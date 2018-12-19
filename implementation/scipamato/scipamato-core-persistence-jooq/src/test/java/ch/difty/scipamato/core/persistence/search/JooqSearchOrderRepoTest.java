@@ -227,8 +227,7 @@ public class JooqSearchOrderRepoTest extends
             }
 
             @Override
-            protected List<SearchCondition> findTermLessConditions(Long searchOrderId,
-                List<Long> conditionIdsWithSearchTerms) {
+            protected List<SearchCondition> findConditionsOf(final Long searchOrderId) {
                 return new ArrayList<>();
             }
         };

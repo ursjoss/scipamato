@@ -9,8 +9,11 @@ import java.util.List;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import ch.difty.scipamato.common.persistence.paging.PaginationContext;
+import ch.difty.scipamato.common.persistence.paging.PaginationRequest;
 import ch.difty.scipamato.core.entity.projection.NewsletterAssociation;
 import ch.difty.scipamato.core.entity.projection.PaperSlim;
+import ch.difty.scipamato.core.entity.search.PaperFilter;
 import ch.difty.scipamato.core.entity.search.SearchCondition;
 import ch.difty.scipamato.core.entity.search.SearchOrder;
 import ch.difty.scipamato.core.persistence.JooqTransactionalIntegrationTest;
@@ -38,6 +41,41 @@ public class JooqPaperSlimRepoIntegrationTest extends JooqTransactionalIntegrati
     @Test
     public void findingById_withNonExistingId_returnsNull() {
         assertThat(repo.findById(-1L)).isNull();
+    }
+
+    @Test
+    public void findingById_withExistingIdAndVersion_returnsEntityWithCorrectIdButMissingVersion() {
+        PaperSlim paper = repo.findById(31L, 11, "en");
+        assertThat(paper.getId()).isEqualTo(31L);
+        assertThat(paper.getNumber()).isEqualTo(31L);
+        assertThat(paper.getPublicationYear()).isEqualTo(2016);
+        assertThat(paper.getFirstAuthor()).isEqualTo("Lanzinger");
+        assertThat(paper.getVersion()).isEqualTo(0);
+        assertThat(paper.getTitle()).startsWith("Ultrafine");
+        final NewsletterAssociation newsletterAssociation = paper.getNewsletterAssociation();
+        assertThat(newsletterAssociation).isNotNull();
+        assertThat(newsletterAssociation.getId()).isEqualTo(1L);
+        assertThat(newsletterAssociation.getPublicationStatusId()).isEqualTo(1L);
+        assertThat(newsletterAssociation.getIssue()).isEqualTo("1802");
+        assertThat(newsletterAssociation.getHeadline()).isEqualTo("some headline");
+    }
+
+    @Test
+    public void findingById_withExistingIdAndWrongVersion_returnsNull() {
+        PaperSlim paper = repo.findById(31L, 1, "en");
+        assertThat(paper).isNull();
+    }
+
+    @Test
+    public void findingPageByFilter() {
+        final PaperFilter pf = new PaperFilter();
+        pf.setAuthorMask("lanz");
+        PaginationContext pc = new PaginationRequest(0, 10);
+        List<PaperSlim> papers = repo.findPageByFilter(pf, pc);
+        assertThat(papers).hasSize(2);
+        assertThat(papers)
+            .extracting("number")
+            .containsExactlyInAnyOrder(33L, 31L);
     }
 
     @Test

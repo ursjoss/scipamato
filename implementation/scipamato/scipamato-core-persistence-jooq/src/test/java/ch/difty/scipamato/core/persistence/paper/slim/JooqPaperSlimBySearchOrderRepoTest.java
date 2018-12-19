@@ -25,15 +25,12 @@ public class JooqPaperSlimBySearchOrderRepoTest {
     private JooqBySearchOrderRepo<PaperSlim, PaperSlimRecordMapper> finder;
 
     @Mock
-    private DSLContext                                                                      dslMock;
+    private DSLContext            dslMock;
     @Mock
-    private PaperSlimRecordMapper                                                           mapperMock;
+    private PaperSlimRecordMapper mapperMock;
+
     @Mock
     private JooqSortMapper<PaperRecord, PaperSlim, ch.difty.scipamato.core.db.tables.Paper> sortMapperMock;
-    @Mock
-    private PaperSlim                                                                       unpersistedEntity;
-    @Mock
-    private PaperSlim                                                                       persistedEntity;
 
     @Before
     public void setUp() {
@@ -166,7 +163,7 @@ public class JooqPaperSlimBySearchOrderRepoTest {
             "    )\n" +
             "  )\n" +
             ")"
-        // @formatter:on
+            // @formatter:on
         );
     }
 
@@ -285,7 +282,7 @@ public class JooqPaperSlimBySearchOrderRepoTest {
             "    5, 17\n" +
             "  )\n" +
             ")"
-        // @formatter:on
+            // @formatter:on
         );
     }
 
@@ -319,16 +316,18 @@ public class JooqPaperSlimBySearchOrderRepoTest {
         Condition cond = finder.getConditionsFrom(searchOrder);
         assertThat(cond.toString()).isEqualToIgnoringCase(
             // @formatter:off
-        "exists (\n" +
-        "  select 1 \"one\"\n" +
-        "  from \"public\".\"paper_newsletter\"\n" +
-        "  where (\n" +
-        "    \"public\".\"paper_newsletter\".\"paper_id\" = \"public\".\"paper\".\"id\"\n" +
-        "    and \"public\".\"paper_newsletter\".\"newsletter_topic_id\" = 1\n" +
-        "    and lower(\"public\".\"paper_newsletter\".\"headline\") like lower('%hl%')\n" +
-        "  )\n" +
-        ")"
-        // @formatter:on
+            "exists (\n" +
+            "  select 1 \"one\"\n" +
+            "  from \"public\".\"paper_newsletter\"\n" +
+            "    join \"public\".\"newsletter\"\n" +
+            "    on \"public\".\"paper_newsletter\".\"newsletter_id\" = \"public\".\"newsletter\".\"id\"\n" +
+            "  where (\n" +
+            "    \"public\".\"paper_newsletter\".\"paper_id\" = \"public\".\"paper\".\"id\"\n" +
+            "    and \"public\".\"paper_newsletter\".\"newsletter_topic_id\" = 1\n" +
+            "    and lower(\"public\".\"paper_newsletter\".\"headline\") like lower('%hl%')\n" +
+            "  )\n" +
+            ")"
+            // @formatter:on
         );
     }
 
@@ -346,6 +345,8 @@ public class JooqPaperSlimBySearchOrderRepoTest {
         "exists (\n" +
         "  select 1 \"one\"\n" +
         "  from \"public\".\"paper_newsletter\"\n" +
+        "    join \"public\".\"newsletter\"\n" +
+        "    on \"public\".\"paper_newsletter\".\"newsletter_id\" = \"public\".\"newsletter\".\"id\"\n" +
         "  where (\n" +
         "    \"public\".\"paper_newsletter\".\"paper_id\" = \"public\".\"paper\".\"id\"\n" +
         "    and \"public\".\"paper_newsletter\".\"newsletter_topic_id\" = 1\n" +
@@ -366,15 +367,17 @@ public class JooqPaperSlimBySearchOrderRepoTest {
         Condition cond = finder.getConditionsFrom(searchOrder);
         assertThat(cond.toString()).isEqualToIgnoringCase(
             // @formatter:off
-        "exists (\n" +
-        "  select 1 \"one\"\n" +
-        "  from \"public\".\"paper_newsletter\"\n" +
-        "  where (\n" +
-        "    \"public\".\"paper_newsletter\".\"paper_id\" = \"public\".\"paper\".\"id\"\n" +
-        "    and lower(\"public\".\"paper_newsletter\".\"headline\") like lower('%hl%')\n" +
-        "  )\n" +
-        ")"
-        // @formatter:on
+            "exists (\n" +
+            "  select 1 \"one\"\n" +
+            "  from \"public\".\"paper_newsletter\"\n" +
+            "    join \"public\".\"newsletter\"\n" +
+            "    on \"public\".\"paper_newsletter\".\"newsletter_id\" = \"public\".\"newsletter\".\"id\"\n" +
+            "  where (\n" +
+            "    \"public\".\"paper_newsletter\".\"paper_id\" = \"public\".\"paper\".\"id\"\n" +
+            "    and lower(\"public\".\"paper_newsletter\".\"headline\") like lower('%hl%')\n" +
+            "  )\n" +
+            ")"
+            // @formatter:on
         );
     }
 
@@ -392,25 +395,29 @@ public class JooqPaperSlimBySearchOrderRepoTest {
         Condition cond = finder.getConditionsFrom(searchOrder);
         assertThat(cond.toString()).isEqualToIgnoringCase(
             // @formatter:off
-        "(\n" +
-        "  exists (\n" +
-        "    select 1 \"one\"\n" +
-        "    from \"public\".\"paper_newsletter\"\n" +
-        "    where (\n" +
-        "      \"public\".\"paper_newsletter\".\"paper_id\" = \"public\".\"paper\".\"id\"\n" +
-        "      and lower(\"public\".\"paper_newsletter\".\"headline\") like lower('%hl%')\n" +
-        "    )\n" +
-        "  )\n" +
-        "  or exists (\n" +
-        "    select 1 \"one\"\n" +
-        "    from \"public\".\"paper_newsletter\"\n" +
-        "    where (\n" +
-        "      \"public\".\"paper_newsletter\".\"paper_id\" = \"public\".\"paper\".\"id\"\n" +
-        "      and \"public\".\"paper_newsletter\".\"newsletter_topic_id\" = 1\n" +
-        "    )\n" +
-        "  )\n" +
-        ")"
-        // @formatter:on
+            "(\n" +
+            "  exists (\n" +
+            "    select 1 \"one\"\n" +
+            "    from \"public\".\"paper_newsletter\"\n" +
+            "      join \"public\".\"newsletter\"\n" +
+            "      on \"public\".\"paper_newsletter\".\"newsletter_id\" = \"public\".\"newsletter\".\"id\"\n" +
+            "    where (\n" +
+            "      \"public\".\"paper_newsletter\".\"paper_id\" = \"public\".\"paper\".\"id\"\n" +
+            "      and lower(\"public\".\"paper_newsletter\".\"headline\") like lower('%hl%')\n" +
+            "    )\n" +
+            "  )\n" +
+            "  or exists (\n" +
+            "    select 1 \"one\"\n" +
+            "    from \"public\".\"paper_newsletter\"\n" +
+            "      join \"public\".\"newsletter\"\n" +
+            "      on \"public\".\"paper_newsletter\".\"newsletter_id\" = \"public\".\"newsletter\".\"id\"\n" +
+            "    where (\n" +
+            "      \"public\".\"paper_newsletter\".\"paper_id\" = \"public\".\"paper\".\"id\"\n" +
+            "      and \"public\".\"paper_newsletter\".\"newsletter_topic_id\" = 1\n" +
+            "    )\n" +
+            "  )\n" +
+            ")"
+            // @formatter:on
         );
     }
 }

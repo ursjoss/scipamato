@@ -50,6 +50,7 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware, Ne
     private Long    searchConditionId;
     private String  newsletterHeadline;
     private Integer newsletterTopicId;
+    private String  newsletterIssue;
     // only used for the display value - not identifying and therefore not used for equals or hashcode
     private String  newsletterTopicTitle;
 
@@ -547,6 +548,13 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware, Ne
                 sb.append(JOIN_DELIMITER);
             sb.append(codes.toString());
         }
+        if (newsletterIssue != null) {
+            if (sb.length() > 0)
+                sb.append(JOIN_DELIMITER);
+            sb
+                .append("issue=")
+                .append(newsletterIssue);
+        }
         if (newsletterHeadline != null) {
             if (sb.length() > 0)
                 sb.append(JOIN_DELIMITER);
@@ -579,6 +587,7 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware, Ne
         result = prime * result + (searchConditionId == null ? 0 : searchConditionId.hashCode());
         result = prime * result + (newsletterTopicId == null ? 0 : newsletterTopicId.hashCode());
         result = prime * result + (newsletterHeadline == null ? 0 : newsletterHeadline.hashCode());
+        result = prime * result + (newsletterIssue == null ? 0 : newsletterIssue.hashCode());
         result = prime * result + stringSearchTerms.hashCode();
         result = prime * result + integerSearchTerms.hashCode();
         result = prime * result + booleanSearchTerms.hashCode();
@@ -610,6 +619,11 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware, Ne
             if (other.newsletterHeadline != null)
                 return false;
         } else if (!newsletterHeadline.equals(other.newsletterHeadline))
+            return false;
+        if (newsletterIssue == null) {
+            if (other.newsletterIssue != null)
+                return false;
+        } else if (!newsletterIssue.equals(other.newsletterIssue))
             return false;
         if (!booleanSearchTerms.equals(other.booleanSearchTerms))
             return false;
@@ -649,7 +663,12 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware, Ne
     }
 
     @Override
+    public void setNewsletterIssue(final String newsletterIssue) {
+        this.newsletterIssue = newsletterIssue;
+    }
+
+    @Override
     public String getNewsletterIssue() {
-        return null;
+        return newsletterIssue;
     }
 }

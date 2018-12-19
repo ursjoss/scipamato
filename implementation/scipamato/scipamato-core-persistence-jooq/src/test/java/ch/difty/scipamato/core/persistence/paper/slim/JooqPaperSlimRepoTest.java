@@ -13,6 +13,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 
 import ch.difty.scipamato.common.DateTimeService;
+import ch.difty.scipamato.common.TestUtils;
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.core.db.tables.records.PaperRecord;
 import ch.difty.scipamato.core.entity.projection.PaperSlim;
@@ -165,5 +166,10 @@ public class JooqPaperSlimRepoTest extends
     @Test
     public void gettingVersion_returnsPapersVersion() {
         assertThat(repo.getRecordVersion()).isEqualTo(PAPER.VERSION);
+    }
+
+    @Test
+    public void findingById_withVersion_withNullId() {
+        TestUtils.assertDegenerateSupplierParameter(() -> repo.findById(null, 1, "de"), "id");
     }
 }

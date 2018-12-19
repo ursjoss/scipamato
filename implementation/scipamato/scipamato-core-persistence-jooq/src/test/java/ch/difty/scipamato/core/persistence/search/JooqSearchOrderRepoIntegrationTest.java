@@ -241,6 +241,11 @@ public class JooqSearchOrderRepoIntegrationTest extends JooqTransactionalIntegra
         SearchCondition modifiedCondition8 = repo.updateSearchCondition(savedCondition, searchOrderId, LC);
         assertThat(modifiedCondition8.getNewsletterHeadline()).isEqualTo("some");
 
+        assertThat(savedCondition.getNewsletterIssue()).isNull();
+        savedCondition.setNewsletterIssue("some");
+        SearchCondition modifiedCondition9 = repo.updateSearchCondition(savedCondition, searchOrderId, LC);
+        assertThat(modifiedCondition9.getNewsletterIssue()).isEqualTo("some");
+
         // remove the new search condition
         repo.deleteSearchConditionWithId(savedCondition.getSearchConditionId());
         assertThat(repo.findConditionIdsWithSearchTerms(searchOrderId)).hasSize(1);
