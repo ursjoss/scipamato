@@ -79,14 +79,17 @@ public class PaperSyncConfig
     private static final TableField<PaperRecord, String> C_RESULT_MEASURED_OUTCOME = PAPER.RESULT_MEASURED_OUTCOME;
     private static final TableField<PaperRecord, String> C_CONCLUSION              = PAPER.CONCLUSION;
 
-    private final CodeAggregator codeAggregator;
+    private final CodeAggregator             codeAggregator;
+    private final SyncShortFieldConcatenator shortFieldConcatenator;
 
     protected PaperSyncConfig(CodeAggregator codeAggregator, @Qualifier("dslContext") DSLContext jooqCore,
         @Qualifier("publicDslContext") DSLContext jooqPublic, @Qualifier("dataSource") DataSource coreDataSource,
-        JobBuilderFactory jobBuilderFactory, StepBuilderFactory stepBuilderFactory, DateTimeService dateTimeService) {
+        JobBuilderFactory jobBuilderFactory, StepBuilderFactory stepBuilderFactory, DateTimeService dateTimeService,
+        SyncShortFieldConcatenator shortFieldConcatenator) {
         super(TOPIC, CHUNK_SIZE, jooqCore, jooqPublic, coreDataSource, jobBuilderFactory, stepBuilderFactory,
             dateTimeService);
         this.codeAggregator = codeAggregator;
+        this.shortFieldConcatenator = shortFieldConcatenator;
         setInternalCodes();
     }
 
@@ -152,22 +155,9 @@ public class PaperSyncConfig
             .location(getString(C_LOCATION, rs))
             .publicationYear(getInteger(C_PUB_YEAR, rs))
             .goals(getString(C_GOALS, rs))
-            .methods(getString(C_METHODS, rs))
-            .methodStudyDesign(getString(C_METHOD_STUDY_DESIGN, rs))
-            .methodOutcome(getString(C_METHOD_OUTCOME, rs))
-            .exposurePollutant(getString(C_EXPOSURE_POLLUTANT, rs))
-            .exposureAssessment(getString(C_EXPOSURE_ASSESSMENT, rs))
-            .methodStatistics(getString(C_METHOD_STATISTICS, rs))
-            .methodConfounders(getString(C_METHOD_CONFOUNDERS, rs))
-            .population(getString(C_POPULATION, rs))
-            .populationPlace(getString(C_POPULATION_PLACE, rs))
-            .populationParticipants(getString(C_POPULATION_PARTICIPANTS, rs))
-            .populationDuration(getString(C_POPULATION_DURATION, rs))
-            .result(getString(C_RESULT, rs))
-            .resultExposureRange(getString(C_RESULT_EXPOSURE_RANGE, rs))
-            .resultEffectEstimate(getString(C_RESULT_EFFECT_ESTIMATE, rs))
-            .resultMeasuredOutcome(getString(C_RESULT_MEASURED_OUTCOME, rs))
-            .conclusion(getString(C_CONCLUSION, rs))
+            .methods(shortFieldConcatenator.methodsFrom(rs))
+            .population(shortFieldConcatenator.populationFrom(rs))
+            .result(shortFieldConcatenator.resultFrom(rs))
             .comment(getString(C_COMMENT, rs))
             .codes(extractCodes(ALIAS_CODES, rs))
             .version(getInteger(C_VERSION, rs))

@@ -8,11 +8,14 @@ import org.junit.Test;
 
 import ch.difty.scipamato.core.web.paper.jasper.JasperEntityTest;
 import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields;
+import ch.difty.scipamato.core.web.paper.jasper.CoreShortFieldConcatenator;
+import ch.difty.scipamato.core.web.paper.jasper.CoreShortFieldWithEmptyMainFieldConcatenator;
 
 public class PaperSummaryTest extends JasperEntityTest {
 
-    private PaperSummary       ps;
-    private ReportHeaderFields rhf = newReportHeaderFields();
+    private PaperSummary               ps;
+    private ReportHeaderFields         rhf                    = newReportHeaderFields();
+    private CoreShortFieldConcatenator shortFieldConcatenator = new CoreShortFieldWithEmptyMainFieldConcatenator();
 
     private ReportHeaderFields newReportHeaderFields() {
         return ReportHeaderFields
@@ -27,7 +30,7 @@ public class PaperSummaryTest extends JasperEntityTest {
 
     @Test
     public void instantiating() {
-        ps = new PaperSummary(p, rhf);
+        ps = new PaperSummary(p, shortFieldConcatenator, rhf);
         assertPaperSummary();
     }
 
@@ -62,7 +65,7 @@ public class PaperSummaryTest extends JasperEntityTest {
     }
 
     private PaperSummary newPaperSummary() {
-        return new PaperSummary(p, rhf);
+        return new PaperSummary(p, shortFieldConcatenator, rhf);
     }
 
     @Test

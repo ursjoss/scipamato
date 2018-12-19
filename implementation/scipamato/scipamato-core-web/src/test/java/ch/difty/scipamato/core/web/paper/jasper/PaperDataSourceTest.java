@@ -27,12 +27,15 @@ public abstract class PaperDataSourceTest extends WicketTest {
     protected Paper                                  paperMock;
     @Mock
     protected ClusterablePdfExporterConfiguration    pdfExporterConfigMock;
+    @Mock
+    protected CoreShortFieldConcatenator             shortFieldConcatenatorMock;
 
     protected PaperFilter paperFilter = new PaperFilter();
 
     @After
     public final void tearDown() {
-        verifyNoMoreInteractions(dataProviderMock, paperFilterMock, searchOrderMock, paperMock);
+        verifyNoMoreInteractions(dataProviderMock, paperFilterMock, searchOrderMock, paperMock,
+            shortFieldConcatenatorMock);
     }
 
     protected void assertFieldValue(String fieldName, String value, JRDesignField f, final JRDataSource jsds)

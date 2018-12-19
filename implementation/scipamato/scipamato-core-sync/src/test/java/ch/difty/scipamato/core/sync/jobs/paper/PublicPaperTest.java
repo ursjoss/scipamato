@@ -9,7 +9,7 @@ import ch.difty.scipamato.core.sync.jobs.PublicEntityTest;
 public class PublicPaperTest extends PublicEntityTest {
 
     @Test
-    public void canSetGet_withStandardFieldsPopulated() {
+    public void canSetGet() {
         PublicPaper pp = PublicPaper
             .builder()
             .id(1L)
@@ -52,74 +52,5 @@ public class PublicPaperTest extends PublicEntityTest {
         assertThat(pp.getCodesStudyDesign()).containsExactly((short) 3, (short) 4);
         assertThat(pp.getCodes()).containsExactly("1A", "2B", "3C");
         assertThat(pp.getLastSynched()).isEqualTo(SYNCHED);
-    }
-
-    @Test
-    public void canSetGet_withAllShortFieldsPopulated() {
-        PublicPaper pp = PublicPaper
-            .builder()
-            .methodStudyDesign("methodStudyDesign")
-            .methodOutcome("methodOutcome")
-            .exposurePollutant("exposurePollutant")
-            .exposureAssessment("exposureAssessment")
-            .methodStatistics("methodStatistics")
-            .methodConfounders("methodConfounders")
-            .populationPlace("populationPlace")
-            .populationParticipants("populationParticipants")
-            .populationDuration("populationDuration")
-            .resultExposureRange("resultExposureRange")
-            .resultEffectEstimate("resultEffectEstimate")
-            .resultMeasuredOutcome("resultMeasuredOutcome")
-            .conclusion("conclusion")
-            .build();
-
-        assertThat(pp.getMethods()).isEqualTo(
-            "Study Design: methodStudyDesign / Outcome: methodOutcome / Place: populationPlace / Pollutant: exposurePollutant / Exposure Assessment: exposureAssessment / Statistical Method: methodStatistics / Confounders: methodConfounders");
-        assertThat(pp.getPopulation()).isEqualTo(
-            "Place: populationPlace / Participants: populationParticipants / Study Duration: populationDuration");
-        assertThat(pp.getResult()).isEqualTo(
-            "Exposure (Range): resultExposureRange / Effect Estimate: resultEffectEstimate / Measured Outcome: resultMeasuredOutcome / Conclusion: conclusion");
-    }
-
-    @Test
-    public void canSetGet_withSomeShortFieldsPopulated_usesThoseAvailable() {
-        PublicPaper pp = PublicPaper
-            .builder()
-            .methodStudyDesign("methodStudyDesign")
-            .methodStatistics("methodStatistics")
-            .populationParticipants("populationParticipants")
-            .populationDuration("populationDuration")
-            .resultExposureRange("resultExposureRange")
-            .resultEffectEstimate("resultEffectEstimate")
-            .build();
-
-        assertThat(pp.getMethods()).isEqualTo("Study Design: methodStudyDesign / Statistical Method: methodStatistics");
-        assertThat(pp.getPopulation()).isEqualTo(
-            "Participants: populationParticipants / Study Duration: populationDuration");
-        assertThat(pp.getResult()).isEqualTo(
-            "Exposure (Range): resultExposureRange / Effect Estimate: resultEffectEstimate");
-    }
-
-    @Test
-    public void canSetGet_withBothNormalAndShortFieldPresents_normalFieldWins() {
-        PublicPaper pp = PublicPaper
-            .builder()
-            .methods("methods")
-            .exposurePollutant("exposurePollutant")
-            .exposureAssessment("exposureAssessment")
-            .methodStudyDesign("methodStudyDesign")
-            .methodStatistics("methodStatistics")
-            .population("population")
-            .populationParticipants("populationParticipants")
-            .populationDuration("populationDuration")
-            .result("result")
-            .resultExposureRange("resultExposureRange")
-            .resultEffectEstimate("resultEffectEstimate")
-            .conclusion("conclusion")
-            .build();
-
-        assertThat(pp.getMethods()).isEqualTo("methods");
-        assertThat(pp.getPopulation()).isEqualTo("population");
-        assertThat(pp.getResult()).isEqualTo("result");
     }
 }

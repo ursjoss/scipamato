@@ -43,7 +43,8 @@ public class PaperFilterConditionMapper extends AbstractFilterConditionMapper<Pa
                 .or(PAPER.METHOD_STUDY_DESIGN.likeIgnoreCase(likeExpression))
                 .or(PAPER.METHOD_OUTCOME.likeIgnoreCase(likeExpression))
                 .or(PAPER.METHOD_STATISTICS.likeIgnoreCase(likeExpression))
-                .or(PAPER.METHOD_CONFOUNDERS.likeIgnoreCase(likeExpression)));
+                .or(PAPER.METHOD_CONFOUNDERS.likeIgnoreCase(likeExpression))
+                .or(PAPER.POPULATION_PLACE.likeIgnoreCase(likeExpression)));
         }
 
         if (filter.getSearchMask() != null) {
@@ -54,7 +55,6 @@ public class PaperFilterConditionMapper extends AbstractFilterConditionMapper<Pa
                 .or(PAPER.TITLE.likeIgnoreCase(likeExpression))
                 .or(PAPER.GOALS.likeIgnoreCase(likeExpression))
                 .or(PAPER.POPULATION.likeIgnoreCase(likeExpression))
-                .or(PAPER.POPULATION_PLACE.likeIgnoreCase(likeExpression))
                 .or(PAPER.POPULATION_PARTICIPANTS.likeIgnoreCase(likeExpression))
                 .or(PAPER.POPULATION_DURATION.likeIgnoreCase(likeExpression))
                 .or(PAPER.RESULT.likeIgnoreCase(likeExpression))
