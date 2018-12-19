@@ -11,10 +11,7 @@ import ch.difty.scipamato.core.entity.PaperSlimFilter;
 import ch.difty.scipamato.core.entity.projection.PaperSlim;
 import ch.difty.scipamato.core.persistence.PaperService;
 import ch.difty.scipamato.core.web.paper.AbstractPaperSlimProvider;
-import ch.difty.scipamato.core.web.paper.jasper.ClusterablePdfExporterConfiguration;
-import ch.difty.scipamato.core.web.paper.jasper.JasperPaperDataSource;
-import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields;
-import ch.difty.scipamato.core.web.paper.jasper.ScipamatoPdfResourceHandler;
+import ch.difty.scipamato.core.web.paper.jasper.*;
 import ch.difty.scipamato.core.web.resources.jasper.PaperSummaryReportResourceReference;
 
 /**
@@ -43,7 +40,8 @@ public class PaperSummaryDataSource extends JasperPaperDataSource<PaperSummary> 
     private static final String BASE_NAME_SINGLE_FALLBACK = "paper_summary";
     private static final String BASE_NAME_MULTIPLE        = "paper_summaries";
 
-    private ReportHeaderFields reportHeaderFields;
+    private ReportHeaderFields         reportHeaderFields;
+    private CoreShortFieldConcatenator shortFieldConcatenator = null;
 
     /**
      * Build up the paper summary from a {@link Paper} and any additional
@@ -53,15 +51,18 @@ public class PaperSummaryDataSource extends JasperPaperDataSource<PaperSummary> 
      *     an instance of {@link Paper} - must not be null.
      * @param reportHeaderFields
      *     collection of localized labels for report fields
+     * @param shortFieldConcatenator
+     *     utility bean to manage the content of the fields method/population/result
      * @param config
      *     {@link ClusterablePdfExporterConfiguration}
      */
     public PaperSummaryDataSource(final Paper paper, final ReportHeaderFields reportHeaderFields,
-        ClusterablePdfExporterConfiguration config) {
-        this(Collections.singletonList(new PaperSummary(AssertAs.notNull(paper, "paper"),
+        final CoreShortFieldConcatenator shortFieldConcatenator, ClusterablePdfExporterConfiguration config) {
+        this(Collections.singletonList(new PaperSummary(AssertAs.notNull(paper, "paper"), shortFieldConcatenator,
                 AssertAs.notNull(reportHeaderFields, "reportHeaderFields"))), config,
             makeSinglePaperBaseName(paper.getNumber() != null ? String.valueOf(paper.getNumber()) : null));
         this.reportHeaderFields = reportHeaderFields;
+        this.shortFieldConcatenator = shortFieldConcatenator;
     }
 
     /**
@@ -103,13 +104,17 @@ public class PaperSummaryDataSource extends JasperPaperDataSource<PaperSummary> 
      *     the {@link AbstractPaperSlimProvider} - must not be null
      * @param reportHeaderFields
      *     collection of localized labels for the report fields
+     * @param shortFieldConcatenator
+     *     utility bean to manage the content of the fields method/population/result
      * @param config
      *     {@link ClusterablePdfExporterConfiguration}
      */
     public PaperSummaryDataSource(final AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider,
-        final ReportHeaderFields reportHeaderFields, ClusterablePdfExporterConfiguration config) {
+        final ReportHeaderFields reportHeaderFields, final CoreShortFieldConcatenator shortFieldConcatenator,
+        ClusterablePdfExporterConfiguration config) {
         super(new ScipamatoPdfResourceHandler(config), BASE_NAME_MULTIPLE, dataProvider);
         this.reportHeaderFields = reportHeaderFields;
+        this.shortFieldConcatenator = shortFieldConcatenator;
     }
 
     @Override
@@ -121,7 +126,7 @@ public class PaperSummaryDataSource extends JasperPaperDataSource<PaperSummary> 
 
     @Override
     protected PaperSummary makeEntity(Paper p) {
-        return new PaperSummary(p, reportHeaderFields);
+        return new PaperSummary(p, shortFieldConcatenator, reportHeaderFields);
     }
 
     private static String makeSinglePaperBaseName(String number) {

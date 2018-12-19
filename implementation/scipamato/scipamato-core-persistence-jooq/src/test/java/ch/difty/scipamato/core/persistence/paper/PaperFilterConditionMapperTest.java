@@ -64,6 +64,7 @@ public class PaperFilterConditionMapperTest
                 , "METHOD_OUTCOME"
                 , "METHOD_STATISTICS"
                 , "METHOD_CONFOUNDERS"
+                , "POPULATION_PLACE"
         ));
         // @formatter:on
     }
@@ -79,7 +80,6 @@ public class PaperFilterConditionMapperTest
                 , "TITLE"
                 , "GOALS"
                 , "POPULATION"
-                , "POPULATION_PLACE"
                 , "POPULATION_PARTICIPANTS"
                 , "POPULATION_DURATION"
                 , "RESULT"

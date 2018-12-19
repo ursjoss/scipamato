@@ -48,7 +48,9 @@ public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
     private DateTimeService    dateTimeService;
 
     @Mock
-    private CodeAggregator codeAggregator;
+    private CodeAggregator             codeAggregator;
+    @Mock
+    private SyncShortFieldConcatenator shortFieldConcatenator;
 
     @SpyBean(name = "dslContext")
     private DSLContext jooqCore;
@@ -88,7 +90,7 @@ public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
             deleteConditionStep);
 
         config = new PaperSyncConfig(codeAggregator, jooqCore, jooqPublic, coreDataSource, jobBuilderFactory,
-            stepBuilderFactory, dateTimeService);
+            stepBuilderFactory, dateTimeService, shortFieldConcatenator);
     }
 
     @After
@@ -162,9 +164,6 @@ public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
         when(rs.getString(Paper.PAPER.LOCATION.getName())).thenReturn("l");
         when(rs.getInt(Paper.PAPER.PUBLICATION_YEAR.getName())).thenReturn(2017);
         when(rs.getString(Paper.PAPER.GOALS.getName())).thenReturn("g");
-        when(rs.getString(Paper.PAPER.METHODS.getName())).thenReturn("m");
-        when(rs.getString(Paper.PAPER.POPULATION.getName())).thenReturn("p");
-        when(rs.getString(Paper.PAPER.RESULT.getName())).thenReturn("r");
         when(rs.getString(Paper.PAPER.COMMENT.getName())).thenReturn("c");
         when(rs.getArray("codes")).thenReturn(
             new MockArray<>(SQLDialect.POSTGRES, new String[] { "1A", "2B" }, String[].class));
@@ -176,6 +175,10 @@ public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
         when(codeAggregator.getCodesStudyDesign()).thenReturn(new Short[] { 3, 4 });
         when(codeAggregator.getAggregatedCodes()).thenReturn(new String[] { "1A", "2B" });
 
+        when(shortFieldConcatenator.methodsFrom(rs)).thenReturn("mfrs");
+        when(shortFieldConcatenator.populationFrom(rs)).thenReturn("pfrs");
+        when(shortFieldConcatenator.resultFrom(rs)).thenReturn("rfrs");
+
         PublicPaper pp = config.makeEntity(rs);
 
         assertThat(pp.getId()).isEqualTo(1L);
@@ -186,9 +189,9 @@ public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
         assertThat(pp.getLocation()).isEqualTo("l");
         assertThat(pp.getPublicationYear()).isEqualTo(2017);
         assertThat(pp.getGoals()).isEqualTo("g");
-        assertThat(pp.getMethods()).isEqualTo("m");
-        assertThat(pp.getPopulation()).isEqualTo("p");
-        assertThat(pp.getResult()).isEqualTo("r");
+        assertThat(pp.getMethods()).isEqualTo("mfrs");
+        assertThat(pp.getPopulation()).isEqualTo("pfrs");
+        assertThat(pp.getResult()).isEqualTo("rfrs");
         assertThat(pp.getComment()).isEqualTo("c");
         assertThat(pp.getCodes()).containsExactly("1A", "2B");
         assertThat(pp.getCodesPopulation()).containsExactly((short) 1, (short) 2);
@@ -206,22 +209,6 @@ public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
         verify(rs).getString(Paper.PAPER.LOCATION.getName());
         verify(rs).getInt(Paper.PAPER.PUBLICATION_YEAR.getName());
         verify(rs).getString(Paper.PAPER.GOALS.getName());
-        verify(rs).getString(Paper.PAPER.METHODS.getName());
-        verify(rs).getString(Paper.PAPER.METHOD_STUDY_DESIGN.getName());
-        verify(rs).getString(Paper.PAPER.METHOD_OUTCOME.getName());
-        verify(rs).getString(Paper.PAPER.EXPOSURE_POLLUTANT.getName());
-        verify(rs).getString(Paper.PAPER.EXPOSURE_ASSESSMENT.getName());
-        verify(rs).getString(Paper.PAPER.METHOD_STATISTICS.getName());
-        verify(rs).getString(Paper.PAPER.METHOD_CONFOUNDERS.getName());
-        verify(rs).getString(Paper.PAPER.POPULATION.getName());
-        verify(rs).getString(Paper.PAPER.POPULATION_PLACE.getName());
-        verify(rs).getString(Paper.PAPER.POPULATION_PARTICIPANTS.getName());
-        verify(rs).getString(Paper.PAPER.POPULATION_DURATION.getName());
-        verify(rs).getString(Paper.PAPER.RESULT.getName());
-        verify(rs).getString(Paper.PAPER.RESULT_EXPOSURE_RANGE.getName());
-        verify(rs).getString(Paper.PAPER.RESULT_EFFECT_ESTIMATE.getName());
-        verify(rs).getString(Paper.PAPER.RESULT_MEASURED_OUTCOME.getName());
-        verify(rs).getString(Paper.PAPER.CONCLUSION.getName());
         verify(rs).getString(Paper.PAPER.COMMENT.getName());
         verify(rs).getArray("codes");
         verify(rs).getInt(Paper.PAPER.VERSION.getName());
@@ -230,6 +217,10 @@ public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
         verify(rs, times(5)).wasNull();
 
         verifyCodeAggregator();
+
+        verify(shortFieldConcatenator).methodsFrom(rs);
+        verify(shortFieldConcatenator).populationFrom(rs);
+        verify(shortFieldConcatenator).resultFrom(rs);
 
         verifyNoMoreInteractions(rs);
     }
