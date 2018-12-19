@@ -70,7 +70,7 @@ public class CoreShortFieldWithEmptyMainFieldConcatenatorTest {
         p.setMethodConfounders("mc");
 
         assertThat(sfc.methodsFrom(p, rhf)).isEqualTo(
-            "msdl: msd / mol: mo / ppll: pp / epl: ep / eal: ea / msl: ms / mcl: mc");
+            "msdl: msd\nmol: mo\nppll: pp\nepl: ep\neal: ea\nmsl: ms\nmcl: mc");
     }
 
     @Test
@@ -90,7 +90,7 @@ public class CoreShortFieldWithEmptyMainFieldConcatenatorTest {
         p.setPopulationParticipants("ppa");
         p.setPopulationDuration("pd");
 
-        assertThat(sfc.populationFrom(p, rhf)).isEqualTo("ppll: ppl / ppal: ppa / pdl: pd");
+        assertThat(sfc.populationFrom(p, rhf)).isEqualTo("ppll: ppl\nppal: ppa\npdl: pd");
     }
 
     @Test
@@ -112,7 +112,7 @@ public class CoreShortFieldWithEmptyMainFieldConcatenatorTest {
         p.setResultMeasuredOutcome("rmo");
         p.setConclusion("cc");
 
-        assertThat(sfc.resultFrom(p, rhf)).isEqualTo("rerl: rer / reel: ree / rmol: rmo / ccl: cc");
+        assertThat(sfc.resultFrom(p, rhf)).isEqualTo("rerl: rer\nreel: ree\nrmol: rmo\nccl: cc");
     }
 
 }

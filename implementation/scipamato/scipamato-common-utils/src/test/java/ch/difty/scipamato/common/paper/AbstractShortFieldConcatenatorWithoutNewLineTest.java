@@ -5,9 +5,9 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import org.junit.Test;
 
 @SuppressWarnings("SpellCheckingInspection")
-public class AbstractShortFieldConcatenatorTest {
+public class AbstractShortFieldConcatenatorWithoutNewLineTest {
 
-    private AbstractShortFieldConcatenator concatenator = new AbstractShortFieldConcatenator() {
+    private AbstractShortFieldConcatenator concatenator = new AbstractShortFieldConcatenator(false) {
     };
 
     @Test

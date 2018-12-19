@@ -12,6 +12,12 @@ import org.apache.commons.lang3.StringUtils;
  */
 public abstract class AbstractShortFieldConcatenator {
 
+    private final boolean withNewLine;
+
+    protected AbstractShortFieldConcatenator(final boolean withNewLine) {
+        this.withNewLine = withNewLine;
+    }
+
     protected String methodsFrom(final String method, final String methodStudyDesign, final String methodOutcome,
         final String populationPlace, final String exposurePollutant, final String exposureAssessment,
         final String methodStatistics, final String methodConfounders) {
@@ -75,7 +81,7 @@ public abstract class AbstractShortFieldConcatenator {
         for (final Tuple t : shortFields) {
             if (t != null && StringUtils.isNotBlank(t.content)) {
                 if (sb.length() > 0)
-                    sb.append(" / ");
+                    appendSeparatorTo(sb);
                 if (t.label != null)
                     sb
                         .append(t.label)
@@ -84,6 +90,13 @@ public abstract class AbstractShortFieldConcatenator {
             }
         }
         return sb.toString();
+    }
+
+    private void appendSeparatorTo(final StringBuilder sb) {
+        if (withNewLine)
+            sb.append('\n');
+        else
+            sb.append(" / ");
     }
 
     protected static class Tuple {

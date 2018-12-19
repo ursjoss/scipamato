@@ -12,15 +12,18 @@ import ch.difty.scipamato.core.entity.Paper;
  * There are some main fields (result, population and method) that could alternatively
  * be represented with a number of Short field (Kurzerfassung). If the main field is populated, it will always
  * have precedence, regardless of whether there's content in the respective short fields. If the main field is null,
- * all respective short fields with content are concatenated into the respective field in SciPaMaTo-Public. Note
- * that there's a known deficiency: The labels that are included with the short fields are always in english, they
- * will not adapt to the browser locale of a viewer.
+ * all respective short fields with content are concatenated into the respective field in SciPaMaTo-Public, each on
+ * a new line. The labels will be localized depending on the browser locale of the user (if language is supported).
  */
 @Component
 public class CoreShortFieldWithEmptyMainFieldConcatenator extends AbstractShortFieldConcatenator
     implements CoreShortFieldConcatenator {
 
     private static final String PAPER = "paper";
+
+    public CoreShortFieldWithEmptyMainFieldConcatenator() {
+        super(true);
+    }
 
     @Override
     public String methodsFrom(final Paper p, final ReportHeaderFields rhf) {
