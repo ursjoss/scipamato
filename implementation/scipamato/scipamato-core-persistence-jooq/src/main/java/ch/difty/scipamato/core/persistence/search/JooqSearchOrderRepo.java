@@ -14,6 +14,8 @@ import static java.util.stream.Collectors.toList;
 
 import java.util.*;
 import java.util.Map.Entry;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
@@ -98,10 +100,20 @@ public class JooqSearchOrderRepo extends
     @Override
     public void enrichAssociatedEntitiesOf(final SearchOrder searchOrder, String languageCode) {
         if (searchOrder != null && searchOrder.getId() != null) {
-            fillSearchTermsInto(searchOrder, mapSearchTermsToSearchConditions(searchOrder), languageCode);
-            addSearchTermLessConditionsOf(searchOrder, languageCode);
+            final Map<Long, SearchCondition> idToSc = findConditionsOf(searchOrder.getId())
+                .stream()
+                .collect(Collectors.toMap(SearchCondition::getSearchConditionId, Function.identity()));
+            fillSearchTermsInto(searchOrder, mapSearchTermsToSearchConditions(searchOrder), idToSc, languageCode);
+            addSearchTermLessConditionsOf(searchOrder, idToSc, languageCode);
             fillExcludedPaperIdsInto(searchOrder);
         }
+    }
+
+    protected List<SearchCondition> findConditionsOf(final Long searchOrderId) {
+        return getDsl()
+            .selectFrom(SEARCH_CONDITION)
+            .where(SEARCH_CONDITION.SEARCH_ORDER_ID.eq(searchOrderId))
+            .fetchInto(SearchCondition.class);
     }
 
     private Map<Long, List<SearchTerm>> mapSearchTermsToSearchConditions(final SearchOrder searchOrder) {
@@ -131,12 +143,12 @@ public class JooqSearchOrderRepo extends
      * Note: This method only adds searchConditions that have searchTerms. It will
      * not add conditions that e.g. only have createdTerms or modifiedTerms.
      */
-    private void fillSearchTermsInto(SearchOrder searchOrder, Map<Long, List<SearchTerm>> map, String languageCode) {
+    private void fillSearchTermsInto(final SearchOrder searchOrder, final Map<Long, List<SearchTerm>> map,
+        final Map<Long, SearchCondition> idToSc, final String languageCode) {
         for (final Entry<Long, List<SearchTerm>> entry : map.entrySet()) {
-            final SearchCondition sc = new SearchCondition(entry.getKey());
-            for (final SearchTerm st : entry.getValue()) {
+            final SearchCondition sc = idToSc.computeIfAbsent(entry.getKey(), SearchCondition::new);
+            for (final SearchTerm st : entry.getValue())
                 sc.addSearchTerm(st);
-            }
             fillCodesInto(sc, languageCode);
             searchOrder.add(sc);
         }
@@ -170,11 +182,12 @@ public class JooqSearchOrderRepo extends
     /*
      * Taking care of searchConditions that do not have searchTerms
      */
-    private void addSearchTermLessConditionsOf(SearchOrder searchOrder, String languageCode) {
+    private void addSearchTermLessConditionsOf(final SearchOrder searchOrder, final Map<Long, SearchCondition> idToSc,
+        final String languageCode) {
         if (searchOrder != null && searchOrder.getId() != null) {
             final Long searchOrderId = searchOrder.getId();
             final List<Long> conditionIdsWithSearchTerms = findConditionIdsWithSearchTerms(searchOrderId);
-            final List<SearchCondition> termLessConditions = findTermLessConditions(searchOrderId,
+            final List<SearchCondition> termLessConditions = findTermLessConditions(idToSc,
                 conditionIdsWithSearchTerms);
             for (final SearchCondition sc : termLessConditions) {
                 fillCodesInto(sc, languageCode);
@@ -193,13 +206,14 @@ public class JooqSearchOrderRepo extends
             .fetchInto(Long.class);
     }
 
-    protected List<SearchCondition> findTermLessConditions(final Long searchOrderId,
+    private List<SearchCondition> findTermLessConditions(final Map<Long, SearchCondition> idToSc,
         final List<Long> conditionIdsWithSearchTerms) {
-        return getDsl()
-            .selectFrom(SEARCH_CONDITION)
-            .where(SEARCH_CONDITION.SEARCH_ORDER_ID.eq(searchOrderId))
-            .and(SEARCH_CONDITION.SEARCH_CONDITION_ID.notIn(conditionIdsWithSearchTerms))
-            .fetchInto(SearchCondition.class);
+        return idToSc
+            .values()
+            .stream()
+            .filter(sc -> sc.getSearchConditionId() != null && !conditionIdsWithSearchTerms.contains(
+                sc.getSearchConditionId()))
+            .collect(toList());
     }
 
     private void fillExcludedPaperIdsInto(SearchOrder searchOrder) {
