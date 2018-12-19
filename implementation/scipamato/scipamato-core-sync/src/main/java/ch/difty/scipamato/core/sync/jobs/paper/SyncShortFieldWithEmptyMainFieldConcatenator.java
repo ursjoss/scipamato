@@ -87,8 +87,8 @@ class SyncShortFieldWithEmptyMainFieldConcatenator extends AbstractShortFieldCon
     public String resultFrom(final ResultSet rs) {
         AssertAs.notNull(rs, RS);
         try {
-            return resultFrom(rs, Paper.PAPER.RESULT, Paper.PAPER.RESULT_EXPOSURE_RANGE,
-                Paper.PAPER.RESULT_EFFECT_ESTIMATE, Paper.PAPER.RESULT_MEASURED_OUTCOME, Paper.PAPER.CONCLUSION);
+            return resultFrom(rs, Paper.PAPER.RESULT, Paper.PAPER.RESULT_MEASURED_OUTCOME,
+                Paper.PAPER.RESULT_EXPOSURE_RANGE, Paper.PAPER.RESULT_EFFECT_ESTIMATE, Paper.PAPER.CONCLUSION);
         } catch (SQLException se) {
             log.error(UNABLE_MSG, se);
             return null;
@@ -96,12 +96,12 @@ class SyncShortFieldWithEmptyMainFieldConcatenator extends AbstractShortFieldCon
     }
 
     private String resultFrom(final ResultSet rs, final TableField<PaperRecord, String> resultField,
+        final TableField<PaperRecord, String> resultMeasuredOutcomeField,
         final TableField<PaperRecord, String> resultExposureRangeField,
         final TableField<PaperRecord, String> resultEffectEstimateField,
-        final TableField<PaperRecord, String> resultMeasuredOutcomeField,
         final TableField<PaperRecord, String> conclusionField) throws SQLException {
-        return resultFrom(rs.getString(resultField.getName()), rs.getString(resultExposureRangeField.getName()),
-            rs.getString(resultEffectEstimateField.getName()), rs.getString(resultMeasuredOutcomeField.getName()),
+        return resultFrom(rs.getString(resultField.getName()), rs.getString(resultMeasuredOutcomeField.getName()),
+            rs.getString(resultExposureRangeField.getName()), rs.getString(resultEffectEstimateField.getName()),
             rs.getString(conclusionField.getName()));
     }
 

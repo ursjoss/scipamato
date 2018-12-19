@@ -48,9 +48,9 @@ public class CoreShortFieldWithEmptyMainFieldConcatenator extends AbstractShortF
     @Override
     public String resultFrom(final Paper p, final ReportHeaderFields rhf) {
         AssertAs.notNull(p, PAPER);
-        return resultFrom(p.getResult(), new Tuple(rhf.getResultExposureRangeLabel(), p.getResultExposureRange()),
+        return resultFrom(p.getResult(), new Tuple(rhf.getResultMeasuredOutcomeLabel(), p.getResultMeasuredOutcome()),
+            new Tuple(rhf.getResultExposureRangeLabel(), p.getResultExposureRange()),
             new Tuple(rhf.getResultEffectEstimateLabel(), p.getResultEffectEstimate()),
-            new Tuple(rhf.getResultMeasuredOutcomeLabel(), p.getResultMeasuredOutcome()),
             new Tuple(rhf.getConclusionLabel(), p.getConclusion()));
     }
 

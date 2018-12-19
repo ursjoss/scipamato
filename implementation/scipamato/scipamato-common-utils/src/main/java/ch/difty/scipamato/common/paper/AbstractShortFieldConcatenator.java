@@ -46,17 +46,17 @@ public abstract class AbstractShortFieldConcatenator {
             populationDuration);
     }
 
-    protected String resultFrom(final String result, final String resultExposureRange,
-        final String resultEffectEstimate, final String resultMeasuredOutcome, final String conclusion) {
-        return resultFrom(result, new Tuple("Exposure (Range)", resultExposureRange),
-            new Tuple("Effect Estimate", resultEffectEstimate), new Tuple("Measured Outcome", resultMeasuredOutcome),
+    protected String resultFrom(final String result, final String resultMeasuredOutcome,
+        final String resultExposureRange, final String resultEffectEstimate, final String conclusion) {
+        return resultFrom(result, new Tuple("Measured Outcome", resultMeasuredOutcome),
+            new Tuple("Exposure (Range)", resultExposureRange), new Tuple("Effect Estimate", resultEffectEstimate),
             new Tuple("Conclusion", conclusion));
     }
 
-    protected String resultFrom(final String result, final Tuple resultExposureRange, final Tuple resultEffectEstimate,
-        final Tuple resultMeasuredOutcome, final Tuple conclusion) {
-        return determineAppropriate(new Tuple(null, result), resultExposureRange, resultEffectEstimate,
-            resultMeasuredOutcome, conclusion);
+    protected String resultFrom(final String result, final Tuple resultMeasuredOutcome, final Tuple resultExposureRange,
+        final Tuple resultEffectEstimate, final Tuple conclusion) {
+        return determineAppropriate(new Tuple(null, result), resultMeasuredOutcome, resultExposureRange,
+            resultEffectEstimate, conclusion);
     }
 
     /**

@@ -23,9 +23,9 @@ public class CoreShortFieldWithEmptyMainFieldConcatenatorTest {
         .methodConfoundersLabel("mcl")
         .populationDurationLabel("pdl")
         .populationParticipantsLabel("ppal")
+        .resultMeasuredOutcomeLabel("rmol")
         .resultEffectEstimateLabel("reel")
         .resultExposureRangeLabel("rerl")
-        .resultMeasuredOutcomeLabel("rmol")
         .conclusionLabel("ccl")
         .build();
 
@@ -96,9 +96,9 @@ public class CoreShortFieldWithEmptyMainFieldConcatenatorTest {
     @Test
     public void result_withNonNullResult_returnsResult() {
         p.setResult("result");
+        p.setResultMeasuredOutcome("rmo");
         p.setResultExposureRange("rer");
         p.setResultEffectEstimate("ree");
-        p.setResultMeasuredOutcome("rmo");
         p.setConclusion("cc");
 
         assertThat(sfc.resultFrom(p, rhf)).isEqualTo("result");
@@ -107,12 +107,12 @@ public class CoreShortFieldWithEmptyMainFieldConcatenatorTest {
     @Test
     public void result_withNullResult_returnsResultShortFieldsConcatenated() {
         p.setResult(null);
+        p.setResultMeasuredOutcome("rmo");
         p.setResultExposureRange("rer");
         p.setResultEffectEstimate("ree");
-        p.setResultMeasuredOutcome("rmo");
         p.setConclusion("cc");
 
-        assertThat(sfc.resultFrom(p, rhf)).isEqualTo("rerl: rer\nreel: ree\nrmol: rmo\nccl: cc");
+        assertThat(sfc.resultFrom(p, rhf)).isEqualTo("rmol: rmo\nrerl: rer\nreel: ree\nccl: cc");
     }
 
 }

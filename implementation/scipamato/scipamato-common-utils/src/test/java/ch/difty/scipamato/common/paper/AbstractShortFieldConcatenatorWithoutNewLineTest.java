@@ -70,19 +70,19 @@ public class AbstractShortFieldConcatenatorWithoutNewLineTest {
 
     @Test
     public void result_withResultPresent_returnsMethod() {
-        assertThat(concatenator.resultFrom("r", "rer", "ree", "rmo", "cc")).isEqualTo("r");
+        assertThat(concatenator.resultFrom("r", "rmo", "rer", "ree", "cc")).isEqualTo("r");
     }
 
     @Test
     public void result_withResultNull_returnsConcatenatedShortFields() {
-        assertThat(concatenator.resultFrom(null, "rer", "ree", "rmo", "cc")).isEqualTo(
-            "Exposure (Range): rer / Effect Estimate: ree / Measured Outcome: rmo / Conclusion: cc");
+        assertThat(concatenator.resultFrom(null, "rmo", "rer", "ree", "cc")).isEqualTo(
+            "Measured Outcome: rmo / Exposure (Range): rer / Effect Estimate: ree / Conclusion: cc");
     }
 
     @Test
     public void result_withResultNull_withExplicitLabels_returnsConcatenatedShortFields() {
-        assertThat(concatenator.resultFrom(null, newT("rer"), newT("ree"), newT("rmo"), newT("cc"))).isEqualTo(
-            "rerl: rer / reel: ree / rmol: rmo / ccl: cc");
+        assertThat(concatenator.resultFrom(null, newT("rmo"), newT("rer"), newT("ree"), newT("cc"))).isEqualTo(
+            "rmol: rmo / rerl: rer / reel: ree / ccl: cc");
     }
 
 }

@@ -121,9 +121,9 @@ public class SyncShortFieldWithEmptyMainFieldConcatenatorTest {
     @Test
     public void result_withNonNullResult_returnsResult() throws SQLException {
         when(resultSet.getString(PAPER.RESULT.getName())).thenReturn("result");
+        when(resultSet.getString(PAPER.RESULT_MEASURED_OUTCOME.getName())).thenReturn("rmo");
         when(resultSet.getString(PAPER.RESULT_EXPOSURE_RANGE.getName())).thenReturn("rer");
         when(resultSet.getString(PAPER.RESULT_EFFECT_ESTIMATE.getName())).thenReturn("ree");
-        when(resultSet.getString(PAPER.RESULT_MEASURED_OUTCOME.getName())).thenReturn("rmo");
         when(resultSet.getString(PAPER.CONCLUSION.getName())).thenReturn("cc");
 
         assertThat(sfc.resultFrom(resultSet)).isEqualTo("result");
@@ -133,22 +133,22 @@ public class SyncShortFieldWithEmptyMainFieldConcatenatorTest {
 
     private void verifyCallingResultFields() throws SQLException {
         verify(resultSet).getString(PAPER.RESULT.getName());
+        verify(resultSet).getString(PAPER.RESULT_MEASURED_OUTCOME.getName());
         verify(resultSet).getString(PAPER.RESULT_EXPOSURE_RANGE.getName());
         verify(resultSet).getString(PAPER.RESULT_EFFECT_ESTIMATE.getName());
-        verify(resultSet).getString(PAPER.RESULT_MEASURED_OUTCOME.getName());
         verify(resultSet).getString(PAPER.CONCLUSION.getName());
     }
 
     @Test
     public void result_withNullResult_returnsResultShortFieldsConcatenated() throws SQLException {
         when(resultSet.getString(PAPER.RESULT.getName())).thenReturn(null);
+        when(resultSet.getString(PAPER.RESULT_MEASURED_OUTCOME.getName())).thenReturn("rmo");
         when(resultSet.getString(PAPER.RESULT_EXPOSURE_RANGE.getName())).thenReturn("rer");
         when(resultSet.getString(PAPER.RESULT_EFFECT_ESTIMATE.getName())).thenReturn("ree");
-        when(resultSet.getString(PAPER.RESULT_MEASURED_OUTCOME.getName())).thenReturn("rmo");
         when(resultSet.getString(PAPER.CONCLUSION.getName())).thenReturn("cc");
 
         assertThat(sfc.resultFrom(resultSet)).isEqualTo(
-            "Exposure (Range): rer / Effect Estimate: ree / Measured Outcome: rmo / Conclusion: cc");
+            "Measured Outcome: rmo / Exposure (Range): rer / Effect Estimate: ree / Conclusion: cc");
 
         verifyCallingResultFields();
     }
