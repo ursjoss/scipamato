@@ -12,6 +12,7 @@ import ch.difty.scipamato.core.entity.search.SearchOrder;
 import ch.difty.scipamato.core.persistence.SearchOrderService;
 import ch.difty.scipamato.core.web.CorePageParameters;
 import ch.difty.scipamato.core.web.common.BasePage;
+import ch.difty.scipamato.core.web.common.SelfUpdateBroadcastingBehavior;
 import ch.difty.scipamato.core.web.paper.PageFactory;
 import ch.difty.scipamato.core.web.paper.common.SearchablePaperPanel;
 
@@ -51,7 +52,11 @@ public class PaperSearchCriteriaPage extends BasePage<SearchCondition> {
     protected void onInitialize() {
         super.onInitialize();
 
-        queue(makeSearchablePanel("contentPanel"));
+        final SearchablePaperPanel panel = makeSearchablePanel("contentPanel");
+        queue(panel);
+        panel
+            .getForm()
+            .add(new SelfUpdateBroadcastingBehavior(getPage()));
     }
 
     @SuppressWarnings("SameParameterValue")

@@ -68,6 +68,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 - {url-issues}13[#13] - Core: SummaryPDF to show concatenated short fields if main fields methods/population/results are null.
   Also search by population place in quick search field `method`.
 - {url-issues}17[#17] - Core: Let user filter by newsletter. Also enable (and fix) searching by newsletter topic and headline.
+  Also fix auto-saving behavior of the non-tabbed fields in the Search Page.
   
 
 .Deprecated
