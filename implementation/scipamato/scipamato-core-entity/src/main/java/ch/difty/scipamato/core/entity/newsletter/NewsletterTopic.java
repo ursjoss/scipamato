@@ -22,7 +22,7 @@ public class NewsletterTopic extends IdScipamatoEntity<Integer> {
 
     public NewsletterTopic(final Integer id, final String title) {
         setId(id);
-        setTitle(title);
+        this.title = title;
     }
 
     public enum NewsletterTopicFields implements FieldEnumType {

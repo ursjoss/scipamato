@@ -10,7 +10,7 @@ import ch.difty.scipamato.core.entity.IdScipamatoEntity;
 
 /**
  * The Keyword class represents the keyword in one
- * particular language only.s
+ * particular language only.
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -23,8 +23,8 @@ public class Keyword extends IdScipamatoEntity<Integer> {
 
     public Keyword(final Integer id, final String name, final String searchOverride) {
         setId(id);
-        setName(name);
-        setSearchOverride(searchOverride);
+        this.name = name;
+        this.searchOverride = searchOverride;
     }
 
     public enum KeywordFields implements FieldEnumType {

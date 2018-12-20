@@ -42,9 +42,9 @@ public class NewsletterAssociation extends IdScipamatoEntity<Integer> {
 
     public NewsletterAssociation(Integer id, String issue, Integer publicationStatusId, String headline) {
         setId(id);
-        setIssue(issue);
-        setPublicationStatusId(publicationStatusId);
-        setHeadline(headline);
+        this.issue = issue;
+        this.publicationStatusId = publicationStatusId;
+        this.headline = headline;
     }
 
     @Override
