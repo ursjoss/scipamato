@@ -31,37 +31,63 @@ public class StringSearchTermEvaluator implements SearchTermEvaluator<StringSear
 
     private void addToConditions(final ConditionalSupplier cs, final Token tk, final Field<Object> field,
         final Field<String> value) {
-        final Field<String> fieldLowered = field.lower();
-        final Field<String> valueLowered = value.lower();
-        final boolean negate = tk.type.negate;
+        distinguishConditions(cs, tk, field, value, field.lower(), value.lower(), tk.type.negate);
+    }
+
+    private void distinguishConditions(final ConditionalSupplier cs, final Token tk, final Field<Object> field,
+        final Field<String> value, final Field<String> flc, final Field<String> vlc, final boolean negate) {
         switch (tk.type.matchType) {
         case NONE:
             break;
         case CONTAINS:
-            cs.add(() -> negate ? DSL.not(fieldLowered.contains(valueLowered)) : fieldLowered.contains(valueLowered));
+            containsCondition(cs, flc, vlc, negate);
             break;
         case EQUALS:
-            cs.add(() -> negate ? fieldLowered.notEqual(valueLowered) : fieldLowered.equal(valueLowered));
+            equalsCondition(cs, flc, vlc, negate);
             break;
         case LIKE:
-            cs.add(() -> negate ? fieldLowered.notLike(valueLowered) : fieldLowered.like(valueLowered));
+            likeCondition(cs, flc, vlc, negate);
             break;
         case REGEX:
-            cs.add(() -> negate ? field.notLikeRegex(value) : field.likeRegex(value));
+            regexCondition(cs, field, value, negate);
             break;
         case LENGTH:
-            final Field<Integer> length = field.length();
-            cs.add(() -> negate ?
-                field
-                    .isNull()
-                    .or(length.equal(0)) :
-                field
-                    .isNotNull()
-                    .and(length.greaterThan(0)));
+            lengthCondition(cs, field, negate);
             break;
         case UNSUPPORTED:
         default:
             throw new AssertionError("Evaluation of type " + tk.type.matchType + " is not supported...");
         }
+    }
+
+    private void containsCondition(final ConditionalSupplier cs, final Field<String> flc, final Field<String> vlc,
+        final boolean negate) {
+        cs.add(() -> negate ? DSL.not(flc.contains(vlc)) : flc.contains(vlc));
+    }
+
+    private void equalsCondition(final ConditionalSupplier cs, final Field<String> flc, final Field<String> vlc,
+        final boolean negate) {
+        cs.add(() -> negate ? flc.notEqual(vlc) : flc.equal(vlc));
+    }
+
+    private void likeCondition(final ConditionalSupplier cs, final Field<String> flc, final Field<String> vlc,
+        final boolean negate) {
+        cs.add(() -> negate ? flc.notLike(vlc) : flc.like(vlc));
+    }
+
+    private void regexCondition(final ConditionalSupplier cs, final Field<Object> field, final Field<String> value,
+        final boolean negate) {
+        cs.add(() -> negate ? field.notLikeRegex(value) : field.likeRegex(value));
+    }
+
+    private void lengthCondition(final ConditionalSupplier cs, final Field<Object> field, final boolean negate) {
+        final Field<Integer> length = field.length();
+        cs.add(() -> negate ?
+            field
+                .isNull()
+                .or(length.equal(0)) :
+            field
+                .isNotNull()
+                .and(length.greaterThan(0)));
     }
 }

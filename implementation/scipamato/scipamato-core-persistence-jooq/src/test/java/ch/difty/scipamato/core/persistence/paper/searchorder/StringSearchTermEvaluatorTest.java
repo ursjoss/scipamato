@@ -25,8 +25,6 @@ public class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<Strin
 
     @Mock
     private StringSearchTerm stMock;
-    @Mock
-    private Token            tokenMock;
 
     @Override
     protected StringSearchTermEvaluator getEvaluator() {
