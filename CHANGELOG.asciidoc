@@ -52,8 +52,6 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Removed
 
 .Fixed
-- {url-issues}16[#16] - Core: Fix editing Search Conditions by not automatically closing the page and triggering the search
-  after having updated a field.
 
 .Security
 
@@ -65,40 +63,44 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 
 .Changed
-- {url-issues}13[#13] - Core: SummaryPDF to show concatenated short fields if main fields methods/population/results are null.
-  Also search by population place in quick search field `method`.
-- {url-issues}17[#17] - Core: Let user filter by newsletter. Also enable (and fix) searching by newsletter topic and headline.
-  Also fix auto-saving behavior of the non-tabbed fields in the Search Page.
-  
 
 .Deprecated
 
 .Removed
 
 .Fixed
-- Fixed License in POM file to reflecte the change from GPL3 to BSD-3
 
 .Security
+
+
+[[v1.1.0]]
+== [1.1.0] -- 2018-12-20
+
+.Changed
+- {url-issues}13[#13] - Core: SummaryPDF to show concatenated short fields if main fields methods/population/results are null.
+  Also search by population place in quick search field `method`.
+- {url-issues}17[#17] - Core: Let user filter by newsletter. Also enable (and fix) searching by newsletter topic and headline.
+  Also fix auto-saving behavior of the non-tabbed fields in the Search Page.
+- {url-issues}14[#14] - Migrate from local SonarQube server to SonarCloud
+
+.Fixed
+- {url-issues}16[#16] - Core: Fix editing Search Conditions by not automatically closing the page and triggering the search
+  after having updated a field.
+- Fixed License in POM file to reflecte the change from GPL3 to BSD-3
+
 
 [[v1.0.5]]
 == [1.0.5] -- 2018-12-03
 
-.Added
-
 .Changed
 - {url-issues}9[#9] - Public: Reorder the filter fields in the SimpleFilterPanel
 - Core: PaperEntryPage: Reduce row count of title field to 3
-
-.Deprecated
 
 .Removed
 - {url-issues}7[#7] - Core: Remove Validation from PaperEditPage. Message in the Synchronization Page seems to be enough.
 
 .Fixed
 - {url-issues}6[#6] - Core: Extension of the Literature Review PDF Report: Don't allow pagebreak within study
-
-.Security
-
 
 
 [[v1.0.4]]
