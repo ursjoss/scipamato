@@ -4,6 +4,8 @@ public final class TranslationUtils {
 
     public static final String NOT_TRANSL = "not translated";
 
+    private static final int LANG_CODE_BASE_LENGTH = 2;
+
     private TranslationUtils() {
     }
 
@@ -16,8 +18,8 @@ public final class TranslationUtils {
      */
     public static String trimLanguageCode(final String languageCode) {
         final String lc = AssertAs.notNull(languageCode, "languageCode");
-        if (lc.length() > 2)
-            return lc.substring(0, 2);
+        if (lc.length() > LANG_CODE_BASE_LENGTH)
+            return lc.substring(0, LANG_CODE_BASE_LENGTH);
         return lc;
     }
 
