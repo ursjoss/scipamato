@@ -239,7 +239,7 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
         try {
             if (mode == Mode.EDIT) {
                 final boolean newPaper = getNullSafeId() == 0;
-                Paper persisted = service.saveOrUpdate(paper);
+                final Paper persisted = service.saveOrUpdate(paper);
                 if (persisted != null) {
                     setModelObject(persisted);
                     resetFeedbackMessages();
