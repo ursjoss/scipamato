@@ -272,4 +272,36 @@ public class JooqSearchOrderRepoIntegrationTest extends JooqTransactionalIntegra
         return sc;
     }
 
+    @Test
+    public void addingSearchConditionWithoutIdThatAlreadyExists_canReturnUpdatedNewsletterAttributes() {
+        // make search order with single condition (string search term)
+        SearchOrder initialSearchOrder = makeMinimalSearchOrder();
+        initialSearchOrder.add(newConditionWithAuthors("foo"));
+        assertThat(initialSearchOrder.getId()).isNull();
+
+        SearchOrder savedSearchOrder = repo.add(initialSearchOrder);
+        // saved search order now has a db-generated id, still has single condition.
+        long searchOrderId = savedSearchOrder.getId();
+        assertThat(repo.findConditionIdsWithSearchTerms(searchOrderId)).hasSize(1);
+
+        // add additional title condition to existing search order
+        SearchCondition titleCondition = newConditionWithTitle("PM2.5");
+        SearchCondition savedCondition = repo.addSearchCondition(titleCondition, searchOrderId, LC);
+        assertSearchTermCount(1, 0, 0, 0, savedCondition);
+        assertThat(repo.findConditionIdsWithSearchTerms(searchOrderId)).hasSize(2);
+
+        SearchCondition newButEquivalentCondition = newConditionWithTitle("PM2.5");
+        newButEquivalentCondition.setNewsletterIssue("2018/02");
+        newButEquivalentCondition.setNewsletterHeadline("someHeadLine");
+        newButEquivalentCondition.setNewsletterTopic(new NewsletterTopic(1, "foo"));
+
+        SearchCondition savedNewCondition = repo.addSearchCondition(newButEquivalentCondition, searchOrderId, LC);
+        assertThat(savedNewCondition.getNewsletterIssue()).isEqualTo("2018/02");
+        assertThat(savedNewCondition.getNewsletterHeadline()).isEqualTo("someHeadLine");
+        assertThat(savedNewCondition.getNewsletterTopicId()).isEqualTo(1);
+
+        // remove the new search condition
+        repo.deleteSearchConditionWithId(savedCondition.getSearchConditionId());
+        assertThat(repo.findConditionIdsWithSearchTerms(searchOrderId)).hasSize(1);
+    }
 }

@@ -956,57 +956,57 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void equalsAndHash12_withDifferentNewsletterTopics() {
+    public void equalsAndHash12_withDifferentNewsletterTopics_notDifferent() {
         SearchCondition f1 = new SearchCondition();
         f1.setNewsletterTopic(new NewsletterTopic(1, "foo"));
         SearchCondition f2 = new SearchCondition();
         f2.setNewsletterTopic(new NewsletterTopic(2, "foo"));
-        assertInequality(f1, f2);
+        assertEquality(f1, f2);
     }
 
     @Test
-    public void equalsAndHash13_withDifferentNewsletterHeadlines() {
+    public void equalsAndHash13_withDifferentNewsletterHeadlines_notDifferent() {
         SearchCondition f1 = new SearchCondition();
         f1.setNewsletterHeadline("foo");
         SearchCondition f2 = new SearchCondition();
         f2.setNewsletterHeadline("bar");
-        assertInequality(f1, f2);
+        assertEquality(f1, f2);
     }
 
     @Test
-    public void equalsAndHash14_withDifferentNewsletterIssue() {
+    public void equalsAndHash14_withDifferentNewsletterIssue_notDifferent() {
         SearchCondition f1 = new SearchCondition();
         f1.setNewsletterIssue("foo");
         SearchCondition f2 = new SearchCondition();
         f2.setNewsletterIssue("bar");
-        assertInequality(f1, f2);
+        assertEquality(f1, f2);
     }
 
     @Test
-    public void equalsAndHash15_withDifferentNewsletterTopics_firstNull() {
+    public void equalsAndHash15_withDifferentNewsletterTopics_firstNull_notDifferent() {
         SearchCondition f1 = new SearchCondition();
         f1.setNewsletterTopic(null);
         SearchCondition f2 = new SearchCondition();
         f2.setNewsletterTopic(new NewsletterTopic(2, "foo"));
-        assertInequality(f1, f2);
+        assertEquality(f1, f2);
     }
 
     @Test
-    public void equalsAndHash16_withDifferentNewsletterHeadlines_firstNull() {
+    public void equalsAndHash16_withDifferentNewsletterHeadlines_firstNull_notDifferent() {
         SearchCondition f1 = new SearchCondition();
         f1.setNewsletterHeadline(null);
         SearchCondition f2 = new SearchCondition();
         f2.setNewsletterHeadline("bar");
-        assertInequality(f1, f2);
+        assertEquality(f1, f2);
     }
 
     @Test
-    public void equalsAndHash17_withDifferentNewsletterIssue_firstNull() {
+    public void equalsAndHash17_withDifferentNewsletterIssue_firstNull_notDifferent() {
         SearchCondition f1 = new SearchCondition();
         f1.setNewsletterIssue(null);
         SearchCondition f2 = new SearchCondition();
         f2.setNewsletterIssue("bar");
-        assertInequality(f1, f2);
+        assertEquality(f1, f2);
     }
 
     @Test

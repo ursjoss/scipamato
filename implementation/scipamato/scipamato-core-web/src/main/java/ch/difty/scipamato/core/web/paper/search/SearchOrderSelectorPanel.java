@@ -193,7 +193,6 @@ public class SearchOrderSelectorPanel extends BasePanel<SearchOrder> {
         if (so != null) {
             form.setDefaultModelObject(so);
         }
-        modelChanged();
     }
 
     private boolean isModelSelected() {
