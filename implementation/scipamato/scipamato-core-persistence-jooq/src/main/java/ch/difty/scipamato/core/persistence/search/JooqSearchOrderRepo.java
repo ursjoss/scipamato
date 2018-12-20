@@ -333,7 +333,13 @@ public class JooqSearchOrderRepo extends
         final Optional<SearchCondition> optionalPersisted = findEquivalentPersisted(searchCondition, searchOrderId,
             languageCode);
         if (optionalPersisted.isPresent()) {
-            return optionalPersisted.get();
+            final SearchCondition psc = optionalPersisted.get();
+            if (hasDirtyNewsletterFields(searchCondition, psc)) {
+                enrichNewsletterFields(searchCondition, psc);
+                return updateSearchCondition(psc, searchOrderId, languageCode);
+            } else {
+                return psc;
+            }
         } else {
             final Integer userId = getUserId();
             final SearchConditionRecord searchConditionRecord = getDsl()
@@ -356,6 +362,21 @@ public class JooqSearchOrderRepo extends
             fillCodesInto(persistedSearchCondition, languageCode);
             return persistedSearchCondition;
         }
+    }
+
+    private boolean hasDirtyNewsletterFields(final SearchCondition searchCondition, final SearchCondition psc) {
+        //@formatter:off
+        return !Objects.equals(psc.getNewsletterTopicId(), searchCondition.getNewsletterTopicId())
+            || !Objects.equals(psc.getNewsletterHeadline(), searchCondition.getNewsletterHeadline())
+            || !Objects.equals(psc.getNewsletterIssue(), searchCondition.getNewsletterIssue());
+        //@formatter:on
+    }
+
+    private void enrichNewsletterFields(final SearchCondition searchCondition, final SearchCondition psc) {
+        psc.setNewsletterTopic(
+            new ch.difty.scipamato.core.entity.newsletter.NewsletterTopic(searchCondition.getNewsletterTopicId(), ""));
+        psc.setNewsletterHeadline(searchCondition.getNewsletterHeadline());
+        psc.setNewsletterIssue(searchCondition.getNewsletterIssue());
     }
 
     /**

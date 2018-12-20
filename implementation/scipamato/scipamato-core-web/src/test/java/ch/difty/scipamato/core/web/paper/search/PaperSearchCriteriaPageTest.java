@@ -81,8 +81,7 @@ public class PaperSearchCriteriaPageTest extends BasePageTest<PaperSearchCriteri
         getTester().assertRenderedPage(getPageClass());
         getTester().assertNoErrorMessage();
 
-        verify(searchOrderServiceMock, times(2)).saveOrUpdateSearchCondition(searchConditionMock, SEARCH_ORDER_ID,
-            "en_us");
+        verify(searchOrderServiceMock).saveOrUpdateSearchCondition(searchConditionMock, SEARCH_ORDER_ID, "en_us");
         verify(searchOrderServiceMock, never()).findPageByFilter(isA(SearchOrderFilter.class),
             isA(PaginationContext.class));
     }
@@ -98,8 +97,7 @@ public class PaperSearchCriteriaPageTest extends BasePageTest<PaperSearchCriteri
         getTester().assertRenderedPage(PaperSearchPage.class);
         getTester().assertNoErrorMessage();
 
-        verify(searchOrderServiceMock, times(3)).saveOrUpdateSearchCondition(searchConditionMock, SEARCH_ORDER_ID,
-            "en_us");
+        verify(searchOrderServiceMock).saveOrUpdateSearchCondition(searchConditionMock, SEARCH_ORDER_ID, "en_us");
         verify(searchOrderServiceMock).findPageByFilter(isA(SearchOrderFilter.class), isA(PaginationContext.class));
     }
 
