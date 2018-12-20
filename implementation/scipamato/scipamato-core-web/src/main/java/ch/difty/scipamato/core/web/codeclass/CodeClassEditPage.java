@@ -27,6 +27,8 @@ import ch.difty.scipamato.core.web.common.DefinitionEditTranslationPanel;
 @SuppressWarnings("SameParameterValue")
 public class CodeClassEditPage extends DefinitionEditPage<CodeClassDefinition> {
 
+    private static final long serialVersionUID = 1L;
+
     @SpringBean
     private CodeClassService service;
 

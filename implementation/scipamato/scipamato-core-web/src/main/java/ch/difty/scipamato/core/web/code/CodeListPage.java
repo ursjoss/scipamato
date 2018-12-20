@@ -24,6 +24,8 @@ import ch.difty.scipamato.core.web.common.DefinitionListPage;
 @SuppressWarnings({ "SameParameterValue", "WeakerAccess" })
 public class CodeListPage extends DefinitionListPage<CodeDefinition, CodeFilter, CodeService, CodeDefinitionProvider> {
 
+    private static final long serialVersionUID = 1L;
+
     @SpringBean
     private CodeService service;
 

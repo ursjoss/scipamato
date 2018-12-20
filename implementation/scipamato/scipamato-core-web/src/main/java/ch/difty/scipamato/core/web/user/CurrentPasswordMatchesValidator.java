@@ -13,6 +13,8 @@ import ch.difty.scipamato.common.AssertAs;
  */
 class CurrentPasswordMatchesValidator implements IValidator<String> {
 
+    private static final long serialVersionUID = 1L;
+
     private final PasswordEncoder passwordEncoder;
     private final String          currentPasswordHashPersisted;
 

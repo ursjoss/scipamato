@@ -12,6 +12,8 @@ import ch.difty.scipamato.core.web.common.DefinitionEditTranslationPanel;
 @SuppressWarnings("SameParameterValue")
 class CodeClassEditTranslationPanel extends DefinitionEditTranslationPanel<CodeClassDefinition, CodeTranslation> {
 
+    private static final long serialVersionUID = 1L;
+
     CodeClassEditTranslationPanel(final String id, final IModel<CodeClassDefinition> model) {
         super(id, model);
     }

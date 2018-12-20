@@ -15,6 +15,8 @@ import ch.difty.scipamato.core.web.common.DefinitionListResultPanel;
 class CodeClassListResultPanel extends
     DefinitionListResultPanel<CodeClassDefinition, CodeClassFilter, CodeClassService, CodeClassDefinitionProvider> {
 
+    private static final long serialVersionUID = 1L;
+
     CodeClassListResultPanel(final String id, final CodeClassDefinitionProvider provider) {
         super(id, provider);
     }

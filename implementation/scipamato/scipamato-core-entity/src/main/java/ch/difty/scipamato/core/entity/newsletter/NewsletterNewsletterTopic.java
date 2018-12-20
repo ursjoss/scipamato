@@ -10,6 +10,9 @@ import ch.difty.scipamato.core.entity.CoreEntity;
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 public class NewsletterNewsletterTopic extends CoreEntity {
+
+    private static final long serialVersionUID = 1L;
+
     private int    newsletterId;
     private int    newsletterTopicId;
     private int    sort;
