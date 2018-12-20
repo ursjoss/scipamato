@@ -4,6 +4,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Objects;
 import java.util.Set;
 
 import lombok.EqualsAndHashCode;
@@ -111,7 +112,7 @@ public class User extends IdScipamatoEntity<Integer> {
         final Iterator<Role> it = this.roles.iterator();
         while (it.hasNext()) {
             final Role r = it.next();
-            if (r.equals(role)) {
+            if (Objects.equals(r, role)) {
                 it.remove();
                 return;
             }
