@@ -47,6 +47,8 @@ import ch.difty.scipamato.core.web.common.BasePage;
 @SuppressWarnings("SameParameterValue")
 public class UserListPage extends BasePage<Void> {
 
+    private static final long serialVersionUID = 1L;
+
     private static final String COLUMN_HEADER = "column.header.";
     private static final int    ROWS_PER_PAGE = 10;
 

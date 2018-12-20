@@ -56,6 +56,8 @@ import ch.difty.scipamato.core.web.common.BasePage;
 @SuppressWarnings({ "WeakerAccess", "SameParameterValue" })
 public class UserEditPage extends BasePage<ChangePasswordUser> {
 
+    private static final long serialVersionUID = 1L;
+
     private static final String AM_DATA_WIDTH = "data-width";
     private static final String ROLES         = "roles";
     private static final String ROLES_STRING  = "rolesString";

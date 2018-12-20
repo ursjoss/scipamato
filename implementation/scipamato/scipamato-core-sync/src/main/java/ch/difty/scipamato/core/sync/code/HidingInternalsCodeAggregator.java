@@ -28,6 +28,13 @@ import org.springframework.stereotype.Component;
 @Scope("prototype")
 public class HidingInternalsCodeAggregator implements CodeAggregator {
 
+    private static final short CP_ID_1 = 1;
+    private static final short CP_ID_2 = 2;
+
+    private static final short CSD_ID_1 = 1;
+    private static final short CSD_ID_2 = 2;
+    private static final short CSD_ID_3 = 3;
+
     private final List<String> internalCodes    = new ArrayList<>();
     private final List<String> codes            = new ArrayList<>();
     private final List<Short>  codesPopulation  = new ArrayList<>();
@@ -81,11 +88,11 @@ public class HidingInternalsCodeAggregator implements CodeAggregator {
         if (codes
             .stream()
             .anyMatch(x -> "3A".equals(x) || "3B".equals(x)))
-            pcs.add((short) 1);
+            pcs.add(CP_ID_1);
         if (codes
             .stream()
             .anyMatch("3C"::equals))
-            pcs.add((short) 2);
+            pcs.add(CP_ID_2);
         return pcs;
     }
 
@@ -94,15 +101,15 @@ public class HidingInternalsCodeAggregator implements CodeAggregator {
         if (codes
             .stream()
             .anyMatch("5abc"::equals))
-            csds.add((short) 1);
+            csds.add(CSD_ID_1);
         if (codes
             .stream()
             .anyMatch(x -> "5E".equals(x) || "5F".equals(x) || "5G".equals(x) || "5H".equals(x) || "5I".equals(x)))
-            csds.add((short) 2);
+            csds.add(CSD_ID_2);
         if (codes
             .stream()
             .anyMatch(x -> "5U".equals(x) || "5M".equals(x)))
-            csds.add((short) 3);
+            csds.add(CSD_ID_3);
         return csds;
     }
 

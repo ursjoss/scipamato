@@ -17,6 +17,8 @@ import ch.difty.scipamato.common.entity.DefinitionTranslation;
 public abstract class DefinitionEditTranslationPanel<E extends DefinitionEntity, T extends DefinitionTranslation>
     extends BasePanel<E> {
 
+    private static final long serialVersionUID = 1L;
+
     protected DefinitionEditTranslationPanel(final String id, final IModel<E> model) {
         super(id, model);
     }

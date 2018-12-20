@@ -23,6 +23,8 @@ import ch.difty.scipamato.core.web.common.DefinitionEditTranslationPanel;
 @SuppressWarnings("SameParameterValue")
 public class KeywordEditPage extends DefinitionEditPage<KeywordDefinition> {
 
+    private static final long serialVersionUID = 1L;
+
     @SpringBean
     private KeywordService service;
 

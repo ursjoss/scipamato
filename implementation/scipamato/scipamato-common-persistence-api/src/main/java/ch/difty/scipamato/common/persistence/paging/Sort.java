@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import ch.difty.scipamato.common.AssertAs;
@@ -148,7 +149,7 @@ public class Sort implements Iterable<ch.difty.scipamato.common.persistence.pagi
             if (this.getClass() != obj.getClass())
                 return false;
             final SortProperty that = (SortProperty) obj;
-            return this.direction.equals(that.direction) && this.name.equals(that.name);
+            return Objects.equals(this.direction, that.direction) && this.name.equals(that.name);
         }
 
         @Override
@@ -166,8 +167,7 @@ public class Sort implements Iterable<ch.difty.scipamato.common.persistence.pagi
         DESC;
 
         public boolean isAscending() {
-            return this.equals(ASC);
-        }
-    }
+            return this == ASC;
+        }}
 
 }

@@ -19,6 +19,8 @@ import ch.difty.scipamato.core.web.common.DefinitionListPage;
 public class CodeClassListPage
     extends DefinitionListPage<CodeClassDefinition, CodeClassFilter, CodeClassService, CodeClassDefinitionProvider> {
 
+    private static final long serialVersionUID = 1L;
+
     public CodeClassListPage(final PageParameters parameters) {
         super(parameters);
     }

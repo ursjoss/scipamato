@@ -113,11 +113,11 @@ public class PaperSlim extends IdScipamatoEntity<Long> {
     public PaperSlim(Long id, Long number, String firstAuthor, Integer publicationYear, String title,
         NewsletterAssociation newsletterAssociation) {
         setId(id);
-        setNumber(number);
-        setFirstAuthor(firstAuthor);
-        setPublicationYear(publicationYear);
-        setTitle(title);
-        setNewsletterAssociation(newsletterAssociation);
+        this.number = number;
+        this.firstAuthor = firstAuthor;
+        this.publicationYear = publicationYear;
+        this.title = title;
+        this.newsletterAssociation = newsletterAssociation;
     }
 
     @Override

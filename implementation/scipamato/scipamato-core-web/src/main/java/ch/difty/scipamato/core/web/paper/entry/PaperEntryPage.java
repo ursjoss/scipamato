@@ -130,7 +130,6 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
      *     excluded from it. If true, the current paper has already been
      *     excluded from the search order. You can re-include it.
      */
-    @SuppressWarnings("WeakerAccess")
     public PaperEntryPage(IModel<Paper> paperModel, PageReference callingPage, Long searchOrderId,
         boolean showingExclusions, Model<Integer> tabIndexModel) {
         super(paperModel);
@@ -277,11 +276,10 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
      * messages while entering a paper that fails several validations anyhow.
      */
     private void adaptFeedbackMessageCountBasedOnId() {
-        if (getNullSafeId() == 0) {
+        if (getNullSafeId() == 0)
             tuneDownFeedbackMessages();
-        } else {
+        else
             resetFeedbackMessages();
-        }
     }
 
     @Override

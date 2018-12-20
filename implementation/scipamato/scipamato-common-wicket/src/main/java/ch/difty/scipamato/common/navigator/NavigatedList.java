@@ -24,8 +24,7 @@ class NavigatedList<T extends Serializable> implements NavigatedItems<T> {
 
     private final List<T> items = new ArrayList<>();
 
-    @SuppressWarnings("CanBeFinal")
-    private volatile AtomicInteger index = new AtomicInteger();
+    private final AtomicInteger index = new AtomicInteger();
 
     /**
      * Instantiate the {@link NavigatedList} with the provided collection of items.

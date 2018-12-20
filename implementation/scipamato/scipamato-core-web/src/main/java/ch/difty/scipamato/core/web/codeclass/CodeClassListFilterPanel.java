@@ -13,6 +13,8 @@ import ch.difty.scipamato.core.web.common.DefinitionListFilterPanel;
 class CodeClassListFilterPanel extends
     DefinitionListFilterPanel<CodeClassDefinition, CodeClassFilter, CodeClassService, CodeClassDefinitionProvider> {
 
+    private static final long serialVersionUID = 1L;
+
     CodeClassListFilterPanel(final String id, final CodeClassDefinitionProvider provider) {
         super(id, provider);
     }

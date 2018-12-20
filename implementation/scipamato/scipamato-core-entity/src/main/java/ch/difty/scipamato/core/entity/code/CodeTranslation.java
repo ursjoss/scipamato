@@ -10,7 +10,7 @@ import ch.difty.scipamato.common.entity.FieldEnumType;
  * The individual translation in a particular language of a code.
  */
 @Data
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 public class CodeTranslation extends AbstractDefinitionTranslation {
     private static final long serialVersionUID = 1L;
 
