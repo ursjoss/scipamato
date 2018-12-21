@@ -19,6 +19,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import ch.difty.scipamato.core.auth.Role;
 import ch.difty.scipamato.core.entity.User;
 import ch.difty.scipamato.core.entity.search.UserFilter;
+import ch.difty.scipamato.core.persistence.OptimisticLockingException;
 import ch.difty.scipamato.core.persistence.UserService;
 import ch.difty.scipamato.core.web.CorePageParameters;
 import ch.difty.scipamato.core.web.common.BasePageTest;
@@ -404,6 +405,67 @@ public class UserEditPageTest extends BasePageTest<UserEditPage> {
 
         verify(userServiceMock).saveOrUpdate(argThat(new UserMatcher(PASSWORD2)));
         verify(userServiceMock, never()).findById(1);
+    }
+
+    @Test
+    public void submitting_withCreateServiceReturnNull_issuesErrorMessage() {
+        when(userServiceMock.saveOrUpdate(argThat(new UserMatcher(PASSWORD2)))).thenReturn(null);
+
+        getTester().startPage(newUserEditPageInMode(UserEditPage.Mode.MANAGE));
+        getTester().assertRenderedPage(getPageClass());
+
+        FormTester formTester = getTester().newFormTester("form");
+        formTester.setValue("password", PASSWORD2);
+        formTester.setValue("password2", PASSWORD2);
+        formTester.submit("submit");
+
+        getTester().assertNoInfoMessage();
+        getTester().assertErrorMessages("An unexpected error occurred when trying to save User [id 1]: ");
+
+        verify(userServiceMock).saveOrUpdate(argThat(new UserMatcher(null)));
+        verify(userServiceMock).findById(1);
+    }
+
+    @Test
+    public void submitting_withCreateServiceThrowingOptimisticLockingException() {
+        when(userServiceMock.saveOrUpdate(argThat(new UserMatcher(PASSWORD2)))).thenThrow(
+            new OptimisticLockingException("tblName", OptimisticLockingException.Type.UPDATE));
+
+        getTester().startPage(newUserEditPageInMode(UserEditPage.Mode.MANAGE));
+        getTester().assertRenderedPage(getPageClass());
+
+        FormTester formTester = getTester().newFormTester("form");
+        formTester.setValue("password", PASSWORD2);
+        formTester.setValue("password2", PASSWORD2);
+        formTester.submit("submit");
+
+        getTester().assertNoInfoMessage();
+        getTester().assertErrorMessages(
+            "The tblName with id 1 has been modified concurrently by another user. Please reload it and apply your changes once more.");
+
+        verify(userServiceMock).saveOrUpdate(argThat(new UserMatcher(null)));
+        verify(userServiceMock).findById(1);
+    }
+
+    @Test
+    public void submitting_withCreateServiceThrowingOtherException() {
+        when(userServiceMock.saveOrUpdate(argThat(new UserMatcher(PASSWORD2)))).thenThrow(
+            new RuntimeException("otherExceptionMsg"));
+
+        getTester().startPage(newUserEditPageInMode(UserEditPage.Mode.MANAGE));
+        getTester().assertRenderedPage(getPageClass());
+
+        FormTester formTester = getTester().newFormTester("form");
+        formTester.setValue("password", PASSWORD2);
+        formTester.setValue("password2", PASSWORD2);
+        formTester.submit("submit");
+
+        getTester().assertNoInfoMessage();
+        getTester().assertErrorMessages(
+            "An unexpected error occurred when trying to save User [id 1]: otherExceptionMsg");
+
+        verify(userServiceMock).saveOrUpdate(argThat(new UserMatcher(null)));
+        verify(userServiceMock).findById(1);
     }
 
     @Test
