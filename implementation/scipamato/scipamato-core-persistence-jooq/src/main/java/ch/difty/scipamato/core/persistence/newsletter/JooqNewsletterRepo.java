@@ -6,6 +6,7 @@ import static ch.difty.scipamato.core.db.tables.NewsletterTopicTr.NEWSLETTER_TOP
 import static ch.difty.scipamato.core.db.tables.Paper.PAPER;
 import static ch.difty.scipamato.core.db.tables.PaperNewsletter.PAPER_NEWSLETTER;
 
+import java.sql.Timestamp;
 import java.util.Optional;
 
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Repository;
 
 import ch.difty.scipamato.common.DateTimeService;
 import ch.difty.scipamato.common.config.ApplicationProperties;
+import ch.difty.scipamato.common.entity.newsletter.PublicationStatus;
 import ch.difty.scipamato.common.persistence.GenericFilterConditionMapper;
 import ch.difty.scipamato.common.persistence.JooqSortMapper;
 import ch.difty.scipamato.core.db.tables.records.NewsletterRecord;
@@ -23,7 +25,6 @@ import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.newsletter.Newsletter;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterFilter;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic;
-import ch.difty.scipamato.common.entity.newsletter.PublicationStatus;
 import ch.difty.scipamato.core.entity.projection.PaperSlim;
 import ch.difty.scipamato.core.persistence.InsertSetStepSetter;
 import ch.difty.scipamato.core.persistence.JooqEntityRepo;
@@ -159,12 +160,17 @@ public class JooqNewsletterRepo extends
     @Override
     public Optional<Paper.NewsletterLink> mergePaperIntoNewsletter(final int newsletterId, final long paperId,
         final Integer newsletterTopicId, String languageCode) {
-        // TODO consider insert onDuplicateKey to also amend the audit fields.
+        final Timestamp ts = getDateTimeService().getCurrentTimestamp();
         int count = getDsl()
-            .mergeInto(PAPER_NEWSLETTER)
-            .columns(PAPER_NEWSLETTER.PAPER_ID, PAPER_NEWSLETTER.NEWSLETTER_ID, PAPER_NEWSLETTER.NEWSLETTER_TOPIC_ID)
-            .key(PAPER_NEWSLETTER.PAPER_ID, PAPER_NEWSLETTER.NEWSLETTER_ID)
-            .values(paperId, newsletterId, newsletterTopicId)
+            .insertInto(PAPER_NEWSLETTER)
+            .columns(PAPER_NEWSLETTER.PAPER_ID, PAPER_NEWSLETTER.NEWSLETTER_ID, PAPER_NEWSLETTER.NEWSLETTER_TOPIC_ID,
+                PAPER_NEWSLETTER.VERSION, PAPER_NEWSLETTER.CREATED, PAPER_NEWSLETTER.CREATED_BY)
+            .values(paperId, newsletterId, newsletterTopicId, 1, ts, getUserId())
+            .onDuplicateKeyUpdate()
+            .set(PAPER_NEWSLETTER.NEWSLETTER_TOPIC_ID, newsletterTopicId)
+            .set(PAPER_NEWSLETTER.VERSION, PAPER_NEWSLETTER.VERSION.add(1))
+            .set(PAPER_NEWSLETTER.LAST_MODIFIED, ts)
+            .set(PAPER_NEWSLETTER.LAST_MODIFIED_BY, getUserId())
             .execute();
         if (count > 0) {
             Record6<Integer, String, Integer, Integer, String, String> r = getDsl()

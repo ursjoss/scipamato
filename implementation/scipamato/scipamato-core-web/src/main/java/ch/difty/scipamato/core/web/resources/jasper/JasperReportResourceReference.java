@@ -3,6 +3,7 @@ package ch.difty.scipamato.core.web.resources.jasper;
 import java.io.InputStream;
 import java.io.Serializable;
 
+import lombok.EqualsAndHashCode;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -24,6 +25,7 @@ import org.apache.wicket.util.resource.ResourceStreamNotFoundException;
  * @author u.joss
  */
 @Slf4j
+@EqualsAndHashCode
 public abstract class JasperReportResourceReference extends PackageResourceReference implements Serializable {
 
     private static final long serialVersionUID = 1L;
