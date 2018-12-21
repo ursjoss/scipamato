@@ -801,9 +801,11 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
     protected void modifyNewsletterAssociation(final AjaxRequestTarget target) {
         final Paper p = getModelObject();
         if (!isAssociatedWithNewsletter()) {
-            final Optional<Paper.NewsletterLink> nlo = paperService.mergePaperIntoWipNewsletter(p.getId(), null,
-                sessionFacade.getLanguageCode());
-            nlo.ifPresent(getModelObject()::setNewsletterLink);
+            if (p.getId() != null) {
+                final Optional<Paper.NewsletterLink> nlo = paperService.mergePaperIntoWipNewsletter(p.getId(), null,
+                    sessionFacade.getLanguageCode());
+                nlo.ifPresent(getModelObject()::setNewsletterLink);
+            }
         } else if (isAssociatedWithWipNewsletter()) {
             final Paper.NewsletterLink nl = p.getNewsletterLink();
             paperService.removePaperFromNewsletter(nl.getNewsletterId(), p.getId());

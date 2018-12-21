@@ -76,6 +76,7 @@ public class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
             METHOD_OUTCOME.getName(), METHOD_STATISTICS.getName(), METHOD_CONFOUNDERS.getName());
     }
 
+    @SuppressWarnings("SameParameterValue")
     private void assertTabPanelFields(int tabId, int panelId, String b, String... fields) {
         final String bb = b + ":tab" + tabId + "Form";
         getTester().assertComponent(bb, Form.class);
@@ -85,16 +86,37 @@ public class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
     }
 
     @Test
-    public void submitting_shouldActuallyKickoffOnSubmitInTest() {
+    public void submitting_withNewPaper_addsIdToPaperManager() {
+        Long id = 0L;
+        when(persistedPaperMock.getId()).thenReturn(id);
         when(paperServiceMock.saveOrUpdate(isA(Paper.class))).thenReturn(persistedPaperMock);
 
         getTester().startPage(makePage());
-        FormTester formTester = makeSaveablePaperTester();
+        FormTester formTester = makeSavablePaperTester();
         formTester.submit();
 
         getTester().assertNoInfoMessage();
         getTester().assertNoErrorMessage();
+
         verify(paperServiceMock, times(2)).saveOrUpdate(isA(Paper.class));
+        verify(itemNavigatorMock, times(2)).setIdToHeadIfNotPresent(id);
+    }
+
+    @Test
+    public void submitting_withPersistedPaper_doesNotAddsIdToPaperManagerAfterSaving() {
+        Long id = 1L;
+        when(persistedPaperMock.getId()).thenReturn(id);
+        when(paperServiceMock.saveOrUpdate(isA(Paper.class))).thenReturn(persistedPaperMock);
+
+        getTester().startPage(makePage());
+        FormTester formTester = makeSavablePaperTester();
+        formTester.submit();
+
+        getTester().assertNoInfoMessage();
+        getTester().assertNoErrorMessage();
+
+        verify(paperServiceMock, times(2)).saveOrUpdate(isA(Paper.class));
+        verify(itemNavigatorMock, times(1)).setIdToHeadIfNotPresent(id);
     }
 
     @Test
@@ -118,7 +140,7 @@ public class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
 
         getTester().startPage(makePage());
 
-        FormTester formTester = makeSaveablePaperTester();
+        FormTester formTester = makeSavablePaperTester();
         formTester.submit();
 
         getTester().assertErrorMessages("An unexpected error occurred when trying to save Paper [id 0]: foo",
@@ -126,7 +148,7 @@ public class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
         verify(paperServiceMock, times(2)).saveOrUpdate(isA(Paper.class));
     }
 
-    private FormTester makeSaveablePaperTester() {
+    private FormTester makeSavablePaperTester() {
         FormTester formTester = getTester().newFormTester("contentPanel:form");
         formTester.setValue("number", "100");
         formTester.setValue("authors", "Poe EA.");
@@ -144,7 +166,7 @@ public class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
 
         getTester().startPage(makePage());
 
-        FormTester formTester = makeSaveablePaperTester();
+        FormTester formTester = makeSavablePaperTester();
         formTester.submit();
 
         getTester().assertErrorMessages(
@@ -158,7 +180,7 @@ public class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
         when(paperServiceMock.saveOrUpdate(isA(Paper.class))).thenReturn(null);
 
         getTester().startPage(makePage());
-        FormTester formTester = makeSaveablePaperTester();
+        FormTester formTester = makeSavablePaperTester();
         formTester.submit();
 
         getTester().assertNoInfoMessage();
@@ -191,6 +213,18 @@ public class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
         getTester().assertNoErrorMessage();
         verify(paperServiceMock, times(2)).saveOrUpdate(isA(Paper.class));
         verify(paperServiceMock).findLowestFreeNumberStartingFrom(7L);
+    }
+
+    @Test
+    public void eventTest() {
+        when(persistedPaperMock.getId()).thenReturn(3L);
+
+        getTester().startPage(makePage());
+
+        getTester().executeAjaxEvent("contentPanel:form:modAssociation", "click");
+
+        getTester().assertComponentOnAjaxResponse("contentPanel");
+        getTester().assertComponentOnAjaxResponse("feedback");
     }
 
 }

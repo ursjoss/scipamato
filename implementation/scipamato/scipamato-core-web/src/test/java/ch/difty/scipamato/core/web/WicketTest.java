@@ -57,7 +57,7 @@ public abstract class WicketTest {
     private ScipamatoWebSessionFacade sessionFacadeMock;
 
     @MockBean
-    private ItemNavigator<Long> itemNavigatorMock;
+    protected ItemNavigator<Long> itemNavigatorMock;
 
     // The paper slim service, paper service and newsletter service are used in the home page
     // PaperListPage
