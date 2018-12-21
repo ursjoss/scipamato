@@ -101,7 +101,6 @@ public class SearchOrderPanel extends BasePanel<SearchOrder> {
         final List<IColumn<SearchCondition, String>> columns = new ArrayList<>();
         columns.add(makeClickableColumn("displayValue", null,
             pageFactory.setResponsePageToPaperSearchCriteriaPageConsumer(this), () -> getModelObject().getId()));
-        // TODO find a way to dynamically hide/show the remove column based on isEntitledToModify(getModelObject()
         columns.add(
             makeLinkIconColumn("remove", (IModel<SearchCondition> m) -> getModelObject().remove(m.getObject())));
         return columns;
@@ -122,6 +121,11 @@ public class SearchOrderPanel extends BasePanel<SearchOrder> {
         SerializableConsumer<IModel<SearchCondition>> consumer) {
         return new LinkIconColumn<>(new StringResourceModel("column.header." + id, this, null)) {
             private static final long serialVersionUID = 1L;
+
+            @Override
+            protected boolean shouldBeVisible() {
+                return isEntitledToModify(getModelObject());
+            }
 
             @Override
             protected IModel<String> createIconModel(IModel<SearchCondition> rowModel) {

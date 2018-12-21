@@ -45,7 +45,17 @@ public abstract class LinkIconColumn<T extends Serializable> extends AbstractCol
             protected void onClickPerformed(AjaxRequestTarget target) {
                 LinkIconColumn.this.onClickPerformed(target, rowModel, getLink());
             }
+
+            @Override
+            protected void onConfigure() {
+                super.onConfigure();
+                setVisible(shouldBeVisible());
+            }
         });
+    }
+
+    protected boolean shouldBeVisible() {
+        return true;
     }
 
     /**
