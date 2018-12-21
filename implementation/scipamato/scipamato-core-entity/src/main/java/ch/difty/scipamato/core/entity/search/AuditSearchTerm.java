@@ -67,6 +67,8 @@ public class AuditSearchTerm extends AbstractSearchTerm {
 
     private static final long serialVersionUID = 1L;
 
+    private static final int DATE_TIME_LENGTH = 10;
+
     private static final String USER_FIELD_TAG = "_BY";
 
     private static final String RE_DATE      = "\\d{4}-\\d{2}-\\d{2}(?: \\d{2}:\\d{2}:\\d{2})?";
@@ -149,9 +151,9 @@ public class AuditSearchTerm extends AbstractSearchTerm {
         // cache values
         private static final TokenType[] TOKEN_TYPES = values();
 
-        final  String    pattern;
+        final         String    pattern;
         public final  MatchType matchType;
-        final  FieldType fieldType;
+        final         FieldType fieldType;
         private final int       group;
 
         TokenType(final String pattern, final MatchType matchType, final FieldType fieldType, final int group) {
@@ -185,7 +187,7 @@ public class AuditSearchTerm extends AbstractSearchTerm {
         }
 
         private String completeDateTimeIfNecessary(final TokenType type, final String data) {
-            if (type.fieldType != FieldType.DATE || data.length() != 10) {
+            if (type.fieldType != FieldType.DATE || data.length() != DATE_TIME_LENGTH) {
                 return data;
             } else {
                 if (type.matchType == MatchType.GREATER_THAN || type.matchType == MatchType.LESS_OR_EQUAL)
@@ -288,7 +290,7 @@ public class AuditSearchTerm extends AbstractSearchTerm {
     }
 
     private static String completeDateTimeIfNecessary(final String data, final RangeElement rangeElement) {
-        if (data.length() != 10) {
+        if (data.length() != DATE_TIME_LENGTH) {
             return data;
         } else {
             switch (rangeElement) {
