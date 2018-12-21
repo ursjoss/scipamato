@@ -8,7 +8,7 @@ import ch.difty.scipamato.common.web.pages.login.AbstractLogoutPage;
 
 @SuppressWarnings("WeakerAccess")
 @MountPath("logout")
-public class LogoutPage extends AbstractLogoutPage {
+public class LogoutPage extends AbstractLogoutPage<LoginPage> {
 
     private static final long serialVersionUID = 1L;
 
@@ -17,7 +17,7 @@ public class LogoutPage extends AbstractLogoutPage {
     }
 
     @Override
-    protected AbstractPage<?> getResponsePage() {
+    protected LoginPage getResponsePage() {
         return new LoginPage(new PageParameters());
     }
 }

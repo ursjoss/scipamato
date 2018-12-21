@@ -10,7 +10,7 @@ import ch.difty.scipamato.common.web.AbstractPage;
 
 @MountPath("logout")
 @SuppressWarnings("SameParameterValue")
-public abstract class AbstractLogoutPage extends AbstractPage<Void> {
+public abstract class AbstractLogoutPage<R extends AbstractPage<?>> extends AbstractPage<Void> {
 
     private static final long serialVersionUID = 1L;
 
@@ -51,7 +51,7 @@ public abstract class AbstractLogoutPage extends AbstractPage<Void> {
     /**
      * @return the response page
      */
-    protected abstract AbstractPage<?> getResponsePage();
+    protected abstract R getResponsePage();
 
     @Override
     protected boolean isNavbarVisible() {

@@ -4,13 +4,12 @@ import org.apache.wicket.authroles.authorization.strategies.role.annotations.Aut
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.wicketstuff.annotation.mount.MountPath;
 
-import ch.difty.scipamato.common.web.AbstractPage;
 import ch.difty.scipamato.common.web.pages.login.AbstractLogoutPage;
 
 @MountPath("logout")
 @AuthorizeInstantiation({ "ROLE_USER", "ROLE_ADMIN" })
 @SuppressWarnings("WeakerAccess")
-public class LogoutPage extends AbstractLogoutPage {
+public class LogoutPage extends AbstractLogoutPage<LoginPage> {
 
     private static final long serialVersionUID = 1L;
 
@@ -19,7 +18,7 @@ public class LogoutPage extends AbstractLogoutPage {
     }
 
     @Override
-    protected AbstractPage<?> getResponsePage() {
+    protected LoginPage getResponsePage() {
         return new LoginPage(new PageParameters());
     }
 }
