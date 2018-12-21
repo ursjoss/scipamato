@@ -15,8 +15,12 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import ch.difty.scipamato.common.config.ApplicationProperties;
 import ch.difty.scipamato.common.web.AbstractPage;
 
+/**
+ * @param <R>
+ *     type of the response page
+ */
 @SuppressWarnings("SameParameterValue")
-public abstract class AbstractLoginPage extends AbstractPage<Void> {
+public abstract class AbstractLoginPage<R extends AbstractPage<?>> extends AbstractPage<Void> {
 
     private static final long serialVersionUID = 1L;
 
@@ -73,9 +77,9 @@ public abstract class AbstractLoginPage extends AbstractPage<Void> {
     /**
      * Provide the response page
      *
-     * @return the response page
+     * @return the response page of type <R>
      */
-    protected abstract AbstractPage<?> getResponsePage();
+    protected abstract R getResponsePage();
 
     private Label newHeader(String id) {
         return new Label(id, new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null));
