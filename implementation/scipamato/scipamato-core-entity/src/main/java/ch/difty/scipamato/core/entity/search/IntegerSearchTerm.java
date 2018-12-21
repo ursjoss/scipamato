@@ -29,7 +29,7 @@ package ch.difty.scipamato.core.entity.search;
 public class IntegerSearchTerm extends AbstractSearchTerm {
     private static final long serialVersionUID = 1L;
 
-    private static final int COMP_SYMBOL_MAX_LENGTH_ = 2;
+    private static final int COMP_SYMBOL_MAX_LENGTH = 2;
 
     public enum MatchType {
         EXACT,
@@ -65,10 +65,10 @@ public class IntegerSearchTerm extends AbstractSearchTerm {
             this.type = MatchType.PRESENT;
             this.value = 0;
             this.value2 = 0;
-        } else if (rst.length() > COMP_SYMBOL_MAX_LENGTH_ && rst.startsWith(">=")) {
+        } else if (rst.length() > COMP_SYMBOL_MAX_LENGTH && rst.startsWith(">=")) {
             this.type = MatchType.GREATER_OR_EQUAL;
             this.value = Integer.parseInt(rst
-                .substring(COMP_SYMBOL_MAX_LENGTH_)
+                .substring(COMP_SYMBOL_MAX_LENGTH)
                 .trim());
             this.value2 = this.value;
         } else if (rst.length() > 1 && rst.startsWith(">")) {
@@ -77,10 +77,10 @@ public class IntegerSearchTerm extends AbstractSearchTerm {
                 .substring(1)
                 .trim());
             this.value2 = this.value;
-        } else if (rst.length() > COMP_SYMBOL_MAX_LENGTH_ && rst.startsWith("<=")) {
+        } else if (rst.length() > COMP_SYMBOL_MAX_LENGTH && rst.startsWith("<=")) {
             this.type = MatchType.LESS_OR_EQUAL;
             this.value = Integer.parseInt(rst
-                .substring(COMP_SYMBOL_MAX_LENGTH_)
+                .substring(COMP_SYMBOL_MAX_LENGTH)
                 .trim());
             this.value2 = this.value;
         } else if (rst.length() > 1 && rst.startsWith("<")) {
