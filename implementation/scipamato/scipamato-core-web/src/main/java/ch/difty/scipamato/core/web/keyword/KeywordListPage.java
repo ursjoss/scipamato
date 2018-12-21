@@ -24,6 +24,8 @@ import ch.difty.scipamato.core.web.common.DefinitionListPage;
 public class KeywordListPage
     extends DefinitionListPage<KeywordDefinition, KeywordFilter, KeywordService, KeywordDefinitionProvider> {
 
+    private static final long serialVersionUID = 1L;
+
     @SpringBean
     private KeywordService service;
 

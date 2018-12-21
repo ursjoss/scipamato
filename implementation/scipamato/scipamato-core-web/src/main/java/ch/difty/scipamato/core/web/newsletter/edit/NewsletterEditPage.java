@@ -50,6 +50,8 @@ import ch.difty.scipamato.core.web.paper.result.ResultPanel;
 @SuppressWarnings("SameParameterValue")
 public class NewsletterEditPage extends BasePage<Newsletter> {
 
+    private static final long serialVersionUID = 1L;
+
     private static final int RESULT_PAGE_SIZE = 12;
 
     @SpringBean

@@ -25,6 +25,8 @@ import ch.difty.scipamato.core.web.newsletter.NewsletterTopicDefinitionProvider;
 public class NewsletterTopicListPage extends
     DefinitionListPage<NewsletterTopicDefinition, NewsletterTopicFilter, NewsletterTopicService, NewsletterTopicDefinitionProvider> {
 
+    private static final long serialVersionUID = 1L;
+
     @SpringBean
     private NewsletterTopicService service;
 

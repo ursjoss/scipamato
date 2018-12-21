@@ -13,6 +13,8 @@ import ch.difty.scipamato.core.web.common.DefinitionEditTranslationPanel;
 class NewsletterTopicEditTranslationPanel
     extends DefinitionEditTranslationPanel<NewsletterTopicDefinition, NewsletterTopicTranslation> {
 
+    private static final long serialVersionUID = 1L;
+
     NewsletterTopicEditTranslationPanel(final String id, final IModel<NewsletterTopicDefinition> model) {
         super(id, model);
     }

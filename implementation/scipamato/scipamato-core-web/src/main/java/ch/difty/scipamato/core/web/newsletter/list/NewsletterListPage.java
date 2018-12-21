@@ -35,13 +35,13 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.wicketstuff.annotation.mount.MountPath;
 
+import ch.difty.scipamato.common.entity.newsletter.PublicationStatus;
 import ch.difty.scipamato.common.web.component.SerializableConsumer;
 import ch.difty.scipamato.common.web.component.table.column.ClickablePropertyColumn;
 import ch.difty.scipamato.common.web.component.table.column.LinkIconColumn;
 import ch.difty.scipamato.core.auth.Roles;
 import ch.difty.scipamato.core.entity.newsletter.Newsletter;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterFilter;
-import ch.difty.scipamato.common.entity.newsletter.PublicationStatus;
 import ch.difty.scipamato.core.persistence.NewsletterService;
 import ch.difty.scipamato.core.web.common.BasePage;
 import ch.difty.scipamato.core.web.newsletter.NewsletterProvider;
@@ -58,6 +58,8 @@ import ch.difty.scipamato.core.web.newsletter.edit.NewsletterEditPage;
 @MountPath("/newsletters")
 @AuthorizeInstantiation({ Roles.USER, Roles.ADMIN })
 public class NewsletterListPage extends BasePage<Void> {
+
+    private static final long serialVersionUID = 1L;
 
     private static final String COLUMN_HEADER = "column.header.";
     private static final int    ROWS_PER_PAGE = 10;

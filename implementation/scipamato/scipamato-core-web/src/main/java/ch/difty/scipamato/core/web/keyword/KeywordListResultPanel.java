@@ -15,6 +15,8 @@ import ch.difty.scipamato.core.web.common.DefinitionListResultPanel;
 class KeywordListResultPanel
     extends DefinitionListResultPanel<KeywordDefinition, KeywordFilter, KeywordService, KeywordDefinitionProvider> {
 
+    private static final long serialVersionUID = 1L;
+
     KeywordListResultPanel(final String id, final KeywordDefinitionProvider provider) {
         super(id, provider);
     }
