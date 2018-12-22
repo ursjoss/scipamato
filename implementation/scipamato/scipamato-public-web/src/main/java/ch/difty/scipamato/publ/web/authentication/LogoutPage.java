@@ -3,7 +3,6 @@ package ch.difty.scipamato.publ.web.authentication;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.wicketstuff.annotation.mount.MountPath;
 
-import ch.difty.scipamato.common.web.AbstractPage;
 import ch.difty.scipamato.common.web.pages.login.AbstractLogoutPage;
 
 @SuppressWarnings("WeakerAccess")
