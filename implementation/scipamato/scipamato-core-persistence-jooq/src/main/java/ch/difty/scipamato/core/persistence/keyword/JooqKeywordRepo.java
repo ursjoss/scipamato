@@ -198,12 +198,10 @@ public class JooqKeywordRepo extends AbstractRepo implements KeywordRepository {
             .where(KEYWORD.ID.eq(id))
             .orderBy(KEYWORD_TR.ID)
             .fetchGroups(KEYWORD.ID);
-        if (!records.isEmpty()) {
-            final List<KeywordDefinition> results = mapRawRecordsIntoKeywordDefinitions(records);
-            if (!results.isEmpty())
-                return results.get(0);
-        }
-        return null;
+        if (!records.isEmpty())
+            return mapRawRecordsIntoKeywordDefinitions(records).get(0);
+        else
+            return null;
     }
 
     @Override
@@ -386,8 +384,8 @@ public class JooqKeywordRepo extends AbstractRepo implements KeywordRepository {
                     .and(KEYWORD.VERSION.eq(version))
                     .execute();
                 if (deleteCount > 0) {
-                    log.info("{} deleted {} record{}: {} with id {}.", getActiveUser().getUserName(), deleteCount,
-                        (deleteCount != 1 ? "s" : ""), KEYWORD.getName(), id);
+                    log.info("{} deleted {} record: {} with id {}.", getActiveUser().getUserName(), deleteCount,
+                        KEYWORD.getName(), id);
                 } else {
                     throw new OptimisticLockingException(KEYWORD.getName(), toBeDeleted.toString(),
                         OptimisticLockingException.Type.DELETE);
