@@ -62,6 +62,11 @@ public class AbstractPageTest extends WicketBaseTest {
     }
 
     @Test
+    public void hasNavbarVisibleByDefault() {
+        assertThat(page.isNavbarVisible()).isTrue();
+    }
+
+    @Test
     public void gettingNavbarAndFeedbackPanelBeforeInitialize_returnsNull() {
         assertThat(page.getNavBar()).isNull();
         assertThat(page.getFeedbackPanel()).isNull();

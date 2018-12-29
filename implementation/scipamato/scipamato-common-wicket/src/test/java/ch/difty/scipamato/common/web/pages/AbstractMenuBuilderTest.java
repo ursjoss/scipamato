@@ -15,6 +15,7 @@ import org.apache.wicket.Component;
 import org.apache.wicket.Page;
 import org.apache.wicket.markup.html.link.AbstractLink;
 import org.apache.wicket.protocol.http.WebApplication;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,6 +30,8 @@ import ch.difty.scipamato.common.TestUtils;
 import ch.difty.scipamato.common.config.ApplicationProperties;
 import ch.difty.scipamato.common.web.ScipamatoWebSessionFacade;
 import ch.difty.scipamato.common.web.TestHomePage;
+import ch.difty.scipamato.common.web.component.SerializableConsumer;
+import ch.difty.scipamato.common.web.pages.login.TestLoginPage;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -47,6 +50,8 @@ public class AbstractMenuBuilderTest {
     private ScipamatoWebSessionFacade webSessionFacade;
 
     private Navbar navbar;
+
+    private boolean called = false;
 
     @Before
     public void setUp() {
@@ -159,6 +164,14 @@ public class AbstractMenuBuilderTest {
     }
 
     @Test
+    public void adingMenu() {
+        SerializableConsumer<List<AbstractLink>> consumer = (x) -> called = true;
+        menuBuilder.newMenu(navbar, new TestLoginPage(new PageParameters()), "foo", GlyphIconType.adjust, consumer);
+
+        assertThat(called).isTrue();
+    }
+
+    @Test
     public void gettingVersionStuff_withNoVersionInApplicationProperties() {
         assertThat(menuBuilder.getVersionAnker()).isEqualTo("");
         assertThat(menuBuilder.getVersionLink()).isEqualTo("version null");
@@ -193,5 +206,27 @@ public class AbstractMenuBuilderTest {
             .get("label")
             .getDefaultModelObject()).isEqualTo("somelink");
         assertThat(((Icon) link.get("icon")).getType()).isEqualTo(GlyphIconType.adjust);
+    }
+
+    @Test
+    public void addingEntryToMenu_withoutIcon() {
+        final List<AbstractLink> links = new ArrayList<>();
+        assertThat(links).isEmpty();
+
+        menuBuilder.addEntryToMenu("label.link", new TestHomePage(), TestHomePage.class, null, links);
+
+        assertThat(links).hasSize(1);
+        final AbstractLink link = links.get(0);
+        assertThat(link
+            .get("label")
+            .getDefaultModelObject()).isEqualTo("somelink");
+        assertThat(((Icon) link.get("icon")).getType()).isNull();
+    }
+
+    @Test
+    public void hasOneOfRoles() {
+        when(webSessionFacade.hasAtLeastOneRoleOutOf("foo", "bar")).thenReturn(true);
+        assertThat(menuBuilder.hasOneOfRoles("foo", "bar")).isTrue();
+        verify(webSessionFacade).hasAtLeastOneRoleOutOf("foo", "bar");
     }
 }

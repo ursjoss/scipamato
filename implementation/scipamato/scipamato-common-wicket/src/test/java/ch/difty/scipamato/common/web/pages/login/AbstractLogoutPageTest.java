@@ -8,6 +8,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.common.DateTimeService;
 import ch.difty.scipamato.common.config.ApplicationProperties;
+import ch.difty.scipamato.common.web.AbstractPage;
 import ch.difty.scipamato.common.web.WicketBaseTest;
 
 public class AbstractLogoutPageTest extends WicketBaseTest {
@@ -32,6 +33,22 @@ public class AbstractLogoutPageTest extends WicketBaseTest {
         getTester().assertInvisible("navbar");
         getTester().assertComponent("feedback", NotificationPanel.class);
         getTester().assertComponent("form", StatelessForm.class);
+    }
+
+    @Test
+    public void submit_withResponsePage() {
+        AbstractLogoutPage page2 = new TestLogoutPage(new PageParameters()) {
+            @Override
+            protected AbstractPage<?> getResponsePage() {
+                return new TestLoginPage(new PageParameters());
+            }
+        };
+        getTester().startPage(page2);
+        getTester().assertRenderedPage(AbstractLogoutPage.class);
+        getTester().submitForm("form");
+
+        getTester().assertRenderedPage(TestLoginPage.class);
+        getTester().assertNoErrorMessage();
     }
 
     @Test
