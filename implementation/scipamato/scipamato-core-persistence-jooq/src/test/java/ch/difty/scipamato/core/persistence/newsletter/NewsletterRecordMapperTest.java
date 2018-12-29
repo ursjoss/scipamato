@@ -7,10 +7,11 @@ import java.sql.Date;
 import java.time.LocalDate;
 
 import org.jooq.RecordMapper;
+import org.junit.Test;
 
+import ch.difty.scipamato.common.entity.newsletter.PublicationStatus;
 import ch.difty.scipamato.core.db.tables.records.NewsletterRecord;
 import ch.difty.scipamato.core.entity.newsletter.Newsletter;
-import ch.difty.scipamato.common.entity.newsletter.PublicationStatus;
 import ch.difty.scipamato.core.persistence.RecordMapperTest;
 
 public class NewsletterRecordMapperTest extends RecordMapperTest<NewsletterRecord, Newsletter> {
@@ -57,5 +58,14 @@ public class NewsletterRecordMapperTest extends RecordMapperTest<NewsletterRecor
         assertThat(entity.getIssueDate()).isEqualTo(LocalDate.parse(ISSUE_DATE));
         assertThat(entity.getPublicationStatus()).isEqualTo(PUBLICATION_STATUS);
         assertThat(entity.getTopics()).isEmpty();
+    }
+
+    @Test
+    public void mapping_withIssueDateInRecordNull_mapsRecordToEntity_withIssueDateNull() {
+        NewsletterRecord record = makeRecord();
+        setAuditFieldsIn(record);
+        record.setIssueDate(null);
+        Newsletter entity = getMapper().map(record);
+        assertThat(entity.getIssueDate()).isNull();
     }
 }
