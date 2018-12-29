@@ -382,6 +382,31 @@ public class JooqPaperSlimBySearchOrderRepoTest {
     }
 
     @Test
+    public void getConditions_withSearchOrderWithSingleConditionCoveringNewspaperIssue() {
+        SearchOrder searchOrder = new SearchOrder();
+
+        SearchCondition sc1 = new SearchCondition(1L);
+        sc1.setNewsletterIssue("i");
+        searchOrder.add(sc1);
+
+        Condition cond = finder.getConditionsFrom(searchOrder);
+        assertThat(cond.toString()).isEqualToIgnoringCase(
+            // @formatter:off
+            "exists (\n" +
+            "  select 1 \"one\"\n" +
+            "  from \"public\".\"paper_newsletter\"\n" +
+            "    join \"public\".\"newsletter\"\n" +
+            "    on \"public\".\"paper_newsletter\".\"newsletter_id\" = \"public\".\"newsletter\".\"id\"\n" +
+            "  where (\n" +
+            "    \"public\".\"paper_newsletter\".\"paper_id\" = \"public\".\"paper\".\"id\"\n" +
+            "    and lower(\"public\".\"newsletter\".\"issue\") like lower('%i%')\n" +
+            "  )\n" +
+            ")"
+            // @formatter:on
+        );
+    }
+
+    @Test
     public void getConditions_withSearchOrderWithTwoConditionsCoveringNewspaperTopicAndHeadline() {
         SearchOrder searchOrder = new SearchOrder();
 
