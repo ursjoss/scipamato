@@ -16,7 +16,7 @@ import ch.difty.scipamato.common.entity.CodeClassId;
 import ch.difty.scipamato.common.entity.newsletter.PublicationStatus;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic;
 
-@SuppressWarnings("SameParameterValue")
+@SuppressWarnings({ "SameParameterValue", "SpellCheckingInspection" })
 public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
 
     private static final String VALID_AUTHORS      = "Turner MC, Cohen A, Jerret M, Gapstur SM, Driver WR, Pope CA 3rd, Krewsky D, Beckermann BS, Samet JM.";
@@ -535,6 +535,11 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
         validateNewsletterLink(p.getNewsletterLink(), 1, "1806", PublicationStatus.WIP, null, null, null);
 
         assertThat(p.getNewsletterIssue()).isEqualTo("1806");
+        assertThat(p.getNewsletterLink()).isNotNull();
+        assertThat(p
+            .getNewsletterLink()
+            .getIssue()).isEqualTo("1806");
+
     }
 
     private void validateNewsletterLink(final Paper.NewsletterLink newsletterLink, final Integer newsletterId,
@@ -549,7 +554,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     }
 
     @Test
-    public void settingNewsletterLinkFields_whileNewsletterLInkIsNull_doesNothing() {
+    public void settingNewsletterLinkFields_whileNewsletterLinkIsNull_doesNothing() {
         Paper p = newValidEntity();
         assertThat(p.getNewsletterLink()).isNull();
 
