@@ -19,6 +19,7 @@ import ch.difty.scipamato.core.entity.code_class.CodeClassTranslation;
 import ch.difty.scipamato.core.persistence.JooqTransactionalIntegrationTest;
 import ch.difty.scipamato.core.persistence.OptimisticLockingException;
 
+@SuppressWarnings("SpellCheckingInspection")
 @Slf4j
 public class JooqCodeClassRepoIntegrationTest extends JooqTransactionalIntegrationTest {
 
@@ -131,19 +132,24 @@ public class JooqCodeClassRepoIntegrationTest extends JooqTransactionalIntegrati
     }
 
     @Test
-    public void countingCodeClasss_withUnspecifiedFilter_findsAllDefinitions() {
+    public void countingCodeClasses_witNullFilter_findsAllDefinitions() {
+        assertThat(repo.countByFilter(null)).isEqualTo(8);
+    }
+
+    @Test
+    public void countingCodeClasses_withUnspecifiedFilter_findsAllDefinitions() {
         assertThat(repo.countByFilter(new CodeClassFilter())).isEqualTo(8);
     }
 
     @Test
-    public void countingCodeClasss_withFilter_findsAllMatchingDefinitions() {
+    public void countingCodeClasses_withFilter_findsAllMatchingDefinitions() {
         final CodeClassFilter filter = new CodeClassFilter();
         filter.setNameMask("en");
         assertThat(repo.countByFilter(filter)).isEqualTo(3);
     }
 
     @Test
-    public void countingCodeClasss_withNonMatchingFilter_findsNone() {
+    public void countingCodeClasses_withNonMatchingFilter_findsNone() {
         final CodeClassFilter filter = new CodeClassFilter();
         filter.setNameMask("foobar");
         assertThat(repo.countByFilter(filter)).isEqualTo(0);

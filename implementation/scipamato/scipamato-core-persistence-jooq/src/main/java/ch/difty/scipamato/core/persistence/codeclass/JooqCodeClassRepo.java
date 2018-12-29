@@ -6,8 +6,8 @@ import static ch.difty.scipamato.core.db.tables.Language.LANGUAGE;
 import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.toList;
 
-import java.util.*;
 import java.util.Comparator;
+import java.util.*;
 
 import lombok.extern.slf4j.Slf4j;
 import org.jooq.*;
@@ -203,12 +203,10 @@ public class JooqCodeClassRepo extends AbstractRepo implements CodeClassReposito
             .where(CODE_CLASS.ID.eq(id))
             .orderBy(CODE_CLASS_TR.ID)
             .fetchGroups(CODE_CLASS.ID);
-        if (!records.isEmpty()) {
-            final List<CodeClassDefinition> results = mapRawRecordsIntoCodeClassDefinitions(records);
-            if (!results.isEmpty())
-                return results.get(0);
-        }
-        return null;
+        if (!records.isEmpty())
+            return mapRawRecordsIntoCodeClassDefinitions(records).get(0);
+        else
+            return null;
     }
 
     @Override
@@ -349,8 +347,8 @@ public class JooqCodeClassRepo extends AbstractRepo implements CodeClassReposito
                     .and(CODE_CLASS.VERSION.eq(version))
                     .execute();
                 if (deleteCount > 0) {
-                    log.info("{} deleted {} record{}: {} with code class {}.", getActiveUser().getUserName(),
-                        deleteCount, (deleteCount != 1 ? "s" : ""), CODE_CLASS.getName(), id);
+                    log.info("{} deleted {} record: {} with code class {}.", getActiveUser().getUserName(), deleteCount,
+                        CODE_CLASS.getName(), id);
                 } else {
                     throw new OptimisticLockingException(CODE_CLASS.getName(), toBeDeleted.toString(),
                         OptimisticLockingException.Type.DELETE);
