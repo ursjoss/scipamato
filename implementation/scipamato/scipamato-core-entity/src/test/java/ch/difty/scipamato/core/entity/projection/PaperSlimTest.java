@@ -4,6 +4,7 @@ import static ch.difty.scipamato.common.entity.ScipamatoEntity.ScipamatoEntityFi
 import static ch.difty.scipamato.common.entity.ScipamatoEntity.ScipamatoEntityFields.MODIFIED;
 import static ch.difty.scipamato.core.entity.CoreEntity.CoreEntityFields.CREATOR_ID;
 import static ch.difty.scipamato.core.entity.CoreEntity.CoreEntityFields.MODIFIER_ID;
+import static ch.difty.scipamato.core.entity.projection.PaperSlim.PaperSlimFields.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
@@ -110,4 +111,14 @@ public class PaperSlimTest {
             .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
             .verify();
     }
+
+    @Test
+    public void fields() {
+        assertThat(PaperSlim.PaperSlimFields.values()).containsExactly(NUMBER, FIRST_AUTHOR, PUBLICATION_YEAR, TITLE,
+            NEWSLETTER_ASSOCIATION);
+        assertThat(PaperSlim.PaperSlimFields.values())
+            .extracting("name")
+            .containsExactly("number", "firstAuthor", "publicationYear", "title", "newsletterAssociation");
+    }
+
 }

@@ -1,8 +1,12 @@
 package ch.difty.scipamato.common.entity;
 
+import static ch.difty.scipamato.common.entity.ScipamatoEntity.ScipamatoEntityFields.CREATED;
+import static ch.difty.scipamato.common.entity.ScipamatoEntity.ScipamatoEntityFields.MODIFIED;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
+import nl.jqno.equalsverifier.EqualsVerifier;
+import nl.jqno.equalsverifier.Warning;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -34,6 +38,9 @@ public class AbstractDefinitionEntityTest {
     private AbstractDefinitionTranslation dt_de, dt_de2, dt_en, dt_fr;
 
     private final TestDefinitionEntity tde_wo_transl = new TestDefinitionEntity("de", "some", 0,
+        new DefinitionTranslation[] {});
+
+    private final TestDefinitionEntity tde_wo_transl_versionNull = new TestDefinitionEntity("de", "some", null,
         new DefinitionTranslation[] {});
 
     @Before
@@ -128,10 +135,27 @@ public class AbstractDefinitionEntityTest {
     }
 
     @Test
-    public void entity_canSetNameInLanguage() {
+    public void entity_canSetNameInMainLanguage() {
         assertThat(tde.getNameInLanguage("de")).isEqualTo("deutsch");
+        assertThat(tde.getName()).isEqualTo("mainName");
         tde.setNameInLanguage("de", "d");
         assertThat(tde.getNameInLanguage("de")).isEqualTo("d");
+        assertThat(tde.getName()).isEqualTo("d");
+    }
+
+    @Test
+    public void entity_canSetNameInOtherDefinedLanguage() {
+        assertThat(tde.getNameInLanguage("en")).isEqualTo("english");
+        tde.setNameInLanguage("en", "e");
+        assertThat(tde.getNameInLanguage("en")).isEqualTo("e");
+        assertThat(tde.getName()).isEqualTo("mainName");
+    }
+
+    @Test
+    public void entity_settingNameInUndefinedLanguageHasNoEffect() {
+        assertThat(tde.getNameInLanguage("es")).isNull();
+        tde.setNameInLanguage("es", "d");
+        assertThat(tde.getNameInLanguage("es")).isNull();
     }
 
     @Test
@@ -176,7 +200,7 @@ public class AbstractDefinitionEntityTest {
 
     @Test
     public void entity_settingVersionNull_resultsInZero() {
-        assertThat(tde_wo_transl.getVersion()).isEqualTo(0);
+        assertThat(tde_wo_transl_versionNull.getVersion()).isEqualTo(0);
     }
 
     @Test
@@ -224,5 +248,15 @@ public class AbstractDefinitionEntityTest {
         assertThat(AbstractDefinitionTranslation.DefinitionTranslationFields.ID.getName()).isEqualTo("id");
         assertThat(AbstractDefinitionTranslation.DefinitionTranslationFields.LANG_CODE.getName()).isEqualTo("langCode");
         assertThat(AbstractDefinitionTranslation.DefinitionTranslationFields.NAME.getName()).isEqualTo("name");
+    }
+
+    @Test
+    public void equals() {
+        EqualsVerifier
+            .forClass(AbstractDefinitionEntity.class)
+            .withRedefinedSuperclass()
+            .withIgnoredFields(CREATED.getName(), MODIFIED.getName())
+            .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
+            .verify();
     }
 }

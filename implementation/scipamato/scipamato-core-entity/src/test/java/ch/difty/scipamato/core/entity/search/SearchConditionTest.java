@@ -789,6 +789,14 @@ public class SearchConditionTest {
         assertThat(sc1.getDisplayValue()).isEqualTo("issue=2018/02 AND headline=foobar AND topic=t2");
     }
 
+    @Test
+    public void testDisplayValue_withTopicWithNullTitle_dirtyWorksAroundWithDisplayingTopicIdInstead() {
+        sc1.setNewsletterHeadline("foobar");
+        sc1.setNewsletterIssue("2018/02");
+        sc1.setNewsletterTopic(new NewsletterTopic(10, null));
+        assertThat(sc1.getDisplayValue()).isEqualTo("issue=2018/02 AND headline=foobar AND topic=10");
+    }
+
     @SuppressWarnings({ "unlikely-arg-type", "EqualsWithItself", "ConstantConditions", "ObjectEqualsCanBeEquality",
         "EqualsBetweenInconvertibleTypes" })
     @Test

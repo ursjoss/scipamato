@@ -113,9 +113,15 @@ public class NewsletterTopicDefinitionTest {
     }
 
     @Test
-    public void gettingNullSafeId() {
+    public void gettingNullSafeId_withNonNullId() {
         NewsletterTopicDefinition ntd = new NewsletterTopicDefinition(2, "de", 1, ntt_de, ntt_en, ntt_fr);
         assertThat(ntd.getNullSafeId()).isEqualTo(2);
+    }
+
+    @Test
+    public void gettingNullSafeId_withNullId() {
+        NewsletterTopicDefinition ntd = new NewsletterTopicDefinition(null, "de", 1, ntt_de, ntt_en, ntt_fr);
+        assertThat(ntd.getNullSafeId()).isEqualTo(0);
     }
 
     @Test

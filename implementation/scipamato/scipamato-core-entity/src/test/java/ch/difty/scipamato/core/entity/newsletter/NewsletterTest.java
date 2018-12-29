@@ -153,6 +153,47 @@ public class NewsletterTest extends Jsr303ValidatedEntityTest<Newsletter> {
     }
 
     @Test
+    public void canAddNullTopic_withNullPaperWithoutTopicAlreadyPresent_hasNoEffectEffect() {
+        Newsletter nl = newValidEntity();
+        assertThat(nl.getTopics()).containsOnly(null, topic1);
+        assertThat(nl.getPapers()).containsOnly(paper1, paper2);
+
+        PaperSlim oneMore = new PaperSlim();
+        oneMore.setId(10L);
+        oneMore.setTitle("foo");
+
+        nl.addPaper(oneMore, null);
+
+        assertThat(nl.getTopics()).containsOnly(null, topic1);
+        assertThat(nl.getPapers()).containsOnly(paper1, paper2, oneMore);
+    }
+
+    @Test
+    public void canAddNullTopic_hasNoEffectEffect() {
+        final Newsletter nl = new Newsletter();
+        nl.setId(1);
+        nl.setIssue("2018-03");
+        nl.setIssueDate(LocalDate.parse("2018-03-26"));
+        nl.setPublicationStatus(PublicationStatus.WIP);
+
+        paper1.setId(1L);
+        paper1.setTitle("somepaper");
+        nl.addPaper(paper1, topic1);
+
+        assertThat(nl.getTopics()).containsOnly(topic1);
+        assertThat(nl.getPapers()).containsOnly(paper1);
+
+        PaperSlim oneMore = new PaperSlim();
+        oneMore.setId(10L);
+        oneMore.setTitle("foo");
+
+        nl.addPaper(oneMore, null);
+
+        assertThat(nl.getTopics()).containsOnly(null, topic1);
+        assertThat(nl.getPapers()).containsOnly(paper1, oneMore);
+    }
+
+    @Test
     public void canReassignAssociatedPaperFromOneTopicToAnother() {
         Newsletter nl = newValidEntity();
         assertThat(nl.getTopics()).containsOnly(null, topic1);

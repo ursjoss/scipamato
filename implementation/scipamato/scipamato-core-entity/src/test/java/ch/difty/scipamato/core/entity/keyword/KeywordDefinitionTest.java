@@ -199,9 +199,14 @@ public class KeywordDefinitionTest {
     }
 
     @Test
-    public void gettingNullSafeId() {
+    public void gettingNullSafeId_withIdPresent() {
         KeywordDefinition kd = new KeywordDefinition(2, "de", 1, kw_de, kw_en, kw_fr, kw_de2);
         assertThat(kd.getNullSafeId()).isEqualTo(2);
     }
 
+    @Test
+    public void gettingNullSafeId_withNoIdPresent() {
+        KeywordDefinition kd = new KeywordDefinition(null, "de", 1, kw_de, kw_en, kw_fr, kw_de2);
+        assertThat(kd.getNullSafeId()).isEqualTo(0);
+    }
 }

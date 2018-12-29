@@ -42,6 +42,11 @@ public class JooqCodeClassLikeServiceTest {
     }
 
     @Test
+    public void cangetRepo() {
+        assertThat(service.getRepo()).isEqualTo(repoMock);
+    }
+
+    @Test
     public void finding_delegatesToRepo() {
         assertThat(service.find(LANG_CODE)).containsExactly(cclMock, cclMock);
         verify(repoMock).find(LANG_CODE);
