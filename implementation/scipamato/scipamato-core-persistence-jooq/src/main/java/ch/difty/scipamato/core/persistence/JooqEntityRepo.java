@@ -145,8 +145,8 @@ public abstract class JooqEntityRepo<R extends Record, T extends CoreEntity, ID,
                 .and(getRecordVersion().eq(version))
                 .execute();
             if (deleteCount > 0) {
-                getLogger().info("{} deleted {} record{}: {} with id {}.", getActiveUser().getUserName(), deleteCount,
-                    (deleteCount != 1 ? "s" : ""), getTable().getName(), id);
+                getLogger().info("{} deleted {} record: {} with id {}.", getActiveUser().getUserName(), deleteCount,
+                    getTable().getName(), id);
             } else {
                 throw new OptimisticLockingException(getTable().getName(), toBeDeleted.toString(), Type.DELETE);
             }
