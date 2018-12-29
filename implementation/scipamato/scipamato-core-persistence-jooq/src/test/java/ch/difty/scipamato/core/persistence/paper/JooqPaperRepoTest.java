@@ -3,6 +3,7 @@ package ch.difty.scipamato.core.persistence.paper;
 import static ch.difty.scipamato.common.TestUtils.assertDegenerateSupplierParameter;
 import static ch.difty.scipamato.core.db.tables.Paper.PAPER;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 import static org.mockito.Mockito.*;
 
 import java.util.*;
@@ -467,4 +468,15 @@ public class JooqPaperRepoTest extends
         TestUtils.assertDegenerateSupplierParameter(() -> repo.isDoiAlreadyAssigned(null, 1L), "doi");
     }
 
+    @Test
+    public void updateAssociatedEntities_withNullPaper_throws() {
+        try {
+            repo.updateAssociatedEntities(null, "de");
+            fail("should have thrown exception");
+        } catch (Exception ex) {
+            assertThat(ex)
+                .isInstanceOf(NullArgumentException.class)
+                .hasMessage("paper must not be null.");
+        }
+    }
 }

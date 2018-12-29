@@ -43,7 +43,7 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
     private static final String ID_PART = ",id=1,createdBy=1,lastModifiedBy=1,created=2016-12-14T14:47:29.431,lastModified=2016-12-14T14:47:29.431,version=1";
 
     // @formatter:off
-    private static final String PAPER1_WO_CODE_CLASSES =
+    @SuppressWarnings("SpellCheckingInspection") private static final String PAPER1_WO_CODE_CLASSES =
             "Paper[number=1,doi=10.1093/aje/kwu275,pmId=25395026"
             + ",authors=Turner MC, Cohen A, Jerrett M, Gapstur SM, Diver WR, Pope CA 3rd, Krewski D, Beckerman BS, Samet JM.,firstAuthor=Turner,firstAuthorOverridden=false"
             + ",title=Interactions Between Cigarette Smoking and Fine Particulate Matter in the Risk of Lung Cancer Mortality in Cancer Prevention Study II."
@@ -218,6 +218,7 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
         assertThat(repo.findById(id)).isNull();
     }
 
+    @SuppressWarnings("SpellCheckingInspection")
     @Test
     public void findingById_forPaper1InGerman() {
         Paper paper = repo.findById(1L);
@@ -384,7 +385,7 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
     }
 
     @Test
-    public void findingLowestFreeNumberStartingFrom_withMinimumBeyondNextFreeNumber_findsMiniumLeavingGap() {
+    public void findingLowestFreeNumberStartingFrom_withMinimumBeyondNextFreeNumber_findsMinimumLeavingGap() {
         long number = repo.findLowestFreeNumberStartingFrom(100L);
         assertThat(number).isGreaterThanOrEqualTo(100L);
     }
@@ -410,7 +411,7 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
     }
 
     @Test
-    public void exludingPaperFromSearch_addsOneRecord_reincluding_removesItAgain() {
+    public void excludingPaperFromSearch_addsOneRecord_reIncluding_removesItAgain() {
         final long searchOrderId = 1;
         final long paperId = 1;
         ensureRecordNotPresent(searchOrderId, paperId);
@@ -436,7 +437,7 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
     }
 
     @Test
-    public void exludingPaperFromSearch_whenAddingMultipleTimes_ignoresAllButFirst() {
+    public void excludingPaperFromSearch_whenAddingMultipleTimes_ignoresAllButFirst() {
         final long searchOrderId = 1;
         final long paperId = 1;
         ensureRecordNotPresent(searchOrderId, paperId);
@@ -585,6 +586,7 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
             assertThat(dae).isInstanceOf(DataIntegrityViolationException.class);
             assertThat(dae.getMessage()).startsWith("jOOQ; SQL [update \"public\".\"paper\" set \"number\" = ?");
         }
+        //noinspection ConstantConditions
         assertThat(rollback).isTrue();
     }
 
@@ -668,7 +670,7 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
     }
 
     @Test
-    public void isPmIdAlreadyAssigned_withDoiInDb_andWithNewEntityWithNullId_countsAnyRecordFoudnWithPmId() {
+    public void isPmIdAlreadyAssigned_withDoiInDb_andWithNewEntityWithNullId_countsAnyRecordFoundWithPmId() {
         assertThat(repo.isPmIdAlreadyAssigned(25395026, null)).isPresent();
     }
 
