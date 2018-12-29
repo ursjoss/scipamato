@@ -18,7 +18,8 @@ public class PropertyUtilsTest extends FinalClassTest<PropertyUtils> {
         }
     }
 
-    private final PropertyTestEnum[] values = { PropertyTestEnum.VAL1, PropertyTestEnum.VAL2, PropertyTestEnum.DEFAULT };
+    private final PropertyTestEnum[] values = { PropertyTestEnum.VAL1, PropertyTestEnum.VAL2,
+        PropertyTestEnum.DEFAULT };
 
     @Test
     public void fromProperty_withNullProperty_resortsToDefaultValue() {
@@ -27,9 +28,15 @@ public class PropertyUtilsTest extends FinalClassTest<PropertyUtils> {
     }
 
     @Test
-    public void fromProperty() {
+    public void fromProperty_witValues_retunsValue() {
         assertThat(PropertyUtils.fromProperty("VAL2", values, PropertyTestEnum.DEFAULT, PROPERTY_KEY)).isEqualTo(
             PropertyTestEnum.VAL2);
+    }
+
+    @Test
+    public void fromProperty_withoutValues_returnsDefault() {
+        assertThat(PropertyUtils.fromProperty("VAL2", new PropertyTestEnum[] {}, PropertyTestEnum.DEFAULT,
+            PROPERTY_KEY)).isEqualTo(PropertyTestEnum.DEFAULT);
     }
 
     @Test
