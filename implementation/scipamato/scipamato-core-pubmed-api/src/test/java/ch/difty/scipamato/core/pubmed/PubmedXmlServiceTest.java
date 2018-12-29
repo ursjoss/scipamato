@@ -162,6 +162,19 @@ public class PubmedXmlServiceTest {
     }
 
     @Test
+    public void gettingPubmedArticle_withInvalidId_returnsEmptyArticle() {
+        final int pmId = 25395026;
+        when(pubMedMock.articleWithId(String.valueOf(pmId))).thenThrow(new RuntimeException("boom"));
+        final List<java.lang.Object> objects = new ArrayList<>();
+        objects.add(pubmedArticleMock);
+
+        Optional<PubmedArticleFacade> pa = service.getPubmedArticleWithPmid(pmId);
+        assertThat(pa.isPresent()).isFalse();
+
+        verify(pubMedMock).articleWithId(String.valueOf(pmId));
+    }
+
+    @Test
     public void gettingArticles_withUnmarshallerException_returnsEmptyList() {
         when(unmarshallerMock.unmarshal(isA(StreamSource.class))).thenThrow(new UnmarshallingFailureException("boom"));
         assertThat(service.extractArticlesFrom("some invalid xml")).isEmpty();
