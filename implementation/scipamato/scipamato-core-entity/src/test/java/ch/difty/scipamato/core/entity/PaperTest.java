@@ -521,6 +521,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
         assertThat(p.getNewsletterLink()).isNotNull();
         validateNewsletterLink(p.getNewsletterLink(), 1, "1806", PublicationStatus.WIP, 1, "mytopic", "headline");
         assertThat(p.getNewsletterHeadline()).isEqualTo("headline");
+        assertThat(p.getNewsletterTopicId()).isEqualTo(1);
 
         p.setNewsletterHeadline("otherHeadline");
         validateNewsletterLink(p.getNewsletterLink(), 1, "1806", PublicationStatus.WIP, 1, "mytopic", "otherHeadline");
