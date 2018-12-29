@@ -8,8 +8,8 @@ import static ch.difty.scipamato.core.db.tables.Language.LANGUAGE;
 import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.toList;
 
-import java.util.*;
 import java.util.Comparator;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import lombok.extern.slf4j.Slf4j;
@@ -238,12 +238,10 @@ public class JooqCodeRepo extends AbstractRepo implements CodeRepository {
             .where(CODE.CODE_.eq(code))
             .orderBy(CODE_TR.ID)
             .fetchGroups(CODE.CODE_);
-        if (!records.isEmpty()) {
-            final List<CodeDefinition> results = mapRawRecordsIntoCodeDefinitions(records);
-            if (!results.isEmpty())
-                return results.get(0);
-        }
-        return null;
+        if (!records.isEmpty())
+            return mapRawRecordsIntoCodeDefinitions(records).get(0);
+        else
+            return null;
     }
 
     @Override
@@ -402,8 +400,8 @@ public class JooqCodeRepo extends AbstractRepo implements CodeRepository {
                     .and(CODE.VERSION.eq(version))
                     .execute();
                 if (deleteCount > 0) {
-                    log.info("{} deleted {} record{}: {} with code {}.", getActiveUser().getUserName(), deleteCount,
-                        (deleteCount != 1 ? "s" : ""), CODE.getName(), code);
+                    log.info("{} deleted {} record: {} with code {}.", getActiveUser().getUserName(), deleteCount,
+                        CODE.getName(), code);
                 } else {
                     throw new OptimisticLockingException(CODE.getName(), toBeDeleted.toString(),
                         OptimisticLockingException.Type.DELETE);

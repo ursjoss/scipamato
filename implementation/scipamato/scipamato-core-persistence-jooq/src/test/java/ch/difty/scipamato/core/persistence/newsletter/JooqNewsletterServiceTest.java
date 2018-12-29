@@ -11,11 +11,11 @@ import java.util.Optional;
 import org.junit.Test;
 import org.mockito.Mock;
 
+import ch.difty.scipamato.common.entity.newsletter.PublicationStatus;
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.newsletter.Newsletter;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterFilter;
-import ch.difty.scipamato.common.entity.newsletter.PublicationStatus;
 import ch.difty.scipamato.core.persistence.AbstractServiceTest;
 
 @SuppressWarnings({ "ResultOfMethodCallIgnored", "OptionalGetWithoutIsPresent" })
@@ -245,6 +245,17 @@ public class JooqNewsletterServiceTest extends AbstractServiceTest<Integer, News
         when(repoMock.getNewsletterInStatusWorkInProgress()).thenReturn(Optional.empty());
 
         service.mergePaperIntoWipNewsletter(paperId, newsletterTopicId);
+
+        verify(repoMock).getNewsletterInStatusWorkInProgress();
+    }
+
+    @Test
+    public void mergingPaperIntoNewsletter2_withNoWipNewsletterPresent_cannotMerge() {
+        final long paperId = 5;
+
+        when(repoMock.getNewsletterInStatusWorkInProgress()).thenReturn(Optional.empty());
+
+        service.mergePaperIntoWipNewsletter(paperId);
 
         verify(repoMock).getNewsletterInStatusWorkInProgress();
     }

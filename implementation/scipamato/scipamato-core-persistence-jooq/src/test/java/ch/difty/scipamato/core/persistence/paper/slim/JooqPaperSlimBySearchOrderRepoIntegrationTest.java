@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.common.persistence.paging.PaginationRequest;
 import ch.difty.scipamato.core.entity.projection.PaperSlim;
+import ch.difty.scipamato.core.entity.search.SearchCondition;
 import ch.difty.scipamato.core.entity.search.SearchOrder;
 import ch.difty.scipamato.core.persistence.JooqTransactionalIntegrationTest;
 
@@ -28,14 +29,27 @@ public class JooqPaperSlimBySearchOrderRepoIntegrationTest extends JooqTransacti
     }
 
     @Test
-    public void findingPaged() {
+    public void findingPaged_withNonMatchingCondition_findsNoRecors() {
         SearchOrder so = new SearchOrder();
         so.setGlobal(true);
 
         PaginationContext pc = new PaginationRequest(0, 10);
         List<PaperSlim> papers = repo.findPageBySearchOrder(so, pc);
 
-        assertThat(papers).isNotNull();
+        assertThat(papers).isEmpty();
+    }
+
+    @Test
+    public void findingPaged_withMatchingSearchCondition() {
+        SearchOrder so = new SearchOrder();
+        SearchCondition sc = new SearchCondition();
+        sc.setAuthors("Turner");
+        so.add(sc);
+
+        PaginationContext pc = new PaginationRequest(0, 10);
+        List<PaperSlim> papers = repo.findPageBySearchOrder(so, pc);
+
+        assertThat(papers).isNotEmpty();
     }
 
     @Test

@@ -193,6 +193,7 @@ public class JooqPaperRepo extends
 
     @Override
     protected void updateAssociatedEntities(final Paper paper, final String languageCode) {
+        AssertAs.notNull(paper, "paper");
         storeNewCodesOf(paper);
         deleteObsoleteCodesFrom(paper);
         considerStoringNewsletterLinkOf(paper);
@@ -231,7 +232,7 @@ public class JooqPaperRepo extends
      *     the paper to store the newsletter link
      */
     private void considerStoringNewsletterLinkOf(final Paper paper) {
-        if (paper != null && paper.getNewsletterLink() != null) {
+        if (paper.getNewsletterLink() != null) {
             final Paper.NewsletterLink nl = paper.getNewsletterLink();
             getDsl()
                 .insertInto(PAPER_NEWSLETTER)

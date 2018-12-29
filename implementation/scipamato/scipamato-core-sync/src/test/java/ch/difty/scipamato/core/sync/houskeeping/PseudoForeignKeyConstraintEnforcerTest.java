@@ -52,6 +52,13 @@ public class PseudoForeignKeyConstraintEnforcerTest {
     }
 
     @Test
+    public void executing_withNullPlural_returnsFinishedStatus_asIfPluralWereS() {
+        fkce = new PseudoForeignKeyConstraintEnforcer<>(stepMock, "code", null);
+        assertThat(fkce.execute(contributionMock, chunkContextMock)).isEqualTo(RepeatStatus.FINISHED);
+        verify(stepMock).execute();
+    }
+
+    @Test
     public void executing_withSingleModifications_logs() {
         when(stepMock.execute()).thenReturn(1);
         fkce.execute(contributionMock, chunkContextMock);

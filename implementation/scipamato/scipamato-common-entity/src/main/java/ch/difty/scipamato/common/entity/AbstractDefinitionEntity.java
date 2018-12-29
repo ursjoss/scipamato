@@ -135,10 +135,10 @@ public abstract class AbstractDefinitionEntity<T extends DefinitionTranslation, 
         final Collection<T> trs = translations.get(AssertAs.notNull(langCode, "langCode"));
         if (CollectionUtils.isEmpty(trs))
             return null;
-        final T tr = trs
+        return trs
             .iterator()
-            .next();
-        return tr != null ? tr.getName() : null;
+            .next()
+            .getName();
     }
 
     @Override

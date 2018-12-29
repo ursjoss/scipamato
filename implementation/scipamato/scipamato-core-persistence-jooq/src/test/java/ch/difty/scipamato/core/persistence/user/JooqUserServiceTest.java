@@ -92,6 +92,11 @@ public class JooqUserServiceTest {
     }
 
     @Test
+    public void savingOrUpdating_withNullUser_simplyReturnsNull() {
+        assertThat(service.saveOrUpdate(null)).isNull();
+    }
+
+    @Test
     public void savingOrUpdating_withUserWithNullId_hasRepoAddTheUser() {
         when(userMock.getId()).thenReturn(null);
         when(repoMock.add(userMock)).thenReturn(userMock);

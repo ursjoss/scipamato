@@ -76,6 +76,22 @@ public class JooqNewsletterTopicRepoIntegrationTest extends JooqTransactionalInt
     }
 
     @Test
+    public void findingNewsletterTopicDefinitions_withFilterMatchingNa_findsSomeWithMissingTranslations() {
+        final NewsletterTopicFilter filter = new NewsletterTopicFilter();
+        filter.setTitleMask("n.a.");
+        final List<NewsletterTopicDefinition> ntds = repo.findPageOfNewsletterTopicDefinitions(filter,
+            new PaginationRequest(Sort.Direction.ASC, "title"));
+
+        assertThat(ntds).hasSize(3);
+
+        NewsletterTopicDefinition ntd = ntds.get(0);
+        assertThat(ntd.getId()).isEqualTo(3);
+        assertThat(ntd.getTitle()).isEqualTo("Gesundheitsfolgenabschätzung");
+        assertThat(ntd.getTitleInLanguage("de")).isEqualTo("Gesundheitsfolgenabschätzung");
+        assertThat(ntd.getTitleInLanguage("fr")).isNull();
+    }
+
+    @Test
     public void findingNewsletterTopicDefinitions_haveVersionFieldsPopulated() {
         final NewsletterTopicFilter filter = new NewsletterTopicFilter();
         filter.setTitleMask("Partikel");
@@ -358,5 +374,25 @@ public class JooqNewsletterTopicRepoIntegrationTest extends JooqTransactionalInt
         repo.removeObsoleteNewsletterTopicsFromSort(newsletterId);
 
         assertThat(repo.findPersistedSortedNewsletterTopicsForNewsletterWithId(newsletterId)).isEmpty();
+    }
+
+    @Test
+    public void findingNewsletterTopicDefinitions_sortedByName() {
+        assertSortedList("name", 1);
+    }
+
+    @Test
+    public void findingNewsletterTopicDefinitions_sortedByUndefinedProperty() {
+        assertSortedList("whatever", 1);
+    }
+
+    private void assertSortedList(final String sortProperty, final Integer id) {
+        final List<NewsletterTopicDefinition> cds = repo.findPageOfNewsletterTopicDefinitions(
+            new NewsletterTopicFilter(), new PaginationRequest(0, 10, Sort.Direction.DESC, sortProperty));
+
+        assertThat(cds).hasSize(3);
+
+        NewsletterTopicDefinition ntd = cds.get(0);
+        assertThat(ntd.getId()).isEqualTo(id);
     }
 }

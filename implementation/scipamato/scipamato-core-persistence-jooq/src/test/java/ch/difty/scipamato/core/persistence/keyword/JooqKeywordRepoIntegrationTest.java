@@ -129,6 +129,11 @@ public class JooqKeywordRepoIntegrationTest extends JooqTransactionalIntegration
     }
 
     @Test
+    public void countingKeywords_witNullFilter_findsAllDefinitions() {
+        assertThat(repo.countByFilter(null)).isEqualTo(3);
+    }
+
+    @Test
     public void countingKeywords_withUnspecifiedFilter_findsAllDefinitions() {
         assertThat(repo.countByFilter(new KeywordFilter())).isEqualTo(3);
     }
@@ -138,6 +143,13 @@ public class JooqKeywordRepoIntegrationTest extends JooqTransactionalIntegration
         final KeywordFilter filter = new KeywordFilter();
         filter.setNameMask("es");
         assertThat(repo.countByFilter(filter)).isEqualTo(2);
+    }
+
+    @Test
+    public void countingKeywords_withNaFilter_findsThem() {
+        final KeywordFilter filter = new KeywordFilter();
+        filter.setNameMask("n.a.");
+        assertThat(repo.countByFilter(filter)).isEqualTo(0);
     }
 
     @Test
@@ -328,6 +340,26 @@ public class JooqKeywordRepoIntegrationTest extends JooqTransactionalIntegration
         assertThat(kd).isNotNull();
         assertThat(kd.getTranslationsAsString()).isEqualTo(
             "DE: 'Allergie (not Atopie)','Allergie'; EN: 'Allergies'; FR: 'Allergie'");
+    }
+
+    @Test
+    public void findingKeywordDefinitions_sortedByName() {
+        assertSortedList("name", 3);
+    }
+
+    @Test
+    public void findingKeywordDefinitions_sortedByUndefinedProperty() {
+        assertSortedList("whatever", 1);
+    }
+
+    private void assertSortedList(final String sortProperty, final Integer id) {
+        final List<KeywordDefinition> cds = repo.findPageOfKeywordDefinitions(new KeywordFilter(),
+            new PaginationRequest(0, 10, Sort.Direction.DESC, sortProperty));
+
+        assertThat(cds).hasSize(3);
+
+        KeywordDefinition cd = cds.get(0);
+        assertThat(cd.getId()).isEqualTo(id);
     }
 
 }

@@ -185,12 +185,10 @@ public class JooqNewsletterTopicRepo extends AbstractRepo implements NewsletterT
             .and(LANGUAGE.CODE.eq(NEWSLETTER_TOPIC_TR.LANG_CODE))
             .where(NEWSLETTER_TOPIC.ID.eq(id))
             .fetchGroups(NEWSLETTER_TOPIC.ID);
-        if (!records.isEmpty()) {
-            final List<NewsletterTopicDefinition> results = mapRawRecordsIntoNewsletterTopicDefinitions(records);
-            if (!results.isEmpty())
-                return results.get(0);
-        }
-        return null;
+        if (!records.isEmpty())
+            return mapRawRecordsIntoNewsletterTopicDefinitions(records).get(0);
+        else
+            return null;
     }
 
     @Override
@@ -344,8 +342,8 @@ public class JooqNewsletterTopicRepo extends AbstractRepo implements NewsletterT
                     .and(NEWSLETTER_TOPIC.VERSION.eq(version))
                     .execute();
                 if (deleteCount > 0) {
-                    log.info("{} deleted {} record{}: {} with id {}.", getActiveUser().getUserName(), deleteCount,
-                        (deleteCount != 1 ? "s" : ""), NEWSLETTER_TOPIC.getName(), id);
+                    log.info("{} deleted {} record: {} with id {}.", getActiveUser().getUserName(), deleteCount,
+                        NEWSLETTER_TOPIC.getName(), id);
                 } else {
                     throw new OptimisticLockingException(NEWSLETTER_TOPIC.getName(), toBeDeleted.toString(),
                         OptimisticLockingException.Type.DELETE);
