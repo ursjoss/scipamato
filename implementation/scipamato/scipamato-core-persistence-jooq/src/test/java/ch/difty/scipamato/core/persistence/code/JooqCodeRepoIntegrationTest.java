@@ -21,6 +21,7 @@ import ch.difty.scipamato.core.entity.code.CodeTranslation;
 import ch.difty.scipamato.core.persistence.JooqTransactionalIntegrationTest;
 import ch.difty.scipamato.core.persistence.OptimisticLockingException;
 
+@SuppressWarnings("SpellCheckingInspection")
 @Slf4j
 public class JooqCodeRepoIntegrationTest extends JooqTransactionalIntegrationTest {
 
@@ -368,6 +369,11 @@ public class JooqCodeRepoIntegrationTest extends JooqTransactionalIntegrationTes
     @Test
     public void findingCodeDefinitions_sortedByTranslation() {
         assertSortedList("translationsAsString", "2N");
+    }
+
+    @Test
+    public void findingCodeDefinitions_sortedBySomethingUndefined_doesNotSort() {
+        assertSortedList("notexisting", "1F");
     }
 
     private void assertFiltering(final CodeFilter filter, final int count, final String code) {
