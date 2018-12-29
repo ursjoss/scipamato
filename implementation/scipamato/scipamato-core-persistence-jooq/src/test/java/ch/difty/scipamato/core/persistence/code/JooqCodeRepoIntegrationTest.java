@@ -131,6 +131,11 @@ public class JooqCodeRepoIntegrationTest extends JooqTransactionalIntegrationTes
     }
 
     @Test
+    public void countingCodes_witNullFilter_findsAllDefinitions() {
+        assertThat(repo.countByFilter(null)).isEqualTo(82);
+    }
+
+    @Test
     public void countingCodes_withUnspecifiedFilter_findsAllDefinitions() {
         assertThat(repo.countByFilter(new CodeFilter())).isEqualTo(82);
     }
@@ -348,6 +353,21 @@ public class JooqCodeRepoIntegrationTest extends JooqTransactionalIntegrationTes
     @Test
     public void findingCodeDefinitions_sortedByCode() {
         assertSortedList("code", "8Z");
+    }
+
+    @Test
+    public void findingCodeDefinitions_sortedByInternal() {
+        final List<CodeDefinition> cds = repo.findPageOfCodeDefinitions(new CodeFilter(),
+            new PaginationRequest(0, 10, Sort.Direction.DESC, "internal"));
+
+        assertThat(cds).hasSize(10);
+
+        // all are internal=true, no use asserting
+    }
+
+    @Test
+    public void findingCodeDefinitions_sortedByTranslation() {
+        assertSortedList("translationsAsString", "2N");
     }
 
     private void assertFiltering(final CodeFilter filter, final int count, final String code) {
