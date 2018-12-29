@@ -153,19 +153,43 @@ public class NewsletterTest extends Jsr303ValidatedEntityTest<Newsletter> {
     }
 
     @Test
-    public void canAddNullTopic_withNullPaperWithoutTopicAlreadyPresent_hasNoEffectEffect() {
+    public void canAddPaperWithNullTopic_evenIfItWasAddedWithTopicBefore() {
         Newsletter nl = newValidEntity();
         assertThat(nl.getTopics()).containsOnly(null, topic1);
         assertThat(nl.getPapers()).containsOnly(paper1, paper2);
 
-        PaperSlim oneMore = new PaperSlim();
-        oneMore.setId(10L);
-        oneMore.setTitle("foo");
+        nl.addPaper(paper1, null);
 
-        nl.addPaper(oneMore, null);
+        assertThat(nl.getTopics()).hasSize(1);
+        assertThat(nl.getTopics()).containsNull();
+        assertThat(nl.getPapers()).containsOnly(paper1, paper2);
+    }
 
+    @Test
+    public void canAddPaperWithTopic_evenIfItWasAddedWithNullTopicBefore() {
+        Newsletter nl = newValidEntity();
         assertThat(nl.getTopics()).containsOnly(null, topic1);
-        assertThat(nl.getPapers()).containsOnly(paper1, paper2, oneMore);
+        assertThat(nl.getPapers()).containsOnly(paper1, paper2);
+
+        nl.addPaper(paper2, topic1);
+
+        assertThat(nl.getTopics()).containsOnly(topic1);
+        assertThat(nl.getPapers()).containsOnly(paper1, paper2);
+    }
+
+    @Test
+    public void canAddPaperWithTopic_evenIfItWasAddedWithOtherTopicBefore() {
+        Newsletter nl = newValidEntity();
+        assertThat(nl.getTopics()).containsOnly(null, topic1);
+        assertThat(nl.getPapers()).containsOnly(paper1, paper2);
+
+        NewsletterTopic oneMoreTopic = new NewsletterTopic(1, "t1");
+        oneMoreTopic.setTitle("anotherTopic");
+
+        nl.addPaper(paper2, oneMoreTopic);
+
+        assertThat(nl.getTopics()).containsOnly(topic1, oneMoreTopic);
+        assertThat(nl.getPapers()).containsOnly(paper1, paper2);
     }
 
     @Test
