@@ -85,8 +85,7 @@ public abstract class AbstractDefinitionEntity<T extends DefinitionTranslation, 
             .entrySet()) {
             final String kw = entry.getKey();
             if (!kw.equals(mainLanguageCode)) {
-                if (sb.length() > 0)
-                    sb.append("; ");
+                sb.append("; ");
                 sb
                     .append(kw.toUpperCase())
                     .append(": ");
