@@ -10,6 +10,7 @@ import ch.difty.scipamato.common.config.ApplicationProperties;
 public class TestAbstractPage extends AbstractPage<TestRecord> {
     private static final long serialVersionUID = 1L;
 
+    @SuppressWarnings("WeakerAccess")
     public TestAbstractPage(final IModel<TestRecord> model) {
         super(model);
     }
@@ -18,6 +19,7 @@ public class TestAbstractPage extends AbstractPage<TestRecord> {
     protected void onInitialize() {
         super.onInitialize();
 
+        queuePanelHeadingFor("panel");
         queue(new Form<Void>("form"));
         queueFieldAndLabel(new TextField<String>("foo"));
         queue(newResponsePageButton("respPageButton", () -> new TestHomePage(new PageParameters())));

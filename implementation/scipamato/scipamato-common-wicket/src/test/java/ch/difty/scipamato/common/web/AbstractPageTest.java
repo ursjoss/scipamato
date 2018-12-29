@@ -35,11 +35,6 @@ public class AbstractPageTest extends WicketBaseTest {
             protected ApplicationProperties getProperties() {
                 return new TestApplicationProperties();
             }
-
-            @Override
-            protected boolean isNavbarVisible() {
-                return true;
-            }
         };
     }
 
