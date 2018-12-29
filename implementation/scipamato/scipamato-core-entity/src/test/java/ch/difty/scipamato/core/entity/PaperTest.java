@@ -520,6 +520,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
 
         assertThat(p.getNewsletterLink()).isNotNull();
         validateNewsletterLink(p.getNewsletterLink(), 1, "1806", PublicationStatus.WIP, 1, "mytopic", "headline");
+        assertThat(p.getNewsletterHeadline()).isEqualTo("headline");
 
         p.setNewsletterHeadline("otherHeadline");
         validateNewsletterLink(p.getNewsletterLink(), 1, "1806", PublicationStatus.WIP, 1, "mytopic", "otherHeadline");
