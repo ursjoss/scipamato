@@ -1,10 +1,14 @@
 package ch.difty.scipamato.core.persistence.search;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import ch.difty.scipamato.core.entity.Code;
@@ -303,5 +307,25 @@ public class JooqSearchOrderRepoIntegrationTest extends JooqTransactionalIntegra
         // remove the new search condition
         repo.deleteSearchConditionWithId(savedCondition.getSearchConditionId());
         assertThat(repo.findConditionIdsWithSearchTerms(searchOrderId)).hasSize(1);
+    }
+
+    @Test
+    public void removingObsoleteSearchTerms_withNoRemovedKeys_doesNothing() {
+        final SearchCondition sc = Mockito.mock(SearchCondition.class);
+        when(sc.getRemovedKeys()).thenReturn(Collections.emptySet());
+
+        repo.removeObsoleteSearchTerms(sc, -1L);
+
+        verify(sc, never()).clearRemovedKeys();
+    }
+
+    @Test
+    public void removingObsoleteSearchTerms_withRemovedKeys_deletesAndClearsKeys() {
+        final SearchCondition sc = Mockito.mock(SearchCondition.class);
+        when(sc.getRemovedKeys()).thenReturn(Set.of("foo", "bar"));
+
+        repo.removeObsoleteSearchTerms(sc, -1L);
+
+        verify(sc).clearRemovedKeys();
     }
 }
