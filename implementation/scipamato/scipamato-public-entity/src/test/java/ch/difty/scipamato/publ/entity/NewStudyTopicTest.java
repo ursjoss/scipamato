@@ -48,4 +48,13 @@ public class NewStudyTopicTest extends PublicEntityTest<NewStudyTopic> {
             .containsExactly("sort", "title", "studies");
     }
 
+    @Test
+    public void secondaryConstructor_hasNoStudies() {
+        final NewStudyTopic t = new NewStudyTopic(2, "title2");
+        assertThat(t.getSort()).isEqualTo(2);
+        assertThat(t.getTitle()).isEqualTo("title2");
+        assertThat(t.getStudies()).isEmpty();
+
+    }
+
 }
