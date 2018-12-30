@@ -3,6 +3,7 @@ package ch.difty.scipamato.core.pubmed;
 import static ch.difty.scipamato.common.TestUtils.assertDegenerateSupplierParameter;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.lang.Object;
 import java.util.List;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
@@ -488,5 +489,38 @@ public class ScipamatoPubmedArticleTest {
         ScipamatoPubmedArticle pa = new ScipamatoPubmedArticle(pubmedArticle);
         assertThat(pa.toString()).isEqualTo(
             "AbstractPubmedArticleFacade(pmId=null, authors=null, firstAuthor=null, publicationYear=0, location=null. 0;, title=null, doi=null, originalAbstract=null)");
+    }
+
+    @Test
+    public void handleDatishObject_withYear() {
+        Year o = new Year();
+        o.setvalue("2018");
+        assertDatish("2018 ", o);
+    }
+
+    @Test
+    public void handleDatishObject_withMonth() {
+        Month o = new Month();
+        o.setvalue("12");
+        assertDatish("12 ", o);
+    }
+
+    @Test
+    public void handleDatishObject_withDay() {
+        Day o = new Day();
+        o.setvalue("13");
+        assertDatish("13", o);
+    }
+
+    @Test
+    public void handleDatishObject_withUndefinedObject() {
+        assertDatish("", "foo");
+    }
+
+    private void assertDatish(final String expected, final Object o) {
+        final ScipamatoPubmedArticle pa = new ScipamatoPubmedArticle(pubmedArticle);
+        final StringBuilder sb = new StringBuilder();
+        pa.handleDatishObject(sb, o);
+        assertThat(sb.toString()).isEqualTo(expected);
     }
 }

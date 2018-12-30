@@ -1,5 +1,6 @@
 package ch.difty.scipamato.core.pubmed;
 
+import java.lang.Object;
 import java.util.List;
 
 import org.springframework.util.CollectionUtils;
@@ -162,18 +163,22 @@ class ScipamatoPubmedArticle extends AbstractPubmedArticleFacade {
             "pubmedArticle.medlineCitation.article.journal.journalIssue.pubDate");
         final List<java.lang.Object> datishObjects = pubDate.getYearOrMonthOrDayOrSeasonOrMedlineDate();
         final StringBuilder sb = new StringBuilder();
-        for (final java.lang.Object o : datishObjects) {
-            if (o instanceof Year) {
-                sb.append(((Year) o).getvalue());
-                sb.append(" ");
-            } else if (o instanceof Month) {
-                sb.append(((Month) o).getvalue());
-                sb.append(" ");
-            } else if (o instanceof Day) {
-                sb.append(((Day) o).getvalue());
-            }
-        }
+        for (final java.lang.Object o : datishObjects)
+            handleDatishObject(sb, o);
         return sb.toString();
+    }
+
+    // package-private for testing
+    void handleDatishObject(final StringBuilder sb, final Object o) {
+        if (o instanceof Year) {
+            sb.append(((Year) o).getvalue());
+            sb.append(" ");
+        } else if (o instanceof Month) {
+            sb.append(((Month) o).getvalue());
+            sb.append(" ");
+        } else if (o instanceof Day) {
+            sb.append(((Day) o).getvalue());
+        }
     }
 
     /**
