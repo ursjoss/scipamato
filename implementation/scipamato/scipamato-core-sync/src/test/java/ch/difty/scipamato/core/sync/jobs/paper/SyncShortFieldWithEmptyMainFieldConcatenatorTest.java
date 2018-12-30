@@ -7,6 +7,7 @@ import static org.mockito.Mockito.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.jooq.TableField;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,6 +15,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import ch.difty.scipamato.common.TestUtils;
+import ch.difty.scipamato.core.db.public_.tables.records.PaperRecord;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SyncShortFieldWithEmptyMainFieldConcatenatorTest {
@@ -151,6 +153,52 @@ public class SyncShortFieldWithEmptyMainFieldConcatenatorTest {
             "Measured Outcome: rmo / Exposure (Range): rer / Effect Estimate: ree / Conclusion: cc");
 
         verifyCallingResultFields();
+    }
+
+    final SyncShortFieldConcatenator throwingConcatenator = new SyncShortFieldWithEmptyMainFieldConcatenator() {
+        @Override
+        String methodsFrom(final ResultSet rs, final TableField<PaperRecord, String> methodField,
+            final TableField<PaperRecord, String> methodStudyDesignField,
+            final TableField<PaperRecord, String> methodOutcomeField,
+            final TableField<PaperRecord, String> populationPlaceField,
+            final TableField<PaperRecord, String> exposurePollutantField,
+            final TableField<PaperRecord, String> exposureAssessmentField,
+            final TableField<PaperRecord, String> methodStatisticsField,
+            final TableField<PaperRecord, String> methodConfoundersField) throws SQLException {
+            throw new SQLException("boom");
+        }
+
+        @Override
+        String populationFrom(final ResultSet rs, final TableField<PaperRecord, String> populationField,
+            final TableField<PaperRecord, String> populationPlaceField,
+            final TableField<PaperRecord, String> populationParticipantsField,
+            final TableField<PaperRecord, String> populationDurationField) throws SQLException {
+            throw new SQLException("boom");
+        }
+
+        @Override
+        String resultFrom(final ResultSet rs, final TableField<PaperRecord, String> resultField,
+            final TableField<PaperRecord, String> resultMeasuredOutcomeField,
+            final TableField<PaperRecord, String> resultExposureRangeField,
+            final TableField<PaperRecord, String> resultEffectEstimateField,
+            final TableField<PaperRecord, String> conclusionField) throws SQLException {
+            throw new SQLException("boom");
+        }
+    };
+
+    @Test
+    public void methodsFrom_withThrowingMethod_returnsNull() {
+        assertThat(throwingConcatenator.methodsFrom(mock(ResultSet.class))).isNull();
+    }
+
+    @Test
+    public void polulationFrom_withThrowingMethod_returnsNull() {
+        assertThat(throwingConcatenator.populationFrom(mock(ResultSet.class))).isNull();
+    }
+
+    @Test
+    public void resultFrom_withThrowingMethod_returnsNull() {
+        assertThat(throwingConcatenator.resultFrom(mock(ResultSet.class))).isNull();
     }
 
 }

@@ -49,7 +49,8 @@ class SyncShortFieldWithEmptyMainFieldConcatenator extends AbstractShortFieldCon
         }
     }
 
-    private String methodsFrom(final ResultSet rs, final TableField<PaperRecord, String> methodField,
+    // package-private for stubbing purposes
+    String methodsFrom(final ResultSet rs, final TableField<PaperRecord, String> methodField,
         final TableField<PaperRecord, String> methodStudyDesignField,
         final TableField<PaperRecord, String> methodOutcomeField,
         final TableField<PaperRecord, String> populationPlaceField,
@@ -75,7 +76,8 @@ class SyncShortFieldWithEmptyMainFieldConcatenator extends AbstractShortFieldCon
         }
     }
 
-    private String populationFrom(final ResultSet rs, final TableField<PaperRecord, String> populationField,
+    // package-private for stubbing purposes
+    String populationFrom(final ResultSet rs, final TableField<PaperRecord, String> populationField,
         final TableField<PaperRecord, String> populationPlaceField,
         final TableField<PaperRecord, String> populationParticipantsField,
         final TableField<PaperRecord, String> populationDurationField) throws SQLException {
@@ -95,7 +97,8 @@ class SyncShortFieldWithEmptyMainFieldConcatenator extends AbstractShortFieldCon
         }
     }
 
-    private String resultFrom(final ResultSet rs, final TableField<PaperRecord, String> resultField,
+    // package-private for stubbing purposes
+    String resultFrom(final ResultSet rs, final TableField<PaperRecord, String> resultField,
         final TableField<PaperRecord, String> resultMeasuredOutcomeField,
         final TableField<PaperRecord, String> resultExposureRangeField,
         final TableField<PaperRecord, String> resultEffectEstimateField,
