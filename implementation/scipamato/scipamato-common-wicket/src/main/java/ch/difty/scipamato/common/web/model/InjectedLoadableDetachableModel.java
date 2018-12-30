@@ -5,7 +5,6 @@ import java.util.List;
 import org.apache.wicket.injection.Injector;
 import org.apache.wicket.model.LoadableDetachableModel;
 
-@SuppressWarnings("WeakerAccess")
 public abstract class InjectedLoadableDetachableModel<T> extends LoadableDetachableModel<List<T>> {
     private static final long serialVersionUID = 1L;
 

@@ -84,8 +84,8 @@ public class NewStudyTopicSyncConfig
     @Override
     protected String selectSql() {
         return getJooqCore()
-            .select(PN_NEWSLETTER_ID, NTT_NEWSLETTER_TOPIC_ID, NTT_VERSION, NTT_CREATED, NTT_LAST_MODIFIED, NNT_SORT,
-                NNT_LAST_MODIFIED)
+            .select(PN_NEWSLETTER_ID, NTT_NEWSLETTER_TOPIC_ID, NTT_VERSION, NTT_CREATED, NTT_LAST_MODIFIED.as("NTTLM"),
+                NNT_SORT, NNT_LAST_MODIFIED.as("NNTLM"))
             .from(PAPER_NEWSLETTER)
             .innerJoin(NEWSLETTER_TOPIC)
             .on(PAPER_NEWSLETTER.NEWSLETTER_TOPIC_ID.eq(NEWSLETTER_TOPIC.ID))
@@ -109,7 +109,7 @@ public class NewStudyTopicSyncConfig
             .sort(getSortOrMaxIntFrom(rs))
             .version(getInteger(NTT_VERSION, rs))
             .created(getTimestamp(NTT_CREATED, rs))
-            .lastModified(getLaterTimeStampFrom(NTT_LAST_MODIFIED, NNT_LAST_MODIFIED, rs))
+            .lastModified(getLaterTimeStampFrom("NTTLM", "NNTLM", rs))
             .lastSynched(getNow())
             .build();
     }
@@ -119,9 +119,8 @@ public class NewStudyTopicSyncConfig
         return sort != null ? sort : Integer.MAX_VALUE;
     }
 
-    private Timestamp getLaterTimeStampFrom(final TableField<NewsletterTopicTrRecord, Timestamp> nttLastModified,
-        final TableField<NewsletterNewsletterTopicRecord, Timestamp> nntLastModified, final ResultSet rs)
-        throws SQLException {
+    private Timestamp getLaterTimeStampFrom(final String nttLastModified, final String nntLastModified,
+        final ResultSet rs) throws SQLException {
         final Timestamp ts1 = getTimestamp(nttLastModified, rs);
         final Timestamp ts2 = getTimestamp(nntLastModified, rs);
         if (ts2 != null) {

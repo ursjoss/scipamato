@@ -214,6 +214,10 @@ public abstract class SyncConfig<T, R extends UpdatableRecordImpl<R>> {
         return rs.getTimestamp(field.getName());
     }
 
+    protected Timestamp getTimestamp(final String alias, final ResultSet rs) throws SQLException {
+        return rs.getTimestamp(alias);
+    }
+
     protected Date getDate(final TableField<?, Date> field, final ResultSet rs) throws SQLException {
         return rs.getDate(field.getName());
     }

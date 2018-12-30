@@ -23,6 +23,7 @@ import ch.difty.scipamato.core.sync.jobs.SyncConfigTest;
 import ch.difty.scipamato.publ.db.public_.tables.NewStudy;
 import ch.difty.scipamato.publ.db.public_.tables.records.NewStudyRecord;
 
+@SuppressWarnings("SpellCheckingInspection")
 @SpringBootTest
 @RunWith(SpringRunner.class)
 public class NewStudySyncConfigTest extends SyncConfigTest<NewStudyRecord> {
@@ -84,14 +85,23 @@ public class NewStudySyncConfigTest extends SyncConfigTest<NewStudyRecord> {
     }
 
     @Test
-    public void makingEntity() throws SQLException {
+    public void makingEntityWithMultipleAuthors() throws SQLException {
+        makingEntityWithAuthors("Yano E, Nishii S, Yokoyama Y.", "Yano et al.");
+    }
+
+    @Test
+    public void makingEntityWithSingleAuthor() throws SQLException {
+        makingEntityWithAuthors("Yano E.", "Yano");
+    }
+
+    private void makingEntityWithAuthors(final String authors, final String expectedAuthors) throws SQLException {
         ResultSet rs = Mockito.mock(ResultSet.class);
         when(rs.getInt(PaperNewsletter.PAPER_NEWSLETTER.NEWSLETTER_ID.getName())).thenReturn(1);
         when(rs.getInt(PaperNewsletter.PAPER_NEWSLETTER.NEWSLETTER_TOPIC_ID.getName())).thenReturn(2);
         // when(rs.getInt(PaperNewsletter.PAPER_NEWSLETTER.SORT.getName())).thenReturn(3);
         when(rs.getLong(Paper.PAPER.NUMBER.getName())).thenReturn(4L);
         when(rs.getInt(Paper.PAPER.PUBLICATION_YEAR.getName())).thenReturn(5);
-        when(rs.getString(Paper.PAPER.AUTHORS.getName())).thenReturn("Yano E, Nishii S, Yokoyama Y.");
+        when(rs.getString(Paper.PAPER.AUTHORS.getName())).thenReturn(authors);
         when(rs.getString(Paper.PAPER.FIRST_AUTHOR.getName())).thenReturn("Yano");
         when(rs.getString(PaperNewsletter.PAPER_NEWSLETTER.HEADLINE.getName())).thenReturn("hl");
         when(rs.getString(Paper.PAPER.GOALS.getName())).thenReturn("goals");
@@ -106,7 +116,7 @@ public class NewStudySyncConfigTest extends SyncConfigTest<NewStudyRecord> {
         assertThat(pns.getSort()).isEqualTo(1); // TODO make dynamic
         assertThat(pns.getPaperNumber()).isEqualTo(4L);
         assertThat(pns.getYear()).isEqualTo(5);
-        assertThat(pns.getAuthors()).isEqualTo("Yano et al.");
+        assertThat(pns.getAuthors()).isEqualTo(expectedAuthors);
         assertThat(pns.getHeadline()).isEqualTo("hl");
         assertThat(pns.getDescription()).isEqualTo("goals");
         assertThat(pns.getVersion()).isEqualTo(6);
