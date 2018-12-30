@@ -62,8 +62,8 @@ public class NewStudyTopicSyncConfigTest extends SyncConfigTest<NewStudyTopicRec
         return
             "select \"public\".\"paper_newsletter\".\"newsletter_id\", \"public\".\"newsletter_topic_tr\".\"newsletter_topic_id\", "
                 + "\"public\".\"newsletter_topic_tr\".\"version\", \"public\".\"newsletter_topic_tr\".\"created\", "
-                + "\"public\".\"newsletter_topic_tr\".\"last_modified\", \"public\".\"newsletter_newsletter_topic\".\"sort\", "
-                + "\"public\".\"newsletter_newsletter_topic\".\"last_modified\" " + "from \"public\".\"paper_newsletter\" "
+                + "\"public\".\"newsletter_topic_tr\".\"last_modified\" as \"NTTLM\", \"public\".\"newsletter_newsletter_topic\".\"sort\", "
+                + "\"public\".\"newsletter_newsletter_topic\".\"last_modified\" as \"NNTLM\" from \"public\".\"paper_newsletter\" "
             + "join \"public\".\"newsletter_topic\" "
                 + "on \"public\".\"paper_newsletter\".\"newsletter_topic_id\" = \"public\".\"newsletter_topic\".\"id\" "
             + "join \"public\".\"newsletter_topic_tr\" "
@@ -89,23 +89,60 @@ public class NewStudyTopicSyncConfigTest extends SyncConfigTest<NewStudyTopicRec
     }
 
     @Test
-    public void makingEntity() throws SQLException {
+    public void makingEntityWithNonNullSortAmdNttTimestamp() throws SQLException {
+        makingEntityWithSort(3, 3, MODIFIED, MODIFIED);
+    }
+
+    @Test
+    public void makingEntityWithNullSort_usesSortMaxInt() throws SQLException {
+        makingEntityWithSort(null, Integer.MAX_VALUE, MODIFIED, MODIFIED);
+    }
+
+    @Test
+    public void makingEntityWithNullNttTimestamp() throws SQLException {
+        makingEntityWithSort(3, 3, null, MODIFIED);
+    }
+
+    @Test
+    public void makingEntityWitNntTimestampAfterNttTimestamp() throws SQLException {
+        Timestamp nttLm = Timestamp.from(MODIFIED
+            .toInstant()
+            .plusSeconds(2));
+        makingEntityWithSort(3, 3, nttLm, nttLm);
+    }
+
+    @Test
+    public void makingEntityWitNntTimestampBEforeNttTimestamp() throws SQLException {
+        Timestamp nttLm = Timestamp.from(MODIFIED
+            .toInstant()
+            .minusSeconds(2));
+        makingEntityWithSort(3, 3, nttLm, MODIFIED);
+    }
+
+    private void makingEntityWithSort(final Integer sort, final Integer expectedSort, final Timestamp nntLastMod,
+        final Timestamp expectedLastMod) throws SQLException {
         ResultSet rs = Mockito.mock(ResultSet.class);
         when(rs.getInt(PaperNewsletter.PAPER_NEWSLETTER.NEWSLETTER_ID.getName())).thenReturn(1);
         when(rs.getInt(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.NEWSLETTER_TOPIC_ID.getName())).thenReturn(2);
-        when(rs.getInt(NewsletterNewsletterTopic.NEWSLETTER_NEWSLETTER_TOPIC.SORT.getName())).thenReturn(3);
+        if (sort == null) {
+            when(rs.getInt(NewsletterNewsletterTopic.NEWSLETTER_NEWSLETTER_TOPIC.SORT.getName())).thenReturn(0);
+            when(rs.wasNull()).thenReturn(false, false, true, false);
+        } else {
+            when(rs.getInt(NewsletterNewsletterTopic.NEWSLETTER_NEWSLETTER_TOPIC.SORT.getName())).thenReturn(sort);
+        }
         when(rs.getInt(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.VERSION.getName())).thenReturn(4);
         when(rs.getTimestamp(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.CREATED.getName())).thenReturn(CREATED);
-        when(rs.getTimestamp(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.LAST_MODIFIED.getName())).thenReturn(MODIFIED);
+        when(rs.getTimestamp("NTTLM")).thenReturn(MODIFIED);
+        when(rs.getTimestamp("NNTLM")).thenReturn(nntLastMod);
 
         PublicNewStudyTopic pns = config.makeEntity(rs);
 
         assertThat(pns.getNewsletterId()).isEqualTo(1);
         assertThat(pns.getNewsletterTopicId()).isEqualTo(2);
-        assertThat(pns.getSort()).isEqualTo(3);
+        assertThat(pns.getSort()).isEqualTo(expectedSort);
         assertThat(pns.getVersion()).isEqualTo(4);
         assertThat(pns.getCreated()).isEqualTo(CREATED);
-        assertThat(pns.getLastModified()).isEqualTo(MODIFIED);
+        assertThat(pns.getLastModified()).isEqualTo(expectedLastMod);
         assertThat(pns.getLastSynched()).isCloseTo("2016-12-09T06:02:13.000", 1000);
 
         verify(rs).getInt(PaperNewsletter.PAPER_NEWSLETTER.NEWSLETTER_ID.getName());
@@ -114,9 +151,8 @@ public class NewStudyTopicSyncConfigTest extends SyncConfigTest<NewStudyTopicRec
         verify(rs).getInt(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.VERSION.getName());
         verify(rs).getInt(NewsletterNewsletterTopic.NEWSLETTER_NEWSLETTER_TOPIC.SORT.getName());
         verify(rs).getTimestamp(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.CREATED.getName());
-        verify(rs, times(2)).getTimestamp(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.LAST_MODIFIED.getName());
-        verify(rs, times(2)).getTimestamp(
-            NewsletterNewsletterTopic.NEWSLETTER_NEWSLETTER_TOPIC.LAST_MODIFIED.getName());
+        verify(rs).getTimestamp("NTTLM");
+        verify(rs).getTimestamp("NNTLM");
         verify(rs, times(4)).wasNull();
 
         verifyNoMoreInteractions(rs);
