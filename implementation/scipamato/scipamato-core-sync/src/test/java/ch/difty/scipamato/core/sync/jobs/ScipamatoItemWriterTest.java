@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.DSLContext;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -16,32 +17,51 @@ import ch.difty.scipamato.core.sync.jobs.paper.PublicPaper;
 @RunWith(MockitoJUnitRunner.class)
 public class ScipamatoItemWriterTest {
 
+    private int tracker = 0;
+
     @Mock
     private DSLContext dslContext;
 
-    @Test
-    public void test() {
-        final int[] i = { 0 };
-        final ScipamatoItemWriter<PublicPaper> writer = new ScipamatoItemWriter<PublicPaper>(dslContext, "topic") {
+    private final List<PublicPaper> papers = new ArrayList<>();
+
+    private final PublicPaper p1 = PublicPaper
+        .builder()
+        .pmId(1)
+        .build();
+    private final PublicPaper p2 = PublicPaper
+        .builder()
+        .pmId(10)
+        .build();
+
+    private ScipamatoItemWriter<PublicPaper> writer;
+
+    @Before
+    public void setUp() {
+        writer = new ScipamatoItemWriter<>(dslContext, "topic") {
             @Override
             protected int executeUpdate(final PublicPaper pp) {
-                i[0] += pp.getPmId();
+                tracker += pp.getPmId();
                 return pp.getPmId();
             }
         };
+    }
 
-        final List<PublicPaper> papers = new ArrayList<>();
-        papers.add(PublicPaper
-            .builder()
-            .pmId(10)
-            .build());
-        papers.add(PublicPaper
-            .builder()
-            .pmId(20)
-            .build());
+    @Test
+    public void writingTwoPapers() {
+        papers.add(p1);
+        papers.add(p2);
 
         writer.write(papers);
 
-        assertThat(i[0]).isEqualTo(30);
+        assertThat(tracker).isEqualTo(11);
+    }
+
+    @Test
+    public void writingOnePaper() {
+        papers.add(p1);
+
+        writer.write(papers);
+
+        assertThat(tracker).isEqualTo(1);
     }
 }
