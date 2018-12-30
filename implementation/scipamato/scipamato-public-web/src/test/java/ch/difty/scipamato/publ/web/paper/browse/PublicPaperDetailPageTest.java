@@ -9,6 +9,7 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapExternal
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.util.tester.FormTester;
 import org.junit.After;
 import org.junit.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -210,5 +211,41 @@ public class PublicPaperDetailPageTest extends BasePageTest<PublicPaperDetailPag
         assertVisible(b, "methods", "Methods:");
         assertVisible(b, "result", "Results:");
         assertVisible(b, "comment", "Comment:");
+    }
+
+    @Test
+    public void clickingPrevious_withPreviousItemAvailable_skipsBack() {
+        when(getItemNavigator().hasPrevious()).thenReturn(true);
+
+        PublicPaper p = new PublicPaper(1L, NUMBER, 2, "authors", "auths", "title", "location", "journal", 2017,
+            "goals", "methods", "population", "result", "comment");
+        getTester().startPage(new PublicPaperDetailPage(Model.of(p), null));
+
+        FormTester formTester = getTester().newFormTester("form");
+        formTester.submit("previous");
+
+        getTester().assertRenderedPage(PublicPaperDetailPage.class);
+
+        verify(getItemNavigator(), times(2)).hasPrevious();
+        verify(getItemNavigator()).previous();
+        verify(getItemNavigator()).getItemWithFocus();
+    }
+
+    @Test
+    public void clickingNext_withNextItemAvailable_skipsForward() {
+        when(getItemNavigator().hasNext()).thenReturn(true);
+
+        PublicPaper p = new PublicPaper(1L, NUMBER, 2, "authors", "auths", "title", "location", "journal", 2017,
+            "goals", "methods", "population", "result", "comment");
+        getTester().startPage(new PublicPaperDetailPage(Model.of(p), null));
+
+        FormTester formTester = getTester().newFormTester("form");
+        formTester.submit("next");
+
+        getTester().assertRenderedPage(PublicPaperDetailPage.class);
+
+        verify(getItemNavigator(), times(2)).hasNext();
+        verify(getItemNavigator()).next();
+        verify(getItemNavigator()).getItemWithFocus();
     }
 }
