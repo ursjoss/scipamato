@@ -24,4 +24,9 @@ public class RolesTest extends FinalClassTest<Roles> {
         assertThat(VIEWER).isEqualTo("ROLE_VIEWER");
     }
 
+    @Test
+    public void dummyTest() {
+        assertThat(dummyMethod()).isNull();
+    }
+
 }
