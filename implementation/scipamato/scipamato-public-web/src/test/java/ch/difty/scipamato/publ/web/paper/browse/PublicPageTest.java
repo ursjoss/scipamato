@@ -13,6 +13,7 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDef
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.util.tester.FormTester;
 import org.junit.After;
 import org.junit.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -109,7 +110,7 @@ public class PublicPageTest extends BasePageTest<PublicPage> {
         getTester().startPage(makePage());
         getTester().assertRenderedPage(getPageClass());
 
-        // trigger the roundtrip to get the data by clicking 'query'
+        // trigger the round-trip to get the data by clicking 'query'
         // this should make the result panel visible
         getTester()
             .newFormTester("searchForm")
@@ -129,7 +130,6 @@ public class PublicPageTest extends BasePageTest<PublicPage> {
         // used in navigateable
         verify(serviceMock, times(3)).findPageOfNumbersByFilter(isA(PublicPaperFilter.class),
             isA(PaginationContext.class));
-
     }
 
     private void assertResultsTable() {
@@ -208,6 +208,22 @@ public class PublicPageTest extends BasePageTest<PublicPage> {
 
         verify(serviceMock, times(1)).countByFilter(isA(PublicPaperFilter.class));
         verify(serviceMock, times(1)).findPageByFilter(isA(PublicPaperFilter.class), isA(PaginationContext.class));
+        // used in navigateable
+        verify(serviceMock, times(3)).findPageOfNumbersByFilter(isA(PublicPaperFilter.class),
+            isA(PaginationContext.class));
+    }
+
+    @Test
+    public void clickingClearSearch() {
+        getTester().startPage(makePage());
+        getTester().assertRenderedPage(getPageClass());
+
+        final FormTester formTester = getTester().newFormTester("searchForm");
+        formTester.setValue("tabs:panel:tab1Form:simpleFilterPanel:methodsSearch", "foo");
+        formTester.submit("clear");
+
+        getTester().assertRenderedPage(PublicPage.class);
+
         // used in navigateable
         verify(serviceMock, times(3)).findPageOfNumbersByFilter(isA(PublicPaperFilter.class),
             isA(PaginationContext.class));
