@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Locale;
 
+import org.apache.wicket.authroles.authorization.strategies.role.Roles;
 import org.junit.Test;
 
 import ch.difty.scipamato.common.navigator.LongNavigator;
@@ -33,5 +34,12 @@ public class PublicWebSessionFacadeTest extends WicketTest {
     @Test
     public void gettingPaperIdManager_returnsMock() {
         assertThat(sessionFacade.getPaperIdManager()).isInstanceOf(LongNavigator.class);
+    }
+
+    @Test
+    public void hasAtLeastOneRoleOutOf_staticallyReturnsFalse() {
+        assertThat(sessionFacade.hasAtLeastOneRoleOutOf()).isFalse();
+        assertThat(sessionFacade.hasAtLeastOneRoleOutOf(null)).isFalse();
+        assertThat(sessionFacade.hasAtLeastOneRoleOutOf(Roles.ADMIN, Roles.USER)).isFalse();
     }
 }
