@@ -21,6 +21,11 @@ public class SimpleJournalExtractorTest {
     }
 
     @Test
+    public void extractingJournal_fromLocationWithoutPeriod_returnsBlank() {
+        assertThat(extractor.extractJournal("foo")).isEqualTo("foo");
+    }
+
+    @Test
     public void extractingJournal_fromLocationWithDot_returnsJournal() {
         assertThat(extractor.extractJournal("Nature. 2017; 543 (7647): 705-709.")).isEqualTo("Nature");
     }

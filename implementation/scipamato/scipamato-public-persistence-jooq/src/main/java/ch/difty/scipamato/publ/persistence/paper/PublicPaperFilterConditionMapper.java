@@ -112,8 +112,7 @@ public class PublicPaperFilterConditionMapper extends AbstractFilterConditionMap
         String term = null;
         while (m.find()) {
             term = m.group(QUOTED_GROUP_INDEX);
-            if (term != null)
-                conditions.add(field.likeIgnoreCase("%" + term + "%"));
+            conditions.add(field.likeIgnoreCase("%" + term + "%"));
         }
         return term != null;
     }

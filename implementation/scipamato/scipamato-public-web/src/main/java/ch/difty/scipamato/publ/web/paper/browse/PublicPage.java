@@ -127,6 +127,7 @@ public class PublicPage extends BasePage<Void> {
         filterForm.add(new BootstrapTabbedPanel<>(tabId, tabs));
     }
 
+    @SuppressWarnings("WicketForgeJavaIdInspection")
     private class TabPanel1 extends AbstractTabPanel {
         private static final long serialVersionUID = 1L;
 
@@ -142,6 +143,7 @@ public class PublicPage extends BasePage<Void> {
         }
     }
 
+    @SuppressWarnings("WicketForgeJavaIdInspection")
     private class TabPanel2 extends AbstractTabPanel {
         private static final long serialVersionUID = 1L;
 

@@ -24,7 +24,6 @@ import ch.difty.scipamato.publ.web.resources.MainCssResourceReference;
 import ch.difty.scipamato.publ.web.resources.PymJavaScriptResourceReference;
 
 @Slf4j
-@SuppressWarnings("WeakerAccess")
 public abstract class BasePage<T> extends AbstractPage<T> {
 
     private static final long serialVersionUID = 1L;

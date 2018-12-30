@@ -61,6 +61,10 @@ public abstract class WicketTest {
         return dateTimeService;
     }
 
+    public ItemNavigator<Long> getItemNavigator() {
+        return itemNavigatorMock;
+    }
+
     @Before
     public final void setUp() {
         application.setHeaderResponseDecorator(
