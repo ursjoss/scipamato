@@ -80,7 +80,6 @@ public class NewStudyListPage extends BasePage<Void> {
     protected void renderAdditionalCommercialFonts(final IHeaderResponse response) {
         response.render(CssHeaderItem.forReference(simplonFontResourceProvider.getCssResourceReference()));
         response.render(CssHeaderItem.forReference(icoMoonFontResourceProvider.getCssResourceReference()));
-        response.render(CssHeaderItem.forReference(icoMoonFontResourceProvider.getCssResourceReference()));
     }
 
     @Override
@@ -161,7 +160,7 @@ public class NewStudyListPage extends BasePage<Void> {
 
     private List<NewStudyTopic> retrieveStudyCollection() {
         final StringValue issue = getPageParameters().get(PublicPageParameters.ISSUE.getName());
-        if (issue == null || issue.isNull() || issue.isEmpty())
+        if (issue.isNull() || issue.isEmpty())
             return newStudyTopicService.findMostRecentNewStudyTopics(getLanguageCode());
         else
             return newStudyTopicService.findNewStudyTopicsForNewsletterIssue(issue.toString(), getLanguageCode());
@@ -242,7 +241,8 @@ public class NewStudyListPage extends BasePage<Void> {
         return link;
     }
 
-    private IconType chooseIcon(IconType free, IconType commercial) {
+    // package-private for test purposes
+    IconType chooseIcon(IconType free, IconType commercial) {
         if (getProperties().isCommercialFontPresent())
             return commercial;
         else

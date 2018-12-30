@@ -1,12 +1,17 @@
 package ch.difty.scipamato.publ.web.newstudies;
 
-import static org.mockito.Mockito.when;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapExternalLink;
+import de.agilecoders.wicket.core.markup.html.bootstrap.image.GlyphIconType;
+import de.agilecoders.wicket.core.markup.html.bootstrap.image.IconType;
+import org.apache.wicket.markup.head.CssHeaderItem;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.ExternalLink;
 import org.apache.wicket.markup.html.link.Link;
@@ -16,18 +21,29 @@ import org.junit.Test;
 import org.mockito.Mockito;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import ch.difty.scipamato.publ.config.ApplicationPublicProperties;
+import ch.difty.scipamato.publ.config.ScipamatoPublicProperties;
 import ch.difty.scipamato.publ.entity.NewStudy;
 import ch.difty.scipamato.publ.entity.NewStudyPageLink;
 import ch.difty.scipamato.publ.entity.NewStudyTopic;
 import ch.difty.scipamato.publ.entity.Newsletter;
 import ch.difty.scipamato.publ.persistence.api.NewStudyTopicService;
+import ch.difty.scipamato.publ.web.CommercialFontResourceProvider;
+import ch.difty.scipamato.publ.web.PublicPageParameters;
 import ch.difty.scipamato.publ.web.common.BasePageTest;
 import ch.difty.scipamato.publ.web.paper.browse.PublicPaperDetailPage;
+import ch.difty.scipamato.publ.web.resources.IcoMoonIconType;
 
 public class NewStudyListPageTest extends BasePageTest<NewStudyListPage> {
 
     @MockBean
     private NewStudyTopicService serviceMock;
+
+    @MockBean(name = "simplonFontResourceProvider")
+    private CommercialFontResourceProvider simplonFontResourceProvider;
+
+    @MockBean(name = "icoMoonFontResourceProvider")
+    private CommercialFontResourceProvider icoMoonFontResourceProvider;
 
     private final List<NewStudyTopic>    topics   = new ArrayList<>();
     private final List<NewStudyPageLink> links    = new ArrayList<>();
@@ -139,4 +155,74 @@ public class NewStudyListPageTest extends BasePageTest<NewStudyListPage> {
         getTester().assertRenderedPage(NewStudyListPage.class);
     }
 
+    @Test
+    public void renderingCommercialFonts() {
+        final NewStudyListPage page = makePage();
+
+        IHeaderResponse hr = mock(IHeaderResponse.class);
+        page.renderAdditionalCommercialFonts(hr);
+
+        // null, as commercial font is configured to not be used
+        verify(hr, times(2)).render(CssHeaderItem.forReference(null));
+    }
+
+    @Test
+    public void withIssueMissing() {
+        PageParameters pp = new PageParameters();
+        pageWithIssue(pp);
+    }
+
+    @Test
+    public void withIssueNull() {
+        PageParameters pp = new PageParameters();
+        pp.set(PublicPageParameters.ISSUE.getName(), null);
+        pageWithIssue(pp);
+    }
+
+    @Test
+    public void withIssueBlank() {
+        PageParameters pp = new PageParameters();
+        pp.set(PublicPageParameters.ISSUE.getName(), "");
+        pageWithIssue(pp);
+    }
+
+    private void pageWithIssue(final PageParameters pp) {
+        final NewStudyListPage page = new NewStudyListPage(pp);
+        getTester().startPage(page);
+        getTester().assertRenderedPage(getPageClass());
+        verify(serviceMock, times(2)).findMostRecentNewStudyTopics("en_us");
+        verify(serviceMock, never()).findNewStudyTopicsForNewsletterIssue(anyString(), anyString());
+    }
+
+    @Test
+    public void withIssuePresent() {
+        PageParameters pp = new PageParameters();
+        pp.set(PublicPageParameters.ISSUE.getName(), "1806");
+        final NewStudyListPage page = new NewStudyListPage(pp);
+        getTester().startPage(page);
+        getTester().assertRenderedPage(getPageClass());
+        verify(serviceMock, times(2)).findNewStudyTopicsForNewsletterIssue("1806", "en_us");
+        verify(serviceMock, never()).findMostRecentNewStudyTopics(anyString());
+    }
+
+    @Test
+    public void icon_withFreeFont() {
+        final NewStudyListPage page = makePage();
+        final IconType icon = page.chooseIcon(GlyphIconType.arrowright, IcoMoonIconType.arrow_right);
+        assertThat(icon).isEqualTo(GlyphIconType.arrowright);
+    }
+
+    @Test
+    public void icon_withCommercialFont() {
+        final ScipamatoPublicProperties applicationProperties = mock(ScipamatoPublicProperties.class);
+        when(applicationProperties.isCommercialFontPresent()).thenReturn(true);
+        final NewStudyListPage page = new NewStudyListPage(new PageParameters()) {
+            @Override
+            protected ApplicationPublicProperties getProperties() {
+                return applicationProperties;
+            }
+        };
+        final IconType icon = page.chooseIcon(GlyphIconType.arrowright, IcoMoonIconType.arrow_right);
+        assertThat(icon).isEqualTo(IcoMoonIconType.arrow_right);
+    }
 }
