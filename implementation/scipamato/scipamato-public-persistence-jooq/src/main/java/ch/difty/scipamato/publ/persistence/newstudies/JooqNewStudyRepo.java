@@ -99,7 +99,7 @@ public class JooqNewStudyRepo implements NewStudyRepository {
      * @param newStudyTable
      *     database table representation of the NewStudy table. Required to access the fields.
      * @param aliasedNewsStudySortField
-     *     the aliased NewStudy.Sort field
+     *     the aliased NewStudy.Sort field, the value must not be null
      * @return single NewStudyTopic
      */
     private NewStudyTopic newNewStudyTopic(final int newStudyTopicSortValue, final String newStudyTopicTitleValue,
@@ -107,12 +107,10 @@ public class JooqNewStudyRepo implements NewStudyRepository {
         final ch.difty.scipamato.publ.db.tables.NewStudy newStudyTable,
         final Field<Integer> aliasedNewsStudySortField) {
         final List<NewStudy> map = newStudyRecords.map(r -> {
-            final Integer sort = r.getValue(aliasedNewsStudySortField);
-            return sort != null ?
-                new NewStudy(sort, r.getValue(newStudyTable.PAPER_NUMBER), r.getValue(newStudyTable.YEAR),
-                    r.getValue(newStudyTable.AUTHORS), r.getValue(newStudyTable.HEADLINE),
-                    r.getValue(newStudyTable.DESCRIPTION)) :
-                null;
+            final int sort = r.getValue(aliasedNewsStudySortField);
+            return new NewStudy(sort, r.getValue(newStudyTable.PAPER_NUMBER), r.getValue(newStudyTable.YEAR),
+                r.getValue(newStudyTable.AUTHORS), r.getValue(newStudyTable.HEADLINE),
+                r.getValue(newStudyTable.DESCRIPTION));
         });
         return new NewStudyTopic(newStudyTopicSortValue, newStudyTopicTitleValue, map
             .stream()
