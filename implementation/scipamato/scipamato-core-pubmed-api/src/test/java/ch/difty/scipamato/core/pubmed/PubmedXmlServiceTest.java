@@ -156,22 +156,22 @@ public class PubmedXmlServiceTest {
     }
 
     @Test
-    public void nonValidXml_returnsNull() throws XmlMappingException, IOException {
-        assertThat(service.unmarshal("")).isNull();
-        verify(unmarshallerMock).unmarshal(isA(StreamSource.class));
-    }
-
-    @Test
     public void gettingPubmedArticle_withInvalidId_returnsEmptyArticle() {
         final int pmId = 25395026;
-        when(pubMedMock.articleWithId(String.valueOf(pmId))).thenThrow(new RuntimeException("boom"));
+        when(pubMedMock.articleWithId(String.valueOf(pmId), "key")).thenThrow(new RuntimeException("boom"));
         final List<java.lang.Object> objects = new ArrayList<>();
         objects.add(pubmedArticleMock);
 
-        Optional<PubmedArticleFacade> pa = service.getPubmedArticleWithPmid(pmId);
+        Optional<PubmedArticleFacade> pa = service.getPubmedArticleWithPmidAndApiKey(pmId, "key");
         assertThat(pa.isPresent()).isFalse();
 
-        verify(pubMedMock).articleWithId(String.valueOf(pmId));
+        verify(pubMedMock).articleWithId(String.valueOf(pmId), "key");
+    }
+
+    @Test
+    public void nonValidXml_returnsNull() throws XmlMappingException, IOException {
+        assertThat(service.unmarshal("")).isNull();
+        verify(unmarshallerMock).unmarshal(isA(StreamSource.class));
     }
 
     @Test

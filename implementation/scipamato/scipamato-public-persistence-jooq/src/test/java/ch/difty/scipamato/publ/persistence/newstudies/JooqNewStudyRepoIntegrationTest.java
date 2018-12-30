@@ -3,6 +3,7 @@ package ch.difty.scipamato.publ.persistence.newstudies;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -158,5 +159,18 @@ public class JooqNewStudyRepoIntegrationTest extends JooqTransactionalIntegratio
         assertThat(results)
             .extracting(NewStudyPageLink.NewStudyPageLinkFields.TITLE.getName())
             .containsExactly("Web Suche", "Projekt Code");
+    }
+
+    @Test
+    public void findingIdOfNewsletterWithIssue_forExistingNewsletter_findsIt() {
+        final Optional<Integer> idOpt = repo.findIdOfNewsletterWithIssue("2018/06");
+        assertThat(idOpt).isPresent();
+        assertThat(idOpt.get()).isEqualTo(2);
+    }
+
+    @Test
+    public void findingIdOfNewsletterWithIssue_forNonExistingNewsletter_returnsEmptyOptional() {
+        final Optional<Integer> idOpt = repo.findIdOfNewsletterWithIssue("2018/06xxx");
+        assertThat(idOpt).isNotPresent();
     }
 }

@@ -184,15 +184,12 @@ public class JooqSearchOrderRepo extends
      */
     private void addSearchTermLessConditionsOf(final SearchOrder searchOrder, final Map<Long, SearchCondition> idToSc,
         final String languageCode) {
-        if (searchOrder != null && searchOrder.getId() != null) {
-            final Long searchOrderId = searchOrder.getId();
-            final List<Long> conditionIdsWithSearchTerms = findConditionIdsWithSearchTerms(searchOrderId);
-            final List<SearchCondition> termLessConditions = findTermLessConditions(idToSc,
-                conditionIdsWithSearchTerms);
-            for (final SearchCondition sc : termLessConditions) {
-                fillCodesInto(sc, languageCode);
-                searchOrder.add(sc);
-            }
+        final Long searchOrderId = searchOrder.getId();
+        final List<Long> conditionIdsWithSearchTerms = findConditionIdsWithSearchTerms(searchOrderId);
+        final List<SearchCondition> termLessConditions = findTermLessConditions(idToSc, conditionIdsWithSearchTerms);
+        for (final SearchCondition sc : termLessConditions) {
+            fillCodesInto(sc, languageCode);
+            searchOrder.add(sc);
         }
     }
 
