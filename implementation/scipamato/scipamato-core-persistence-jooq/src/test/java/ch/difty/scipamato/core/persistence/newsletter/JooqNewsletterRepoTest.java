@@ -1,10 +1,14 @@
 package ch.difty.scipamato.core.persistence.newsletter;
 
 import static ch.difty.scipamato.core.db.tables.Newsletter.NEWSLETTER;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.sql.Timestamp;
+
 import org.jooq.TableField;
+import org.junit.Test;
 import org.mockito.Mock;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
@@ -135,4 +139,17 @@ public class JooqNewsletterRepoTest extends
         return NEWSLETTER.VERSION;
     }
 
+    @Test
+    public void mergingPaperIntoNewsletter_withInsertAttemptNotSucceeding_returnsEmptyOptional() {
+        JooqNewsletterRepo repo = new JooqNewsletterRepo(getDsl(), getMapper(), getSortMapper(),
+            getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(),
+            getApplicationProperties()) {
+            @Override
+            int tryInserting(final int newsletterId, final long paperId, final Integer newsletterTopicId,
+                final Timestamp ts) {
+                return 0;
+            }
+        };
+        assertThat(repo.mergePaperIntoNewsletter(1, 2L, 3, "en")).isNotPresent();
+    }
 }
