@@ -1,6 +1,5 @@
 package ch.difty.scipamato.core.pubmed;
 
-import java.lang.Object;
 import java.util.List;
 
 import org.springframework.util.CollectionUtils;
@@ -169,7 +168,7 @@ class ScipamatoPubmedArticle extends AbstractPubmedArticleFacade {
     }
 
     // package-private for testing
-    void handleDatishObject(final StringBuilder sb, final Object o) {
+    void handleDatishObject(final StringBuilder sb, final java.lang.Object o) {
         if (o instanceof Year) {
             sb.append(((Year) o).getvalue());
             sb.append(" ");
