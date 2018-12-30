@@ -4,6 +4,7 @@ import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
@@ -19,6 +20,7 @@ import org.junit.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
+import ch.difty.scipamato.publ.entity.CodeClass;
 import ch.difty.scipamato.publ.entity.PublicPaper;
 import ch.difty.scipamato.publ.entity.filter.PublicPaperFilter;
 import ch.difty.scipamato.publ.persistence.api.CodeClassService;
@@ -151,6 +153,17 @@ public class PublicPageTest extends BasePageTest<PublicPage> {
 
     @Test
     public void clickingTab2Title_showsTab2() {
+        CodeClass cc1 = CodeClass
+            .builder()
+            .codeClassId(1)
+            .name("cc1")
+            .build();
+        CodeClass cc2 = CodeClass
+            .builder()
+            .codeClassId(2)
+            .name("cc2")
+            .build();
+        when(codeClassServiceMock.find("en_us")).thenReturn(Arrays.asList(cc1, cc2));
         getTester().startPage(makePage());
         getTester().assertRenderedPage(getPageClass());
 
@@ -179,8 +192,8 @@ public class PublicPageTest extends BasePageTest<PublicPage> {
         getTester().assertComponent(bb + ":simpleFilterPanel", SimpleFilterPanel.class);
 
         int i = 1;
-        assertCodeClass(bb, i++);
-        assertCodeClass(bb, i++);
+        assertCodeClass(bb, i, "cc" + i++);
+        assertCodeClass(bb, i, "cc" + i++);
         assertCodeClass(bb, i++);
         assertCodeClass(bb, i++);
         assertCodeClass(bb, i++);
@@ -190,8 +203,12 @@ public class PublicPageTest extends BasePageTest<PublicPage> {
     }
 
     private void assertCodeClass(final String esc, final int ccId) {
+        assertCodeClass(esc, ccId, "CC" + ccId);
+    }
+
+    private void assertCodeClass(final String esc, final int ccId, final String ccLabel) {
         final String compId = esc + ":codesOfClass" + ccId;
-        getTester().assertLabel(compId + "Label", "CC" + ccId);
+        getTester().assertLabel(compId + "Label", ccLabel);
         getTester().assertComponent(compId, BootstrapMultiSelect.class);
     }
 
