@@ -215,9 +215,11 @@ public class PublicPaperDetailPageTest extends BasePageTest<PublicPaperDetailPag
 
     @Test
     public void clickingPrevious_withPreviousItemAvailable_skipsBack() {
+        final long previousId = 1;
         when(getItemNavigator().hasPrevious()).thenReturn(true);
+        when(getItemNavigator().getItemWithFocus()).thenReturn(previousId);
 
-        PublicPaper p = new PublicPaper(1L, NUMBER, 2, "authors", "auths", "title", "location", "journal", 2017,
+        PublicPaper p = new PublicPaper(2L, NUMBER, 2, "authors", "auths", "title", "location", "journal", 2017,
             "goals", "methods", "population", "result", "comment");
         getTester().startPage(new PublicPaperDetailPage(Model.of(p), null));
 
@@ -229,11 +231,15 @@ public class PublicPaperDetailPageTest extends BasePageTest<PublicPaperDetailPag
         verify(getItemNavigator(), times(2)).hasPrevious();
         verify(getItemNavigator()).previous();
         verify(getItemNavigator()).getItemWithFocus();
+
+        verify(serviceMock).findByNumber(previousId);
     }
 
     @Test
     public void clickingNext_withNextItemAvailable_skipsForward() {
+        final long nextId = 2;
         when(getItemNavigator().hasNext()).thenReturn(true);
+        when(getItemNavigator().getItemWithFocus()).thenReturn(nextId);
 
         PublicPaper p = new PublicPaper(1L, NUMBER, 2, "authors", "auths", "title", "location", "journal", 2017,
             "goals", "methods", "population", "result", "comment");
@@ -247,5 +253,28 @@ public class PublicPaperDetailPageTest extends BasePageTest<PublicPaperDetailPag
         verify(getItemNavigator(), times(2)).hasNext();
         verify(getItemNavigator()).next();
         verify(getItemNavigator()).getItemWithFocus();
+
+        verify(serviceMock).findByNumber(nextId);
+    }
+
+    @Test
+    public void clickingNext_withNextItemAvailable_butWithNoIdReturnedFromItemManager_triesToSkipForwardButRemainsOnPage() {
+        when(getItemNavigator().hasNext()).thenReturn(true);
+        when(getItemNavigator().getItemWithFocus()).thenReturn(null);
+
+        PublicPaper p = new PublicPaper(1L, NUMBER, 2, "authors", "auths", "title", "location", "journal", 2017,
+            "goals", "methods", "population", "result", "comment");
+        getTester().startPage(new PublicPaperDetailPage(Model.of(p), null));
+
+        FormTester formTester = getTester().newFormTester("form");
+        formTester.submit("next");
+
+        getTester().assertRenderedPage(PublicPaperDetailPage.class);
+
+        verify(getItemNavigator(), times(2)).hasNext();
+        verify(getItemNavigator()).next();
+        verify(getItemNavigator()).getItemWithFocus();
+
+        verify(serviceMock, never()).findByNumber(anyLong());
     }
 }
