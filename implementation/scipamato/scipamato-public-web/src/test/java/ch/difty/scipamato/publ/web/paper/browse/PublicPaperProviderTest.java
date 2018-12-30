@@ -1,9 +1,7 @@
 package ch.difty.scipamato.publ.web.paper.browse;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.argThat;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.ArgumentMatchers.isA;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
@@ -108,8 +106,20 @@ public class PublicPaperProviderTest {
     }
 
     @Test
-    public void gettingIterator() {
-        assertThat(provider.iterator(0L, 10L)).hasSize(2);
+    public void gettingIterator_withAscendingSort() {
+        provider.setSort("title", SortOrder.ASCENDING);
+        assertThat(provider.iterator(0L, 10L))
+            .extracting("id")
+            .containsExactlyInAnyOrder(1L, 2L);
+        verify(serviceMock).findPageByFilter(eq(filterMock), isA(PaginationContext.class));
+    }
+
+    @Test
+    public void gettingIterator_withDescendingSort() {
+        provider.setSort("title", SortOrder.DESCENDING);
+        assertThat(provider.iterator(0L, 10L))
+            .extracting("id")
+            .containsExactlyInAnyOrder(2L, 1L);
         verify(serviceMock).findPageByFilter(eq(filterMock), isA(PaginationContext.class));
     }
 
@@ -120,15 +130,27 @@ public class PublicPaperProviderTest {
     }
 
     @Test
-    public void findingAllNumbersByFilter() {
-        provider.setSort("title", SortOrder.DESCENDING);
+    public void findingAllNumbersByFilter_descendingSort() {
+        findingAllNumbersByFilter(SortOrder.DESCENDING);
+    }
+
+    @Test
+    public void findingAllNumbersByFilter_ascendingSort() {
+        findingAllNumbersByFilter(SortOrder.ASCENDING);
+    }
+
+    private void findingAllNumbersByFilter(final SortOrder srt) {
+        final String sortDescription = "title: " + (SortOrder.DESCENDING.equals(srt) ? "DESC" : "ASC");
+        provider.setSort("title", srt);
+
         when(serviceMock.findPageOfNumbersByFilter(eq(filterMock),
-            argThat(new PaginationContextMatcher(0, Integer.MAX_VALUE, "title: DESC")))).thenReturn(
+            argThat(new PaginationContextMatcher(0, Integer.MAX_VALUE, sortDescription)))).thenReturn(
             Arrays.asList(5L, 3L, 17L));
-        List<Long> ids = provider.findAllPaperNumbersByFilter();
-        assertThat(ids).containsExactly(5L, 3L, 17L);
+
+        assertThat(provider.findAllPaperNumbersByFilter()).containsExactly(5L, 3L, 17L);
+
         verify(serviceMock).findPageOfNumbersByFilter(eq(filterMock),
-            argThat(new PaginationContextMatcher(0, Integer.MAX_VALUE, "title: DESC")));
+            argThat(new PaginationContextMatcher(0, Integer.MAX_VALUE, sortDescription)));
     }
 
 }
