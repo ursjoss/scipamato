@@ -22,8 +22,6 @@ public class AuditSearchTermEvaluatorTest extends SearchTermEvaluatorTest<AuditS
 
     @Mock
     private AuditSearchTerm stMock;
-    @Mock
-    private Token           tokenMock;
 
     @Override
     protected AuditSearchTermEvaluator getEvaluator() {

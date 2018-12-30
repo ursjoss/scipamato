@@ -59,6 +59,17 @@ public class JooqNewsletterTopicRepoIntegrationTest extends JooqTransactionalInt
     }
 
     @Test
+    public void findingNewsletterTopicDefinitions_withUnspecifiedFilter_sortingDescendingly_findsAllDefinitions() {
+        final List<NewsletterTopicDefinition> ntds = repo.findPageOfNewsletterTopicDefinitions(
+            new NewsletterTopicFilter(), new PaginationRequest(Sort.Direction.DESC, "title"));
+
+        assertThat(ntds).hasSize(3);
+
+        NewsletterTopicDefinition ntd = ntds.get(0);
+        assertThat(ntd.getId()).isEqualTo(1);
+    }
+
+    @Test
     public void findingNewsletterTopicDefinitions_withFilterMatchingSingleGermanTitle_findsOne() {
         final NewsletterTopicFilter filter = new NewsletterTopicFilter();
         filter.setTitleMask("Partikel");

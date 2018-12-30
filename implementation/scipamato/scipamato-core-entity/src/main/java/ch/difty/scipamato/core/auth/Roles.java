@@ -23,4 +23,8 @@ public final class Roles {
 
     private Roles() {
     }
+
+    static String dummyMethod() {
+        return null;
+    }
 }

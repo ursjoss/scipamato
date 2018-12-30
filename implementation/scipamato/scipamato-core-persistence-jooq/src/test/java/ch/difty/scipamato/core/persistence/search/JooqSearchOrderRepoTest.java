@@ -3,13 +3,9 @@ package ch.difty.scipamato.core.persistence.search;
 import static ch.difty.scipamato.common.TestUtils.assertDegenerateSupplierParameter;
 import static ch.difty.scipamato.core.db.tables.SearchOrder.SEARCH_ORDER;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import org.jooq.TableField;
 import org.junit.Test;
@@ -18,6 +14,7 @@ import org.mockito.Mock;
 import ch.difty.scipamato.core.db.tables.records.SearchOrderRecord;
 import ch.difty.scipamato.core.entity.Code;
 import ch.difty.scipamato.core.entity.Paper;
+import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic;
 import ch.difty.scipamato.core.entity.search.*;
 import ch.difty.scipamato.core.persistence.EntityRepository;
 import ch.difty.scipamato.core.persistence.JooqEntityRepoTest;
@@ -41,6 +38,9 @@ public class JooqSearchOrderRepoTest extends
     private SearchOrderRecordMapper mapperMock;
     @Mock
     private SearchOrderFilter       filterMock;
+
+    private final SearchCondition sc1 = new SearchCondition();
+    private final SearchCondition sc2 = new SearchCondition();
 
     @Override
     protected Long getSampleId() {
@@ -281,4 +281,148 @@ public class JooqSearchOrderRepoTest extends
             .containsExactly(17L, 33L, 42L);
     }
 
+    @Test
+    public void hasDirtyNewsletterFields_withTwoEmptySearchConditions_isNotDirty() {
+        assertThat(sc1.getNewsletterTopicId()).isNull();
+        assertThat(sc2.getNewsletterTopicId()).isNull();
+        assertThat(sc1.getNewsletterHeadline()).isNull();
+        assertThat(sc2.getNewsletterHeadline()).isNull();
+        assertThat(sc1.getNewsletterIssue()).isNull();
+        assertThat(sc2.getNewsletterIssue()).isNull();
+
+        assertThat(repo.hasDirtyNewsletterFields(sc1, sc2)).isFalse();
+    }
+
+    @Test
+    public void hasDirtyNewsletterFields_withSingleNewsletterTopic_isDirty() {
+        sc1.setNewsletterTopic(new NewsletterTopic(1, "1"));
+        assertThat(repo.hasDirtyNewsletterFields(sc1, sc2)).isTrue();
+    }
+
+    @Test
+    public void hasDirtyNewsletterFields_withDifferentNewsletterTopic_isDirty() {
+        sc1.setNewsletterTopic(new NewsletterTopic(1, "1"));
+        sc2.setNewsletterTopic(new NewsletterTopic(2, "2"));
+        assertThat(repo.hasDirtyNewsletterFields(sc1, sc2)).isTrue();
+    }
+
+    @Test
+    public void hasDirtyNewsletterFields_withIdenticalNewsletterTopicIds_isNotDirty() {
+        sc1.setNewsletterTopic(new NewsletterTopic(1, "foo"));
+        sc2.setNewsletterTopic(new NewsletterTopic(1, "bar"));
+        assertThat(repo.hasDirtyNewsletterFields(sc1, sc2)).isFalse();
+    }
+
+    @Test
+    public void hasDirtyNewsletterFields_withSingleNewsletterHeadline_isDirty() {
+        sc1.setNewsletterHeadline("foo");
+        assertThat(repo.hasDirtyNewsletterFields(sc1, sc2)).isTrue();
+    }
+
+    @Test
+    public void hasDirtyNewsletterFields_withDifferentNewsletterHeadlines_isDirty() {
+        sc1.setNewsletterHeadline("foo");
+        sc2.setNewsletterHeadline("bar");
+        assertThat(repo.hasDirtyNewsletterFields(sc1, sc2)).isTrue();
+    }
+
+    @Test
+    public void hasDirtyNewsletterFields_withIdenticalNewsletterHeadlines_isNotDirty() {
+        sc1.setNewsletterHeadline("foo");
+        sc2.setNewsletterHeadline("foo");
+        assertThat(repo.hasDirtyNewsletterFields(sc1, sc2)).isFalse();
+    }
+
+    @Test
+    public void hasDirtyNewsletterFields_withSingleNewsletterIssue_isDirty() {
+        sc1.setNewsletterIssue("foo");
+        assertThat(repo.hasDirtyNewsletterFields(sc1, sc2)).isTrue();
+    }
+
+    @Test
+    public void hasDirtyNewsletterFields_withDifferentNewsletterIssue_isDirty() {
+        sc2.setNewsletterIssue("bar");
+        sc1.setNewsletterIssue("foo");
+        assertThat(repo.hasDirtyNewsletterFields(sc1, sc2)).isTrue();
+    }
+
+    @Test
+    public void hasDirtyNewsletterFields_withIdenticalNewsletterIssue_isNotDirty() {
+        sc1.setNewsletterIssue("foo");
+        sc2.setNewsletterIssue("foo");
+        assertThat(repo.hasDirtyNewsletterFields(sc1, sc2)).isFalse();
+    }
+
+    @Test
+    public void addingSearchCondition_nonDirty_returnsPersistedEquivalentSearchCondition() {
+        final SearchCondition equivalentPersistedSearchCondition = mock(SearchCondition.class);
+        final JooqSearchOrderRepo repo = new JooqSearchOrderRepo(getDsl(), getMapper(), getSortMapper(),
+            getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(),
+            getApplicationProperties()) {
+            @Override
+            Optional<SearchCondition> findEquivalentPersisted(final SearchCondition searchCondition,
+                final long searchOrderId, final String languageCode) {
+                return Optional.of(equivalentPersistedSearchCondition);
+            }
+
+            @Override
+            boolean hasDirtyNewsletterFields(final SearchCondition searchCondition, final SearchCondition psc) {
+                return false;
+            }
+        };
+        assertThat(repo.addSearchCondition(new SearchCondition(), 1, "en")).isEqualTo(
+            equivalentPersistedSearchCondition);
+    }
+
+    @Test
+    public void findingTermLessConditions() {
+        final Map<Long, SearchCondition> idToSc = new HashMap<>();
+
+        // sc without id - should be filtered out
+        final SearchCondition sc1 = new SearchCondition();
+        assertThat(sc1.getSearchConditionId()).isNull();
+        idToSc.put(1L, sc1);
+
+        // sc with id - which is also contained in the conditionId list - should be filtered out
+        final SearchCondition sc2 = new SearchCondition();
+        sc2.setSearchConditionId(2L);
+        idToSc.put(sc2.getSearchConditionId(), sc2);
+
+        // sc with id -> should be returned
+        final SearchCondition sc3 = new SearchCondition();
+        sc3.setSearchConditionId(3L);
+        idToSc.put(sc3.getSearchConditionId(), sc3);
+
+        final List<Long> conditionIdsWithSearchTerms = Arrays.asList(sc2.getSearchConditionId());
+
+        assertThat(repo.findTermLessConditions(idToSc, conditionIdsWithSearchTerms)).containsExactly(sc3);
+    }
+
+    @Test
+    public void storingExistingConditionsOf_withSearchConditionsWithIds_callsUpdateSearchConditionForEach() {
+        final SearchOrder so = new SearchOrder();
+        so.setId(1L);
+        final SearchCondition sc1 = new SearchCondition(10L);
+
+        final SearchCondition sc2 = new SearchCondition(20L);
+        so.add(sc1);
+        so.add(sc2);
+
+        final long[] updateCalled = { 0 };
+        final JooqSearchOrderRepo repo = new JooqSearchOrderRepo(getDsl(), getMapper(), getSortMapper(),
+            getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(),
+            getApplicationProperties()) {
+
+            @Override
+            public SearchCondition updateSearchCondition(final SearchCondition searchCondition,
+                final long searchOrderId, final String languageCode) {
+                updateCalled[0] = updateCalled[0] + searchCondition.getSearchConditionId();
+                return null;
+            }
+        };
+        repo.storeExistingConditionsOf(so, "de");
+
+        assertThat(updateCalled[0]).isEqualTo(30L);
+
+    }
 }

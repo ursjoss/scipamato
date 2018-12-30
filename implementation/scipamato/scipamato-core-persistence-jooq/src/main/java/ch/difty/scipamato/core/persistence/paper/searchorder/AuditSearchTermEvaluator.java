@@ -133,11 +133,7 @@ public class AuditSearchTermEvaluator implements SearchTermEvaluator<AuditSearch
         case LESS_THAN:
             conditions.add(() -> field.lessThan(value1));
             break;
-        case CONTAINS:
-        case NONE:
-            break;
         default:
-            throw new AssertionError("Evaluation of type " + token.getType().matchType + " is not supported...");
         }
     }
 }

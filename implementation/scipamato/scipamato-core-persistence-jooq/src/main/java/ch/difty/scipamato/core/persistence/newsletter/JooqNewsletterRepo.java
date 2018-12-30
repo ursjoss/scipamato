@@ -161,17 +161,7 @@ public class JooqNewsletterRepo extends
     public Optional<Paper.NewsletterLink> mergePaperIntoNewsletter(final int newsletterId, final long paperId,
         final Integer newsletterTopicId, String languageCode) {
         final Timestamp ts = getDateTimeService().getCurrentTimestamp();
-        int count = getDsl()
-            .insertInto(PAPER_NEWSLETTER)
-            .columns(PAPER_NEWSLETTER.PAPER_ID, PAPER_NEWSLETTER.NEWSLETTER_ID, PAPER_NEWSLETTER.NEWSLETTER_TOPIC_ID,
-                PAPER_NEWSLETTER.VERSION, PAPER_NEWSLETTER.CREATED, PAPER_NEWSLETTER.CREATED_BY)
-            .values(paperId, newsletterId, newsletterTopicId, 1, ts, getUserId())
-            .onDuplicateKeyUpdate()
-            .set(PAPER_NEWSLETTER.NEWSLETTER_TOPIC_ID, newsletterTopicId)
-            .set(PAPER_NEWSLETTER.VERSION, PAPER_NEWSLETTER.VERSION.add(1))
-            .set(PAPER_NEWSLETTER.LAST_MODIFIED, ts)
-            .set(PAPER_NEWSLETTER.LAST_MODIFIED_BY, getUserId())
-            .execute();
+        int count = tryInserting(newsletterId, paperId, newsletterTopicId, ts);
         if (count > 0) {
             Record6<Integer, String, Integer, Integer, String, String> r = getDsl()
                 .select(NEWSLETTER.ID, NEWSLETTER.ISSUE, NEWSLETTER.PUBLICATION_STATUS, NEWSLETTER_TOPIC.ID,
@@ -195,6 +185,21 @@ public class JooqNewsletterRepo extends
         }
         return Optional.empty();
 
+    }
+
+    // package-private for stubbing
+    int tryInserting(final int newsletterId, final long paperId, final Integer newsletterTopicId, final Timestamp ts) {
+        return getDsl()
+            .insertInto(PAPER_NEWSLETTER)
+            .columns(PAPER_NEWSLETTER.PAPER_ID, PAPER_NEWSLETTER.NEWSLETTER_ID, PAPER_NEWSLETTER.NEWSLETTER_TOPIC_ID,
+                PAPER_NEWSLETTER.VERSION, PAPER_NEWSLETTER.CREATED, PAPER_NEWSLETTER.CREATED_BY)
+            .values(paperId, newsletterId, newsletterTopicId, 1, ts, getUserId())
+            .onDuplicateKeyUpdate()
+            .set(PAPER_NEWSLETTER.NEWSLETTER_TOPIC_ID, newsletterTopicId)
+            .set(PAPER_NEWSLETTER.VERSION, PAPER_NEWSLETTER.VERSION.add(1))
+            .set(PAPER_NEWSLETTER.LAST_MODIFIED, ts)
+            .set(PAPER_NEWSLETTER.LAST_MODIFIED_BY, getUserId())
+            .execute();
     }
 
     @Override

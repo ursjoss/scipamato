@@ -150,6 +150,24 @@ public class JooqNewsletterServiceTest extends AbstractServiceTest<Integer, News
     }
 
     @Test
+    public void savingOrUpdating_withSavedEntity_butOtherNewsletterInWipStatus() {
+        final int newsletterId = 1;
+
+        when(newsletterMock.getId()).thenReturn(newsletterId);
+        when(newsletterMock.getPublicationStatus()).thenReturn(PublicationStatus.WIP);
+        when(repoMock.getNewsletterInStatusWorkInProgress()).thenReturn(Optional.of(newsletterWipMock));
+        when(newsletterWipMock.getId()).thenReturn(newsletterId);
+
+        service.saveOrUpdate(newsletterMock);
+
+        verify(newsletterMock).getPublicationStatus();
+        verify(newsletterMock, times(3)).getId();
+        verify(repoMock).getNewsletterInStatusWorkInProgress();
+        verify(newsletterWipMock).getId();
+        verify(repoMock).update(newsletterMock);
+    }
+
+    @Test
     public void savingOrUpdating_withPaperWithNullId_hasRepoAddThePaper() {
         when(newsletterMock.getId()).thenReturn(null);
         when(newsletterMock.getPublicationStatus()).thenReturn(PublicationStatus.PUBLISHED);
@@ -213,6 +231,21 @@ public class JooqNewsletterServiceTest extends AbstractServiceTest<Integer, News
         when(repoMock.getNewsletterInStatusWorkInProgress()).thenReturn(Optional.of(new Newsletter()));
         assertThat(service.canCreateNewsletterInProgress()).isFalse();
         verify(repoMock).getNewsletterInStatusWorkInProgress();
+    }
+
+    @Test
+    public void mergingPaperIntoNewsletter_withNoWipNewsletterPresent() {
+        final long paperId = 5;
+        final Integer newsletterTopicId = 10;
+        final int newsletterId = 1;
+        final String langCode = "en";
+
+        when(repoMock.getNewsletterInStatusWorkInProgress()).thenReturn(Optional.empty());
+
+        service.mergePaperIntoWipNewsletter(paperId, newsletterTopicId);
+
+        verify(repoMock).getNewsletterInStatusWorkInProgress();
+        verify(repoMock, never()).mergePaperIntoNewsletter(newsletterId, paperId, newsletterTopicId, langCode);
     }
 
     @Test

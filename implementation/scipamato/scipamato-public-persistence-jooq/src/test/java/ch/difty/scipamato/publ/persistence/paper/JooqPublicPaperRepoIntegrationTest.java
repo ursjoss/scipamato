@@ -161,4 +161,14 @@ public class JooqPublicPaperRepoIntegrationTest extends JooqTransactionalIntegra
             .containsOnly(3L);
     }
 
+    @Test
+    public void findingPageByFilter_withKeywordWithId3And6_findsOnlyOne() {
+        final Keyword kw1 = new Keyword(1, 3, "en", "foo", null);
+        filter.setKeywords(List.of(kw1));
+        assertThat(repo.findPageByFilter(filter, allSorted)).isNotEmpty();
+
+        final Keyword kw2 = new Keyword(7, 2, "en", "bar", null);
+        filter.setKeywords(List.of(kw1, kw2));
+        assertThat(repo.findPageByFilter(filter, allSorted)).isEmpty();
+    }
 }

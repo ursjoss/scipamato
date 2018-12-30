@@ -203,7 +203,8 @@ public class JooqSearchOrderRepo extends
             .fetchInto(Long.class);
     }
 
-    private List<SearchCondition> findTermLessConditions(final Map<Long, SearchCondition> idToSc,
+    // package-private for testing purposes
+    List<SearchCondition> findTermLessConditions(final Map<Long, SearchCondition> idToSc,
         final List<Long> conditionIdsWithSearchTerms) {
         return idToSc
             .values()
@@ -242,10 +243,11 @@ public class JooqSearchOrderRepo extends
         deleteObsoleteConditionsFrom(searchOrder);
     }
 
-    private void storeExistingConditionsOf(final SearchOrder searchOrder, final String languageCode) {
+    // package-private for testing purposes
+    void storeExistingConditionsOf(final SearchOrder searchOrder, final String languageCode) {
         final Long searchOrderId = searchOrder.getId();
         for (final SearchCondition sc : searchOrder.getSearchConditions()) {
-            Long searchConditionId = sc.getSearchConditionId();
+            final Long searchConditionId = sc.getSearchConditionId();
             if (searchConditionId == null)
                 addSearchCondition(sc, searchOrderId, languageCode);
             else
@@ -361,7 +363,8 @@ public class JooqSearchOrderRepo extends
         }
     }
 
-    private boolean hasDirtyNewsletterFields(final SearchCondition searchCondition, final SearchCondition psc) {
+    // package-private for testing
+    boolean hasDirtyNewsletterFields(final SearchCondition searchCondition, final SearchCondition psc) {
         //@formatter:off
         return !Objects.equals(psc.getNewsletterTopicId(), searchCondition.getNewsletterTopicId())
             || !Objects.equals(psc.getNewsletterHeadline(), searchCondition.getNewsletterHeadline())
@@ -380,6 +383,8 @@ public class JooqSearchOrderRepo extends
      * Tries to load an already persisted instance of {@link SearchCondition} for
      * the given search order (identified by the {@code searchOrderId}) semantically
      * covering the same searchConditions.
+     * <p>
+     * package-private for testing
      *
      * @param searchCondition
      *     the search condition we're trying to find the semantically
@@ -388,8 +393,8 @@ public class JooqSearchOrderRepo extends
      *     identifying the search order
      * @return optional of the persisted version (if found - empty otherwise)
      */
-    private Optional<SearchCondition> findEquivalentPersisted(final SearchCondition searchCondition,
-        final long searchOrderId, final String languageCode) {
+    Optional<SearchCondition> findEquivalentPersisted(final SearchCondition searchCondition, final long searchOrderId,
+        final String languageCode) {
         final List<SearchCondition> persisted = getDsl()
             .selectFrom(SEARCH_CONDITION)
             .where(SEARCH_CONDITION.SEARCH_ORDER_ID.eq(searchOrderId))
@@ -500,7 +505,8 @@ public class JooqSearchOrderRepo extends
             .fetchOneInto(termClass);
     }
 
-    private void removeObsoleteSearchTerms(SearchCondition searchCondition, Long searchConditionId) {
+    // package-private for testing purposes
+    void removeObsoleteSearchTerms(SearchCondition searchCondition, Long searchConditionId) {
         if (!searchCondition
             .getRemovedKeys()
             .isEmpty()) {

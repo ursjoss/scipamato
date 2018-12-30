@@ -25,8 +25,6 @@ public class IntegerSearchTermEvaluator implements SearchTermEvaluator<IntegerSe
         final Param<Integer> value = DSL.val(searchTerm.getValue());
 
         switch (searchTerm.getType()) {
-        case EXACT:
-            return field.equal(value);
         case LESS_OR_EQUAL:
             return field.le(value);
         case LESS_THAN:
@@ -42,7 +40,7 @@ public class IntegerSearchTermEvaluator implements SearchTermEvaluator<IntegerSe
         case PRESENT:
             return field.isNotNull();
         default:
-            throw new AssertionError("Evaluation of type " + searchTerm.getType() + " is not supported...");
+            return field.equal(value);
         }
     }
 
