@@ -92,6 +92,14 @@ public class AuditSearchTermEvaluatorTest extends SearchTermEvaluatorTest<AuditS
     }
 
     @Test
+    public void buildingConditionForWhitespace_appliesTrueCondition2() {
+        expectToken(TokenType.WHITESPACE, "   ", "paper.last_modified");
+        assertThat(e
+            .evaluate(stMock)
+            .toString()).isEqualTo("1 = 1");
+    }
+
+    @Test
     public void buildingConditionForWord_appliesContains() {
         expectToken(TokenType.WORD, "foo", "paper.created_by");
         assertThat(e
@@ -107,6 +115,40 @@ public class AuditSearchTermEvaluatorTest extends SearchTermEvaluatorTest<AuditS
               ")"
             // @formatter:on
         ));
+    }
+
+    @Test
+    public void buildingConditionForWord_appliesContains2() {
+        expectToken(TokenType.WORD, "foo", "paper.last_modified_by");
+        assertThat(e
+            .evaluate(stMock)
+            .toString()).isEqualToIgnoringCase(concat(
+            // @formatter:off
+              "\"public\".\"paper\".\"id\" in (",
+              "  select \"public\".\"paper\".\"id\"",
+              "  from \"public\".\"paper\"",
+              "    join \"public\".\"scipamato_user\"",
+              "    on paper.last_modified_by = \"public\".\"scipamato_user\".\"id\"",
+              "  where lower(\"public\".\"scipamato_user\".\"user_name\") like '%foo%'",
+              ")"
+            // @formatter:on
+        ));
+    }
+
+    @Test
+    public void buildingConditionForGreaterOrEquals() {
+        expectToken(TokenType.GREATEROREQUAL, "2019-01-05", "paper.created");
+        assertThat(e
+            .evaluate(stMock)
+            .toString()).isEqualToIgnoringCase(concat("paper.created >= timestamp '2019-01-05 00:00:00.0'"));
+    }
+
+    @Test
+    public void buildingConditionForGreaterOrEquals2() {
+        expectToken(TokenType.GREATEROREQUAL, "2019-01-05", "paper.last_modified");
+        assertThat(e
+            .evaluate(stMock)
+            .toString()).isEqualToIgnoringCase(concat("paper.last_modified >= timestamp '2019-01-05 00:00:00.0'"));
     }
 
     @Test

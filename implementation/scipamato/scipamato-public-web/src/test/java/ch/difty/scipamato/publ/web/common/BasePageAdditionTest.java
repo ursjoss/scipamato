@@ -1,8 +1,7 @@
 package ch.difty.scipamato.publ.web.common;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.util.Locale;
 
@@ -122,6 +121,16 @@ public class BasePageAdditionTest extends WicketTest {
             .contains("var pymChild = new pym.Child()")).isEqualTo(render);
 
         verify(applicationProperties).isResponsiveIframeSupportEnabled();
+    }
+
+    @Test
+    public void renderingAdditionalCommercialFonts_isNoop() {
+        final IHeaderResponse response = mock(IHeaderResponse.class);
+        final BasePage page = newPageWithParameters(pp);
+
+        page.renderAdditionalCommercialFonts(response);
+
+        verifyNoMoreInteractions(response);
     }
 
 }

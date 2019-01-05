@@ -14,6 +14,7 @@ import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.settings.DebugSettings;
 import org.junit.After;
 import org.junit.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -176,5 +177,30 @@ public class AbstractPageTest extends WicketBaseTest {
 
         getTester().assertRenderedPage(TestAbstractPage.class);
         getTester().assertModelValue("form:name", "bar");
+    }
+
+    @Test
+    public void withDebugEnabled() {
+        final DebugSettings debugSettings = mock(DebugSettings.class);
+        when(debugSettings.isDevelopmentUtilitiesEnabled()).thenReturn(true);
+
+        page = new AbstractPage<>(Model.of(new TestRecord(1, "foo"))) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected ApplicationProperties getProperties() {
+                return new TestApplicationProperties();
+            }
+
+            @Override
+            DebugSettings getDebugSettings() {
+                return debugSettings;
+            }
+        };
+
+        getTester().startPage(page);
+        getTester().assertRenderedPage(AbstractPage.class);
+
+        verify(debugSettings).isDevelopmentUtilitiesEnabled();
     }
 }
