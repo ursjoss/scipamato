@@ -483,7 +483,7 @@ public class JooqPaperRepo extends
             return condition;
     }
 
-    private Optional<String> evaluateNumbers(final Record1<Long[]> numbers) {
+    Optional<String> evaluateNumbers(final Record1<Long[]> numbers) {
         if (numbers == null || numbers.value1() == null || numbers.value1().length == 0)
             return Optional.empty();
         return Optional.of(Arrays
