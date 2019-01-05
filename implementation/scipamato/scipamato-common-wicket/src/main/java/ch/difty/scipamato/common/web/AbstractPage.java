@@ -20,6 +20,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.settings.DebugSettings;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.string.Strings;
 
@@ -114,13 +115,14 @@ public abstract class AbstractPage<T> extends GenericWebPage<T> {
     }
 
     private void createAndAddDebugBar(String label) {
-        if (getApplication()
-            .getDebugSettings()
-            .isDevelopmentUtilitiesEnabled()) {
+        if (getDebugSettings().isDevelopmentUtilitiesEnabled())
             queue(new DebugBar(label).positionBottom());
-        } else {
+        else
             queue(new EmptyPanel(label).setVisible(false));
-        }
+    }
+
+    DebugSettings getDebugSettings() {
+        return getApplication().getDebugSettings();
     }
 
     private void createAndAddFooterContainer(String id) {
