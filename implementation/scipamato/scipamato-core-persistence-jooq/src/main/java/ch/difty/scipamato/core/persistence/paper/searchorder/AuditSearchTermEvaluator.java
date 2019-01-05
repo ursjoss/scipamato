@@ -16,6 +16,7 @@ import org.jooq.impl.DSL;
 
 import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.entity.FieldEnumType;
+import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.search.AuditSearchTerm;
 import ch.difty.scipamato.core.entity.search.AuditSearchTerm.MatchType;
 import ch.difty.scipamato.core.entity.search.AuditSearchTerm.Token;
@@ -53,11 +54,7 @@ public class AuditSearchTermEvaluator implements SearchTermEvaluator<AuditSearch
     private void handleUserField(final AuditSearchTerm searchTerm, final ConditionalSupplier conditions,
         final Token token) {
         final String fieldName = searchTerm.getFieldName();
-        if (!(CREATED_BY
-                  .getName()
-                  .equals(fieldName) || LAST_MOD_BY
-                  .getName()
-                  .equals(fieldName))) {
+        if (isOneOrTheOther(CREATED_BY, LAST_MOD_BY, fieldName)) {
             checkFields(fieldName, "user", CREATED_BY, LAST_MOD_BY, "CONTAINS");
         }
         final Field<Object> field = DSL.field(fieldName);
@@ -75,6 +72,16 @@ public class AuditSearchTermEvaluator implements SearchTermEvaluator<AuditSearch
         conditions.add(() -> PAPER.ID.in(step));
     }
 
+    private boolean isOneOrTheOther(final Paper.PaperFields createdField, final Paper.PaperFields lastModField,
+        final String fieldName) {
+        //@formatter:off
+        return !(
+               createdField.getName().equals(fieldName)
+            || lastModField.getName().equals(fieldName)
+        );
+        //@formatter:on
+    }
+
     private void checkFields(final String fieldName, String fieldType, FieldEnumType fld1, FieldEnumType fld2,
         String matchType) {
         final String msg = String.format(
@@ -86,30 +93,33 @@ public class AuditSearchTermEvaluator implements SearchTermEvaluator<AuditSearch
     private void handleDateField(final AuditSearchTerm searchTerm, final ConditionalSupplier conditions,
         final Token token) {
         final String fieldName = searchTerm.getFieldName();
-        if (!(CREATED
-                  .getName()
-                  .equals(fieldName) || LAST_MOD
-                  .getName()
-                  .equals(fieldName))) {
+        if (isOneOrTheOther(CREATED, LAST_MOD, fieldName)) {
             checkFields(fieldName, "date", CREATED, LAST_MOD, token.getType().matchType.name());
         }
         if (token
                 .getDateSqlData()
                 .length() == DATE_RANGE_PATTERN_LENGTH) {
-            final LocalDateTime ldt1 = LocalDateTime.parse(token
-                .getDateSqlData()
-                .substring(0, 19), DateTimeFormatter.ofPattern(DATE_FORMAT));
-            final LocalDateTime ldt2 = LocalDateTime.parse(token
-                .getDateSqlData()
-                .substring(20), DateTimeFormatter.ofPattern(DATE_FORMAT));
-            addToConditions(token, DSL.field(fieldName), DSL.val(Timestamp.valueOf(ldt1)),
-                DSL.val(Timestamp.valueOf(ldt2)), conditions);
+            handleDateRange(conditions, token, fieldName);
         } else {
-            final LocalDateTime ldt = LocalDateTime.parse(token.getDateSqlData(),
-                DateTimeFormatter.ofPattern(DATE_FORMAT));
-            addToConditions(token, DSL.field(fieldName), DSL.val(Timestamp.valueOf(ldt)),
-                DSL.val(Timestamp.valueOf(ldt)), conditions);
+            handleSingleDate(conditions, token, fieldName);
         }
+    }
+
+    private void handleDateRange(final ConditionalSupplier conditions, final Token token, final String fieldName) {
+        final LocalDateTime ldt1 = LocalDateTime.parse(token
+            .getDateSqlData()
+            .substring(0, 19), DateTimeFormatter.ofPattern(DATE_FORMAT));
+        final LocalDateTime ldt2 = LocalDateTime.parse(token
+            .getDateSqlData()
+            .substring(20), DateTimeFormatter.ofPattern(DATE_FORMAT));
+        addToConditions(token, DSL.field(fieldName), DSL.val(Timestamp.valueOf(ldt1)), DSL.val(Timestamp.valueOf(ldt2)),
+            conditions);
+    }
+
+    private void handleSingleDate(final ConditionalSupplier conditions, final Token token, final String fieldName) {
+        final LocalDateTime ldt = LocalDateTime.parse(token.getDateSqlData(), DateTimeFormatter.ofPattern(DATE_FORMAT));
+        addToConditions(token, DSL.field(fieldName), DSL.val(Timestamp.valueOf(ldt)), DSL.val(Timestamp.valueOf(ldt)),
+            conditions);
     }
 
     private void addToConditions(final Token token, final Field<Object> field, final Field<Timestamp> value1,
