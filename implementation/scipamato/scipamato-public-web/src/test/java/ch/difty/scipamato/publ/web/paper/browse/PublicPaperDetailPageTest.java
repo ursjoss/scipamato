@@ -293,4 +293,19 @@ public class PublicPaperDetailPageTest extends BasePageTest<PublicPaperDetailPag
 
         verify(serviceMock).findPageOfNumbersByFilter(isA(PublicPaperFilter.class), isA(PaginationRequest.class));
     }
+
+    @Test
+    public void constructingPage_withPageParmeterProvidingNumber_loadsPaperWithNumber() {
+        PageParameters pp = new PageParameters();
+        pp.set(PublicPageParameters.NUMBER.getName(), NUMBER);
+        new PublicPaperDetailPage(pp);
+        verify(serviceMock).findByNumber(NUMBER);
+    }
+
+    @Test
+    public void constructingPage_withoutPageParmeterProvidingNumber_loadsNothing() {
+        new PublicPaperDetailPage(new PageParameters());
+        verify(serviceMock, never()).findByNumber(anyLong());
+    }
+
 }

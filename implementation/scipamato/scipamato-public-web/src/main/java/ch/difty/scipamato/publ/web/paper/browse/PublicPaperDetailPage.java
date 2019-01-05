@@ -75,10 +75,6 @@ public class PublicPaperDetailPage extends BasePage<PublicPaper> {
         this.callingPageRef = callingPageRef;
     }
 
-    /**
-     * Try loading the record by ID. If not reasonable id is supplied, try by
-     * number.
-     */
     private void tryLoadingRecord(final PageParameters parameters) {
         final long number = parameters
             .get(PublicPageParameters.NUMBER.getName())
