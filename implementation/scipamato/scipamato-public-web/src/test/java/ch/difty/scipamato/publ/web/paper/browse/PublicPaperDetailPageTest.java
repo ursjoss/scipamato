@@ -14,7 +14,9 @@ import org.junit.After;
 import org.junit.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import ch.difty.scipamato.common.persistence.paging.PaginationRequest;
 import ch.difty.scipamato.publ.entity.PublicPaper;
+import ch.difty.scipamato.publ.entity.filter.PublicPaperFilter;
 import ch.difty.scipamato.publ.persistence.api.PublicPaperService;
 import ch.difty.scipamato.publ.web.PublicPageParameters;
 import ch.difty.scipamato.publ.web.common.BasePageTest;
@@ -276,5 +278,19 @@ public class PublicPaperDetailPageTest extends BasePageTest<PublicPaperDetailPag
         verify(getItemNavigator()).getItemWithFocus();
 
         verify(serviceMock, never()).findByNumber(anyLong());
+    }
+
+    @Test
+    public void clickingBack_withoutCallingRef_jumpsToPublicPage() {
+        PublicPaper p = new PublicPaper(2L, NUMBER, 2, "authors", "auths", "title", "location", "journal", 2017,
+            "goals", "methods", "population", "result", "comment");
+        getTester().startPage(new PublicPaperDetailPage(Model.of(p), null));
+
+        FormTester formTester = getTester().newFormTester("form");
+        formTester.submit("back");
+
+        getTester().assertRenderedPage(PublicPage.class);
+
+        verify(serviceMock).findPageOfNumbersByFilter(isA(PublicPaperFilter.class), isA(PaginationRequest.class));
     }
 }
