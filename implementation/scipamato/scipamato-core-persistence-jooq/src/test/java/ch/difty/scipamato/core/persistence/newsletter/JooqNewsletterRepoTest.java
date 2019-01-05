@@ -49,6 +49,18 @@ public class JooqNewsletterRepoTest extends
     }
 
     @Override
+    protected EntityRepository<Newsletter, Integer, NewsletterFilter> makeRepoSavingReturning(
+        final NewsletterRecord returning) {
+        return new JooqNewsletterRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(),
+            getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), getApplicationProperties()) {
+            @Override
+            protected NewsletterRecord doSave(final Newsletter entity, final String languageCode) {
+                return returning;
+            }
+        };
+    }
+
+    @Override
     protected Integer getSampleId() {
         return SAMPLE_ID;
     }

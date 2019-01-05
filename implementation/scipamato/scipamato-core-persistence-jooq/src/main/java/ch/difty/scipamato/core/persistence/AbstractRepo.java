@@ -43,14 +43,18 @@ public abstract class AbstractRepo {
      * @return the current {@link User}
      */
     protected User getActiveUser() {
-        final Authentication auth = SecurityContextHolder
-            .getContext()
-            .getAuthentication();
+        final Authentication auth = getAuthentication();
         if (auth != null) {
             return (User) auth.getPrincipal();
         } else {
             return User.NO_USER;
         }
+    }
+
+    Authentication getAuthentication() {
+        return SecurityContextHolder
+            .getContext()
+            .getAuthentication();
     }
 
     /**

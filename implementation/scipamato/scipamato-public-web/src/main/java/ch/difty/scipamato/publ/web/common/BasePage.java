@@ -46,13 +46,13 @@ public abstract class BasePage<T> extends AbstractPage<T> {
     protected BasePage(final PageParameters parameters) {
         super(parameters);
         final StringValue showNavbarValue = parameters.get(PublicPageParameters.SHOW_NAVBAR.getName());
-        this.showNavbar = showNavbarValue.toBoolean(applicationProperties.isNavbarVisibleByDefault());
+        this.showNavbar = showNavbarValue.toBoolean(getProperties().isNavbarVisibleByDefault());
         considerSettingLocaleFromParentUrl(parameters);
     }
 
     protected BasePage(final IModel<T> model) {
         super(model);
-        this.showNavbar = applicationProperties.isNavbarVisibleByDefault();
+        this.showNavbar = getProperties().isNavbarVisibleByDefault();
     }
 
     private void considerSettingLocaleFromParentUrl(final PageParameters parameters) {
@@ -79,10 +79,10 @@ public abstract class BasePage<T> extends AbstractPage<T> {
         super.renderHead(response);
         response.render(CssHeaderItem.forReference(MainCssResourceReference.get()));
 
-        if (applicationProperties.isCommercialFontPresent())
+        if (getProperties().isCommercialFontPresent())
             renderCommercialFonts(response);
 
-        if (applicationProperties.isResponsiveIframeSupportEnabled())
+        if (getProperties().isResponsiveIframeSupportEnabled())
             renderPymForResponsiveIframe(response);
     }
 

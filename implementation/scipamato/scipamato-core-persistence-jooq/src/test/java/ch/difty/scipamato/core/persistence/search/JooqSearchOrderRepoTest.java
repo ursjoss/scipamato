@@ -105,6 +105,18 @@ public class JooqSearchOrderRepoTest extends
     }
 
     @Override
+    protected EntityRepository<SearchOrder, Long, SearchOrderFilter> makeRepoSavingReturning(
+        final SearchOrderRecord returning) {
+        return new JooqSearchOrderRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(),
+            getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), getApplicationProperties()) {
+            @Override
+            protected SearchOrderRecord doSave(final SearchOrder entity, final String languageCode) {
+                return returning;
+            }
+        };
+    }
+
+    @Override
     protected SearchOrderFilter getFilter() {
         return filterMock;
     }

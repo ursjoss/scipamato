@@ -74,6 +74,18 @@ public class JooqPaperRepoTest extends
     }
 
     @Override
+    protected EntityRepository<Paper, Long, PaperFilter> makeRepoSavingReturning(final PaperRecord returning) {
+        return new JooqPaperRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(),
+            getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), searchOrderRepositoryMock,
+            getApplicationProperties()) {
+            @Override
+            protected PaperRecord doSave(final Paper entity, final String languageCode) {
+                return returning;
+            }
+        };
+    }
+
+    @Override
     protected Long getSampleId() {
         return SAMPLE_ID;
     }
@@ -479,4 +491,24 @@ public class JooqPaperRepoTest extends
                 .hasMessage("paper must not be null.");
         }
     }
+
+    @Test
+    public void evaluatingNumbers_withNullRecord_returnsEmpty() {
+        assertThat(repo.evaluateNumbers(null)).isEmpty();
+    }
+
+    @Test
+    public void evaluatingNumbers_withRecordWithNullValue1_returnsEmpty() {
+        Record1<Long[]> numbers = mock(Record1.class);
+        when(numbers.value1()).thenReturn(null);
+        assertThat(repo.evaluateNumbers(numbers)).isEmpty();
+    }
+
+    @Test
+    public void evaluatingNumbers_withRecordWithEmptyValue1_returnsEmpty() {
+        Record1<Long[]> numbers = mock(Record1.class);
+        when(numbers.value1()).thenReturn(new Long[] {});
+        assertThat(repo.evaluateNumbers(numbers)).isEmpty();
+    }
+
 }

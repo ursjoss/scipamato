@@ -1,15 +1,17 @@
 package ch.difty.scipamato.common.web;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.*;
 
 import de.agilecoders.wicket.core.markup.html.bootstrap.common.NotificationPanel;
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
+import org.apache.wicket.bean.validation.PropertyValidator;
 import org.apache.wicket.markup.head.filter.HeaderResponseContainer;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.internal.HtmlHeaderContainer;
 import org.apache.wicket.markup.repeater.RepeatingView;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.junit.After;
@@ -110,7 +112,69 @@ public class AbstractPageTest extends WicketBaseTest {
         getTester().assertInvisible("debug");
 
         getTester().assertComponent("form", Form.class);
-        getTester().assertLabel("form:fooLabel", "Foo");
-        getTester().assertComponent("form:foo", TextField.class);
+        getTester().assertLabel("form:nameLabel", "Name");
+        getTester().assertComponent("form:name", TextField.class);
+        getTester().assertModelValue("form:name", "foo");
+    }
+
+    @Test
+    public void gettingBrandName_withNullBrand_retrievesBrandFromProperties() {
+        assertThat(page.getBrandName(null)).isEqualTo("SciPaMaTo");
+    }
+
+    @Test
+    public void gettingBrandName_withEmptyBrand_retrievesBrandFromProperties() {
+        assertThat(page.getBrandName("")).isEqualTo("SciPaMaTo");
+    }
+
+    @Test
+    public void gettingBrandName_withNaBrand_retrievesBrandFromProperties() {
+        assertThat(page.getBrandName("n.a.")).isEqualTo("SciPaMaTo");
+    }
+
+    @Test
+    public void gettingBrandName_withExplicitBrand_usesThat() {
+        assertThat(page.getBrandName("foo")).isEqualTo("foo");
+    }
+
+    @Test
+    public void queueingFieldAndLabel_withPropertyValidator_addsItToField() {
+        final TextField<String> field = mock(TextField.class);
+        when(field.getId()).thenReturn("testField");
+        final PropertyValidator<String> pv = mock(PropertyValidator.class);
+
+        page.queueFieldAndLabel(field, pv);
+
+        verify(field, times(8)).getId();
+        verify(field).setLabel(isA(IModel.class));
+        verify(field).add(pv);
+        verify(field).isVisible();
+        verifyNoMoreInteractions(field);
+    }
+
+    @Test
+    public void queueingFieldAndLabel_withNoPropertyValidator_dowNotAddToField() {
+        final TextField<String> field = mock(TextField.class);
+        when(field.getId()).thenReturn("testField");
+
+        page.queueFieldAndLabel(field, null);
+
+        verify(field, times(8)).getId();
+        verify(field).setLabel(isA(IModel.class));
+        verify(field).isVisible();
+        verifyNoMoreInteractions(field);
+    }
+
+    @Test
+    public void submitting() {
+        getTester().startPage(new TestAbstractPage(Model.of(new TestRecord(1, "foo"))));
+        getTester().assertRenderedPage(TestAbstractPage.class);
+
+        getTester().assertModelValue("form:name", "foo");
+
+        getTester().executeAjaxEvent("form:respPageButton", "click");
+
+        getTester().assertRenderedPage(TestAbstractPage.class);
+        getTester().assertModelValue("form:name", "bar");
     }
 }

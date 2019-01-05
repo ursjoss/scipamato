@@ -59,8 +59,7 @@ public abstract class JasperReportResourceReference extends PackageResourceRefer
     public JasperReport getReport() {
         if (!cacheReport || report == null) {
             try {
-                report = JasperCompileManager.compileReport(getInputStream());
-                log.info("Successfully compiled JasperReport {}...", getName());
+                compileReport();
             } catch (final JRException e) {
                 throw new JasperReportException(e);
             }
@@ -68,21 +67,30 @@ public abstract class JasperReportResourceReference extends PackageResourceRefer
         return report;
     }
 
-    private InputStream getInputStream() {
-        try {
-            return getResourceStream().getInputStream();
-        } catch (final ResourceStreamNotFoundException e) {
-            throw new JasperReportException(e);
-        }
+    void compileReport() throws JRException {
+        report = JasperCompileManager.compileReport(getInputStream());
+        log.info("Successfully compiled JasperReport {}...", getName());
     }
 
-    private IResourceStream getResourceStream() {
-        final IResourceStream rs = getResource().getResourceStream();
+    private InputStream getInputStream() {
+        final IResourceStream rs = getResourceStreamFromResource();
         if (rs != null) {
-            return rs;
+            try {
+                return getInputStream(rs);
+            } catch (ResourceStreamNotFoundException ex) {
+                throw new JasperReportException(ex);
+            }
         } else {
             throw new JasperReportException("Unable to locate resource stream for jasper file '" + getName() + "'");
         }
+    }
+
+    InputStream getInputStream(final IResourceStream rs) throws ResourceStreamNotFoundException {
+        return rs.getInputStream();
+    }
+
+    IResourceStream getResourceStreamFromResource() {
+        return getResource().getResourceStream();
     }
 
     boolean isCacheReport() {
