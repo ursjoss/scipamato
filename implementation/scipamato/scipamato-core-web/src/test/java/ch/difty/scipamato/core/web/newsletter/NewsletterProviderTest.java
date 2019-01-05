@@ -166,4 +166,14 @@ public class NewsletterProviderTest {
             argThat(new NewsletterProviderTest.PaginationContextMatcher(3, "title: DESC")));
     }
 
+    @Test
+    public void iterating_throughThirdPage_ascendingly() {
+        provider.setSort("title", SortOrder.ASCENDING);
+        when(serviceMock.findPageByFilter(eq(filterMock), isA(PaginationContext.class))).thenReturn(papers);
+        Iterator<Newsletter> it = provider.iterator(6, 3);
+        assertRecordsIn(it);
+        verify(serviceMock).findPageByFilter(eq(filterMock),
+            argThat(new NewsletterProviderTest.PaginationContextMatcher(3, "title: ASC")));
+    }
+
 }
