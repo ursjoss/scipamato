@@ -139,7 +139,7 @@ public abstract class AbstractPage<T> extends GenericWebPage<T> {
         };
         nb.fluid();
         nb.setPosition(Navbar.Position.STATIC_TOP);
-        nb.setBrandName(getBrandName());
+        nb.setBrandName(Model.of(getBrandName(getProperties().getBrand())));
         nb.setInverted(true);
 
         addLinksTo(nb);
@@ -156,11 +156,10 @@ public abstract class AbstractPage<T> extends GenericWebPage<T> {
         return true;
     }
 
-    private IModel<String> getBrandName() {
-        String brand = getProperties().getBrand();
+    String getBrandName(final String brand) {
         if (Strings.isEmpty(brand) || "n.a.".equals(brand))
-            brand = new StringResourceModel("brandname", this, null).getString();
-        return Model.of(brand);
+            return new StringResourceModel("brandname", this, null).getString();
+        return brand;
     }
 
     protected abstract ApplicationProperties getProperties();

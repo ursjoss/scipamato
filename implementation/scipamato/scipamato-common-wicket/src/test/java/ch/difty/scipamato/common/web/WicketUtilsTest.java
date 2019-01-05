@@ -28,4 +28,8 @@ public class WicketUtilsTest extends FinalClassTest<WicketUtils> {
         assertThat(WicketUtils.PANEL_HEADER_RESOURCE_TAG).isEqualTo(".header");
     }
 
+    @Test
+    public void dummyTest() {
+        assertThat(WicketUtils.dummyMethod()).isEqualTo("Label.label.loading.title.short.label.header");
+    }
 }
