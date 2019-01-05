@@ -98,6 +98,20 @@ public abstract class JooqEntityRepo<R extends Record, T extends CoreEntity, ID,
         AssertAs.notNull(entity, "entity");
         AssertAs.notNull(languageCode, "languageCode");
 
+        R saved = doSave(entity, languageCode);
+        if (saved != null) {
+            getLogger().info("{} inserted 1 record: {} with id {}.", getActiveUser().getUserName(),
+                getTable().getName(), getIdFrom(saved));
+            T savedEntity = getMapper().map(saved);
+            enrichAssociatedEntitiesOf(savedEntity, languageCode);
+            return savedEntity;
+        } else {
+            getLogger().warn("Unable to insert {} record", getTable().getName());
+            return null;
+        }
+    }
+
+    protected R doSave(final T entity, final String languageCode) {
         entity.setCreatedBy(getUserId());
         entity.setLastModifiedBy(getUserId());
 
@@ -109,16 +123,7 @@ public abstract class JooqEntityRepo<R extends Record, T extends CoreEntity, ID,
             .fetchOne();
         insertSetStepSetter.resetIdToEntity(entity, saved);
         saveAssociatedEntitiesOf(entity, languageCode);
-        if (saved != null) {
-            getLogger().info("{} inserted 1 record: {} with id {}.", getActiveUser().getUserName(),
-                getTable().getName(), getIdFrom(saved));
-            T savedEntity = getMapper().map(saved);
-            enrichAssociatedEntitiesOf(savedEntity, languageCode);
-            return savedEntity;
-        } else {
-            getLogger().warn("Unable to insert {} record", getTable().getName());
-            return null;
-        }
+        return saved;
     }
 
     /**

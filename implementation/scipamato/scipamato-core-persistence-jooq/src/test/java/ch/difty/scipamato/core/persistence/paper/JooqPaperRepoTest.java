@@ -74,6 +74,18 @@ public class JooqPaperRepoTest extends
     }
 
     @Override
+    protected EntityRepository<Paper, Long, PaperFilter> makeRepoSavingReturning(final PaperRecord returning) {
+        return new JooqPaperRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(),
+            getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), searchOrderRepositoryMock,
+            getApplicationProperties()) {
+            @Override
+            protected PaperRecord doSave(final Paper entity, final String languageCode) {
+                return returning;
+            }
+        };
+    }
+
+    @Override
     protected Long getSampleId() {
         return SAMPLE_ID;
     }

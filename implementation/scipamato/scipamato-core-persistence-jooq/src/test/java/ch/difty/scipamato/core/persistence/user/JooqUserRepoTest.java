@@ -97,6 +97,18 @@ public class JooqUserRepoTest extends
         return SCIPAMATO_USER.VERSION;
     }
 
+    @Override
+    protected EntityRepository<User, Integer, UserFilter> makeRepoSavingReturning(final ScipamatoUserRecord returning) {
+        return new JooqUserRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(),
+            getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), getApplicationProperties(),
+            userRoleRepoMock) {
+            @Override
+            protected ScipamatoUserRecord doSave(final User entity, final String languageCode) {
+                return returning;
+            }
+        };
+    }
+
     @Mock
     private UserFilter filterMock;
 

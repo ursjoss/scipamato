@@ -186,6 +186,22 @@ public abstract class JooqEntityRepoTest<R extends Record, T extends IdScipamato
         assertDegenerateSupplierParameter(() -> repo.add(getUnpersistedEntity(), null), "languageCode");
     }
 
+    @Test
+    public void adding_withSaveReturningNull_returnsNull() {
+        repo = makeRepoSavingReturning(null);
+        assertThat(repo.add(getUnpersistedEntity(), "de")).isNull();
+    }
+
+    /**
+     * Hand-rolled spy that returns the provided entity in the method
+     * {@code doSaving(T entity)}
+     *
+     * @param returning
+     *     the record to be returned after the save.
+     * @return the entity
+     */
+    protected abstract EntityRepository<T, ID, F> makeRepoSavingReturning(R returning);
+
     @Test(expected = NullArgumentException.class)
     public void deleting_withIdNull_throws() {
         repo.delete(null, 1);
