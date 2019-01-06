@@ -244,46 +244,28 @@ public class JooqCodeClassRepo extends AbstractRepo implements CodeClassReposito
 
     private List<CodeClassTranslation> updateOrInsertAndLoadCodeClassTranslations(final CodeClassDefinition entity,
         final int userId) {
+        final Result<CodeClassTrRecord> persistedTranslations = loadCodeClassTranslationsFromDbFor(entity.getId());
         final Collection<CodeClassTranslation> entityTranslations = entity
             .getTranslations()
             .values();
-        removeObsoletePersistedRecords(entity, entityTranslations);
+        removeObsoletePersistedRecordsFor(persistedTranslations, entityTranslations);
         return addOrUpdate(entity, entityTranslations, userId);
     }
 
-    private void removeObsoletePersistedRecords(final CodeClassDefinition entity,
-        final Collection<CodeClassTranslation> entityTranslations) {
-        final Result<CodeClassTrRecord> persistedTranslations = getDsl()
+    private Result<CodeClassTrRecord> loadCodeClassTranslationsFromDbFor(final Integer codeClassId) {
+        return getDsl()
             .selectFrom(CODE_CLASS_TR)
-            .where(CODE_CLASS_TR.ID.eq(entity.getId()))
+            .where(CODE_CLASS_TR.ID.eq(codeClassId))
             .fetch();
-        for (final CodeClassTrRecord cctr : persistedTranslations) {
-            if (!isPresentIn(entityTranslations, cctr))
-                cctr.delete();
-        }
     }
 
-    private List<CodeClassTranslation> addOrUpdate(final CodeClassDefinition entity,
-        final Collection<CodeClassTranslation> entityTranslations, final int userId) {
-        final List<CodeClassTranslation> cctsPersisted = new ArrayList<>();
-        for (final CodeClassTranslation cct : entityTranslations) {
-            if (cct.getDescription() == null)
-                cct.setDescription("");
-            if (cct.getId() != null) {
-                final int currentVersion = cct.getVersion();
-                final CodeClassTrRecord cctRecord = updateCodeClassTr(entity, cct, userId, currentVersion);
-                if (cctRecord != null) {
-                    cctsPersisted.add(toCodeClassTranslation(cctRecord));
-                } else {
-                    throw new OptimisticLockingException(CODE_CLASS_TR.getName(), cct.toString(),
-                        OptimisticLockingException.Type.UPDATE);
-                }
-            } else {
-                final CodeClassTrRecord cctRecord = insertAndGetCodeClassTr(entity.getId(), userId, cct);
-                cctsPersisted.add(toCodeClassTranslation(cctRecord));
-            }
+    // package-protected for test purposes
+    void removeObsoletePersistedRecordsFor(final Result<CodeClassTrRecord> persistedTranslations,
+        final Collection<CodeClassTranslation> entityTranslations) {
+        for (final CodeClassTrRecord pcctr : persistedTranslations) {
+            if (!isPresentIn(entityTranslations, pcctr))
+                pcctr.delete();
         }
-        return cctsPersisted;
     }
 
     private boolean isPresentIn(final Collection<CodeClassTranslation> translations, final CodeClassTrRecord cct) {
@@ -294,6 +276,33 @@ public class JooqCodeClassRepo extends AbstractRepo implements CodeClassReposito
                 return true;
         }
         return false;
+    }
+
+    private List<CodeClassTranslation> addOrUpdate(final CodeClassDefinition entity,
+        final Collection<CodeClassTranslation> entityTranslations, final int userId) {
+        final List<CodeClassTranslation> cctsPersisted = new ArrayList<>();
+        for (final CodeClassTranslation cct : entityTranslations) {
+            if (cct.getDescription() == null)
+                cct.setDescription("");
+            if (cct.getId() != null) {
+                considerAdding(updateCodeClassTr(entity, cct, userId, cct.getVersion()), cctsPersisted, cct);
+            } else {
+                final CodeClassTrRecord cctRecord = insertAndGetCodeClassTr(entity.getId(), userId, cct);
+                cctsPersisted.add(toCodeClassTranslation(cctRecord));
+            }
+        }
+        return cctsPersisted;
+    }
+
+    // package-private for testing purposes
+    void considerAdding(final CodeClassTrRecord cctRecord, final List<CodeClassTranslation> cctsPersisted,
+        final CodeClassTranslation cct) {
+        if (cctRecord != null) {
+            cctsPersisted.add(toCodeClassTranslation(cctRecord));
+        } else {
+            throw new OptimisticLockingException(CODE_CLASS_TR.getName(), cct.toString(),
+                OptimisticLockingException.Type.UPDATE);
+        }
     }
 
     private CodeClassTrRecord insertAndGetCodeClassTr(final Integer id, final int userId,
@@ -341,23 +350,32 @@ public class JooqCodeClassRepo extends AbstractRepo implements CodeClassReposito
         final CodeClassDefinition toBeDeleted = findCodeClassDefinition(id);
         if (toBeDeleted != null) {
             if (toBeDeleted.getVersion() == version) {
-                final int deleteCount = getDsl()
-                    .delete(CODE_CLASS)
-                    .where(CODE_CLASS.ID.equal(id))
-                    .and(CODE_CLASS.VERSION.eq(version))
-                    .execute();
-                if (deleteCount > 0) {
-                    log.info("{} deleted {} record: {} with code class {}.", getActiveUser().getUserName(), deleteCount,
-                        CODE_CLASS.getName(), id);
-                } else {
-                    throw new OptimisticLockingException(CODE_CLASS.getName(), toBeDeleted.toString(),
-                        OptimisticLockingException.Type.DELETE);
-                }
+                final int deleteCount = deleteCodeClassMatching(id, version);
+                logOrThrow(deleteCount, id, toBeDeleted.toString());
             } else {
                 throw new OptimisticLockingException(CODE_CLASS.getName(), OptimisticLockingException.Type.DELETE);
             }
         }
         return toBeDeleted;
+    }
+
+    private int deleteCodeClassMatching(final Integer id, final int version) {
+        return getDsl()
+            .delete(CODE_CLASS)
+            .where(CODE_CLASS.ID.equal(id))
+            .and(CODE_CLASS.VERSION.eq(version))
+            .execute();
+    }
+
+    // package-private for testing purposes
+    void logOrThrow(final int deleteCount, final Integer id, final String deletedAsString) {
+        if (deleteCount > 0) {
+            log.info("{} deleted {} record: {} with code class {}.", getActiveUser().getUserName(), deleteCount,
+                CODE_CLASS.getName(), id);
+        } else {
+            throw new OptimisticLockingException(CODE_CLASS.getName(), deletedAsString,
+                OptimisticLockingException.Type.DELETE);
+        }
     }
 
 }
