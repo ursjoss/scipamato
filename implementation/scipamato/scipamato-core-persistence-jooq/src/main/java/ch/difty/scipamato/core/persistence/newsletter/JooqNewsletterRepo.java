@@ -161,30 +161,43 @@ public class JooqNewsletterRepo extends
     public Optional<Paper.NewsletterLink> mergePaperIntoNewsletter(final int newsletterId, final long paperId,
         final Integer newsletterTopicId, String languageCode) {
         final Timestamp ts = getDateTimeService().getCurrentTimestamp();
-        int count = tryInserting(newsletterId, paperId, newsletterTopicId, ts);
+        final int count = tryInserting(newsletterId, paperId, newsletterTopicId, ts);
+        return handleInsertedNewsletter(count, newsletterId, paperId, languageCode);
+
+    }
+
+    // package-private for testing purposes
+    Optional<Paper.NewsletterLink> handleInsertedNewsletter(final int count, final int newsletterId, final long paperId,
+        final String languageCode) {
         if (count > 0) {
-            Record6<Integer, String, Integer, Integer, String, String> r = getDsl()
-                .select(NEWSLETTER.ID, NEWSLETTER.ISSUE, NEWSLETTER.PUBLICATION_STATUS, NEWSLETTER_TOPIC.ID,
-                    NEWSLETTER_TOPIC_TR.TITLE, PAPER_NEWSLETTER.HEADLINE)
-                .from(PAPER_NEWSLETTER)
-                .innerJoin(NEWSLETTER)
-                .on(PAPER_NEWSLETTER.NEWSLETTER_ID.eq(NEWSLETTER.ID))
-                .leftOuterJoin(NEWSLETTER_TOPIC)
-                .on(PAPER_NEWSLETTER.NEWSLETTER_TOPIC_ID.eq(NEWSLETTER_TOPIC.ID))
-                .leftOuterJoin(NEWSLETTER_TOPIC_TR)
-                .on(NEWSLETTER_TOPIC.ID.eq(NEWSLETTER_TOPIC_TR.NEWSLETTER_TOPIC_ID))
-                .where(PAPER_NEWSLETTER.PAPER_ID.eq(paperId))
-                .and(PAPER_NEWSLETTER.NEWSLETTER_ID.eq(newsletterId))
-                .and(PAPER_NEWSLETTER.NEWSLETTER_TOPIC_ID
-                    .isNull()
-                    .or(NEWSLETTER_TOPIC_TR.LANG_CODE.eq(languageCode)))
-                .fetchOne();
+            final Record6<Integer, String, Integer, Integer, String, String> r = fetchMergedNewsletter(newsletterId,
+                paperId, languageCode);
             if (r != null)
                 return Optional.of(
                     new Paper.NewsletterLink(r.value1(), r.value2(), r.value3(), r.value4(), r.value5(), r.value6()));
         }
         return Optional.empty();
+    }
 
+    // package-private for stubbing purposes
+    Record6<Integer, String, Integer, Integer, String, String> fetchMergedNewsletter(final int newsletterId,
+        final long paperId, final String languageCode) {
+        return getDsl()
+            .select(NEWSLETTER.ID, NEWSLETTER.ISSUE, NEWSLETTER.PUBLICATION_STATUS, NEWSLETTER_TOPIC.ID,
+                NEWSLETTER_TOPIC_TR.TITLE, PAPER_NEWSLETTER.HEADLINE)
+            .from(PAPER_NEWSLETTER)
+            .innerJoin(NEWSLETTER)
+            .on(PAPER_NEWSLETTER.NEWSLETTER_ID.eq(NEWSLETTER.ID))
+            .leftOuterJoin(NEWSLETTER_TOPIC)
+            .on(PAPER_NEWSLETTER.NEWSLETTER_TOPIC_ID.eq(NEWSLETTER_TOPIC.ID))
+            .leftOuterJoin(NEWSLETTER_TOPIC_TR)
+            .on(NEWSLETTER_TOPIC.ID.eq(NEWSLETTER_TOPIC_TR.NEWSLETTER_TOPIC_ID))
+            .where(PAPER_NEWSLETTER.PAPER_ID.eq(paperId))
+            .and(PAPER_NEWSLETTER.NEWSLETTER_ID.eq(newsletterId))
+            .and(PAPER_NEWSLETTER.NEWSLETTER_TOPIC_ID
+                .isNull()
+                .or(NEWSLETTER_TOPIC_TR.LANG_CODE.eq(languageCode)))
+            .fetchOne();
     }
 
     // package-private for stubbing
