@@ -1,8 +1,17 @@
 package ch.difty.scipamato.core.persistence.code;
 
 import static ch.difty.scipamato.common.TestUtils.assertDegenerateSupplierParameter;
+import static ch.difty.scipamato.core.db.tables.CodeTr.CODE_TR;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+import static org.mockito.Mockito.*;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
 
 import org.jooq.DSLContext;
+import org.jooq.Result;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,8 +20,11 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import ch.difty.scipamato.common.DateTimeService;
 import ch.difty.scipamato.common.entity.CodeClassId;
+import ch.difty.scipamato.core.db.tables.records.CodeTrRecord;
 import ch.difty.scipamato.core.entity.CodeClass;
 import ch.difty.scipamato.core.entity.code.CodeDefinition;
+import ch.difty.scipamato.core.entity.code.CodeTranslation;
+import ch.difty.scipamato.core.persistence.OptimisticLockingException;
 import ch.difty.scipamato.core.persistence.codeclass.CodeClassRepository;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -77,4 +89,55 @@ public class JooqCodeRepoTest {
         assertDegenerateSupplierParameter(() -> repo.saveOrUpdate(cd), "codeDefinition.codeClass.id");
     }
 
+    @Test
+    public void removingObsoletePersistedRecords() {
+        final String code = "1A";
+        final CodeTranslation ct = new CodeTranslation(1, "de", "1ade", "", 1);
+        final Result<CodeTrRecord> resultMock = mock(Result.class);
+        final Iterator itMock = mock(Iterator.class);
+        when(resultMock.iterator()).thenReturn(itMock);
+        final CodeTrRecord ctr1 = mock(CodeTrRecord.class);
+        when(ctr1.get(CODE_TR.ID)).thenReturn(1);
+        final CodeTrRecord ctr2 = mock(CodeTrRecord.class);
+        when(ctr2.get(CODE_TR.ID)).thenReturn(2);
+        when(itMock.hasNext()).thenReturn(true, true, false);
+        when(itMock.next()).thenReturn(ctr1, ctr2);
+
+        repo.removeObsoletePersistedRecordsFor(resultMock, Arrays.asList(ct));
+
+        verify(resultMock).iterator();
+        verify(itMock, times(3)).hasNext();
+        verify(itMock, times(2)).next();
+        verify(ctr1).get(CODE_TR.ID);
+        verify(ctr2).get(CODE_TR.ID);
+        verify(ctr2).delete();
+
+        verifyNoMoreInteractions(resultMock, itMock, ctr1, ctr2);
+    }
+
+    @Test
+    public void consideringAdding_withNullRecord_throwsOptimisticLockingException() {
+        try {
+            repo.considerAdding(null, new ArrayList<>(), new CodeTranslation(1, "de", "c1", "comm", 10));
+            fail("should have thrown exception");
+        } catch (Exception ex) {
+            assertThat(ex)
+                .isInstanceOf(OptimisticLockingException.class)
+                .hasMessage(
+                    "Record in table 'code_tr' has been modified prior to the update attempt. Aborting.... [CodeTranslation(comment=comm)]");
+        }
+    }
+
+    @Test
+    public void logOrThrow_withDeleteCount0_throws() {
+        try {
+            repo.logOrThrow(0, "1A", "deletedObject");
+            fail("should have thrown exception");
+        } catch (Exception ex) {
+            assertThat(ex)
+                .isInstanceOf(OptimisticLockingException.class)
+                .hasMessage(
+                    "Record in table 'code' has been modified prior to the delete attempt. Aborting.... [deletedObject]");
+        }
+    }
 }
