@@ -192,6 +192,23 @@ public class JooqNewsletterServiceTest extends AbstractServiceTest<Integer, News
     }
 
     @Test
+    public void savingOrUpdating_witNoWipOption_justSaves() {
+        // hypothetical case
+        when(newsletterMock.getId()).thenReturn(17);
+        when(newsletterMock.getPublicationStatus()).thenReturn(PublicationStatus.WIP);
+        when(repoMock.getNewsletterInStatusWorkInProgress()).thenReturn(Optional.empty());
+        when(repoMock.update(newsletterMock)).thenReturn(newsletterMock);
+
+        assertThat(service.saveOrUpdate(newsletterMock)).isEqualTo(newsletterMock);
+
+        verify(repoMock).getNewsletterInStatusWorkInProgress();
+        verify(repoMock).update(newsletterMock);
+        verify(newsletterMock).getId();
+        verify(newsletterMock).getPublicationStatus();
+        verifyAudit(1);
+    }
+
+    @Test
     public void deleting_withNullEntity_doesNothing() {
         service.remove(null);
         verify(repoMock, never()).delete(anyInt(), anyInt());
