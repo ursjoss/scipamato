@@ -248,12 +248,45 @@ public class JooqKeywordRepo extends AbstractRepo implements KeywordRepository {
         AssertAs.notNull(entity.getId(), "entity.id");
 
         final int userId = getUserId();
-        final int currentVersion = entity.getVersion();
+        final List<KeywordTranslation> persistedTranslations = updateOrInsertAndLoadKeywordTranslations(entity, userId);
+        final KeywordRecord record = updateAndLoadKeywordDefinition(entity, userId, entity.getVersion());
+        return manageTranslations(record, entity, persistedTranslations);
+    }
 
-        final KeywordRecord record = updateAndLoadKeywordDefinition(entity, userId, currentVersion);
+    private List<KeywordTranslation> updateOrInsertAndLoadKeywordTranslations(final KeywordDefinition entity,
+        final int userId) {
+        final Collection<KeywordTranslation> entityTranslations = entity
+            .getTranslations()
+            .values();
+        removeObsoletePersistedRecords(entity.getId(), entityTranslations);
+        return addOrUpdate(entity, entityTranslations, userId);
+    }
+
+    private void removeObsoletePersistedRecords(final Integer id,
+        final Collection<KeywordTranslation> entityTranslations) {
+        final Result<KeywordTrRecord> persistedTranslations = loadTranslationsFromDbFor(id);
+        removeObsoletePersistedRecordsFor(persistedTranslations, entityTranslations);
+    }
+
+    private Result<KeywordTrRecord> loadTranslationsFromDbFor(final Integer id) {
+        return getDsl()
+            .selectFrom(KEYWORD_TR)
+            .where(KEYWORD_TR.KEYWORD_ID.eq(id))
+            .fetch();
+    }
+
+    // package-private for testing purposes
+    void removeObsoletePersistedRecordsFor(final Result<KeywordTrRecord> persistedTranslations,
+        final Collection<KeywordTranslation> entityTranslations) {
+        for (final KeywordTrRecord ktr : persistedTranslations)
+            if (!isPresentIn(entityTranslations, ktr))
+                ktr.delete();
+    }
+
+    // package-private for testing purposes
+    KeywordDefinition manageTranslations(final KeywordRecord record, final KeywordDefinition entity,
+        final List<KeywordTranslation> persistedTranslations) {
         if (record != null) {
-            final List<KeywordTranslation> persistedTranslations = updateOrInsertAndLoadKeywordTranslations(entity,
-                userId);
             final KeywordDefinition updatedEntity = toKeywordDefinition(entity.getId(),
                 record.get(KEYWORD.SEARCH_OVERRIDE), record.get(KEYWORD.VERSION), persistedTranslations);
             log.info("{} updated 1 record: {} with id {}.", getActiveUser().getUserName(), KEYWORD.getName(),
@@ -285,46 +318,36 @@ public class JooqKeywordRepo extends AbstractRepo implements KeywordRepository {
             .fetchOne();
     }
 
-    private List<KeywordTranslation> updateOrInsertAndLoadKeywordTranslations(final KeywordDefinition entity,
-        final int userId) {
-        final Collection<KeywordTranslation> entityTranslations = entity
-            .getTranslations()
-            .values();
-        removeObsoletePersistedRecords(entity, entityTranslations);
-        return addOrUpdate(entity, entityTranslations, userId);
-    }
-
-    private void removeObsoletePersistedRecords(final KeywordDefinition entity,
-        final Collection<KeywordTranslation> entityTranslations) {
-        final Result<KeywordTrRecord> persistedTranslations = getDsl()
-            .selectFrom(KEYWORD_TR)
-            .where(KEYWORD_TR.KEYWORD_ID.eq(entity.getId()))
-            .fetch();
-        for (final KeywordTrRecord ktr : persistedTranslations) {
-            if (!isPresentIn(entityTranslations, ktr))
-                ktr.delete();
-        }
-    }
-
     private List<KeywordTranslation> addOrUpdate(final KeywordDefinition entity,
         final Collection<KeywordTranslation> entityTranslations, final int userId) {
         final List<KeywordTranslation> ktPersisted = new ArrayList<>();
-        for (final KeywordTranslation kt : entityTranslations) {
-            if (kt.getId() != null) {
-                final int currentVersion = kt.getVersion();
-                final KeywordTrRecord ktRecord = updateKeywordTr(entity, kt, userId, currentVersion);
-                if (ktRecord != null) {
-                    ktPersisted.add(toKeywordTranslation(ktRecord));
-                } else {
-                    throw new OptimisticLockingException(KEYWORD_TR.getName(), kt.toString(),
-                        OptimisticLockingException.Type.UPDATE);
-                }
-            } else {
-                final KeywordTrRecord ktRecord = insertAndGetKeywordTr(entity.getId(), userId, kt);
-                ktPersisted.add(toKeywordTranslation(ktRecord));
-            }
-        }
+        for (final KeywordTranslation kt : entityTranslations)
+            addOrUpdateTranslation(kt, entity, userId, ktPersisted);
         return ktPersisted;
+    }
+
+    // package-private for test purposes
+    void addOrUpdateTranslation(final KeywordTranslation kt, final KeywordDefinition entity, final int userId,
+        final List<KeywordTranslation> ktPersisted) {
+        if (kt.getId() != null) {
+            final int currentVersion = kt.getVersion();
+            final KeywordTrRecord ktRecord = updateKeywordTr(entity, kt, userId, currentVersion);
+            addOrThrow(ktRecord, kt.toString(), ktPersisted);
+        } else {
+            final KeywordTrRecord ktRecord = insertAndGetKeywordTr(entity.getId(), userId, kt);
+            ktPersisted.add(toKeywordTranslation(ktRecord));
+        }
+    }
+
+    // package-private for testing purposes
+    void addOrThrow(final KeywordTrRecord ktRecord, final String translationAsString,
+        final List<KeywordTranslation> ktPersisted) {
+        if (ktRecord != null) {
+            ktPersisted.add(toKeywordTranslation(ktRecord));
+        } else {
+            throw new OptimisticLockingException(KEYWORD_TR.getName(), translationAsString,
+                OptimisticLockingException.Type.UPDATE);
+        }
     }
 
     private boolean isPresentIn(final Collection<KeywordTranslation> translations, final KeywordTrRecord ktr) {
@@ -337,7 +360,8 @@ public class JooqKeywordRepo extends AbstractRepo implements KeywordRepository {
         return false;
     }
 
-    private KeywordTrRecord insertAndGetKeywordTr(final int keywordId, final int userId, final KeywordTranslation kt) {
+    // package-private for stubbing purposes
+    KeywordTrRecord insertAndGetKeywordTr(final int keywordId, final int userId, final KeywordTranslation kt) {
         return getDsl()
             .insertInto(KEYWORD_TR)
             .set(KEYWORD_TR.KEYWORD_ID, keywordId)

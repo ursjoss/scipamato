@@ -7,6 +7,7 @@ import static org.mockito.Mockito.when;
 
 import java.sql.Timestamp;
 
+import org.jooq.Record6;
 import org.jooq.TableField;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -163,5 +164,23 @@ public class JooqNewsletterRepoTest extends
             }
         };
         assertThat(repo.mergePaperIntoNewsletter(1, 2L, 3, "en")).isNotPresent();
+    }
+
+    @Test
+    public void handlingInsertedNewsletter_withZeroCount_returnsEmptyOptional() {
+        assertThat(repo.handleInsertedNewsletter(0, 1, 2, "de")).isEmpty();
+    }
+
+    @Test
+    public void test() {
+        repo = new JooqNewsletterRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(),
+            getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), getApplicationProperties()) {
+            @Override
+            Record6<Integer, String, Integer, Integer, String, String> fetchMergedNewsletter(final int newsletterId,
+                final long paperId, final String languageCode) {
+                return null;
+            }
+        };
+        assertThat(repo.handleInsertedNewsletter(1, 1, 2, "de")).isEmpty();
     }
 }

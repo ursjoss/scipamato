@@ -54,9 +54,8 @@ public class AuditSearchTermEvaluator implements SearchTermEvaluator<AuditSearch
     private void handleUserField(final AuditSearchTerm searchTerm, final ConditionalSupplier conditions,
         final Token token) {
         final String fieldName = searchTerm.getFieldName();
-        if (isOneOrTheOther(CREATED_BY, LAST_MOD_BY, fieldName)) {
-            checkFields(fieldName, "user", CREATED_BY, LAST_MOD_BY, "CONTAINS");
-        }
+        checkField(fieldName, CREATED_BY, LAST_MOD_BY, "user", "CONTAINS");
+
         final Field<Object> field = DSL.field(fieldName);
         final String userName = "%" + token
             .getUserSqlData()
@@ -72,6 +71,12 @@ public class AuditSearchTermEvaluator implements SearchTermEvaluator<AuditSearch
         conditions.add(() -> PAPER.ID.in(step));
     }
 
+    private void checkField(final String fieldName, final Paper.PaperFields createdField,
+        final Paper.PaperFields lastModField, final String fieldType, final String matchType) {
+        if (isOneOrTheOther(createdField, lastModField, fieldName))
+            throwWithMessage(fieldName, fieldType, createdField, lastModField, matchType);
+    }
+
     private boolean isOneOrTheOther(final Paper.PaperFields createdField, final Paper.PaperFields lastModField,
         final String fieldName) {
         //@formatter:off
@@ -82,7 +87,7 @@ public class AuditSearchTermEvaluator implements SearchTermEvaluator<AuditSearch
         //@formatter:on
     }
 
-    private void checkFields(final String fieldName, String fieldType, FieldEnumType fld1, FieldEnumType fld2,
+    private void throwWithMessage(final String fieldName, String fieldType, FieldEnumType fld1, FieldEnumType fld2,
         String matchType) {
         final String msg = String.format(
             "Field %s is not one of the expected %s fields [%s, %s] entitled to use MatchType.%s", fieldName, fieldType,
@@ -93,9 +98,8 @@ public class AuditSearchTermEvaluator implements SearchTermEvaluator<AuditSearch
     private void handleDateField(final AuditSearchTerm searchTerm, final ConditionalSupplier conditions,
         final Token token) {
         final String fieldName = searchTerm.getFieldName();
-        if (isOneOrTheOther(CREATED, LAST_MOD, fieldName)) {
-            checkFields(fieldName, "date", CREATED, LAST_MOD, token.getType().matchType.name());
-        }
+        checkField(fieldName, CREATED, LAST_MOD, "date", token.getType().matchType.name());
+
         if (token
                 .getDateSqlData()
                 .length() == DATE_RANGE_PATTERN_LENGTH) {
