@@ -83,7 +83,8 @@ public class JooqNewsletterTopicRepo extends AbstractRepo implements NewsletterT
             .collect(toList());
     }
 
-    private <R extends Record> SelectConditionStep<R> applyWhereCondition(final NewsletterTopicFilter filter,
+    // package-private for test purposes
+    <R extends Record> SelectConditionStep<R> applyWhereCondition(final NewsletterTopicFilter filter,
         final SelectJoinStep<R> selectStep) {
         if (filter != null && filter.getTitleMask() != null) {
             final String titleMask = filter.getTitleMask();
@@ -237,6 +238,12 @@ public class JooqNewsletterTopicRepo extends AbstractRepo implements NewsletterT
         final int currentVersion = entity.getVersion();
 
         final NewsletterTopicRecord record = updateAndLoadNewsletterTopicDefinition(entity, userId, currentVersion);
+        return handleUpdatedRecord(record, entity, userId);
+    }
+
+    // package-private for testing purposes
+    NewsletterTopicDefinition handleUpdatedRecord(final NewsletterTopicRecord record,
+        final NewsletterTopicDefinition entity, final int userId) {
         if (record != null) {
             final List<NewsletterTopicTranslation> persistedTranslations = updateOrInsertAndLoadNewsletterTopicTranslations(
                 entity, userId);
@@ -277,14 +284,9 @@ public class JooqNewsletterTopicRepo extends AbstractRepo implements NewsletterT
             .getTranslations()
             .values()) {
             if (ntt.getId() != null) {
-                final int currentVersion = ntt.getVersion();
-                final NewsletterTopicTrRecord nttRecord = updateNewsletterTopicTr(entity, ntt, userId, currentVersion);
-                if (nttRecord != null) {
-                    nttPersisted.add(toTopicTranslation(nttRecord));
-                } else {
-                    throw new OptimisticLockingException(NEWSLETTER_TOPIC_TR.getName(), ntt.toString(),
-                        OptimisticLockingException.Type.UPDATE);
-                }
+                final NewsletterTopicTrRecord nttRecord = updateNewsletterTopicTr(entity, ntt, userId,
+                    ntt.getVersion());
+                addOrThrow(nttRecord, nttPersisted, ntt.toString());
             } else {
                 final NewsletterTopicTrRecord nttRecord = insertAndGetNewsletterTopicTr(entity.getId(), userId, ntt);
                 nttPersisted.add(toTopicTranslation(nttRecord));
@@ -323,6 +325,17 @@ public class JooqNewsletterTopicRepo extends AbstractRepo implements NewsletterT
             .fetchOne();
     }
 
+    // package-private for test purposes
+    void addOrThrow(final NewsletterTopicTrRecord nttRecord, final List<NewsletterTopicTranslation> nttPersisted,
+        final String nttAsString) {
+        if (nttRecord != null) {
+            nttPersisted.add(toTopicTranslation(nttRecord));
+        } else {
+            throw new OptimisticLockingException(NEWSLETTER_TOPIC_TR.getName(), nttAsString,
+                OptimisticLockingException.Type.UPDATE);
+        }
+    }
+
     private NewsletterTopicTranslation toTopicTranslation(final NewsletterTopicTrRecord record) {
         return new NewsletterTopicTranslation(record.get(NEWSLETTER_TOPIC_TR.ID),
             record.get(NEWSLETTER_TOPIC_TR.LANG_CODE), record.get(NEWSLETTER_TOPIC_TR.TITLE),
@@ -336,24 +349,33 @@ public class JooqNewsletterTopicRepo extends AbstractRepo implements NewsletterT
         final NewsletterTopicDefinition toBeDeleted = findNewsletterTopicDefinitionById(id);
         if (toBeDeleted != null) {
             if (toBeDeleted.getVersion() == version) {
-                final int deleteCount = getDsl()
-                    .delete(NEWSLETTER_TOPIC)
-                    .where(NEWSLETTER_TOPIC.ID.equal(id))
-                    .and(NEWSLETTER_TOPIC.VERSION.eq(version))
-                    .execute();
-                if (deleteCount > 0) {
-                    log.info("{} deleted {} record: {} with id {}.", getActiveUser().getUserName(), deleteCount,
-                        NEWSLETTER_TOPIC.getName(), id);
-                } else {
-                    throw new OptimisticLockingException(NEWSLETTER_TOPIC.getName(), toBeDeleted.toString(),
-                        OptimisticLockingException.Type.DELETE);
-                }
+                final int deleteCount = doDelete(id, version);
+                logOrThrow(deleteCount, id, toBeDeleted.toString());
             } else {
                 throw new OptimisticLockingException(NEWSLETTER_TOPIC.getName(),
                     OptimisticLockingException.Type.DELETE);
             }
         }
         return toBeDeleted;
+    }
+
+    private int doDelete(final Integer id, final int version) {
+        return getDsl()
+            .delete(NEWSLETTER_TOPIC)
+            .where(NEWSLETTER_TOPIC.ID.equal(id))
+            .and(NEWSLETTER_TOPIC.VERSION.eq(version))
+            .execute();
+    }
+
+    // package-private for test purposes
+    void logOrThrow(final int deleteCount, final Integer id, final String deletedAsString) {
+        if (deleteCount > 0) {
+            log.info("{} deleted {} record: {} with id {}.", getActiveUser().getUserName(), deleteCount,
+                NEWSLETTER_TOPIC.getName(), id);
+        } else {
+            throw new OptimisticLockingException(NEWSLETTER_TOPIC.getName(), deletedAsString,
+                OptimisticLockingException.Type.DELETE);
+        }
     }
 
     @Override
