@@ -324,11 +324,10 @@ public class JooqCodeRepo extends AbstractRepo implements CodeRepository {
                 pctr.delete();
     }
 
-    private boolean isPresentIn(final Collection<CodeTranslation> translations, final CodeTrRecord pctr) {
-        for (final CodeTranslation ct : translations) {
-            if (ct.getId() != null && ct
-                .getId()
-                .equals(pctr.get(CODE_TR.ID)))
+    private boolean isPresentIn(final Collection<CodeTranslation> entityTranslations, final CodeTrRecord pctr) {
+        for (final CodeTranslation entityTranslation : entityTranslations) {
+            final Integer entityTrId = entityTranslation.getId();
+            if (entityTrId != null && entityTrId.equals(pctr.get(CODE_TR.ID)))
                 return true;
         }
         return false;
