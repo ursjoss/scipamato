@@ -76,6 +76,20 @@ public class JooqCodeClassRepoIntegrationTest extends JooqTransactionalIntegrati
     }
 
     @Test
+    public void findingCodeClassDefinitions_sortingByUndefinedField_doesNotSort() {
+        final List<CodeClassDefinition> ccds = repo.findPageOfCodeClassDefinitions(new CodeClassFilter(),
+            new PaginationRequest(0, 8, Sort.Direction.ASC, "foobar"));
+
+        assertThat(ccds).hasSize(8);
+
+        CodeClassDefinition ccd = ccds.get(0);
+        assertThat(ccd.getName()).isEqualTo("Schadstoffe");
+
+        ccd = ccds.get(1);
+        assertThat(ccd.getName()).isEqualTo("Region");
+    }
+
+    @Test
     public void findingCodeClassDefinitions_withUnspecifiedFilter_withReverseSortByTranslations() {
         final CodeClassFilter filter = new CodeClassFilter();
         filter.setDescriptionMask("en");
@@ -109,7 +123,7 @@ public class JooqCodeClassRepoIntegrationTest extends JooqTransactionalIntegrati
         final CodeClassFilter filter = new CodeClassFilter();
         filter.setNameMask("Zeitdauer");
         final List<CodeClassDefinition> ccds = repo.findPageOfCodeClassDefinitions(filter,
-            new PaginationRequest(Sort.Direction.ASC, "name"));
+            new PaginationRequest(Sort.Direction.DESC, "name"));
 
         assertThat(ccds).hasSize(1);
 

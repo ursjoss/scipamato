@@ -6,10 +6,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 import static org.mockito.Mockito.*;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 import org.jooq.DSLContext;
 import org.jooq.Result;
@@ -101,6 +98,28 @@ public class JooqKeywordRepoTest {
     }
 
     @Test
+    public void removingObsoletePersistedRecords_whenCheckingIfTranslationIsPresentInEntity_doesNotConsiderIdLessEntityTranslations() {
+        final KeywordTranslation ct = new KeywordTranslation(null, "de", "1ade", 1);
+        final Result<KeywordTrRecord> resultMock = mock(Result.class);
+        final Iterator itMock = mock(Iterator.class);
+        when(resultMock.iterator()).thenReturn(itMock);
+        final KeywordTrRecord ctr1 = mock(KeywordTrRecord.class);
+        final KeywordTrRecord ctr2 = mock(KeywordTrRecord.class);
+        when(itMock.hasNext()).thenReturn(true, true, false);
+        when(itMock.next()).thenReturn(ctr1, ctr2);
+
+        repo.removeObsoletePersistedRecordsFor(resultMock, Arrays.asList(ct));
+
+        verify(resultMock).iterator();
+        verify(itMock, times(3)).hasNext();
+        verify(itMock, times(2)).next();
+        verify(ctr1).delete();
+        verify(ctr2).delete();
+
+        verifyNoMoreInteractions(resultMock, itMock, ctr1, ctr2);
+    }
+
+    @Test
     public void managingTranslations() {
         final KeywordDefinition entity = new KeywordDefinition(1, "de", 10);
 
@@ -158,6 +177,19 @@ public class JooqKeywordRepoTest {
                 .isInstanceOf(OptimisticLockingException.class)
                 .hasMessage(
                     "Record in table 'keyword_tr' has been modified prior to the update attempt. Aborting.... [trslString]");
+        }
+    }
+
+    @Test
+    public void loggingOrThrowing_withDeleteCountZero_throws() {
+        try {
+            repo.logOrThrow(0, 1, new KeywordDefinition(10, "de", 100));
+            fail("should have thrown exception");
+        } catch (Exception ex) {
+            assertThat(ex)
+                .isInstanceOf(OptimisticLockingException.class)
+                .hasMessage(
+                    "Record in table 'keyword' has been modified prior to the delete attempt. Aborting.... [KeywordDefinition(id=10, searchOverride=null)]");
         }
     }
 }

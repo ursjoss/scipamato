@@ -91,7 +91,6 @@ public class JooqCodeRepoTest {
 
     @Test
     public void removingObsoletePersistedRecords() {
-        final String code = "1A";
         final CodeTranslation ct = new CodeTranslation(1, "de", "1ade", "", 1);
         final Result<CodeTrRecord> resultMock = mock(Result.class);
         final Iterator itMock = mock(Iterator.class);
@@ -110,6 +109,28 @@ public class JooqCodeRepoTest {
         verify(itMock, times(2)).next();
         verify(ctr1).get(CODE_TR.ID);
         verify(ctr2).get(CODE_TR.ID);
+        verify(ctr2).delete();
+
+        verifyNoMoreInteractions(resultMock, itMock, ctr1, ctr2);
+    }
+
+    @Test
+    public void removingObsoletePersistedRecords_whenCheckingIfTranslationIsPresentInEntity_doesNotConsiderIdLessEntityTranslations() {
+        final CodeTranslation ct = new CodeTranslation(null, "de", "1ade", "", 1);
+        final Result<CodeTrRecord> resultMock = mock(Result.class);
+        final Iterator itMock = mock(Iterator.class);
+        when(resultMock.iterator()).thenReturn(itMock);
+        final CodeTrRecord ctr1 = mock(CodeTrRecord.class);
+        final CodeTrRecord ctr2 = mock(CodeTrRecord.class);
+        when(itMock.hasNext()).thenReturn(true, true, false);
+        when(itMock.next()).thenReturn(ctr1, ctr2);
+
+        repo.removeObsoletePersistedRecordsFor(resultMock, Arrays.asList(ct));
+
+        verify(resultMock).iterator();
+        verify(itMock, times(3)).hasNext();
+        verify(itMock, times(2)).next();
+        verify(ctr1).delete();
         verify(ctr2).delete();
 
         verifyNoMoreInteractions(resultMock, itMock, ctr1, ctr2);

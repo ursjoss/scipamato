@@ -352,9 +352,8 @@ public class JooqKeywordRepo extends AbstractRepo implements KeywordRepository {
 
     private boolean isPresentIn(final Collection<KeywordTranslation> translations, final KeywordTrRecord ktr) {
         for (final KeywordTranslation kt : translations) {
-            if (kt.getId() != null && kt
-                .getId()
-                .equals(ktr.get(KEYWORD_TR.ID)))
+            final Integer id = kt.getId();
+            if (id != null && id.equals(ktr.get(KEYWORD_TR.ID)))
                 return true;
         }
         return false;
@@ -407,18 +406,23 @@ public class JooqKeywordRepo extends AbstractRepo implements KeywordRepository {
                     .where(KEYWORD.ID.equal(id))
                     .and(KEYWORD.VERSION.eq(version))
                     .execute();
-                if (deleteCount > 0) {
-                    log.info("{} deleted {} record: {} with id {}.", getActiveUser().getUserName(), deleteCount,
-                        KEYWORD.getName(), id);
-                } else {
-                    throw new OptimisticLockingException(KEYWORD.getName(), toBeDeleted.toString(),
-                        OptimisticLockingException.Type.DELETE);
-                }
+                logOrThrow(deleteCount, id, toBeDeleted);
             } else {
                 throw new OptimisticLockingException(KEYWORD.getName(), OptimisticLockingException.Type.DELETE);
             }
         }
         return toBeDeleted;
+    }
+
+    // package-private for testing purposes
+    void logOrThrow(final int deleteCount, final Integer id, final KeywordDefinition toBeDeleted) {
+        if (deleteCount > 0) {
+            log.info("{} deleted {} record: {} with id {}.", getActiveUser().getUserName(), deleteCount,
+                KEYWORD.getName(), id);
+        } else {
+            throw new OptimisticLockingException(KEYWORD.getName(), toBeDeleted.toString(),
+                OptimisticLockingException.Type.DELETE);
+        }
     }
 
 }
