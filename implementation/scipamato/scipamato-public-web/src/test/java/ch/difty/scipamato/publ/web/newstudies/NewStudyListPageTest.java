@@ -141,6 +141,16 @@ public class NewStudyListPageTest extends BasePageTest<NewStudyListPage> {
         getTester().assertComponent(path + "reference", Link.class);
     }
 
+    @Override
+    protected void doVerify() {
+        super.doVerify();
+        // loading the page initially
+        verify(serviceMock, times(2)).findMostRecentNewStudyTopics("en_us");
+        verify(serviceMock, times(2)).findNewStudyPageLinks("en_us");
+        verify(serviceMock, times(2)).findArchivedNewsletters(14, "en_us");
+        verifyNoMoreInteractions(serviceMock);
+    }
+
     @Test
     public void canAccessPublicPaperDetailPageForSpecificPaper_andReturnToNewStudyListPageFromThere() {
         getTester().startPage(makePage());
@@ -224,5 +234,25 @@ public class NewStudyListPageTest extends BasePageTest<NewStudyListPage> {
         };
         final IconType icon = page.chooseIcon(GlyphIconType.arrowright, IcoMoonIconType.arrow_right);
         assertThat(icon).isEqualTo(IcoMoonIconType.arrow_right);
+    }
+
+    @Test
+    public void clickingLinkToArchivedNewsletter() {
+        getTester().startPage(makePage());
+        getTester().assertRenderedPage(getPageClass());
+
+        getTester().clickLink("archive:1:monthName");
+
+        getTester().assertRenderedPage(NewStudyListPage.class);
+        getTester().debugComponentTrees();
+
+        // loading the page initially
+        verify(serviceMock, times(2)).findMostRecentNewStudyTopics("en_us");
+        // redirecting after having clicked the link
+        verify(serviceMock).findNewStudyTopicsForNewsletterIssue("2017/12", "en_us");
+        // other service calls (twice at initial page load, one each after redirect
+        verify(serviceMock, times(2 + 1)).findNewStudyPageLinks("en_us");
+        verify(serviceMock, times(2 + 1)).findArchivedNewsletters(14, "en_us");
+        verifyNoMoreInteractions(serviceMock);
     }
 }
