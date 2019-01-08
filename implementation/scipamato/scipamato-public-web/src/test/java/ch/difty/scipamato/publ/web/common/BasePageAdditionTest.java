@@ -126,8 +126,17 @@ public class BasePageAdditionTest extends WicketTest {
     @Test
     public void renderingAdditionalCommercialFonts_isNoop() {
         final IHeaderResponse response = mock(IHeaderResponse.class);
-        final BasePage page = newPageWithParameters(pp);
+        // call it for coverage
+        BasePage page = new BasePage<>(pp) {
+            @Override
+            protected ApplicationPublicProperties getProperties() {
+                return applicationProperties;
+            }
+        };
+        page.renderAdditionalCommercialFonts(response);
 
+        // this time assert call it to assert it
+        page = newPageWithParameters(pp);
         page.renderAdditionalCommercialFonts(response);
 
         verifyNoMoreInteractions(response);

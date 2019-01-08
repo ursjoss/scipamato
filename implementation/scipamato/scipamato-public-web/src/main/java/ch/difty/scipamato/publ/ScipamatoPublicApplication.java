@@ -7,7 +7,6 @@ import org.apache.wicket.markup.head.ResourceAggregator;
 import org.apache.wicket.markup.head.filter.JavaScriptFilteredIntoFooterHeaderResponse;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.cache.annotation.EnableCaching;
@@ -21,8 +20,11 @@ import ch.difty.scipamato.publ.config.ScipamatoPublicProperties;
 @Slf4j
 public class ScipamatoPublicApplication extends WicketBootSecuredWebApplication {
 
-    @Autowired
-    private ScipamatoPublicProperties applicationProperties;
+    private final ScipamatoPublicProperties applicationProperties;
+
+    public ScipamatoPublicApplication(final ScipamatoPublicProperties applicationProperties) {
+        this.applicationProperties = applicationProperties;
+    }
 
     public static void main(String[] args) {
         new SpringApplicationBuilder()
@@ -46,7 +48,8 @@ public class ScipamatoPublicApplication extends WicketBootSecuredWebApplication 
         logSpecialConfiguration();
     }
 
-    private void logSpecialConfiguration() {
+    // package-private for testing purposes
+    void logSpecialConfiguration() {
         if (applicationProperties.isCommercialFontPresent())
             log.info("CommercialFonts enabled.");
 
