@@ -31,11 +31,11 @@
 	<group name="number" minHeightToStartNewPage="5">
 		<groupExpression><![CDATA[$F{number}]]></groupExpression>
 		<groupHeader>
-			<band height="69" splitType="Prevent">
+			<band height="72" splitType="Prevent">
 				<property name="local_mesure_unitheight" value="pixel"/>
 				<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				<rectangle>
-					<reportElement style="Zebra" stretchType="RelativeToBandHeight" mode="Opaque" x="-2" y="-2" width="559" height="71" forecolor="#FFFFFF" uuid="024634be-b0d7-48f4-9a2c-815437dd8f28">
+					<reportElement style="Zebra" stretchType="RelativeToBandHeight" mode="Opaque" x="-2" y="-2" width="559" height="74" forecolor="#FFFFFF" uuid="024634be-b0d7-48f4-9a2c-815437dd8f28">
 						<property name="local_mesure_unitwidth" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 						<property name="local_mesure_unitheight" value="pixel"/>
