@@ -63,6 +63,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 
 .Changed
+- {url-issues}34[#34] - Dependency updates: spring-boot-parent-2.1.2, jaxb-impl, spring-boot-admin-starter-client,equalsverifier, sonar-maven-plugin
 
 .Deprecated
 
