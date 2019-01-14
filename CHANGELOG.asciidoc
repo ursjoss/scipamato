@@ -70,6 +70,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Removed
 
 .Fixed
+- {url-issues}36[#36] - Core: Fix spacing in paper summary table PDF to prevent result field to be cut off
 
 .Security
 
