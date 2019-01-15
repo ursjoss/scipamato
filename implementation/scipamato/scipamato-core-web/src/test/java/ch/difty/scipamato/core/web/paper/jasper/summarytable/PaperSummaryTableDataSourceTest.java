@@ -109,7 +109,7 @@ public class PaperSummaryTableDataSourceTest extends PaperDataSourceTest {
         when(dataProviderMock.size()).thenReturn(1L);
         when(dataProviderMock.findAllPapersByFilter()).thenReturn(Collections.singletonList(paperMock));
 
-        ds = new PaperSummaryTableDataSource(dataProviderMock, rhf, true, pdfExporterConfigMock);
+        ds = new PaperSummaryTableDataSource(dataProviderMock, rhf, pdfExporterConfigMock);
         assertDataSource(FILE_NAME);
 
         verify(dataProviderMock).size();
@@ -129,7 +129,7 @@ public class PaperSummaryTableDataSourceTest extends PaperDataSourceTest {
     @Test
     public void instantiatingWithProvider_withEmptyProvider_returnsNoRecord() throws JRException {
         when(dataProviderMock.size()).thenReturn(0L);
-        ds = new PaperSummaryTableDataSource(dataProviderMock, rhf, true, pdfExporterConfigMock);
+        ds = new PaperSummaryTableDataSource(dataProviderMock, rhf, pdfExporterConfigMock);
         assertThat(ds
             .getReportDataSource()
             .next()).isFalse();
@@ -139,7 +139,7 @@ public class PaperSummaryTableDataSourceTest extends PaperDataSourceTest {
     @Test
     public void instantiatingWithProvider_withNullProvider_throws() {
         try {
-            new PaperSummaryTableDataSource(null, rhf, true, pdfExporterConfigMock);
+            new PaperSummaryTableDataSource(null, rhf, pdfExporterConfigMock);
         } catch (Exception ex) {
             assertThat(ex)
                 .isInstanceOf(NullArgumentException.class)
