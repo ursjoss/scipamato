@@ -21,17 +21,17 @@ public class PaperSummaryTableTest extends JasperEntityTest {
 
     @Test(expected = NullArgumentException.class)
     public void degenerateConstruction_withNullPaper() {
-        new PaperSummaryTable(null, rhf, true);
+        new PaperSummaryTable(null, rhf);
     }
 
     @Test(expected = NullArgumentException.class)
     public void degenerateConstruction_withNullReportHeaderFields() {
-        new PaperSummaryTable(p, null, true);
+        new PaperSummaryTable(p, null);
     }
 
     @Test
     public void instantiating() {
-        pst = new PaperSummaryTable(p, rhf, true);
+        pst = new PaperSummaryTable(p, rhf);
         assertPst();
     }
 
@@ -61,30 +61,23 @@ public class PaperSummaryTableTest extends JasperEntityTest {
     }
 
     @Test
-    public void constructionWithPaper_notIncludingResults() {
-        pst = new PaperSummaryTable(p, rhf, false);
-        assertPst();
-        assertThat(pst.getResult()).isEmpty();
-    }
-
-    @Test
     public void constructionWithPaperWithNoCodeOfClass7_returnsBlank() {
         p.clearCodes();
-        pst = new PaperSummaryTable(p, rhf, true);
+        pst = new PaperSummaryTable(p, rhf);
         assertThat(pst.getCodesOfClass4()).isEqualTo("");
     }
 
     @Test
     public void paperWithNullNumber_resultsInEmptyNumber() {
         p.setNumber(null);
-        pst = new PaperSummaryTable(p, rhf, false);
+        pst = new PaperSummaryTable(p, rhf);
         assertThat(pst.getNumber()).isEmpty();
     }
 
     @Test
     public void paperWithNullYear_resultsInEmptyYear() {
         p.setPublicationYear(null);
-        pst = new PaperSummaryTable(p, rhf, false);
+        pst = new PaperSummaryTable(p, rhf);
         assertThat(pst.getPublicationYear()).isEmpty();
     }
 
@@ -99,7 +92,7 @@ public class PaperSummaryTableTest extends JasperEntityTest {
 
     @Test
     public void testingToString() {
-        pst = new PaperSummaryTable(p, rhf, true);
+        pst = new PaperSummaryTable(p, rhf);
         assertThat(pst.toString()).isEqualTo(
             "PaperSummaryTable(number=100, firstAuthor=firstAuthor, publicationYear=2017, codesOfClass1=1F, codesOfClass4=4A,4C, codesOfClass7=7B, goals=goals, title=title, result=results, caption=caption, brand=brand, numberLabel=nl)");
     }

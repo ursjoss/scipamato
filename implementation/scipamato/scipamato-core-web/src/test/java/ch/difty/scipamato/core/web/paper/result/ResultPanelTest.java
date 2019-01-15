@@ -272,13 +272,6 @@ public abstract class ResultPanelTest extends PanelTest<ResultPanel> {
     }
 
     @Test
-    public void clickingSummaryTableWithoutResultLink_succeeds() {
-        getTester().startComponentInPage(makePanel());
-        getTester().clickLink(PANEL_ID + ":summaryTableWithoutResultsLink");
-        verifyPdfExport();
-    }
-
-    @Test
     public void startingPage_inNonSearchContext_doesNotRenderExcludeFromSearchIcon() {
         ResultPanel panel = newNonSearchRelevantResultPanel();
         getTester().startComponentInPage(panel);

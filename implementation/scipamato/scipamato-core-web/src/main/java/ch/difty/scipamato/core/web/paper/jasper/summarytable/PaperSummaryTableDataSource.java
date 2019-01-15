@@ -16,8 +16,6 @@ import ch.difty.scipamato.core.web.resources.jasper.PaperSummaryTableReportResou
 /**
  * DataSource for the PaperSummaryTableReport.
  * <p>
- * Can be instantiated in different ways, either by passing in
- * <p>
  * The report header fields are not contained within a paper instance and make
  * up e.g. localized labels, the brand or part of the header.
  *
@@ -30,7 +28,6 @@ public class PaperSummaryTableDataSource extends JasperPaperDataSource<PaperSumm
     private static final String FILE_NAME = "paper_summary_table";
 
     private ReportHeaderFields reportHeaderFields;
-    private boolean            includeResults;
 
     /**
      * Using the dataProvider for the Result Panel as record source. Needs the
@@ -41,17 +38,13 @@ public class PaperSummaryTableDataSource extends JasperPaperDataSource<PaperSumm
      *     the {@link AbstractPaperSlimProvider} - must not be null
      * @param reportHeaderFields
      *     collection of localized labels for the report fields
-     * @param includeResults
-     *     true: show results in pdf, false: hide it
      * @param config
      *     {@link ClusterablePdfExporterConfiguration}
      */
     public PaperSummaryTableDataSource(final AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider,
-        final ReportHeaderFields reportHeaderFields, final boolean includeResults,
-        ClusterablePdfExporterConfiguration config) {
+        final ReportHeaderFields reportHeaderFields, ClusterablePdfExporterConfiguration config) {
         super(new ScipamatoPdfResourceHandler(config), FILE_NAME, dataProvider);
         this.reportHeaderFields = reportHeaderFields;
-        this.includeResults = includeResults;
     }
 
     @Override
@@ -63,7 +56,7 @@ public class PaperSummaryTableDataSource extends JasperPaperDataSource<PaperSumm
 
     @Override
     protected PaperSummaryTable makeEntity(Paper p) {
-        return new PaperSummaryTable(p, reportHeaderFields, includeResults);
+        return new PaperSummaryTable(p, reportHeaderFields);
     }
 
 }

@@ -46,10 +46,8 @@ public class PaperSummaryTable extends JasperEntity {
      *     the paper with the relevant fields
      * @param rhf
      *     the reportHeaderFields with the localized field headers
-     * @param includeResults
-     *     whether to include the results field or not
      */
-    public PaperSummaryTable(final Paper p, final ReportHeaderFields rhf, final boolean includeResults) {
+    public PaperSummaryTable(final Paper p, final ReportHeaderFields rhf) {
         AssertAs.notNull(p, "p");
         AssertAs.notNull(rhf, "rhf");
 
@@ -74,7 +72,7 @@ public class PaperSummaryTable extends JasperEntity {
             .collect(Collectors.joining(CODE_DELIMITER));
         this.goals = na(p.getGoals());
         this.title = na(p.getTitle());
-        this.result = includeResults ? na(p.getResult()) : "";
+        this.result = na(p.getResult());
 
         this.caption = na(rhf.getCaptionLabel());
         this.brand = na(rhf.getBrand());

@@ -103,7 +103,6 @@ public abstract class ResultPanel extends BasePanel<Void> {
         makeAndQueuePdfLiteratureReviewLink("literatureReviewLink", false);
         makeAndQueuePdfLiteratureReviewLink("literatureReviewPlusLink", true);
         makeAndQueuePdfSummaryTableLink("summaryTableLink");
-        makeAndQueuePdfSummaryTableWithoutResultsLink("summaryTableWithoutResultsLink");
     }
 
     private void makeAndQueueTable(String id) {
@@ -404,15 +403,10 @@ public abstract class ResultPanel extends BasePanel<Void> {
     }
 
     private void makeAndQueuePdfSummaryTableLink(final String id) {
-        queue(newPdfSummaryTable(id, true, "summary_table"));
+        queue(newPdfSummaryTable(id, "summary_table"));
     }
 
-    private void makeAndQueuePdfSummaryTableWithoutResultsLink(final String id) {
-        queue(newPdfSummaryTable(id, false, "summary_table_wo_results"));
-    }
-
-    private ResourceLink<Void> newPdfSummaryTable(final String id, final boolean includeResults,
-        final String resourceKeyPart) {
+    private ResourceLink<Void> newPdfSummaryTable(final String id, final String resourceKeyPart) {
         final String pdfCaption = new StringResourceModel("paper_summary_table.titlePart", this, null).getString();
         final String brand = getProperties().getBrand();
         final ReportHeaderFields rhf = ReportHeaderFields
@@ -425,8 +419,7 @@ public abstract class ResultPanel extends BasePanel<Void> {
             .withCreator(brand)
             .withCompression()
             .build();
-        return newResourceLink(id, resourceKeyPart,
-            new PaperSummaryTableDataSource(dataProvider, rhf, includeResults, config));
+        return newResourceLink(id, resourceKeyPart, new PaperSummaryTableDataSource(dataProvider, rhf, config));
     }
 
     private ResourceLink<Void> newResourceLink(String id, final String resourceKeyPart,
