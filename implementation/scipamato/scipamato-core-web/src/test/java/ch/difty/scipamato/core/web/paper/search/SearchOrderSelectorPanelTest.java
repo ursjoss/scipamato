@@ -160,10 +160,9 @@ public abstract class SearchOrderSelectorPanelTest extends PanelTest<SearchOrder
         FormTester formTester = getTester().newFormTester(b);
         formTester.submit("delete");
 
-        b = b + ":";
-        getTester().assertComponentOnAjaxResponse(b);
+        getTester().assertRenderedPage(PaperSearchPage.class);
 
-        verify(searchOrderMock, times(13)).getId();
+        verify(searchOrderMock, times(10)).getId();
         verify(searchOrderServiceMock, times(3)).findPageByFilter(isA(SearchOrderFilter.class),
             isA(PaginationContext.class));
         verify(searchOrderServiceMock).remove(searchOrderMock);

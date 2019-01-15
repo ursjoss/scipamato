@@ -22,6 +22,7 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.StringResourceModel;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import ch.difty.scipamato.common.web.Mode;
@@ -227,7 +228,7 @@ public class SearchOrderSelectorPanel extends BasePanel<SearchOrder> {
                 super.onSubmit(target);
                 if (getModelObject() != null) {
                     searchOrderService.remove(getModelObject());
-                    target.add(form);
+                    setResponsePage(new PaperSearchPage(new PageParameters()));
                 }
             }
         };
