@@ -71,6 +71,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Fixed
 - {url-issues}36[#36] - Core: Fix spacing in paper summary table PDF to prevent result field to be cut off
+- {url-issues}38[#38] - Core: Fix `Class does not have a visible default constructor` in PaperEntryPage
 
 .Security
 

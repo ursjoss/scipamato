@@ -166,6 +166,16 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
         this.tabIndexModel = tabIndexFromPageParameters();
     }
 
+    /**
+     * Default constructor, used from DefaultPageFactory
+     *
+     * @param parameters
+     */
+    @SuppressWarnings("WeakerAccess")
+    public PaperEntryPage(PageParameters parameters) {
+        this(parameters, null);
+    }
+
     private Long searchOrderIdFromPageParameters() {
         final StringValue sv = getPageParameters().get(SEARCH_ORDER_ID.getName());
         return sv.isNull() ? null : sv.toLong();

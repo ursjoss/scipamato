@@ -227,4 +227,10 @@ public class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
         getTester().assertComponentOnAjaxResponse("feedback");
     }
 
+    @Test
+    public void canStartPageWithDefaultConstructor() {
+        getTester().startPage(new PaperEntryPage(new PageParameters()));
+        getTester().assertRenderedPage(PaperEntryPage.class);
+    }
+
 }
