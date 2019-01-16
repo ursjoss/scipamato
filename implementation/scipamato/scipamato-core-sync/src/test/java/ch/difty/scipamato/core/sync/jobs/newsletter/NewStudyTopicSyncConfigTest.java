@@ -90,17 +90,28 @@ public class NewStudyTopicSyncConfigTest extends SyncConfigTest<NewStudyTopicRec
 
     @Test
     public void makingEntityWithNonNullSortAmdNttTimestamp() throws SQLException {
-        makingEntityWithSort(3, 3, MODIFIED, MODIFIED);
+        makingEntityWithSort(3, 3, MODIFIED, MODIFIED, MODIFIED);
     }
 
     @Test
     public void makingEntityWithNullSort_usesSortMaxInt() throws SQLException {
-        makingEntityWithSort(null, Integer.MAX_VALUE, MODIFIED, MODIFIED);
+        makingEntityWithSort(null, Integer.MAX_VALUE, MODIFIED, MODIFIED, MODIFIED);
     }
 
     @Test
+    public void makingEntityWithNullNttAndNntTimestamp() throws SQLException {
+        makingEntityWithSort(3, 3, null, null, null);
+    }
+
+
+    @Test
     public void makingEntityWithNullNttTimestamp() throws SQLException {
-        makingEntityWithSort(3, 3, null, MODIFIED);
+        makingEntityWithSort(3, 3, null, MODIFIED, MODIFIED);
+    }
+
+    @Test
+    public void makingEntityWithNullNntTimestamp() throws SQLException {
+        makingEntityWithSort(3, 3, MODIFIED, null, MODIFIED);
     }
 
     @Test
@@ -108,7 +119,7 @@ public class NewStudyTopicSyncConfigTest extends SyncConfigTest<NewStudyTopicRec
         Timestamp nttLm = Timestamp.from(MODIFIED
             .toInstant()
             .plusSeconds(2));
-        makingEntityWithSort(3, 3, nttLm, nttLm);
+        makingEntityWithSort(3, 3, MODIFIED, nttLm, nttLm);
     }
 
     @Test
@@ -116,11 +127,11 @@ public class NewStudyTopicSyncConfigTest extends SyncConfigTest<NewStudyTopicRec
         Timestamp nttLm = Timestamp.from(MODIFIED
             .toInstant()
             .minusSeconds(2));
-        makingEntityWithSort(3, 3, nttLm, MODIFIED);
+        makingEntityWithSort(3, 3, MODIFIED, nttLm, MODIFIED);
     }
 
-    private void makingEntityWithSort(final Integer sort, final Integer expectedSort, final Timestamp nntLastMod,
-        final Timestamp expectedLastMod) throws SQLException {
+    private void makingEntityWithSort(final Integer sort, final Integer expectedSort, final Timestamp nttLastMod,
+        final Timestamp nntLastMod, final Timestamp expectedLastMod) throws SQLException {
         ResultSet rs = Mockito.mock(ResultSet.class);
         when(rs.getInt(PaperNewsletter.PAPER_NEWSLETTER.NEWSLETTER_ID.getName())).thenReturn(1);
         when(rs.getInt(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.NEWSLETTER_TOPIC_ID.getName())).thenReturn(2);
@@ -132,7 +143,7 @@ public class NewStudyTopicSyncConfigTest extends SyncConfigTest<NewStudyTopicRec
         }
         when(rs.getInt(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.VERSION.getName())).thenReturn(4);
         when(rs.getTimestamp(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.CREATED.getName())).thenReturn(CREATED);
-        when(rs.getTimestamp("NTTLM")).thenReturn(MODIFIED);
+        when(rs.getTimestamp("NTTLM")).thenReturn(nttLastMod);
         when(rs.getTimestamp("NNTLM")).thenReturn(nntLastMod);
 
         PublicNewStudyTopic pns = config.makeEntity(rs);
