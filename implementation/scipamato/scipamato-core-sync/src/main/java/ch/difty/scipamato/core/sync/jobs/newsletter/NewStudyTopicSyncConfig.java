@@ -123,11 +123,12 @@ public class NewStudyTopicSyncConfig
         final ResultSet rs) throws SQLException {
         final Timestamp ts1 = getTimestamp(nttLastModified, rs);
         final Timestamp ts2 = getTimestamp(nntLastModified, rs);
-        if (ts2 != null) {
+        if (ts1 == null ^ ts2 == null)
+            return ts1 == null ? ts2 : ts1;
+        if (ts1 == null)
+            return null;
+        else
             return ts1.after(ts2) ? ts1 : ts2;
-        } else {
-            return ts1;
-        }
     }
 
     @Override
