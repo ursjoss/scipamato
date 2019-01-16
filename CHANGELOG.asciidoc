@@ -69,6 +69,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Removed
 
 .Fixed
+- {url-issues}44[#44] - Core & Public: Fix typo in Code '4H' (en): cardovascular -> cardiovascular
 
 .Security
 
