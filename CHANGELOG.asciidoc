@@ -63,9 +63,21 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 
 .Changed
-- {url-issues}34[#34] - Dependency updates: spring-boot-parent-2.1.2, jaxb-impl, spring-boot-admin-starter-client,equalsverifier, sonar-maven-plugin
 
 .Deprecated
+
+.Removed
+
+.Fixed
+
+.Security
+
+
+[[v1.1.1]]
+== [1.1.1] -- 2019-01-16
+
+.Changed
+- {url-issues}34[#34] - Dependency updates: spring-boot-parent-2.1.2, jaxb-impl, spring-boot-admin-starter-client,equalsverifier, sonar-maven-plugin
 
 .Removed
 - {url-issues}42[#42] - Core: Remove ShortList report and rename ShortList+ to Results
@@ -74,8 +86,6 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 - {url-issues}36[#36] - Core: Fix spacing in paper summary table PDF to prevent result field to be cut off
 - {url-issues}38[#38] - Core: Fix `Class does not have a visible default constructor` in PaperEntryPage
 - {url-issues}39[#39] - Core: Fix deleting search orders in the SearchOrderPage
-
-.Security
 
 
 [[v1.1.0]]
