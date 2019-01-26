@@ -56,6 +56,7 @@ import ch.difty.scipamato.core.logic.parsing.AuthorParserFactory;
 import ch.difty.scipamato.core.persistence.NewsletterService;
 import ch.difty.scipamato.core.persistence.PaperService;
 import ch.difty.scipamato.core.pubmed.PubmedArticleFacade;
+import ch.difty.scipamato.core.pubmed.PubmedArticleResult;
 import ch.difty.scipamato.core.pubmed.PubmedArticleService;
 import ch.difty.scipamato.core.web.common.BasePage;
 import ch.difty.scipamato.core.web.paper.NewsletterChangeEvent;
@@ -326,18 +327,20 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
         final Integer pmId = paper.getPmId();
         final String apiKey = getProperties().getPubmedApiKey();
         if (pmId != null) {
-            final Optional<PubmedArticleFacade> pao = (apiKey == null) ?
+            final PubmedArticleResult par = (apiKey == null) ?
                 pubmedArticleService.getPubmedArticleWithPmid(pmId) :
                 pubmedArticleService.getPubmedArticleWithPmidAndApiKey(pmId, apiKey);
-            if (pao.isPresent()) {
-                final PubmedArticleFacade pa = pao.get();
+            if (par.getPubmedArticleFacade() != null) {
+                final PubmedArticleFacade pa = par.getPubmedArticleFacade();
                 if (String
                     .valueOf(pmId)
                     .equals(pa.getPmId())) {
                     setFieldsIfNotSetCompareOtherwise(paper, pa, target);
                 }
             } else {
-                error(new StringResourceModel("pubmedRetrieval.pmid.error", this, getModel()).getString());
+                error(new StringResourceModel("pubmedRetrieval.pmid.error", this, getModel())
+                    .setParameters(par.getErrorMessage())
+                    .getString());
             }
         } else {
             error(new StringResourceModel("pubmedRetrieval.pmid.missing", this, null).getString());

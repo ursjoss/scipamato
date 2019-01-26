@@ -2,7 +2,6 @@ package ch.difty.scipamato.core.persistence;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -14,6 +13,7 @@ import ch.difty.scipamato.common.DateTimeService;
 import ch.difty.scipamato.common.FrozenDateTimeService;
 import ch.difty.scipamato.common.config.ApplicationProperties;
 import ch.difty.scipamato.core.pubmed.PubmedArticleFacade;
+import ch.difty.scipamato.core.pubmed.PubmedArticleResult;
 import ch.difty.scipamato.core.pubmed.PubmedArticleService;
 
 @SpringBootApplication
@@ -72,14 +72,13 @@ public class TestApplication {
         return new PubmedArticleService() {
 
             @Override
-            public Optional<PubmedArticleFacade> getPubmedArticleWithPmid(int pmId) {
-                return Optional.empty();
+            public PubmedArticleResult getPubmedArticleWithPmid(int pmId) {
+                return new PubmedArticleResult(null, null, null);
             }
 
             @Override
-            public Optional<PubmedArticleFacade> getPubmedArticleWithPmidAndApiKey(final int pmId,
-                final String apiKey) {
-                return Optional.empty();
+            public PubmedArticleResult getPubmedArticleWithPmidAndApiKey(final int pmId, final String apiKey) {
+                return new PubmedArticleResult(null, null, null);
             }
 
             @Override

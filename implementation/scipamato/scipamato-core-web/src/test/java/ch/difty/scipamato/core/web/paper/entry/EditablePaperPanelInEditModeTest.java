@@ -14,11 +14,13 @@ import org.apache.wicket.feedback.FeedbackMessage;
 import org.apache.wicket.util.tester.FormTester;
 import org.apache.wicket.util.tester.TagTester;
 import org.junit.Test;
+import org.springframework.http.HttpStatus;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.common.web.Mode;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.search.PaperFilter;
+import ch.difty.scipamato.core.pubmed.PubmedArticleResult;
 import ch.difty.scipamato.core.web.paper.search.PaperSearchPage;
 
 public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
@@ -254,10 +256,29 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
     public void clickingOnPubmedRetrievalButton_withNoPmIdInScipamatoPaper_warns() {
         getTester().startComponentInPage(makePanel());
 
-        when(pubmedArticleServiceMock.getPubmedArticleWithPmid(PMID)).thenReturn(Optional.empty());
+        when(pubmedArticleServiceMock.getPubmedArticleWithPmid(PMID)).thenReturn(
+            new PubmedArticleResult(null, null, "some message"));
 
         getTester().executeAjaxEvent(PANEL_ID + ":form:pubmedRetrieval", "click");
-        getTester().assertErrorMessages("Could not retrieve an article with PMID " + PMID + " from PubMed.");
+        getTester().assertErrorMessages(
+            "Could not retrieve an article with PMID " + PMID + " from PubMed: some message");
+
+        verify(pubmedArticleServiceMock).getPubmedArticleWithPmid(PMID);
+
+        verify(newsletterServiceMock).canCreateNewsletterInProgress();
+        verify(paperServiceMock, times(2)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
+    }
+
+    @Test
+    public void clickingOnPubmedRetrievalButton_withBadGateway_warns() {
+        getTester().startComponentInPage(makePanel());
+
+        when(pubmedArticleServiceMock.getPubmedArticleWithPmid(PMID)).thenReturn(
+            new PubmedArticleResult(null, HttpStatus.BAD_GATEWAY, "boom"));
+
+        getTester().executeAjaxEvent(PANEL_ID + ":form:pubmedRetrieval", "click");
+        getTester().assertErrorMessages(
+            "Could not retrieve an article with PMID " + PMID + " from PubMed: Status 502 BAD_GATEWAY: boom");
 
         verify(pubmedArticleServiceMock).getPubmedArticleWithPmid(PMID);
 
@@ -281,7 +302,8 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
 
     private void fixPubmedRetrievalButtonClicked(String a, String fa, String t, String l, String py, String doi,
         String oa) {
-        when(pubmedArticleServiceMock.getPubmedArticleWithPmid(PMID)).thenReturn(Optional.of(pubmedArticleMock));
+        when(pubmedArticleServiceMock.getPubmedArticleWithPmid(PMID)).thenReturn(
+            new PubmedArticleResult(pubmedArticleMock, HttpStatus.OK, null));
         when(pubmedArticleMock.getPmId()).thenReturn(String.valueOf(PMID));
         when(pubmedArticleMock.getAuthors()).thenReturn(a);
         when(pubmedArticleMock.getFirstAuthor()).thenReturn(fa);

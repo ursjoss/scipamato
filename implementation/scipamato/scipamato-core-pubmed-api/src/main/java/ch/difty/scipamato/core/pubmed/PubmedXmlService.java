@@ -6,9 +6,12 @@ import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
+import feign.FeignException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.oxm.Unmarshaller;
 import org.springframework.stereotype.Service;
 
@@ -34,45 +37,51 @@ public class PubmedXmlService implements PubmedArticleService {
     }
 
     @Override
-    public Optional<PubmedArticleFacade> getPubmedArticleWithPmid(final int pmId) {
-        return processArticles(retrievePubmedArticleSet(pmId));
+    public PubmedArticleResult getPubmedArticleWithPmid(final int pmId) {
+        return processArticles(retrievePubmedArticleSet(pmId), pmId);
     }
 
     @Override
-    public Optional<PubmedArticleFacade> getPubmedArticleWithPmidAndApiKey(final int pmId, final String apiKey) {
+    public PubmedArticleResult getPubmedArticleWithPmidAndApiKey(final int pmId, final String apiKey) {
         AssertAs.notNull(apiKey, "apiKey");
-        return processArticles(retrievePubmedArticleSet(pmId, apiKey));
+        return processArticles(retrievePubmedArticleSet(pmId, apiKey), pmId);
     }
 
-    private Optional<PubmedArticleFacade> processArticles(final Optional<PubmedArticleSet> set) {
-        if (set.isPresent()) {
-            final List<Object> articles = set
-                .get()
-                .getPubmedArticleOrPubmedBookArticle();
-            if (articles != null)
-                return articles
+    private PubmedArticleResult processArticles(final PubmedArticleFeignResult result, final int pmId) {
+        if (result.pubmedArticleSet != null) {
+            final List<Object> articles = result.pubmedArticleSet.getPubmedArticleOrPubmedBookArticle();
+            if (articles != null) {
+                final Optional<PubmedArticleFacade> facade = articles
                     .stream()
                     .map(PubmedArticleFacade::newPubmedArticleFrom)
                     .findFirst();
+                return facade
+                    .map(pubmedArticleFacade -> new PubmedArticleResult(pubmedArticleFacade, result.httpStatus,
+                        result.errorMessage))
+                    .orElseGet(() -> new PubmedArticleResult(null, null,
+                        "PMID " + pmId + " seems to be undefined in PubMed."));
+            }
         }
-        return Optional.empty();
+        return new PubmedArticleResult(null, result.httpStatus, result.errorMessage);
     }
 
-    private Optional<PubmedArticleSet> retrievePubmedArticleSet(final int pmId) {
-        try {
-            return Optional.ofNullable(pubMed.articleWithId(String.valueOf(pmId)));
-        } catch (final Exception ex) {
-            log.error("Unexpected error: {}", ex.getMessage());
-            return Optional.empty();
-        }
+    private PubmedArticleFeignResult retrievePubmedArticleSet(final int pmId) {
+        return doRetrieve(() -> pubMed.articleWithId(String.valueOf(pmId)));
     }
 
-    private Optional<PubmedArticleSet> retrievePubmedArticleSet(final int pmId, final String apiKey) {
+    private PubmedArticleFeignResult retrievePubmedArticleSet(final int pmId, final String apiKey) {
+        return doRetrieve(() -> pubMed.articleWithId(String.valueOf(pmId), apiKey));
+    }
+
+    private PubmedArticleFeignResult doRetrieve(final Supplier<PubmedArticleSet> articleSetSupplier) {
         try {
-            return Optional.ofNullable(pubMed.articleWithId(String.valueOf(pmId), apiKey));
+            return new PubmedArticleFeignResult(articleSetSupplier.get());
+        } catch (final FeignException fex) {
+            log.error("feign exception: {}", fex.getMessage());
+            return new PubmedArticleFeignResult(fex);
         } catch (final Exception ex) {
             log.error("Unexpected error: {}", ex.getMessage());
-            return Optional.empty();
+            return new PubmedArticleFeignResult(ex.getMessage());
         }
     }
 
@@ -123,6 +132,35 @@ public class PubmedXmlService implements PubmedArticleService {
             log.info("Unable to parse xmlString '{}': {}", xmlString, e.getMessage());
         }
         return articles;
+    }
+
+    /**
+     * Data class that will either hold a {@link PubmedArticleSet} or
+     * an error message (optionally with an {@link HttpStatus} if available.
+     */
+    private class PubmedArticleFeignResult {
+        final PubmedArticleSet pubmedArticleSet;
+        final String           errorMessage;
+        final HttpStatus       httpStatus;
+
+        PubmedArticleFeignResult(final PubmedArticleSet articleSet) {
+            pubmedArticleSet = articleSet;
+            errorMessage = null;
+            httpStatus = null;
+        }
+
+        PubmedArticleFeignResult(final FeignException ex) {
+            pubmedArticleSet = null;
+            errorMessage = ex.getLocalizedMessage();
+            httpStatus = HttpStatus.resolve(ex.status());
+        }
+
+        PubmedArticleFeignResult(final String exceptionMessage) {
+            pubmedArticleSet = null;
+            errorMessage = exceptionMessage;
+            httpStatus = null;
+        }
+
     }
 
 }
