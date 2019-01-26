@@ -2,8 +2,6 @@ package ch.difty.scipamato.core.pubmed;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.Optional;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +20,6 @@ import org.springframework.test.context.junit4.SpringRunner;
  */
 @SpringBootTest
 @RunWith(SpringRunner.class)
-@SuppressWarnings("OptionalGetWithoutIsPresent")
 public class PubmedXmlServiceIntegrationAdHocTest {
 
     @Autowired
@@ -30,29 +27,32 @@ public class PubmedXmlServiceIntegrationAdHocTest {
 
     // https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=25395026&retmode=xml&version=2.0
     @Test
-    public void gettingArticleFromPubmed_withValidPmId_returnsArticle() {
+    public void gettingArticleFromPubmed_withValidPmId_returnsArticleAndNoMessage() {
         final int pmId = 25395026;
 
-        final Optional<PubmedArticleFacade> article = service.getPubmedArticleWithPmid(pmId);
-        assertThat(article.isPresent()).isTrue();
-        ScipamatoPubmedArticleIntegrationTest.assertArticle239026(article.get());
+        final PubmedArticleResult result = service.getPubmedArticleWithPmid(pmId);
+        assertThat(result.getPubmedArticleFacade()).isNotNull();
+        assertThat(result.getErrorMessage()).isNull();
+        ScipamatoPubmedArticleIntegrationTest.assertArticle239026(result.getPubmedArticleFacade());
     }
 
     @Test
-    public void gettingArticleFromPubmed_withNotExistingPmId_returnsEmptyOptional() {
+    public void gettingArticleFromPubmed_withNotExistingPmId_returnsNoArticle() {
         final int pmId = 999999999;
 
-        final Optional<PubmedArticleFacade> article = service.getPubmedArticleWithPmid(pmId);
-        assertThat(article.isPresent()).isFalse();
+        final PubmedArticleResult result = service.getPubmedArticleWithPmid(pmId);
+        assertThat(result.getPubmedArticleFacade()).isNull();
+        assertThat(result.getErrorMessage()).isEqualTo("PMID " + pmId + " seems to be undefined in PubMed.");
     }
 
     // https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?api_key=xxx,db=pubmed&id=25395026&retmode=xml&version=2.0
     @Test
     public void gettingArticleFromPubmed_withValidPmIdButInvalidApiKey_returnsNoting() {
         final int pmId = 25395026;
-        final String apiKey="xxx";
+        final String apiKey = "xxx";
 
-        final Optional<PubmedArticleFacade> article = service.getPubmedArticleWithPmidAndApiKey(pmId, apiKey);
-        assertThat(article.isPresent()).isFalse();
+        final PubmedArticleResult result = service.getPubmedArticleWithPmidAndApiKey(pmId, apiKey);
+        assertThat(result.getPubmedArticleFacade()).isNull();
+        assertThat(result.getErrorMessage()).isEqualTo("Status 400 BAD_REQUEST: API key invalid");
     }
 }

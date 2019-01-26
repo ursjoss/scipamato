@@ -7,10 +7,11 @@ import static org.mockito.Mockito.*;
 
 import javax.xml.transform.stream.StreamSource;
 import java.io.IOException;
+import java.lang.Object;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
+import feign.FeignException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,7 +26,6 @@ import ch.difty.scipamato.common.NullArgumentException;
 import ch.difty.scipamato.core.pubmed.api.*;
 
 @RunWith(MockitoJUnitRunner.class)
-@SuppressWarnings("OptionalGetWithoutIsPresent")
 public class PubmedXmlServiceTest {
 
     private PubmedXmlService service;
@@ -54,6 +54,8 @@ public class PubmedXmlServiceTest {
     private MedlineJournalInfo medLineJournalInfoMock;
     @Mock
     private ArticleTitle       articleTitleMock;
+    @Mock
+    private FeignException     feignExceptionMock;
 
     @Before
     public void setUp() {
@@ -100,40 +102,42 @@ public class PubmedXmlServiceTest {
     public void gettingPubmedArticleWithPmid_withValidId_returnsArticle() {
         final int pmId = 25395026;
         when(pubMedMock.articleWithId(String.valueOf(pmId))).thenReturn(pubmedArticleSetMock);
-        final List<java.lang.Object> objects = new ArrayList<>();
+        final List<Object> objects = new ArrayList<>();
         objects.add(pubmedArticleMock);
         when(pubmedArticleSetMock.getPubmedArticleOrPubmedBookArticle()).thenReturn(objects);
 
-        Optional<PubmedArticleFacade> pa = service.getPubmedArticleWithPmid(pmId);
-        assertThat(pa.isPresent()).isTrue();
-        assertThat(pa.get()).isNotNull();
+        PubmedArticleResult pr = service.getPubmedArticleWithPmid(pmId);
+        assertThat(pr.getPubmedArticleFacade()).isNotNull();
+        assertThat(pr.getErrorMessage()).isNull();
 
         verify(pubMedMock).articleWithId(String.valueOf(pmId));
         verify(pubmedArticleSetMock).getPubmedArticleOrPubmedBookArticle();
     }
 
     @Test
-    public void gettingPubmedArticleWithPmid_withInvalidId_returnsEmptyOptional() {
+    public void gettingPubmedArticleWithPmid_withInvalidId_returnsNullFacade() {
         final int pmId = 999999999;
         when(pubMedMock.articleWithId(String.valueOf(pmId))).thenReturn(pubmedArticleSetMock);
         final List<java.lang.Object> objects = new ArrayList<>();
         when(pubmedArticleSetMock.getPubmedArticleOrPubmedBookArticle()).thenReturn(objects);
 
-        Optional<PubmedArticleFacade> pa = service.getPubmedArticleWithPmid(pmId);
-        assertThat(pa.isPresent()).isFalse();
+        PubmedArticleResult pr = service.getPubmedArticleWithPmid(pmId);
+        assertThat(pr.getPubmedArticleFacade()).isNull();
+        assertThat(pr.getErrorMessage()).isEqualTo("PMID " + pmId + " seems to be undefined in PubMed.");
 
         verify(pubMedMock).articleWithId(String.valueOf(pmId));
         verify(pubmedArticleSetMock).getPubmedArticleOrPubmedBookArticle();
     }
 
     @Test
-    public void gettingPubmedArticleWithPmid_withNullObjects_returnsEmptyOptional() {
+    public void gettingPubmedArticleWithPmid_withNullObjects_returnsNullFacade() {
         final int pmId = 999999999;
         when(pubMedMock.articleWithId(String.valueOf(pmId))).thenReturn(pubmedArticleSetMock);
         when(pubmedArticleSetMock.getPubmedArticleOrPubmedBookArticle()).thenReturn(null);
 
-        Optional<PubmedArticleFacade> pa = service.getPubmedArticleWithPmid(pmId);
-        assertThat(pa.isPresent()).isFalse();
+        PubmedArticleResult pr = service.getPubmedArticleWithPmid(pmId);
+        assertThat(pr.getPubmedArticleFacade()).isNull();
+        assertThat(pr.getErrorMessage()).isNull();
 
         verify(pubMedMock).articleWithId(String.valueOf(pmId));
         verify(pubmedArticleSetMock).getPubmedArticleOrPubmedBookArticle();
@@ -147,23 +151,22 @@ public class PubmedXmlServiceTest {
         objects.add(pubmedArticleMock);
         when(pubmedArticleSetMock.getPubmedArticleOrPubmedBookArticle()).thenReturn(objects);
 
-        Optional<PubmedArticleFacade> pa = service.getPubmedArticleWithPmidAndApiKey(pmId, "key");
-        assertThat(pa.isPresent()).isTrue();
-        assertThat(pa.get()).isNotNull();
+        PubmedArticleResult pr = service.getPubmedArticleWithPmidAndApiKey(pmId, "key");
+        assertThat(pr.getPubmedArticleFacade()).isNotNull();
+        assertThat(pr.getErrorMessage()).isNull();
 
         verify(pubMedMock).articleWithId(String.valueOf(pmId), "key");
         verify(pubmedArticleSetMock).getPubmedArticleOrPubmedBookArticle();
     }
 
     @Test
-    public void gettingPubmedArticle_withInvalidId_returnsEmptyArticle() {
+    public void gettingPubmedArticle_withInvalidId_returnsEmptyArticleAndRawExceptionMessage() {
         final int pmId = 25395026;
         when(pubMedMock.articleWithId(String.valueOf(pmId), "key")).thenThrow(new RuntimeException("boom"));
-        final List<java.lang.Object> objects = new ArrayList<>();
-        objects.add(pubmedArticleMock);
 
-        Optional<PubmedArticleFacade> pa = service.getPubmedArticleWithPmidAndApiKey(pmId, "key");
-        assertThat(pa.isPresent()).isFalse();
+        PubmedArticleResult pr = service.getPubmedArticleWithPmidAndApiKey(pmId, "key");
+        assertThat(pr.getPubmedArticleFacade()).isNull();
+        assertThat(pr.getErrorMessage()).isEqualTo("boom");
 
         verify(pubMedMock).articleWithId(String.valueOf(pmId), "key");
     }
@@ -205,13 +208,62 @@ public class PubmedXmlServiceTest {
     }
 
     @Test
-    public void gettingPubmedArticleWithPmid_withNoNetwork_returnsEmptyOptional() {
+    public void gettingPubmedArticleWithPmid_withParsableHtmlError502_hasHttpStatusPopulated() {
+        final int pmId = 25395026;
+        feignExceptionFixture(502, "status 502 reading PubMed#articleWithId(String,String); content: \nfoo");
+        when(pubMedMock.articleWithId(String.valueOf(pmId))).thenThrow(feignExceptionMock);
+
+        PubmedArticleResult pr = service.getPubmedArticleWithPmid(pmId);
+        assertThat(pr.getPubmedArticleFacade()).isNull();
+        assertThat(pr.getErrorMessage()).isEqualTo(
+            "Status 502 BAD_GATEWAY: status 502 reading PubMed#articleWithId(String,String); content: \nfoo");
+
+        verify(pubMedMock).articleWithId(String.valueOf(pmId));
+    }
+
+    @Test
+    public void gettingPubmedArticleWithPmid_withParsableHtmlError400_hasHttpStatusPopulated() {
+        final int pmId = 25395026;
+        feignExceptionFixture(400, "status 400 reading PubMed#articleWithId(String,String); content:\n"
+                                   + "{\"error\":\"API key invalid\",\"api-key\":\"xxx\",\"type\":\"invalid\",\"status\":\"unknown\"}");
+        when(pubMedMock.articleWithId(String.valueOf(pmId))).thenThrow(feignExceptionMock);
+
+        PubmedArticleResult pr = service.getPubmedArticleWithPmid(pmId);
+        assertThat(pr.getPubmedArticleFacade()).isNull();
+        assertThat(pr.getErrorMessage()).isEqualTo("Status 400 BAD_REQUEST: API key invalid");
+
+        verify(pubMedMock).articleWithId(String.valueOf(pmId));
+    }
+
+    private void feignExceptionFixture(final int status, final String msg) {
+        when(feignExceptionMock.status()).thenReturn(status);
+        when(feignExceptionMock.getLocalizedMessage()).thenReturn(msg);
+    }
+
+    @Test
+    public void gettingPubmedArticleWithPmid_withParsableHtmlError400_hasHttpStatusPopulated2() {
+        final int pmId = 25395026;
+        when(pubMedMock.articleWithId(String.valueOf(pmId))).thenThrow(new RuntimeException(
+            "status 400 reading PubMed#articleWithId(String,String); content:\n"
+            + "{\"error\":\"API key invalid\",\"api-key\":\"xxx\",\"type\":\"invalid\",\"status\":\"unknown\"}"));
+
+        PubmedArticleResult pr = service.getPubmedArticleWithPmid(pmId);
+        assertThat(pr.getPubmedArticleFacade()).isNull();
+        assertThat(pr.getErrorMessage()).isEqualTo("status 400 reading PubMed#articleWithId(String,String); content:\n"
+                                                   + "{\"error\":\"API key invalid\",\"api-key\":\"xxx\",\"type\":\"invalid\",\"status\":\"unknown\"}");
+
+        verify(pubMedMock).articleWithId(String.valueOf(pmId));
+    }
+
+    @Test
+    public void gettingPubmedArticleWithPmid_withNoParsableHtmlError_onlyHasMessage() {
         final int pmId = 25395026;
         when(pubMedMock.articleWithId(String.valueOf(pmId))).thenThrow(
             new RuntimeException("The network is not reachable"));
 
-        Optional<PubmedArticleFacade> pa = service.getPubmedArticleWithPmid(pmId);
-        assertThat(pa.isPresent()).isFalse();
+        PubmedArticleResult pr = service.getPubmedArticleWithPmid(pmId);
+        assertThat(pr.getPubmedArticleFacade()).isNull();
+        assertThat(pr.getErrorMessage()).isEqualTo("The network is not reachable");
 
         verify(pubMedMock).articleWithId(String.valueOf(pmId));
     }

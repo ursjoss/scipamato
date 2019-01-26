@@ -1,7 +1,6 @@
 package ch.difty.scipamato.core.pubmed;
 
 import java.util.List;
-import java.util.Optional;
 
 import ch.difty.scipamato.common.NullArgumentException;
 
@@ -18,9 +17,9 @@ public interface PubmedArticleService {
      *
      * @param pmId
      *     pubmedId
-     * @return optional of {@link PubmedArticleFacade}
+     * @return {@link PubmedArticleResult} holding the {@link PubmedArticleFacade} and some status information
      */
-    Optional<PubmedArticleFacade> getPubmedArticleWithPmid(int pmId);
+    PubmedArticleResult getPubmedArticleWithPmid(int pmId);
 
     /**
      * Retrieve the pubmed article with the provided pmID directly from PubMed, using
@@ -30,9 +29,9 @@ public interface PubmedArticleService {
      *     pubmedId
      * @param apiKey
      *     the PubmedApi Key - must not be null
-     * @return optional of {@link PubmedArticleFacade}
+     * @return PubmedArticleResult holding the PubmedArticleFacade and some status information
      */
-    Optional<PubmedArticleFacade> getPubmedArticleWithPmidAndApiKey(int pmId, String apiKey);
+    PubmedArticleResult getPubmedArticleWithPmidAndApiKey(int pmId, String apiKey);
 
     /**
      * Extracts pubmed articles and pubmed book articles from a a source string. It
