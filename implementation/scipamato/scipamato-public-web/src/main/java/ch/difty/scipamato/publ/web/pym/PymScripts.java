@@ -5,8 +5,8 @@ package ch.difty.scipamato.publ.web.pym;
  * providing responsive iframes with pym.js.
  */
 public enum PymScripts {
-    INSTANTIATE("pymChild", "var pymChild = new pym.Child()"),
-    RESIZE("pymResize", "pymChild.sendHeight(); console.log('sendHeight called');");
+    INSTANTIATE("pymChild", "var pymChild = new pym.Child({ id: 'scipamato-public' });"),
+    RESIZE("pymResize", "pymChild.sendHeight();");
 
     public final String id;
     public final String script;
@@ -15,4 +15,5 @@ public enum PymScripts {
         this.id = id;
         this.script = script;
     }
+
 }

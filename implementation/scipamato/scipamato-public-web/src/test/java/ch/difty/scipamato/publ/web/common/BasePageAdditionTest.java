@@ -118,7 +118,10 @@ public class BasePageAdditionTest extends WicketTest {
             .contains("PymJavaScriptResourceReference/js/pym.v1")).isEqualTo(render);
         assertThat(getTester()
             .getLastResponseAsString()
-            .contains("var pymChild = new pym.Child()")).isEqualTo(render);
+            .contains("var pymChild = new pym.Child({ id: 'scipamato-public' });")).isEqualTo(render);
+        assertThat(getTester()
+            .getLastResponseAsString()
+            .contains("pymChild.sendHeight();")).isEqualTo(render);
 
         verify(applicationProperties).isResponsiveIframeSupportEnabled();
     }
