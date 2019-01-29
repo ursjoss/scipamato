@@ -131,13 +131,38 @@ public class NewsletterEditPage extends BasePage<Newsletter> {
     protected void onInitialize() {
         super.onInitialize();
         queueForm("form");
-        queueFieldAndLabel(new TextField<String>(ISSUE.getName()), new PropertyValidator<String>());
-        queueFieldAndLabel(new LocalDateTextField(ISSUE_DATE.getName(),
-            new StringResourceModel("date.format", this, null).getString()), new PropertyValidator<LocalDate>());
+        queueFieldAndLabel(newIssueField(ISSUE.getName()), new PropertyValidator<String>());
+        queueFieldAndLabel(newIssueDateField(ISSUE_DATE.getName()), new PropertyValidator<LocalDate>());
         makeAndQueuePublicationStatusSelectBox(PUBLICATION_STATUS.getName());
         queueSubmitButton("submit");
 
         makeAndQueueResultPanel("resultPanel");
+    }
+
+    private TextField<String> newIssueField(final String id) {
+        return new TextField<>(id) {
+            @Override
+            protected void onConfigure() {
+                super.onConfigure();
+                setEnabled(isInStatusInProgress());
+            }
+        };
+    }
+
+    private boolean isInStatusInProgress() {
+        return getModelObject() != null && getModelObject()
+            .getPublicationStatus()
+            .isInProgress();
+    }
+
+    private LocalDateTextField newIssueDateField(final String id) {
+        return new LocalDateTextField(id, new StringResourceModel("date.format", this, null).getString()) {
+            @Override
+            protected void onConfigure() {
+                super.onConfigure();
+                setEnabled(isInStatusInProgress());
+            }
+        };
     }
 
     private void queueSubmitButton(final String id) {
