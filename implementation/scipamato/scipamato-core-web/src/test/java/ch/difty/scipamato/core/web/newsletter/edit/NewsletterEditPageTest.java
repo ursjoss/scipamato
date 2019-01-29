@@ -14,8 +14,8 @@ import org.apache.wicket.util.tester.FormTester;
 import org.junit.After;
 import org.junit.Test;
 
-import ch.difty.scipamato.core.entity.newsletter.Newsletter;
 import ch.difty.scipamato.common.entity.newsletter.PublicationStatus;
+import ch.difty.scipamato.core.entity.newsletter.Newsletter;
 import ch.difty.scipamato.core.web.common.BasePageTest;
 import ch.difty.scipamato.core.web.paper.result.ResultPanel;
 
@@ -86,5 +86,28 @@ public class NewsletterEditPageTest extends BasePageTest<NewsletterEditPage> {
 
         getTester().assertNoErrorMessage();
         getTester().assertNoInfoMessage();
+    }
+
+    @Test
+    public void fieldsIssueAndIssueDate_areOnlyEnabledIfNewsletterIsInProgress() {
+        for (final PublicationStatus ps : PublicationStatus.values()) {
+            final Newsletter nl = Newsletter
+                .builder()
+                .issue("1804")
+                .issueDate(LocalDate.parse("2018-04-01"))
+                .publicationStatus(ps)
+                .build();
+            getTester().startPage(new NewsletterEditPage(Model.of(nl)));
+            getTester().assertRenderedPage(NewsletterEditPage.class);
+
+            String b = "form:";
+            if (ps.isInProgress()) {
+                getTester().assertEnabled(b + "issue");
+                getTester().assertEnabled(b + "issueDate");
+            } else {
+                getTester().assertDisabled(b + "issue");
+                getTester().assertDisabled(b + "issueDate");
+            }
+        }
     }
 }
