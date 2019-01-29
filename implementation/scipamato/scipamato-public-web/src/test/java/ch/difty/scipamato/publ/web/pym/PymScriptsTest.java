@@ -14,12 +14,13 @@ public class PymScriptsTest {
     @Test
     public void instantiating() {
         assertThat(PymScripts.INSTANTIATE.id).isEqualTo("pymChild");
-        assertThat(PymScripts.INSTANTIATE.script).isEqualTo("var pymChild = new pym.Child()");
+        assertThat(PymScripts.INSTANTIATE.script).isEqualTo(
+            "var pymChild = new pym.Child({ id: 'scipamato-public' });");
     }
 
     @Test
     public void resizing() {
         assertThat(PymScripts.RESIZE.id).isEqualTo("pymResize");
-        assertThat(PymScripts.RESIZE.script).isEqualTo("pymChild.sendHeight(); console.log('sendHeight called');");
+        assertThat(PymScripts.RESIZE.script).isEqualTo("pymChild.sendHeight();");
     }
 }

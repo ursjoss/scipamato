@@ -941,9 +941,9 @@
         this.sendHeight = function() {
             // Get the child's height.
             var height = document.getElementsByTagName('body')[0].offsetHeight.toString();
-
             // Send the height to the parent.
             this.sendMessage('height', height);
+console.log("pym.sendHeight: height sent to parent: " + height);// TODO remove
 
             return height;
         }.bind(this);
