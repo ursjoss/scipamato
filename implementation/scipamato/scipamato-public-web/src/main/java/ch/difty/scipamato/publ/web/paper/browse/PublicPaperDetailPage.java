@@ -44,11 +44,14 @@ public class PublicPaperDetailPage extends BasePage<PublicPaper> {
      * Loads the page with the record specified by the 'id' passed in via
      * PageParameters. If the parameter 'no' contains a valid business key number
      * instead, the page will be loaded by number.
+     * <p>
+     * This method has to be public, otherwise direct access via page parameters does not work.
      *
      * @param parameters
      *     page parameters
      */
-    PublicPaperDetailPage(final PageParameters parameters) {
+    @SuppressWarnings("WeakerAccess")
+    public PublicPaperDetailPage(final PageParameters parameters) {
         this(parameters, null);
     }
 
