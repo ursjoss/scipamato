@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapExternalLink;
 import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.BootstrapTabbedPanel;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
@@ -81,6 +82,8 @@ public class PublicPageTest extends BasePageTest<PublicPage> {
 
         getTester().assertComponent(b + ":query", BootstrapButton.class);
         getTester().assertComponent(b + ":clear", BootstrapButton.class);
+        getTester().assertComponent(b + ":help", BootstrapExternalLink.class);
+        getTester().assertModelValue(b + ":help", "https://github.com/ursjoss/scipamato/wiki/Filtering-Papers-Public");
 
         // query was not yet executed and results panel is still invisible
         getTester().assertInvisible("results");
