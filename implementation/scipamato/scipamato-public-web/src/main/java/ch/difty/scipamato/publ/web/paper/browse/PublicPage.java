@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.giffing.wicket.spring.boot.context.scan.WicketHomePage;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapExternalLink;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
 import de.agilecoders.wicket.core.markup.html.bootstrap.table.TableBehavior;
 import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.BootstrapTabbedPanel;
@@ -102,6 +103,8 @@ public class PublicPage extends BasePage<Void> {
         queueQueryButton("query", filterForm);
 
         queueClearSearchButton("clear");
+
+        queueHelpLink("help");
     }
 
     private void addTabPanel(FilterForm<PublicPaperFilter> filterForm, String tabId) {
@@ -248,6 +251,16 @@ public class PublicPage extends BasePage<Void> {
         button.add(new AttributeModifier("title",
             new StringResourceModel(BUTTON_RESOURCE_PREFIX + id + TITLE_RESOURCE_TAG, this, null).getString()));
         queue(button);
+    }
+
+    private void queueHelpLink(String id) {
+        final BootstrapExternalLink link = new BootstrapExternalLink(id,
+            new StringResourceModel(id + ".url", this, null)) {
+            private static final long serialVersionUID = 1L;
+        };
+        link.setTarget(BootstrapExternalLink.Target.blank);
+        link.setLabel(new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null));
+        queue(link);
     }
 
     private void makeAndQueueResultTable(String id) {
