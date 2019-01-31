@@ -153,4 +153,17 @@ public class CodeListPageTest extends BasePageTest<CodeListPage> {
         verify(codeServiceMock).newUnpersistedCodeDefinition();
     }
 
+    @Test
+    public void changingCodeClass_refreshesResultPanel() {
+        getTester().startPage(getPageClass());
+
+        getTester().executeAjaxEvent("filterPanel:filterForm:codeClass", "change");
+        getTester().assertComponentOnAjaxResponse("resultPanel");
+
+        verify(codeServiceMock).getCodeClass1("en_us");
+        verify(codeServiceMock, times(2)).countByFilter(isA(CodeFilter.class));
+        verify(codeServiceMock, times(2)).findPageOfEntityDefinitions(isA(CodeFilter.class),
+            isA(PaginationRequest.class));
+    }
+
 }

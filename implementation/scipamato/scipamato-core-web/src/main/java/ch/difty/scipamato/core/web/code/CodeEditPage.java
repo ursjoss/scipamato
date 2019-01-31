@@ -29,6 +29,10 @@ public class CodeEditPage extends DefinitionEditPage<CodeDefinition> {
 
     private static final long serialVersionUID = 1L;
 
+    private static final Pattern DUPLICATE_KEY_PATTERN = Pattern.compile(
+        "Key \\(code_class_id, sort\\)=\\((\\d+), (\\d+)\\) already exists.*PSQLException: "
+        + "ERROR: duplicate key value violates unique constraint");
+
     @SpringBean
     private CodeService service;
 
@@ -77,9 +81,7 @@ public class CodeEditPage extends DefinitionEditPage<CodeDefinition> {
     protected void handleDuplicateKeyException(final DuplicateKeyException dke) {
         final String errorMsg = dke.getMessage();
         if (errorMsg != null) {
-            final Pattern pattern = Pattern.compile(
-                "Key \\(code_class_id, sort\\)=\\((\\d+), (\\d+)\\) already exists.*PSQLException: ERROR: duplicate key value violates unique constraint");
-            final Matcher matcher = pattern.matcher(errorMsg);
+            final Matcher matcher = DUPLICATE_KEY_PATTERN.matcher(errorMsg);
             if (matcher.find()) {
                 error(new StringResourceModel("save.duplicatekey.hint", this, null)
                     .setParameters(matcher.group(2), matcher.group(1))
@@ -87,6 +89,8 @@ public class CodeEditPage extends DefinitionEditPage<CodeDefinition> {
             } else {
                 error(errorMsg);
             }
+        } else {
+            error("Unexpected DuplicateKeyConstraintViolation");
         }
     }
 }

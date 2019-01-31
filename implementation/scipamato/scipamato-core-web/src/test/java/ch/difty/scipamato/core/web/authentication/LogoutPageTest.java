@@ -41,10 +41,8 @@ public class LogoutPageTest extends WicketTest {
         assertThat(getTester()
             .getSession()
             .isSessionInvalidated()).isFalse();
-        // TODO does not work in the test scenario, investigate
-        // getTester().submitForm(FORM);
-        // getTester().assertRenderedPage(LoginPage.class);
-        // assertThat(getTester().getSession().isSessionInvalidated()).isTrue();
+        getTester().submitForm(FORM);
+        getTester().assertRenderedPage(LoginPage.class);
     }
 
 }
