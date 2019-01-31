@@ -9,6 +9,7 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.repeater.RefreshingView;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.tester.FormTester;
 import org.junit.After;
 import org.junit.Test;
@@ -18,9 +19,11 @@ import org.springframework.dao.DuplicateKeyException;
 
 import ch.difty.scipamato.core.entity.CodeClass;
 import ch.difty.scipamato.core.entity.code.CodeDefinition;
+import ch.difty.scipamato.core.entity.code.CodeFilter;
 import ch.difty.scipamato.core.entity.code.CodeTranslation;
 import ch.difty.scipamato.core.persistence.CodeService;
 import ch.difty.scipamato.core.persistence.OptimisticLockingException;
+import ch.difty.scipamato.core.web.authentication.LogoutPage;
 import ch.difty.scipamato.core.web.common.BasePageTest;
 
 public class CodeEditPageTest extends BasePageTest<CodeEditPage> {
@@ -172,6 +175,17 @@ public class CodeEditPageTest extends BasePageTest<CodeEditPage> {
     }
 
     @Test
+    public void submitting_withDuplicateKeyConstraintViolationException_withUnexpectedMsg_addsThatErrorMsg() {
+        String msg = "something unexpected happened";
+        when(codeServiceMock.saveOrUpdate(isA(CodeDefinition.class))).thenThrow(new DuplicateKeyException(msg));
+
+        runSubmitTest();
+
+        getTester().assertNoInfoMessage();
+        getTester().assertErrorMessages("something unexpected happened");
+    }
+
+    @Test
     public void submitting_withNullCode_preventsSave() {
         assertCodeCodeClassMismatch(null);
     }
@@ -212,6 +226,30 @@ public class CodeEditPageTest extends BasePageTest<CodeEditPage> {
 
         getTester().assertNoInfoMessage();
         getTester().assertErrorMessages("You cannot delete code '2A' as it is still assigned to at least one paper.");
+    }
+
+    @Test
+    public void clickingBackButton_withPageWithoutCallingPageRef_forwardsToCodeListPage() {
+        getTester().startPage(new CodeEditPage(Model.of(cd), null));
+
+        FormTester formTester = getTester().newFormTester("form");
+        formTester.submit("headerPanel:back");
+
+        getTester().assertRenderedPage(CodeListPage.class);
+
+        // from CodeListPage
+        verify(codeServiceMock).getCodeClass1("en_us");
+        verify(codeServiceMock).countByFilter(isA(CodeFilter.class));
+    }
+
+    @Test
+    public void clickingBackButton_withPageWithCallingPageRef_forwardsToThat() {
+        getTester().startPage(new CodeEditPage(Model.of(cd), new LogoutPage(new PageParameters()).getPageReference()));
+
+        FormTester formTester = getTester().newFormTester("form");
+        formTester.submit("headerPanel:back");
+
+        getTester().assertRenderedPage(LogoutPage.class);
     }
 
 }
