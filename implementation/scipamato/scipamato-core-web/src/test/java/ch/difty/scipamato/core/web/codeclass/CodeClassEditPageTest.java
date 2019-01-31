@@ -7,17 +7,19 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.repeater.RefreshingView;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.tester.FormTester;
 import org.junit.After;
 import org.junit.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.dao.DuplicateKeyException;
 
-import ch.difty.scipamato.core.entity.code.CodeDefinition;
 import ch.difty.scipamato.core.entity.code_class.CodeClassDefinition;
 import ch.difty.scipamato.core.entity.code_class.CodeClassTranslation;
 import ch.difty.scipamato.core.persistence.CodeClassService;
 import ch.difty.scipamato.core.persistence.OptimisticLockingException;
+import ch.difty.scipamato.core.web.authentication.LogoutPage;
+import ch.difty.scipamato.core.web.code.CodeListPage;
 import ch.difty.scipamato.core.web.common.BasePageTest;
 
 public class CodeClassEditPageTest extends BasePageTest<CodeClassEditPage> {
@@ -146,11 +148,60 @@ public class CodeClassEditPageTest extends BasePageTest<CodeClassEditPage> {
     public void submitting_withDuplicateKeyConstraintViolationException_addsErrorMsg() {
         String msg = "...Detail: Key (code_class_id, lang_code)=(1, en) already exists.; "
                      + "nested exception is org.postgresql.util.PSQLException: ERROR: duplicate key value violates unique constraint...";
-        when(codeClassServiceMock.saveOrUpdate(isA(CodeClassDefinition.class))).thenThrow(new DuplicateKeyException(msg));
+        when(codeClassServiceMock.saveOrUpdate(isA(CodeClassDefinition.class))).thenThrow(
+            new DuplicateKeyException(msg));
 
         runSubmitTest();
 
         getTester().assertNoInfoMessage();
         getTester().assertErrorMessages("Code class id 1 is already used.");
+    }
+
+    @Test
+    public void submitting_withDuplicateKeyConstraintViolationException_withUnexpectedErrorMessage_addsThat() {
+        String msg = "odd";
+        when(codeClassServiceMock.saveOrUpdate(isA(CodeClassDefinition.class))).thenThrow(
+            new DuplicateKeyException(msg));
+
+        runSubmitTest();
+
+        getTester().assertNoInfoMessage();
+        getTester().assertErrorMessages("odd");
+    }
+
+    @Test
+    public void submitting_withDuplicateKeyConstraintViolationException_withNullMsg_addsThatErrorMsg() {
+        //noinspection ConstantConditions
+        when(codeClassServiceMock.saveOrUpdate(isA(CodeClassDefinition.class))).thenThrow(
+            new DuplicateKeyException(null));
+
+        runSubmitTest();
+
+        getTester().assertNoInfoMessage();
+        getTester().assertErrorMessages("Unexpected DuplicateKeyConstraintViolation");
+    }
+
+    @Test
+    public void clickingBackButton_withPageWithoutCallingPageRef_forwardsToCodeListPage() {
+        getTester().startPage(new CodeClassEditPage(Model.of(ccd), null));
+
+        FormTester formTester = getTester().newFormTester("form");
+        formTester.submit("headerPanel:back");
+
+        getTester().assertRenderedPage(CodeListPage.class);
+
+        // from CodeClassListPage
+        verify(codeClassServiceMock).find("en_us");
+    }
+
+    @Test
+    public void clickingBackButton_withPageWithCallingPageRef_forwardsToThat() {
+        getTester().startPage(
+            new CodeClassEditPage(Model.of(ccd), new LogoutPage(new PageParameters()).getPageReference()));
+
+        FormTester formTester = getTester().newFormTester("form");
+        formTester.submit("headerPanel:back");
+
+        getTester().assertRenderedPage(LogoutPage.class);
     }
 }

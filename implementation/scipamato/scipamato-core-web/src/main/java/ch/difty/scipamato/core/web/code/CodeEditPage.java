@@ -89,6 +89,8 @@ public class CodeEditPage extends DefinitionEditPage<CodeDefinition> {
             } else {
                 error(errorMsg);
             }
+        } else {
+            error("Unexpected DuplicateKeyConstraintViolation");
         }
     }
 }

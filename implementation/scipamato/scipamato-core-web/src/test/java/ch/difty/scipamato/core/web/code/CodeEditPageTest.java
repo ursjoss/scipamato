@@ -186,6 +186,16 @@ public class CodeEditPageTest extends BasePageTest<CodeEditPage> {
     }
 
     @Test
+    public void submitting_withDuplicateKeyConstraintViolationException_withNullMsg_addsThatErrorMsg() {
+        when(codeServiceMock.saveOrUpdate(isA(CodeDefinition.class))).thenThrow(new DuplicateKeyException(null));
+
+        runSubmitTest();
+
+        getTester().assertNoInfoMessage();
+        getTester().assertErrorMessages("Unexpected DuplicateKeyConstraintViolation");
+    }
+
+    @Test
     public void submitting_withNullCode_preventsSave() {
         assertCodeCodeClassMismatch(null);
     }
