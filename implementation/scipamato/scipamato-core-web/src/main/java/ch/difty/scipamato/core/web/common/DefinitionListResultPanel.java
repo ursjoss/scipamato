@@ -34,10 +34,6 @@ public abstract class DefinitionListResultPanel<T extends DefinitionEntity, F ex
         this.dataProvider = provider;
     }
 
-    protected F getFilter() {
-        return dataProvider.getFilterState();
-    }
-
     @Override
     protected final void onInitialize() {
         super.onInitialize();
