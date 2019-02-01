@@ -62,7 +62,7 @@ abstract class CodeEditHeaderPanel extends DefinitionEditHeaderPanel<CodeDefinit
      * Validator to guarantee that the selected Code (e.g. "2A") matches the code class
      * that corresponds with the first number in the code (i.e. Code Class 2).
      */
-    class CodeMustMatchCodeClassValidator extends AbstractFormValidator {
+    static class CodeMustMatchCodeClassValidator extends AbstractFormValidator {
         private static final long serialVersionUID = 1L;
 
         private final FormComponent<?>[] components;
@@ -85,7 +85,7 @@ abstract class CodeEditHeaderPanel extends DefinitionEditHeaderPanel<CodeDefinit
             final BootstrapSelect<CodeClass> codeClassField = (BootstrapSelect<CodeClass>) components[1];
             final String codeValue = codeField.getConvertedInput();
             final CodeClass codeClass = codeClassField.getConvertedInput();
-            if (codeValue == null || codeValue.isEmpty() || !codeValue
+            if (codeClass == null || codeValue == null || codeValue.isEmpty() || !codeValue
                 .substring(0, 1)
                 .equalsIgnoreCase(codeClass
                     .getId()

@@ -1,10 +1,12 @@
 package ch.difty.scipamato.core.web.code;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.checkboxx.CheckBoxX;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelect;
+import org.apache.wicket.feedback.FeedbackMessage;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.repeater.RefreshingView;
@@ -13,10 +15,12 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.tester.FormTester;
 import org.junit.After;
 import org.junit.Test;
+import org.mockito.Mock;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DuplicateKeyException;
 
+import ch.difty.scipamato.common.TestUtils;
 import ch.difty.scipamato.core.entity.CodeClass;
 import ch.difty.scipamato.core.entity.code.CodeDefinition;
 import ch.difty.scipamato.core.entity.code.CodeFilter;
@@ -35,6 +39,12 @@ public class CodeEditPageTest extends BasePageTest<CodeEditPage> {
     @MockBean
     private CodeService codeServiceMock;
 
+    @Mock
+    private Form<?> formDummy;
+
+    private TextField<String>          codeField;
+    private BootstrapSelect<CodeClass> codeClasses;
+
     @Override
     public void setUpHook() {
         final CodeTranslation kt_de = new CodeTranslation(1, "de", "Name1", "some comment", 1);
@@ -42,6 +52,9 @@ public class CodeEditPageTest extends BasePageTest<CodeEditPage> {
         final CodeTranslation kt_en = new CodeTranslation(2, "en", "name1", null, 1);
         final CodeTranslation kt_fr = new CodeTranslation(3, "fr", "nom1", null, 1);
         cd = new CodeDefinition("2A", "de", cc2, 1, false, 1, kt_de, kt_en, kt_fr, kt_de2);
+
+        codeField = new TextField<>("code");
+        codeClasses = new BootstrapSelect<>("codeClasses");
     }
 
     @After
@@ -262,4 +275,46 @@ public class CodeEditPageTest extends BasePageTest<CodeEditPage> {
         getTester().assertRenderedPage(LogoutPage.class);
     }
 
+    @Test
+    public void constructing_withNullCodeField_throws() {
+        TestUtils.assertDegenerateSupplierParameter(
+            () -> new CodeEditHeaderPanel.CodeMustMatchCodeClassValidator(null, codeClasses), "field");
+    }
+
+    @Test
+    public void constructing_withNullCodeClassesField_throws() {
+        TestUtils.assertDegenerateSupplierParameter(
+            () -> new CodeEditHeaderPanel.CodeMustMatchCodeClassValidator(codeField, null), "codeClasses");
+    }
+
+    @Test
+    public void withNullCodeClasses_failsValidation() {
+        assertThat(codeClasses.getConvertedInput()).isNull();
+        assertValidationDidNotPass();
+    }
+
+    @Test
+    public void withNonNullCodeClass_withNullCode_failsValidation() {
+        codeClasses.setConvertedInput(new CodeClass(1, "CC1", ""));
+        assertThat(codeField.getConvertedInput()).isNull();
+
+        assertValidationDidNotPass();
+    }
+
+    @Test
+    public void withNonNullCodeClass_withBlankCode_failsValidation() {
+        codeClasses.setConvertedInput(new CodeClass(1, "CC1", ""));
+        codeField.setConvertedInput("");
+
+        assertValidationDidNotPass();
+    }
+
+    private void assertValidationDidNotPass() {
+        CodeEditHeaderPanel.CodeMustMatchCodeClassValidator validator = new CodeEditHeaderPanel.CodeMustMatchCodeClassValidator(
+            codeField, codeClasses);
+        validator.validate(formDummy);
+        assertThat(codeField
+            .getFeedbackMessages()
+            .hasMessage(FeedbackMessage.ERROR)).isTrue();
+    }
 }
