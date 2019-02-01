@@ -36,6 +36,9 @@ public class CodeEditPageTest extends BasePageTest<CodeEditPage> {
 
     private CodeDefinition cd;
 
+    @Mock
+    private CodeDefinition codeDefinitionDummy;
+
     @MockBean
     private CodeService codeServiceMock;
 
@@ -200,6 +203,7 @@ public class CodeEditPageTest extends BasePageTest<CodeEditPage> {
 
     @Test
     public void submitting_withDuplicateKeyConstraintViolationException_withNullMsg_addsThatErrorMsg() {
+        //noinspection ConstantConditions
         when(codeServiceMock.saveOrUpdate(isA(CodeDefinition.class))).thenThrow(new DuplicateKeyException(null));
 
         runSubmitTest();
@@ -236,7 +240,26 @@ public class CodeEditPageTest extends BasePageTest<CodeEditPage> {
     }
 
     @Test
-    public void submitting_withForeignKeyConstraintViolationException_addsErrorMsg() {
+    public void submittingDelete_delegatesDeleteToService() {
+        when(codeServiceMock.delete(anyString(), anyInt())).thenReturn(codeDefinitionDummy);
+
+        getTester().startPage(new CodeEditPage(Model.of(cd), null));
+
+        FormTester formTester = getTester().newFormTester("form");
+        formTester.submit("headerPanel:delete");
+
+        verify(codeServiceMock).delete("2A", 1);
+        verify(codeServiceMock, never()).saveOrUpdate(any());
+
+        verify(codeServiceMock).getCodeClass1("en_us");
+        verify(codeServiceMock).countByFilter(isA(CodeFilter.class));
+
+        getTester().assertNoInfoMessage();
+        getTester().assertNoErrorMessage();
+    }
+
+    @Test
+    public void submittingDelete_withForeignKeyConstraintViolationException_addsErrorMsg() {
         String msg = "... is still referenced from table \"paper_code\".; nested exception is org.postgresql.util.PSQLException...";
         when(codeServiceMock.delete(anyString(), anyInt())).thenThrow(new DataIntegrityViolationException(msg));
 
@@ -249,6 +272,38 @@ public class CodeEditPageTest extends BasePageTest<CodeEditPage> {
 
         getTester().assertNoInfoMessage();
         getTester().assertErrorMessages("You cannot delete code '2A' as it is still assigned to at least one paper.");
+    }
+
+    @Test
+    public void submittingDelete_withOptimisticLockingException_addsErrorMsg() {
+        when(codeServiceMock.delete(anyString(), anyInt())).thenThrow(
+            new OptimisticLockingException("code_class", OptimisticLockingException.Type.DELETE));
+
+        getTester().startPage(new CodeEditPage(Model.of(cd), null));
+
+        FormTester formTester = getTester().newFormTester("form");
+        formTester.submit("headerPanel:delete");
+
+        verify(codeServiceMock).delete(anyString(), anyInt());
+
+        getTester().assertNoInfoMessage();
+        getTester().assertErrorMessages(
+            "The code_class with id 2A has been modified concurrently by another user. Please reload it and apply your changes once more.");
+    }
+
+    @Test
+    public void submittingDelete_withException_addsErrorMsg() {
+        when(codeServiceMock.delete(anyString(), anyInt())).thenThrow(new RuntimeException("boom"));
+
+        getTester().startPage(new CodeEditPage(Model.of(cd), null));
+
+        FormTester formTester = getTester().newFormTester("form");
+        formTester.submit("headerPanel:delete");
+
+        verify(codeServiceMock).delete(anyString(), anyInt());
+
+        getTester().assertNoInfoMessage();
+        getTester().assertErrorMessages("An unexpected error occurred when trying to delete code 2A: boom");
     }
 
     @Test
