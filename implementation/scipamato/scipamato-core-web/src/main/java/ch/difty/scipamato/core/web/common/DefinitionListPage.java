@@ -36,7 +36,7 @@ public abstract class DefinitionListPage<T extends DefinitionEntity, F extends S
     protected final void onInitialize() {
         super.onInitialize();
         filter = newFilter();
-        provider = newProvider(filter);
+        provider = newProvider(getFilter());
         queue(newFilterPanel("filterPanel"));
         queue(resultPanel = newResultPanel("resultPanel"));
     }
