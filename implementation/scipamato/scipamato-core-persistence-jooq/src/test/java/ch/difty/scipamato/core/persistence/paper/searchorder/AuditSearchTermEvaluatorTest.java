@@ -184,4 +184,17 @@ public class AuditSearchTermEvaluatorTest extends SearchTermEvaluatorTest<AuditS
         }
     }
 
+    @Test
+    public void buildingConditionForWord_withNonUserField_throws() {
+        expectToken(TokenType.WORD, "foo", "firstAuthor");
+        try {
+            e.evaluate(stMock);
+            fail("should have thrown exception");
+        } catch (Exception ex) {
+            assertThat(ex)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(
+                    "Field firstAuthor is not one of the expected user fields [paper.created_by, paper.last_modified_by] entitled to use MatchType.CONTAINS");
+        }
+    }
 }

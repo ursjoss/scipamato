@@ -62,7 +62,7 @@ import java.util.regex.Pattern;
  * @see <a href=
  *     "http://giocc.com/writing-a-lexer-in-java-1-7-using-regex-named-capturing-groups.html">http://giocc.com/writing-a-lexer-in-java-1-7-using-regex-named-capturing-groups.html</a>
  */
-@SuppressWarnings("SameParameterValue")
+@SuppressWarnings({ "SameParameterValue", "SpellCheckingInspection" })
 public class AuditSearchTerm extends AbstractSearchTerm {
 
     private static final long serialVersionUID = 1L;

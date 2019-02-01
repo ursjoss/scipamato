@@ -73,14 +73,14 @@ public class AuditSearchTermEvaluator implements SearchTermEvaluator<AuditSearch
 
     private void checkField(final String fieldName, final Paper.PaperFields createdField,
         final Paper.PaperFields lastModField, final String fieldType, final String matchType) {
-        if (isOneOrTheOther(createdField, lastModField, fieldName))
+        if (!isOneOrTheOther(createdField, lastModField, fieldName))
             throwWithMessage(fieldName, fieldType, createdField, lastModField, matchType);
     }
 
     private boolean isOneOrTheOther(final Paper.PaperFields createdField, final Paper.PaperFields lastModField,
         final String fieldName) {
         //@formatter:off
-        return !(
+        return (
                createdField.getName().equals(fieldName)
             || lastModField.getName().equals(fieldName)
         );
@@ -138,16 +138,16 @@ public class AuditSearchTermEvaluator implements SearchTermEvaluator<AuditSearch
         case GREATER_OR_EQUAL:
             conditions.add(() -> field.greaterOrEqual(value1));
             break;
-        case EQUALS:
-            conditions.add(() -> field.equal(value1));
-            break;
         case LESS_OR_EQUAL:
             conditions.add(() -> field.lessOrEqual(value1));
             break;
         case LESS_THAN:
             conditions.add(() -> field.lessThan(value1));
             break;
+        // Equals
         default:
+            conditions.add(() -> field.equal(value1));
+            break;
         }
     }
 }
