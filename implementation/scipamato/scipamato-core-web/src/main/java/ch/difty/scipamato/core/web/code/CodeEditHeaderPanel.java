@@ -14,11 +14,11 @@ import ch.difty.scipamato.core.entity.CodeClass;
 import ch.difty.scipamato.core.entity.code.CodeDefinition;
 import ch.difty.scipamato.core.entity.code.CodeFilter;
 import ch.difty.scipamato.core.entity.code.CodeTranslation;
-import ch.difty.scipamato.core.web.common.DefinitionEditHeaderPanel;
+import ch.difty.scipamato.core.web.common.DeletableDefinitionEditHeaderPanel;
 import ch.difty.scipamato.core.web.model.CodeClassModel;
 
 @SuppressWarnings("SameParameterValue")
-abstract class CodeEditHeaderPanel extends DefinitionEditHeaderPanel<CodeDefinition, CodeTranslation, String> {
+abstract class CodeEditHeaderPanel extends DeletableDefinitionEditHeaderPanel<CodeDefinition, CodeTranslation, String> {
 
     private BootstrapSelect<CodeClass> codeClasses;
 

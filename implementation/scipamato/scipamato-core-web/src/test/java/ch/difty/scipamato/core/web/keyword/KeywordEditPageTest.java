@@ -8,23 +8,33 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.repeater.RefreshingView;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.tester.FormTester;
 import org.junit.After;
 import org.junit.Test;
+import org.mockito.Mock;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.DuplicateKeyException;
 
 import ch.difty.scipamato.core.entity.keyword.KeywordDefinition;
+import ch.difty.scipamato.core.entity.keyword.KeywordFilter;
 import ch.difty.scipamato.core.entity.keyword.KeywordTranslation;
 import ch.difty.scipamato.core.persistence.KeywordService;
 import ch.difty.scipamato.core.persistence.OptimisticLockingException;
+import ch.difty.scipamato.core.web.authentication.LogoutPage;
 import ch.difty.scipamato.core.web.common.BasePageTest;
 
+@SuppressWarnings("SpellCheckingInspection")
 public class KeywordEditPageTest extends BasePageTest<KeywordEditPage> {
 
     private KeywordDefinition kd;
 
     @MockBean
     private KeywordService keywordServiceMock;
+
+    @Mock
+    private KeywordDefinition keywordDefinitionDummy;
 
     @Override
     public void setUpHook() {
@@ -135,6 +145,17 @@ public class KeywordEditPageTest extends BasePageTest<KeywordEditPage> {
     }
 
     @Test
+    public void submitting_withDuplicateKeyException_addsErrorMsg() {
+        when(keywordServiceMock.saveOrUpdate(isA(KeywordDefinition.class))).thenThrow(
+            new DuplicateKeyException("boom"));
+
+        runSubmitTest();
+
+        getTester().assertNoInfoMessage();
+        getTester().assertErrorMessages("boom");
+    }
+
+    @Test
     public void submitting_withOtherException_addsErrorMsg() {
         when(keywordServiceMock.saveOrUpdate(isA(KeywordDefinition.class))).thenThrow(new RuntimeException("fooMsg"));
 
@@ -144,4 +165,93 @@ public class KeywordEditPageTest extends BasePageTest<KeywordEditPage> {
         getTester().assertErrorMessages("An unexpected error occurred when trying to save the keyword [id 1]: fooMsg");
     }
 
+    @Test
+    public void submittingDelete_delegatesDeleteToService() {
+        when(keywordServiceMock.delete(anyInt(), anyInt())).thenReturn(keywordDefinitionDummy);
+
+        getTester().startPage(new KeywordEditPage(Model.of(kd), null));
+
+        FormTester formTester = getTester().newFormTester("form");
+        formTester.submit("headerPanel:delete");
+
+        verify(keywordServiceMock).delete(1, 1);
+        verify(keywordServiceMock, never()).saveOrUpdate(any());
+
+        verify(keywordServiceMock).countByFilter(isA(KeywordFilter.class));
+
+        getTester().assertNoInfoMessage();
+        getTester().assertNoErrorMessage();
+    }
+
+    @Test
+    public void submittingDelete_withForeignKeyConstraintViolationException_addsErrorMsg() {
+        String msg = "... is still referenced from table \"paper_code\".; nested exception is org.postgresql.util.PSQLException...";
+        when(keywordServiceMock.delete(anyInt(), anyInt())).thenThrow(new DataIntegrityViolationException(msg));
+
+        getTester().startPage(new KeywordEditPage(Model.of(kd), null));
+
+        FormTester formTester = getTester().newFormTester("form");
+        formTester.submit("headerPanel:delete");
+
+        verify(keywordServiceMock).delete(1, 1);
+
+        getTester().assertNoInfoMessage();
+        getTester().assertErrorMessages("Unable to delete this record as it is still used in other places.");
+    }
+
+    @Test
+    public void submittingDelete_withOptimisticLockingException_addsErrorMsg() {
+        when(keywordServiceMock.delete(anyInt(), anyInt())).thenThrow(
+            new OptimisticLockingException("keyword", OptimisticLockingException.Type.DELETE));
+
+        getTester().startPage(new KeywordEditPage(Model.of(kd), null));
+
+        FormTester formTester = getTester().newFormTester("form");
+        formTester.submit("headerPanel:delete");
+
+        verify(keywordServiceMock).delete(1, 1);
+
+        getTester().assertNoInfoMessage();
+        getTester().assertErrorMessages(
+            "The keyword with id 1 has been modified concurrently by another user. Please reload it and apply your changes once more.");
+    }
+
+    @Test
+    public void submittingDelete_withException_addsErrorMsg() {
+        when(keywordServiceMock.delete(anyInt(), anyInt())).thenThrow(new RuntimeException("boom"));
+
+        getTester().startPage(new KeywordEditPage(Model.of(kd), null));
+
+        FormTester formTester = getTester().newFormTester("form");
+        formTester.submit("headerPanel:delete");
+
+        verify(keywordServiceMock).delete(1, 1);
+
+        getTester().assertNoInfoMessage();
+        getTester().assertErrorMessages("An unexpected error occurred when trying to delete keyword [id 1]: boom");
+    }
+
+    @Test
+    public void clickingBackButton_withPageWithoutCallingPageRef_forwardsToKeywordListPage() {
+        getTester().startPage(new KeywordEditPage(Model.of(kd), null));
+
+        FormTester formTester = getTester().newFormTester("form");
+        formTester.submit("headerPanel:back");
+
+        getTester().assertRenderedPage(KeywordListPage.class);
+
+        // from CodeListPage
+        verify(keywordServiceMock).countByFilter(isA(KeywordFilter.class));
+    }
+
+    @Test
+    public void clickingBackButton_withPageWithCallingPageRef_forwardsToThat() {
+        getTester().startPage(
+            new KeywordEditPage(Model.of(kd), new LogoutPage(new PageParameters()).getPageReference()));
+
+        FormTester formTester = getTester().newFormTester("form");
+        formTester.submit("headerPanel:back");
+
+        getTester().assertRenderedPage(LogoutPage.class);
+    }
 }

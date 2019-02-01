@@ -58,11 +58,6 @@ public class CodeClassEditPage extends DefinitionEditPage<CodeClassDefinition> {
             protected Class<? extends Page> staticResponsePage() {
                 return CodeListPage.class;
             }
-
-            @Override
-            protected CodeClassDefinition doDelete(final CodeClassDefinition ntd, final Integer recordId) {
-                return null; // no-op
-            }
         };
     }
 

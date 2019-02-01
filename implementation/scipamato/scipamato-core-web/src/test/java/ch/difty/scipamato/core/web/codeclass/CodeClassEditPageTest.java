@@ -204,4 +204,5 @@ public class CodeClassEditPageTest extends BasePageTest<CodeClassEditPage> {
 
         getTester().assertRenderedPage(LogoutPage.class);
     }
+
 }
