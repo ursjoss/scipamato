@@ -7,17 +7,21 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.repeater.RefreshingView;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.tester.FormTester;
 import org.junit.After;
 import org.junit.Test;
+import org.mockito.Mock;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DuplicateKeyException;
 
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicDefinition;
+import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicFilter;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicTranslation;
 import ch.difty.scipamato.core.persistence.NewsletterTopicService;
 import ch.difty.scipamato.core.persistence.OptimisticLockingException;
+import ch.difty.scipamato.core.web.authentication.LogoutPage;
 import ch.difty.scipamato.core.web.common.BasePageTest;
 
 public class NewsletterTopicEditPageTest extends BasePageTest<NewsletterTopicEditPage> {
@@ -26,6 +30,9 @@ public class NewsletterTopicEditPageTest extends BasePageTest<NewsletterTopicEdi
 
     @MockBean
     private NewsletterTopicService newsletterTopicServiceMock;
+
+    @Mock
+    private NewsletterTopicDefinition newsletterTopicDefinitionDummy;
 
     @Override
     public void setUpHook() {
@@ -151,6 +158,24 @@ public class NewsletterTopicEditPageTest extends BasePageTest<NewsletterTopicEdi
     }
 
     @Test
+    public void submittingDelete_delegatesDeleteToService() {
+        when(newsletterTopicServiceMock.delete(anyInt(), anyInt())).thenReturn(newsletterTopicDefinitionDummy);
+
+        getTester().startPage(new NewsletterTopicEditPage(Model.of(ntd), null));
+
+        FormTester formTester = getTester().newFormTester("form");
+        formTester.submit("headerPanel:delete");
+
+        verify(newsletterTopicServiceMock).delete(1, 1);
+        verify(newsletterTopicServiceMock, never()).saveOrUpdate(any());
+
+        verify(newsletterTopicServiceMock).countByFilter(isA(NewsletterTopicFilter.class));
+
+        getTester().assertNoInfoMessage();
+        getTester().assertNoErrorMessage();
+    }
+
+    @Test
     public void submitting_withForeignKeyConstraintViolationException_addsErrorMsg() {
         String msg = "...whatever...";
         when(newsletterTopicServiceMock.delete(anyInt(), anyInt())).thenThrow(new DataIntegrityViolationException(msg));
@@ -164,6 +189,30 @@ public class NewsletterTopicEditPageTest extends BasePageTest<NewsletterTopicEdi
 
         getTester().assertNoInfoMessage();
         getTester().assertErrorMessages("Unable to delete this record as it is still used in other places.");
+    }
+
+    @Test
+    public void clickingBackButton_withPageWithoutCallingPageRef_forwardsToNewsletterTopicListPage() {
+        getTester().startPage(new NewsletterTopicEditPage(Model.of(ntd), null));
+
+        FormTester formTester = getTester().newFormTester("form");
+        formTester.submit("headerPanel:back");
+
+        getTester().assertRenderedPage(NewsletterTopicListPage.class);
+
+        // from NewsletterListPage
+        verify(newsletterTopicServiceMock).countByFilter(isA(NewsletterTopicFilter.class));
+    }
+
+    @Test
+    public void clickingBackButton_withPageWithCallingPageRef_forwardsToThat() {
+        getTester().startPage(
+            new NewsletterTopicEditPage(Model.of(ntd), new LogoutPage(new PageParameters()).getPageReference()));
+
+        FormTester formTester = getTester().newFormTester("form");
+        formTester.submit("headerPanel:back");
+
+        getTester().assertRenderedPage(LogoutPage.class);
     }
 
 }
