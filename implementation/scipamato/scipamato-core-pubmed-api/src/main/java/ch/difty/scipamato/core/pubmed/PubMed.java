@@ -12,8 +12,6 @@ import ch.difty.scipamato.core.pubmed.api.PubmedArticleSet;
  */
 public interface PubMed {
 
-    String URL = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/";
-
     /**
      * Retrieve a pubmed article with the given PMID.
      *

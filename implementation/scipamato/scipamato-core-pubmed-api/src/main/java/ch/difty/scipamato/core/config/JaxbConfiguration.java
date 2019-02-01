@@ -19,6 +19,8 @@ public class JaxbConfiguration {
 
     private static final String PACKAGE = "ch.difty.scipamato.core.pubmed";
 
+    static final String PUBMED_URL = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/";
+
     private final JAXBContextFactory jaxbFactory = new JAXBContextFactory.Builder()
         .withMarshallerJAXBEncoding("UTF-8")
         .build();
@@ -46,6 +48,6 @@ public class JaxbConfiguration {
             .logger(new Slf4jLogger())
             .logLevel(Logger.Level.FULL)
             .decoder(new JAXBDecoder(jaxbFactory))
-            .target(PubMed.class, PubMed.URL);
+            .target(PubMed.class, PUBMED_URL);
     }
 }
