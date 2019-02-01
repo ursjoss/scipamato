@@ -22,9 +22,4 @@ abstract class CodeClassEditHeaderPanel
         queueFieldAndLabel(idField);
     }
 
-    @Override
-    protected boolean canDelete() {
-        return false;
-    }
-
 }

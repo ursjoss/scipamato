@@ -6,11 +6,11 @@ import org.apache.wicket.model.IModel;
 import ch.difty.scipamato.core.entity.keyword.Keyword;
 import ch.difty.scipamato.core.entity.keyword.KeywordDefinition;
 import ch.difty.scipamato.core.entity.keyword.KeywordTranslation;
-import ch.difty.scipamato.core.web.common.DefinitionEditHeaderPanel;
+import ch.difty.scipamato.core.web.common.DeletableDefinitionEditHeaderPanel;
 
 @SuppressWarnings("SameParameterValue")
 abstract class KeywordEditHeaderPanel
-    extends DefinitionEditHeaderPanel<KeywordDefinition, KeywordTranslation, Integer> {
+    extends DeletableDefinitionEditHeaderPanel<KeywordDefinition, KeywordTranslation, Integer> {
 
     KeywordEditHeaderPanel(final String id, final IModel<KeywordDefinition> model) {
         super(id, model);
