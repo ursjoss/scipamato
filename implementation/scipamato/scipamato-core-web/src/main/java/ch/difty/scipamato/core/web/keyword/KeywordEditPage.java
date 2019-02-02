@@ -70,7 +70,12 @@ public class KeywordEditPage extends DefinitionEditPage<KeywordDefinition> {
 
     @Override
     protected void handleDuplicateKeyException(final DuplicateKeyException dke) {
-        if (dke != null && dke.getMessage() != null)
-            error(dke.getMessage());
+        if (dke != null) {
+            if (dke.getMessage() != null) {
+                error(dke.getMessage());
+            } else {
+                error("Unexpected DuplicateKeyConstraintViolation");
+            }
+        }
     }
 }

@@ -207,7 +207,7 @@ public class CodeEditPageTest extends BasePageTest<CodeEditPage> {
     }
 
     @Test
-    public void submitting_withDuplicateKeyConstraintViolationException_withNullMsg_addsThatErrorMsg() {
+    public void submitting_withDuplicateKeyConstraintViolationException_withNullMsg_addsStandardErrorMsg() {
         //noinspection ConstantConditions
         when(codeServiceMock.saveOrUpdate(isA(CodeDefinition.class))).thenThrow(new DuplicateKeyException(null));
 
