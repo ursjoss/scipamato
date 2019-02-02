@@ -16,6 +16,7 @@ import org.junit.Test;
 
 import ch.difty.scipamato.common.entity.newsletter.PublicationStatus;
 import ch.difty.scipamato.core.entity.newsletter.Newsletter;
+import ch.difty.scipamato.core.persistence.OptimisticLockingException;
 import ch.difty.scipamato.core.web.common.BasePageTest;
 import ch.difty.scipamato.core.web.paper.result.ResultPanel;
 
@@ -67,12 +68,88 @@ public class NewsletterEditPageTest extends BasePageTest<NewsletterEditPage> {
     @Test
     public void submitting_callsService() {
         when(newsletterServiceMock.canCreateNewsletterInProgress()).thenReturn(true);
+        when(newsletterServiceMock.saveOrUpdate(isA(Newsletter.class))).thenReturn(nl);
 
         getTester().startPage(NewsletterEditPage.class);
 
         FormTester formTester = getTester().newFormTester("form");
         formTester.setValue("issue", "1806");
         formTester.submit("submit");
+
+        getTester().assertInfoMessages("Successfully saved Newsletter [id 0]: 1804 ({2}).");
+        getTester().assertNoErrorMessage();
+
+        verify(newsletterServiceMock).saveOrUpdate(isA(Newsletter.class));
+    }
+
+    @Test
+    public void submitting_withServiceReturningNull_addsErrorMessage() {
+        when(newsletterServiceMock.canCreateNewsletterInProgress()).thenReturn(true);
+        when(newsletterServiceMock.saveOrUpdate(isA(Newsletter.class))).thenReturn(null);
+
+        getTester().startPage(NewsletterEditPage.class);
+
+        FormTester formTester = getTester().newFormTester("form");
+        formTester.setValue("issue", "1806");
+        formTester.submit("submit");
+
+        getTester().assertNoInfoMessage();
+        getTester().assertErrorMessages("An unexpected error occurred when trying to save Newsletter [id 0]: ");
+
+        verify(newsletterServiceMock).saveOrUpdate(isA(Newsletter.class));
+    }
+
+    @Test
+    public void submitting_withServiceReturningOptimisticLockingException() {
+        when(newsletterServiceMock.canCreateNewsletterInProgress()).thenReturn(true);
+        when(newsletterServiceMock.saveOrUpdate(isA(Newsletter.class))).thenThrow(
+            new OptimisticLockingException("newsletter", OptimisticLockingException.Type.UPDATE));
+
+        getTester().startPage(NewsletterEditPage.class);
+
+        FormTester formTester = getTester().newFormTester("form");
+        formTester.setValue("issue", "1806");
+        formTester.submit("submit");
+
+        getTester().assertNoInfoMessage();
+        getTester().assertErrorMessages(
+            "The newsletter with id 0 has been modified concurrently by another user. Please reload it and apply your changes once more.");
+
+        verify(newsletterServiceMock).saveOrUpdate(isA(Newsletter.class));
+    }
+
+    @Test
+    public void submitting_withIllegalArgumentException() {
+        when(newsletterServiceMock.canCreateNewsletterInProgress()).thenReturn(true);
+        when(newsletterServiceMock.saveOrUpdate(isA(Newsletter.class))).thenThrow(
+            new IllegalArgumentException("newsletter.onlyOneInStatusWipAllowed"));
+
+        getTester().startPage(NewsletterEditPage.class);
+
+        FormTester formTester = getTester().newFormTester("form");
+        formTester.setValue("issue", "1806");
+        formTester.submit("submit");
+
+        getTester().assertNoInfoMessage();
+        getTester().assertErrorMessages(
+            "Another newsletter is already in status WIP. You cannot save the current newsletter in the same status.");
+
+        verify(newsletterServiceMock).saveOrUpdate(isA(Newsletter.class));
+    }
+
+    @Test
+    public void submitting_withOtherException() {
+        when(newsletterServiceMock.canCreateNewsletterInProgress()).thenReturn(true);
+        when(newsletterServiceMock.saveOrUpdate(isA(Newsletter.class))).thenThrow(new RuntimeException("boom"));
+
+        getTester().startPage(NewsletterEditPage.class);
+
+        FormTester formTester = getTester().newFormTester("form");
+        formTester.setValue("issue", "1806");
+        formTester.submit("submit");
+
+        getTester().assertNoInfoMessage();
+        getTester().assertErrorMessages("An unexpected error occurred when trying to save Newsletter [id 0]: boom");
 
         verify(newsletterServiceMock).saveOrUpdate(isA(Newsletter.class));
     }

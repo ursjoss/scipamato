@@ -14,7 +14,6 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.springframework.dao.DuplicateKeyException;
 import org.wicketstuff.annotation.mount.MountPath;
 
-import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.core.auth.Roles;
 import ch.difty.scipamato.core.entity.code.CodeDefinition;
 import ch.difty.scipamato.core.persistence.CodeService;
