@@ -112,14 +112,14 @@ public class NewsletterTopicSortPage extends BasePage<Newsletter> {
                     service.saveSortedNewsletterTopics(NewsletterTopicSortPage.this
                         .getModelObject()
                         .getId(), topics);
+                    if (previousPageRef != null)
+                        setResponsePage(previousPageRef.getPage());
+                    else
+                        setResponsePage(PaperListPage.class);
                 } catch (Exception ex) {
                     error("Unexpected error: " + ex.getMessage());
                 }
 
-                if (previousPageRef != null)
-                    setResponsePage(previousPageRef.getPage());
-                else
-                    setResponsePage(PaperListPage.class);
             }
         };
     }

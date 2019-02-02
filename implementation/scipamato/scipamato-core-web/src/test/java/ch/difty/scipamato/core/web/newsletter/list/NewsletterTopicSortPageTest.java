@@ -10,13 +10,15 @@ import com.googlecode.wicket.jquery.ui.interaction.sortable.Sortable;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.junit.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import ch.difty.scipamato.common.entity.newsletter.PublicationStatus;
 import ch.difty.scipamato.core.entity.newsletter.Newsletter;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterNewsletterTopic;
-import ch.difty.scipamato.common.entity.newsletter.PublicationStatus;
 import ch.difty.scipamato.core.persistence.NewsletterTopicService;
+import ch.difty.scipamato.core.web.authentication.LoginPage;
 import ch.difty.scipamato.core.web.common.BasePageTest;
 import ch.difty.scipamato.core.web.paper.list.PaperListPage;
 
@@ -61,7 +63,7 @@ public class NewsletterTopicSortPageTest extends BasePageTest<NewsletterTopicSor
 
         bb += ":items:";
         for (int i = 0; i < topics.size(); i++)
-            getTester().assertLabel(bb + String.valueOf(i) + ":item", "topic" + (i + 1));
+            getTester().assertLabel(bb + i + ":item", "topic" + (i + 1));
 
         bb = b + ":submit";
         getTester().assertComponent(bb, BootstrapAjaxButton.class);
@@ -73,7 +75,19 @@ public class NewsletterTopicSortPageTest extends BasePageTest<NewsletterTopicSor
     }
 
     @Test
-    public void clickSubmit_callsSave_andNavigatesAwayFromPage() {
+    public void startingPageWithNonNullModel__loadsSortedNewsletterTopics() {
+        getTester().startPage(new NewsletterTopicSortPage(Model.of(newsletter), null));
+        verify(service).getSortedNewsletterTopicsForNewsletter(newsletter.getId());
+    }
+
+    @Test
+    public void startingPageWithNonModel__loadsSortedNewsletterTopics() {
+        getTester().startPage(new NewsletterTopicSortPage(null, null));
+        verify(service, never()).getSortedNewsletterTopicsForNewsletter(anyInt());
+    }
+
+    @Test
+    public void clickSubmit_withNoPreviousPage_callsSave_andNavigatesToPaperListPage() {
         getTester().startPage(makePage());
         getTester().assertRenderedPage(getPageClass());
 
@@ -88,7 +102,42 @@ public class NewsletterTopicSortPageTest extends BasePageTest<NewsletterTopicSor
     }
 
     @Test
-    public void clickCancel_doesNotCallSave_butNavigatesAwayFromPage() {
+    public void clickSubmit_withPreviousPage_callsSave_andNavigatesToPreviousPage() {
+        getTester().startPage(
+            new NewsletterTopicSortPage(Model.of(newsletter), new LoginPage(new PageParameters()).getPageReference()));
+        getTester().assertRenderedPage(getPageClass());
+
+        getTester().executeAjaxEvent("form:submit", "click");
+
+        getTester().assertRenderedPage(LoginPage.class);
+
+        getTester().assertNoErrorMessage();
+        getTester().assertNoInfoMessage();
+
+        verify(service).saveSortedNewsletterTopics(newsletter.getId(), topics);
+    }
+
+    @Test
+    public void clickSubmit_withSaveThrowing_addsErrorMessage_andStaysOnPage() {
+        doThrow(new RuntimeException("boom"))
+            .when(service)
+            .saveSortedNewsletterTopics(newsletter.getId(), topics);
+
+        getTester().startPage(makePage());
+        getTester().assertRenderedPage(getPageClass());
+
+        getTester().executeAjaxEvent("form:submit", "click");
+
+        getTester().assertNoInfoMessage();
+        getTester().assertErrorMessages("Unexpected error: boom");
+
+        getTester().assertRenderedPage(NewsletterTopicSortPage.class);
+
+        verify(service).saveSortedNewsletterTopics(newsletter.getId(), topics);
+    }
+
+    @Test
+    public void clickCancel_withNoPreviousPage_doesNotCallSave_butNavigatesToPaperListPage() {
         getTester().startPage(makePage());
         getTester().assertRenderedPage(getPageClass());
 
@@ -101,4 +150,21 @@ public class NewsletterTopicSortPageTest extends BasePageTest<NewsletterTopicSor
 
         verify(service, never()).saveSortedNewsletterTopics(anyInt(), anyList());
     }
+
+    @Test
+    public void clickCancel_withPreviousPage_doesNotCallSave_butNavigatesToPreviousPage() {
+        getTester().startPage(
+            new NewsletterTopicSortPage(Model.of(newsletter), new LoginPage(new PageParameters()).getPageReference()));
+        getTester().assertRenderedPage(getPageClass());
+
+        getTester().executeAjaxEvent("form:cancel", "click");
+
+        getTester().assertRenderedPage(LoginPage.class);
+
+        getTester().assertNoErrorMessage();
+        getTester().assertNoInfoMessage();
+
+        verify(service, never()).saveSortedNewsletterTopics(anyInt(), anyList());
+    }
+
 }
