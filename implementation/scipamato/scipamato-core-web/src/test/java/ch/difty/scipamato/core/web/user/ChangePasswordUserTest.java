@@ -31,7 +31,7 @@ public class ChangePasswordUserTest {
     }
 
     @Test
-    public void degenerateConstruction() {
+    public void degenerateConstruction_cannotInstantiateWithNullUser() {
         assertDegenerateSupplierParameter(() -> new ChangePasswordUser(null), "user");
     }
 
@@ -106,9 +106,27 @@ public class ChangePasswordUserTest {
     }
 
     @Test
-    public void canGetUser() {
+    public void canGetUser_neverNull() {
         cpu = new ChangePasswordUser(user);
         assertThat(cpu.toUser()).isEqualTo(user);
+    }
+
+    @Test
+    public void canGetUser2_neverNull() {
+        cpu = new ChangePasswordUser();
+        assertThat(cpu.toUser()).isNotNull();
+    }
+
+    @Test
+    public void canGetUser3_neverNull() {
+        cpu = new ChangePasswordUser(user, true);
+        assertThat(cpu.toUser()).isNotNull();
+    }
+
+    @Test
+    public void canGetUser4_neverNull() {
+        cpu = new ChangePasswordUser(user, false);
+        assertThat(cpu.toUser()).isNotNull();
     }
 
     @Test
