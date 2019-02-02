@@ -63,12 +63,9 @@ public class NewsletterTopicEditPage extends DefinitionEditPage<NewsletterTopicD
 
     @Override
     protected void handleDuplicateKeyException(final DuplicateKeyException dke) {
-        if (dke != null) {
-            if (dke.getMessage() != null) {
-                error(dke.getMessage());
-            } else {
-                error("Unexpected DuplicateKeyConstraintViolation");
-            }
-        }
+        if (dke.getMessage() != null)
+            error(dke.getMessage());
+        else
+            error("Unexpected DuplicateKeyConstraintViolation");
     }
 }
