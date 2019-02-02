@@ -54,6 +54,9 @@ public class ChangePasswordUser implements Serializable {
             this.user.setPassword(null);
     }
 
+    /**
+     * @return the user. Is never null.
+     */
     public User toUser() {
         return user;
     }

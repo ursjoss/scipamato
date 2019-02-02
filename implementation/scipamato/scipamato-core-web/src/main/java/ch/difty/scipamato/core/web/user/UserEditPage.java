@@ -255,23 +255,23 @@ public class UserEditPage extends BasePage<ChangePasswordUser> {
 
                 } else {
                     info(new StringResourceModel("save.successful.hint", this, null)
-                        .setParameters(getNullSafeId(), user.getUserName())
+                        .setParameters(getModelObject().getId(), user.getUserName())
                         .getString());
                 }
             } else {
                 error(new StringResourceModel("save.error.hint", this, null)
-                    .setParameters(getNullSafeId(), "")
+                    .setParameters(getModelObject().getId(), "")
                     .getString());
             }
         } catch (OptimisticLockingException ole) {
             final String msg = new StringResourceModel("save.optimisticlockexception.hint", this, null)
-                .setParameters(ole.getTableName(), getNullSafeId())
+                .setParameters(ole.getTableName(), getModelObject().getId())
                 .getString();
             log.error(msg);
             error(msg);
         } catch (Exception ex) {
             String msg = new StringResourceModel("save.error.hint", this, null)
-                .setParameters(getNullSafeId(), ex.getMessage())
+                .setParameters(getModelObject().getId(), ex.getMessage())
                 .getString();
             log.error(msg);
             error(msg);
@@ -280,24 +280,18 @@ public class UserEditPage extends BasePage<ChangePasswordUser> {
 
     private void doOnDelete() {
         final User user = getModelObject().toUser();
-        if (user != null) {
-            final String userName = user.getUserName();
-            try {
-                userService.remove(user);
-                info(new StringResourceModel("delete.successful.hint", this, null).setParameters(userName));
-                setResponsePage(UserListPage.class);
-            } catch (Exception ex) {
-                String msg = new StringResourceModel("delete.error.hint", this, null)
-                    .setParameters(userName, ex.getMessage())
-                    .getString();
-                log.error(msg);
-                error(msg);
-            }
+        final String userName = user.getUserName();
+        try {
+            userService.remove(user);
+            info(new StringResourceModel("delete.successful.hint", this, null).setParameters(userName));
+            setResponsePage(UserListPage.class);
+        } catch (Exception ex) {
+            String msg = new StringResourceModel("delete.error.hint", this, null)
+                .setParameters(userName, ex.getMessage())
+                .getString();
+            log.error(msg);
+            error(msg);
         }
-    }
-
-    private long getNullSafeId() {
-        return getModelObject().getId() != null ? getModelObject().getId() : 0L;
     }
 
     public enum Mode {

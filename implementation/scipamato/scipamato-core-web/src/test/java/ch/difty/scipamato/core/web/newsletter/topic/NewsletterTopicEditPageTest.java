@@ -146,6 +146,18 @@ public class NewsletterTopicEditPageTest extends BasePageTest<NewsletterTopicEdi
     }
 
     @Test
+    public void submitting_withDuplicateKeyException_withNullMsg_addsStandardErrorMsg() {
+        //noinspection ConstantConditions
+        when(newsletterTopicServiceMock.saveOrUpdate(isA(NewsletterTopicDefinition.class))).thenThrow(
+            new DuplicateKeyException(null));
+
+        runSubmitTest();
+
+        getTester().assertNoInfoMessage();
+        getTester().assertErrorMessages("Unexpected DuplicateKeyConstraintViolation");
+    }
+
+    @Test
     public void submitting_withOtherException_addsErrorMsg() {
         when(newsletterTopicServiceMock.saveOrUpdate(isA(NewsletterTopicDefinition.class))).thenThrow(
             new RuntimeException("fooMsg"));

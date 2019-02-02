@@ -8,6 +8,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.StringResourceModel;
 import org.springframework.dao.DataIntegrityViolationException;
 
+import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.entity.DefinitionEntity;
 import ch.difty.scipamato.common.entity.DefinitionTranslation;
 import ch.difty.scipamato.core.persistence.OptimisticLockingException;
@@ -17,8 +18,14 @@ import ch.difty.scipamato.core.persistence.OptimisticLockingException;
 public abstract class DeletableDefinitionEditHeaderPanel<E extends DefinitionEntity<ID, T>, T extends DefinitionTranslation, ID>
     extends DefinitionEditHeaderPanel<E, T, ID> {
 
+    /**
+     * @param id
+     *     the panel wicket id
+     * @param model
+     *     model of type <code>T</code>. Must not be null.
+     */
     protected DeletableDefinitionEditHeaderPanel(final String id, final IModel<E> model) {
-        super(id, model);
+        super(id, AssertAs.notNull(model, "model"));
     }
 
     @Override
@@ -35,7 +42,7 @@ public abstract class DeletableDefinitionEditHeaderPanel<E extends DefinitionEnt
                 super.onSubmit();
                 try {
                     final E ntd = DeletableDefinitionEditHeaderPanel.this.getModelObject();
-                    if (ntd != null && ntd.getNullSafeId() != null) {
+                    if (ntd.getNullSafeId() != null) {
                         final ID recordId = ntd.getNullSafeId();
                         E deleted = doDelete(ntd, recordId);
                         if (deleted != null) {

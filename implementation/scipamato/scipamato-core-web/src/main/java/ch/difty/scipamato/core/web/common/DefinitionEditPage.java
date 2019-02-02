@@ -9,6 +9,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.StringResourceModel;
 import org.springframework.dao.DuplicateKeyException;
 
+import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.entity.DefinitionEntity;
 import ch.difty.scipamato.core.persistence.OptimisticLockingException;
 
@@ -21,7 +22,7 @@ public abstract class DefinitionEditPage<E extends DefinitionEntity> extends Bas
     private Form<E> form;
 
     public DefinitionEditPage(final IModel<E> model, final PageReference callingPageRef) {
-        super(model);
+        super(AssertAs.notNull(model, "model"));
         this.callingPageRef = callingPageRef;
     }
 
