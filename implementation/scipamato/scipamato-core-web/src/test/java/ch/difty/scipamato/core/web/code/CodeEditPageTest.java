@@ -125,6 +125,11 @@ public class CodeEditPageTest extends BasePageTest<CodeEditPage> {
     }
 
     @Test
+    public void instantiating_with_nullModel_throws() {
+        TestUtils.assertDegenerateSupplierParameter(() -> new CodeEditPage(null, null), "model");
+    }
+
+    @Test
     public void submitting_withSuccessfulServiceCall_addsInfoMsg() {
         when(codeServiceMock.saveOrUpdate(isA(CodeDefinition.class))).thenReturn(cd);
 
@@ -248,14 +253,45 @@ public class CodeEditPageTest extends BasePageTest<CodeEditPage> {
         FormTester formTester = getTester().newFormTester("form");
         formTester.submit("headerPanel:delete");
 
+        getTester().assertNoInfoMessage();
+        getTester().assertNoErrorMessage();
+
         verify(codeServiceMock).delete("2A", 1);
         verify(codeServiceMock, never()).saveOrUpdate(any());
 
         verify(codeServiceMock).getCodeClass1("en_us");
         verify(codeServiceMock).countByFilter(isA(CodeFilter.class));
+    }
+
+    @Test
+    public void submittingDelete_withNullId_silentlyDoesNothing() {
+        cd.setCode(null);
+        getTester().startPage(new CodeEditPage(Model.of(cd), null));
+
+        FormTester formTester = getTester().newFormTester("form");
+        formTester.submit("headerPanel:delete");
 
         getTester().assertNoInfoMessage();
         getTester().assertNoErrorMessage();
+
+        verify(codeServiceMock, never()).delete("2A", 1);
+        verify(codeServiceMock, never()).saveOrUpdate(any());
+    }
+
+    @Test
+    public void submittingDelete_withServiceReturningNull_informsAboutRepoError() {
+        when(codeServiceMock.delete(anyString(), anyInt())).thenReturn(null);
+
+        getTester().startPage(new CodeEditPage(Model.of(cd), null));
+
+        FormTester formTester = getTester().newFormTester("form");
+        formTester.submit("headerPanel:delete");
+
+        getTester().assertNoInfoMessage();
+        getTester().assertErrorMessages("Could not delete code 2A.");
+
+        verify(codeServiceMock).delete("2A", 1);
+        verify(codeServiceMock, never()).saveOrUpdate(any());
     }
 
     @Test
@@ -268,10 +304,10 @@ public class CodeEditPageTest extends BasePageTest<CodeEditPage> {
         FormTester formTester = getTester().newFormTester("form");
         formTester.submit("headerPanel:delete");
 
-        verify(codeServiceMock).delete(anyString(), anyInt());
-
         getTester().assertNoInfoMessage();
         getTester().assertErrorMessages("You cannot delete code '2A' as it is still assigned to at least one paper.");
+
+        verify(codeServiceMock).delete(anyString(), anyInt());
     }
 
     @Test
@@ -284,11 +320,11 @@ public class CodeEditPageTest extends BasePageTest<CodeEditPage> {
         FormTester formTester = getTester().newFormTester("form");
         formTester.submit("headerPanel:delete");
 
-        verify(codeServiceMock).delete(anyString(), anyInt());
-
         getTester().assertNoInfoMessage();
         getTester().assertErrorMessages(
             "The code_class with id 2A has been modified concurrently by another user. Please reload it and apply your changes once more.");
+
+        verify(codeServiceMock).delete(anyString(), anyInt());
     }
 
     @Test
@@ -300,10 +336,10 @@ public class CodeEditPageTest extends BasePageTest<CodeEditPage> {
         FormTester formTester = getTester().newFormTester("form");
         formTester.submit("headerPanel:delete");
 
-        verify(codeServiceMock).delete(anyString(), anyInt());
-
         getTester().assertNoInfoMessage();
         getTester().assertErrorMessages("An unexpected error occurred when trying to delete code 2A: boom");
+
+        verify(codeServiceMock).delete(anyString(), anyInt());
     }
 
     @Test

@@ -27,7 +27,7 @@ import org.apache.commons.collections4.ListValuedMap;
 public interface DefinitionEntity<ID, T> extends Serializable {
 
     /**
-     * Id value of type {@code T}, must never be null.
+     * Id value of type {@code T}, can itself be null but must never throw.
      */
     ID getNullSafeId();
 

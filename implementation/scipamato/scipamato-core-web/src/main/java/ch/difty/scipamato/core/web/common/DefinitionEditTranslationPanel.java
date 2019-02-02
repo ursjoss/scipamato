@@ -33,7 +33,7 @@ public abstract class DefinitionEditTranslationPanel<E extends DefinitionEntity,
         final RefreshingView<T> translations = new RefreshingView<>(id) {
             @Override
             protected Iterator<IModel<T>> getItemModels() {
-                final Collection<T> translations = getModelObject()
+                @SuppressWarnings("unchecked") final Collection<T> translations = getModelObject()
                     .getTranslations()
                     .values();
                 return new ModelIteratorAdapter<>(translations) {
