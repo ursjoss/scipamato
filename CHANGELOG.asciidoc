@@ -64,6 +64,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 - {url-issues}56[#56] - Public: Add help link in Public Filter page pointing to wiki in Github
 
 .Changed
+- Bumped wicket to 8.3.0
 
 .Deprecated
 
