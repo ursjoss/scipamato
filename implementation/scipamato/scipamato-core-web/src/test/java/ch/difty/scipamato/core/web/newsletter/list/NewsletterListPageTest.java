@@ -15,11 +15,11 @@ import org.apache.wicket.util.tester.FormTester;
 import org.junit.After;
 import org.junit.Test;
 
+import ch.difty.scipamato.common.entity.newsletter.PublicationStatus;
 import ch.difty.scipamato.common.persistence.paging.PaginationRequest;
 import ch.difty.scipamato.common.web.component.table.column.LinkIconPanel;
 import ch.difty.scipamato.core.entity.newsletter.Newsletter;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterFilter;
-import ch.difty.scipamato.common.entity.newsletter.PublicationStatus;
 import ch.difty.scipamato.core.web.common.BasePageTest;
 import ch.difty.scipamato.core.web.newsletter.edit.NewsletterEditPage;
 
@@ -117,7 +117,7 @@ public class NewsletterListPageTest extends BasePageTest<NewsletterListPage> {
         getTester().clickLink("results:body:rows:1:cells:1:cell:link");
         getTester().assertRenderedPage(NewsletterEditPage.class);
 
-        // verify the newletter was loaded in the target page
+        // verify the newsletter was loaded in the target page
         FormTester formTester = getTester().newFormTester("form");
         assertThat(formTester.getTextComponentValue("issue")).isEqualTo("1801");
 
@@ -127,7 +127,7 @@ public class NewsletterListPageTest extends BasePageTest<NewsletterListPage> {
     }
 
     @Test
-    public void clickingNewNewslettter_forwardsToNewsletterEditPage() {
+    public void clickingNewNewsletter_forwardsToNewsletterEditPage() {
         when(newsletterServiceMock.canCreateNewsletterInProgress()).thenReturn(true);
         getTester().startPage(getPageClass());
         getTester().assertRenderedPage(getPageClass());
@@ -148,7 +148,7 @@ public class NewsletterListPageTest extends BasePageTest<NewsletterListPage> {
     }
 
     @Test
-    public void givenNoNewNewsletterShallBeCreated_newNewletterButtonIsDisabled() {
+    public void givenNoNewNewsletterShallBeCreated_newNewsletterButtonIsDisabled() {
         when(newsletterServiceMock.canCreateNewsletterInProgress()).thenReturn(false);
         getTester().startPage(getPageClass());
         getTester().assertRenderedPage(getPageClass());
@@ -228,4 +228,18 @@ public class NewsletterListPageTest extends BasePageTest<NewsletterListPage> {
         getTester().assertComponent(bodyRow + "5:cell", LinkIconPanel.class);
         getTester().assertModelValue(bodyRow + "5:cell", value);
     }
+
+    @Test
+    public void changingPublicationStatus_updatesResultTable() {
+        getTester().startPage(getPageClass());
+
+        getTester().executeAjaxEvent("filterForm:publicationStatus", "change");
+        getTester().assertComponentOnAjaxResponse("results");
+
+        verify(newsletterServiceMock, times(2)).countByFilter(isA(NewsletterFilter.class));
+        verify(newsletterServiceMock, times(2)).findPageByFilter(isA(NewsletterFilter.class),
+            isA(PaginationRequest.class));
+        verify(newsletterServiceMock).canCreateNewsletterInProgress();
+    }
+
 }
