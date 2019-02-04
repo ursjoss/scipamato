@@ -80,7 +80,7 @@
         <wicket.version>8.3.0</wicket.version>
         <wicket-jquery-ui.version>8.1.0</wicket-jquery-ui.version>
         <wicket-spring-boot-starter.version>2.1.5</wicket-spring-boot-starter.version>
-        <wicket-bootstrap.version>2.0.6</wicket-bootstrap.version>
+        <wicket-bootstrap.version>2.0.7</wicket-bootstrap.version>
         <bootstrap.version>3.3.7-1</bootstrap.version>
         <jasperreports.version>6.7.0</jasperreports.version>
 
