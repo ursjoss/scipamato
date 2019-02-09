@@ -249,7 +249,7 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
         getTester().startPage(page);
         getTester().assertRenderedPage(getPageClass());
 
-        String someTextInRow = "fa fa-fw fa-ban";
+        String someTextInRow = "fas fa-ban fa-fw";
         getTester().assertContains(someTextInRow);
 
         final String linkPath = "resultPanel:table:body:rows:1:cells:6:cell:link";

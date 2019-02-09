@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.agilecoders.wicket.core.markup.html.bootstrap.table.TableBehavior;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome5IconType;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome5IconTypeBuilder;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -182,7 +184,15 @@ public abstract class ResultPanel extends BasePanel<Void> {
 
             @Override
             protected IModel<String> createIconModel(IModel<PaperSlim> rowModel) {
-                return Model.of(dataProvider.isShowExcluded() ? "fa fa-fw fa-check-circle-o" : "fa fa-fw fa-ban");
+                final FontAwesome5IconType check_circle = FontAwesome5IconTypeBuilder
+                    .on(FontAwesome5IconTypeBuilder.FontAwesome5Regular.check_circle)
+                    .fixedWidth()
+                    .build();
+                final FontAwesome5IconType ban = FontAwesome5IconTypeBuilder
+                    .on(FontAwesome5IconTypeBuilder.FontAwesome5Solid.ban)
+                    .fixedWidth()
+                    .build();
+                return Model.of(dataProvider.isShowExcluded() ? check_circle.cssClassName() : ban.cssClassName());
             }
 
             @Override
@@ -218,6 +228,18 @@ public abstract class ResultPanel extends BasePanel<Void> {
      * </ul>
      */
     private IColumn<PaperSlim, String> makeNewsletterLinkIconColumn(String id) {
+        final FontAwesome5IconType plus_square = FontAwesome5IconTypeBuilder
+            .on(FontAwesome5IconTypeBuilder.FontAwesome5Solid.plus_square)
+            .fixedWidth()
+            .build();
+        final FontAwesome5IconType envelope_open = FontAwesome5IconTypeBuilder
+            .on(FontAwesome5IconTypeBuilder.FontAwesome5Regular.envelope_open)
+            .fixedWidth()
+            .build();
+        final FontAwesome5IconType envelope = FontAwesome5IconTypeBuilder
+            .on(FontAwesome5IconTypeBuilder.FontAwesome5Regular.envelope)
+            .fixedWidth()
+            .build();
         return new LinkIconColumn<>(new StringResourceModel(COLUMN_HEADER + id, this, null)) {
             private static final long serialVersionUID = 1L;
 
@@ -226,11 +248,11 @@ public abstract class ResultPanel extends BasePanel<Void> {
                 String icon;
                 final PaperSlim paper = rowModel.getObject();
                 if (hasNoNewsletter(paper))
-                    icon = isThereOneNewsletterInStatusWip() ? "fa fa-fw fa-plus-square-o" : "";
+                    icon = isThereOneNewsletterInStatusWip() ? plus_square.cssClassName() : "";
                 else if (hasNewsletterWip(paper))
-                    icon = "fa fa-fw fa-envelope-open-o";
+                    icon = envelope_open.cssClassName();
                 else
-                    icon = "fa fa-fw fa-envelope-o";
+                    icon = envelope.cssClassName();
                 return Model.of(icon);
             }
 

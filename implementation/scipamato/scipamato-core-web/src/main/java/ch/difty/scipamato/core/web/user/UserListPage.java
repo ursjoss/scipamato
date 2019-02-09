@@ -8,7 +8,7 @@ import java.util.List;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.LoadingBehavior;
 import de.agilecoders.wicket.core.markup.html.bootstrap.table.TableBehavior;
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesomeCDNCSSReference;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome5CDNCSSReference;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
@@ -68,7 +68,7 @@ public class UserListPage extends BasePage<Void> {
     @Override
     public void renderHead(final IHeaderResponse response) {
         super.renderHead(response);
-        response.render(CssHeaderItem.forReference(FontAwesomeCDNCSSReference.instance()));
+        response.render(CssHeaderItem.forReference(FontAwesome5CDNCSSReference.instance()));
     }
 
     @Override

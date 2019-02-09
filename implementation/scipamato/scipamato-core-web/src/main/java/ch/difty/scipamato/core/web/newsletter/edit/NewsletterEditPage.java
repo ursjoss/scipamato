@@ -10,7 +10,7 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.LoadingBehavior;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.LocalDateTextField;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelect;
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesomeCDNCSSReference;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome5CDNCSSReference;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
@@ -105,7 +105,7 @@ public class NewsletterEditPage extends BasePage<Newsletter> {
     @Override
     public void renderHead(final IHeaderResponse response) {
         super.renderHead(response);
-        response.render(CssHeaderItem.forReference(FontAwesomeCDNCSSReference.instance()));
+        response.render(CssHeaderItem.forReference(FontAwesome5CDNCSSReference.instance()));
     }
 
     @Override

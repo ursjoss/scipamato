@@ -15,6 +15,7 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.checkboxx.Che
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelect;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelectConfig;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome5IconType;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesomeIconType;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.wicket.AttributeModifier;
@@ -238,11 +239,11 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
             // Otherwise: Show the open envelope if assigned to current, closed envelope if assigned to closed nl.
             private IconType getIconType() {
                 if (!isAssociatedWithNewsletter())
-                    return FontAwesomeIconType.plus_square;
+                    return FontAwesome5IconType.plus_square_s;
                 else if (isAssociatedWithWipNewsletter())
-                    return FontAwesomeIconType.envelope_open_o;
+                    return FontAwesome5IconType.envelope_open_r;
                 else
-                    return FontAwesomeIconType.envelope_o;
+                    return FontAwesome5IconType.envelope_r;
             }
         };
         addRemoveNewsletter.setOutputMarkupPlaceholderTag(true);

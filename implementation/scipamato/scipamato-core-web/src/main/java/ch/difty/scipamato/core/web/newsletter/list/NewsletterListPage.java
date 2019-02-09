@@ -13,7 +13,9 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.button.LoadingBehavior;
 import de.agilecoders.wicket.core.markup.html.bootstrap.table.TableBehavior;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelect;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelectConfig;
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesomeCDNCSSReference;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome5CDNCSSReference;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome5IconType;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome5IconTypeBuilder;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
@@ -89,7 +91,7 @@ public class NewsletterListPage extends BasePage<Void> {
     @Override
     public void renderHead(final IHeaderResponse response) {
         super.renderHead(response);
-        response.render(CssHeaderItem.forReference(FontAwesomeCDNCSSReference.instance()));
+        response.render(CssHeaderItem.forReference(FontAwesome5CDNCSSReference.instance()));
     }
 
     @Override
@@ -206,12 +208,16 @@ public class NewsletterListPage extends BasePage<Void> {
     }
 
     private IColumn<Newsletter, String> makeSortTopicLinkColumn(String id) {
+        final FontAwesome5IconType random = FontAwesome5IconTypeBuilder
+            .on(FontAwesome5IconTypeBuilder.FontAwesome5Solid.random)
+            .fixedWidth()
+            .build();
         return new LinkIconColumn<>(new StringResourceModel(COLUMN_HEADER + id, this, null)) {
             private static final long serialVersionUID = 1L;
 
             @Override
             protected IModel<String> createIconModel(final IModel<Newsletter> rowModel) {
-                return Model.of("fa fa-fw fa-random");
+                return Model.of(random.cssClassName());
             }
 
             @Override
@@ -228,6 +234,10 @@ public class NewsletterListPage extends BasePage<Void> {
     }
 
     private IColumn<Newsletter, String> makeRemoveLinkColumn(String id) {
+        final FontAwesome5IconType trash = FontAwesome5IconTypeBuilder
+            .on(FontAwesome5IconTypeBuilder.FontAwesome5Solid.trash_alt)
+            .fixedWidth()
+            .build();
         return new LinkIconColumn<>(new StringResourceModel(COLUMN_HEADER + id, this, null)) {
             private static final long serialVersionUID = 1L;
 
@@ -236,7 +246,7 @@ public class NewsletterListPage extends BasePage<Void> {
                 final boolean canDelete = rowModel
                     .getObject()
                     .isDeletable();
-                return Model.of(canDelete ? "fa fa-fw fa-trash" : "");
+                return Model.of(canDelete ? trash.cssClassName() : "");
             }
 
             @Override
