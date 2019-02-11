@@ -57,6 +57,9 @@ image:http://structure101.com/images/s101_170.png[Structure101]
 * https://github.com/ursjoss/scipamato/wiki/Entering-Papers[Entering Papers]
 * https://github.com/ursjoss/scipamato/wiki/Filtering-Papers[Filtering Papers]
 * https://github.com/ursjoss/scipamato/wiki/Searches[Complex Searches on Papers]
+* https://github.com/ursjoss/scipamato/wiki/Newsletters[Newsletters]
+* https://github.com/ursjoss/scipamato/wiki/New-Studies[New Studies]
+* https://github.com/ursjoss/scipamato/wiki/ReferenceData[Reference Data]
 
 [[user-docu-scipamato-public]]
 === SciPaMaTo-Public Documentation
