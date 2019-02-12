@@ -64,6 +64,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 
 .Changed
+- {url-issues}63[#63] - Core: Change layout of new study fields panel in paper edit page - take 2
 
 .Deprecated
 
