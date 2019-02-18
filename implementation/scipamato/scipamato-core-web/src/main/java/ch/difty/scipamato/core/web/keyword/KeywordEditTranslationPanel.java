@@ -17,7 +17,7 @@ import ch.difty.scipamato.core.entity.keyword.KeywordDefinition;
 import ch.difty.scipamato.core.entity.keyword.KeywordTranslation;
 import ch.difty.scipamato.core.web.common.DefinitionEditTranslationPanel;
 
-@SuppressWarnings("SameParameterValue")
+@SuppressWarnings({ "SameParameterValue", "WicketForgeJavaIdInspection" })
 abstract class KeywordEditTranslationPanel
     extends DefinitionEditTranslationPanel<KeywordDefinition, KeywordTranslation> {
 

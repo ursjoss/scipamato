@@ -265,4 +265,39 @@ public class KeywordEditPageTest extends BasePageTest<KeywordEditPage> {
 
         getTester().assertRenderedPage(LogoutPage.class);
     }
+
+    @Test
+    public void clickingAddNewKeyword_addsTranslationInRequestedLanguage_andRefreshesForm() {
+        getTester().startPage(
+            new KeywordEditPage(Model.of(kd), new LogoutPage(new PageParameters()).getPageReference()));
+
+        int next = assertTranslationsInLanguages(1, "de", "de", "en", "fr");
+
+        getTester().clickLink("form:translationsPanel:translations:3:addTranslation");
+
+        assertTranslationsInLanguages(next, "de", "de", "en", "en", "fr");
+
+        getTester().assertComponentOnAjaxResponse("form");
+    }
+
+    private int assertTranslationsInLanguages(final int startIndex, final String... languages) {
+        int i = startIndex;
+        for (final String lang : languages)
+            getTester().assertModelValue("form:translationsPanel:translations:" + i++ + ":langCode", lang);
+        return i;
+    }
+
+    @Test
+    public void clickingRemoveNewKeyword_addsTranslation_andRefreshesForm() {
+        getTester().startPage(
+            new KeywordEditPage(Model.of(kd), new LogoutPage(new PageParameters()).getPageReference()));
+
+        int next = assertTranslationsInLanguages(1, "de", "de", "en", "fr");
+
+        getTester().clickLink("form:translationsPanel:translations:2:removeTranslation");
+
+        assertTranslationsInLanguages(next, "de", "en", "fr");
+
+        getTester().assertComponentOnAjaxResponse("form");
+    }
 }
