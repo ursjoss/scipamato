@@ -8,6 +8,7 @@ import org.apache.wicket.model.Model;
 
 import ch.difty.scipamato.common.config.ApplicationProperties;
 
+@SuppressWarnings("WicketForgeJavaIdInspection")
 public class TestAbstractPage extends AbstractPage<TestRecord> {
     private static final long serialVersionUID = 1L;
 

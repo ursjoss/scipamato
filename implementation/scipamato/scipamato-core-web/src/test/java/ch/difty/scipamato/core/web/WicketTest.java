@@ -86,6 +86,10 @@ public abstract class WicketTest {
         return itemNavigatorMock;
     }
 
+    protected ScipamatoWebSessionFacade getWebSessionFacade() {
+        return sessionFacadeMock;
+    }
+
     @Before
     public final void setUp() {
         application.setHeaderResponseDecorator(
