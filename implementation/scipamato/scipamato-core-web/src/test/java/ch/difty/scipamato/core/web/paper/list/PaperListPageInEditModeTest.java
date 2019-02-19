@@ -13,8 +13,8 @@ import org.apache.wicket.markup.html.internal.HtmlHeaderContainer;
 import org.apache.wicket.util.tester.FormTester;
 import org.junit.Test;
 
-import ch.difty.scipamato.common.entity.CodeClassId;
 import ch.difty.scipamato.common.persistence.paging.PaginationRequest;
+import ch.difty.scipamato.core.auth.Roles;
 import ch.difty.scipamato.core.entity.search.PaperFilter;
 import ch.difty.scipamato.core.persistence.DefaultServiceResult;
 import ch.difty.scipamato.core.persistence.ServiceResult;
@@ -28,6 +28,13 @@ public class PaperListPageInEditModeTest extends PaperListPageTest {
     @Override
     protected String getUserName() {
         return TestUserDetailsService.USER_ADMIN;
+    }
+
+    @Override
+    protected void setUpHook() {
+        super.setUpHook();
+        when(getWebSessionFacade().hasAtLeastOneRoleOutOf(Roles.USER, Roles.ADMIN)).thenReturn(true);
+        when(getWebSessionFacade().hasAtLeastOneRoleOutOf(Roles.ADMIN)).thenReturn(true);
     }
 
     @Override
@@ -58,9 +65,31 @@ public class PaperListPageInEditModeTest extends PaperListPageTest {
         getTester().assertComponent("navbar", Navbar.class);
 
         // Note: Only one menu is open - we're unable to see the other submenu items without clicking.
-        assertTopLevelMenu(0, "Left", "Papers");
-        assertNestedMenu(0, 0, "Left", "Papers");
-        assertNestedMenu(0, 1, "Left", "Search");
+        String position = "Left";
+        int menuIndex = 0;
+        int subMenuIndex = 0;
+
+        assertTopLevelMenu(menuIndex, position, "Papers");
+        assertNestedMenu(menuIndex, subMenuIndex++, position, "Papers");
+        assertNestedMenu(menuIndex, subMenuIndex, position, "Search");
+
+        subMenuIndex = 0;
+        assertTopLevelMenu(++menuIndex, position, "Newsletters");
+        assertNestedMenu(menuIndex, subMenuIndex++, position, "Newsletter");
+        assertNestedMenu(menuIndex, subMenuIndex, position, "Newsletter Topics");
+
+        subMenuIndex = 0;
+        assertTopLevelMenu(++menuIndex, position, "Reference Data");
+        assertNestedMenu(menuIndex, subMenuIndex++, position, "Keywords");
+        assertNestedMenu(menuIndex, subMenuIndex++, position, "Codes");
+        assertNestedMenu(menuIndex, subMenuIndex++, position, "Code Classes");
+        assertNestedMenu(menuIndex, subMenuIndex, position, "Sync: Core -&gt; Public");
+
+        subMenuIndex = 0;
+        assertTopLevelMenu(++menuIndex, position, "Preferences");
+        assertNestedMenu(menuIndex, subMenuIndex++, position, "User Management");
+        assertNestedMenu(menuIndex, subMenuIndex++, position, "Profile");
+        assertNestedMenu(menuIndex, subMenuIndex, position, "Change Password");
 
         assertExternalLink("navbar:container:collapse:navRightListEnclosure:navRightList:0:component",
             "https://github.com/ursjoss/scipamato/wiki/");
