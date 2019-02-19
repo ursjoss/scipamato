@@ -1,5 +1,7 @@
 package ch.difty.scipamato.core.web.user;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 import static org.mockito.Mockito.*;
 
 import java.util.Optional;
@@ -332,6 +334,27 @@ public class UserEditPageTest extends BasePageTest<UserEditPage> {
     }
 
     @Test
+    public void submitting_inPWChangeMode_withNoCurrentPassword_doesNotSubmitDueToMissingExistingPassword() {
+        reset(userServiceMock);
+        final User user = new User(1, "user", "first", "last", "foo@bar.baz", null, true,
+            Set.of(Role.ADMIN, Role.USER));
+        when(userServiceMock.findById(1)).thenReturn(Optional.of(user));
+
+        getTester().startPage(newUserEditPageInMode(UserEditPage.Mode.CHANGE_PASSWORD));
+        getTester().assertRenderedPage(getPageClass());
+
+        FormTester formTester = getTester().newFormTester("form");
+        formTester.setValue("password", PASSWORD2);
+        formTester.setValue("password2", PASSWORD2);
+        formTester.submit("submit");
+
+        getTester().assertErrorMessages("'Current Password' is required.");
+
+        verify(userServiceMock, never()).saveOrUpdate(any());
+        verify(userServiceMock).findById(1);
+    }
+
+    @Test
     public void submitting_inManageMode_withNoPasswordsSet_delegatesToService() {
         when(userServiceMock.saveOrUpdate(argThat(new UserMatcher(null)))).thenReturn(user_saved);
 
@@ -505,4 +528,19 @@ public class UserEditPageTest extends BasePageTest<UserEditPage> {
         verify(userServiceMock).findById(1);
         verify(userServiceMock).remove(user);
     }
+
+    @Test
+    public void instantiateUserEditPage_withInvalidMode_throws() {
+        final PageParameters pp = new PageParameters();
+        pp.add(CorePageParameters.MODE.getName(), "foo");
+        try {
+            new UserEditPage(pp);
+            fail("should have thrown exception");
+        } catch (Exception ex) {
+            assertThat(ex)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("No enum constant ch.difty.scipamato.core.web.user.UserEditPage.Mode.foo");
+        }
+    }
+
 }

@@ -200,8 +200,13 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
             .conclusionLabel(getLabelResourceFor(CONCLUSION.getName()))
             .build();
         final Paper p = getModelObject();
-        final ScipamatoPdfExporterConfiguration config = new ScipamatoPdfExporterConfiguration.Builder(headerPart,
-            p.getNumber())
+        final ScipamatoPdfExporterConfiguration config = makeExporterConfig(brand, headerPart, p);
+        return new PaperSummaryDataSource(p, rhf, shortFieldConcatenator, config);
+    }
+
+    private ScipamatoPdfExporterConfiguration makeExporterConfig(final String brand, final String headerPart,
+        final Paper p) {
+        return new ScipamatoPdfExporterConfiguration.Builder(headerPart, p.getNumber())
             .withCreator(brand)
             .withPaperTitle(p.getTitle())
             .withPaperAuthor(p.getFirstAuthor())
@@ -210,7 +215,6 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
             .withCodes(p.getCodes())
             .withCompression()
             .build();
-        return new PaperSummaryDataSource(p, rhf, shortFieldConcatenator, config);
     }
 
     /**
@@ -242,16 +246,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
             .commentLabel(getLabelResourceFor(COMMENT.getName()))
             .build();
         final Paper p = getModelObject();
-        final ScipamatoPdfExporterConfiguration config = new ScipamatoPdfExporterConfiguration.Builder(headerPart,
-            p.getNumber())
-            .withCreator(brand)
-            .withPaperTitle(p.getTitle())
-            .withPaperAuthor(p.getFirstAuthor())
-            .withSubject(p.getMethods())
-            .withAuthor(p.getCreatedByFullName())
-            .withCodes(p.getCodes())
-            .withCompression()
-            .build();
+        final ScipamatoPdfExporterConfiguration config = makeExporterConfig(brand, headerPart, p);
         return new PaperSummaryShortDataSource(p, rhf, config);
     }
 
@@ -312,7 +307,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
                         .get()
                         .equals(c))
                     .findFirst();
-                if (main.isPresent() && !match.isPresent()) {
+                if (main.isPresent() && match.isEmpty()) {
                     mainCodeOfCodeClass1.setModelObject(null);
                     target.add(mainCodeOfCodeClass1);
                 }

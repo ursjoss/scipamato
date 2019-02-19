@@ -4,7 +4,6 @@ import static ch.difty.scipamato.core.entity.User.UserFields.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.LoadingBehavior;
@@ -90,14 +89,9 @@ public class UserListPage extends BasePage<Void> {
 
     private void queueNewButton(String id) {
         BootstrapAjaxButton button = newResponsePageButton(id, () -> {
-            try {
-                final PageParameters pp = new PageParameters();
-                pp.set(CorePageParameters.MODE.getName(), UserEditPage.Mode.CREATE);
-                return new UserEditPage(pp);
-            } catch (Exception ex) {
-                error(ex.getMessage());
-                return null;
-            }
+            final PageParameters pp = new PageParameters();
+            pp.set(CorePageParameters.MODE.getName(), UserEditPage.Mode.CREATE);
+            return new UserEditPage(pp);
         });
         button.add(new LoadingBehavior(new StringResourceModel(id + LOADING_RESOURCE_TAG, this, null)));
         queue(button);
@@ -154,11 +148,7 @@ public class UserListPage extends BasePage<Void> {
 
             @Override
             public IModel<?> getDataModel(final IModel<User> rowModel) {
-                return Model.of(Stream
-                    .of(rowModel.getObject())
-                    .map(predicate)
-                    .findFirst()
-                    .orElse(false) ? trueLabel : falseLabel);
+                return Model.of(predicate.apply(rowModel.getObject()) ? trueLabel : falseLabel);
             }
         };
     }

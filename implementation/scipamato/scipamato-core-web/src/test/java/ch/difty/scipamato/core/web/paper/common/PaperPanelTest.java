@@ -103,6 +103,7 @@ public abstract class PaperPanelTest<T extends CodeBoxAware & NewsletterAware, P
         return new Code(ccId + c, "Code " + ccId + c, "", false, ccId, "cc" + ccId, "", 0);
     }
 
+    @SuppressWarnings("SameParameterValue")
     protected void verifyCodeAndCodeClassCalls(int times) {
         verifyCodeAndCodeClassCalls(times, times);
     }

@@ -316,11 +316,7 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
                 SearchOrder p = searchOrderService.saveOrUpdate(getModelObject());
                 setModelObject(p);
             } catch (OptimisticLockingException ole) {
-                final String msg = new StringResourceModel("save.optimisticlockexception.hint", this, null)
-                    .setParameters(ole.getTableName(), getModelObject().getId())
-                    .getString();
-                log.error(msg);
-                error(msg);
+                handleOptimisticLockingException(ole);
             }
         }
         dataProvider.setFilterState(getModelObject());
@@ -328,6 +324,14 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
             .getExcludedPaperIds()
             .isEmpty())
             updateNavigateable();
+    }
+
+    private void handleOptimisticLockingException(final OptimisticLockingException ole) {
+        final String msg = new StringResourceModel("save.optimisticlockexception.hint", this, null)
+            .setParameters(ole.getTableName(), getModelObject().getId())
+            .getString();
+        log.error(msg);
+        error(msg);
     }
 
     private void newSearchOrder() {
@@ -341,11 +345,7 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
             pp.add(MODE.getName(), mode);
             pageFactory.setResponsePageToPaperSearchPageConsumer(this);
         } catch (OptimisticLockingException ole) {
-            final String msg = new StringResourceModel("save.optimisticlockexception.hint", this, null)
-                .setParameters(ole.getTableName(), getModelObject().getId())
-                .getString();
-            log.error(msg);
-            error(msg);
+            handleOptimisticLockingException(ole);
         }
     }
 
