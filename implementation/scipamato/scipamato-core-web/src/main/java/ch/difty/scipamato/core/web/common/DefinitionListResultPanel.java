@@ -1,7 +1,6 @@
 package ch.difty.scipamato.core.web.common;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 import de.agilecoders.wicket.core.markup.html.bootstrap.table.TableBehavior;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
@@ -72,11 +71,7 @@ public abstract class DefinitionListResultPanel<T extends DefinitionEntity, F ex
 
             @Override
             public IModel<?> getDataModel(final IModel<T> rowModel) {
-                return Model.of(Stream
-                    .of(rowModel.getObject())
-                    .map(predicate)
-                    .findFirst()
-                    .orElse(false) ? trueLabel : falseLabel);
+                return (Model.of(predicate.apply(rowModel.getObject()) ? trueLabel : falseLabel));
             }
         };
     }
