@@ -5,6 +5,7 @@ import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.*;
 
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
+import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.model.Model;
 import org.junit.Test;
 
@@ -159,4 +160,25 @@ public class SearchablePaperPanelTest extends PaperPanelTest<SearchCondition, Se
         assertThat(panel.getCallingPage()).isNull();
     }
 
+    @Test
+    public void isNotAssociatedWithNewsletter() {
+        assertThat(makePanel().isAssociatedWithNewsletter()).isFalse();
+    }
+
+    @Test
+    public void isNotAssociatedWithWipNewsletter() {
+        assertThat(makePanel().isAssociatedWithWipNewsletter()).isFalse();
+    }
+
+    @Test
+    public void isNotNewsletterInStatusWip() {
+        assertThat(makePanel().isaNewsletterInStatusWip()).isFalse();
+    }
+
+    @Test
+    public void modifyNewsletterAssociation_isNoOp() {
+        AjaxRequestTarget targetMock = mock(AjaxRequestTarget.class);
+        makePanel().modifyNewsletterAssociation(targetMock);
+        verifyNoMoreInteractions(targetMock);
+    }
 }
