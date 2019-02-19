@@ -27,7 +27,9 @@ import ch.difty.scipamato.core.web.common.BasePageTest;
 @SuppressWarnings("SameParameterValue")
 public class UserListPageAsAdminTest extends BasePageTest<UserListPage> {
 
-    private User user = new User(1, "user", "first", "last", "foo@bar.baz", "pw", true, Set.of(Role.ADMIN, Role.USER));
+    private User enabledUser  = new User(1, "enabledUser", "first", "last", "foo@bar.baz", "pw", true,
+        Set.of(Role.ADMIN, Role.USER));
+    private User disabledUser = new User(2, "disabledUser", "f", "l", "boo@bar.baz", "pw2", false, Set.of(Role.VIEWER));
 
     private final List<User> results = new ArrayList<>();
 
@@ -41,7 +43,8 @@ public class UserListPageAsAdminTest extends BasePageTest<UserListPage> {
 
     @Override
     protected void setUpHook() {
-        results.add(user);
+        results.add(disabledUser);
+        results.add(enabledUser);
         when(userServiceMock.countByFilter(isA(UserFilter.class))).thenReturn(results.size());
         when(userServiceMock.findPageByFilter(isA(UserFilter.class), isA(PaginationRequest.class))).thenReturn(results);
     }
@@ -66,8 +69,9 @@ public class UserListPageAsAdminTest extends BasePageTest<UserListPage> {
         assertFilterForm("filterForm");
 
         final String[] headers = { "User Name", "First Name", "Last Name", "Email", "Enabled" };
-        final String[] values = { "user", "first", "last", "foo@bar.baz", "Enabled" };
-        assertResultTable("results", headers, values);
+        final String[] row1 = { "disabledUser", "f", "l", "boo@bar.baz", "Disabled" };
+        final String[] row2 = { "enabledUser", "first", "last", "foo@bar.baz", "Enabled" };
+        assertResultTable("results", headers, row1, row2);
 
         verify(userServiceMock).countByFilter(isA(UserFilter.class));
         verify(userServiceMock).findPageByFilter(isA(UserFilter.class), isA(PaginationRequest.class));
@@ -79,10 +83,10 @@ public class UserListPageAsAdminTest extends BasePageTest<UserListPage> {
         getTester().assertComponent(b + ":newUser", BootstrapAjaxButton.class);
     }
 
-    private void assertResultTable(final String b, final String[] labels, final String[] values) {
+    private void assertResultTable(final String b, final String[] labels, final String[]... rows) {
         getTester().assertComponent(b, BootstrapDefaultDataTable.class);
         assertHeaderColumns(b, labels);
-        assertTableValuesOfRow(b, 1, 1, values);
+        assertTableValuesOfRow(b, 1, 1, rows);
     }
 
     private void assertHeaderColumns(final String b, final String[] labels) {
@@ -93,27 +97,31 @@ public class UserListPageAsAdminTest extends BasePageTest<UserListPage> {
     }
 
     private void assertTableValuesOfRow(final String b, final int rowIdx, final Integer colIdxAsLink,
-        final String[] values) {
-        if (colIdxAsLink != null)
-            getTester().assertComponent(b + ":body:rows:" + rowIdx + ":cells:" + colIdxAsLink + ":cell:link",
-                Link.class);
-        int colIdx = 1;
-        for (final String value : values)
-            getTester().assertLabel(b + ":body:rows:" + rowIdx + ":cells:" + colIdx + ":cell" + (
-                colIdxAsLink != null && colIdx++ == colIdxAsLink ? ":link:label" : ""), value);
+        final String[]... rows) {
+        int rIdx = rowIdx;
+        for (final String[] values : rows) {
+            int colIdx = 1;
+            if (colIdxAsLink != null)
+                getTester().assertComponent(b + ":body:rows:" + rIdx + ":cells:" + colIdxAsLink + ":cell:link",
+                    Link.class);
+            for (final String value : values)
+                getTester().assertLabel(b + ":body:rows:" + rIdx + ":cells:" + colIdx + ":cell" + (
+                    colIdxAsLink != null && colIdx++ == colIdxAsLink ? ":link:label" : ""), value);
+            rIdx++;
+        }
     }
 
     @Test
     public void clickingOnUserName_forwardsToUserEntryPage_withModelLoaded() {
-        when(userServiceMock.findById(1)).thenReturn(Optional.of(user));
+        when(userServiceMock.findById(1)).thenReturn(Optional.of(enabledUser));
         getTester().startPage(getPageClass());
 
-        getTester().clickLink("results:body:rows:1:cells:1:cell:link");
+        getTester().clickLink("results:body:rows:2:cells:1:cell:link");
         getTester().assertRenderedPage(UserEditPage.class);
 
         // verify the user was loaded in the target page
         FormTester formTester = getTester().newFormTester("form");
-        assertThat(formTester.getTextComponentValue("userName")).isEqualTo("user");
+        assertThat(formTester.getTextComponentValue("userName")).isEqualTo("enabledUser");
 
         verify(userServiceMock).countByFilter(isA(UserFilter.class));
         verify(userServiceMock).findPageByFilter(isA(UserFilter.class), isA(PaginationRequest.class));
