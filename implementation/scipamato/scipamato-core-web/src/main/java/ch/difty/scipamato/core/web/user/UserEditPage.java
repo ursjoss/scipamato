@@ -53,7 +53,7 @@ import ch.difty.scipamato.core.web.common.BasePage;
 @MountPath("user")
 @Slf4j
 @AuthorizeInstantiation({ Roles.USER, Roles.ADMIN })
-@SuppressWarnings({ "WeakerAccess", "SameParameterValue" })
+@SuppressWarnings({ "SameParameterValue", "WicketForgeJavaIdInspection" })
 public class UserEditPage extends BasePage<ChangePasswordUser> {
 
     private static final long serialVersionUID = 1L;
