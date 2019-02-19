@@ -62,7 +62,7 @@ public class PaperLiteratureReview extends JasperEntity {
 
     private String makePubmedLink(final String pubmedBaseUrl, final Integer pmId) {
         if (pmId != null)
-            return pubmedBaseUrl + String.valueOf(pmId);
+            return pubmedBaseUrl + pmId;
         else
             return "";
     }

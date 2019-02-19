@@ -81,6 +81,7 @@ import ch.difty.scipamato.core.web.paper.NewsletterChangeEvent;
  *
  * @author u.joss
  */
+@SuppressWarnings("WicketForgeJavaIdInspection")
 @MountPath("entry")
 @Slf4j
 @AuthorizeInstantiation({ Roles.USER, Roles.ADMIN, Roles.VIEWER })
@@ -170,6 +171,7 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
      * Default constructor, used from DefaultPageFactory
      *
      * @param parameters
+     *     page parameters
      */
     @SuppressWarnings("WeakerAccess")
     public PaperEntryPage(PageParameters parameters) {

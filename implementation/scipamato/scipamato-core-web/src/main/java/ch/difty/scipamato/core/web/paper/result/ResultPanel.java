@@ -281,26 +281,9 @@ public abstract class ResultPanel extends BasePanel<Void> {
         final String headerPart = brand + "-" + new StringResourceModel("headerPart.summary", this, null).getString();
         final String pdfCaption =
             brand + "- " + new StringResourceModel("paper_summary.titlePart", this, null).getString();
-        final ReportHeaderFields rhf = ReportHeaderFields
-            .builder(headerPart, brand)
+        final ReportHeaderFields rhf = commonReportHeaderFieldsBuildPart(brand, headerPart)
             .populationLabel(getLabelResourceFor(POPULATION.getName()))
-            .goalsLabel(getLabelResourceFor(GOALS.getName()))
-            .methodsLabel(getLabelResourceFor(METHODS.getName()))
             .resultLabel(getLabelResourceFor(RESULT.getName()))
-            .commentLabel(getLabelResourceFor(COMMENT.getName()))
-            .methodStudyDesignLabel(getLabelResourceFor(METHOD_STUDY_DESIGN.getName()))
-            .methodOutcomeLabel(getLabelResourceFor(METHOD_OUTCOME.getName()))
-            .populationPlaceLabel(getLabelResourceFor(POPULATION_PLACE.getName()))
-            .exposurePollutantLabel(getLabelResourceFor(EXPOSURE_POLLUTANT.getName()))
-            .exposureAssessmentLabel(getLabelResourceFor(EXPOSURE_ASSESSMENT.getName()))
-            .methodStatisticsLabel(getLabelResourceFor(METHOD_STATISTICS.getName()))
-            .methodConfoundersLabel(getLabelResourceFor(METHOD_CONFOUNDERS.getName()))
-            .populationDurationLabel(getLabelResourceFor(POPULATION_DURATION.getName()))
-            .populationParticipantsLabel(getLabelResourceFor(POPULATION_PARTICIPANTS.getName()))
-            .resultEffectEstimateLabel(getLabelResourceFor(RESULT_EFFECT_ESTIMATE.getName()))
-            .resultExposureRangeLabel(getLabelResourceFor(RESULT_EXPOSURE_RANGE.getName()))
-            .resultMeasuredOutcomeLabel(getLabelResourceFor(RESULT_MEASURED_OUTCOME.getName()))
-            .conclusionLabel(getLabelResourceFor(CONCLUSION.getName()))
             .build();
         final ScipamatoPdfExporterConfiguration config = new ScipamatoPdfExporterConfiguration.Builder(pdfCaption)
             .withAuthor(getActiveUser())
@@ -312,13 +295,9 @@ public abstract class ResultPanel extends BasePanel<Void> {
             new PaperSummaryDataSource(dataProvider, rhf, shortFieldConcatenator, config)));
     }
 
-    private void makeAndQueuePdfSummaryShortLink(String id) {
-        final String brand = getProperties().getBrand();
-        final String headerPart =
-            brand + "-" + new StringResourceModel("headerPart.summaryShort", this, null).getString();
-        final String pdfCaption =
-            brand + "- " + new StringResourceModel("paper_summary.titlePart", this, null).getString();
-        final ReportHeaderFields rhf = ReportHeaderFields
+    private ReportHeaderFields.ReportHeaderFieldsBuilder commonReportHeaderFieldsBuildPart(final String brand,
+        final String headerPart) {
+        return ReportHeaderFields
             .builder(headerPart, brand)
             .goalsLabel(getLabelResourceFor(GOALS.getName()))
             .methodsLabel(getLabelResourceFor(METHODS.getName()))
@@ -335,8 +314,16 @@ public abstract class ResultPanel extends BasePanel<Void> {
             .methodConfoundersLabel(getLabelResourceFor(METHOD_CONFOUNDERS.getName()))
             .resultEffectEstimateLabel(getLabelResourceFor(RESULT_EFFECT_ESTIMATE.getName()))
             .conclusionLabel(getLabelResourceFor(CONCLUSION.getName()))
-            .commentLabel(getLabelResourceFor(COMMENT.getName()))
-            .build();
+            .commentLabel(getLabelResourceFor(COMMENT.getName()));
+    }
+
+    private void makeAndQueuePdfSummaryShortLink(String id) {
+        final String brand = getProperties().getBrand();
+        final String headerPart =
+            brand + "-" + new StringResourceModel("headerPart.summaryShort", this, null).getString();
+        final String pdfCaption =
+            brand + "- " + new StringResourceModel("paper_summary.titlePart", this, null).getString();
+        final ReportHeaderFields rhf = commonReportHeaderFieldsBuildPart(brand, headerPart).build();
         final ScipamatoPdfExporterConfiguration config = new ScipamatoPdfExporterConfiguration.Builder(pdfCaption)
             .withAuthor(getActiveUser())
             .withCreator(brand)
