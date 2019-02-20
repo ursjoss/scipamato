@@ -288,7 +288,7 @@ public class KeywordEditPageTest extends BasePageTest<KeywordEditPage> {
     }
 
     @Test
-    public void clickingRemoveNewKeyword_addsTranslation_andRefreshesForm() {
+    public void clickingRemoveKeyword_removesTranslation_andRefreshesForm() {
         getTester().startPage(
             new KeywordEditPage(Model.of(kd), new LogoutPage(new PageParameters()).getPageReference()));
 
