@@ -46,7 +46,7 @@ public class CodeListPageTest extends BasePageTest<CodeListPage> {
         final CodeTranslation ct2_en = new CodeTranslation(5, "en", "name2", null, 1);
         final CodeTranslation ct2_fr = new CodeTranslation(6, "fr", "nom2", null, 1);
         final CodeTranslation ct2_de = new CodeTranslation(4, "de", "Name2", null, 1);
-        final CodeDefinition cd2 = new CodeDefinition("2A", "de", cc2, 2, false, 1, ct2_de, ct2_en, ct2_fr);
+        final CodeDefinition cd2 = new CodeDefinition("2A", "de", cc2, 2, true, 1, ct2_de, ct2_en, ct2_fr);
 
         results.addAll(List.of(cd1, cd2));
 
@@ -75,8 +75,9 @@ public class CodeListPageTest extends BasePageTest<CodeListPage> {
         assertFilterForm("filterPanel:filterForm");
 
         final String[] headers = { "Code", "Translations", "Sort", "Scope" };
-        final String[] values = { "1A", "DE: 'Name1'; EN: 'name1'; FR: 'nom1'".replace("'", "&#039;"), "1", "Public" };
-        assertResultTable("resultPanel:results", headers, values);
+        final String[] row1 = { "1A", "DE: 'Name1'; EN: 'name1'; FR: 'nom1'".replace("'", "&#039;"), "1", "Public" };
+        final String[] row2 = { "2A", "DE: 'Name2'; EN: 'name2'; FR: 'nom2'".replace("'", "&#039;"), "2", "Internal" };
+        assertResultTable("resultPanel:results", headers, row1, row2);
 
         verify(codeServiceMock).getCodeClass1("en_us");
         verify(codeServiceMock).countByFilter(isA(CodeFilter.class));
@@ -92,10 +93,10 @@ public class CodeListPageTest extends BasePageTest<CodeListPage> {
         getTester().assertComponent(b + ":newCode", BootstrapAjaxButton.class);
     }
 
-    private void assertResultTable(final String b, final String[] labels, final String[] values) {
+    private void assertResultTable(final String b, final String[] labels, final String[]... rows) {
         getTester().assertComponent(b, BootstrapDefaultDataTable.class);
         assertHeaderColumns(b, labels);
-        assertTableValuesOfRow(b, 1, COLUMN_ID_WITH_LINK, values);
+        assertTableValuesOfRows(b, 1, COLUMN_ID_WITH_LINK, rows);
     }
 
     private void assertHeaderColumns(final String b, final String[] labels) {
@@ -105,15 +106,19 @@ public class CodeListPageTest extends BasePageTest<CodeListPage> {
                 b + ":topToolbars:toolbars:2:headers:" + ++idx + ":header:orderByLink:header_body:label", label);
     }
 
-    private void assertTableValuesOfRow(final String b, final int rowIdx, final Integer colIdxAsLink,
-        final String[] values) {
+    private void assertTableValuesOfRows(final String b, final int rowStartIdx, final Integer colIdxAsLink,
+        final String[]... rows) {
         if (colIdxAsLink != null)
-            getTester().assertComponent(b + ":body:rows:" + rowIdx + ":cells:" + colIdxAsLink + ":cell:link",
+            getTester().assertComponent(b + ":body:rows:" + rowStartIdx + ":cells:" + colIdxAsLink + ":cell:link",
                 Link.class);
-        int colIdx = 1;
-        for (final String value : values)
-            getTester().assertLabel(b + ":body:rows:" + rowIdx + ":cells:" + colIdx + ":cell" + (
-                colIdxAsLink != null && colIdx++ == colIdxAsLink ? ":link:label" : ""), value);
+        int rowIdx = rowStartIdx;
+        for (final String[] row : rows) {
+            int colIdx = 1;
+            for (final String value : row)
+                getTester().assertLabel(b + ":body:rows:" + rowIdx + ":cells:" + colIdx + ":cell" + (
+                    colIdxAsLink != null && colIdx++ == colIdxAsLink ? ":link:label" : ""), value);
+            rowIdx++;
+        }
     }
 
     @Test
