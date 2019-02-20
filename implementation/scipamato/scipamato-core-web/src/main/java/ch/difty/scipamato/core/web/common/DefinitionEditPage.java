@@ -14,7 +14,7 @@ import ch.difty.scipamato.common.entity.DefinitionEntity;
 import ch.difty.scipamato.core.persistence.OptimisticLockingException;
 
 @Slf4j
-@SuppressWarnings("SameParameterValue")
+@SuppressWarnings({ "SameParameterValue", "WicketForgeJavaIdInspection" })
 public abstract class DefinitionEditPage<E extends DefinitionEntity> extends BasePage<E> {
 
     private final PageReference callingPageRef;
