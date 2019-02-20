@@ -22,6 +22,7 @@ public class XmlPasteModalPanel extends Panel {
     private static final long serialVersionUID = 1L;
 
     private static final String TEXT_XML = "text/xml";
+    private static final String KEY_FILE = "file";
 
     private String content;
 
@@ -60,19 +61,7 @@ public class XmlPasteModalPanel extends Panel {
 
             @Override
             protected void onUpload(AjaxRequestTarget target, Map<String, List<FileItem>> fileMap) {
-                if (fileMap != null && fileMap.containsKey("file")) {
-                    for (final FileItem file : fileMap.get("file")) {
-                        if (file
-                            .getContentType()
-                            .equals(TEXT_XML)) {
-                            content = file.getString();
-                            info(new StringResourceModel("dropzone.upload.successful", this, null)
-                                .setParameters(file.getName(), file.getContentType())
-                                .getString());
-                        }
-                    }
-                    target.add(contentField);
-                }
+                doOnUpdate(target, fileMap);
             }
         };
         upload
@@ -86,6 +75,23 @@ public class XmlPasteModalPanel extends Panel {
         return upload;
     }
 
+    /** package private for test purposes */
+    void doOnUpdate(final AjaxRequestTarget target, final Map<String, List<FileItem>> fileMap) {
+        if (fileMap != null && fileMap.containsKey(KEY_FILE)) {
+            for (final FileItem file : fileMap.get(KEY_FILE)) {
+                if (file
+                    .getContentType()
+                    .equals(TEXT_XML)) {
+                    content = file.getString();
+                    info(new StringResourceModel("dropzone.upload.successful", this, null)
+                        .setParameters(file.getName(), file.getContentType())
+                        .getString());
+                }
+            }
+            target.add(contentField);
+        }
+    }
+
     private BootstrapAjaxButton newButton(String id) {
         final BootstrapAjaxButton button = new BootstrapAjaxButton(id,
             new StringResourceModel(id + ".label", this, null), form, Buttons.Type.Primary) {
@@ -97,7 +103,7 @@ public class XmlPasteModalPanel extends Panel {
                 ModalWindow.closeCurrent(target);
             }
         };
-        button.add(new LoadingBehavior(new StringResourceModel( id + ".loading", this, null)));
+        button.add(new LoadingBehavior(new StringResourceModel(id + ".loading", this, null)));
         return button;
     }
 
