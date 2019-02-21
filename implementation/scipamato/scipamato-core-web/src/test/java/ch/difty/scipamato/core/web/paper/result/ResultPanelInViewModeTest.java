@@ -4,7 +4,6 @@ import org.apache.wicket.ajax.markup.html.AjaxLink;
 
 import ch.difty.scipamato.common.web.Mode;
 
-@SuppressWarnings("ResultOfMethodCallIgnored")
 public class ResultPanelInViewModeTest extends ResultPanelTest {
 
     @Override

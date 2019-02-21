@@ -29,19 +29,13 @@ import org.wicketstuff.annotation.mount.MountPath;
 import ch.difty.scipamato.common.entity.newsletter.PublicationStatus;
 import ch.difty.scipamato.common.web.Mode;
 import ch.difty.scipamato.core.auth.Roles;
-import ch.difty.scipamato.core.entity.Paper;
-import ch.difty.scipamato.core.entity.PaperSlimFilter;
 import ch.difty.scipamato.core.entity.newsletter.Newsletter;
-import ch.difty.scipamato.core.entity.projection.PaperSlim;
 import ch.difty.scipamato.core.entity.search.PaperFilter;
 import ch.difty.scipamato.core.persistence.NewsletterService;
 import ch.difty.scipamato.core.persistence.OptimisticLockingException;
-import ch.difty.scipamato.core.persistence.PaperService;
 import ch.difty.scipamato.core.web.common.BasePage;
-import ch.difty.scipamato.core.web.paper.AbstractPaperSlimProvider;
 import ch.difty.scipamato.core.web.paper.NewsletterChangeEvent;
 import ch.difty.scipamato.core.web.paper.PaperSlimByPaperFilterProvider;
-import ch.difty.scipamato.core.web.paper.entry.PaperEntryPage;
 import ch.difty.scipamato.core.web.paper.result.ResultPanel;
 
 @MountPath("newsletters/entry")
@@ -241,17 +235,6 @@ public class NewsletterEditPage extends BasePage<Newsletter> {
             @Override
             protected boolean isOfferingSearchComposition() {
                 return false;
-            }
-
-            @Override
-            protected PaperEntryPage getResponsePage(IModel<PaperSlim> m, String languageCode,
-                PaperService paperService, AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider) {
-                return new PaperEntryPage(Model.of(paperService
-                    .findByNumber(m
-                        .getObject()
-                        .getNumber(), languageCode)
-                    .orElse(new Paper())), getPage().getPageReference(), dataProvider.getSearchOrderId(),
-                    dataProvider.isShowExcluded(), Model.of(0));
             }
 
         };

@@ -67,7 +67,7 @@ abstract class KeywordEditTranslationPanel
                     .getTranslations()
                     .get(langCode)
                     .iterator();
-                while (it.hasNext()) {
+                while (true) {
                     final KeywordTranslation kt = it.next();
                     if (currentKt.equals(kt)) {
                         it.remove();

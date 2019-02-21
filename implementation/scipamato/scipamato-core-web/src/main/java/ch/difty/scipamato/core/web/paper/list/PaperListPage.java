@@ -19,8 +19,6 @@ import org.apache.wicket.extensions.markup.html.repeater.data.table.filter.Filte
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.form.TextField;
-import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
@@ -29,16 +27,11 @@ import org.wicketstuff.annotation.mount.MountPath;
 
 import ch.difty.scipamato.common.web.Mode;
 import ch.difty.scipamato.core.auth.Roles;
-import ch.difty.scipamato.core.entity.Paper;
-import ch.difty.scipamato.core.entity.PaperSlimFilter;
-import ch.difty.scipamato.core.entity.projection.PaperSlim;
 import ch.difty.scipamato.core.entity.search.PaperFilter;
-import ch.difty.scipamato.core.persistence.PaperService;
 import ch.difty.scipamato.core.persistence.ServiceResult;
 import ch.difty.scipamato.core.pubmed.PubmedImporter;
 import ch.difty.scipamato.core.web.common.BasePage;
 import ch.difty.scipamato.core.web.common.pastemodal.XmlPasteModalPanel;
-import ch.difty.scipamato.core.web.paper.AbstractPaperSlimProvider;
 import ch.difty.scipamato.core.web.paper.NewsletterChangeEvent;
 import ch.difty.scipamato.core.web.paper.PaperSlimByPaperFilterProvider;
 import ch.difty.scipamato.core.web.paper.entry.PaperEntryPage;
@@ -159,17 +152,6 @@ public class PaperListPage extends BasePage<Void> {
             @Override
             protected boolean isOfferingSearchComposition() {
                 return false;
-            }
-
-            @Override
-            protected PaperEntryPage getResponsePage(IModel<PaperSlim> m, String languageCode,
-                PaperService paperService, AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider) {
-                return new PaperEntryPage(Model.of(paperService
-                    .findByNumber(m
-                        .getObject()
-                        .getNumber(), languageCode)
-                    .orElse(new Paper())), getPage().getPageReference(), dataProvider.getSearchOrderId(),
-                    dataProvider.isShowExcluded(), Model.of(0));
             }
 
         };

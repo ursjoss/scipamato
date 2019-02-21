@@ -10,11 +10,8 @@ import java.util.Optional;
 
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
-import org.apache.wicket.markup.html.GenericWebPage;
 import org.apache.wicket.markup.html.link.ResourceLink;
 import org.apache.wicket.markup.html.panel.Panel;
-import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
 import org.apache.wicket.util.tester.TagTester;
 import org.junit.After;
 import org.junit.Test;
@@ -24,23 +21,21 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import ch.difty.scipamato.common.persistence.paging.PaginationRequest;
 import ch.difty.scipamato.common.web.Mode;
 import ch.difty.scipamato.core.entity.Paper;
-import ch.difty.scipamato.core.entity.PaperSlimFilter;
 import ch.difty.scipamato.core.entity.projection.PaperSlim;
 import ch.difty.scipamato.core.entity.search.PaperFilter;
 import ch.difty.scipamato.core.entity.search.SearchOrder;
 import ch.difty.scipamato.core.persistence.CodeClassService;
 import ch.difty.scipamato.core.persistence.CodeService;
-import ch.difty.scipamato.core.persistence.PaperService;
 import ch.difty.scipamato.core.web.common.PanelTest;
-import ch.difty.scipamato.core.web.paper.AbstractPaperSlimProvider;
 import ch.difty.scipamato.core.web.paper.PaperSlimBySearchOrderProvider;
 import ch.difty.scipamato.core.web.paper.entry.PaperEntryPage;
 
 public abstract class ResultPanelTest extends PanelTest<ResultPanel> {
 
-    static final long   NUMBER        = 2L;
-    static final int    ROWS_PER_PAGE = 12;
-    static final String LC            = "en_us";
+    static final long NUMBER = 2L;
+
+    private static final int    ROWS_PER_PAGE = 12;
+    private static final String LC            = "en_us";
 
     @MockBean
     CodeClassService codeClassServiceMock;
@@ -83,17 +78,6 @@ public abstract class ResultPanelTest extends PanelTest<ResultPanel> {
             @Override
             protected boolean isOfferingSearchComposition() {
                 return true;
-            }
-
-            @Override
-            protected GenericWebPage<Paper> getResponsePage(IModel<PaperSlim> m, String languageCode,
-                PaperService paperService, AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider) {
-                return new PaperEntryPage(Model.of(paperService
-                    .findByNumber(m
-                        .getObject()
-                        .getNumber(), languageCode)
-                    .orElse(new Paper())), getPage().getPageReference(), dataProvider.getSearchOrderId(),
-                    dataProvider.isShowExcluded(), Model.of(0));
             }
         };
     }
@@ -289,7 +273,7 @@ public abstract class ResultPanelTest extends PanelTest<ResultPanel> {
     }
 
     // with isOfferingSearchComposition = false
-    ResultPanel newNonSearchRelevantResultPanel() {
+    private ResultPanel newNonSearchRelevantResultPanel() {
         return new ResultPanel(PANEL_ID, new PaperSlimBySearchOrderProvider(searchOrderMock, ROWS_PER_PAGE),
             getMode()) {
             private static final long serialVersionUID = 1L;
@@ -297,12 +281,6 @@ public abstract class ResultPanelTest extends PanelTest<ResultPanel> {
             @Override
             protected boolean isOfferingSearchComposition() {
                 return false;
-            }
-
-            @Override
-            protected GenericWebPage<Paper> getResponsePage(IModel<PaperSlim> m, String languageCode,
-                PaperService paperService, AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider) {
-                return null;
             }
         };
     }

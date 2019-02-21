@@ -3,6 +3,9 @@ package ch.difty.scipamato.core.web.newsletter.edit;
 import static org.mockito.Mockito.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.LocalDateTextField;
@@ -15,9 +18,12 @@ import org.junit.After;
 import org.junit.Test;
 
 import ch.difty.scipamato.common.entity.newsletter.PublicationStatus;
+import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.newsletter.Newsletter;
+import ch.difty.scipamato.core.entity.projection.PaperSlim;
 import ch.difty.scipamato.core.persistence.OptimisticLockingException;
 import ch.difty.scipamato.core.web.common.BasePageTest;
+import ch.difty.scipamato.core.web.paper.entry.PaperEntryPage;
 import ch.difty.scipamato.core.web.paper.result.ResultPanel;
 
 public class NewsletterEditPageTest extends BasePageTest<NewsletterEditPage> {
@@ -186,5 +192,34 @@ public class NewsletterEditPageTest extends BasePageTest<NewsletterEditPage> {
                 getTester().assertDisabled(b + "issueDate");
             }
         }
+    }
+
+    @Test
+    public void clickingTitleInResultPanel_opensPaperEntryPage() {
+        final List<PaperSlim> papers = new ArrayList<>();
+        final PaperSlim ps = new PaperSlim();
+        ps.setId(1l);
+        ps.setNumber(2l);
+        ps.setTitle("some title");
+        ps.setPublicationYear(2019);
+        ps.setFirstAuthor("Foo");
+        papers.add(ps);
+        final Paper p = new Paper();
+        p.setId(ps.getId());
+        when(paperSlimServiceMock.countByFilter(any())).thenReturn(papers.size());
+        when(paperSlimServiceMock.findPageByFilter(any(), any())).thenReturn(papers);
+        when(paperServiceMock.findByNumber(ps.getNumber(), "en_us")).thenReturn(Optional.of(p));
+
+        getTester().startPage(makePage());
+        getTester().assertRenderedPage(NewsletterEditPage.class);
+
+        getTester().clickLink("resultPanel:table:body:rows:1:cells:5:cell:link");
+
+        getTester().assertRenderedPage(PaperEntryPage.class);
+
+        verify(paperSlimServiceMock, times(2)).countByFilter(any());
+        verify(paperSlimServiceMock, times(1)).findPageByFilter(any(), any());
+        verify(newsletterServiceMock, times(3)).canCreateNewsletterInProgress();
+        verify(paperServiceMock).findByNumber(ps.getNumber(), "en_us");
     }
 }
