@@ -9,7 +9,6 @@ import ch.difty.scipamato.common.web.Mode;
 import ch.difty.scipamato.common.entity.newsletter.PublicationStatus;
 import ch.difty.scipamato.core.entity.projection.NewsletterAssociation;
 
-@SuppressWarnings("ResultOfMethodCallIgnored")
 public class ResultPanelInSearchModeTest extends ResultPanelTest {
 
     @Override

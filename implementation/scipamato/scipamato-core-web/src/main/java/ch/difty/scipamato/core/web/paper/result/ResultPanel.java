@@ -14,7 +14,6 @@ import org.apache.wicket.event.Broadcast;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
-import org.apache.wicket.markup.html.GenericWebPage;
 import org.apache.wicket.markup.html.link.ResourceLink;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -35,6 +34,7 @@ import ch.difty.scipamato.core.web.common.BasePanel;
 import ch.difty.scipamato.core.web.paper.AbstractPaperSlimProvider;
 import ch.difty.scipamato.core.web.paper.NewsletterChangeEvent;
 import ch.difty.scipamato.core.web.paper.SearchOrderChangeEvent;
+import ch.difty.scipamato.core.web.paper.entry.PaperEntryPage;
 import ch.difty.scipamato.core.web.paper.jasper.CoreShortFieldConcatenator;
 import ch.difty.scipamato.core.web.paper.jasper.JasperPaperDataSource;
 import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields;
@@ -149,8 +149,15 @@ public abstract class ResultPanel extends BasePanel<Void> {
         setResponsePage(getResponsePage(m, getLocalization(), paperService, dataProvider));
     }
 
-    protected abstract GenericWebPage<Paper> getResponsePage(IModel<PaperSlim> m, String languageCode,
-        PaperService paperService, AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider);
+    private PaperEntryPage getResponsePage(IModel<PaperSlim> m, String languageCode, PaperService paperService,
+        AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider) {
+        return new PaperEntryPage(Model.of(paperService
+            .findByNumber(m
+                .getObject()
+                .getNumber(), languageCode)
+            .orElse(new Paper())), getPage().getPageReference(), dataProvider.getSearchOrderId(),
+            dataProvider.isShowExcluded(), Model.of(0));
+    }
 
     private PropertyColumn<PaperSlim, String> makePropertyColumn(String propExpression) {
         return new PropertyColumn<>(new StringResourceModel(COLUMN_HEADER + propExpression, this, null), propExpression,
