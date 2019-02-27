@@ -14,10 +14,12 @@ public class NewsletterFilter extends ScipamatoFilter {
 
     private String            issueMask;
     private PublicationStatus publicationStatus;
+    private NewsletterTopic   newsletterTopic;
 
     public enum NewsletterFilterFields implements FieldEnumType {
         ISSUE_MASK("issueMask"),
-        PUBLICATION_STATUS("publicationStatus");
+        PUBLICATION_STATUS("publicationStatus"),
+        NEWSLETTER_TOPIC_ID("newsletterTopic");
 
         private final String name;
 

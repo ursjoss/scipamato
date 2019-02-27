@@ -16,11 +16,16 @@ public class NewsletterFilterTest {
     public void getAndSet() {
         f.setIssueMask("issueMask");
         f.setPublicationStatus(PublicationStatus.CANCELLED);
+        f.setNewsletterTopic(new NewsletterTopic(1, "foo"));
 
         assertThat(f.getIssueMask()).isEqualTo("issueMask");
         assertThat(f.getPublicationStatus()).isEqualTo(PublicationStatus.CANCELLED);
+        assertThat(f
+            .getNewsletterTopic()
+            .getId()).isEqualTo(1);
 
-        assertThat(f.toString()).isEqualTo("NewsletterFilter(issueMask=issueMask, publicationStatus=CANCELLED)");
+        assertThat(f.toString()).isEqualTo(
+            "NewsletterFilter(issueMask=issueMask, publicationStatus=CANCELLED, newsletterTopic=NewsletterTopic(title=foo))");
     }
 
     @Test
@@ -36,7 +41,7 @@ public class NewsletterFilterTest {
     public void assertEnumFields() {
         assertThat(NewsletterFilter.NewsletterFilterFields.values())
             .extracting("name")
-            .containsExactly("issueMask", "publicationStatus");
+            .containsExactly("issueMask", "publicationStatus", "newsletterTopic");
     }
 
 }

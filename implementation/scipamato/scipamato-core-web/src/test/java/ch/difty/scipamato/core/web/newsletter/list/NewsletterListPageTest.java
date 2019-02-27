@@ -83,6 +83,8 @@ public class NewsletterListPageTest extends BasePageTest<NewsletterListPage> {
     private void assertFilterForm(final String b) {
         getTester().assertComponent(b, Form.class);
         assertLabeledTextField(b, "issue");
+        assertLabeledBootstrapSelect(b, "publicationStatus");
+        assertLabeledBootstrapSelect(b, "topics");
         getTester().assertComponent(b + ":newNewsletter", BootstrapAjaxButton.class);
     }
 
@@ -175,7 +177,7 @@ public class NewsletterListPageTest extends BasePageTest<NewsletterListPage> {
     }
 
     @Test
-    public void clickingRemoveIcon__forNewsletterInProgress_delegatesRemovalToServiceAndRefreshesResultPanel() {
+    public void clickingRemoveIcon_forNewsletterInProgress_delegatesRemovalToServiceAndRefreshesResultPanel() {
         getTester().startPage(getPageClass());
         getTester().assertRenderedPage(getPageClass());
 
@@ -234,6 +236,19 @@ public class NewsletterListPageTest extends BasePageTest<NewsletterListPage> {
         getTester().startPage(getPageClass());
 
         getTester().executeAjaxEvent("filterForm:publicationStatus", "change");
+        getTester().assertComponentOnAjaxResponse("results");
+
+        verify(newsletterServiceMock, times(2)).countByFilter(isA(NewsletterFilter.class));
+        verify(newsletterServiceMock, times(2)).findPageByFilter(isA(NewsletterFilter.class),
+            isA(PaginationRequest.class));
+        verify(newsletterServiceMock).canCreateNewsletterInProgress();
+    }
+
+    @Test
+    public void changingNewsletterTopic_updatesResultTable() {
+        getTester().startPage(getPageClass());
+
+        getTester().executeAjaxEvent("filterForm:topics", "change");
         getTester().assertComponentOnAjaxResponse("results");
 
         verify(newsletterServiceMock, times(2)).countByFilter(isA(NewsletterFilter.class));
