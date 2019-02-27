@@ -1,8 +1,8 @@
 package ch.difty.scipamato.core.web.newsletter.list;
 
 import static ch.difty.scipamato.core.entity.newsletter.Newsletter.NewsletterFields.*;
-import static ch.difty.scipamato.core.entity.newsletter.NewsletterFilter.NewsletterFilterFields;
-import static ch.difty.scipamato.core.entity.newsletter.NewsletterFilter.NewsletterFilterFields.ISSUE_MASK;
+import static ch.difty.scipamato.core.entity.newsletter.NewsletterFilter.NewsletterFilterFields.PUBLICATION_STATUS;
+import static ch.difty.scipamato.core.entity.newsletter.NewsletterFilter.NewsletterFilterFields.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,6 +12,7 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButt
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.LoadingBehavior;
 import de.agilecoders.wicket.core.markup.html.bootstrap.table.TableBehavior;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelect;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelectConfig;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesomeCDNCSSReference;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -25,7 +26,9 @@ import org.apache.wicket.extensions.markup.html.repeater.data.table.filter.Filte
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.form.EnumChoiceRenderer;
+import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -42,8 +45,10 @@ import ch.difty.scipamato.common.web.component.table.column.LinkIconColumn;
 import ch.difty.scipamato.core.auth.Roles;
 import ch.difty.scipamato.core.entity.newsletter.Newsletter;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterFilter;
+import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic;
 import ch.difty.scipamato.core.persistence.NewsletterService;
 import ch.difty.scipamato.core.web.common.BasePage;
+import ch.difty.scipamato.core.web.model.NewsletterTopicModel;
 import ch.difty.scipamato.core.web.newsletter.NewsletterProvider;
 import ch.difty.scipamato.core.web.newsletter.edit.NewsletterEditPage;
 
@@ -99,27 +104,50 @@ public class NewsletterListPage extends BasePage<Void> {
         queue(new FilterForm<>(id, dataProvider));
 
         queueFieldAndLabel(new TextField<String>(ISSUE.getName(), PropertyModel.of(filter, ISSUE_MASK.getName())));
-        queueBootstrapSelectAndLabel(PUBLICATION_STATUS.getName());
+        queueStatusSelectAndLabel(Newsletter.NewsletterFields.PUBLICATION_STATUS.getName());
+        queueTopicsSelectAndLabel(TOPICS.getName());
         queueNewButton("newNewsletter");
 
     }
 
-    private void queueBootstrapSelectAndLabel(final String id) {
+    private void queueStatusSelectAndLabel(final String id) {
         StringResourceModel labelModel = new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null);
         queue(new Label(id + LABEL_TAG, labelModel));
 
-        final PropertyModel<PublicationStatus> selectionModel = PropertyModel.of(filter,
-            NewsletterFilterFields.PUBLICATION_STATUS.getName());
+        final PropertyModel<PublicationStatus> selectionModel = PropertyModel.of(filter, PUBLICATION_STATUS.getName());
         final IModel<List<PublicationStatus>> choicesModel = Model.ofList(Arrays.asList(PublicationStatus.values()));
         BootstrapSelect<PublicationStatus> select = new BootstrapSelect<>(id, selectionModel, choicesModel,
             new EnumChoiceRenderer<>(this));
         select.setNullValid(true);
-        select.add(new AjaxFormComponentUpdatingBehavior("change") {
+        select.add(filterFormFieldUpdatingBehavior());
+        queue(select);
+    }
+
+    private AjaxFormComponentUpdatingBehavior filterFormFieldUpdatingBehavior() {
+        return new AjaxFormComponentUpdatingBehavior("change") {
             @Override
             protected void onUpdate(final AjaxRequestTarget target) {
                 target.add(results);
             }
-        });
+        };
+    }
+
+    private void queueTopicsSelectAndLabel(final String id) {
+        StringResourceModel labelModel = new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null);
+        queue(new Label(id + LABEL_TAG, labelModel));
+
+        final PropertyModel<NewsletterTopic> selectionModel = PropertyModel.of(filter, NEWSLETTER_TOPIC_ID.getName());
+        final IModel<List<NewsletterTopic>> choicesModel = new NewsletterTopicModel(getLanguageCode());
+        final IChoiceRenderer<NewsletterTopic> choiceRenderer = new ChoiceRenderer<>(
+            NewsletterTopic.NewsletterTopicFields.TITLE.getName(), NewsletterTopic.NewsletterTopicFields.ID.getName());
+        final StringResourceModel noneSelectedModel = new StringResourceModel(id + ".noneSelected", this, null);
+        final BootstrapSelectConfig config = new BootstrapSelectConfig()
+            .withNoneSelectedText(noneSelectedModel.getObject())
+            .withLiveSearch(true);
+        BootstrapSelect<NewsletterTopic> select = new BootstrapSelect<>(id, selectionModel, choicesModel,
+            choiceRenderer).with(config);
+        select.setNullValid(true);
+        select.add(filterFormFieldUpdatingBehavior());
         queue(select);
     }
 
@@ -141,7 +169,7 @@ public class NewsletterListPage extends BasePage<Void> {
         final List<IColumn<Newsletter, String>> columns = new ArrayList<>();
         columns.add(makeClickableColumn(ISSUE.getName(), this::onTitleClick));
         columns.add(makePropertyColumn(ISSUE_DATE.getName()));
-        columns.add(makeEnumPropertyColumn(PUBLICATION_STATUS.getName()));
+        columns.add(makeEnumPropertyColumn(Newsletter.NewsletterFields.PUBLICATION_STATUS.getName()));
         columns.add(makeSortTopicLinkColumn("sortTopics"));
         columns.add(makeRemoveLinkColumn("remove"));
         return columns;

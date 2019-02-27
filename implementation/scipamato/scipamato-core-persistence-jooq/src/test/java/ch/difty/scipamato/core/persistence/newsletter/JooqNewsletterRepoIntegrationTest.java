@@ -11,6 +11,7 @@ import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import ch.difty.scipamato.common.entity.newsletter.PublicationStatus;
 import ch.difty.scipamato.common.persistence.paging.PaginationRequest;
 import ch.difty.scipamato.common.persistence.paging.Sort;
 import ch.difty.scipamato.core.entity.IdScipamatoEntity;
@@ -18,7 +19,6 @@ import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.newsletter.Newsletter;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterFilter;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic;
-import ch.difty.scipamato.common.entity.newsletter.PublicationStatus;
 import ch.difty.scipamato.core.entity.projection.PaperSlim;
 import ch.difty.scipamato.core.persistence.JooqTransactionalIntegrationTest;
 
@@ -122,6 +122,14 @@ public class JooqNewsletterRepoIntegrationTest extends JooqTransactionalIntegrat
         assertThat(results
             .get(0)
             .getIssue()).isEqualTo("1802");
+    }
+
+    @Test
+    public void findingByFilter_withTopicFilter() {
+        NewsletterFilter nf = new NewsletterFilter();
+        nf.setNewsletterTopic(new NewsletterTopic(54, "foo"));
+        List<Newsletter> results = repo.findPageByFilter(nf, new PaginationRequest(Sort.Direction.ASC, "issueDate"));
+        assertThat(results).hasSize(0);
     }
 
     @Test

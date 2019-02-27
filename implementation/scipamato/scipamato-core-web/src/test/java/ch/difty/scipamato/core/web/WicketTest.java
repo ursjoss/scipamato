@@ -6,7 +6,7 @@ import java.util.Locale;
 
 import com.giffing.wicket.spring.boot.starter.configuration.extensions.external.spring.security.SecureWebSession;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.checkboxx.CheckBoxX;
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelect;
 import org.apache.wicket.markup.head.ResourceAggregator;
 import org.apache.wicket.markup.head.filter.JavaScriptFilteredIntoFooterHeaderResponse;
 import org.apache.wicket.markup.html.basic.Label;
@@ -179,10 +179,10 @@ public abstract class WicketTest {
         getTester().assertComponent(bb, CheckBoxX.class);
     }
 
-    protected void assertLabeledMultiSelect(String b, String id) {
+    protected void assertLabeledBootstrapSelect(String b, String id) {
         final String bb = b + ":" + id;
         getTester().assertComponent(bb + "Label", Label.class);
-        getTester().assertComponent(bb, BootstrapMultiSelect.class);
+        getTester().assertComponent(bb, BootstrapSelect.class);
     }
 
 }
