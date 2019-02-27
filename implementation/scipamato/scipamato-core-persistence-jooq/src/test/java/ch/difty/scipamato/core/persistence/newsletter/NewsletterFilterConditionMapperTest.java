@@ -68,4 +68,12 @@ public class NewsletterFilterConditionMapperTest
                 + "  )\n" + ")");
             //@formatter:on
     }
+
+    @Test
+    public void creatingWhereCondition_withNewsletterTopicWithNullId() {
+        filter.setNewsletterTopic(new NewsletterTopic(null, "foo"));
+        assertThat(mapper
+            .map(filter)
+            .toString()).isEqualToIgnoringCase("1 = 1");
+    }
 }
