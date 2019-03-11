@@ -2,3 +2,7 @@ spring:
   autoconfigure.exclude: org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration
   main:
     allow-bean-definition-overriding: true
+    banner-mode: "off"
+logging:
+  level:
+    root: WARN

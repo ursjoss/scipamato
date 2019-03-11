@@ -1,9 +1,13 @@
 spring:
   main:
     allow-bean-definition-overriding: true
+    banner-mode: "off"
   autoconfigure:
     exclude: org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration
   batch:
     initialize-schema: never
     job:
       enabled: false
+logging:
+  level:
+    root: WARN

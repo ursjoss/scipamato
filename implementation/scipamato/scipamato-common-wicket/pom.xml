@@ -180,6 +180,7 @@
                 <directory>src/main/java</directory>
                 <includes>
                     <include>**/*.html</include>
+                    <include>**/*.css</include>
                     <include>**/*.properties</include>
                 </includes>
             </resource>
@@ -193,4 +194,5 @@
             </resource>
         </resources>
     </build>
+
 </project>

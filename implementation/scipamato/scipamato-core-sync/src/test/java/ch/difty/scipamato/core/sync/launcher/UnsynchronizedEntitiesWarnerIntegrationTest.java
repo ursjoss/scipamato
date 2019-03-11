@@ -29,6 +29,7 @@ public class UnsynchronizedEntitiesWarnerIntegrationTest extends JooqBaseIntegra
     public void findUnsynchronizedPapers() {
         Optional<String> msg = warner.findUnsynchronizedPapers();
         assertThat(msg).isPresent();
+        //noinspection OptionalGetWithoutIsPresent
         assertThat(msg.get()).isEqualTo("Papers not synchronized due to missing codes: Number 2, 3, 4, 11.");
     }
 
