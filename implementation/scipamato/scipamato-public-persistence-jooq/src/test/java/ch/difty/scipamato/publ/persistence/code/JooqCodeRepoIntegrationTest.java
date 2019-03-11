@@ -10,10 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import ch.difty.scipamato.common.entity.CodeClassId;
 import ch.difty.scipamato.publ.entity.Code;
-import ch.difty.scipamato.publ.persistence.JooqTransactionalIntegrationTest;
+import ch.difty.scipamato.publ.persistence.JooqBaseIntegrationTest;
 
 @Slf4j
-public class JooqCodeRepoIntegrationTest extends JooqTransactionalIntegrationTest {
+public class JooqCodeRepoIntegrationTest extends JooqBaseIntegrationTest {
 
     @Autowired
     private JooqCodeRepo repo;

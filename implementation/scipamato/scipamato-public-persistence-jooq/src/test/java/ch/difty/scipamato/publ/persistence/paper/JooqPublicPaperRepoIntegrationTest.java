@@ -14,9 +14,10 @@ import ch.difty.scipamato.common.persistence.paging.PaginationRequest;
 import ch.difty.scipamato.common.persistence.paging.Sort.Direction;
 import ch.difty.scipamato.publ.entity.*;
 import ch.difty.scipamato.publ.entity.filter.PublicPaperFilter;
-import ch.difty.scipamato.publ.persistence.JooqTransactionalIntegrationTest;
+import ch.difty.scipamato.publ.persistence.JooqBaseIntegrationTest;
 
-public class JooqPublicPaperRepoIntegrationTest extends JooqTransactionalIntegrationTest {
+@SuppressWarnings("SpellCheckingInspection")
+public class JooqPublicPaperRepoIntegrationTest extends JooqBaseIntegrationTest {
 
     @Autowired
     private JooqPublicPaperRepo repo;

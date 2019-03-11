@@ -30,10 +30,10 @@ import ch.difty.scipamato.core.entity.PaperAttachment;
 import ch.difty.scipamato.core.entity.search.PaperFilter;
 import ch.difty.scipamato.core.entity.search.SearchCondition;
 import ch.difty.scipamato.core.entity.search.SearchOrder;
-import ch.difty.scipamato.core.persistence.JooqTransactionalIntegrationTest;
+import ch.difty.scipamato.core.persistence.JooqBaseIntegrationTest;
 
 @SuppressWarnings("SameParameterValue")
-public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTest {
+public class JooqPaperRepoIntegrationTest extends JooqBaseIntegrationTest {
 
     private static final long   TEST_PAPER_ID = 1L;
     private static final String TEST_FILE_1   = "test file";

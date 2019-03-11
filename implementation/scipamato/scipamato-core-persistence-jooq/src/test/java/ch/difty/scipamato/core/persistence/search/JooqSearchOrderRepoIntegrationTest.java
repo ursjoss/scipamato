@@ -15,10 +15,10 @@ import ch.difty.scipamato.core.entity.Code;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic;
 import ch.difty.scipamato.core.entity.search.SearchCondition;
 import ch.difty.scipamato.core.entity.search.SearchOrder;
-import ch.difty.scipamato.core.persistence.JooqTransactionalIntegrationTest;
+import ch.difty.scipamato.core.persistence.JooqBaseIntegrationTest;
 
 @SuppressWarnings("SameParameterValue")
-public class JooqSearchOrderRepoIntegrationTest extends JooqTransactionalIntegrationTest {
+public class JooqSearchOrderRepoIntegrationTest extends JooqBaseIntegrationTest {
 
     private static final Integer RECORD_COUNT_PREPOPULATED = 4;
     private static final Long    MAX_ID_PREPOPULATED       = 4L;

@@ -16,10 +16,10 @@ import ch.difty.scipamato.core.entity.newsletter.NewsletterNewsletterTopic;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicDefinition;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicFilter;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicTranslation;
-import ch.difty.scipamato.core.persistence.JooqTransactionalIntegrationTest;
+import ch.difty.scipamato.core.persistence.JooqBaseIntegrationTest;
 import ch.difty.scipamato.core.persistence.OptimisticLockingException;
 
-public class JooqNewsletterTopicRepoIntegrationTest extends JooqTransactionalIntegrationTest {
+public class JooqNewsletterTopicRepoIntegrationTest extends JooqBaseIntegrationTest {
 
     @Autowired
     private JooqNewsletterTopicRepo repo;
@@ -397,6 +397,7 @@ public class JooqNewsletterTopicRepoIntegrationTest extends JooqTransactionalInt
         assertSortedList("whatever", 1);
     }
 
+    @SuppressWarnings("SameParameterValue")
     private void assertSortedList(final String sortProperty, final Integer id) {
         final List<NewsletterTopicDefinition> cds = repo.findPageOfNewsletterTopicDefinitions(
             new NewsletterTopicFilter(), new PaginationRequest(0, 10, Sort.Direction.DESC, sortProperty));

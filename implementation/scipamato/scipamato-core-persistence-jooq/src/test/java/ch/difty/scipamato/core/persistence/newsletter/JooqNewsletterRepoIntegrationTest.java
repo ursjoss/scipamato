@@ -20,10 +20,10 @@ import ch.difty.scipamato.core.entity.newsletter.Newsletter;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterFilter;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic;
 import ch.difty.scipamato.core.entity.projection.PaperSlim;
-import ch.difty.scipamato.core.persistence.JooqTransactionalIntegrationTest;
+import ch.difty.scipamato.core.persistence.JooqBaseIntegrationTest;
 
 @SuppressWarnings({ "SameParameterValue", "OptionalGetWithoutIsPresent" })
-public class JooqNewsletterRepoIntegrationTest extends JooqTransactionalIntegrationTest {
+public class JooqNewsletterRepoIntegrationTest extends JooqBaseIntegrationTest {
 
     @Autowired
     private JooqNewsletterRepo repo;
@@ -38,6 +38,7 @@ public class JooqNewsletterRepoIntegrationTest extends JooqTransactionalIntegrat
         assertThat(repo.findById(-1)).isNull();
     }
 
+    @SuppressWarnings("SpellCheckingInspection")
     @Test
     public void findById_withExistingId_returnsRecord() {
         final Newsletter nl = repo.findById(1);
@@ -136,15 +137,15 @@ public class JooqNewsletterRepoIntegrationTest extends JooqTransactionalIntegrat
     public void mergingPaperIntoNewsletter_withNewAssociation() {
         int newsletterId = 2;
         long paperId = 30L;
-        String languCode = "en";
+        String langCode = "en";
 
         Newsletter nl = repo.findById(newsletterId);
         assertThat(getIdsOfAssociatedPapers(nl)).doesNotContain(paperId);
 
-        Optional<Paper.NewsletterLink> nlo = repo.mergePaperIntoNewsletter(newsletterId, paperId, 1, languCode);
+        Optional<Paper.NewsletterLink> nlo = repo.mergePaperIntoNewsletter(newsletterId, paperId, 1, langCode);
         assertThat(nlo).isPresent();
 
-        nlo = repo.mergePaperIntoNewsletter(newsletterId, paperId, 1, languCode);
+        nlo = repo.mergePaperIntoNewsletter(newsletterId, paperId, 1, langCode);
         assertThat(nlo).isPresent();
 
         nl = repo.findById(newsletterId);
@@ -182,10 +183,10 @@ public class JooqNewsletterRepoIntegrationTest extends JooqTransactionalIntegrat
 
     private void assertPaperIsAssignedToNewsletterWithTopic(final NewsletterTopic nt, final long paperId,
         final Newsletter nl) {
-        List<PaperSlim> topiclessPapers = nl
+        List<PaperSlim> topicLessPapers = nl
             .getPapersByTopic()
             .get(nt);
-        assertThat(topiclessPapers
+        assertThat(topicLessPapers
             .stream()
             .filter(p -> p.getId() == paperId)
             .collect(Collectors.toList())).isNotEmpty();

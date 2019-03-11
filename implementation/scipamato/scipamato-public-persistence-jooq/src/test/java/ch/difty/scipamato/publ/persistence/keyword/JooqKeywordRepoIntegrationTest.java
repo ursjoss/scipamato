@@ -9,10 +9,10 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import ch.difty.scipamato.publ.entity.Keyword;
-import ch.difty.scipamato.publ.persistence.JooqTransactionalIntegrationTest;
+import ch.difty.scipamato.publ.persistence.JooqBaseIntegrationTest;
 
 @Slf4j
-public class JooqKeywordRepoIntegrationTest extends JooqTransactionalIntegrationTest {
+public class JooqKeywordRepoIntegrationTest extends JooqBaseIntegrationTest {
 
     @Autowired
     private JooqKeywordRepo repo;

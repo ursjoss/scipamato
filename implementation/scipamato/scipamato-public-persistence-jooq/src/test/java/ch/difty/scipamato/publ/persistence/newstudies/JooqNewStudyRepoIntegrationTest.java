@@ -12,9 +12,10 @@ import ch.difty.scipamato.publ.entity.NewStudy;
 import ch.difty.scipamato.publ.entity.NewStudyPageLink;
 import ch.difty.scipamato.publ.entity.NewStudyTopic;
 import ch.difty.scipamato.publ.entity.Newsletter;
-import ch.difty.scipamato.publ.persistence.JooqTransactionalIntegrationTest;
+import ch.difty.scipamato.publ.persistence.JooqBaseIntegrationTest;
 
-public class JooqNewStudyRepoIntegrationTest extends JooqTransactionalIntegrationTest {
+@SuppressWarnings("SpellCheckingInspection")
+public class JooqNewStudyRepoIntegrationTest extends JooqBaseIntegrationTest {
 
     @Autowired
     private NewStudyRepository repo;
@@ -165,6 +166,7 @@ public class JooqNewStudyRepoIntegrationTest extends JooqTransactionalIntegratio
     public void findingIdOfNewsletterWithIssue_forExistingNewsletter_findsIt() {
         final Optional<Integer> idOpt = repo.findIdOfNewsletterWithIssue("2018/06");
         assertThat(idOpt).isPresent();
+        //noinspection OptionalGetWithoutIsPresent
         assertThat(idOpt.get()).isEqualTo(2);
     }
 

@@ -12,13 +12,20 @@ import org.jooq.DSLContext;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
-public class JooqDslTransactionIntegrationTest extends JooqBaseIntegrationTest {
+@RunWith(SpringRunner.class)
+@SpringBootTest
+@ActiveProfiles({ "test" })
+public class JooqDslTransactionIntegrationTest {
 
     @Autowired
     private DSLContext dsl;

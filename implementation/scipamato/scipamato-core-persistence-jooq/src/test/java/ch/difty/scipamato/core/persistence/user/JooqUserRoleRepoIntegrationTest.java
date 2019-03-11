@@ -8,9 +8,9 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import ch.difty.scipamato.core.auth.Role;
-import ch.difty.scipamato.core.persistence.JooqTransactionalIntegrationTest;
+import ch.difty.scipamato.core.persistence.JooqBaseIntegrationTest;
 
-public class JooqUserRoleRepoIntegrationTest extends JooqTransactionalIntegrationTest {
+public class JooqUserRoleRepoIntegrationTest extends JooqBaseIntegrationTest {
 
     @Autowired
     private JooqUserRoleRepo repo;

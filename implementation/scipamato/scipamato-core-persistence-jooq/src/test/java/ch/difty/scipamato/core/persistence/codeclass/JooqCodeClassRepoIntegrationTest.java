@@ -16,12 +16,12 @@ import ch.difty.scipamato.core.entity.CodeClass;
 import ch.difty.scipamato.core.entity.code_class.CodeClassDefinition;
 import ch.difty.scipamato.core.entity.code_class.CodeClassFilter;
 import ch.difty.scipamato.core.entity.code_class.CodeClassTranslation;
-import ch.difty.scipamato.core.persistence.JooqTransactionalIntegrationTest;
+import ch.difty.scipamato.core.persistence.JooqBaseIntegrationTest;
 import ch.difty.scipamato.core.persistence.OptimisticLockingException;
 
 @SuppressWarnings("SpellCheckingInspection")
 @Slf4j
-public class JooqCodeClassRepoIntegrationTest extends JooqTransactionalIntegrationTest {
+public class JooqCodeClassRepoIntegrationTest extends JooqBaseIntegrationTest {
 
     private static final int CODE_CLASS_COUNT = 8;
 

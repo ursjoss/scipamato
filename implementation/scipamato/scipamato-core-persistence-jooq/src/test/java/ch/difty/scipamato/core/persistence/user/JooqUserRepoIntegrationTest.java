@@ -9,10 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import ch.difty.scipamato.core.auth.Role;
 import ch.difty.scipamato.core.entity.User;
-import ch.difty.scipamato.core.persistence.JooqTransactionalIntegrationTest;
+import ch.difty.scipamato.core.persistence.JooqBaseIntegrationTest;
 import ch.difty.scipamato.core.persistence.OptimisticLockingException;
 
-public class JooqUserRepoIntegrationTest extends JooqTransactionalIntegrationTest {
+public class JooqUserRepoIntegrationTest extends JooqBaseIntegrationTest {
 
     private static final Integer MAX_ID_PREPOPULATED       = 8;
     private static final int     RECORD_COUNT_PREPOPULATED = 8;
@@ -113,6 +113,7 @@ public class JooqUserRepoIntegrationTest extends JooqTransactionalIntegrationTes
 
     @Test
     public void findingUserByName_withNonExistingUserName_returnsNull() {
+        //noinspection SpellCheckingInspection
         assertThat(repo.findByUserName("lkajdsklj")).isNull();
     }
 
@@ -183,6 +184,7 @@ public class JooqUserRepoIntegrationTest extends JooqTransactionalIntegrationTes
         User user = makeAndValidateNewUser();
         User secondReloaded = loadSameUserIndependentlyAndModifyAndUpdate(user);
 
+        //noinspection SpellCheckingInspection
         user.setLastName("yetanother");
 
         try {

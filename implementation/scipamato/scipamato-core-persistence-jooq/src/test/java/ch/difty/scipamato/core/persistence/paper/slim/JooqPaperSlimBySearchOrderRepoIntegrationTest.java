@@ -12,9 +12,9 @@ import ch.difty.scipamato.common.persistence.paging.PaginationRequest;
 import ch.difty.scipamato.core.entity.projection.PaperSlim;
 import ch.difty.scipamato.core.entity.search.SearchCondition;
 import ch.difty.scipamato.core.entity.search.SearchOrder;
-import ch.difty.scipamato.core.persistence.JooqTransactionalIntegrationTest;
+import ch.difty.scipamato.core.persistence.JooqBaseIntegrationTest;
 
-public class JooqPaperSlimBySearchOrderRepoIntegrationTest extends JooqTransactionalIntegrationTest {
+public class JooqPaperSlimBySearchOrderRepoIntegrationTest extends JooqBaseIntegrationTest {
 
     @Autowired
     private JooqPaperSlimBySearchOrderRepo repo;
@@ -29,7 +29,7 @@ public class JooqPaperSlimBySearchOrderRepoIntegrationTest extends JooqTransacti
     }
 
     @Test
-    public void findingPaged_withNonMatchingCondition_findsNoRecors() {
+    public void findingPaged_withNonMatchingCondition_findsNoRecords() {
         SearchOrder so = new SearchOrder();
         so.setGlobal(true);
 

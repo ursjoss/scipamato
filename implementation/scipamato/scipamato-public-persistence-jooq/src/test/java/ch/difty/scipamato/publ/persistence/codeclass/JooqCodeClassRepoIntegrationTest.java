@@ -5,9 +5,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import ch.difty.scipamato.publ.persistence.JooqTransactionalIntegrationTest;
+import ch.difty.scipamato.publ.persistence.JooqBaseIntegrationTest;
 
-public class JooqCodeClassRepoIntegrationTest extends JooqTransactionalIntegrationTest {
+@SuppressWarnings("SpellCheckingInspection")
+public class JooqCodeClassRepoIntegrationTest extends JooqBaseIntegrationTest {
 
     @Autowired
     private JooqCodeClassRepo repo;
@@ -24,8 +25,8 @@ public class JooqCodeClassRepoIntegrationTest extends JooqTransactionalIntegrati
     public void finding_inFrench_returnsLocalizedCodeClasses() {
         assertThat(repo.find("fr"))
             .extracting("name")
-            .containsExactly("Polluant nocif", "Région", "Population", "Effets physiologique ou nocifs",
-                "Type d'étude", "Espèces investigées", "Durée de l'exposition", "Site d'exposition");
+            .containsExactly("Polluant nocif", "Région", "Population", "Effets physiologique ou nocifs", "Type d'étude",
+                "Espèces investigées", "Durée de l'exposition", "Site d'exposition");
     }
 
     @Test

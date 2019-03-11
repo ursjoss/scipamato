@@ -14,10 +14,10 @@ import ch.difty.scipamato.common.persistence.paging.Sort;
 import ch.difty.scipamato.core.entity.keyword.KeywordDefinition;
 import ch.difty.scipamato.core.entity.keyword.KeywordFilter;
 import ch.difty.scipamato.core.entity.keyword.KeywordTranslation;
-import ch.difty.scipamato.core.persistence.JooqTransactionalIntegrationTest;
+import ch.difty.scipamato.core.persistence.JooqBaseIntegrationTest;
 import ch.difty.scipamato.core.persistence.OptimisticLockingException;
 
-public class JooqKeywordRepoIntegrationTest extends JooqTransactionalIntegrationTest {
+public class JooqKeywordRepoIntegrationTest extends JooqBaseIntegrationTest {
 
     @Autowired
     private JooqKeywordRepo repo;

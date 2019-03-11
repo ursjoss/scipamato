@@ -16,9 +16,9 @@ import ch.difty.scipamato.core.entity.projection.PaperSlim;
 import ch.difty.scipamato.core.entity.search.PaperFilter;
 import ch.difty.scipamato.core.entity.search.SearchCondition;
 import ch.difty.scipamato.core.entity.search.SearchOrder;
-import ch.difty.scipamato.core.persistence.JooqTransactionalIntegrationTest;
+import ch.difty.scipamato.core.persistence.JooqBaseIntegrationTest;
 
-public class JooqPaperSlimRepoIntegrationTest extends JooqTransactionalIntegrationTest {
+public class JooqPaperSlimRepoIntegrationTest extends JooqBaseIntegrationTest {
 
     @Autowired
     private JooqPaperSlimRepo repo;
@@ -49,6 +49,7 @@ public class JooqPaperSlimRepoIntegrationTest extends JooqTransactionalIntegrati
         assertThat(paper.getId()).isEqualTo(31L);
         assertThat(paper.getNumber()).isEqualTo(31L);
         assertThat(paper.getPublicationYear()).isEqualTo(2016);
+        //noinspection SpellCheckingInspection
         assertThat(paper.getFirstAuthor()).isEqualTo("Lanzinger");
         assertThat(paper.getVersion()).isEqualTo(0);
         assertThat(paper.getTitle()).startsWith("Ultrafine");
@@ -69,6 +70,7 @@ public class JooqPaperSlimRepoIntegrationTest extends JooqTransactionalIntegrati
     @Test
     public void findingPageByFilter() {
         final PaperFilter pf = new PaperFilter();
+        //noinspection SpellCheckingInspection
         pf.setAuthorMask("lanz");
         PaginationContext pc = new PaginationRequest(0, 10);
         List<PaperSlim> papers = repo.findPageByFilter(pf, pc);
