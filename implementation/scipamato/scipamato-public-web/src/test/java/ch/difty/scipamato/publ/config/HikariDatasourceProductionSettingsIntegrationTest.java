@@ -13,7 +13,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class HikariDatasourceProductionSettingsTest {
+public class HikariDatasourceProductionSettingsIntegrationTest {
 
     @Autowired
     private DataSource datasource;

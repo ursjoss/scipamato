@@ -20,7 +20,7 @@ import ch.difty.scipamato.core.sync.launcher.Warner;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
-public class DataSourceConfigTest {
+public class DataSourceConfigIntegrationTest {
 
     @Autowired
     private Configuration coreConfiguration;
