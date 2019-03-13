@@ -60,13 +60,9 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[unreleased]]
 == [unreleased]
 
-
 .Added
-- {url-issues}63[#70] - Core: Filter Newsletters by newsletter topic
 
 .Changed
-- {url-issues}63[#63] - Core: Change layout of new study fields panel in paper edit page - take 2
-- Bumped spring-boot-parent to 2.1.3
 
 .Deprecated
 
@@ -75,6 +71,25 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Fixed
 
 .Security
+
+
+[[v1.1.4]]
+== [1.1.4] -- 2019-03-13
+
+.Added
+- {url-issues}63[#70] - Core: Filter Newsletters by newsletter topic
+- Added many wiki pages
+- Test coverage, refactorings and small optimizations behind the scene
+
+.Changed
+- {url-issues}63[#63] - Core: Change layout of new study fields panel in paper edit page - take 2
+- Bumped spring-boot-parent to 2.1.3
+
+.Fixed
+- {url-issues}50[#50] - Public: pym integration into CMS - Fix resizing of the page height after
+  switching to a different new study issue with a shorter or longer list than the most recent one
+  (The issue was fixed in the pym integration in the parent CMS page of SwissTPH by CS2). SciPaMaTo
+  only assisted with issueing log statements on the browser console.
 
 
 [[v1.1.3]]
