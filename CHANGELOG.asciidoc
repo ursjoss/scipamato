@@ -70,6 +70,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Removed
 
 .Fixed
+- {url-issues}73[#73] - Public: Allow starting SciPaMaTo-Public in development profile
 
 .Security
 
@@ -78,7 +79,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 == [1.1.4] -- 2019-03-13
 
 .Added
-- {url-issues}63[#70] - Core: Filter Newsletters by newsletter topic
+- {url-issues}70[#70] - Core: Filter Newsletters by newsletter topic
 - Added many wiki pages
 - Test coverage, refactorings and small optimizations behind the scene
 
