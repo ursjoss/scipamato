@@ -8,17 +8,17 @@ import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.HeaderItem;
 
 /**
- * java representation of the SciPaMaTo-Public Theme. Is based on TODC Bootstrap
+ * Java representation of the SciPaMaTo-Public Theme. Is based on TODC Bootstrap
  * and the wicket-bootstrap implementation of Michael Haitz in wicket-bootstrap.
  * <p>
  * A flag passed into the constructor indicates whether the precompiled CSS
  * classes will be used (preferable in production) or if the LESS files shall be
  * dynamically compiled into CSS.
  * <p>
- * This theme modifies bootstrap and therefore both files gets loaded
+ * This theme modifies bootstrap and therefore both css files get loaded
  * (`bootstrap.css` and `scipamato-public-bootstrap.css`).
  *
- * <span class="strong">Usage</span>
+ * <span class="strong">Usage:</span>
  *
  * <pre>
  * settings.setThemeProvider(new SingleThemeProvider(new ScipamatoPublicTheme()));
@@ -50,7 +50,7 @@ public class ScipamatoPublicTheme extends Theme {
      * {@literal scipamato-public}.
      *
      * @param useLessOverCss
-     *     if true: SciPamaTo will dynamically compile the LESS files into
+     *     if true: SciPaMaTo will dynamically compile the LESS files into
      *     CSS. If false, the precompiled CSS is used.
      */
     public ScipamatoPublicTheme(final boolean useLessOverCss) {
