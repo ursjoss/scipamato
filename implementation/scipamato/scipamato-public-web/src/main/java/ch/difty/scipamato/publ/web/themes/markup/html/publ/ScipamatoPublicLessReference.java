@@ -9,12 +9,12 @@ import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.HeaderItem;
 
 /**
- * less resource reference that references `scipamato-public-bootstrap.css`. Can
+ * less resource reference that references the main less file. Can
  * be used by the ScipamatoPublicTheme in the development process of the
  * less/css classes. Should not be used in production. Use
  * {@link ScipamatoPublicCssReference} instead.
  * <p>
- * <strong>Usage</strong>
+ * <strong>Usage:</strong>
  *
  * <pre>
  * response.render(CssHeaderItem.forReference(ScipamatoPublicLessReference.instance()));
