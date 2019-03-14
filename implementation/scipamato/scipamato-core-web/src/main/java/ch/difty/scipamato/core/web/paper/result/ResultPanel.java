@@ -2,6 +2,8 @@ package ch.difty.scipamato.core.web.paper.result;
 
 import static ch.difty.scipamato.core.entity.Paper.PaperFields.*;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -97,12 +99,16 @@ public abstract class ResultPanel extends BasePanel<Void> {
         super.onInitialize();
 
         makeAndQueueTable("table");
-        makeAndQueuePdfSummaryLink("summaryLink");
-        makeAndQueuePdfSummaryShortLink("summaryShortLink");
-        makeAndQueuePdfReviewLink("reviewLink");
-        makeAndQueuePdfLiteratureReviewLink("literatureReviewLink", false);
-        makeAndQueuePdfLiteratureReviewLink("literatureReviewPlusLink", true);
-        makeAndQueuePdfSummaryTableLink("summaryTableLink");
+        addOrReplaceJasperLinks();
+    }
+
+    private void addOrReplaceJasperLinks() {
+        addOrReplacePdfSummaryLink("summaryLink");
+        addOrReplacePdfSummaryShortLink("summaryShortLink");
+        addOrReplacePdfReviewLink("reviewLink");
+        addOrReplacePdfLiteratureReviewLink("literatureReviewLink", false);
+        addOrReplacePdfLiteratureReviewLink("literatureReviewPlusLink", true);
+        addOrReplacePdfSummaryTableLink("summaryTableLink");
     }
 
     private void makeAndQueueTable(String id) {
@@ -283,7 +289,7 @@ public abstract class ResultPanel extends BasePanel<Void> {
         };
     }
 
-    private void makeAndQueuePdfSummaryLink(String id) {
+    private void addOrReplacePdfSummaryLink(String id) {
         final String brand = getProperties().getBrand();
         final String headerPart = brand + "-" + new StringResourceModel("headerPart.summary", this, null).getString();
         final String pdfCaption =
@@ -298,7 +304,7 @@ public abstract class ResultPanel extends BasePanel<Void> {
             .withCompression()
             .build();
 
-        queue(newResourceLink(id, "summary",
+        addOrReplace(newResourceLink(id, "summary",
             new PaperSummaryDataSource(dataProvider, rhf, shortFieldConcatenator, config)));
     }
 
@@ -324,7 +330,7 @@ public abstract class ResultPanel extends BasePanel<Void> {
             .commentLabel(getLabelResourceFor(COMMENT.getName()));
     }
 
-    private void makeAndQueuePdfSummaryShortLink(String id) {
+    private void addOrReplacePdfSummaryShortLink(String id) {
         final String brand = getProperties().getBrand();
         final String headerPart =
             brand + "-" + new StringResourceModel("headerPart.summaryShort", this, null).getString();
@@ -337,10 +343,10 @@ public abstract class ResultPanel extends BasePanel<Void> {
             .withCompression()
             .build();
 
-        queue(newResourceLink(id, "summary-short", new PaperSummaryShortDataSource(dataProvider, rhf, config)));
+        addOrReplace(newResourceLink(id, "summary-short", new PaperSummaryShortDataSource(dataProvider, rhf, config)));
     }
 
-    private void makeAndQueuePdfReviewLink(String id) {
+    private void addOrReplacePdfReviewLink(String id) {
         final String brand = getProperties().getBrand();
         final String pdfCaption =
             brand + "- " + new StringResourceModel("paper_review.titlePart", this, null).getString();
@@ -366,10 +372,10 @@ public abstract class ResultPanel extends BasePanel<Void> {
             .withCompression()
             .build();
 
-        queue(newResourceLink(id, "review", new PaperReviewDataSource(dataProvider, rhf, config)));
+        addOrReplace(newResourceLink(id, "review", new PaperReviewDataSource(dataProvider, rhf, config)));
     }
 
-    private void makeAndQueuePdfLiteratureReviewLink(final String id, final boolean plus) {
+    private void addOrReplacePdfLiteratureReviewLink(final String id, final boolean plus) {
         final String brand = getProperties().getBrand();
         final String pdfCaption = new StringResourceModel("paper_literature_review.caption", this, null)
             .setParameters(brand)
@@ -388,16 +394,16 @@ public abstract class ResultPanel extends BasePanel<Void> {
             .build();
 
         if (plus) {
-            queue(newResourceLink(id, "literature_review_plus",
+            addOrReplace(newResourceLink(id, "literature_review_plus",
                 new PaperLiteratureReviewPlusDataSource(dataProvider, rhf, config)));
         } else {
-            queue(newResourceLink(id, "literature_review",
+            addOrReplace(newResourceLink(id, "literature_review",
                 new PaperLiteratureReviewDataSource(dataProvider, rhf, config)));
         }
     }
 
-    private void makeAndQueuePdfSummaryTableLink(final String id) {
-        queue(newPdfSummaryTable(id, "summary_table"));
+    private void addOrReplacePdfSummaryTableLink(final String id) {
+        addOrReplace(newPdfSummaryTable(id, "summary_table"));
     }
 
     private ResourceLink<Void> newPdfSummaryTable(final String id, final String resourceKeyPart) {
@@ -427,6 +433,13 @@ public abstract class ResultPanel extends BasePanel<Void> {
         reviewLink.add(
             new AttributeModifier(TITLE_ATTR, new StringResourceModel(tileResourceKey, this, null).getString()));
         return reviewLink;
+    }
+
+    // Deserialization of the panel without recreating the jasper links renders them invalid
+    // see https://github.com/ursjoss/scipamato/issues/2
+    private void readObject(final ObjectInputStream s) throws IOException, ClassNotFoundException {
+        s.defaultReadObject();
+        addOrReplaceJasperLinks();
     }
 
 }
