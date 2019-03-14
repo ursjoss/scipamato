@@ -85,7 +85,7 @@
         <jasperreports.version>6.7.1</jasperreports.version>
 
         <spring-cloud.version>Greenwich.SR1</spring-cloud.version>
-        <asm.version>6.2.1</asm.version>
+        <asm.version>7.1</asm.version>
     </properties>
 
     <dependencyManagement>
