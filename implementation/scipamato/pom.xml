@@ -84,7 +84,7 @@
         <bootstrap.version>3.3.7-1</bootstrap.version>
         <jasperreports.version>6.7.0</jasperreports.version>
 
-        <spring-cloud.version>Finchley.SR2</spring-cloud.version>
+        <spring-cloud.version>Greenwich.SR1</spring-cloud.version>
         <asm.version>6.2.1</asm.version>
     </properties>
 
