@@ -64,7 +64,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Changed
 - Bumped version of asm, spring-cloud, jasperreports, commons-collections4,
-  spring-boot-admin-starter-client, equalsverifier
+  spring-boot-admin-starter-client, equalsverifier, wicket-jquery-ui
 
 .Deprecated
 
