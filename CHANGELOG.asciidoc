@@ -63,19 +63,27 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 
 .Changed
-- Bumped version of asm, spring-cloud, jasperreports, commons-collections4,
-  spring-boot-admin-starter-client, equalsverifier, wicket-jquery-ui
 
 .Deprecated
 
 .Removed
 
 .Fixed
+
+.Security
+
+
+[[v1.1.5]]
+== [1.1.5] -- 2019-03-22
+
+.Changed
+- Bumped version of asm, spring-cloud, jasperreports, commons-collections4,
+  spring-boot-admin-starter-client, equalsverifier, wicket-jquery-ui
+
+.Fixed
 - {url-issues}2[#2] - Core: Using Back button from PaperEntryPage breaks PDF Report generation
 - {url-issues}73[#73] - Public: Allow starting SciPaMaTo-Public in development profile
 - {url-issues}12[#12] - Core-Sync: Improve Hikari configuration
-
-.Security
 
 
 [[v1.1.4]]
