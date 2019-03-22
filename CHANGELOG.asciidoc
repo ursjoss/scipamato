@@ -73,6 +73,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Fixed
 - {url-issues}2[#2] - Core: Using Back button from PaperEntryPage breaks PDF Report generation
 - {url-issues}73[#73] - Public: Allow starting SciPaMaTo-Public in development profile
+- {url-issues}12[#12] - Core-Sync: Improve Hikari configuration
 
 .Security
 
