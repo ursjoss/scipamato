@@ -397,7 +397,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
     }
 
     private void addDisableBehavior(final FormComponent... components) {
-        if (isEditMode())
+        if (isEditMode() || isSearchMode())
             for (final FormComponent fc : components) {
                 fc.add(new AjaxFormComponentUpdatingBehavior("input") {
                     @Override
