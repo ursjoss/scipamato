@@ -69,9 +69,15 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Removed
 
 .Fixed
-- {url-issues}70[#70] - Core: Filter Newsletters by newsletter topic - fix query
 
 .Security
+
+
+[[v1.1.6]]
+== [1.1.6] -- 2019-03-27
+
+.Fixed
+- {url-issues}70[#70] - Core: Filter Newsletters by newsletter topic - fix query
 
 
 [[v1.1.5]]
