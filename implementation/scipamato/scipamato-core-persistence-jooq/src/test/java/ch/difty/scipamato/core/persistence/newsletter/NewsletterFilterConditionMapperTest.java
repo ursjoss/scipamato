@@ -60,12 +60,10 @@ public class NewsletterFilterConditionMapperTest
             .toString()).isEqualToIgnoringCase(
             //@formatter:off
                   "\"public\".\"newsletter\".\"id\" in (\n"
-                + "  select \"public\".\"newsletter_newsletter_topic\".\"newsletter_id\"\n"
-                + "  from \"public\".\"newsletter_newsletter_topic\"\n"
-                + "  where (\n"
-                + "    \"public\".\"newsletter_newsletter_topic\".\"newsletter_id\" = \"public\".\"newsletter\".\"id\"\n"
-                + "    and \"public\".\"newsletter_newsletter_topic\".\"newsletter_topic_id\" = 5\n"
-                + "  )\n" + ")");
+                + "  select \"public\".\"paper_newsletter\".\"newsletter_id\"\n"
+                + "  from \"public\".\"paper_newsletter\"\n"
+                + "  where \"public\".\"paper_newsletter\".\"newsletter_topic_id\" = 5\n"
+                + ")");
             //@formatter:on
     }
 

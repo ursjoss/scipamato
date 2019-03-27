@@ -1,7 +1,7 @@
 package ch.difty.scipamato.core.persistence.newsletter;
 
 import static ch.difty.scipamato.core.db.tables.Newsletter.NEWSLETTER;
-import static ch.difty.scipamato.core.db.tables.NewsletterNewsletterTopic.NEWSLETTER_NEWSLETTER_TOPIC;
+import static ch.difty.scipamato.core.db.tables.PaperNewsletter.PAPER_NEWSLETTER;
 
 import java.util.List;
 
@@ -36,10 +36,9 @@ public class NewsletterFilterConditionMapper extends AbstractFilterConditionMapp
                                                        .getNewsletterTopic()
                                                        .getId() != null) {
             conditions.add(NEWSLETTER.ID.in(DSL
-                .select(NEWSLETTER_NEWSLETTER_TOPIC.NEWSLETTER_ID)
-                .from(NEWSLETTER_NEWSLETTER_TOPIC)
-                .where(NEWSLETTER_NEWSLETTER_TOPIC.NEWSLETTER_ID.eq(NEWSLETTER.ID))
-                .and(NEWSLETTER_NEWSLETTER_TOPIC.NEWSLETTER_TOPIC_ID.eq(DSL.val(filter
+                .select(PAPER_NEWSLETTER.NEWSLETTER_ID)
+                .from(PAPER_NEWSLETTER)
+                .where(PAPER_NEWSLETTER.NEWSLETTER_TOPIC_ID.eq(DSL.val(filter
                     .getNewsletterTopic()
                     .getId())))));
         }
