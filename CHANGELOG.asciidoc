@@ -63,7 +63,8 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 
 .Changed
-- Bumped versions of spring-boot-starter, wicket, wicket-bootstrap, wicket-webjars, jasperreports and -fonts, equalsverifier
+- Bumped versions of spring-boot-starter, wicket, wicket-bootstrap, wicket-webjars, jasperreports and -fonts,
+  equalsverifier, spring-boot-admin-starter-client
 
 .Deprecated
 
