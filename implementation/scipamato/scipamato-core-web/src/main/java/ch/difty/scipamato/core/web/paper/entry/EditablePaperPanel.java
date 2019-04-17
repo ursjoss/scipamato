@@ -13,6 +13,8 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
 import de.agilecoders.wicket.core.markup.html.bootstrap.image.GlyphIconType;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.fileUpload.DropZoneFileUpload;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome5IconType;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome5IconTypeBuilder;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.fileupload.FileItem;
@@ -754,12 +756,16 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
 
     @SuppressWarnings("SameParameterValue")
     private IColumn<PaperAttachment, String> makeLinkIconColumn(String id) {
+        final FontAwesome5IconType trash = FontAwesome5IconTypeBuilder
+            .on(FontAwesome5IconTypeBuilder.FontAwesome5Solid.trash_alt)
+            .fixedWidth()
+            .build();
         return new LinkIconColumn<>(new StringResourceModel(COLUMN_HEADER + id, this, null)) {
             private static final long serialVersionUID = 1L;
 
             @Override
             protected IModel<String> createIconModel(IModel<PaperAttachment> rowModel) {
-                return Model.of("fa fa-fw fa-trash-o text-danger");
+                return Model.of(trash.cssClassName() + " text-danger");
             }
 
             @Override

@@ -2,7 +2,7 @@ package ch.difty.scipamato.core.web.paper.entry;
 
 import static ch.difty.scipamato.core.web.CorePageParameters.*;
 
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesomeCDNCSSReference;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome5CDNCSSReference;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.wicket.PageReference;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -197,7 +197,7 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
     @Override
     public void renderHead(final IHeaderResponse response) {
         super.renderHead(response);
-        response.render(CssHeaderItem.forReference(FontAwesomeCDNCSSReference.instance()));
+        response.render(CssHeaderItem.forReference(FontAwesome5CDNCSSReference.instance()));
     }
 
     /**

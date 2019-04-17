@@ -29,26 +29,26 @@ public class ResultPanelInEditModeTest extends ResultPanelTest {
     @Test
     public void startingPage_showingResults() {
         when(searchOrderMock.isShowExcluded()).thenReturn(false);
-        assertExcludeIcon("fa fa-fw fa-ban", "Exclude the paper from the search");
+        assertExcludeIcon("fas fa-ban fa-fw", "Exclude the paper from the search");
     }
 
     @Test
     public void startingPage_showingExclusions() {
         when(searchOrderMock.isShowExcluded()).thenReturn(true);
-        assertExcludeIcon("fa fa-fw fa-check-circle-o", "Re-include the paper into the search");
+        assertExcludeIcon("far fa-check-circle fa-fw", "Re-include the paper into the search");
     }
 
     @Test
     public void startingPage_withPaperWithNoNewsletter_rendersAddToNewsletterLink() {
         assertThat(paperSlim.getNewsletterAssociation()).isNull();
-        assertNewsletterIcon("fa fa-fw fa-plus-square-o", "Add to current newsletter");
+        assertNewsletterIcon("fas fa-plus-square fa-fw", "Add to current newsletter");
     }
 
     @Test
     public void startingPage_withPaperWithNewsletter_rendersAddToNewsletterLink() {
         NewsletterAssociation ns = new NewsletterAssociation(1, "1802", PublicationStatus.PUBLISHED.getId(), null);
         paperSlim.setNewsletterAssociation(ns);
-        assertNewsletterIcon("fa fa-fw fa-envelope-o", "Newsletter 1802");
+        assertNewsletterIcon("far fa-envelope fa-fw", "Newsletter 1802");
     }
 
 }
