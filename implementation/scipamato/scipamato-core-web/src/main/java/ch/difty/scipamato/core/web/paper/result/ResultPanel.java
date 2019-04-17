@@ -184,7 +184,7 @@ public abstract class ResultPanel extends BasePanel<Void> {
 
             @Override
             protected IModel<String> createIconModel(IModel<PaperSlim> rowModel) {
-                final FontAwesome5IconType check_circle = FontAwesome5IconTypeBuilder
+                final FontAwesome5IconType checkCircle = FontAwesome5IconTypeBuilder
                     .on(FontAwesome5IconTypeBuilder.FontAwesome5Regular.check_circle)
                     .fixedWidth()
                     .build();
@@ -192,7 +192,7 @@ public abstract class ResultPanel extends BasePanel<Void> {
                     .on(FontAwesome5IconTypeBuilder.FontAwesome5Solid.ban)
                     .fixedWidth()
                     .build();
-                return Model.of(dataProvider.isShowExcluded() ? check_circle.cssClassName() : ban.cssClassName());
+                return Model.of(dataProvider.isShowExcluded() ? checkCircle.cssClassName() : ban.cssClassName());
             }
 
             @Override
@@ -228,11 +228,11 @@ public abstract class ResultPanel extends BasePanel<Void> {
      * </ul>
      */
     private IColumn<PaperSlim, String> makeNewsletterLinkIconColumn(String id) {
-        final FontAwesome5IconType plus_square = FontAwesome5IconTypeBuilder
+        final FontAwesome5IconType plusSquare = FontAwesome5IconTypeBuilder
             .on(FontAwesome5IconTypeBuilder.FontAwesome5Solid.plus_square)
             .fixedWidth()
             .build();
-        final FontAwesome5IconType envelope_open = FontAwesome5IconTypeBuilder
+        final FontAwesome5IconType envelopeOpen = FontAwesome5IconTypeBuilder
             .on(FontAwesome5IconTypeBuilder.FontAwesome5Regular.envelope_open)
             .fixedWidth()
             .build();
@@ -248,9 +248,9 @@ public abstract class ResultPanel extends BasePanel<Void> {
                 String icon;
                 final PaperSlim paper = rowModel.getObject();
                 if (hasNoNewsletter(paper))
-                    icon = isThereOneNewsletterInStatusWip() ? plus_square.cssClassName() : "";
+                    icon = isThereOneNewsletterInStatusWip() ? plusSquare.cssClassName() : "";
                 else if (hasNewsletterWip(paper))
-                    icon = envelope_open.cssClassName();
+                    icon = envelopeOpen.cssClassName();
                 else
                     icon = envelope.cssClassName();
                 return Model.of(icon);
