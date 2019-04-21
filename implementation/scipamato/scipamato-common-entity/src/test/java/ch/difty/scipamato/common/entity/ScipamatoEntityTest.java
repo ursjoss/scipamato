@@ -8,8 +8,8 @@ import java.time.LocalDateTime;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class ScipamatoEntityTest {
 
@@ -24,7 +24,7 @@ public class ScipamatoEntityTest {
 
     private final ScipamatoEntity e = new ScipamatoEntity();
 
-    @Before
+    @BeforeEach
     public void setUp() {
         e.setCreated(CD);
         e.setLastModified(LM);

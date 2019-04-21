@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 import org.apache.wicket.PageReference;
 import org.apache.wicket.markup.html.link.ResourceLink;
 import org.apache.wicket.model.Model;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.boot.test.mock.mockito.MockBean;
 

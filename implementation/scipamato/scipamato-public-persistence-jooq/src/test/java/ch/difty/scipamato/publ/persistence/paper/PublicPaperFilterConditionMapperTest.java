@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.common.persistence.FilterConditionMapperTest;
 import ch.difty.scipamato.common.persistence.GenericFilterConditionMapper;

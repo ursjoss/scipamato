@@ -1,11 +1,9 @@
 package ch.difty.scipamato.core.persistence.paper.searchorder;
 
-import junitparams.JUnitParamsRunner;
-import org.junit.runner.RunWith;
-
 import ch.difty.scipamato.core.entity.search.SearchTerm;
 
-@RunWith(JUnitParamsRunner.class)
+// TODO restore parameterized tests
+//@RunWith(JUnitParamsRunner.class)
 @SuppressWarnings("WeakerAccess")
 public abstract class SearchTermEvaluatorIntegrationTest<T extends SearchTerm> extends SearchTermEvaluatorTest<T> {
 

@@ -11,15 +11,15 @@ import java.util.List;
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.tester.WicketTester;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentMatcher;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.core.ScipamatoCoreApplication;
@@ -27,7 +27,7 @@ import ch.difty.scipamato.core.entity.User;
 import ch.difty.scipamato.core.entity.search.UserFilter;
 import ch.difty.scipamato.core.persistence.UserService;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest
 public class UserProviderTest {
 
@@ -47,7 +47,7 @@ public class UserProviderTest {
 
     private List<User> papers;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         new WicketTester(application);
         provider = new UserProvider(filterMock);
@@ -56,7 +56,7 @@ public class UserProviderTest {
         papers = Arrays.asList(entityMock, entityMock, entityMock);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         verifyNoMoreInteractions(serviceMock, entityMock);
     }

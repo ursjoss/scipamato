@@ -14,8 +14,8 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.util.tester.FormTester;
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.common.entity.newsletter.PublicationStatus;
 import ch.difty.scipamato.core.entity.Paper;
@@ -35,7 +35,7 @@ public class NewsletterEditPageTest extends BasePageTest<NewsletterEditPage> {
         .publicationStatus(PublicationStatus.CANCELLED)
         .build();
 
-    @After
+    @AfterEach
     public void tearDown() {
         verifyNoMoreInteractions(newsletterServiceMock);
     }

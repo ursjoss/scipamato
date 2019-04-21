@@ -2,7 +2,7 @@ package ch.difty.scipamato.core.entity.newsletter;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class NewsletterNewsletterTopicTest {
 

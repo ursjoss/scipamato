@@ -9,8 +9,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.common.persistence.paging.Sort.Direction;
 import ch.difty.scipamato.common.persistence.paging.Sort.SortProperty;
@@ -21,7 +21,7 @@ public class SortTest {
 
     private Sort sort;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         sortProperties.add(new SortProperty("a", Direction.ASC));
         sortProperties.add(new SortProperty("b", Direction.DESC));

@@ -8,7 +8,7 @@ import java.time.LocalDate;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class NewsletterTest extends PublicEntityTest<Newsletter> {
 

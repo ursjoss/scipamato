@@ -7,7 +7,7 @@ import net.sf.jasperreports.engine.export.JRPdfExporterContext;
 import net.sf.jasperreports.export.OutputStreamExporterOutput;
 import net.sf.jasperreports.export.PdfExporterConfiguration;
 import net.sf.jasperreports.export.PdfReportConfiguration;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.core.web.paper.jasper.ScipamatoPdfExporterConfiguration.Builder;
 

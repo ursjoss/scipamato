@@ -3,7 +3,7 @@ package ch.difty.scipamato.common;
 import static ch.difty.scipamato.common.TestUtils.assertDegenerateSupplierParameter;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class TranslationUtilsTest extends FinalClassTest<TranslationUtils> {
 

@@ -3,7 +3,7 @@ package ch.difty.scipamato.common.entity;
 import static ch.difty.scipamato.common.entity.CodeClassId.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("OptionalGetWithoutIsPresent")
 public class CodeClassIdTest {

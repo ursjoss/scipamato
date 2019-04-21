@@ -12,12 +12,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import feign.FeignException;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.oxm.UnmarshallingFailureException;
 import org.springframework.oxm.XmlMappingException;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
@@ -25,7 +25,7 @@ import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import ch.difty.scipamato.common.NullArgumentException;
 import ch.difty.scipamato.core.pubmed.api.*;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class PubmedXmlServiceTest {
 
     private PubmedXmlService service;
@@ -57,7 +57,7 @@ public class PubmedXmlServiceTest {
     @Mock
     private FeignException     feignExceptionMock;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         service = new PubmedXmlService(unmarshallerMock, pubMedMock);
 
@@ -71,7 +71,7 @@ public class PubmedXmlServiceTest {
         when(articleMock.getArticleTitle()).thenReturn(articleTitleMock);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         verifyNoMoreInteractions(unmarshallerMock, pubMedMock, pubmedArticleSetMock);
     }

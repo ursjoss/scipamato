@@ -3,7 +3,7 @@ package ch.difty.scipamato.core.logic.parsing;
 import static ch.difty.scipamato.core.logic.parsing.AuthorParserStrategy.PUBMED;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.core.logic.parsing.AuthorParserStrategy;
 

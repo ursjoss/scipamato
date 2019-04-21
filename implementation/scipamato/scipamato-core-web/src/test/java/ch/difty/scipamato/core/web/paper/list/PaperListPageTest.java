@@ -13,8 +13,8 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarExternalLin
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.form.Form;
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationRequest;
@@ -60,7 +60,7 @@ public abstract class PaperListPageTest extends BasePageTest<PaperListPage> {
         when(applicationPropertiesMock.getBrand()).thenReturn("scipamato");
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         verifyNoMoreInteractions(paperSlimServiceMock, paperServiceMock, codeServiceMock, codeClassServiceMock,
             paperServiceMock, pubmedImportService);

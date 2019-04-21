@@ -4,15 +4,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 import org.jooq.Condition;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import ch.difty.scipamato.core.entity.search.IntegerSearchTerm;
 import ch.difty.scipamato.core.entity.search.IntegerSearchTerm.MatchType;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 @SuppressWarnings("SameParameterValue")
 public class IntegerSearchTermEvaluatorTest extends SearchTermEvaluatorTest<IntegerSearchTerm> {
 

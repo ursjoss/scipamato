@@ -3,7 +3,7 @@ package ch.difty.scipamato.core.persistence.newsletter;
 import static ch.difty.scipamato.core.db.tables.Newsletter.NEWSLETTER;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.common.entity.newsletter.PublicationStatus;
 import ch.difty.scipamato.common.persistence.FilterConditionMapperTest;

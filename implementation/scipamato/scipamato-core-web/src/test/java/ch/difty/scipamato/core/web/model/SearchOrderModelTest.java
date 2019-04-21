@@ -6,8 +6,8 @@ import static org.mockito.Mockito.*;
 import java.util.Arrays;
 import java.util.Iterator;
 
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatcher;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -26,7 +26,7 @@ public class SearchOrderModelTest extends ModelTest {
     @Mock
     private SearchOrder        mockSearchOrder;
 
-    @After
+    @AfterEach
     public void tearDown() {
         verifyNoMoreInteractions(serviceMock, mockSearchOrder);
     }

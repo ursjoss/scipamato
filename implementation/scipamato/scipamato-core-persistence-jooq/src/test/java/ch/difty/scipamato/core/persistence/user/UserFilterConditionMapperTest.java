@@ -3,7 +3,7 @@ package ch.difty.scipamato.core.persistence.user;
 import static ch.difty.scipamato.core.db.tables.ScipamatoUser.SCIPAMATO_USER;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.common.persistence.FilterConditionMapperTest;
 import ch.difty.scipamato.common.persistence.GenericFilterConditionMapper;

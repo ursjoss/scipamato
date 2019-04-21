@@ -5,8 +5,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.Optional;
 
 import org.jooq.DSLContext;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -20,7 +20,7 @@ public class UnsynchronizedEntitiesWarnerIntegrationTest extends JooqBaseIntegra
 
     private Warner warner;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         warner = new UnsynchronizedEntitiesWarner(dsl);
     }

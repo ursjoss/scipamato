@@ -7,18 +7,18 @@ import static org.mockito.Mockito.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import ch.difty.scipamato.core.config.ApplicationCoreProperties;
 import ch.difty.scipamato.core.persistence.PaperService;
 import ch.difty.scipamato.core.persistence.ServiceResult;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class PubmedImportServiceTest {
 
     private PubmedImporter pubmedImporter;
@@ -36,14 +36,14 @@ public class PubmedImportServiceTest {
 
     private final List<PubmedArticleFacade> pubmedArticles = new ArrayList<>();
 
-    @Before
+    @BeforeEach
     public void setUp() {
         pubmedArticles.add(pubmedArticleMock);
         when(applicationPropertiesMock.getMinimumPaperNumberToBeRecycled()).thenReturn(7L);
         pubmedImporter = new PubmedImportService(pubmedArticleServiceMock, paperServiceMock, applicationPropertiesMock);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         verifyNoMoreInteractions(pubmedArticleServiceMock, paperServiceMock, pubmedArticleMock, serviceResultMock,
             applicationPropertiesMock);

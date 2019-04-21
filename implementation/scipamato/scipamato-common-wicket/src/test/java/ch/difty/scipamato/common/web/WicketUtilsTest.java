@@ -2,7 +2,7 @@ package ch.difty.scipamato.common.web;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.common.FinalClassTest;
 

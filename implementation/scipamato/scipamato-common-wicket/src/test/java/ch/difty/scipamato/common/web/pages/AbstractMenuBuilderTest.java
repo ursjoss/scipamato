@@ -17,13 +17,13 @@ import org.apache.wicket.markup.html.link.AbstractLink;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.tester.WicketTester;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import ch.difty.scipamato.common.DateTimeService;
 import ch.difty.scipamato.common.TestUtils;
@@ -34,7 +34,7 @@ import ch.difty.scipamato.common.web.component.SerializableConsumer;
 import ch.difty.scipamato.common.web.pages.login.TestLoginPage;
 
 @SpringBootTest
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 public class AbstractMenuBuilderTest {
 
     private AbstractMenuBuilder menuBuilder;
@@ -53,7 +53,7 @@ public class AbstractMenuBuilderTest {
 
     private boolean called = false;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         // instantiate the application, but we don't need the wicket tester
         new WicketTester(application);

@@ -2,7 +2,7 @@ package ch.difty.scipamato.core.entity.keyword;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.common.TestUtils;
 

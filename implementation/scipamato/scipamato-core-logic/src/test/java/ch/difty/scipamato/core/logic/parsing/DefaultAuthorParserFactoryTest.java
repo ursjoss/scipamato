@@ -2,8 +2,9 @@ package ch.difty.scipamato.core.logic.parsing;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.common.NullArgumentException;
 
@@ -11,19 +12,19 @@ public class DefaultAuthorParserFactoryTest {
 
     private AuthorParserFactory factory;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         factory = new DefaultAuthorParserFactory(AuthorParserStrategy.PUBMED);
     }
 
-    @Test(expected = NullArgumentException.class)
+    @Test
     public void degenerateConstruction() {
-        new DefaultAuthorParserFactory(null);
+        Assertions.assertThrows(NullArgumentException.class, () -> new DefaultAuthorParserFactory(null));
     }
 
-    @Test(expected = NullArgumentException.class)
+    @Test
     public void creatingParser_withNullAuthorString_throws() {
-        factory.createParser(null);
+        Assertions.assertThrows(NullArgumentException.class, () -> factory.createParser(null));
     }
 
     @Test

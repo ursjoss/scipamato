@@ -11,8 +11,8 @@ import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.tester.FormTester;
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
@@ -59,7 +59,7 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
         when(paperSlimMock.getDisplayValue()).thenReturn("ps");
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         verifyNoMoreInteractions(searchOrderServiceMock);
     }

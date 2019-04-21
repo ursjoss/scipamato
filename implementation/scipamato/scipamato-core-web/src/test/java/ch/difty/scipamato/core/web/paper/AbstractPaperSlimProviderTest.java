@@ -8,14 +8,14 @@ import java.util.*;
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.tester.WicketTester;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationContextMatcher;
 import ch.difty.scipamato.core.ScipamatoCoreApplication;
@@ -25,7 +25,7 @@ import ch.difty.scipamato.core.entity.projection.PaperSlim;
 import ch.difty.scipamato.core.persistence.PaperService;
 import ch.difty.scipamato.core.persistence.PaperSlimService;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest
 public abstract class AbstractPaperSlimProviderTest<F extends PaperSlimFilter, P extends AbstractPaperSlimProvider<F>> {
 
@@ -49,7 +49,7 @@ public abstract class AbstractPaperSlimProviderTest<F extends PaperSlimFilter, P
 
     abstract F getFilter();
 
-    @Before
+    @BeforeEach
     public final void setUp() {
         final WicketTester tester = new WicketTester(application);
         tester
@@ -68,7 +68,7 @@ public abstract class AbstractPaperSlimProviderTest<F extends PaperSlimFilter, P
 
     protected abstract void localFixture();
 
-    @After
+    @AfterEach
     public final void tearDown() {
         verifyNoMoreInteractions(serviceMock, getFilter(), entityMock, paperServiceMock, paperMock);
     }

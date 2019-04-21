@@ -9,15 +9,15 @@ import java.util.List;
 
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import ch.difty.scipamato.core.entity.search.SearchCondition;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class SearchConditionProviderTest {
 
     private SearchConditionProvider provider;
@@ -27,7 +27,7 @@ public class SearchConditionProviderTest {
 
     private final List<SearchCondition> conditions = new ArrayList<>();
 
-    @Before
+    @BeforeEach
     public void setUp() {
         conditions.addAll(Arrays.asList(mockCondition1, mockCondition2, mockCondition3, mockCondition4));
 

@@ -9,8 +9,8 @@ import java.util.List;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.core.pubmed.api.*;
 
@@ -18,7 +18,7 @@ public class ScipamatoPubmedBookArticleTest {
 
     private final PubmedBookArticle pubmedBookArticle = new PubmedBookArticle();
 
-    @Before
+    @BeforeEach
     public void setUp() {
         BookDocument bookDocument = new BookDocument();
         pubmedBookArticle.setBookDocument(bookDocument);

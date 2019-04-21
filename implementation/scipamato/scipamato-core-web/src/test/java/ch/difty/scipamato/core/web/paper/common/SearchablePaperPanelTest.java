@@ -7,7 +7,7 @@ import static org.mockito.Mockito.*;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.model.Model;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.core.entity.search.PaperFilter;

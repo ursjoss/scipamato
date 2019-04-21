@@ -1,7 +1,7 @@
 package ch.difty.scipamato.core.sync.jobs;
 
 import org.jooq.DSLContext;
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -22,7 +22,7 @@ public abstract class AbstractItemWriterIntegrationTest<E, W extends ScipamatoIt
         return writer;
     }
 
-    @Before
+    @BeforeEach
     public final void setUp() {
         writer = newWriter();
         setUpEntities();

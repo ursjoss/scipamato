@@ -5,8 +5,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.jooq.Condition;
 import org.jooq.DSLContext;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
 import ch.difty.scipamato.common.persistence.JooqSortMapper;
@@ -32,7 +32,7 @@ public class JooqPaperSlimBySearchOrderRepoTest {
     @Mock
     private JooqSortMapper<PaperRecord, PaperSlim, ch.difty.scipamato.core.db.tables.Paper> sortMapperMock;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         finder = new JooqPaperSlimBySearchOrderRepo(dslMock, mapperMock, sortMapperMock);
     }

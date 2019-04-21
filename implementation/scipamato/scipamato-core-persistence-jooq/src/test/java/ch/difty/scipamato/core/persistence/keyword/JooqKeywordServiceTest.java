@@ -6,12 +6,12 @@ import static org.mockito.Mockito.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import ch.difty.scipamato.common.TestUtils;
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
@@ -19,7 +19,7 @@ import ch.difty.scipamato.core.entity.keyword.Keyword;
 import ch.difty.scipamato.core.entity.keyword.KeywordDefinition;
 import ch.difty.scipamato.core.entity.keyword.KeywordFilter;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 @SuppressWarnings("ResultOfMethodCallIgnored")
 public class JooqKeywordServiceTest {
 
@@ -51,7 +51,7 @@ public class JooqKeywordServiceTest {
     @Mock
     private KeywordDefinition keywordDefinitionMock, persistedKeywordDefinitionMock;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         service = new JooqKeywordService(repoMock);
 
@@ -62,7 +62,7 @@ public class JooqKeywordServiceTest {
         keywordDefinitions.add(keywordDefinitionMock);
     }
 
-    @After
+    @AfterEach
     public void specificTearDown() {
         verifyNoMoreInteractions(repoMock, filterMock, paginationContextMock, keywordMock, keywordDefinitionMock);
     }

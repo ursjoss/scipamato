@@ -3,7 +3,7 @@ package ch.difty.scipamato.core.web.paper.search;
 import static ch.difty.scipamato.core.entity.search.SearchOrder.SearchOrderFields.*;
 import static org.mockito.Mockito.*;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.common.web.Mode;
 import ch.difty.scipamato.core.entity.search.SearchOrder;

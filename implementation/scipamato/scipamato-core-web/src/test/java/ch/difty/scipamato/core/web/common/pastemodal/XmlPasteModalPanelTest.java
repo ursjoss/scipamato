@@ -16,8 +16,8 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.panel.Panel;
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
 import ch.difty.scipamato.core.web.common.PanelTest;
@@ -34,7 +34,7 @@ public class XmlPasteModalPanelTest extends PanelTest<XmlPasteModalPanel> {
     @Mock
     private FileItem fileItem;
 
-    @After
+    @AfterEach
     public void tearDown() {
         verifyNoMoreInteractions(requestTargetMock, fileItem);
     }

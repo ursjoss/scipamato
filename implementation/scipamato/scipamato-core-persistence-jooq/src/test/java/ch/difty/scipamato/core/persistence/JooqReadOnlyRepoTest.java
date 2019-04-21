@@ -9,12 +9,13 @@ import java.util.List;
 
 import org.jooq.*;
 import org.jooq.impl.TableImpl;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import ch.difty.scipamato.common.NullArgumentException;
 import ch.difty.scipamato.common.config.ApplicationProperties;
@@ -25,7 +26,7 @@ import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.common.persistence.paging.Sort;
 import ch.difty.scipamato.core.entity.IdScipamatoEntity;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 @SuppressWarnings("WeakerAccess")
 public abstract class JooqReadOnlyRepoTest<R extends Record, T extends IdScipamatoEntity<ID>, ID extends Number, TI extends TableImpl<R>, M extends RecordMapper<R, T>, F extends ScipamatoFilter> {
 
@@ -135,7 +136,7 @@ public abstract class JooqReadOnlyRepoTest<R extends Record, T extends IdScipama
         return applicationPropertiesMock;
     }
 
-    @Before
+    @BeforeEach
     public final void setUp() {
         repo = getRepo();
 
@@ -153,7 +154,7 @@ public abstract class JooqReadOnlyRepoTest<R extends Record, T extends IdScipama
     protected void specificSetUp() {
     }
 
-    @After
+    @AfterEach
     public final void tearDown() {
         specificTearDown();
         verifyNoMoreInteractions(dslMock, getMapper(), sortMapperMock);
@@ -182,9 +183,9 @@ public abstract class JooqReadOnlyRepoTest<R extends Record, T extends IdScipama
     protected void specificNullCheck() {
     }
 
-    @Test(expected = NullArgumentException.class)
+    @Test
     public void findingByIdNull_throws() {
-        repo.findById(null, "en");
+        Assertions.assertThrows(NullArgumentException.class, () -> repo.findById(null, "en"));
     }
 
     @Test

@@ -9,7 +9,7 @@ import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.StringResourceModel;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class AbstractPanelTest extends WicketBaseTest {
 

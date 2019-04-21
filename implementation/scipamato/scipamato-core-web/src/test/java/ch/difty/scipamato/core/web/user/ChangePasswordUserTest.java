@@ -6,8 +6,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.List;
 import java.util.Set;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.core.auth.Role;
 import ch.difty.scipamato.core.entity.User;
@@ -18,7 +18,7 @@ public class ChangePasswordUserTest {
 
     private ChangePasswordUser cpu;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         user.setId(1);
         user.setUserName("un");

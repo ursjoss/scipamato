@@ -13,8 +13,8 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.*;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.tester.FormTester;
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatcher;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
@@ -55,7 +55,7 @@ public class UserEditPageTest extends BasePageTest<UserEditPage> {
         return "testadmin";
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         verifyNoMoreInteractions(userServiceMock);
     }

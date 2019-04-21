@@ -8,7 +8,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.common.NullArgumentException;
 import ch.difty.scipamato.common.entity.CodeClassId;
@@ -65,11 +66,11 @@ public class PaperCodeBoxTest {
         assertThat(codeBox.getCodes()).containsExactly(CODE_1F);
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void gettingCodes_andThenAlteringList_throws() {
-        codeBox
+        Assertions.assertThrows(UnsupportedOperationException.class, () -> codeBox
             .getCodes()
-            .add(CODE_5H);
+            .add(CODE_5H));
     }
 
     @Test

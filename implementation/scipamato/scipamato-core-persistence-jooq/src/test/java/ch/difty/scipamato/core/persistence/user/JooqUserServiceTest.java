@@ -8,12 +8,12 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
@@ -21,7 +21,7 @@ import ch.difty.scipamato.core.entity.User;
 import ch.difty.scipamato.core.entity.search.UserFilter;
 import ch.difty.scipamato.core.persistence.UserRepository;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 @SuppressWarnings({ "ResultOfMethodCallIgnored", "OptionalGetWithoutIsPresent" })
 public class JooqUserServiceTest {
 
@@ -40,7 +40,7 @@ public class JooqUserServiceTest {
 
     private final List<User> users = new ArrayList<>();
 
-    @Before
+    @BeforeEach
     public void setUp() {
         service = new JooqUserService(repoMock, passwordEncoderMock);
 
@@ -48,7 +48,7 @@ public class JooqUserServiceTest {
         users.add(userMock);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         verifyNoMoreInteractions(repoMock, passwordEncoderMock, filterMock, paginationContextMock, userMock);
     }

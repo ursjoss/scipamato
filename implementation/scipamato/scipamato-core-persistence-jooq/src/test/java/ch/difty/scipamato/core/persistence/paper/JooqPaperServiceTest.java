@@ -6,7 +6,7 @@ import static org.mockito.Mockito.*;
 
 import java.util.*;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
 import ch.difty.scipamato.common.TestUtils;

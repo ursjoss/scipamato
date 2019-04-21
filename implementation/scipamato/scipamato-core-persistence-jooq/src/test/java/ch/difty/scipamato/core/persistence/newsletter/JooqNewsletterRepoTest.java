@@ -9,7 +9,7 @@ import java.sql.Timestamp;
 
 import org.jooq.Record6;
 import org.jooq.TableField;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;

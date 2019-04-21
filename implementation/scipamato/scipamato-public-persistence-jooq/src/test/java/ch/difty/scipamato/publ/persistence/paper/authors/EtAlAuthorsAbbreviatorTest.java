@@ -3,17 +3,17 @@ package ch.difty.scipamato.publ.persistence.paper.authors;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import ch.difty.scipamato.common.TestUtils;
 import ch.difty.scipamato.publ.config.ApplicationPublicProperties;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class EtAlAuthorsAbbreviatorTest {
 
     private final int maxLength = 16;
@@ -25,7 +25,7 @@ public class EtAlAuthorsAbbreviatorTest {
 
     private static final String ET_AL = " et al.";
 
-    @Before
+    @BeforeEach
     public void setUp() {
         when(propertiesMock.getAuthorsAbbreviatedMaxLength()).thenReturn(maxLength);
         abbr16 = new EtAlAuthorsAbbreviator(propertiesMock);

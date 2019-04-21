@@ -4,7 +4,7 @@ import static ch.difty.scipamato.core.db.tables.ScipamatoUser.SCIPAMATO_USER;
 import static ch.difty.scipamato.core.persistence.user.UserRecordMapperTest.*;
 import static org.mockito.Mockito.*;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
 import ch.difty.scipamato.core.db.tables.records.ScipamatoUserRecord;

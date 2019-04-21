@@ -3,7 +3,7 @@ package ch.difty.scipamato.core.web.user;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.apache.wicket.validation.Validatable;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import ch.difty.scipamato.common.TestUtils;

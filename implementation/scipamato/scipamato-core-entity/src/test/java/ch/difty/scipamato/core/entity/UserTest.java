@@ -13,8 +13,8 @@ import java.util.Set;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.core.auth.Role;
 
@@ -36,7 +36,7 @@ public class UserTest {
     private final Role role2 = Role.USER;
     private final Role role3 = Role.VIEWER;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         roles.addAll(Arrays.asList(role1, role2));
     }

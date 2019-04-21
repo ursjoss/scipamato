@@ -7,16 +7,16 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import ch.difty.scipamato.common.entity.CodeClassLike;
 import ch.difty.scipamato.common.persistence.CodeClassLikeService;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class CodeClassLikeModelTest {
 
     private static final String LANG_CODE = "en";
@@ -31,7 +31,7 @@ public class CodeClassLikeModelTest {
     @Mock
     private CodeClassLikeService<CodeClassLike> serviceMock;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         model = new CodeClassLikeModel<>(LANG_CODE, serviceMock) {
             private static final long serialVersionUID = 1L;

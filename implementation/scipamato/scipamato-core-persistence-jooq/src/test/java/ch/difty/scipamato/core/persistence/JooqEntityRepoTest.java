@@ -10,10 +10,11 @@ import java.util.List;
 
 import org.jooq.*;
 import org.jooq.impl.TableImpl;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import ch.difty.scipamato.common.DateTimeService;
 import ch.difty.scipamato.common.FrozenDateTimeService;
@@ -34,7 +35,7 @@ import ch.difty.scipamato.core.entity.IdScipamatoEntity;
  * Let's postpone this and remove the ignored test methods for now (gentle
  * pressure of sonarqube :-) )
  */
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SuppressWarnings("WeakerAccess")
 public abstract class JooqEntityRepoTest<R extends Record, T extends IdScipamatoEntity<ID>, ID extends Number, TI extends TableImpl<R>, M extends RecordMapper<R, T>, F extends ScipamatoFilter>
     extends JooqReadOnlyRepoTest<R, T, ID, TI, M, F> {
@@ -202,9 +203,9 @@ public abstract class JooqEntityRepoTest<R extends Record, T extends IdScipamato
      */
     protected abstract EntityRepository<T, ID, F> makeRepoSavingReturning(R returning);
 
-    @Test(expected = NullArgumentException.class)
+    @Test
     public void deleting_withIdNull_throws() {
-        repo.delete(null, 1);
+        Assertions.assertThrows(NullArgumentException.class, () -> repo.delete(null, 1));
     }
 
     @Test

@@ -2,7 +2,7 @@ package ch.difty.scipamato.core.entity.search;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("SameParameterValue")
 public class AuditSearchTermsTest {

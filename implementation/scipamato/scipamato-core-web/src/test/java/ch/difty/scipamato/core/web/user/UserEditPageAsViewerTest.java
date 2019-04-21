@@ -5,7 +5,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.fail;
 
 import org.apache.wicket.authorization.UnauthorizedInstantiationException;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.core.web.CorePageParameters;
 import ch.difty.scipamato.core.web.WicketTest;

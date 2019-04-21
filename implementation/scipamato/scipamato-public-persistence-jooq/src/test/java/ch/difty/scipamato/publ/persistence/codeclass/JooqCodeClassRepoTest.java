@@ -4,14 +4,14 @@ import static ch.difty.scipamato.common.TestUtils.assertDegenerateSupplierParame
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 import org.jooq.DSLContext;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class JooqCodeClassRepoTest {
 
     private CodeClassRepository repo;
@@ -19,12 +19,12 @@ public class JooqCodeClassRepoTest {
     @Mock
     private DSLContext dslMock;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         repo = new JooqCodeClassRepo(dslMock);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         verifyNoMoreInteractions(dslMock);
     }

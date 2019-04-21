@@ -8,18 +8,18 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.publ.entity.PublicPaper;
 import ch.difty.scipamato.publ.entity.filter.PublicPaperFilter;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class JooqPublicPaperServiceTest {
 
     private static final long ID     = 5;
@@ -40,7 +40,7 @@ public class JooqPublicPaperServiceTest {
 
     private final List<PublicPaper> papers = new ArrayList<>();
 
-    @Before
+    @BeforeEach
     public void setUp() {
         service = new JooqPublicPaperService(mockRepo);
 
@@ -56,7 +56,7 @@ public class JooqPublicPaperServiceTest {
             .build());
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         verifyNoMoreInteractions(mockRepo);
     }

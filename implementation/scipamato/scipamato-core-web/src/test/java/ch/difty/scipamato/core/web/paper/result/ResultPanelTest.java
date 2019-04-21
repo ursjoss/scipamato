@@ -13,8 +13,8 @@ import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.markup.html.link.ResourceLink;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.util.tester.TagTester;
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
@@ -60,7 +60,7 @@ public abstract class ResultPanelTest extends PanelTest<ResultPanel> {
             eq(LC))).thenReturn(Collections.singletonList(paperMock));
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         // after the login
         verify(paperSlimServiceMock).countByFilter(isA(PaperFilter.class));

@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.web.paper.search;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.common.web.Mode;
 

@@ -9,11 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import ch.difty.scipamato.common.NullArgumentException;
 import ch.difty.scipamato.common.TestUtils;
@@ -21,7 +22,7 @@ import ch.difty.scipamato.publ.entity.NewStudyPageLink;
 import ch.difty.scipamato.publ.entity.NewStudyTopic;
 import ch.difty.scipamato.publ.entity.Newsletter;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class JooqNewStudyTopicServiceTest {
 
     private static final int NL_ID = 17;
@@ -36,7 +37,7 @@ public class JooqNewStudyTopicServiceTest {
 
     private List<NewStudyTopic> studyTopics;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         service = new JooqNewStudyTopicService(repoMock);
 
@@ -45,9 +46,9 @@ public class JooqNewStudyTopicServiceTest {
         studyTopics.add(newStudyTopicMock);
     }
 
-    @Test(expected = NullArgumentException.class)
+    @Test
     public void findingMostRecentNewStudyTopics_withNullLanguage_throws() {
-        service.findMostRecentNewStudyTopics(null);
+        Assertions.assertThrows(NullArgumentException.class, () -> service.findMostRecentNewStudyTopics(null));
     }
 
     @Test

@@ -9,14 +9,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class PaperSlimTest {
 
     private PaperSlim ps;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         ps = new PaperSlim();
         ps.setId(1L);

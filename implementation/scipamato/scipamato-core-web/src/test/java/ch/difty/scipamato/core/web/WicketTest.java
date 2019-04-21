@@ -15,13 +15,13 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.util.tester.FormTester;
 import org.apache.wicket.util.tester.WicketTester;
-import org.junit.Before;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.ApplicationContext;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import ch.difty.scipamato.common.DateTimeService;
@@ -38,7 +38,7 @@ import ch.difty.scipamato.core.web.security.TestUserDetailsService;
 
 @SuppressWarnings("SameParameterValue")
 @SpringBootTest
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 public abstract class WicketTest {
 
     private static final String USERNAME = "testuser";
@@ -90,7 +90,7 @@ public abstract class WicketTest {
         return sessionFacadeMock;
     }
 
-    @Before
+    @BeforeEach
     public final void setUp() {
         application.setHeaderResponseDecorator(
             r -> new ResourceAggregator(new JavaScriptFilteredIntoFooterHeaderResponse(r, "footer-container")));

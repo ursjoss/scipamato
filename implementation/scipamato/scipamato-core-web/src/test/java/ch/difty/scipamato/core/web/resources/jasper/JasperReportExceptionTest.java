@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import net.sf.jasperreports.engine.JRException;
 import org.apache.wicket.util.resource.ResourceStreamNotFoundException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class JasperReportExceptionTest {
 

@@ -3,7 +3,7 @@ package ch.difty.scipamato.common.web.pages.login;
 import de.agilecoders.wicket.core.markup.html.bootstrap.common.NotificationPanel;
 import org.apache.wicket.markup.html.form.StatelessForm;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.common.DateTimeService;

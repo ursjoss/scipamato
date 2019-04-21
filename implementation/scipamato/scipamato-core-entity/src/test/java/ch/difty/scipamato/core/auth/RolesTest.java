@@ -3,7 +3,7 @@ package ch.difty.scipamato.core.auth;
 import static ch.difty.scipamato.core.auth.Roles.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.common.FinalClassTest;
 

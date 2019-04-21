@@ -9,7 +9,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.common.NullArgumentException;
 import ch.difty.scipamato.common.entity.CodeClassId;

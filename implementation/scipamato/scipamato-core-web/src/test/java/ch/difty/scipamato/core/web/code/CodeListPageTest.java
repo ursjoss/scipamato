@@ -11,8 +11,8 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDef
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.util.tester.FormTester;
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationRequest;
@@ -55,7 +55,7 @@ public class CodeListPageTest extends BasePageTest<CodeListPage> {
             isA(PaginationRequest.class))).thenReturn(results.iterator());
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         verifyNoMoreInteractions(codeServiceMock);
     }

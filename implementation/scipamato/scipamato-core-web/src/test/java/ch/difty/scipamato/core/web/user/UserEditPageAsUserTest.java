@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.web.user;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class UserEditPageAsUserTest extends UserEditPageAsViewerTest {
 

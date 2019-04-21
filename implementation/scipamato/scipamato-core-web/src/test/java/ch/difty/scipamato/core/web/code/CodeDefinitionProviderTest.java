@@ -11,16 +11,16 @@ import java.util.List;
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.tester.WicketTester;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentMatcher;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.core.ScipamatoCoreApplication;
@@ -28,7 +28,7 @@ import ch.difty.scipamato.core.entity.code.CodeDefinition;
 import ch.difty.scipamato.core.entity.code.CodeFilter;
 import ch.difty.scipamato.core.persistence.CodeService;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest
 public class CodeDefinitionProviderTest {
 
@@ -48,14 +48,14 @@ public class CodeDefinitionProviderTest {
     @Autowired
     private ScipamatoCoreApplication application;
 
-    @Before
+    @BeforeEach
     public final void setUp() {
         new WicketTester(application);
         provider = new CodeDefinitionProvider(filterMock);
         codes = Arrays.asList(entityMock, entityMock, entityMock);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         verifyNoMoreInteractions(serviceMock, entityMock);
     }

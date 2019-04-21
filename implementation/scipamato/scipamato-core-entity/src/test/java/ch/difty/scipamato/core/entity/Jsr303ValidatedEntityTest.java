@@ -12,8 +12,8 @@ import java.util.Set;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
 import org.apache.bval.jsr.ApacheValidationProvider;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 import ch.difty.scipamato.common.entity.FieldEnumType;
@@ -29,7 +29,7 @@ public abstract class Jsr303ValidatedEntityTest<T extends CoreEntity> {
         this.clazz = clazz;
     }
 
-    @Before
+    @BeforeEach
     public final void setUp() {
         validatorFactoryBean = new LocalValidatorFactoryBean();
         validatorFactoryBean.setProviderClass(ApacheValidationProvider.class);

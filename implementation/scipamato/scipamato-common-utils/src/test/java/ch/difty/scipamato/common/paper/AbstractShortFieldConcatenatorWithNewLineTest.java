@@ -2,7 +2,7 @@ package ch.difty.scipamato.common.paper;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("SpellCheckingInspection")
 public class AbstractShortFieldConcatenatorWithNewLineTest {

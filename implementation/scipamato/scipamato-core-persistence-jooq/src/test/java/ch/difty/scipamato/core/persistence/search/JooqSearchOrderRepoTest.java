@@ -8,7 +8,7 @@ import static org.mockito.Mockito.*;
 import java.util.*;
 
 import org.jooq.TableField;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
 import ch.difty.scipamato.core.db.tables.records.SearchOrderRecord;

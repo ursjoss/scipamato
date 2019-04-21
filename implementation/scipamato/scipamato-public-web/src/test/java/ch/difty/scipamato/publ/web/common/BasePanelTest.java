@@ -3,7 +3,7 @@ package ch.difty.scipamato.publ.web.common;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.apache.wicket.model.Model;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.common.web.Mode;
 import ch.difty.scipamato.publ.web.WicketTest;

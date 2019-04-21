@@ -4,8 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.LocalDateTime;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public abstract class PublicEntityTest<T extends PublicEntity> {
 
@@ -18,7 +18,7 @@ public abstract class PublicEntityTest<T extends PublicEntity> {
         return entity;
     }
 
-    @Before
+    @BeforeEach
     public final void setUp() {
         entity = newEntity();
         entity.setCreated(CREATED_DATE);

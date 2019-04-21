@@ -3,7 +3,7 @@ package ch.difty.scipamato.common;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class AssertAsTest extends FinalClassTest<AssertAs> {
 

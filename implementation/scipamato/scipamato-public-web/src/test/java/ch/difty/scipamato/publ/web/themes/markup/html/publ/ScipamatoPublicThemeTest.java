@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.apache.wicket.markup.head.CssReferenceHeaderItem;
 import org.apache.wicket.request.resource.ResourceReference;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class ScipamatoPublicThemeTest {
 

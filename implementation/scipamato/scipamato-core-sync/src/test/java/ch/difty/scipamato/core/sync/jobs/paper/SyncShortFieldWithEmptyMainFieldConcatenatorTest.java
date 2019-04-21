@@ -8,16 +8,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.jooq.TableField;
-import org.junit.After;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import ch.difty.scipamato.common.TestUtils;
 import ch.difty.scipamato.core.db.public_.tables.records.PaperRecord;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class SyncShortFieldWithEmptyMainFieldConcatenatorTest {
 
     private final SyncShortFieldConcatenator sfc = new SyncShortFieldWithEmptyMainFieldConcatenator();
@@ -25,7 +25,7 @@ public class SyncShortFieldWithEmptyMainFieldConcatenatorTest {
     @Mock
     private ResultSet resultSet;
 
-    @After
+    @AfterEach
     public void tearDown() {
         verifyNoMoreInteractions(resultSet);
     }

@@ -9,12 +9,12 @@ import java.util.List;
 
 import org.jooq.*;
 import org.jooq.impl.TableImpl;
-import org.junit.After;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Spy;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 
 import ch.difty.scipamato.common.NullArgumentException;
@@ -23,7 +23,7 @@ import ch.difty.scipamato.common.persistence.paging.Sort;
 import ch.difty.scipamato.common.persistence.paging.Sort.Direction;
 import ch.difty.scipamato.common.persistence.paging.Sort.SortProperty;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class SortMapperTest {
 
     @Spy
@@ -40,7 +40,7 @@ public class SortMapperTest {
 
     private final List<SortProperty> sortProps = new ArrayList<>();
 
-    @After
+    @AfterEach
     public void tearDown() {
         verifyNoMoreInteractions(tableMock, sortSpecMock, tableFieldMock, sortFieldMock);
     }

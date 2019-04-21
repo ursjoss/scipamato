@@ -1,7 +1,7 @@
 package ch.difty.scipamato.publ.web.common;
 
 import org.apache.wicket.markup.html.panel.Panel;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.publ.web.WicketTest;
 

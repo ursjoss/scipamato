@@ -2,11 +2,11 @@ package ch.difty.scipamato.core.config;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import ch.difty.scipamato.core.ScipamatoCoreApplication;
 import ch.difty.scipamato.core.logic.parsing.AuthorParserStrategy;
@@ -17,7 +17,7 @@ import ch.difty.scipamato.core.logic.parsing.AuthorParserStrategy;
  *
  * @author u.joss
  */
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = ScipamatoCoreApplication.class)
 public class ScipamatoCorePropertiesIntegrationTest {
 

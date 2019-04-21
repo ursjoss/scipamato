@@ -3,7 +3,7 @@ package ch.difty.scipamato.core.web.paper.result;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.common.web.Mode;
 import ch.difty.scipamato.common.entity.newsletter.PublicationStatus;

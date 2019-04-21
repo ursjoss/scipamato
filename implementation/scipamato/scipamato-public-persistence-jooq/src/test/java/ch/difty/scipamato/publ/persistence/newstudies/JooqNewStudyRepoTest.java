@@ -3,8 +3,8 @@ package ch.difty.scipamato.publ.persistence.newstudies;
 import static ch.difty.scipamato.common.TestUtils.assertDegenerateSupplierParameter;
 
 import org.jooq.DSLContext;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
 public class JooqNewStudyRepoTest {
@@ -14,7 +14,7 @@ public class JooqNewStudyRepoTest {
 
     private JooqNewStudyRepo repo;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         repo = new JooqNewStudyRepo(dslContextMock);
     }

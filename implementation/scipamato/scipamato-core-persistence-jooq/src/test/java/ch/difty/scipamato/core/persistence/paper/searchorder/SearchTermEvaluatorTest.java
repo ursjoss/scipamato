@@ -2,13 +2,13 @@ package ch.difty.scipamato.core.persistence.paper.searchorder;
 
 import static ch.difty.scipamato.common.TestUtils.assertDegenerateSupplierParameter;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import ch.difty.scipamato.core.entity.search.SearchTerm;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public abstract class SearchTermEvaluatorTest<T extends SearchTerm> {
 
     // needs to match the newlines used in JOOQ Condition.toString()

@@ -2,16 +2,16 @@ package ch.difty.scipamato.core.persistence;
 
 import static org.mockito.Mockito.*;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import ch.difty.scipamato.core.entity.IdScipamatoEntity;
 import ch.difty.scipamato.core.entity.User;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 @SuppressWarnings({ "ResultOfMethodCallIgnored", "WeakerAccess" })
 public abstract class AbstractServiceTest<ID extends Number, T extends IdScipamatoEntity<ID>, R extends ReadOnlyRepository<T, ID, ?>> {
 
@@ -36,7 +36,7 @@ public abstract class AbstractServiceTest<ID extends Number, T extends IdScipama
      */
     protected abstract T getEntity();
 
-    @Before
+    @BeforeEach
     public final void setUp() {
         specificSetUp();
         auditFixture();
@@ -60,7 +60,7 @@ public abstract class AbstractServiceTest<ID extends Number, T extends IdScipama
         when(userRepoMock.findById(MODIFIER_ID)).thenReturn(modifierMock);
     }
 
-    @After
+    @AfterEach
     public final void tearDown() {
         verifyNoMoreInteractions(userRepoMock);
         specificTearDown();

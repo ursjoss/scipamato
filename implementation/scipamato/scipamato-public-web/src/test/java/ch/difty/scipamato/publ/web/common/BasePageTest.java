@@ -1,6 +1,6 @@
 package ch.difty.scipamato.publ.web.common;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.publ.web.WicketTest;
 

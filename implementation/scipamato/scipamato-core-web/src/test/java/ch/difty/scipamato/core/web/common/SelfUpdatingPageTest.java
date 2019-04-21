@@ -5,7 +5,7 @@ import static org.mockito.Mockito.when;
 
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.Model;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.core.config.ApplicationCoreProperties;

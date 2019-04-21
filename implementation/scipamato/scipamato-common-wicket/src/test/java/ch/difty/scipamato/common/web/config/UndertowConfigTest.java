@@ -11,12 +11,12 @@ import io.undertow.Undertow;
 import io.undertow.Undertow.Builder;
 import io.undertow.Undertow.ListenerInfo;
 import io.undertow.servlet.api.*;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.web.embedded.undertow.UndertowBuilderCustomizer;
 import org.springframework.boot.web.embedded.undertow.UndertowDeploymentInfoCustomizer;
@@ -33,7 +33,7 @@ import ch.difty.scipamato.common.config.ApplicationProperties;
  *
  * @author u.joss
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class UndertowConfigTest {
 
     private UndertowServletWebServerFactory factory;
@@ -46,13 +46,13 @@ public class UndertowConfigTest {
     private final Builder        undertowBuilder = Undertow.builder();
     private final DeploymentInfo deploymentInfo  = new DeploymentInfo();
 
-    @Before
+    @BeforeEach
     public void setUp() {
         UndertowConfig config = new UndertowConfig(serverPropsMock, scipamatoPropertiesMock);
         factory = (UndertowServletWebServerFactory) config.undertow();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         verify(scipamatoPropertiesMock).getRedirectFromPort();
         verify(serverPropsMock).getPort();

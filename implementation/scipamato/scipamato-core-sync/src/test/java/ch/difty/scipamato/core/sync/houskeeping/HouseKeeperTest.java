@@ -8,11 +8,11 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 import org.jooq.*;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.batch.core.StepContribution;
 import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.repeat.RepeatStatus;
@@ -20,7 +20,7 @@ import org.springframework.batch.repeat.RepeatStatus;
 import ch.difty.scipamato.common.DateTimeService;
 import ch.difty.scipamato.publ.db.public_.tables.records.CodeClassRecord;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class HouseKeeperTest {
 
     public static final LocalDateTime TS = LocalDateTime.parse("2018-10-28T22:18:00.000");
@@ -44,7 +44,7 @@ public class HouseKeeperTest {
     @Mock
     private ChunkContext                           chunkContextMock;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         hk = new HouseKeeper<>(dslContextMock, lastSynchedField, dateTimeServiceMock, 30, "code_class");
 

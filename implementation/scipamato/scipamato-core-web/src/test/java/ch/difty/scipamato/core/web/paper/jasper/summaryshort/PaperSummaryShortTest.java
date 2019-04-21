@@ -4,7 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.common.NullArgumentException;
 import ch.difty.scipamato.core.web.paper.jasper.JasperEntityTest;
@@ -15,14 +16,14 @@ public class PaperSummaryShortTest extends JasperEntityTest {
     private PaperSummaryShort  ps;
     private ReportHeaderFields rhf = newReportHeaderFields();
 
-    @Test(expected = NullArgumentException.class)
+    @Test
     public void degenerateConstruction_withNullPaper() {
-        new PaperSummaryShort(null, rhf);
+        Assertions.assertThrows(NullArgumentException.class, () -> new PaperSummaryShort(null, rhf));
     }
 
-    @Test(expected = NullArgumentException.class)
+    @Test
     public void degenerateConstruction_withNullReportHeaderFields() {
-        new PaperSummaryShort(p, null);
+        Assertions.assertThrows(NullArgumentException.class, () -> new PaperSummaryShort(p, null));
     }
 
     @Test

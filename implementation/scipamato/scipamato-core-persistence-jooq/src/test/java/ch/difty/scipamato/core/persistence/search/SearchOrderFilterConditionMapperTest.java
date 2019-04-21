@@ -3,7 +3,7 @@ package ch.difty.scipamato.core.persistence.search;
 import static ch.difty.scipamato.core.db.tables.SearchOrder.SEARCH_ORDER;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.common.persistence.FilterConditionMapperTest;
 import ch.difty.scipamato.common.persistence.GenericFilterConditionMapper;

@@ -2,7 +2,7 @@ package ch.difty.scipamato.common;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class UtilTestConfigurationTest {
 

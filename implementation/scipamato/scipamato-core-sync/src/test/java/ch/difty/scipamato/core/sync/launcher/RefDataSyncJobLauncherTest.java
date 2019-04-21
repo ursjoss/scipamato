@@ -7,12 +7,12 @@ import static org.mockito.Mockito.*;
 
 import java.util.*;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.batch.core.*;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.batch.core.repository.JobExecutionAlreadyRunningException;
@@ -20,7 +20,7 @@ import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteExcep
 import org.springframework.batch.core.repository.JobRestartException;
 
 @SuppressWarnings("SameParameterValue")
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class RefDataSyncJobLauncherTest {
 
     private static final int    JOB_STEP_ID_START    = 75;
@@ -41,7 +41,7 @@ public class RefDataSyncJobLauncherTest {
 
     private Map<String, Job> jobMap;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         launcher = new RefDataSyncJobLauncher(jobLauncher, syncLanguageJob, syncNewStudyPageLinkJob, syncCodeClassJob,
             syncCodeJob, syncPaperJob, syncNewsletterJob, syncNewsletterTopicJob, syncNewStudyJob, syncNewStudyTopicJob,
@@ -50,7 +50,7 @@ public class RefDataSyncJobLauncherTest {
         jobMap = jobsPerTopic();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         verifyNoMoreInteractions(jobLauncher, syncLanguageJob, syncNewStudyPageLinkJob, syncCodeClassJob, syncCodeJob,
             syncPaperJob, syncNewsletterJob, syncNewsletterTopicJob, syncNewStudyJob, syncNewStudyTopicJob,

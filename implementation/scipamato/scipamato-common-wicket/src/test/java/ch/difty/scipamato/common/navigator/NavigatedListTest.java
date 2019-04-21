@@ -7,7 +7,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.common.NullArgumentException;
 
@@ -16,14 +17,14 @@ public class NavigatedListTest {
     private final List<Long>          ids           = new ArrayList<>(Arrays.asList(13L, 2L, 5L, 27L, 7L, 3L, 30L));
     private final NavigatedList<Long> navigatedList = new NavigatedList<>(ids);
 
-    @Test(expected = NullArgumentException.class)
+    @Test
     public void passingNull_throws() {
-        new NavigatedList<Long>(null);
+        Assertions.assertThrows(NullArgumentException.class, () -> new NavigatedList<Long>(null));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void passingEmptyList_throws() {
-        new NavigatedList<>(new ArrayList<Long>());
+        Assertions.assertThrows(IllegalArgumentException.class, () -> new NavigatedList<>(new ArrayList<Long>()));
     }
 
     @Test
@@ -77,16 +78,18 @@ public class NavigatedListTest {
         assertThat(navigatedList.getItemWithFocus()).isEqualTo(ids.get(0));
     }
 
-    @Test(expected = NullArgumentException.class)
+    @Test
     public void settingCurrentItem_withNullParameter_throws() {
-        navigatedList.setFocusToItem(null);
+        Assertions.assertThrows(NullArgumentException.class, () -> navigatedList.setFocusToItem(null));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void settingCurrentItem_withItemNotContained_throws() {
-        long idNotContained = 300L;
-        assertThat(ids).doesNotContain(idNotContained);
-        navigatedList.setFocusToItem(idNotContained);
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            long idNotContained = 300L;
+            assertThat(ids).doesNotContain(idNotContained);
+            navigatedList.setFocusToItem(idNotContained);
+        });
     }
 
     @Test

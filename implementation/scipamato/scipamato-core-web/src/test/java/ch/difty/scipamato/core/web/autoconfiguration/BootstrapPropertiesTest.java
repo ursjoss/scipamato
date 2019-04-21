@@ -3,7 +3,7 @@ package ch.difty.scipamato.core.web.autoconfiguration;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import de.agilecoders.wicket.themes.markup.html.bootswatch.BootswatchTheme;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class BootstrapPropertiesTest {
 

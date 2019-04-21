@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import org.jooq.DeleteConditionStep;
 import org.jooq.TableField;
 import org.jooq.UpdatableRecord;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
 

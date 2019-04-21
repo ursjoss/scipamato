@@ -15,8 +15,8 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.settings.DebugSettings;
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.common.DateTimeService;
@@ -41,7 +41,7 @@ public class AbstractPageTest extends WicketBaseTest {
         };
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         verifyNoMoreInteractions(dateTimeServiceMock);
     }

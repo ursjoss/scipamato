@@ -1,7 +1,7 @@
 package ch.difty.scipamato.core.sync.jobs.code;
 
 import org.jooq.DSLContext;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.common.TestUtils;
 import ch.difty.scipamato.core.sync.jobs.AbstractItemWriterTest;

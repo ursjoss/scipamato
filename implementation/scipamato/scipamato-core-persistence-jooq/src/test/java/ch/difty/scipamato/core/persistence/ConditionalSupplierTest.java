@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.jooq.Condition;
 import org.jooq.impl.DSL;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class ConditionalSupplierTest {
 

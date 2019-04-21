@@ -10,11 +10,11 @@ import java.util.*;
 
 import org.jooq.DSLContext;
 import org.jooq.Result;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import ch.difty.scipamato.common.DateTimeService;
 import ch.difty.scipamato.core.db.tables.records.KeywordTrRecord;
@@ -22,7 +22,7 @@ import ch.difty.scipamato.core.entity.keyword.KeywordDefinition;
 import ch.difty.scipamato.core.entity.keyword.KeywordTranslation;
 import ch.difty.scipamato.core.persistence.OptimisticLockingException;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class JooqKeywordRepoTest {
 
     @Mock
@@ -32,7 +32,7 @@ public class JooqKeywordRepoTest {
 
     private JooqKeywordRepo repo;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         repo = new JooqKeywordRepo(dslContextMock, dateTimeServiceMock);
     }

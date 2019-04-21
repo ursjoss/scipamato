@@ -8,16 +8,16 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 import org.jooq.Record;
 import org.jooq.UpdateSetFirstStep;
 import org.jooq.UpdateSetMoreStep;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import ch.difty.scipamato.core.entity.CoreEntity;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 @SuppressWarnings("ResultOfMethodCallIgnored")
 public abstract class UpdateSetStepSetterTest<R extends Record, E extends CoreEntity> {
 
@@ -38,7 +38,7 @@ public abstract class UpdateSetStepSetterTest<R extends Record, E extends CoreEn
 
     protected abstract E getEntity();
 
-    @Before
+    @BeforeEach
     public void setUp() {
         entityFixture();
         stepSetFixtureExceptAudit();
@@ -77,7 +77,7 @@ public abstract class UpdateSetStepSetterTest<R extends Record, E extends CoreEn
      */
     protected abstract void stepSetFixtureAudit();
 
-    @After
+    @AfterEach
     public void tearDown() {
         specificTearDown();
         verifyNoMoreInteractions(stepMock, moreStepMock);

@@ -7,16 +7,16 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import ch.difty.scipamato.common.entity.CodeClassId;
 import ch.difty.scipamato.common.entity.CodeLike;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class JooqCodeLikeServiceTest {
     private static final String      LANG_CODE = "en";
     private static final CodeClassId CC_ID     = CodeClassId.CC1;
@@ -31,7 +31,7 @@ public class JooqCodeLikeServiceTest {
     @Mock
     private CodeLikeRepository<CodeLike> repoMock;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         service = new JooqCodeLikeService<>(repoMock) {
         };

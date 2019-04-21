@@ -7,15 +7,15 @@ import java.util.Collections;
 import java.util.List;
 
 import org.jooq.DSLContext;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import ch.difty.scipamato.common.TestUtils;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class UnsynchronizedEntitiesWarnerTest {
 
     private UnsynchronizedEntitiesWarner warner;
@@ -23,7 +23,7 @@ public class UnsynchronizedEntitiesWarnerTest {
     @Mock
     private DSLContext jooqCore;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         warner = new UnsynchronizedEntitiesWarner(jooqCore);
     }

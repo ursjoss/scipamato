@@ -4,7 +4,7 @@ import static ch.difty.scipamato.publ.entity.StudyDesignCode.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.extractProperty;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class StudyDesignCodeTest {
 

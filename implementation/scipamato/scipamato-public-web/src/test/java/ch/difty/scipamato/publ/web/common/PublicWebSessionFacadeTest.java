@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.Locale;
 
 import org.apache.wicket.authroles.authorization.strategies.role.Roles;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.common.navigator.LongNavigator;
 import ch.difty.scipamato.common.web.ScipamatoWebSessionFacade;

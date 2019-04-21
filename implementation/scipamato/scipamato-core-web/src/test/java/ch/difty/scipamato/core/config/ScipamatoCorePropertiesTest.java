@@ -3,18 +3,18 @@ package ch.difty.scipamato.core.config;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import ch.difty.scipamato.common.config.MavenProperties;
 import ch.difty.scipamato.core.logic.parsing.AuthorParserStrategy;
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class ScipamatoCorePropertiesTest {
 
     private ScipamatoCoreProperties prop;
@@ -24,7 +24,7 @@ public class ScipamatoCorePropertiesTest {
     @Mock
     private MavenProperties     mavenPropMock;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         prop = new ScipamatoCoreProperties(scipamatoPropMock, mavenPropMock);
 
@@ -38,7 +38,7 @@ public class ScipamatoCorePropertiesTest {
         when(mavenPropMock.getVersion()).thenReturn("0.0.1-SNAPSHOT");
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         verifyNoMoreInteractions(scipamatoPropMock, mavenPropMock);
     }

@@ -3,7 +3,7 @@ package ch.difty.scipamato.core.entity.search;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.core.entity.search.IntegerSearchTerm.MatchType;
 

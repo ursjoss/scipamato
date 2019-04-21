@@ -10,8 +10,8 @@ import org.apache.wicket.markup.repeater.RefreshingView;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.tester.FormTester;
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -45,7 +45,7 @@ public class KeywordEditPageTest extends BasePageTest<KeywordEditPage> {
         kd = new KeywordDefinition(1, "de", "thename", 1, kt_de, kt_en, kt_fr, kt_de2);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         verifyNoMoreInteractions(keywordServiceMock);
     }

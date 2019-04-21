@@ -12,11 +12,11 @@ import java.util.Iterator;
 
 import org.jooq.DSLContext;
 import org.jooq.Result;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import ch.difty.scipamato.common.DateTimeService;
 import ch.difty.scipamato.common.entity.CodeClassId;
@@ -27,7 +27,7 @@ import ch.difty.scipamato.core.entity.code.CodeTranslation;
 import ch.difty.scipamato.core.persistence.OptimisticLockingException;
 import ch.difty.scipamato.core.persistence.codeclass.CodeClassRepository;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class JooqCodeRepoTest {
 
     @Mock
@@ -41,7 +41,7 @@ public class JooqCodeRepoTest {
 
     private JooqCodeRepo repo;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         repo = new JooqCodeRepo(dslContextMock, dtsMock, codeClassRepoMock);
     }

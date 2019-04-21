@@ -11,11 +11,11 @@ import java.util.Collections;
 import org.jooq.DSLContext;
 import org.jooq.SelectJoinStep;
 import org.jooq.impl.DSL;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import ch.difty.scipamato.common.DateTimeService;
 import ch.difty.scipamato.core.db.tables.records.NewsletterTopicRecord;
@@ -23,7 +23,7 @@ import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicDefinition;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicFilter;
 import ch.difty.scipamato.core.persistence.OptimisticLockingException;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class JooqNewsletterTopicRepoTest {
 
     @Mock
@@ -33,7 +33,7 @@ public class JooqNewsletterTopicRepoTest {
 
     private JooqNewsletterTopicRepo repo;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         repo = new JooqNewsletterTopicRepo(dslContextMock, dateTimeServiceMock);
     }

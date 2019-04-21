@@ -8,19 +8,19 @@ import static org.mockito.Mockito.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.core.entity.CodeClass;
 import ch.difty.scipamato.core.entity.code_class.CodeClassDefinition;
 import ch.difty.scipamato.core.entity.code_class.CodeClassFilter;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class JooqCodeClassServiceTest {
 
     private JooqCodeClassService service;
@@ -50,7 +50,7 @@ public class JooqCodeClassServiceTest {
     @Mock
     private CodeClassDefinition codeClassDefinitionMock, persistedCodeClassDefinitionMock;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         service = new JooqCodeClassService(repoMock);
 
@@ -58,7 +58,7 @@ public class JooqCodeClassServiceTest {
         codeClassDefinitions.add(codeClassDefinitionMock);
     }
 
-    @After
+    @AfterEach
     public void specificTearDown() {
         verifyNoMoreInteractions(repoMock, filterMock, paginationContextMock, codeMock, codeClassDefinitionMock);
     }

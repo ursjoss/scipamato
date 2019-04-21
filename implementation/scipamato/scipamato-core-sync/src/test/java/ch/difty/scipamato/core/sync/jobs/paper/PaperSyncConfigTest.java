@@ -14,10 +14,10 @@ import java.util.function.Supplier;
 
 import org.jooq.*;
 import org.jooq.tools.jdbc.MockArray;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
@@ -25,7 +25,7 @@ import org.springframework.batch.core.configuration.annotation.StepBuilderFactor
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import ch.difty.scipamato.common.DateTimeService;
 import ch.difty.scipamato.core.db.public_.tables.Code;
@@ -35,7 +35,7 @@ import ch.difty.scipamato.core.sync.jobs.SyncConfigTest;
 import ch.difty.scipamato.publ.db.public_.tables.records.PaperRecord;
 
 @SpringBootTest
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
 
     private PaperSyncConfig config;
@@ -76,7 +76,7 @@ public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
 
     private final List<String> internalCodes = Arrays.asList("1N", "1U", "1Z");
 
-    @Before
+    @BeforeEach
     public void setUp() {
         when(jooqCore.select()).thenReturn(selectSelectStep);
         when(selectSelectStep.from(Code.CODE)).thenReturn(selectJoinStep);
@@ -93,7 +93,7 @@ public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
             stepBuilderFactory, dateTimeService, shortFieldConcatenator);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         verifyNoMoreInteractions(codeAggregator, jooqPublic, coreDataSource);
     }

@@ -3,7 +3,7 @@ package ch.difty.scipamato.publ.web;
 import static ch.difty.scipamato.publ.web.PublicPageParameters.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class PublicPageParametersTest {
 

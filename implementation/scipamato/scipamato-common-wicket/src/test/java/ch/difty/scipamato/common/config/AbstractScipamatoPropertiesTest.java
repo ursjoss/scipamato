@@ -3,14 +3,14 @@ package ch.difty.scipamato.common.config;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 @SuppressWarnings("ResultOfMethodCallIgnored")
 public class AbstractScipamatoPropertiesTest {
 
@@ -21,7 +21,7 @@ public class AbstractScipamatoPropertiesTest {
     @Mock
     private MavenProperties         mavenPropMock;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         prop = new AbstractScipamatoProperties<>(scipamatoPropMock, mavenPropMock) {
             private static final long serialVersionUID = 1L;
@@ -35,7 +35,7 @@ public class AbstractScipamatoPropertiesTest {
         when(mavenPropMock.getVersion()).thenReturn("0.0.1-SNAPSHOT");
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         verifyNoMoreInteractions(scipamatoPropMock, mavenPropMock);
     }

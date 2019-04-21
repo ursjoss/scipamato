@@ -7,8 +7,8 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 import org.jooq.impl.DSL;
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.core.sync.jobs.AbstractItemWriterIntegrationTest;
 import ch.difty.scipamato.publ.db.public_.tables.records.LanguageRecord;
@@ -60,7 +60,7 @@ public class LanguageItemWriterIntegrationTest
             .build();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         dsl
             .deleteFrom(LANGUAGE)

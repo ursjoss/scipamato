@@ -6,14 +6,14 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class WicketEventTest {
 
     @Mock
@@ -21,13 +21,13 @@ public class WicketEventTest {
 
     private WicketEvent e;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         e = new WicketEvent(targetMock) {
         };
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         verifyNoMoreInteractions(targetMock);
     }

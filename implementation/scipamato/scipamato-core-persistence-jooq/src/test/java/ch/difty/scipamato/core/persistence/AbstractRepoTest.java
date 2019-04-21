@@ -4,17 +4,17 @@ import static org.assertj.core.api.Java6Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 import org.jooq.DSLContext;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.core.Authentication;
 
 import ch.difty.scipamato.common.DateTimeService;
 import ch.difty.scipamato.core.entity.User;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class AbstractRepoTest {
 
     private AbstractRepo repo;
@@ -31,7 +31,7 @@ public class AbstractRepoTest {
     @Mock
     private User userMock;
 
-    @Before
+    @BeforeEach
     public void setUp() {
     }
 

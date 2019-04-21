@@ -2,7 +2,7 @@ package ch.difty.scipamato.core.web.paper.jasper;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.common.TestUtils;
 import ch.difty.scipamato.core.entity.Paper;

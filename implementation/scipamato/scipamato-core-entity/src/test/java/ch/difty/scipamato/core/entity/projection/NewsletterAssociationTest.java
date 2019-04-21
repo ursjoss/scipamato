@@ -8,14 +8,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class NewsletterAssociationTest {
 
     private NewsletterAssociation na = new NewsletterAssociation();
 
-    @Before
+    @BeforeEach
     public void setUp() {
         na.setId(1);
         na.setIssue("issue");

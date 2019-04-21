@@ -7,14 +7,14 @@ import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.TextArea;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class NewFieldChangeEventTest {
 
     private NewFieldChangeEvent e;
@@ -25,13 +25,13 @@ public class NewFieldChangeEventTest {
     @Mock
     private TextArea<?> mockComponent;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         when(mockComponent.getId()).thenReturn("id");
         when(mockComponent.getMarkupId()).thenReturn("mId");
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         verifyNoMoreInteractions(targetMock, targetMock2);
     }

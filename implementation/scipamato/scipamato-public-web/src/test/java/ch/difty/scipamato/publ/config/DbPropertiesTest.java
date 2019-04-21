@@ -2,7 +2,7 @@ package ch.difty.scipamato.publ.config;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class DbPropertiesTest {
 

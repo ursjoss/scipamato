@@ -3,7 +3,7 @@ package ch.difty.scipamato.common.web.model;
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.common.web.WicketBaseTest;
 

@@ -7,8 +7,8 @@ import static org.assertj.core.api.Assertions.fail;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.common.NullArgumentException;
 import ch.difty.scipamato.common.TestUtils;
@@ -43,7 +43,7 @@ public class AbstractDefinitionEntityTest {
     private final TestDefinitionEntity tde_wo_transl_versionNull = new TestDefinitionEntity("de", "some", null,
         new DefinitionTranslation[] {});
 
-    @Before
+    @BeforeEach
     public void setUp() {
         dt_de = new TestDefinitionTranslation(1, "de", "deutsch", 10);
         dt_de2 = new TestDefinitionTranslation(1, "de", "deutsch2", 100);

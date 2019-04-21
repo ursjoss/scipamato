@@ -7,12 +7,12 @@ import static org.mockito.Mockito.*;
 
 import java.util.Optional;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
@@ -21,7 +21,7 @@ import ch.difty.scipamato.core.persistence.UserService;
 import ch.difty.scipamato.core.web.authentication.ScipamatoUserDetails;
 import ch.difty.scipamato.core.web.authentication.ScipamatoUserDetailsService;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class ScipamatoUserDetailsServiceTest {
 
     private ScipamatoUserDetailsService service;
@@ -30,12 +30,12 @@ public class ScipamatoUserDetailsServiceTest {
     private       UserService userServiceMock;
     private final User        user = new User(10, "un", "fn", "ln", "em", "pw");
 
-    @Before
+    @BeforeEach
     public void setUp() {
         service = new ScipamatoUserDetailsService(userServiceMock);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         verifyNoMoreInteractions(userServiceMock);
     }
