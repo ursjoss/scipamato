@@ -195,11 +195,11 @@ public class NewsletterEditPageTest extends BasePageTest<NewsletterEditPage> {
     }
 
     @Test
-    public void clickingTitleInResultPanel_opensPaperEntryPage() {
+    void clickingTitleInResultPanel_opensPaperEntryPage() {
         final List<PaperSlim> papers = new ArrayList<>();
         final PaperSlim ps = new PaperSlim();
-        ps.setId(1l);
-        ps.setNumber(2l);
+        ps.setId(1L);
+        ps.setNumber(2L);
         ps.setTitle("some title");
         ps.setPublicationYear(2019);
         ps.setFirstAuthor("Foo");

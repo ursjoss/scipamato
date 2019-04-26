@@ -46,19 +46,42 @@ public class SyncShortFieldWithEmptyMainFieldConcatenatorTest {
     }
 
     @Test
-    public void methods_withNonNullMethod_returnsMethod() throws SQLException {
-        when(resultSet.getString(PAPER.METHODS.getName())).thenReturn("method");
-        when(resultSet.getString(PAPER.METHOD_STUDY_DESIGN.getName())).thenReturn("msd");
-        when(resultSet.getString(PAPER.METHOD_OUTCOME.getName())).thenReturn("mo");
-        when(resultSet.getString(PAPER.POPULATION_PLACE.getName())).thenReturn("pp");
-        when(resultSet.getString(PAPER.EXPOSURE_POLLUTANT.getName())).thenReturn("ep");
-        when(resultSet.getString(PAPER.EXPOSURE_ASSESSMENT.getName())).thenReturn("ea");
-        when(resultSet.getString(PAPER.METHOD_STATISTICS.getName())).thenReturn("ms");
-        when(resultSet.getString(PAPER.METHOD_CONFOUNDERS.getName())).thenReturn("mc");
-
+    void methods_withNonNullMethod_returnsMethod() throws SQLException {
+        stubMethodFieldsWithMainFieldReturning("method");
         assertThat(sfc.methodsFrom(resultSet)).isEqualTo("method");
-
         verifyCallingMethodsFields();
+    }
+
+    @Test
+    void methods_withNullMethod_returnsConcatenatedShortMethodFieldsConcatenated() throws SQLException {
+        stubMethodFieldsWithMainFieldReturning(null);
+        assertThat(sfc.methodsFrom(resultSet)).isEqualTo(
+            "Study Design: msd / Outcome: mo / Place: pp / Pollutant: ep / Exposure Assessment: ea / Statistical Method: ms / Confounders: mc");
+        verifyCallingMethodsFields();
+    }
+
+    private void stubMethodFieldsWithMainFieldReturning(final String mainFixture) throws SQLException {
+        when(resultSet.getString(anyString())).thenAnswer(invocationsOnMock -> {
+            String fieldName = (String) invocationsOnMock.getArguments()[0];
+            if (fieldName.equals(PAPER.METHODS.getName()))
+                return mainFixture;
+            else if (fieldName.equals(PAPER.METHOD_STUDY_DESIGN.getName()))
+                return "msd";
+            else if (fieldName.equals(PAPER.METHOD_OUTCOME.getName()))
+                return "mo";
+            else if (fieldName.equals(PAPER.POPULATION_PLACE.getName()))
+                return "pp";
+            else if (fieldName.equals(PAPER.EXPOSURE_POLLUTANT.getName()))
+                return "ep";
+            else if (fieldName.equals(PAPER.EXPOSURE_ASSESSMENT.getName()))
+                return "ea";
+            else if (fieldName.equals(PAPER.METHOD_STATISTICS.getName()))
+                return "ms";
+            else if (fieldName.equals(PAPER.METHOD_CONFOUNDERS.getName()))
+                return "mc";
+            else
+                throw new IllegalArgumentException("unhandled stub");
+        });
     }
 
     private void verifyCallingMethodsFields() throws SQLException {
@@ -73,32 +96,33 @@ public class SyncShortFieldWithEmptyMainFieldConcatenatorTest {
     }
 
     @Test
-    public void methods_withNullMethod_returnsConcatenatedShortMethodFieldsConcatenated() throws SQLException {
-        when(resultSet.getString(PAPER.METHODS.getName())).thenReturn(null);
-        when(resultSet.getString(PAPER.METHOD_STUDY_DESIGN.getName())).thenReturn("msd");
-        when(resultSet.getString(PAPER.METHOD_OUTCOME.getName())).thenReturn("mo");
-        when(resultSet.getString(PAPER.POPULATION_PLACE.getName())).thenReturn("pp");
-        when(resultSet.getString(PAPER.EXPOSURE_POLLUTANT.getName())).thenReturn("ep");
-        when(resultSet.getString(PAPER.EXPOSURE_ASSESSMENT.getName())).thenReturn("ea");
-        when(resultSet.getString(PAPER.METHOD_STATISTICS.getName())).thenReturn("ms");
-        when(resultSet.getString(PAPER.METHOD_CONFOUNDERS.getName())).thenReturn("mc");
-
-        assertThat(sfc.methodsFrom(resultSet)).isEqualTo(
-            "Study Design: msd / Outcome: mo / Place: pp / Pollutant: ep / Exposure Assessment: ea / Statistical Method: ms / Confounders: mc");
-
-        verifyCallingMethodsFields();
+    void population_withNonNullPopulation_returnsPopulation() throws SQLException {
+        stubPopulationFieldsWithMainFieldReturning("population");
+        assertThat(sfc.populationFrom(resultSet)).isEqualTo("population");
+        verifyCallingPopulationFields();
     }
 
     @Test
-    public void population_withNonNullPopulation_returnsPopulation() throws SQLException {
-        when(resultSet.getString(PAPER.POPULATION.getName())).thenReturn("population");
-        when(resultSet.getString(PAPER.POPULATION_PLACE.getName())).thenReturn("ppl");
-        when(resultSet.getString(PAPER.POPULATION_PARTICIPANTS.getName())).thenReturn("ppa");
-        when(resultSet.getString(PAPER.POPULATION_DURATION.getName())).thenReturn("pd");
-
-        assertThat(sfc.populationFrom(resultSet)).isEqualTo("population");
-
+    void population_withNullPopulation_returnsPopulationShortFieldsConcatenated() throws SQLException {
+        stubPopulationFieldsWithMainFieldReturning(null);
+        assertThat(sfc.populationFrom(resultSet)).isEqualTo("Place: ppl / Participants: ppa / Study Duration: pd");
         verifyCallingPopulationFields();
+    }
+
+    private void stubPopulationFieldsWithMainFieldReturning(final String mainFixture) throws SQLException {
+        when(resultSet.getString(anyString())).thenAnswer(invocationsOnMock -> {
+            String fieldName = (String) invocationsOnMock.getArguments()[0];
+            if (fieldName.equals(PAPER.POPULATION.getName()))
+                return mainFixture;
+            else if (fieldName.equals(PAPER.POPULATION_PLACE.getName()))
+                return "ppl";
+            else if (fieldName.equals(PAPER.POPULATION_PARTICIPANTS.getName()))
+                return "ppa";
+            else if (fieldName.equals(PAPER.POPULATION_DURATION.getName()))
+                return "pd";
+            else
+                throw new IllegalArgumentException("unhandled stub");
+        });
     }
 
     private void verifyCallingPopulationFields() throws SQLException {
@@ -109,28 +133,36 @@ public class SyncShortFieldWithEmptyMainFieldConcatenatorTest {
     }
 
     @Test
-    public void population_withNullPopulation_returnsPopulationShortFieldsConcatenated() throws SQLException {
-        when(resultSet.getString(PAPER.POPULATION.getName())).thenReturn(null);
-        when(resultSet.getString(PAPER.POPULATION_PLACE.getName())).thenReturn("ppl");
-        when(resultSet.getString(PAPER.POPULATION_PARTICIPANTS.getName())).thenReturn("ppa");
-        when(resultSet.getString(PAPER.POPULATION_DURATION.getName())).thenReturn("pd");
-
-        assertThat(sfc.populationFrom(resultSet)).isEqualTo("Place: ppl / Participants: ppa / Study Duration: pd");
-
-        verifyCallingPopulationFields();
+    void result_withNonNullResult_returnsResult() throws SQLException {
+        stubResultFieldsWithMainFieldReturning("result");
+        assertThat(sfc.resultFrom(resultSet)).isEqualTo("result");
+        verifyCallingResultFields();
     }
 
     @Test
-    public void result_withNonNullResult_returnsResult() throws SQLException {
-        when(resultSet.getString(PAPER.RESULT.getName())).thenReturn("result");
-        when(resultSet.getString(PAPER.RESULT_MEASURED_OUTCOME.getName())).thenReturn("rmo");
-        when(resultSet.getString(PAPER.RESULT_EXPOSURE_RANGE.getName())).thenReturn("rer");
-        when(resultSet.getString(PAPER.RESULT_EFFECT_ESTIMATE.getName())).thenReturn("ree");
-        when(resultSet.getString(PAPER.CONCLUSION.getName())).thenReturn("cc");
-
-        assertThat(sfc.resultFrom(resultSet)).isEqualTo("result");
-
+    void result_withNullResult_returnsResultShortFieldsConcatenated() throws SQLException {
+        stubResultFieldsWithMainFieldReturning(null);
+        assertThat(sfc.resultFrom(resultSet)).isEqualTo(
+            "Measured Outcome: rmo / Exposure (Range): rer / Effect Estimate: ree / Conclusion: cc");
         verifyCallingResultFields();
+    }
+
+    private void stubResultFieldsWithMainFieldReturning(final String mainFixture) throws SQLException {
+        when(resultSet.getString(anyString())).thenAnswer(invocationsOnMock -> {
+            String fieldName = (String) invocationsOnMock.getArguments()[0];
+            if (fieldName.equals(PAPER.RESULT.getName()))
+                return mainFixture;
+            else if (fieldName.equals(PAPER.RESULT_MEASURED_OUTCOME.getName()))
+                return "rmo";
+            else if (fieldName.equals(PAPER.RESULT_EXPOSURE_RANGE.getName()))
+                return "rer";
+            else if (fieldName.equals(PAPER.RESULT_EFFECT_ESTIMATE.getName()))
+                return "ree";
+            else if (fieldName.equals(PAPER.CONCLUSION.getName()))
+                return "cc";
+            else
+                throw new IllegalArgumentException("unhandled stub");
+        });
     }
 
     private void verifyCallingResultFields() throws SQLException {
@@ -141,21 +173,7 @@ public class SyncShortFieldWithEmptyMainFieldConcatenatorTest {
         verify(resultSet).getString(PAPER.CONCLUSION.getName());
     }
 
-    @Test
-    public void result_withNullResult_returnsResultShortFieldsConcatenated() throws SQLException {
-        when(resultSet.getString(PAPER.RESULT.getName())).thenReturn(null);
-        when(resultSet.getString(PAPER.RESULT_MEASURED_OUTCOME.getName())).thenReturn("rmo");
-        when(resultSet.getString(PAPER.RESULT_EXPOSURE_RANGE.getName())).thenReturn("rer");
-        when(resultSet.getString(PAPER.RESULT_EFFECT_ESTIMATE.getName())).thenReturn("ree");
-        when(resultSet.getString(PAPER.CONCLUSION.getName())).thenReturn("cc");
-
-        assertThat(sfc.resultFrom(resultSet)).isEqualTo(
-            "Measured Outcome: rmo / Exposure (Range): rer / Effect Estimate: ree / Conclusion: cc");
-
-        verifyCallingResultFields();
-    }
-
-    final SyncShortFieldConcatenator throwingConcatenator = new SyncShortFieldWithEmptyMainFieldConcatenator() {
+    private final SyncShortFieldConcatenator throwingConcatenator = new SyncShortFieldWithEmptyMainFieldConcatenator() {
         @Override
         String methodsFrom(final ResultSet rs, final TableField<PaperRecord, String> methodField,
             final TableField<PaperRecord, String> methodStudyDesignField,

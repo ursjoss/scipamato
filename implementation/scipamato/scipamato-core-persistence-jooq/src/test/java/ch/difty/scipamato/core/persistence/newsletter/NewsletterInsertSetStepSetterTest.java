@@ -47,17 +47,25 @@ public class NewsletterInsertSetStepSetterTest extends InsertSetStepSetterTest<N
 
     @Override
     protected void stepSetFixtureExceptAudit() {
-        when(getStep().set(NEWSLETTER.ISSUE, ISSUE)).thenReturn(getMoreStep());
-        when(getMoreStep().set(NEWSLETTER.ISSUE_DATE, Date.valueOf(ISSUE_DATE))).thenReturn(getMoreStep());
-
-        when(getMoreStep().set(NEWSLETTER.PUBLICATION_STATUS, PUBLICATION_STATUS.getId())).thenReturn(getMoreStep());
+        doReturn(getMoreStep())
+            .when(getStep())
+            .set(NEWSLETTER.ISSUE, ISSUE);
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(NEWSLETTER.ISSUE_DATE, Date.valueOf(ISSUE_DATE));
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(NEWSLETTER.PUBLICATION_STATUS, PUBLICATION_STATUS.getId());
     }
 
     @Override
     protected void setStepFixtureAudit() {
-        when(getMoreStep().set(NEWSLETTER.CREATED_BY, NewsletterRecordMapperTest.CREATED_BY)).thenReturn(getMoreStep());
-        when(getMoreStep().set(NEWSLETTER.LAST_MODIFIED_BY, NewsletterRecordMapperTest.LAST_MOD_BY)).thenReturn(
-            getMoreStep());
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(NEWSLETTER.CREATED_BY, NewsletterRecordMapperTest.CREATED_BY);
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(NEWSLETTER.LAST_MODIFIED_BY, NewsletterRecordMapperTest.LAST_MOD_BY);
     }
 
     @Override

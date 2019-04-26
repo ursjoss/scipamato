@@ -46,8 +46,6 @@ public class CodeLikeModelTest {
 
         ccls.add(cclMock);
         ccls.add(cclMock);
-
-        when(serviceMock.findCodesOfClass(CC_ID, LANG_CODE)).thenReturn(ccls);
     }
 
     @Test
@@ -61,7 +59,8 @@ public class CodeLikeModelTest {
     }
 
     @Test
-    public void modelObject_gotCodeClassesFromService() {
+    void modelObject_gotCodeClassesFromService() {
+        when(serviceMock.findCodesOfClass(CC_ID, LANG_CODE)).thenReturn(ccls);
         assertThat(model.getObject()).containsExactly(cclMock, cclMock);
         verify(serviceMock).findCodesOfClass(CC_ID, LANG_CODE);
     }

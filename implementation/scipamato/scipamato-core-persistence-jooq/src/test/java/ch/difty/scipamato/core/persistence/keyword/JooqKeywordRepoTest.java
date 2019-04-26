@@ -135,12 +135,20 @@ public class JooqKeywordRepoTest {
     }
 
     @Test
-    public void addingOrUpdatingTranlsation() {
+    void addingOrUpdatingTranslation() {
         KeywordTrRecord ktrMock = mock(KeywordTrRecord.class);
-        when(ktrMock.get(KEYWORD_TR.ID)).thenReturn(1000);
-        when(ktrMock.get(KEYWORD_TR.LANG_CODE)).thenReturn("de");
-        when(ktrMock.get(KEYWORD_TR.NAME)).thenReturn("someName");
-        when(ktrMock.get(KEYWORD_TR.VERSION)).thenReturn(500);
+        doReturn(1000)
+            .when(ktrMock)
+            .get(KEYWORD_TR.ID);
+        doReturn("de")
+            .when(ktrMock)
+            .get(KEYWORD_TR.LANG_CODE);
+        doReturn("someName")
+            .when(ktrMock)
+            .get(KEYWORD_TR.NAME);
+        doReturn(500)
+            .when(ktrMock)
+            .get(KEYWORD_TR.VERSION);
 
         repo = new JooqKeywordRepo(dslContextMock, dateTimeServiceMock) {
             @Override

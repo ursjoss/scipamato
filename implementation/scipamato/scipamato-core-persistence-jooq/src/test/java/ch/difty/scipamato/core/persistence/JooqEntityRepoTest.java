@@ -108,33 +108,8 @@ public abstract class JooqEntityRepoTest<R extends Record, T extends IdScipamato
     protected abstract TableField<R, Integer> getRecordVersion();
 
     @Override
-    @SuppressWarnings("unchecked")
     protected final void specificSetUp() {
         repo = getRepo();
-
-        entities.add(getPersistedEntity());
-        entities.add(getPersistedEntity());
-
-        records.add(getPersistedRecord());
-        records.add(getPersistedRecord());
-
-        when(getDsl().insertInto(getTable())).thenReturn(insertSetStepMock);
-        when(insertSetStepSetterMock.setNonKeyFieldsFor(insertSetStepMock, getUnpersistedEntity())).thenReturn(
-            insertSetMoreStepMock);
-        when(insertSetStepMock.set(isA(TableField.class), eq(getUnpersistedEntity()))).thenReturn(
-            insertSetMoreStepMock);
-        when(insertSetMoreStepMock.returning()).thenReturn(insertResultStepMock);
-
-        when(getMapper().map(getPersistedRecord())).thenReturn(getPersistedEntity());
-
-        when(getDsl().delete(getTable())).thenReturn(deleteWhereStepMock);
-        when(deleteWhereStepMock.where(getTableId().equal(id))).thenReturn(deleteConditionStep1Mock);
-
-        when(getDsl().update(getTable())).thenReturn(updateSetFirstStepMock);
-        when(updateSetStepSetterMock.setFieldsFor(updateSetFirstStepMock, getUnpersistedEntity())).thenReturn(
-            updateSetMoreStepMock);
-        when(updateConditionStepMock.returning()).thenReturn(updateResultStepMock);
-
         testSpecificSetUp();
     }
 
@@ -225,6 +200,8 @@ public abstract class JooqEntityRepoTest<R extends Record, T extends IdScipamato
     public void deleting_validPersistentEntity_returnsDeletedEntity() {
         repo = makeRepoFindingEntityById(getPersistedEntity());
 
+        when(getDsl().delete(getTable())).thenReturn(deleteWhereStepMock);
+        when(deleteWhereStepMock.where(getTableId().equal(id))).thenReturn(deleteConditionStep1Mock);
         when(deleteConditionStep1Mock.and(getRecordVersion().eq(0))).thenReturn(deleteConditionStep2Mock);
         when(deleteConditionStep2Mock.execute()).thenReturn(1);
 
@@ -239,6 +216,8 @@ public abstract class JooqEntityRepoTest<R extends Record, T extends IdScipamato
     @Test
     public void deleting_validPersistentEntity_withFailingDelete_returnsDeletedEntity() {
         repo = makeRepoFindingEntityById(getPersistedEntity());
+        when(getDsl().delete(getTable())).thenReturn(deleteWhereStepMock);
+        when(deleteWhereStepMock.where(getTableId().equal(id))).thenReturn(deleteConditionStep1Mock);
         when(deleteConditionStep1Mock.and(getRecordVersion().eq(0))).thenReturn(deleteConditionStep2Mock);
         when(deleteConditionStep2Mock.execute()).thenReturn(0);
 

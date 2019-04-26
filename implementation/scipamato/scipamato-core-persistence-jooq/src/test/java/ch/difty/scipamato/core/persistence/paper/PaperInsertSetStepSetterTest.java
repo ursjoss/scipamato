@@ -45,49 +45,113 @@ public class PaperInsertSetStepSetterTest extends InsertSetStepSetterTest<PaperR
 
     @Override
     protected void stepSetFixtureExceptAudit() {
-        when(getStep().set(PAPER.NUMBER, NUMBER)).thenReturn(getMoreStep());
-        when(getMoreStep().set(PAPER.PM_ID, PM_ID)).thenReturn(getMoreStep());
+        doReturn(getMoreStep())
+            .when(getStep())
+            .set(PAPER.NUMBER, NUMBER);
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(PAPER.PM_ID, PM_ID);
 
-        when(getMoreStep().set(PAPER.DOI, DOI)).thenReturn(getMoreStep());
-        when(getMoreStep().set(PAPER.AUTHORS, AUTHORS)).thenReturn(getMoreStep());
-        when(getMoreStep().set(PAPER.FIRST_AUTHOR, FIRST_AUTHOR)).thenReturn(getMoreStep());
-        when(getMoreStep().set(PAPER.FIRST_AUTHOR_OVERRIDDEN, FIRST_AUTHOR_OVERRIDDEN)).thenReturn(getMoreStep());
-        when(getMoreStep().set(PAPER.TITLE, TITLE)).thenReturn(getMoreStep());
-        when(getMoreStep().set(PAPER.LOCATION, LOCATION)).thenReturn(getMoreStep());
-        when(getMoreStep().set(PAPER.PUBLICATION_YEAR, PUBLICATION_YEAR)).thenReturn(getMoreStep());
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(PAPER.DOI, DOI);
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(PAPER.AUTHORS, AUTHORS);
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(PAPER.FIRST_AUTHOR, FIRST_AUTHOR);
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(PAPER.FIRST_AUTHOR_OVERRIDDEN, FIRST_AUTHOR_OVERRIDDEN);
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(PAPER.TITLE, TITLE);
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(PAPER.LOCATION, LOCATION);
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(PAPER.PUBLICATION_YEAR, PUBLICATION_YEAR);
 
-        when(getMoreStep().set(PAPER.GOALS, GOALS)).thenReturn(getMoreStep());
-        when(getMoreStep().set(PAPER.POPULATION, POPULATION)).thenReturn(getMoreStep());
-        when(getMoreStep().set(PAPER.METHODS, METHODS)).thenReturn(getMoreStep());
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(PAPER.GOALS, GOALS);
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(PAPER.POPULATION, POPULATION);
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(PAPER.METHODS, METHODS);
 
-        when(getMoreStep().set(PAPER.POPULATION_PLACE, POPULATION_PLACE)).thenReturn(getMoreStep());
-        when(getMoreStep().set(PAPER.POPULATION_PARTICIPANTS, POPULATION_PARTICIPANTS)).thenReturn(getMoreStep());
-        when(getMoreStep().set(PAPER.POPULATION_DURATION, POPULATION_DURATION)).thenReturn(getMoreStep());
-        when(getMoreStep().set(PAPER.EXPOSURE_POLLUTANT, EXPOSURE_POLLUTANT)).thenReturn(getMoreStep());
-        when(getMoreStep().set(PAPER.EXPOSURE_ASSESSMENT, EXPOSURE_ASSESSMENT)).thenReturn(getMoreStep());
-        when(getMoreStep().set(PAPER.METHOD_STUDY_DESIGN, METHOD_STUDY_DESIGN)).thenReturn(getMoreStep());
-        when(getMoreStep().set(PAPER.METHOD_OUTCOME, METHOD_OUTCOME)).thenReturn(getMoreStep());
-        when(getMoreStep().set(PAPER.METHOD_STATISTICS, METHOD_STATISTICS)).thenReturn(getMoreStep());
-        when(getMoreStep().set(PAPER.METHOD_CONFOUNDERS, METHOD_CONFOUNDERS)).thenReturn(getMoreStep());
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(PAPER.POPULATION_PLACE, POPULATION_PLACE);
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(PAPER.POPULATION_PARTICIPANTS, POPULATION_PARTICIPANTS);
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(PAPER.POPULATION_DURATION, POPULATION_DURATION);
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(PAPER.EXPOSURE_POLLUTANT, EXPOSURE_POLLUTANT);
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(PAPER.EXPOSURE_ASSESSMENT, EXPOSURE_ASSESSMENT);
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(PAPER.METHOD_STUDY_DESIGN, METHOD_STUDY_DESIGN);
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(PAPER.METHOD_OUTCOME, METHOD_OUTCOME);
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(PAPER.METHOD_STATISTICS, METHOD_STATISTICS);
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(PAPER.METHOD_CONFOUNDERS, METHOD_CONFOUNDERS);
 
-        when(getMoreStep().set(PAPER.RESULT, RESULT)).thenReturn(getMoreStep());
-        when(getMoreStep().set(PAPER.COMMENT, COMMENT)).thenReturn(getMoreStep());
-        when(getMoreStep().set(PAPER.INTERN, INTERN)).thenReturn(getMoreStep());
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(PAPER.RESULT, RESULT);
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(PAPER.COMMENT, COMMENT);
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(PAPER.INTERN, INTERN);
 
-        when(getMoreStep().set(PAPER.RESULT_EXPOSURE_RANGE, RESULT_EXPOSURE_RANGE)).thenReturn(getMoreStep());
-        when(getMoreStep().set(PAPER.RESULT_EFFECT_ESTIMATE, RESULT_EFFECT_ESTIMATE)).thenReturn(getMoreStep());
-        when(getMoreStep().set(PAPER.RESULT_MEASURED_OUTCOME, RESULT_MEASURED_OUTCOME)).thenReturn(getMoreStep());
-        when(getMoreStep().set(PAPER.CONCLUSION, CONCLUSION)).thenReturn(getMoreStep());
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(PAPER.RESULT_EXPOSURE_RANGE, RESULT_EXPOSURE_RANGE);
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(PAPER.RESULT_EFFECT_ESTIMATE, RESULT_EFFECT_ESTIMATE);
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(PAPER.RESULT_MEASURED_OUTCOME, RESULT_MEASURED_OUTCOME);
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(PAPER.CONCLUSION, CONCLUSION);
 
-        when(getMoreStep().set(PAPER.ORIGINAL_ABSTRACT, ORIGINAL_ABSTRACT)).thenReturn(getMoreStep());
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(PAPER.ORIGINAL_ABSTRACT, ORIGINAL_ABSTRACT);
 
-        when(getMoreStep().set(PAPER.MAIN_CODE_OF_CODECLASS1, MAIN_CODE_OF_CODECLASS1)).thenReturn(getMoreStep());
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(PAPER.MAIN_CODE_OF_CODECLASS1, MAIN_CODE_OF_CODECLASS1);
     }
 
     @Override
     protected void setStepFixtureAudit() {
-        when(getMoreStep().set(PAPER.CREATED_BY, PaperRecordMapperTest.CREATED_BY)).thenReturn(getMoreStep());
-        when(getMoreStep().set(PAPER.LAST_MODIFIED_BY, PaperRecordMapperTest.LAST_MOD_BY)).thenReturn(getMoreStep());
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(PAPER.CREATED_BY, PaperRecordMapperTest.CREATED_BY);
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(PAPER.LAST_MODIFIED_BY, PaperRecordMapperTest.LAST_MOD_BY);
     }
 
     @Override

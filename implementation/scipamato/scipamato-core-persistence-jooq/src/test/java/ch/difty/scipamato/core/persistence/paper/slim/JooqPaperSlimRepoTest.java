@@ -54,7 +54,6 @@ public class JooqPaperSlimRepoTest extends
 
     private final List<PaperSlim> paperSlims = new ArrayList<>();
 
-    @Override
     protected void specificSetUp() {
         paperSlims.add(paperSlimMock);
         paperSlims.add(paperSlimMock);

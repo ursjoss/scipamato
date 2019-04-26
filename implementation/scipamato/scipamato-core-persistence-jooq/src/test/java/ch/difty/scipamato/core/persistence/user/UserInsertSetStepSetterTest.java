@@ -45,20 +45,34 @@ public class UserInsertSetStepSetterTest extends InsertSetStepSetterTest<Scipama
 
     @Override
     protected void stepSetFixtureExceptAudit() {
-        when(getStep().set(SCIPAMATO_USER.USER_NAME, USER_NAME)).thenReturn(getMoreStep());
-
-        when(getMoreStep().set(SCIPAMATO_USER.FIRST_NAME, FIRST_NAME)).thenReturn(getMoreStep());
-        when(getMoreStep().set(SCIPAMATO_USER.LAST_NAME, LAST_NAME)).thenReturn(getMoreStep());
-        when(getMoreStep().set(SCIPAMATO_USER.EMAIL, EMAIL)).thenReturn(getMoreStep());
-        when(getMoreStep().set(SCIPAMATO_USER.PASSWORD, PASSWORD)).thenReturn(getMoreStep());
-        when(getMoreStep().set(SCIPAMATO_USER.ENABLED, ENABLED)).thenReturn(getMoreStep());
+        doReturn(getMoreStep())
+            .when(getStep())
+            .set(SCIPAMATO_USER.USER_NAME, USER_NAME);
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(SCIPAMATO_USER.FIRST_NAME, FIRST_NAME);
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(SCIPAMATO_USER.LAST_NAME, LAST_NAME);
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(SCIPAMATO_USER.EMAIL, EMAIL);
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(SCIPAMATO_USER.PASSWORD, PASSWORD);
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(SCIPAMATO_USER.ENABLED, ENABLED);
     }
 
     @Override
     protected void setStepFixtureAudit() {
-        when(getMoreStep().set(SCIPAMATO_USER.CREATED_BY, UserRecordMapperTest.CREATED_BY)).thenReturn(getMoreStep());
-        when(getMoreStep().set(SCIPAMATO_USER.LAST_MODIFIED_BY, UserRecordMapperTest.LAST_MOD_BY)).thenReturn(
-            getMoreStep());
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(SCIPAMATO_USER.CREATED_BY, UserRecordMapperTest.CREATED_BY);
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(SCIPAMATO_USER.LAST_MODIFIED_BY, UserRecordMapperTest.LAST_MOD_BY);
     }
 
     @Override

@@ -29,13 +29,14 @@ public class AuditSearchTermEvaluatorTest extends SearchTermEvaluatorTest<AuditS
     }
 
     private void expectToken(TokenType type, String term, String fieldName) {
-        when(stMock.getFieldName()).thenReturn(fieldName);
+        if (fieldName != null)
+            when(stMock.getFieldName()).thenReturn(fieldName);
         tokens.add(new Token(type, term));
         when(stMock.getTokens()).thenReturn(tokens);
     }
 
     @Test
-    public void buildingConditionForGreaterOrEqual_applies() {
+    void buildingConditionForGreaterOrEqual_applies() {
         expectToken(TokenType.GREATEROREQUAL, "2017-01-12 00:00:00", "paper.created");
         assertThat(e
             .evaluate(stMock)
@@ -84,16 +85,16 @@ public class AuditSearchTermEvaluatorTest extends SearchTermEvaluatorTest<AuditS
     }
 
     @Test
-    public void buildingConditionForWhitespace_appliesTrueCondition() {
-        expectToken(TokenType.WHITESPACE, "   ", "paper.created");
+    void buildingConditionForWhitespace_appliesTrueCondition() {
+        expectToken(TokenType.WHITESPACE, "   ", null);
         assertThat(e
             .evaluate(stMock)
             .toString()).isEqualTo("1 = 1");
     }
 
     @Test
-    public void buildingConditionForWhitespace_appliesTrueCondition2() {
-        expectToken(TokenType.WHITESPACE, "   ", "paper.last_modified");
+    void buildingConditionForWhitespace_appliesTrueCondition2() {
+        expectToken(TokenType.WHITESPACE, "   ", null);
         assertThat(e
             .evaluate(stMock)
             .toString()).isEqualTo("1 = 1");
@@ -152,8 +153,8 @@ public class AuditSearchTermEvaluatorTest extends SearchTermEvaluatorTest<AuditS
     }
 
     @Test
-    public void buildingConditionForRaw_appliesDummyTrue() {
-        expectToken(TokenType.RAW, "foo", "paper.created");
+    void buildingConditionForRaw_appliesDummyTrue() {
+        expectToken(TokenType.RAW, "foo", null);
         assertThat(e
             .evaluate(stMock)
             .toString()).isEqualTo("1 = 1");

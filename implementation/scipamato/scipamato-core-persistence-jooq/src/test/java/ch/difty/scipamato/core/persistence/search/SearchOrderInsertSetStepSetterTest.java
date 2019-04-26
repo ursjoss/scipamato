@@ -45,17 +45,25 @@ public class SearchOrderInsertSetStepSetterTest extends InsertSetStepSetterTest<
 
     @Override
     protected void stepSetFixtureExceptAudit() {
-        when(getStep().set(SEARCH_ORDER.NAME, NAME)).thenReturn(getMoreStep());
-        when(getMoreStep().set(SEARCH_ORDER.OWNER, OWNER)).thenReturn(getMoreStep());
-        when(getMoreStep().set(SEARCH_ORDER.GLOBAL, GLOBAL)).thenReturn(getMoreStep());
+        doReturn(getMoreStep())
+            .when(getStep())
+            .set(SEARCH_ORDER.NAME, NAME);
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(SEARCH_ORDER.OWNER, OWNER);
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(SEARCH_ORDER.GLOBAL, GLOBAL);
     }
 
     @Override
     protected void setStepFixtureAudit() {
-        when(getMoreStep().set(SEARCH_ORDER.CREATED_BY, SearchOrderRecordMapperTest.CREATED_BY)).thenReturn(
-            getMoreStep());
-        when(getMoreStep().set(SEARCH_ORDER.LAST_MODIFIED_BY, SearchOrderRecordMapperTest.LAST_MOD_BY)).thenReturn(
-            getMoreStep());
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(SEARCH_ORDER.CREATED_BY, SearchOrderRecordMapperTest.CREATED_BY);
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(SEARCH_ORDER.LAST_MODIFIED_BY, SearchOrderRecordMapperTest.LAST_MOD_BY);
     }
 
     @Override

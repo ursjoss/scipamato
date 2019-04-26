@@ -55,8 +55,6 @@ public class JooqNewsletterServiceTest extends AbstractServiceTest<Integer, News
 
         newsletters.add(newsletterMock);
         newsletters.add(newsletterMock);
-
-        when(newsletterMock.getCreatedBy()).thenReturn(10);
     }
 
     @Override
@@ -65,9 +63,10 @@ public class JooqNewsletterServiceTest extends AbstractServiceTest<Integer, News
     }
 
     @Test
-    public void findingById_withFoundEntity_returnsOptionalOfIt() {
+    void findingById_withFoundEntity_returnsOptionalOfIt() {
         Integer id = 7;
         when(repoMock.findById(id)).thenReturn(newsletterMock);
+        auditFixture();
 
         Optional<Newsletter> optNl = service.findById(id);
         assertThat(optNl.isPresent()).isTrue();
@@ -168,10 +167,11 @@ public class JooqNewsletterServiceTest extends AbstractServiceTest<Integer, News
     }
 
     @Test
-    public void savingOrUpdating_withPaperWithNullId_hasRepoAddThePaper() {
+    void savingOrUpdating_withPaperWithNullId_hasRepoAddThePaper() {
         when(newsletterMock.getId()).thenReturn(null);
         when(newsletterMock.getPublicationStatus()).thenReturn(PublicationStatus.PUBLISHED);
         when(repoMock.add(newsletterMock)).thenReturn(newsletterMock);
+        auditFixture();
         assertThat(service.saveOrUpdate(newsletterMock)).isEqualTo(newsletterMock);
         verify(repoMock).add(newsletterMock);
         verify(newsletterMock).getId();
@@ -180,10 +180,11 @@ public class JooqNewsletterServiceTest extends AbstractServiceTest<Integer, News
     }
 
     @Test
-    public void savingOrUpdating_withPaperWithNonNullId_hasRepoUpdateThePaper() {
+    void savingOrUpdating_withPaperWithNonNullId_hasRepoUpdateThePaper() {
         when(newsletterMock.getId()).thenReturn(17);
         when(newsletterMock.getPublicationStatus()).thenReturn(PublicationStatus.PUBLISHED);
         when(repoMock.update(newsletterMock)).thenReturn(newsletterMock);
+        auditFixture();
         assertThat(service.saveOrUpdate(newsletterMock)).isEqualTo(newsletterMock);
         verify(repoMock).update(newsletterMock);
         verify(newsletterMock).getId();
@@ -192,12 +193,13 @@ public class JooqNewsletterServiceTest extends AbstractServiceTest<Integer, News
     }
 
     @Test
-    public void savingOrUpdating_witNoWipOption_justSaves() {
+    void savingOrUpdating_witNoWipOption_justSaves() {
         // hypothetical case
         when(newsletterMock.getId()).thenReturn(17);
         when(newsletterMock.getPublicationStatus()).thenReturn(PublicationStatus.WIP);
         when(repoMock.getNewsletterInStatusWorkInProgress()).thenReturn(Optional.empty());
         when(repoMock.update(newsletterMock)).thenReturn(newsletterMock);
+        auditFixture();
 
         assertThat(service.saveOrUpdate(newsletterMock)).isEqualTo(newsletterMock);
 

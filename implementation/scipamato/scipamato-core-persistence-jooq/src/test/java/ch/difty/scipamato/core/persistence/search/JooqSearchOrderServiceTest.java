@@ -66,6 +66,7 @@ public class JooqSearchOrderServiceTest extends AbstractServiceTest<Long, Search
     public void findingById_withFoundEntity_returnsOptionalOfIt() {
         Long id = 7L;
         when(repoMock.findById(id)).thenReturn(searchOrderMock);
+        auditFixture();
 
         Optional<SearchOrder> optSearchOrder = service.findById(id);
         assertThat(optSearchOrder.isPresent()).isTrue();
@@ -76,9 +77,11 @@ public class JooqSearchOrderServiceTest extends AbstractServiceTest<Long, Search
     }
 
     @Test
-    public void findingById_withNotFoundEntity_returnsOptionalEmpty() {
+    void findingById_withNotFoundEntity_returnsOptionalEmpty() {
         Long id = 7L;
-        when(repoMock.findById(id)).thenReturn(null);
+        doReturn(null)
+            .when(repoMock)
+            .findById(id);
 
         assertThat(service
             .findById(id)
@@ -90,6 +93,7 @@ public class JooqSearchOrderServiceTest extends AbstractServiceTest<Long, Search
     @Test
     public void findingByFilter_delegatesToRepo() {
         when(repoMock.findPageByFilter(filterMock, paginationContextMock)).thenReturn(searchOrders);
+        auditFixture();
         assertThat(service.findPageByFilter(filterMock, paginationContextMock)).isEqualTo(searchOrders);
         verify(repoMock).findPageByFilter(filterMock, paginationContextMock);
         verifyAudit(2);
@@ -106,6 +110,7 @@ public class JooqSearchOrderServiceTest extends AbstractServiceTest<Long, Search
     public void savingOrUpdating_withSearchOrderWithNullId_hasRepoAddTheSearchOrder() {
         when(searchOrderMock.getId()).thenReturn(null);
         when(repoMock.add(searchOrderMock)).thenReturn(searchOrderMock);
+        auditFixture();
         assertThat(service.saveOrUpdate(searchOrderMock)).isEqualTo(searchOrderMock);
         verify(repoMock).add(searchOrderMock);
         verify(searchOrderMock).getId();
@@ -116,6 +121,7 @@ public class JooqSearchOrderServiceTest extends AbstractServiceTest<Long, Search
     public void savingOrUpdating_withSearchOrderWithNonNullId_hasRepoUpdateTheSearchOrder() {
         when(searchOrderMock.getId()).thenReturn(17L);
         when(repoMock.update(searchOrderMock)).thenReturn(searchOrderMock);
+        auditFixture();
         assertThat(service.saveOrUpdate(searchOrderMock)).isEqualTo(searchOrderMock);
         verify(repoMock).update(searchOrderMock);
         verify(searchOrderMock).getId();

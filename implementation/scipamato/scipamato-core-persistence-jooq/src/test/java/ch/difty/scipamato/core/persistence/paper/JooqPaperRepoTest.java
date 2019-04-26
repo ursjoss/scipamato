@@ -67,10 +67,6 @@ public class JooqPaperRepoTest extends
     protected void testSpecificSetUp() {
         papers.add(paperMock);
         papers.add(paperMock);
-
-        when(unpersistedEntity.getVersion()).thenReturn(0);
-        when(persistedEntity.getVersion()).thenReturn(0);
-        when(persistedRecord.getVersion()).thenReturn(0);
     }
 
     @Override
@@ -176,7 +172,6 @@ public class JooqPaperRepoTest extends
     @Override
     protected void expectUnpersistedEntityIdNull() {
         when(unpersistedEntity.getId()).thenReturn(null);
-        when(unpersistedEntity.getVersion()).thenReturn(0);
     }
 
     @Override
@@ -328,8 +323,7 @@ public class JooqPaperRepoTest extends
 
     @SuppressWarnings("unchecked")
     @Test
-    public void findingPageByFilter() {
-        List<PaperRecord> paperRecords = new ArrayList<>();
+    void findingPageByFilter() {
         Collection<SortField<Paper>> sortFields = new ArrayList<>();
         Sort sort = new Sort(Direction.DESC, "id");
         when(paginationContextMock.getSort()).thenReturn(sort);
@@ -370,10 +364,9 @@ public class JooqPaperRepoTest extends
 
     @SuppressWarnings("unchecked")
     @Test
-    public void findingPageByFilter_withNoExplicitLanguageCode() {
+    void findingPageByFilter_withNoExplicitLanguageCode() {
         when(getApplicationProperties().getDefaultLocalization()).thenReturn(LC);
 
-        List<PaperRecord> paperRecords = new ArrayList<>();
         Collection<SortField<Paper>> sortFields = new ArrayList<>();
         Sort sort = new Sort(Direction.DESC, "id");
         when(paginationContextMock.getSort()).thenReturn(sort);
@@ -493,20 +486,20 @@ public class JooqPaperRepoTest extends
     }
 
     @Test
-    public void evaluatingNumbers_withNullRecord_returnsEmpty() {
+    void evaluatingNumbers_withNullRecord_returnsEmpty() {
         assertThat(repo.evaluateNumbers(null)).isEmpty();
     }
 
     @Test
-    public void evaluatingNumbers_withRecordWithNullValue1_returnsEmpty() {
-        Record1<Long[]> numbers = mock(Record1.class);
+    void evaluatingNumbers_withRecordWithNullValue1_returnsEmpty() {
+        @SuppressWarnings("unchecked") Record1<Long[]> numbers = mock(Record1.class);
         when(numbers.value1()).thenReturn(null);
         assertThat(repo.evaluateNumbers(numbers)).isEmpty();
     }
 
     @Test
-    public void evaluatingNumbers_withRecordWithEmptyValue1_returnsEmpty() {
-        Record1<Long[]> numbers = mock(Record1.class);
+    void evaluatingNumbers_withRecordWithEmptyValue1_returnsEmpty() {
+        @SuppressWarnings("unchecked") Record1<Long[]> numbers = mock(Record1.class);
         when(numbers.value1()).thenReturn(new Long[] {});
         assertThat(repo.evaluateNumbers(numbers)).isEmpty();
     }

@@ -66,8 +66,6 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
 
         papers.add(paperMock);
         papers.add(paperMock);
-
-        when(paperMock.getCreatedBy()).thenReturn(10);
     }
 
     @Override
@@ -76,9 +74,10 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
     }
 
     @Test
-    public void findingById_withFoundEntity_returnsOptionalOfIt() {
+    void findingById_withFoundEntity_returnsOptionalOfIt() {
         Long id = 7L;
         when(repoMock.findById(id)).thenReturn(paperMock);
+        auditFixture();
 
         Optional<Paper> optPaper = service.findById(id);
         assertThat(optPaper.isPresent()).isTrue();
@@ -104,6 +103,7 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
     @Test
     public void findingByFilter_delegatesToRepo() {
         when(repoMock.findPageByFilter(filterMock, paginationContextMock)).thenReturn(papers);
+        auditFixture();
         assertThat(service.findPageByFilter(filterMock, paginationContextMock)).isEqualTo(papers);
         verify(repoMock).findPageByFilter(filterMock, paginationContextMock);
         verifyAudit(2);
@@ -120,6 +120,7 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
     public void savingOrUpdating_withPaperWithNullId_hasRepoAddThePaper() {
         when(paperMock.getId()).thenReturn(null);
         when(repoMock.add(paperMock)).thenReturn(paperMock);
+        auditFixture();
         assertThat(service.saveOrUpdate(paperMock)).isEqualTo(paperMock);
         verify(repoMock).add(paperMock);
         verify(paperMock).getId();
@@ -130,6 +131,7 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
     public void savingOrUpdating_withPaperWithNonNullId_hasRepoUpdateThePaper() {
         when(paperMock.getId()).thenReturn(17L);
         when(repoMock.update(paperMock)).thenReturn(paperMock);
+        auditFixture();
         assertThat(service.saveOrUpdate(paperMock)).isEqualTo(paperMock);
         verify(repoMock).update(paperMock);
         verify(paperMock).getId();
@@ -326,16 +328,14 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
     }
 
     @Test
-    public void findingByNumber_withSingleResultFromRepo_returnsThatAsOptional() {
+    void findingByNumber_withSingleResultFromRepo_returnsThatAsOptional() {
         when(repoMock.findByNumbers(Collections.singletonList(1L), LC)).thenReturn(
             Collections.singletonList(paperMock));
+        auditFixture();
         testFindingByNumbers();
     }
 
     private void testFindingByNumbers() {
-        when(userRepoMock.findById(CREATOR_ID)).thenReturn(creatorMock);
-        when(userRepoMock.findById(MODIFIER_ID)).thenReturn(modifierMock);
-
         Optional<Paper> opt = service.findByNumber(1L, LC);
         assertThat(opt.isPresent()).isTrue();
         assertThat(opt.get()).isEqualTo(paperMock);
@@ -354,6 +354,7 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
     public void findingByNumber_withMultipleRecordsFromRepo_returnsFirstAsOptional() {
         when(repoMock.findByNumbers(Collections.singletonList(1L), LC)).thenReturn(
             Arrays.asList(paperMock, paperMock2));
+        auditFixture();
         testFindingByNumbers();
     }
 

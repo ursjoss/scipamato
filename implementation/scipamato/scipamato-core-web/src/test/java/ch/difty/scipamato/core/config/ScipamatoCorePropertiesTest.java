@@ -27,15 +27,6 @@ public class ScipamatoCorePropertiesTest {
     @BeforeEach
     public void setUp() {
         prop = new ScipamatoCoreProperties(scipamatoPropMock, mavenPropMock);
-
-        when(scipamatoPropMock.getBrand()).thenReturn("brand");
-        when(scipamatoPropMock.getDefaultLocalization()).thenReturn("dl");
-        when(scipamatoPropMock.getPubmedBaseUrl()).thenReturn("pbUrl");
-        when(scipamatoPropMock.getAuthorParserStrategy()).thenReturn(AuthorParserStrategy.PUBMED);
-        when(scipamatoPropMock.getPaperNumberMinimumToBeRecycled()).thenReturn(100);
-        when(scipamatoPropMock.getRedirectFromPort()).thenReturn(5678);
-
-        when(mavenPropMock.getVersion()).thenReturn("0.0.1-SNAPSHOT");
     }
 
     @AfterEach
@@ -44,7 +35,8 @@ public class ScipamatoCorePropertiesTest {
     }
 
     @Test
-    public void gettingBrand_delegatesToScipamatoProps() {
+    void gettingBrand_delegatesToScipamatoProps() {
+        when(scipamatoPropMock.getBrand()).thenReturn("brand");
         assertThat(prop.getBrand()).isEqualTo("brand");
         verify(scipamatoPropMock).getBrand();
     }
@@ -66,37 +58,43 @@ public class ScipamatoCorePropertiesTest {
     }
 
     @Test
-    public void gettingDefaultLocalization_delegatesToScipamatoProps() {
+    void gettingDefaultLocalization_delegatesToScipamatoProps() {
+        when(scipamatoPropMock.getDefaultLocalization()).thenReturn("dl");
         assertThat(prop.getDefaultLocalization()).isEqualTo("dl");
         verify(scipamatoPropMock).getDefaultLocalization();
     }
 
     @Test
-    public void gettingPubmedBaseUrl_delegatesToScipamatoProps() {
+    void gettingPubmedBaseUrl_delegatesToScipamatoProps() {
+        when(scipamatoPropMock.getPubmedBaseUrl()).thenReturn("pbUrl");
         assertThat(prop.getPubmedBaseUrl()).isEqualTo("pbUrl");
         verify(scipamatoPropMock).getPubmedBaseUrl();
     }
 
     @Test
-    public void gettingBuildVersion_delegatesToMavenProp() {
+    void gettingBuildVersion_delegatesToMavenProp() {
+        when(mavenPropMock.getVersion()).thenReturn("0.0.1-SNAPSHOT");
         assertThat(prop.getBuildVersion()).isEqualTo("0.0.1-SNAPSHOT");
         verify(mavenPropMock).getVersion();
     }
 
     @Test
-    public void gettingAuthorParserStrategy_delegatesToScipamatoProps() {
+    void gettingAuthorParserStrategy_delegatesToScipamatoProps() {
+        when(scipamatoPropMock.getAuthorParserStrategy()).thenReturn(AuthorParserStrategy.PUBMED);
         assertThat(prop.getAuthorParserStrategy()).isEqualTo(AuthorParserStrategy.PUBMED);
         verify(scipamatoPropMock).getAuthorParserStrategy();
     }
 
     @Test
-    public void gettingPaperNumberMin2BeRecycled_delegatesToScipamatoProps() {
+    void gettingPaperNumberMin2BeRecycled_delegatesToScipamatoProps() {
+        when(scipamatoPropMock.getPaperNumberMinimumToBeRecycled()).thenReturn(100);
         assertThat(prop.getMinimumPaperNumberToBeRecycled()).isEqualTo(100);
         verify(scipamatoPropMock).getPaperNumberMinimumToBeRecycled();
     }
 
     @Test
-    public void gettingRedirectFromPort_delegatesToScipamatoProps() {
+    void gettingRedirectFromPort_delegatesToScipamatoProps() {
+        when(scipamatoPropMock.getRedirectFromPort()).thenReturn(5678);
         assertThat(prop.getRedirectFromPort()).isEqualTo(5678);
         verify(scipamatoPropMock).getRedirectFromPort();
     }

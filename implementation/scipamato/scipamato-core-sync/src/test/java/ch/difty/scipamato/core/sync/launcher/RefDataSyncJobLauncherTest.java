@@ -134,7 +134,9 @@ public class RefDataSyncJobLauncherTest {
         throws JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException,
         JobParametersInvalidException {
         final JobExecution jobExecution = jobExecutionFixture(executionID, status, exitStatus);
-        when(jobLauncher.run(eq(job), isA(JobParameters.class))).thenReturn(jobExecution);
+        doReturn(jobExecution)
+            .when(jobLauncher)
+            .run(eq(job), isA(JobParameters.class));
     }
 
     private JobExecution jobExecutionFixture(final long id, final BatchStatus status, final ExitStatus exitStatus) {
@@ -334,8 +336,9 @@ public class RefDataSyncJobLauncherTest {
                 break;
         }
 
-        when(jobLauncher.run(eq(syncCodeClassJob), isA(JobParameters.class))).thenThrow(
-            new RuntimeException("unexpected exception somewhere"));
+        doThrow(new RuntimeException("unexpected exception somewhere"))
+            .when(jobLauncher)
+            .run(eq(syncCodeClassJob), isA(JobParameters.class));
         return expectedMessages;
     }
 }

@@ -60,15 +60,6 @@ public class PubmedXmlServiceTest {
     @BeforeEach
     public void setUp() {
         service = new PubmedXmlService(unmarshallerMock, pubMedMock);
-
-        when(pubmedArticleMock.getMedlineCitation()).thenReturn(medLineCitationMock);
-        when(medLineCitationMock.getArticle()).thenReturn(articleMock);
-        when(articleMock.getJournal()).thenReturn(journalMock);
-        when(medLineCitationMock.getPMID()).thenReturn(pmidMock);
-        when(journalMock.getJournalIssue()).thenReturn(journalIssueMock);
-        when(journalIssueMock.getPubDate()).thenReturn(pubDateMock);
-        when(medLineCitationMock.getMedlineJournalInfo()).thenReturn(medLineJournalInfoMock);
-        when(articleMock.getArticleTitle()).thenReturn(articleTitleMock);
     }
 
     @AfterEach
@@ -105,6 +96,15 @@ public class PubmedXmlServiceTest {
         final List<Object> objects = new ArrayList<>();
         objects.add(pubmedArticleMock);
         when(pubmedArticleSetMock.getPubmedArticleOrPubmedBookArticle()).thenReturn(objects);
+
+        when(pubmedArticleMock.getMedlineCitation()).thenReturn(medLineCitationMock);
+        when(medLineCitationMock.getArticle()).thenReturn(articleMock);
+        when(articleMock.getJournal()).thenReturn(journalMock);
+        when(medLineCitationMock.getPMID()).thenReturn(pmidMock);
+        when(journalMock.getJournalIssue()).thenReturn(journalIssueMock);
+        when(journalIssueMock.getPubDate()).thenReturn(pubDateMock);
+        when(medLineCitationMock.getMedlineJournalInfo()).thenReturn(medLineJournalInfoMock);
+        when(articleMock.getArticleTitle()).thenReturn(articleTitleMock);
 
         PubmedArticleResult pr = service.getPubmedArticleWithPmid(pmId);
         assertThat(pr.getPubmedArticleFacade()).isNotNull();
@@ -150,6 +150,15 @@ public class PubmedXmlServiceTest {
         final List<java.lang.Object> objects = new ArrayList<>();
         objects.add(pubmedArticleMock);
         when(pubmedArticleSetMock.getPubmedArticleOrPubmedBookArticle()).thenReturn(objects);
+
+        when(pubmedArticleMock.getMedlineCitation()).thenReturn(medLineCitationMock);
+        when(medLineCitationMock.getArticle()).thenReturn(articleMock);
+        when(articleMock.getJournal()).thenReturn(journalMock);
+        when(medLineCitationMock.getPMID()).thenReturn(pmidMock);
+        when(journalMock.getJournalIssue()).thenReturn(journalIssueMock);
+        when(journalIssueMock.getPubDate()).thenReturn(pubDateMock);
+        when(medLineCitationMock.getMedlineJournalInfo()).thenReturn(medLineJournalInfoMock);
+        when(articleMock.getArticleTitle()).thenReturn(articleTitleMock);
 
         PubmedArticleResult pr = service.getPubmedArticleWithPmidAndApiKey(pmId, "key");
         assertThat(pr.getPubmedArticleFacade()).isNotNull();

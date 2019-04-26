@@ -39,7 +39,6 @@ public abstract class AbstractServiceTest<ID extends Number, T extends IdScipama
     @BeforeEach
     public final void setUp() {
         specificSetUp();
-        auditFixture();
     }
 
     /**
@@ -49,15 +48,29 @@ public abstract class AbstractServiceTest<ID extends Number, T extends IdScipama
     }
 
     protected void auditFixture() {
-        when(getEntity().getCreatedBy()).thenReturn(CREATOR_ID);
-        when(getEntity().getLastModifiedBy()).thenReturn(MODIFIER_ID);
+        doReturn(CREATOR_ID)
+            .when(getEntity())
+            .getCreatedBy();
+        doReturn(MODIFIER_ID)
+            .when(getEntity())
+            .getLastModifiedBy();
 
-        when(creatorMock.getDisplayValue()).thenReturn("creatingUser");
-        when(creatorMock.getFullName()).thenReturn("creatingUserFullName");
-        when(modifierMock.getDisplayValue()).thenReturn("modifyingUser");
+        doReturn("creatingUser")
+            .when(creatorMock)
+            .getDisplayValue();
+        doReturn("creatingUserFullName")
+            .when(creatorMock)
+            .getFullName();
+        doReturn("modifyingUser")
+            .when(modifierMock)
+            .getDisplayValue();
 
-        when(userRepoMock.findById(CREATOR_ID)).thenReturn(creatorMock);
-        when(userRepoMock.findById(MODIFIER_ID)).thenReturn(modifierMock);
+        doReturn(creatorMock)
+            .when(userRepoMock)
+            .findById(CREATOR_ID);
+        doReturn(modifierMock)
+            .when(userRepoMock)
+            .findById(MODIFIER_ID);
     }
 
     @AfterEach

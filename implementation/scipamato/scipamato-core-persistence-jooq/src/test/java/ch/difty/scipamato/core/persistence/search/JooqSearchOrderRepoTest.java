@@ -47,6 +47,10 @@ public class JooqSearchOrderRepoTest extends
         return SAMPLE_ID;
     }
 
+    protected void testSpecificSetUp() {
+        repo = getRepo();
+    }
+
     @Override
     protected JooqSearchOrderRepo getRepo() {
         if (repo == null) {
@@ -405,7 +409,7 @@ public class JooqSearchOrderRepoTest extends
         sc3.setSearchConditionId(3L);
         idToSc.put(sc3.getSearchConditionId(), sc3);
 
-        final List<Long> conditionIdsWithSearchTerms = Arrays.asList(sc2.getSearchConditionId());
+        final List<Long> conditionIdsWithSearchTerms = Collections.singletonList(sc2.getSearchConditionId());
 
         assertThat(repo.findTermLessConditions(idToSc, conditionIdsWithSearchTerms)).containsExactly(sc3);
     }

@@ -39,13 +39,6 @@ public abstract class InsertSetStepSetterTest<R extends Record, E extends CoreEn
 
     protected abstract E getEntity();
 
-    @BeforeEach
-    public void setUp() {
-        entityFixture();
-        stepSetFixtureExceptAudit();
-        setStepFixtureAudit();
-    }
-
     protected abstract void entityFixture();
 
     /**
@@ -106,7 +99,11 @@ public abstract class InsertSetStepSetterTest<R extends Record, E extends CoreEn
     }
 
     @Test
-    public void settingNonKeyFields() {
+    void settingNonKeyFields() {
+        entityFixture();
+        stepSetFixtureExceptAudit();
+        setStepFixtureAudit();
+
         RecordMapperTest.auditFixtureFor(getEntity());
 
         getSetter().setNonKeyFieldsFor(getStep(), getEntity());

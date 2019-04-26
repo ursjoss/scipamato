@@ -25,23 +25,6 @@ public class ScipamatoPublicPropertiesTest {
     @BeforeEach
     public void setUp() {
         prop = new ScipamatoPublicProperties(scipamatoPropMock, mavenPropMock);
-
-        when(scipamatoPropMock.getBrand()).thenReturn("brand");
-        when(scipamatoPropMock.getDefaultLocalization()).thenReturn("dl");
-        when(scipamatoPropMock.getPubmedBaseUrl()).thenReturn("pbUrl");
-        when(scipamatoPropMock.getRedirectFromPort()).thenReturn(5678);
-
-        when(mavenPropMock.getVersion()).thenReturn("0.0.1-SNAPSHOT");
-
-        when(scipamatoPropMock.getCmsUrlSearchPage()).thenReturn("http://u.sp");
-        when(scipamatoPropMock.getCmsUrlNewStudyPage()).thenReturn("http://u.nsp");
-
-        when(scipamatoPropMock.getAuthorsAbbreviatedMaxLength()).thenReturn(70);
-
-        when(scipamatoPropMock.getManagementUserName()).thenReturn("un");
-        when(scipamatoPropMock.getManagementUserPassword()).thenReturn("pw");
-
-        when(scipamatoPropMock.getNumberOfPreviousNewslettersInArchive()).thenReturn(14);
     }
 
     @AfterEach
@@ -50,7 +33,8 @@ public class ScipamatoPublicPropertiesTest {
     }
 
     @Test
-    public void gettingBrand_delegatesToScipamatoProps() {
+    void gettingBrand_delegatesToScipamatoProps() {
+        when(scipamatoPropMock.getBrand()).thenReturn("brand");
         assertThat(prop.getBrand()).isEqualTo("brand");
         verify(scipamatoPropMock).getBrand();
     }
@@ -64,7 +48,8 @@ public class ScipamatoPublicPropertiesTest {
     }
 
     @Test
-    public void gettingTitleOrBrand_withPageTitleNotDefined_delegatesToScipamatoProps_andReturnsBrand() {
+    void gettingTitleOrBrand_withPageTitleNotDefined_delegatesToScipamatoProps_andReturnsBrand() {
+        when(scipamatoPropMock.getBrand()).thenReturn("brand");
         when(scipamatoPropMock.getPageTitle()).thenReturn(null);
         assertThat(prop.getTitleOrBrand()).isEqualTo("brand");
         verify(scipamatoPropMock).getPageTitle();
@@ -72,13 +57,15 @@ public class ScipamatoPublicPropertiesTest {
     }
 
     @Test
-    public void gettingDefaultLocalization_delegatesToScipamatoProps() {
+    void gettingDefaultLocalization_delegatesToScipamatoProps() {
+        when(scipamatoPropMock.getDefaultLocalization()).thenReturn("dl");
         assertThat(prop.getDefaultLocalization()).isEqualTo("dl");
         verify(scipamatoPropMock).getDefaultLocalization();
     }
 
     @Test
-    public void gettingPubmedBaseUrl_delegatesToScipamatoProps() {
+    void gettingPubmedBaseUrl_delegatesToScipamatoProps() {
+        when(scipamatoPropMock.getPubmedBaseUrl()).thenReturn("pbUrl");
         assertThat(prop.getPubmedBaseUrl()).isEqualTo("pbUrl");
         verify(scipamatoPropMock).getPubmedBaseUrl();
     }
@@ -98,13 +85,15 @@ public class ScipamatoPublicPropertiesTest {
     }
 
     @Test
-    public void gettingRedirectFromPort_delegatesToScipamatoProp() {
+    void gettingRedirectFromPort_delegatesToScipamatoProp() {
+        when(scipamatoPropMock.getRedirectFromPort()).thenReturn(5678);
         assertThat(prop.getRedirectFromPort()).isEqualTo(5678);
         verify(scipamatoPropMock).getRedirectFromPort();
     }
 
     @Test
-    public void gettingBuildVersion_delegatesToMavenProp() {
+    void gettingBuildVersion_delegatesToMavenProp() {
+        when(mavenPropMock.getVersion()).thenReturn("0.0.1-SNAPSHOT");
         assertThat(prop.getBuildVersion()).isEqualTo("0.0.1-SNAPSHOT");
         verify(mavenPropMock).getVersion();
     }
@@ -131,37 +120,43 @@ public class ScipamatoPublicPropertiesTest {
     }
 
     @Test
-    public void checkingCssUrlSearchPage_delegatesToScipamatoProp() {
+    void checkingCssUrlSearchPage_delegatesToScipamatoProp() {
+        when(scipamatoPropMock.getCmsUrlSearchPage()).thenReturn("http://u.sp");
         assertThat(prop.getCmsUrlSearchPage()).isEqualTo("http://u.sp");
         verify(scipamatoPropMock).getCmsUrlSearchPage();
     }
 
     @Test
-    public void checkingCssUrlNewStudyPage_delegatesToScipamatoProp() {
+    void checkingCssUrlNewStudyPage_delegatesToScipamatoProp() {
+        when(scipamatoPropMock.getCmsUrlNewStudyPage()).thenReturn("http://u.nsp");
         assertThat(prop.getCmsUrlNewStudyPage()).isEqualTo("http://u.nsp");
         verify(scipamatoPropMock).getCmsUrlNewStudyPage();
     }
 
     @Test
-    public void checkingAuthorsAbbreviatedMaxLength() {
+    void checkingAuthorsAbbreviatedMaxLength() {
+        when(scipamatoPropMock.getAuthorsAbbreviatedMaxLength()).thenReturn(70);
         assertThat(prop.getAuthorsAbbreviatedMaxLength()).isEqualTo(70);
         verify(scipamatoPropMock).getAuthorsAbbreviatedMaxLength();
     }
 
     @Test
-    public void checkingManagementUserName_delegatesToScipamatoProp() {
+    void checkingManagementUserName_delegatesToScipamatoProp() {
+        when(scipamatoPropMock.getManagementUserName()).thenReturn("un");
         assertThat(prop.getManagementUserName()).isEqualTo("un");
         verify(scipamatoPropMock).getManagementUserName();
     }
 
     @Test
-    public void checkingManagementPassword_delegatesToScipamatoProp() {
+    void checkingManagementPassword_delegatesToScipamatoProp() {
+        when(scipamatoPropMock.getManagementUserPassword()).thenReturn("pw");
         assertThat(prop.getManagementUserPassword()).isEqualTo("pw");
         verify(scipamatoPropMock).getManagementUserPassword();
     }
 
     @Test
-    public void checkingNumberOfPreviousNewslettersInArchive() {
+    void checkingNumberOfPreviousNewslettersInArchive() {
+        when(scipamatoPropMock.getNumberOfPreviousNewslettersInArchive()).thenReturn(14);
         assertThat(prop.getNumberOfPreviousNewslettersInArchive()).isEqualTo(14);
         verify(scipamatoPropMock).getNumberOfPreviousNewslettersInArchive();
     }

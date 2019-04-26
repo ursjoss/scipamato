@@ -56,6 +56,8 @@ public class JooqPaperSlimServiceTest extends AbstractServiceTest<Long, PaperSli
 
         papers.add(paperSlimMock);
         papers.add(paperSlimMock);
+
+        // when(newsletterMock.getCreatedBy()).thenReturn(10);
     }
 
     @Override
@@ -65,9 +67,10 @@ public class JooqPaperSlimServiceTest extends AbstractServiceTest<Long, PaperSli
     }
 
     @Test
-    public void findingById_withFoundEntity_returnsOptionalOfIt() {
+    void findingById_withFoundEntity_returnsOptionalOfIt() {
         Long id = 7L;
         when(repoMock.findById(id)).thenReturn(paperSlimMock);
+        auditFixture();
 
         Optional<PaperSlim> optPaper = service.findById(id);
         assertThat(optPaper.isPresent()).isTrue();
@@ -93,6 +96,7 @@ public class JooqPaperSlimServiceTest extends AbstractServiceTest<Long, PaperSli
     @Test
     public void findingPageByFilter_delegatesToRepo() {
         when(repoMock.findPageByFilter(filterMock, paginationContextMock)).thenReturn(papers);
+        auditFixture();
         assertThat(service.findPageByFilter(filterMock, paginationContextMock)).isEqualTo(papers);
         verify(repoMock).findPageByFilter(filterMock, paginationContextMock);
         verifyAudit(2);

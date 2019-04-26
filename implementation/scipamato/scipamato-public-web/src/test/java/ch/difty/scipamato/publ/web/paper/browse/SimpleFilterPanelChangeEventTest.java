@@ -8,7 +8,6 @@ import nl.jqno.equalsverifier.Warning;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -24,12 +23,6 @@ public class SimpleFilterPanelChangeEventTest {
 
     @Mock
     private TextArea<?> mockComponent;
-
-    @BeforeEach
-    public void setUp() {
-        when(mockComponent.getId()).thenReturn("id");
-        when(mockComponent.getMarkupId()).thenReturn("mId");
-    }
 
     @AfterEach
     public void tearDown() {
@@ -100,7 +93,10 @@ public class SimpleFilterPanelChangeEventTest {
     }
 
     @Test
-    public void consideringAddingToTarget_withSameIdButNullMarkupId_addsTarget() {
+    void consideringAddingToTarget_withSameIdButNullMarkupId_addsTarget() {
+        when(mockComponent.getId()).thenReturn("id");
+        when(mockComponent.getMarkupId()).thenReturn("mId");
+
         e = new SimpleFilterPanelChangeEvent(targetMock).withId("id");
         assertThat(e.getMarkupId()).isNull();
 
@@ -110,7 +106,10 @@ public class SimpleFilterPanelChangeEventTest {
     }
 
     @Test
-    public void consideringAddingToTarget_withSameIdAndDifferingMarkupId_addsTarget() {
+    void consideringAddingToTarget_withSameIdAndDifferingMarkupId_addsTarget() {
+        when(mockComponent.getId()).thenReturn("id");
+        when(mockComponent.getMarkupId()).thenReturn("mId");
+
         e = new SimpleFilterPanelChangeEvent(targetMock)
             .withId("id")
             .withMarkupId("otherMarkupId");

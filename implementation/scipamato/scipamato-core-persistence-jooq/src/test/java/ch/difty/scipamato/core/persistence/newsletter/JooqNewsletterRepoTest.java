@@ -12,7 +12,6 @@ import org.jooq.TableField;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
-import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.core.db.tables.records.NewsletterRecord;
 import ch.difty.scipamato.core.entity.newsletter.Newsletter;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterFilter;
@@ -37,17 +36,6 @@ public class JooqNewsletterRepoTest extends
     private NewsletterRecordMapper mapperMock;
     @Mock
     private NewsletterFilter       filterMock;
-    @Mock
-    private Newsletter             newsletterMock;
-    @Mock
-    private PaginationContext      pageableMock;
-
-    @Override
-    protected void testSpecificSetUp() {
-        when(unpersistedEntity.getVersion()).thenReturn(0);
-        when(persistedEntity.getVersion()).thenReturn(0);
-        when(persistedRecord.getVersion()).thenReturn(0);
-    }
 
     @Override
     protected EntityRepository<Newsletter, Integer, NewsletterFilter> makeRepoSavingReturning(
@@ -129,7 +117,6 @@ public class JooqNewsletterRepoTest extends
     @Override
     protected void expectUnpersistedEntityIdNull() {
         when(unpersistedEntity.getId()).thenReturn(null);
-        when(unpersistedEntity.getVersion()).thenReturn(0);
     }
 
     @Override

@@ -27,14 +27,15 @@ public class IntegerSearchTermEvaluatorTest extends SearchTermEvaluatorTest<Inte
     }
 
     private void expectSearchTerm(MatchType type, int v) {
-        expectSearchTerm(type, v, v);
+        expectSearchTerm(type, v, null);
     }
 
-    private void expectSearchTerm(MatchType type, int v1, int v2) {
+    private void expectSearchTerm(MatchType type, int v1, Integer v2) {
         when(stMock.getType()).thenReturn(type);
         when(stMock.getFieldName()).thenReturn("fieldX");
         when(stMock.getValue()).thenReturn(v1);
-        when(stMock.getValue2()).thenReturn(v2);
+        if (v2 != null)
+            when(stMock.getValue2()).thenReturn(v2);
     }
 
     @Test
@@ -82,7 +83,7 @@ public class IntegerSearchTermEvaluatorTest extends SearchTermEvaluatorTest<Inte
     @Test
     public void buildingCondition_withFieldValueMissing() {
         int any = 0;
-        expectSearchTerm(MatchType.MISSING, any, any);
+        expectSearchTerm(MatchType.MISSING, any);
         Condition c = e.evaluate(stMock);
         assertThat(c.toString()).isEqualTo("field_x is null");
     }
@@ -90,7 +91,7 @@ public class IntegerSearchTermEvaluatorTest extends SearchTermEvaluatorTest<Inte
     @Test
     public void buildingCondition_withAnyFieldValuePresent() {
         int any = 0;
-        expectSearchTerm(MatchType.PRESENT, any, any);
+        expectSearchTerm(MatchType.PRESENT, any);
         Condition c = e.evaluate(stMock);
         assertThat(c.toString()).isEqualTo("field_x is not null");
     }

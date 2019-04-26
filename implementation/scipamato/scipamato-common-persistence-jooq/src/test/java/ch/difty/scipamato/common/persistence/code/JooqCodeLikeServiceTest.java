@@ -39,7 +39,6 @@ public class JooqCodeLikeServiceTest {
         codeClasses.add(cclMock);
         codeClasses.add(cclMock);
 
-        when(repoMock.findCodesOfClass(CC_ID, LANG_CODE)).thenReturn(codeClasses);
     }
 
     @Test
@@ -48,7 +47,8 @@ public class JooqCodeLikeServiceTest {
     }
 
     @Test
-    public void finding_delegatesToRepo() {
+    void finding_delegatesToRepo() {
+        when(repoMock.findCodesOfClass(CC_ID, LANG_CODE)).thenReturn(codeClasses);
         assertThat(service.findCodesOfClass(CC_ID, LANG_CODE)).containsExactly(cclMock, cclMock);
         verify(repoMock).findCodesOfClass(CC_ID, LANG_CODE);
     }

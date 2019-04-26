@@ -36,21 +36,21 @@ public abstract class JooqReadOnlyRepoTest<R extends Record, T extends IdScipama
     private final List<R> records  = new ArrayList<>();
 
     @Mock
-    private DSLContext                            dslMock;
+    private   DSLContext                         dslMock;
     @Mock
-    private GenericFilterConditionMapper<F>       filterConditionMapperMock;
+    protected GenericFilterConditionMapper<F>    filterConditionMapperMock;
     @Mock
-    private R                                     unpersistedRecord;
+    private   R                                  unpersistedRecord;
     @Mock
-    private JooqSortMapper<R, T, TI>              sortMapperMock;
+    private   JooqSortMapper<R, T, TI>           sortMapperMock;
     @Mock
-    private SelectWhereStep<R>                    selectWhereStepMock;
+    private   SelectWhereStep<R>                 selectWhereStepMock;
     @Mock
-    private SelectConditionStep<R>                selectConditionStepMock;
+    private   SelectConditionStep<R>             selectConditionStepMock;
     @Mock
-    private SelectSelectStep<Record1<Integer>>    selectSelectStepMock;
+    private   SelectSelectStep<Record1<Integer>> selectSelectStepMock;
     @Mock
-    private SelectJoinStep<Record1<Integer>>      selectJoinStepMock;
+    private   SelectJoinStep<Record1<Integer>>   selectJoinStepMock;
     @Mock
     private SelectConditionStep<Record1<Integer>> selectConditionStepMock2;
 
@@ -64,12 +64,12 @@ public abstract class JooqReadOnlyRepoTest<R extends Record, T extends IdScipama
     private SelectSeekStepN<R>       selectSeekStepNMock;
 
     @Mock
-    private Condition conditionMock;
+    Condition conditionMock;
 
     @Mock
     private ApplicationProperties applicationPropertiesMock;
 
-    private final F filterMock = getFilter();
+    final F filterMock = getFilter();
 
     protected DSLContext getDsl() {
         return dslMock;
@@ -146,8 +146,6 @@ public abstract class JooqReadOnlyRepoTest<R extends Record, T extends IdScipama
         records.add(getPersistedRecord());
         records.add(getPersistedRecord());
 
-        when(filterConditionMapperMock.map(filterMock)).thenReturn(conditionMock);
-
         specificSetUp();
     }
 
@@ -190,6 +188,7 @@ public abstract class JooqReadOnlyRepoTest<R extends Record, T extends IdScipama
 
     @Test
     public void countingByFilter() {
+        when(filterConditionMapperMock.map(filterMock)).thenReturn(conditionMock);
         when(dslMock.selectOne()).thenReturn(selectSelectStepMock);
         when(selectSelectStepMock.from(getTable())).thenReturn(selectJoinStepMock);
         when(selectJoinStepMock.where(isA(Condition.class))).thenReturn(selectConditionStepMock2);

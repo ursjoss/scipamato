@@ -47,12 +47,6 @@ public class HouseKeeperTest {
     @BeforeEach
     public void setUp() {
         hk = new HouseKeeper<>(dslContextMock, lastSynchedField, dateTimeServiceMock, 30, "code_class");
-
-        when(lastSynchedField.getTable()).thenReturn(tableMock);
-        when(dslContextMock.deleteFrom(tableMock)).thenReturn(deleteWhereStepMock);
-        when(dateTimeServiceMock.getCurrentDateTime()).thenReturn(TS);
-        when(deleteWhereStepMock.where(lastSynchedField.lessThan(Timestamp.valueOf(TS)))).thenReturn(
-            deleteCondStepMock);
     }
 
     @Test
@@ -80,13 +74,23 @@ public class HouseKeeperTest {
     }
 
     @Test
-    public void executing_returnsFinishedStatus() {
+    void executing_returnsFinishedStatus() {
+        commonTestFixture();
         assertThat(hk.execute(contributionMock, chunkContextMock)).isEqualTo(RepeatStatus.FINISHED);
         verify(dateTimeServiceMock).getCurrentDateTime();
     }
 
+    private void commonTestFixture() {
+        when(lastSynchedField.getTable()).thenReturn(tableMock);
+        when(dslContextMock.deleteFrom(tableMock)).thenReturn(deleteWhereStepMock);
+        when(dateTimeServiceMock.getCurrentDateTime()).thenReturn(TS);
+        when(deleteWhereStepMock.where(lastSynchedField.lessThan(Timestamp.valueOf(TS)))).thenReturn(
+            deleteCondStepMock);
+    }
+
     @Test
-    public void executing_withSingleModifications_logs() {
+    void executing_withSingleModifications_logs() {
+        commonTestFixture();
         when(deleteCondStepMock.execute()).thenReturn(1);
         hk.execute(contributionMock, chunkContextMock);
         verify(dateTimeServiceMock).getCurrentDateTime();
@@ -96,7 +100,8 @@ public class HouseKeeperTest {
     }
 
     @Test
-    public void executing_withMultipleModifications_logs() {
+    void executing_withMultipleModifications_logs() {
+        commonTestFixture();
         when(deleteCondStepMock.execute()).thenReturn(2);
         hk.execute(contributionMock, chunkContextMock);
         verify(dateTimeServiceMock).getCurrentDateTime();
@@ -106,7 +111,8 @@ public class HouseKeeperTest {
     }
 
     @Test
-    public void executing_withoutModifications_skipsLog() {
+    void executing_withoutModifications_skipsLog() {
+        commonTestFixture();
         when(deleteCondStepMock.execute()).thenReturn(0);
         hk.execute(contributionMock, chunkContextMock);
         verify(dateTimeServiceMock).getCurrentDateTime();
@@ -115,14 +121,16 @@ public class HouseKeeperTest {
     }
 
     @Test
-    public void executing_ignoresContributionMock() {
+    void executing_ignoresContributionMock() {
+        commonTestFixture();
         hk.execute(contributionMock, chunkContextMock);
         verify(dateTimeServiceMock).getCurrentDateTime();
         verifyNoMoreInteractions(contributionMock);
     }
 
     @Test
-    public void executing_ignoresChunkContextMock() {
+    void executing_ignoresChunkContextMock() {
+        commonTestFixture();
         hk.execute(contributionMock, chunkContextMock);
         verify(dateTimeServiceMock).getCurrentDateTime();
         verifyNoMoreInteractions(chunkContextMock);

@@ -9,7 +9,6 @@ import org.jooq.Record;
 import org.jooq.UpdateSetFirstStep;
 import org.jooq.UpdateSetMoreStep;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -38,8 +37,7 @@ public abstract class UpdateSetStepSetterTest<R extends Record, E extends CoreEn
 
     protected abstract E getEntity();
 
-    @BeforeEach
-    public void setUp() {
+    private void fullFixture() {
         entityFixture();
         stepSetFixtureExceptAudit();
         stepSetFixtureAudit();
@@ -102,7 +100,8 @@ public abstract class UpdateSetStepSetterTest<R extends Record, E extends CoreEn
     }
 
     @Test
-    public void settingNonKeyFields() {
+    void settingNonKeyFields() {
+        fullFixture();
         RecordMapperTest.auditFixtureFor(getEntity());
         RecordMapperTest.auditExtendedFixtureFor(getEntity());
 
