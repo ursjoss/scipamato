@@ -12,11 +12,11 @@ import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.core.pubmed.api.*;
 
-public class ScipamatoPubmedArticleTest {
+class ScipamatoPubmedArticleTest {
 
     private final PubmedArticle pubmedArticle = makeMinimalValidPubmedArticle();
 
-    public static PubmedArticle makeMinimalValidPubmedArticle() {
+    static PubmedArticle makeMinimalValidPubmedArticle() {
         PubmedArticle pa = new PubmedArticle();
         MedlineCitation medlineCitation = new MedlineCitation();
         Article article = new Article();
@@ -34,19 +34,19 @@ public class ScipamatoPubmedArticleTest {
     }
 
     @Test
-    public void degenerateConstruction_withNullPubmedArticle() {
+    void degenerateConstruction_withNullPubmedArticle() {
         assertDegenerateSupplierParameter(() -> new ScipamatoPubmedArticle(null), "pubmedArticle");
     }
 
     @Test
-    public void degenerateConstruction_withNullMedlineCitation() {
+    void degenerateConstruction_withNullMedlineCitation() {
         pubmedArticle.setMedlineCitation(null);
         assertDegenerateSupplierParameter(() -> new ScipamatoPubmedArticle(pubmedArticle),
             "pubmedArticle.medlineCitation");
     }
 
     @Test
-    public void degenerateConstruction_withNullArticle() {
+    void degenerateConstruction_withNullArticle() {
         pubmedArticle
             .getMedlineCitation()
             .setArticle(null);
@@ -55,7 +55,7 @@ public class ScipamatoPubmedArticleTest {
     }
 
     @Test
-    public void degenerateConstruction_withNullJournal() {
+    void degenerateConstruction_withNullJournal() {
         pubmedArticle
             .getMedlineCitation()
             .getArticle()
@@ -65,7 +65,7 @@ public class ScipamatoPubmedArticleTest {
     }
 
     @Test
-    public void degenerateConstruction_withNullPmid() {
+    void degenerateConstruction_withNullPmid() {
         pubmedArticle
             .getMedlineCitation()
             .setPMID(null);
@@ -74,7 +74,7 @@ public class ScipamatoPubmedArticleTest {
     }
 
     @Test
-    public void degenerateConstruction_withNullJournalIssue() {
+    void degenerateConstruction_withNullJournalIssue() {
         pubmedArticle
             .getMedlineCitation()
             .getArticle()
@@ -85,7 +85,7 @@ public class ScipamatoPubmedArticleTest {
     }
 
     @Test
-    public void degenerateConstruction_withNullPubDate() {
+    void degenerateConstruction_withNullPubDate() {
         pubmedArticle
             .getMedlineCitation()
             .getArticle()
@@ -97,7 +97,7 @@ public class ScipamatoPubmedArticleTest {
     }
 
     @Test
-    public void degenerateConstruction_withNullMedlineJournalInfo() {
+    void degenerateConstruction_withNullMedlineJournalInfo() {
         pubmedArticle
             .getMedlineCitation()
             .setMedlineJournalInfo(null);
@@ -106,17 +106,17 @@ public class ScipamatoPubmedArticleTest {
     }
 
     @Test
-    public void validConstruction() {
+    void validConstruction() {
         assertThat(new ScipamatoPubmedArticle(pubmedArticle)).isNotNull();
     }
 
     @Test
-    public void validConstructionUsingOf() {
+    void validConstructionUsingOf() {
         assertThat(PubmedArticleFacade.newPubmedArticleFrom(pubmedArticle)).isNotNull();
     }
 
     @Test
-    public void extractingYearFromNeitherYearObjectNorMedlineDate_returnsYear0() {
+    void extractingYearFromNeitherYearObjectNorMedlineDate_returnsYear0() {
         assertThat(pubmedArticle
             .getMedlineCitation()
             .getArticle()
@@ -139,7 +139,7 @@ public class ScipamatoPubmedArticleTest {
     }
 
     @Test
-    public void extractYearFromYearObject() {
+    void extractYearFromYearObject() {
         Year year = new Year();
         year.setvalue("2016");
         pubmedArticle
@@ -155,7 +155,7 @@ public class ScipamatoPubmedArticleTest {
     }
 
     @Test
-    public void extractYearFromMedlineDate() {
+    void extractYearFromMedlineDate() {
         MedlineDate md = new MedlineDate();
         md.setvalue("2016 Nov-Dec");
         pubmedArticle
@@ -172,7 +172,7 @@ public class ScipamatoPubmedArticleTest {
     }
 
     @Test
-    public void withNoFurtherAttributes() {
+    void withNoFurtherAttributes() {
         ScipamatoPubmedArticle spa = new ScipamatoPubmedArticle(pubmedArticle);
         assertThat(spa.getAuthors()).isNull();
         assertThat(spa.getFirstAuthor()).isNull();
@@ -182,7 +182,7 @@ public class ScipamatoPubmedArticleTest {
     }
 
     @Test
-    public void authors_withoutCollectiveAuthor() {
+    void authors_withoutCollectiveAuthor() {
         AuthorList authorList = new AuthorList();
         authorList
             .getAuthor()
@@ -203,7 +203,7 @@ public class ScipamatoPubmedArticleTest {
     }
 
     @Test
-    public void authors_withCollectiveAuthor() {
+    void authors_withCollectiveAuthor() {
         AuthorList authorList = new AuthorList();
         authorList
             .getAuthor()
@@ -224,7 +224,7 @@ public class ScipamatoPubmedArticleTest {
     }
 
     @Test
-    public void noAuthors_withCollectiveAuthor() {
+    void noAuthors_withCollectiveAuthor() {
         AuthorList authorList = new AuthorList();
         authorList
             .getAuthor()
@@ -239,7 +239,7 @@ public class ScipamatoPubmedArticleTest {
     }
 
     @Test
-    public void noAuthors_noCollectiveAuthor() {
+    void noAuthors_noCollectiveAuthor() {
         AuthorList authorList = new AuthorList();
         pubmedArticle
             .getMedlineCitation()
@@ -251,7 +251,7 @@ public class ScipamatoPubmedArticleTest {
     }
 
     @Test
-    public void location_withMedlinePagination() {
+    void location_withMedlinePagination() {
         pubmedArticle
             .getMedlineCitation()
             .getMedlineJournalInfo()
@@ -299,7 +299,7 @@ public class ScipamatoPubmedArticleTest {
     }
 
     @Test
-    public void location_withMedlinePaginationWithoutPageRange() {
+    void location_withMedlinePaginationWithoutPageRange() {
         pubmedArticle
             .getMedlineCitation()
             .getMedlineJournalInfo()
@@ -342,7 +342,7 @@ public class ScipamatoPubmedArticleTest {
     }
 
     @Test
-    public void location_withMedlineElocation() {
+    void location_withMedlineElocation() {
         pubmedArticle
             .getMedlineCitation()
             .getMedlineJournalInfo()
@@ -430,7 +430,7 @@ public class ScipamatoPubmedArticleTest {
     }
 
     @Test
-    public void title() {
+    void title() {
         ArticleTitle articleTitle = new ArticleTitle();
         articleTitle.setMixedContent(List.of("article title"));
         pubmedArticle
@@ -442,7 +442,7 @@ public class ScipamatoPubmedArticleTest {
     }
 
     @Test
-    public void doi_fromArticleIdList() {
+    void doi_fromArticleIdList() {
         ArticleId articleId1 = new ArticleId();
         articleId1.setIdType("foo");
         articleId1.setvalue("bar");
@@ -464,7 +464,7 @@ public class ScipamatoPubmedArticleTest {
     }
 
     @Test
-    public void doi_withoutArticleIdList_usesElocIfthere() {
+    void doi_withoutArticleIdList_usesElocIfthere() {
         ELocationID elocationId = new ELocationID();
         elocationId.setvalue("eloc");
         pubmedArticle
@@ -477,7 +477,7 @@ public class ScipamatoPubmedArticleTest {
     }
 
     @Test
-    public void equals() {
+    void equals() {
         EqualsVerifier
             .forClass(ScipamatoPubmedArticle.class)
             .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
@@ -485,35 +485,35 @@ public class ScipamatoPubmedArticleTest {
     }
 
     @Test
-    public void testingToString() {
+    void testingToString() {
         ScipamatoPubmedArticle pa = new ScipamatoPubmedArticle(pubmedArticle);
         assertThat(pa.toString()).isEqualTo(
             "AbstractPubmedArticleFacade(pmId=null, authors=null, firstAuthor=null, publicationYear=0, location=null. 0;, title=null, doi=null, originalAbstract=null)");
     }
 
     @Test
-    public void handleDatishObject_withYear() {
+    void handleDatishObject_withYear() {
         Year o = new Year();
         o.setvalue("2018");
         assertDatish("2018 ", o);
     }
 
     @Test
-    public void handleDatishObject_withMonth() {
+    void handleDatishObject_withMonth() {
         Month o = new Month();
         o.setvalue("12");
         assertDatish("12 ", o);
     }
 
     @Test
-    public void handleDatishObject_withDay() {
+    void handleDatishObject_withDay() {
         Day o = new Day();
         o.setvalue("13");
         assertDatish("13", o);
     }
 
     @Test
-    public void handleDatishObject_withUndefinedObject() {
+    void handleDatishObject_withUndefinedObject() {
         assertDatish("", "foo");
     }
 

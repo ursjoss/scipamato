@@ -7,7 +7,7 @@ import static org.assertj.core.api.Assertions.fail;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
 
 import org.jooq.DSLContext;
@@ -24,7 +24,7 @@ import ch.difty.scipamato.core.entity.code_class.CodeClassTranslation;
 import ch.difty.scipamato.core.persistence.OptimisticLockingException;
 
 @ExtendWith(MockitoExtension.class)
-public class JooqCodeClassRepoTest {
+class JooqCodeClassRepoTest {
 
     @Mock
     private DSLContext dslContextMock;
@@ -35,42 +35,42 @@ public class JooqCodeClassRepoTest {
     private JooqCodeClassRepo repo;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         repo = new JooqCodeClassRepo(dslContextMock, dtsMock);
     }
 
     @Test
-    public void degenerateConstruction_withNullDsl_throws() {
+    void degenerateConstruction_withNullDsl_throws() {
         assertDegenerateSupplierParameter(() -> new JooqCodeClassRepo(null, dtsMock), "dsl");
     }
 
     @Test
-    public void degenerateConstruction_withNullDateTimeService_throws() {
+    void degenerateConstruction_withNullDateTimeService_throws() {
         assertDegenerateSupplierParameter(() -> new JooqCodeClassRepo(dslContextMock, null), "dateTimeService");
     }
 
     @Test
-    public void finding_withNullLanguageId_throws() {
+    void finding_withNullLanguageId_throws() {
         assertDegenerateSupplierParameter(() -> repo.find(null), "languageCode");
     }
 
     @Test
-    public void insertingOrUpdating_withNullCodeClassDefinition_throws() {
+    void insertingOrUpdating_withNullCodeClassDefinition_throws() {
         assertDegenerateSupplierParameter(() -> repo.saveOrUpdate(null), "codeClassDefinition");
     }
 
     @Test
-    public void findingCodeClassDefinition_withNullId_throws() {
+    void findingCodeClassDefinition_withNullId_throws() {
         assertDegenerateSupplierParameter(() -> repo.findCodeClassDefinition(null), "id");
     }
 
     @Test
-    public void deleting_withNullId_throws() {
+    void deleting_withNullId_throws() {
         assertDegenerateSupplierParameter(() -> repo.delete(null, 1), "id");
     }
 
     @Test
-    public void removingObsoletePersistedRecords() {
+    void removingObsoletePersistedRecords() {
         final Integer codeClassId = 1;
         final CodeClassTranslation cct = new CodeClassTranslation(1, "de", "cc1", "", 1);
         final Result<CodeClassTrRecord> resultMock = mock(Result.class);
@@ -83,7 +83,7 @@ public class JooqCodeClassRepoTest {
         when(itMock.hasNext()).thenReturn(true, true, false);
         when(itMock.next()).thenReturn(cctr1, cctr2);
 
-        repo.removeObsoletePersistedRecordsFor(resultMock, Arrays.asList(cct));
+        repo.removeObsoletePersistedRecordsFor(resultMock, Collections.singletonList(cct));
 
         verify(resultMock).iterator();
         verify(itMock, times(3)).hasNext();
@@ -96,7 +96,7 @@ public class JooqCodeClassRepoTest {
     }
 
     @Test
-    public void consideringAdding_withNullRecord_throwsOptimisticLockingException() {
+    void consideringAdding_withNullRecord_throwsOptimisticLockingException() {
         try {
             repo.considerAdding(null, new ArrayList<>(), new CodeClassTranslation(1, "de", "c1", "comm", 10));
             fail("should have thrown exception");
@@ -109,7 +109,7 @@ public class JooqCodeClassRepoTest {
     }
 
     @Test
-    public void logOrThrow_withDeleteCount0_throws() {
+    void logOrThrow_withDeleteCount0_throws() {
         try {
             repo.logOrThrow(0, 1, "deletedObject");
             fail("should have thrown exception");

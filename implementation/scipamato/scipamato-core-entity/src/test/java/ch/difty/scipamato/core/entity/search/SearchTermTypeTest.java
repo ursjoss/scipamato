@@ -6,15 +6,15 @@ import static org.assertj.core.api.Assertions.fail;
 
 import org.junit.jupiter.api.Test;
 
-public class SearchTermTypeTest {
+class SearchTermTypeTest {
 
     @Test
-    public void testValues() {
+    void testValues() {
         assertThat(values()).containsExactly(BOOLEAN, INTEGER, STRING, AUDIT, UNSUPPORTED);
     }
 
     @Test
-    public void testId() {
+    void testId() {
         assertThat(BOOLEAN.getId()).isEqualTo(0);
         assertThat(INTEGER.getId()).isEqualTo(1);
         assertThat(STRING.getId()).isEqualTo(2);
@@ -23,7 +23,7 @@ public class SearchTermTypeTest {
     }
 
     @Test
-    public void testById_withValidIds() {
+    void testById_withValidIds() {
         assertThat(SearchTermType.byId(0)).isEqualTo(BOOLEAN);
         assertThat(SearchTermType.byId(1)).isEqualTo(INTEGER);
         assertThat(SearchTermType.byId(2)).isEqualTo(STRING);
@@ -31,7 +31,7 @@ public class SearchTermTypeTest {
     }
 
     @Test
-    public void testById_withInvalidIds() {
+    void testById_withInvalidIds() {
         try {
             SearchTermType.byId(-2);
             fail("should have thrown");

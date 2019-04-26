@@ -18,7 +18,7 @@ import ch.difty.scipamato.publ.db.tables.records.PaperRecord;
 import ch.difty.scipamato.publ.entity.PublicPaper;
 
 @ExtendWith(MockitoExtension.class)
-public class JooqPublicPaperRepoTest {
+class JooqPublicPaperRepoTest {
 
     private JooqPublicPaperRepo repo;
 
@@ -34,7 +34,7 @@ public class JooqPublicPaperRepoTest {
     private JournalExtractor                                journalExtractor;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         repo = new JooqPublicPaperRepo(dslMock, sortMapperMock, filterConditionMapperMock, authorsAbbreviator,
             journalExtractor) {
             @Override
@@ -45,17 +45,17 @@ public class JooqPublicPaperRepoTest {
     }
 
     @AfterEach
-    public void tearDown() {
+    void tearDown() {
         verifyNoMoreInteractions(dslMock, sortMapperMock, filterConditionMapperMock);
     }
 
     @Test
-    public void findingByNumber_withNullNumber_throws() {
+    void findingByNumber_withNullNumber_throws() {
         assertDegenerateSupplierParameter(() -> repo.findByNumber(null), "number");
     }
 
     @Test
-    public void mapping_withPaperRecordHandingBackNullEvenForAuditDates_doesNotThrow() {
+    void mapping_withPaperRecordHandingBackNullEvenForAuditDates_doesNotThrow() {
         PaperRecord pr = mock(PaperRecord.class);
         PublicPaper pp = repo.map(pr);
         assertThat(pp.getCreated()).isNull();
@@ -63,7 +63,7 @@ public class JooqPublicPaperRepoTest {
     }
 
     @Test
-    public void mapping_callsAuthorsAbbreviator_withAuthors() {
+    void mapping_callsAuthorsAbbreviator_withAuthors() {
         final String authors = "authors";
         final String authorsAbbr = "auths";
         PaperRecord pr = mock(PaperRecord.class);
@@ -79,7 +79,7 @@ public class JooqPublicPaperRepoTest {
     }
 
     @Test
-    public void mapping_callsJournalExtractor_withLocation() {
+    void mapping_callsJournalExtractor_withLocation() {
         final String location = "location";
         final String journal = "journal";
         PaperRecord pr = mock(PaperRecord.class);

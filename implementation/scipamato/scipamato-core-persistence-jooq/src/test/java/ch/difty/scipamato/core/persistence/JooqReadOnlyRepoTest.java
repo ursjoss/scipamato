@@ -36,23 +36,23 @@ public abstract class JooqReadOnlyRepoTest<R extends Record, T extends IdScipama
     private final List<R> records  = new ArrayList<>();
 
     @Mock
-    private   DSLContext                         dslMock;
+    private   DSLContext                            dslMock;
     @Mock
-    protected GenericFilterConditionMapper<F>    filterConditionMapperMock;
+    protected GenericFilterConditionMapper<F>       filterConditionMapperMock;
     @Mock
-    private   R                                  unpersistedRecord;
+    private   R                                     unpersistedRecord;
     @Mock
-    private   JooqSortMapper<R, T, TI>           sortMapperMock;
+    private   JooqSortMapper<R, T, TI>              sortMapperMock;
     @Mock
-    private   SelectWhereStep<R>                 selectWhereStepMock;
+    private   SelectWhereStep<R>                    selectWhereStepMock;
     @Mock
-    private   SelectConditionStep<R>             selectConditionStepMock;
+    private   SelectConditionStep<R>                selectConditionStepMock;
     @Mock
-    private   SelectSelectStep<Record1<Integer>> selectSelectStepMock;
+    private   SelectSelectStep<Record1<Integer>>    selectSelectStepMock;
     @Mock
-    private   SelectJoinStep<Record1<Integer>>   selectJoinStepMock;
+    private   SelectJoinStep<Record1<Integer>>      selectJoinStepMock;
     @Mock
-    private SelectConditionStep<Record1<Integer>> selectConditionStepMock2;
+    private   SelectConditionStep<Record1<Integer>> selectConditionStepMock2;
 
     @Mock
     private PaginationContext        paginationContextMock;
@@ -137,7 +137,7 @@ public abstract class JooqReadOnlyRepoTest<R extends Record, T extends IdScipama
     }
 
     @BeforeEach
-    public final void setUp() {
+    final void setUp() {
         repo = getRepo();
 
         entities.add(getPersistedEntity());
@@ -153,7 +153,7 @@ public abstract class JooqReadOnlyRepoTest<R extends Record, T extends IdScipama
     }
 
     @AfterEach
-    public final void tearDown() {
+    final void tearDown() {
         specificTearDown();
         verifyNoMoreInteractions(dslMock, getMapper(), sortMapperMock);
         verifyNoMoreInteractions(getUnpersistedEntity(), getPersistedEntity(), unpersistedRecord, getPersistedRecord());
@@ -168,7 +168,7 @@ public abstract class JooqReadOnlyRepoTest<R extends Record, T extends IdScipama
     }
 
     @Test
-    public final void nullCheck() {
+    final void nullCheck() {
         assertThat(getRepo()).isNotNull();
         assertThat(getDsl()).isNotNull();
         assertThat(getMapper()).isNotNull();
@@ -182,12 +182,12 @@ public abstract class JooqReadOnlyRepoTest<R extends Record, T extends IdScipama
     }
 
     @Test
-    public void findingByIdNull_throws() {
+    void findingByIdNull_throws() {
         Assertions.assertThrows(NullArgumentException.class, () -> repo.findById(null, "en"));
     }
 
     @Test
-    public void countingByFilter() {
+    void countingByFilter() {
         when(filterConditionMapperMock.map(filterMock)).thenReturn(conditionMock);
         when(dslMock.selectOne()).thenReturn(selectSelectStepMock);
         when(selectSelectStepMock.from(getTable())).thenReturn(selectJoinStepMock);

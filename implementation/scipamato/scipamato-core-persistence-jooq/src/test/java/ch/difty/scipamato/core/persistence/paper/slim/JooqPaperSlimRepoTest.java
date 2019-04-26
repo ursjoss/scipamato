@@ -24,7 +24,7 @@ import ch.difty.scipamato.core.persistence.ReadOnlyRepository;
 import ch.difty.scipamato.core.persistence.paper.searchorder.PaperSlimBackedSearchOrderRepository;
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
-public class JooqPaperSlimRepoTest extends
+class JooqPaperSlimRepoTest extends
     JooqReadOnlyRepoTest<PaperRecord, PaperSlim, Long, ch.difty.scipamato.core.db.tables.Paper, PaperSlimRecordMapper, PaperFilter> {
 
     private static final Long SAMPLE_ID = 3L;
@@ -136,26 +136,26 @@ public class JooqPaperSlimRepoTest extends
     }
 
     @Test
-    public void gettingTableId() {
+    void gettingTableId() {
         assertThat(repo.getTableId()).isEqualTo(getTableId());
     }
 
     @Test
-    public void findingBySearchOrder_delegatesToSearchOrderFinder() {
+    void findingBySearchOrder_delegatesToSearchOrderFinder() {
         when(searchOrderRepositoryMock.findBySearchOrder(searchOrderMock)).thenReturn(paperSlims);
         assertThat(repo.findBySearchOrder(searchOrderMock)).containsExactly(paperSlimMock, paperSlimMock);
         verify(searchOrderRepositoryMock).findBySearchOrder(searchOrderMock);
     }
 
     @Test
-    public void countingBySearchOrder_delegatesToSearchOrderFinder() {
+    void countingBySearchOrder_delegatesToSearchOrderFinder() {
         when(searchOrderRepositoryMock.countBySearchOrder(searchOrderMock)).thenReturn(2);
         assertThat(repo.countBySearchOrder(searchOrderMock)).isEqualTo(2);
         verify(searchOrderRepositoryMock).countBySearchOrder(searchOrderMock);
     }
 
     @Test
-    public void findingPageBySearchOrder_delegatesToSearchOrderFinder() {
+    void findingPageBySearchOrder_delegatesToSearchOrderFinder() {
         when(searchOrderRepositoryMock.findPageBySearchOrder(searchOrderMock, pageableMock)).thenReturn(paperSlims);
         assertThat(repo.findPageBySearchOrder(searchOrderMock, pageableMock)).containsExactly(paperSlimMock,
             paperSlimMock);
@@ -163,12 +163,12 @@ public class JooqPaperSlimRepoTest extends
     }
 
     @Test
-    public void gettingVersion_returnsPapersVersion() {
+    void gettingVersion_returnsPapersVersion() {
         assertThat(repo.getRecordVersion()).isEqualTo(PAPER.VERSION);
     }
 
     @Test
-    public void findingById_withVersion_withNullId() {
+    void findingById_withVersion_withNullId() {
         TestUtils.assertDegenerateSupplierParameter(() -> repo.findById(null, 1, "de"), "id");
     }
 }

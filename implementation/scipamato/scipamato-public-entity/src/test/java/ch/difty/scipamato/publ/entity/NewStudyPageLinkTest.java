@@ -8,7 +8,7 @@ import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
 import org.junit.jupiter.api.Test;
 
-public class NewStudyPageLinkTest extends PublicEntityTest<NewStudyPageLink> {
+class NewStudyPageLinkTest extends PublicEntityTest<NewStudyPageLink> {
 
     @Override
     protected NewStudyPageLink newEntity() {
@@ -39,7 +39,7 @@ public class NewStudyPageLinkTest extends PublicEntityTest<NewStudyPageLink> {
     }
 
     @Test
-    public void assertEnumFields() {
+    void assertEnumFields() {
         assertThat(NewStudyPageLink.NewStudyPageLinkFields.values())
             .extracting("name")
             .containsExactly("langCode", "sort", "title", "url");

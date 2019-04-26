@@ -11,7 +11,7 @@ import org.apache.wicket.util.resource.IResourceStream;
 import org.apache.wicket.util.resource.ResourceStreamNotFoundException;
 import org.junit.jupiter.api.Test;
 
-public class PaperLiteratureReviewReportResourceReferenceTest
+class PaperLiteratureReviewReportResourceReferenceTest
     extends JasperReportResourceReferenceTest<PaperLiteratureReviewReportResourceReference> {
 
     @Override
@@ -30,7 +30,7 @@ public class PaperLiteratureReviewReportResourceReferenceTest
     }
 
     @Test
-    public void gettingResourceStream_withNullStream() {
+    void gettingResourceStream_withNullStream() {
         final JasperReportResourceReference rr = new JasperReportResourceReference(
             PaperLiteratureReviewReportResourceReference.class, "baz", false) {
             @Override
@@ -50,7 +50,7 @@ public class PaperLiteratureReviewReportResourceReferenceTest
     }
 
     @Test
-    public void gettingResourceStream_withResourceStreamNotFoundException() {
+    void gettingResourceStream_withResourceStreamNotFoundException() {
         final JasperReportResourceReference rr = new JasperReportResourceReference(
             PaperLiteratureReviewReportResourceReference.class, "baz", false) {
 
@@ -76,7 +76,7 @@ public class PaperLiteratureReviewReportResourceReferenceTest
     }
 
     @Test
-    public void compilingReport_throwingJRexception() {
+    void compilingReport_throwingJRexception() {
         final JasperReportResourceReference rr = new JasperReportResourceReference(
             PaperLiteratureReviewReportResourceReference.class, "baz", false) {
             @Override

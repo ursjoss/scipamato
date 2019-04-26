@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 import ch.difty.scipamato.common.web.TestRecord;
 import ch.difty.scipamato.common.web.WicketBaseTest;
 
-public class LinkIconColumnTest extends WicketBaseTest {
+class LinkIconColumnTest extends WicketBaseTest {
 
     private static final String ID = "panel";
 
@@ -34,7 +34,7 @@ public class LinkIconColumnTest extends WicketBaseTest {
     }
 
     @Test
-    public void testPanel_withTitle() {
+    void testPanel_withTitle() {
         getTester().startComponentInPage(newPanelWithTitle("the title"));
         assertComponents();
         assertImageTitle();
@@ -61,7 +61,7 @@ public class LinkIconColumnTest extends WicketBaseTest {
     }
 
     @Test
-    public void testPanel_withoutTitle() {
+    void testPanel_withoutTitle() {
         getTester().startComponentInPage(newPanelWithTitle(null));
         assertComponents();
         assertNoImageTitle();
@@ -78,7 +78,7 @@ public class LinkIconColumnTest extends WicketBaseTest {
     }
 
     @Test
-    public void clickingLink() {
+    void clickingLink() {
         getTester().startComponentInPage(newPanelWithTitle("foo"));
         getTester().clickLink("panel:table:body:rows:1:cells:2:cell:link");
         assertThat(clickPerformed).isEqualTo("TestRecord(1, foo)");
@@ -101,14 +101,14 @@ public class LinkIconColumnTest extends WicketBaseTest {
     };
 
     @Test
-    public void cssClassIsNull_canSetLater() {
+    void cssClassIsNull_canSetLater() {
         assertThat(lc
             .getDisplayModel()
             .getObject()).isEqualTo("headerText");
     }
 
     @Test
-    public void creatingTitleModel_returnsNull() {
+    void creatingTitleModel_returnsNull() {
         assertThat(lc.createTitleModel(Model.of(new TestRecord(1, "foo")))).isNull();
     }
 }

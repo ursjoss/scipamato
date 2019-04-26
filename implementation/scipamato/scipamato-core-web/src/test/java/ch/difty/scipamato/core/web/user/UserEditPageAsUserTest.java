@@ -2,7 +2,7 @@ package ch.difty.scipamato.core.web.user;
 
 import org.junit.jupiter.api.Test;
 
-public class UserEditPageAsUserTest extends UserEditPageAsViewerTest {
+class UserEditPageAsUserTest extends UserEditPageAsViewerTest {
 
     @Override
     protected String getUserName() {
@@ -11,37 +11,37 @@ public class UserEditPageAsUserTest extends UserEditPageAsViewerTest {
 
     @Test
     @Override
-    public void userCannotAccessUserEditPageInManagedMode() {
+    void userCannotAccessUserEditPageInManagedMode() {
         assertCannotAccessUserEditPageInMode(UserEditPage.Mode.MANAGE);
     }
 
     @Test
     @Override
-    public void userCannotAccessUserEditPageInCreateMode() {
+    void userCannotAccessUserEditPageInCreateMode() {
         assertCannotAccessUserEditPageInMode(UserEditPage.Mode.CREATE);
     }
 
     @Test
-    public void userCanAccessUserEditPageInEditMode() {
+    void userCanAccessUserEditPageInEditMode() {
         getTester().startPage(newUserEditPageInMode(UserEditPage.Mode.EDIT));
         getTester().assertRenderedPage(UserEditPage.class);
     }
 
     @Test
-    public void userCanAccessUserEditPageInChangePasswordMode() {
+    void userCanAccessUserEditPageInChangePasswordMode() {
         getTester().startPage(newUserEditPageInMode(UserEditPage.Mode.CHANGE_PASSWORD));
         getTester().assertRenderedPage(UserEditPage.class);
     }
 
     @Test
     @Override
-    public void userCannotAccessUserEditPageInEditMode() {
+    void userCannotAccessUserEditPageInEditMode() {
         // no-op
     }
 
     @Test
     @Override
-    public void userCannotAccessUserEditPageInChangePasswordMode() {
+    void userCannotAccessUserEditPageInChangePasswordMode() {
         // no-op
     }
 

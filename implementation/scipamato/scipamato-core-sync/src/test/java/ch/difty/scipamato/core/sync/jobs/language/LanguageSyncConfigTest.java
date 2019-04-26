@@ -23,7 +23,7 @@ import ch.difty.scipamato.publ.db.public_.tables.records.LanguageRecord;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
-public class LanguageSyncConfigTest extends SyncConfigTest<LanguageRecord> {
+class LanguageSyncConfigTest extends SyncConfigTest<LanguageRecord> {
 
     @Autowired
     private LanguageSyncConfig config;
@@ -64,7 +64,7 @@ public class LanguageSyncConfigTest extends SyncConfigTest<LanguageRecord> {
     }
 
     @Test
-    public void makingEntity() throws SQLException {
+    void makingEntity() throws SQLException {
         ResultSet rs = Mockito.mock(ResultSet.class);
         when(rs.getString(Language.LANGUAGE.CODE.getName())).thenReturn("de");
         when(rs.getBoolean(Language.LANGUAGE.MAIN_LANGUAGE.getName())).thenReturn(true);

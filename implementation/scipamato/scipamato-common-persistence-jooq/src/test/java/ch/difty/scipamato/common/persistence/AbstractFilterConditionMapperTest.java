@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.common.entity.filter.ScipamatoFilter;
 
-public class AbstractFilterConditionMapperTest {
+class AbstractFilterConditionMapperTest {
 
     private boolean filterCalled = false;
 
@@ -25,7 +25,7 @@ public class AbstractFilterConditionMapperTest {
     };
 
     @Test
-    public void mappingWithNullFilter_doesNotMap() {
+    void mappingWithNullFilter_doesNotMap() {
         assertThat(mapper
             .map(null)
             .toString()).isEqualTo("1 = 1");
@@ -33,7 +33,7 @@ public class AbstractFilterConditionMapperTest {
     }
 
     @Test
-    public void mappingWithNonNullFilter_doesMap() {
+    void mappingWithNonNullFilter_doesMap() {
         mapper.map(new DummyFilter());
         assertThat(filterCalled).isTrue();
     }

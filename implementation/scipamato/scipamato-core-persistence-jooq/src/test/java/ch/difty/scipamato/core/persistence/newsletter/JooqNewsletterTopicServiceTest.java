@@ -23,7 +23,7 @@ import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicFilter;
 
 @ExtendWith(MockitoExtension.class)
 @SuppressWarnings("ResultOfMethodCallIgnored")
-public class JooqNewsletterTopicServiceTest {
+class JooqNewsletterTopicServiceTest {
 
     private JooqNewsletterTopicService service;
 
@@ -54,7 +54,7 @@ public class JooqNewsletterTopicServiceTest {
     private NewsletterTopicDefinition topicDefinitionMock, persistedTopicDefinitionMock;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         service = new JooqNewsletterTopicService(repoMock);
 
         topics.add(topicMock);
@@ -67,12 +67,12 @@ public class JooqNewsletterTopicServiceTest {
     }
 
     @AfterEach
-    public void specificTearDown() {
+    void specificTearDown() {
         verifyNoMoreInteractions(repoMock, filterMock, paginationContextMock, topicMock, topicDefinitionMock);
     }
 
     @Test
-    public void findingAll_delegatesToRepo() {
+    void findingAll_delegatesToRepo() {
         final String langCode = "en";
         when(repoMock.findAll(langCode)).thenReturn(topics);
         assertThat(service.findAll(langCode)).isEqualTo(topics);
@@ -80,14 +80,14 @@ public class JooqNewsletterTopicServiceTest {
     }
 
     @Test
-    public void newUnpersistedNewsletterTopicDefinition_delegatesToRepo() {
+    void newUnpersistedNewsletterTopicDefinition_delegatesToRepo() {
         when(repoMock.newUnpersistedNewsletterTopicDefinition()).thenReturn(topicDefinitionMock);
         assertThat(service.newUnpersistedNewsletterTopicDefinition()).isEqualTo(topicDefinitionMock);
         verify(repoMock).newUnpersistedNewsletterTopicDefinition();
     }
 
     @Test
-    public void findingPageOfNewsletterTopicDefinitions_delegatesToRepo() {
+    void findingPageOfNewsletterTopicDefinitions_delegatesToRepo() {
         when(repoMock.findPageOfNewsletterTopicDefinitions(filterMock, paginationContextMock)).thenReturn(
             topicDefinitions);
         assertThat(service.findPageOfNewsletterTopicDefinitions(filterMock, paginationContextMock)).isEqualTo(
@@ -96,7 +96,7 @@ public class JooqNewsletterTopicServiceTest {
     }
 
     @Test
-    public void findingPageOfEntityDefinitions_delegatesToRepo() {
+    void findingPageOfEntityDefinitions_delegatesToRepo() {
         when(repoMock.findPageOfNewsletterTopicDefinitions(filterMock, paginationContextMock)).thenReturn(
             topicDefinitions);
         assertThat(service.findPageOfEntityDefinitions(filterMock, paginationContextMock)).hasSameElementsAs(
@@ -105,33 +105,33 @@ public class JooqNewsletterTopicServiceTest {
     }
 
     @Test
-    public void countingNewsletterTopics_delegatesToRepo() {
+    void countingNewsletterTopics_delegatesToRepo() {
         when(repoMock.countByFilter(filterMock)).thenReturn(3);
         assertThat(service.countByFilter(filterMock)).isEqualTo(3);
         verify(repoMock).countByFilter(filterMock);
     }
 
     @Test
-    public void insertingNewsletterTopicDefinition_delegatesToRepo() {
+    void insertingNewsletterTopicDefinition_delegatesToRepo() {
         when(repoMock.insert(topicDefinitionMock)).thenReturn(persistedTopicDefinitionMock);
         assertThat(service.insert(topicDefinitionMock)).isEqualTo(persistedTopicDefinitionMock);
         verify(repoMock).insert(topicDefinitionMock);
     }
 
     @Test
-    public void updatingNewsletterTopicDefinition_delegatesToRepo() {
+    void updatingNewsletterTopicDefinition_delegatesToRepo() {
         when(repoMock.update(topicDefinitionMock)).thenReturn(persistedTopicDefinitionMock);
         assertThat(service.update(topicDefinitionMock)).isEqualTo(persistedTopicDefinitionMock);
         verify(repoMock).update(topicDefinitionMock);
     }
 
     @Test
-    public void savingOrUpdatingNewsletterTopicDefinition_withNullEntity_throws() {
+    void savingOrUpdatingNewsletterTopicDefinition_withNullEntity_throws() {
         TestUtils.assertDegenerateSupplierParameter(() -> service.saveOrUpdate(null), "entity");
     }
 
     @Test
-    public void savingOrUpdatingNewsletterTopicDefinition_withNullId_callsInsert() {
+    void savingOrUpdatingNewsletterTopicDefinition_withNullId_callsInsert() {
         when(topicDefinitionMock.getId()).thenReturn(null);
         when(repoMock.insert(topicDefinitionMock)).thenReturn(persistedTopicDefinitionMock);
         assertThat(service.saveOrUpdate(topicDefinitionMock)).isEqualTo(persistedTopicDefinitionMock);
@@ -140,7 +140,7 @@ public class JooqNewsletterTopicServiceTest {
     }
 
     @Test
-    public void savingOrUpdatingNewsletterTopicDefinition_withNonNullId_callsUpdate() {
+    void savingOrUpdatingNewsletterTopicDefinition_withNonNullId_callsUpdate() {
         when(topicDefinitionMock.getId()).thenReturn(1);
         when(repoMock.update(topicDefinitionMock)).thenReturn(persistedTopicDefinitionMock);
         assertThat(service.saveOrUpdate(topicDefinitionMock)).isEqualTo(persistedTopicDefinitionMock);
@@ -149,7 +149,7 @@ public class JooqNewsletterTopicServiceTest {
     }
 
     @Test
-    public void deletingNewsletterTopicDefinition_delegatesToRepo() {
+    void deletingNewsletterTopicDefinition_delegatesToRepo() {
         int id = 11;
         int version = 12;
         when(repoMock.delete(id, version)).thenReturn(persistedTopicDefinitionMock);
@@ -158,7 +158,7 @@ public class JooqNewsletterTopicServiceTest {
     }
 
     @Test
-    public void gettingSortedNewsletterTopicsForNewsletter_withNoAssignedTopics_isEmpty() {
+    void gettingSortedNewsletterTopicsForNewsletter_withNoAssignedTopics_isEmpty() {
         final int newsletterId = 12;
 
         when(repoMock.findPersistedSortedNewsletterTopicsForNewsletterWithId(newsletterId)).thenReturn(
@@ -173,7 +173,7 @@ public class JooqNewsletterTopicServiceTest {
     }
 
     @Test
-    public void gettingSortedNewsletterTopicsForNewsletter_withNoPersistedTopics_resortsAllUnpersisted() {
+    void gettingSortedNewsletterTopicsForNewsletter_withNoPersistedTopics_resortsAllUnpersisted() {
         final int newsletterId = 12;
         final List<NewsletterNewsletterTopic> persisted = Lists.emptyList();
         final List<NewsletterNewsletterTopic> all = List.of(
@@ -202,7 +202,7 @@ public class JooqNewsletterTopicServiceTest {
     }
 
     @Test
-    public void gettingSortedNewsletterTopicsForNewsletter_withAllPersistedTopics_returnsThoseOnly() {
+    void gettingSortedNewsletterTopicsForNewsletter_withAllPersistedTopics_returnsThoseOnly() {
         final int newsletterId = 12;
         final List<NewsletterNewsletterTopic> persisted = List.of(
             new NewsletterNewsletterTopic(newsletterId, 1, 0, "topic1"),
@@ -231,7 +231,7 @@ public class JooqNewsletterTopicServiceTest {
     }
 
     @Test
-    public void gettingSortedNewsletterTopicsForNewsletter_withPersistedAndUnpersistedTopics_returnsMergedLists() {
+    void gettingSortedNewsletterTopicsForNewsletter_withPersistedAndUnpersistedTopics_returnsMergedLists() {
         final int newsletterId = 12;
         final List<NewsletterNewsletterTopic> persisted = List.of(
             new NewsletterNewsletterTopic(newsletterId, 1, 0, "topic1"),
@@ -263,7 +263,7 @@ public class JooqNewsletterTopicServiceTest {
     }
 
     @Test
-    public void savingSortedNewsletterTopics_withTopics_delegatesSaveToRepo() {
+    void savingSortedNewsletterTopics_withTopics_delegatesSaveToRepo() {
         final int newsletterId = 1;
         final List<NewsletterNewsletterTopic> sortedTopics = List.of(
             new NewsletterNewsletterTopic(newsletterId, 1, 0, "topic1"),
@@ -274,12 +274,12 @@ public class JooqNewsletterTopicServiceTest {
     }
 
     @Test
-    public void savingSortedNewsletterTopics_withNoTopics_skipsSaving() {
+    void savingSortedNewsletterTopics_withNoTopics_skipsSaving() {
         service.saveSortedNewsletterTopics(1, Lists.emptyList());
     }
 
     @Test
-    public void savingSortedNewsletterTopics_withNullTopics_skipsSaving() {
+    void savingSortedNewsletterTopics_withNullTopics_skipsSaving() {
         service.saveSortedNewsletterTopics(1, null);
     }
 }

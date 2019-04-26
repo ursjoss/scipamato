@@ -17,7 +17,7 @@ import ch.difty.scipamato.common.entity.CodeClassId;
 import ch.difty.scipamato.common.entity.CodeLike;
 
 @ExtendWith(MockitoExtension.class)
-public class JooqCodeLikeServiceTest {
+class JooqCodeLikeServiceTest {
     private static final String      LANG_CODE = "en";
     private static final CodeClassId CC_ID     = CodeClassId.CC1;
 
@@ -32,7 +32,7 @@ public class JooqCodeLikeServiceTest {
     private CodeLikeRepository<CodeLike> repoMock;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         service = new JooqCodeLikeService<>(repoMock) {
         };
 
@@ -42,7 +42,7 @@ public class JooqCodeLikeServiceTest {
     }
 
     @Test
-    public void cangetRepo() {
+    void canGetRepo() {
         assertThat(service.getRepo()).isEqualTo(repoMock);
     }
 

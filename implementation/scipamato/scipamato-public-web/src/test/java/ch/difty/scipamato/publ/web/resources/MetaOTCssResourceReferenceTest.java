@@ -4,17 +4,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 
-public class MetaOTCssResourceReferenceTest {
+class MetaOTCssResourceReferenceTest {
 
     private static final MetaOTCssResourceReference REF = MetaOTCssResourceReference.get();
 
     @Test
-    public void canGetInstance() {
+    void canGetInstance() {
         assertThat(REF).isInstanceOf(MetaOTCssResourceReference.class);
     }
 
     @Test
-    public void assertResourceName() {
+    void assertResourceName() {
         assertThat(REF.getName()).isEqualTo("css/MetaOT.css");
     }
 }

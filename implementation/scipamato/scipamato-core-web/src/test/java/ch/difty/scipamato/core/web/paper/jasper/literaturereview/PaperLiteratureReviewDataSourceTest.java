@@ -14,8 +14,7 @@ import org.junit.jupiter.api.Test;
 import ch.difty.scipamato.core.web.paper.jasper.PaperDataSourceTest;
 import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields;
 
-@SuppressWarnings("ResultOfMethodCallIgnored")
-public class PaperLiteratureReviewDataSourceTest extends PaperDataSourceTest {
+class PaperLiteratureReviewDataSourceTest extends PaperDataSourceTest {
 
     private static final String FILE_NAME = "paper_literature_review.pdf";
 
@@ -66,7 +65,7 @@ public class PaperLiteratureReviewDataSourceTest extends PaperDataSourceTest {
 
         assertThat(ds.getFileName()).isEqualTo(fileName);
 
-        final JRDataSource jsds = ds.getReportDataSource();
+        @SuppressWarnings("SpellCheckingInspection") final JRDataSource jsds = ds.getReportDataSource();
         JRDesignField f = new JRDesignField();
 
         assertThat(jsds.next()).isTrue();
@@ -86,8 +85,9 @@ public class PaperLiteratureReviewDataSourceTest extends PaperDataSourceTest {
         assertThat(jsds.next()).isFalse();
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     @Test
-    public void instantiatingWithProvider_returnsPdfDataSourceWithOneRecord() throws JRException {
+    void instantiatingWithProvider_returnsPdfDataSourceWithOneRecord() throws JRException {
         when(dataProviderMock.size()).thenReturn(1L);
         when(dataProviderMock.findAllPapersByFilter()).thenReturn(Collections.singletonList(paperMock));
 

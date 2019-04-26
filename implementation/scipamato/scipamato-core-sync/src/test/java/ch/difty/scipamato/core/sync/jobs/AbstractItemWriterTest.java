@@ -21,14 +21,14 @@ public abstract class AbstractItemWriterTest<T, W extends ItemWriter<T>> {
     private DSLContext dslContextMock;
 
     @BeforeEach
-    public final void setUp() {
+    final void setUp() {
         writer = newWriter(dslContextMock);
     }
 
     protected abstract W newWriter(DSLContext dslContextMock);
 
     @Test
-    public void writingEmptyList_doesNotInteractWithJooq() throws Exception {
+    void writingEmptyList_doesNotInteractWithJooq() throws Exception {
         writer.write(new ArrayList<>());
         verifyNoMoreInteractions(dslContextMock);
     }

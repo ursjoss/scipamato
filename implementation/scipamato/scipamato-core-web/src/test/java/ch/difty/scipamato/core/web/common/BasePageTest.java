@@ -7,7 +7,7 @@ import ch.difty.scipamato.core.web.WicketTest;
 public abstract class BasePageTest<T extends BasePage<?>> extends WicketTest {
 
     @Test
-    public void assertPage() {
+    void assertPage() {
         getTester().startPage(makePage());
         getTester().assertRenderedPage(getPageClass());
 

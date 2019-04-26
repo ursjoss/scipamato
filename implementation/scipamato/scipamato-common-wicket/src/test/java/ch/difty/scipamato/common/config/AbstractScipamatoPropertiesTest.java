@@ -12,7 +12,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
 @SuppressWarnings("ResultOfMethodCallIgnored")
-public class AbstractScipamatoPropertiesTest {
+class AbstractScipamatoPropertiesTest {
 
     private AbstractScipamatoProperties<ScipamatoBaseProperties> prop;
 
@@ -22,14 +22,14 @@ public class AbstractScipamatoPropertiesTest {
     private MavenProperties         mavenPropMock;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         prop = new AbstractScipamatoProperties<>(scipamatoPropMock, mavenPropMock) {
             private static final long serialVersionUID = 1L;
         };
     }
 
     @AfterEach
-    public void tearDown() {
+    void tearDown() {
         verifyNoMoreInteractions(scipamatoPropMock, mavenPropMock);
     }
 
@@ -41,7 +41,7 @@ public class AbstractScipamatoPropertiesTest {
     }
 
     @Test
-    public void gettingTitleOrBrand_withPageTitleDefined_delegatesToScipamatoProps_andReturnsPageTitle() {
+    void gettingTitleOrBrand_withPageTitleDefined_delegatesToScipamatoProps_andReturnsPageTitle() {
         when(scipamatoPropMock.getPageTitle()).thenReturn("pt");
         assertThat(prop.getTitleOrBrand()).isEqualTo("pt");
         verify(scipamatoPropMock).getPageTitle();
@@ -86,7 +86,7 @@ public class AbstractScipamatoPropertiesTest {
     }
 
     @Test
-    public void gettingMultiSelectBoxActionBoxWithMoreEntriesThan_delegatesToScipamatoProps() {
+    void gettingMultiSelectBoxActionBoxWithMoreEntriesThan_delegatesToScipamatoProps() {
         when(scipamatoPropMock.getMultiSelectBoxActionBoxWithMoreEntriesThan()).thenReturn(4);
         assertThat(prop.getMultiSelectBoxActionBoxWithMoreEntriesThan()).isEqualTo(4);
         verify(scipamatoPropMock).getMultiSelectBoxActionBoxWithMoreEntriesThan();

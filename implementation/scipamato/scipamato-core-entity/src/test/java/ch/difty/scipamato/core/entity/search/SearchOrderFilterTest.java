@@ -6,10 +6,10 @@ import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
 import org.junit.jupiter.api.Test;
 
-public class SearchOrderFilterTest {
+class SearchOrderFilterTest {
 
     @Test
-    public void canInstantiate() {
+    void canInstantiate() {
         SearchOrderFilter f = new SearchOrderFilter();
         f.setNameMask("foo");
         f.setOwner(3);
@@ -26,7 +26,7 @@ public class SearchOrderFilterTest {
     }
 
     @Test
-    public void equals() {
+    void equals() {
         EqualsVerifier
             .forClass(SearchOrderFilter.class)
             .withRedefinedSuperclass()

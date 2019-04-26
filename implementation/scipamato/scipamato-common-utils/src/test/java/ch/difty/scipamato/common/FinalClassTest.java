@@ -24,7 +24,7 @@ import org.springframework.core.GenericTypeResolver;
 public abstract class FinalClassTest<C> {
 
     @Test
-    public void testConstructorIsPrivate()
+    void testConstructorIsPrivate()
         throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         @SuppressWarnings("unchecked") Class<C> clazz = (Class<C>) GenericTypeResolver.resolveTypeArgument(getClass(),
             FinalClassTest.class);

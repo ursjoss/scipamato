@@ -7,7 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
-public class JooqKeywordRepoTest {
+class JooqKeywordRepoTest {
 
     @Mock
     private DSLContext dslContextMock;
@@ -15,12 +15,12 @@ public class JooqKeywordRepoTest {
     private JooqKeywordRepo repo;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         repo = new JooqKeywordRepo(dslContextMock);
     }
 
     @Test
-    public void findingKeywords_withNullLanguageId_throws() {
+    void findingKeywords_withNullLanguageId_throws() {
         assertDegenerateSupplierParameter(() -> repo.findKeywords(null), "languageCode");
     }
 }

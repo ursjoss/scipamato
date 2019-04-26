@@ -24,7 +24,7 @@ import ch.difty.scipamato.publ.db.public_.tables.records.CodeClassRecord;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
-public class CodeClassSyncConfigTest extends SyncConfigTest<CodeClassRecord> {
+class CodeClassSyncConfigTest extends SyncConfigTest<CodeClassRecord> {
 
     @Autowired
     private CodeClassSyncConfig config;
@@ -68,7 +68,7 @@ public class CodeClassSyncConfigTest extends SyncConfigTest<CodeClassRecord> {
     }
 
     @Test
-    public void makingEntity() throws SQLException {
+    void makingEntity() throws SQLException {
         ResultSet rs = Mockito.mock(ResultSet.class);
         when(rs.getInt(CodeClass.CODE_CLASS.ID.getName())).thenReturn(1);
         when(rs.getString(CodeClassTr.CODE_CLASS_TR.LANG_CODE.getName())).thenReturn("lc");

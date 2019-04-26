@@ -27,6 +27,7 @@ import ch.difty.scipamato.core.persistence.CodeClassService;
 import ch.difty.scipamato.core.persistence.CodeService;
 import ch.difty.scipamato.core.web.common.PanelTest;
 
+@SuppressWarnings("SpellCheckingInspection")
 public abstract class PaperPanelTest<T extends CodeBoxAware & NewsletterAware, P extends PaperPanel<T>>
     extends PanelTest<P> {
 
@@ -86,7 +87,7 @@ public abstract class PaperPanelTest<T extends CodeBoxAware & NewsletterAware, P
     }
 
     @AfterEach
-    public final void tearDown() {
+    final void tearDown() {
         verifyNoMoreInteractions(codeClassServiceMock, codeServiceMock);
 
         tearDownLocalHook();

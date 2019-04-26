@@ -16,7 +16,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @ActiveProfiles("test")
-public class HikariDatasourceTestSettingsIntegrationTest {
+class HikariDatasourceTestSettingsIntegrationTest {
 
     @Autowired
     @Qualifier("hikariBatchDataSource")
@@ -31,7 +31,7 @@ public class HikariDatasourceTestSettingsIntegrationTest {
     private DataSource coreDataSource;
 
     @Test
-    public void validateSettingsBatchDatasourceInProduction() {
+    void validateSettingsBatchDatasourceInProduction() {
         assertThat(batchDataSource).isInstanceOf(HikariDataSource.class);
         HikariDataSource ds = (HikariDataSource) batchDataSource;
 
@@ -48,7 +48,7 @@ public class HikariDatasourceTestSettingsIntegrationTest {
     }
 
     @Test
-    public void validateTargetDataSourceInProduction() {
+    void validateTargetDataSourceInProduction() {
         assertThat(publicDataSource).isInstanceOf(HikariDataSource.class);
         HikariDataSource ds = (HikariDataSource) publicDataSource;
 
@@ -65,7 +65,7 @@ public class HikariDatasourceTestSettingsIntegrationTest {
     }
 
     @Test
-    public void validateSettingsSourceDatasourceInProduction() {
+    void validateSettingsSourceDatasourceInProduction() {
         assertThat(coreDataSource).isInstanceOf(HikariDataSource.class);
         HikariDataSource ds = (HikariDataSource) coreDataSource;
 

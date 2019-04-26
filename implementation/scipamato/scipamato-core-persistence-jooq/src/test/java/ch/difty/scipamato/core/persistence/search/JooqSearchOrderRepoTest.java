@@ -20,7 +20,7 @@ import ch.difty.scipamato.core.persistence.EntityRepository;
 import ch.difty.scipamato.core.persistence.JooqEntityRepoTest;
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
-public class JooqSearchOrderRepoTest extends
+class JooqSearchOrderRepoTest extends
     JooqEntityRepoTest<SearchOrderRecord, SearchOrder, Long, ch.difty.scipamato.core.db.tables.SearchOrder, SearchOrderRecordMapper, SearchOrderFilter> {
 
     private static final Long   SAMPLE_ID = 3L;
@@ -147,7 +147,7 @@ public class JooqSearchOrderRepoTest extends
     }
 
     @Test
-    public void degenerateConstruction() {
+    void degenerateConstruction() {
         assertDegenerateSupplierParameter(
             () -> new JooqSearchOrderRepo(null, getMapper(), getSortMapper(), getFilterConditionMapper(),
                 getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), getApplicationProperties()),
@@ -181,12 +181,12 @@ public class JooqSearchOrderRepoTest extends
     }
 
     @Test
-    public void enrichingAssociatedEntities_withNullEntity_doesNothing() {
+    void enrichingAssociatedEntities_withNullEntity_doesNothing() {
         repo.enrichAssociatedEntitiesOf(null, LC);
     }
 
     @Test
-    public void enrichingAssociatedEntities_withEntityWithNullId_doesNothing() {
+    void enrichingAssociatedEntities_withEntityWithNullId_doesNothing() {
         SearchOrder so = new SearchOrder();
         assertThat(so.getId()).isNull();
 
@@ -250,7 +250,7 @@ public class JooqSearchOrderRepoTest extends
     }
 
     @Test
-    public void enrichingAssociatedEntities_withEntityId_fillsTheSearchConditionsAndTerms() {
+    void enrichingAssociatedEntities_withEntityId_fillsTheSearchConditionsAndTerms() {
         JooqSearchOrderRepo repoSpy = makeRepoFindingNestedEntities();
         SearchOrder so = new SearchOrder();
         so.setId(SAMPLE_ID);
@@ -284,7 +284,7 @@ public class JooqSearchOrderRepoTest extends
     }
 
     @Test
-    public void enrichingAssociatedEntities_withEntityId_fillsTheExcludedPaperIds() {
+    void enrichingAssociatedEntities_withEntityId_fillsTheExcludedPaperIds() {
         JooqSearchOrderRepo repoSpy = makeRepoFindingNestedEntities();
         SearchOrder so = new SearchOrder();
         so.setId(SAMPLE_ID);
@@ -298,7 +298,7 @@ public class JooqSearchOrderRepoTest extends
     }
 
     @Test
-    public void hasDirtyNewsletterFields_withTwoEmptySearchConditions_isNotDirty() {
+    void hasDirtyNewsletterFields_withTwoEmptySearchConditions_isNotDirty() {
         assertThat(sc1.getNewsletterTopicId()).isNull();
         assertThat(sc2.getNewsletterTopicId()).isNull();
         assertThat(sc1.getNewsletterHeadline()).isNull();
@@ -310,67 +310,67 @@ public class JooqSearchOrderRepoTest extends
     }
 
     @Test
-    public void hasDirtyNewsletterFields_withSingleNewsletterTopic_isDirty() {
+    void hasDirtyNewsletterFields_withSingleNewsletterTopic_isDirty() {
         sc1.setNewsletterTopic(new NewsletterTopic(1, "1"));
         assertThat(repo.hasDirtyNewsletterFields(sc1, sc2)).isTrue();
     }
 
     @Test
-    public void hasDirtyNewsletterFields_withDifferentNewsletterTopic_isDirty() {
+    void hasDirtyNewsletterFields_withDifferentNewsletterTopic_isDirty() {
         sc1.setNewsletterTopic(new NewsletterTopic(1, "1"));
         sc2.setNewsletterTopic(new NewsletterTopic(2, "2"));
         assertThat(repo.hasDirtyNewsletterFields(sc1, sc2)).isTrue();
     }
 
     @Test
-    public void hasDirtyNewsletterFields_withIdenticalNewsletterTopicIds_isNotDirty() {
+    void hasDirtyNewsletterFields_withIdenticalNewsletterTopicIds_isNotDirty() {
         sc1.setNewsletterTopic(new NewsletterTopic(1, "foo"));
         sc2.setNewsletterTopic(new NewsletterTopic(1, "bar"));
         assertThat(repo.hasDirtyNewsletterFields(sc1, sc2)).isFalse();
     }
 
     @Test
-    public void hasDirtyNewsletterFields_withSingleNewsletterHeadline_isDirty() {
+    void hasDirtyNewsletterFields_withSingleNewsletterHeadline_isDirty() {
         sc1.setNewsletterHeadline("foo");
         assertThat(repo.hasDirtyNewsletterFields(sc1, sc2)).isTrue();
     }
 
     @Test
-    public void hasDirtyNewsletterFields_withDifferentNewsletterHeadlines_isDirty() {
+    void hasDirtyNewsletterFields_withDifferentNewsletterHeadlines_isDirty() {
         sc1.setNewsletterHeadline("foo");
         sc2.setNewsletterHeadline("bar");
         assertThat(repo.hasDirtyNewsletterFields(sc1, sc2)).isTrue();
     }
 
     @Test
-    public void hasDirtyNewsletterFields_withIdenticalNewsletterHeadlines_isNotDirty() {
+    void hasDirtyNewsletterFields_withIdenticalNewsletterHeadlines_isNotDirty() {
         sc1.setNewsletterHeadline("foo");
         sc2.setNewsletterHeadline("foo");
         assertThat(repo.hasDirtyNewsletterFields(sc1, sc2)).isFalse();
     }
 
     @Test
-    public void hasDirtyNewsletterFields_withSingleNewsletterIssue_isDirty() {
+    void hasDirtyNewsletterFields_withSingleNewsletterIssue_isDirty() {
         sc1.setNewsletterIssue("foo");
         assertThat(repo.hasDirtyNewsletterFields(sc1, sc2)).isTrue();
     }
 
     @Test
-    public void hasDirtyNewsletterFields_withDifferentNewsletterIssue_isDirty() {
+    void hasDirtyNewsletterFields_withDifferentNewsletterIssue_isDirty() {
         sc2.setNewsletterIssue("bar");
         sc1.setNewsletterIssue("foo");
         assertThat(repo.hasDirtyNewsletterFields(sc1, sc2)).isTrue();
     }
 
     @Test
-    public void hasDirtyNewsletterFields_withIdenticalNewsletterIssue_isNotDirty() {
+    void hasDirtyNewsletterFields_withIdenticalNewsletterIssue_isNotDirty() {
         sc1.setNewsletterIssue("foo");
         sc2.setNewsletterIssue("foo");
         assertThat(repo.hasDirtyNewsletterFields(sc1, sc2)).isFalse();
     }
 
     @Test
-    public void addingSearchCondition_nonDirty_returnsPersistedEquivalentSearchCondition() {
+    void addingSearchCondition_nonDirty_returnsPersistedEquivalentSearchCondition() {
         final SearchCondition equivalentPersistedSearchCondition = mock(SearchCondition.class);
         final JooqSearchOrderRepo repo = new JooqSearchOrderRepo(getDsl(), getMapper(), getSortMapper(),
             getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(),
@@ -391,7 +391,7 @@ public class JooqSearchOrderRepoTest extends
     }
 
     @Test
-    public void findingTermLessConditions() {
+    void findingTermLessConditions() {
         final Map<Long, SearchCondition> idToSc = new HashMap<>();
 
         // sc without id - should be filtered out
@@ -415,7 +415,7 @@ public class JooqSearchOrderRepoTest extends
     }
 
     @Test
-    public void storingExistingConditionsOf_withSearchConditionsWithIds_callsUpdateSearchConditionForEach() {
+    void storingExistingConditionsOf_withSearchConditionsWithIds_callsUpdateSearchConditionForEach() {
         final SearchOrder so = new SearchOrder();
         so.setId(1L);
         final SearchCondition sc1 = new SearchCondition(10L);

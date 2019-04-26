@@ -17,7 +17,7 @@ import ch.difty.scipamato.publ.entity.filter.PublicPaperFilter;
 import ch.difty.scipamato.publ.persistence.JooqBaseIntegrationTest;
 
 @SuppressWarnings("SpellCheckingInspection")
-public class JooqPublicPaperRepoIntegrationTest extends JooqBaseIntegrationTest {
+class JooqPublicPaperRepoIntegrationTest extends JooqBaseIntegrationTest {
 
     @Autowired
     private JooqPublicPaperRepo repo;
@@ -29,7 +29,7 @@ public class JooqPublicPaperRepoIntegrationTest extends JooqBaseIntegrationTest 
     private final PaginationRequest allSorted = new PaginationRequest(Direction.ASC, "authors");
 
     @Test
-    public void findingByNumber_withExistingNumber_returnsEntity() {
+    void findingByNumber_withExistingNumber_returnsEntity() {
         long number = 1;
         PublicPaper paper = repo.findByNumber(number);
         assertThat(paper.getId()).isEqualTo(number);
@@ -41,58 +41,58 @@ public class JooqPublicPaperRepoIntegrationTest extends JooqBaseIntegrationTest 
     }
 
     @Test
-    public void findingByNumber_withNonExistingNumber_returnsNull() {
+    void findingByNumber_withNonExistingNumber_returnsNull() {
         assertThat(repo.findByNumber(-1L)).isNull();
     }
 
     @Test
-    public void findingPageByFilter_forPapersAsOf2017_findsOne_() {
+    void findingPageByFilter_forPapersAsOf2017_findsOne_() {
         filter.setPublicationYearFrom(2016);
         assertThat(repo.findPageByFilter(filter, pc)).hasSize(3);
     }
 
     @Test
-    public void findingPageByFilter_forAnyPaper() {
+    void findingPageByFilter_forAnyPaper() {
         assertThat(repo.findPageByFilter(filter, pc)).hasSize(10);
     }
 
     @Test
-    public void countingByFilter_withNoFilterCriteria_findsTwo() {
+    void countingByFilter_withNoFilterCriteria_findsTwo() {
         assertThat(repo.countByFilter(filter)).isEqualTo(13);
     }
 
     @Test
-    public void countingByFilter_withAuthorMask_findsOne() {
+    void countingByFilter_withAuthorMask_findsOne() {
         filter.setAuthorMask("Gapstur");
         assertThat(repo.countByFilter(filter)).isEqualTo(1);
     }
 
     @Test
-    public void countingByFilter_withTitleMask_findsOne() {
+    void countingByFilter_withTitleMask_findsOne() {
         filter.setTitleMask("ambient");
         assertThat(repo.countByFilter(filter)).isEqualTo(3);
     }
 
     @Test
-    public void countingByFilter_withMethodsMask_findsOne() {
+    void countingByFilter_withMethodsMask_findsOne() {
         filter.setMethodsMask("Sensitivitätsanalysen");
         assertThat(repo.countByFilter(filter)).isEqualTo(1);
     }
 
     @Test
-    public void findingPageByFilter_adultsOnly() {
+    void findingPageByFilter_adultsOnly() {
         filter.setPopulationCodes(Collections.singletonList(PopulationCode.ADULTS));
         assertThat(repo.findPageByFilter(filter, pc)).hasSize(2);
     }
 
     @Test
-    public void findingPageByFilter_overViewMethodologyOnly() {
+    void findingPageByFilter_overViewMethodologyOnly() {
         filter.setStudyDesignCodes(Collections.singletonList(StudyDesignCode.OVERVIEW_METHODOLOGY));
         assertThat(repo.findPageByFilter(filter, pc)).hasSize(1);
     }
 
     @Test
-    public void findingPageOfNumbersByFilter() {
+    void findingPageOfNumbersByFilter() {
         filter.setPublicationYearFrom(2015);
         filter.setPublicationYearUntil(2018);
         assertThat(repo.findPageOfNumbersByFilter(filter, allSorted))
@@ -111,7 +111,7 @@ public class JooqPublicPaperRepoIntegrationTest extends JooqBaseIntegrationTest 
     }
 
     @Test
-    public void findingPageByFilter_withCodes1Fand5H_finds2() {
+    void findingPageByFilter_withCodes1Fand5H_finds2() {
         filter.setCodesOfClass1(newCodes("1F"));
         filter.setCodesOfClass5(newCodes("5H"));
         assertThat(repo.findPageByFilter(filter, allSorted))
@@ -121,7 +121,7 @@ public class JooqPublicPaperRepoIntegrationTest extends JooqBaseIntegrationTest 
     }
 
     @Test
-    public void findingPageByFilter_withCodes6Mand7L_finds3() {
+    void findingPageByFilter_withCodes6Mand7L_finds3() {
         filter.setCodesOfClass6(newCodes("6M"));
         filter.setCodesOfClass7(newCodes("7L"));
         assertThat(repo.findPageByFilter(filter, allSorted))
@@ -131,7 +131,7 @@ public class JooqPublicPaperRepoIntegrationTest extends JooqBaseIntegrationTest 
     }
 
     @Test
-    public void findingPageByFilter_withCode2R_finds1() {
+    void findingPageByFilter_withCode2R_finds1() {
         filter.setCodesOfClass2(newCodes("2R"));
         assertThat(repo.findPageByFilter(filter, allSorted))
             .isNotEmpty()
@@ -140,7 +140,7 @@ public class JooqPublicPaperRepoIntegrationTest extends JooqBaseIntegrationTest 
     }
 
     @Test
-    public void findingPageByFilter_withOriginallySetAndThenClearedFilter_findsAll() {
+    void findingPageByFilter_withOriginallySetAndThenClearedFilter_findsAll() {
         filter.setCodesOfClass2(newCodes("2R"));
         filter
             .getCodesOfClass2()
@@ -152,7 +152,7 @@ public class JooqPublicPaperRepoIntegrationTest extends JooqBaseIntegrationTest 
     }
 
     @Test
-    public void findingPageByFilter_withCodes6Mand7L_andWithKeywordWithId3_findsOnlyOne() {
+    void findingPageByFilter_withCodes6Mand7L_andWithKeywordWithId3_findsOnlyOne() {
         filter.setCodesOfClass6(newCodes("6M"));
         filter.setCodesOfClass7(newCodes("7L"));
         filter.setKeywords(List.of(new Keyword(1, 3, "en", "foo", null)));
@@ -163,7 +163,7 @@ public class JooqPublicPaperRepoIntegrationTest extends JooqBaseIntegrationTest 
     }
 
     @Test
-    public void findingPageByFilter_withKeywordWithId3And6_findsOnlyOne() {
+    void findingPageByFilter_withKeywordWithId3And6_findsOnlyOne() {
         final Keyword kw1 = new Keyword(1, 3, "en", "foo", null);
         filter.setKeywords(List.of(kw1));
         assertThat(repo.findPageByFilter(filter, allSorted)).isNotEmpty();

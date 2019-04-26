@@ -11,7 +11,7 @@ import ch.difty.scipamato.common.NullArgumentException;
 import ch.difty.scipamato.core.web.paper.jasper.JasperEntityTest;
 import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields;
 
-public class PaperSummaryTableTest extends JasperEntityTest {
+class PaperSummaryTableTest extends JasperEntityTest {
 
     private static final String BRAND        = "brand";
     private static final String CAPTION      = "caption";
@@ -21,17 +21,17 @@ public class PaperSummaryTableTest extends JasperEntityTest {
     private ReportHeaderFields rhf = newReportHeaderFields();
 
     @Test
-    public void degenerateConstruction_withNullPaper() {
+    void degenerateConstruction_withNullPaper() {
         Assertions.assertThrows(NullArgumentException.class, () -> new PaperSummaryTable(null, rhf));
     }
 
     @Test
-    public void degenerateConstruction_withNullReportHeaderFields() {
+    void degenerateConstruction_withNullReportHeaderFields() {
         Assertions.assertThrows(NullArgumentException.class, () -> new PaperSummaryTable(p, null));
     }
 
     @Test
-    public void instantiating() {
+    void instantiating() {
         pst = new PaperSummaryTable(p, rhf);
         assertPst();
     }
@@ -62,28 +62,28 @@ public class PaperSummaryTableTest extends JasperEntityTest {
     }
 
     @Test
-    public void constructionWithPaperWithNoCodeOfClass7_returnsBlank() {
+    void constructionWithPaperWithNoCodeOfClass7_returnsBlank() {
         p.clearCodes();
         pst = new PaperSummaryTable(p, rhf);
         assertThat(pst.getCodesOfClass4()).isEqualTo("");
     }
 
     @Test
-    public void paperWithNullNumber_resultsInEmptyNumber() {
+    void paperWithNullNumber_resultsInEmptyNumber() {
         p.setNumber(null);
         pst = new PaperSummaryTable(p, rhf);
         assertThat(pst.getNumber()).isEmpty();
     }
 
     @Test
-    public void paperWithNullYear_resultsInEmptyYear() {
+    void paperWithNullYear_resultsInEmptyYear() {
         p.setPublicationYear(null);
         pst = new PaperSummaryTable(p, rhf);
         assertThat(pst.getPublicationYear()).isEmpty();
     }
 
     @Test
-    public void equals() {
+    void equals() {
         EqualsVerifier
             .forClass(PaperSummaryTable.class)
             .withRedefinedSuperclass()
@@ -92,7 +92,7 @@ public class PaperSummaryTableTest extends JasperEntityTest {
     }
 
     @Test
-    public void testingToString() {
+    void testingToString() {
         pst = new PaperSummaryTable(p, rhf);
         assertThat(pst.toString()).isEqualTo(
             "PaperSummaryTable(number=100, firstAuthor=firstAuthor, publicationYear=2017, codesOfClass1=1F, codesOfClass4=4A,4C, codesOfClass7=7B, goals=goals, title=title, result=results, caption=caption, brand=brand, numberLabel=nl)");

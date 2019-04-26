@@ -14,13 +14,13 @@ import ch.difty.scipamato.common.entity.newsletter.PublicationStatus;
 import ch.difty.scipamato.core.entity.Jsr303ValidatedEntityTest;
 import ch.difty.scipamato.core.entity.projection.PaperSlim;
 
-public class NewsletterTest extends Jsr303ValidatedEntityTest<Newsletter> {
+class NewsletterTest extends Jsr303ValidatedEntityTest<Newsletter> {
 
     private final NewsletterTopic topic1 = new NewsletterTopic(1, "sometopic");
     private final PaperSlim       paper1 = new PaperSlim();
     private final PaperSlim       paper2 = new PaperSlim();
 
-    public NewsletterTest() {
+    NewsletterTest() {
         super(Newsletter.class);
     }
 
@@ -55,7 +55,7 @@ public class NewsletterTest extends Jsr303ValidatedEntityTest<Newsletter> {
     }
 
     @Test
-    public void get() {
+    void get() {
         Newsletter nl = newValidEntity();
         assertThat(nl.getId()).isEqualTo(1);
         assertThat(nl.getIssue()).isEqualTo("2018-03");
@@ -70,26 +70,26 @@ public class NewsletterTest extends Jsr303ValidatedEntityTest<Newsletter> {
     }
 
     @Test
-    public void validatingNewsletter_withIssueAndPublicationStatus_succeeds() {
+    void validatingNewsletter_withIssueAndPublicationStatus_succeeds() {
         verifySuccessfulValidation(newValidEntity());
     }
 
     @Test
-    public void validatingNewsletter_withNullIssue_fails() {
+    void validatingNewsletter_withNullIssue_fails() {
         Newsletter nl = newValidEntity();
         nl.setIssue(null);
         validateAndAssertFailure(nl, ISSUE, null, "{javax.validation.constraints.NotNull.message}");
     }
 
     @Test
-    public void validatingNewsletter_withNullPublicationStatus_fails() {
+    void validatingNewsletter_withNullPublicationStatus_fails() {
         Newsletter nl = newValidEntity();
         nl.setPublicationStatus(null);
         validateAndAssertFailure(nl, PUBLICATION_STATUS, null, "{javax.validation.constraints.NotNull.message}");
     }
 
     @Test
-    public void isDeletable_delegatesToPublicationStatus() {
+    void isDeletable_delegatesToPublicationStatus() {
         Newsletter nl = newValidEntity();
 
         nl.setPublicationStatus(PublicationStatus.WIP);
@@ -99,12 +99,12 @@ public class NewsletterTest extends Jsr303ValidatedEntityTest<Newsletter> {
     }
 
     @Test
-    public void cannotAddNullPaper() {
+    void cannotAddNullPaper() {
         assertDegenerateParameter(newValidEntity(), null, "paper");
     }
 
     @Test
-    public void cannotAddPaperWithNullId() {
+    void cannotAddPaperWithNullId() {
         assertDegenerateParameter(newValidEntity(), new PaperSlim(), "paper.id");
     }
 
@@ -120,7 +120,7 @@ public class NewsletterTest extends Jsr303ValidatedEntityTest<Newsletter> {
     }
 
     @Test
-    public void canAddAdditionalPaperToExistingTopic() {
+    void canAddAdditionalPaperToExistingTopic() {
         Newsletter nl = newValidEntity();
         assertThat(nl.getTopics()).containsOnly(null, topic1);
         assertThat(nl.getPapers()).containsOnly(paper1, paper2);
@@ -135,7 +135,7 @@ public class NewsletterTest extends Jsr303ValidatedEntityTest<Newsletter> {
     }
 
     @Test
-    public void canAddAdditionalPaperToNewTopic() {
+    void canAddAdditionalPaperToNewTopic() {
         Newsletter nl = newValidEntity();
         assertThat(nl.getTopics()).containsOnly(null, topic1);
         assertThat(nl.getPapers()).containsOnly(paper1, paper2);
@@ -153,7 +153,7 @@ public class NewsletterTest extends Jsr303ValidatedEntityTest<Newsletter> {
     }
 
     @Test
-    public void canAddPaperWithNullTopic_evenIfItWasAddedWithTopicBefore() {
+    void canAddPaperWithNullTopic_evenIfItWasAddedWithTopicBefore() {
         Newsletter nl = newValidEntity();
         assertThat(nl.getTopics()).containsOnly(null, topic1);
         assertThat(nl.getPapers()).containsOnly(paper1, paper2);
@@ -166,7 +166,7 @@ public class NewsletterTest extends Jsr303ValidatedEntityTest<Newsletter> {
     }
 
     @Test
-    public void canAddPaperWithTopic_evenIfItWasAddedWithNullTopicBefore() {
+    void canAddPaperWithTopic_evenIfItWasAddedWithNullTopicBefore() {
         Newsletter nl = newValidEntity();
         assertThat(nl.getTopics()).containsOnly(null, topic1);
         assertThat(nl.getPapers()).containsOnly(paper1, paper2);
@@ -178,7 +178,7 @@ public class NewsletterTest extends Jsr303ValidatedEntityTest<Newsletter> {
     }
 
     @Test
-    public void canAddPaperWithTopic_evenIfItWasAddedWithOtherTopicBefore() {
+    void canAddPaperWithTopic_evenIfItWasAddedWithOtherTopicBefore() {
         Newsletter nl = newValidEntity();
         assertThat(nl.getTopics()).containsOnly(null, topic1);
         assertThat(nl.getPapers()).containsOnly(paper1, paper2);
@@ -193,7 +193,7 @@ public class NewsletterTest extends Jsr303ValidatedEntityTest<Newsletter> {
     }
 
     @Test
-    public void canAddNullTopic_hasNoEffectEffect() {
+    void canAddNullTopic_hasNoEffectEffect() {
         final Newsletter nl = new Newsletter();
         nl.setId(1);
         nl.setIssue("2018-03");
@@ -218,7 +218,7 @@ public class NewsletterTest extends Jsr303ValidatedEntityTest<Newsletter> {
     }
 
     @Test
-    public void canReassignAssociatedPaperFromOneTopicToAnother() {
+    void canReassignAssociatedPaperFromOneTopicToAnother() {
         Newsletter nl = newValidEntity();
         assertThat(nl.getTopics()).containsOnly(null, topic1);
         assertThat(nl.getPapers()).containsOnly(paper1, paper2);

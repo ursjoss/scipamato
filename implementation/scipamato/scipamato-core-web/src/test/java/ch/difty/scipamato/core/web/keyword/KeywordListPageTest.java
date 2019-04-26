@@ -22,7 +22,7 @@ import ch.difty.scipamato.core.persistence.KeywordService;
 import ch.difty.scipamato.core.web.common.BasePageTest;
 
 @SuppressWarnings("SameParameterValue")
-public class KeywordListPageTest extends BasePageTest<KeywordListPage> {
+class KeywordListPageTest extends BasePageTest<KeywordListPage> {
 
     private static final int COLUMN_ID_WITH_LINK = 1;
 
@@ -51,7 +51,7 @@ public class KeywordListPageTest extends BasePageTest<KeywordListPage> {
     }
 
     @AfterEach
-    public void tearDown() {
+    void tearDown() {
         verifyNoMoreInteractions(keywordServiceMock);
     }
 
@@ -107,7 +107,7 @@ public class KeywordListPageTest extends BasePageTest<KeywordListPage> {
     }
 
     @Test
-    public void clickingOnKeywordTitle_forwardsToKeywordEditPage_withModelLoaded() {
+    void clickingOnKeywordTitle_forwardsToKeywordEditPage_withModelLoaded() {
         getTester().startPage(getPageClass());
 
         getTester().clickLink("resultPanel:results:body:rows:1:cells:" + COLUMN_ID_WITH_LINK + ":cell:link");
@@ -123,7 +123,7 @@ public class KeywordListPageTest extends BasePageTest<KeywordListPage> {
     }
 
     @Test
-    public void clickingNewKeyword_forwardsToKeywordEditPage() {
+    void clickingNewKeyword_forwardsToKeywordEditPage() {
         KeywordTranslation kt_en = new KeywordTranslation(1, "en", "kt_en", 1);
         KeywordDefinition kd = new KeywordDefinition(1, "en", 1, kt_en);
         when(keywordServiceMock.newUnpersistedKeywordDefinition()).thenReturn(kd);

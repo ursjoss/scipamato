@@ -4,27 +4,27 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 
-public class SyncJobResultTest {
+class SyncJobResultTest {
 
     private final SyncJobResult result = new SyncJobResult();
 
     @Test
-    public void newSyncJobResult_hasNotSuccessful() {
+    void newSyncJobResult_hasNotSuccessful() {
         assertThat(result.isSuccessful()).isFalse();
     }
 
     @Test
-    public void newSyncJobResult_hasNotFailed() {
+    void newSyncJobResult_hasNotFailed() {
         assertThat(result.isFailed()).isFalse();
     }
 
     @Test
-    public void newSyncJobResult_hasNoMessages() {
+    void newSyncJobResult_hasNoMessages() {
         assertThat(result.getMessages()).isEmpty();
     }
 
     @Test
-    public void settingSuccess_hasMessageWithLevelInfo() {
+    void settingSuccess_hasMessageWithLevelInfo() {
         result.setSuccess("foo");
         SyncJobResult.LogMessage lm = result
             .getMessages()
@@ -34,7 +34,7 @@ public class SyncJobResultTest {
     }
 
     @Test
-    public void settingFailure_hasMessageWithLevelError() {
+    void settingFailure_hasMessageWithLevelError() {
         result.setFailure("bar");
         SyncJobResult.LogMessage lm = result
             .getMessages()
@@ -44,7 +44,7 @@ public class SyncJobResultTest {
     }
 
     @Test
-    public void settingWarning_hasMessageWithLevelWarning() {
+    void settingWarning_hasMessageWithLevelWarning() {
         result.setWarning("baz");
         SyncJobResult.LogMessage lm = result
             .getMessages()
@@ -54,14 +54,14 @@ public class SyncJobResultTest {
     }
 
     @Test
-    public void settingWarning_doesNotAlterSuccess() {
+    void settingWarning_doesNotAlterSuccess() {
         result.setWarning("baz");
         assertThat(result.isSuccessful()).isFalse();
         assertThat(result.isFailed()).isFalse();
     }
 
     @Test
-    public void addingSuccessMessage_resultsInSuccessfulJobWithMessage() {
+    void addingSuccessMessage_resultsInSuccessfulJobWithMessage() {
         result.setSuccess("foo");
         assertThat(result.isSuccessful()).isTrue();
         assertThat(result.isFailed()).isFalse();
@@ -73,7 +73,7 @@ public class SyncJobResultTest {
     }
 
     @Test
-    public void addingFailureMessage_resultsInFailedJobWithMessage() {
+    void addingFailureMessage_resultsInFailedJobWithMessage() {
         result.setFailure("bar");
         assertThat(result.isSuccessful()).isFalse();
         assertThat(result.isFailed()).isTrue();
@@ -85,7 +85,7 @@ public class SyncJobResultTest {
     }
 
     @Test
-    public void withMultipleSteps_ifAllSucceed_success() {
+    void withMultipleSteps_ifAllSucceed_success() {
         result.setSuccess("success1");
         result.setSuccess("success2");
         assertThat(result.isSuccessful()).isTrue();
@@ -95,7 +95,7 @@ public class SyncJobResultTest {
     }
 
     @Test
-    public void withMultipleSteps_ifOneFails_failure() {
+    void withMultipleSteps_ifOneFails_failure() {
         result.setSuccess("success1");
         result.setFailure("some issue2");
         assertThat(result.isFailed()).isTrue();
@@ -105,7 +105,7 @@ public class SyncJobResultTest {
     }
 
     @Test
-    public void withMultipleSteps_failureWins() {
+    void withMultipleSteps_failureWins() {
         result.setSuccess("success1");
         result.setFailure("some issue2");
         result.setSuccess("success3");

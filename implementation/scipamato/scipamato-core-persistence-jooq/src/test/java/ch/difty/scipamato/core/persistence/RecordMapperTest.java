@@ -50,12 +50,12 @@ public abstract class RecordMapperTest<R extends Record, E extends CoreEntity> {
     }
 
     @Test
-    public void mappingWithNullEntity_throws() {
+    void mappingWithNullEntity_throws() {
         Assertions.assertThrows(NullArgumentException.class, () -> mapper.map(null));
     }
 
     @Test
-    public void mapping_mapsRecordToEntity() {
+    void mapping_mapsRecordToEntity() {
         R record = makeRecord();
         setAuditFieldsIn(record);
         E entity = mapper.map(record);

@@ -30,7 +30,7 @@ import ch.difty.scipamato.core.persistence.CodeService;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-public class CodeDefinitionProviderTest {
+class CodeDefinitionProviderTest {
 
     private CodeDefinitionProvider provider;
 
@@ -49,31 +49,31 @@ public class CodeDefinitionProviderTest {
     private ScipamatoCoreApplication application;
 
     @BeforeEach
-    public final void setUp() {
+    final void setUp() {
         new WicketTester(application);
         provider = new CodeDefinitionProvider(filterMock);
         codes = Arrays.asList(entityMock, entityMock, entityMock);
     }
 
     @AfterEach
-    public void tearDown() {
+    void tearDown() {
         verifyNoMoreInteractions(serviceMock, entityMock);
     }
 
     @Test
-    public void defaultFilterIsNewCodeFilter() {
+    void defaultFilterIsNewCodeFilter() {
         provider = new CodeDefinitionProvider();
         assertThat(provider.getFilterState()).isEqualToComparingFieldByField(new CodeFilter());
     }
 
     @Test
-    public void nullFilterResultsInNewCodeFilter() {
+    void nullFilterResultsInNewCodeFilter() {
         CodeDefinitionProvider p = new CodeDefinitionProvider(null);
         assertThat(p.getFilterState()).isEqualToComparingFieldByField(new CodeFilter());
     }
 
     @Test
-    public void size() {
+    void size() {
         int size = 5;
         when(serviceMock.countByFilter(filterMock)).thenReturn(size);
         assertThat(provider.size()).isEqualTo(size);
@@ -81,18 +81,18 @@ public class CodeDefinitionProviderTest {
     }
 
     @Test
-    public void gettingModel_wrapsEntity() {
+    void gettingModel_wrapsEntity() {
         IModel<CodeDefinition> model = provider.model(entityMock);
         assertThat(model.getObject()).isEqualTo(entityMock);
     }
 
     @Test
-    public void gettingFilterState_returnsFilter() {
+    void gettingFilterState_returnsFilter() {
         assertThat(provider.getFilterState()).isEqualTo(filterMock);
     }
 
     @Test
-    public void settingFilterState() {
+    void settingFilterState() {
         provider = new CodeDefinitionProvider();
         assertThat(provider.getFilterState()).isNotEqualTo(filterMock);
         provider.setFilterState(filterMock);
@@ -119,7 +119,7 @@ public class CodeDefinitionProviderTest {
     }
 
     @Test
-    public void iterating_withNoRecords_returnsNoRecords() {
+    void iterating_withNoRecords_returnsNoRecords() {
         codes = Collections.emptyList();
         when(serviceMock.findPageOfEntityDefinitions(eq(filterMock), isA(PaginationContext.class))).thenReturn(
             codes.iterator());
@@ -130,7 +130,7 @@ public class CodeDefinitionProviderTest {
     }
 
     @Test
-    public void iterating_throughFirst() {
+    void iterating_throughFirst() {
         when(serviceMock.findPageOfEntityDefinitions(eq(filterMock), isA(PaginationContext.class))).thenReturn(
             codes.iterator());
         Iterator<CodeDefinition> it = provider.iterator(0, 3);
@@ -149,7 +149,7 @@ public class CodeDefinitionProviderTest {
     }
 
     @Test
-    public void iterating_throughSecondPage() {
+    void iterating_throughSecondPage() {
         when(serviceMock.findPageOfEntityDefinitions(eq(filterMock), isA(PaginationContext.class))).thenReturn(
             codes.iterator());
         Iterator<CodeDefinition> it = provider.iterator(3, 3);
@@ -159,7 +159,7 @@ public class CodeDefinitionProviderTest {
     }
 
     @Test
-    public void iterating_throughThirdPage() {
+    void iterating_throughThirdPage() {
         provider.setSort("sort", SortOrder.DESCENDING);
         when(serviceMock.findPageOfEntityDefinitions(eq(filterMock), isA(PaginationContext.class))).thenReturn(
             codes.iterator());

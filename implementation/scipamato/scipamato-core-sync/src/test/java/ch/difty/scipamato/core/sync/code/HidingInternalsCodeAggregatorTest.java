@@ -4,11 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
 
-import org.junit.jupiter.api.Test;
-
 // TODO restore parametrized tests
-//@RunsWith(JUnitParamsRunner.class)
-public class HidingInternalsCodeAggregatorTest {
+class HidingInternalsCodeAggregatorTest {
 
     private static final short P1 = 1;
     private static final short P2 = 2;
@@ -20,6 +17,7 @@ public class HidingInternalsCodeAggregatorTest {
 
     @SuppressWarnings("unused")
     private Object[] paramsCodeAggregation() {
+
         /**
          * input String[]: the code array to be loaded aggregatedCodes String[]: the
          * expected resulting array of (partially) aggregated codes
@@ -48,8 +46,8 @@ public class HidingInternalsCodeAggregatorTest {
         // @formatter:on
     }
 
-//    @Test
-//    @Parameters(method = "paramsCodeAggregation")
+    //    @Test
+    //    @Parameters(method = "paramsCodeAggregation")
     public void gettingAggregatedCodes(String[] input, String[] codes) {
         String[] internals = new String[] { "1N", "1U", "1Z", "3U", "3Z", "4U", "4X", "4Y", "4Z", "5A", "5B", "5C",
             "5D", "5K", "6P", "6Z", "7M", "7Z", "8Z" };
@@ -85,8 +83,8 @@ public class HidingInternalsCodeAggregatorTest {
         // @formatter:on
     }
 
-//    @Test
-//    @Parameters(method = "paramsCodePopulation")
+    //    @Test
+    //    @Parameters(method = "paramsCodePopulation")
     public void gettingCodePopulation(String[] input, Short[] codesPopulation) {
         ca.load(input);
         assertThat(ca.getCodesPopulation()).isEqualTo(codesPopulation);
@@ -134,8 +132,8 @@ public class HidingInternalsCodeAggregatorTest {
         };
     }
 
-//    @Test
-//    @Parameters(method = "paramsCodeStudyDesign")
+    //    @Test
+    //    @Parameters(method = "paramsCodeStudyDesign")
     public void gettingCodeStudyDesign(String[] input, Short[] codesStudyDesign) {
         ca.load(input);
         assertThat(ca.getCodesStudyDesign()).isEqualTo(codesStudyDesign);
@@ -165,8 +163,8 @@ public class HidingInternalsCodeAggregatorTest {
         // @formatter:on
     }
 
-//    @Test
-//    @Parameters(method = "paramsAll")
+    //    @Test
+    //    @Parameters(method = "paramsAll")
     public void gettingAllCodeTypes(String[] input, String[] codes, Short[] codesPopulation, Short[] codesStudyDesign) {
         String[] internals = new String[] { "1N", "1U", "1Z", "3U", "3Z", "4U", "4X", "4Y", "4Z", "5A", "5B", "5C",
             "5D", "5K", "6P", "6Z", "7M", "7Z", "8Z" };

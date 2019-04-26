@@ -6,12 +6,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 
-public class CodeClassTest extends Jsr303ValidatedEntityTest<CodeClass> {
+class CodeClassTest extends Jsr303ValidatedEntityTest<CodeClass> {
 
     private static final String JAVAX_VALIDATION_CONSTRAINTS_NOT_NULL_MESSAGE = "{javax.validation.constraints.NotNull.message}";
     private static final String DESC                                          = "this is cc1";
 
-    public CodeClassTest() {
+    CodeClassTest() {
         super(CodeClass.class);
     }
 
@@ -31,31 +31,31 @@ public class CodeClassTest extends Jsr303ValidatedEntityTest<CodeClass> {
     }
 
     @Test
-    public void validatingCodeClass_beingValid_succeeds() {
+    void validatingCodeClass_beingValid_succeeds() {
         verifySuccessfulValidation(new CodeClass(1, "foo", "bar"));
     }
 
     @Test
-    public void validatingCodeClass_withNullName_fails() {
+    void validatingCodeClass_withNullName_fails() {
         CodeClass cc = new CodeClass(1, null, "bar");
         validateAndAssertFailure(cc, NAME, null, JAVAX_VALIDATION_CONSTRAINTS_NOT_NULL_MESSAGE);
     }
 
     @Test
-    public void validatingCodeClass_withNullDescription_fails() {
+    void validatingCodeClass_withNullDescription_fails() {
         CodeClass cc = new CodeClass(1, "foo", null);
         validateAndAssertFailure(cc, DESCRIPTION, null, JAVAX_VALIDATION_CONSTRAINTS_NOT_NULL_MESSAGE);
     }
 
     @Test
-    public void cloning_copiesValues() {
+    void cloning_copiesValues() {
         CodeClass orig = new CodeClass(1, "cc1", DESC);
         CodeClass copy = new CodeClass(orig);
         assertThat(copy).isEqualToComparingFieldByField(orig);
     }
 
     @Test
-    public void sameValues_makeEquality() {
+    void sameValues_makeEquality() {
         CodeClass cc1 = new CodeClass(1, "cc1", DESC);
         CodeClass cc2 = new CodeClass(cc1);
         assertEquality(cc1, cc2);
@@ -68,7 +68,7 @@ public class CodeClassTest extends Jsr303ValidatedEntityTest<CodeClass> {
     }
 
     @Test
-    public void differingValues_makeInequality() {
+    void differingValues_makeInequality() {
         CodeClass cc1 = new CodeClass(1, "cc1", DESC);
         CodeClass cc2 = new CodeClass(2, "cc1", DESC);
         CodeClass cc3 = new CodeClass(1, "cc2", DESC);
@@ -92,7 +92,7 @@ public class CodeClassTest extends Jsr303ValidatedEntityTest<CodeClass> {
     @SuppressWarnings({ "unlikely-arg-type", "EqualsWithItself", "ConstantConditions",
         "EqualsBetweenInconvertibleTypes" })
     @Test
-    public void equalingToSpecialCases() {
+    void equalingToSpecialCases() {
         CodeClass cc1 = new CodeClass(1, "cc1", DESC);
 
         assertThat(cc1.equals(cc1)).isTrue();
@@ -101,7 +101,7 @@ public class CodeClassTest extends Jsr303ValidatedEntityTest<CodeClass> {
     }
 
     @Test
-    public void differingValues_withIdNullOnOne() {
+    void differingValues_withIdNullOnOne() {
         CodeClass cc1 = new CodeClass(1, "cc1", DESC);
         CodeClass cc2 = new CodeClass(null, "cc1", DESC);
         assertInequality(cc1, cc2);
@@ -114,35 +114,35 @@ public class CodeClassTest extends Jsr303ValidatedEntityTest<CodeClass> {
     }
 
     @Test
-    public void differingValues_withIdNullOnBoth() {
+    void differingValues_withIdNullOnBoth() {
         CodeClass cc1 = new CodeClass(null, "cc1", DESC);
         CodeClass cc2 = new CodeClass(null, "cc1", DESC);
         assertEquality(cc1, cc2);
     }
 
     @Test
-    public void differingValues_withNameNullOnOne() {
+    void differingValues_withNameNullOnOne() {
         CodeClass cc1 = new CodeClass(1, null, DESC);
         CodeClass cc2 = new CodeClass(1, "cc1", DESC);
         assertInequality(cc1, cc2);
     }
 
     @Test
-    public void differingValues_withNameNullOnBoth() {
+    void differingValues_withNameNullOnBoth() {
         CodeClass cc1 = new CodeClass(1, null, DESC);
         CodeClass cc2 = new CodeClass(1, null, DESC);
         assertEquality(cc1, cc2);
     }
 
     @Test
-    public void differingValues_withDescriptionNullOnOne() {
+    void differingValues_withDescriptionNullOnOne() {
         CodeClass cc1 = new CodeClass(1, "cc1", DESC);
         CodeClass cc2 = new CodeClass(1, "cc1", null);
         assertInequality(cc1, cc2);
     }
 
     @Test
-    public void differingValues_withDescriptionNullOnBoth() {
+    void differingValues_withDescriptionNullOnBoth() {
         CodeClass cc1 = new CodeClass(1, "cc1", null);
         CodeClass cc2 = new CodeClass(1, "cc1", null);
         assertEquality(cc1, cc2);

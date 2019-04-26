@@ -7,20 +7,20 @@ import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
-public class CookieTest {
+class CookieTest {
 
     @Test
-    public void assertValues() {
+    void assertValues() {
         assertThat(Cookie.values()).contains(Cookie.PAPER_LIST_PAGE_MODAL_WINDOW);
     }
 
     @Test
-    public void assertPaperListPageModalWindow() {
+    void assertPaperListPageModalWindow() {
         assertThat(Cookie.PAPER_LIST_PAGE_MODAL_WINDOW.getName()).isEqualTo("SciPaMaTo-xmlPasteModal-1");
     }
 
     @Test
-    public void assertAllNamesAreUnique() {
+    void assertAllNamesAreUnique() {
         final Set<String> cookies = new HashSet<>();
         for (final Cookie c : Cookie.values())
             cookies.add(c.getName());

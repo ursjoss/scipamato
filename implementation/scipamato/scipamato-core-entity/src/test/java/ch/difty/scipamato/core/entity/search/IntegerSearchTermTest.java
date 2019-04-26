@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import ch.difty.scipamato.core.entity.search.IntegerSearchTerm.MatchType;
 
 @SuppressWarnings("SameParameterValue")
-public class IntegerSearchTermTest {
+class IntegerSearchTermTest {
 
     private static final long   CONDITION_ID = 7;
     private static final String FIELD_NAME   = "fn";
@@ -31,105 +31,105 @@ public class IntegerSearchTermTest {
     }
 
     @Test
-    public void exactSearch() {
+    void exactSearch() {
         final String raw = "2016";
         st = new IntegerSearchTerm(CONDITION_ID, FIELD_NAME, raw);
         assertTerm(MatchType.EXACT, 2016, raw);
     }
 
     @Test
-    public void exactSearch_withSpaces() {
+    void exactSearch_withSpaces() {
         final String raw = "   2016 ";
         st = new IntegerSearchTerm(CONDITION_ID, FIELD_NAME, raw);
         assertTerm(MatchType.EXACT, 2016, raw);
     }
 
     @Test
-    public void exactSearch_withEqual() {
+    void exactSearch_withEqual() {
         final String raw = "=2016";
         st = new IntegerSearchTerm(CONDITION_ID, FIELD_NAME, raw);
         assertTerm(MatchType.EXACT, 2016, raw);
     }
 
     @Test
-    public void exactSearch_withEqualAndSpaces() {
+    void exactSearch_withEqualAndSpaces() {
         final String raw = "=    2016";
         st = new IntegerSearchTerm(CONDITION_ID, FIELD_NAME, raw);
         assertTerm(MatchType.EXACT, 2016, raw);
     }
 
     @Test
-    public void greaterThanOrEqualSearch() {
+    void greaterThanOrEqualSearch() {
         final String raw = ">=2016";
         st = new IntegerSearchTerm(CONDITION_ID, FIELD_NAME, raw);
         assertTerm(MatchType.GREATER_OR_EQUAL, 2016, raw);
     }
 
     @Test
-    public void greaterThanOrEqualSearch_WithSpaces() {
+    void greaterThanOrEqualSearch_WithSpaces() {
         final String raw = "   >=    2016 ";
         st = new IntegerSearchTerm(CONDITION_ID, FIELD_NAME, raw);
         assertTerm(MatchType.GREATER_OR_EQUAL, 2016, raw);
     }
 
     @Test
-    public void greaterThanSearch() {
+    void greaterThanSearch() {
         final String raw = ">2016";
         st = new IntegerSearchTerm(CONDITION_ID, FIELD_NAME, raw);
         assertTerm(MatchType.GREATER_THAN, 2016, raw);
     }
 
     @Test
-    public void lessThanOrEqualSearch() {
+    void lessThanOrEqualSearch() {
         final String raw = "<=2016";
         st = new IntegerSearchTerm(CONDITION_ID, FIELD_NAME, raw);
         assertTerm(MatchType.LESS_OR_EQUAL, 2016, raw);
     }
 
     @Test
-    public void lessThanSearch() {
+    void lessThanSearch() {
         final String raw = "<2016";
         st = new IntegerSearchTerm(CONDITION_ID, FIELD_NAME, raw);
         assertTerm(MatchType.LESS_THAN, 2016, raw);
     }
 
     @Test
-    public void rangeSearch() {
+    void rangeSearch() {
         final String raw = "2016-2018";
         st = new IntegerSearchTerm(CONDITION_ID, FIELD_NAME, raw);
         assertTerm(MatchType.RANGE, 2016, 2018, raw);
     }
 
     @Test
-    public void rangeSearch_withSpaces() {
+    void rangeSearch_withSpaces() {
         final String raw = "    2016     -    2018 ";
         st = new IntegerSearchTerm(CONDITION_ID, FIELD_NAME, raw);
         assertTerm(MatchType.RANGE, 2016, 2018, raw);
     }
 
     @Test
-    public void hasNoValue_usingEquals() {
+    void hasNoValue_usingEquals() {
         final String raw = "=\"\"";
         st = new IntegerSearchTerm(CONDITION_ID, FIELD_NAME, raw);
         assertTerm(MatchType.MISSING, 0, 0, raw);
     }
 
     @Test
-    public void hasNoValue_skippingEquals() {
+    void hasNoValue_skippingEquals() {
         final String raw = "\"\"";
         st = new IntegerSearchTerm(CONDITION_ID, FIELD_NAME, raw);
         assertTerm(MatchType.MISSING, 0, 0, raw);
     }
 
     @Test
-    public void hasAnyValue() {
+    void hasAnyValue() {
         final String raw = ">\"\"";
         st = new IntegerSearchTerm(CONDITION_ID, FIELD_NAME, raw);
         assertTerm(MatchType.PRESENT, 0, 0, raw);
     }
 
     @Test
-    public void invalidSearch_withNonNumericCharacters() {
+    void invalidSearch_withNonNumericCharacters() {
         try {
             new IntegerSearchTerm(CONDITION_ID, FIELD_NAME, "2014a");
             fail("Should have thrown exception");
@@ -141,7 +141,7 @@ public class IntegerSearchTermTest {
     }
 
     @Test
-    public void invalidSearch_withInvalidPattern() {
+    void invalidSearch_withInvalidPattern() {
         try {
             new IntegerSearchTerm(CONDITION_ID, FIELD_NAME, ">>2014");
             fail("Should have thrown exception");

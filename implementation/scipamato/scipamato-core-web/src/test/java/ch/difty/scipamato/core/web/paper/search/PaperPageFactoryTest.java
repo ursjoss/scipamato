@@ -16,7 +16,7 @@ import ch.difty.scipamato.common.web.component.SerializableConsumer;
 import ch.difty.scipamato.core.entity.search.SearchCondition;
 import ch.difty.scipamato.core.web.WicketTest;
 
-public class PaperPageFactoryTest extends WicketTest {
+class PaperPageFactoryTest extends WicketTest {
 
     private final PaperPageFactory factory = new PaperPageFactory();
 
@@ -27,7 +27,7 @@ public class PaperPageFactoryTest extends WicketTest {
     private MarkupContainer container;
 
     @Test
-    public void assertingNewPaperSearchCriteriaPage() {
+    void assertingNewPaperSearchCriteriaPage() {
         SerializableBiFunction<IModel<SearchCondition>, Long, GenericWebPage<SearchCondition>> function = factory.newPaperSearchCriteriaPage();
 
         GenericWebPage<SearchCondition> page = function.apply(Model.of(sc), searchConditionId);
@@ -35,7 +35,7 @@ public class PaperPageFactoryTest extends WicketTest {
     }
 
     @Test
-    public void settingResponsePageToPaperSearchCriteriaPageConsumer() {
+    void settingResponsePageToPaperSearchCriteriaPageConsumer() {
         SerializableBiConsumer<IModel<SearchCondition>, Long> consumer = factory.setResponsePageToPaperSearchCriteriaPageConsumer(
             container);
         consumer.accept(Model.of(sc), searchConditionId);
@@ -47,7 +47,7 @@ public class PaperPageFactoryTest extends WicketTest {
     }
 
     @Test
-    public void settingResponsePageToPaperSearchPageConsumer() {
+    void settingResponsePageToPaperSearchPageConsumer() {
         PageParameters pp = new PageParameters();
         SerializableConsumer<PageParameters> consumer = factory.setResponsePageToPaperSearchPageConsumer(container);
         consumer.accept(pp);

@@ -19,7 +19,7 @@ import ch.difty.scipamato.core.entity.newsletter.NewsletterFilter;
 import ch.difty.scipamato.core.persistence.AbstractServiceTest;
 
 @SuppressWarnings({ "ResultOfMethodCallIgnored", "OptionalGetWithoutIsPresent" })
-public class JooqNewsletterServiceTest extends AbstractServiceTest<Integer, Newsletter, NewsletterRepository> {
+class JooqNewsletterServiceTest extends AbstractServiceTest<Integer, Newsletter, NewsletterRepository> {
 
     private JooqNewsletterService service;
 
@@ -78,7 +78,7 @@ public class JooqNewsletterServiceTest extends AbstractServiceTest<Integer, News
     }
 
     @Test
-    public void findingById_withNotFoundEntity_returnsOptionalEmpty() {
+    void findingById_withNotFoundEntity_returnsOptionalEmpty() {
         Integer id = 7;
         when(repoMock.findById(id)).thenReturn(null);
 
@@ -90,22 +90,23 @@ public class JooqNewsletterServiceTest extends AbstractServiceTest<Integer, News
     }
 
     @Test
-    public void findingByFilter_delegatesToRepo() {
+    void findingByFilter_delegatesToRepo() {
         when(repoMock.findPageByFilter(filterMock, paginationContextMock)).thenReturn(newsletters);
+        auditFixture();
         assertThat(service.findPageByFilter(filterMock, paginationContextMock)).isEqualTo(newsletters);
         verify(repoMock).findPageByFilter(filterMock, paginationContextMock);
         verifyAudit(2);
     }
 
     @Test
-    public void countingByFilter_delegatesToRepo() {
+    void countingByFilter_delegatesToRepo() {
         when(repoMock.countByFilter(filterMock)).thenReturn(3);
         assertThat(service.countByFilter(filterMock)).isEqualTo(3);
         verify(repoMock).countByFilter(filterMock);
     }
 
     @Test
-    public void savingOrUpdating_withUnsavedEntityAndOtherNewsletterInStatusWIP_throws() {
+    void savingOrUpdating_withUnsavedEntityAndOtherNewsletterInStatusWIP_throws() {
         when(newsletterMock.getId()).thenReturn(null);
         when(newsletterMock.getPublicationStatus()).thenReturn(PublicationStatus.WIP);
         when(repoMock.getNewsletterInStatusWorkInProgress()).thenReturn(Optional.of(newsletterWipMock));
@@ -127,7 +128,7 @@ public class JooqNewsletterServiceTest extends AbstractServiceTest<Integer, News
     }
 
     @Test
-    public void savingOrUpdating_withSavedEntity_butOtherNewsletterInWipStatus_throws() {
+    void savingOrUpdating_withSavedEntity_butOtherNewsletterInWipStatus_throws() {
         when(newsletterMock.getId()).thenReturn(2);
         when(newsletterMock.getPublicationStatus()).thenReturn(PublicationStatus.WIP);
         when(repoMock.getNewsletterInStatusWorkInProgress()).thenReturn(Optional.of(newsletterWipMock));
@@ -149,7 +150,7 @@ public class JooqNewsletterServiceTest extends AbstractServiceTest<Integer, News
     }
 
     @Test
-    public void savingOrUpdating_withSavedEntity_butOtherNewsletterInWipStatus() {
+    void savingOrUpdating_withSavedEntity_butOtherNewsletterInWipStatus() {
         final int newsletterId = 1;
 
         when(newsletterMock.getId()).thenReturn(newsletterId);
@@ -211,13 +212,13 @@ public class JooqNewsletterServiceTest extends AbstractServiceTest<Integer, News
     }
 
     @Test
-    public void deleting_withNullEntity_doesNothing() {
+    void deleting_withNullEntity_doesNothing() {
         service.remove(null);
         verify(repoMock, never()).delete(anyInt(), anyInt());
     }
 
     @Test
-    public void deleting_withEntityWithNullId_doesNothing() {
+    void deleting_withEntityWithNullId_doesNothing() {
         when(newsletterMock.getId()).thenReturn(null);
 
         service.remove(newsletterMock);
@@ -227,7 +228,7 @@ public class JooqNewsletterServiceTest extends AbstractServiceTest<Integer, News
     }
 
     @Test
-    public void deleting_withEntityWithNormalId_delegatesToRepo() {
+    void deleting_withEntityWithNormalId_delegatesToRepo() {
         when(newsletterMock.getId()).thenReturn(3);
         when(newsletterMock.getVersion()).thenReturn(17);
 
@@ -239,21 +240,21 @@ public class JooqNewsletterServiceTest extends AbstractServiceTest<Integer, News
     }
 
     @Test
-    public void canCreateNewNewsletter_withNoWipNewsletters_isAllowed() {
+    void canCreateNewNewsletter_withNoWipNewsletters_isAllowed() {
         when(repoMock.getNewsletterInStatusWorkInProgress()).thenReturn(Optional.empty());
         assertThat(service.canCreateNewsletterInProgress()).isTrue();
         verify(repoMock).getNewsletterInStatusWorkInProgress();
     }
 
     @Test
-    public void canCreateNewNewsletter_withOneWipNewsletters_isNotAllowed() {
+    void canCreateNewNewsletter_withOneWipNewsletters_isNotAllowed() {
         when(repoMock.getNewsletterInStatusWorkInProgress()).thenReturn(Optional.of(new Newsletter()));
         assertThat(service.canCreateNewsletterInProgress()).isFalse();
         verify(repoMock).getNewsletterInStatusWorkInProgress();
     }
 
     @Test
-    public void mergingPaperIntoNewsletter_withNoWipNewsletterPresent() {
+    void mergingPaperIntoNewsletter_withNoWipNewsletterPresent() {
         final long paperId = 5;
         final Integer newsletterTopicId = 10;
         final int newsletterId = 1;
@@ -268,7 +269,7 @@ public class JooqNewsletterServiceTest extends AbstractServiceTest<Integer, News
     }
 
     @Test
-    public void mergingPaperIntoNewsletter_withWipNewsletterPresent_canMerge() {
+    void mergingPaperIntoNewsletter_withWipNewsletterPresent_canMerge() {
         final long paperId = 5;
         final Integer newsletterTopicId = 10;
         final int newsletterId = 1;
@@ -290,7 +291,7 @@ public class JooqNewsletterServiceTest extends AbstractServiceTest<Integer, News
     }
 
     @Test
-    public void mergingPaperIntoNewsletter_withNoWipNewsletterPresent_cannotMerge() {
+    void mergingPaperIntoNewsletter_withNoWipNewsletterPresent_cannotMerge() {
         final long paperId = 5;
         final Integer newsletterTopicId = 10;
 
@@ -302,7 +303,7 @@ public class JooqNewsletterServiceTest extends AbstractServiceTest<Integer, News
     }
 
     @Test
-    public void mergingPaperIntoNewsletter2_withNoWipNewsletterPresent_cannotMerge() {
+    void mergingPaperIntoNewsletter2_withNoWipNewsletterPresent_cannotMerge() {
         final long paperId = 5;
 
         when(repoMock.getNewsletterInStatusWorkInProgress()).thenReturn(Optional.empty());
@@ -313,7 +314,7 @@ public class JooqNewsletterServiceTest extends AbstractServiceTest<Integer, News
     }
 
     @Test
-    public void removingPaperFromNewsletter_withWipNewsletterPresentAndRemoveSucceeding_canRemove() {
+    void removingPaperFromNewsletter_withWipNewsletterPresentAndRemoveSucceeding_canRemove() {
         final long paperId = 5;
         final int newsletterId = 1;
         Newsletter wip = new Newsletter();
@@ -329,7 +330,7 @@ public class JooqNewsletterServiceTest extends AbstractServiceTest<Integer, News
     }
 
     @Test
-    public void removingPaperFromNewsletter_withWipNewsletterPresentAndRemoveNotSucceeding_cannotRemove() {
+    void removingPaperFromNewsletter_withWipNewsletterPresentAndRemoveNotSucceeding_cannotRemove() {
         final long paperId = 5;
         final int newsletterId = 1;
         Newsletter wip = new Newsletter();
@@ -345,7 +346,7 @@ public class JooqNewsletterServiceTest extends AbstractServiceTest<Integer, News
     }
 
     @Test
-    public void removingPaperFromNewsletter_withNoWipNewsletterPresent_cannotRemove() {
+    void removingPaperFromNewsletter_withNoWipNewsletterPresent_cannotRemove() {
         final long paperId = 5;
 
         when(repoMock.getNewsletterInStatusWorkInProgress()).thenReturn(Optional.empty());

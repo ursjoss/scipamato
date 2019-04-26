@@ -25,7 +25,7 @@ public abstract class ModelTest {
     private ApplicationContext applicationContextMock;
 
     @BeforeEach
-    public final void setUp() {
+    protected final void setUp() {
         ReflectionTestUtils.setField(application, "applicationContext", applicationContextMock);
         WicketTester tester = new WicketTester(application);
         Locale locale = new Locale("en_US");

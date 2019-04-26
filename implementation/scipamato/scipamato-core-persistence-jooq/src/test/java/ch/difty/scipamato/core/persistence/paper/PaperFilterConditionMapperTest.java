@@ -11,7 +11,7 @@ import ch.difty.scipamato.core.db.tables.Paper;
 import ch.difty.scipamato.core.db.tables.records.PaperRecord;
 import ch.difty.scipamato.core.entity.search.PaperFilter;
 
-public class PaperFilterConditionMapperTest
+class PaperFilterConditionMapperTest
     extends FilterConditionMapperTest<PaperRecord, ch.difty.scipamato.core.db.tables.Paper, PaperFilter> {
 
     private final PaperFilterConditionMapper mapper = new PaperFilterConditionMapper();
@@ -34,7 +34,7 @@ public class PaperFilterConditionMapperTest
     }
 
     @Test
-    public void creatingWhereCondition_withNumber_searchesNumber() {
+    void creatingWhereCondition_withNumber_searchesNumber() {
         Long number = 17L;
         filter.setNumber(number);
         assertThat(mapper
@@ -43,7 +43,7 @@ public class PaperFilterConditionMapperTest
     }
 
     @Test
-    public void creatingWhereCondition_withAuthorMask_searchesFirstAuthorAndAuthors() {
+    void creatingWhereCondition_withAuthorMask_searchesFirstAuthorAndAuthors() {
         String pattern = "am";
         filter.setAuthorMask(pattern);
         assertThat(mapper
@@ -52,7 +52,7 @@ public class PaperFilterConditionMapperTest
     }
 
     @Test
-    public void creatingWhereCondition_withMethodsMask_searchesExposureAndMethodFields() {
+    void creatingWhereCondition_withMethodsMask_searchesExposureAndMethodFields() {
         String pattern = "m";
         filter.setMethodsMask(pattern);
         // @formatter:off
@@ -70,7 +70,7 @@ public class PaperFilterConditionMapperTest
     }
 
     @Test
-    public void creatingWhereCondition_withSearchMask_searchesRemainingTextFields() {
+    void creatingWhereCondition_withSearchMask_searchesRemainingTextFields() {
         String pattern = "foo";
         filter.setSearchMask(pattern);
         // @formatter:off
@@ -95,7 +95,7 @@ public class PaperFilterConditionMapperTest
     }
 
     @Test
-    public void creatingWhereCondition_withPublicationYearFrom_searchesPublicationYear() {
+    void creatingWhereCondition_withPublicationYearFrom_searchesPublicationYear() {
         filter.setPublicationYearFrom(2016);
         assertThat(mapper
             .map(filter)
@@ -103,7 +103,7 @@ public class PaperFilterConditionMapperTest
     }
 
     @Test
-    public void creatingWhereCondition_withPublicationYearUntil_searchesPublicationYear() {
+    void creatingWhereCondition_withPublicationYearUntil_searchesPublicationYear() {
         filter.setPublicationYearUntil(2016);
         assertThat(mapper
             .map(filter)
@@ -111,7 +111,7 @@ public class PaperFilterConditionMapperTest
     }
 
     @Test
-    public void creatingWhereCondition_withNewsletterId() {
+    void creatingWhereCondition_withNewsletterId() {
         filter.setNewsletterId(10);
         assertThat(mapper
             .map(filter)

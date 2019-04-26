@@ -21,7 +21,7 @@ import org.springframework.batch.core.repository.JobRestartException;
 
 @SuppressWarnings("SameParameterValue")
 @ExtendWith(MockitoExtension.class)
-public class RefDataSyncJobLauncherTest {
+class RefDataSyncJobLauncherTest {
 
     private static final int    JOB_STEP_ID_START    = 75;
     private static final int    BATCH_SIZE           = 100;
@@ -42,7 +42,7 @@ public class RefDataSyncJobLauncherTest {
     private Map<String, Job> jobMap;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         launcher = new RefDataSyncJobLauncher(jobLauncher, syncLanguageJob, syncNewStudyPageLinkJob, syncCodeClassJob,
             syncCodeJob, syncPaperJob, syncNewsletterJob, syncNewsletterTopicJob, syncNewStudyJob, syncNewStudyTopicJob,
             syncKeywordJob, warner);
@@ -51,7 +51,7 @@ public class RefDataSyncJobLauncherTest {
     }
 
     @AfterEach
-    public void tearDown() {
+    void tearDown() {
         verifyNoMoreInteractions(jobLauncher, syncLanguageJob, syncNewStudyPageLinkJob, syncCodeClassJob, syncCodeJob,
             syncPaperJob, syncNewsletterJob, syncNewsletterTopicJob, syncNewStudyJob, syncNewStudyTopicJob,
             syncKeywordJob, warner);
@@ -73,7 +73,7 @@ public class RefDataSyncJobLauncherTest {
     }
 
     @Test
-    public void jobParameters_haveSingleIdentifyingParameterRunDate_withCurrentDate() {
+    void jobParameters_haveSingleIdentifyingParameterRunDate_withCurrentDate() {
         JobParameters params = launcher.getJobParameters();
         assertThat(params.getParameters()).hasSize(1);
         assertThat(params.getDate("runDate")).isCloseTo(new Date(), 1000);
@@ -86,7 +86,7 @@ public class RefDataSyncJobLauncherTest {
     }
 
     @Test
-    public void launching_withUnsynchronizedPapersAndAllStepsSuccessful_addsWarningBeforeStepResultsAndSucceeds()
+    void launching_withUnsynchronizedPapersAndAllStepsSuccessful_addsWarningBeforeStepResultsAndSucceeds()
         throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException,
         JobInstanceAlreadyCompleteException {
 
@@ -201,7 +201,7 @@ public class RefDataSyncJobLauncherTest {
     }
 
     @Test
-    public void launching_withoutUnsynchronizedPapers_onlyAddsInfoMessages()
+    void launching_withoutUnsynchronizedPapers_onlyAddsInfoMessages()
         throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException,
         JobInstanceAlreadyCompleteException {
         when(warner.findUnsynchronizedPapers()).thenReturn(Optional.empty());
@@ -216,7 +216,7 @@ public class RefDataSyncJobLauncherTest {
     }
 
     @Test
-    public void launching_withFailingStep_failsJob()
+    void launching_withFailingStep_failsJob()
         throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException,
         JobInstanceAlreadyCompleteException {
         when(warner.findUnsynchronizedPapers()).thenReturn(Optional.empty());
@@ -280,7 +280,7 @@ public class RefDataSyncJobLauncherTest {
     }
 
     @Test
-    public void launching_withUnexpectedException_stopsRunningSubsequentJobs()
+    void launching_withUnexpectedException_stopsRunningSubsequentJobs()
         throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException,
         JobInstanceAlreadyCompleteException {
         when(warner.findUnsynchronizedPapers()).thenReturn(Optional.empty());

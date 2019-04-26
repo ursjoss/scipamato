@@ -23,7 +23,7 @@ import ch.difty.scipamato.publ.entity.NewStudyTopic;
 import ch.difty.scipamato.publ.entity.Newsletter;
 
 @ExtendWith(MockitoExtension.class)
-public class JooqNewStudyTopicServiceTest {
+class JooqNewStudyTopicServiceTest {
 
     private static final int NL_ID = 17;
 
@@ -38,7 +38,7 @@ public class JooqNewStudyTopicServiceTest {
     private List<NewStudyTopic> studyTopics;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         service = new JooqNewStudyTopicService(repoMock);
 
         studyTopics = new ArrayList<>();
@@ -47,12 +47,12 @@ public class JooqNewStudyTopicServiceTest {
     }
 
     @Test
-    public void findingMostRecentNewStudyTopics_withNullLanguage_throws() {
+    void findingMostRecentNewStudyTopics_withNullLanguage_throws() {
         Assertions.assertThrows(NullArgumentException.class, () -> service.findMostRecentNewStudyTopics(null));
     }
 
     @Test
-    public void findingMostRecentNewStudyTopics() {
+    void findingMostRecentNewStudyTopics() {
         when(repoMock.findMostRecentNewsletterId()).thenReturn(Optional.of(NL_ID));
         when(repoMock.findNewStudyTopicsForNewsletter(NL_ID, "en")).thenReturn(studyTopics);
 
@@ -63,19 +63,19 @@ public class JooqNewStudyTopicServiceTest {
     }
 
     @Test
-    public void findNewStudyTopicsForNewsletterIssue_withNullIssue_throws() {
+    void findNewStudyTopicsForNewsletterIssue_withNullIssue_throws() {
         TestUtils.assertDegenerateSupplierParameter(() -> service.findNewStudyTopicsForNewsletterIssue(null, "en"),
             "issue");
     }
 
     @Test
-    public void findNewStudyTopicsForNewsletterIssue_withNullLanguageCode_throws() {
+    void findNewStudyTopicsForNewsletterIssue_withNullLanguageCode_throws() {
         TestUtils.assertDegenerateSupplierParameter(() -> service.findNewStudyTopicsForNewsletterIssue("2018/06", null),
             "languageCode");
     }
 
     @Test
-    public void findNewStudyTopicsForNewsletterIssue() {
+    void findNewStudyTopicsForNewsletterIssue() {
         when(repoMock.findIdOfNewsletterWithIssue("2018/06")).thenReturn(Optional.of(NL_ID));
         when(repoMock.findNewStudyTopicsForNewsletter(NL_ID, "en")).thenReturn(studyTopics);
 
@@ -87,7 +87,7 @@ public class JooqNewStudyTopicServiceTest {
     }
 
     @Test
-    public void findingArchivedNewsletters_delegatesToRepo() {
+    void findingArchivedNewsletters_delegatesToRepo() {
         when(repoMock.findArchivedNewsletters(14, "de")).thenReturn(
             List.of(new Newsletter(2, "2018/06", LocalDate.of(2018, 6, 10)),
                 new Newsletter(1, "2018/04", LocalDate.of(2018, 4, 10))));
@@ -98,7 +98,7 @@ public class JooqNewStudyTopicServiceTest {
     }
 
     @Test
-    public void findingNewStudyPageLinks_delegatesToRepo() {
+    void findingNewStudyPageLinks_delegatesToRepo() {
         when(repoMock.findNewStudyPageLinks("de")).thenReturn(
             List.of(new NewStudyPageLink("en", 1, "title1", "url1"), new NewStudyPageLink("en", 2, "title2", "url2")));
 

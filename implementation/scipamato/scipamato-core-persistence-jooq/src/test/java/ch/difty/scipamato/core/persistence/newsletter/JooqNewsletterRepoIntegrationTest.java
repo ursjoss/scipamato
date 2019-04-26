@@ -23,24 +23,24 @@ import ch.difty.scipamato.core.entity.projection.PaperSlim;
 import ch.difty.scipamato.core.persistence.JooqBaseIntegrationTest;
 
 @SuppressWarnings({ "SameParameterValue", "OptionalGetWithoutIsPresent" })
-public class JooqNewsletterRepoIntegrationTest extends JooqBaseIntegrationTest {
+class JooqNewsletterRepoIntegrationTest extends JooqBaseIntegrationTest {
 
     @Autowired
     private JooqNewsletterRepo repo;
 
     @Test
-    public void findingAll() {
+    void findingAll() {
         assertThat(repo.findAll()).hasSize(2);
     }
 
     @Test
-    public void findingById_withNonExistingId_returnsNull() {
+    void findingById_withNonExistingId_returnsNull() {
         assertThat(repo.findById(-1)).isNull();
     }
 
     @SuppressWarnings("SpellCheckingInspection")
     @Test
-    public void findById_withExistingId_returnsRecord() {
+    void findById_withExistingId_returnsRecord() {
         final Newsletter nl = repo.findById(1);
         assertThat(nl).isNotNull();
         assertThat(nl.getId()).isEqualTo(1);
@@ -58,7 +58,7 @@ public class JooqNewsletterRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void addingRecord_savesRecordAndRefreshesId() {
+    void addingRecord_savesRecordAndRefreshesId() {
         Newsletter nl = makeMinimalNewsletter();
         assertThat(nl.getId()).isNull();
 
@@ -79,7 +79,7 @@ public class JooqNewsletterRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void updatingRecord() {
+    void updatingRecord() {
         Newsletter nl = repo.add(makeMinimalNewsletter());
         assertThat(nl).isNotNull();
         assertThat(nl.getId())
@@ -99,7 +99,7 @@ public class JooqNewsletterRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void deletingRecord() {
+    void deletingRecord() {
         Newsletter nl = repo.add(makeMinimalNewsletter());
         assertThat(nl).isNotNull();
         assertThat(nl.getId())
@@ -115,7 +115,7 @@ public class JooqNewsletterRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void findingByFilter_withIssueFilter() {
+    void findingByFilter_withIssueFilter() {
         NewsletterFilter nf = new NewsletterFilter();
         nf.setIssueMask("1802");
         List<Newsletter> results = repo.findPageByFilter(nf, new PaginationRequest(Sort.Direction.ASC, "issueDate"));
@@ -126,7 +126,7 @@ public class JooqNewsletterRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void findingByFilter_withTopicFilter() {
+    void findingByFilter_withTopicFilter() {
         NewsletterFilter nf = new NewsletterFilter();
         nf.setNewsletterTopic(new NewsletterTopic(54, "foo"));
         List<Newsletter> results = repo.findPageByFilter(nf, new PaginationRequest(Sort.Direction.ASC, "issueDate"));
@@ -134,7 +134,7 @@ public class JooqNewsletterRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void mergingPaperIntoNewsletter_withNewAssociation() {
+    void mergingPaperIntoNewsletter_withNewAssociation() {
         int newsletterId = 2;
         long paperId = 30L;
         String langCode = "en";
@@ -161,7 +161,7 @@ public class JooqNewsletterRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void mergingPaperIntoNewsletter_withExistingAssociationToUpdate() {
+    void mergingPaperIntoNewsletter_withExistingAssociationToUpdate() {
         final int newsletterId = 2;
         final long paperId = 39L;
         final String languageCode = "en";
@@ -193,7 +193,7 @@ public class JooqNewsletterRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void deletingPaperFromNewsletter_withExistingAssociation_managesToDeleteIt() {
+    void deletingPaperFromNewsletter_withExistingAssociation_managesToDeleteIt() {
         final int newsletterId = 2;
         final long paperId = 39L;
         Newsletter nl = repo.findById(newsletterId);
@@ -207,7 +207,7 @@ public class JooqNewsletterRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void deletingPaperFromNewsletter_withNonExistingRelation() {
+    void deletingPaperFromNewsletter_withNonExistingRelation() {
         final int newsletterId = 2;
         final long paperId = -1L;
         Newsletter nl = repo.findById(newsletterId);
@@ -221,7 +221,7 @@ public class JooqNewsletterRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void gettingNewsletterInStatusWorkInProgress() {
+    void gettingNewsletterInStatusWorkInProgress() {
         final Optional<Newsletter> wipNl = repo.getNewsletterInStatusWorkInProgress();
         AssertionsForClassTypes
             .assertThat(wipNl)

@@ -13,13 +13,13 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-public class HikariDatasourceProductionSettingsIntegrationTest {
+class HikariDatasourceProductionSettingsIntegrationTest {
 
     @Autowired
     private DataSource datasource;
 
     @Test
-    public void validateSettingsInProduction() {
+    void validateSettingsInProduction() {
         assertThat(datasource).isInstanceOf(HikariDataSource.class);
         HikariDataSource ds = (HikariDataSource) datasource;
 

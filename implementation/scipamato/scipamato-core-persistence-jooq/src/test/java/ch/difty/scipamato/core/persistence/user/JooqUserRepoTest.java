@@ -16,7 +16,7 @@ import ch.difty.scipamato.core.persistence.EntityRepository;
 import ch.difty.scipamato.core.persistence.JooqEntityRepoTest;
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
-public class JooqUserRepoTest extends
+class JooqUserRepoTest extends
     JooqEntityRepoTest<ScipamatoUserRecord, User, Integer, ch.difty.scipamato.core.db.tables.ScipamatoUser, UserRecordMapper, UserFilter> {
 
     private static final Integer SAMPLE_ID = 3;
@@ -139,7 +139,7 @@ public class JooqUserRepoTest extends
     }
 
     @Test
-    public void degenerateConstruction() {
+    void degenerateConstruction() {
         assertDegenerateSupplierParameter(
             () -> new JooqUserRepo(null, getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(),
                 getInsertSetStepSetter(), getUpdateSetStepSetter(), getApplicationProperties(), userRoleRepoMock),

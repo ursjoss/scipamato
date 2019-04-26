@@ -9,13 +9,13 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-public class SelfUpdateEventTest {
+class SelfUpdateEventTest {
 
     @Mock
     private AjaxRequestTarget targetMock;
 
     @Test
-    public void instantiate() {
+    void instantiate() {
         SelfUpdateEvent e = new SelfUpdateEvent(targetMock);
         assertThat(e.getTarget()).isEqualTo(targetMock);
     }

@@ -20,7 +20,7 @@ import ch.difty.scipamato.core.persistence.ServiceResult;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @ActiveProfiles({ "test" })
-public class PubmedImportServiceIntegrationTest {
+class PubmedImportServiceIntegrationTest {
 
     private static final String XML = "xml/pubmed_result_3studies.xml";
 
@@ -35,7 +35,7 @@ public class PubmedImportServiceIntegrationTest {
     private PaperService paperService;
 
     @Test
-    public void canReadXmlFile_whichHas3Studies() throws IOException {
+    void canReadXmlFile_whichHas3Studies() throws IOException {
         final String xml = TestUtils.readFileAsString(XML);
         assertThat(xml)
             .startsWith("<?xml version")
@@ -46,7 +46,7 @@ public class PubmedImportServiceIntegrationTest {
     }
 
     @Test
-    public void test() throws IOException {
+    void test() throws IOException {
         final String xml = TestUtils.readFileAsString(XML);
 
         final ServiceResult result = importer.persistPubmedArticlesFromXml(xml);

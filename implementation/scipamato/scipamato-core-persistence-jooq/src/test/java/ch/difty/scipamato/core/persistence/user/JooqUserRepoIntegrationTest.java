@@ -12,7 +12,7 @@ import ch.difty.scipamato.core.entity.User;
 import ch.difty.scipamato.core.persistence.JooqBaseIntegrationTest;
 import ch.difty.scipamato.core.persistence.OptimisticLockingException;
 
-public class JooqUserRepoIntegrationTest extends JooqBaseIntegrationTest {
+class JooqUserRepoIntegrationTest extends JooqBaseIntegrationTest {
 
     private static final Integer MAX_ID_PREPOPULATED       = 8;
     private static final int     RECORD_COUNT_PREPOPULATED = 8;
@@ -21,7 +21,7 @@ public class JooqUserRepoIntegrationTest extends JooqBaseIntegrationTest {
     private JooqUserRepo repo;
 
     @Test
-    public void findingAll() {
+    void findingAll() {
         List<User> users = repo.findAll();
         assertThat(users).hasSize(RECORD_COUNT_PREPOPULATED);
         assertThat(users
@@ -39,7 +39,7 @@ public class JooqUserRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void findingById_withExistingId_returnsEntity() {
+    void findingById_withExistingId_returnsEntity() {
         User user = repo.findById(4);
         assertThat(user.getId()).isEqualTo(4);
 
@@ -48,12 +48,12 @@ public class JooqUserRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void findingById_withNonExistingId_returnsNull() {
+    void findingById_withNonExistingId_returnsNull() {
         assertThat(repo.findById(-1)).isNull();
     }
 
     @Test
-    public void addingRecord_savesRecordAndRefreshesId() {
+    void addingRecord_savesRecordAndRefreshesId() {
         User p = makeMinimalUser();
         assertThat(p.getId()).isNull();
 
@@ -76,7 +76,7 @@ public class JooqUserRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void updatingRecord() {
+    void updatingRecord() {
         User user = repo.add(makeMinimalUser());
         assertThat(user).isNotNull();
         assertThat(user.getId())
@@ -96,7 +96,7 @@ public class JooqUserRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void deletingRecord() {
+    void deletingRecord() {
         User user = repo.add(makeMinimalUser());
         assertThat(user).isNotNull();
         assertThat(user.getId())
@@ -112,13 +112,13 @@ public class JooqUserRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void findingUserByName_withNonExistingUserName_returnsNull() {
+    void findingUserByName_withNonExistingUserName_returnsNull() {
         //noinspection SpellCheckingInspection
         assertThat(repo.findByUserName("lkajdsklj")).isNull();
     }
 
     @Test
-    public void findingUserByName_withExistingUserName_returnsUserIncludingRoles() {
+    void findingUserByName_withExistingUserName_returnsUserIncludingRoles() {
         String name = "admin";
         final User admin = repo.findByUserName(name);
         assertThat(admin.getUserName()).isEqualTo(name);
@@ -126,7 +126,7 @@ public class JooqUserRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void updatingAssociatedEntities_addsAndRemovesRoles() {
+    void updatingAssociatedEntities_addsAndRemovesRoles() {
         Integer id = newUserAndSave();
 
         addRoleViewerAndUserToUserWith(id);
@@ -180,7 +180,7 @@ public class JooqUserRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void canUpdateUser_thatHasBeenModifiedElsewhereInTheMeanTime() {
+    void canUpdateUser_thatHasBeenModifiedElsewhereInTheMeanTime() {
         User user = makeAndValidateNewUser();
         User secondReloaded = loadSameUserIndependentlyAndModifyAndUpdate(user);
 
@@ -221,7 +221,7 @@ public class JooqUserRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void cannotDeleteUser_thatHasBeenModifiedElsewhereInTheMeanTime() {
+    void cannotDeleteUser_thatHasBeenModifiedElsewhereInTheMeanTime() {
         User user = makeAndValidateNewUser();
         User secondReloaded = loadSameUserIndependentlyAndModifyAndUpdate(user);
         try {

@@ -66,7 +66,7 @@ public abstract class JasperEntityTest {
     protected final Paper p = new Paper();
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         p.setId(ID);
         p.setNumber(NUMBER);
         p.setAuthors(AUTHORS);

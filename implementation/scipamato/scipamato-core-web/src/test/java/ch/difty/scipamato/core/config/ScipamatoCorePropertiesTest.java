@@ -15,7 +15,7 @@ import ch.difty.scipamato.core.logic.parsing.AuthorParserStrategy;
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
 @ExtendWith(MockitoExtension.class)
-public class ScipamatoCorePropertiesTest {
+class ScipamatoCorePropertiesTest {
 
     private ScipamatoCoreProperties prop;
 
@@ -25,12 +25,12 @@ public class ScipamatoCorePropertiesTest {
     private MavenProperties     mavenPropMock;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         prop = new ScipamatoCoreProperties(scipamatoPropMock, mavenPropMock);
     }
 
     @AfterEach
-    public void tearDown() {
+    void tearDown() {
         verifyNoMoreInteractions(scipamatoPropMock, mavenPropMock);
     }
 
@@ -42,7 +42,7 @@ public class ScipamatoCorePropertiesTest {
     }
 
     @Test
-    public void gettingTitleOrBrand_withPageTitleDefined_delegatesToScipamatoProps_andReturnsPageTitle() {
+    void gettingTitleOrBrand_withPageTitleDefined_delegatesToScipamatoProps_andReturnsPageTitle() {
         when(scipamatoPropMock.getPageTitle()).thenReturn("pt");
         assertThat(prop.getTitleOrBrand()).isEqualTo("pt");
         verify(scipamatoPropMock).getPageTitle();
@@ -50,7 +50,8 @@ public class ScipamatoCorePropertiesTest {
     }
 
     @Test
-    public void gettingTitleOrBrand_withPageTitleNotDefined_delegatesToScipamatoProps_andReturnsBrand() {
+    void gettingTitleOrBrand_withPageTitleNotDefined_delegatesToScipamatoProps_andReturnsBrand() {
+        when(scipamatoPropMock.getBrand()).thenReturn("brand");
         when(scipamatoPropMock.getPageTitle()).thenReturn(null);
         assertThat(prop.getTitleOrBrand()).isEqualTo("brand");
         verify(scipamatoPropMock).getPageTitle();
@@ -100,7 +101,7 @@ public class ScipamatoCorePropertiesTest {
     }
 
     @Test
-    public void gettingPubmedApiKey_() {
+    void gettingPubmedApiKey_() {
         when(scipamatoPropMock.getPubmedApiKey()).thenReturn("ak");
         assertThat(prop.getPubmedApiKey()).isEqualTo("ak");
         verify(scipamatoPropMock).getPubmedApiKey();

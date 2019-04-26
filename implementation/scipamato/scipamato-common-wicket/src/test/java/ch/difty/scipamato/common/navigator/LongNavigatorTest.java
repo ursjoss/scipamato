@@ -10,7 +10,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-public class LongNavigatorTest {
+class LongNavigatorTest {
 
     private final ItemNavigator<Long> nm = new LongNavigator();
 
@@ -18,52 +18,52 @@ public class LongNavigatorTest {
     private final List<Long> triple = Arrays.asList(5L, 12L, 3L);
 
     @Test
-    public void gettingItemWithFocus_withUninitializedNavigator_returnsNull() {
+    void gettingItemWithFocus_withUninitializedNavigator_returnsNull() {
         assertThat(nm.getItemWithFocus()).isNull();
     }
 
     @Test
-    public void settingFocus_withUninitializedNavigator_ignores() {
+    void settingFocus_withUninitializedNavigator_ignores() {
         nm.setFocusToItem(5L);
         assertThat(nm.getItemWithFocus()).isNull();
     }
 
     @Test
-    public void hasPrevious_withUninitializedNavigator_isFalse() {
+    void hasPrevious_withUninitializedNavigator_isFalse() {
         assertThat(nm.hasPrevious()).isFalse();
     }
 
     @Test
-    public void hasNext_withUninitializedNavigator_isFalse() {
+    void hasNext_withUninitializedNavigator_isFalse() {
         assertThat(nm.hasNext()).isFalse();
     }
 
     @Test
-    public void previousOrNext_withUninitializedNavigator_isIgnored() {
+    void previousOrNext_withUninitializedNavigator_isIgnored() {
         nm.previous();
         nm.next();
     }
 
     @Test
-    public void initializingWithNull_isIgnored() {
+    void initializingWithNull_isIgnored() {
         nm.initialize(null);
         assertThat(nm.getItemWithFocus()).isNull();
     }
 
     @Test
-    public void initializingEmptyList_isIgnored() {
+    void initializingEmptyList_isIgnored() {
         nm.initialize(new ArrayList<>());
         assertThat(nm.getItemWithFocus()).isNull();
     }
 
     @Test
-    public void initializingSingleItemList_setsFocusToSingleItem() {
+    void initializingSingleItemList_setsFocusToSingleItem() {
         nm.initialize(single);
         assertThat(nm.getItemWithFocus()).isEqualTo(5L);
     }
 
     @Test
-    public void singleItemList_cannotMove_andKeepsFocusOnSingleItem() {
+    void singleItemList_cannotMove_andKeepsFocusOnSingleItem() {
         nm.initialize(single);
         assertThat(nm.hasPrevious()).isFalse();
         nm.previous();
@@ -74,33 +74,33 @@ public class LongNavigatorTest {
     }
 
     @Test
-    public void initializingWithTripleItemList_hasFocusOnFirstItem() {
+    void initializingWithTripleItemList_hasFocusOnFirstItem() {
         nm.initialize(triple);
         assertThat(nm.getItemWithFocus()).isEqualTo(5L);
     }
 
     @Test
-    public void initializingWithTripleItemList_hasNoPrevious() {
+    void initializingWithTripleItemList_hasNoPrevious() {
         nm.initialize(triple);
         assertThat(nm.hasPrevious()).isFalse();
     }
 
     @Test
-    public void initializingWithTripleItemList_hasNextAndCanAdvance() {
+    void initializingWithTripleItemList_hasNextAndCanAdvance() {
         nm.initialize(triple);
         assertThat(nm.getItemWithFocus()).isEqualTo(5L);
         assertNextIs(12L);
     }
 
     @Test
-    public void canSetFocus_withTripleItemList() {
+    void canSetFocus_withTripleItemList() {
         nm.initialize(triple);
         nm.setFocusToItem(12L);
         assertThat(nm.getItemWithFocus()).isEqualTo(12L);
     }
 
     @Test
-    public void canRetract_withTripleItemList_withFocusOnSecond() {
+    void canRetract_withTripleItemList_withFocusOnSecond() {
         nm.initialize(triple);
         nm.setFocusToItem(12L);
         assertThat(nm.hasPrevious()).isTrue();
@@ -109,14 +109,14 @@ public class LongNavigatorTest {
     }
 
     @Test
-    public void settingFocusToNull_isIgnored() {
+    void settingFocusToNull_isIgnored() {
         nm.initialize(triple);
         nm.setFocusToItem(null);
         assertThat(nm.getItemWithFocus()).isEqualTo(5L);
     }
 
     @Test
-    public void settingFocusToItemNotInList_throws() {
+    void settingFocusToItemNotInList_throws() {
         nm.initialize(triple);
         assertThat(triple).doesNotContain(100L);
         try {
@@ -130,7 +130,7 @@ public class LongNavigatorTest {
     }
 
     @Test
-    public void settingIdToHeadIfNotPresent_ifPresent_doesNothing() {
+    void settingIdToHeadIfNotPresent_ifPresent_doesNothing() {
         assertAddingDoesNothing(triple.get(1));
     }
 
@@ -148,12 +148,12 @@ public class LongNavigatorTest {
     }
 
     @Test
-    public void settingIdToHeadIfNotPresent_ifNull_doesNothing() {
+    void settingIdToHeadIfNotPresent_ifNull_doesNothing() {
         assertAddingDoesNothing(null);
     }
 
     @Test
-    public void settingIdToHeadIfNotPresent_ifNotPresent_addsToHeadAndFocuses() {
+    void settingIdToHeadIfNotPresent_ifNotPresent_addsToHeadAndFocuses() {
         Long id = 200L;
         assertThat(triple).doesNotContain(id);
 
@@ -170,7 +170,7 @@ public class LongNavigatorTest {
     }
 
     @Test
-    public void removeFromManger_ifPresent_removesItAndIsModified() {
+    void removeFromManger_ifPresent_removesItAndIsModified() {
         Long id = 12L;
         assertThat(triple).contains(id);
         nm.initialize(triple);
@@ -187,7 +187,7 @@ public class LongNavigatorTest {
     }
 
     @Test
-    public void removeFromManager_ifNotPresent_isNotModified() {
+    void removeFromManager_ifNotPresent_isNotModified() {
         Long id = 200L;
         assertThat(triple).doesNotContain(id);
         nm.initialize(triple);
@@ -210,7 +210,7 @@ public class LongNavigatorTest {
     }
 
     @Test
-    public void removeFromManager_ifPresentAndWithFocusAndIsNotLast_removesItAndSetsFocusToNextItem() {
+    void removeFromManager_ifPresentAndWithFocusAndIsNotLast_removesItAndSetsFocusToNextItem() {
         Long id = 12L;
         assertThat(triple).contains(id);
         nm.initialize(triple);
@@ -227,7 +227,7 @@ public class LongNavigatorTest {
     }
 
     @Test
-    public void removeFromManager_ifPresentAndWithFocusAndIsLast_removesItAndSetsFocusToPreviousItem() {
+    void removeFromManager_ifPresentAndWithFocusAndIsLast_removesItAndSetsFocusToPreviousItem() {
         Long id = 3L;
         assertThat(triple).contains(id);
         nm.initialize(triple);
@@ -245,14 +245,14 @@ public class LongNavigatorTest {
     }
 
     @Test
-    public void removeFromManager_withNullId_isNotModified() {
+    void removeFromManager_withNullId_isNotModified() {
         nm.initialize(triple);
         nm.remove(null);
         assertThat(nm.isModified()).isFalse();
     }
 
     @Test
-    public void removingFromManager_removingAll() {
+    void removingFromManager_removingAll() {
         nm.initialize(triple);
         assertThat(nm.getItemWithFocus()).isEqualTo(5L);
 

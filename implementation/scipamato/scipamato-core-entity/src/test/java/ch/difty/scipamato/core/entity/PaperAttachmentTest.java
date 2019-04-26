@@ -11,12 +11,12 @@ import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
 import org.junit.jupiter.api.Test;
 
-public class PaperAttachmentTest {
+class PaperAttachmentTest {
 
     private final PaperAttachment pa = new PaperAttachment(1, 2L, "pdf1", "content".getBytes(), "ct", 2048L);
 
     @Test
-    public void test() {
+    void test() {
         assertThat(pa.getId()).isEqualTo(1);
         assertThat(pa.getPaperId()).isEqualTo(2L);
         assertThat(pa.getName()).isEqualTo("pdf1");
@@ -27,12 +27,12 @@ public class PaperAttachmentTest {
     }
 
     @Test
-    public void sizeInKiloBytes_withNullSize_isNull() {
+    void sizeInKiloBytes_withNullSize_isNull() {
         assertThat(new PaperAttachment().getSizeKiloBytes()).isNull();
     }
 
     @Test
-    public void sizeInKiloBytes_isRoundedUp() {
+    void sizeInKiloBytes_isRoundedUp() {
         pa.setSize(2047L);
         assertThat(pa.getSizeKiloBytes()).isEqualTo(2L);
         pa.setSize(2050L);
@@ -40,17 +40,17 @@ public class PaperAttachmentTest {
     }
 
     @Test
-    public void displayValue_isName() {
+    void displayValue_isName() {
         assertThat(pa.getDisplayValue()).isEqualTo(pa.getName());
     }
 
     @Test
-    public void toString_isMinimal() {
+    void toString_isMinimal() {
         assertThat(pa.toString()).isEqualTo("PaperAttachment[paperId=2,name=pdf1,id=1]");
     }
 
     @Test
-    public void equals() {
+    void equals() {
         EqualsVerifier
             .forClass(PaperAttachment.class)
             .withRedefinedSuperclass()

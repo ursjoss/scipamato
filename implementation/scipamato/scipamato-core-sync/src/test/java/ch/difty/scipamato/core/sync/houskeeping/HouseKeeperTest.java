@@ -21,9 +21,9 @@ import ch.difty.scipamato.common.DateTimeService;
 import ch.difty.scipamato.publ.db.public_.tables.records.CodeClassRecord;
 
 @ExtendWith(MockitoExtension.class)
-public class HouseKeeperTest {
+class HouseKeeperTest {
 
-    public static final LocalDateTime TS = LocalDateTime.parse("2018-10-28T22:18:00.000");
+    static final LocalDateTime TS = LocalDateTime.parse("2018-10-28T22:18:00.000");
 
     private HouseKeeper<CodeClassRecord> hk;
 
@@ -45,30 +45,30 @@ public class HouseKeeperTest {
     private ChunkContext                           chunkContextMock;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         hk = new HouseKeeper<>(dslContextMock, lastSynchedField, dateTimeServiceMock, 30, "code_class");
     }
 
     @Test
-    public void degenerateConstruction_withNullStep_throws() {
+    void degenerateConstruction_withNullStep_throws() {
         assertDegenerateSupplierParameter(
             () -> new HouseKeeper<>(null, lastSynchedField, dateTimeServiceMock, 30, "code_class"), "jooqPublic");
     }
 
     @Test
-    public void degenerateConstruction_withNullLastSynchedField_throws() {
+    void degenerateConstruction_withNullLastSynchedField_throws() {
         assertDegenerateSupplierParameter(
             () -> new HouseKeeper<>(dslContextMock, null, dateTimeServiceMock, 30, "code_class"), "lastSynchedField");
     }
 
     @Test
-    public void degenerateConstruction_withNullDateTimeService_throws() {
+    void degenerateConstruction_withNullDateTimeService_throws() {
         assertDegenerateSupplierParameter(
             () -> new HouseKeeper<>(dslContextMock, lastSynchedField, null, 30, "code_class"), "dateTimeService");
     }
 
     @Test
-    public void degenerateConstruction_withNullEntityName_throws() {
+    void degenerateConstruction_withNullEntityName_throws() {
         assertDegenerateSupplierParameter(
             () -> new HouseKeeper<>(dslContextMock, lastSynchedField, dateTimeServiceMock, 30, null), "entityName");
     }

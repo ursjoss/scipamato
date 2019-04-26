@@ -32,7 +32,7 @@ public abstract class WicketBaseTest {
     private ScipamatoWebSessionFacade webSessionFacade;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         wicketApplication.setHeaderResponseDecorator(
             r -> new ResourceAggregator(new JavaScriptFilteredIntoFooterHeaderResponse(r, "footer-container")));
 

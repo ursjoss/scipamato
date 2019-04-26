@@ -18,7 +18,7 @@ import ch.difty.scipamato.core.entity.search.SearchOrder;
 import ch.difty.scipamato.core.persistence.JooqBaseIntegrationTest;
 
 @SuppressWarnings("SameParameterValue")
-public class JooqSearchOrderRepoIntegrationTest extends JooqBaseIntegrationTest {
+class JooqSearchOrderRepoIntegrationTest extends JooqBaseIntegrationTest {
 
     private static final Integer RECORD_COUNT_PREPOPULATED = 4;
     private static final Long    MAX_ID_PREPOPULATED       = 4L;
@@ -28,13 +28,13 @@ public class JooqSearchOrderRepoIntegrationTest extends JooqBaseIntegrationTest 
     private JooqSearchOrderRepo repo;
 
     @Test
-    public void findingAll() {
+    void findingAll() {
         List<SearchOrder> searchOrders = repo.findAll();
         assertThat(searchOrders).hasSize(RECORD_COUNT_PREPOPULATED);
     }
 
     @Test
-    public void findingById_withExistingId_returnsEntity() {
+    void findingById_withExistingId_returnsEntity() {
         SearchOrder searchOrder = repo.findById(RECORD_COUNT_PREPOPULATED.longValue());
         if (MAX_ID_PREPOPULATED > 0)
             assertThat(searchOrder.getId()).isEqualTo(MAX_ID_PREPOPULATED);
@@ -43,12 +43,12 @@ public class JooqSearchOrderRepoIntegrationTest extends JooqBaseIntegrationTest 
     }
 
     @Test
-    public void findingById_withNonExistingId_returnsNull() {
+    void findingById_withNonExistingId_returnsNull() {
         assertThat(repo.findById(-1L)).isNull();
     }
 
     @Test
-    public void addingRecord_savesRecordAndRefreshesId() {
+    void addingRecord_savesRecordAndRefreshesId() {
         SearchOrder so = makeMinimalSearchOrder();
         SearchCondition searchCondition = new SearchCondition();
         searchCondition.setAuthors("foo");
@@ -100,7 +100,7 @@ public class JooqSearchOrderRepoIntegrationTest extends JooqBaseIntegrationTest 
     }
 
     @Test
-    public void updatingRecord() {
+    void updatingRecord() {
         SearchOrder searchOrder = repo.add(makeMinimalSearchOrder());
         assertThat(searchOrder).isNotNull();
         assertThat(searchOrder.getId())
@@ -124,7 +124,7 @@ public class JooqSearchOrderRepoIntegrationTest extends JooqBaseIntegrationTest 
     }
 
     @Test
-    public void deletingRecord() {
+    void deletingRecord() {
         SearchOrder searchOrder = repo.add(makeMinimalSearchOrder());
         assertThat(searchOrder).isNotNull();
         assertThat(searchOrder.getId())
@@ -140,7 +140,7 @@ public class JooqSearchOrderRepoIntegrationTest extends JooqBaseIntegrationTest 
     }
 
     @Test
-    public void enrichingAssociatedEntities_hasConditionsAndTerms() {
+    void enrichingAssociatedEntities_hasConditionsAndTerms() {
         final SearchOrder so = new SearchOrder();
         so.setId(1L);
         repo.enrichAssociatedEntitiesOf(so, LC);
@@ -166,7 +166,7 @@ public class JooqSearchOrderRepoIntegrationTest extends JooqBaseIntegrationTest 
     }
 
     @Test
-    public void enrichingAssociatedEntities_hasExcludedIds() {
+    void enrichingAssociatedEntities_hasExcludedIds() {
         final SearchOrder so = new SearchOrder();
         so.setId(4L);
         repo.enrichAssociatedEntitiesOf(so, LC);
@@ -177,7 +177,7 @@ public class JooqSearchOrderRepoIntegrationTest extends JooqBaseIntegrationTest 
     }
 
     @Test
-    public void addAndModifyAndDeleteSearchConditions() {
+    void addAndModifyAndDeleteSearchConditions() {
         // make search order with single condition (string search term)
         SearchOrder initialSearchOrder = makeMinimalSearchOrder();
         initialSearchOrder.add(newConditionWithAuthors("foo"));
@@ -277,7 +277,7 @@ public class JooqSearchOrderRepoIntegrationTest extends JooqBaseIntegrationTest 
     }
 
     @Test
-    public void addingSearchConditionWithoutIdThatAlreadyExists_canReturnUpdatedNewsletterAttributes() {
+    void addingSearchConditionWithoutIdThatAlreadyExists_canReturnUpdatedNewsletterAttributes() {
         // make search order with single condition (string search term)
         SearchOrder initialSearchOrder = makeMinimalSearchOrder();
         initialSearchOrder.add(newConditionWithAuthors("foo"));
@@ -310,7 +310,7 @@ public class JooqSearchOrderRepoIntegrationTest extends JooqBaseIntegrationTest 
     }
 
     @Test
-    public void removingObsoleteSearchTerms_withNoRemovedKeys_doesNothing() {
+    void removingObsoleteSearchTerms_withNoRemovedKeys_doesNothing() {
         final SearchCondition sc = Mockito.mock(SearchCondition.class);
         when(sc.getRemovedKeys()).thenReturn(Collections.emptySet());
 
@@ -320,7 +320,7 @@ public class JooqSearchOrderRepoIntegrationTest extends JooqBaseIntegrationTest 
     }
 
     @Test
-    public void removingObsoleteSearchTerms_withRemovedKeys_deletesAndClearsKeys() {
+    void removingObsoleteSearchTerms_withRemovedKeys_deletesAndClearsKeys() {
         final SearchCondition sc = Mockito.mock(SearchCondition.class);
         when(sc.getRemovedKeys()).thenReturn(Set.of("foo", "bar"));
 

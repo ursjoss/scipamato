@@ -1,10 +1,6 @@
 package ch.difty.scipamato.core.web.paper.search;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.isA;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 
 import java.util.Collections;
 import java.util.List;
@@ -21,7 +17,6 @@ import org.apache.wicket.util.tester.FormTester;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import ch.difty.scipamato.common.entity.CodeClassId;
 import ch.difty.scipamato.common.web.Mode;
 import ch.difty.scipamato.common.web.component.table.column.LinkIconPanel;
 import ch.difty.scipamato.core.entity.search.SearchCondition;
@@ -32,7 +27,7 @@ import ch.difty.scipamato.core.persistence.CodeClassService;
 import ch.difty.scipamato.core.persistence.CodeService;
 import ch.difty.scipamato.core.web.common.PanelTest;
 
-public abstract class SearchOrderPanelTest extends PanelTest<SearchOrderPanel> {
+abstract class SearchOrderPanelTest extends PanelTest<SearchOrderPanel> {
 
     @MockBean
     private CodeClassService codeClassServiceMock;
@@ -79,19 +74,19 @@ public abstract class SearchOrderPanelTest extends PanelTest<SearchOrderPanel> {
     }
 
     @Test
-    public void newButtonIsEnabled_ifSearchOrderIdPresent() {
+    void newButtonIsEnabled_ifSearchOrderIdPresent() {
         getTester().startComponentInPage(makePanel());
         getTester().isEnabled(PANEL_ID + ":form:addSearchCondition");
     }
 
     @Test
-    public void newButtonIsDisabled_ifSearchOrderIdNotPresent() {
+    void newButtonIsDisabled_ifSearchOrderIdNotPresent() {
         getTester().startComponentInPage(new SearchOrderPanel(PANEL_ID, Model.of(new SearchOrder()), getMode()));
         getTester().isDisabled(PANEL_ID + ":form:addSearchCondition");
     }
 
     @Test
-    public void clickingNewButton_forwardsToPaperSearchCriteriaPage() {
+    void clickingNewButton_forwardsToPaperSearchCriteriaPage() {
         getTester().startComponentInPage(makePanel());
         FormTester formTester = getTester().newFormTester(PANEL_ID + ":form", false);
         formTester.submit("addSearchCondition");
@@ -99,26 +94,26 @@ public abstract class SearchOrderPanelTest extends PanelTest<SearchOrderPanel> {
     }
 
     @Test
-    public void clickingLink_opensPaperSearchCriteriaPage() {
+    void clickingLink_opensPaperSearchCriteriaPage() {
         getTester().startComponentInPage(makePanel());
         getTester().clickLink(PANEL_ID + ":form:searchConditions:body:rows:1:cells:1:cell:link");
         getTester().assertRenderedPage(PaperSearchCriteriaPage.class);
     }
 
     @Test
-    public void searchOrderIdDefined_withRegularModel() {
+    void searchOrderIdDefined_withRegularModel() {
         SearchOrderPanel p = makePanel();
         assertThat(p.isSearchOrderIdDefined()).isTrue();
     }
 
     @Test
-    public void searchOrderIdDefined_withNullModel() {
+    void searchOrderIdDefined_withNullModel() {
         SearchOrderPanel p = new SearchOrderPanel(PANEL_ID, null, getMode());
         assertThat(p.isSearchOrderIdDefined()).isFalse();
     }
 
     @Test
-    public void searchOrderIdDefined_withModelOFSearchOrderWIthNullId() {
+    void searchOrderIdDefined_withModelOFSearchOrderWIthNullId() {
         SearchOrder searchOrder = new SearchOrder();
         assertThat(searchOrder.getId()).isNull();
         SearchOrderPanel p = new SearchOrderPanel(PANEL_ID, Model.of(searchOrder), getMode());

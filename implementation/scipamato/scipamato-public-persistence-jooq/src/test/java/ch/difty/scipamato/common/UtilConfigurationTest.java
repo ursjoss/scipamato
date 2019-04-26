@@ -4,10 +4,10 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 import org.junit.jupiter.api.Test;
 
-public class UtilConfigurationTest {
+class UtilConfigurationTest {
 
     @Test
-    public void dateTimeService() {
+    void dateTimeService() {
         UtilConfiguration uc = new UtilConfiguration();
         assertThat(uc.dateTimeService()).isInstanceOf(CurrentDateTimeService.class);
     }

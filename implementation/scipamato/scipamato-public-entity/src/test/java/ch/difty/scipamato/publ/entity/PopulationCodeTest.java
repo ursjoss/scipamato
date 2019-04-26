@@ -6,25 +6,25 @@ import static org.assertj.core.api.Assertions.extractProperty;
 
 import org.junit.jupiter.api.Test;
 
-public class PopulationCodeTest {
+class PopulationCodeTest {
 
     @Test
-    public void hasAllValues() {
+    void hasAllValues() {
         assertThat(values()).containsExactly(CHILDREN, ADULTS);
     }
 
     @Test
-    public void assertIds() {
+    void assertIds() {
         assertThat(extractProperty("id").from(values())).containsExactly((short) 1, (short) 2);
     }
 
     @Test
-    public void of_withExistingId() {
+    void of_withExistingId() {
         assertThat(PopulationCode.of((short) 1)).hasValue(CHILDREN);
     }
 
     @Test
-    public void of_withNotExistingId_returnsEmptyOptional() {
+    void of_withNotExistingId_returnsEmptyOptional() {
         assertThat(PopulationCode.of((short) 0)).isEmpty();
     }
 

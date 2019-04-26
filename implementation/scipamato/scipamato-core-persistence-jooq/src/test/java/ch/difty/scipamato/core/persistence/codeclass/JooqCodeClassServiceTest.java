@@ -21,7 +21,7 @@ import ch.difty.scipamato.core.entity.code_class.CodeClassDefinition;
 import ch.difty.scipamato.core.entity.code_class.CodeClassFilter;
 
 @ExtendWith(MockitoExtension.class)
-public class JooqCodeClassServiceTest {
+class JooqCodeClassServiceTest {
 
     private JooqCodeClassService service;
 
@@ -51,7 +51,7 @@ public class JooqCodeClassServiceTest {
     private CodeClassDefinition codeClassDefinitionMock, persistedCodeClassDefinitionMock;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         service = new JooqCodeClassService(repoMock);
 
         codeClassDefinitions.add(codeClassDefinitionMock);
@@ -59,12 +59,12 @@ public class JooqCodeClassServiceTest {
     }
 
     @AfterEach
-    public void specificTearDown() {
+    void specificTearDown() {
         verifyNoMoreInteractions(repoMock, filterMock, paginationContextMock, codeMock, codeClassDefinitionMock);
     }
 
     @Test
-    public void findingCodes_delegatesToRepo() {
+    void findingCodes_delegatesToRepo() {
         String languageCodeClass = "de";
 
         List<CodeClass> ccs = new ArrayList<>();
@@ -80,14 +80,14 @@ public class JooqCodeClassServiceTest {
     }
 
     @Test
-    public void newUnpersistedCodeClassDefinition_delegatesToRepo() {
+    void newUnpersistedCodeClassDefinition_delegatesToRepo() {
         when(repoMock.newUnpersistedCodeClassDefinition()).thenReturn(codeClassDefinitionMock);
         assertThat(service.newUnpersistedCodeClassDefinition()).isEqualTo(codeClassDefinitionMock);
         verify(repoMock).newUnpersistedCodeClassDefinition();
     }
 
     @Test
-    public void findingPageOfCodeClassDefinitions_delegatesToRepo() {
+    void findingPageOfCodeClassDefinitions_delegatesToRepo() {
         when(repoMock.findPageOfCodeClassDefinitions(filterMock, paginationContextMock)).thenReturn(
             codeClassDefinitions);
         assertThat(service.findPageOfCodeClassDefinitions(filterMock, paginationContextMock)).isEqualTo(
@@ -96,7 +96,7 @@ public class JooqCodeClassServiceTest {
     }
 
     @Test
-    public void gettingPageOfEntityDefinitions_delegatesToRepo() {
+    void gettingPageOfEntityDefinitions_delegatesToRepo() {
         when(repoMock.findPageOfCodeClassDefinitions(filterMock, paginationContextMock)).thenReturn(
             codeClassDefinitions);
         assertThat(service.findPageOfEntityDefinitions(filterMock, paginationContextMock)).hasSameElementsAs(
@@ -105,21 +105,21 @@ public class JooqCodeClassServiceTest {
     }
 
     @Test
-    public void countingCodes_delegatesToRepo() {
+    void countingCodes_delegatesToRepo() {
         when(repoMock.countByFilter(filterMock)).thenReturn(3);
         assertThat(service.countByFilter(filterMock)).isEqualTo(3);
         verify(repoMock).countByFilter(filterMock);
     }
 
     @Test
-    public void insertingCodeClassDefinition_delegatesToRepo() {
+    void insertingCodeClassDefinition_delegatesToRepo() {
         when(repoMock.saveOrUpdate(codeClassDefinitionMock)).thenReturn(persistedCodeClassDefinitionMock);
         assertThat(service.saveOrUpdate(codeClassDefinitionMock)).isEqualTo(persistedCodeClassDefinitionMock);
         verify(repoMock).saveOrUpdate(codeClassDefinitionMock);
     }
 
     @Test
-    public void deletingCodeClassDefinition_delegatesToRepo() {
+    void deletingCodeClassDefinition_delegatesToRepo() {
         final Integer id = 1;
         final int version = 12;
         when(repoMock.delete(id, version)).thenReturn(persistedCodeClassDefinitionMock);

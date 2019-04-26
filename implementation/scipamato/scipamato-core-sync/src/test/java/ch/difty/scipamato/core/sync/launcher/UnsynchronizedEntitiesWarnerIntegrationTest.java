@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 import ch.difty.scipamato.core.sync.JooqBaseIntegrationTest;
 
-public class UnsynchronizedEntitiesWarnerIntegrationTest extends JooqBaseIntegrationTest {
+class UnsynchronizedEntitiesWarnerIntegrationTest extends JooqBaseIntegrationTest {
 
     @Autowired
     @Qualifier("dslContext")
@@ -21,12 +21,12 @@ public class UnsynchronizedEntitiesWarnerIntegrationTest extends JooqBaseIntegra
     private Warner warner;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         warner = new UnsynchronizedEntitiesWarner(dsl);
     }
 
     @Test
-    public void findUnsynchronizedPapers() {
+    void findUnsynchronizedPapers() {
         Optional<String> msg = warner.findUnsynchronizedPapers();
         assertThat(msg).isPresent();
         //noinspection OptionalGetWithoutIsPresent

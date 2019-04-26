@@ -34,7 +34,7 @@ import ch.difty.scipamato.publ.web.common.BasePageTest;
 import ch.difty.scipamato.publ.web.paper.browse.PublicPaperDetailPage;
 import ch.difty.scipamato.publ.web.resources.IcoMoonIconType;
 
-public class NewStudyListPageTest extends BasePageTest<NewStudyListPage> {
+class NewStudyListPageTest extends BasePageTest<NewStudyListPage> {
 
     @MockBean
     private NewStudyTopicService serviceMock;
@@ -152,7 +152,7 @@ public class NewStudyListPageTest extends BasePageTest<NewStudyListPage> {
     }
 
     @Test
-    public void canAccessPublicPaperDetailPageForSpecificPaper_andReturnToNewStudyListPageFromThere() {
+    void canAccessPublicPaperDetailPageForSpecificPaper_andReturnToNewStudyListPageFromThere() {
         getTester().startPage(makePage());
         getTester().assertRenderedPage(getPageClass());
 
@@ -166,7 +166,7 @@ public class NewStudyListPageTest extends BasePageTest<NewStudyListPage> {
     }
 
     @Test
-    public void renderingCommercialFonts() {
+    void renderingCommercialFonts() {
         final NewStudyListPage page = makePage();
 
         IHeaderResponse hr = mock(IHeaderResponse.class);
@@ -177,20 +177,20 @@ public class NewStudyListPageTest extends BasePageTest<NewStudyListPage> {
     }
 
     @Test
-    public void withIssueMissing() {
+    void withIssueMissing() {
         PageParameters pp = new PageParameters();
         pageWithIssue(pp);
     }
 
     @Test
-    public void withIssueNull() {
+    void withIssueNull() {
         PageParameters pp = new PageParameters();
         pp.set(PublicPageParameters.ISSUE.getName(), null);
         pageWithIssue(pp);
     }
 
     @Test
-    public void withIssueBlank() {
+    void withIssueBlank() {
         PageParameters pp = new PageParameters();
         pp.set(PublicPageParameters.ISSUE.getName(), "");
         pageWithIssue(pp);
@@ -205,7 +205,7 @@ public class NewStudyListPageTest extends BasePageTest<NewStudyListPage> {
     }
 
     @Test
-    public void withIssuePresent() {
+    void withIssuePresent() {
         PageParameters pp = new PageParameters();
         pp.set(PublicPageParameters.ISSUE.getName(), "1806");
         final NewStudyListPage page = new NewStudyListPage(pp);
@@ -216,14 +216,14 @@ public class NewStudyListPageTest extends BasePageTest<NewStudyListPage> {
     }
 
     @Test
-    public void icon_withFreeFont() {
+    void icon_withFreeFont() {
         final NewStudyListPage page = makePage();
         final IconType icon = page.chooseIcon(GlyphIconType.arrowright, IcoMoonIconType.arrow_right);
         assertThat(icon).isEqualTo(GlyphIconType.arrowright);
     }
 
     @Test
-    public void icon_withCommercialFont() {
+    void icon_withCommercialFont() {
         final ScipamatoPublicProperties applicationProperties = mock(ScipamatoPublicProperties.class);
         when(applicationProperties.isCommercialFontPresent()).thenReturn(true);
         final NewStudyListPage page = new NewStudyListPage(new PageParameters()) {
@@ -237,7 +237,7 @@ public class NewStudyListPageTest extends BasePageTest<NewStudyListPage> {
     }
 
     @Test
-    public void clickingLinkToArchivedNewsletter() {
+    void clickingLinkToArchivedNewsletter() {
         getTester().startPage(makePage());
         getTester().assertRenderedPage(getPageClass());
 

@@ -14,7 +14,7 @@ import ch.difty.scipamato.publ.config.ApplicationPublicProperties;
 import ch.difty.scipamato.publ.web.resources.MetaOTCssResourceReference;
 
 @ExtendWith(MockitoExtension.class)
-public class MetaOTFontResourceProviderTest {
+class MetaOTFontResourceProviderTest {
 
     private MetaOTFontResourceProvider provider;
 
@@ -22,13 +22,13 @@ public class MetaOTFontResourceProviderTest {
     private ApplicationPublicProperties applicationProperties;
 
     @Test
-    public void degenerateConstruction_withNullArgument() {
+    void degenerateConstruction_withNullArgument() {
         TestUtils.assertDegenerateSupplierParameter(() -> new MetaOTFontResourceProvider(null),
             "applicationProperties");
     }
 
     @Test
-    public void withNoCommercialFontPresentSetting_getsNull() {
+    void withNoCommercialFontPresentSetting_getsNull() {
         when(applicationProperties.isCommercialFontPresent()).thenReturn(false);
 
         provider = new MetaOTFontResourceProvider(applicationProperties);
@@ -39,7 +39,7 @@ public class MetaOTFontResourceProviderTest {
     }
 
     @Test
-    public void withCommercialFontPresentSetting_getsReference() {
+    void withCommercialFontPresentSetting_getsReference() {
         when(applicationProperties.isCommercialFontPresent()).thenReturn(true);
 
         provider = new MetaOTFontResourceProvider(applicationProperties);

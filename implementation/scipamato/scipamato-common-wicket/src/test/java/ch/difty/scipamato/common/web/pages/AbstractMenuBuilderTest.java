@@ -35,7 +35,7 @@ import ch.difty.scipamato.common.web.pages.login.TestLoginPage;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
-public class AbstractMenuBuilderTest {
+class AbstractMenuBuilderTest {
 
     private AbstractMenuBuilder menuBuilder;
 
@@ -54,7 +54,7 @@ public class AbstractMenuBuilderTest {
     private boolean called = false;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         // instantiate the application, but we don't need the wicket tester
         new WicketTester(application);
 
@@ -63,19 +63,19 @@ public class AbstractMenuBuilderTest {
     }
 
     @Test
-    public void degenerateConstruction_withNullApplicationProperties_throws() {
+    void degenerateConstruction_withNullApplicationProperties_throws() {
         TestUtils.assertDegenerateSupplierParameter(() -> new TestMenuBuilder(null, webSessionFacade),
             "applicationProperties");
     }
 
     @Test
-    public void degenerateConstruction_withNullWebSessionFacade_throws() {
+    void degenerateConstruction_withNullWebSessionFacade_throws() {
         TestUtils.assertDegenerateSupplierParameter(() -> new TestMenuBuilder(applicationProperties, null),
             "webSessionFacade");
     }
 
     @Test
-    public void canGetApplicationProperties() {
+    void canGetApplicationProperties() {
         assertThat(menuBuilder.getApplicationProperties()).isEqualTo(applicationProperties);
     }
 
@@ -86,12 +86,12 @@ public class AbstractMenuBuilderTest {
     }
 
     @Test
-    public void pageLinks_withNoneAdded_isEmpty() {
+    void pageLinks_withNoneAdded_isEmpty() {
         assertThat(getPageLinksFrom(navbar)).isEmpty();
     }
 
     @Test
-    public void assertPageLink() {
+    void assertPageLink() {
         menuBuilder.addPageLink(navbar, new TestHomePage(), TestHomePage.class, "test", GlyphIconType.volumedown,
             Navbar.ComponentPosition.LEFT);
 
@@ -114,12 +114,12 @@ public class AbstractMenuBuilderTest {
     }
 
     @Test
-    public void externalLinks_withNoneAdded_isEmpty() {
+    void externalLinks_withNoneAdded_isEmpty() {
         assertThat(getExternalLinksFrom(navbar)).isEmpty();
     }
 
     @Test
-    public void assertExternalLinkWithIcon() {
+    void assertExternalLinkWithIcon() {
         menuBuilder.addExternalLink(navbar, "http://test.com", "mylabel", GlyphIconType.adjust,
             Navbar.ComponentPosition.LEFT);
 
@@ -136,7 +136,7 @@ public class AbstractMenuBuilderTest {
     }
 
     @Test
-    public void assertExternalLinkWithoutIcon() {
+    void assertExternalLinkWithoutIcon() {
         menuBuilder.addExternalLink(navbar, "http://foo.com", "otherlabel", null, Navbar.ComponentPosition.LEFT);
 
         List<NavbarExternalLink> links = getExternalLinksFrom(navbar);
@@ -164,7 +164,7 @@ public class AbstractMenuBuilderTest {
     }
 
     @Test
-    public void adingMenu() {
+    void adingMenu() {
         SerializableConsumer<List<AbstractLink>> consumer = (x) -> called = true;
         menuBuilder.newMenu(navbar, new TestLoginPage(new PageParameters()), "foo", GlyphIconType.adjust, consumer);
 
@@ -172,13 +172,13 @@ public class AbstractMenuBuilderTest {
     }
 
     @Test
-    public void gettingVersionStuff_withNoVersionInApplicationProperties() {
+    void gettingVersionStuff_withNoVersionInApplicationProperties() {
         assertThat(menuBuilder.getVersionAnker()).isEqualTo("");
         assertThat(menuBuilder.getVersionLink()).isEqualTo("version null");
     }
 
     @Test
-    public void gettingVersionStuff_withSnapshotVersionInApplicationProperties() {
+    void gettingVersionStuff_withSnapshotVersionInApplicationProperties() {
         when(applicationProperties.getBuildVersion()).thenReturn("1.2.3-SNAPSHOT");
         assertThat(menuBuilder.getVersionAnker()).isEqualTo("#unreleased");
         assertThat(menuBuilder.getVersionLink()).isEqualTo("version 1.2.3-SNAPSHOT");
@@ -186,7 +186,7 @@ public class AbstractMenuBuilderTest {
     }
 
     @Test
-    public void gettingVersionStuff_withReleasedVersionInApplicationProperties() {
+    void gettingVersionStuff_withReleasedVersionInApplicationProperties() {
         when(applicationProperties.getBuildVersion()).thenReturn("1.2.3");
         assertThat(menuBuilder.getVersionAnker()).isEqualTo("#v1.2.3");
         assertThat(menuBuilder.getVersionLink()).isEqualTo("version 1.2.3");
@@ -194,7 +194,7 @@ public class AbstractMenuBuilderTest {
     }
 
     @Test
-    public void addingEntryToMenu_withIcon() {
+    void addingEntryToMenu_withIcon() {
         final List<AbstractLink> links = new ArrayList<>();
         assertThat(links).isEmpty();
 
@@ -209,7 +209,7 @@ public class AbstractMenuBuilderTest {
     }
 
     @Test
-    public void addingEntryToMenu_withoutIcon() {
+    void addingEntryToMenu_withoutIcon() {
         final List<AbstractLink> links = new ArrayList<>();
         assertThat(links).isEmpty();
 
@@ -224,7 +224,7 @@ public class AbstractMenuBuilderTest {
     }
 
     @Test
-    public void hasOneOfRoles() {
+    void hasOneOfRoles() {
         when(webSessionFacade.hasAtLeastOneRoleOutOf("foo", "bar")).thenReturn(true);
         assertThat(menuBuilder.hasOneOfRoles("foo", "bar")).isTrue();
         verify(webSessionFacade).hasAtLeastOneRoleOutOf("foo", "bar");

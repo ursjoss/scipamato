@@ -26,7 +26,7 @@ import ch.difty.scipamato.core.web.authentication.LogoutPage;
 import ch.difty.scipamato.core.web.common.BasePageTest;
 
 @SuppressWarnings("SpellCheckingInspection")
-public class KeywordEditPageTest extends BasePageTest<KeywordEditPage> {
+class KeywordEditPageTest extends BasePageTest<KeywordEditPage> {
 
     private KeywordDefinition kd;
 
@@ -46,7 +46,7 @@ public class KeywordEditPageTest extends BasePageTest<KeywordEditPage> {
     }
 
     @AfterEach
-    public void tearDown() {
+    void tearDown() {
         verifyNoMoreInteractions(keywordServiceMock);
     }
 
@@ -100,7 +100,7 @@ public class KeywordEditPageTest extends BasePageTest<KeywordEditPage> {
     }
 
     @Test
-    public void submitting_withSuccessfulServiceCall_addsInfoMsg() {
+    void submitting_withSuccessfulServiceCall_addsInfoMsg() {
         when(keywordServiceMock.saveOrUpdate(isA(KeywordDefinition.class))).thenReturn(kd);
 
         runSubmitTest();
@@ -123,7 +123,7 @@ public class KeywordEditPageTest extends BasePageTest<KeywordEditPage> {
     }
 
     @Test
-    public void submitting_withUnsuccessfulServiceCall_addsErrorMsg() {
+    void submitting_withUnsuccessfulServiceCall_addsErrorMsg() {
         when(keywordServiceMock.saveOrUpdate(isA(KeywordDefinition.class))).thenReturn(null);
 
         runSubmitTest();
@@ -133,7 +133,7 @@ public class KeywordEditPageTest extends BasePageTest<KeywordEditPage> {
     }
 
     @Test
-    public void submitting_withOptimisticLockingException_addsErrorMsg() {
+    void submitting_withOptimisticLockingException_addsErrorMsg() {
         when(keywordServiceMock.saveOrUpdate(isA(KeywordDefinition.class))).thenThrow(
             new OptimisticLockingException("tblName", "rcd", OptimisticLockingException.Type.UPDATE));
 
@@ -145,7 +145,7 @@ public class KeywordEditPageTest extends BasePageTest<KeywordEditPage> {
     }
 
     @Test
-    public void submitting_withDuplicateKeyException_addsErrorMsg() {
+    void submitting_withDuplicateKeyException_addsErrorMsg() {
         when(keywordServiceMock.saveOrUpdate(isA(KeywordDefinition.class))).thenThrow(
             new DuplicateKeyException("boom"));
 
@@ -156,7 +156,7 @@ public class KeywordEditPageTest extends BasePageTest<KeywordEditPage> {
     }
 
     @Test
-    public void submitting_withDuplicateKeyException_withNullMsg_addsStandardErrorMsg() {
+    void submitting_withDuplicateKeyException_withNullMsg_addsStandardErrorMsg() {
         //noinspection ConstantConditions
         when(keywordServiceMock.saveOrUpdate(isA(KeywordDefinition.class))).thenThrow(new DuplicateKeyException(null));
 
@@ -167,7 +167,7 @@ public class KeywordEditPageTest extends BasePageTest<KeywordEditPage> {
     }
 
     @Test
-    public void submitting_withOtherException_addsErrorMsg() {
+    void submitting_withOtherException_addsErrorMsg() {
         when(keywordServiceMock.saveOrUpdate(isA(KeywordDefinition.class))).thenThrow(new RuntimeException("fooMsg"));
 
         runSubmitTest();
@@ -177,7 +177,7 @@ public class KeywordEditPageTest extends BasePageTest<KeywordEditPage> {
     }
 
     @Test
-    public void submittingDelete_delegatesDeleteToService() {
+    void submittingDelete_delegatesDeleteToService() {
         when(keywordServiceMock.delete(anyInt(), anyInt())).thenReturn(keywordDefinitionDummy);
 
         getTester().startPage(new KeywordEditPage(Model.of(kd), null));
@@ -195,7 +195,7 @@ public class KeywordEditPageTest extends BasePageTest<KeywordEditPage> {
     }
 
     @Test
-    public void submittingDelete_withForeignKeyConstraintViolationException_addsErrorMsg() {
+    void submittingDelete_withForeignKeyConstraintViolationException_addsErrorMsg() {
         String msg = "... is still referenced from table \"paper_code\".; nested exception is org.postgresql.util.PSQLException...";
         when(keywordServiceMock.delete(anyInt(), anyInt())).thenThrow(new DataIntegrityViolationException(msg));
 
@@ -211,7 +211,7 @@ public class KeywordEditPageTest extends BasePageTest<KeywordEditPage> {
     }
 
     @Test
-    public void submittingDelete_withOptimisticLockingException_addsErrorMsg() {
+    void submittingDelete_withOptimisticLockingException_addsErrorMsg() {
         when(keywordServiceMock.delete(anyInt(), anyInt())).thenThrow(
             new OptimisticLockingException("keyword", OptimisticLockingException.Type.DELETE));
 
@@ -228,7 +228,7 @@ public class KeywordEditPageTest extends BasePageTest<KeywordEditPage> {
     }
 
     @Test
-    public void submittingDelete_withException_addsErrorMsg() {
+    void submittingDelete_withException_addsErrorMsg() {
         when(keywordServiceMock.delete(anyInt(), anyInt())).thenThrow(new RuntimeException("boom"));
 
         getTester().startPage(new KeywordEditPage(Model.of(kd), null));
@@ -243,7 +243,7 @@ public class KeywordEditPageTest extends BasePageTest<KeywordEditPage> {
     }
 
     @Test
-    public void clickingBackButton_withPageWithoutCallingPageRef_forwardsToKeywordListPage() {
+    void clickingBackButton_withPageWithoutCallingPageRef_forwardsToKeywordListPage() {
         getTester().startPage(new KeywordEditPage(Model.of(kd), null));
 
         FormTester formTester = getTester().newFormTester("form");
@@ -256,7 +256,7 @@ public class KeywordEditPageTest extends BasePageTest<KeywordEditPage> {
     }
 
     @Test
-    public void clickingBackButton_withPageWithCallingPageRef_forwardsToThat() {
+    void clickingBackButton_withPageWithCallingPageRef_forwardsToThat() {
         getTester().startPage(
             new KeywordEditPage(Model.of(kd), new LogoutPage(new PageParameters()).getPageReference()));
 
@@ -267,7 +267,7 @@ public class KeywordEditPageTest extends BasePageTest<KeywordEditPage> {
     }
 
     @Test
-    public void clickingAddNewKeyword_addsTranslationInRequestedLanguage_andRefreshesForm() {
+    void clickingAddNewKeyword_addsTranslationInRequestedLanguage_andRefreshesForm() {
         getTester().startPage(
             new KeywordEditPage(Model.of(kd), new LogoutPage(new PageParameters()).getPageReference()));
 
@@ -288,7 +288,7 @@ public class KeywordEditPageTest extends BasePageTest<KeywordEditPage> {
     }
 
     @Test
-    public void clickingRemoveKeyword_removesTranslation_andRefreshesForm() {
+    void clickingRemoveKeyword_removesTranslation_andRefreshesForm() {
         getTester().startPage(
             new KeywordEditPage(Model.of(kd), new LogoutPage(new PageParameters()).getPageReference()));
 

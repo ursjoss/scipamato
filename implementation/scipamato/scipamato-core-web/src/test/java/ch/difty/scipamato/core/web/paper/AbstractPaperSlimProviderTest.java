@@ -27,7 +27,7 @@ import ch.difty.scipamato.core.persistence.PaperSlimService;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-public abstract class AbstractPaperSlimProviderTest<F extends PaperSlimFilter, P extends AbstractPaperSlimProvider<F>> {
+abstract class AbstractPaperSlimProviderTest<F extends PaperSlimFilter, P extends AbstractPaperSlimProvider<F>> {
 
     static final int PAGE_SIZE = 3;
 
@@ -50,7 +50,7 @@ public abstract class AbstractPaperSlimProviderTest<F extends PaperSlimFilter, P
     abstract F getFilter();
 
     @BeforeEach
-    public final void setUp() {
+    final void setUp() {
         final WicketTester tester = new WicketTester(application);
         tester
             .getSession()
@@ -69,25 +69,25 @@ public abstract class AbstractPaperSlimProviderTest<F extends PaperSlimFilter, P
     protected abstract void localFixture();
 
     @AfterEach
-    public final void tearDown() {
+    final void tearDown() {
         verifyNoMoreInteractions(serviceMock, getFilter(), entityMock, paperServiceMock, paperMock);
     }
 
     protected abstract P newProvider();
 
     @Test
-    public void gettingModel_wrapsEntity() {
+    void gettingModel_wrapsEntity() {
         IModel<PaperSlim> model = provider.model(entityMock);
         assertThat(model.getObject()).isEqualTo(entityMock);
     }
 
     @Test
-    public void gettingFilterState_returnsFilter() {
+    void gettingFilterState_returnsFilter() {
         assertThat(provider.getFilterState()).isEqualTo(getFilter());
     }
 
     @Test
-    public void iterating_withNoRecords_returnsNoRecords() {
+    void iterating_withNoRecords_returnsNoRecords() {
         // reset the service mock
         pageOfSlimPapers = Collections.emptyList();
         localFixture();
@@ -100,7 +100,7 @@ public abstract class AbstractPaperSlimProviderTest<F extends PaperSlimFilter, P
     protected abstract void verifyFilterMock(PaginationContextMatcher matcher);
 
     @Test
-    public void iterating_throughFirstFullPage() {
+    void iterating_throughFirstFullPage() {
         Iterator<PaperSlim> it = provider.iterator(0, 3);
         assertRecordsIn(it);
         verifyFilterMock(new PaginationContextMatcher(0, 3, "id: DESC"));
@@ -116,14 +116,14 @@ public abstract class AbstractPaperSlimProviderTest<F extends PaperSlimFilter, P
     }
 
     @Test
-    public void iterating_throughSecondFullPage() {
+    void iterating_throughSecondFullPage() {
         Iterator<PaperSlim> it = provider.iterator(3, 3);
         assertRecordsIn(it);
         verifyFilterMock(new PaginationContextMatcher(3, 3, "id: DESC"));
     }
 
     @Test
-    public void iterating_throughThirdPage() {
+    void iterating_throughThirdPage() {
         provider.setSort("title", SortOrder.ASCENDING);
         Iterator<PaperSlim> it = provider.iterator(6, 3);
         assertRecordsIn(it);
@@ -131,12 +131,12 @@ public abstract class AbstractPaperSlimProviderTest<F extends PaperSlimFilter, P
     }
 
     @Test
-    public void instantiationWithPageSize_returnsGivenPageSize() {
+    void instantiationWithPageSize_returnsGivenPageSize() {
         assertThat(provider.getRowsPerPage()).isEqualTo(PAGE_SIZE);
     }
 
     @Test
-    public void iterating_withDefaultPageSize_throughFirstFullPage_withPageSizeMatchingActualSize() {
+    void iterating_withDefaultPageSize_throughFirstFullPage_withPageSizeMatchingActualSize() {
         int actualSize = 3;
         assertThat(actualSize).isEqualTo(PAGE_SIZE);
 
@@ -146,7 +146,7 @@ public abstract class AbstractPaperSlimProviderTest<F extends PaperSlimFilter, P
     }
 
     @Test
-    public void iterating_withDefaultPageSize_throughThirdNotFullPage_withPageSizeHigherThanActualSize() {
+    void iterating_withDefaultPageSize_throughThirdNotFullPage_withPageSizeHigherThanActualSize() {
         int actualSize = 2;
         assertThat(actualSize).isLessThan(PAGE_SIZE);
 
@@ -158,7 +158,7 @@ public abstract class AbstractPaperSlimProviderTest<F extends PaperSlimFilter, P
     }
 
     @Test
-    public void gettingLanguageCode() {
+    void gettingLanguageCode() {
         assertThat(provider.getLanguageCode()).isEqualTo("en");
     }
 

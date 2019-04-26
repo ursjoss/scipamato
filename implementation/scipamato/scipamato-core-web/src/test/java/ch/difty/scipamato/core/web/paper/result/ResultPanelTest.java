@@ -30,7 +30,7 @@ import ch.difty.scipamato.core.web.common.PanelTest;
 import ch.difty.scipamato.core.web.paper.PaperSlimBySearchOrderProvider;
 import ch.difty.scipamato.core.web.paper.entry.PaperEntryPage;
 
-public abstract class ResultPanelTest extends PanelTest<ResultPanel> {
+abstract class ResultPanelTest extends PanelTest<ResultPanel> {
 
     static final long NUMBER = 2L;
 
@@ -61,7 +61,7 @@ public abstract class ResultPanelTest extends PanelTest<ResultPanel> {
     }
 
     @AfterEach
-    public void tearDown() {
+    void tearDown() {
         // after the login
         verify(paperSlimServiceMock).countByFilter(isA(PaperFilter.class));
         verify(paperServiceMock, times(2)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationRequest.class));
@@ -179,7 +179,7 @@ public abstract class ResultPanelTest extends PanelTest<ResultPanel> {
     }
 
     @Test
-    public void clickingLink_opensPaperEntryPage() {
+    void clickingLink_opensPaperEntryPage() {
         Paper paper = new Paper();
         paper.setNumber(NUMBER);
         when(paperServiceMock.findByNumber(NUMBER, LC)).thenReturn(Optional.of(paper));
@@ -214,49 +214,49 @@ public abstract class ResultPanelTest extends PanelTest<ResultPanel> {
     }
 
     @Test
-    public void clickingSummaryLink_succeeds() {
+    void clickingSummaryLink_succeeds() {
         getTester().startComponentInPage(makePanel());
         getTester().clickLink(PANEL_ID + ":summaryLink");
         verifyPdfExport();
     }
 
     @Test
-    public void clickingSummaryShortLink_succeeds() {
+    void clickingSummaryShortLink_succeeds() {
         getTester().startComponentInPage(makePanel());
         getTester().clickLink(PANEL_ID + ":summaryShortLink");
         verifyPdfExport();
     }
 
     @Test
-    public void clickingReviewLink_succeeds() {
+    void clickingReviewLink_succeeds() {
         getTester().startComponentInPage(makePanel());
         getTester().clickLink(PANEL_ID + ":reviewLink");
         verifyPdfExport();
     }
 
     @Test
-    public void clickingLiteratureReviewLink_succeeds() {
+    void clickingLiteratureReviewLink_succeeds() {
         getTester().startComponentInPage(makePanel());
         getTester().clickLink(PANEL_ID + ":literatureReviewLink");
         verifyPdfExport();
     }
 
     @Test
-    public void clickingLiteratureReviewPlusLink_succeeds() {
+    void clickingLiteratureReviewPlusLink_succeeds() {
         getTester().startComponentInPage(makePanel());
         getTester().clickLink(PANEL_ID + ":literatureReviewPlusLink");
         verifyPdfExport();
     }
 
     @Test
-    public void clickingSummaryTableLink_succeeds() {
+    void clickingSummaryTableLink_succeeds() {
         getTester().startComponentInPage(makePanel());
         getTester().clickLink(PANEL_ID + ":summaryTableLink");
         verifyPdfExport();
     }
 
     @Test
-    public void startingPage_inNonSearchContext_doesNotRenderExcludeFromSearchIcon() {
+    void startingPage_inNonSearchContext_doesNotRenderExcludeFromSearchIcon() {
         ResultPanel panel = newNonSearchRelevantResultPanel();
         getTester().startComponentInPage(panel);
 

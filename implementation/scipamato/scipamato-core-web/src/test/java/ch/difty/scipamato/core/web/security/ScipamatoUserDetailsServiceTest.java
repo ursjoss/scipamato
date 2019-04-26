@@ -22,7 +22,7 @@ import ch.difty.scipamato.core.web.authentication.ScipamatoUserDetails;
 import ch.difty.scipamato.core.web.authentication.ScipamatoUserDetailsService;
 
 @ExtendWith(MockitoExtension.class)
-public class ScipamatoUserDetailsServiceTest {
+class ScipamatoUserDetailsServiceTest {
 
     private ScipamatoUserDetailsService service;
 
@@ -31,22 +31,22 @@ public class ScipamatoUserDetailsServiceTest {
     private final User        user = new User(10, "un", "fn", "ln", "em", "pw");
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         service = new ScipamatoUserDetailsService(userServiceMock);
     }
 
     @AfterEach
-    public void tearDown() {
+    void tearDown() {
         verifyNoMoreInteractions(userServiceMock);
     }
 
     @Test
-    public void degenerateCallWithNullUserName_throws() {
+    void degenerateCallWithNullUserName_throws() {
         assertDegenerateSupplierParameter(() -> service.loadUserByUsername(null), "username");
     }
 
     @Test
-    public void loadUserByUsername_withUserNotFound_throws() {
+    void loadUserByUsername_withUserNotFound_throws() {
         String username = "foo";
         when(userServiceMock.findByUserName(username)).thenReturn(Optional.empty());
         try {
@@ -61,7 +61,7 @@ public class ScipamatoUserDetailsServiceTest {
     }
 
     @Test
-    public void loadUserByUsername_withUserFound() {
+    void loadUserByUsername_withUserFound() {
         String username = "bar";
         when(userServiceMock.findByUserName(username)).thenReturn(Optional.of(user));
 

@@ -8,8 +8,7 @@ import org.junit.jupiter.api.Test;
 import ch.difty.scipamato.common.web.Mode;
 import ch.difty.scipamato.core.entity.search.SearchOrder;
 
-@SuppressWarnings("ResultOfMethodCallIgnored")
-public class SearchOrderSelectorPanelInEditModeTest extends SearchOrderSelectorPanelTest {
+class SearchOrderSelectorPanelInEditModeTest extends SearchOrderSelectorPanelTest {
 
     @Override
     Mode getMode() {
@@ -17,14 +16,14 @@ public class SearchOrderSelectorPanelInEditModeTest extends SearchOrderSelectorP
     }
 
     @Test
-    public void loadingPage_withSearchOrderWithCurrentOwner_rendersGlobalCheckBoxDisabled() {
+    void loadingPage_withSearchOrderWithCurrentOwner_rendersGlobalCheckBoxDisabled() {
         when(searchOrderMock.getOwner()).thenReturn(OWNER_ID);
         getTester().startComponentInPage(makePanel());
         getTester().assertEnabled(PANEL_ID + ":form:global");
     }
 
     @Test
-    public void withGlobalSearchOrders_withSameOwner_globalCheckBox_enabled() {
+    void withGlobalSearchOrders_withSameOwner_globalCheckBox_enabled() {
         when(searchOrderMock.getName()).thenReturn(VALID_NAME);
         when(searchOrderMock.getOwner()).thenReturn(OWNER_ID);
         getTester().startComponentInPage(makePanel());
@@ -35,7 +34,7 @@ public class SearchOrderSelectorPanelInEditModeTest extends SearchOrderSelectorP
     }
 
     @Test
-    public void withGlobalSearchOrders_withOtherOwner_globalCheckBox_disabled() {
+    void withGlobalSearchOrders_withOtherOwner_globalCheckBox_disabled() {
         when(searchOrderMock.getName()).thenReturn(VALID_NAME);
         when(searchOrderMock.getOwner()).thenReturn(OWNER_ID + 1);
         getTester().startComponentInPage(makePanel());
@@ -46,7 +45,7 @@ public class SearchOrderSelectorPanelInEditModeTest extends SearchOrderSelectorP
     }
 
     @Test
-    public void changingName_forSearchOwnedByUser_addsTargetsAndSaves() {
+    void changingName_forSearchOwnedByUser_addsTargetsAndSaves() {
         when(searchOrderMock.getName()).thenReturn(VALID_NAME);
         when(searchOrderMock.getOwner()).thenReturn(OWNER_ID);
         getTester().startComponentInPage(makePanel());
@@ -63,7 +62,7 @@ public class SearchOrderSelectorPanelInEditModeTest extends SearchOrderSelectorP
     }
 
     @Test
-    public void changingName_forSearchOwnedByDifferentUser_doesNotAddTargetNorSaves() {
+    void changingName_forSearchOwnedByDifferentUser_doesNotAddTargetNorSaves() {
         when(searchOrderMock.getName()).thenReturn(VALID_NAME);
         when(searchOrderMock.getOwner()).thenReturn(OWNER_ID + 1);
         getTester().startComponentInPage(makePanel());

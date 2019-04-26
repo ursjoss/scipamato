@@ -13,7 +13,7 @@ import ch.difty.scipamato.core.persistence.InsertSetStepSetter;
 import ch.difty.scipamato.core.persistence.InsertSetStepSetterTest;
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
-public class UserInsertSetStepSetterTest extends InsertSetStepSetterTest<ScipamatoUserRecord, User> {
+class UserInsertSetStepSetterTest extends InsertSetStepSetterTest<ScipamatoUserRecord, User> {
 
     private final InsertSetStepSetter<ScipamatoUserRecord, User> setter = new UserInsertSetStepSetter();
 
@@ -103,14 +103,14 @@ public class UserInsertSetStepSetterTest extends InsertSetStepSetterTest<Scipama
     }
 
     @Test
-    public void consideringSettingKeyOf_withNullId_doesNotSetId() {
+    void consideringSettingKeyOf_withNullId_doesNotSetId() {
         when(getEntity().getId()).thenReturn(null);
         getSetter().considerSettingKeyOf(getMoreStep(), getEntity());
         verify(getEntity()).getId();
     }
 
     @Test
-    public void consideringSettingKeyOf_withNonNullId_doesSetId() {
+    void consideringSettingKeyOf_withNonNullId_doesSetId() {
         when(getEntity().getId()).thenReturn(ID);
 
         getSetter().considerSettingKeyOf(getMoreStep(), getEntity());
@@ -120,13 +120,13 @@ public class UserInsertSetStepSetterTest extends InsertSetStepSetterTest<Scipama
     }
 
     @Test
-    public void resettingIdToEntity_withNullRecord_doesNothing() {
+    void resettingIdToEntity_withNullRecord_doesNothing() {
         getSetter().resetIdToEntity(entityMock, null);
         verify(entityMock, never()).setId(anyInt());
     }
 
     @Test
-    public void resettingIdToEntity_withNonNullRecord_setsId() {
+    void resettingIdToEntity_withNonNullRecord_setsId() {
         when(recordMock.getId()).thenReturn(3);
         getSetter().resetIdToEntity(entityMock, recordMock);
         verify(recordMock).getId();

@@ -19,18 +19,18 @@ import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicTranslation;
 import ch.difty.scipamato.core.persistence.JooqBaseIntegrationTest;
 import ch.difty.scipamato.core.persistence.OptimisticLockingException;
 
-public class JooqNewsletterTopicRepoIntegrationTest extends JooqBaseIntegrationTest {
+class JooqNewsletterTopicRepoIntegrationTest extends JooqBaseIntegrationTest {
 
     @Autowired
     private JooqNewsletterTopicRepo repo;
 
     @Test
-    public void findingAll() {
+    void findingAll() {
         assertThat(repo.findAll("en")).hasSize(3);
     }
 
     @Test
-    public void findingNewsletterTopicDefinitions_withUnspecifiedFilter_findsAllDefinitions() {
+    void findingNewsletterTopicDefinitions_withUnspecifiedFilter_findsAllDefinitions() {
         final List<NewsletterTopicDefinition> ntds = repo.findPageOfNewsletterTopicDefinitions(
             new NewsletterTopicFilter(), new PaginationRequest(Sort.Direction.ASC, "title"));
 
@@ -59,7 +59,7 @@ public class JooqNewsletterTopicRepoIntegrationTest extends JooqBaseIntegrationT
     }
 
     @Test
-    public void findingNewsletterTopicDefinitions_withUnspecifiedFilter_sortingDescendingly_findsAllDefinitions() {
+    void findingNewsletterTopicDefinitions_withUnspecifiedFilter_sortingDescendingly_findsAllDefinitions() {
         final List<NewsletterTopicDefinition> ntds = repo.findPageOfNewsletterTopicDefinitions(
             new NewsletterTopicFilter(), new PaginationRequest(Sort.Direction.DESC, "title"));
 
@@ -70,7 +70,7 @@ public class JooqNewsletterTopicRepoIntegrationTest extends JooqBaseIntegrationT
     }
 
     @Test
-    public void findingNewsletterTopicDefinitions_withFilterMatchingSingleGermanTitle_findsOne() {
+    void findingNewsletterTopicDefinitions_withFilterMatchingSingleGermanTitle_findsOne() {
         final NewsletterTopicFilter filter = new NewsletterTopicFilter();
         filter.setTitleMask("Partikel");
         final List<NewsletterTopicDefinition> ntds = repo.findPageOfNewsletterTopicDefinitions(filter,
@@ -87,7 +87,7 @@ public class JooqNewsletterTopicRepoIntegrationTest extends JooqBaseIntegrationT
     }
 
     @Test
-    public void findingNewsletterTopicDefinitions_withFilterMatchingNa_findsSomeWithMissingTranslations() {
+    void findingNewsletterTopicDefinitions_withFilterMatchingNa_findsSomeWithMissingTranslations() {
         final NewsletterTopicFilter filter = new NewsletterTopicFilter();
         filter.setTitleMask("n.a.");
         final List<NewsletterTopicDefinition> ntds = repo.findPageOfNewsletterTopicDefinitions(filter,
@@ -103,7 +103,7 @@ public class JooqNewsletterTopicRepoIntegrationTest extends JooqBaseIntegrationT
     }
 
     @Test
-    public void findingNewsletterTopicDefinitions_haveVersionFieldsPopulated() {
+    void findingNewsletterTopicDefinitions_haveVersionFieldsPopulated() {
         final NewsletterTopicFilter filter = new NewsletterTopicFilter();
         filter.setTitleMask("Partikel");
         final List<NewsletterTopicDefinition> ntds = repo.findPageOfNewsletterTopicDefinitions(filter,
@@ -130,7 +130,7 @@ public class JooqNewsletterTopicRepoIntegrationTest extends JooqBaseIntegrationT
     }
 
     @Test
-    public void findingNewsletterTopicDefinitions_withFilterMatchingSeveral() {
+    void findingNewsletterTopicDefinitions_withFilterMatchingSeveral() {
         final NewsletterTopicFilter filter = new NewsletterTopicFilter();
         filter.setTitleMask("es");
         final List<NewsletterTopicDefinition> ntds = repo.findPageOfNewsletterTopicDefinitions(filter,
@@ -154,31 +154,31 @@ public class JooqNewsletterTopicRepoIntegrationTest extends JooqBaseIntegrationT
     }
 
     @Test
-    public void countingNewsletterTopics_withUnspecifiedFilter_findsAllDefinitions() {
+    void countingNewsletterTopics_withUnspecifiedFilter_findsAllDefinitions() {
         assertThat(repo.countByFilter(new NewsletterTopicFilter())).isEqualTo(3);
     }
 
     @Test
-    public void countingNewsletterTopics_withFilter_findsAllMatchingDefinitions() {
+    void countingNewsletterTopics_withFilter_findsAllMatchingDefinitions() {
         final NewsletterTopicFilter filter = new NewsletterTopicFilter();
         filter.setTitleMask("es");
         assertThat(repo.countByFilter(filter)).isEqualTo(2);
     }
 
     @Test
-    public void countingNewsletterTopics_withNonMatchingFilter_findsNone() {
+    void countingNewsletterTopics_withNonMatchingFilter_findsNone() {
         final NewsletterTopicFilter filter = new NewsletterTopicFilter();
         filter.setTitleMask("foobar");
         assertThat(repo.countByFilter(filter)).isEqualTo(0);
     }
 
     @Test
-    public void gettingMainLanguage() {
+    void gettingMainLanguage() {
         assertThat(repo.getMainLanguage()).isEqualTo("de");
     }
 
     @Test
-    public void findingMainLanguage() {
+    void findingMainLanguage() {
         NewsletterTopicDefinition ntd = repo.newUnpersistedNewsletterTopicDefinition();
 
         assertThat(ntd.getId()).isNull();
@@ -204,12 +204,12 @@ public class JooqNewsletterTopicRepoIntegrationTest extends JooqBaseIntegrationT
     }
 
     @Test
-    public void findingNewsletterTopicDefinition_withNonExistingId_returnsNull() {
+    void findingNewsletterTopicDefinition_withNonExistingId_returnsNull() {
         assertThat(repo.findNewsletterTopicDefinitionById(-1)).isNull();
     }
 
     @Test
-    public void findingNewsletterTopicDefinition_withExistingId_loadsWithAllLanguages() {
+    void findingNewsletterTopicDefinition_withExistingId_loadsWithAllLanguages() {
         final NewsletterTopicDefinition existing = repo.findNewsletterTopicDefinitionById(1);
 
         assertThat(existing).isNotNull();
@@ -224,7 +224,7 @@ public class JooqNewsletterTopicRepoIntegrationTest extends JooqBaseIntegrationT
     }
 
     @Test
-    public void insertingRecord_savesRecordAndRefreshesId() {
+    void insertingRecord_savesRecordAndRefreshesId() {
         final NewsletterTopicTranslation ntt_de = new NewsletterTopicTranslation(null, "de", "foo_de", 0);
         final NewsletterTopicTranslation ntt_en = new NewsletterTopicTranslation(null, "en", "foo1_en", 0);
         final NewsletterTopicTranslation ntt_fr = new NewsletterTopicTranslation(null, "fr", "foo1_fr", 0);
@@ -255,7 +255,7 @@ public class JooqNewsletterTopicRepoIntegrationTest extends JooqBaseIntegrationT
     }
 
     @Test
-    public void updatingRecord() {
+    void updatingRecord() {
         final NewsletterTopicDefinition ntd = repo.findNewsletterTopicDefinitionById(1);
 
         assertThat(ntd).isNotNull();
@@ -310,12 +310,12 @@ public class JooqNewsletterTopicRepoIntegrationTest extends JooqBaseIntegrationT
     }
 
     @Test
-    public void deleting_withNonExistingId_returnsNull() {
+    void deleting_withNonExistingId_returnsNull() {
         assertThat(repo.delete(-1, 1)).isNull();
     }
 
     @Test
-    public void deleting_withExistingId_butWrongVersion_throwsOptimisticLockingException() {
+    void deleting_withExistingId_butWrongVersion_throwsOptimisticLockingException() {
         try {
             repo.delete(1, -1);
             fail("should have thrown exception");
@@ -328,7 +328,7 @@ public class JooqNewsletterTopicRepoIntegrationTest extends JooqBaseIntegrationT
     }
 
     @Test
-    public void deleting_withExistingIdAndVersion_deletes() {
+    void deleting_withExistingIdAndVersion_deletes() {
         // insert new record to the database and verify it's there
         NewsletterTopicDefinition ntd = new NewsletterTopicDefinition(null, "de", null);
         NewsletterTopicDefinition persisted = repo.insert(ntd);
@@ -346,23 +346,23 @@ public class JooqNewsletterTopicRepoIntegrationTest extends JooqBaseIntegrationT
     }
 
     @Test
-    public void findingPersistedSortedNewsletterTopicsForNewsletterWithId() {
+    void findingPersistedSortedNewsletterTopicsForNewsletterWithId() {
         assertThat(repo.findPersistedSortedNewsletterTopicsForNewsletterWithId(1)).isEmpty();
     }
 
     @Test
-    public void findingAllSortedNewsletterTopicsForNewsletterWithId() {
+    void findingAllSortedNewsletterTopicsForNewsletterWithId() {
         assertThat(repo.findAllSortedNewsletterTopicsForNewsletterWithId(1)).hasSize(3);
     }
 
     @Test
-    public void removingObsoleteNewsletterTopicsFromSort() {
+    void removingObsoleteNewsletterTopicsFromSort() {
         repo.removeObsoleteNewsletterTopicsFromSort(1);
         // TODO currently only asserting that the method runs without failure. Need test data and actually assert the behavior
     }
 
     @Test
-    public void savingSortedNewsletterTopics() {
+    void savingSortedNewsletterTopics() {
         final int newsletterId = 1;
 
         final List<NewsletterNewsletterTopic> initialRecords = repo.findPersistedSortedNewsletterTopicsForNewsletterWithId(
@@ -388,12 +388,12 @@ public class JooqNewsletterTopicRepoIntegrationTest extends JooqBaseIntegrationT
     }
 
     @Test
-    public void findingNewsletterTopicDefinitions_sortedByName() {
+    void findingNewsletterTopicDefinitions_sortedByName() {
         assertSortedList("name", 1);
     }
 
     @Test
-    public void findingNewsletterTopicDefinitions_sortedByUndefinedProperty() {
+    void findingNewsletterTopicDefinitions_sortedByUndefinedProperty() {
         assertSortedList("whatever", 1);
     }
 

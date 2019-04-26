@@ -31,11 +31,11 @@ import ch.difty.scipamato.core.entity.search.SearchOrderFilter;
 import ch.difty.scipamato.core.persistence.SearchOrderService;
 import ch.difty.scipamato.core.web.common.PanelTest;
 
-public abstract class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorPanel> {
+abstract class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorPanel> {
 
-    static final long   ID         = 17L;
-    static final String VALID_NAME = "soName";
-    static final int    OWNER_ID   = 2;
+    private static final long   ID         = 17L;
+    static final         String VALID_NAME = "soName";
+    static final         int    OWNER_ID   = 2;
 
     @MockBean
     SearchOrderService searchOrderServiceMock;
@@ -43,7 +43,7 @@ public abstract class SearchOrderSelectorPanelTest extends PanelTest<SearchOrder
     @Mock
     SearchOrder searchOrderMock;
 
-    final List<SearchCondition> searchConditions = new ArrayList<>();
+    private final List<SearchCondition> searchConditions = new ArrayList<>();
 
     @Override
     protected SearchOrderSelectorPanel makePanel() {
@@ -83,7 +83,7 @@ public abstract class SearchOrderSelectorPanelTest extends PanelTest<SearchOrder
     }
 
     @Test
-    public void loadingPage_withSearchOrderWithoutOverrides_hidesShowExclusionStuff() {
+    void loadingPage_withSearchOrderWithoutOverrides_hidesShowExclusionStuff() {
         assertThat(searchOrderMock.getExcludedPaperIds()).isEmpty();
 
         getTester().startComponentInPage(makePanel());
@@ -94,7 +94,7 @@ public abstract class SearchOrderSelectorPanelTest extends PanelTest<SearchOrder
     }
 
     @Test
-    public void loadingPage_withSearchOrderWithOverrides_showsShowExcludedStuff() {
+    void loadingPage_withSearchOrderWithOverrides_showsShowExcludedStuff() {
         when(searchOrderMock.getExcludedPaperIds()).thenReturn(Collections.singletonList(3L));
         when(searchOrderMock.isShowExcluded()).thenReturn(false);
 
@@ -108,7 +108,7 @@ public abstract class SearchOrderSelectorPanelTest extends PanelTest<SearchOrder
     }
 
     @Test
-    public void changingSearchOrderSelection_addsTargetsAndSendsEvent() {
+    void changingSearchOrderSelection_addsTargetsAndSendsEvent() {
         getTester().startComponentInPage(makePanel());
 
         getTester().executeAjaxEvent(PANEL_ID + ":form:searchOrder", "change");
@@ -123,14 +123,14 @@ public abstract class SearchOrderSelectorPanelTest extends PanelTest<SearchOrder
     }
 
     @Test
-    public void loadingPage_withSearchOrderWithDifferentOwner_rendersGlobalCheckBoxDisabled() {
+    void loadingPage_withSearchOrderWithDifferentOwner_rendersGlobalCheckBoxDisabled() {
         when(searchOrderMock.getOwner()).thenReturn(OWNER_ID + 1);
         getTester().startComponentInPage(makePanel());
         getTester().assertDisabled(PANEL_ID + ":form:global");
     }
 
     @Test
-    public void testSubmittingWithNewButton_createsNewSearchOrder() {
+    void testSubmittingWithNewButton_createsNewSearchOrder() {
         when(searchOrderMock.getName()).thenReturn(VALID_NAME);
         when(searchOrderMock.getOwner()).thenReturn(OWNER_ID);
         getTester().startComponentInPage(makePanel());
@@ -151,7 +151,7 @@ public abstract class SearchOrderSelectorPanelTest extends PanelTest<SearchOrder
     }
 
     @Test
-    public void testSubmittingWithDeleteButton_deletesSearchOrder() {
+    void testSubmittingWithDeleteButton_deletesSearchOrder() {
         when(searchOrderMock.getName()).thenReturn(VALID_NAME);
         when(searchOrderMock.getOwner()).thenReturn(OWNER_ID);
         getTester().startComponentInPage(makePanel());

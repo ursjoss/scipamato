@@ -15,14 +15,14 @@ import org.junit.jupiter.api.Test;
 import ch.difty.scipamato.common.persistence.paging.Sort.Direction;
 import ch.difty.scipamato.common.persistence.paging.Sort.SortProperty;
 
-public class SortTest {
+class SortTest {
 
     private final List<SortProperty> sortProperties = new ArrayList<>(4);
 
     private Sort sort;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         sortProperties.add(new SortProperty("a", Direction.ASC));
         sortProperties.add(new SortProperty("b", Direction.DESC));
         sortProperties.add(new SortProperty("c", Direction.DESC));
@@ -32,12 +32,12 @@ public class SortTest {
     }
 
     @Test
-    public void degenerateConstruction_withNullSortProperties_throws() {
+    void degenerateConstruction_withNullSortProperties_throws() {
         assertDegenerateSupplierParameter(() -> new Sort(null), "sortProperties");
     }
 
     @Test
-    public void degenerateConstruction_withNoSortProperties_throws() {
+    void degenerateConstruction_withNoSortProperties_throws() {
         try {
             new Sort(Collections.emptyList());
             fail("should have thrown exception");
@@ -49,12 +49,12 @@ public class SortTest {
     }
 
     @Test
-    public void degenerateConstruction_withNullPropertyNames_throws() {
+    void degenerateConstruction_withNullPropertyNames_throws() {
         assertDegenerateSupplierParameter(() -> new Sort(Direction.ASC, (String[]) null), "propertyNames");
     }
 
     @Test
-    public void degenerateConstruction_withEmptyPropertyNames_throws() {
+    void degenerateConstruction_withEmptyPropertyNames_throws() {
         try {
             new Sort(Direction.ASC);
             fail("should have thrown exception");
@@ -75,17 +75,17 @@ public class SortTest {
     }
 
     @Test
-    public void creatingSortForThreeAscendingProperties_returnsIteratorForAllThreePropertiesInAscendingOrder() {
+    void creatingSortForThreeAscendingProperties_returnsIteratorForAllThreePropertiesInAscendingOrder() {
         assertSortProperty(Direction.ASC, new String[] { "a", "b", "c" });
     }
 
     @Test
-    public void cratingSortForFiveDescendingProperties_returnsIteratorForAllFiveElementsWithDescendingOrder() {
+    void cratingSortForFiveDescendingProperties_returnsIteratorForAllFiveElementsWithDescendingOrder() {
         assertSortProperty(Direction.DESC, new String[] { "a", "b", "c", "d", "e" });
     }
 
     @Test
-    public void creatingSortForFourSortPropertiesWithDifferentSortDirections() {
+    void creatingSortForFourSortPropertiesWithDifferentSortDirections() {
         final Iterator<SortProperty> it = sort.iterator();
         assertSortProperty(it, Direction.ASC, "a");
         assertSortProperty(it, Direction.DESC, "b");
@@ -101,12 +101,12 @@ public class SortTest {
     }
 
     @Test
-    public void gettingSortPropertyFor_withNullName_returnsNull() {
+    void gettingSortPropertyFor_withNullName_returnsNull() {
         assertThat(sort.getSortPropertyFor(null)).isNull();
     }
 
     @Test
-    public void gettingSortPropertyFor_nonExistingName_returnsNull() {
+    void gettingSortPropertyFor_nonExistingName_returnsNull() {
         String p = "x";
         assertThat(sortProperties)
             .extracting("name")
@@ -115,7 +115,7 @@ public class SortTest {
     }
 
     @Test
-    public void gettingSortPropertyFor_existingName_returnsRespectiveSortProperty() {
+    void gettingSortPropertyFor_existingName_returnsRespectiveSortProperty() {
         String p = "c";
         assertThat(sortProperties)
             .extracting("name")
@@ -126,29 +126,29 @@ public class SortTest {
     }
 
     @Test
-    public void directionAsc_isAscending() {
+    void directionAsc_isAscending() {
         assertThat(Direction.ASC.isAscending()).isTrue();
     }
 
     @Test
-    public void directionDesc_isNotAscending() {
+    void directionDesc_isNotAscending() {
         assertThat(Direction.DESC.isAscending()).isFalse();
     }
 
     @Test
-    public void sortPropertyWithNullDirection_isAscending() {
+    void sortPropertyWithNullDirection_isAscending() {
         assertThat(new SortProperty("foo", null).getDirection()).isEqualTo(Direction.ASC);
     }
 
     @Test
-    public void testingToString() {
+    void testingToString() {
         assertThat(sort.toString()).isEqualTo("a: ASC,b: DESC,c: DESC,d: ASC");
     }
 
     @SuppressWarnings({ "unlikely-arg-type", "ConstantConditions", "RedundantStringConstructorCall", "EqualsWithItself",
         "EqualsBetweenInconvertibleTypes" })
     @Test
-    public void sortEqualityTests() {
+    void sortEqualityTests() {
         assertThat(sort.equals(null)).isFalse();
         assertThat(sort.equals("")).isFalse();
         assertThat(sort.equals(sort)).isTrue();
@@ -169,7 +169,7 @@ public class SortTest {
     @SuppressWarnings({ "unlikely-arg-type", "ConstantConditions", "RedundantStringConstructorCall", "EqualsWithItself",
         "EqualsBetweenInconvertibleTypes" })
     @Test
-    public void sortPropertyEqualityTests() {
+    void sortPropertyEqualityTests() {
         SortProperty sf1 = new SortProperty("foo", Direction.DESC);
 
         assertThat(sf1.equals(null)).isFalse();

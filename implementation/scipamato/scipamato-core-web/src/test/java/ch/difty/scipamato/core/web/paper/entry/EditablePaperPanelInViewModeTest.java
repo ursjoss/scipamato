@@ -15,7 +15,8 @@ import ch.difty.scipamato.common.web.Mode;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.search.PaperFilter;
 
-public class EditablePaperPanelInViewModeTest extends EditablePaperPanelTest {
+@SuppressWarnings("SpellCheckingInspection")
+class EditablePaperPanelInViewModeTest extends EditablePaperPanelTest {
 
     @Override
     Mode getMode() {
@@ -69,7 +70,7 @@ public class EditablePaperPanelInViewModeTest extends EditablePaperPanelTest {
     }
 
     @Test
-    public void isAssociatedWithNewsletter_withNewsletterLink() {
+    void isAssociatedWithNewsletter_withNewsletterLink() {
         EditablePaperPanel p = makePanel();
         p
             .getModelObject()
@@ -78,7 +79,7 @@ public class EditablePaperPanelInViewModeTest extends EditablePaperPanelTest {
     }
 
     @Test
-    public void specificFields_areDisabled() {
+    void specificFields_areDisabled() {
         getTester().startComponentInPage(makePanel());
         getTester().isDisabled("panel:form:id");
         getTester().isDisabled("panel:form:firstAuthorOverridden");

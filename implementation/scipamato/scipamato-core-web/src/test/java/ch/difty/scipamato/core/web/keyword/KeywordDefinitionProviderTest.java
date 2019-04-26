@@ -30,7 +30,7 @@ import ch.difty.scipamato.core.persistence.KeywordService;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-public class KeywordDefinitionProviderTest {
+class KeywordDefinitionProviderTest {
 
     private KeywordDefinitionProvider provider;
 
@@ -49,7 +49,7 @@ public class KeywordDefinitionProviderTest {
     private List<KeywordDefinition> papers;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         new WicketTester(application);
         provider = new KeywordDefinitionProvider(filterMock);
 
@@ -57,24 +57,24 @@ public class KeywordDefinitionProviderTest {
     }
 
     @AfterEach
-    public void tearDown() {
+    void tearDown() {
         verifyNoMoreInteractions(serviceMock, entityMock);
     }
 
     @Test
-    public void defaultFilterIsNewKeywordFilter() {
+    void defaultFilterIsNewKeywordFilter() {
         provider = new KeywordDefinitionProvider();
         assertThat(provider.getFilterState()).isEqualToComparingFieldByField(new KeywordFilter());
     }
 
     @Test
-    public void nullFilterResultsInNewKeywordFilter() {
+    void nullFilterResultsInNewKeywordFilter() {
         KeywordDefinitionProvider p = new KeywordDefinitionProvider(null);
         assertThat(p.getFilterState()).isEqualToComparingFieldByField(new KeywordFilter());
     }
 
     @Test
-    public void size() {
+    void size() {
         int size = 5;
         when(serviceMock.countByFilter(filterMock)).thenReturn(size);
         assertThat(provider.size()).isEqualTo(size);
@@ -82,18 +82,18 @@ public class KeywordDefinitionProviderTest {
     }
 
     @Test
-    public void gettingModel_wrapsEntity() {
+    void gettingModel_wrapsEntity() {
         IModel<KeywordDefinition> model = provider.model(entityMock);
         assertThat(model.getObject()).isEqualTo(entityMock);
     }
 
     @Test
-    public void gettingFilterState_returnsFilter() {
+    void gettingFilterState_returnsFilter() {
         assertThat(provider.getFilterState()).isEqualTo(filterMock);
     }
 
     @Test
-    public void settingFilterState() {
+    void settingFilterState() {
         provider = new KeywordDefinitionProvider();
         assertThat(provider.getFilterState()).isNotEqualTo(filterMock);
         provider.setFilterState(filterMock);
@@ -120,7 +120,7 @@ public class KeywordDefinitionProviderTest {
     }
 
     @Test
-    public void iterating_withNoRecords_returnsNoRecords() {
+    void iterating_withNoRecords_returnsNoRecords() {
         papers = Collections.emptyList();
         when(serviceMock.findPageOfEntityDefinitions(eq(filterMock), isA(PaginationContext.class))).thenReturn(
             papers.iterator());
@@ -131,7 +131,7 @@ public class KeywordDefinitionProviderTest {
     }
 
     @Test
-    public void iterating_throughFirst() {
+    void iterating_throughFirst() {
         when(serviceMock.findPageOfEntityDefinitions(eq(filterMock), isA(PaginationContext.class))).thenReturn(
             papers.iterator());
         Iterator<KeywordDefinition> it = provider.iterator(0, 3);
@@ -150,7 +150,7 @@ public class KeywordDefinitionProviderTest {
     }
 
     @Test
-    public void iterating_throughSecondPage() {
+    void iterating_throughSecondPage() {
         when(serviceMock.findPageOfEntityDefinitions(eq(filterMock), isA(PaginationContext.class))).thenReturn(
             papers.iterator());
         Iterator<KeywordDefinition> it = provider.iterator(3, 3);
@@ -160,7 +160,7 @@ public class KeywordDefinitionProviderTest {
     }
 
     @Test
-    public void iterating_throughThirdPage() {
+    void iterating_throughThirdPage() {
         provider.setSort("name", SortOrder.DESCENDING);
         when(serviceMock.findPageOfEntityDefinitions(eq(filterMock), isA(PaginationContext.class))).thenReturn(
             papers.iterator());

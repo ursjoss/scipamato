@@ -6,12 +6,12 @@ import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
 import org.junit.jupiter.api.Test;
 
-import ch.difty.scipamato.core.web.paper.jasper.JasperEntityTest;
-import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields;
 import ch.difty.scipamato.core.web.paper.jasper.CoreShortFieldConcatenator;
 import ch.difty.scipamato.core.web.paper.jasper.CoreShortFieldWithEmptyMainFieldConcatenator;
+import ch.difty.scipamato.core.web.paper.jasper.JasperEntityTest;
+import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields;
 
-public class PaperSummaryTest extends JasperEntityTest {
+class PaperSummaryTest extends JasperEntityTest {
 
     private PaperSummary               ps;
     private ReportHeaderFields         rhf                    = newReportHeaderFields();
@@ -29,7 +29,7 @@ public class PaperSummaryTest extends JasperEntityTest {
     }
 
     @Test
-    public void instantiating() {
+    void instantiating() {
         ps = new PaperSummary(p, shortFieldConcatenator, rhf);
         assertPaperSummary();
     }
@@ -56,7 +56,7 @@ public class PaperSummaryTest extends JasperEntityTest {
     }
 
     @Test
-    public void populationLabelIsBlankIfPopulationIsBlank() {
+    void populationLabelIsBlankIfPopulationIsBlank() {
         p.setPopulation("");
         ps = newPaperSummary();
 
@@ -69,7 +69,7 @@ public class PaperSummaryTest extends JasperEntityTest {
     }
 
     @Test
-    public void methodsLabelIsBlankIfMethodsIsBlank() {
+    void methodsLabelIsBlankIfMethodsIsBlank() {
         p.setMethods("");
         ps = newPaperSummary();
 
@@ -78,7 +78,7 @@ public class PaperSummaryTest extends JasperEntityTest {
     }
 
     @Test
-    public void resultLabelIsBlankIfResultIsBlank() {
+    void resultLabelIsBlankIfResultIsBlank() {
         p.setResult("");
         ps = newPaperSummary();
 
@@ -87,7 +87,7 @@ public class PaperSummaryTest extends JasperEntityTest {
     }
 
     @Test
-    public void commentLabelIsBlankIfCommentIsBlank() {
+    void commentLabelIsBlankIfCommentIsBlank() {
         p.setComment("");
         ps = newPaperSummary();
 
@@ -96,7 +96,7 @@ public class PaperSummaryTest extends JasperEntityTest {
     }
 
     @Test
-    public void headerHasNoNumberIfNumberIsNull() {
+    void headerHasNoNumberIfNumberIsNull() {
         p.setNumber(null);
         ps = newPaperSummary();
 
@@ -104,7 +104,7 @@ public class PaperSummaryTest extends JasperEntityTest {
     }
 
     @Test
-    public void headerOnlyShowsIdIfHeaderPartIsBlank() {
+    void headerOnlyShowsIdIfHeaderPartIsBlank() {
         rhf = ReportHeaderFields
             .builder("", BRAND)
             .populationLabel(POPULATION_LABEL)
@@ -120,7 +120,7 @@ public class PaperSummaryTest extends JasperEntityTest {
     }
 
     @Test
-    public void equalsVerify() {
+    void equalsVerify() {
         EqualsVerifier
             .forClass(PaperSummary.class)
             .withRedefinedSuperclass()

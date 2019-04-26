@@ -22,7 +22,7 @@ import ch.difty.scipamato.core.web.authentication.LoginPage;
 import ch.difty.scipamato.core.web.common.BasePageTest;
 import ch.difty.scipamato.core.web.paper.list.PaperListPage;
 
-public class NewsletterTopicSortPageTest extends BasePageTest<NewsletterTopicSortPage> {
+class NewsletterTopicSortPageTest extends BasePageTest<NewsletterTopicSortPage> {
 
     private Newsletter newsletter;
 
@@ -75,19 +75,19 @@ public class NewsletterTopicSortPageTest extends BasePageTest<NewsletterTopicSor
     }
 
     @Test
-    public void startingPageWithNonNullModel__loadsSortedNewsletterTopics() {
+    void startingPageWithNonNullModel__loadsSortedNewsletterTopics() {
         getTester().startPage(new NewsletterTopicSortPage(Model.of(newsletter), null));
         verify(service).getSortedNewsletterTopicsForNewsletter(newsletter.getId());
     }
 
     @Test
-    public void startingPageWithNonModel__loadsSortedNewsletterTopics() {
+    void startingPageWithNonModel__loadsSortedNewsletterTopics() {
         getTester().startPage(new NewsletterTopicSortPage(null, null));
         verify(service, never()).getSortedNewsletterTopicsForNewsletter(anyInt());
     }
 
     @Test
-    public void clickSubmit_withNoPreviousPage_callsSave_andNavigatesToPaperListPage() {
+    void clickSubmit_withNoPreviousPage_callsSave_andNavigatesToPaperListPage() {
         getTester().startPage(makePage());
         getTester().assertRenderedPage(getPageClass());
 
@@ -102,7 +102,7 @@ public class NewsletterTopicSortPageTest extends BasePageTest<NewsletterTopicSor
     }
 
     @Test
-    public void clickSubmit_withPreviousPage_callsSave_andNavigatesToPreviousPage() {
+    void clickSubmit_withPreviousPage_callsSave_andNavigatesToPreviousPage() {
         getTester().startPage(
             new NewsletterTopicSortPage(Model.of(newsletter), new LoginPage(new PageParameters()).getPageReference()));
         getTester().assertRenderedPage(getPageClass());
@@ -118,7 +118,7 @@ public class NewsletterTopicSortPageTest extends BasePageTest<NewsletterTopicSor
     }
 
     @Test
-    public void clickSubmit_withSaveThrowing_addsErrorMessage_andStaysOnPage() {
+    void clickSubmit_withSaveThrowing_addsErrorMessage_andStaysOnPage() {
         doThrow(new RuntimeException("boom"))
             .when(service)
             .saveSortedNewsletterTopics(newsletter.getId(), topics);
@@ -137,7 +137,7 @@ public class NewsletterTopicSortPageTest extends BasePageTest<NewsletterTopicSor
     }
 
     @Test
-    public void clickCancel_withNoPreviousPage_doesNotCallSave_butNavigatesToPaperListPage() {
+    void clickCancel_withNoPreviousPage_doesNotCallSave_butNavigatesToPaperListPage() {
         getTester().startPage(makePage());
         getTester().assertRenderedPage(getPageClass());
 
@@ -152,7 +152,7 @@ public class NewsletterTopicSortPageTest extends BasePageTest<NewsletterTopicSor
     }
 
     @Test
-    public void clickCancel_withPreviousPage_doesNotCallSave_butNavigatesToPreviousPage() {
+    void clickCancel_withPreviousPage_doesNotCallSave_butNavigatesToPreviousPage() {
         getTester().startPage(
             new NewsletterTopicSortPage(Model.of(newsletter), new LoginPage(new PageParameters()).getPageReference()));
         getTester().assertRenderedPage(getPageClass());

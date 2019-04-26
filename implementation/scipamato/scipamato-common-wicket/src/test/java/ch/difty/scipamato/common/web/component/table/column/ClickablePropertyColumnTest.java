@@ -16,7 +16,7 @@ import ch.difty.scipamato.common.web.TestRecord;
 import ch.difty.scipamato.common.web.WicketBaseTest;
 import ch.difty.scipamato.common.web.component.SerializableConsumer;
 
-public class ClickablePropertyColumnTest extends WicketBaseTest {
+class ClickablePropertyColumnTest extends WicketBaseTest {
 
     @Mock
     private SerializableConsumer<IModel<String>> consumerMock;
@@ -26,7 +26,7 @@ public class ClickablePropertyColumnTest extends WicketBaseTest {
     private String clickPerformed = null;
 
     @Test
-    public void testOnClick() {
+    void testOnClick() {
         String property = "prop";
         ClickablePropertyColumn<String, String> c = new ClickablePropertyColumn<>(displayModel, property, consumerMock);
         Model<String> clickModel = Model.of("bar");
@@ -35,7 +35,7 @@ public class ClickablePropertyColumnTest extends WicketBaseTest {
     }
 
     @Test
-    public void testOnClick_withSort() {
+    void testOnClick_withSort() {
         String property = "prop";
         ClickablePropertyColumn<String, String> c = new ClickablePropertyColumn<>(displayModel, property, property,
             consumerMock);
@@ -45,7 +45,7 @@ public class ClickablePropertyColumnTest extends WicketBaseTest {
     }
 
     @Test
-    public void testOnClick_inNewTab() {
+    void testOnClick_inNewTab() {
         String property = "prop";
         ClickablePropertyColumn<String, String> c = new ClickablePropertyColumn<>(displayModel, property, property,
             consumerMock, true);
@@ -55,21 +55,21 @@ public class ClickablePropertyColumnTest extends WicketBaseTest {
     }
 
     @Test
-    public void testPanel() {
+    void testPanel() {
         getTester().startComponentInPage(new ClickablePropertyColumnTestPanel("panel", this::setVariable, false));
         assertComponents();
         assertThat(clickPerformed).isNull();
     }
 
     @Test
-    public void clickLink() {
+    void clickLink() {
         getTester().startComponentInPage(new ClickablePropertyColumnTestPanel("panel", this::setVariable, false));
         getTester().clickLink("panel:table:body:rows:1:cells:2:cell:link");
         assertThat(clickPerformed).isEqualTo("TestRecord(1, foo)");
     }
 
     @Test
-    public void clickLink_inNewTab() {
+    void clickLink_inNewTab() {
         getTester().startComponentInPage(new ClickablePropertyColumnTestPanel("panel", this::setVariable, true));
         getTester().clickLink("panel:table:body:rows:1:cells:2:cell:link");
         assertThat(clickPerformed).isEqualTo("TestRecord(1, foo)");

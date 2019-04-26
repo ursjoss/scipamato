@@ -18,7 +18,7 @@ import ch.difty.scipamato.core.pubmed.api.PubmedArticleSet;
 @SpringBootTest
 @ActiveProfiles("test")
 @SuppressWarnings("SameParameterValue")
-public abstract class PubmedIntegrationTest {
+abstract class PubmedIntegrationTest {
 
     @Autowired
     private PubmedXmlService service;

@@ -14,7 +14,7 @@ import org.springframework.boot.autoconfigure.batch.BatchProperties;
 import org.springframework.core.io.ResourceLoader;
 
 @ExtendWith(MockitoExtension.class)
-public class BatchConfigurationTest {
+class BatchConfigurationTest {
 
     @Mock
     private BatchProperties batchProperties;
@@ -29,7 +29,7 @@ public class BatchConfigurationTest {
     private DSLContext jooqCore;
 
     @Test
-    public void instantiate() {
+    void instantiate() {
         BatchConfiguration bc = new BatchConfiguration(batchProperties);
         assertThat(bc.batchDataSourceInitializer(dataSource, resourceLoader)).isNotNull();
         verifyNoMoreInteractions(batchProperties, dataSource, resourceLoader, jooqCore);

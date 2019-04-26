@@ -11,7 +11,7 @@ import nl.jqno.equalsverifier.Warning;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class ScipamatoEntityTest {
+class ScipamatoEntityTest {
 
     private static final int VERSION = 10;
 
@@ -25,27 +25,27 @@ public class ScipamatoEntityTest {
     private final ScipamatoEntity e = new ScipamatoEntity();
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         e.setCreated(CD);
         e.setLastModified(LM);
         e.setVersion(VERSION);
     }
 
     @Test
-    public void get() {
+    void get() {
         assertThat(e.getCreated()).isEqualTo(CD);
         assertThat(e.getLastModified()).isEqualTo(LM);
         assertThat(e.getVersion()).isEqualTo(VERSION);
     }
 
     @Test
-    public void testingToString() {
+    void testingToString() {
         assertThat(e.toString()).isEqualTo(
             "ScipamatoEntity[created=" + CD + ",lastModified=" + LM + ",version=" + VERSION + "]");
     }
 
     @Test
-    public void equals() {
+    void equals() {
         EqualsVerifier
             .forClass(ScipamatoEntity.class)
             .withIgnoredFields(CREATED.getName(), MODIFIED.getName())

@@ -17,7 +17,7 @@ public abstract class SearchTermEvaluatorTest<T extends SearchTerm> {
     protected abstract SearchTermEvaluator<T> getEvaluator();
 
     @Test
-    public void evaluating_withNullParameter_throws() {
+    void evaluating_withNullParameter_throws() {
         assertDegenerateSupplierParameter(() -> getEvaluator().evaluate(null), "searchTerm");
     }
 

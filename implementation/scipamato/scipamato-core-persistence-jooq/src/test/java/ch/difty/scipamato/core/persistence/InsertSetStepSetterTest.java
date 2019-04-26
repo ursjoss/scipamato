@@ -9,7 +9,6 @@ import org.jooq.InsertSetMoreStep;
 import org.jooq.InsertSetStep;
 import org.jooq.Record;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -75,7 +74,7 @@ public abstract class InsertSetStepSetterTest<R extends Record, E extends CoreEn
     protected abstract void setStepFixtureAudit();
 
     @AfterEach
-    public void tearDown() {
+    void tearDown() {
         specificTearDown();
         verifyNoMoreInteractions(stepMock, moreStepMock);
     }
@@ -83,18 +82,18 @@ public abstract class InsertSetStepSetterTest<R extends Record, E extends CoreEn
     protected abstract void specificTearDown();
 
     @Test
-    public void nullCheck() {
+    void nullCheck() {
         assertThat(stepMock).isNotNull();
         assertThat(moreStepMock).isNotNull();
     }
 
     @Test
-    public void settingNonKeyFields_withNullSetter_throws() {
+    void settingNonKeyFields_withNullSetter_throws() {
         assertDegenerateSupplierParameter(() -> getSetter().setNonKeyFieldsFor(null, getEntity()), "step");
     }
 
     @Test
-    public void settingNonKeyFields_withNullEntity_throws() {
+    void settingNonKeyFields_withNullEntity_throws() {
         assertDegenerateSupplierParameter(() -> getSetter().setNonKeyFieldsFor(getStep(), null), "entity");
     }
 
@@ -130,7 +129,7 @@ public abstract class InsertSetStepSetterTest<R extends Record, E extends CoreEn
     protected abstract void verifySettingAuditFields();
 
     @Test
-    public void consideringSettingKeyOf_withNullSetter_throws() {
+    void consideringSettingKeyOf_withNullSetter_throws() {
         try {
             getSetter().considerSettingKeyOf(null, getEntity());
             fail("should have thrown exception");
@@ -142,7 +141,7 @@ public abstract class InsertSetStepSetterTest<R extends Record, E extends CoreEn
     }
 
     @Test
-    public void consideringSettingKeyOf_withNullEntity_throws() {
+    void consideringSettingKeyOf_withNullEntity_throws() {
         try {
             getSetter().considerSettingKeyOf(getMoreStep(), null);
             fail("should have thrown exception");

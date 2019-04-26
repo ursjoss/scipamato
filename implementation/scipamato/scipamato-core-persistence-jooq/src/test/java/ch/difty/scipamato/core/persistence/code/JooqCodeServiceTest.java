@@ -23,7 +23,7 @@ import ch.difty.scipamato.core.entity.code.CodeDefinition;
 import ch.difty.scipamato.core.entity.code.CodeFilter;
 
 @ExtendWith(MockitoExtension.class)
-public class JooqCodeServiceTest {
+class JooqCodeServiceTest {
 
     private JooqCodeService service;
 
@@ -53,7 +53,7 @@ public class JooqCodeServiceTest {
     private CodeDefinition codeDefinitionMock, persistedCodeDefinitionMock;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         service = new JooqCodeService(repoMock);
 
         codeDefinitions.add(codeDefinitionMock);
@@ -61,12 +61,12 @@ public class JooqCodeServiceTest {
     }
 
     @AfterEach
-    public void specificTearDown() {
+    void specificTearDown() {
         verifyNoMoreInteractions(repoMock, filterMock, paginationContextMock, codeMock, codeDefinitionMock);
     }
 
     @Test
-    public void findingCodes_delegatesToRepo() {
+    void findingCodes_delegatesToRepo() {
         CodeClassId ccId = CodeClassId.CC1;
         String languageCode = "de";
 
@@ -84,21 +84,21 @@ public class JooqCodeServiceTest {
     }
 
     @Test
-    public void newUnpersistedCodeDefinition_delegatesToRepo() {
+    void newUnpersistedCodeDefinition_delegatesToRepo() {
         when(repoMock.newUnpersistedCodeDefinition()).thenReturn(codeDefinitionMock);
         assertThat(service.newUnpersistedCodeDefinition()).isEqualTo(codeDefinitionMock);
         verify(repoMock).newUnpersistedCodeDefinition();
     }
 
     @Test
-    public void findingPageOfCodeDefinitions_delegatesToRepo() {
+    void findingPageOfCodeDefinitions_delegatesToRepo() {
         when(repoMock.findPageOfCodeDefinitions(filterMock, paginationContextMock)).thenReturn(codeDefinitions);
         assertThat(service.findPageOfCodeDefinitions(filterMock, paginationContextMock)).isEqualTo(codeDefinitions);
         verify(repoMock).findPageOfCodeDefinitions(filterMock, paginationContextMock);
     }
 
     @Test
-    public void gettingPageOfEntityDefinitions_delegatesToRepo() {
+    void gettingPageOfEntityDefinitions_delegatesToRepo() {
         when(repoMock.findPageOfCodeDefinitions(filterMock, paginationContextMock)).thenReturn(codeDefinitions);
         assertThat(service.findPageOfEntityDefinitions(filterMock, paginationContextMock)).hasSameElementsAs(
             codeDefinitions);
@@ -106,21 +106,21 @@ public class JooqCodeServiceTest {
     }
 
     @Test
-    public void countingCodes_delegatesToRepo() {
+    void countingCodes_delegatesToRepo() {
         when(repoMock.countByFilter(filterMock)).thenReturn(3);
         assertThat(service.countByFilter(filterMock)).isEqualTo(3);
         verify(repoMock).countByFilter(filterMock);
     }
 
     @Test
-    public void insertingCodeDefinition_delegatesToRepo() {
+    void insertingCodeDefinition_delegatesToRepo() {
         when(repoMock.saveOrUpdate(codeDefinitionMock)).thenReturn(persistedCodeDefinitionMock);
         assertThat(service.saveOrUpdate(codeDefinitionMock)).isEqualTo(persistedCodeDefinitionMock);
         verify(repoMock).saveOrUpdate(codeDefinitionMock);
     }
 
     @Test
-    public void deletingCodeDefinition_delegatesToRepo() {
+    void deletingCodeDefinition_delegatesToRepo() {
         final String code = "1A";
         final int version = 12;
         when(repoMock.delete(code, version)).thenReturn(persistedCodeDefinitionMock);
@@ -129,7 +129,7 @@ public class JooqCodeServiceTest {
     }
 
     @Test
-    public void gettingCodeClass1_delegatesToRepo() {
+    void gettingCodeClass1_delegatesToRepo() {
         CodeClass cc1 = new CodeClass(1, "cc1", null);
         when(repoMock.getCodeClass1("en")).thenReturn(cc1);
 

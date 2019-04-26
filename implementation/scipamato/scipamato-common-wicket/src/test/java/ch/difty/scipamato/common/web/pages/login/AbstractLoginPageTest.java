@@ -13,7 +13,7 @@ import ch.difty.scipamato.common.DateTimeService;
 import ch.difty.scipamato.common.config.ApplicationProperties;
 import ch.difty.scipamato.common.web.WicketBaseTest;
 
-public class AbstractLoginPageTest extends WicketBaseTest {
+class AbstractLoginPageTest extends WicketBaseTest {
 
     private AbstractLoginPage page;
 
@@ -28,7 +28,7 @@ public class AbstractLoginPageTest extends WicketBaseTest {
     }
 
     @Test
-    public void assertPage() {
+    void assertPage() {
         getTester().startPage(page);
         getTester().assertRenderedPage(AbstractLoginPage.class);
 
@@ -43,7 +43,7 @@ public class AbstractLoginPageTest extends WicketBaseTest {
     }
 
     @Test
-    public void submitting_withoutLoginData_rendersErrorMessages() {
+    void submitting_withoutLoginData_rendersErrorMessages() {
         getTester().startPage(page);
         getTester().assertRenderedPage(AbstractLoginPage.class);
         getTester().submitForm("form");
@@ -54,7 +54,7 @@ public class AbstractLoginPageTest extends WicketBaseTest {
     }
 
     @Test
-    public void submitting_withInvalidCredentials_doesNotLoginAndRendersErrorMessage() {
+    void submitting_withInvalidCredentials_doesNotLoginAndRendersErrorMessage() {
         getTester().startPage(page);
         getTester().assertRenderedPage(TestLoginPage.class);
 
@@ -68,7 +68,7 @@ public class AbstractLoginPageTest extends WicketBaseTest {
     }
 
     @Test
-    public void submitting_withValidCredentials_doesLoginAndForwardsToTestHomePage() {
+    void submitting_withValidCredentials_doesLoginAndForwardsToTestHomePage() {
         getTester().startPage(page);
         getTester().assertRenderedPage(TestLoginPage.class);
 

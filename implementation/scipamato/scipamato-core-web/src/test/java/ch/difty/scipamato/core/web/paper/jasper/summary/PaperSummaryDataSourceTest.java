@@ -19,7 +19,7 @@ import ch.difty.scipamato.core.web.paper.jasper.PaperDataSourceTest;
 import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields;
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
-public class PaperSummaryDataSourceTest extends PaperDataSourceTest {
+class PaperSummaryDataSourceTest extends PaperDataSourceTest {
 
     private static final Long   NUMBER     = 100L;
     private static final String AUTHORS    = "authors";
@@ -78,7 +78,7 @@ public class PaperSummaryDataSourceTest extends PaperDataSourceTest {
     }
 
     @Test
-    public void instantiatingWithPaper_returnsPdfDataSourceWithOneRecord() throws JRException {
+    void instantiatingWithPaper_returnsPdfDataSourceWithOneRecord() throws JRException {
         ds = new PaperSummaryDataSource(paperMock, rhf, shortFieldConcatenatorMock, pdfExporterConfigMock);
 
         assertDataSource(FILE_NAME_SINGLE);
@@ -142,7 +142,7 @@ public class PaperSummaryDataSourceTest extends PaperDataSourceTest {
     }
 
     @Test
-    public void instantiatingWithPaperSummary_returnsPdfDataSourceWithOneRecord() throws JRException {
+    void instantiatingWithPaperSummary_returnsPdfDataSourceWithOneRecord() throws JRException {
         PaperSummary ps = new PaperSummary(paperMock, shortFieldConcatenatorMock, rhf);
         ds = new PaperSummaryDataSource(ps, pdfExporterConfigMock);
 
@@ -153,7 +153,7 @@ public class PaperSummaryDataSourceTest extends PaperDataSourceTest {
     }
 
     @Test
-    public void instantiatingWithPaperSummaryWithoutNumber_returnsPdfDataSourceWithOneRecordAndFallBackName() {
+    void instantiatingWithPaperSummaryWithoutNumber_returnsPdfDataSourceWithOneRecordAndFallBackName() {
         reset(paperMock);
         when(paperMock.getNumber()).thenReturn(null);
 
@@ -167,7 +167,7 @@ public class PaperSummaryDataSourceTest extends PaperDataSourceTest {
     }
 
     @Test
-    public void instantiatingWithPaperWithoutNumber_returnsPdfDataSourceWithOneRecordAndFallBackName() {
+    void instantiatingWithPaperWithoutNumber_returnsPdfDataSourceWithOneRecordAndFallBackName() {
         reset(paperMock);
         when(paperMock.getNumber()).thenReturn(null);
 
@@ -180,7 +180,7 @@ public class PaperSummaryDataSourceTest extends PaperDataSourceTest {
     }
 
     @Test
-    public void instantiatingWithProvider_returnsPdfDataSourceWithOneRecord() throws JRException {
+    void instantiatingWithProvider_returnsPdfDataSourceWithOneRecord() throws JRException {
         when(dataProviderMock.size()).thenReturn(1L);
         when(dataProviderMock.findAllPapersByFilter()).thenReturn(Collections.singletonList(paperMock));
 
@@ -195,7 +195,7 @@ public class PaperSummaryDataSourceTest extends PaperDataSourceTest {
     }
 
     @Test
-    public void instantiatingWithProvider_withEmptyProvider_returnsNoRecord() throws JRException {
+    void instantiatingWithProvider_withEmptyProvider_returnsNoRecord() throws JRException {
         when(dataProviderMock.size()).thenReturn(0L);
         ds = new PaperSummaryDataSource(dataProviderMock, rhf, shortFieldConcatenatorMock, pdfExporterConfigMock);
         assertThat(ds
@@ -205,9 +205,10 @@ public class PaperSummaryDataSourceTest extends PaperDataSourceTest {
     }
 
     @Test
-    public void instantiatingWithProvider_withNullProvider_throws() {
+    void instantiatingWithProvider_withNullProvider_throws() {
         AbstractPaperSlimProvider<? extends PaperSlimFilter> provider = null;
         try {
+            //noinspection ConstantConditions
             new PaperSummaryDataSource(provider, rhf, shortFieldConcatenatorMock, pdfExporterConfigMock);
         } catch (Exception ex) {
             assertThat(ex)

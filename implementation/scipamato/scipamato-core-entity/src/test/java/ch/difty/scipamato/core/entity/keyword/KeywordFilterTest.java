@@ -6,12 +6,12 @@ import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
 import org.junit.jupiter.api.Test;
 
-public class KeywordFilterTest {
+class KeywordFilterTest {
 
     private final KeywordFilter f = new KeywordFilter();
 
     @Test
-    public void getAndSet() {
+    void getAndSet() {
         f.setNameMask("nameMask");
 
         assertThat(f.getNameMask()).isEqualTo("nameMask");
@@ -20,7 +20,7 @@ public class KeywordFilterTest {
     }
 
     @Test
-    public void equals() {
+    void equals() {
         EqualsVerifier
             .forClass(KeywordFilter.class)
             .withRedefinedSuperclass()
@@ -29,7 +29,7 @@ public class KeywordFilterTest {
     }
 
     @Test
-    public void assertEnumFields() {
+    void assertEnumFields() {
         assertThat(KeywordFilter.KeywordFilterFields.values())
             .extracting("name")
             .containsExactly("nameMask");

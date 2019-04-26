@@ -28,7 +28,7 @@ import ch.difty.scipamato.publ.persistence.api.CodeClassService;
 import ch.difty.scipamato.publ.persistence.api.PublicPaperService;
 import ch.difty.scipamato.publ.web.common.BasePageTest;
 
-public class PublicPageTest extends BasePageTest<PublicPage> {
+class PublicPageTest extends BasePageTest<PublicPage> {
 
     @MockBean
     private PublicPaperService serviceMock;
@@ -59,7 +59,7 @@ public class PublicPageTest extends BasePageTest<PublicPage> {
     }
 
     @AfterEach
-    public void tearDown() {
+    void tearDown() {
         verifyNoMoreInteractions(serviceMock, codeClassServiceMock);
     }
 
@@ -111,7 +111,7 @@ public class PublicPageTest extends BasePageTest<PublicPage> {
     }
 
     @Test
-    public void clickingQuery_showsResultPanel() {
+    void clickingQuery_showsResultPanel() {
         getTester().startPage(makePage());
         getTester().assertRenderedPage(getPageClass());
 
@@ -155,7 +155,7 @@ public class PublicPageTest extends BasePageTest<PublicPage> {
     }
 
     @Test
-    public void clickingTab2Title_showsTab2() {
+    void clickingTab2Title_showsTab2() {
         CodeClass cc1 = CodeClass
             .builder()
             .codeClassId(1)
@@ -216,7 +216,7 @@ public class PublicPageTest extends BasePageTest<PublicPage> {
     }
 
     @Test
-    public void clickingTitle_forwardsToDetailsPage() {
+    void clickingTitle_forwardsToDetailsPage() {
         getTester().startPage(makePage());
         getTester().assertRenderedPage(getPageClass());
         getTester()
@@ -234,7 +234,7 @@ public class PublicPageTest extends BasePageTest<PublicPage> {
     }
 
     @Test
-    public void clickingClearSearch() {
+    void clickingClearSearch() {
         getTester().startPage(makePage());
         getTester().assertRenderedPage(getPageClass());
 

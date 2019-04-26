@@ -15,13 +15,13 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import ch.difty.scipamato.publ.entity.CodeClass;
 
 @ExtendWith(MockitoExtension.class)
-public class JooqCodeClassServiceTest {
+class JooqCodeClassServiceTest {
 
     @Mock
     private CodeClassRepository repoMock;
 
     @Test
-    public void findingCodeClass_delegatesToRepo() {
+    void findingCodeClass_delegatesToRepo() {
         JooqCodeClassService service = new JooqCodeClassService(repoMock);
 
         String languageCodeClass = "de";

@@ -14,7 +14,7 @@ import ch.difty.scipamato.publ.config.ApplicationPublicProperties;
 import ch.difty.scipamato.publ.web.resources.SimplonCssResourceReference;
 
 @ExtendWith(MockitoExtension.class)
-public class SimplonFontResourceProviderTest {
+class SimplonFontResourceProviderTest {
 
     private SimplonFontResourceProvider provider;
 
@@ -22,13 +22,13 @@ public class SimplonFontResourceProviderTest {
     private ApplicationPublicProperties applicationProperties;
 
     @Test
-    public void degenerateConstruction_withNullArgument() {
+    void degenerateConstruction_withNullArgument() {
         TestUtils.assertDegenerateSupplierParameter(() -> new SimplonFontResourceProvider(null),
             "applicationProperties");
     }
 
     @Test
-    public void withNoCommercialFontPresentSetting_getsNull() {
+    void withNoCommercialFontPresentSetting_getsNull() {
         when(applicationProperties.isCommercialFontPresent()).thenReturn(false);
 
         provider = new SimplonFontResourceProvider(applicationProperties);
@@ -39,7 +39,7 @@ public class SimplonFontResourceProviderTest {
     }
 
     @Test
-    public void withCommercialFontPresentSetting_getsReference() {
+    void withCommercialFontPresentSetting_getsReference() {
         when(applicationProperties.isCommercialFontPresent()).thenReturn(true);
 
         provider = new SimplonFontResourceProvider(applicationProperties);

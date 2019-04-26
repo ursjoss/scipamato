@@ -26,7 +26,7 @@ import ch.difty.scipamato.publ.db.public_.tables.records.NewStudyTopicRecord;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
-public class NewStudyTopicSyncConfigTest extends SyncConfigTest<NewStudyTopicRecord> {
+class NewStudyTopicSyncConfigTest extends SyncConfigTest<NewStudyTopicRecord> {
 
     @Autowired
     private NewStudyTopicSyncConfig config;
@@ -89,33 +89,32 @@ public class NewStudyTopicSyncConfigTest extends SyncConfigTest<NewStudyTopicRec
     }
 
     @Test
-    public void makingEntityWithNonNullSortAmdNttTimestamp() throws SQLException {
+    void makingEntityWithNonNullSortAmdNttTimestamp() throws SQLException {
         makingEntityWithSort(3, 3, MODIFIED, MODIFIED, MODIFIED);
     }
 
     @Test
-    public void makingEntityWithNullSort_usesSortMaxInt() throws SQLException {
+    void makingEntityWithNullSort_usesSortMaxInt() throws SQLException {
         makingEntityWithSort(null, Integer.MAX_VALUE, MODIFIED, MODIFIED, MODIFIED);
     }
 
     @Test
-    public void makingEntityWithNullNttAndNntTimestamp() throws SQLException {
+    void makingEntityWithNullNttAndNntTimestamp() throws SQLException {
         makingEntityWithSort(3, 3, null, null, null);
     }
 
-
     @Test
-    public void makingEntityWithNullNttTimestamp() throws SQLException {
+    void makingEntityWithNullNttTimestamp() throws SQLException {
         makingEntityWithSort(3, 3, null, MODIFIED, MODIFIED);
     }
 
     @Test
-    public void makingEntityWithNullNntTimestamp() throws SQLException {
+    void makingEntityWithNullNntTimestamp() throws SQLException {
         makingEntityWithSort(3, 3, MODIFIED, null, MODIFIED);
     }
 
     @Test
-    public void makingEntityWitNntTimestampAfterNttTimestamp() throws SQLException {
+    void makingEntityWitNntTimestampAfterNttTimestamp() throws SQLException {
         Timestamp nttLm = Timestamp.from(MODIFIED
             .toInstant()
             .plusSeconds(2));
@@ -123,7 +122,7 @@ public class NewStudyTopicSyncConfigTest extends SyncConfigTest<NewStudyTopicRec
     }
 
     @Test
-    public void makingEntityWitNntTimestampBEforeNttTimestamp() throws SQLException {
+    void makingEntityWitNntTimestampBEforeNttTimestamp() throws SQLException {
         Timestamp nttLm = Timestamp.from(MODIFIED
             .toInstant()
             .minusSeconds(2));

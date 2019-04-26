@@ -8,7 +8,7 @@ import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
 import org.junit.jupiter.api.Test;
 
-public class KeywordTest extends PublicEntityTest<Keyword> {
+class KeywordTest extends PublicEntityTest<Keyword> {
 
     @Override
     protected Keyword newEntity() {
@@ -47,12 +47,12 @@ public class KeywordTest extends PublicEntityTest<Keyword> {
     }
 
     @Test
-    public void displayValue() {
+    void displayValue() {
         assertThat(getEntity().getDisplayValue()).isEqualTo("name");
     }
 
     @Test
-    public void assertEnumFields() {
+    void assertEnumFields() {
         assertThat(Keyword.KeywordFields.values())
             .extracting("name")
             .containsExactly("id", "keywordId", "langCode", "name", "searchOverride", "displayValue");

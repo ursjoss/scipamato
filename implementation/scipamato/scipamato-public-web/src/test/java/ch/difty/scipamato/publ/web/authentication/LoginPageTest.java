@@ -11,10 +11,10 @@ import org.junit.jupiter.api.Test;
 import ch.difty.scipamato.publ.web.WicketTest;
 
 @SuppressWarnings("WeakerAccess")
-public class LoginPageTest extends WicketTest {
+class LoginPageTest extends WicketTest {
 
     @Test
-    public void assertPage() {
+    void assertPage() {
         getTester().startPage(makePage());
         getTester().assertRenderedPage(getPageClass());
 
@@ -43,7 +43,7 @@ public class LoginPageTest extends WicketTest {
     }
 
     @Test
-    public void whenSigningIn_withWrongCredentials_providesErrorMessage() {
+    void whenSigningIn_withWrongCredentials_providesErrorMessage() {
         SecureWebSession session = (SecureWebSession) getTester().getSession();
         session.signOut();
         getTester().startPage(LoginPage.class);

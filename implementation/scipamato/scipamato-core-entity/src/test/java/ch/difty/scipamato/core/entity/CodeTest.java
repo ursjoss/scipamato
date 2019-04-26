@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 import org.junit.jupiter.api.Test;
 
-public class CodeTest extends Jsr303ValidatedEntityTest<Code> {
+class CodeTest extends Jsr303ValidatedEntityTest<Code> {
 
     private static final String JAVAX_VALIDATION_CONSTRAINTS_NOT_NULL_MESSAGE = "{javax.validation.constraints.NotNull.message}";
 
@@ -18,7 +18,7 @@ public class CodeTest extends Jsr303ValidatedEntityTest<Code> {
     private static final LocalDateTime CREATED     = LocalDateTime.parse("2017-01-01T08:01:33.821");
     private static final LocalDateTime LAST_MOD    = LocalDateTime.parse("2017-02-02T08:01:33.821");
 
-    public CodeTest() {
+    CodeTest() {
         super(Code.class);
     }
 
@@ -38,7 +38,7 @@ public class CodeTest extends Jsr303ValidatedEntityTest<Code> {
     }
 
     @Test
-    public void constructing_withAllValues_populatesCodeClass() {
+    void constructing_withAllValues_populatesCodeClass() {
         Code c1 = new Code("C1", "c1", null, false, 10, "cc10", CODECLASS10, 2);
         assertThat(c1.getCodeClass()).isNotNull();
         assertThat(c1
@@ -53,29 +53,29 @@ public class CodeTest extends Jsr303ValidatedEntityTest<Code> {
     }
 
     @Test
-    public void constructing_withNullCode_throws() {
+    void constructing_withNullCode_throws() {
         assertDegenerateSupplierParameter(() -> new Code(null, CODE1, null, false, 1, "c1", "", 1), "code");
     }
 
     @Test
-    public void constructing_withNullCodeClassId_throws() {
+    void constructing_withNullCodeClassId_throws() {
         assertDegenerateSupplierParameter(() -> new Code("1A", CODE1, null, false, null, null, null, 1), "codeClassId");
     }
 
     @Test
-    public void validatingCode_withNullName_fails() {
+    void validatingCode_withNullName_fails() {
         Code c1 = new Code("1A", null, null, false, 1, "c1", "", 1);
         validateAndAssertFailure(c1, NAME, null, JAVAX_VALIDATION_CONSTRAINTS_NOT_NULL_MESSAGE);
     }
 
     @Test
-    public void validatingCode_withWrongCodeFormat_fails() {
+    void validatingCode_withWrongCodeFormat_fails() {
         Code c1 = new Code("xyz", CODE1, null, false, 1, "c1", "", 1);
         validateAndAssertFailure(c1, CODE, "xyz", "{code.invalidCode}");
     }
 
     @Test
-    public void cloning_copiesValues() {
+    void cloning_copiesValues() {
         Code c1 = new Code("1A", CODE1, "foo", true, 1, "c1", "", 2);
         Code c2 = new Code(c1);
         assertThat(c2.getCode()).isEqualTo("1A");
@@ -87,7 +87,7 @@ public class CodeTest extends Jsr303ValidatedEntityTest<Code> {
     }
 
     @Test
-    public void sameValues_makeEquality() {
+    void sameValues_makeEquality() {
         Code c = newValidEntity();
         Code c2 = new Code(c);
         assertThat(c.equals(c2)).isTrue();
@@ -96,7 +96,7 @@ public class CodeTest extends Jsr303ValidatedEntityTest<Code> {
     }
 
     @Test
-    public void differingValues_makeInequality() {
+    void differingValues_makeInequality() {
         Code c1 = new Code("1A", CODE1, null, false, 1, "c1", "", 1);
         Code c2 = new Code("1B", CODE1, null, false, 1, "c1", "", 1);
         Code c3 = new Code("1A", "code2", null, false, 1, "c1", "", 1);
@@ -153,7 +153,7 @@ public class CodeTest extends Jsr303ValidatedEntityTest<Code> {
     @SuppressWarnings({ "unlikely-arg-type", "EqualsWithItself", "ConstantConditions",
         "EqualsBetweenInconvertibleTypes" })
     @Test
-    public void equalingToSpecialCases() {
+    void equalingToSpecialCases() {
         Code c = newValidEntity();
         assertThat(c.equals(c)).isTrue();
         assertThat(c.equals(null)).isFalse();
@@ -173,35 +173,35 @@ public class CodeTest extends Jsr303ValidatedEntityTest<Code> {
     }
 
     @Test
-    public void differingValues_withNameNullOnOne() {
+    void differingValues_withNameNullOnOne() {
         Code c1 = new Code("1A", null, null, false, 1, "c1", "", 1);
         Code c2 = new Code("1A", CODE1, null, false, 1, "c1", "", 1);
         assertInequality(c1, c2);
     }
 
     @Test
-    public void differingValues_withNameNullOnBoth() {
+    void differingValues_withNameNullOnBoth() {
         Code c1 = new Code("1A", null, null, false, 1, "c1", "", 1);
         Code c2 = new Code("1A", null, null, false, 1, "c1", "", 1);
         assertEquality(c1, c2);
     }
 
     @Test
-    public void differingValues_withSameComment() {
+    void differingValues_withSameComment() {
         Code c1 = new Code("1A", CODE1, "foo", false, 1, "c1", "", 1);
         Code c2 = new Code("1A", CODE1, "foo", false, 1, "c1", "", 1);
         assertEquality(c1, c2);
     }
 
     @Test
-    public void differingValues_withDifferingComment() {
+    void differingValues_withDifferingComment() {
         Code c1 = new Code("1A", CODE1, "foo", false, 1, "c1", "", 1);
         Code c2 = new Code("1A", CODE1, "bar", false, 1, "c1", "", 1);
         assertInequality(c1, c2);
     }
 
     @Test
-    public void differingValues_withDifferingSort() {
+    void differingValues_withDifferingSort() {
         Code c1 = new Code("1A", CODE1, "", false, 1, "c1", "", 1);
         Code c2 = new Code("1A", CODE1, "", false, 1, "c1", "", 2);
         assertInequality(c1, c2);

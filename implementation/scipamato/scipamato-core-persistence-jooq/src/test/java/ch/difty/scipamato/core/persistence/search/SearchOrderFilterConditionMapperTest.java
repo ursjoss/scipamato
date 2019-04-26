@@ -11,7 +11,7 @@ import ch.difty.scipamato.core.db.tables.SearchOrder;
 import ch.difty.scipamato.core.db.tables.records.SearchOrderRecord;
 import ch.difty.scipamato.core.entity.search.SearchOrderFilter;
 
-public class SearchOrderFilterConditionMapperTest extends
+class SearchOrderFilterConditionMapperTest extends
     FilterConditionMapperTest<SearchOrderRecord, ch.difty.scipamato.core.db.tables.SearchOrder, SearchOrderFilter> {
 
     private final SearchOrderFilterConditionMapper mapper = new SearchOrderFilterConditionMapper();
@@ -34,7 +34,7 @@ public class SearchOrderFilterConditionMapperTest extends
     }
 
     @Test
-    public void creatingWhereCondition_withNameMask_searchesForName() {
+    void creatingWhereCondition_withNameMask_searchesForName() {
         filter.setNameMask("fOo");
         assertThat(mapper
             .map(filter)
@@ -43,7 +43,7 @@ public class SearchOrderFilterConditionMapperTest extends
     }
 
     @Test
-    public void creatingWhereCondition_withOwnerIncludingGlobal_searchesForOwnerIdOrGlobal() {
+    void creatingWhereCondition_withOwnerIncludingGlobal_searchesForOwnerIdOrGlobal() {
         filter.setOwnerIncludingGlobal(10);
         assertThat(mapper
             .map(filter)
@@ -52,7 +52,7 @@ public class SearchOrderFilterConditionMapperTest extends
     }
 
     @Test
-    public void creatingWhereCondition_withOwner_searchesForOwnerId() {
+    void creatingWhereCondition_withOwner_searchesForOwnerId() {
         filter.setOwner(20);
         assertThat(mapper
             .map(filter)
@@ -60,7 +60,7 @@ public class SearchOrderFilterConditionMapperTest extends
     }
 
     @Test
-    public void creatingWhereCondition_forGlobal_searchesForGlobal() {
+    void creatingWhereCondition_forGlobal_searchesForGlobal() {
         filter.setGlobal(true);
         assertThat(mapper
             .map(filter)
@@ -68,7 +68,7 @@ public class SearchOrderFilterConditionMapperTest extends
     }
 
     @Test
-    public void creatingWhereCondition_forGlobal_searchesForNotGlobal() {
+    void creatingWhereCondition_forGlobal_searchesForNotGlobal() {
         filter.setGlobal(false);
         assertThat(mapper
             .map(filter)

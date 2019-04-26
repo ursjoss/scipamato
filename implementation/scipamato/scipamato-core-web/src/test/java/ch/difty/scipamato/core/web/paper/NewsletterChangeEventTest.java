@@ -11,7 +11,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-public class NewsletterChangeEventTest {
+class NewsletterChangeEventTest {
 
     private NewsletterChangeEvent e;
 
@@ -19,13 +19,13 @@ public class NewsletterChangeEventTest {
     private AjaxRequestTarget targetMock, targetMock2;
 
     @Test
-    public void canRetrieveTarget() {
+    void canRetrieveTarget() {
         e = new NewsletterChangeEvent(targetMock);
         assertThat(e.getTarget()).isEqualTo(targetMock);
     }
 
     @Test
-    public void canOverrideTarget() {
+    void canOverrideTarget() {
         e = new NewsletterChangeEvent(targetMock);
         assertThat(e.getTarget()).isEqualTo(targetMock);
         e.setTarget(targetMock2);
@@ -33,7 +33,7 @@ public class NewsletterChangeEventTest {
     }
 
     @Test
-    public void equals() {
+    void equals() {
         EqualsVerifier
             .forClass(NewsletterChangeEvent.class)
             .withRedefinedSuperclass()

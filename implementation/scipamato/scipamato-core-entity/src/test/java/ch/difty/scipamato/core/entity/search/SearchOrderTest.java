@@ -20,7 +20,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-public class SearchOrderTest {
+class SearchOrderTest {
 
     private static final String SO_NAME = "soName";
 
@@ -35,7 +35,7 @@ public class SearchOrderTest {
     private final List<Long>            excludedIds      = new ArrayList<>();
 
     @Test
-    public void testGetters() {
+    void testGetters() {
         assertThat(so.getId()).isEqualTo(10);
         assertThat(so.getOwner()).isEqualTo(1);
         assertThat(so.isGlobal()).isEqualTo(false);
@@ -43,7 +43,7 @@ public class SearchOrderTest {
     }
 
     @Test
-    public void testSetters() {
+    void testSetters() {
         so.setId(11L);
         so.setOwner(2);
         so.setName(SO_NAME);
@@ -58,31 +58,31 @@ public class SearchOrderTest {
     }
 
     @Test
-    public void whenInstantiating_withNullLists_containsNoItems() {
+    void whenInstantiating_withNullLists_containsNoItems() {
         assertThat(so.getSearchConditions()).isEmpty();
         assertThat(so.getExcludedPaperIds()).isEmpty();
     }
 
     @Test
-    public void whenInstantiating_withEmptyConditionList_hasNoConditions() {
+    void whenInstantiating_withEmptyConditionList_hasNoConditions() {
         assertThat(new SearchOrder(searchConditions).getSearchConditions()).isEmpty();
     }
 
     @Test
-    public void whenInstantiating_withEmptyExclusionList_hasNoExclusions() {
+    void whenInstantiating_withEmptyExclusionList_hasNoExclusions() {
         assertThat(excludedIds).isEmpty();
         assertThat(new SearchOrder(10L, SO_NAME, 1, false, null, excludedIds).getExcludedPaperIds()).isEmpty();
     }
 
     @Test
-    public void whenInstantiating_withNonEmptyConditionList_hasHandedOverConditions() {
+    void whenInstantiating_withNonEmptyConditionList_hasHandedOverConditions() {
         searchConditions.addAll(Arrays.asList(mockCondition1, mockCondition2));
         assertThat(new SearchOrder(searchConditions).getSearchConditions()).containsExactly(mockCondition1,
             mockCondition2);
     }
 
     @Test
-    public void whenInstantiating_withNonEmptyExclusionList_hasHandedOverExclusions() {
+    void whenInstantiating_withNonEmptyExclusionList_hasHandedOverExclusions() {
         excludedIds.add(3L);
         excludedIds.add(5L);
         assertThat(new SearchOrder(10L, SO_NAME, 1, false, null, excludedIds).getExcludedPaperIds()).containsExactly(3L,
@@ -90,19 +90,19 @@ public class SearchOrderTest {
     }
 
     @Test
-    public void whenAddingNullCondition_itIsNotAdded() {
+    void whenAddingNullCondition_itIsNotAdded() {
         so.add(null);
         assertThat(so.getSearchConditions()).isEmpty();
     }
 
     @Test
-    public void whenAddingCondition_itIsGettingAdded() {
+    void whenAddingCondition_itIsGettingAdded() {
         so.add(mockCondition1);
         assertThat(so.getSearchConditions()).containsExactly(mockCondition1);
     }
 
     @Test
-    public void whenRemovingSearchCondition_withNullParameter_doesNothing() {
+    void whenRemovingSearchCondition_withNullParameter_doesNothing() {
         so.add(mockCondition1);
         so.add(mockCondition2);
         assertThat(so.getSearchConditions()).containsExactly(mockCondition1, mockCondition2);
@@ -113,7 +113,7 @@ public class SearchOrderTest {
     }
 
     @Test
-    public void whenRemovingSearchCondition_withConditionWhichIsPresent_doesRemoveIt() {
+    void whenRemovingSearchCondition_withConditionWhichIsPresent_doesRemoveIt() {
         so.add(mockCondition1);
         so.add(mockCondition2);
         assertThat(so.getSearchConditions()).containsExactly(mockCondition1, mockCondition2);
@@ -124,7 +124,7 @@ public class SearchOrderTest {
     }
 
     @Test
-    public void whenRemovingCondition_withConditionWhichIsNotPresent_doesNothing() {
+    void whenRemovingCondition_withConditionWhichIsNotPresent_doesNothing() {
         so.add(mockCondition2);
         assertThat(so.getSearchConditions()).containsExactly(mockCondition2);
 
@@ -134,13 +134,13 @@ public class SearchOrderTest {
     }
 
     @Test
-    public void whenAddingExclusion_itIsGettingAdded() {
+    void whenAddingExclusion_itIsGettingAdded() {
         so.addExclusionOfPaperWithId(5L);
         assertThat(so.getExcludedPaperIds()).containsExactly(5L);
     }
 
     @Test
-    public void whenAddingExclusion_withExclusionAlreadyPresent_doesNotAddItAnymore() {
+    void whenAddingExclusion_withExclusionAlreadyPresent_doesNotAddItAnymore() {
         so.addExclusionOfPaperWithId(5L);
         assertThat(so.getExcludedPaperIds()).containsExactly(5L);
         so.addExclusionOfPaperWithId(5L);
@@ -148,7 +148,7 @@ public class SearchOrderTest {
     }
 
     @Test
-    public void whenRemovingExclusion_whichWasExcluded_doesRemoveIt() {
+    void whenRemovingExclusion_whichWasExcluded_doesRemoveIt() {
         so.addExclusionOfPaperWithId(5L);
         so.addExclusionOfPaperWithId(8L);
         assertThat(so.getExcludedPaperIds()).containsExactly(5L, 8L);
@@ -159,7 +159,7 @@ public class SearchOrderTest {
     }
 
     @Test
-    public void whenRemovingExclusion_whichWasNotExcluded_doesNothing() {
+    void whenRemovingExclusion_whichWasNotExcluded_doesNothing() {
         so.addExclusionOfPaperWithId(5L);
         assertThat(so.getExcludedPaperIds()).containsExactly(5L);
 
@@ -169,7 +169,7 @@ public class SearchOrderTest {
     }
 
     @Test
-    public void testingToString_withNoConditionsOrExclusions() {
+    void testingToString_withNoConditionsOrExclusions() {
         assertThat(so.getSearchConditions()).hasSize(0);
         assertThat(so.getExcludedPaperIds()).hasSize(0);
         assertThat(so.toString()).isEqualTo(
@@ -177,7 +177,7 @@ public class SearchOrderTest {
     }
 
     @Test
-    public void testingToString_withConditionsAndExclusions() {
+    void testingToString_withConditionsAndExclusions() {
         so.add(mockCondition1);
         so.add(mockCondition2);
         so.addExclusionOfPaperWithId(3L);
@@ -187,20 +187,20 @@ public class SearchOrderTest {
     }
 
     @Test
-    public void testingDisplayValue_withNoConditions_returnsIDOnly() {
+    void testingDisplayValue_withNoConditions_returnsIDOnly() {
         assertThat(so.getSearchConditions()).hasSize(0);
         assertThat(so.getDisplayValue()).isEqualTo("soName:  (10)");
     }
 
     @Test
-    public void testingDisplayValue_forGlobalSearchOrderWithNoConditions_returnsIdPlusGlobalIndicator() {
+    void testingDisplayValue_forGlobalSearchOrderWithNoConditions_returnsIdPlusGlobalIndicator() {
         assertThat(so.getSearchConditions()).hasSize(0);
         so.setGlobal(true);
         assertThat(so.getDisplayValue()).isEqualTo("soName:  (10)*");
     }
 
     @Test
-    public void testingDisplayValue_withoutName_forGlobalSearchOrderWithNoConditions_returnsIdPlusGlobalIndicator() {
+    void testingDisplayValue_withoutName_forGlobalSearchOrderWithNoConditions_returnsIdPlusGlobalIndicator() {
         so.setName(null);
         assertThat(so.getSearchConditions()).hasSize(0);
         so.setGlobal(true);
@@ -208,7 +208,7 @@ public class SearchOrderTest {
     }
 
     @Test
-    public void testingDisplayValue_withoutNameButWithSingleCondition_returnsIt() {
+    void testingDisplayValue_withoutNameButWithSingleCondition_returnsIt() {
         SearchOrder so1 = new SearchOrder(10L, null, 1, false, null, excludedIds);
         so1.add(new SearchCondition() {
             private static final long serialVersionUID = 1L;
@@ -223,7 +223,7 @@ public class SearchOrderTest {
     }
 
     @Test
-    public void testingDisplayValue_withSingleCondition_returnsIt() {
+    void testingDisplayValue_withSingleCondition_returnsIt() {
         so.add(new SearchCondition() {
             private static final long serialVersionUID = 1L;
 
@@ -237,7 +237,7 @@ public class SearchOrderTest {
     }
 
     @Test
-    public void testingDisplayValue_withTwoConditions_joinsThemUsingOR() {
+    void testingDisplayValue_withTwoConditions_joinsThemUsingOR() {
         so.add(new SearchCondition() {
             private static final long serialVersionUID = 1L;
 
@@ -259,7 +259,7 @@ public class SearchOrderTest {
     }
 
     @Test
-    public void cannotAddTheSameSearchTermTwice() {
+    void cannotAddTheSameSearchTermTwice() {
         SearchCondition c1 = new SearchCondition();
         c1.setAuthors("baz");
         c1.setTitle("foo");
@@ -279,38 +279,38 @@ public class SearchOrderTest {
     }
 
     @Test
-    public void createdDisplayValue_withNullValues_isEmpty() {
+    void createdDisplayValue_withNullValues_isEmpty() {
         assertThat(so.getCreatedDisplayValue()).isEqualTo("");
     }
 
     @Test
-    public void createdDisplayValue_withNameOnly_hasName() {
+    void createdDisplayValue_withNameOnly_hasName() {
         so.setCreatedByName("foo");
         assertThat(so.getCreated()).isNull();
         assertThat(so.getCreatedDisplayValue()).isEqualTo("foo");
     }
 
     @Test
-    public void createdDisplayValue_withDateOnly_hasDate() {
+    void createdDisplayValue_withDateOnly_hasDate() {
         assertThat(so.getCreatedByName()).isNull();
         so.setCreated(LocalDateTime.parse("2017-01-01T10:11:12.345"));
         assertThat(so.getCreatedDisplayValue()).isEqualTo("2017-01-01 10:11:12");
     }
 
     @Test
-    public void createdDisplayValue() {
+    void createdDisplayValue() {
         so.setCreatedByName("foo");
         so.setCreated(LocalDateTime.parse("2017-01-01T10:11:12.345"));
         assertThat(so.getCreatedDisplayValue()).isEqualTo("foo (2017-01-01 10:11:12)");
     }
 
     @Test
-    public void defaultConstructor() {
+    void defaultConstructor() {
         assertThat(new SearchOrder()).isNotNull();
     }
 
     @Test
-    public void equals() {
+    void equals() {
         EqualsVerifier
             .forClass(SearchOrder.class)
             .withRedefinedSuperclass()

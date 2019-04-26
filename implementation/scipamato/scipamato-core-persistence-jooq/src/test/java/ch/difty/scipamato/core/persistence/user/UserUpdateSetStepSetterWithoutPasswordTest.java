@@ -12,7 +12,7 @@ import ch.difty.scipamato.core.persistence.UpdateSetStepSetter;
 import ch.difty.scipamato.core.persistence.UpdateSetStepSetterTest;
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
-public class UserUpdateSetStepSetterWithoutPasswordTest extends UpdateSetStepSetterTest<ScipamatoUserRecord, User> {
+class UserUpdateSetStepSetterWithoutPasswordTest extends UpdateSetStepSetterTest<ScipamatoUserRecord, User> {
 
     private final UpdateSetStepSetter<ScipamatoUserRecord, User> setter = new UserUpdateSetStepSetter();
 

@@ -8,18 +8,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import ch.difty.scipamato.publ.web.WicketTest;
 
-public class ScipamatoAuthenticatedWebSessionConfigTest extends WicketTest {
+class ScipamatoAuthenticatedWebSessionConfigTest extends WicketTest {
 
     @Autowired
     private ScipamatoAuthenticatedWebSessionConfig config;
 
     @Test
-    public void canWire() {
+    void canWire() {
         assertThat(config).isNotNull();
     }
 
     @Test
-    public void providesSecureWebSession() {
+    void providesSecureWebSession() {
         assertThat(config.getAuthenticatedWebSessionClass()).isNotNull();
         assertThat(config
             .getAuthenticatedWebSessionClass()

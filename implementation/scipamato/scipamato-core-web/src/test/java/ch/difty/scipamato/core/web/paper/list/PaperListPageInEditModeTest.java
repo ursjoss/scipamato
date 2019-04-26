@@ -23,7 +23,7 @@ import ch.difty.scipamato.core.web.paper.entry.PaperEntryPage;
 import ch.difty.scipamato.core.web.security.TestUserDetailsService;
 
 @SuppressWarnings("SameParameterValue")
-public class PaperListPageInEditModeTest extends PaperListPageTest {
+class PaperListPageInEditModeTest extends PaperListPageTest {
 
     @Override
     protected String getUserName() {
@@ -99,7 +99,7 @@ public class PaperListPageInEditModeTest extends PaperListPageTest {
     }
 
     @Test
-    public void clickingNewPaper_forwardsToPaperEntryPage() {
+    void clickingNewPaper_forwardsToPaperEntryPage() {
         final long minimumNumber = 7;
         final long freeNumber = 21;
         when(applicationPropertiesMock.getMinimumPaperNumberToBeRecycled()).thenReturn(minimumNumber);
@@ -121,7 +121,7 @@ public class PaperListPageInEditModeTest extends PaperListPageTest {
     }
 
     @Test
-    public void clickingOnShowXmlPastePanelButton_opensModalWindow() {
+    void clickingOnShowXmlPastePanelButton_opensModalWindow() {
         getTester().startPage(getPageClass());
 
         String b = "searchForm";
@@ -142,7 +142,7 @@ public class PaperListPageInEditModeTest extends PaperListPageTest {
     }
 
     @Test
-    public void onXmlPasteModalPanelClose_withNullContent_doesNotPersists() {
+    void onXmlPasteModalPanelClose_withNullContent_doesNotPersists() {
         makePage().onXmlPasteModalPanelClose(null, mock(AjaxRequestTarget.class));
 
         verify(pubmedImportService, never()).persistPubmedArticlesFromXml(anyString());
@@ -151,7 +151,7 @@ public class PaperListPageInEditModeTest extends PaperListPageTest {
     }
 
     @Test
-    public void onXmlPasteModalPanelClose_withBlankContent_doesNotPersists() {
+    void onXmlPasteModalPanelClose_withBlankContent_doesNotPersists() {
         String content = "";
         makePage().onXmlPasteModalPanelClose(content, mock(AjaxRequestTarget.class));
 
@@ -161,7 +161,7 @@ public class PaperListPageInEditModeTest extends PaperListPageTest {
     }
 
     @Test
-    public void onXmlPasteModalPanelClose_withContent_persistsArticlesAndUpdatesNavigateable() {
+    void onXmlPasteModalPanelClose_withContent_persistsArticlesAndUpdatesNavigateable() {
         String content = "content";
         when(pubmedImportService.persistPubmedArticlesFromXml(content)).thenReturn(makeServiceResult());
 

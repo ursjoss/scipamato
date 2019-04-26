@@ -11,12 +11,12 @@ import ch.difty.scipamato.common.navigator.LongNavigator;
 import ch.difty.scipamato.common.web.ScipamatoWebSessionFacade;
 import ch.difty.scipamato.publ.web.WicketTest;
 
-public class PublicWebSessionFacadeTest extends WicketTest {
+class PublicWebSessionFacadeTest extends WicketTest {
 
     private final ScipamatoWebSessionFacade sessionFacade = new PublicWebSessionFacade();
 
     @Test
-    public void gettingLanguageCode_withBritishLocale_returnsBritishCode() {
+    void gettingLanguageCode_withBritishLocale_returnsBritishCode() {
         getTester()
             .getSession()
             .setLocale(new Locale("en_GB"));
@@ -24,7 +24,7 @@ public class PublicWebSessionFacadeTest extends WicketTest {
     }
 
     @Test
-    public void gettingLanguageCode_withFrenchLocale_returnsFrenchCode() {
+    void gettingLanguageCode_withFrenchLocale_returnsFrenchCode() {
         getTester()
             .getSession()
             .setLocale(new Locale("fr"));
@@ -32,12 +32,12 @@ public class PublicWebSessionFacadeTest extends WicketTest {
     }
 
     @Test
-    public void gettingPaperIdManager_returnsMock() {
+    void gettingPaperIdManager_returnsMock() {
         assertThat(sessionFacade.getPaperIdManager()).isInstanceOf(LongNavigator.class);
     }
 
     @Test
-    public void hasAtLeastOneRoleOutOf_staticallyReturnsFalse() {
+    void hasAtLeastOneRoleOutOf_staticallyReturnsFalse() {
         assertThat(sessionFacade.hasAtLeastOneRoleOutOf()).isFalse();
         assertThat(sessionFacade.hasAtLeastOneRoleOutOf(null)).isFalse();
         assertThat(sessionFacade.hasAtLeastOneRoleOutOf(Roles.ADMIN, Roles.USER)).isFalse();

@@ -14,12 +14,12 @@ import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.core.pubmed.api.*;
 
-public class ScipamatoPubmedBookArticleTest {
+class ScipamatoPubmedBookArticleTest {
 
     private final PubmedBookArticle pubmedBookArticle = new PubmedBookArticle();
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         BookDocument bookDocument = new BookDocument();
         pubmedBookArticle.setBookDocument(bookDocument);
 
@@ -107,12 +107,12 @@ public class ScipamatoPubmedBookArticleTest {
     }
 
     @Test
-    public void degenerateConstruction_withNullPubmedBookArticle_throws() {
+    void degenerateConstruction_withNullPubmedBookArticle_throws() {
         assertDegenerateSupplierParameter(() -> new ScipamatoPubmedBookArticle(null), "pubmedBookArticle");
     }
 
     @Test
-    public void degenerateConstruction_withNullBookDocument_throws() {
+    void degenerateConstruction_withNullBookDocument_throws() {
         PubmedBookArticle pubmedBookArticle = new PubmedBookArticle();
         assertThat(pubmedBookArticle.getBookDocument()).isNull();
         assertDegenerateSupplierParameter(() -> new ScipamatoPubmedBookArticle(pubmedBookArticle),
@@ -120,7 +120,7 @@ public class ScipamatoPubmedBookArticleTest {
     }
 
     @Test
-    public void canConstructWithMinimalAttributes() {
+    void canConstructWithMinimalAttributes() {
         PubmedBookArticle pubmedBookArticle = new PubmedBookArticle();
         pubmedBookArticle.setBookDocument(new BookDocument());
         PubmedArticleFacade pa = new ScipamatoPubmedBookArticle(pubmedBookArticle);
@@ -136,7 +136,7 @@ public class ScipamatoPubmedBookArticleTest {
     }
 
     @Test
-    public void canParseAllFieldsOfFullyEquippedPubmedBookArticle() {
+    void canParseAllFieldsOfFullyEquippedPubmedBookArticle() {
         PubmedArticleFacade pa = new ScipamatoPubmedBookArticle(pubmedBookArticle);
 
         assertThat(pa.getPmId()).isEqualTo("pmid");
@@ -153,7 +153,7 @@ public class ScipamatoPubmedBookArticleTest {
     }
 
     @Test
-    public void canParseAbstractWithoutAbstractLabel() {
+    void canParseAbstractWithoutAbstractLabel() {
         pubmedBookArticle
             .getBookDocument()
             .getAbstract()
@@ -165,7 +165,7 @@ public class ScipamatoPubmedBookArticleTest {
     }
 
     @Test
-    public void withArticleIdListNull_leavesDoiNull() {
+    void withArticleIdListNull_leavesDoiNull() {
         pubmedBookArticle
             .getBookDocument()
             .setArticleIdList(null);
@@ -176,7 +176,7 @@ public class ScipamatoPubmedBookArticleTest {
     }
 
     @Test
-    public void withAuthorsNull_leavesAuthorAndFirstAuthorNull() {
+    void withAuthorsNull_leavesAuthorAndFirstAuthorNull() {
         pubmedBookArticle
             .getBookDocument()
             .getAuthorList()
@@ -189,12 +189,12 @@ public class ScipamatoPubmedBookArticleTest {
     }
 
     @Test
-    public void validConstructionUsingOf() {
+    void validConstructionUsingOf() {
         assertThat(PubmedArticleFacade.newPubmedArticleFrom(pubmedBookArticle)).isNotNull();
     }
 
     @Test
-    public void invalidConstructionUsingOfWithForeignObject() {
+    void invalidConstructionUsingOfWithForeignObject() {
         try {
             PubmedArticleFacade.newPubmedArticleFrom(1);
             fail("should have thrown exception");
@@ -206,7 +206,7 @@ public class ScipamatoPubmedBookArticleTest {
     }
 
     @Test
-    public void equals() {
+    void equals() {
         EqualsVerifier
             .forClass(ScipamatoPubmedBookArticle.class)
             .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)

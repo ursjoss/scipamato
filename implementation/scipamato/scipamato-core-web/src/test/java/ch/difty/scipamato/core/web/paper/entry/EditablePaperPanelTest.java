@@ -13,17 +13,17 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import ch.difty.scipamato.common.entity.newsletter.PublicationStatus;
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.common.web.Mode;
 import ch.difty.scipamato.core.entity.Paper;
-import ch.difty.scipamato.common.entity.newsletter.PublicationStatus;
 import ch.difty.scipamato.core.entity.search.PaperFilter;
 import ch.difty.scipamato.core.persistence.SearchOrderService;
 import ch.difty.scipamato.core.pubmed.PubmedArticleFacade;
 import ch.difty.scipamato.core.pubmed.PubmedArticleService;
 import ch.difty.scipamato.core.web.paper.common.PaperPanelTest;
 
-public abstract class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperPanel> {
+abstract class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperPanel> {
 
     static final int     PMID            = 1234;
     static final long    SEARCH_ORDER_ID = 5678L;
@@ -121,7 +121,7 @@ public abstract class EditablePaperPanelTest extends PaperPanelTest<Paper, Edita
     abstract Mode getMode();
 
     @Test
-    public void specificFields_areDisabled() {
+    void specificFields_areDisabled() {
         getTester().startComponentInPage(makePanel());
         getTester().isDisabled("panel:form:id");
         getTester().isDisabled("panel:form:firstAuthorOverridden");
@@ -173,7 +173,7 @@ public abstract class EditablePaperPanelTest extends PaperPanelTest<Paper, Edita
     }
 
     @Test
-    public void withNoCallingPage_hasInvisibleBackButton() {
+    void withNoCallingPage_hasInvisibleBackButton() {
         getTester().startComponentInPage(makePanelWith(PMID, null, SEARCH_ORDER_ID, SHOW_EXCLUDED));
 
         getTester().assertInvisible(PANEL_ID + ":form:back");
@@ -184,19 +184,19 @@ public abstract class EditablePaperPanelTest extends PaperPanelTest<Paper, Edita
     }
 
     @Test
-    public void isAssociatedWithNewsletter_withNoNewsletterLink() {
+    void isAssociatedWithNewsletter_withNoNewsletterLink() {
         EditablePaperPanel p = makePanel();
         assertThat(p.isAssociatedWithNewsletter()).isFalse();
     }
 
     @Test
-    public void isAssociatedWithWipNewsletter_withNoNewsletterLink_isFalse() {
+    void isAssociatedWithWipNewsletter_withNoNewsletterLink_isFalse() {
         EditablePaperPanel p = makePanel();
         assertThat(p.isAssociatedWithWipNewsletter()).isFalse();
     }
 
     @Test
-    public void isAssociatedWithWipNewsletter_withNewsletterLinkInNonWipStatus_isFalse() {
+    void isAssociatedWithWipNewsletter_withNewsletterLinkInNonWipStatus_isFalse() {
         EditablePaperPanel p = makePanel();
         p
             .getModelObject()
@@ -205,7 +205,7 @@ public abstract class EditablePaperPanelTest extends PaperPanelTest<Paper, Edita
     }
 
     @Test
-    public void isAssociatedWithWipNewsletter_withNewsletterLinkInWipStatus_isTrue() {
+    void isAssociatedWithWipNewsletter_withNewsletterLinkInWipStatus_isTrue() {
         EditablePaperPanel p = makePanel();
         p
             .getModelObject()
@@ -214,7 +214,7 @@ public abstract class EditablePaperPanelTest extends PaperPanelTest<Paper, Edita
     }
 
     @Test
-    public void assertSummaryLink() {
+    void assertSummaryLink() {
         getTester().startComponentInPage(makePanel());
         String path = "panel:form:summary";
         getTester().assertComponent(path, ResourceLink.class);
@@ -226,7 +226,7 @@ public abstract class EditablePaperPanelTest extends PaperPanelTest<Paper, Edita
     }
 
     @Test
-    public void assertSummaryShortLink() {
+    void assertSummaryShortLink() {
         getTester().startComponentInPage(makePanel());
         String path = "panel:form:summaryShort";
         getTester().assertComponent(path, ResourceLink.class);

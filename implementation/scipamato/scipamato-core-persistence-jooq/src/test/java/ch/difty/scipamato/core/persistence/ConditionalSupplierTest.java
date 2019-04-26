@@ -6,20 +6,20 @@ import org.jooq.Condition;
 import org.jooq.impl.DSL;
 import org.junit.jupiter.api.Test;
 
-public class ConditionalSupplierTest {
+class ConditionalSupplierTest {
 
     private final ConditionalSupplier cs = new ConditionalSupplier();
 
     private Condition c;
 
     @Test
-    public void combiningWithAnd_withNoConditions_createsDummySelectAllCondition() {
+    void combiningWithAnd_withNoConditions_createsDummySelectAllCondition() {
         c = cs.combineWithAnd();
         assertThat(c.toString()).isEqualTo("1 = 1");
     }
 
     @Test
-    public void combiningWithAnd_withSingleConditionConsideredPresent_returnsSingleElementCondition() {
+    void combiningWithAnd_withSingleConditionConsideredPresent_returnsSingleElementCondition() {
         boolean present = true;
         cs.add(present, () -> DSL
             .field("baz")
@@ -29,7 +29,7 @@ public class ConditionalSupplierTest {
     }
 
     @Test
-    public void combiningWithAnd_withSingleConditionNotConsideredPresent_returnsDummyTrueCondition() {
+    void combiningWithAnd_withSingleConditionNotConsideredPresent_returnsDummyTrueCondition() {
         boolean present = false;
         cs.add(present, () -> DSL
             .field("foo")
@@ -39,7 +39,7 @@ public class ConditionalSupplierTest {
     }
 
     @Test
-    public void combiningWithAnd_withSingleCondition_returnsSingleElementCondition() {
+    void combiningWithAnd_withSingleCondition_returnsSingleElementCondition() {
         cs.add(() -> DSL
             .field("foo")
             .eq(DSL.value("bar")));
@@ -48,7 +48,7 @@ public class ConditionalSupplierTest {
     }
 
     @Test
-    public void combiningWithAnd_withTwoConditions_appliesDummyTermWithConditions() {
+    void combiningWithAnd_withTwoConditions_appliesDummyTermWithConditions() {
         cs.add(() -> DSL
             .field("foo")
             .eq(DSL.value("bar")));
@@ -67,19 +67,19 @@ public class ConditionalSupplierTest {
     }
 
     @Test
-    public void combiningWithOr_withNoConditions_selectsAllRecords() {
+    void combiningWithOr_withNoConditions_selectsAllRecords() {
         c = cs.combineWithOr();
         assertThat(c.toString()).isEqualTo("1 = 0");
     }
 
     @Test
-    public void combiningWithOr_withNoConditions_createsDummySelectNothingCondition() {
+    void combiningWithOr_withNoConditions_createsDummySelectNothingCondition() {
         c = cs.combineWithOr();
         assertThat(c.toString()).isEqualTo("1 = 0");
     }
 
     @Test
-    public void combiningWithOr_withSingleConditions_appliesDummyTermWith() {
+    void combiningWithOr_withSingleConditions_appliesDummyTermWith() {
         cs.add(() -> DSL
             .field("foo")
             .eq(DSL.value("bar")));
@@ -88,7 +88,7 @@ public class ConditionalSupplierTest {
     }
 
     @Test
-    public void combiningWithOr_withDoubleConditions() {
+    void combiningWithOr_withDoubleConditions() {
         cs.add(() -> DSL
             .field("foo")
             .eq(DSL.value("bar")));

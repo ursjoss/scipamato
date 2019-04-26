@@ -30,7 +30,7 @@ import ch.difty.scipamato.core.persistence.OptimisticLockingException;
 import ch.difty.scipamato.core.web.authentication.LogoutPage;
 import ch.difty.scipamato.core.web.common.BasePageTest;
 
-public class CodeEditPageTest extends BasePageTest<CodeEditPage> {
+class CodeEditPageTest extends BasePageTest<CodeEditPage> {
 
     private final CodeClass cc2 = new CodeClass(2, "Region", null);
 
@@ -61,7 +61,7 @@ public class CodeEditPageTest extends BasePageTest<CodeEditPage> {
     }
 
     @AfterEach
-    public void tearDown() {
+    void tearDown() {
         verifyNoMoreInteractions(codeServiceMock);
     }
 
@@ -125,12 +125,12 @@ public class CodeEditPageTest extends BasePageTest<CodeEditPage> {
     }
 
     @Test
-    public void instantiating_with_nullModel_throws() {
+    void instantiating_with_nullModel_throws() {
         TestUtils.assertDegenerateSupplierParameter(() -> new CodeEditPage(null, null), "model");
     }
 
     @Test
-    public void submitting_withSuccessfulServiceCall_addsInfoMsg() {
+    void submitting_withSuccessfulServiceCall_addsInfoMsg() {
         when(codeServiceMock.saveOrUpdate(isA(CodeDefinition.class))).thenReturn(cd);
 
         runSubmitTest();
@@ -152,7 +152,7 @@ public class CodeEditPageTest extends BasePageTest<CodeEditPage> {
     }
 
     @Test
-    public void submitting_withUnsuccessfulServiceCall_addsErrorMsg() {
+    void submitting_withUnsuccessfulServiceCall_addsErrorMsg() {
         when(codeServiceMock.saveOrUpdate(isA(CodeDefinition.class))).thenReturn(null);
 
         runSubmitTest();
@@ -162,7 +162,7 @@ public class CodeEditPageTest extends BasePageTest<CodeEditPage> {
     }
 
     @Test
-    public void submitting_withOptimisticLockingException_addsErrorMsg() {
+    void submitting_withOptimisticLockingException_addsErrorMsg() {
         when(codeServiceMock.saveOrUpdate(isA(CodeDefinition.class))).thenThrow(
             new OptimisticLockingException("tblName", "rcd", OptimisticLockingException.Type.UPDATE));
 
@@ -174,7 +174,7 @@ public class CodeEditPageTest extends BasePageTest<CodeEditPage> {
     }
 
     @Test
-    public void submitting_withOtherException_addsErrorMsg() {
+    void submitting_withOtherException_addsErrorMsg() {
         when(codeServiceMock.saveOrUpdate(isA(CodeDefinition.class))).thenThrow(new RuntimeException("fooMsg"));
 
         runSubmitTest();
@@ -184,7 +184,7 @@ public class CodeEditPageTest extends BasePageTest<CodeEditPage> {
     }
 
     @Test
-    public void submitting_withDuplicateKeyConstraintViolationException_addsErrorMsg() {
+    void submitting_withDuplicateKeyConstraintViolationException_addsErrorMsg() {
         String msg = "...Detail: Key (code_class_id, sort)=(2, 1) already exists.; "
                      + "nested exception is org.postgresql.util.PSQLException: ERROR: duplicate key value violates unique constraint...";
         when(codeServiceMock.saveOrUpdate(isA(CodeDefinition.class))).thenThrow(new DuplicateKeyException(msg));
@@ -196,7 +196,7 @@ public class CodeEditPageTest extends BasePageTest<CodeEditPage> {
     }
 
     @Test
-    public void submitting_withDuplicateKeyConstraintViolationException_withUnexpectedMsg_addsThatErrorMsg() {
+    void submitting_withDuplicateKeyConstraintViolationException_withUnexpectedMsg_addsThatErrorMsg() {
         String msg = "something unexpected happened";
         when(codeServiceMock.saveOrUpdate(isA(CodeDefinition.class))).thenThrow(new DuplicateKeyException(msg));
 
@@ -207,7 +207,7 @@ public class CodeEditPageTest extends BasePageTest<CodeEditPage> {
     }
 
     @Test
-    public void submitting_withDuplicateKeyConstraintViolationException_withNullMsg_addsStandardErrorMsg() {
+    void submitting_withDuplicateKeyConstraintViolationException_withNullMsg_addsStandardErrorMsg() {
         //noinspection ConstantConditions
         when(codeServiceMock.saveOrUpdate(isA(CodeDefinition.class))).thenThrow(new DuplicateKeyException(null));
 
@@ -218,17 +218,17 @@ public class CodeEditPageTest extends BasePageTest<CodeEditPage> {
     }
 
     @Test
-    public void submitting_withNullCode_preventsSave() {
+    void submitting_withNullCode_preventsSave() {
         assertCodeCodeClassMismatch(null);
     }
 
     @Test
-    public void submitting_withBlankCode_preventsSave() {
+    void submitting_withBlankCode_preventsSave() {
         assertCodeCodeClassMismatch("");
     }
 
     @Test
-    public void submitting_withCodeCodeClassMismatch_preventsSave() {
+    void submitting_withCodeCodeClassMismatch_preventsSave() {
         assertCodeCodeClassMismatch("3A");
     }
 
@@ -245,7 +245,7 @@ public class CodeEditPageTest extends BasePageTest<CodeEditPage> {
     }
 
     @Test
-    public void submittingDelete_delegatesDeleteToService() {
+    void submittingDelete_delegatesDeleteToService() {
         when(codeServiceMock.delete(anyString(), anyInt())).thenReturn(codeDefinitionDummy);
 
         getTester().startPage(new CodeEditPage(Model.of(cd), null));
@@ -264,7 +264,7 @@ public class CodeEditPageTest extends BasePageTest<CodeEditPage> {
     }
 
     @Test
-    public void submittingDelete_withNullId_silentlyDoesNothing() {
+    void submittingDelete_withNullId_silentlyDoesNothing() {
         cd.setCode(null);
         getTester().startPage(new CodeEditPage(Model.of(cd), null));
 
@@ -279,7 +279,7 @@ public class CodeEditPageTest extends BasePageTest<CodeEditPage> {
     }
 
     @Test
-    public void submittingDelete_withServiceReturningNull_informsAboutRepoError() {
+    void submittingDelete_withServiceReturningNull_informsAboutRepoError() {
         when(codeServiceMock.delete(anyString(), anyInt())).thenReturn(null);
 
         getTester().startPage(new CodeEditPage(Model.of(cd), null));
@@ -295,7 +295,7 @@ public class CodeEditPageTest extends BasePageTest<CodeEditPage> {
     }
 
     @Test
-    public void submittingDelete_withForeignKeyConstraintViolationException_addsErrorMsg() {
+    void submittingDelete_withForeignKeyConstraintViolationException_addsErrorMsg() {
         String msg = "... is still referenced from table \"paper_code\".; nested exception is org.postgresql.util.PSQLException...";
         when(codeServiceMock.delete(anyString(), anyInt())).thenThrow(new DataIntegrityViolationException(msg));
 
@@ -311,7 +311,7 @@ public class CodeEditPageTest extends BasePageTest<CodeEditPage> {
     }
 
     @Test
-    public void submittingDelete_withOptimisticLockingException_addsErrorMsg() {
+    void submittingDelete_withOptimisticLockingException_addsErrorMsg() {
         when(codeServiceMock.delete(anyString(), anyInt())).thenThrow(
             new OptimisticLockingException("code_class", OptimisticLockingException.Type.DELETE));
 
@@ -328,7 +328,7 @@ public class CodeEditPageTest extends BasePageTest<CodeEditPage> {
     }
 
     @Test
-    public void submittingDelete_withException_addsErrorMsg() {
+    void submittingDelete_withException_addsErrorMsg() {
         when(codeServiceMock.delete(anyString(), anyInt())).thenThrow(new RuntimeException("boom"));
 
         getTester().startPage(new CodeEditPage(Model.of(cd), null));
@@ -343,7 +343,7 @@ public class CodeEditPageTest extends BasePageTest<CodeEditPage> {
     }
 
     @Test
-    public void clickingBackButton_withPageWithoutCallingPageRef_forwardsToCodeListPage() {
+    void clickingBackButton_withPageWithoutCallingPageRef_forwardsToCodeListPage() {
         getTester().startPage(new CodeEditPage(Model.of(cd), null));
 
         FormTester formTester = getTester().newFormTester("form");
@@ -357,7 +357,7 @@ public class CodeEditPageTest extends BasePageTest<CodeEditPage> {
     }
 
     @Test
-    public void clickingBackButton_withPageWithCallingPageRef_forwardsToThat() {
+    void clickingBackButton_withPageWithCallingPageRef_forwardsToThat() {
         getTester().startPage(new CodeEditPage(Model.of(cd), new LogoutPage(new PageParameters()).getPageReference()));
 
         FormTester formTester = getTester().newFormTester("form");
@@ -367,25 +367,25 @@ public class CodeEditPageTest extends BasePageTest<CodeEditPage> {
     }
 
     @Test
-    public void constructing_withNullCodeField_throws() {
+    void constructing_withNullCodeField_throws() {
         TestUtils.assertDegenerateSupplierParameter(
             () -> new CodeEditHeaderPanel.CodeMustMatchCodeClassValidator(null, codeClasses), "field");
     }
 
     @Test
-    public void constructing_withNullCodeClassesField_throws() {
+    void constructing_withNullCodeClassesField_throws() {
         TestUtils.assertDegenerateSupplierParameter(
             () -> new CodeEditHeaderPanel.CodeMustMatchCodeClassValidator(codeField, null), "codeClasses");
     }
 
     @Test
-    public void withNullCodeClasses_failsValidation() {
+    void withNullCodeClasses_failsValidation() {
         assertThat(codeClasses.getConvertedInput()).isNull();
         assertValidationDidNotPass();
     }
 
     @Test
-    public void withNonNullCodeClass_withNullCode_failsValidation() {
+    void withNonNullCodeClass_withNullCode_failsValidation() {
         codeClasses.setConvertedInput(new CodeClass(1, "CC1", ""));
         assertThat(codeField.getConvertedInput()).isNull();
 
@@ -393,7 +393,7 @@ public class CodeEditPageTest extends BasePageTest<CodeEditPage> {
     }
 
     @Test
-    public void withNonNullCodeClass_withBlankCode_failsValidation() {
+    void withNonNullCodeClass_withBlankCode_failsValidation() {
         codeClasses.setConvertedInput(new CodeClass(1, "CC1", ""));
         codeField.setConvertedInput("");
 

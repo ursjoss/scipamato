@@ -8,12 +8,12 @@ import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.core.web.WicketTest;
 
-public class LogoutPageTest extends WicketTest {
+class LogoutPageTest extends WicketTest {
 
     private static final String FORM = "form";
 
     @Test
-    public void assertPage() {
+    void assertPage() {
         getTester().startPage(makePage());
         getTester().assertRenderedPage(getPageClass());
 
@@ -36,7 +36,7 @@ public class LogoutPageTest extends WicketTest {
     }
 
     @Test
-    public void submitting_invalidatesSessionAndSendsToHomePage_whichForwardsToLoginPage() {
+    void submitting_invalidatesSessionAndSendsToHomePage_whichForwardsToLoginPage() {
         getTester().startPage(makePage());
         assertThat(getTester()
             .getSession()

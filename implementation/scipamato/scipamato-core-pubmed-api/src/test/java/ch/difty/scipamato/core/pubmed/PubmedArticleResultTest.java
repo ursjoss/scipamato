@@ -9,7 +9,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 
 @ExtendWith(MockitoExtension.class)
-public class PubmedArticleResultTest {
+class PubmedArticleResultTest {
 
     @Mock
     private PubmedArticleFacade paf;
@@ -20,7 +20,7 @@ public class PubmedArticleResultTest {
     }
 
     @Test
-    public void withPubmedArticleFacade_messageIsAlwaysNull() {
+    void withPubmedArticleFacade_messageIsAlwaysNull() {
         assertPar(new PubmedArticleResult(paf, null, null), paf, null);
         assertPar(new PubmedArticleResult(paf, HttpStatus.OK, "foo"), paf, null);
         assertPar(new PubmedArticleResult(paf, null, "foo"), paf, null);
@@ -28,28 +28,28 @@ public class PubmedArticleResultTest {
     }
 
     @Test
-    public void withNoPubmedArticleFacade_withNullStatus_messageIsRawMessage() {
+    void withNoPubmedArticleFacade_withNullStatus_messageIsRawMessage() {
         final HttpStatus status = null;
         assertPar(new PubmedArticleResult(null, status, "foo"), null, "foo");
         assertPar(new PubmedArticleResult(null, status, null), null, null);
     }
 
     @Test
-    public void withNoFacade_withStatus200_messageIsRawMessage() {
+    void withNoFacade_withStatus200_messageIsRawMessage() {
         final HttpStatus status = HttpStatus.OK;
         assertPar(new PubmedArticleResult(null, status, "foo"), null, "foo");
         assertPar(new PubmedArticleResult(null, status, null), null, null);
     }
 
     @Test
-    public void withNoFacade_withStatus400_withNullMessage_messageIsHttpStatus() {
+    void withNoFacade_withStatus400_withNullMessage_messageIsHttpStatus() {
         final HttpStatus status = HttpStatus.BAD_REQUEST;
         final String msg = null;
         assertPar(new PubmedArticleResult(null, status, msg), null, "Status 400 BAD_REQUEST");
     }
 
     @Test
-    public void withNoFacade_withStatus400_witValidMessage_messageIsHttpStatusPlusErrorTag() {
+    void withNoFacade_withStatus400_witValidMessage_messageIsHttpStatusPlusErrorTag() {
         final HttpStatus status = HttpStatus.BAD_REQUEST;
         final String msg = "status 400 reading PubMed#articleWithId(String,String); content:\n"
                            + "{\"error\":\"API key invalid\",\"api-key\":\"xxx\",\"type\":\"invalid\",\"status\":\"unknown\"}";
@@ -57,7 +57,7 @@ public class PubmedArticleResultTest {
     }
 
     @Test
-    public void withNoFacade_withStatus400_witValidMessage_messageIsHttpStatusPlusRawMessage() {
+    void withNoFacade_withStatus400_witValidMessage_messageIsHttpStatusPlusRawMessage() {
         final HttpStatus status = HttpStatus.BAD_REQUEST;
         final String msg = "status 400 reading PubMed#articleWithId(String,String); content:\n" + "bar";
         assertPar(new PubmedArticleResult(null, status, msg), null,
@@ -65,14 +65,14 @@ public class PubmedArticleResultTest {
     }
 
     @Test
-    public void withNoFacade_withStatus502_withNullMessage_messageIsHttpStatus() {
+    void withNoFacade_withStatus502_withNullMessage_messageIsHttpStatus() {
         final HttpStatus status = HttpStatus.BAD_GATEWAY;
         final String msg = null;
         assertPar(new PubmedArticleResult(null, status, msg), null, "Status 502 BAD_GATEWAY");
     }
 
     @Test
-    public void withNoFacade_withStatus502_witValidMessage_messageIsHttpStatusPlusReason() {
+    void withNoFacade_withStatus502_witValidMessage_messageIsHttpStatusPlusReason() {
         final HttpStatus status = HttpStatus.BAD_GATEWAY;
         final String msg = "status 502 reading PubMed#articleWithId(String,String); content:\n"
                            + "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
@@ -122,7 +122,7 @@ public class PubmedArticleResultTest {
     }
 
     @Test
-    public void withNoFacade_withStatus502_witValidMessage_messageIsHttpStatusPlusRawMessage() {
+    void withNoFacade_withStatus502_witValidMessage_messageIsHttpStatusPlusRawMessage() {
         final HttpStatus status = HttpStatus.BAD_GATEWAY;
         final String msg = "status 502 reading PubMed#articleWithId(String,String); content:\n"
                            + "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
@@ -150,7 +150,7 @@ public class PubmedArticleResultTest {
     }
 
     @Test
-    public void withNoFacade_withUnhandledStatus_messageIsRawMessage() {
+    void withNoFacade_withUnhandledStatus_messageIsRawMessage() {
         final HttpStatus status = HttpStatus.FAILED_DEPENDENCY;
         assertPar(new PubmedArticleResult(null, status, "foo\nbar"), null, "Status 424 FAILED_DEPENDENCY: foo\nbar");
         assertPar(new PubmedArticleResult(null, status, null), null, "Status 424 FAILED_DEPENDENCY");

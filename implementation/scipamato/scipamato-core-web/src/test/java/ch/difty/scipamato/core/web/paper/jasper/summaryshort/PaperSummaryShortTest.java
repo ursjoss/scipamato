@@ -11,23 +11,23 @@ import ch.difty.scipamato.common.NullArgumentException;
 import ch.difty.scipamato.core.web.paper.jasper.JasperEntityTest;
 import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields;
 
-public class PaperSummaryShortTest extends JasperEntityTest {
+class PaperSummaryShortTest extends JasperEntityTest {
 
     private PaperSummaryShort  ps;
     private ReportHeaderFields rhf = newReportHeaderFields();
 
     @Test
-    public void degenerateConstruction_withNullPaper() {
+    void degenerateConstruction_withNullPaper() {
         Assertions.assertThrows(NullArgumentException.class, () -> new PaperSummaryShort(null, rhf));
     }
 
     @Test
-    public void degenerateConstruction_withNullReportHeaderFields() {
+    void degenerateConstruction_withNullReportHeaderFields() {
         Assertions.assertThrows(NullArgumentException.class, () -> new PaperSummaryShort(p, null));
     }
 
     @Test
-    public void instantiating() {
+    void instantiating() {
         ps = new PaperSummaryShort(p, rhf);
         assertPaperSummaryShort();
     }
@@ -99,7 +99,7 @@ public class PaperSummaryShortTest extends JasperEntityTest {
     }
 
     @Test
-    public void goalsLabelIsBlankIfGoalsIsBlank() {
+    void goalsLabelIsBlankIfGoalsIsBlank() {
         p.setGoals("");
         ps = new PaperSummaryShort(p, rhf);
 
@@ -108,7 +108,7 @@ public class PaperSummaryShortTest extends JasperEntityTest {
     }
 
     @Test
-    public void methodsLabelIsBlankIfMethodsIsBlank() {
+    void methodsLabelIsBlankIfMethodsIsBlank() {
         p.setMethods("");
         ps = new PaperSummaryShort(p, rhf);
 
@@ -117,7 +117,7 @@ public class PaperSummaryShortTest extends JasperEntityTest {
     }
 
     @Test
-    public void methodOutcomeLabelIsBlankIfMethodOutcomeIsBlank() {
+    void methodOutcomeLabelIsBlankIfMethodOutcomeIsBlank() {
         p.setMethodOutcome("");
         ps = new PaperSummaryShort(p, rhf);
 
@@ -126,7 +126,7 @@ public class PaperSummaryShortTest extends JasperEntityTest {
     }
 
     @Test
-    public void resultMeasuredOutcomeLabelIsBlankIfResultMeasuredOutcomeIsBlank() {
+    void resultMeasuredOutcomeLabelIsBlankIfResultMeasuredOutcomeIsBlank() {
         p.setResultMeasuredOutcome("");
         ps = new PaperSummaryShort(p, rhf);
 
@@ -135,7 +135,7 @@ public class PaperSummaryShortTest extends JasperEntityTest {
     }
 
     @Test
-    public void methodStudyDesignLabelIsBlankIfMethodStudyDesignIsBlank() {
+    void methodStudyDesignLabelIsBlankIfMethodStudyDesignIsBlank() {
         p.setMethodStudyDesign("");
         ps = new PaperSummaryShort(p, rhf);
 
@@ -144,7 +144,7 @@ public class PaperSummaryShortTest extends JasperEntityTest {
     }
 
     @Test
-    public void populationPlaceLabelIsBlankIfPopulationPlaceIsBlank() {
+    void populationPlaceLabelIsBlankIfPopulationPlaceIsBlank() {
         p.setPopulationPlace("");
         ps = new PaperSummaryShort(p, rhf);
 
@@ -153,7 +153,7 @@ public class PaperSummaryShortTest extends JasperEntityTest {
     }
 
     @Test
-    public void populationParticipantsLabelIsBlankIfPopulationParticipantsIsBlank() {
+    void populationParticipantsLabelIsBlankIfPopulationParticipantsIsBlank() {
         p.setPopulationParticipants("");
         ps = new PaperSummaryShort(p, rhf);
 
@@ -162,7 +162,7 @@ public class PaperSummaryShortTest extends JasperEntityTest {
     }
 
     @Test
-    public void populationDurationLabelIsBlankIfPopulationDurationIsBlank() {
+    void populationDurationLabelIsBlankIfPopulationDurationIsBlank() {
         p.setPopulationDuration("");
         ps = new PaperSummaryShort(p, rhf);
 
@@ -171,7 +171,7 @@ public class PaperSummaryShortTest extends JasperEntityTest {
     }
 
     @Test
-    public void exposurePollutantLabelIsBlankIfExposurePollutantIsBlank() {
+    void exposurePollutantLabelIsBlankIfExposurePollutantIsBlank() {
         p.setExposurePollutant("");
         ps = new PaperSummaryShort(p, rhf);
 
@@ -180,7 +180,7 @@ public class PaperSummaryShortTest extends JasperEntityTest {
     }
 
     @Test
-    public void exposureAssessmentLabelIsBlankIfExposureAssessmentIsBlank() {
+    void exposureAssessmentLabelIsBlankIfExposureAssessmentIsBlank() {
         p.setExposureAssessment("");
         ps = new PaperSummaryShort(p, rhf);
 
@@ -189,7 +189,7 @@ public class PaperSummaryShortTest extends JasperEntityTest {
     }
 
     @Test
-    public void resultExposureRangeLabelIsBlankIfResultExposureRangeIsBlank() {
+    void resultExposureRangeLabelIsBlankIfResultExposureRangeIsBlank() {
         p.setResultExposureRange("");
         ps = new PaperSummaryShort(p, rhf);
 
@@ -198,7 +198,7 @@ public class PaperSummaryShortTest extends JasperEntityTest {
     }
 
     @Test
-    public void methodStatisticsLabelIsBlankIfMethodStatisticsIsBlank() {
+    void methodStatisticsLabelIsBlankIfMethodStatisticsIsBlank() {
         p.setMethodStatistics("");
         ps = new PaperSummaryShort(p, rhf);
 
@@ -207,7 +207,7 @@ public class PaperSummaryShortTest extends JasperEntityTest {
     }
 
     @Test
-    public void methodConfoundersLabelIsBlankIfMethodConfoundersIsBlank() {
+    void methodConfoundersLabelIsBlankIfMethodConfoundersIsBlank() {
         p.setMethodConfounders("");
         ps = new PaperSummaryShort(p, rhf);
 
@@ -216,7 +216,7 @@ public class PaperSummaryShortTest extends JasperEntityTest {
     }
 
     @Test
-    public void resultEffectEstimateLabelIsBlankIfResultIsBlank() {
+    void resultEffectEstimateLabelIsBlankIfResultIsBlank() {
         p.setResultEffectEstimate("");
         ps = new PaperSummaryShort(p, rhf);
 
@@ -225,7 +225,7 @@ public class PaperSummaryShortTest extends JasperEntityTest {
     }
 
     @Test
-    public void conclusionLabelIsBlankIfConclusionIsBlank() {
+    void conclusionLabelIsBlankIfConclusionIsBlank() {
         p.setConclusion("");
         ps = new PaperSummaryShort(p, rhf);
 
@@ -234,7 +234,7 @@ public class PaperSummaryShortTest extends JasperEntityTest {
     }
 
     @Test
-    public void commentLabelIsBlankIfCommentIsBlank() {
+    void commentLabelIsBlankIfCommentIsBlank() {
         p.setComment("");
         ps = new PaperSummaryShort(p, rhf);
 
@@ -243,7 +243,7 @@ public class PaperSummaryShortTest extends JasperEntityTest {
     }
 
     @Test
-    public void equalsVerify() {
+    void equalsVerify() {
         EqualsVerifier
             .forClass(PaperSummaryShort.class)
             .withRedefinedSuperclass()

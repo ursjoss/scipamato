@@ -12,13 +12,13 @@ import ch.difty.scipamato.publ.entity.Keyword;
 import ch.difty.scipamato.publ.persistence.JooqBaseIntegrationTest;
 
 @Slf4j
-public class JooqKeywordRepoIntegrationTest extends JooqBaseIntegrationTest {
+class JooqKeywordRepoIntegrationTest extends JooqBaseIntegrationTest {
 
     @Autowired
     private JooqKeywordRepo repo;
 
     @Test
-    public void findingAllKeywordsInGerman() {
+    void findingAllKeywordsInGerman() {
         List<Keyword> keywords = repo.findKeywords("de");
         assertThat(keywords)
             .extracting("name")
@@ -27,7 +27,7 @@ public class JooqKeywordRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void findingAllKeywords1InEnglish() {
+    void findingAllKeywords1InEnglish() {
         List<Keyword> keywords = repo.findKeywords("en");
         assertThat(keywords)
             .extracting("name")
@@ -36,7 +36,7 @@ public class JooqKeywordRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void findingAllKeywords1InFrench() {
+    void findingAllKeywords1InFrench() {
         List<Keyword> keywords = repo.findKeywords("fr");
         assertThat(keywords)
             .extracting("name")

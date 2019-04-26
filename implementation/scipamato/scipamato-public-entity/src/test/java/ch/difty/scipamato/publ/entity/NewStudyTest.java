@@ -8,7 +8,7 @@ import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
 import org.junit.jupiter.api.Test;
 
-public class NewStudyTest extends PublicEntityTest<NewStudy> {
+class NewStudyTest extends PublicEntityTest<NewStudy> {
 
     @Override
     protected NewStudy newEntity() {
@@ -40,7 +40,7 @@ public class NewStudyTest extends PublicEntityTest<NewStudy> {
     }
 
     @Test
-    public void assertEnumFields() {
+    void assertEnumFields() {
         assertThat(NewStudy.NewStudyFields.values())
             .extracting("name")
             .containsExactly("sort", "number", "year", "authors", "reference", "headline", "description");

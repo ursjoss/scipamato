@@ -153,17 +153,17 @@ public abstract class JooqEntityRepoTest<R extends Record, T extends IdScipamato
     }
 
     @Test
-    public void addingNullEntity_throws() {
+    void addingNullEntity_throws() {
         assertDegenerateSupplierParameter(() -> repo.add(null, "de"), "entity");
     }
 
     @Test
-    public void addingNullLanguageCode_throws() {
+    void addingNullLanguageCode_throws() {
         assertDegenerateSupplierParameter(() -> repo.add(getUnpersistedEntity(), null), "languageCode");
     }
 
     @Test
-    public void adding_withSaveReturningNull_returnsNull() {
+    void adding_withSaveReturningNull_returnsNull() {
         repo = makeRepoSavingReturning(null);
         assertThat(repo.add(getUnpersistedEntity(), "de")).isNull();
     }
@@ -179,12 +179,12 @@ public abstract class JooqEntityRepoTest<R extends Record, T extends IdScipamato
     protected abstract EntityRepository<T, ID, F> makeRepoSavingReturning(R returning);
 
     @Test
-    public void deleting_withIdNull_throws() {
+    void deleting_withIdNull_throws() {
         Assertions.assertThrows(NullArgumentException.class, () -> repo.delete(null, 1));
     }
 
     @Test
-    public void deleting_withIdNotFoundInDb_throwsOptimisticLockingException() {
+    void deleting_withIdNotFoundInDb_throwsOptimisticLockingException() {
         repo = makeRepoFindingEntityById(null);
         try {
             repo.delete(id, 0);
@@ -197,7 +197,7 @@ public abstract class JooqEntityRepoTest<R extends Record, T extends IdScipamato
     }
 
     @Test
-    public void deleting_validPersistentEntity_returnsDeletedEntity() {
+    void deleting_validPersistentEntity_returnsDeletedEntity() {
         repo = makeRepoFindingEntityById(getPersistedEntity());
 
         when(getDsl().delete(getTable())).thenReturn(deleteWhereStepMock);
@@ -214,7 +214,7 @@ public abstract class JooqEntityRepoTest<R extends Record, T extends IdScipamato
     }
 
     @Test
-    public void deleting_validPersistentEntity_withFailingDelete_returnsDeletedEntity() {
+    void deleting_validPersistentEntity_withFailingDelete_returnsDeletedEntity() {
         repo = makeRepoFindingEntityById(getPersistedEntity());
         when(getDsl().delete(getTable())).thenReturn(deleteWhereStepMock);
         when(deleteWhereStepMock.where(getTableId().equal(id))).thenReturn(deleteConditionStep1Mock);
@@ -235,17 +235,17 @@ public abstract class JooqEntityRepoTest<R extends Record, T extends IdScipamato
     }
 
     @Test
-    public void updating_withEntityNull_throws() {
+    void updating_withEntityNull_throws() {
         assertDegenerateSupplierParameter(() -> repo.update(null, "de"), "entity");
     }
 
     @Test
-    public void updating_withLanguageCodeNull_throws() {
+    void updating_withLanguageCodeNull_throws() {
         assertDegenerateSupplierParameter(() -> repo.update(getPersistedEntity(), null), "languageCode");
     }
 
     @Test
-    public void updating_withEntityIdNull_throws() {
+    void updating_withEntityIdNull_throws() {
         expectUnpersistedEntityIdNull();
         assertDegenerateSupplierParameter(() -> repo.update(getUnpersistedEntity(), "de"), "entity.id");
         verifyUnpersistedEntityId();

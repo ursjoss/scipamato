@@ -19,7 +19,7 @@ import ch.difty.scipamato.core.persistence.EntityRepository;
 import ch.difty.scipamato.core.persistence.JooqEntityRepoTest;
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
-public class JooqNewsletterRepoTest extends
+class JooqNewsletterRepoTest extends
     JooqEntityRepoTest<NewsletterRecord, Newsletter, Integer, ch.difty.scipamato.core.db.tables.Newsletter, NewsletterRecordMapper, NewsletterFilter> {
 
     private static final Integer SAMPLE_ID = 2;
@@ -140,7 +140,7 @@ public class JooqNewsletterRepoTest extends
     }
 
     @Test
-    public void mergingPaperIntoNewsletter_withInsertAttemptNotSucceeding_returnsEmptyOptional() {
+    void mergingPaperIntoNewsletter_withInsertAttemptNotSucceeding_returnsEmptyOptional() {
         JooqNewsletterRepo repo = new JooqNewsletterRepo(getDsl(), getMapper(), getSortMapper(),
             getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(),
             getApplicationProperties()) {
@@ -154,12 +154,12 @@ public class JooqNewsletterRepoTest extends
     }
 
     @Test
-    public void handlingInsertedNewsletter_withZeroCount_returnsEmptyOptional() {
+    void handlingInsertedNewsletter_withZeroCount_returnsEmptyOptional() {
         assertThat(repo.handleInsertedNewsletter(0, 1, 2, "de")).isEmpty();
     }
 
     @Test
-    public void test() {
+    void test() {
         repo = new JooqNewsletterRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(),
             getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), getApplicationProperties()) {
             @Override

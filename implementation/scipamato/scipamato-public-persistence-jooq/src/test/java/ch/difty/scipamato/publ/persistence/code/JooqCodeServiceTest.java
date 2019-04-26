@@ -16,13 +16,13 @@ import ch.difty.scipamato.common.entity.CodeClassId;
 import ch.difty.scipamato.publ.entity.Code;
 
 @ExtendWith(MockitoExtension.class)
-public class JooqCodeServiceTest {
+class JooqCodeServiceTest {
 
     @Mock
     private CodeRepository repoMock;
 
     @Test
-    public void findingCodes_delegatesToRepo() {
+    void findingCodes_delegatesToRepo() {
         JooqCodeService service = new JooqCodeService(repoMock);
 
         CodeClassId ccId = CodeClassId.CC1;

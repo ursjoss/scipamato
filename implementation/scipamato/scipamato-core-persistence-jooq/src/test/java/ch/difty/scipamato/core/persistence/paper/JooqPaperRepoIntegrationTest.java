@@ -33,7 +33,7 @@ import ch.difty.scipamato.core.entity.search.SearchOrder;
 import ch.difty.scipamato.core.persistence.JooqBaseIntegrationTest;
 
 @SuppressWarnings("SameParameterValue")
-public class JooqPaperRepoIntegrationTest extends JooqBaseIntegrationTest {
+class JooqPaperRepoIntegrationTest extends JooqBaseIntegrationTest {
 
     private static final long   TEST_PAPER_ID = 1L;
     private static final String TEST_FILE_1   = "test file";
@@ -61,7 +61,7 @@ public class JooqPaperRepoIntegrationTest extends JooqBaseIntegrationTest {
     private JooqPaperRepo repo;
 
     @Test
-    public void findingAll() {
+    void findingAll() {
         List<Paper> papers = repo.findAll();
         papers.sort(comparing(Paper::getId));
 
@@ -90,7 +90,7 @@ public class JooqPaperRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void findingById_withExistingId_returnsEntity() {
+    void findingById_withExistingId_returnsEntity() {
         long id = 4;
         Paper paper = repo.findById(id);
         assertThat(paper.getId()).isEqualTo(id);
@@ -98,12 +98,12 @@ public class JooqPaperRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void findingById_withNonExistingId_returnsNull() {
+    void findingById_withNonExistingId_returnsNull() {
         assertThat(repo.findById(-1L)).isNull();
     }
 
     @Test
-    public void addingRecord_savesRecordAndRefreshesId() {
+    void addingRecord_savesRecordAndRefreshesId() {
         Paper p = makeMinimalPaper();
         assertThat(p.getId()).isNull();
 
@@ -128,7 +128,7 @@ public class JooqPaperRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void updatingRecord() {
+    void updatingRecord() {
         Paper paper = repo.add(makeMinimalPaper());
         assertThat(paper).isNotNull();
         assertThat(paper.getId())
@@ -148,7 +148,7 @@ public class JooqPaperRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void savingAssociatedEntitiesOf_withCodes() {
+    void savingAssociatedEntitiesOf_withCodes() {
         Paper paper = repo.add(makeMinimalPaper());
         assertThat(paper).isNotNull();
         assertThat(paper.getId())
@@ -184,7 +184,7 @@ public class JooqPaperRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void savingAssociatedEntitiesOf_withNewsletterLink() {
+    void savingAssociatedEntitiesOf_withNewsletterLink() {
         Paper paper = repo.add(makeMinimalPaper());
         final long id = paper.getId();
         final Paper.NewsletterLink newsletterLink = new Paper.NewsletterLink(2, "whatever", 1, 1, "topic1", "hl");
@@ -203,7 +203,7 @@ public class JooqPaperRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void deletingRecord() {
+    void deletingRecord() {
         Paper paper = repo.add(makeMinimalPaper());
         assertThat(paper).isNotNull();
         assertThat(paper.getId())
@@ -220,7 +220,7 @@ public class JooqPaperRepoIntegrationTest extends JooqBaseIntegrationTest {
 
     @SuppressWarnings("SpellCheckingInspection")
     @Test
-    public void findingById_forPaper1InGerman() {
+    void findingById_forPaper1InGerman() {
         Paper paper = repo.findById(1L);
         assertThat(paper.toString()).isEqualTo(
             // @formatter:off
@@ -258,7 +258,7 @@ public class JooqPaperRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void findingByIds_returnsRecordForEveryIdExisting() {
+    void findingByIds_returnsRecordForEveryIdExisting() {
         List<Paper> papers = repo.findByIds(Arrays.asList(1L, 2L, 3L, 10L, -17L));
         assertThat(papers).hasSize(4);
         assertThat(papers)
@@ -272,12 +272,12 @@ public class JooqPaperRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void findingByIds_returnsEmptyListForEmptyIdList() {
+    void findingByIds_returnsEmptyListForEmptyIdList() {
         assertThat(repo.findByIds(Collections.emptyList())).isEmpty();
     }
 
     @Test
-    public void findingWithCodesByIds_returnsRecordForEveryIdExisting() {
+    void findingWithCodesByIds_returnsRecordForEveryIdExisting() {
         List<Paper> papers = repo.findWithCodesByIds(Arrays.asList(1L, 2L, 3L, 10L, -17L), LC);
         assertThat(papers).hasSize(4);
         assertThat(papers)
@@ -291,7 +291,7 @@ public class JooqPaperRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void findingPapersByPmIds_withThreeValidPmIds_returnsThreePapers() {
+    void findingPapersByPmIds_withThreeValidPmIds_returnsThreePapers() {
         List<Paper> papers = repo.findByPmIds(Arrays.asList(20335815, 27128166, 25104428), LC);
         assertThat(papers).hasSize(3);
         assertThat(papers)
@@ -300,12 +300,12 @@ public class JooqPaperRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void findingPapersByPmIds_withInvalidPmIds_returnsEmptyList() {
+    void findingPapersByPmIds_withInvalidPmIds_returnsEmptyList() {
         assertThat(repo.findByPmIds(Collections.singletonList(-20335815), LC)).isEmpty();
     }
 
     @Test
-    public void findingPapersByPmIds_hasCodesEnriched() {
+    void findingPapersByPmIds_hasCodesEnriched() {
         List<Paper> papers = repo.findByPmIds(Collections.singletonList(20335815), LC);
         assertThat(papers
             .get(0)
@@ -313,19 +313,19 @@ public class JooqPaperRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void findingExistingPmIdsOutOf_withThreeValidPmIds_returnsThreePMIDs() {
+    void findingExistingPmIdsOutOf_withThreeValidPmIds_returnsThreePMIDs() {
         List<Integer> pmids = repo.findExistingPmIdsOutOf(Arrays.asList(20335815, 27128166, 25104428));
         assertThat(pmids).hasSize(3);
         assertThat(pmids).containsOnly(20335815, 27128166, 25104428);
     }
 
     @Test
-    public void findingExistingPmIdsOutOf_withInvalidPmIds_returnsEmptyList() {
+    void findingExistingPmIdsOutOf_withInvalidPmIds_returnsEmptyList() {
         assertThat(repo.findExistingPmIdsOutOf(Collections.singletonList(-20335815))).isEmpty();
     }
 
     @Test
-    public void findingPapersByNumbers_withThreeValidNumbers_returnsThreePapers() {
+    void findingPapersByNumbers_withThreeValidNumbers_returnsThreePapers() {
         List<Paper> papers = repo.findByNumbers(Arrays.asList(1L, 2L, 3L), LC);
         assertThat(papers).hasSize(3);
         assertThat(papers)
@@ -334,12 +334,12 @@ public class JooqPaperRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void findingPapersByNumbers_withInvalidNumbers_returnsEmptyList() {
+    void findingPapersByNumbers_withInvalidNumbers_returnsEmptyList() {
         assertThat(repo.findByNumbers(Collections.singletonList(-1L), LC)).isEmpty();
     }
 
     @Test
-    public void findingPapersByNumber_hasCodesEnriched() {
+    void findingPapersByNumber_hasCodesEnriched() {
         List<Paper> papers = repo.findByNumbers(Collections.singletonList(1L), LC);
         assertThat(papers
             .get(0)
@@ -347,7 +347,7 @@ public class JooqPaperRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void findingBySearchOrder() {
+    void findingBySearchOrder() {
         SearchOrder searchOrder = new SearchOrder();
         SearchCondition sc = new SearchCondition();
         sc.setAuthors("kutlar");
@@ -357,7 +357,7 @@ public class JooqPaperRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void findingPageBySearchOrder() {
+    void findingPageBySearchOrder() {
         SearchOrder searchOrder = new SearchOrder();
         SearchCondition sc = new SearchCondition();
         sc.setAuthors("kutlar");
@@ -367,31 +367,31 @@ public class JooqPaperRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void findingLowestFreeNumberStartingFrom_findsFirstGapStartingAboveMinimumValue() {
+    void findingLowestFreeNumberStartingFrom_findsFirstGapStartingAboveMinimumValue() {
         long number = repo.findLowestFreeNumberStartingFrom(0L);
         assertThat(number).isEqualTo(5L);
     }
 
     @Test
-    public void findingLowestFreeNumberStartingFrom_withMinimumInMultiNumberGap_ignoresRemainingNumbersOfSameGap() {
+    void findingLowestFreeNumberStartingFrom_withMinimumInMultiNumberGap_ignoresRemainingNumbersOfSameGap() {
         long number = repo.findLowestFreeNumberStartingFrom(5L);
         assertThat(number).isGreaterThanOrEqualTo(42L);
     }
 
     @Test
-    public void findingLowestFreeNumberStartingFrom_withMinimumBeyondLastGap_findsNextFreeNumber() {
+    void findingLowestFreeNumberStartingFrom_withMinimumBeyondLastGap_findsNextFreeNumber() {
         long number = repo.findLowestFreeNumberStartingFrom(30);
         assertThat(number).isGreaterThanOrEqualTo(42L);
     }
 
     @Test
-    public void findingLowestFreeNumberStartingFrom_withMinimumBeyondNextFreeNumber_findsMinimumLeavingGap() {
+    void findingLowestFreeNumberStartingFrom_withMinimumBeyondNextFreeNumber_findsMinimumLeavingGap() {
         long number = repo.findLowestFreeNumberStartingFrom(100L);
         assertThat(number).isGreaterThanOrEqualTo(100L);
     }
 
     @Test
-    public void findingPageOfIdsByFilter() {
+    void findingPageOfIdsByFilter() {
         PaperFilter filter = new PaperFilter();
         filter.setAuthorMask("Kutlar");
         assertThat(repo.findPageOfIdsByFilter(filter, new PaginationRequest(Direction.ASC, "authors")))
@@ -400,7 +400,7 @@ public class JooqPaperRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void findingPageOfIdsBySearchOrder() {
+    void findingPageOfIdsBySearchOrder() {
         SearchOrder searchOrder = new SearchOrder();
         SearchCondition sc = new SearchCondition();
         sc.setAuthors("kutlar");
@@ -411,7 +411,7 @@ public class JooqPaperRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void excludingPaperFromSearch_addsOneRecord_reIncluding_removesItAgain() {
+    void excludingPaperFromSearch_addsOneRecord_reIncluding_removesItAgain() {
         final long searchOrderId = 1;
         final long paperId = 1;
         ensureRecordNotPresent(searchOrderId, paperId);
@@ -437,7 +437,7 @@ public class JooqPaperRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void excludingPaperFromSearch_whenAddingMultipleTimes_ignoresAllButFirst() {
+    void excludingPaperFromSearch_whenAddingMultipleTimes_ignoresAllButFirst() {
         final long searchOrderId = 1;
         final long paperId = 1;
         ensureRecordNotPresent(searchOrderId, paperId);
@@ -449,7 +449,7 @@ public class JooqPaperRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void loadingSlimAttachment_loadsEverythingExceptContent() {
+    void loadingSlimAttachment_loadsEverythingExceptContent() {
         final String content1 = "baz";
         PaperAttachment pa1 = newPaperAttachment(TEST_FILE_1, content1);
         repo.saveAttachment(pa1);
@@ -481,7 +481,7 @@ public class JooqPaperRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void savingAttachment_whenNotExisting_insertsIntoDb() {
+    void savingAttachment_whenNotExisting_insertsIntoDb() {
         final String content = "foo";
         PaperAttachment pa = newPaperAttachment(TEST_FILE_1, content);
 
@@ -509,7 +509,7 @@ public class JooqPaperRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void savingAttachment_whenExisted_performsUpdate() {
+    void savingAttachment_whenExisted_performsUpdate() {
         final String content2 = "bar";
         PaperAttachment pa1 = newPaperAttachment(TEST_FILE_1, "foo");
         PaperAttachment pa2 = newPaperAttachment(TEST_FILE_1, content2);
@@ -531,7 +531,7 @@ public class JooqPaperRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void loadingAttachmentWithContentById() {
+    void loadingAttachmentWithContentById() {
         final String content1 = "baz";
         PaperAttachment pa1 = newPaperAttachment(TEST_FILE_1, content1);
         repo.saveAttachment(pa1);
@@ -547,7 +547,7 @@ public class JooqPaperRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void deletingAttachment_deletes() {
+    void deletingAttachment_deletes() {
         repo.saveAttachment(newPaperAttachment(TEST_FILE_1, "foo"));
         Integer id = dsl
             .select(PAPER_ATTACHMENT.ID)
@@ -571,7 +571,7 @@ public class JooqPaperRepoIntegrationTest extends JooqBaseIntegrationTest {
      * doing it's job to translate jooq specific exceptions into spring exceptions.
      */
     @Test
-    public void testDeclarativeTransaction() {
+    void testDeclarativeTransaction() {
         boolean rollback = false;
         Paper paper = repo.findById(1L);
         assertThat(paper).isNotNull();
@@ -591,7 +591,7 @@ public class JooqPaperRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void findingByFilter_filteringByNewsletterId() {
+    void findingByFilter_filteringByNewsletterId() {
         PaperFilter filter = new PaperFilter();
         filter.setNewsletterId(1);
         List<Paper> papers = repo.findPageByFilter(filter, new PaginationRequest(0, 10));
@@ -603,21 +603,21 @@ public class JooqPaperRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void findingById_populatesNewsLetterWithAllFields() {
+    void findingById_populatesNewsLetterWithAllFields() {
         Paper paper = repo.findById(31L, "en");
         assertThat(paper.getNewsletterLink()).isNotNull();
         assertNewsletterLink(paper, "1802", 1, 1, "Ultrafine Particles", "some headline");
     }
 
     @Test
-    public void findingById_populatesNewsLetterWithMostFields() {
+    void findingById_populatesNewsLetterWithMostFields() {
         Paper paper = repo.findById(20L, "en");
         assertThat(paper.getNewsletterLink()).isNotNull();
         assertNewsletterLink(paper, "1802", 1, 2, "Mortality", null);
     }
 
     @Test
-    public void findingById_populatesNewsLetterWithSomeFields() {
+    void findingById_populatesNewsLetterWithSomeFields() {
         Paper paper = repo.findById(39L, "en");
         assertThat(paper.getNewsletterLink()).isNotNull();
         assertNewsletterLink(paper, "1804", 0, null, null, null);
@@ -643,39 +643,39 @@ public class JooqPaperRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void isDoiAlreadyAssigned_withDoiInDb_countsOtherPaperAsDuplicate() {
+    void isDoiAlreadyAssigned_withDoiInDb_countsOtherPaperAsDuplicate() {
         // it's id 1 that has that doi
         assertThat(repo.isDoiAlreadyAssigned("10.1093/aje/kwu275", 2L)).hasValue("1");
     }
 
     @Test
-    public void isDoiAlreadyAssigned_withDoiInDb_doesNotCountCurrentPaperAsDuplicate() {
+    void isDoiAlreadyAssigned_withDoiInDb_doesNotCountCurrentPaperAsDuplicate() {
         assertThat(repo.isDoiAlreadyAssigned("10.1093/aje/kwu275", 1L)).isNotPresent();
     }
 
     @Test
-    public void isDoiAlreadyAssigned_withDoiNotInDb_reportsNoDuplicate() {
+    void isDoiAlreadyAssigned_withDoiNotInDb_reportsNoDuplicate() {
         assertThat(repo.isDoiAlreadyAssigned("foobar", 1L)).isNotPresent();
     }
 
     @Test
-    public void isPmIdAlreadyAssigned_withDoiInDb_countsOtherPaperAsDuplicate() {
+    void isPmIdAlreadyAssigned_withDoiInDb_countsOtherPaperAsDuplicate() {
         // it's id 1 that has that pmId
         assertThat(repo.isPmIdAlreadyAssigned(25395026, 2L)).hasValue("1");
     }
 
     @Test
-    public void isPmIdAlreadyAssigned_withDoiInDb_doesNotCountCurrentPaperAsDuplicate() {
+    void isPmIdAlreadyAssigned_withDoiInDb_doesNotCountCurrentPaperAsDuplicate() {
         assertThat(repo.isPmIdAlreadyAssigned(25395026, 1L)).isNotPresent();
     }
 
     @Test
-    public void isPmIdAlreadyAssigned_withDoiInDb_andWithNewEntityWithNullId_countsAnyRecordFoundWithPmId() {
+    void isPmIdAlreadyAssigned_withDoiInDb_andWithNewEntityWithNullId_countsAnyRecordFoundWithPmId() {
         assertThat(repo.isPmIdAlreadyAssigned(25395026, null)).isPresent();
     }
 
     @Test
-    public void isPmIdAlreadyAssigned_withDoiNotInDb_reportsNoDuplicate() {
+    void isPmIdAlreadyAssigned_withDoiNotInDb_reportsNoDuplicate() {
         assertThat(repo.isPmIdAlreadyAssigned(-1, 1L)).isNotPresent();
     }
 }

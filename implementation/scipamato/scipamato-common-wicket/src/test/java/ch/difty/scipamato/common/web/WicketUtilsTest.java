@@ -6,30 +6,30 @@ import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.common.FinalClassTest;
 
-public class WicketUtilsTest extends FinalClassTest<WicketUtils> {
+class WicketUtilsTest extends FinalClassTest<WicketUtils> {
 
     @Test
-    public void labelTag() {
+    void labelTag() {
         assertThat(WicketUtils.LABEL_TAG).isEqualTo("Label");
     }
 
     @Test
-    public void labelResourceTag() {
+    void labelResourceTag() {
         assertThat(WicketUtils.LABEL_RESOURCE_TAG).isEqualTo(".label");
     }
 
     @Test
-    public void shortLabelResourceTag() {
+    void shortLabelResourceTag() {
         assertThat(WicketUtils.SHORT_LABEL_RESOURCE_TAG).isEqualTo(".short.label");
     }
 
     @Test
-    public void panelHeaderResourceTag() {
+    void panelHeaderResourceTag() {
         assertThat(WicketUtils.PANEL_HEADER_RESOURCE_TAG).isEqualTo(".header");
     }
 
     @Test
-    public void dummyTest() {
+    void dummyTest() {
         assertThat(WicketUtils.dummyMethod()).isEqualTo("Label.label.loading.title.short.label.header");
     }
 }

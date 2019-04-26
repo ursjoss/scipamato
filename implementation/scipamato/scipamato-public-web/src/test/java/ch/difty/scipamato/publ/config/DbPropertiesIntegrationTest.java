@@ -12,13 +12,13 @@ import ch.difty.scipamato.publ.ScipamatoPublicApplication;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = ScipamatoPublicApplication.class)
-public class DbPropertiesIntegrationTest {
+class DbPropertiesIntegrationTest {
 
     @Autowired
     private DbProperties dbProperties;
 
     @Test
-    public void schema_hasValuePublic() {
+    void schema_hasValuePublic() {
         assertThat(dbProperties.getSchema()).isEqualTo("public");
     }
 }

@@ -12,13 +12,13 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 @Disabled
-public class RefDataSyncJobLauncherAdHocTest {
+class RefDataSyncJobLauncherAdHocTest {
 
     @Autowired
     private RefDataSyncJobLauncher launcher;
 
     @Test
-    public void run() {
+    void run() {
         SyncJobResult result = launcher.launch();
         result
             .getMessages()

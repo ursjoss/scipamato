@@ -20,7 +20,7 @@ import ch.difty.scipamato.core.persistence.CodeClassService;
 import ch.difty.scipamato.core.web.common.BasePageTest;
 
 @SuppressWarnings("SameParameterValue")
-public class CodeClassListPageTest extends BasePageTest<CodeClassListPage> {
+class CodeClassListPageTest extends BasePageTest<CodeClassListPage> {
 
     private static final int COLUMN_ID_WITH_LINK = 2;
 
@@ -49,7 +49,7 @@ public class CodeClassListPageTest extends BasePageTest<CodeClassListPage> {
     }
 
     @AfterEach
-    public void tearDown() {
+    void tearDown() {
         verifyNoMoreInteractions(codeClassServiceMock);
     }
 
@@ -107,7 +107,7 @@ public class CodeClassListPageTest extends BasePageTest<CodeClassListPage> {
     }
 
     @Test
-    public void clickingOnCodeTitle_forwardsToCodeEditPage_withModelLoaded() {
+    void clickingOnCodeTitle_forwardsToCodeEditPage_withModelLoaded() {
         getTester().startPage(getPageClass());
 
         getTester().clickLink("resultPanel:results:body:rows:1:cells:" + COLUMN_ID_WITH_LINK + ":cell:link");

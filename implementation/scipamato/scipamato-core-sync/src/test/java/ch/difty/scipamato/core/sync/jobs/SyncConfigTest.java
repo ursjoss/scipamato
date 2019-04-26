@@ -64,32 +64,32 @@ public abstract class SyncConfigTest<R extends UpdatableRecord<R>> {
     }
 
     @Test
-    public void assertingJobIncrementer_toBeRunIdIncrementer() {
+    protected void assertingJobIncrementer_toBeRunIdIncrementer() {
         assertThat(getJob().getJobParametersIncrementer()).isInstanceOf(RunIdIncrementer.class);
     }
 
     @Test
-    public void assertingJobName() {
+    protected void assertingJobName() {
         assertThat(getJob().getName()).isEqualTo(expectedJobName());
     }
 
     @Test
-    public void jobIsRestartable() {
+    protected void jobIsRestartable() {
         assertThat(getJob().isRestartable()).isTrue();
     }
 
     @Test
-    public void assertingSql() {
+    protected void assertingSql() {
         assertThat(selectSql()).isEqualTo(expectedSelectSql());
     }
 
     @Test
-    public void assertingPurgeLastSynchField() {
+    protected void assertingPurgeLastSynchField() {
         assertThat(lastSynchedField()).isEqualTo(expectedLastSyncField());
     }
 
     @Test
-    public void assertingPseudoRefDataEnforcementDdl() {
+    protected void assertingPseudoRefDataEnforcementDdl() {
         final DeleteConditionStep<R> dcs = getPseudoFkDcs();
         if (dcs != null)
             assertThat(dcs.getSQL()).isEqualTo(expectedPseudoFkSql());

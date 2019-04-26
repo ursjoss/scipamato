@@ -18,7 +18,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import ch.difty.scipamato.core.entity.search.SearchCondition;
 
 @ExtendWith(MockitoExtension.class)
-public class SearchConditionProviderTest {
+class SearchConditionProviderTest {
 
     private SearchConditionProvider provider;
 
@@ -28,47 +28,45 @@ public class SearchConditionProviderTest {
     private final List<SearchCondition> conditions = new ArrayList<>();
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         conditions.addAll(Arrays.asList(mockCondition1, mockCondition2, mockCondition3, mockCondition4));
 
         provider = new SearchConditionProvider(Model.ofList(conditions));
     }
 
     @Test
-    public void degenerateConstruction_withNullSearchOrderModel() {
+    void degenerateConstruction_withNullSearchOrderModel() {
         assertDegenerateSupplierParameter(() -> new SearchConditionProvider(null), "searchConditionsModel");
     }
 
     @Test
-    public void degenerateConstruction_withNullSearchOrderModel1() {
-        List<SearchCondition> conditions = null;
-        assertDegenerateSupplierParameter(() -> new SearchConditionProvider(Model.ofList(conditions)),
-            "searchConditions");
+    void degenerateConstruction_withNullSearchOrderModel1() {
+        assertDegenerateSupplierParameter(() -> new SearchConditionProvider(Model.ofList(null)), "searchConditions");
     }
 
     @Test
-    public void providerSize_equals_conditionSize() {
+    void providerSize_equals_conditionSize() {
         assertThat(provider.size()).isEqualTo(conditions.size());
     }
 
     @Test
-    public void iterator_fromStartWithPageSizeLargerThanActualSize_returnsAll() {
+    void iterator_fromStartWithPageSizeLargerThanActualSize_returnsAll() {
         assertThat(provider.iterator(0, 100)).containsExactly(mockCondition1, mockCondition2, mockCondition3,
             mockCondition4);
     }
 
     @Test
-    public void iterator_fromStartWithLimitingPageSize_returnsPageFullFromStart() {
+    void iterator_fromStartWithLimitingPageSize_returnsPageFullFromStart() {
         assertThat(provider.iterator(0, 2)).containsExactly(mockCondition1, mockCondition2);
     }
 
     @Test
-    public void iterator_fromIndex1WithLimitingPageSize_returnsPageFullFromIndex() {
+    void iterator_fromIndex1WithLimitingPageSize_returnsPageFullFromIndex() {
         assertThat(provider.iterator(1, 2)).containsExactly(mockCondition2, mockCondition3);
     }
 
     @Test
-    public void gettingModel() {
+    void gettingModel() {
         IModel<SearchCondition> model = provider.model(mockCondition1);
         assertThat(model.getObject()).isEqualTo(mockCondition1);
     }

@@ -4,10 +4,10 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import org.junit.jupiter.api.Test;
 
-public class UtilTestConfigurationTest {
+class UtilTestConfigurationTest {
 
     @Test
-    public void dateTimeService() {
+    void dateTimeService() {
         UtilTestConfiguration uc = new UtilTestConfiguration();
         assertThat(uc.dateTimeService()).isInstanceOf(FrozenDateTimeService.class);
     }

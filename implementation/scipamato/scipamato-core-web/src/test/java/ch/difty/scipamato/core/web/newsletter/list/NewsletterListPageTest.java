@@ -24,7 +24,7 @@ import ch.difty.scipamato.core.web.common.BasePageTest;
 import ch.difty.scipamato.core.web.newsletter.edit.NewsletterEditPage;
 
 @SuppressWarnings("SameParameterValue")
-public class NewsletterListPageTest extends BasePageTest<NewsletterListPage> {
+class NewsletterListPageTest extends BasePageTest<NewsletterListPage> {
 
     private Newsletter newsletterInProgress = Newsletter
         .builder()
@@ -53,7 +53,7 @@ public class NewsletterListPageTest extends BasePageTest<NewsletterListPage> {
     }
 
     @AfterEach
-    public void tearDown() {
+    void tearDown() {
         verifyNoMoreInteractions(newsletterServiceMock);
     }
 
@@ -113,7 +113,7 @@ public class NewsletterListPageTest extends BasePageTest<NewsletterListPage> {
     }
 
     @Test
-    public void clickingOnNewsletterIssue_forwardsToNewsletterEntryPage_withModelLoaded() {
+    void clickingOnNewsletterIssue_forwardsToNewsletterEntryPage_withModelLoaded() {
         getTester().startPage(getPageClass());
 
         getTester().clickLink("results:body:rows:1:cells:1:cell:link");
@@ -129,7 +129,7 @@ public class NewsletterListPageTest extends BasePageTest<NewsletterListPage> {
     }
 
     @Test
-    public void clickingNewNewsletter_forwardsToNewsletterEditPage() {
+    void clickingNewNewsletter_forwardsToNewsletterEditPage() {
         when(newsletterServiceMock.canCreateNewsletterInProgress()).thenReturn(true);
         getTester().startPage(getPageClass());
         getTester().assertRenderedPage(getPageClass());
@@ -150,7 +150,7 @@ public class NewsletterListPageTest extends BasePageTest<NewsletterListPage> {
     }
 
     @Test
-    public void givenNoNewNewsletterShallBeCreated_newNewsletterButtonIsDisabled() {
+    void givenNoNewNewsletterShallBeCreated_newNewsletterButtonIsDisabled() {
         when(newsletterServiceMock.canCreateNewsletterInProgress()).thenReturn(false);
         getTester().startPage(getPageClass());
         getTester().assertRenderedPage(getPageClass());
@@ -163,7 +163,7 @@ public class NewsletterListPageTest extends BasePageTest<NewsletterListPage> {
     }
 
     @Test
-    public void clickingSortTopicsIcon_forwardsToSortTopicsPage() {
+    void clickingSortTopicsIcon_forwardsToSortTopicsPage() {
         getTester().startPage(getPageClass());
         getTester().assertRenderedPage(getPageClass());
 
@@ -177,7 +177,7 @@ public class NewsletterListPageTest extends BasePageTest<NewsletterListPage> {
     }
 
     @Test
-    public void clickingRemoveIcon_forNewsletterInProgress_delegatesRemovalToServiceAndRefreshesResultPanel() {
+    void clickingRemoveIcon_forNewsletterInProgress_delegatesRemovalToServiceAndRefreshesResultPanel() {
         getTester().startPage(getPageClass());
         getTester().assertRenderedPage(getPageClass());
 
@@ -197,7 +197,7 @@ public class NewsletterListPageTest extends BasePageTest<NewsletterListPage> {
     }
 
     @Test
-    public void clickingRemoveIcon_forNewsletterPublished_doesNotDelegate() {
+    void clickingRemoveIcon_forNewsletterPublished_doesNotDelegate() {
         getTester().startPage(getPageClass());
         getTester().assertRenderedPage(getPageClass());
 
@@ -210,7 +210,7 @@ public class NewsletterListPageTest extends BasePageTest<NewsletterListPage> {
     }
 
     @Test
-    public void assertVisibilityOfRemoveLink_dependingOnPublicationState() {
+    void assertVisibilityOfRemoveLink_dependingOnPublicationState() {
         getTester().startPage(getPageClass());
         getTester().assertRenderedPage(getPageClass());
 
@@ -232,7 +232,7 @@ public class NewsletterListPageTest extends BasePageTest<NewsletterListPage> {
     }
 
     @Test
-    public void changingPublicationStatus_updatesResultTable() {
+    void changingPublicationStatus_updatesResultTable() {
         getTester().startPage(getPageClass());
 
         getTester().executeAjaxEvent("filterForm:publicationStatus", "change");
@@ -245,7 +245,7 @@ public class NewsletterListPageTest extends BasePageTest<NewsletterListPage> {
     }
 
     @Test
-    public void changingNewsletterTopic_updatesResultTable() {
+    void changingNewsletterTopic_updatesResultTable() {
         getTester().startPage(getPageClass());
 
         getTester().executeAjaxEvent("filterForm:topics", "change");

@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.core.web.WicketTest;
 
-public abstract class JasperReportResourceReferenceTest<E extends JasperReportResourceReference> extends WicketTest {
+abstract class JasperReportResourceReferenceTest<E extends JasperReportResourceReference> extends WicketTest {
 
     private static final String TAG    = "jrxml";
     private static final String DOTTAG = "." + TAG;
@@ -28,7 +28,7 @@ public abstract class JasperReportResourceReferenceTest<E extends JasperReportRe
     protected abstract String getResourceReferencePath();
 
     @Test
-    public void testDefaultAttributes() {
+    void testDefaultAttributes() {
         E ref = getResourceReference();
         assertThat(ref.getScope()).isEqualTo(getResourceReference().getClass());
         assertThat(ref.getName()).isEqualTo(getReportBaseName() + DOTTAG);
@@ -38,7 +38,7 @@ public abstract class JasperReportResourceReferenceTest<E extends JasperReportRe
     }
 
     @Test
-    public void testKey() {
+    void testKey() {
         E ref = getResourceReference();
         assertThat(ref
             .getKey()
@@ -58,7 +58,7 @@ public abstract class JasperReportResourceReferenceTest<E extends JasperReportRe
     }
 
     @Test
-    public void gettingReport() {
+    void gettingReport() {
         E ref = getResourceReference();
         assertThat(ref
             .getReport()
@@ -72,7 +72,7 @@ public abstract class JasperReportResourceReferenceTest<E extends JasperReportRe
      * true...
      */
     @Test
-    public void doCacheReport() {
+    void doCacheReport() {
         E ref = getResourceReference();
         assertThat(ref.isCacheReport()).isTrue();
     }

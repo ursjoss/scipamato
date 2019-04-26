@@ -24,7 +24,7 @@ import ch.difty.scipamato.core.persistence.CodeService;
 import ch.difty.scipamato.core.web.common.BasePageTest;
 
 @SuppressWarnings("SameParameterValue")
-public class CodeListPageTest extends BasePageTest<CodeListPage> {
+class CodeListPageTest extends BasePageTest<CodeListPage> {
 
     private static final int COLUMN_ID_WITH_LINK = 2;
 
@@ -56,7 +56,7 @@ public class CodeListPageTest extends BasePageTest<CodeListPage> {
     }
 
     @AfterEach
-    public void tearDown() {
+    void tearDown() {
         verifyNoMoreInteractions(codeServiceMock);
     }
 
@@ -122,7 +122,7 @@ public class CodeListPageTest extends BasePageTest<CodeListPage> {
     }
 
     @Test
-    public void clickingOnCodeTitle_forwardsToCodeEditPage_withModelLoaded() {
+    void clickingOnCodeTitle_forwardsToCodeEditPage_withModelLoaded() {
         getTester().startPage(getPageClass());
 
         getTester().clickLink("resultPanel:results:body:rows:1:cells:" + COLUMN_ID_WITH_LINK + ":cell:link");
@@ -139,7 +139,7 @@ public class CodeListPageTest extends BasePageTest<CodeListPage> {
     }
 
     @Test
-    public void clickingNewCode_forwardsToCodeEditPage() {
+    void clickingNewCode_forwardsToCodeEditPage() {
         CodeTranslation ct_en = new CodeTranslation(1, "en", "ct_en", null, 1);
         CodeDefinition kd = new CodeDefinition("1A", "en", cc1, 1, false, 1, ct_en);
         when(codeServiceMock.newUnpersistedCodeDefinition()).thenReturn(kd);
@@ -159,7 +159,7 @@ public class CodeListPageTest extends BasePageTest<CodeListPage> {
     }
 
     @Test
-    public void changingCodeClass_refreshesResultPanel() {
+    void changingCodeClass_refreshesResultPanel() {
         getTester().startPage(getPageClass());
 
         getTester().executeAjaxEvent("filterPanel:filterForm:codeClass", "change");

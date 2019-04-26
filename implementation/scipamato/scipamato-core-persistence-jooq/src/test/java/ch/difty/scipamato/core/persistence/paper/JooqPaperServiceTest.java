@@ -24,7 +24,7 @@ import ch.difty.scipamato.core.pubmed.PubmedArticleFacade;
 import ch.difty.scipamato.core.pubmed.api.*;
 
 @SuppressWarnings({ "ResultOfMethodCallIgnored", "OptionalGetWithoutIsPresent" })
-public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, PaperRepository> {
+class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, PaperRepository> {
 
     private static final long   MINIMUM_NUMBER = 7L;
     private static final String LC             = "de";
@@ -89,7 +89,7 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
     }
 
     @Test
-    public void findingById_withNotFoundEntity_returnsOptionalEmpty() {
+    void findingById_withNotFoundEntity_returnsOptionalEmpty() {
         Long id = 7L;
         when(repoMock.findById(id)).thenReturn(null);
 
@@ -101,7 +101,7 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
     }
 
     @Test
-    public void findingByFilter_delegatesToRepo() {
+    void findingByFilter_delegatesToRepo() {
         when(repoMock.findPageByFilter(filterMock, paginationContextMock)).thenReturn(papers);
         auditFixture();
         assertThat(service.findPageByFilter(filterMock, paginationContextMock)).isEqualTo(papers);
@@ -110,14 +110,14 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
     }
 
     @Test
-    public void countingByFilter_delegatesToRepo() {
+    void countingByFilter_delegatesToRepo() {
         when(repoMock.countByFilter(filterMock)).thenReturn(3);
         assertThat(service.countByFilter(filterMock)).isEqualTo(3);
         verify(repoMock).countByFilter(filterMock);
     }
 
     @Test
-    public void savingOrUpdating_withPaperWithNullId_hasRepoAddThePaper() {
+    void savingOrUpdating_withPaperWithNullId_hasRepoAddThePaper() {
         when(paperMock.getId()).thenReturn(null);
         when(repoMock.add(paperMock)).thenReturn(paperMock);
         auditFixture();
@@ -128,7 +128,7 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
     }
 
     @Test
-    public void savingOrUpdating_withPaperWithNonNullId_hasRepoUpdateThePaper() {
+    void savingOrUpdating_withPaperWithNonNullId_hasRepoUpdateThePaper() {
         when(paperMock.getId()).thenReturn(17L);
         when(repoMock.update(paperMock)).thenReturn(paperMock);
         auditFixture();
@@ -139,13 +139,13 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
     }
 
     @Test
-    public void deleting_withNullEntity_doesNothing() {
+    void deleting_withNullEntity_doesNothing() {
         service.remove(null);
         verify(repoMock, never()).delete(anyLong(), anyInt());
     }
 
     @Test
-    public void deleting_withEntityWithNullId_doesNothing() {
+    void deleting_withEntityWithNullId_doesNothing() {
         when(paperMock.getId()).thenReturn(null);
 
         service.remove(paperMock);
@@ -155,7 +155,7 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
     }
 
     @Test
-    public void deleting_withEntityWithNormalId_delegatesToRepo() {
+    void deleting_withEntityWithNormalId_delegatesToRepo() {
         when(paperMock.getId()).thenReturn(3L);
         when(paperMock.getVersion()).thenReturn(17);
 
@@ -167,28 +167,28 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
     }
 
     @Test
-    public void findingBySearchOrder_delegatesToRepo() {
+    void findingBySearchOrder_delegatesToRepo() {
         when(repoMock.findBySearchOrder(searchOrderMock, LC)).thenReturn(papers);
         assertThat(service.findBySearchOrder(searchOrderMock, LC)).containsAll(papers);
         verify(repoMock).findBySearchOrder(searchOrderMock, LC);
     }
 
     @Test
-    public void findingPagedBySearchOrder_delegatesToRepo() {
+    void findingPagedBySearchOrder_delegatesToRepo() {
         when(repoMock.findPageBySearchOrder(searchOrderMock, paginationContextMock, LC)).thenReturn(papers);
         assertThat(service.findPageBySearchOrder(searchOrderMock, paginationContextMock, LC)).isEqualTo(papers);
         verify(repoMock).findPageBySearchOrder(searchOrderMock, paginationContextMock, LC);
     }
 
     @Test
-    public void countingBySearchOrder_delegatesToRepo() {
+    void countingBySearchOrder_delegatesToRepo() {
         when(repoMock.countBySearchOrder(searchOrderMock)).thenReturn(2);
         assertThat(service.countBySearchOrder(searchOrderMock)).isEqualTo(2);
         verify(repoMock).countBySearchOrder(searchOrderMock);
     }
 
     @Test
-    public void dumpingEmptyListOfArticles_logsWarnMessage() {
+    void dumpingEmptyListOfArticles_logsWarnMessage() {
         ServiceResult sr = service.dumpPubmedArticlesToDb(articles, MINIMUM_NUMBER);
         assertThat(sr).isNotNull();
         assertThat(sr.getInfoMessages()).isEmpty();
@@ -197,7 +197,7 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
     }
 
     @Test
-    public void dumpingSingleArticle_whichAlreadyExists_doesNotSave() {
+    void dumpingSingleArticle_whichAlreadyExists_doesNotSave() {
         Integer pmIdValue = 23193287;
         PubmedArticle pa = newPubmedArticle(pmIdValue);
         articles.add(PubmedArticleFacade.newPubmedArticleFrom(pa));
@@ -218,7 +218,7 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
     }
 
     @Test
-    public void dumpingSingleNewArticle_saves() {
+    void dumpingSingleNewArticle_saves() {
         Integer pmIdValue = 23193287;
         PubmedArticle pa = newPubmedArticle(pmIdValue);
         articles.add(PubmedArticleFacade.newPubmedArticleFrom(pa));
@@ -249,7 +249,7 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
     }
 
     @Test
-    public void dumpingSingleNewArticleWithNullPmId_doesNotTryToSave() {
+    void dumpingSingleNewArticleWithNullPmId_doesNotTryToSave() {
         Integer pmIdValue = 23193287;
         PubmedArticle pa = newPubmedArticle(pmIdValue);
         articles.add(PubmedArticleFacade.newPubmedArticleFrom(pa));
@@ -265,7 +265,7 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
     }
 
     @Test
-    public void dumpingTwoNewArticleOneOfWhichWithNullPmId_savesOnlyOther() {
+    void dumpingTwoNewArticleOneOfWhichWithNullPmId_savesOnlyOther() {
         Integer pmIdValue = 23193287;
         PubmedArticle pa1 = newPubmedArticle(pmIdValue);
         articles.add(PubmedArticleFacade.newPubmedArticleFrom(pa1));
@@ -320,7 +320,7 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
     }
 
     @Test
-    public void findingByNumber_withNoResult_returnsOptionalEmpty() {
+    void findingByNumber_withNoResult_returnsOptionalEmpty() {
         when(repoMock.findByNumbers(Collections.singletonList(1L), LC)).thenReturn(new ArrayList<>());
         Optional<Paper> opt = service.findByNumber(1L, LC);
         assertThat(opt.isPresent()).isFalse();
@@ -351,7 +351,7 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
     }
 
     @Test
-    public void findingByNumber_withMultipleRecordsFromRepo_returnsFirstAsOptional() {
+    void findingByNumber_withMultipleRecordsFromRepo_returnsFirstAsOptional() {
         when(repoMock.findByNumbers(Collections.singletonList(1L), LC)).thenReturn(
             Arrays.asList(paperMock, paperMock2));
         auditFixture();
@@ -359,7 +359,7 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
     }
 
     @Test
-    public void findingLowestFreeNumberStartingFrom_delegatesToRepo() {
+    void findingLowestFreeNumberStartingFrom_delegatesToRepo() {
         long minimum = 4L;
         when(repoMock.findLowestFreeNumberStartingFrom(minimum)).thenReturn(17L);
         assertThat(service.findLowestFreeNumberStartingFrom(minimum)).isEqualTo(17L);
@@ -367,7 +367,7 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
     }
 
     @Test
-    public void findingPageOfIdsByFilter() {
+    void findingPageOfIdsByFilter() {
         final List<Long> ids = Arrays.asList(3L, 17L, 5L);
         when(repoMock.findPageOfIdsByFilter(filterMock, paginationContextMock)).thenReturn(ids);
         assertThat(service.findPageOfIdsByFilter(filterMock, paginationContextMock)).isEqualTo(ids);
@@ -375,7 +375,7 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
     }
 
     @Test
-    public void findingPageOfIdsBySearchOrder() {
+    void findingPageOfIdsBySearchOrder() {
         final List<Long> ids = Arrays.asList(3L, 17L, 5L);
         when(repoMock.findPageOfIdsBySearchOrder(searchOrderMock, paginationContextMock)).thenReturn(ids);
         assertThat(service.findPageOfIdsBySearchOrder(searchOrderMock, paginationContextMock)).isEqualTo(ids);
@@ -383,7 +383,7 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
     }
 
     @Test
-    public void excludingFromSearchOrder_delegatesToRepo() {
+    void excludingFromSearchOrder_delegatesToRepo() {
         long searchOrderId = 4L;
         long paperId = 5L;
         service.excludeFromSearchOrder(searchOrderId, paperId);
@@ -391,7 +391,7 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
     }
 
     @Test
-    public void reincludingFromSearchOrder_delegatesToRepo() {
+    void reincludingFromSearchOrder_delegatesToRepo() {
         long searchOrderId = 4L;
         long paperId = 5L;
         service.reincludeIntoSearchOrder(searchOrderId, paperId);
@@ -399,14 +399,14 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
     }
 
     @Test
-    public void savingAttachment_delegatesToRepo() {
+    void savingAttachment_delegatesToRepo() {
         PaperAttachment paMock = mock(PaperAttachment.class);
         service.saveAttachment(paMock);
         verify(repoMock).saveAttachment(paMock);
     }
 
     @Test
-    public void loadingAttachmentWithContentById_delegatesToRepo() {
+    void loadingAttachmentWithContentById_delegatesToRepo() {
         final Integer id = 7;
         when(repoMock.loadAttachmentWithContentBy(id)).thenReturn(attachmentMock);
         assertThat(service.loadAttachmentWithContentBy(id)).isEqualTo(attachmentMock);
@@ -414,7 +414,7 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
     }
 
     @Test
-    public void deletingAttachment_delegatesToRepo() {
+    void deletingAttachment_delegatesToRepo() {
         Integer id = 5;
         when(repoMock.deleteAttachment(id)).thenReturn(paperMock);
         assertThat(service.deleteAttachment(id)).isEqualTo(paperMock);
@@ -422,14 +422,14 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
     }
 
     @Test
-    public void deletingByIds_delegatesToRepo() {
+    void deletingByIds_delegatesToRepo() {
         List<Long> ids = Arrays.asList(5L, 7L, 9L);
         service.deletePapersWithIds(ids);
         verify(repoMock).delete(ids);
     }
 
     @Test
-    public void findingByFilter_withPaperWithNullCreator() {
+    void findingByFilter_withPaperWithNullCreator() {
         when(paperMock3.getCreatedBy()).thenReturn(null);
         when(paperMock3.getLastModifiedBy()).thenReturn(null);
         papers.clear();
@@ -444,7 +444,7 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
     }
 
     @Test
-    public void mergingPaperIntoNewsletter_withWipNewsletterPresent_delegatesToNewsletterRepo() {
+    void mergingPaperIntoNewsletter_withWipNewsletterPresent_delegatesToNewsletterRepo() {
         final int newsletterId = 13;
         final long paperId = 14;
         final Integer topicId = 3;
@@ -466,7 +466,7 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
     }
 
     @Test
-    public void mergingPaperIntoNewsletter_withNoWipNewsletterPresent_returns0() {
+    void mergingPaperIntoNewsletter_withNoWipNewsletterPresent_returns0() {
         final long paperId = 14;
         final Integer topicId = 3;
         final String languageCode = "en";
@@ -477,7 +477,7 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
     }
 
     @Test
-    public void removingPaperFromNewsletter_delegatesToNewsletterRepo() {
+    void removingPaperFromNewsletter_delegatesToNewsletterRepo() {
         final int newsletterId = 13;
         final long paperId = 14;
         when(newsletterRepoMock.removePaperFromNewsletter(newsletterId, paperId)).thenReturn(1);
@@ -486,13 +486,13 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
     }
 
     @Test
-    public void hasDuplicateFieldNextToCurrent_withDegenerateConstruction_nullFieldName_throws() {
+    void hasDuplicateFieldNextToCurrent_withDegenerateConstruction_nullFieldName_throws() {
         TestUtils.assertDegenerateSupplierParameter(() -> service.hasDuplicateFieldNextToCurrent(null, "fw", 1L),
             "fieldName");
     }
 
     @Test
-    public void hasDuplicateFieldNextToCurrent_withInvalidFieldNameFails() {
+    void hasDuplicateFieldNextToCurrent_withInvalidFieldNameFails() {
         try {
             service.hasDuplicateFieldNextToCurrent("foo", "fw", 1L);
             fail("should have thrown exception");
@@ -504,7 +504,7 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
     }
 
     @Test
-    public void hasDuplicateFieldNextToCurrent_withPmIdValidated_withNoDuplicate() {
+    void hasDuplicateFieldNextToCurrent_withPmIdValidated_withNoDuplicate() {
         final String fieldName = "pmId";
         final int fieldValue = 11;
         final Long id = 1L;
@@ -516,7 +516,7 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
     }
 
     @Test
-    public void hasDuplicateFieldNextToCurrent_withPmIdValidated_withDuplicate() {
+    void hasDuplicateFieldNextToCurrent_withPmIdValidated_withDuplicate() {
         final String fieldName = "pmId";
         final int fieldValue = 10;
         final Long id = 1L;
@@ -528,7 +528,7 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
     }
 
     @Test
-    public void hasDuplicateFieldNextToCurrent_withDoiValidated_withNoDuplicate() {
+    void hasDuplicateFieldNextToCurrent_withDoiValidated_withNoDuplicate() {
         final String fieldName = "doi";
         final String fieldValue = "fw";
         final Long id = 1L;
@@ -540,7 +540,7 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
     }
 
     @Test
-    public void hasDuplicateFieldNextToCurrent_withNullFieldValue_isAlwaysFalse() {
+    void hasDuplicateFieldNextToCurrent_withNullFieldValue_isAlwaysFalse() {
         final String fieldName = "doi";
         final Long id = 1L;
 
@@ -551,7 +551,7 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
     }
 
     @Test
-    public void hasDuplicateFieldNextToCurrent_withNullId_withNoOtherStudyMatchingPmId() {
+    void hasDuplicateFieldNextToCurrent_withNullId_withNoOtherStudyMatchingPmId() {
         final String fieldName = "pmId";
         final int fieldValue = 10;
 

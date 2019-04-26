@@ -12,7 +12,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-public class JooqCodeClassRepoTest {
+class JooqCodeClassRepoTest {
 
     private CodeClassRepository repo;
 
@@ -20,17 +20,17 @@ public class JooqCodeClassRepoTest {
     private DSLContext dslMock;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         repo = new JooqCodeClassRepo(dslMock);
     }
 
     @AfterEach
-    public void tearDown() {
+    void tearDown() {
         verifyNoMoreInteractions(dslMock);
     }
 
     @Test
-    public void finding_withNullLanguageCode_throws() {
+    void finding_withNullLanguageCode_throws() {
         assertDegenerateSupplierParameter(() -> repo.find(null), "languageCode");
     }
 }

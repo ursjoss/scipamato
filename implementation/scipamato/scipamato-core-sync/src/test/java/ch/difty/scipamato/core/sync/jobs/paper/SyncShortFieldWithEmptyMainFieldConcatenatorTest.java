@@ -18,7 +18,7 @@ import ch.difty.scipamato.common.TestUtils;
 import ch.difty.scipamato.core.db.public_.tables.records.PaperRecord;
 
 @ExtendWith(MockitoExtension.class)
-public class SyncShortFieldWithEmptyMainFieldConcatenatorTest {
+class SyncShortFieldWithEmptyMainFieldConcatenatorTest {
 
     private final SyncShortFieldConcatenator sfc = new SyncShortFieldWithEmptyMainFieldConcatenator();
 
@@ -26,22 +26,22 @@ public class SyncShortFieldWithEmptyMainFieldConcatenatorTest {
     private ResultSet resultSet;
 
     @AfterEach
-    public void tearDown() {
+    void tearDown() {
         verifyNoMoreInteractions(resultSet);
     }
 
     @Test
-    public void methods_withNullRecordset_throws() {
+    void methods_withNullRecordSet_throws() {
         TestUtils.assertDegenerateSupplierParameter(() -> sfc.methodsFrom(null), "rs");
     }
 
     @Test
-    public void population_withNullRecordset_throws() {
+    void population_withNullRecordSet_throws() {
         TestUtils.assertDegenerateSupplierParameter(() -> sfc.populationFrom(null), "rs");
     }
 
     @Test
-    public void result_withNullRecordset_throws() {
+    void result_withNullRecordSet_throws() {
         TestUtils.assertDegenerateSupplierParameter(() -> sfc.resultFrom(null), "rs");
     }
 
@@ -205,17 +205,17 @@ public class SyncShortFieldWithEmptyMainFieldConcatenatorTest {
     };
 
     @Test
-    public void methodsFrom_withThrowingMethod_returnsNull() {
+    void methodsFrom_withThrowingMethod_returnsNull() {
         assertThat(throwingConcatenator.methodsFrom(mock(ResultSet.class))).isNull();
     }
 
     @Test
-    public void polulationFrom_withThrowingMethod_returnsNull() {
+    void populationFrom_withThrowingMethod_returnsNull() {
         assertThat(throwingConcatenator.populationFrom(mock(ResultSet.class))).isNull();
     }
 
     @Test
-    public void resultFrom_withThrowingMethod_returnsNull() {
+    void resultFrom_withThrowingMethod_returnsNull() {
         assertThat(throwingConcatenator.resultFrom(mock(ResultSet.class))).isNull();
     }
 

@@ -4,10 +4,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 
-public class ScipamatoFilterTest {
+class ScipamatoFilterTest {
 
     @Test
-    public void canInstantiate() {
+    void canInstantiate() {
         assertThat(new ScipamatoFilter()).isNotNull();
     }
 }

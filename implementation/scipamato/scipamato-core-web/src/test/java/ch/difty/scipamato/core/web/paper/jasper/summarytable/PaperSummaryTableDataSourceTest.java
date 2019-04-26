@@ -19,8 +19,7 @@ import ch.difty.scipamato.core.entity.Code;
 import ch.difty.scipamato.core.web.paper.jasper.PaperDataSourceTest;
 import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields;
 
-@SuppressWarnings("ResultOfMethodCallIgnored")
-public class PaperSummaryTableDataSourceTest extends PaperDataSourceTest {
+class PaperSummaryTableDataSourceTest extends PaperDataSourceTest {
 
     private static final Long   NUMBER           = 100L;
     private static final String FIRST_AUTHOR     = "firstAuthor";
@@ -84,7 +83,7 @@ public class PaperSummaryTableDataSourceTest extends PaperDataSourceTest {
 
         assertThat(ds.getFileName()).isEqualTo(fileName);
 
-        final JRDataSource jsds = ds.getReportDataSource();
+        @SuppressWarnings("SpellCheckingInspection") final JRDataSource jsds = ds.getReportDataSource();
         JRDesignField f = new JRDesignField();
 
         assertThat(jsds.next()).isTrue();
@@ -104,8 +103,9 @@ public class PaperSummaryTableDataSourceTest extends PaperDataSourceTest {
         assertThat(jsds.next()).isFalse();
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     @Test
-    public void instantiatingWithProvider_returnsPdfDataSourceWithOneRecord() throws JRException {
+    void instantiatingWithProvider_returnsPdfDataSourceWithOneRecord() throws JRException {
         when(dataProviderMock.size()).thenReturn(1L);
         when(dataProviderMock.findAllPapersByFilter()).thenReturn(Collections.singletonList(paperMock));
 
@@ -127,7 +127,7 @@ public class PaperSummaryTableDataSourceTest extends PaperDataSourceTest {
     }
 
     @Test
-    public void instantiatingWithProvider_withEmptyProvider_returnsNoRecord() throws JRException {
+    void instantiatingWithProvider_withEmptyProvider_returnsNoRecord() throws JRException {
         when(dataProviderMock.size()).thenReturn(0L);
         ds = new PaperSummaryTableDataSource(dataProviderMock, rhf, pdfExporterConfigMock);
         assertThat(ds
@@ -137,7 +137,7 @@ public class PaperSummaryTableDataSourceTest extends PaperDataSourceTest {
     }
 
     @Test
-    public void instantiatingWithProvider_withNullProvider_throws() {
+    void instantiatingWithProvider_withNullProvider_throws() {
         try {
             new PaperSummaryTableDataSource(null, rhf, pdfExporterConfigMock);
         } catch (Exception ex) {

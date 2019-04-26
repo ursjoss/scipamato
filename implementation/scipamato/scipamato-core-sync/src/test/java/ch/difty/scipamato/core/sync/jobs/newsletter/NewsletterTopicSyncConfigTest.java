@@ -24,7 +24,7 @@ import ch.difty.scipamato.publ.db.public_.tables.records.NewsletterTopicRecord;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
-public class NewsletterTopicSyncConfigTest extends SyncConfigTest<NewsletterTopicRecord> {
+class NewsletterTopicSyncConfigTest extends SyncConfigTest<NewsletterTopicRecord> {
 
     @Autowired
     private NewsletterTopicSyncConfig config;
@@ -68,7 +68,7 @@ public class NewsletterTopicSyncConfigTest extends SyncConfigTest<NewsletterTopi
     }
 
     @Test
-    public void makingEntity() throws SQLException {
+    void makingEntity() throws SQLException {
         ResultSet rs = Mockito.mock(ResultSet.class);
         when(rs.getInt(NewsletterTopic.NEWSLETTER_TOPIC.ID.getName())).thenReturn(1);
         when(rs.getString(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.LANG_CODE.getName())).thenReturn("lc");

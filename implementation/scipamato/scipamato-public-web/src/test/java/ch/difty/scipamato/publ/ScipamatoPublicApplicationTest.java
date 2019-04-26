@@ -12,13 +12,13 @@ import ch.difty.scipamato.publ.config.ScipamatoPublicProperties;
 
 @ExtendWith(MockitoExtension.class)
 @Slf4j
-public class ScipamatoPublicApplicationTest {
+class ScipamatoPublicApplicationTest {
 
     @Mock
     private ScipamatoPublicProperties properties;
 
     @Test
-    public void withCommercialFontEnabled_willOutputLog() {
+    void withCommercialFontEnabled_willOutputLog() {
         when(properties.isCommercialFontPresent()).thenReturn(true);
         when(properties.isResponsiveIframeSupportEnabled()).thenReturn(false);
 
@@ -30,7 +30,7 @@ public class ScipamatoPublicApplicationTest {
     }
 
     @Test
-    public void withPymEnabled_willOutputLog() {
+    void withPymEnabled_willOutputLog() {
         when(properties.isCommercialFontPresent()).thenReturn(false);
         when(properties.isResponsiveIframeSupportEnabled()).thenReturn(true);
 
@@ -42,7 +42,7 @@ public class ScipamatoPublicApplicationTest {
     }
 
     @Test
-    public void withPropertiesDisabled_willNotOutputLogs() {
+    void withPropertiesDisabled_willNotOutputLogs() {
         when(properties.isCommercialFontPresent()).thenReturn(false);
         when(properties.isResponsiveIframeSupportEnabled()).thenReturn(false);
         ScipamatoPublicApplication app = new ScipamatoPublicApplication(properties);

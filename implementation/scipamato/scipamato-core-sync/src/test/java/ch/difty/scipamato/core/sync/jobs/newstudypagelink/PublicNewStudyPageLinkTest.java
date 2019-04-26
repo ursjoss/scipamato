@@ -6,10 +6,10 @@ import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.core.sync.jobs.PublicEntityTest;
 
-public class PublicNewStudyPageLinkTest extends PublicEntityTest {
+class PublicNewStudyPageLinkTest extends PublicEntityTest {
 
     @Test
-    public void canSetGet_withStandardFieldsPopulated() {
+    void canSetGet_withStandardFieldsPopulated() {
         PublicNewStudyPageLink pp = PublicNewStudyPageLink
             .builder()
             .langCode("en")

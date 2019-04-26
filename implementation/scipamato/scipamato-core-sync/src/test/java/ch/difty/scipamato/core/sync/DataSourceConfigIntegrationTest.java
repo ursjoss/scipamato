@@ -20,7 +20,7 @@ import ch.difty.scipamato.core.sync.launcher.Warner;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
-public class DataSourceConfigIntegrationTest {
+class DataSourceConfigIntegrationTest {
 
     @Autowired
     private Configuration coreConfiguration;
@@ -35,17 +35,17 @@ public class DataSourceConfigIntegrationTest {
     private Warner warner;
 
     @Test
-    public void assertJooqSourceConfigIsProperlyWired() throws SQLException {
+    void assertJooqSourceConfigIsProperlyWired() throws SQLException {
         assertConfiguration(coreConfiguration);
     }
 
     @Test
-    public void assertJooqTargetConfigIsProperlyWired() throws SQLException {
+    void assertJooqTargetConfigIsProperlyWired() throws SQLException {
         assertConfiguration(publicConfiguration);
     }
 
     @Test
-    public void assertJooqBatchConfigIsProperlyWired() throws SQLException {
+    void assertJooqBatchConfigIsProperlyWired() throws SQLException {
         assertConfiguration(batchConfiguration);
     }
 
@@ -83,7 +83,7 @@ public class DataSourceConfigIntegrationTest {
     }
 
     @Test
-    public void assertWarner() {
+    void assertWarner() {
         assertThat(warner).isNotNull();
     }
 

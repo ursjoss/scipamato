@@ -7,11 +7,13 @@ import org.junit.jupiter.api.Test;
 import ch.difty.scipamato.common.TestUtils;
 import ch.difty.scipamato.core.entity.Paper;
 
-public class CoreShortFieldWithEmptyMainFieldConcatenatorTest {
+@SuppressWarnings("SpellCheckingInspection")
+class CoreShortFieldWithEmptyMainFieldConcatenatorTest {
 
     private final CoreShortFieldConcatenator sfc = new CoreShortFieldWithEmptyMainFieldConcatenator();
 
     private final Paper              p   = new Paper();
+    @SuppressWarnings("SpellCheckingInspection")
     private final ReportHeaderFields rhf = ReportHeaderFields
         .builder("hp", "b")
         .methodStudyDesignLabel("msdl")
@@ -30,22 +32,22 @@ public class CoreShortFieldWithEmptyMainFieldConcatenatorTest {
         .build();
 
     @Test
-    public void methods_withNullRecordset_throws() {
+    void methods_withNullRecordset_throws() {
         TestUtils.assertDegenerateSupplierParameter(() -> sfc.methodsFrom(null, rhf), "paper");
     }
 
     @Test
-    public void population_withNullRecordset_throws() {
+    void population_withNullRecordset_throws() {
         TestUtils.assertDegenerateSupplierParameter(() -> sfc.populationFrom(null, rhf), "paper");
     }
 
     @Test
-    public void result_withNullRecordset_throws() {
+    void result_withNullRecordset_throws() {
         TestUtils.assertDegenerateSupplierParameter(() -> sfc.resultFrom(null, rhf), "paper");
     }
 
     @Test
-    public void methods_withNonNullMethod_returnsMethod() {
+    void methods_withNonNullMethod_returnsMethod() {
         p.setMethods("method");
         p.setMethodStudyDesign("msd");
         p.setMethodOutcome("mo");
@@ -59,7 +61,7 @@ public class CoreShortFieldWithEmptyMainFieldConcatenatorTest {
     }
 
     @Test
-    public void methods_withNullMethod_returnsConcatenatedShortMethodFieldsConcatenated() {
+    void methods_withNullMethod_returnsConcatenatedShortMethodFieldsConcatenated() {
         p.setMethods(null);
         p.setMethodStudyDesign("msd");
         p.setMethodOutcome("mo");
@@ -74,7 +76,7 @@ public class CoreShortFieldWithEmptyMainFieldConcatenatorTest {
     }
 
     @Test
-    public void population_withNonNullPopulation_returnsPopulation() {
+    void population_withNonNullPopulation_returnsPopulation() {
         p.setPopulation("population");
         p.setPopulationPlace("ppl");
         p.setPopulationParticipants("ppa");
@@ -84,7 +86,7 @@ public class CoreShortFieldWithEmptyMainFieldConcatenatorTest {
     }
 
     @Test
-    public void population_withNullPopulation_returnsPopulationShortFieldsConcatenated() {
+    void population_withNullPopulation_returnsPopulationShortFieldsConcatenated() {
         p.setPopulation(null);
         p.setPopulationPlace("ppl");
         p.setPopulationParticipants("ppa");
@@ -94,7 +96,7 @@ public class CoreShortFieldWithEmptyMainFieldConcatenatorTest {
     }
 
     @Test
-    public void result_withNonNullResult_returnsResult() {
+    void result_withNonNullResult_returnsResult() {
         p.setResult("result");
         p.setResultMeasuredOutcome("rmo");
         p.setResultExposureRange("rer");
@@ -105,7 +107,7 @@ public class CoreShortFieldWithEmptyMainFieldConcatenatorTest {
     }
 
     @Test
-    public void result_withNullResult_returnsResultShortFieldsConcatenated() {
+    void result_withNullResult_returnsResultShortFieldsConcatenated() {
         p.setResult(null);
         p.setResultMeasuredOutcome("rmo");
         p.setResultExposureRange("rer");

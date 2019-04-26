@@ -21,7 +21,7 @@ import ch.difty.scipamato.core.persistence.AbstractServiceTest;
 
 @SuppressWarnings("OptionalGetWithoutIsPresent")
 @ExtendWith(MockitoExtension.class)
-public class JooqPaperSlimServiceTest extends AbstractServiceTest<Long, PaperSlim, PaperSlimRepository> {
+class JooqPaperSlimServiceTest extends AbstractServiceTest<Long, PaperSlim, PaperSlimRepository> {
 
     private JooqPaperSlimService service;
 
@@ -56,8 +56,6 @@ public class JooqPaperSlimServiceTest extends AbstractServiceTest<Long, PaperSli
 
         papers.add(paperSlimMock);
         papers.add(paperSlimMock);
-
-        // when(newsletterMock.getCreatedBy()).thenReturn(10);
     }
 
     @Override
@@ -82,7 +80,7 @@ public class JooqPaperSlimServiceTest extends AbstractServiceTest<Long, PaperSli
     }
 
     @Test
-    public void findingById_withNotFoundEntity_returnsOptionalEmpty() {
+    void findingById_withNotFoundEntity_returnsOptionalEmpty() {
         Long id = 7L;
         when(repoMock.findById(id)).thenReturn(null);
 
@@ -94,7 +92,7 @@ public class JooqPaperSlimServiceTest extends AbstractServiceTest<Long, PaperSli
     }
 
     @Test
-    public void findingPageByFilter_delegatesToRepo() {
+    void findingPageByFilter_delegatesToRepo() {
         when(repoMock.findPageByFilter(filterMock, paginationContextMock)).thenReturn(papers);
         auditFixture();
         assertThat(service.findPageByFilter(filterMock, paginationContextMock)).isEqualTo(papers);
@@ -103,28 +101,28 @@ public class JooqPaperSlimServiceTest extends AbstractServiceTest<Long, PaperSli
     }
 
     @Test
-    public void countingByFilter_withSimpleFilter_delegatesToRepo() {
+    void countingByFilter_withSimpleFilter_delegatesToRepo() {
         when(repoMock.countByFilter(filterMock)).thenReturn(3);
         assertThat(service.countByFilter(filterMock)).isEqualTo(3);
         verify(repoMock).countByFilter(filterMock);
     }
 
     @Test
-    public void findingBySearchOrder_delegatesToRepo() {
+    void findingBySearchOrder_delegatesToRepo() {
         when(repoMock.findBySearchOrder(searchOrderMock)).thenReturn(papers);
         assertThat(service.findBySearchOrder(searchOrderMock)).containsAll(papers);
         verify(repoMock).findBySearchOrder(searchOrderMock);
     }
 
     @Test
-    public void findingPagedBySearchOrder_delegatesToRepo() {
+    void findingPagedBySearchOrder_delegatesToRepo() {
         when(repoMock.findPageBySearchOrder(searchOrderMock, paginationContextMock)).thenReturn(papers);
         assertThat(service.findPageBySearchOrder(searchOrderMock, paginationContextMock)).isEqualTo(papers);
         verify(repoMock).findPageBySearchOrder(searchOrderMock, paginationContextMock);
     }
 
     @Test
-    public void countingBySearchOrder_delegatesToRepo() {
+    void countingBySearchOrder_delegatesToRepo() {
         when(repoMock.countBySearchOrder(searchOrderMock)).thenReturn(2);
         assertThat(service.countBySearchOrder(searchOrderMock)).isEqualTo(2);
         verify(repoMock).countBySearchOrder(searchOrderMock);

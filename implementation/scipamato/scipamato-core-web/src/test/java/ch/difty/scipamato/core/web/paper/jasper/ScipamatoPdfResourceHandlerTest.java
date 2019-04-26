@@ -11,16 +11,17 @@ import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.core.web.paper.jasper.ScipamatoPdfExporterConfiguration.Builder;
 
-public class ScipamatoPdfResourceHandlerTest {
+class ScipamatoPdfResourceHandlerTest {
 
     @Test
-    public void testWithDefaultConfig() {
+    void testWithDefaultConfig() {
         ScipamatoPdfResourceHandler h = new ScipamatoPdfResourceHandler();
         assertThat(h.getContentType()).isEqualTo("application/pdf");
         assertThat(h.getExtension()).isEqualTo("pdf");
         validateDefaultConfig(h);
     }
 
+    @SuppressWarnings("SpellCheckingInspection")
     private void validateDefaultConfig(ScipamatoPdfResourceHandler h) {
         JRAbstractExporter<PdfReportConfiguration, PdfExporterConfiguration, OutputStreamExporterOutput, JRPdfExporterContext> exporter = h.newExporter();
         assertThat(exporter).isNotNull();
@@ -29,13 +30,13 @@ public class ScipamatoPdfResourceHandlerTest {
     }
 
     @Test
-    public void testWithExplicitConfigNull() {
+    void testWithExplicitConfigNull() {
         ScipamatoPdfResourceHandler h = new ScipamatoPdfResourceHandler(null);
         validateDefaultConfig(h);
     }
 
     @Test
-    public void testWithExplicitConfig() {
+    void testWithExplicitConfig() {
         ClusterablePdfExporterConfiguration c = new Builder("hp", 1L)
             .withAuthor("a")
             .build();

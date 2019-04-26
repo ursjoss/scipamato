@@ -24,7 +24,7 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @ActiveProfiles({ "test" })
-public class JooqDslTransactionIntegrationTest {
+class JooqDslTransactionIntegrationTest {
 
     @Autowired
     private DSLContext dsl;
@@ -33,7 +33,7 @@ public class JooqDslTransactionIntegrationTest {
     private DataSourceTransactionManager txMgr;
 
     @AfterEach
-    public void tearDown() {
+    void tearDown() {
         // Delete all books that were created in any test - just in case
         dsl
             .delete(PAPER)
@@ -42,7 +42,7 @@ public class JooqDslTransactionIntegrationTest {
     }
 
     @Test
-    public void testExplicitTransactions() {
+    void testExplicitTransactions() {
         boolean rollback = false;
 
         TransactionStatus tx = txMgr.getTransaction(new DefaultTransactionDefinition());
@@ -73,7 +73,7 @@ public class JooqDslTransactionIntegrationTest {
     }
 
     @Test
-    public void testjOOQTransactionsSimple() {
+    void testjOOQTransactionsSimple() {
         boolean rollback = false;
 
         try {
@@ -105,7 +105,7 @@ public class JooqDslTransactionIntegrationTest {
     }
 
     @Test
-    public void testjOOQTransactionsNested() {
+    void testjOOQTransactionsNested() {
         AtomicBoolean rollback1 = new AtomicBoolean(false);
         AtomicBoolean rollback2 = new AtomicBoolean(false);
 

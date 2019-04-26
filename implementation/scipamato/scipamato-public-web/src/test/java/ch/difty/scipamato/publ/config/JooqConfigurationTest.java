@@ -18,13 +18,13 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-public class JooqConfigurationTest {
+class JooqConfigurationTest {
 
     @Autowired
     private Configuration jooqConfig;
 
     @Test
-    public void assertJooqConfigIsProperlyWired() throws SQLException {
+    void assertJooqConfigIsProperlyWired() throws SQLException {
         assertThat(jooqConfig).isNotNull();
 
         assertThat(jooqConfig.dialect()).isEqualTo(SQLDialect.POSTGRES);

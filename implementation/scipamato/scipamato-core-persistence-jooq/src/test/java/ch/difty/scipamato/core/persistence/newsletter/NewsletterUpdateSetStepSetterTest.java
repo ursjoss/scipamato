@@ -14,7 +14,7 @@ import ch.difty.scipamato.core.persistence.UpdateSetStepSetter;
 import ch.difty.scipamato.core.persistence.UpdateSetStepSetterTest;
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
-public class NewsletterUpdateSetStepSetterTest extends UpdateSetStepSetterTest<NewsletterRecord, Newsletter> {
+class NewsletterUpdateSetStepSetterTest extends UpdateSetStepSetterTest<NewsletterRecord, Newsletter> {
 
     private final UpdateSetStepSetter<NewsletterRecord, Newsletter> setter = new NewsletterUpdateSetStepSetter();
 

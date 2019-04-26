@@ -4,17 +4,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 
-public class SimplonCssResourceReferenceTest {
+class SimplonCssResourceReferenceTest {
 
     private static final SimplonCssResourceReference REF = SimplonCssResourceReference.get();
 
     @Test
-    public void canGetInstance() {
+    void canGetInstance() {
         assertThat(REF).isInstanceOf(SimplonCssResourceReference.class);
     }
 
     @Test
-    public void assertResourceName() {
+    void assertResourceName() {
         assertThat(REF.getName()).isEqualTo("css/Simplon.css");
     }
 }

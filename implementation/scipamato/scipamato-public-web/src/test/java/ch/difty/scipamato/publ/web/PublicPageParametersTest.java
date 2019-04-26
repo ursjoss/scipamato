@@ -5,16 +5,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 
-public class PublicPageParametersTest {
+class PublicPageParametersTest {
 
     @Test
-    public void assertParameters() {
+    void assertParameters() {
         assertThat(PublicPageParameters.values()).containsExactly(SEARCH_ORDER_ID, SHOW_EXCLUDED, SHOW_NAVBAR, NUMBER,
             ISSUE, PARENT_URL);
     }
 
     @Test
-    public void assertRoleNames() {
+    void assertRoleNames() {
         assertThat(SEARCH_ORDER_ID.getName()).isEqualTo("searchOrderId");
         assertThat(SHOW_EXCLUDED.getName()).isEqualTo("showExcluded");
         assertThat(SHOW_NAVBAR.getName()).isEqualTo("showNavbar");

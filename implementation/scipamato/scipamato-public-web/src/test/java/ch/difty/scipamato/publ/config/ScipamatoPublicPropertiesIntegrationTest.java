@@ -18,63 +18,63 @@ import ch.difty.scipamato.publ.ScipamatoPublicApplication;
  */
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = ScipamatoPublicApplication.class)
-public class ScipamatoPublicPropertiesIntegrationTest {
+class ScipamatoPublicPropertiesIntegrationTest {
 
     @Autowired
-    public ApplicationPublicProperties appProperties;
+    ApplicationPublicProperties appProperties;
 
     @Test
-    public void gettingBuildVersion() {
+    void gettingBuildVersion() {
         assertThat(appProperties.getBuildVersion()).matches("\\d+\\.\\d+\\.\\d+.*");
     }
 
     @Test
-    public void assertDefaultLocalization() {
+    void assertDefaultLocalization() {
         assertThat(appProperties.getDefaultLocalization()).isEqualTo("de");
     }
 
     @Test
-    public void assertBrand() {
+    void assertBrand() {
         assertThat(appProperties.getBrand()).isEqualTo("SciPaMaTo");
     }
 
     @Test
-    public void assertPubmedBaseUrl() {
+    void assertPubmedBaseUrl() {
         assertThat(appProperties.getPubmedBaseUrl()).isEqualTo("https://www.ncbi.nlm.nih.gov/pubmed/");
     }
 
     @Test
-    public void assertPresenceOfCommercialFont() {
+    void assertPresenceOfCommercialFont() {
         assertThat(appProperties.isCommercialFontPresent()).isEqualTo(false);
     }
 
     @Test
-    public void assertNavbarVisibleByDefault() {
+    void assertNavbarVisibleByDefault() {
         assertThat(appProperties.isNavbarVisibleByDefault()).isEqualTo(false);
     }
 
     @Test
-    public void assertCmsUrlSearchPage() {
+    void assertCmsUrlSearchPage() {
         assertThat(appProperties.getCmsUrlSearchPage()).isEqualTo("http://localhost:8081/");
     }
 
     @Test
-    public void assertCmsUrlNewStudyPage() {
+    void assertCmsUrlNewStudyPage() {
         assertThat(appProperties.getCmsUrlNewStudyPage()).isEqualTo("http://localhost:8081/new-studies");
     }
 
     @Test
-    public void authorsAbbreviatedMaxLength() {
+    void authorsAbbreviatedMaxLength() {
         assertThat(appProperties.getAuthorsAbbreviatedMaxLength()).isEqualTo(60);
     }
 
     @Test
-    public void isResponsiveIframeSupportEnabled() {
+    void isResponsiveIframeSupportEnabled() {
         assertThat(appProperties.isResponsiveIframeSupportEnabled()).isFalse();
     }
 
     @Test
-    public void numberOfPreviousNewslettersInArchive() {
+    void numberOfPreviousNewslettersInArchive() {
         assertThat(appProperties.getNumberOfPreviousNewslettersInArchive()).isEqualTo(14);
     }
 

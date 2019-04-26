@@ -6,10 +6,10 @@ import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.core.sync.jobs.PublicEntityTest;
 
-public class PublicCodeClassTest extends PublicEntityTest {
+class PublicCodeClassTest extends PublicEntityTest {
 
     @Test
-    public void canSetGet() {
+    void canSetGet() {
         PublicCodeClass pcc = PublicCodeClass
             .builder()
             .codeClassId(1)

@@ -23,13 +23,13 @@ import ch.difty.scipamato.core.persistence.OptimisticLockingException;
 
 @SuppressWarnings("SpellCheckingInspection")
 @Slf4j
-public class JooqCodeRepoIntegrationTest extends JooqBaseIntegrationTest {
+class JooqCodeRepoIntegrationTest extends JooqBaseIntegrationTest {
 
     @Autowired
     private JooqCodeRepo repo;
 
     @Test
-    public void findingAllCodes1InGerman() {
+    void findingAllCodes1InGerman() {
         List<Code> codesOfClass1 = repo.findCodesOfClass(CodeClassId.CC1, "de");
         assertThat(codesOfClass1)
             .isNotEmpty()
@@ -38,7 +38,7 @@ public class JooqCodeRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void findingAllCodes2InEnglish() {
+    void findingAllCodes2InEnglish() {
         List<Code> codesOfClass1 = repo.findCodesOfClass(CodeClassId.CC2, "en");
         assertThat(codesOfClass1)
             .isNotEmpty()
@@ -47,7 +47,7 @@ public class JooqCodeRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void findingAllCodes3InEnglish() {
+    void findingAllCodes3InEnglish() {
         List<Code> codesOfClass1 = repo.findCodesOfClass(CodeClassId.CC3, "fr");
         assertThat(codesOfClass1)
             .isNotEmpty()
@@ -56,7 +56,7 @@ public class JooqCodeRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void findingCodeDefinitions_withUnspecifiedFilter_findsAllDefinitions() {
+    void findingCodeDefinitions_withUnspecifiedFilter_findsAllDefinitions() {
         final List<CodeDefinition> cds = repo.findPageOfCodeDefinitions(new CodeFilter(),
             new PaginationRequest(0, 10, Sort.Direction.ASC, "name"));
 
@@ -88,7 +88,7 @@ public class JooqCodeRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void findingCodeDefinitions_withFilterMatchingSingleGermanName_findsOne() {
+    void findingCodeDefinitions_withFilterMatchingSingleGermanName_findsOne() {
         final CodeFilter filter = new CodeFilter();
         filter.setNameMask("Experimentelle Studie unter Belastung / Arbeit");
         final List<CodeDefinition> kds = repo.findPageOfCodeDefinitions(filter,
@@ -105,7 +105,7 @@ public class JooqCodeRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void findingCodeDefinitions_haveVersionFieldsPopulated() {
+    void findingCodeDefinitions_haveVersionFieldsPopulated() {
         final CodeFilter filter = new CodeFilter();
         filter.setNameMask("Experimentelle Studie unter Belastung / Arbeit");
         final List<CodeDefinition> kds = repo.findPageOfCodeDefinitions(filter,
@@ -132,36 +132,36 @@ public class JooqCodeRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void countingCodes_witNullFilter_findsAllDefinitions() {
+    void countingCodes_witNullFilter_findsAllDefinitions() {
         assertThat(repo.countByFilter(null)).isEqualTo(82);
     }
 
     @Test
-    public void countingCodes_withUnspecifiedFilter_findsAllDefinitions() {
+    void countingCodes_withUnspecifiedFilter_findsAllDefinitions() {
         assertThat(repo.countByFilter(new CodeFilter())).isEqualTo(82);
     }
 
     @Test
-    public void countingCodes_withFilter_findsAllMatchingDefinitions() {
+    void countingCodes_withFilter_findsAllMatchingDefinitions() {
         final CodeFilter filter = new CodeFilter();
         filter.setNameMask("es");
         assertThat(repo.countByFilter(filter)).isEqualTo(44);
     }
 
     @Test
-    public void countingCodes_withNonMatchingFilter_findsNone() {
+    void countingCodes_withNonMatchingFilter_findsNone() {
         final CodeFilter filter = new CodeFilter();
         filter.setNameMask("foobar");
         assertThat(repo.countByFilter(filter)).isEqualTo(0);
     }
 
     @Test
-    public void gettingMainLanguage() {
+    void gettingMainLanguage() {
         assertThat(repo.getMainLanguage()).isEqualTo("de");
     }
 
     @Test
-    public void findingMainLanguage() {
+    void findingMainLanguage() {
         CodeDefinition cd = repo.newUnpersistedCodeDefinition();
 
         assertThat(cd.getCode()).isNull();
@@ -190,12 +190,12 @@ public class JooqCodeRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void findingCodeDefinition_withNonExistingId_returnsNull() {
+    void findingCodeDefinition_withNonExistingId_returnsNull() {
         assertThat(repo.findCodeDefinition("foo")).isNull();
     }
 
     @Test
-    public void findingCodeDefinition_withExistingId_loadsWithAllLanguages() {
+    void findingCodeDefinition_withExistingId_loadsWithAllLanguages() {
         final CodeDefinition existing = repo.findCodeDefinition("4Y");
 
         assertThat(existing).isNotNull();
@@ -210,7 +210,7 @@ public class JooqCodeRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void savingNewRecord_savesRecordAndRefreshesId() {
+    void savingNewRecord_savesRecordAndRefreshesId() {
         final CodeTranslation ct_de = new CodeTranslation(null, "de", "foo_de", "Kommentar", 0);
         final CodeTranslation ct_en = new CodeTranslation(null, "en", "foo1_en", null, 0);
         final CodeTranslation ct_fr = new CodeTranslation(null, "fr", "foo1_fr", null, 0);
@@ -239,7 +239,7 @@ public class JooqCodeRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void updatingRecord() {
+    void updatingRecord() {
         final CodeDefinition cd = repo.findCodeDefinition("2R");
 
         assertThat(cd).isNotNull();
@@ -295,12 +295,12 @@ public class JooqCodeRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void deleting_withNonExistingId_returnsNull() {
+    void deleting_withNonExistingId_returnsNull() {
         assertThat(repo.delete("ZZ", 1)).isNull();
     }
 
     @Test
-    public void deleting_withExistingId_butWrongVersion_throwsOptimisticLockingException() {
+    void deleting_withExistingId_butWrongVersion_throwsOptimisticLockingException() {
         try {
             repo.delete("1A", -1);
             fail("should have thrown exception");
@@ -312,7 +312,7 @@ public class JooqCodeRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void deleting_withExistingIdAndVersion_deletes() {
+    void deleting_withExistingIdAndVersion_deletes() {
         // insert new record to the database and verify it's there
         CodeDefinition cd = new CodeDefinition("2Z", "de", new CodeClass(2, null, null), 3, true, null);
         CodeDefinition persisted = repo.saveOrUpdate(cd);
@@ -330,7 +330,7 @@ public class JooqCodeRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void gettingCodeClass1() {
+    void gettingCodeClass1() {
         CodeClass cc1 = repo.getCodeClass1("en");
         assertThat(cc1).isNotNull();
         assertThat(cc1.getId()).isEqualTo(1);
@@ -347,17 +347,17 @@ public class JooqCodeRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void findingCodeDefinitions_sortedBySort() {
+    void findingCodeDefinitions_sortedBySort() {
         assertSortedList("sort", "1Z");
     }
 
     @Test
-    public void findingCodeDefinitions_sortedByCode() {
+    void findingCodeDefinitions_sortedByCode() {
         assertSortedList("code", "8Z");
     }
 
     @Test
-    public void findingCodeDefinitions_sortedByInternal() {
+    void findingCodeDefinitions_sortedByInternal() {
         final List<CodeDefinition> cds = repo.findPageOfCodeDefinitions(new CodeFilter(),
             new PaginationRequest(0, 10, Sort.Direction.DESC, "internal"));
 
@@ -367,12 +367,12 @@ public class JooqCodeRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void findingCodeDefinitions_sortedByTranslation() {
+    void findingCodeDefinitions_sortedByTranslation() {
         assertSortedList("translationsAsString", "2N");
     }
 
     @Test
-    public void findingCodeDefinitions_sortedBySomethingUndefined_doesNotSort() {
+    void findingCodeDefinitions_sortedBySomethingUndefined_doesNotSort() {
         assertSortedList("notexisting", "1F");
     }
 
@@ -387,21 +387,21 @@ public class JooqCodeRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void findingCodeDefinitions_filteredByInternal() {
+    void findingCodeDefinitions_filteredByInternal() {
         final CodeFilter filter = new CodeFilter();
         filter.setInternal(true);
         assertFiltering(filter, 19, "1Z");
     }
 
     @Test
-    public void findingCodeDefinitions_filteredByCodeClass() {
+    void findingCodeDefinitions_filteredByCodeClass() {
         final CodeFilter filter = new CodeFilter(); // internal codeclass, comment
         filter.setCodeClass(new CodeClass(5, "whatever", ""));
         assertFiltering(filter, 13, "5U");
     }
 
     @Test
-    public void findingCodeDefinitions_filteredByComment() {
+    void findingCodeDefinitions_filteredByComment() {
         final CodeFilter filter = new CodeFilter(); // internal codeclass, comment
         filter.setCommentMask("COPD");
         assertFiltering(filter, 1, "4F");

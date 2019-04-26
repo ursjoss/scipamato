@@ -6,10 +6,10 @@ import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.core.sync.jobs.PublicEntityTest;
 
-public class PublicLanguageTest extends PublicEntityTest {
+class PublicLanguageTest extends PublicEntityTest {
 
     @Test
-    public void canSetGet_withStandardFieldsPopulated() {
+    void canSetGet_withStandardFieldsPopulated() {
         PublicLanguage pp = PublicLanguage
             .builder()
             .code("en")

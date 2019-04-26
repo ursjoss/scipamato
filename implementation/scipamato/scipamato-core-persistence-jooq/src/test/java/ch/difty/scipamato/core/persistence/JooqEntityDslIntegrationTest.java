@@ -15,13 +15,13 @@ import ch.difty.scipamato.core.db.tables.records.PaperRecord;
  * @author Thomas Darimont
  * @author Urs Joss
  */
-public class JooqEntityDslIntegrationTest extends JooqBaseIntegrationTest {
+class JooqEntityDslIntegrationTest extends JooqBaseIntegrationTest {
 
     @Autowired
     private DSLContext create;
 
     @Test
-    public void testPaperRecords() {
+    void testPaperRecords() {
         Result<PaperRecord> result = create
             .selectFrom(PAPER)
             .orderBy(PAPER.ID)

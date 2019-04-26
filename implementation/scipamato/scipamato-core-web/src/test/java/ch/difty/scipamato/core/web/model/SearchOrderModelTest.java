@@ -19,7 +19,7 @@ import ch.difty.scipamato.core.entity.search.SearchOrder;
 import ch.difty.scipamato.core.entity.search.SearchOrderFilter;
 import ch.difty.scipamato.core.persistence.SearchOrderService;
 
-public class SearchOrderModelTest extends ModelTest {
+class SearchOrderModelTest extends ModelTest {
 
     @MockBean
     private SearchOrderService serviceMock;
@@ -27,12 +27,12 @@ public class SearchOrderModelTest extends ModelTest {
     private SearchOrder        mockSearchOrder;
 
     @AfterEach
-    public void tearDown() {
+    void tearDown() {
         verifyNoMoreInteractions(serviceMock, mockSearchOrder);
     }
 
     @Test
-    public void test() {
+    void test() {
         final int owner = 1;
         final int maxRows = 10;
         when(serviceMock.findPageByFilter(isA(SearchOrderFilter.class), isA(PaginationRequest.class))).thenReturn(

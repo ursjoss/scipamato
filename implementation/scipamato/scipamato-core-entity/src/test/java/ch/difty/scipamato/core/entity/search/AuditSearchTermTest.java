@@ -8,7 +8,7 @@ import ch.difty.scipamato.core.entity.search.AuditSearchTerm.MatchType;
 import ch.difty.scipamato.core.entity.search.AuditSearchTerm.TokenType;
 
 @SuppressWarnings("SameParameterValue")
-public class AuditSearchTermTest {
+class AuditSearchTermTest {
 
     private static final String CREATED    = "CREATED";
     private static final String CREATED_BY = "CREATED_BY";
@@ -69,14 +69,14 @@ public class AuditSearchTermTest {
     }
 
     @Test
-    public void lexingUserSpecs_findsUserOnly() {
+    void lexingUserSpecs_findsUserOnly() {
         String fieldName = CREATED_BY;
         st = new AuditSearchTerm(fieldName, "mkj");
         assertSingleToken(fieldName, TokenType.WORD, "mkj", "mkj", null, null);
     }
 
     @Test
-    public void lexingUserSpecsForNonUserField_findsNothing() {
+    void lexingUserSpecsForNonUserField_findsNothing() {
         String fieldName = CREATED;
         st = new AuditSearchTerm(fieldName, "mkj");
         assertThat(st.getFieldName()).isEqualTo(fieldName);
@@ -84,7 +84,7 @@ public class AuditSearchTermTest {
     }
 
     @Test
-    public void lexingMinimumDate_findsDate() {
+    void lexingMinimumDate_findsDate() {
         String fieldName = CREATED;
         st = new AuditSearchTerm(fieldName, ">=2017-12-01 23:15:13");
         assertSingleToken(fieldName, TokenType.GREATEROREQUAL, null, null, "2017-12-01 23:15:13",
@@ -92,14 +92,14 @@ public class AuditSearchTermTest {
     }
 
     @Test
-    public void lexingMinimumDateWithoutTime_usesTimestampAtStartOfDay() {
+    void lexingMinimumDateWithoutTime_usesTimestampAtStartOfDay() {
         String fieldName = CREATED;
         st = new AuditSearchTerm(fieldName, ">=2017-12-01");
         assertSingleToken(fieldName, TokenType.GREATEROREQUAL, null, null, "2017-12-01", "2017-12-01 00:00:00");
     }
 
     @Test
-    public void lexingMinimumDateQuoted_findsDate() {
+    void lexingMinimumDateQuoted_findsDate() {
         String fieldName = CREATED;
         st = new AuditSearchTerm(fieldName, ">=\"2017-12-01 23:15:13\"");
         assertSingleToken(fieldName, TokenType.GREATEROREQUALQUOTED, null, null, "2017-12-01 23:15:13",
@@ -107,21 +107,21 @@ public class AuditSearchTermTest {
     }
 
     @Test
-    public void lexingMinimumDateExcluded_findsDate() {
+    void lexingMinimumDateExcluded_findsDate() {
         String fieldName = CREATED;
         st = new AuditSearchTerm(fieldName, ">2017-12-01 23:15:13");
         assertSingleToken(fieldName, TokenType.GREATERTHAN, null, null, "2017-12-01 23:15:13", "2017-12-01 23:15:13");
     }
 
     @Test
-    public void lexingMinimumDateExcludedWithoutDate_usesTimestampAtEndOfDay() {
+    void lexingMinimumDateExcludedWithoutDate_usesTimestampAtEndOfDay() {
         String fieldName = CREATED;
         st = new AuditSearchTerm(fieldName, ">2017-12-01");
         assertSingleToken(fieldName, TokenType.GREATERTHAN, null, null, "2017-12-01", "2017-12-01 23:59:59");
     }
 
     @Test
-    public void lexingMinimumDateExcludedQuoted_findsDate() {
+    void lexingMinimumDateExcludedQuoted_findsDate() {
         String fieldName = "LAST_MODIFIED";
         st = new AuditSearchTerm(fieldName, ">\"2017-12-01 23:15:13\"");
         assertSingleToken(fieldName, TokenType.GREATERTHANQUOTED, null, null, "2017-12-01 23:15:13",
@@ -129,21 +129,21 @@ public class AuditSearchTermTest {
     }
 
     @Test
-    public void lexingMaximumDate_findsDate() {
+    void lexingMaximumDate_findsDate() {
         String fieldName = CREATED;
         st = new AuditSearchTerm(fieldName, "<=2017-12-01 23:15:13");
         assertSingleToken(fieldName, TokenType.LESSOREQUAL, null, null, "2017-12-01 23:15:13", "2017-12-01 23:15:13");
     }
 
     @Test
-    public void lexingMaximumDateWithoutTime_usesTimestampAtEndOfDay() {
+    void lexingMaximumDateWithoutTime_usesTimestampAtEndOfDay() {
         String fieldName = CREATED;
         st = new AuditSearchTerm(fieldName, "<=2017-12-01");
         assertSingleToken(fieldName, TokenType.LESSOREQUAL, null, null, "2017-12-01", "2017-12-01 23:59:59");
     }
 
     @Test
-    public void lexingMaximumDateQuoted_findsDate() {
+    void lexingMaximumDateQuoted_findsDate() {
         String fieldName = CREATED;
         st = new AuditSearchTerm(fieldName, "<=\"2017-12-01 23:15:13\"");
         assertSingleToken(fieldName, TokenType.LESSOREQUALQUOTED, null, null, "2017-12-01 23:15:13",
@@ -151,7 +151,7 @@ public class AuditSearchTermTest {
     }
 
     @Test
-    public void lexingMaximumDateExcludedQuoted_findsDate() {
+    void lexingMaximumDateExcludedQuoted_findsDate() {
         String fieldName = CREATED;
         st = new AuditSearchTerm(fieldName, "<\"2017-12-01 23:15:13\"");
         assertSingleToken(fieldName, TokenType.LESSTHANQUOTED, null, null, "2017-12-01 23:15:13",
@@ -159,28 +159,28 @@ public class AuditSearchTermTest {
     }
 
     @Test
-    public void lexingMaximumDateExcludedQuotedWithoutTime_usesTimestampAtStartOfDay() {
+    void lexingMaximumDateExcludedQuotedWithoutTime_usesTimestampAtStartOfDay() {
         String fieldName = CREATED;
         st = new AuditSearchTerm(fieldName, "<\"2017-12-01\"");
         assertSingleToken(fieldName, TokenType.LESSTHANQUOTED, null, null, "2017-12-01", "2017-12-01 00:00:00");
     }
 
     @Test
-    public void lexingMaximumDateExcluded_findsDate() {
+    void lexingMaximumDateExcluded_findsDate() {
         String fieldName = CREATED;
         st = new AuditSearchTerm(fieldName, "<2017-12-01 23:15:13");
         assertSingleToken(fieldName, TokenType.LESSTHAN, null, null, "2017-12-01 23:15:13", "2017-12-01 23:15:13");
     }
 
     @Test
-    public void lexingExactDate_findsDate() {
+    void lexingExactDate_findsDate() {
         String fieldName = CREATED;
         st = new AuditSearchTerm(fieldName, "2017-12-01 23:15:13");
         assertSingleToken(fieldName, TokenType.EXACT, null, null, "2017-12-01 23:15:13", "2017-12-01 23:15:13");
     }
 
     @Test
-    public void lexingDateRangeQuoted_withEquals_findsBothDates() {
+    void lexingDateRangeQuoted_withEquals_findsBothDates() {
         String fieldName = CREATED;
         st = new AuditSearchTerm(fieldName, "=\"2017-12-01 10:15:13\"-\"2017-12-02 23:12:11\"");
         assertSingleToken(fieldName, TokenType.RANGEQUOTED, null, null, "2017-12-01 10:15:13-2017-12-02 23:12:11",
@@ -188,7 +188,7 @@ public class AuditSearchTermTest {
     }
 
     @Test
-    public void lexingDateRangeUnquoted_withEquals_findsBothDates() {
+    void lexingDateRangeUnquoted_withEquals_findsBothDates() {
         String fieldName = CREATED;
         st = new AuditSearchTerm(fieldName, "=2017-12-01 10:15:13-2017-12-02 23:12:11");
         assertSingleToken(fieldName, TokenType.RANGE, null, null, "2017-12-01 10:15:13-2017-12-02 23:12:11",
@@ -196,7 +196,7 @@ public class AuditSearchTermTest {
     }
 
     @Test
-    public void lexingDateRangeUnquoted_withoutEquals_findsBothDates() {
+    void lexingDateRangeUnquoted_withoutEquals_findsBothDates() {
         String fieldName = CREATED;
         st = new AuditSearchTerm(fieldName, "2017-12-01 10:15:13-2017-12-02 23:12:11");
         assertSingleToken(fieldName, TokenType.RANGE, null, null, "2017-12-01 10:15:13-2017-12-02 23:12:11",
@@ -204,7 +204,7 @@ public class AuditSearchTermTest {
     }
 
     @Test
-    public void lexingDateRange_findsBothDates() {
+    void lexingDateRange_findsBothDates() {
         String fieldName = CREATED;
         st = new AuditSearchTerm(fieldName, "\"2017-12-01 10:15:13\"-\"2017-12-02 23:12:11\"");
         assertSingleToken(fieldName, TokenType.RANGEQUOTED, null, null, "2017-12-01 10:15:13-2017-12-02 23:12:11",
@@ -212,7 +212,7 @@ public class AuditSearchTermTest {
     }
 
     @Test
-    public void lexingDateRangeQuoted_withDatePartOnly_findsBothDatesExtended() {
+    void lexingDateRangeQuoted_withDatePartOnly_findsBothDatesExtended() {
         String fieldName = CREATED;
         st = new AuditSearchTerm(fieldName, "=\"2017-12-01\"-\"2017-12-02\"");
         assertSingleToken(fieldName, TokenType.RANGEQUOTED, null, null, "2017-12-01 00:00:00-2017-12-02 23:59:59",
@@ -220,7 +220,7 @@ public class AuditSearchTermTest {
     }
 
     @Test
-    public void lexingDateRangeUnquoted_withDatePartOnly_findsBothDatesExtended() {
+    void lexingDateRangeUnquoted_withDatePartOnly_findsBothDatesExtended() {
         String fieldName = CREATED;
         st = new AuditSearchTerm(fieldName, "=2017-12-01-2017-12-02");
         assertSingleToken(fieldName, TokenType.RANGE, null, null, "2017-12-01 00:00:00-2017-12-02 23:59:59",
@@ -228,7 +228,7 @@ public class AuditSearchTermTest {
     }
 
     @Test
-    public void lexingDateRangeUnquoted_withDatePartOnly2_findsBothDatesExtended() {
+    void lexingDateRangeUnquoted_withDatePartOnly2_findsBothDatesExtended() {
         String fieldName = CREATED;
         st = new AuditSearchTerm(fieldName, "2017-12-01-2017-12-02");
         assertSingleToken(fieldName, TokenType.RANGE, null, null, "2017-12-01 00:00:00-2017-12-02 23:59:59",
@@ -236,7 +236,7 @@ public class AuditSearchTermTest {
     }
 
     @Test
-    public void lexingDateRange_withMixedDateParts_findsBothDatesExtended() {
+    void lexingDateRange_withMixedDateParts_findsBothDatesExtended() {
         String fieldName = CREATED;
         st = new AuditSearchTerm(fieldName, "\"2017-12-01 12:13:14\"-\"2017-12-02\"");
         assertSingleToken(fieldName, TokenType.RANGEQUOTED, null, null, "2017-12-01 12:13:14-2017-12-02 23:59:59",
@@ -244,7 +244,7 @@ public class AuditSearchTermTest {
     }
 
     @Test
-    public void lexingDateRange_withMixedDateParts2_findsBothDatesExtended() {
+    void lexingDateRange_withMixedDateParts2_findsBothDatesExtended() {
         String fieldName = CREATED;
         st = new AuditSearchTerm(fieldName, "\"2017-12-01\"-\"2017-12-02 14:15:16\"");
         assertSingleToken(fieldName, TokenType.RANGEQUOTED, null, null, "2017-12-01 00:00:00-2017-12-02 14:15:16",
@@ -256,35 +256,35 @@ public class AuditSearchTermTest {
      * the entire day. Let's see
      */
     @Test
-    public void lexingExactDateWithoutTime_usesTimestampAtStartOfDay() {
+    void lexingExactDateWithoutTime_usesTimestampAtStartOfDay() {
         String fieldName = CREATED;
         st = new AuditSearchTerm(fieldName, "2017-12-01");
         assertSingleToken(fieldName, TokenType.EXACT, null, null, "2017-12-01", "2017-12-01 00:00:00");
     }
 
     @Test
-    public void lexingExactDateQuoted_findsDate() {
+    void lexingExactDateQuoted_findsDate() {
         String fieldName = CREATED;
         st = new AuditSearchTerm(fieldName, "\"2017-12-01 23:15:13\"");
         assertSingleToken(fieldName, TokenType.EXACTQUOTED, null, null, "2017-12-01 23:15:13", "2017-12-01 23:15:13");
     }
 
     @Test
-    public void lexingExactDateWithEquals_findsDate() {
+    void lexingExactDateWithEquals_findsDate() {
         String fieldName = CREATED;
         st = new AuditSearchTerm(fieldName, "=2017-12-01 23:15:13");
         assertSingleToken(fieldName, TokenType.EXACT, null, null, "2017-12-01 23:15:13", "2017-12-01 23:15:13");
     }
 
     @Test
-    public void lexingExactDateQuotedWithEquals_findsDate() {
+    void lexingExactDateQuotedWithEquals_findsDate() {
         String fieldName = CREATED;
         st = new AuditSearchTerm(fieldName, "=\"2017-12-01 23:15:13\"");
         assertSingleToken(fieldName, TokenType.EXACTQUOTED, null, null, "2017-12-01 23:15:13", "2017-12-01 23:15:13");
     }
 
     @Test
-    public void lexingImproperDate_findsNothing() {
+    void lexingImproperDate_findsNothing() {
         String fieldName = CREATED;
         st = new AuditSearchTerm(fieldName, "\"2017-12- 01 23:15:13\"");
         assertThat(st.getFieldName()).isEqualTo(fieldName);
@@ -292,21 +292,21 @@ public class AuditSearchTermTest {
     }
 
     @Test
-    public void lexingUserAndDate_forUserField_findsUserTokenOnly() {
+    void lexingUserAndDate_forUserField_findsUserTokenOnly() {
         String fieldName = CREATED_BY;
         st = new AuditSearchTerm(fieldName, "user =\"2017-12-01 23:15:13\"");
         assertSingleToken(fieldName, TokenType.WORD, "user", "user", null, null);
     }
 
     @Test
-    public void lexingUserAndDate_forDateField_findsDateTokenOnly() {
+    void lexingUserAndDate_forDateField_findsDateTokenOnly() {
         String fieldName = CREATED;
         st = new AuditSearchTerm(fieldName, "user =\"2017-12-01 23:15:13\"");
         assertSingleToken(fieldName, TokenType.EXACTQUOTED, null, null, "2017-12-01 23:15:13", "2017-12-01 23:15:13");
     }
 
     @Test
-    public void tokenToString_forDateField() {
+    void tokenToString_forDateField() {
         st = new AuditSearchTerm(CREATED, "user =\"2017-12-01 23:15:13\"");
         assertThat(st.getTokens()).hasSize(1);
         assertThat(st
@@ -316,7 +316,7 @@ public class AuditSearchTermTest {
     }
 
     @Test
-    public void tokenToString_forUserField() {
+    void tokenToString_forUserField() {
         st = new AuditSearchTerm(CREATED_BY, "foo =\"2017-12-01 23:15:13\"");
         assertThat(st.getTokens()).hasSize(1);
         assertThat(st
@@ -326,54 +326,54 @@ public class AuditSearchTermTest {
     }
 
     @Test
-    public void byMatchType_withNullMatchType_isEmpty() {
+    void byMatchType_withNullMatchType_isEmpty() {
         assertThat(AuditSearchTerm.TokenType.byMatchType(null)).isEmpty();
     }
 
     @Test
-    public void byMatchType_withValidMatchTypeNONE() {
+    void byMatchType_withValidMatchTypeNONE() {
         assertThat(AuditSearchTerm.TokenType.byMatchType(MatchType.NONE)).containsExactly(TokenType.WHITESPACE,
             TokenType.RAW);
     }
 
     @Test
-    public void byMatchType_withValidMatchTypeRANGE() {
+    void byMatchType_withValidMatchTypeRANGE() {
         assertThat(AuditSearchTerm.TokenType.byMatchType(MatchType.RANGE)).containsExactly(TokenType.RANGEQUOTED,
             TokenType.RANGE);
     }
 
     @Test
-    public void byMatchType_withValidMatchTypeGREATER_OR_EQUAL() {
+    void byMatchType_withValidMatchTypeGREATER_OR_EQUAL() {
         assertThat(AuditSearchTerm.TokenType.byMatchType(MatchType.GREATER_OR_EQUAL)).containsExactly(
             TokenType.GREATEROREQUALQUOTED, TokenType.GREATEROREQUAL);
     }
 
     @Test
-    public void byMatchType_withValidMatchTypeGREATER_THAN() {
+    void byMatchType_withValidMatchTypeGREATER_THAN() {
         assertThat(AuditSearchTerm.TokenType.byMatchType(MatchType.GREATER_THAN)).containsExactly(
             TokenType.GREATERTHANQUOTED, TokenType.GREATERTHAN);
     }
 
     @Test
-    public void byMatchType_withValidMatchTypeLESS_OR_EQUAL() {
+    void byMatchType_withValidMatchTypeLESS_OR_EQUAL() {
         assertThat(AuditSearchTerm.TokenType.byMatchType(MatchType.LESS_OR_EQUAL)).containsExactly(
             TokenType.LESSOREQUALQUOTED, TokenType.LESSOREQUAL);
     }
 
     @Test
-    public void byMatchType_withValidMatchTypeLESS_THAN() {
+    void byMatchType_withValidMatchTypeLESS_THAN() {
         assertThat(AuditSearchTerm.TokenType.byMatchType(MatchType.LESS_THAN)).containsExactly(TokenType.LESSTHANQUOTED,
             TokenType.LESSTHAN);
     }
 
     @Test
-    public void byMatchType_withValidMatchTypeEQUALS() {
+    void byMatchType_withValidMatchTypeEQUALS() {
         assertThat(AuditSearchTerm.TokenType.byMatchType(MatchType.EQUALS)).containsExactly(TokenType.EXACTQUOTED,
             TokenType.EXACT);
     }
 
     @Test
-    public void byMatchType_withValidMatchTypeCONTAINS() {
+    void byMatchType_withValidMatchTypeCONTAINS() {
         assertThat(AuditSearchTerm.TokenType.byMatchType(MatchType.CONTAINS)).containsExactly(TokenType.WORD);
     }
 }

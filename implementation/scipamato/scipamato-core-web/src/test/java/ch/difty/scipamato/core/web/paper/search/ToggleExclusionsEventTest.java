@@ -9,13 +9,13 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-public class ToggleExclusionsEventTest {
+class ToggleExclusionsEventTest {
 
     @Mock
     private AjaxRequestTarget targetMock;
 
     @Test
-    public void canRetrieveTarget() {
+    void canRetrieveTarget() {
         final ToggleExclusionsEvent e = new ToggleExclusionsEvent(targetMock);
         assertThat(e.getTarget()).isEqualTo(targetMock);
     }

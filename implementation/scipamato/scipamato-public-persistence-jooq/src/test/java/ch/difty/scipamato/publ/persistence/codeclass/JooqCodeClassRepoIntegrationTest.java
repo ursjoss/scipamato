@@ -8,13 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import ch.difty.scipamato.publ.persistence.JooqBaseIntegrationTest;
 
 @SuppressWarnings("SpellCheckingInspection")
-public class JooqCodeClassRepoIntegrationTest extends JooqBaseIntegrationTest {
+class JooqCodeClassRepoIntegrationTest extends JooqBaseIntegrationTest {
 
     @Autowired
     private JooqCodeClassRepo repo;
 
     @Test
-    public void finding_inEnglish_returnsLocalizedCodeClasses() {
+    void finding_inEnglish_returnsLocalizedCodeClasses() {
         assertThat(repo.find("en"))
             .extracting("name")
             .containsExactly("Exposure Agent", "Region", "Study Population", "Health Outcome", "Study Design",
@@ -22,7 +22,7 @@ public class JooqCodeClassRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void finding_inFrench_returnsLocalizedCodeClasses() {
+    void finding_inFrench_returnsLocalizedCodeClasses() {
         assertThat(repo.find("fr"))
             .extracting("name")
             .containsExactly("Polluant nocif", "Région", "Population", "Effets physiologique ou nocifs", "Type d'étude",
@@ -30,7 +30,7 @@ public class JooqCodeClassRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void finding_inGerman_returnsLocalizedCodeClasses() {
+    void finding_inGerman_returnsLocalizedCodeClasses() {
         assertThat(repo.find("de"))
             .extracting("name")
             .containsExactly("Schadstoffe", "Region", "Kollektiv", "Zielgrössen", "Studientyp", "Spezies", "Zeitdauer",

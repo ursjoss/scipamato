@@ -12,7 +12,7 @@ import ch.difty.scipamato.core.persistence.UpdateSetStepSetter;
 import ch.difty.scipamato.core.persistence.UpdateSetStepSetterTest;
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
-public class PaperUpdateSetStepSetterTest extends UpdateSetStepSetterTest<PaperRecord, Paper> {
+class PaperUpdateSetStepSetterTest extends UpdateSetStepSetterTest<PaperRecord, Paper> {
 
     private final UpdateSetStepSetter<PaperRecord, Paper> setter = new PaperUpdateSetStepSetter();
 

@@ -7,9 +7,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-public class SciPaMaToPublicApplicationIntegrationTest {
+class SciPaMaToPublicApplicationIntegrationTest {
 
     @Test
-    public void contextLoads() {
+    void contextLoads() {
     }
 }

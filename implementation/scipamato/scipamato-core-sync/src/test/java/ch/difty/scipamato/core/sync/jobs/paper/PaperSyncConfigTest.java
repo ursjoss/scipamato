@@ -36,7 +36,7 @@ import ch.difty.scipamato.publ.db.public_.tables.records.PaperRecord;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
-public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
+class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
 
     private PaperSyncConfig config;
 
@@ -77,7 +77,7 @@ public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
     private final List<String> internalCodes = Arrays.asList("1N", "1U", "1Z");
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         when(jooqCore.select()).thenReturn(selectSelectStep);
         when(selectSelectStep.from(Code.CODE)).thenReturn(selectJoinStep);
         when(selectJoinStep.where(Code.CODE.INTERNAL.isTrue())).thenReturn(selectConditionStep);
@@ -94,7 +94,7 @@ public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
     }
 
     @AfterEach
-    public void tearDown() {
+    void tearDown() {
         verifyNoMoreInteractions(codeAggregator, jooqPublic, coreDataSource);
     }
 
@@ -155,7 +155,7 @@ public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
     }
 
     @Test
-    public void makingEntity() throws SQLException {
+    void makingEntity() throws SQLException {
         when(rs.getLong(Paper.PAPER.ID.getName())).thenReturn(1L);
         when(rs.getLong(Paper.PAPER.NUMBER.getName())).thenReturn(2L);
         when(rs.getInt(Paper.PAPER.PM_ID.getName())).thenReturn(3);
@@ -234,7 +234,7 @@ public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
     }
 
     @Test
-    public void makingEntity_withNullValueInPM_ID() throws SQLException {
+    void makingEntity_withNullValueInPM_ID() throws SQLException {
         final String fieldName = Paper.PAPER.PM_ID.getName();
         validateNullableInteger(fieldName);
         verify(rs).getInt(fieldName);
@@ -253,7 +253,7 @@ public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
     }
 
     @Test
-    public void makingEntity_withNullValueInPublicationYear() throws SQLException {
+    void makingEntity_withNullValueInPublicationYear() throws SQLException {
         final String fieldName = Paper.PAPER.PUBLICATION_YEAR.getName();
         validateNullableInteger(fieldName);
         verify(rs).getInt(fieldName);
@@ -261,7 +261,7 @@ public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
     }
 
     @Test
-    public void makingEntity_withNullNumber() throws SQLException {
+    void makingEntity_withNullNumber() throws SQLException {
         final String fieldName = Paper.PAPER.NUMBER.getName();
         validateNullableLongColumn(() -> {
             try {
@@ -298,38 +298,38 @@ public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
     }
 
     @Test
-    public void assertInternalCodesAreSet() {
+    void assertInternalCodesAreSet() {
         verify(codeAggregator).setInternalCodes(anyList());
     }
 
     @Test
     @Override
-    public void assertingJobName() {
+    protected void assertingJobName() {
         verify(codeAggregator).setInternalCodes(internalCodes);
     }
 
     @Test
     @Override
-    public void jobIsRestartable() {
+    protected void jobIsRestartable() {
         verify(codeAggregator).setInternalCodes(internalCodes);
     }
 
     @Test
     @Override
-    public void assertingJobIncrementer_toBeRunIdIncrementer() {
+    protected void assertingJobIncrementer_toBeRunIdIncrementer() {
         verify(codeAggregator).setInternalCodes(internalCodes);
     }
 
     @Test
     @Override
-    public void assertingSql() {
+    protected void assertingSql() {
         assertThat(selectSql()).isEqualTo(expectedSelectSql());
         verify(codeAggregator).setInternalCodes(internalCodes);
     }
 
     @Test
     @Override
-    public void assertingPseudoRefDataEnforcementDdl() {
+    protected void assertingPseudoRefDataEnforcementDdl() {
         final DeleteConditionStep<PaperRecord> dcs = getPseudoFkDcs();
         if (dcs != null)
             assertThat(dcs.getSQL()).isEqualTo(expectedPseudoFkSql());
@@ -341,7 +341,7 @@ public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
 
     @Test
     @Override
-    public void assertingPurgeLastSynchField() {
+    protected void assertingPurgeLastSynchField() {
         assertThat(lastSynchedField()).isEqualTo(expectedLastSyncField());
         verify(codeAggregator).setInternalCodes(internalCodes);
     }

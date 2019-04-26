@@ -7,25 +7,25 @@ import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.common.FinalClassTest;
 
-public class RolesTest extends FinalClassTest<Roles> {
+class RolesTest extends FinalClassTest<Roles> {
 
     @Test
-    public void assertRoleName_User() {
+    void assertRoleName_User() {
         assertThat(USER).isEqualTo("ROLE_USER");
     }
 
     @Test
-    public void assertRoleName_Admin() {
+    void assertRoleName_Admin() {
         assertThat(ADMIN).isEqualTo("ROLE_ADMIN");
     }
 
     @Test
-    public void assertRoleName_Viewer() {
+    void assertRoleName_Viewer() {
         assertThat(VIEWER).isEqualTo("ROLE_VIEWER");
     }
 
     @Test
-    public void dummyTest() {
+    void dummyTest() {
         assertThat(dummyMethod()).isNull();
     }
 

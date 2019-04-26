@@ -26,7 +26,7 @@ import ch.difty.scipamato.publ.db.public_.tables.records.NewStudyRecord;
 @SuppressWarnings("SpellCheckingInspection")
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
-public class NewStudySyncConfigTest extends SyncConfigTest<NewStudyRecord> {
+class NewStudySyncConfigTest extends SyncConfigTest<NewStudyRecord> {
 
     @Autowired
     private NewStudySyncConfig config;
@@ -85,12 +85,12 @@ public class NewStudySyncConfigTest extends SyncConfigTest<NewStudyRecord> {
     }
 
     @Test
-    public void makingEntityWithMultipleAuthors() throws SQLException {
+    void makingEntityWithMultipleAuthors() throws SQLException {
         makingEntityWithAuthors("Yano E, Nishii S, Yokoyama Y.", "Yano et al.");
     }
 
     @Test
-    public void makingEntityWithSingleAuthor() throws SQLException {
+    void makingEntityWithSingleAuthor() throws SQLException {
         makingEntityWithAuthors("Yano E.", "Yano");
     }
 

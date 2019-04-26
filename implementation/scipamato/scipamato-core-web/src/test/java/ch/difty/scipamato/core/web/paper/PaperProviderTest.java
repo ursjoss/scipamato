@@ -29,7 +29,7 @@ import ch.difty.scipamato.core.persistence.PaperService;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-public class PaperProviderTest {
+class PaperProviderTest {
 
     private PaperProvider provider;
 
@@ -48,7 +48,7 @@ public class PaperProviderTest {
     private List<Paper> papers;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         new WicketTester(application);
         provider = new PaperProvider(filterMock);
         provider.setService(serviceMock);
@@ -57,24 +57,24 @@ public class PaperProviderTest {
     }
 
     @AfterEach
-    public void tearDown() {
+    void tearDown() {
         verifyNoMoreInteractions(serviceMock, entityMock);
     }
 
     @Test
-    public void defaultFilterIsNewPaperFilter() {
+    void defaultFilterIsNewPaperFilter() {
         provider = new PaperProvider();
         assertThat(provider.getFilterState()).isEqualToComparingFieldByField(new PaperFilter());
     }
 
     @Test
-    public void nullFilterResultsInNewPaperFilter() {
+    void nullFilterResultsInNewPaperFilter() {
         PaperSlimByPaperFilterProvider p = new PaperSlimByPaperFilterProvider(null, 10);
         assertThat(p.getFilterState()).isEqualToComparingFieldByField(new PaperFilter());
     }
 
     @Test
-    public void size() {
+    void size() {
         int size = 5;
         when(serviceMock.countByFilter(filterMock)).thenReturn(size);
         assertThat(provider.size()).isEqualTo(size);
@@ -82,18 +82,18 @@ public class PaperProviderTest {
     }
 
     @Test
-    public void gettingModel_wrapsEntity() {
+    void gettingModel_wrapsEntity() {
         IModel<Paper> model = provider.model(entityMock);
         assertThat(model.getObject()).isEqualTo(entityMock);
     }
 
     @Test
-    public void gettingFilterState_returnsFilter() {
+    void gettingFilterState_returnsFilter() {
         assertThat(provider.getFilterState()).isEqualTo(filterMock);
     }
 
     @Test
-    public void settingFilterState() {
+    void settingFilterState() {
         provider = new PaperProvider();
         assertThat(provider.getFilterState()).isNotEqualTo(filterMock);
         provider.setFilterState(filterMock);
@@ -120,7 +120,7 @@ public class PaperProviderTest {
     }
 
     @Test
-    public void iterating_withNoRecords_returnsNoRecords() {
+    void iterating_withNoRecords_returnsNoRecords() {
         papers = Collections.emptyList();
         when(serviceMock.findPageByFilter(eq(filterMock), isA(PaginationContext.class))).thenReturn(papers);
         Iterator<Paper> it = provider.iterator(0, 3);
@@ -129,7 +129,7 @@ public class PaperProviderTest {
     }
 
     @Test
-    public void iterating_throughFirst() {
+    void iterating_throughFirst() {
         when(serviceMock.findPageByFilter(eq(filterMock), isA(PaginationContext.class))).thenReturn(papers);
         Iterator<Paper> it = provider.iterator(0, 3);
         assertRecordsIn(it);
@@ -146,7 +146,7 @@ public class PaperProviderTest {
     }
 
     @Test
-    public void iterating_throughSecondPage() {
+    void iterating_throughSecondPage() {
         when(serviceMock.findPageByFilter(eq(filterMock), isA(PaginationContext.class))).thenReturn(papers);
         Iterator<Paper> it = provider.iterator(3, 3);
         assertRecordsIn(it);
@@ -154,7 +154,7 @@ public class PaperProviderTest {
     }
 
     @Test
-    public void iterating_throughThirdPage() {
+    void iterating_throughThirdPage() {
         provider.setSort("title", SortOrder.DESCENDING);
         when(serviceMock.findPageByFilter(eq(filterMock), isA(PaginationContext.class))).thenReturn(papers);
         Iterator<Paper> it = provider.iterator(6, 3);

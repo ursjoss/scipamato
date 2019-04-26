@@ -15,7 +15,7 @@ import ch.difty.scipamato.common.web.component.SerializableBiConsumer;
 import ch.difty.scipamato.common.web.component.SerializableSupplier;
 
 @ExtendWith(MockitoExtension.class)
-public class ClickablePropertyColumn2Test {
+class ClickablePropertyColumn2Test {
 
     @Mock
     private SerializableBiConsumer<IModel<String>, Integer> biConsumerMock;
@@ -30,7 +30,7 @@ public class ClickablePropertyColumn2Test {
     private ClickablePropertyColumn2<String, String, Integer> c;
 
     @Test
-    public void testOnClick_withSortProperty() {
+    void testOnClick_withSortProperty() {
         String sort = "sort";
 
         when(supplierMock.get()).thenReturn(suppliedValue);
@@ -43,7 +43,7 @@ public class ClickablePropertyColumn2Test {
     }
 
     @Test
-    public void testOnClick_inNewTab() {
+    void testOnClick_inNewTab() {
         String sort = "sort";
 
         when(supplierMock.get()).thenReturn(suppliedValue);
@@ -56,7 +56,7 @@ public class ClickablePropertyColumn2Test {
     }
 
     @Test
-    public void testOnClick_withoutSortProperty() {
+    void testOnClick_withoutSortProperty() {
         when(supplierMock.get()).thenReturn(suppliedValue);
 
         c = new ClickablePropertyColumn2<>(displayModel, property, biConsumerMock, supplierMock);
@@ -67,7 +67,7 @@ public class ClickablePropertyColumn2Test {
     }
 
     @Test
-    public void gettingProperty() {
+    void gettingProperty() {
         c = new ClickablePropertyColumn2<>(displayModel, property, biConsumerMock, supplierMock);
         assertThat(c.getProperty()).isEqualTo(property);
     }

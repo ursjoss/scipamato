@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public abstract class PublicEntityTest<T extends PublicEntity> {
+abstract class PublicEntityTest<T extends PublicEntity> {
 
     private static final LocalDateTime CREATED_DATE = LocalDateTime.parse("2017-01-01T22:15:13.111");
     private static final LocalDateTime LASTMOD_DATE = LocalDateTime.parse("2017-01-10T22:15:13.111");
@@ -19,7 +19,7 @@ public abstract class PublicEntityTest<T extends PublicEntity> {
     }
 
     @BeforeEach
-    public final void setUp() {
+    final void setUp() {
         entity = newEntity();
         entity.setCreated(CREATED_DATE);
         entity.setLastModified(LASTMOD_DATE);
@@ -29,7 +29,7 @@ public abstract class PublicEntityTest<T extends PublicEntity> {
     protected abstract T newEntity();
 
     @Test
-    public void setGet() {
+    void setGet() {
         assertSpecificGetters();
 
         assertThat(entity.getCreated()).isEqualTo(CREATED_DATE);
@@ -40,14 +40,14 @@ public abstract class PublicEntityTest<T extends PublicEntity> {
     protected abstract void assertSpecificGetters();
 
     @Test
-    public void testingToString() {
+    void testingToString() {
         assertThat(entity.toString()).isEqualTo(getToString());
     }
 
     protected abstract String getToString();
 
     @Test
-    public void equals() {
+    void equals() {
         verifyEquals();
     }
 

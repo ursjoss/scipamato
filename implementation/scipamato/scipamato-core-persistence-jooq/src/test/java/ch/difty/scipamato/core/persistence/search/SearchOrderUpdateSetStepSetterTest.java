@@ -12,7 +12,7 @@ import ch.difty.scipamato.core.persistence.UpdateSetStepSetter;
 import ch.difty.scipamato.core.persistence.UpdateSetStepSetterTest;
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
-public class SearchOrderUpdateSetStepSetterTest extends UpdateSetStepSetterTest<SearchOrderRecord, SearchOrder> {
+class SearchOrderUpdateSetStepSetterTest extends UpdateSetStepSetterTest<SearchOrderRecord, SearchOrder> {
 
     private final UpdateSetStepSetter<SearchOrderRecord, SearchOrder> setter = new SearchOrderUpdateSetStepSetter();
 

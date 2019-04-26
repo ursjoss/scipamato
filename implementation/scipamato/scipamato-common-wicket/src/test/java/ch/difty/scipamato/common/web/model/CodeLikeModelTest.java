@@ -18,7 +18,7 @@ import ch.difty.scipamato.common.entity.CodeLike;
 import ch.difty.scipamato.common.persistence.CodeLikeService;
 
 @ExtendWith(MockitoExtension.class)
-public class CodeLikeModelTest {
+class CodeLikeModelTest {
 
     private static final String      LANG_CODE = "en";
     private static final CodeClassId CC_ID     = CodeClassId.CC1;
@@ -34,7 +34,7 @@ public class CodeLikeModelTest {
     private CodeLikeService<CodeLike> serviceMock;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         model = new CodeLikeModel<>(CC_ID, LANG_CODE, serviceMock) {
             private static final long serialVersionUID = 1L;
 
@@ -49,12 +49,12 @@ public class CodeLikeModelTest {
     }
 
     @Test
-    public void canGetCodeClass() {
+    void canGetCodeClass() {
         assertThat(model.getCodeClassId()).isEqualTo(CC_ID);
     }
 
     @Test
-    public void canGetLanguageCode() {
+    void canGetLanguageCode() {
         assertThat(model.getLanguageCode()).isEqualTo(LANG_CODE);
     }
 

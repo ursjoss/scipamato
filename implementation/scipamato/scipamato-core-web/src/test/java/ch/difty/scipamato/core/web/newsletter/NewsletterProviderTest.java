@@ -29,7 +29,7 @@ import ch.difty.scipamato.core.persistence.NewsletterService;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-public class NewsletterProviderTest {
+class NewsletterProviderTest {
 
     private NewsletterProvider provider;
 
@@ -48,7 +48,7 @@ public class NewsletterProviderTest {
     private List<Newsletter> papers;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         new WicketTester(application);
         provider = new NewsletterProvider(filterMock);
         provider.setService(serviceMock);
@@ -57,24 +57,24 @@ public class NewsletterProviderTest {
     }
 
     @AfterEach
-    public void tearDown() {
+    void tearDown() {
         verifyNoMoreInteractions(serviceMock, entityMock);
     }
 
     @Test
-    public void defaultFilterIsNewNewsletterFilter() {
+    void defaultFilterIsNewNewsletterFilter() {
         provider = new NewsletterProvider();
         assertThat(provider.getFilterState()).isEqualToComparingFieldByField(new NewsletterFilter());
     }
 
     @Test
-    public void nullFilterResultsInNewNewsletterFilter() {
+    void nullFilterResultsInNewNewsletterFilter() {
         NewsletterProvider p = new NewsletterProvider(null);
         assertThat(p.getFilterState()).isEqualToComparingFieldByField(new NewsletterFilter());
     }
 
     @Test
-    public void size() {
+    void size() {
         int size = 5;
         when(serviceMock.countByFilter(filterMock)).thenReturn(size);
         assertThat(provider.size()).isEqualTo(size);
@@ -82,18 +82,18 @@ public class NewsletterProviderTest {
     }
 
     @Test
-    public void gettingModel_wrapsEntity() {
+    void gettingModel_wrapsEntity() {
         IModel<Newsletter> model = provider.model(entityMock);
         assertThat(model.getObject()).isEqualTo(entityMock);
     }
 
     @Test
-    public void gettingFilterState_returnsFilter() {
+    void gettingFilterState_returnsFilter() {
         assertThat(provider.getFilterState()).isEqualTo(filterMock);
     }
 
     @Test
-    public void settingFilterState() {
+    void settingFilterState() {
         provider = new NewsletterProvider();
         assertThat(provider.getFilterState()).isNotEqualTo(filterMock);
         provider.setFilterState(filterMock);
@@ -120,7 +120,7 @@ public class NewsletterProviderTest {
     }
 
     @Test
-    public void iterating_withNoRecords_returnsNoRecords() {
+    void iterating_withNoRecords_returnsNoRecords() {
         papers = Collections.emptyList();
         when(serviceMock.findPageByFilter(eq(filterMock), isA(PaginationContext.class))).thenReturn(papers);
         Iterator<Newsletter> it = provider.iterator(0, 3);
@@ -130,7 +130,7 @@ public class NewsletterProviderTest {
     }
 
     @Test
-    public void iterating_throughFirst() {
+    void iterating_throughFirst() {
         when(serviceMock.findPageByFilter(eq(filterMock), isA(PaginationContext.class))).thenReturn(papers);
         Iterator<Newsletter> it = provider.iterator(0, 3);
         assertRecordsIn(it);
@@ -148,7 +148,7 @@ public class NewsletterProviderTest {
     }
 
     @Test
-    public void iterating_throughSecondPage() {
+    void iterating_throughSecondPage() {
         when(serviceMock.findPageByFilter(eq(filterMock), isA(PaginationContext.class))).thenReturn(papers);
         Iterator<Newsletter> it = provider.iterator(3, 3);
         assertRecordsIn(it);
@@ -157,7 +157,7 @@ public class NewsletterProviderTest {
     }
 
     @Test
-    public void iterating_throughThirdPage() {
+    void iterating_throughThirdPage() {
         provider.setSort("title", SortOrder.DESCENDING);
         when(serviceMock.findPageByFilter(eq(filterMock), isA(PaginationContext.class))).thenReturn(papers);
         Iterator<Newsletter> it = provider.iterator(6, 3);
@@ -167,7 +167,7 @@ public class NewsletterProviderTest {
     }
 
     @Test
-    public void iterating_throughThirdPage_ascendingly() {
+    void iterating_throughThirdPage_ascendingly() {
         provider.setSort("title", SortOrder.ASCENDING);
         when(serviceMock.findPageByFilter(eq(filterMock), isA(PaginationContext.class))).thenReturn(papers);
         Iterator<Newsletter> it = provider.iterator(6, 3);

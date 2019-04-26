@@ -13,7 +13,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import ch.difty.scipamato.common.config.MavenProperties;
 
 @ExtendWith(MockitoExtension.class)
-public class ScipamatoPublicPropertiesTest {
+class ScipamatoPublicPropertiesTest {
 
     private ScipamatoPublicProperties prop;
 
@@ -23,12 +23,12 @@ public class ScipamatoPublicPropertiesTest {
     private MavenProperties     mavenPropMock;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         prop = new ScipamatoPublicProperties(scipamatoPropMock, mavenPropMock);
     }
 
     @AfterEach
-    public void tearDown() {
+    void tearDown() {
         verifyNoMoreInteractions(scipamatoPropMock, mavenPropMock);
     }
 
@@ -40,7 +40,7 @@ public class ScipamatoPublicPropertiesTest {
     }
 
     @Test
-    public void gettingTitleOrBrand_withPageTitleDefined_delegatesToScipamatoProps_andReturnsPageTitle() {
+    void gettingTitleOrBrand_withPageTitleDefined_delegatesToScipamatoProps_andReturnsPageTitle() {
         when(scipamatoPropMock.getPageTitle()).thenReturn("pt");
         assertThat(prop.getTitleOrBrand()).isEqualTo("pt");
         verify(scipamatoPropMock).getPageTitle();
@@ -71,14 +71,14 @@ public class ScipamatoPublicPropertiesTest {
     }
 
     @Test
-    public void checkingCommercialFontPresence_ifPresent_delegatesToMavenProp() {
+    void checkingCommercialFontPresence_ifPresent_delegatesToMavenProp() {
         when(scipamatoPropMock.isCommercialFontPresent()).thenReturn(true);
         assertThat(prop.isCommercialFontPresent()).isEqualTo(true);
         verify(scipamatoPropMock).isCommercialFontPresent();
     }
 
     @Test
-    public void checkingCommercialFontPresence_ifNotPresent_delegatesToMavenProp() {
+    void checkingCommercialFontPresence_ifNotPresent_delegatesToMavenProp() {
         when(scipamatoPropMock.isCommercialFontPresent()).thenReturn(false);
         assertThat(prop.isCommercialFontPresent()).isEqualTo(false);
         verify(scipamatoPropMock).isCommercialFontPresent();
@@ -99,21 +99,21 @@ public class ScipamatoPublicPropertiesTest {
     }
 
     @Test
-    public void checkingLessOverCSS_ifTrue_delegatesToScipamatoProp() {
+    void checkingLessOverCSS_ifTrue_delegatesToScipamatoProp() {
         when(scipamatoPropMock.isLessUsedOverCss()).thenReturn(true);
         assertThat(prop.isLessUsedOverCss()).isEqualTo(true);
         verify(scipamatoPropMock).isLessUsedOverCss();
     }
 
     @Test
-    public void checkingLessOverCSS_ifNotPresent_delegatesToScipamatoProp() {
+    void checkingLessOverCSS_ifNotPresent_delegatesToScipamatoProp() {
         when(scipamatoPropMock.isLessUsedOverCss()).thenReturn(false);
         assertThat(prop.isLessUsedOverCss()).isEqualTo(false);
         verify(scipamatoPropMock).isLessUsedOverCss();
     }
 
     @Test
-    public void checkingNavbarDefaultVisibility_delegatesToScipamatoProp() {
+    void checkingNavbarDefaultVisibility_delegatesToScipamatoProp() {
         when(scipamatoPropMock.isNavbarVisibleByDefault()).thenReturn(true);
         assertThat(prop.isNavbarVisibleByDefault()).isEqualTo(true);
         verify(scipamatoPropMock).isNavbarVisibleByDefault();

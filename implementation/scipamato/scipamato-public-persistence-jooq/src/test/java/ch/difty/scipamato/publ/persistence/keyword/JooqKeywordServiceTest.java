@@ -14,13 +14,13 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import ch.difty.scipamato.publ.entity.Keyword;
 
 @ExtendWith(MockitoExtension.class)
-public class JooqKeywordServiceTest {
+class JooqKeywordServiceTest {
 
     @Mock
     private KeywordRepository repoMock;
 
     @Test
-    public void findingKeywords_delegatesToRepo() {
+    void findingKeywords_delegatesToRepo() {
         JooqKeywordService service = new JooqKeywordService(repoMock);
 
         String languageCode = "de";

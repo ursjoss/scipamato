@@ -30,7 +30,7 @@ public abstract class SelfUpdatingPageTest<T extends BasePage<?>> extends BasePa
     }
 
     @Test
-    public void renderedPage_setsOutputMarkupIdToComponents() {
+    void renderedPage_setsOutputMarkupIdToComponents() {
         getTester().startPage(makePage());
         assertThat(getTester()
             .getComponentFromLastRenderedPage("contentPanel:form:title")
@@ -38,7 +38,7 @@ public abstract class SelfUpdatingPageTest<T extends BasePage<?>> extends BasePa
     }
 
     @Test
-    public void test() {
+    void test() {
         SelfUpdatingPage p = new SelfUpdatingPage<>(Model.of(new CodeClass(1, "CC1", ""))) {
             @Override
             protected Form<CodeClass> getForm() {

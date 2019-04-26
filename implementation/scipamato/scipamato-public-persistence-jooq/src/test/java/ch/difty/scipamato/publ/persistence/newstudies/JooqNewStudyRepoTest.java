@@ -7,7 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
-public class JooqNewStudyRepoTest {
+class JooqNewStudyRepoTest {
 
     @Mock
     private DSLContext dslContextMock;
@@ -15,27 +15,27 @@ public class JooqNewStudyRepoTest {
     private JooqNewStudyRepo repo;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         repo = new JooqNewStudyRepo(dslContextMock);
     }
 
     @Test
-    public void findingCodesOfClass_withNullCodeClassId_throws() {
+    void findingCodesOfClass_withNullCodeClassId_throws() {
         assertDegenerateSupplierParameter(() -> repo.findNewStudyTopicsForNewsletter(1, null), "languageCode");
     }
 
     @Test
-    public void findingIdOfNewsletterWithIssue_withNullIssue() {
+    void findingIdOfNewsletterWithIssue_withNullIssue() {
         assertDegenerateSupplierParameter(() -> repo.findIdOfNewsletterWithIssue(null), "issue");
     }
 
     @Test
-    public void findingArchivedNewsletters_withNullLanguageCode() {
+    void findingArchivedNewsletters_withNullLanguageCode() {
         assertDegenerateSupplierParameter(() -> repo.findArchivedNewsletters(14, null), "languageCode");
     }
 
     @Test
-    public void findingNewStudyPageLinks_withNullLanguageCode() {
+    void findingNewStudyPageLinks_withNullLanguageCode() {
         assertDegenerateSupplierParameter(() -> repo.findNewStudyPageLinks(null), "languageCode");
     }
 }

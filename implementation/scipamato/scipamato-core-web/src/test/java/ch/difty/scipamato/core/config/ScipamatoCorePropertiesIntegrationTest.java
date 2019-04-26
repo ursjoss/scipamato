@@ -19,38 +19,38 @@ import ch.difty.scipamato.core.logic.parsing.AuthorParserStrategy;
  */
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = ScipamatoCoreApplication.class)
-public class ScipamatoCorePropertiesIntegrationTest {
+class ScipamatoCorePropertiesIntegrationTest {
 
     @Autowired
-    public ApplicationCoreProperties appProperties;
+    private ApplicationCoreProperties appProperties;
 
     @Test
-    public void gettingBuildVersion() {
+    void gettingBuildVersion() {
         assertThat(appProperties.getBuildVersion()).matches("\\d+\\.\\d+\\.\\d+.*");
     }
 
     @Test
-    public void gettingDefaultStrategy() {
+    void gettingDefaultStrategy() {
         assertThat(appProperties.getAuthorParserStrategy()).isEqualTo(AuthorParserStrategy.PUBMED);
     }
 
     @Test
-    public void assertDefaultLocalization() {
+    void assertDefaultLocalization() {
         assertThat(appProperties.getDefaultLocalization()).isEqualTo("de");
     }
 
     @Test
-    public void assertBrand() {
+    void assertBrand() {
         assertThat(appProperties.getBrand()).isEqualTo("SciPaMaTo");
     }
 
     @Test
-    public void assertMinimumPaperNumberToBeRecycled() {
+    void assertMinimumPaperNumberToBeRecycled() {
         assertThat(appProperties.getMinimumPaperNumberToBeRecycled()).isEqualTo(8);
     }
 
     @Test
-    public void assertPubmedBaseUrl() {
+    void assertPubmedBaseUrl() {
         assertThat(appProperties.getPubmedBaseUrl()).isEqualTo("https://www.ncbi.nlm.nih.gov/pubmed/");
     }
 }

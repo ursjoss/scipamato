@@ -76,7 +76,7 @@ public abstract class UpdateSetStepSetterTest<R extends Record, E extends CoreEn
     protected abstract void stepSetFixtureAudit();
 
     @AfterEach
-    public void tearDown() {
+    void tearDown() {
         specificTearDown();
         verifyNoMoreInteractions(stepMock, moreStepMock);
     }
@@ -84,18 +84,18 @@ public abstract class UpdateSetStepSetterTest<R extends Record, E extends CoreEn
     protected abstract void specificTearDown();
 
     @Test
-    public void nullCheck() {
+    void nullCheck() {
         assertThat(stepMock).isNotNull();
         assertThat(moreStepMock).isNotNull();
     }
 
     @Test
-    public void settingFields_withNullSetter_throws() {
+    void settingFields_withNullSetter_throws() {
         assertDegenerateSupplierParameter(() -> getSetter().setFieldsFor(null, getEntity()), "step");
     }
 
     @Test
-    public void settingFields_withNullEntity_throws() {
+    void settingFields_withNullEntity_throws() {
         assertDegenerateSupplierParameter(() -> getSetter().setFieldsFor(stepMock, null), "entity");
     }
 

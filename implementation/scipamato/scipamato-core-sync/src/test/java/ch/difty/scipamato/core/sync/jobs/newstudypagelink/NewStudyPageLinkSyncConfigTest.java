@@ -23,7 +23,7 @@ import ch.difty.scipamato.publ.db.public_.tables.records.NewStudyPageLinkRecord;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
-public class NewStudyPageLinkSyncConfigTest extends SyncConfigTest<NewStudyPageLinkRecord> {
+class NewStudyPageLinkSyncConfigTest extends SyncConfigTest<NewStudyPageLinkRecord> {
 
     @Autowired
     private NewStudyPageLinkSyncConfig config;
@@ -64,7 +64,7 @@ public class NewStudyPageLinkSyncConfigTest extends SyncConfigTest<NewStudyPageL
     }
 
     @Test
-    public void makingEntity() throws SQLException {
+    void makingEntity() throws SQLException {
         ResultSet rs = Mockito.mock(ResultSet.class);
         when(rs.getString(NewStudyPageLink.NEW_STUDY_PAGE_LINK.LANG_CODE.getName())).thenReturn("de");
         when(rs.getInt(NewStudyPageLink.NEW_STUDY_PAGE_LINK.SORT.getName())).thenReturn(1);

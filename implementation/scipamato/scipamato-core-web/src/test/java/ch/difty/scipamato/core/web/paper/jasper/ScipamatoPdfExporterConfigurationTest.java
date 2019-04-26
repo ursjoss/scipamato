@@ -10,32 +10,32 @@ import org.junit.jupiter.api.Test;
 import ch.difty.scipamato.core.entity.Code;
 import ch.difty.scipamato.core.entity.User;
 
-public class ScipamatoPdfExporterConfigurationTest {
+class ScipamatoPdfExporterConfigurationTest {
 
     private static final String                            TITLE = "title";
     private              ScipamatoPdfExporterConfiguration config;
     private final        List<Code>                        codes = new ArrayList<>();
 
     @Test
-    public void minimalInstantiation_buildingTitleFromHeaderPartAndNumber_intoMetadataTitle() {
+    void minimalInstantiation_buildingTitleFromHeaderPartAndNumber_intoMetadataTitle() {
         config = new ScipamatoPdfExporterConfiguration.Builder("headerpart:", 5L).build();
         assertingMinimalConfigWithTitle("headerpart: 5");
     }
 
     @Test
-    public void minimalInstantiation_buildingTitleFromHeaderPartAndNullNumber_intoMetadataTitle() {
+    void minimalInstantiation_buildingTitleFromHeaderPartAndNullNumber_intoMetadataTitle() {
         config = new ScipamatoPdfExporterConfiguration.Builder("headerpart:", null).build();
         assertingMinimalConfigWithTitle("headerpart:");
     }
 
     @Test
-    public void minimalInstantiation_buildingTitleFromNullHeaderPartAndNullNumber_intoMetadataTitle() {
+    void minimalInstantiation_buildingTitleFromNullHeaderPartAndNullNumber_intoMetadataTitle() {
         config = new ScipamatoPdfExporterConfiguration.Builder(null, null).build();
         assertingMinimalConfigWithTitle(null);
     }
 
     @Test
-    public void minimalInstantiation_buildingTitleFromNullHeaderPartAndNumber_intoMetadataTitle() {
+    void minimalInstantiation_buildingTitleFromNullHeaderPartAndNumber_intoMetadataTitle() {
         config = new ScipamatoPdfExporterConfiguration.Builder(null, 3L).build();
         assertingMinimalConfigWithTitle("3");
     }
@@ -50,13 +50,13 @@ public class ScipamatoPdfExporterConfigurationTest {
     }
 
     @Test
-    public void minimalInstantiation_buildingTitleAsIsIntoMetadataTitle() {
+    void minimalInstantiation_buildingTitleAsIsIntoMetadataTitle() {
         config = new ScipamatoPdfExporterConfiguration.Builder(TITLE).build();
         assertingMinimalConfigWithTitle(TITLE);
     }
 
     @Test
-    public void withAuthor_asString_setsMetadataAuthor() {
+    void withAuthor_asString_setsMetadataAuthor() {
         config = new ScipamatoPdfExporterConfiguration.Builder(TITLE)
             .withAuthor("author")
             .build();
@@ -69,7 +69,7 @@ public class ScipamatoPdfExporterConfigurationTest {
     }
 
     @Test
-    public void withAuthor_asUser_setsMetadataAuthorFromFirstAndLastName() {
+    void withAuthor_asUser_setsMetadataAuthorFromFirstAndLastName() {
         final User user = new User(3, "username", "first", "last", "email", "pw");
         config = new ScipamatoPdfExporterConfiguration.Builder(TITLE)
             .withAuthor(user)
@@ -83,7 +83,7 @@ public class ScipamatoPdfExporterConfigurationTest {
     }
 
     @Test
-    public void withAuthor_asNullUser_doesNotSetMetadataAuthor() {
+    void withAuthor_asNullUser_doesNotSetMetadataAuthor() {
         config = new ScipamatoPdfExporterConfiguration.Builder(TITLE)
             .withAuthor((User) null)
             .build();
@@ -91,7 +91,7 @@ public class ScipamatoPdfExporterConfigurationTest {
     }
 
     @Test
-    public void withPaperTitle_concatenatesTitleAndPaperTitleIntoMetadataTitle() {
+    void withPaperTitle_concatenatesTitleAndPaperTitleIntoMetadataTitle() {
         config = new ScipamatoPdfExporterConfiguration.Builder(TITLE)
             .withPaperTitle("papertitle")
             .build();
@@ -104,7 +104,7 @@ public class ScipamatoPdfExporterConfigurationTest {
     }
 
     @Test
-    public void withPaperTitle_withNullTitle_onlyAppliesPaperTitle() {
+    void withPaperTitle_withNullTitle_onlyAppliesPaperTitle() {
         config = new ScipamatoPdfExporterConfiguration.Builder(null)
             .withPaperTitle("papertitle")
             .build();
@@ -112,7 +112,7 @@ public class ScipamatoPdfExporterConfigurationTest {
     }
 
     @Test
-    public void withNullPaperTitle_withTitleAndAuthor_appliesTitleAndAuthor() {
+    void withNullPaperTitle_withTitleAndAuthor_appliesTitleAndAuthor() {
         config = new ScipamatoPdfExporterConfiguration.Builder(TITLE)
             .withPaperTitle(null)
             .withPaperAuthor("author")
@@ -121,7 +121,7 @@ public class ScipamatoPdfExporterConfigurationTest {
     }
 
     @Test
-    public void withPaperTitle_concatenatesTitleAndPaperAuthorAndPaperTitleIntoMetadataTitle() {
+    void withPaperTitle_concatenatesTitleAndPaperAuthorAndPaperTitleIntoMetadataTitle() {
         config = new ScipamatoPdfExporterConfiguration.Builder(TITLE)
             .withPaperTitle("papertitle")
             .withPaperAuthor("paperAuthor")
@@ -135,7 +135,7 @@ public class ScipamatoPdfExporterConfigurationTest {
     }
 
     @Test
-    public void withSubject_setsMetadataSubject() {
+    void withSubject_setsMetadataSubject() {
         config = new ScipamatoPdfExporterConfiguration.Builder(TITLE)
             .withSubject("subject")
             .build();
@@ -148,7 +148,7 @@ public class ScipamatoPdfExporterConfigurationTest {
     }
 
     @Test
-    public void withCreator_setsMetadataCreator() {
+    void withCreator_setsMetadataCreator() {
         config = new ScipamatoPdfExporterConfiguration.Builder(TITLE)
             .withCreator("creator")
             .build();
@@ -161,7 +161,7 @@ public class ScipamatoPdfExporterConfigurationTest {
     }
 
     @Test
-    public void withSingleCodeSpaceless_setsMetadataKeywords() {
+    void withSingleCodeSpaceLess_setsMetadataKeywords() {
         codes.add(new Code("1A", "code1", null, false, 1, "c1", "", 1));
         config = new ScipamatoPdfExporterConfiguration.Builder(TITLE)
             .withCodes(codes)
@@ -175,7 +175,7 @@ public class ScipamatoPdfExporterConfigurationTest {
     }
 
     @Test
-    public void withDoubleCodesBothSpaceless_setsMetadataKeywordsCommaSeparated() {
+    void withDoubleCodesBothSpaceLess_setsMetadataKeywordsCommaSeparated() {
         codes.add(new Code("1A", "code1", null, false, 1, "c1", "", 1));
         codes.add(new Code("2B", "code2", null, false, 2, "c2", "", 1));
         config = new ScipamatoPdfExporterConfiguration.Builder(TITLE)
@@ -185,7 +185,7 @@ public class ScipamatoPdfExporterConfigurationTest {
     }
 
     @Test
-    public void withTripleCodesOneWithSpaces_setsMetadataKeywordsCommaSeparatedAndPartiallyQuoted() {
+    void withTripleCodesOneWithSpaces_setsMetadataKeywordsCommaSeparatedAndPartiallyQuoted() {
         codes.add(new Code("1A", "code1", null, false, 1, "c1", "", 1));
         codes.add(new Code("2B", "code2 with spaces", null, false, 2, "c2", "", 1));
         codes.add(new Code("3C", "code3", null, false, 3, "c3", "", 1));
@@ -196,7 +196,7 @@ public class ScipamatoPdfExporterConfigurationTest {
     }
 
     @Test
-    public void withCompression() {
+    void withCompression() {
         config = new ScipamatoPdfExporterConfiguration.Builder(TITLE)
             .withCompression()
             .build();
@@ -209,7 +209,7 @@ public class ScipamatoPdfExporterConfigurationTest {
     }
 
     @Test
-    public void withAllAttributes() {
+    void withAllAttributes() {
         codes.add(new Code("1A", "c1", null, false, 1, "c1", "", 1));
         codes.add(new Code("2B", "c2 with spaces", null, false, 2, "c2", "", 1));
         config = new ScipamatoPdfExporterConfiguration.Builder("hp:", 10L)
@@ -230,7 +230,7 @@ public class ScipamatoPdfExporterConfigurationTest {
     }
 
     @Test
-    public void withNullCodes_returnsNullMetadataKeywords() {
+    void withNullCodes_returnsNullMetadataKeywords() {
         config = new ScipamatoPdfExporterConfiguration.Builder(TITLE)
             .withCodes(null)
             .build();

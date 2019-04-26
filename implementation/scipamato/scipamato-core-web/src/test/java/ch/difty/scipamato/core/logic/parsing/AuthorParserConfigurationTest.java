@@ -13,7 +13,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import ch.difty.scipamato.core.config.ApplicationCoreProperties;
 
 @ExtendWith(MockitoExtension.class)
-public class AuthorParserConfigurationTest {
+class AuthorParserConfigurationTest {
 
     private AuthorParserConfiguration conf;
 
@@ -21,13 +21,13 @@ public class AuthorParserConfigurationTest {
     private ApplicationCoreProperties appProperties;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         conf = new AuthorParserConfiguration();
         when(appProperties.getAuthorParserStrategy()).thenReturn(AuthorParserStrategy.PUBMED);
     }
 
     @Test
-    public void canRetrieveAuthorParserFactory() {
+    void canRetrieveAuthorParserFactory() {
         AuthorParserFactory factory = conf.authorParserFactory(appProperties);
 
         assertThat(factory)

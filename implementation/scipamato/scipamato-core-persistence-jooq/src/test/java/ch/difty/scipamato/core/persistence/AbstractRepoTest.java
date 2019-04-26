@@ -15,7 +15,7 @@ import ch.difty.scipamato.common.DateTimeService;
 import ch.difty.scipamato.core.entity.User;
 
 @ExtendWith(MockitoExtension.class)
-public class AbstractRepoTest {
+class AbstractRepoTest {
 
     private AbstractRepo repo;
 
@@ -32,11 +32,11 @@ public class AbstractRepoTest {
     private User userMock;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
     }
 
     @Test
-    public void gettingActiveUser_withAuthenticationPresent_returnsPrincipalAsUser() {
+    void gettingActiveUser_withAuthenticationPresent_returnsPrincipalAsUser() {
         repo = new AbstractRepo(dslContext, dateTimeService) {
             @Override
             Authentication getAuthentication() {
@@ -48,7 +48,7 @@ public class AbstractRepoTest {
     }
 
     @Test
-    public void gettingActiveUser_withNoAuthenticationPresent_returnsDummyUser() {
+    void gettingActiveUser_withNoAuthenticationPresent_returnsDummyUser() {
         repo = new AbstractRepo(dslContext, dateTimeService) {
             @Override
             Authentication getAuthentication() {

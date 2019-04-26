@@ -7,18 +7,18 @@ import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.common.persistence.paging.Sort.Direction;
 
-public class PaginationRequestTest {
+class PaginationRequestTest {
 
     private PaginationRequest pr;
     private String            sort;
 
     @Test
-    public void degenerateConstruction_withInvalidOffset() {
+    void degenerateConstruction_withInvalidOffset() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> new PaginationRequest(-1, 1));
     }
 
     @Test
-    public void degenerateConstruction_withInvalidPageSize() {
+    void degenerateConstruction_withInvalidPageSize() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> new PaginationRequest(0, 0));
     }
 
@@ -37,7 +37,7 @@ public class PaginationRequestTest {
     }
 
     @Test
-    public void paginationContextWithSortButNoPaging() {
+    void paginationContextWithSortButNoPaging() {
         sort = "foo: DESC";
         pr = new PaginationRequest(Direction.DESC, "foo");
 
@@ -46,7 +46,7 @@ public class PaginationRequestTest {
     }
 
     @Test
-    public void paginationContextWithSort_withOffset0_andPageSize10() {
+    void paginationContextWithSort_withOffset0_andPageSize10() {
         sort = "foo: DESC";
         pr = new PaginationRequest(0, 10, Direction.DESC, "foo");
 
@@ -55,7 +55,7 @@ public class PaginationRequestTest {
     }
 
     @Test
-    public void paginationContextWithSort_withOffset24_andPageSize12() {
+    void paginationContextWithSort_withOffset24_andPageSize12() {
         sort = "foo: ASC";
         pr = new PaginationRequest(24, 12, Direction.ASC, "foo");
 
@@ -64,7 +64,7 @@ public class PaginationRequestTest {
     }
 
     @Test
-    public void paginationContextWithoutSort_withOffset6_andPageSize2() {
+    void paginationContextWithoutSort_withOffset6_andPageSize2() {
         sort = null;
         pr = new PaginationRequest(6, 2);
 
@@ -73,7 +73,7 @@ public class PaginationRequestTest {
     }
 
     @Test
-    public void equality_ofSameObjectInstance() {
+    void equality_ofSameObjectInstance() {
         pr = new PaginationRequest(5, 5);
         assertEquality(pr, pr);
     }
@@ -85,20 +85,20 @@ public class PaginationRequestTest {
 
     @SuppressWarnings("ConstantConditions")
     @Test
-    public void inequality_ofNull() {
+    void inequality_ofNull() {
         pr = new PaginationRequest(5, 5);
         assertThat(pr.equals(null)).isFalse();
     }
 
     @SuppressWarnings({ "unlikely-arg-type", "EqualsBetweenInconvertibleTypes" })
     @Test
-    public void inequality_ofDifferentClass() {
+    void inequality_ofDifferentClass() {
         pr = new PaginationRequest(5, 5);
         assertThat("foo".equals(pr)).isFalse();
     }
 
     @Test
-    public void inequality_ofPaginationRequestWithDifferentSorts() {
+    void inequality_ofPaginationRequestWithDifferentSorts() {
         pr = new PaginationRequest(5, 5);
         assertInequality(pr, new PaginationRequest(5, 5, Direction.ASC, "foo"));
     }
@@ -109,37 +109,37 @@ public class PaginationRequestTest {
     }
 
     @Test
-    public void inequality_ofPaginationRequestWithDifferentSorts2() {
+    void inequality_ofPaginationRequestWithDifferentSorts2() {
         pr = new PaginationRequest(5, 6, Direction.ASC, "bar");
         assertInequality(pr, new PaginationRequest(5, 6, Direction.ASC, "foo"));
     }
 
     @Test
-    public void inequality_ofPaginationRequestWithDifferentSorts3() {
+    void inequality_ofPaginationRequestWithDifferentSorts3() {
         pr = new PaginationRequest(5, 6, Direction.DESC, "foo");
         assertInequality(pr, new PaginationRequest(5, 6, Direction.ASC, "foo"));
     }
 
     @Test
-    public void inequality_ofPaginationRequestWithNonSortAttributes1() {
+    void inequality_ofPaginationRequestWithNonSortAttributes1() {
         pr = new PaginationRequest(5, 6, Direction.ASC, "foo");
         assertInequality(pr, new PaginationRequest(6, 6, Direction.ASC, "foo"));
     }
 
     @Test
-    public void inequality_ofPaginationRequestWithNonSortAttributes2() {
+    void inequality_ofPaginationRequestWithNonSortAttributes2() {
         pr = new PaginationRequest(5, 6, Direction.ASC, "foo");
         assertInequality(pr, new PaginationRequest(5, 7, Direction.ASC, "foo"));
     }
 
     @Test
-    public void equality_ofPaginationRequestWithSameAttributes_withSort() {
+    void equality_ofPaginationRequestWithSameAttributes_withSort() {
         pr = new PaginationRequest(5, 6, Direction.ASC, "foo");
         assertEquality(pr, new PaginationRequest(5, 6, Direction.ASC, "foo"));
     }
 
     @Test
-    public void equality_ofPaginationRequestWithSameAttributes_withoutSort() {
+    void equality_ofPaginationRequestWithSameAttributes_withoutSort() {
         pr = new PaginationRequest(5, 6);
         PaginationRequest pr2 = new PaginationRequest(5, 6);
         assertEquality(pr, pr2);
@@ -147,7 +147,7 @@ public class PaginationRequestTest {
 
     @SuppressWarnings({ "unlikely-arg-type", "RedundantStringConstructorCall", "EqualsBetweenInconvertibleTypes" })
     @Test
-    public void inequality_ofPaginationRequestWithNonPaginationRequest() {
+    void inequality_ofPaginationRequestWithNonPaginationRequest() {
         pr = new PaginationRequest(5, 6);
         String pr2 = "";
         assertThat(pr.equals(pr2)).isFalse();

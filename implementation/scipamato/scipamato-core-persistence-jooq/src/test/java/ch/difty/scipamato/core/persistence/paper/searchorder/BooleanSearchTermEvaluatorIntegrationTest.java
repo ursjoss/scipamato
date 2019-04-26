@@ -13,7 +13,7 @@ import ch.difty.scipamato.core.entity.search.SearchTermType;
  * Test class to integration test the search term and the search term evaluator.
  */
 
-public class BooleanSearchTermEvaluatorIntegrationTest extends SearchTermEvaluatorIntegrationTest<BooleanSearchTerm> {
+class BooleanSearchTermEvaluatorIntegrationTest extends SearchTermEvaluatorIntegrationTest<BooleanSearchTerm> {
 
     @SuppressWarnings("unused")
     private Object[] booleanParameters() {

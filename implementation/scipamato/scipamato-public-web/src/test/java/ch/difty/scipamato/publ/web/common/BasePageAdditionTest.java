@@ -19,7 +19,7 @@ import ch.difty.scipamato.publ.web.PublicPageParameters;
 import ch.difty.scipamato.publ.web.WicketTest;
 import ch.difty.scipamato.publ.web.resources.MetaOTCssResourceReference;
 
-public class BasePageAdditionTest extends WicketTest {
+class BasePageAdditionTest extends WicketTest {
 
     @MockBean
     private LocaleExtractor localeExtractor;
@@ -51,14 +51,14 @@ public class BasePageAdditionTest extends WicketTest {
     }
 
     @Test
-    public void callingPageWithoutLocaleIndicatingParentUrl_doesNotSetLocale() {
+    void callingPageWithoutLocaleIndicatingParentUrl_doesNotSetLocale() {
         assertThat(newPageWithParameters(pp)
             .getSession()
             .getLocale()).isNotEqualTo(localeZh);
     }
 
     @Test
-    public void callingPageWithParentUrlIndicatingChinese_setsChineseLocale() {
+    void callingPageWithParentUrlIndicatingChinese_setsChineseLocale() {
         pp.set(PublicPageParameters.PARENT_URL.getName(), "someParentUrlIndicatingChineseLocal");
         when(localeExtractor.extractLocaleFrom("someParentUrlIndicatingChineseLocal")).thenReturn(localeZh);
 
@@ -68,7 +68,7 @@ public class BasePageAdditionTest extends WicketTest {
     }
 
     @Test
-    public void page_withCommercialFontsPresent_rendersMetaFontsAndAdditionalCommercialFonts() {
+    void page_withCommercialFontsPresent_rendersMetaFontsAndAdditionalCommercialFonts() {
         when(applicationProperties.isCommercialFontPresent()).thenReturn(true);
 
         when(metaOtFontResourceProvider.getCssResourceReference()).thenReturn(MetaOTCssResourceReference.get());
@@ -85,7 +85,7 @@ public class BasePageAdditionTest extends WicketTest {
     }
 
     @Test
-    public void page_withoutCommercialFontsPresent_rendersNeitherMetaFontsNorAdditionalCommercialFonts() {
+    void page_withoutCommercialFontsPresent_rendersNeitherMetaFontsNorAdditionalCommercialFonts() {
         when(applicationProperties.isCommercialFontPresent()).thenReturn(false);
 
         getTester().startPage(newPageWithParameters(pp));
@@ -99,12 +99,12 @@ public class BasePageAdditionTest extends WicketTest {
     }
 
     @Test
-    public void page_withResponsiveIframeSupportEnabled_rendersPym() {
+    void page_withResponsiveIframeSupportEnabled_rendersPym() {
         assertPym(true);
     }
 
     @Test
-    public void page_withoutResponsiveIframeSupportEnabled_doesNotRenderPym() {
+    void page_withoutResponsiveIframeSupportEnabled_doesNotRenderPym() {
         assertPym(false);
     }
 
@@ -127,7 +127,7 @@ public class BasePageAdditionTest extends WicketTest {
     }
 
     @Test
-    public void renderingAdditionalCommercialFonts_isNoop() {
+    void renderingAdditionalCommercialFonts_isNoop() {
         final IHeaderResponse response = mock(IHeaderResponse.class);
         // call it for coverage
         BasePage page = new BasePage<>(pp) {

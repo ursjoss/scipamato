@@ -6,7 +6,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.stream.Collectors;
 
 import org.jooq.Condition;
-import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.core.entity.search.SearchTerm;
 import ch.difty.scipamato.core.entity.search.SearchTermType;
@@ -17,7 +16,8 @@ import ch.difty.scipamato.core.entity.search.StringSearchTerm.Token;
 /**
  * Test class to integration test the search term and the search term evaluator.
  */
-public class StringSearchTermEvaluatorIntegrationTest extends SearchTermEvaluatorIntegrationTest<StringSearchTerm> {
+@SuppressWarnings("SpellCheckingInspection")
+class StringSearchTermEvaluatorIntegrationTest extends SearchTermEvaluatorIntegrationTest<StringSearchTerm> {
 
     @SuppressWarnings("unused")
     private Object[] stringParameters() {
@@ -106,8 +106,8 @@ public class StringSearchTermEvaluatorIntegrationTest extends SearchTermEvaluato
     }
 
     // TODO restore parametrized test
-//    @Test
-//    @Parameters(method = "stringParameters")
+    //    @Test
+    //    @Parameters(method = "stringParameters")
     public void stringTest(String rawSearchTerm, String tokenString, String condition, MatchType type) {
         final StringSearchTerm st = makeSearchTerm(rawSearchTerm);
         assertThat(st

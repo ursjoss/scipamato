@@ -17,7 +17,7 @@ import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.search.SearchOrder;
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
-public class PaperSlimBySearchOrderProviderTest
+class PaperSlimBySearchOrderProviderTest
     extends AbstractPaperSlimProviderTest<SearchOrder, PaperSlimBySearchOrderProvider> {
 
     private static final String LC = "en";
@@ -54,13 +54,13 @@ public class PaperSlimBySearchOrderProviderTest
     }
 
     @Test
-    public void constructingWithNewFilter_usesEmptyFilter() {
+    void constructingWithNewFilter_usesEmptyFilter() {
         PaperSlimBySearchOrderProvider p = new PaperSlimBySearchOrderProvider(null, 10);
         assertThat(p.getFilterState()).isEqualToComparingFieldByField(new SearchOrder());
     }
 
     @Test
-    public void size() {
+    void size() {
         int size = 5;
         when(serviceMock.countBySearchOrder(getFilter())).thenReturn(size);
         assertThat(provider.size()).isEqualTo(size);
@@ -68,7 +68,7 @@ public class PaperSlimBySearchOrderProviderTest
     }
 
     @Test
-    public void settingFilterState() {
+    void settingFilterState() {
         SearchOrder searchOrder2 = mock(SearchOrder.class);
         assertThat(provider.getFilterState()).isEqualTo(searchOrder);
         provider.setFilterState(searchOrder2);
@@ -76,7 +76,7 @@ public class PaperSlimBySearchOrderProviderTest
     }
 
     @Test
-    public void gettingAllPapersByFilter() {
+    void gettingAllPapersByFilter() {
         provider.setSort("authors", SortOrder.ASCENDING);
         when(paperServiceMock.findPageBySearchOrder(eq(getFilter()),
             Mockito.argThat(new PaginationContextMatcher(0, Integer.MAX_VALUE, "authors: ASC")), eq(LC))).thenReturn(
@@ -89,7 +89,7 @@ public class PaperSlimBySearchOrderProviderTest
     }
 
     @Test
-    public void findingAllPaperIds() {
+    void findingAllPaperIds() {
         final List<Long> ids = Arrays.asList(3L, 18L, 6L);
         provider.setSort("authors", SortOrder.ASCENDING);
         when(paperServiceMock.findPageOfIdsBySearchOrder(eq(getFilter()),
@@ -101,19 +101,19 @@ public class PaperSlimBySearchOrderProviderTest
     }
 
     @Test
-    public void gettingSearchOrderId_passesModelId() {
+    void gettingSearchOrderId_passesModelId() {
         when(searchOrder.getId()).thenReturn(55L);
         assertThat(provider.getSearchOrderId()).isEqualTo(55L);
         verify(searchOrder).getId();
     }
 
     @Test
-    public void isShowingExclusion_ifTrueInFilter_returnsTrue() {
+    void isShowingExclusion_ifTrueInFilter_returnsTrue() {
         assertShowExcluded(true);
     }
 
     @Test
-    public void isShowingExclusion_ifFalseInFilter_returnsFalse() {
+    void isShowingExclusion_ifFalseInFilter_returnsFalse() {
         assertShowExcluded(false);
     }
 

@@ -25,32 +25,32 @@ class NewFieldChangeEventTest {
     private TextArea<?> mockComponent;
 
     @AfterEach
-    public void tearDown() {
+    void tearDown() {
         verifyNoMoreInteractions(targetMock, targetMock2);
     }
 
     @Test
-    public void canRetrieveTarget() {
+    void canRetrieveTarget() {
         e = new NewFieldChangeEvent(targetMock);
         assertThat(e.getTarget()).isEqualTo(targetMock);
     }
 
     @Test
-    public void usingMinimalConstructor_doesNotSetAnySpecialStuff() {
+    void usingMinimalConstructor_doesNotSetAnySpecialStuff() {
         e = new NewFieldChangeEvent(targetMock);
         assertThat(e.getId()).isNull();
         assertThat(e.getMarkupId()).isNull();
     }
 
     @Test
-    public void usingWithId_doesAddId() {
+    void usingWithId_doesAddId() {
         e = new NewFieldChangeEvent(targetMock).withId("foo");
         assertThat(e.getId()).isEqualTo("foo");
         assertThat(e.getMarkupId()).isNull();
     }
 
     @Test
-    public void usingWithMarkupId_doesAddMarkupId() {
+    void usingWithMarkupId_doesAddMarkupId() {
         e = new NewFieldChangeEvent(targetMock).withMarkupId("bar");
         assertThat(e.getId()).isNull();
         assertThat(e.getMarkupId()).isEqualTo("bar");
@@ -58,7 +58,7 @@ class NewFieldChangeEventTest {
 
     @SuppressWarnings("SpellCheckingInspection")
     @Test
-    public void usingWithIdAndMarkupId_doesAddBoth() {
+    void usingWithIdAndMarkupId_doesAddBoth() {
         e = new NewFieldChangeEvent(targetMock)
             .withId("hups")
             .withMarkupId("goo");
@@ -67,7 +67,7 @@ class NewFieldChangeEventTest {
     }
 
     @Test
-    public void canOverrideTarget() {
+    void canOverrideTarget() {
         e = new NewFieldChangeEvent(targetMock);
         assertThat(e.getTarget()).isEqualTo(targetMock);
         e.setTarget(targetMock2);
@@ -75,7 +75,7 @@ class NewFieldChangeEventTest {
     }
 
     @Test
-    public void consideringAddingToTarget_withIdLessEvent_addsTarget() {
+    void consideringAddingToTarget_withIdLessEvent_addsTarget() {
         e = new NewFieldChangeEvent(targetMock);
         assertThat(e.getId()).isNull();
 
@@ -85,7 +85,7 @@ class NewFieldChangeEventTest {
     }
 
     @Test
-    public void consideringAddingToTarget_withDifferingId_doesNotAddTarget() {
+    void consideringAddingToTarget_withDifferingId_doesNotAddTarget() {
         e = new NewFieldChangeEvent(targetMock)
             .withId("otherId")
             .withMarkupId("mId");
@@ -128,7 +128,7 @@ class NewFieldChangeEventTest {
     }
 
     @Test
-    public void equals() {
+    void equals() {
         EqualsVerifier
             .forClass(NewFieldChangeEvent.class)
             .withRedefinedSuperclass()

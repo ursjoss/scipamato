@@ -14,7 +14,7 @@ import ch.difty.scipamato.core.entity.search.SearchTermType;
 /**
  * Test class to integration test the search term and the search term evaluator.
  */
-public class IntegerSearchTermEvaluatorIntegrationTest extends SearchTermEvaluatorIntegrationTest<IntegerSearchTerm> {
+class IntegerSearchTermEvaluatorIntegrationTest extends SearchTermEvaluatorIntegrationTest<IntegerSearchTerm> {
 
     @SuppressWarnings("unused")
     private Object[] integerParameters() {

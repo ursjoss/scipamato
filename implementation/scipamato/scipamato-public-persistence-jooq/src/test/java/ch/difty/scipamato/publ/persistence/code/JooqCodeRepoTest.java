@@ -9,7 +9,7 @@ import org.mockito.Mock;
 
 import ch.difty.scipamato.common.entity.CodeClassId;
 
-public class JooqCodeRepoTest {
+class JooqCodeRepoTest {
 
     @Mock
     private DSLContext dslContextMock;
@@ -17,17 +17,17 @@ public class JooqCodeRepoTest {
     private JooqCodeRepo repo;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         repo = new JooqCodeRepo(dslContextMock);
     }
 
     @Test
-    public void findingCodesOfClass_withNullCodeClassId_throws() {
+    void findingCodesOfClass_withNullCodeClassId_throws() {
         assertDegenerateSupplierParameter(() -> repo.findCodesOfClass(null, "de"), "codeClassId");
     }
 
     @Test
-    public void findingCodesOfClass_withNullLanguageId_throws() {
+    void findingCodesOfClass_withNullLanguageId_throws() {
         assertDegenerateSupplierParameter(() -> repo.findCodesOfClass(CodeClassId.CC1, null), "languageCode");
     }
 }

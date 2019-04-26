@@ -24,7 +24,7 @@ import ch.difty.scipamato.publ.db.public_.tables.records.KeywordRecord;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
-public class KeywordSyncConfigTest extends SyncConfigTest<KeywordRecord> {
+class KeywordSyncConfigTest extends SyncConfigTest<KeywordRecord> {
 
     @Autowired
     private KeywordSyncConfig config;
@@ -70,7 +70,7 @@ public class KeywordSyncConfigTest extends SyncConfigTest<KeywordRecord> {
     }
 
     @Test
-    public void makingEntity() throws SQLException {
+    void makingEntity() throws SQLException {
         ResultSet rs = Mockito.mock(ResultSet.class);
         when(rs.getInt(KeywordTr.KEYWORD_TR.ID.getName())).thenReturn(1);
         when(rs.getInt("KeywordId")).thenReturn(2);

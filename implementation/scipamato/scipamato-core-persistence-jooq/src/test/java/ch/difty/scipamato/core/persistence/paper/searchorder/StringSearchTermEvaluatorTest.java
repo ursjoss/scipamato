@@ -17,7 +17,7 @@ import ch.difty.scipamato.core.entity.search.StringSearchTerm.Token;
 import ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType;
 
 @ExtendWith(MockitoExtension.class)
-public class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<StringSearchTerm> {
+class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<StringSearchTerm> {
 
     private final StringSearchTermEvaluator e = new StringSearchTermEvaluator();
 
@@ -38,7 +38,7 @@ public class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<Strin
     }
 
     @Test
-    public void buildingConditionForNotRegex_appliesNotRegex() {
+    void buildingConditionForNotRegex_appliesNotRegex() {
         expectToken(TokenType.NOTREGEX, "foo");
         assertThat(e
             .evaluate(stMock)
@@ -46,7 +46,7 @@ public class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<Strin
     }
 
     @Test
-    public void buildingConditionForRegex_appliesRegex() {
+    void buildingConditionForRegex_appliesRegex() {
         expectToken(TokenType.REGEX, "foo");
         assertThat(e
             .evaluate(stMock)
@@ -54,7 +54,7 @@ public class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<Strin
     }
 
     @Test
-    public void buildingConditionForWhitespace_appliesTrueCondition() {
+    void buildingConditionForWhitespace_appliesTrueCondition() {
         expectToken(TokenType.WHITESPACE, "   ");
         assertThat(e
             .evaluate(stMock)
@@ -62,7 +62,7 @@ public class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<Strin
     }
 
     @Test
-    public void buildingConditionForSome_appliesNotEmpty() {
+    void buildingConditionForSome_appliesNotEmpty() {
         expectToken(TokenType.SOME, "whatever");
         assertThat(e
             .evaluate(stMock)
@@ -77,7 +77,7 @@ public class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<Strin
     }
 
     @Test
-    public void buildingConditionForEmpty_appliesEmpty() {
+    void buildingConditionForEmpty_appliesEmpty() {
         expectToken(TokenType.EMPTY, "whatever");
         assertThat(e
             .evaluate(stMock)
@@ -92,7 +92,7 @@ public class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<Strin
     }
 
     @Test
-    public void buildingConditionForNotOpenLeftRightQuoted_appliesLike() {
+    void buildingConditionForNotOpenLeftRightQuoted_appliesLike() {
         expectToken(TokenType.NOTOPENLEFTRIGHTQUOTED, "foo");
         assertThat(e
             .evaluate(stMock)
@@ -100,7 +100,7 @@ public class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<Strin
     }
 
     @Test
-    public void buildingConditionForOpenLeftRightQuoted_appliesLike() {
+    void buildingConditionForOpenLeftRightQuoted_appliesLike() {
         expectToken(TokenType.OPENLEFTRIGHTQUOTED, "foo");
         assertThat(e
             .evaluate(stMock)
@@ -108,7 +108,7 @@ public class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<Strin
     }
 
     @Test
-    public void buildingConditionForNotOpenLeftRight_appliesNotLike() {
+    void buildingConditionForNotOpenLeftRight_appliesNotLike() {
         expectToken(TokenType.NOTOPENLEFTRIGHT, "foo");
         assertThat(e
             .evaluate(stMock)
@@ -116,7 +116,7 @@ public class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<Strin
     }
 
     @Test
-    public void buildingConditionForOpenLeftRight_appliesLike() {
+    void buildingConditionForOpenLeftRight_appliesLike() {
         expectToken(TokenType.OPENLEFTRIGHT, "foo");
         assertThat(e
             .evaluate(stMock)
@@ -124,7 +124,7 @@ public class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<Strin
     }
 
     @Test
-    public void buildingConditionForNotOpenRightQuoted_appliesLike() {
+    void buildingConditionForNotOpenRightQuoted_appliesLike() {
         expectToken(TokenType.NOTOPENRIGHTQUOTED, "foo");
         assertThat(e
             .evaluate(stMock)
@@ -132,7 +132,7 @@ public class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<Strin
     }
 
     @Test
-    public void buildingConditionForOpenRightQuoted_appliesLike() {
+    void buildingConditionForOpenRightQuoted_appliesLike() {
         expectToken(TokenType.OPENRIGHTQUOTED, "foo");
         assertThat(e
             .evaluate(stMock)
@@ -140,7 +140,7 @@ public class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<Strin
     }
 
     @Test
-    public void buildingConditionForNotOpenRight_appliesNotLike() {
+    void buildingConditionForNotOpenRight_appliesNotLike() {
         expectToken(TokenType.NOTOPENRIGHT, "foo");
         assertThat(e
             .evaluate(stMock)
@@ -148,7 +148,7 @@ public class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<Strin
     }
 
     @Test
-    public void buildingConditionForOpenRight_appliesLike() {
+    void buildingConditionForOpenRight_appliesLike() {
         expectToken(TokenType.OPENRIGHT, "foo");
         assertThat(e
             .evaluate(stMock)
@@ -156,7 +156,7 @@ public class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<Strin
     }
 
     @Test
-    public void buildingConditionForNotOpenLeftQuoted_appliesLike() {
+    void buildingConditionForNotOpenLeftQuoted_appliesLike() {
         expectToken(TokenType.NOTOPENLEFTQUOTED, "foo");
         assertThat(e
             .evaluate(stMock)
@@ -164,7 +164,7 @@ public class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<Strin
     }
 
     @Test
-    public void buildingConditionForOpenLeftQuoted_appliesLike() {
+    void buildingConditionForOpenLeftQuoted_appliesLike() {
         expectToken(TokenType.OPENLEFTQUOTED, "foo");
         assertThat(e
             .evaluate(stMock)
@@ -172,7 +172,7 @@ public class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<Strin
     }
 
     @Test
-    public void buildingConditionForNotOpenLeft_appliesNotLike() {
+    void buildingConditionForNotOpenLeft_appliesNotLike() {
         expectToken(TokenType.NOTOPENLEFT, "foo");
         assertThat(e
             .evaluate(stMock)
@@ -180,7 +180,7 @@ public class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<Strin
     }
 
     @Test
-    public void buildingConditionForOpenLeft_appliesLike() {
+    void buildingConditionForOpenLeft_appliesLike() {
         expectToken(TokenType.OPENLEFT, "foo");
         assertThat(e
             .evaluate(stMock)
@@ -188,7 +188,7 @@ public class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<Strin
     }
 
     @Test
-    public void buildingConditionForNotQuoted_appliesUnequal() {
+    void buildingConditionForNotQuoted_appliesUnequal() {
         expectToken(TokenType.NOTQUOTED, "foo");
         assertThat(e
             .evaluate(stMock)
@@ -196,7 +196,7 @@ public class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<Strin
     }
 
     @Test
-    public void buildingConditionForQuoted_appliesEqual() {
+    void buildingConditionForQuoted_appliesEqual() {
         expectToken(TokenType.QUOTED, "foo");
         assertThat(e
             .evaluate(stMock)
@@ -204,7 +204,7 @@ public class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<Strin
     }
 
     @Test
-    public void buildingConditionForNotWord_appliesNotContains() {
+    void buildingConditionForNotWord_appliesNotContains() {
         expectToken(TokenType.NOTWORD, "foo");
         assertThat(e
             .evaluate(stMock)
@@ -228,7 +228,7 @@ public class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<Strin
     }
 
     @Test
-    public void buildingConditionForWord_appliesContains() {
+    void buildingConditionForWord_appliesContains() {
         expectToken(TokenType.WORD, "foo");
         assertThat(e
             .evaluate(stMock)
@@ -252,7 +252,7 @@ public class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<Strin
     }
 
     @Test
-    public void buildingConditionForRaw_appliesDummyTrue() {
+    void buildingConditionForRaw_appliesDummyTrue() {
         expectToken(TokenType.RAW, "foo");
         assertThat(e
             .evaluate(stMock)
@@ -260,7 +260,7 @@ public class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<Strin
     }
 
     @Test
-    public void buildingConditionForUnexpected_throws() {
+    void buildingConditionForUnexpected_throws() {
         expectToken(TokenType.UNSUPPORTED, "foo");
         try {
             e.evaluate(stMock);

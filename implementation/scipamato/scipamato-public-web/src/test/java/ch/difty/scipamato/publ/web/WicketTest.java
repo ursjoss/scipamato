@@ -61,7 +61,7 @@ public abstract class WicketTest {
         return dateTimeService;
     }
 
-    public ItemNavigator<Long> getItemNavigator() {
+    protected ItemNavigator<Long> getItemNavigator() {
         return itemNavigatorMock;
     }
 

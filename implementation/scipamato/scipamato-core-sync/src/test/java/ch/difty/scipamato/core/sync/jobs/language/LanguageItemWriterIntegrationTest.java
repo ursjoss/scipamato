@@ -14,8 +14,7 @@ import ch.difty.scipamato.core.sync.jobs.AbstractItemWriterIntegrationTest;
 import ch.difty.scipamato.publ.db.public_.tables.records.LanguageRecord;
 
 @SuppressWarnings("SameParameterValue")
-public class LanguageItemWriterIntegrationTest
-    extends AbstractItemWriterIntegrationTest<PublicLanguage, LanguageItemWriter> {
+class LanguageItemWriterIntegrationTest extends AbstractItemWriterIntegrationTest<PublicLanguage, LanguageItemWriter> {
 
     private static final String CODE_NEW      = "es";
     private static final String CODE_EXISTING = "de";
@@ -61,7 +60,7 @@ public class LanguageItemWriterIntegrationTest
     }
 
     @AfterEach
-    public void tearDown() {
+    void tearDown() {
         dsl
             .deleteFrom(LANGUAGE)
             .where(LANGUAGE.CODE.eq(CODE_NEW))
@@ -75,7 +74,7 @@ public class LanguageItemWriterIntegrationTest
     }
 
     @Test
-    public void insertingNewLanguage_succeeds() {
+    void insertingNewLanguage_succeeds() {
         String newCode = newLanguage.getCode();
         assertCodeDoesNotExistWith(newCode);
         assertThat(getWriter().executeUpdate(newLanguage)).isEqualTo(1);
@@ -99,7 +98,7 @@ public class LanguageItemWriterIntegrationTest
     }
 
     @Test
-    public void updatingExistingCode_succeeds() {
+    void updatingExistingCode_succeeds() {
         assertThat(getWriter().executeUpdate(existingLanguage)).isEqualTo(1);
     }
 

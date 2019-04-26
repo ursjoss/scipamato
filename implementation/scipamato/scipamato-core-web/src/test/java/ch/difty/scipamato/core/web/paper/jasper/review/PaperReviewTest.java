@@ -11,7 +11,7 @@ import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.web.paper.jasper.JasperEntityTest;
 import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields;
 
-public class PaperReviewTest extends JasperEntityTest {
+class PaperReviewTest extends JasperEntityTest {
 
     private PaperReview        pr;
     private ReportHeaderFields rhf = newReportHeaderFields();
@@ -37,7 +37,7 @@ public class PaperReviewTest extends JasperEntityTest {
     }
 
     @Test
-    public void degenerateConstruction_withNullPaper_throws() {
+    void degenerateConstruction_withNullPaper_throws() {
         try {
             new PaperReview(null, rhf);
         } catch (Exception ex) {
@@ -48,7 +48,7 @@ public class PaperReviewTest extends JasperEntityTest {
     }
 
     @Test
-    public void degenerateConstruction_withNullReportHeaderFields_throws() {
+    void degenerateConstruction_withNullReportHeaderFields_throws() {
         try {
             new PaperReview(new Paper(), null);
         } catch (Exception ex) {
@@ -59,7 +59,7 @@ public class PaperReviewTest extends JasperEntityTest {
     }
 
     @Test
-    public void instantiatingWithValidFieldsAndValidLabels() {
+    void instantiatingWithValidFieldsAndValidLabels() {
         pr = new PaperReview(p, rhf);
 
         assertFieldValues();
@@ -82,14 +82,14 @@ public class PaperReviewTest extends JasperEntityTest {
     }
 
     @Test
-    public void instantiatingWithNullNumber_returnsBlank() {
+    void instantiatingWithNullNumber_returnsBlank() {
         p.setNumber(null);
         pr = new PaperReview(p, rhf);
         assertThat(pr.getNumber()).isEqualTo("");
     }
 
     @Test
-    public void instantiatingWithNullFirstAuthorAndPubYear_returnsBlank() {
+    void instantiatingWithNullFirstAuthorAndPubYear_returnsBlank() {
         p.setFirstAuthor(null);
         p.setPublicationYear(null);
         pr = new PaperReview(p, rhf);
@@ -97,7 +97,7 @@ public class PaperReviewTest extends JasperEntityTest {
     }
 
     @Test
-    public void instantiatingWithNullFirstAuthorAndPubYear0_returnsBlank() {
+    void instantiatingWithNullFirstAuthorAndPubYear0_returnsBlank() {
         p.setFirstAuthor(null);
         p.setPublicationYear(0);
         pr = new PaperReview(p, rhf);
@@ -105,7 +105,7 @@ public class PaperReviewTest extends JasperEntityTest {
     }
 
     @Test
-    public void instantiatingWithNonNullFirstAuthorButNullPubYear_returnsFirstAuthorOnly() {
+    void instantiatingWithNonNullFirstAuthorButNullPubYear_returnsFirstAuthorOnly() {
         assertThat(p.getFirstAuthor()).isNotNull();
         p.setPublicationYear(null);
         pr = new PaperReview(p, rhf);
@@ -113,7 +113,7 @@ public class PaperReviewTest extends JasperEntityTest {
     }
 
     @Test
-    public void instantiatingWithNonNullFirstAuthorButPubYear0_returnsFirstAuthorOnly() {
+    void instantiatingWithNonNullFirstAuthorButPubYear0_returnsFirstAuthorOnly() {
         assertThat(p.getFirstAuthor()).isNotNull();
         p.setPublicationYear(0);
         pr = new PaperReview(p, rhf);
@@ -122,7 +122,7 @@ public class PaperReviewTest extends JasperEntityTest {
 
     private void assertFieldValues() {
         assertThat(pr.getNumber()).isEqualTo(String.valueOf(NUMBER));
-        assertThat(pr.getAuthorYear()).isEqualTo(FIRST_AUTHOR + " " + String.valueOf(PUBLICATION_YEAR));
+        assertThat(pr.getAuthorYear()).isEqualTo(FIRST_AUTHOR + " " + PUBLICATION_YEAR);
         assertThat(pr.getPopulationPlace()).isEqualTo(POPULATION_PLACE);
         assertThat(pr.getMethodOutcome()).isEqualTo(METHOD_OUTCOME);
         assertThat(pr.getExposurePollutant()).isEqualTo(EXPOSURE_POLLUTANT);
@@ -137,7 +137,7 @@ public class PaperReviewTest extends JasperEntityTest {
     }
 
     @Test
-    public void authorYear_withNullFirstAuthorAndYear() {
+    void authorYear_withNullFirstAuthorAndYear() {
         p.setFirstAuthor(null);
         p.setPublicationYear(null);
 
@@ -147,7 +147,7 @@ public class PaperReviewTest extends JasperEntityTest {
     }
 
     @Test
-    public void authorYear_withOnlyFirstAuthor() {
+    void authorYear_withOnlyFirstAuthor() {
         assertThat(p.getFirstAuthor()).isNotNull();
         p.setPublicationYear(null);
 
@@ -157,7 +157,7 @@ public class PaperReviewTest extends JasperEntityTest {
     }
 
     @Test
-    public void authorYear_withOnlyPubYear() {
+    void authorYear_withOnlyPubYear() {
         p.setFirstAuthor(null);
         assertThat(p.getPublicationYear()).isNotNull();
 
@@ -167,7 +167,7 @@ public class PaperReviewTest extends JasperEntityTest {
     }
 
     @Test
-    public void equals() {
+    void equals() {
         EqualsVerifier
             .forClass(PaperReview.class)
             .withRedefinedSuperclass()

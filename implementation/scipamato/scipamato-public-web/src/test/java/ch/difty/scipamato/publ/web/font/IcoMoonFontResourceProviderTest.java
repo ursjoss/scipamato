@@ -14,7 +14,7 @@ import ch.difty.scipamato.publ.config.ApplicationPublicProperties;
 import ch.difty.scipamato.publ.web.resources.IcoMoonCssResourceReference;
 
 @ExtendWith(MockitoExtension.class)
-public class IcoMoonFontResourceProviderTest {
+class IcoMoonFontResourceProviderTest {
 
     private IcoMoonFontResourceProvider provider;
 
@@ -22,13 +22,13 @@ public class IcoMoonFontResourceProviderTest {
     private ApplicationPublicProperties applicationProperties;
 
     @Test
-    public void degenerateConstruction_withNullArgument() {
+    void degenerateConstruction_withNullArgument() {
         TestUtils.assertDegenerateSupplierParameter(() -> new IcoMoonFontResourceProvider(null),
             "applicationProperties");
     }
 
     @Test
-    public void withNoCommercialFontPresentSetting_getsNull() {
+    void withNoCommercialFontPresentSetting_getsNull() {
         when(applicationProperties.isCommercialFontPresent()).thenReturn(false);
 
         provider = new IcoMoonFontResourceProvider(applicationProperties);
@@ -39,7 +39,7 @@ public class IcoMoonFontResourceProviderTest {
     }
 
     @Test
-    public void withCommercialFontPresentSetting_getsReference() {
+    void withCommercialFontPresentSetting_getsReference() {
         when(applicationProperties.isCommercialFontPresent()).thenReturn(true);
 
         provider = new IcoMoonFontResourceProvider(applicationProperties);

@@ -13,7 +13,7 @@ import ch.difty.scipamato.core.db.tables.records.NewsletterRecord;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterFilter;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic;
 
-public class NewsletterFilterConditionMapperTest
+class NewsletterFilterConditionMapperTest
     extends FilterConditionMapperTest<NewsletterRecord, Newsletter, NewsletterFilter> {
 
     private final NewsletterFilterConditionMapper mapper = new NewsletterFilterConditionMapper();
@@ -36,7 +36,7 @@ public class NewsletterFilterConditionMapperTest
     }
 
     @Test
-    public void creatingWhereCondition_withIssueMask_searchesFirstIssue() {
+    void creatingWhereCondition_withIssueMask_searchesFirstIssue() {
         String pattern = "im";
         filter.setIssueMask(pattern);
         assertThat(mapper
@@ -45,7 +45,7 @@ public class NewsletterFilterConditionMapperTest
     }
 
     @Test
-    public void creatingWhereCondition_withPublicationStatus() {
+    void creatingWhereCondition_withPublicationStatus() {
         filter.setPublicationStatus(PublicationStatus.CANCELLED);
         assertThat(mapper
             .map(filter)
@@ -53,7 +53,7 @@ public class NewsletterFilterConditionMapperTest
     }
 
     @Test
-    public void creatingWhereCondition_withNewsletterTopic() {
+    void creatingWhereCondition_withNewsletterTopic() {
         filter.setNewsletterTopic(new NewsletterTopic(5, "foo"));
         assertThat(mapper
             .map(filter)
@@ -68,7 +68,7 @@ public class NewsletterFilterConditionMapperTest
     }
 
     @Test
-    public void creatingWhereCondition_withNewsletterTopicWithNullId() {
+    void creatingWhereCondition_withNewsletterTopicWithNullId() {
         filter.setNewsletterTopic(new NewsletterTopic(null, "foo"));
         assertThat(mapper
             .map(filter)

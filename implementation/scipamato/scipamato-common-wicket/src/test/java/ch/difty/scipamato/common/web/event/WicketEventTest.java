@@ -14,7 +14,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-public class WicketEventTest {
+class WicketEventTest {
 
     @Mock
     private AjaxRequestTarget targetMock;
@@ -22,23 +22,23 @@ public class WicketEventTest {
     private WicketEvent e;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         e = new WicketEvent(targetMock) {
         };
     }
 
     @AfterEach
-    public void tearDown() {
+    void tearDown() {
         verifyNoMoreInteractions(targetMock);
     }
 
     @Test
-    public void test() {
+    void test() {
         assertThat(e.getTarget()).isEqualTo(targetMock);
     }
 
     @Test
-    public void equals() {
+    void equals() {
         EqualsVerifier
             .forClass(WicketEvent.class)
             .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
@@ -46,7 +46,7 @@ public class WicketEventTest {
     }
 
     @Test
-    public void testingToString() {
+    void testingToString() {
         assertThat(e.toString()).isEqualTo("WicketEvent(target=targetMock)");
     }
 }

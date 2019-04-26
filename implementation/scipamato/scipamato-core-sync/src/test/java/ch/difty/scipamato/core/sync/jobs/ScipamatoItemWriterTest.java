@@ -15,7 +15,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import ch.difty.scipamato.core.sync.jobs.paper.PublicPaper;
 
 @ExtendWith(MockitoExtension.class)
-public class ScipamatoItemWriterTest {
+class ScipamatoItemWriterTest {
 
     private int tracker = 0;
 
@@ -36,7 +36,7 @@ public class ScipamatoItemWriterTest {
     private ScipamatoItemWriter<PublicPaper> writer;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         writer = new ScipamatoItemWriter<>(dslContext, "topic") {
             @Override
             protected int executeUpdate(final PublicPaper pp) {
@@ -47,7 +47,7 @@ public class ScipamatoItemWriterTest {
     }
 
     @Test
-    public void writingTwoPapers() {
+    void writingTwoPapers() {
         papers.add(p1);
         papers.add(p2);
 
@@ -57,7 +57,7 @@ public class ScipamatoItemWriterTest {
     }
 
     @Test
-    public void writingOnePaper() {
+    void writingOnePaper() {
         papers.add(p1);
 
         writer.write(papers);

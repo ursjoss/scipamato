@@ -11,7 +11,7 @@ import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.web.paper.jasper.JasperEntityTest;
 import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields;
 
-public class PaperLiteratureReviewTest extends JasperEntityTest {
+class PaperLiteratureReviewTest extends JasperEntityTest {
 
     private static final String PUBMED_BASE_URL = "baseUrl/";
 
@@ -28,17 +28,17 @@ public class PaperLiteratureReviewTest extends JasperEntityTest {
     }
 
     @Test
-    public void degenerateConstruction_withNullPaper_throws() {
+    void degenerateConstruction_withNullPaper_throws() {
         assertDegenerateSupplierParameter(() -> new PaperLiteratureReview(null, rhf), "p");
     }
 
     @Test
-    public void degenerateConstruction_withNullReportHeaderFields_throws() {
+    void degenerateConstruction_withNullReportHeaderFields_throws() {
         assertDegenerateSupplierParameter(() -> new PaperLiteratureReview(new Paper(), null), "rhf");
     }
 
     @Test
-    public void degenerateConstruction_withNullPubmedBaseUrl_throws() {
+    void degenerateConstruction_withNullPubmedBaseUrl_throws() {
         ReportHeaderFields rhf2 = ReportHeaderFields
             .builder(HEADER_PART, BRAND)
             .numberLabel(NUMBER_LABEL)
@@ -49,7 +49,7 @@ public class PaperLiteratureReviewTest extends JasperEntityTest {
     }
 
     @Test
-    public void instantiatingWithValidFieldsAndValidLabels() {
+    void instantiatingWithValidFieldsAndValidLabels() {
         plr = new PaperLiteratureReview(p, rhf);
 
         validateFields();
@@ -71,28 +71,28 @@ public class PaperLiteratureReviewTest extends JasperEntityTest {
     }
 
     @Test
-    public void pubmedLink_withPaperWithPmIdNull_isBlank() {
+    void pubmedLink_withPaperWithPmIdNull_isBlank() {
         p.setPmId(null);
         plr = new PaperLiteratureReview(p, rhf);
         assertThat(plr.getPubmedLink()).isEqualTo("");
     }
 
     @Test
-    public void number_withPaperWithNumberNull_isBlank() {
+    void number_withPaperWithNumberNull_isBlank() {
         p.setNumber(null);
         plr = new PaperLiteratureReview(p, rhf);
         assertThat(plr.getNumber()).isEqualTo("");
     }
 
     @Test
-    public void publicationYear_withPaperWithYearNull_isBlank() {
+    void publicationYear_withPaperWithYearNull_isBlank() {
         p.setPublicationYear(null);
         plr = new PaperLiteratureReview(p, rhf);
         assertThat(plr.getPublicationYear()).isEqualTo("");
     }
 
     @Test
-    public void equals() {
+    void equals() {
         EqualsVerifier
             .forClass(PaperLiteratureReview.class)
             .withRedefinedSuperclass()
@@ -101,7 +101,7 @@ public class PaperLiteratureReviewTest extends JasperEntityTest {
     }
 
     @Test
-    public void testingToString() {
+    void testingToString() {
         plr = new PaperLiteratureReview(p, rhf);
         assertThat(plr.toString()).isEqualTo(
             "PaperLiteratureReview(number=100, authors=authors, publicationYear=2017, title=title, goals=goals, "

@@ -16,7 +16,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import ch.difty.scipamato.common.entity.CodeClassLike;
 
 @ExtendWith(MockitoExtension.class)
-public class JooqCodeClassLikeServiceTest {
+class JooqCodeClassLikeServiceTest {
 
     private static final String LANG_CODE = "en";
 
@@ -31,7 +31,7 @@ public class JooqCodeClassLikeServiceTest {
     private CodeClassLikeRepository<CodeClassLike> repoMock;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         service = new JooqCodeClassLikeService<>(repoMock) {
         };
 
@@ -41,7 +41,7 @@ public class JooqCodeClassLikeServiceTest {
     }
 
     @Test
-    public void cangetRepo() {
+    void canGetRepo() {
         assertThat(service.getRepo()).isEqualTo(repoMock);
     }
 

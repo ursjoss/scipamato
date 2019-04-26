@@ -4,15 +4,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 
-public class IcoMoonIconTypeTest {
+class IcoMoonIconTypeTest {
 
     @Test
-    public void arrow_right() {
+    void arrow_right() {
         assertThat(IcoMoonIconType.arrow_right.cssClassName()).isEqualTo("icon-arrow-right");
     }
 
     @Test
-    public void link() {
+    void link() {
         assertThat(IcoMoonIconType.link.cssClassName()).isEqualTo("icon-link");
     }
 }

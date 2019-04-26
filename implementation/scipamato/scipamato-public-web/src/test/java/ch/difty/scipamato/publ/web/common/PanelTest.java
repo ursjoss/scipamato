@@ -10,7 +10,7 @@ public abstract class PanelTest<T extends Panel> extends WicketTest {
     protected static final String PANEL_ID = "panel";
 
     @Test
-    public void assertPanel() {
+    void assertPanel() {
         getTester().startComponentInPage(makePanel());
 
         assertSpecificComponents();

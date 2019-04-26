@@ -25,7 +25,7 @@ import ch.difty.scipamato.core.persistence.UserService;
 import ch.difty.scipamato.core.web.common.BasePageTest;
 
 @SuppressWarnings("SameParameterValue")
-public class UserListPageAsAdminTest extends BasePageTest<UserListPage> {
+class UserListPageAsAdminTest extends BasePageTest<UserListPage> {
 
     private User enabledUser  = new User(1, "enabledUser", "first", "last", "foo@bar.baz", "pw", true,
         Set.of(Role.ADMIN, Role.USER));
@@ -50,7 +50,7 @@ public class UserListPageAsAdminTest extends BasePageTest<UserListPage> {
     }
 
     @AfterEach
-    public void tearDown() {
+    void tearDown() {
         verifyNoMoreInteractions(userServiceMock);
     }
 
@@ -112,7 +112,7 @@ public class UserListPageAsAdminTest extends BasePageTest<UserListPage> {
     }
 
     @Test
-    public void clickingOnUserName_forwardsToUserEntryPage_withModelLoaded() {
+    void clickingOnUserName_forwardsToUserEntryPage_withModelLoaded() {
         when(userServiceMock.findById(1)).thenReturn(Optional.of(enabledUser));
         getTester().startPage(getPageClass());
 
@@ -129,7 +129,7 @@ public class UserListPageAsAdminTest extends BasePageTest<UserListPage> {
     }
 
     @Test
-    public void clickingNewUser_forwardsToUserEditPage() {
+    void clickingNewUser_forwardsToUserEditPage() {
         getTester().startPage(getPageClass());
         getTester().assertRenderedPage(getPageClass());
 

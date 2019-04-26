@@ -13,13 +13,13 @@ import ch.difty.scipamato.publ.entity.Code;
 import ch.difty.scipamato.publ.persistence.JooqBaseIntegrationTest;
 
 @Slf4j
-public class JooqCodeRepoIntegrationTest extends JooqBaseIntegrationTest {
+class JooqCodeRepoIntegrationTest extends JooqBaseIntegrationTest {
 
     @Autowired
     private JooqCodeRepo repo;
 
     @Test
-    public void findingAllCodes1InGerman() {
+    void findingAllCodes1InGerman() {
         List<Code> codesOfClass1 = repo.findCodesOfClass(CodeClassId.CC1, "de");
         assertThat(codesOfClass1)
             .isNotEmpty()
@@ -28,7 +28,7 @@ public class JooqCodeRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void findingAllCodes2InEnglish() {
+    void findingAllCodes2InEnglish() {
         List<Code> codesOfClass1 = repo.findCodesOfClass(CodeClassId.CC2, "en");
         assertThat(codesOfClass1)
             .isNotEmpty()
@@ -37,7 +37,7 @@ public class JooqCodeRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void findingAllCodes3InEnglish() {
+    void findingAllCodes3InEnglish() {
         List<Code> codesOfClass1 = repo.findCodesOfClass(CodeClassId.CC3, "fr");
         assertThat(codesOfClass1)
             .isNotEmpty()

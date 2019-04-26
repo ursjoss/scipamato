@@ -5,10 +5,10 @@ import static org.assertj.core.api.Assertions.fail;
 
 import org.junit.jupiter.api.Test;
 
-public class SearchTermTest {
+class SearchTermTest {
 
     @Test
-    public void booleanSearchTerm() {
+    void booleanSearchTerm() {
         SearchTerm st = SearchTerm.newSearchTerm(10, SearchTermType.BOOLEAN.getId(), 1L, "fn", "true");
         assertThat(st).isInstanceOf(BooleanSearchTerm.class);
 
@@ -22,7 +22,7 @@ public class SearchTermTest {
     }
 
     @Test
-    public void integerSearchTerm() {
+    void integerSearchTerm() {
         SearchTerm st = SearchTerm.newSearchTerm(11, SearchTermType.INTEGER.getId(), 2L, "fn2", "5-7");
         assertThat(st).isInstanceOf(IntegerSearchTerm.class);
 
@@ -37,7 +37,7 @@ public class SearchTermTest {
     }
 
     @Test
-    public void stringSearchTerm() {
+    void stringSearchTerm() {
         SearchTerm st = SearchTerm.newSearchTerm(12, SearchTermType.STRING.getId(), 3L, "fn3", "foo*");
         assertThat(st).isInstanceOf(StringSearchTerm.class);
 
@@ -61,7 +61,7 @@ public class SearchTermTest {
     }
 
     @Test
-    public void stringSearchTerm2() {
+    void stringSearchTerm2() {
         SearchTerm st = SearchTerm.newSearchTerm(12, SearchTermType.STRING, 3L, "fn3", "foo*");
         assertThat(st).isInstanceOf(StringSearchTerm.class);
 
@@ -69,7 +69,7 @@ public class SearchTermTest {
     }
 
     @Test
-    public void undefinedSearchTerm_throws() {
+    void undefinedSearchTerm_throws() {
         try {
             SearchTerm.newSearchTerm(13, SearchTermType.UNSUPPORTED, 4L, "fn4", "whatever");
             fail("should have thrown exception");
@@ -81,12 +81,12 @@ public class SearchTermTest {
     }
 
     @Test
-    public void auditSearchTerm_forFieldEndingWithUserTag_akaUserField_returnsUserTokenOnly() {
+    void auditSearchTerm_forFieldEndingWithUserTag_akaUserField_returnsUserTokenOnly() {
         assertUserFieldEndingWith("_BY");
     }
 
     @Test
-    public void auditSearchTerm_forFieldEndingWithUserTagLC_akaUserField_returnsUserTokenOnly() {
+    void auditSearchTerm_forFieldEndingWithUserTagLC_akaUserField_returnsUserTokenOnly() {
         assertUserFieldEndingWith("_by");
     }
 
@@ -113,7 +113,7 @@ public class SearchTermTest {
     }
 
     @Test
-    public void auditSearchTerm_forFieldNotEndingWithUserTag_akaDateField_returnsDateTokenOnly() {
+    void auditSearchTerm_forFieldNotEndingWithUserTag_akaDateField_returnsDateTokenOnly() {
         String userFieldName = "fn4";
         SearchTerm st = SearchTerm.newSearchTerm(13, 3, 4L, userFieldName, "foo >=\"2017-02-01\"");
         assertThat(st).isInstanceOf(AuditSearchTerm.class);
@@ -136,28 +136,28 @@ public class SearchTermTest {
     }
 
     @Test
-    public void newStringSearchTerm() {
+    void newStringSearchTerm() {
         StringSearchTerm st = SearchTerm.newStringSearchTerm("field", "rawSearchTerm");
         assertThat(st.getFieldName()).isEqualTo("field");
         assertThat(st.getRawSearchTerm()).isEqualTo("rawSearchTerm");
     }
 
     @Test
-    public void newIntegerSearchTerm() {
+    void newIntegerSearchTerm() {
         IntegerSearchTerm st = SearchTerm.newIntegerSearchTerm("field", "5");
         assertThat(st.getFieldName()).isEqualTo("field");
         assertThat(st.getRawSearchTerm()).isEqualTo("5");
     }
 
     @Test
-    public void newBooleanSearchTerm() {
+    void newBooleanSearchTerm() {
         BooleanSearchTerm st = SearchTerm.newBooleanSearchTerm("field", "rawSearchTerm");
         assertThat(st.getFieldName()).isEqualTo("field");
         assertThat(st.getRawSearchTerm()).isEqualTo("rawSearchTerm");
     }
 
     @Test
-    public void newAuditSearchTerm() {
+    void newAuditSearchTerm() {
         AuditSearchTerm st = SearchTerm.newAuditSearchTerm("field", "rawSearchTerm");
         assertThat(st.getFieldName()).isEqualTo("field");
         assertThat(st.getRawSearchTerm()).isEqualTo("rawSearchTerm");

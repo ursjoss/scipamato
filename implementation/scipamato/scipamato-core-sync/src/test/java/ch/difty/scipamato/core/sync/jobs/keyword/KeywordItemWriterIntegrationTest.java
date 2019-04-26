@@ -14,8 +14,7 @@ import ch.difty.scipamato.core.sync.jobs.AbstractItemWriterIntegrationTest;
 import ch.difty.scipamato.publ.db.public_.tables.records.KeywordRecord;
 
 @SuppressWarnings("SameParameterValue")
-public class KeywordItemWriterIntegrationTest
-    extends AbstractItemWriterIntegrationTest<PublicKeyword, KeywordItemWriter> {
+class KeywordItemWriterIntegrationTest extends AbstractItemWriterIntegrationTest<PublicKeyword, KeywordItemWriter> {
 
     private static final int ID_NEW      = 10;
     private static final int ID_EXISTING = 8;
@@ -71,7 +70,7 @@ public class KeywordItemWriterIntegrationTest
     }
 
     @AfterEach
-    public void tearDown() {
+    void tearDown() {
         dsl
             .deleteFrom(KEYWORD)
             .where(KEYWORD.ID.eq(ID_NEW))
@@ -85,7 +84,7 @@ public class KeywordItemWriterIntegrationTest
     }
 
     @Test
-    public void insertingNewKeyword_succeeds() {
+    void insertingNewKeyword_succeeds() {
         int keywordId = newKeyword.getKeywordId();
         assertCodeDoesNotExistWith(keywordId, LANG_CODE);
         assertThat(getWriter().executeUpdate(newKeyword)).isEqualTo(1);
@@ -110,7 +109,7 @@ public class KeywordItemWriterIntegrationTest
     }
 
     @Test
-    public void updatingExistingCode_succeeds() {
+    void updatingExistingCode_succeeds() {
         assertThat(getWriter().executeUpdate(existingKeyword)).isEqualTo(1);
     }
 

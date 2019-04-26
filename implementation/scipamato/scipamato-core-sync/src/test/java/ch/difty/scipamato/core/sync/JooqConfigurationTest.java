@@ -19,7 +19,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-public class JooqConfigurationTest {
+class JooqConfigurationTest {
 
     @Autowired
     @Qualifier("publicConfiguration")
@@ -34,17 +34,17 @@ public class JooqConfigurationTest {
     private Configuration jooqBatchConfig;
 
     @Test
-    public void assertJooqPublicConfigIsProperlyWired() throws SQLException {
+    void assertJooqPublicConfigIsProperlyWired() throws SQLException {
         assertConfiguration(jooqPublicConfig);
     }
 
     @Test
-    public void assertJooqCoreConfigIsProperlyWired() throws SQLException {
+    void assertJooqCoreConfigIsProperlyWired() throws SQLException {
         assertConfiguration(jooqCoreConfig);
     }
 
     @Test
-    public void assertJooqBatchConfigIsProperlyWired() throws SQLException {
+    void assertJooqBatchConfigIsProperlyWired() throws SQLException {
         assertConfiguration(jooqBatchConfig);
     }
 

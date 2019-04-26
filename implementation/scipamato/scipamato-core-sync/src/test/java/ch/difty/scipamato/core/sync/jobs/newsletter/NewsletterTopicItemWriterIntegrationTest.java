@@ -13,7 +13,7 @@ import ch.difty.scipamato.core.sync.jobs.AbstractItemWriterIntegrationTest;
 import ch.difty.scipamato.publ.db.public_.tables.records.NewsletterTopicRecord;
 
 @SuppressWarnings("SameParameterValue")
-public class NewsletterTopicItemWriterIntegrationTest
+class NewsletterTopicItemWriterIntegrationTest
     extends AbstractItemWriterIntegrationTest<PublicNewsletterTopic, NewsletterTopicItemWriter> {
 
     private static final int ID_EXISTING = 1;
@@ -66,7 +66,7 @@ public class NewsletterTopicItemWriterIntegrationTest
     }
 
     @AfterEach
-    public void tearDown() {
+    void tearDown() {
         dsl
             .deleteFrom(NEWSLETTER_TOPIC)
             .where(NEWSLETTER_TOPIC.ID.eq(ID_NEW))
@@ -80,7 +80,7 @@ public class NewsletterTopicItemWriterIntegrationTest
     }
 
     @Test
-    public void insertingNewNewsletterTopic_succeeds() {
+    void insertingNewNewsletterTopic_succeeds() {
         int id = newNewsletterTopic.getId();
         assertNewsletterTopicDoesNotExistWith(id, LANG_CODE);
         assertThat(getWriter().executeUpdate(newNewsletterTopic)).isEqualTo(1);
@@ -105,7 +105,7 @@ public class NewsletterTopicItemWriterIntegrationTest
     }
 
     @Test
-    public void updatingExistingNewsletterTopic_succeeds() {
+    void updatingExistingNewsletterTopic_succeeds() {
         assertThat(getWriter().executeUpdate(existingNewsletterTopic)).isEqualTo(1);
     }
 

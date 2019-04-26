@@ -6,10 +6,10 @@ import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.core.sync.jobs.PublicEntityTest;
 
-public class PublicPaperTest extends PublicEntityTest {
+class PublicPaperTest extends PublicEntityTest {
 
     @Test
-    public void canSetGet() {
+    void canSetGet() {
         PublicPaper pp = PublicPaper
             .builder()
             .id(1L)

@@ -14,7 +14,7 @@ import ch.difty.scipamato.core.entity.search.IntegerSearchTerm.MatchType;
 
 @ExtendWith(MockitoExtension.class)
 @SuppressWarnings("SameParameterValue")
-public class IntegerSearchTermEvaluatorTest extends SearchTermEvaluatorTest<IntegerSearchTerm> {
+class IntegerSearchTermEvaluatorTest extends SearchTermEvaluatorTest<IntegerSearchTerm> {
 
     private final IntegerSearchTermEvaluator e = new IntegerSearchTermEvaluator();
 
@@ -39,49 +39,49 @@ public class IntegerSearchTermEvaluatorTest extends SearchTermEvaluatorTest<Inte
     }
 
     @Test
-    public void buildingCondition_withGreaterThanComparison() {
+    void buildingCondition_withGreaterThanComparison() {
         expectSearchTerm(MatchType.GREATER_THAN, 10);
         Condition c = e.evaluate(stMock);
         assertThat(c.toString()).isEqualTo("field_x > 10");
     }
 
     @Test
-    public void buildingCondition_withGreaterThanOrEqualComparison() {
+    void buildingCondition_withGreaterThanOrEqualComparison() {
         expectSearchTerm(MatchType.GREATER_OR_EQUAL, 10);
         Condition c = e.evaluate(stMock);
         assertThat(c.toString()).isEqualTo("field_x >= 10");
     }
 
     @Test
-    public void buildingCondition_withExactValue() {
+    void buildingCondition_withExactValue() {
         expectSearchTerm(MatchType.EXACT, 10);
         Condition c = e.evaluate(stMock);
         assertThat(c.toString()).isEqualTo("field_x = 10");
     }
 
     @Test
-    public void buildingCondition_withLessThanOrEqualComparison() {
+    void buildingCondition_withLessThanOrEqualComparison() {
         expectSearchTerm(MatchType.LESS_OR_EQUAL, 10);
         Condition c = e.evaluate(stMock);
         assertThat(c.toString()).isEqualTo("field_x <= 10");
     }
 
     @Test
-    public void buildingCondition_withLessThanComparison() {
+    void buildingCondition_withLessThanComparison() {
         expectSearchTerm(MatchType.LESS_THAN, 10);
         Condition c = e.evaluate(stMock);
         assertThat(c.toString()).isEqualTo("field_x < 10");
     }
 
     @Test
-    public void buildingCondition_withRangeComparison() {
+    void buildingCondition_withRangeComparison() {
         expectSearchTerm(MatchType.RANGE, 10, 15);
         Condition c = e.evaluate(stMock);
         assertThat(c.toString()).isEqualTo("field_x between 10 and 15");
     }
 
     @Test
-    public void buildingCondition_withFieldValueMissing() {
+    void buildingCondition_withFieldValueMissing() {
         int any = 0;
         expectSearchTerm(MatchType.MISSING, any);
         Condition c = e.evaluate(stMock);
@@ -89,7 +89,7 @@ public class IntegerSearchTermEvaluatorTest extends SearchTermEvaluatorTest<Inte
     }
 
     @Test
-    public void buildingCondition_withAnyFieldValuePresent() {
+    void buildingCondition_withAnyFieldValuePresent() {
         int any = 0;
         expectSearchTerm(MatchType.PRESENT, any);
         Condition c = e.evaluate(stMock);

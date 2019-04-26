@@ -6,12 +6,12 @@ import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
 import org.junit.jupiter.api.Test;
 
-public class PaperFilterTest {
+class PaperFilterTest {
 
     private final PaperFilter f = new PaperFilter();
 
     @Test
-    public void getAndSet() {
+    void getAndSet() {
         f.setNumber(1L);
         f.setAuthorMask("authorMask");
         f.setMethodsMask("methodsMask");
@@ -33,7 +33,7 @@ public class PaperFilterTest {
     }
 
     @Test
-    public void equals() {
+    void equals() {
         EqualsVerifier
             .forClass(PaperFilter.class)
             .withRedefinedSuperclass()
@@ -42,7 +42,7 @@ public class PaperFilterTest {
     }
 
     @Test
-    public void assertEnumFields() {
+    void assertEnumFields() {
         assertThat(PaperFilter.PaperFilterFields.values())
             .extracting("name")
             .containsExactly("number", "authorMask", "methodsMask", "searchMask", "publicationYearFrom",
