@@ -3,7 +3,7 @@ package ch.difty.scipamato.core.persistence.user;
 import static ch.difty.scipamato.core.db.tables.ScipamatoUser.SCIPAMATO_USER;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.common.persistence.FilterConditionMapperTest;
 import ch.difty.scipamato.common.persistence.GenericFilterConditionMapper;
@@ -11,7 +11,7 @@ import ch.difty.scipamato.core.db.tables.ScipamatoUser;
 import ch.difty.scipamato.core.db.tables.records.ScipamatoUserRecord;
 import ch.difty.scipamato.core.entity.search.UserFilter;
 
-public class UserFilterConditionMapperTest extends
+class UserFilterConditionMapperTest extends
     FilterConditionMapperTest<ScipamatoUserRecord, ch.difty.scipamato.core.db.tables.ScipamatoUser, UserFilter> {
 
     private final UserFilterConditionMapper mapper = new UserFilterConditionMapper();
@@ -34,7 +34,7 @@ public class UserFilterConditionMapperTest extends
     }
 
     @Test
-    public void creatingWhereCondition_withNameMask_searchesUserNameAndFirstNameAndLastName() {
+    void creatingWhereCondition_withNameMask_searchesUserNameAndFirstNameAndLastName() {
         String pattern = "am";
         filter.setNameMask(pattern);
         assertThat(mapper
@@ -43,7 +43,7 @@ public class UserFilterConditionMapperTest extends
     }
 
     @Test
-    public void creatingWhereCondition_withEmailMask_searchesEmail() {
+    void creatingWhereCondition_withEmailMask_searchesEmail() {
         String pattern = "m";
         filter.setEmailMask(pattern);
         assertThat(mapper
@@ -52,9 +52,8 @@ public class UserFilterConditionMapperTest extends
     }
 
     @Test
-    public void creatingWhereCondition_withEnabledMask_searchesEnabled() {
-        boolean pattern = true;
-        filter.setEnabled(pattern);
+    void creatingWhereCondition_withEnabledMask_searchesEnabled() {
+        filter.setEnabled(true);
         assertThat(mapper
             .map(filter)
             .toString()).isEqualToIgnoringCase("\"public\".\"scipamato_user\".\"enabled\" = true");

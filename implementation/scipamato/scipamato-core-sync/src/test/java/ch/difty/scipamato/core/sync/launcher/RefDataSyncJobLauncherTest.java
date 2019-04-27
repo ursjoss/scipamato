@@ -7,12 +7,12 @@ import static org.mockito.Mockito.*;
 
 import java.util.*;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.batch.core.*;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.batch.core.repository.JobExecutionAlreadyRunningException;
@@ -20,8 +20,8 @@ import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteExcep
 import org.springframework.batch.core.repository.JobRestartException;
 
 @SuppressWarnings("SameParameterValue")
-@RunWith(MockitoJUnitRunner.class)
-public class RefDataSyncJobLauncherTest {
+@ExtendWith(MockitoExtension.class)
+class RefDataSyncJobLauncherTest {
 
     private static final int    JOB_STEP_ID_START    = 75;
     private static final int    BATCH_SIZE           = 100;
@@ -41,8 +41,8 @@ public class RefDataSyncJobLauncherTest {
 
     private Map<String, Job> jobMap;
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
         launcher = new RefDataSyncJobLauncher(jobLauncher, syncLanguageJob, syncNewStudyPageLinkJob, syncCodeClassJob,
             syncCodeJob, syncPaperJob, syncNewsletterJob, syncNewsletterTopicJob, syncNewStudyJob, syncNewStudyTopicJob,
             syncKeywordJob, warner);
@@ -50,8 +50,8 @@ public class RefDataSyncJobLauncherTest {
         jobMap = jobsPerTopic();
     }
 
-    @After
-    public void tearDown() {
+    @AfterEach
+    void tearDown() {
         verifyNoMoreInteractions(jobLauncher, syncLanguageJob, syncNewStudyPageLinkJob, syncCodeClassJob, syncCodeJob,
             syncPaperJob, syncNewsletterJob, syncNewsletterTopicJob, syncNewStudyJob, syncNewStudyTopicJob,
             syncKeywordJob, warner);
@@ -73,7 +73,7 @@ public class RefDataSyncJobLauncherTest {
     }
 
     @Test
-    public void jobParameters_haveSingleIdentifyingParameterRunDate_withCurrentDate() {
+    void jobParameters_haveSingleIdentifyingParameterRunDate_withCurrentDate() {
         JobParameters params = launcher.getJobParameters();
         assertThat(params.getParameters()).hasSize(1);
         assertThat(params.getDate("runDate")).isCloseTo(new Date(), 1000);
@@ -86,7 +86,7 @@ public class RefDataSyncJobLauncherTest {
     }
 
     @Test
-    public void launching_withUnsynchronizedPapersAndAllStepsSuccessful_addsWarningBeforeStepResultsAndSucceeds()
+    void launching_withUnsynchronizedPapersAndAllStepsSuccessful_addsWarningBeforeStepResultsAndSucceeds()
         throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException,
         JobInstanceAlreadyCompleteException {
 
@@ -134,7 +134,9 @@ public class RefDataSyncJobLauncherTest {
         throws JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException,
         JobParametersInvalidException {
         final JobExecution jobExecution = jobExecutionFixture(executionID, status, exitStatus);
-        when(jobLauncher.run(eq(job), isA(JobParameters.class))).thenReturn(jobExecution);
+        doReturn(jobExecution)
+            .when(jobLauncher)
+            .run(eq(job), isA(JobParameters.class));
     }
 
     private JobExecution jobExecutionFixture(final long id, final BatchStatus status, final ExitStatus exitStatus) {
@@ -199,7 +201,7 @@ public class RefDataSyncJobLauncherTest {
     }
 
     @Test
-    public void launching_withoutUnsynchronizedPapers_onlyAddsInfoMessages()
+    void launching_withoutUnsynchronizedPapers_onlyAddsInfoMessages()
         throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException,
         JobInstanceAlreadyCompleteException {
         when(warner.findUnsynchronizedPapers()).thenReturn(Optional.empty());
@@ -214,7 +216,7 @@ public class RefDataSyncJobLauncherTest {
     }
 
     @Test
-    public void launching_withFailingStep_failsJob()
+    void launching_withFailingStep_failsJob()
         throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException,
         JobInstanceAlreadyCompleteException {
         when(warner.findUnsynchronizedPapers()).thenReturn(Optional.empty());
@@ -278,7 +280,7 @@ public class RefDataSyncJobLauncherTest {
     }
 
     @Test
-    public void launching_withUnexpectedException_stopsRunningSubsequentJobs()
+    void launching_withUnexpectedException_stopsRunningSubsequentJobs()
         throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException,
         JobInstanceAlreadyCompleteException {
         when(warner.findUnsynchronizedPapers()).thenReturn(Optional.empty());
@@ -334,8 +336,9 @@ public class RefDataSyncJobLauncherTest {
                 break;
         }
 
-        when(jobLauncher.run(eq(syncCodeClassJob), isA(JobParameters.class))).thenThrow(
-            new RuntimeException("unexpected exception somewhere"));
+        doThrow(new RuntimeException("unexpected exception somewhere"))
+            .when(jobLauncher)
+            .run(eq(syncCodeClassJob), isA(JobParameters.class));
         return expectedMessages;
     }
 }

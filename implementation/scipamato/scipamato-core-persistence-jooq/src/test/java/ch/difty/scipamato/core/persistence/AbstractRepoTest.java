@@ -4,18 +4,18 @@ import static org.assertj.core.api.Java6Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 import org.jooq.DSLContext;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.core.Authentication;
 
 import ch.difty.scipamato.common.DateTimeService;
 import ch.difty.scipamato.core.entity.User;
 
-@RunWith(MockitoJUnitRunner.class)
-public class AbstractRepoTest {
+@ExtendWith(MockitoExtension.class)
+class AbstractRepoTest {
 
     private AbstractRepo repo;
 
@@ -31,12 +31,12 @@ public class AbstractRepoTest {
     @Mock
     private User userMock;
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
     }
 
     @Test
-    public void gettingActiveUser_withAuthenticationPresent_returnsPrincipalAsUser() {
+    void gettingActiveUser_withAuthenticationPresent_returnsPrincipalAsUser() {
         repo = new AbstractRepo(dslContext, dateTimeService) {
             @Override
             Authentication getAuthentication() {
@@ -48,7 +48,7 @@ public class AbstractRepoTest {
     }
 
     @Test
-    public void gettingActiveUser_withNoAuthenticationPresent_returnsDummyUser() {
+    void gettingActiveUser_withNoAuthenticationPresent_returnsDummyUser() {
         repo = new AbstractRepo(dslContext, dateTimeService) {
             @Override
             Authentication getAuthentication() {

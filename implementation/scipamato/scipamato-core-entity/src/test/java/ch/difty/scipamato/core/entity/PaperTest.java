@@ -10,14 +10,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.common.entity.CodeClassId;
 import ch.difty.scipamato.common.entity.newsletter.PublicationStatus;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic;
 
 @SuppressWarnings({ "SameParameterValue", "SpellCheckingInspection" })
-public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
+class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
 
     private static final String VALID_AUTHORS      = "Turner MC, Cohen A, Jerret M, Gapstur SM, Driver WR, Pope CA 3rd, Krewsky D, Beckermann BS, Samet JM.";
     private static final String VALID_COLLECTIVE   = "Mehta AJ, Thun GA, Imboden M, Ferrarotti I, Keidel D, Künzli N, Kromhout H, Miedinger D, Phuleria H, Rochat T, Russi EW, Schindler C, Schwartz J, Vermeulen R, Luisetti M, Probst-Hensch N; SAPALDIA team.";
@@ -26,7 +26,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     private static final String VALID_DOI          = "10.1093/aje/kwu275";
     private static final String NON_NULL_STRING    = "foo";
 
-    public PaperTest() {
+    PaperTest() {
         super(Paper.class);
     }
 
@@ -72,27 +72,27 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     }
 
     @Test
-    public void validatingPaper_withMultipleAuthorsWithFirstname_withPeriod_succeeds() {
+    void validatingPaper_withMultipleAuthorsWithFirstname_withPeriod_succeeds() {
         final Paper p = newValidEntity();
         verifySuccessfulValidation(p);
     }
 
     @Test
-    public void validatingPaper_withNullNumber_fails() {
+    void validatingPaper_withNullNumber_fails() {
         final Paper p = newValidEntity();
         p.setNumber(null);
         validateAndAssertFailure(p, NUMBER, null, "{javax.validation.constraints.NotNull.message}");
     }
 
     @Test
-    public void validatingPaper_withNegativeNumber_fails() {
+    void validatingPaper_withNegativeNumber_fails() {
         final Paper p = newValidEntity();
         p.setNumber(-1L);
         validateAndAssertFailure(p, NUMBER, -1L, "{javax.validation.constraints.Min.message}");
     }
 
     @Test
-    public void validatingPaper_withNullTitle_fails() {
+    void validatingPaper_withNullTitle_fails() {
         final Paper p = newValidEntity();
         p.setTitle(null);
         validateAndAssertFailure(p, TITLE, null, "{javax.validation.constraints.NotNull.message}");
@@ -103,7 +103,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     }
 
     @Test
-    public void validatingPaper_withBlankAuthor_fails() {
+    void validatingPaper_withBlankAuthor_fails() {
         final String invalidValue = "";
         final Paper p = newValidEntity();
         p.setAuthors(invalidValue);
@@ -111,7 +111,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     }
 
     @Test
-    public void validatingPaper_withSingleAuthorWithoutFirstname_withoutPeriod_fails() {
+    void validatingPaper_withSingleAuthorWithoutFirstname_withoutPeriod_fails() {
         final String invalidValue = "Turner";
         final Paper p = newValidEntity();
         p.setAuthors(invalidValue);
@@ -119,7 +119,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     }
 
     @Test
-    public void validatingPaper_withSingleAuthorWithoutFirstname_withPeriod_succeeds() {
+    void validatingPaper_withSingleAuthorWithoutFirstname_withPeriod_succeeds() {
         final String validValue = "Turner.";
         final Paper p = newValidEntity();
         p.setAuthors(validValue);
@@ -127,28 +127,28 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     }
 
     @Test
-    public void validatingPaper_withAuthorsPlusCollectiveAuthor_succeeds() {
+    void validatingPaper_withAuthorsPlusCollectiveAuthor_succeeds() {
         final Paper p = newValidEntity();
         p.setAuthors(VALID_COLLECTIVE);
         verifySuccessfulValidation(p);
     }
 
     @Test
-    public void validatingPaper_withSingleAuthorWithFirstname_withoutPeriod_fails() {
+    void validatingPaper_withSingleAuthorWithFirstname_withoutPeriod_fails() {
         final Paper p = newValidEntity();
         p.setAuthors("Turner MC");
         verifyFailedAuthorValidation(p, "Turner MC");
     }
 
     @Test
-    public void validatingPaper_withSingleAuthorWithFirstname_withPeriod_succeeds() {
+    void validatingPaper_withSingleAuthorWithFirstname_withPeriod_succeeds() {
         final Paper p = newValidEntity();
         p.setAuthors("Turner MC.");
         verifySuccessfulValidation(p);
     }
 
     @Test
-    public void validatingPaper_withTwoAuthorsWithFirstnames_withoutPeriod_fails() {
+    void validatingPaper_withTwoAuthorsWithFirstnames_withoutPeriod_fails() {
         final String invalidValue = "Turner MC, Cohan A";
         final Paper p = newValidEntity();
         p.setAuthors(invalidValue);
@@ -156,14 +156,14 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     }
 
     @Test
-    public void validatingPaper_withTwoAuthorsWithFirstname_withPeriod_succeeds() {
+    void validatingPaper_withTwoAuthorsWithFirstname_withPeriod_succeeds() {
         final Paper p = newValidEntity();
         p.setAuthors("Turner MC, Cohen A.");
         verifySuccessfulValidation(p);
     }
 
     @Test
-    public void validatingPaper_withMultipleAuthorsWithFirstnames_withoutMissingSpace_fails() {
+    void validatingPaper_withMultipleAuthorsWithFirstnames_withoutMissingSpace_fails() {
         final String invalidValue = "Turner MC,Cohen A, Jerret M, Gapstur SM, Driver WR, Pope CA 3rd, Krewsky D, Beckermann BS, Samet JM.";
         final Paper p = newValidEntity();
         p.setAuthors(invalidValue);
@@ -171,35 +171,35 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     }
 
     @Test
-    public void validatingPaper_withNullFirstAuthor_fails() {
+    void validatingPaper_withNullFirstAuthor_fails() {
         final Paper p = newValidEntity();
         p.setFirstAuthor(null);
         validateAndAssertFailure(p, FIRST_AUTHOR, null, "{javax.validation.constraints.NotNull.message}");
     }
 
     @Test
-    public void validatingPaper_withAuthorWithDashInName_succeeds() {
+    void validatingPaper_withAuthorWithDashInName_succeeds() {
         final Paper p = newValidEntity();
         p.setAuthors("Alpha-Beta G.");
         verifySuccessfulValidation(p);
     }
 
     @Test
-    public void validatingPaper_withAuthorWithTickInName_succeeds() {
+    void validatingPaper_withAuthorWithTickInName_succeeds() {
         final Paper p = newValidEntity();
         p.setAuthors("d'Alpha G.");
         verifySuccessfulValidation(p);
     }
 
     @Test
-    public void validatingPaper_withNullLocation_fails() {
+    void validatingPaper_withNullLocation_fails() {
         final Paper p = newValidEntity();
         p.setLocation(null);
         validateAndAssertFailure(p, LOCATION, null, "{javax.validation.constraints.NotNull.message}");
     }
 
     @Test
-    public void validatingPaper_withTooSmallPublicationYear_fails() {
+    void validatingPaper_withTooSmallPublicationYear_fails() {
         final int tooEarly = 1499;
         final Paper p = newValidEntity();
         p.setPublicationYear(tooEarly);
@@ -207,7 +207,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     }
 
     @Test
-    public void validatingPaper_withOkPublicationYear_succeeds() {
+    void validatingPaper_withOkPublicationYear_succeeds() {
         final Paper p = newValidEntity();
         p.setPublicationYear(1500);
         verifySuccessfulValidation(p);
@@ -220,7 +220,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     }
 
     @Test
-    public void validatingPaper_withTooLargePublicationYear_fails() {
+    void validatingPaper_withTooLargePublicationYear_fails() {
         final int tooLate = 2101;
         final Paper p = newValidEntity();
         p.setPublicationYear(tooLate);
@@ -228,7 +228,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     }
 
     @Test
-    public void validatingPaper_withInvalidDoi_fails() {
+    void validatingPaper_withInvalidDoi_fails() {
         final String invalidDoi = "abc";
         final Paper p = newValidEntity();
         p.setDoi(invalidDoi);
@@ -236,14 +236,14 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     }
 
     @Test
-    public void validatingPaper_withNullGoals_fails() {
+    void validatingPaper_withNullGoals_fails() {
         final Paper p = newValidEntity();
         p.setGoals(null);
         validateAndAssertFailure(p, GOALS, null, "{javax.validation.constraints.NotNull.message}");
     }
 
     @Test
-    public void validatingPaper_withNonAsciiChars_passes() {
+    void validatingPaper_withNonAsciiChars_passes() {
         final String valueWithUmlaut = "ÄäÖöÜüéèàêç A.";
         final Paper p = newValidEntity();
         p.setAuthors(valueWithUmlaut);
@@ -251,7 +251,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     }
 
     @Test
-    public void testingToString_withCodeClassesAndMainCodeOfClass1() {
+    void testingToString_withCodeClassesAndMainCodeOfClass1() {
         final Paper p = newValidEntity();
         p.addCode(makeCode(1, "D"));
         p.addCode(makeCode(1, "E"));
@@ -274,7 +274,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     }
 
     @Test
-    public void testingToString_withAttachments() {
+    void testingToString_withAttachments() {
         List<PaperAttachment> attachments = new ArrayList<>();
         attachments.add(newAttachment(1, 1, "p1"));
         attachments.add(newAttachment(2, 1, "p2"));
@@ -301,7 +301,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     }
 
     @Test
-    public void addingCode_addsItAndAllowsToRetrieveIt() {
+    void addingCode_addsItAndAllowsToRetrieveIt() {
         final Paper p = newValidEntity();
         assertThat(p.getCodes())
             .isNotNull()
@@ -314,7 +314,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     }
 
     @Test
-    public void addingCodes() {
+    void addingCodes() {
         final Paper p = newValidEntity();
         p.addCode(makeCode(1, "C"));
         Code c1D = makeCode(1, "D");
@@ -330,7 +330,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     }
 
     @Test
-    public void addingCodesOfSeveralClasses_allowsToRetrieveThemByClass() {
+    void addingCodesOfSeveralClasses_allowsToRetrieveThemByClass() {
         Code c1D = makeCode(1, "D");
         Code c2F = makeCode(2, "F");
         Code c2A = makeCode(2, "A");
@@ -344,7 +344,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     }
 
     @Test
-    public void clearingCode_delegatesClearingToCode() {
+    void clearingCode_delegatesClearingToCode() {
         final Paper p = newValidEntity();
         assertThat(p.getCodes())
             .isNotNull()
@@ -358,7 +358,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     }
 
     @Test
-    public void testingMainCodeOfCodeClass1() {
+    void testingMainCodeOfCodeClass1() {
         Code c1D = makeCode(1, "D");
         Code c1E = makeCode(1, "E");
         Code c5A = makeCode(5, "A");
@@ -373,34 +373,34 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     }
 
     @Test
-    public void createdDisplayValue() {
+    void createdDisplayValue() {
         final Paper p = newValidEntity();
         assertThat(p.getCreatedDisplayValue()).isEqualTo("creator (2017-01-01 22:15:13)");
     }
 
     @Test
-    public void modifiedDisplayValue() {
+    void modifiedDisplayValue() {
         final Paper p = newValidEntity();
         assertThat(p.getModifiedDisplayValue()).isEqualTo("modifier (2017-01-10 22:15:13)");
     }
 
     @Test
-    public void assertNotAvailableValueForAuthors() {
+    void assertNotAvailableValueForAuthors() {
         assertThat(Paper.NA_AUTHORS).isEqualTo("N A.");
     }
 
     @Test
-    public void assertNotAvailableValueForOtherStringFields() {
+    void assertNotAvailableValueForOtherStringFields() {
         assertThat(Paper.NA_STRING).isEqualTo("n.a.");
     }
 
     @Test
-    public void assertNotAvailableValueForPublicationYear() {
+    void assertNotAvailableValueForPublicationYear() {
         assertThat(Paper.NA_PUBL_YEAR).isEqualTo(1500);
     }
 
     @Test
-    public void newPaper_hasNonNullButEmptyAttachments() {
+    void newPaper_hasNonNullButEmptyAttachments() {
         final Paper p = newValidEntity();
         assertThat(p.getAttachments())
             .isNotNull()
@@ -408,7 +408,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     }
 
     @Test
-    public void cannotAddAttachment_viaGetter() {
+    void cannotAddAttachment_viaGetter() {
         final Paper p = newValidEntity();
         p
             .getAttachments()
@@ -417,14 +417,14 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     }
 
     @Test
-    public void canSetAttachments() {
+    void canSetAttachments() {
         final Paper p = newValidEntity();
         p.setAttachments(Arrays.asList(new PaperAttachment(), new PaperAttachment()));
         assertThat(p.getAttachments()).hasSize(2);
     }
 
     @Test
-    public void cannotModifyAttachmentsAfterSettig() {
+    void cannotModifyAttachmentsAfterSettig() {
         List<PaperAttachment> attachments = new ArrayList<>(
             Arrays.asList(new PaperAttachment(), new PaperAttachment()));
         final Paper p = newValidEntity();
@@ -436,7 +436,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     }
 
     @Test
-    public void canUnsetAttachments_withNullParameter() {
+    void canUnsetAttachments_withNullParameter() {
         List<PaperAttachment> attachments = new ArrayList<>(
             Arrays.asList(new PaperAttachment(), new PaperAttachment()));
         final Paper p = newValidEntity();
@@ -447,7 +447,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     }
 
     @Test
-    public void canUnsetAttachments_withEmptyListParameter() {
+    void canUnsetAttachments_withEmptyListParameter() {
         List<PaperAttachment> attachments = new ArrayList<>(
             Arrays.asList(new PaperAttachment(), new PaperAttachment()));
         final Paper p = newValidEntity();
@@ -460,9 +460,9 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     @SuppressWarnings({ "unlikely-arg-type", "EqualsBetweenInconvertibleTypes", "ConstantConditions",
         "EqualsWithItself", "UnnecessaryBoxing" })
     @Test
-    // Note: Did not get this to run with equalsverifier due to 'Abstract
-    // delegation: Paper's hashCode method delegates to an abstract method' on codes
-    public void equalityAndHashCode() {
+        // Note: Did not get this to run with equalsverifier due to 'Abstract
+        // delegation: Paper's hashCode method delegates to an abstract method' on codes
+    void equalityAndHashCode() {
         Paper p1 = newValidEntity();
         p1.setId(1L);
 
@@ -489,7 +489,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     }
 
     @Test
-    public void canSetAndGetNewsletterLinkAsObject() {
+    void canSetAndGetNewsletterLinkAsObject() {
         Paper p = newValidEntity();
         assertThat(p.getNewsletterLink()).isNull();
 
@@ -501,7 +501,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     }
 
     @Test
-    public void canSetAndGetNewsletterLinkAsFields() {
+    void canSetAndGetNewsletterLinkAsFields() {
         Paper p = newValidEntity();
         assertThat(p.getNewsletterLink()).isNull();
 
@@ -511,7 +511,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     }
 
     @Test
-    public void settingNewsletterAssociation() {
+    void settingNewsletterAssociation() {
         Paper p = newValidEntity();
         assertThat(p.getNewsletterLink()).isNull();
 
@@ -556,7 +556,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     }
 
     @Test
-    public void settingNewsletterLinkFields_whileNewsletterLinkIsNull_doesNothing() {
+    void settingNewsletterLinkFields_whileNewsletterLinkIsNull_doesNothing() {
         Paper p = newValidEntity();
         assertThat(p.getNewsletterLink()).isNull();
 
@@ -569,7 +569,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     }
 
     @Test
-    public void settingNewsletterIssue_isNoOp() {
+    void settingNewsletterIssue_isNoOp() {
         Paper p = newValidEntity();
         assertThat(p.getNewsletterIssue()).isNull();
         p.setNewsletterIssue("whatever");

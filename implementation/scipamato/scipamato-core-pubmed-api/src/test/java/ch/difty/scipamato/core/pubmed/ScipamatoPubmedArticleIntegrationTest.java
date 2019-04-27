@@ -7,12 +7,12 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.oxm.XmlMappingException;
 
 import ch.difty.scipamato.core.pubmed.api.*;
 
-public class ScipamatoPubmedArticleIntegrationTest extends PubmedIntegrationTest {
+class ScipamatoPubmedArticleIntegrationTest extends PubmedIntegrationTest {
 
     private static final String XML_2539026  = "xml/pubmed_result_25395026.xml";
     private static final String XML_23454700 = "xml/pubmed_result_23454700.xml";
@@ -25,7 +25,7 @@ public class ScipamatoPubmedArticleIntegrationTest extends PubmedIntegrationTest
     private static final String XML_30077140 = "xml/pubmed_result_30077140.xml";
 
     @Test
-    public void feedIntoScipamatoArticle_25395026() throws XmlMappingException, IOException {
+    void feedIntoScipamatoArticle_25395026() throws XmlMappingException, IOException {
         List<PubmedArticleFacade> articles = getPubmedArticles(XML_2539026);
         assertThat(articles).hasSize(1);
         PubmedArticleFacade sa = articles.get(0);
@@ -51,7 +51,7 @@ public class ScipamatoPubmedArticleIntegrationTest extends PubmedIntegrationTest
     }
 
     @Test
-    public void feedIntoScipamatoArticle_23454700_withoutIssue_stillHasColon() throws XmlMappingException, IOException {
+    void feedIntoScipamatoArticle_23454700_withoutIssue_stillHasColon() throws XmlMappingException, IOException {
         List<PubmedArticleFacade> articles = getPubmedArticles(XML_23454700);
         assertThat(articles).hasSize(1);
         PubmedArticleFacade sa = articles.get(0);
@@ -71,7 +71,7 @@ public class ScipamatoPubmedArticleIntegrationTest extends PubmedIntegrationTest
     }
 
     @Test
-    public void feedIntoScipamatoArticle_26607712_notHavingPaginationButElocationIdOfTypePii_usesThat()
+    void feedIntoScipamatoArticle_26607712_notHavingPaginationButElocationIdOfTypePii_usesThat()
         throws XmlMappingException, IOException {
         List<PubmedArticleFacade> articles = getPubmedArticles(XML_26607712);
         assertThat(articles).hasSize(1);
@@ -92,7 +92,7 @@ public class ScipamatoPubmedArticleIntegrationTest extends PubmedIntegrationTest
     }
 
     @Test
-    public void feedIntoScipamatoArticle_27214671_yearFromMedDate() throws XmlMappingException, IOException {
+    void feedIntoScipamatoArticle_27214671_yearFromMedDate() throws XmlMappingException, IOException {
         List<PubmedArticleFacade> articles = getPubmedArticles(XML_27214671);
         assertThat(articles).hasSize(1);
         PubmedArticleFacade sa = articles.get(0);
@@ -112,7 +112,7 @@ public class ScipamatoPubmedArticleIntegrationTest extends PubmedIntegrationTest
     }
 
     @Test
-    public void feedIntoScipamatoArticle_27224452_authorWithCollectiveName() throws XmlMappingException, IOException {
+    void feedIntoScipamatoArticle_27224452_authorWithCollectiveName() throws XmlMappingException, IOException {
         List<PubmedArticleFacade> articles = getPubmedArticles(XML_27224452);
         assertThat(articles).hasSize(1);
         PubmedArticleFacade sa = articles.get(0);
@@ -133,7 +133,7 @@ public class ScipamatoPubmedArticleIntegrationTest extends PubmedIntegrationTest
     }
 
     @Test
-    public void feedIntoScipamatoArticle_27258721() throws XmlMappingException, IOException {
+    void feedIntoScipamatoArticle_27258721() throws XmlMappingException, IOException {
         List<PubmedArticleFacade> articles = getPubmedArticles(XML_27258721);
         assertThat(articles).hasSize(1);
         PubmedArticleFacade sa = articles.get(0);
@@ -154,7 +154,7 @@ public class ScipamatoPubmedArticleIntegrationTest extends PubmedIntegrationTest
     }
 
     @Test
-    public void manualExplorationOfFile_25395026() throws XmlMappingException, IOException {
+    void manualExplorationOfFile_25395026() throws XmlMappingException, IOException {
         PubmedArticleSet articleSet = getPubmedArticleSet(XML_2539026);
         assertThat(articleSet.getPubmedArticleOrPubmedBookArticle()).hasSize(1);
 
@@ -290,7 +290,7 @@ public class ScipamatoPubmedArticleIntegrationTest extends PubmedIntegrationTest
     }
 
     @Test
-    public void feedIntoScipamatoArticle_30124840() throws XmlMappingException, IOException {
+    void feedIntoScipamatoArticle_30124840() throws XmlMappingException, IOException {
         List<PubmedArticleFacade> articles = getPubmedArticles(XML_30124840);
         assertThat(articles).hasSize(1);
         PubmedArticleFacade sa = articles.get(0);
@@ -308,7 +308,7 @@ public class ScipamatoPubmedArticleIntegrationTest extends PubmedIntegrationTest
     }
 
     @Test
-    public void feedIntoScipamatoArticle_29144419_withTagsInAbstract_canExtractAbstract()
+    void feedIntoScipamatoArticle_29144419_withTagsInAbstract_canExtractAbstract()
         throws XmlMappingException, IOException {
         List<PubmedArticleFacade> articles = getPubmedArticles(XML_29144419);
         assertThat(articles).hasSize(1);
@@ -330,7 +330,7 @@ public class ScipamatoPubmedArticleIntegrationTest extends PubmedIntegrationTest
     }
 
     @Test
-    public void feedIntoScipamatoArticle_30077140_withTagsInTitleAndAbstract_canExtractFullTitleAndAbstract()
+    void feedIntoScipamatoArticle_30077140_withTagsInTitleAndAbstract_canExtractFullTitleAndAbstract()
         throws XmlMappingException, IOException {
         List<PubmedArticleFacade> articles = getPubmedArticles(XML_30077140);
         assertThat(articles).hasSize(1);

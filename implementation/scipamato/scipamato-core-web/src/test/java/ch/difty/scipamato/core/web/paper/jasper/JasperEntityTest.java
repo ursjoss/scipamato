@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.web.paper.jasper;
 
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 
 import ch.difty.scipamato.common.entity.CodeClassId;
 import ch.difty.scipamato.core.entity.Code;
@@ -65,8 +65,8 @@ public abstract class JasperEntityTest {
 
     protected final Paper p = new Paper();
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
         p.setId(ID);
         p.setNumber(NUMBER);
         p.setAuthors(AUTHORS);

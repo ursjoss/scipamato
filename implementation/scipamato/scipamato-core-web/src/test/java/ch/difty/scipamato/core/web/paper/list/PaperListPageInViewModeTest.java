@@ -12,7 +12,7 @@ import ch.difty.scipamato.core.entity.search.PaperFilter;
 import ch.difty.scipamato.core.web.security.TestUserDetailsService;
 
 @SuppressWarnings("SameParameterValue")
-public class PaperListPageInViewModeTest extends PaperListPageTest {
+class PaperListPageInViewModeTest extends PaperListPageTest {
 
     @Override
     protected String getUserName() {

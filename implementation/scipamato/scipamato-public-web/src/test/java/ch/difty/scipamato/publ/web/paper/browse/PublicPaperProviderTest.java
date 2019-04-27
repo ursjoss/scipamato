@@ -11,14 +11,14 @@ import java.util.List;
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.tester.WicketTester;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.common.persistence.paging.PaginationContextMatcher;
@@ -27,9 +27,10 @@ import ch.difty.scipamato.publ.entity.PublicPaper;
 import ch.difty.scipamato.publ.entity.filter.PublicPaperFilter;
 import ch.difty.scipamato.publ.persistence.api.PublicPaperService;
 
-@RunWith(SpringRunner.class)
+@SuppressWarnings("SpellCheckingInspection")
+@ExtendWith(SpringExtension.class)
 @SpringBootTest
-public class PublicPaperProviderTest {
+class PublicPaperProviderTest {
 
     private PublicPaperProvider provider;
 
@@ -44,8 +45,8 @@ public class PublicPaperProviderTest {
 
     private final List<PublicPaper> papers = new ArrayList<>();
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
         new WicketTester(application);
         provider = new PublicPaperProvider(filterMock, 20);
         provider.setService(serviceMock);
@@ -59,19 +60,19 @@ public class PublicPaperProviderTest {
         when(serviceMock.findPageByFilter(eq(filterMock), isA(PaginationContext.class))).thenReturn(papers);
     }
 
-    @After
-    public void tearDown() {
+    @AfterEach
+    void tearDown() {
         verifyNoMoreInteractions(serviceMock);
     }
 
     @Test
-    public void construct() {
+    void construct() {
         assertThat(provider.getFilterState()).isEqualTo(filterMock);
         assertThat(provider.getRowsPerPage()).isEqualTo(20);
     }
 
     @Test
-    public void construct_withNullFilter_instantiatesNewFilter() {
+    void construct_withNullFilter_instantiatesNewFilter() {
         PublicPaperProvider provider2 = new PublicPaperProvider(null, 10);
         assertThat(provider2.getFilterState())
             .isNotNull()
@@ -81,7 +82,7 @@ public class PublicPaperProviderTest {
     }
 
     @Test
-    public void canSetFilterState() {
+    void canSetFilterState() {
         assertThat(provider.getFilterState()).isEqualTo(filterMock);
         provider.setFilterState(new PublicPaperFilter());
         assertThat(provider.getFilterState())
@@ -90,7 +91,7 @@ public class PublicPaperProviderTest {
     }
 
     @Test
-    public void newModel() {
+    void newModel() {
         PublicPaper pp = PublicPaper
             .builder()
             .id(5L)
@@ -106,7 +107,7 @@ public class PublicPaperProviderTest {
     }
 
     @Test
-    public void gettingIterator_withAscendingSort() {
+    void gettingIterator_withAscendingSort() {
         provider.setSort("title", SortOrder.ASCENDING);
         assertThat(provider.iterator(0L, 10L))
             .extracting("id")
@@ -115,7 +116,7 @@ public class PublicPaperProviderTest {
     }
 
     @Test
-    public void gettingIterator_withDescendingSort() {
+    void gettingIterator_withDescendingSort() {
         provider.setSort("title", SortOrder.DESCENDING);
         assertThat(provider.iterator(0L, 10L))
             .extracting("id")
@@ -124,18 +125,18 @@ public class PublicPaperProviderTest {
     }
 
     @Test
-    public void gettingSize() {
+    void gettingSize() {
         assertThat(provider.size()).isEqualTo(2);
         verify(serviceMock).countByFilter(filterMock);
     }
 
     @Test
-    public void findingAllNumbersByFilter_descendingSort() {
+    void findingAllNumbersByFilter_descendingSort() {
         findingAllNumbersByFilter(SortOrder.DESCENDING);
     }
 
     @Test
-    public void findingAllNumbersByFilter_ascendingSort() {
+    void findingAllNumbersByFilter_ascendingSort() {
         findingAllNumbersByFilter(SortOrder.ASCENDING);
     }
 

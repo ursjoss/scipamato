@@ -3,21 +3,21 @@ package ch.difty.scipamato.core.logic.parsing;
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.common.TestUtils;
 
-public class PubmedAuthorParserTest {
+class PubmedAuthorParserTest {
 
     private PubmedAuthorParser p;
 
     @Test
-    public void degenerateConstruction() {
+    void degenerateConstruction() {
         TestUtils.assertDegenerateSupplierParameter(() -> new PubmedAuthorParser(null), "authorsString");
     }
 
     @Test
-    public void canReturnOriginalAuthorsString() {
+    void canReturnOriginalAuthorsString() {
         String authorsString = "Bond J.";
         p = new PubmedAuthorParser(authorsString);
         assertThat(p.getAuthorsString()).isEqualTo(authorsString);
@@ -31,7 +31,7 @@ public class PubmedAuthorParserTest {
     }
 
     @Test
-    public void canReturnFirstAuthor_withSingleAuthorOnly() {
+    void canReturnFirstAuthor_withSingleAuthorOnly() {
         // proper format
         assertFirstAuthorOf("Bond J.", "Bond");
         // unclean format
@@ -43,7 +43,7 @@ public class PubmedAuthorParserTest {
     }
 
     @Test
-    public void canReturnFirstAuthor_withMultipleAuthors() {
+    void canReturnFirstAuthor_withMultipleAuthors() {
         // proper format
         assertFirstAuthorOf(
             "Turner MC, Cohen A, Jerret M, Gapstur SM, Driver WR, Pope CA 3rd, Krewsky D, Beckermann BS, Samet JM.",
@@ -51,14 +51,14 @@ public class PubmedAuthorParserTest {
     }
 
     @Test
-    public void canReturnFirstAuthor_withMultipleLastNames() {
+    void canReturnFirstAuthor_withMultipleLastNames() {
         assertFirstAuthorOf("Lloyd Webber A.", "Lloyd Webber");
         assertFirstAuthorOf("Lloyd Webber A", "Lloyd Webber");
         assertFirstAuthorOf("Lloyd   Webber   Andrew", "Lloyd Webber");
     }
 
     @Test
-    public void canParseNameWithCardinality() {
+    void canParseNameWithCardinality() {
         p = new PubmedAuthorParser("Ln FN 1st, Ln FN 2nd, Ln FN 3rd, Ln FN 4th, Ln FN 5th, Ln FN 100th, Ln FN.");
         assertThat(p
             .getFirstAuthor()
@@ -76,28 +76,28 @@ public class PubmedAuthorParserTest {
     }
 
     @Test
-    public void canReturnFirstAuthor_evenWhenCardinalityStandsAfterFirstName() {
+    void canReturnFirstAuthor_evenWhenCardinalityStandsAfterFirstName() {
         assertFirstAuthorOf("Pope CA 3rd, Lloyd Webber A.", "Pope");
     }
 
     @Test
-    public void canReturnFirstAuthor_evenWhenNameContainsJunior() {
+    void canReturnFirstAuthor_evenWhenNameContainsJunior() {
         assertFirstAuthorOf("Cox LA Jr.", "Cox");
     }
 
     @Test
-    public void canReturnFirstAuthor_letsNotBeFooledByInitialsLookingLikeJunior() {
+    void canReturnFirstAuthor_letsNotBeFooledByInitialsLookingLikeJunior() {
         assertFirstAuthorOf("Cox JR.", "Cox");
     }
 
     @Test
-    public void cannotProperlyReturnFirstAuthor_withInitialsAndCapitalJR() {
+    void cannotProperlyReturnFirstAuthor_withInitialsAndCapitalJR() {
         // this is probably not a valid case, but let's state it explicitly here
         assertFirstAuthorOf("Cox LA JR.", "Cox LA");
     }
 
     @Test
-    public void canReturnAuthors() {
+    void canReturnAuthors() {
         p = new PubmedAuthorParser(
             "Turner MC, Cohen A, Jerret M, Gapstur SM, Driver WR, Krewsky D, Beckermann BS, Samet JM.");
         assertThat(p
@@ -114,7 +114,7 @@ public class PubmedAuthorParserTest {
     }
 
     @Test
-    public void canDoUmlaute() {
+    void canDoUmlaute() {
         p = new PubmedAuthorParser("Flückiger P, Bäni HU.");
         assertThat(p
             .getAuthors()

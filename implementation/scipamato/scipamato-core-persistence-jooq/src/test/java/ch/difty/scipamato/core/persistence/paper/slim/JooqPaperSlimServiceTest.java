@@ -7,10 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.core.entity.Paper;
@@ -20,8 +20,8 @@ import ch.difty.scipamato.core.entity.search.SearchOrder;
 import ch.difty.scipamato.core.persistence.AbstractServiceTest;
 
 @SuppressWarnings("OptionalGetWithoutIsPresent")
-@RunWith(MockitoJUnitRunner.class)
-public class JooqPaperSlimServiceTest extends AbstractServiceTest<Long, PaperSlim, PaperSlimRepository> {
+@ExtendWith(MockitoExtension.class)
+class JooqPaperSlimServiceTest extends AbstractServiceTest<Long, PaperSlim, PaperSlimRepository> {
 
     private JooqPaperSlimService service;
 
@@ -65,9 +65,10 @@ public class JooqPaperSlimServiceTest extends AbstractServiceTest<Long, PaperSli
     }
 
     @Test
-    public void findingById_withFoundEntity_returnsOptionalOfIt() {
+    void findingById_withFoundEntity_returnsOptionalOfIt() {
         Long id = 7L;
         when(repoMock.findById(id)).thenReturn(paperSlimMock);
+        auditFixture();
 
         Optional<PaperSlim> optPaper = service.findById(id);
         assertThat(optPaper.isPresent()).isTrue();
@@ -79,7 +80,7 @@ public class JooqPaperSlimServiceTest extends AbstractServiceTest<Long, PaperSli
     }
 
     @Test
-    public void findingById_withNotFoundEntity_returnsOptionalEmpty() {
+    void findingById_withNotFoundEntity_returnsOptionalEmpty() {
         Long id = 7L;
         when(repoMock.findById(id)).thenReturn(null);
 
@@ -91,36 +92,37 @@ public class JooqPaperSlimServiceTest extends AbstractServiceTest<Long, PaperSli
     }
 
     @Test
-    public void findingPageByFilter_delegatesToRepo() {
+    void findingPageByFilter_delegatesToRepo() {
         when(repoMock.findPageByFilter(filterMock, paginationContextMock)).thenReturn(papers);
+        auditFixture();
         assertThat(service.findPageByFilter(filterMock, paginationContextMock)).isEqualTo(papers);
         verify(repoMock).findPageByFilter(filterMock, paginationContextMock);
         verifyAudit(2);
     }
 
     @Test
-    public void countingByFilter_withSimpleFilter_delegatesToRepo() {
+    void countingByFilter_withSimpleFilter_delegatesToRepo() {
         when(repoMock.countByFilter(filterMock)).thenReturn(3);
         assertThat(service.countByFilter(filterMock)).isEqualTo(3);
         verify(repoMock).countByFilter(filterMock);
     }
 
     @Test
-    public void findingBySearchOrder_delegatesToRepo() {
+    void findingBySearchOrder_delegatesToRepo() {
         when(repoMock.findBySearchOrder(searchOrderMock)).thenReturn(papers);
         assertThat(service.findBySearchOrder(searchOrderMock)).containsAll(papers);
         verify(repoMock).findBySearchOrder(searchOrderMock);
     }
 
     @Test
-    public void findingPagedBySearchOrder_delegatesToRepo() {
+    void findingPagedBySearchOrder_delegatesToRepo() {
         when(repoMock.findPageBySearchOrder(searchOrderMock, paginationContextMock)).thenReturn(papers);
         assertThat(service.findPageBySearchOrder(searchOrderMock, paginationContextMock)).isEqualTo(papers);
         verify(repoMock).findPageBySearchOrder(searchOrderMock, paginationContextMock);
     }
 
     @Test
-    public void countingBySearchOrder_delegatesToRepo() {
+    void countingBySearchOrder_delegatesToRepo() {
         when(repoMock.countBySearchOrder(searchOrderMock)).thenReturn(2);
         assertThat(service.countBySearchOrder(searchOrderMock)).isEqualTo(2);
         verify(repoMock).countBySearchOrder(searchOrderMock);

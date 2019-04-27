@@ -15,14 +15,14 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.settings.DebugSettings;
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.common.DateTimeService;
 import ch.difty.scipamato.common.config.ApplicationProperties;
 
-public class AbstractPageTest extends WicketBaseTest {
+class AbstractPageTest extends WicketBaseTest {
 
     private AbstractPage<TestRecord> page;
 
@@ -41,37 +41,37 @@ public class AbstractPageTest extends WicketBaseTest {
         };
     }
 
-    @After
-    public void tearDown() {
+    @AfterEach
+    void tearDown() {
         verifyNoMoreInteractions(dateTimeServiceMock);
     }
 
     @Test
-    public void test_withModelConstructor() {
+    void test_withModelConstructor() {
         getTester().startPage(page);
         getTester().assertRenderedPage(AbstractPage.class);
     }
 
     @Test
-    public void canGetDateTimeService() {
+    void canGetDateTimeService() {
         assertThat(page.getDateTimeService())
             .isNotNull()
             .isInstanceOf(DateTimeService.class);
     }
 
     @Test
-    public void hasNavbarVisibleByDefault() {
+    void hasNavbarVisibleByDefault() {
         assertThat(page.isNavbarVisible()).isTrue();
     }
 
     @Test
-    public void gettingNavbarAndFeedbackPanelBeforeInitialize_returnsNull() {
+    void gettingNavbarAndFeedbackPanelBeforeInitialize_returnsNull() {
         assertThat(page.getNavBar()).isNull();
         assertThat(page.getFeedbackPanel()).isNull();
     }
 
     @Test
-    public void test_withPageParametersConstructor() {
+    void test_withPageParametersConstructor() {
         AbstractPage<TestRecord> page = new AbstractPage<>(new PageParameters()) {
             private static final long serialVersionUID = 1L;
 
@@ -91,7 +91,7 @@ public class AbstractPageTest extends WicketBaseTest {
     }
 
     @Test
-    public void assertPage() {
+    void assertPage() {
         getTester().startPage(new TestAbstractPage(Model.of(new TestRecord(1, "foo"))));
         getTester().assertRenderedPage(TestAbstractPage.class);
         assertComponents();
@@ -119,27 +119,27 @@ public class AbstractPageTest extends WicketBaseTest {
     }
 
     @Test
-    public void gettingBrandName_withNullBrand_retrievesBrandFromProperties() {
+    void gettingBrandName_withNullBrand_retrievesBrandFromProperties() {
         assertThat(page.getBrandName(null)).isEqualTo("SciPaMaTo");
     }
 
     @Test
-    public void gettingBrandName_withEmptyBrand_retrievesBrandFromProperties() {
+    void gettingBrandName_withEmptyBrand_retrievesBrandFromProperties() {
         assertThat(page.getBrandName("")).isEqualTo("SciPaMaTo");
     }
 
     @Test
-    public void gettingBrandName_withNaBrand_retrievesBrandFromProperties() {
+    void gettingBrandName_withNaBrand_retrievesBrandFromProperties() {
         assertThat(page.getBrandName("n.a.")).isEqualTo("SciPaMaTo");
     }
 
     @Test
-    public void gettingBrandName_withExplicitBrand_usesThat() {
+    void gettingBrandName_withExplicitBrand_usesThat() {
         assertThat(page.getBrandName("foo")).isEqualTo("foo");
     }
 
     @Test
-    public void queueingFieldAndLabel_withPropertyValidator_addsItToField() {
+    void queueingFieldAndLabel_withPropertyValidator_addsItToField() {
         final TextField<String> field = mock(TextField.class);
         when(field.getId()).thenReturn("testField");
         final PropertyValidator<String> pv = mock(PropertyValidator.class);
@@ -154,7 +154,7 @@ public class AbstractPageTest extends WicketBaseTest {
     }
 
     @Test
-    public void queueingFieldAndLabel_withNoPropertyValidator_dowNotAddToField() {
+    void queueingFieldAndLabel_withNoPropertyValidator_dowNotAddToField() {
         final TextField<String> field = mock(TextField.class);
         when(field.getId()).thenReturn("testField");
 
@@ -167,7 +167,7 @@ public class AbstractPageTest extends WicketBaseTest {
     }
 
     @Test
-    public void submitting() {
+    void submitting() {
         getTester().startPage(new TestAbstractPage(Model.of(new TestRecord(1, "foo"))));
         getTester().assertRenderedPage(TestAbstractPage.class);
 
@@ -180,7 +180,7 @@ public class AbstractPageTest extends WicketBaseTest {
     }
 
     @Test
-    public void withDebugEnabled() {
+    void withDebugEnabled() {
         final DebugSettings debugSettings = mock(DebugSettings.class);
         when(debugSettings.isDevelopmentUtilitiesEnabled()).thenReturn(true);
 

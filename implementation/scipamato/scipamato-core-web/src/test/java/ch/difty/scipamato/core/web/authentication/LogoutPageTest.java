@@ -4,16 +4,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.core.web.WicketTest;
 
-public class LogoutPageTest extends WicketTest {
+class LogoutPageTest extends WicketTest {
 
     private static final String FORM = "form";
 
     @Test
-    public void assertPage() {
+    void assertPage() {
         getTester().startPage(makePage());
         getTester().assertRenderedPage(getPageClass());
 
@@ -36,7 +36,7 @@ public class LogoutPageTest extends WicketTest {
     }
 
     @Test
-    public void submitting_invalidatesSessionAndSendsToHomePage_whichForwardsToLoginPage() {
+    void submitting_invalidatesSessionAndSendsToHomePage_whichForwardsToLoginPage() {
         getTester().startPage(makePage());
         assertThat(getTester()
             .getSession()

@@ -6,9 +6,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class PublicPaperTest extends PublicEntityTest<PublicPaper> {
+class PublicPaperTest extends PublicEntityTest<PublicPaper> {
 
     @Override
     protected PublicPaper newEntity() {
@@ -64,7 +64,7 @@ public class PublicPaperTest extends PublicEntityTest<PublicPaper> {
     }
 
     @Test
-    public void assertEnumFields() {
+    void assertEnumFields() {
         assertThat(PublicPaper.PublicPaperFields.values())
             .extracting("name")
             .containsExactly("id", "number", "pmId", "authors", "authorsAbbreviated", "title", "location", "journal",

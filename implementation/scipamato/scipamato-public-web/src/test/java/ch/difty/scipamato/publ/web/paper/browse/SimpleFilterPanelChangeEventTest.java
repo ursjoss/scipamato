@@ -7,15 +7,14 @@ import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.TextArea;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.class)
-public class SimpleFilterPanelChangeEventTest {
+@ExtendWith(MockitoExtension.class)
+class SimpleFilterPanelChangeEventTest {
 
     private SimpleFilterPanelChangeEvent e;
 
@@ -25,46 +24,40 @@ public class SimpleFilterPanelChangeEventTest {
     @Mock
     private TextArea<?> mockComponent;
 
-    @Before
-    public void setUp() {
-        when(mockComponent.getId()).thenReturn("id");
-        when(mockComponent.getMarkupId()).thenReturn("mId");
-    }
-
-    @After
-    public void tearDown() {
+    @AfterEach
+    void tearDown() {
         verifyNoMoreInteractions(targetMock, targetMock2);
     }
 
     @Test
-    public void canRetrieveTarget() {
+    void canRetrieveTarget() {
         e = new SimpleFilterPanelChangeEvent(targetMock);
         assertThat(e.getTarget()).isEqualTo(targetMock);
     }
 
     @Test
-    public void usingMinimalConstructor_doesNotSetAnySpecialStuff() {
+    void usingMinimalConstructor_doesNotSetAnySpecialStuff() {
         e = new SimpleFilterPanelChangeEvent(targetMock);
         assertThat(e.getId()).isNull();
         assertThat(e.getMarkupId()).isNull();
     }
 
     @Test
-    public void usingWithId_doesAddId() {
+    void usingWithId_doesAddId() {
         e = new SimpleFilterPanelChangeEvent(targetMock).withId("foo");
         assertThat(e.getId()).isEqualTo("foo");
         assertThat(e.getMarkupId()).isNull();
     }
 
     @Test
-    public void usingWithMarkupId_doesAddMarkupId() {
+    void usingWithMarkupId_doesAddMarkupId() {
         e = new SimpleFilterPanelChangeEvent(targetMock).withMarkupId("bar");
         assertThat(e.getId()).isNull();
         assertThat(e.getMarkupId()).isEqualTo("bar");
     }
 
     @Test
-    public void usingWithIdAndMarkupId_doesAddBoth() {
+    void usingWithIdAndMarkupId_doesAddBoth() {
         e = new SimpleFilterPanelChangeEvent(targetMock)
             .withId("hups")
             .withMarkupId("goo");
@@ -73,7 +66,7 @@ public class SimpleFilterPanelChangeEventTest {
     }
 
     @Test
-    public void canOverrideTarget() {
+    void canOverrideTarget() {
         e = new SimpleFilterPanelChangeEvent(targetMock);
         assertThat(e.getTarget()).isEqualTo(targetMock);
         e.setTarget(targetMock2);
@@ -81,7 +74,7 @@ public class SimpleFilterPanelChangeEventTest {
     }
 
     @Test
-    public void consideringAddingToTarget_withIdLessEvent_addsTarget() {
+    void consideringAddingToTarget_withIdLessEvent_addsTarget() {
         e = new SimpleFilterPanelChangeEvent(targetMock);
         assertThat(e.getId()).isNull();
 
@@ -91,7 +84,7 @@ public class SimpleFilterPanelChangeEventTest {
     }
 
     @Test
-    public void consideringAddingToTarget_withDifferingId_doesNotAddTarget() {
+    void consideringAddingToTarget_withDifferingId_doesNotAddTarget() {
         e = new SimpleFilterPanelChangeEvent(targetMock)
             .withId("otherId")
             .withMarkupId("mId");
@@ -100,7 +93,10 @@ public class SimpleFilterPanelChangeEventTest {
     }
 
     @Test
-    public void consideringAddingToTarget_withSameIdButNullMarkupId_addsTarget() {
+    void consideringAddingToTarget_withSameIdButNullMarkupId_addsTarget() {
+        when(mockComponent.getId()).thenReturn("id");
+        when(mockComponent.getMarkupId()).thenReturn("mId");
+
         e = new SimpleFilterPanelChangeEvent(targetMock).withId("id");
         assertThat(e.getMarkupId()).isNull();
 
@@ -110,7 +106,10 @@ public class SimpleFilterPanelChangeEventTest {
     }
 
     @Test
-    public void consideringAddingToTarget_withSameIdAndDifferingMarkupId_addsTarget() {
+    void consideringAddingToTarget_withSameIdAndDifferingMarkupId_addsTarget() {
+        when(mockComponent.getId()).thenReturn("id");
+        when(mockComponent.getMarkupId()).thenReturn("mId");
+
         e = new SimpleFilterPanelChangeEvent(targetMock)
             .withId("id")
             .withMarkupId("otherMarkupId");
@@ -119,7 +118,7 @@ public class SimpleFilterPanelChangeEventTest {
     }
 
     @Test
-    public void consideringAddingToTarget_withSameIdButSameMarkupId_doesNotAddTarget() {
+    void consideringAddingToTarget_withSameIdButSameMarkupId_doesNotAddTarget() {
         e = new SimpleFilterPanelChangeEvent(targetMock)
             .withId("id")
             .withMarkupId("mId");
@@ -128,7 +127,7 @@ public class SimpleFilterPanelChangeEventTest {
     }
 
     @Test
-    public void equals() {
+    void equals() {
         EqualsVerifier
             .forClass(SimpleFilterPanelChangeEvent.class)
             .withRedefinedSuperclass()

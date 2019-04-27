@@ -6,7 +6,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
@@ -18,19 +18,19 @@ import ch.difty.scipamato.core.entity.search.SearchCondition;
 import ch.difty.scipamato.core.entity.search.SearchOrder;
 import ch.difty.scipamato.core.persistence.JooqBaseIntegrationTest;
 
-public class JooqPaperSlimRepoIntegrationTest extends JooqBaseIntegrationTest {
+class JooqPaperSlimRepoIntegrationTest extends JooqBaseIntegrationTest {
 
     @Autowired
     private JooqPaperSlimRepo repo;
 
     @Test
-    public void findingAll() {
+    void findingAll() {
         List<PaperSlim> papers = repo.findAll();
         assertThat(papers).hasSize(RECORD_COUNT_PREPOPULATED);
     }
 
     @Test
-    public void findingById_withExistingId_returnsEntity() {
+    void findingById_withExistingId_returnsEntity() {
         PaperSlim paper = repo.findById(MAX_ID_PREPOPULATED);
         if (MAX_ID_PREPOPULATED > 0)
             assertThat(paper.getId()).isEqualTo(MAX_ID_PREPOPULATED);
@@ -39,12 +39,12 @@ public class JooqPaperSlimRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void findingById_withNonExistingId_returnsNull() {
+    void findingById_withNonExistingId_returnsNull() {
         assertThat(repo.findById(-1L)).isNull();
     }
 
     @Test
-    public void findingById_withExistingIdAndVersion_returnsEntityWithCorrectIdButMissingVersion() {
+    void findingById_withExistingIdAndVersion_returnsEntityWithCorrectIdButMissingVersion() {
         PaperSlim paper = repo.findById(31L, 11, "en");
         assertThat(paper.getId()).isEqualTo(31L);
         assertThat(paper.getNumber()).isEqualTo(31L);
@@ -62,13 +62,13 @@ public class JooqPaperSlimRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void findingById_withExistingIdAndWrongVersion_returnsNull() {
+    void findingById_withExistingIdAndWrongVersion_returnsNull() {
         PaperSlim paper = repo.findById(31L, 1, "en");
         assertThat(paper).isNull();
     }
 
     @Test
-    public void findingPageByFilter() {
+    void findingPageByFilter() {
         final PaperFilter pf = new PaperFilter();
         //noinspection SpellCheckingInspection
         pf.setAuthorMask("lanz");
@@ -81,7 +81,7 @@ public class JooqPaperSlimRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void bug21_queryingAllFieldsShouldNotThrowAnException() {
+    void bug21_queryingAllFieldsShouldNotThrowAnException() {
         final SearchOrder so = new SearchOrder();
         final SearchCondition sc = new SearchCondition();
         so.add(sc);
@@ -124,7 +124,7 @@ public class JooqPaperSlimRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void canQueryNewsletterFields() {
+    void canQueryNewsletterFields() {
         PaperSlim paper = repo.findById(31L, "en");
 
         assertThat(paper).isNotNull();

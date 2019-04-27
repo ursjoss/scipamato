@@ -11,8 +11,8 @@ import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.tester.FormTester;
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
@@ -31,7 +31,7 @@ import ch.difty.scipamato.core.web.common.BasePageTest;
 import ch.difty.scipamato.core.web.paper.result.ResultPanel;
 
 @SuppressWarnings({ "SameParameterValue", "ResultOfMethodCallIgnored" })
-public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
+class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
 
     private static final long SO_ID = 7;
 
@@ -59,8 +59,8 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
         when(paperSlimMock.getDisplayValue()).thenReturn("ps");
     }
 
-    @After
-    public void tearDown() {
+    @AfterEach
+    void tearDown() {
         verifyNoMoreInteractions(searchOrderServiceMock);
     }
 
@@ -105,7 +105,7 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
     }
 
     @Test
-    public void clickingAddSearchCondition_forwardsToPaperSearchCriteriaPageToLoadSearchOrder() {
+    void clickingAddSearchCondition_forwardsToPaperSearchCriteriaPageToLoadSearchOrder() {
         PageParameters pp = new PageParameters().add(SEARCH_ORDER_ID.getName(), SO_ID);
         getTester().startPage(getPageClass(), pp);
         getTester().assertRenderedPage(getPageClass());
@@ -124,7 +124,7 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
     }
 
     @Test
-    public void clickingRemoveButtonOnSearchCondition_removesSearchCondition() {
+    void clickingRemoveButtonOnSearchCondition_removesSearchCondition() {
         final String labelDisplayValue = "searchConditionDisplayValue";
         final SearchCondition sc = new SearchCondition() {
             private static final long serialVersionUID = 1L;
@@ -165,7 +165,7 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
     }
 
     @Test
-    public void clickingNewSearchCondition_reloadsPage() {
+    void clickingNewSearchCondition_reloadsPage() {
         when(searchOrderServiceMock.saveOrUpdate(isA(SearchOrder.class))).thenReturn(searchOrderMock);
         when(searchOrderMock.getId()).thenReturn(27L);
         when(searchOrderServiceMock.findById(27L)).thenReturn(Optional.of(searchOrderMock2));
@@ -200,7 +200,7 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
     }
 
     @Test
-    public void clickingNewSearchCondition_withOptimisticLockingException_failsSaveAndWarns() {
+    void clickingNewSearchCondition_withOptimisticLockingException_failsSaveAndWarns() {
         when(searchOrderMock.getId()).thenReturn(27L);
         when(searchOrderServiceMock.saveOrUpdate(isA(SearchOrder.class))).thenThrow(
             new OptimisticLockingException("searchOrder", "record", Type.UPDATE));
@@ -236,7 +236,7 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
     }
 
     @Test
-    public void clickingRemoveButtonOnResults_removesResultAndSavesSearchOrder() {
+    void clickingRemoveButtonOnResults_removesResultAndSavesSearchOrder() {
         when(searchOrderMock.getId()).thenReturn(SO_ID);
 
         when(paperSlimServiceMock.countBySearchOrder(eq(searchOrderMock))).thenReturn(1, 0);
@@ -272,7 +272,7 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
     }
 
     @Test
-    public void constructingPage_withPageParametersHavingSearchOrderId_loadsSearchOrderFromDb() {
+    void constructingPage_withPageParametersHavingSearchOrderId_loadsSearchOrderFromDb() {
         PageParameters pp = new PageParameters().add(SEARCH_ORDER_ID.getName(), SO_ID);
         getTester().startPage(getPageClass(), pp);
         getTester().assertRenderedPage(getPageClass());
@@ -288,7 +288,7 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
     }
 
     @Test
-    public void constructingPage_withPageParametersLackingSearchOrderId_setsFreshSearchOrder() {
+    void constructingPage_withPageParametersLackingSearchOrderId_setsFreshSearchOrder() {
         getTester().startPage(getPageClass(), new PageParameters());
         getTester().assertRenderedPage(getPageClass());
 
@@ -301,7 +301,7 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
     }
 
     @Test
-    public void searchOrderMock_withNoExclusions_hidesShowExcludedButton() {
+    void searchOrderMock_withNoExclusions_hidesShowExcludedButton() {
         when(searchOrderMock.getId()).thenReturn(SO_ID);
         when(searchOrderMock.getExcludedPaperIds()).thenReturn(new ArrayList<>());
 
@@ -327,7 +327,7 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
     }
 
     @Test
-    public void searchOrderMock_withExclusions_whenClicking_sendsEvent() {
+    void searchOrderMock_withExclusions_whenClicking_sendsEvent() {
         when(searchOrderMock.getId()).thenReturn(SO_ID);
         when(searchOrderMock.getExcludedPaperIds()).thenReturn(Arrays.asList(5L, 3L));
 

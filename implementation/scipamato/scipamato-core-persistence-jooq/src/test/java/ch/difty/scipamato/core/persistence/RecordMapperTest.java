@@ -7,7 +7,8 @@ import java.sql.Timestamp;
 
 import org.jooq.Record;
 import org.jooq.RecordMapper;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.common.NullArgumentException;
 import ch.difty.scipamato.core.entity.CoreEntity;
@@ -48,13 +49,13 @@ public abstract class RecordMapperTest<R extends Record, E extends CoreEntity> {
         when(entityMock.getVersion()).thenReturn(VERSION);
     }
 
-    @Test(expected = NullArgumentException.class)
-    public void mappingWithNullEntity_throws() {
-        mapper.map(null);
+    @Test
+    void mappingWithNullEntity_throws() {
+        Assertions.assertThrows(NullArgumentException.class, () -> mapper.map(null));
     }
 
     @Test
-    public void mapping_mapsRecordToEntity() {
+    void mapping_mapsRecordToEntity() {
         R record = makeRecord();
         setAuditFieldsIn(record);
         E entity = mapper.map(record);

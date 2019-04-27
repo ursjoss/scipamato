@@ -6,20 +6,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.List;
 import java.util.Set;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.core.auth.Role;
 import ch.difty.scipamato.core.entity.User;
 
-public class ChangePasswordUserTest {
+class ChangePasswordUserTest {
 
     private final User user = new User();
 
     private ChangePasswordUser cpu;
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
         user.setId(1);
         user.setUserName("un");
         user.setFirstName("fn");
@@ -31,12 +31,12 @@ public class ChangePasswordUserTest {
     }
 
     @Test
-    public void degenerateConstruction_cannotInstantiateWithNullUser() {
+    void degenerateConstruction_cannotInstantiateWithNullUser() {
         assertDegenerateSupplierParameter(() -> new ChangePasswordUser(null), "user");
     }
 
     @Test
-    public void fromUser_withoutResettingPassword_hasThePasswordButNoCurrentPasswordNorPassword2() {
+    void fromUser_withoutResettingPassword_hasThePasswordButNoCurrentPasswordNorPassword2() {
         cpu = new ChangePasswordUser(user);
 
         assertUserBackedFields(cpu);
@@ -47,7 +47,7 @@ public class ChangePasswordUserTest {
     }
 
     @Test
-    public void fromUser_withResettingPassword_hasNoneOfThePasswords() {
+    void fromUser_withResettingPassword_hasNoneOfThePasswords() {
         cpu = new ChangePasswordUser(user, true);
 
         assertUserBackedFields(cpu);
@@ -72,7 +72,7 @@ public class ChangePasswordUserTest {
     }
 
     @Test
-    public void getSet() {
+    void getSet() {
         cpu = new ChangePasswordUser();
         cpu.setId(1);
         cpu.setUserName("un");
@@ -92,51 +92,51 @@ public class ChangePasswordUserTest {
     }
 
     @Test
-    public void canAddRole() {
+    void canAddRole() {
         cpu = new ChangePasswordUser(user);
         cpu.addRole(Role.VIEWER);
         cpu.setRoles(List.of(Role.ADMIN, Role.USER, Role.VIEWER));
     }
 
     @Test
-    public void canRemoveRole() {
+    void canRemoveRole() {
         cpu = new ChangePasswordUser(user);
         cpu.removeRole(Role.USER);
         cpu.setRoles(List.of(Role.ADMIN));
     }
 
     @Test
-    public void canGetUser_neverNull() {
+    void canGetUser_neverNull() {
         cpu = new ChangePasswordUser(user);
         assertThat(cpu.toUser()).isEqualTo(user);
     }
 
     @Test
-    public void canGetUser2_neverNull() {
+    void canGetUser2_neverNull() {
         cpu = new ChangePasswordUser();
         assertThat(cpu.toUser()).isNotNull();
     }
 
     @Test
-    public void canGetUser3_neverNull() {
+    void canGetUser3_neverNull() {
         cpu = new ChangePasswordUser(user, true);
         assertThat(cpu.toUser()).isNotNull();
     }
 
     @Test
-    public void canGetUser4_neverNull() {
+    void canGetUser4_neverNull() {
         cpu = new ChangePasswordUser(user, false);
         assertThat(cpu.toUser()).isNotNull();
     }
 
     @Test
-    public void canGetRolesString() {
+    void canGetRolesString() {
         cpu = new ChangePasswordUser(user);
         assertThat(cpu.getRolesString()).isEqualTo("ADMIN, USER");
     }
 
     @Test
-    public void canGetRoles() {
+    void canGetRoles() {
         cpu = new ChangePasswordUser(user);
         assertThat(cpu.getRoles()).containsExactlyInAnyOrder(Role.ADMIN, Role.USER);
 

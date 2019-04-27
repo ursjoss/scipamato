@@ -7,24 +7,24 @@ import static org.mockito.Mockito.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic;
 import ch.difty.scipamato.core.persistence.NewsletterTopicService;
 
-public class NewsletterTopicModelTest extends ModelTest {
+class NewsletterTopicModelTest extends ModelTest {
 
     @MockBean
     private NewsletterTopicService serviceMock;
 
     @Test
-    public void instantiating_withNullLanguageCode_throws() {
+    void instantiating_withNullLanguageCode_throws() {
         assertDegenerateSupplierParameter(() -> new NewsletterTopicModel(null), "languageCode");
     }
 
     @Test
-    public void loading_delegatesToNewsletterTopicService() {
+    void loading_delegatesToNewsletterTopicService() {
         String languageCode = "de";
 
         final List<NewsletterTopic> topics = new ArrayList<>();

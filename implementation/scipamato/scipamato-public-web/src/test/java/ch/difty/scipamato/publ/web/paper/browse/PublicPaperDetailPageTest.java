@@ -10,8 +10,8 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.tester.FormTester;
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationRequest;
@@ -21,7 +21,7 @@ import ch.difty.scipamato.publ.persistence.api.PublicPaperService;
 import ch.difty.scipamato.publ.web.PublicPageParameters;
 import ch.difty.scipamato.publ.web.common.BasePageTest;
 
-public class PublicPaperDetailPageTest extends BasePageTest<PublicPaperDetailPage> {
+class PublicPaperDetailPageTest extends BasePageTest<PublicPaperDetailPage> {
 
     private static final long NUMBER = 17L;
 
@@ -43,8 +43,8 @@ public class PublicPaperDetailPageTest extends BasePageTest<PublicPaperDetailPag
         verify(serviceMock).findByNumber(NUMBER);
     }
 
-    @After
-    public void tearDown() {
+    @AfterEach
+    void tearDown() {
         verifyNoMoreInteractions(serviceMock);
     }
 
@@ -114,7 +114,7 @@ public class PublicPaperDetailPageTest extends BasePageTest<PublicPaperDetailPag
     }
 
     @Test
-    public void withGoalsMissing_hideGoalsTopic() {
+    void withGoalsMissing_hideGoalsTopic() {
         PublicPaper p = new PublicPaper(1L, NUMBER, 10000, "authors", "auths", "title", "location", "journal", 2017,
             null, "methods", "population", "result", "comment");
         getTester().startPage(new PublicPaperDetailPage(Model.of(p), null));
@@ -131,7 +131,7 @@ public class PublicPaperDetailPageTest extends BasePageTest<PublicPaperDetailPag
     }
 
     @Test
-    public void withPopulationMissing_hidePopulationTopic() {
+    void withPopulationMissing_hidePopulationTopic() {
         PublicPaper p = new PublicPaper(1L, NUMBER, 10000, "authors", "auths", "title", "location", "journal", 2017,
             "goals", "methods", null, "result", "comment");
         getTester().startPage(new PublicPaperDetailPage(Model.of(p), null));
@@ -148,7 +148,7 @@ public class PublicPaperDetailPageTest extends BasePageTest<PublicPaperDetailPag
     }
 
     @Test
-    public void withMethodsMissing_hideMethodsTopic() {
+    void withMethodsMissing_hideMethodsTopic() {
         PublicPaper p = new PublicPaper(1L, NUMBER, 10000, "authors", "auths", "title", "location", "journal", 2017,
             "goals", null, "population", "result", "comment");
         getTester().startPage(new PublicPaperDetailPage(Model.of(p), null));
@@ -165,7 +165,7 @@ public class PublicPaperDetailPageTest extends BasePageTest<PublicPaperDetailPag
     }
 
     @Test
-    public void withResultMissing_hideResultTopic() {
+    void withResultMissing_hideResultTopic() {
         PublicPaper p = new PublicPaper(1L, NUMBER, 10000, "authors", "auths", "title", "location", "journal", 2017,
             "goals", "methods", "population", null, "comment");
         getTester().startPage(new PublicPaperDetailPage(Model.of(p), null));
@@ -182,7 +182,7 @@ public class PublicPaperDetailPageTest extends BasePageTest<PublicPaperDetailPag
     }
 
     @Test
-    public void withCommentMissing_hideCommentTopic() {
+    void withCommentMissing_hideCommentTopic() {
         PublicPaper p = new PublicPaper(1L, NUMBER, 10000, "authors", "auths", "title", "location", "journal", 2017,
             "goals", "methods", "population", "result", null);
         getTester().startPage(new PublicPaperDetailPage(Model.of(p), null));
@@ -199,7 +199,7 @@ public class PublicPaperDetailPageTest extends BasePageTest<PublicPaperDetailPag
     }
 
     @Test
-    public void withNullPmId_pubMedLinkIsInvisible() {
+    void withNullPmId_pubMedLinkIsInvisible() {
         PublicPaper p = new PublicPaper(1L, NUMBER, null, "authors", "auths", "title", "location", "journal", 2017,
             "goals", "methods", "population", "result", "comment");
         getTester().startPage(new PublicPaperDetailPage(Model.of(p), null));
@@ -216,7 +216,7 @@ public class PublicPaperDetailPageTest extends BasePageTest<PublicPaperDetailPag
     }
 
     @Test
-    public void clickingPrevious_withPreviousItemAvailable_skipsBack() {
+    void clickingPrevious_withPreviousItemAvailable_skipsBack() {
         final long previousId = 1;
         when(getItemNavigator().hasPrevious()).thenReturn(true);
         when(getItemNavigator().getItemWithFocus()).thenReturn(previousId);
@@ -238,7 +238,7 @@ public class PublicPaperDetailPageTest extends BasePageTest<PublicPaperDetailPag
     }
 
     @Test
-    public void clickingNext_withNextItemAvailable_skipsForward() {
+    void clickingNext_withNextItemAvailable_skipsForward() {
         final long nextId = 2;
         when(getItemNavigator().hasNext()).thenReturn(true);
         when(getItemNavigator().getItemWithFocus()).thenReturn(nextId);
@@ -260,7 +260,7 @@ public class PublicPaperDetailPageTest extends BasePageTest<PublicPaperDetailPag
     }
 
     @Test
-    public void clickingNext_withNextItemAvailable_butWithNoIdReturnedFromItemManager_triesToSkipForwardButRemainsOnPage() {
+    void clickingNext_withNextItemAvailable_butWithNoIdReturnedFromItemManager_triesToSkipForwardButRemainsOnPage() {
         when(getItemNavigator().hasNext()).thenReturn(true);
         when(getItemNavigator().getItemWithFocus()).thenReturn(null);
 
@@ -281,7 +281,7 @@ public class PublicPaperDetailPageTest extends BasePageTest<PublicPaperDetailPag
     }
 
     @Test
-    public void clickingBack_withoutCallingRef_jumpsToPublicPage() {
+    void clickingBack_withoutCallingRef_jumpsToPublicPage() {
         PublicPaper p = new PublicPaper(2L, NUMBER, 2, "authors", "auths", "title", "location", "journal", 2017,
             "goals", "methods", "population", "result", "comment");
         getTester().startPage(new PublicPaperDetailPage(Model.of(p), null));
@@ -295,7 +295,7 @@ public class PublicPaperDetailPageTest extends BasePageTest<PublicPaperDetailPag
     }
 
     @Test
-    public void constructingPage_withPageParmeterProvidingNumber_loadsPaperWithNumber() {
+    void constructingPage_withPageParmeterProvidingNumber_loadsPaperWithNumber() {
         PageParameters pp = new PageParameters();
         pp.set(PublicPageParameters.NUMBER.getName(), NUMBER);
         new PublicPaperDetailPage(pp);
@@ -303,7 +303,7 @@ public class PublicPaperDetailPageTest extends BasePageTest<PublicPaperDetailPag
     }
 
     @Test
-    public void constructingPage_withoutPageParmeterProvidingNumber_loadsNothing() {
+    void constructingPage_withoutPageParmeterProvidingNumber_loadsNothing() {
         new PublicPaperDetailPage(new PageParameters());
         verify(serviceMock, never()).findByNumber(anyLong());
     }

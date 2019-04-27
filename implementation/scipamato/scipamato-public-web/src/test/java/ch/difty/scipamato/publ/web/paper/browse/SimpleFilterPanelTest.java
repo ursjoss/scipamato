@@ -5,12 +5,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.apache.wicket.event.IEvent;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.model.Model;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.publ.entity.filter.PublicPaperFilter;
 import ch.difty.scipamato.publ.web.common.PanelTest;
 
-public class SimpleFilterPanelTest extends PanelTest<SimpleFilterPanel> {
+class SimpleFilterPanelTest extends PanelTest<SimpleFilterPanel> {
 
     private static final String PANEL = "panel";
 
@@ -48,27 +48,27 @@ public class SimpleFilterPanelTest extends PanelTest<SimpleFilterPanel> {
     }
 
     @Test
-    public void notChangingAnyField() {
+    void notChangingAnyField() {
         getTester().startComponentInPage(makePanelSpy());
         assertThat(eventHandlerCallCount).isEqualTo(0);
     }
 
     @Test
-    public void changingTextField() {
+    void changingTextField() {
         getTester().startComponentInPage(makePanelSpy());
         getTester().executeAjaxEvent("panel:methodsSearch", "change");
         assertThat(eventHandlerCallCount).isEqualTo(COMPONENTS_WITH_EVENT_HANDLER);
     }
 
     @Test
-    public void changingMultiselectCombo() {
+    void changingMultiselectCombo() {
         getTester().startComponentInPage(makePanelSpy());
         getTester().executeAjaxEvent("panel:populationCodes", "change");
         assertThat(eventHandlerCallCount).isEqualTo(COMPONENTS_WITH_EVENT_HANDLER);
     }
 
     @Test
-    public void changingKeywordMultiselect() {
+    void changingKeywordMultiselect() {
         getTester().startComponentInPage(makePanelSpy());
         getTester().executeAjaxEvent("panel:keywords", "change");
         assertThat(eventHandlerCallCount).isEqualTo(COMPONENTS_WITH_EVENT_HANDLER);

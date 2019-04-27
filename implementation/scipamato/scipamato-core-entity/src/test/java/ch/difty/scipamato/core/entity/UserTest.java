@@ -13,12 +13,12 @@ import java.util.Set;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.core.auth.Role;
 
-public class UserTest {
+class UserTest {
 
     private static final int     ID         = 1;
     private static final String  USER_NAME  = "username";
@@ -36,13 +36,13 @@ public class UserTest {
     private final Role role2 = Role.USER;
     private final Role role3 = Role.VIEWER;
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
         roles.addAll(Arrays.asList(role1, role2));
     }
 
     @Test
-    public void setAndGet() {
+    void setAndGet() {
         User u = new User();
         u.setId(ID);
         u.setUserName(USER_NAME);
@@ -69,14 +69,14 @@ public class UserTest {
     }
 
     @Test
-    public void constructingByUser() {
+    void constructingByUser() {
         final User u = new User(ID, USER_NAME, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, ENABLED, roles);
         final User u1 = new User(u);
         assertUser(u1);
     }
 
     @Test
-    public void constructingByUser2() {
+    void constructingByUser2() {
         final User u = new User(ID, USER_NAME, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD);
         assertThat(u.isEnabled()).isFalse();
         assertThat(u.getRoles())
@@ -89,13 +89,13 @@ public class UserTest {
     }
 
     @Test
-    public void displayValue_isEqualToName() {
+    void displayValue_isEqualToName() {
         final User u = new User(ID, USER_NAME, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, ENABLED, roles);
         assertThat(u.getDisplayValue()).isEqualTo(USER_NAME);
     }
 
     @Test
-    public void reducedConstructor_leavesSomeFieldsDefault() {
+    void reducedConstructor_leavesSomeFieldsDefault() {
         assertThat(user.getId()).isEqualTo(1);
         assertThat(user.getUserName()).isEqualTo(USER_NAME);
         assertThat(user.getFirstName()).isEqualTo(FIRST_NAME);
@@ -108,7 +108,7 @@ public class UserTest {
     }
 
     @Test
-    public void settingRoles_reSetsRoles() {
+    void settingRoles_reSetsRoles() {
         final User u = new User(ID, USER_NAME, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, ENABLED, roles);
         assertThat(u.getRoles()).containsExactlyInAnyOrder(role1, role2);
 
@@ -118,41 +118,41 @@ public class UserTest {
     }
 
     @Test
-    public void settingRole_withNullList_clearsList() {
+    void settingRole_withNullList_clearsList() {
         final User u = new User(ID, USER_NAME, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, ENABLED, roles);
         u.setRoles(null);
         assertThat(u.getRoles()).isEmpty();
     }
 
     @Test
-    public void settingRole_withBlankList_clearsList() {
+    void settingRole_withBlankList_clearsList() {
         final User u = new User(ID, USER_NAME, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, ENABLED, roles);
         u.setRoles(Collections.emptySet());
         assertThat(u.getRoles()).isEmpty();
     }
 
     @Test
-    public void removingAssignedRole_removesIt() {
+    void removingAssignedRole_removesIt() {
         final User u = new User(ID, USER_NAME, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, ENABLED, roles);
         u.removeRole(role1);
         assertThat(u.getRoles()).containsExactly(role2);
     }
 
     @Test
-    public void removingUnassignedRole_doesNothing() {
+    void removingUnassignedRole_doesNothing() {
         final User u = new User(ID, USER_NAME, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, ENABLED, roles);
         u.removeRole(role3);
         assertThat(u.getRoles()).containsExactlyInAnyOrder(role1, role2);
     }
 
     @Test
-    public void addingNullRole_addsNothing() {
+    void addingNullRole_addsNothing() {
         user.addRole(role1);
         assertThat(user.getRoles()).containsExactly(role1);
     }
 
     @Test
-    public void equals() {
+    void equals() {
         EqualsVerifier
             .forClass(User.class)
             .withRedefinedSuperclass()
@@ -162,13 +162,13 @@ public class UserTest {
     }
 
     @Test
-    public void testingToString() {
+    void testingToString() {
         assertThat(user.toString()).isEqualTo(
             "User[userName=username,firstName=firstname,lastName=lastname,email=email,password=password,enabled=false,roles=[],id=1,createdBy=<null>,lastModifiedBy=<null>,created=<null>,lastModified=<null>,version=0]");
     }
 
     @Test
-    public void assertEnumFields() {
+    void assertEnumFields() {
         assertThat(User.UserFields.values())
             .extracting("name")
             .containsExactly("userName", "firstName", "lastName", "email", "password", "enabled", "roles");

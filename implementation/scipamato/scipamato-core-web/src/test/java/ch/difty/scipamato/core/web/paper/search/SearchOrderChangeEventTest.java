@@ -5,15 +5,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import ch.difty.scipamato.core.web.paper.SearchOrderChangeEvent;
 
-@RunWith(MockitoJUnitRunner.class)
-public class SearchOrderChangeEventTest {
+@ExtendWith(MockitoExtension.class)
+class SearchOrderChangeEventTest {
 
     private SearchOrderChangeEvent e;
 
@@ -21,13 +21,13 @@ public class SearchOrderChangeEventTest {
     private AjaxRequestTarget targetMock, targetMock2;
 
     @Test
-    public void canRetrieveTarget() {
+    void canRetrieveTarget() {
         e = new SearchOrderChangeEvent(targetMock);
         assertThat(e.getTarget()).isEqualTo(targetMock);
     }
 
     @Test
-    public void usingMinimalConstructor_doesNotSetAnySpecialStuff() {
+    void usingMinimalConstructor_doesNotSetAnySpecialStuff() {
         e = new SearchOrderChangeEvent(targetMock);
         assertThat(e.getExcludedId()).isNull();
         assertThat(e.getDroppedConditionId()).isNull();
@@ -35,25 +35,25 @@ public class SearchOrderChangeEventTest {
     }
 
     @Test
-    public void usingWithExcludedPaperId_doesAddExclusionId() {
+    void usingWithExcludedPaperId_doesAddExclusionId() {
         e = new SearchOrderChangeEvent(targetMock).withExcludedPaperId(5L);
         assertThat(e.getExcludedId()).isEqualTo(5L);
     }
 
     @Test
-    public void usingWithDroppedConditionId_doesAddConditionId() {
+    void usingWithDroppedConditionId_doesAddConditionId() {
         e = new SearchOrderChangeEvent(targetMock).withDroppedConditionId(5L);
         assertThat(e.getDroppedConditionId()).isEqualTo(5L);
     }
 
     @Test
-    public void requestingNewSearchOrder_setsFlagAccordingly() {
+    void requestingNewSearchOrder_setsFlagAccordingly() {
         e = new SearchOrderChangeEvent(targetMock).requestingNewSearchOrder();
         assertThat(e.isNewSearchOrderRequested()).isTrue();
     }
 
     @Test
-    public void requestingNewSearchOrder_withExcludedPaperIdAndNewSearchOrderRequest_newSearchOrderRequestWins() {
+    void requestingNewSearchOrder_withExcludedPaperIdAndNewSearchOrderRequest_newSearchOrderRequestWins() {
         e = new SearchOrderChangeEvent(targetMock)
             .withExcludedPaperId(5L)
             .requestingNewSearchOrder();
@@ -62,7 +62,7 @@ public class SearchOrderChangeEventTest {
     }
 
     @Test
-    public void requestingNewSearchOrder_withNewSearchOrderRequestAndThenExcludedPaperId_exclusionWins() {
+    void requestingNewSearchOrder_withNewSearchOrderRequestAndThenExcludedPaperId_exclusionWins() {
         e = new SearchOrderChangeEvent(targetMock)
             .requestingNewSearchOrder()
             .withExcludedPaperId(5L);
@@ -71,7 +71,7 @@ public class SearchOrderChangeEventTest {
     }
 
     @Test
-    public void canOverrideTarget() {
+    void canOverrideTarget() {
         e = new SearchOrderChangeEvent(targetMock);
         assertThat(e.getTarget()).isEqualTo(targetMock);
         e.setTarget(targetMock2);
@@ -79,7 +79,7 @@ public class SearchOrderChangeEventTest {
     }
 
     @Test
-    public void equals() {
+    void equals() {
         EqualsVerifier
             .forClass(SearchOrderChangeEvent.class)
             .withRedefinedSuperclass()

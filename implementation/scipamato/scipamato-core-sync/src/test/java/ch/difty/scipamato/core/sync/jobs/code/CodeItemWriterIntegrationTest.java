@@ -6,14 +6,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.core.sync.jobs.AbstractItemWriterIntegrationTest;
 import ch.difty.scipamato.publ.db.public_.tables.records.CodeRecord;
 
 @SuppressWarnings("SameParameterValue")
-public class CodeItemWriterIntegrationTest extends AbstractItemWriterIntegrationTest<PublicCode, CodeItemWriter> {
+class CodeItemWriterIntegrationTest extends AbstractItemWriterIntegrationTest<PublicCode, CodeItemWriter> {
 
     private static final String CODE_EXISTING       = "1F";
     private static final int    CODE_CLASS_EXISTING = 1;
@@ -69,8 +69,8 @@ public class CodeItemWriterIntegrationTest extends AbstractItemWriterIntegration
             .build();
     }
 
-    @After
-    public void tearDown() {
+    @AfterEach
+    void tearDown() {
         dsl
             .deleteFrom(CODE)
             .where(CODE.CODE_.eq(CODE_NEW))
@@ -84,7 +84,7 @@ public class CodeItemWriterIntegrationTest extends AbstractItemWriterIntegration
     }
 
     @Test
-    public void insertingNewCode_succeeds() {
+    void insertingNewCode_succeeds() {
         String code = newCode.getCode();
         assertCodeDoesNotExistWith(code, LANG_CODE);
         assertThat(getWriter().executeUpdate(newCode)).isEqualTo(1);
@@ -109,7 +109,7 @@ public class CodeItemWriterIntegrationTest extends AbstractItemWriterIntegration
     }
 
     @Test
-    public void updatingExistingCode_succeeds() {
+    void updatingExistingCode_succeeds() {
         assertThat(getWriter().executeUpdate(existingCode)).isEqualTo(1);
     }
 

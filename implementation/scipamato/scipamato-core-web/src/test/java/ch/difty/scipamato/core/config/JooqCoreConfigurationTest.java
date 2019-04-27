@@ -9,17 +9,17 @@ import org.jooq.Configuration;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DataSourceConnectionProvider;
 import org.jooq.impl.DefaultExecuteListenerProvider;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest
-public class JooqCoreConfigurationTest {
+class JooqCoreConfigurationTest {
 
     @Autowired
     @Qualifier("coreConfiguration")
@@ -34,17 +34,17 @@ public class JooqCoreConfigurationTest {
     private Configuration jooqBatchConfig;
 
     @Test
-    public void assertJooqPublicConfigIsProperlyWired() throws SQLException {
+    void assertJooqPublicConfigIsProperlyWired() throws SQLException {
         assertConfiguration(jooqPublicConfig);
     }
 
     @Test
-    public void assertJooqCoreConfigIsProperlyWired() throws SQLException {
+    void assertJooqCoreConfigIsProperlyWired() throws SQLException {
         assertConfiguration(jooqCoreConfig);
     }
 
     @Test
-    public void assertJooqBatchConfigIsProperlyWired() throws SQLException {
+    void assertJooqBatchConfigIsProperlyWired() throws SQLException {
         assertConfiguration(jooqBatchConfig);
     }
 

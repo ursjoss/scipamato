@@ -7,7 +7,7 @@ import java.util.Collection;
 import java.util.List;
 
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationRequest;
@@ -21,7 +21,7 @@ import ch.difty.scipamato.core.persistence.OptimisticLockingException;
 
 @SuppressWarnings("SpellCheckingInspection")
 @Slf4j
-public class JooqCodeClassRepoIntegrationTest extends JooqBaseIntegrationTest {
+class JooqCodeClassRepoIntegrationTest extends JooqBaseIntegrationTest {
 
     private static final int CODE_CLASS_COUNT = 8;
 
@@ -29,7 +29,7 @@ public class JooqCodeClassRepoIntegrationTest extends JooqBaseIntegrationTest {
     private JooqCodeClassRepo repo;
 
     @Test
-    public void findingAllCodesClassesInGerman() {
+    void findingAllCodesClassesInGerman() {
         List<CodeClass> ccs = repo.find("de");
         assertThat(ccs)
             .isNotEmpty()
@@ -38,7 +38,7 @@ public class JooqCodeClassRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void findingAllCodesClassesInEnglish() {
+    void findingAllCodesClassesInEnglish() {
         List<CodeClass> ccs = repo.find("en");
         assertThat(ccs)
             .isNotEmpty()
@@ -47,7 +47,7 @@ public class JooqCodeClassRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void findingAllCodesClassesInFrench() {
+    void findingAllCodesClassesInFrench() {
         List<CodeClass> ccs = repo.find("fr");
         assertThat(ccs)
             .isNotEmpty()
@@ -56,7 +56,7 @@ public class JooqCodeClassRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void findingCodeClassDefinitions_withUnspecifiedFilter_findsAllDefinitions() {
+    void findingCodeClassDefinitions_withUnspecifiedFilter_findsAllDefinitions() {
         final List<CodeClassDefinition> ccds = repo.findPageOfCodeClassDefinitions(new CodeClassFilter(),
             new PaginationRequest(0, 8, Sort.Direction.ASC, "name"));
 
@@ -76,7 +76,7 @@ public class JooqCodeClassRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void findingCodeClassDefinitions_sortingByUndefinedField_doesNotSort() {
+    void findingCodeClassDefinitions_sortingByUndefinedField_doesNotSort() {
         final List<CodeClassDefinition> ccds = repo.findPageOfCodeClassDefinitions(new CodeClassFilter(),
             new PaginationRequest(0, 8, Sort.Direction.ASC, "foobar"));
 
@@ -90,7 +90,7 @@ public class JooqCodeClassRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void findingCodeClassDefinitions_withUnspecifiedFilter_withReverseSortByTranslations() {
+    void findingCodeClassDefinitions_withUnspecifiedFilter_withReverseSortByTranslations() {
         final CodeClassFilter filter = new CodeClassFilter();
         filter.setDescriptionMask("en");
         final List<CodeClassDefinition> ccds = repo.findPageOfCodeClassDefinitions(filter,
@@ -103,7 +103,7 @@ public class JooqCodeClassRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void findingCodeClassDefinitions_withFilterMatchingSingleGermanName_findsOne() {
+    void findingCodeClassDefinitions_withFilterMatchingSingleGermanName_findsOne() {
         final CodeClassFilter filter = new CodeClassFilter();
         filter.setNameMask("Zeitdauer");
         final List<CodeClassDefinition> ccds = repo.findPageOfCodeClassDefinitions(filter,
@@ -119,7 +119,7 @@ public class JooqCodeClassRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void findingCodeClassDefinitions_haveVersionFieldsPopulated() {
+    void findingCodeClassDefinitions_haveVersionFieldsPopulated() {
         final CodeClassFilter filter = new CodeClassFilter();
         filter.setNameMask("Zeitdauer");
         final List<CodeClassDefinition> ccds = repo.findPageOfCodeClassDefinitions(filter,
@@ -146,36 +146,36 @@ public class JooqCodeClassRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void countingCodeClasses_witNullFilter_findsAllDefinitions() {
+    void countingCodeClasses_witNullFilter_findsAllDefinitions() {
         assertThat(repo.countByFilter(null)).isEqualTo(8);
     }
 
     @Test
-    public void countingCodeClasses_withUnspecifiedFilter_findsAllDefinitions() {
+    void countingCodeClasses_withUnspecifiedFilter_findsAllDefinitions() {
         assertThat(repo.countByFilter(new CodeClassFilter())).isEqualTo(8);
     }
 
     @Test
-    public void countingCodeClasses_withFilter_findsAllMatchingDefinitions() {
+    void countingCodeClasses_withFilter_findsAllMatchingDefinitions() {
         final CodeClassFilter filter = new CodeClassFilter();
         filter.setNameMask("en");
         assertThat(repo.countByFilter(filter)).isEqualTo(3);
     }
 
     @Test
-    public void countingCodeClasses_withNonMatchingFilter_findsNone() {
+    void countingCodeClasses_withNonMatchingFilter_findsNone() {
         final CodeClassFilter filter = new CodeClassFilter();
         filter.setNameMask("foobar");
         assertThat(repo.countByFilter(filter)).isEqualTo(0);
     }
 
     @Test
-    public void gettingMainLanguage() {
+    void gettingMainLanguage() {
         assertThat(repo.getMainLanguage()).isEqualTo("de");
     }
 
     @Test
-    public void findingMainLanguage() {
+    void findingMainLanguage() {
         CodeClassDefinition ccd = repo.newUnpersistedCodeClassDefinition();
 
         assertThat(ccd.getMainLanguageCode()).isEqualTo("de");
@@ -200,12 +200,12 @@ public class JooqCodeClassRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void findingCodeClassDefinition_withNonExistingId_returnsNull() {
+    void findingCodeClassDefinition_withNonExistingId_returnsNull() {
         assertThat(repo.findCodeClassDefinition(800)).isNull();
     }
 
     @Test
-    public void findingCodeClassDefinition_withExistingId_loadsWithAllLanguages() {
+    void findingCodeClassDefinition_withExistingId_loadsWithAllLanguages() {
         final CodeClassDefinition existing = repo.findCodeClassDefinition(1);
 
         assertThat(existing).isNotNull();
@@ -219,7 +219,7 @@ public class JooqCodeClassRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void savingNewRecord_savesRecordAndRefreshesId() {
+    void savingNewRecord_savesRecordAndRefreshesId() {
         final CodeClassTranslation ct_de = new CodeClassTranslation(null, "de", "foo_de", "Kommentar", 0);
         final CodeClassTranslation ct_en = new CodeClassTranslation(null, "en", "foo1_en", null, 0);
         final CodeClassTranslation ct_fr = new CodeClassTranslation(null, "fr", "foo1_fr", null, 0);
@@ -246,7 +246,7 @@ public class JooqCodeClassRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void updatingRecord() {
+    void updatingRecord() {
         final CodeClassDefinition ccd = repo.findCodeClassDefinition(1);
 
         assertThat(ccd).isNotNull();
@@ -300,12 +300,12 @@ public class JooqCodeClassRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void deleting_withNonExistingId_returnsNull() {
+    void deleting_withNonExistingId_returnsNull() {
         assertThat(repo.delete(-1, 1)).isNull();
     }
 
     @Test
-    public void deleting_withExistingId_butWrongVersion_throwsOptimisticLockingException() {
+    void deleting_withExistingId_butWrongVersion_throwsOptimisticLockingException() {
         try {
             repo.delete(1, -1);
             fail("should have thrown exception");
@@ -317,7 +317,7 @@ public class JooqCodeClassRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void deleting_withExistingIdAndVersion_deletes() {
+    void deleting_withExistingIdAndVersion_deletes() {
         // insert new record to the database and verify it's there
         CodeClassDefinition ccd = new CodeClassDefinition(10, "de", 1);
         CodeClassDefinition persisted = repo.saveOrUpdate(ccd);

@@ -4,19 +4,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Locale;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.common.navigator.LongNavigator;
 import ch.difty.scipamato.common.web.ScipamatoWebSessionFacade;
 import ch.difty.scipamato.core.auth.Roles;
 import ch.difty.scipamato.core.web.WicketTest;
 
-public class CoreWebSessionFacadeTest extends WicketTest {
+class CoreWebSessionFacadeTest extends WicketTest {
 
     private final ScipamatoWebSessionFacade sessionFacade = new CoreWebSessionFacade();
 
     @Test
-    public void gettingLanguageCode_withBritishLocale_returnsBritishCode() {
+    void gettingLanguageCode_withBritishLocale_returnsBritishCode() {
         getTester()
             .getSession()
             .setLocale(new Locale("en_GB"));
@@ -24,7 +24,7 @@ public class CoreWebSessionFacadeTest extends WicketTest {
     }
 
     @Test
-    public void gettingLanguageCode_withFrenchLocale_returnsFrenchCode() {
+    void gettingLanguageCode_withFrenchLocale_returnsFrenchCode() {
         getTester()
             .getSession()
             .setLocale(new Locale("fr"));
@@ -32,12 +32,12 @@ public class CoreWebSessionFacadeTest extends WicketTest {
     }
 
     @Test
-    public void gettingPaperIdManager_returnsMock() {
+    void gettingPaperIdManager_returnsMock() {
         assertThat(sessionFacade.getPaperIdManager()).isInstanceOf(LongNavigator.class);
     }
 
     @Test
-    public void roleCheck() {
+    void roleCheck() {
         assertThat(sessionFacade.hasAtLeastOneRoleOutOf(Roles.VIEWER, Roles.ADMIN)).isFalse();
         assertThat(sessionFacade.hasAtLeastOneRoleOutOf(Roles.USER)).isTrue();
     }

@@ -7,14 +7,14 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
 import ch.difty.scipamato.core.entity.search.AuditSearchTerm;
 import ch.difty.scipamato.core.entity.search.AuditSearchTerm.Token;
 import ch.difty.scipamato.core.entity.search.AuditSearchTerm.TokenType;
 
-public class AuditSearchTermEvaluatorTest extends SearchTermEvaluatorTest<AuditSearchTerm> {
+class AuditSearchTermEvaluatorTest extends SearchTermEvaluatorTest<AuditSearchTerm> {
 
     private final AuditSearchTermEvaluator e = new AuditSearchTermEvaluator();
 
@@ -29,13 +29,14 @@ public class AuditSearchTermEvaluatorTest extends SearchTermEvaluatorTest<AuditS
     }
 
     private void expectToken(TokenType type, String term, String fieldName) {
-        when(stMock.getFieldName()).thenReturn(fieldName);
+        if (fieldName != null)
+            when(stMock.getFieldName()).thenReturn(fieldName);
         tokens.add(new Token(type, term));
         when(stMock.getTokens()).thenReturn(tokens);
     }
 
     @Test
-    public void buildingConditionForGreaterOrEqual_applies() {
+    void buildingConditionForGreaterOrEqual_applies() {
         expectToken(TokenType.GREATEROREQUAL, "2017-01-12 00:00:00", "paper.created");
         assertThat(e
             .evaluate(stMock)
@@ -43,7 +44,7 @@ public class AuditSearchTermEvaluatorTest extends SearchTermEvaluatorTest<AuditS
     }
 
     @Test
-    public void buildingConditionForGreaterThan_applies() {
+    void buildingConditionForGreaterThan_applies() {
         expectToken(TokenType.GREATERTHAN, "2017-01-12 00:00:00", "paper.created");
         assertThat(e
             .evaluate(stMock)
@@ -51,7 +52,7 @@ public class AuditSearchTermEvaluatorTest extends SearchTermEvaluatorTest<AuditS
     }
 
     @Test
-    public void buildingConditionForExact_appliesRegex() {
+    void buildingConditionForExact_appliesRegex() {
         expectToken(TokenType.EXACT, "2017-01-12 00:00:00", "paper.created");
         assertThat(e
             .evaluate(stMock)
@@ -59,7 +60,7 @@ public class AuditSearchTermEvaluatorTest extends SearchTermEvaluatorTest<AuditS
     }
 
     @Test
-    public void buildingConditionForLessThan_applies() {
+    void buildingConditionForLessThan_applies() {
         expectToken(TokenType.LESSTHAN, "2017-01-12 00:00:00", "paper.created");
         assertThat(e
             .evaluate(stMock)
@@ -67,7 +68,7 @@ public class AuditSearchTermEvaluatorTest extends SearchTermEvaluatorTest<AuditS
     }
 
     @Test
-    public void buildingConditionForLessThanOrEqual_applies() {
+    void buildingConditionForLessThanOrEqual_applies() {
         expectToken(TokenType.LESSOREQUAL, "2017-01-12 00:00:00", "paper.created");
         assertThat(e
             .evaluate(stMock)
@@ -75,7 +76,7 @@ public class AuditSearchTermEvaluatorTest extends SearchTermEvaluatorTest<AuditS
     }
 
     @Test
-    public void buildingConditionForDateRange_applies() {
+    void buildingConditionForDateRange_applies() {
         expectToken(TokenType.RANGEQUOTED, "2017-01-11 10:00:00-2017-01-12 15:14:13", "paper.created");
         assertThat(e
             .evaluate(stMock)
@@ -84,23 +85,23 @@ public class AuditSearchTermEvaluatorTest extends SearchTermEvaluatorTest<AuditS
     }
 
     @Test
-    public void buildingConditionForWhitespace_appliesTrueCondition() {
-        expectToken(TokenType.WHITESPACE, "   ", "paper.created");
+    void buildingConditionForWhitespace_appliesTrueCondition() {
+        expectToken(TokenType.WHITESPACE, "   ", null);
         assertThat(e
             .evaluate(stMock)
             .toString()).isEqualTo("1 = 1");
     }
 
     @Test
-    public void buildingConditionForWhitespace_appliesTrueCondition2() {
-        expectToken(TokenType.WHITESPACE, "   ", "paper.last_modified");
+    void buildingConditionForWhitespace_appliesTrueCondition2() {
+        expectToken(TokenType.WHITESPACE, "   ", null);
         assertThat(e
             .evaluate(stMock)
             .toString()).isEqualTo("1 = 1");
     }
 
     @Test
-    public void buildingConditionForWord_appliesContains() {
+    void buildingConditionForWord_appliesContains() {
         expectToken(TokenType.WORD, "foo", "paper.created_by");
         assertThat(e
             .evaluate(stMock)
@@ -118,7 +119,7 @@ public class AuditSearchTermEvaluatorTest extends SearchTermEvaluatorTest<AuditS
     }
 
     @Test
-    public void buildingConditionForWord_appliesContains2() {
+    void buildingConditionForWord_appliesContains2() {
         expectToken(TokenType.WORD, "foo", "paper.last_modified_by");
         assertThat(e
             .evaluate(stMock)
@@ -136,7 +137,7 @@ public class AuditSearchTermEvaluatorTest extends SearchTermEvaluatorTest<AuditS
     }
 
     @Test
-    public void buildingConditionForGreaterOrEquals() {
+    void buildingConditionForGreaterOrEquals() {
         expectToken(TokenType.GREATEROREQUAL, "2019-01-05", "paper.created");
         assertThat(e
             .evaluate(stMock)
@@ -144,7 +145,7 @@ public class AuditSearchTermEvaluatorTest extends SearchTermEvaluatorTest<AuditS
     }
 
     @Test
-    public void buildingConditionForGreaterOrEquals2() {
+    void buildingConditionForGreaterOrEquals2() {
         expectToken(TokenType.GREATEROREQUAL, "2019-01-05", "paper.last_modified");
         assertThat(e
             .evaluate(stMock)
@@ -152,22 +153,22 @@ public class AuditSearchTermEvaluatorTest extends SearchTermEvaluatorTest<AuditS
     }
 
     @Test
-    public void buildingConditionForRaw_appliesDummyTrue() {
-        expectToken(TokenType.RAW, "foo", "paper.created");
+    void buildingConditionForRaw_appliesDummyTrue() {
+        expectToken(TokenType.RAW, "foo", null);
         assertThat(e
             .evaluate(stMock)
             .toString()).isEqualTo("1 = 1");
     }
 
     @Test
-    public void buildingConditionForWrongField_withExactMatch_throws() {
+    void buildingConditionForWrongField_withExactMatch_throws() {
         expectToken(TokenType.EXACT, "foo", "bar");
         validateDegenerateField(
             "Field bar is not one of the expected date fields [paper.created, paper.last_modified] entitled to use MatchType.EQUALS");
     }
 
     @Test
-    public void buildingConditionForWrongField_withContainedMatch_throws() {
+    void buildingConditionForWrongField_withContainedMatch_throws() {
         expectToken(TokenType.WORD, "foo", "baz");
         validateDegenerateField(
             "Field baz is not one of the expected user fields [paper.created_by, paper.last_modified_by] entitled to use MatchType.CONTAINS");
@@ -185,7 +186,7 @@ public class AuditSearchTermEvaluatorTest extends SearchTermEvaluatorTest<AuditS
     }
 
     @Test
-    public void buildingConditionForWord_withNonUserField_throws() {
+    void buildingConditionForWord_withNonUserField_throws() {
         expectToken(TokenType.WORD, "foo", "firstAuthor");
         try {
             e.evaluate(stMock);

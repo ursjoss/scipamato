@@ -8,7 +8,7 @@ import ch.difty.scipamato.core.db.tables.NewsletterTopic;
 import ch.difty.scipamato.core.db.tables.records.NewsletterTopicRecord;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicFilter;
 
-public class NewsletterTopicFilterConditionMapperTest
+class NewsletterTopicFilterConditionMapperTest
     extends FilterConditionMapperTest<NewsletterTopicRecord, NewsletterTopic, NewsletterTopicFilter> {
 
     private final NewsletterTopicFilterConditionMapper mapper = new NewsletterTopicFilterConditionMapper();

@@ -9,15 +9,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-public class PaperSlimTest {
+class PaperSlimTest {
 
     private PaperSlim ps;
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
         ps = new PaperSlim();
         ps.setId(1L);
         ps.setNumber(10L);
@@ -28,7 +28,7 @@ public class PaperSlimTest {
     }
 
     @Test
-    public void getting_hasAllFields() {
+    void getting_hasAllFields() {
         getting(20, "nl", 1, "hl");
     }
 
@@ -58,25 +58,25 @@ public class PaperSlimTest {
     }
 
     @Test
-    public void displayValue() {
+    void displayValue() {
         assertThat(ps.getDisplayValue()).isEqualTo("firstAuthor (2016): title.");
     }
 
     @Test
-    public void testingToString() {
+    void testingToString() {
         assertThat(ps.toString()).isEqualTo(
             "PaperSlim(number=10, firstAuthor=firstAuthor, publicationYear=2016, title=title, newsletter=nl, headline=hl)");
     }
 
     @Test
-    public void testingToString_withNoNewsletter() {
+    void testingToString_withNoNewsletter() {
         ps.setNewsletterAssociation(null);
         assertThat(ps.toString()).isEqualTo(
             "PaperSlim(number=10, firstAuthor=firstAuthor, publicationYear=2016, title=title)");
     }
 
     @Test
-    public void testingToString_withNoHeadline() {
+    void testingToString_withNoHeadline() {
         ps
             .getNewsletterAssociation()
             .setHeadline(null);
@@ -85,25 +85,25 @@ public class PaperSlimTest {
     }
 
     @Test
-    public void alternativeConstructorwithoutNewsletter_hasAllFields_exceptNewsletter() {
+    void alternativeConstructorwithoutNewsletter_hasAllFields_exceptNewsletter() {
         ps = new PaperSlim(1L, 10L, "firstAuthor", 2016, "title");
         getting(null, null, null, null);
     }
 
     @Test
-    public void alternativeConstructor_withNewsletterFields() {
+    void alternativeConstructor_withNewsletterFields() {
         ps = new PaperSlim(1L, 10L, "firstAuthor", 2016, "title", 20, "nlTitle", 1, "hl");
         getting(20, "nlTitle", 1, "hl");
     }
 
     @Test
-    public void alternativeConstructor_withNewsletter() {
+    void alternativeConstructor_withNewsletter() {
         ps = new PaperSlim(1L, 10L, "firstAuthor", 2016, "title", new NewsletterAssociation(30, "t", 3, "headline"));
         getting(30, "t", 3, "headline");
     }
 
     @Test
-    public void equals() {
+    void equals() {
         EqualsVerifier
             .forClass(PaperSlim.class)
             .withRedefinedSuperclass()
@@ -113,7 +113,7 @@ public class PaperSlimTest {
     }
 
     @Test
-    public void fields() {
+    void fields() {
         assertThat(PaperSlim.PaperSlimFields.values()).containsExactly(NUMBER, FIRST_AUTHOR, PUBLICATION_YEAR, TITLE,
             NEWSLETTER_ASSOCIATION);
         assertThat(PaperSlim.PaperSlimFields.values())

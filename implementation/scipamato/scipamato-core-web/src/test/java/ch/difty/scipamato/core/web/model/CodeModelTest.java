@@ -7,30 +7,30 @@ import static org.mockito.Mockito.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.common.entity.CodeClassId;
 import ch.difty.scipamato.core.entity.Code;
 import ch.difty.scipamato.core.persistence.CodeService;
 
-public class CodeModelTest extends ModelTest {
+class CodeModelTest extends ModelTest {
 
     @MockBean
     private CodeService serviceMock;
 
     @Test
-    public void instantiating_withNullCodeClassId_throws() {
+    void instantiating_withNullCodeClassId_throws() {
         assertDegenerateSupplierParameter(() -> new CodeModel(null, "de"), "codeClassId");
     }
 
     @Test
-    public void instantiating_withNullLanguageCode_throws() {
+    void instantiating_withNullLanguageCode_throws() {
         assertDegenerateSupplierParameter(() -> new CodeModel(CodeClassId.CC1, null), "languageCode");
     }
 
     @Test
-    public void loading_delegatesToCodeService() {
+    void loading_delegatesToCodeService() {
         CodeClassId ccId = CodeClassId.CC1;
         String languageCode = "de";
 

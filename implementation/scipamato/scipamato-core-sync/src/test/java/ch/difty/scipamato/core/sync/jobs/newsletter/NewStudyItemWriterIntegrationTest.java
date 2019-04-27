@@ -6,16 +6,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.core.db.public_.tables.Paper;
 import ch.difty.scipamato.core.sync.jobs.AbstractItemWriterIntegrationTest;
 import ch.difty.scipamato.publ.db.public_.tables.records.NewStudyRecord;
 
 @SuppressWarnings({ "SameParameterValue", "WeakerAccess" })
-public class NewStudyItemWriterIntegrationTest
-    extends AbstractItemWriterIntegrationTest<PublicNewStudy, NewStudyItemWriter> {
+class NewStudyItemWriterIntegrationTest extends AbstractItemWriterIntegrationTest<PublicNewStudy, NewStudyItemWriter> {
 
     private static final int  NL_ID_EXISTING        = 1;
     private static final long PAPER_NUMBER_EXISTING = 8924;
@@ -80,8 +79,8 @@ public class NewStudyItemWriterIntegrationTest
             .build();
     }
 
-    @After
-    public void tearDown() {
+    @AfterEach
+    void tearDown() {
         dsl
             .deleteFrom(NEW_STUDY)
             .where(NEW_STUDY.NEWSLETTER_ID
@@ -98,14 +97,21 @@ public class NewStudyItemWriterIntegrationTest
     }
 
     @Test
-    public void insertingNewNewStudy_succeeds() {
+    void insertingNewNewStudy_succeeds() {
         final int newsletterId = newNewStudy.getNewsletterId();
         final long paperNumber = newNewStudy.getPaperNumber();
         assertNewStudyDoesNotExistWith(newsletterId, paperNumber);
-        dsl.insertInto(Paper.PAPER).columns(Paper.PAPER.ID, Paper.PAPER.NUMBER, Paper.PAPER.PUBLICATION_YEAR).values(PAPER_NUMBER_NEW, PAPER_NUMBER_NEW, 2007).execute();
+        dsl
+            .insertInto(Paper.PAPER)
+            .columns(Paper.PAPER.ID, Paper.PAPER.NUMBER, Paper.PAPER.PUBLICATION_YEAR)
+            .values(PAPER_NUMBER_NEW, PAPER_NUMBER_NEW, 2007)
+            .execute();
         assertThat(getWriter().executeUpdate(newNewStudy)).isEqualTo(1);
         assertNewStudyExistsWith(newsletterId, paperNumber);
-        dsl.deleteFrom(Paper.PAPER).where(Paper.PAPER.NUMBER.eq(PAPER_NUMBER_NEW)).execute();
+        dsl
+            .deleteFrom(Paper.PAPER)
+            .where(Paper.PAPER.NUMBER.eq(PAPER_NUMBER_NEW))
+            .execute();
     }
 
     private void assertNewStudyExistsWith(final int newsletterId, final long paperNumber) {
@@ -127,7 +133,7 @@ public class NewStudyItemWriterIntegrationTest
     }
 
     @Test
-    public void updatingExistingNewStudy_succeeds() {
+    void updatingExistingNewStudy_succeeds() {
         assertThat(getWriter().executeUpdate(existingNewStudy)).isEqualTo(1);
     }
 

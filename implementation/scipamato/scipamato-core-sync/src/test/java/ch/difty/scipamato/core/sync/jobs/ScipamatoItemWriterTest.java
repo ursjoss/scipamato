@@ -6,16 +6,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.DSLContext;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import ch.difty.scipamato.core.sync.jobs.paper.PublicPaper;
 
-@RunWith(MockitoJUnitRunner.class)
-public class ScipamatoItemWriterTest {
+@ExtendWith(MockitoExtension.class)
+class ScipamatoItemWriterTest {
 
     private int tracker = 0;
 
@@ -35,8 +35,8 @@ public class ScipamatoItemWriterTest {
 
     private ScipamatoItemWriter<PublicPaper> writer;
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
         writer = new ScipamatoItemWriter<>(dslContext, "topic") {
             @Override
             protected int executeUpdate(final PublicPaper pp) {
@@ -47,7 +47,7 @@ public class ScipamatoItemWriterTest {
     }
 
     @Test
-    public void writingTwoPapers() {
+    void writingTwoPapers() {
         papers.add(p1);
         papers.add(p2);
 
@@ -57,7 +57,7 @@ public class ScipamatoItemWriterTest {
     }
 
     @Test
-    public void writingOnePaper() {
+    void writingOnePaper() {
         papers.add(p1);
 
         writer.write(papers);

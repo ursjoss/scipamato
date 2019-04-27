@@ -4,11 +4,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.fail;
 
 import org.apache.wicket.authorization.UnauthorizedInstantiationException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.core.web.WicketTest;
 
-public class UserListPageAsViewerTest extends WicketTest {
+class UserListPageAsViewerTest extends WicketTest {
 
     @Override
     protected String getUserName() {
@@ -16,7 +16,7 @@ public class UserListPageAsViewerTest extends WicketTest {
     }
 
     @Test
-    public void viewerCannotAccessUserListPage() {
+    void viewerCannotAccessUserListPage() {
         try {
             getTester().startPage(new UserListPage(null));
             fail("should have thrown exception");

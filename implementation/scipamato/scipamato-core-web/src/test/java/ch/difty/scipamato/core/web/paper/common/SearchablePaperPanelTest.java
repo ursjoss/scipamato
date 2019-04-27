@@ -7,13 +7,14 @@ import static org.mockito.Mockito.*;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.model.Model;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.core.entity.search.PaperFilter;
 import ch.difty.scipamato.core.entity.search.SearchCondition;
 
-public class SearchablePaperPanelTest extends PaperPanelTest<SearchCondition, SearchablePaperPanel> {
+@SuppressWarnings("SpellCheckingInspection")
+class SearchablePaperPanelTest extends PaperPanelTest<SearchCondition, SearchablePaperPanel> {
 
     @Override
     protected SearchablePaperPanel makePanel() {
@@ -114,7 +115,7 @@ public class SearchablePaperPanelTest extends PaperPanelTest<SearchCondition, Se
     }
 
     @Test
-    public void specificFields_areEnabled() {
+    void specificFields_areEnabled() {
         getTester().startComponentInPage(makePanel());
         getTester().isEnabled("panel:form:id");
         getTester().isEnabled("panel:form:number");
@@ -124,19 +125,19 @@ public class SearchablePaperPanelTest extends PaperPanelTest<SearchCondition, Se
     }
 
     @Test
-    public void summary_doesNotExist() {
+    void summary_doesNotExist() {
         getTester().startComponentInPage(makePanel());
         getTester().assertContainsNot("panel:form:summary");
     }
 
     @Test
-    public void summaryShort_doesNotExist() {
+    void summaryShort_doesNotExist() {
         getTester().startComponentInPage(makePanel());
         getTester().assertContainsNot("panel:form:summaryShort");
     }
 
     @Test
-    public void navigationButtons_andPubmedRetrieval_andBackButton_areInvisible() {
+    void navigationButtons_andPubmedRetrieval_andBackButton_areInvisible() {
         getTester().startComponentInPage(makePanel());
 
         getTester().assertInvisible("panel:form:previous");
@@ -148,35 +149,35 @@ public class SearchablePaperPanelTest extends PaperPanelTest<SearchCondition, Se
     }
 
     @Test
-    public void assertSubmit() {
+    void assertSubmit() {
         getTester().startComponentInPage(makePanel());
         applyTestHackWithNestedMultiPartForms();
         getTester().submitForm("panel:form");
     }
 
     @Test
-    public void gettingCallingPage_isNull() {
+    void gettingCallingPage_isNull() {
         SearchablePaperPanel panel = getTester().startComponentInPage(makePanel());
         assertThat(panel.getCallingPage()).isNull();
     }
 
     @Test
-    public void isNotAssociatedWithNewsletter() {
+    void isNotAssociatedWithNewsletter() {
         assertThat(makePanel().isAssociatedWithNewsletter()).isFalse();
     }
 
     @Test
-    public void isNotAssociatedWithWipNewsletter() {
+    void isNotAssociatedWithWipNewsletter() {
         assertThat(makePanel().isAssociatedWithWipNewsletter()).isFalse();
     }
 
     @Test
-    public void isNotNewsletterInStatusWip() {
+    void isNotNewsletterInStatusWip() {
         assertThat(makePanel().isaNewsletterInStatusWip()).isFalse();
     }
 
     @Test
-    public void modifyNewsletterAssociation_isNoOp() {
+    void modifyNewsletterAssociation_isNoOp() {
         AjaxRequestTarget targetMock = mock(AjaxRequestTarget.class);
         makePanel().modifyNewsletterAssociation(targetMock);
         verifyNoMoreInteractions(targetMock);

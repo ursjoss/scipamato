@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
 import ch.difty.scipamato.common.NullArgumentException;
@@ -14,7 +14,7 @@ import ch.difty.scipamato.common.web.ScipamatoWebSessionFacade;
 import ch.difty.scipamato.common.web.pages.MenuBuilder;
 import ch.difty.scipamato.core.web.common.BasePage;
 
-public class CoreMenuBuilderTest extends WicketTest {
+class CoreMenuBuilderTest extends WicketTest {
 
     @Mock
     private ApplicationProperties     applicationProperties;
@@ -33,19 +33,19 @@ public class CoreMenuBuilderTest extends WicketTest {
     }
 
     @Test
-    public void degenerateConstruction_withNullApplicationProperties() {
+    void degenerateConstruction_withNullApplicationProperties() {
         TestUtils.assertDegenerateSupplierParameter(() -> new CoreMenuBuilder(null, webSessionFacade),
             "applicationProperties");
     }
 
     @Test
-    public void degenerateConstruction_withNullWebSessionFacade() {
+    void degenerateConstruction_withNullWebSessionFacade() {
         TestUtils.assertDegenerateSupplierParameter(() -> new CoreMenuBuilder(applicationProperties, null),
             "webSessionFacade");
     }
 
     @Test
-    public void degenerateMethodCall_withNullNavbar() {
+    void degenerateMethodCall_withNullNavbar() {
         try {
             menuBuilder.addMenuLinksTo(null, basePage);
             fail("should have thrown exception");
@@ -57,7 +57,7 @@ public class CoreMenuBuilderTest extends WicketTest {
     }
 
     @Test
-    public void degenerateMethodCall_withNullPage() {
+    void degenerateMethodCall_withNullPage() {
         try {
             menuBuilder.addMenuLinksTo(navbar, null);
             fail("should have thrown exception");

@@ -2,21 +2,21 @@ package ch.difty.scipamato.core.persistence;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class DefaultServiceResultTest {
+class DefaultServiceResultTest {
 
     private final ServiceResult sr = new DefaultServiceResult();
 
     @Test
-    public void defaultServiceResult_hasNoMessages() {
+    void defaultServiceResult_hasNoMessages() {
         assertThat(sr.getInfoMessages()).isEmpty();
         assertThat(sr.getWarnMessages()).isEmpty();
         assertThat(sr.getErrorMessages()).isEmpty();
     }
 
     @Test
-    public void addingInfoMessages() {
+    void addingInfoMessages() {
         sr.addInfoMessage("foo");
         assertThat(sr.getInfoMessages()).containsOnly("foo");
         assertThat(sr.getWarnMessages()).isEmpty();
@@ -29,7 +29,7 @@ public class DefaultServiceResultTest {
     }
 
     @Test
-    public void addingWarnMessages() {
+    void addingWarnMessages() {
         sr.addWarnMessage("foo");
         assertThat(sr.getWarnMessages()).containsOnly("foo");
         assertThat(sr.getInfoMessages()).isEmpty();
@@ -42,7 +42,7 @@ public class DefaultServiceResultTest {
     }
 
     @Test
-    public void addingErrorMessages() {
+    void addingErrorMessages() {
         sr.addErrorMessage("foo");
         assertThat(sr.getErrorMessages()).containsOnly("foo");
         assertThat(sr.getInfoMessages()).isEmpty();
@@ -55,7 +55,7 @@ public class DefaultServiceResultTest {
     }
 
     @Test
-    public void ignoringNullMessages() {
+    void ignoringNullMessages() {
         sr.addInfoMessage(null);
         sr.addWarnMessage(null);
         sr.addErrorMessage(null);

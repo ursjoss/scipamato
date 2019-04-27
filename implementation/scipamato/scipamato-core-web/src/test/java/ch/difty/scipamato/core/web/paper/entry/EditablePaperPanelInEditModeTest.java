@@ -13,7 +13,7 @@ import org.apache.wicket.feedback.ExactLevelFeedbackMessageFilter;
 import org.apache.wicket.feedback.FeedbackMessage;
 import org.apache.wicket.util.tester.FormTester;
 import org.apache.wicket.util.tester.TagTester;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
@@ -23,7 +23,8 @@ import ch.difty.scipamato.core.entity.search.PaperFilter;
 import ch.difty.scipamato.core.pubmed.PubmedArticleResult;
 import ch.difty.scipamato.core.web.paper.search.PaperSearchPage;
 
-public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
+@SuppressWarnings("SpellCheckingInspection")
+class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
 
     @Override
     Mode getMode() {
@@ -74,7 +75,7 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
     }
 
     @Test
-    public void withNoSearchOrderId_hasInvisibleExcludeButton() {
+    void withNoSearchOrderId_hasInvisibleExcludeButton() {
         getTester().startComponentInPage(makePanelWith(PMID, callingPageMock, null, SHOW_EXCLUDED));
 
         getTester().assertInvisible(PANEL_ID + ":form:exclude");
@@ -84,7 +85,7 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
     }
 
     @Test
-    public void assertSubmit() {
+    void assertSubmit() {
         getTester().startComponentInPage(makePanel());
         applyTestHackWithNestedMultiPartForms();
         getTester().submitForm("panel:form");
@@ -93,7 +94,7 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
     }
 
     @Test
-    public void assertRequiredFields() {
+    void assertRequiredFields() {
         String b = "panel:form:";
         getTester().startComponentInPage(makePanel());
 
@@ -110,7 +111,7 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
     }
 
     @Test
-    public void specificFields_areDisabled() {
+    void specificFields_areDisabled() {
         getTester().startComponentInPage(makePanel());
         getTester().isDisabled("panel:form:id");
         getTester().isDisabled("panel:form:firstAuthorOverridden");
@@ -121,7 +122,7 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
     }
 
     @Test
-    public void firstAuthorChangeBehavior_withoutTriggering_hasFirstAuthorOverriddenFalseAndFirstAuthorDisabled() {
+    void firstAuthorChangeBehavior_withoutTriggering_hasFirstAuthorOverriddenFalseAndFirstAuthorDisabled() {
         getTester().startComponentInPage(makePanel());
 
         String formId = "panel:form:";
@@ -138,7 +139,7 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
     }
 
     @Test
-    public void firstAuthorChangeBehavior_withoutUpdatedAuthor_hasFirstAuthorOverriddenFalseAndFirstAuthorDisabled() {
+    void firstAuthorChangeBehavior_withoutUpdatedAuthor_hasFirstAuthorOverriddenFalseAndFirstAuthorDisabled() {
         getTester().startComponentInPage(makePanel());
 
         String formId = "panel:form:";
@@ -160,7 +161,7 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
     }
 
     @Test
-    public void mainCodeOfCodeClass1ChangeBehavior_whenChangingCodesClass1_reflectsInMainCodeOfCodeClass() {
+    void mainCodeOfCodeClass1ChangeBehavior_whenChangingCodesClass1_reflectsInMainCodeOfCodeClass() {
         getTester().startComponentInPage(makePanel());
 
         getTester().clickLink("panel:form:tabs:tabs-container:tabs:2:link");
@@ -182,7 +183,7 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
     }
 
     @Test
-    public void mainCodeOfCodeClass1ChangeBehavior_whenRemovingCodeOfClass1_clearsMainCodeOfCodeClass() {
+    void mainCodeOfCodeClass1ChangeBehavior_whenRemovingCodeOfClass1_clearsMainCodeOfCodeClass() {
         getTester().startComponentInPage(makePanel());
 
         getTester().clickLink("panel:form:tabs:tabs-container:tabs:2:link");
@@ -207,7 +208,7 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
     }
 
     @Test
-    public void mainCodeOfCodeClass1ChangeBehavior_walkThroughStateChanges() {
+    void mainCodeOfCodeClass1ChangeBehavior_walkThroughStateChanges() {
         getTester().startComponentInPage(makePanel());
 
         getTester().clickLink("panel:form:tabs:tabs-container:tabs:2:link");
@@ -253,7 +254,7 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
     }
 
     @Test
-    public void clickingOnPubmedRetrievalButton_withNoPmIdInScipamatoPaper_warns() {
+    void clickingOnPubmedRetrievalButton_withNoPmIdInScipamatoPaper_warns() {
         getTester().startComponentInPage(makePanel());
 
         when(pubmedArticleServiceMock.getPubmedArticleWithPmid(PMID)).thenReturn(
@@ -270,7 +271,7 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
     }
 
     @Test
-    public void clickingOnPubmedRetrievalButton_withBadGateway_warns() {
+    void clickingOnPubmedRetrievalButton_withBadGateway_warns() {
         getTester().startComponentInPage(makePanel());
 
         when(pubmedArticleServiceMock.getPubmedArticleWithPmid(PMID)).thenReturn(
@@ -287,7 +288,7 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
     }
 
     @Test
-    public void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesSetAndEqual_informsAboutPerfectMatch() {
+    void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesSetAndEqual_informsAboutPerfectMatch() {
         getTester().startComponentInPage(makePanel());
 
         fixPubmedRetrievalButtonClicked("a", "fa", "t", "l", "2017", "doi", "oa");
@@ -330,7 +331,7 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
     }
 
     @Test
-    public void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesEqualExceptArticle_warnsAboutDifferingArticle() {
+    void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesEqualExceptArticle_warnsAboutDifferingArticle() {
         getTester().startComponentInPage(makePanel());
 
         fixPubmedRetrievalButtonClicked("_a", "fa", "t", "l", "2017", "doi", "oa");
@@ -345,7 +346,7 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
     }
 
     @Test
-    public void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesEqualExceptFirstAuthor_warnsAboutDifferingFirstAuthor() {
+    void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesEqualExceptFirstAuthor_warnsAboutDifferingFirstAuthor() {
         getTester().startComponentInPage(makePanel());
 
         fixPubmedRetrievalButtonClicked("a", "_fa", "t", "l", "2017", "doi", "oa");
@@ -360,7 +361,7 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
     }
 
     @Test
-    public void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesEqualExceptTitle_warnsAboutDifferingTitle() {
+    void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesEqualExceptTitle_warnsAboutDifferingTitle() {
         getTester().startComponentInPage(makePanel());
 
         fixPubmedRetrievalButtonClicked("a", "fa", "_t", "l", "2017", "doi", "oa");
@@ -375,7 +376,7 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
     }
 
     @Test
-    public void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesEqualExceptLocation_warnsAboutDifferingLocation() {
+    void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesEqualExceptLocation_warnsAboutDifferingLocation() {
         getTester().startComponentInPage(makePanel());
 
         fixPubmedRetrievalButtonClicked("a", "fa", "t", "_l", "2017", "doi", "oa");
@@ -390,7 +391,7 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
     }
 
     @Test
-    public void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesEqualExceptYear_warnsAboutDifferingYear() {
+    void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesEqualExceptYear_warnsAboutDifferingYear() {
         getTester().startComponentInPage(makePanel());
 
         fixPubmedRetrievalButtonClicked("a", "fa", "t", "l", "2016", "doi", "oa");
@@ -406,7 +407,7 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
     }
 
     @Test
-    public void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesEqualExceptDoi_warnsAboutDifferingDoi() {
+    void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesEqualExceptDoi_warnsAboutDifferingDoi() {
         getTester().startComponentInPage(makePanel());
 
         fixPubmedRetrievalButtonClicked("a", "fa", "t", "l", "2017", "_doi", "oa");
@@ -421,7 +422,7 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
     }
 
     @Test
-    public void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesSetAndAllDifferent_warnsAboutAllComparedFields() {
+    void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesSetAndAllDifferent_warnsAboutAllComparedFields() {
         getTester().startComponentInPage(makePanel());
 
         fixPubmedRetrievalButtonClicked("_a", "_fa", "_t", "_l", "2016", "_doi", "_oa");
@@ -437,7 +438,7 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
     }
 
     @Test
-    public void withNoPmId_PubmedRetrievalLinkIsNotEnabled() {
+    void withNoPmId_PubmedRetrievalLinkIsNotEnabled() {
         getTester().startComponentInPage(makePanelWithEmptyPaper(null));
         getTester().assertDisabled(PANEL_ID + ":form:pubmedRetrieval");
         verify(newsletterServiceMock).canCreateNewsletterInProgress();
@@ -445,7 +446,7 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
     }
 
     @Test
-    public void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithNoOtherValuesSet_setsThemFromPubmedIncludingOriginalAbstract() {
+    void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithNoOtherValuesSet_setsThemFromPubmedIncludingOriginalAbstract() {
         getTester().startComponentInPage(makePanelWithEmptyPaper(PMID));
 
         fixPubmedRetrievalButtonClicked("a", "fa", "t", "l", "2017", "doi", "oa");
@@ -476,7 +477,7 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
     }
 
     @Test
-    public void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesSetExceptAuthor_setsAuthor() {
+    void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesSetExceptAuthor_setsAuthor() {
         EditablePaperPanel panel = makePanel();
         panel
             .getModelObject()
@@ -485,7 +486,7 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
     }
 
     @Test
-    public void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesSetExceptFirstAuthor_setsFirstAuthor() {
+    void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesSetExceptFirstAuthor_setsFirstAuthor() {
         EditablePaperPanel panel = makePanel();
         panel
             .getModelObject()
@@ -494,7 +495,7 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
     }
 
     @Test
-    public void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesSetExceptTitle_setsTitle() {
+    void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesSetExceptTitle_setsTitle() {
         EditablePaperPanel panel = makePanel();
         panel
             .getModelObject()
@@ -503,7 +504,7 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
     }
 
     @Test
-    public void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesSetExceptLocation_setsLocation() {
+    void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesSetExceptLocation_setsLocation() {
         EditablePaperPanel panel = makePanel();
         panel
             .getModelObject()
@@ -512,7 +513,7 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
     }
 
     @Test
-    public void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesSetExceptYear_setsYear() {
+    void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesSetExceptYear_setsYear() {
         EditablePaperPanel panel = makePanel();
         panel
             .getModelObject()
@@ -521,7 +522,7 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
     }
 
     @Test
-    public void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesSetExceptDoi_setsDoi() {
+    void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesSetExceptDoi_setsDoi() {
         EditablePaperPanel panel = makePanel();
         panel
             .getModelObject()
@@ -530,7 +531,7 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
     }
 
     @Test
-    public void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesSetExceptOriginalAbstract_setsOriginalAbstract() {
+    void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesSetExceptOriginalAbstract_setsOriginalAbstract() {
         EditablePaperPanel panel = makePanel();
         panel
             .getModelObject()
@@ -551,7 +552,7 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
     }
 
     @Test
-    public void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithNoOtherValuesSet_butWithInvalidYear_warnsAboutYearButSetsOtherFields() {
+    void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithNoOtherValuesSet_butWithInvalidYear_warnsAboutYearButSetsOtherFields() {
         getTester().startComponentInPage(makePanelWithEmptyPaper(PMID));
 
         fixPubmedRetrievalButtonClicked("a", "fa", "t", "l", "invalid", "doi", "oa");
@@ -568,7 +569,7 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
     }
 
     @Test
-    public void clickingExclude_withBothSearchOrderIdAndPaperId_excludesPaperFromSearchOrder_andForwardsToPaperSearchPage() {
+    void clickingExclude_withBothSearchOrderIdAndPaperId_excludesPaperFromSearchOrder_andForwardsToPaperSearchPage() {
         getTester().startComponentInPage(makePanelWith(PMID, callingPageMock, SEARCH_ORDER_ID, false));
         FormTester formTester = getTester().newFormTester(PANEL_ID + ":form");
 
@@ -580,7 +581,7 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
     }
 
     @Test
-    public void clickingExclude_showingExcluded_reIncludesPaperIntoSearchOrder_andSkipsToNextPaper() {
+    void clickingExclude_showingExcluded_reIncludesPaperIntoSearchOrder_andSkipsToNextPaper() {
         Long idOfNextPaper = 10L;
         when(getItemNavigator().getItemWithFocus()).thenReturn(idOfNextPaper);
         when(paperServiceMock.findById(idOfNextPaper)).thenReturn(Optional.of(mock(Paper.class)));
@@ -602,7 +603,7 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
     }
 
     @Test
-    public void clickingExclude_showingExcluded_reIncludesPaperIntoSearchOrder_andForwardsToPaperSearchPage() {
+    void clickingExclude_showingExcluded_reIncludesPaperIntoSearchOrder_andForwardsToPaperSearchPage() {
         getTester().startComponentInPage(makePanelWith(PMID, callingPageMock, SEARCH_ORDER_ID, true));
         FormTester formTester = getTester().newFormTester(PANEL_ID + ":form");
 
@@ -614,7 +615,7 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
     }
 
     @Test
-    public void startingPage_notShowingExclusions_adjustsIconAndTitleOfToggleInclusionsButton() {
+    void startingPage_notShowingExclusions_adjustsIconAndTitleOfToggleInclusionsButton() {
         assertExcluded(false, "Exclude paper from current search", "glyphicon-ban-circle");
     }
 
@@ -632,12 +633,12 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
     }
 
     @Test
-    public void startingPageShowingExclusions_adjustsIconAndTitleOfToggleInclusionsButton() {
+    void startingPageShowingExclusions_adjustsIconAndTitleOfToggleInclusionsButton() {
         assertExcluded(true, "Re-include paper into current search", "glyphicon-ok-circle");
     }
 
     @Test
-    public void clickingBack_withoutHavingModifiedExclusionList_forwardsToPaperSearchPageViaCallingPage() {
+    void clickingBack_withoutHavingModifiedExclusionList_forwardsToPaperSearchPageViaCallingPage() {
         when(callingPageMock.getPage()).thenThrow(new RuntimeException("forward to calling page triggered"));
         getTester().startComponentInPage(makePanelWith(PMID, callingPageMock, SEARCH_ORDER_ID, true));
         FormTester formTester = getTester().newFormTester(PANEL_ID + ":form");

@@ -12,7 +12,7 @@ import ch.difty.scipamato.core.persistence.UpdateSetStepSetter;
 import ch.difty.scipamato.core.persistence.UpdateSetStepSetterTest;
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
-public class SearchOrderUpdateSetStepSetterTest extends UpdateSetStepSetterTest<SearchOrderRecord, SearchOrder> {
+class SearchOrderUpdateSetStepSetterTest extends UpdateSetStepSetterTest<SearchOrderRecord, SearchOrder> {
 
     private final UpdateSetStepSetter<SearchOrderRecord, SearchOrder> setter = new SearchOrderUpdateSetStepSetter();
 
@@ -41,18 +41,34 @@ public class SearchOrderUpdateSetStepSetterTest extends UpdateSetStepSetterTest<
 
     @Override
     protected void stepSetFixtureExceptAudit() {
-        when(getStep().set(SEARCH_ORDER.NAME, NAME)).thenReturn(getMoreStep());
-        when(getMoreStep().set(SEARCH_ORDER.OWNER, OWNER)).thenReturn(getMoreStep());
-        when(getMoreStep().set(SEARCH_ORDER.GLOBAL, GLOBAL)).thenReturn(getMoreStep());
+        doReturn(getMoreStep())
+            .when(getStep())
+            .set(SEARCH_ORDER.NAME, NAME);
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(SEARCH_ORDER.OWNER, OWNER);
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(SEARCH_ORDER.GLOBAL, GLOBAL);
     }
 
     @Override
     protected void stepSetFixtureAudit() {
-        when(getMoreStep().set(SEARCH_ORDER.CREATED, CREATED)).thenReturn(getMoreStep());
-        when(getMoreStep().set(SEARCH_ORDER.CREATED_BY, CREATED_BY)).thenReturn(getMoreStep());
-        when(getMoreStep().set(SEARCH_ORDER.LAST_MODIFIED, LAST_MOD)).thenReturn(getMoreStep());
-        when(getMoreStep().set(SEARCH_ORDER.LAST_MODIFIED_BY, LAST_MOD_BY)).thenReturn(getMoreStep());
-        when(getMoreStep().set(SEARCH_ORDER.VERSION, VERSION + 1)).thenReturn(getMoreStep());
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(SEARCH_ORDER.CREATED, CREATED);
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(SEARCH_ORDER.CREATED_BY, CREATED_BY);
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(SEARCH_ORDER.LAST_MODIFIED, LAST_MOD);
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(SEARCH_ORDER.LAST_MODIFIED_BY, LAST_MOD_BY);
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(SEARCH_ORDER.VERSION, VERSION + 1);
     }
 
     @Override

@@ -9,10 +9,9 @@ import java.sql.Timestamp;
 
 import org.jooq.Record6;
 import org.jooq.TableField;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
-import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.core.db.tables.records.NewsletterRecord;
 import ch.difty.scipamato.core.entity.newsletter.Newsletter;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterFilter;
@@ -20,7 +19,7 @@ import ch.difty.scipamato.core.persistence.EntityRepository;
 import ch.difty.scipamato.core.persistence.JooqEntityRepoTest;
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
-public class JooqNewsletterRepoTest extends
+class JooqNewsletterRepoTest extends
     JooqEntityRepoTest<NewsletterRecord, Newsletter, Integer, ch.difty.scipamato.core.db.tables.Newsletter, NewsletterRecordMapper, NewsletterFilter> {
 
     private static final Integer SAMPLE_ID = 2;
@@ -37,17 +36,6 @@ public class JooqNewsletterRepoTest extends
     private NewsletterRecordMapper mapperMock;
     @Mock
     private NewsletterFilter       filterMock;
-    @Mock
-    private Newsletter             newsletterMock;
-    @Mock
-    private PaginationContext      pageableMock;
-
-    @Override
-    protected void testSpecificSetUp() {
-        when(unpersistedEntity.getVersion()).thenReturn(0);
-        when(persistedEntity.getVersion()).thenReturn(0);
-        when(persistedRecord.getVersion()).thenReturn(0);
-    }
 
     @Override
     protected EntityRepository<Newsletter, Integer, NewsletterFilter> makeRepoSavingReturning(
@@ -129,7 +117,6 @@ public class JooqNewsletterRepoTest extends
     @Override
     protected void expectUnpersistedEntityIdNull() {
         when(unpersistedEntity.getId()).thenReturn(null);
-        when(unpersistedEntity.getVersion()).thenReturn(0);
     }
 
     @Override
@@ -153,7 +140,7 @@ public class JooqNewsletterRepoTest extends
     }
 
     @Test
-    public void mergingPaperIntoNewsletter_withInsertAttemptNotSucceeding_returnsEmptyOptional() {
+    void mergingPaperIntoNewsletter_withInsertAttemptNotSucceeding_returnsEmptyOptional() {
         JooqNewsletterRepo repo = new JooqNewsletterRepo(getDsl(), getMapper(), getSortMapper(),
             getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(),
             getApplicationProperties()) {
@@ -167,12 +154,12 @@ public class JooqNewsletterRepoTest extends
     }
 
     @Test
-    public void handlingInsertedNewsletter_withZeroCount_returnsEmptyOptional() {
+    void handlingInsertedNewsletter_withZeroCount_returnsEmptyOptional() {
         assertThat(repo.handleInsertedNewsletter(0, 1, 2, "de")).isEmpty();
     }
 
     @Test
-    public void test() {
+    void test() {
         repo = new JooqNewsletterRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(),
             getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), getApplicationProperties()) {
             @Override

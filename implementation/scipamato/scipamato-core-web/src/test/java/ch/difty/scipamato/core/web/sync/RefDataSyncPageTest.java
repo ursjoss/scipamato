@@ -5,23 +5,24 @@ import static org.mockito.Mockito.*;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.ladda.LaddaAjaxButton;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.core.sync.launcher.SyncJobLauncher;
 import ch.difty.scipamato.core.sync.launcher.SyncJobResult;
 import ch.difty.scipamato.core.web.common.BasePageTest;
 
-public class RefDataSyncPageTest extends BasePageTest<RefDataSyncPage> {
+@SuppressWarnings("SpellCheckingInspection")
+class RefDataSyncPageTest extends BasePageTest<RefDataSyncPage> {
 
     private final SyncJobResult result = new SyncJobResult();
 
     @MockBean
     private SyncJobLauncher jobLauncherMock;
 
-    @After
-    public void tearDown() {
+    @AfterEach
+    void tearDown() {
         verifyNoMoreInteractions(jobLauncherMock);
     }
 
@@ -42,7 +43,7 @@ public class RefDataSyncPageTest extends BasePageTest<RefDataSyncPage> {
     }
 
     @Test
-    public void submitting_triggersSynchronize_withSuccess() {
+    void submitting_triggersSynchronize_withSuccess() {
         result.setSuccess("yep");
         assertAjaxEvent("yep", "Data was successfully exported to the public database.", result);
         getTester().assertInfoMessages("Data was successfully exported to the public database.", "yep");
@@ -50,13 +51,13 @@ public class RefDataSyncPageTest extends BasePageTest<RefDataSyncPage> {
     }
 
     @Test
-    public void submitting_triggersSynchronize_withFailure() {
+    void submitting_triggersSynchronize_withFailure() {
         result.setFailure("nope");
         assertAjaxEvent("nope", "Unexpected error occurred while exporting the data to the public database.", result);
     }
 
     @Test
-    public void submitting_triggersSynchronize_withWarn() {
+    void submitting_triggersSynchronize_withWarn() {
         result.setSuccess("yep");
         result.setWarning("hmmm");
         assertAjaxEvent("yep", "Data was successfully exported to the public database.", result);

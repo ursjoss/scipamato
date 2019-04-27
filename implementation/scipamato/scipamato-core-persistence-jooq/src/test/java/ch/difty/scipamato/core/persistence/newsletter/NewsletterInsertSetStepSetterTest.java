@@ -6,7 +6,7 @@ import static org.mockito.Mockito.*;
 
 import java.sql.Date;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
 import ch.difty.scipamato.core.db.tables.records.NewsletterRecord;
@@ -15,7 +15,7 @@ import ch.difty.scipamato.core.persistence.InsertSetStepSetter;
 import ch.difty.scipamato.core.persistence.InsertSetStepSetterTest;
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
-public class NewsletterInsertSetStepSetterTest extends InsertSetStepSetterTest<NewsletterRecord, Newsletter> {
+class NewsletterInsertSetStepSetterTest extends InsertSetStepSetterTest<NewsletterRecord, Newsletter> {
 
     private final InsertSetStepSetter<NewsletterRecord, Newsletter> setter = new NewsletterInsertSetStepSetter();
 
@@ -47,17 +47,25 @@ public class NewsletterInsertSetStepSetterTest extends InsertSetStepSetterTest<N
 
     @Override
     protected void stepSetFixtureExceptAudit() {
-        when(getStep().set(NEWSLETTER.ISSUE, ISSUE)).thenReturn(getMoreStep());
-        when(getMoreStep().set(NEWSLETTER.ISSUE_DATE, Date.valueOf(ISSUE_DATE))).thenReturn(getMoreStep());
-
-        when(getMoreStep().set(NEWSLETTER.PUBLICATION_STATUS, PUBLICATION_STATUS.getId())).thenReturn(getMoreStep());
+        doReturn(getMoreStep())
+            .when(getStep())
+            .set(NEWSLETTER.ISSUE, ISSUE);
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(NEWSLETTER.ISSUE_DATE, Date.valueOf(ISSUE_DATE));
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(NEWSLETTER.PUBLICATION_STATUS, PUBLICATION_STATUS.getId());
     }
 
     @Override
     protected void setStepFixtureAudit() {
-        when(getMoreStep().set(NEWSLETTER.CREATED_BY, NewsletterRecordMapperTest.CREATED_BY)).thenReturn(getMoreStep());
-        when(getMoreStep().set(NEWSLETTER.LAST_MODIFIED_BY, NewsletterRecordMapperTest.LAST_MOD_BY)).thenReturn(
-            getMoreStep());
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(NEWSLETTER.CREATED_BY, NewsletterRecordMapperTest.CREATED_BY);
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(NEWSLETTER.LAST_MODIFIED_BY, NewsletterRecordMapperTest.LAST_MOD_BY);
     }
 
     @Override
@@ -81,14 +89,14 @@ public class NewsletterInsertSetStepSetterTest extends InsertSetStepSetterTest<N
     }
 
     @Test
-    public void consideringSettingKeyOf_withNullId_doesNotSetId() {
+    void consideringSettingKeyOf_withNullId_doesNotSetId() {
         when(getEntity().getId()).thenReturn(null);
         getSetter().considerSettingKeyOf(getMoreStep(), getEntity());
         verify(getEntity()).getId();
     }
 
     @Test
-    public void consideringSettingKeyOf_withNonNullId_doesSetId() {
+    void consideringSettingKeyOf_withNonNullId_doesSetId() {
         when(getEntity().getId()).thenReturn(ID);
 
         getSetter().considerSettingKeyOf(getMoreStep(), getEntity());
@@ -98,13 +106,13 @@ public class NewsletterInsertSetStepSetterTest extends InsertSetStepSetterTest<N
     }
 
     @Test
-    public void resettingIdToEntity_withNullRecord_doesNothing() {
+    void resettingIdToEntity_withNullRecord_doesNothing() {
         getSetter().resetIdToEntity(entityMock, null);
         verify(entityMock, never()).setId(anyInt());
     }
 
     @Test
-    public void resettingIdToEntity_withNonNullRecord_setsId() {
+    void resettingIdToEntity_withNonNullRecord_setsId() {
         when(recordMock.getId()).thenReturn(3);
         getSetter().resetIdToEntity(entityMock, recordMock);
         verify(recordMock).getId();

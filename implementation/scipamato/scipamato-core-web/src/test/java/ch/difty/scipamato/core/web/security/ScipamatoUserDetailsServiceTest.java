@@ -7,12 +7,12 @@ import static org.mockito.Mockito.*;
 
 import java.util.Optional;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
@@ -21,8 +21,8 @@ import ch.difty.scipamato.core.persistence.UserService;
 import ch.difty.scipamato.core.web.authentication.ScipamatoUserDetails;
 import ch.difty.scipamato.core.web.authentication.ScipamatoUserDetailsService;
 
-@RunWith(MockitoJUnitRunner.class)
-public class ScipamatoUserDetailsServiceTest {
+@ExtendWith(MockitoExtension.class)
+class ScipamatoUserDetailsServiceTest {
 
     private ScipamatoUserDetailsService service;
 
@@ -30,23 +30,23 @@ public class ScipamatoUserDetailsServiceTest {
     private       UserService userServiceMock;
     private final User        user = new User(10, "un", "fn", "ln", "em", "pw");
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
         service = new ScipamatoUserDetailsService(userServiceMock);
     }
 
-    @After
-    public void tearDown() {
+    @AfterEach
+    void tearDown() {
         verifyNoMoreInteractions(userServiceMock);
     }
 
     @Test
-    public void degenerateCallWithNullUserName_throws() {
+    void degenerateCallWithNullUserName_throws() {
         assertDegenerateSupplierParameter(() -> service.loadUserByUsername(null), "username");
     }
 
     @Test
-    public void loadUserByUsername_withUserNotFound_throws() {
+    void loadUserByUsername_withUserNotFound_throws() {
         String username = "foo";
         when(userServiceMock.findByUserName(username)).thenReturn(Optional.empty());
         try {
@@ -61,7 +61,7 @@ public class ScipamatoUserDetailsServiceTest {
     }
 
     @Test
-    public void loadUserByUsername_withUserFound() {
+    void loadUserByUsername_withUserFound() {
         String username = "bar";
         when(userServiceMock.findByUserName(username)).thenReturn(Optional.of(user));
 

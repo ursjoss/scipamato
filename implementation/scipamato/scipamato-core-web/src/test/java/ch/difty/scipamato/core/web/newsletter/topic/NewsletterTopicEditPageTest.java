@@ -9,8 +9,8 @@ import org.apache.wicket.markup.repeater.RefreshingView;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.tester.FormTester;
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -24,7 +24,8 @@ import ch.difty.scipamato.core.persistence.OptimisticLockingException;
 import ch.difty.scipamato.core.web.authentication.LogoutPage;
 import ch.difty.scipamato.core.web.common.BasePageTest;
 
-public class NewsletterTopicEditPageTest extends BasePageTest<NewsletterTopicEditPage> {
+@SuppressWarnings("SpellCheckingInspection")
+class NewsletterTopicEditPageTest extends BasePageTest<NewsletterTopicEditPage> {
 
     private NewsletterTopicDefinition ntd;
 
@@ -42,8 +43,8 @@ public class NewsletterTopicEditPageTest extends BasePageTest<NewsletterTopicEdi
         ntd = new NewsletterTopicDefinition(1, "de", 1, ntt_de, ntt_en, ntt_fr);
     }
 
-    @After
-    public void tearDown() {
+    @AfterEach
+    void tearDown() {
         verifyNoMoreInteractions(newsletterTopicServiceMock);
     }
 
@@ -90,7 +91,7 @@ public class NewsletterTopicEditPageTest extends BasePageTest<NewsletterTopicEdi
     }
 
     @Test
-    public void submitting_withSuccessfulServiceCall_addsInfoMsg() {
+    void submitting_withSuccessfulServiceCall_addsInfoMsg() {
         when(newsletterTopicServiceMock.saveOrUpdate(isA(NewsletterTopicDefinition.class))).thenReturn(ntd);
 
         runSubmitTest();
@@ -113,7 +114,7 @@ public class NewsletterTopicEditPageTest extends BasePageTest<NewsletterTopicEdi
     }
 
     @Test
-    public void submitting_withUnsuccessfulServiceCall_addsErrorMsg() {
+    void submitting_withUnsuccessfulServiceCall_addsErrorMsg() {
         when(newsletterTopicServiceMock.saveOrUpdate(isA(NewsletterTopicDefinition.class))).thenReturn(null);
 
         runSubmitTest();
@@ -123,7 +124,7 @@ public class NewsletterTopicEditPageTest extends BasePageTest<NewsletterTopicEdi
     }
 
     @Test
-    public void submitting_withOptimisticLockingException_addsErrorMsg() {
+    void submitting_withOptimisticLockingException_addsErrorMsg() {
         when(newsletterTopicServiceMock.saveOrUpdate(isA(NewsletterTopicDefinition.class))).thenThrow(
             new OptimisticLockingException("tblName", "rcd", OptimisticLockingException.Type.UPDATE));
 
@@ -135,7 +136,7 @@ public class NewsletterTopicEditPageTest extends BasePageTest<NewsletterTopicEdi
     }
 
     @Test
-    public void submitting_withDuplicateKeyException_addsErrorMsg() {
+    void submitting_withDuplicateKeyException_addsErrorMsg() {
         when(newsletterTopicServiceMock.saveOrUpdate(isA(NewsletterTopicDefinition.class))).thenThrow(
             new DuplicateKeyException("some message about duplicate key stuff"));
 
@@ -146,7 +147,7 @@ public class NewsletterTopicEditPageTest extends BasePageTest<NewsletterTopicEdi
     }
 
     @Test
-    public void submitting_withDuplicateKeyException_withNullMsg_addsStandardErrorMsg() {
+    void submitting_withDuplicateKeyException_withNullMsg_addsStandardErrorMsg() {
         //noinspection ConstantConditions
         when(newsletterTopicServiceMock.saveOrUpdate(isA(NewsletterTopicDefinition.class))).thenThrow(
             new DuplicateKeyException(null));
@@ -158,7 +159,7 @@ public class NewsletterTopicEditPageTest extends BasePageTest<NewsletterTopicEdi
     }
 
     @Test
-    public void submitting_withOtherException_addsErrorMsg() {
+    void submitting_withOtherException_addsErrorMsg() {
         when(newsletterTopicServiceMock.saveOrUpdate(isA(NewsletterTopicDefinition.class))).thenThrow(
             new RuntimeException("fooMsg"));
 
@@ -170,7 +171,7 @@ public class NewsletterTopicEditPageTest extends BasePageTest<NewsletterTopicEdi
     }
 
     @Test
-    public void submittingDelete_delegatesDeleteToService() {
+    void submittingDelete_delegatesDeleteToService() {
         when(newsletterTopicServiceMock.delete(anyInt(), anyInt())).thenReturn(newsletterTopicDefinitionDummy);
 
         getTester().startPage(new NewsletterTopicEditPage(Model.of(ntd), null));
@@ -188,7 +189,7 @@ public class NewsletterTopicEditPageTest extends BasePageTest<NewsletterTopicEdi
     }
 
     @Test
-    public void submitting_withForeignKeyConstraintViolationException_addsErrorMsg() {
+    void submitting_withForeignKeyConstraintViolationException_addsErrorMsg() {
         String msg = "...whatever...";
         when(newsletterTopicServiceMock.delete(anyInt(), anyInt())).thenThrow(new DataIntegrityViolationException(msg));
 
@@ -204,7 +205,7 @@ public class NewsletterTopicEditPageTest extends BasePageTest<NewsletterTopicEdi
     }
 
     @Test
-    public void clickingBackButton_withPageWithoutCallingPageRef_forwardsToNewsletterTopicListPage() {
+    void clickingBackButton_withPageWithoutCallingPageRef_forwardsToNewsletterTopicListPage() {
         getTester().startPage(new NewsletterTopicEditPage(Model.of(ntd), null));
 
         FormTester formTester = getTester().newFormTester("form");
@@ -217,7 +218,7 @@ public class NewsletterTopicEditPageTest extends BasePageTest<NewsletterTopicEdi
     }
 
     @Test
-    public void clickingBackButton_withPageWithCallingPageRef_forwardsToThat() {
+    void clickingBackButton_withPageWithCallingPageRef_forwardsToThat() {
         getTester().startPage(
             new NewsletterTopicEditPage(Model.of(ntd), new LogoutPage(new PageParameters()).getPageReference()));
 

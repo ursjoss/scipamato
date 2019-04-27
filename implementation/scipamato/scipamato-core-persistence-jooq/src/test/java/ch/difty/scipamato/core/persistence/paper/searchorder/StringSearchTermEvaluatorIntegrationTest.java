@@ -4,10 +4,12 @@ import static ch.difty.scipamato.core.entity.search.StringSearchTerm.MatchType.*
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-import junitparams.Parameters;
 import org.jooq.Condition;
-import org.junit.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import ch.difty.scipamato.core.entity.search.SearchTerm;
 import ch.difty.scipamato.core.entity.search.SearchTermType;
@@ -18,13 +20,13 @@ import ch.difty.scipamato.core.entity.search.StringSearchTerm.Token;
 /**
  * Test class to integration test the search term and the search term evaluator.
  */
-public class StringSearchTermEvaluatorIntegrationTest extends SearchTermEvaluatorIntegrationTest<StringSearchTerm> {
+@SuppressWarnings("SpellCheckingInspection")
+class StringSearchTermEvaluatorIntegrationTest extends SearchTermEvaluatorIntegrationTest<StringSearchTerm> {
 
-    @SuppressWarnings("unused")
-    private Object[] stringParameters() {
-        return new Object[] {
+    private static Stream<Arguments> stringParameters() {
+        return Stream.of(
             // @formatter:off
-            new Object[] { "foo", "(WORD foo)", concat(
+            Arguments.of( "foo", "(WORD foo)", concat(
                 "lower(cast(fn as varchar)) like ('%' || replace(",
                 "  replace(",
                 "    replace(",
@@ -37,8 +39,8 @@ public class StringSearchTermEvaluatorIntegrationTest extends SearchTermEvaluato
                 "  ), ",
                 "  '_', ",
                 "  '!_'",
-                ") || '%') escape '!'"), CONTAINS },
-            new Object[] { "-foo", "(NOTWORD foo)", concat(
+                ") || '%') escape '!'"), CONTAINS ),
+            Arguments.of( "-foo", "(NOTWORD foo)", concat(
                 "not(lower(cast(fn as varchar)) like ('%' || replace(",
                 "  replace(",
                 "    replace(",
@@ -51,44 +53,44 @@ public class StringSearchTermEvaluatorIntegrationTest extends SearchTermEvaluato
                 "  ), ",
                 "  '_', ",
                 "  '!_'",
-                ") || '%') escape '!')"), CONTAINS },
-            new Object[] {  "\"foo\"",    "(QUOTED foo)", "lower(cast(fn as varchar)) = lower('foo')", EQUALS },
-            new Object[] { "-\"foo\"", "(NOTQUOTED foo)", "lower(cast(fn as varchar)) <> lower('foo')", EQUALS },
-            new Object[] { "=\"foo\"",    "(QUOTED foo)", "lower(cast(fn as varchar)) = lower('foo')", EQUALS },
+                ") || '%') escape '!')"), CONTAINS ),
+            Arguments.of(  "\"foo\"",    "(QUOTED foo)", "lower(cast(fn as varchar)) = lower('foo')", EQUALS ),
+            Arguments.of( "-\"foo\"", "(NOTQUOTED foo)", "lower(cast(fn as varchar)) <> lower('foo')", EQUALS ),
+            Arguments.of( "=\"foo\"",    "(QUOTED foo)", "lower(cast(fn as varchar)) = lower('foo')", EQUALS ),
 
-            new Object[] { "*foo",                "(OPENLEFT %foo)", "lower(cast(fn as varchar)) like lower('%foo')", LIKE },
-            new Object[] { "-*foo",            "(NOTOPENLEFT %foo)", "lower(cast(fn as varchar)) not like lower('%foo')", LIKE },
-            new Object[] { "\"*foo\"",      "(OPENLEFTQUOTED %foo)", "lower(cast(fn as varchar)) like lower('%foo')", LIKE },
-            new Object[] { "-\"*foo\"",  "(NOTOPENLEFTQUOTED %foo)", "lower(cast(fn as varchar)) not like lower('%foo')", LIKE },
+            Arguments.of( "*foo",                "(OPENLEFT %foo)", "lower(cast(fn as varchar)) like lower('%foo')", LIKE ),
+            Arguments.of( "-*foo",            "(NOTOPENLEFT %foo)", "lower(cast(fn as varchar)) not like lower('%foo')", LIKE ),
+            Arguments.of( "\"*foo\"",      "(OPENLEFTQUOTED %foo)", "lower(cast(fn as varchar)) like lower('%foo')", LIKE ),
+            Arguments.of( "-\"*foo\"",  "(NOTOPENLEFTQUOTED %foo)", "lower(cast(fn as varchar)) not like lower('%foo')", LIKE ),
 
-            new Object[] { "*foo*",               "(OPENLEFTRIGHT %foo%)", "lower(cast(fn as varchar)) like lower('%foo%')", LIKE },
-            new Object[] { "-*foo*",           "(NOTOPENLEFTRIGHT %foo%)", "lower(cast(fn as varchar)) not like lower('%foo%')", LIKE },
-            new Object[] { "\"*foo*\"",     "(OPENLEFTRIGHTQUOTED %foo%)", "lower(cast(fn as varchar)) like lower('%foo%')", LIKE },
-            new Object[] { "-\"*foo*\"", "(NOTOPENLEFTRIGHTQUOTED %foo%)", "lower(cast(fn as varchar)) not like lower('%foo%')", LIKE },
+            Arguments.of( "*foo*",               "(OPENLEFTRIGHT %foo%)", "lower(cast(fn as varchar)) like lower('%foo%')", LIKE ),
+            Arguments.of( "-*foo*",           "(NOTOPENLEFTRIGHT %foo%)", "lower(cast(fn as varchar)) not like lower('%foo%')", LIKE ),
+            Arguments.of( "\"*foo*\"",     "(OPENLEFTRIGHTQUOTED %foo%)", "lower(cast(fn as varchar)) like lower('%foo%')", LIKE ),
+            Arguments.of( "-\"*foo*\"", "(NOTOPENLEFTRIGHTQUOTED %foo%)", "lower(cast(fn as varchar)) not like lower('%foo%')", LIKE ),
 
-            new Object[] { "foo*",               "(OPENRIGHT foo%)", "lower(cast(fn as varchar)) like lower('foo%')", LIKE },
-            new Object[] { "-foo*",           "(NOTOPENRIGHT foo%)", "lower(cast(fn as varchar)) not like lower('foo%')", LIKE },
-            new Object[] { "\"foo*\"",     "(OPENRIGHTQUOTED foo%)", "lower(cast(fn as varchar)) like lower('foo%')", LIKE },
-            new Object[] { "-\"foo*\"", "(NOTOPENRIGHTQUOTED foo%)", "lower(cast(fn as varchar)) not like lower('foo%')", LIKE },
+            Arguments.of( "foo*",               "(OPENRIGHT foo%)", "lower(cast(fn as varchar)) like lower('foo%')", LIKE ),
+            Arguments.of( "-foo*",           "(NOTOPENRIGHT foo%)", "lower(cast(fn as varchar)) not like lower('foo%')", LIKE ),
+            Arguments.of( "\"foo*\"",     "(OPENRIGHTQUOTED foo%)", "lower(cast(fn as varchar)) like lower('foo%')", LIKE ),
+            Arguments.of( "-\"foo*\"", "(NOTOPENRIGHTQUOTED foo%)", "lower(cast(fn as varchar)) not like lower('foo%')", LIKE ),
 
-            new Object[] { ">\"\"", "(SOME >\"\")", concat(
+            Arguments.of( ">\"\"", "(SOME >\"\")", concat(
                 "(",
                 "  fn is not null",
                 "  and char_length(cast(fn as varchar)) > 0",
-                ")"), LENGTH },
-            new Object[] { "=\"\"", "(EMPTY =\"\")", concat(
+                ")"), LENGTH ),
+            Arguments.of( "=\"\"", "(EMPTY =\"\")", concat(
                     "(",
                     "  fn is null",
                     "  or char_length(cast(fn as varchar)) = 0",
-                    ")"), LENGTH },
-            new Object[] { "-\"\"", "(RAW -\"\")", "1 = 1", NONE },
+                    ")"), LENGTH ),
+            Arguments.of( "-\"\"", "(RAW -\"\")", "1 = 1", NONE ),
 
-            new Object[] { "s/foo/", "(REGEX foo)", "fn like_regex 'foo'", REGEX },
-            new Object[] { "-s/foo/", "(NOTREGEX foo)", "not(fn like_regex 'foo')", REGEX },
+            Arguments.of( "s/foo/", "(REGEX foo)", "fn like_regex 'foo'", REGEX ),
+            Arguments.of( "-s/foo/", "(NOTREGEX foo)", "not(fn like_regex 'foo')", REGEX ),
 
-            new Object[] { "\"\"", "(RAW \"\")", "1 = 1", NONE },
+            Arguments.of( "\"\"", "(RAW \"\")", "1 = 1", NONE )
             // @formatter:on
-        };
+        );
     }
 
     @Override
@@ -106,9 +108,9 @@ public class StringSearchTermEvaluatorIntegrationTest extends SearchTermEvaluato
         return new StringSearchTermEvaluator();
     }
 
-    @Test
-    @Parameters(method = "stringParameters")
-    public void stringTest(String rawSearchTerm, String tokenString, String condition, MatchType type) {
+    @ParameterizedTest(name = "[{index}] {0} -> {1} [type {3}]")
+    @MethodSource("stringParameters")
+    void stringTest(String rawSearchTerm, String tokenString, String condition, MatchType type) {
         final StringSearchTerm st = makeSearchTerm(rawSearchTerm);
         assertThat(st
             .getTokens()

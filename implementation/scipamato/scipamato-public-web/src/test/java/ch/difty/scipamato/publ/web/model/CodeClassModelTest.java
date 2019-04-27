@@ -8,24 +8,24 @@ import static org.mockito.Mockito.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.publ.entity.CodeClass;
 import ch.difty.scipamato.publ.persistence.api.CodeClassService;
 
-public class CodeClassModelTest extends ModelTest {
+class CodeClassModelTest extends ModelTest {
 
     @MockBean
     private CodeClassService serviceMock;
 
     @Test
-    public void instantiating_withNullLanguageCode_throws() {
+    void instantiating_withNullLanguageCode_throws() {
         assertDegenerateSupplierParameter(() -> new CodeClassModel(null), "languageCode");
     }
 
     @Test
-    public void loading_delegatesToCodeClassService() {
+    void loading_delegatesToCodeClassService() {
         String languageCode = "de";
 
         final List<CodeClass> codeClasses = new ArrayList<>();

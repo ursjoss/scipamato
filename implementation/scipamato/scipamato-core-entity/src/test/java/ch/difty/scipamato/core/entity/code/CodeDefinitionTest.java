@@ -4,12 +4,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Collection;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.common.TestUtils;
 import ch.difty.scipamato.core.entity.CodeClass;
 
-public class CodeDefinitionTest {
+class CodeDefinitionTest {
 
     private final CodeTranslation c_de  = new CodeTranslation(10, "de", "codede2", "kommentar", 1);
     private final CodeTranslation c_de2 = new CodeTranslation(10, "de", "codede2foo", null, 1);
@@ -19,7 +19,7 @@ public class CodeDefinitionTest {
     private CodeClass codeClass = new CodeClass(1, "cc1", "foo");
 
     @Test
-    public void withNoTranslations_unableToEstablishMainName() {
+    void withNoTranslations_unableToEstablishMainName() {
         CodeDefinition code = new CodeDefinition("1A", "de", codeClass, 2, false, 1);
         assertThat(code.getCode()).isEqualTo("1A");
         assertThat(code.getName()).isEqualTo("n.a.");
@@ -33,7 +33,7 @@ public class CodeDefinitionTest {
     }
 
     @Test
-    public void withTranslations_onePerLanguage() {
+    void withTranslations_onePerLanguage() {
         CodeDefinition code = new CodeDefinition("1A", "de", codeClass, 1, true, 1, c_de, c_en, c_fr);
         assertThat(code.getCode()).isEqualTo("1A");
         assertThat(code.getName()).isEqualTo("codede2");
@@ -57,20 +57,20 @@ public class CodeDefinitionTest {
     }
 
     @Test
-    public void canGetTranslationsAsString_withTranslationsIncludingMainTranslation() {
+    void canGetTranslationsAsString_withTranslationsIncludingMainTranslation() {
         CodeDefinition code = new CodeDefinition("1A", "de", codeClass, 1, false, 1, c_de, c_en, c_fr);
         assertThat(code.getTranslationsAsString()).isEqualTo("DE: 'codede2'; EN: 'codeen2'; FR: 'codefr2'");
     }
 
     @Test
-    public void canGetTranslationsAsString_withTranslationsIncludingMainTranslation_withPartialTranslation() {
+    void canGetTranslationsAsString_withTranslationsIncludingMainTranslation_withPartialTranslation() {
         CodeDefinition code = new CodeDefinition("1A", "de", codeClass, 1, false, 1, c_de, c_en,
             new CodeTranslation(12, "fr", null, "remarc", 1));
         assertThat(code.getTranslationsAsString()).isEqualTo("DE: 'codede2'; EN: 'codeen2'; FR: n.a.");
     }
 
     @Test
-    public void modifyTranslation_withMainLanguageTranslationModified_changesMainName_translationName_andSetsModifiedTimestamp() {
+    void modifyTranslation_withMainLanguageTranslationModified_changesMainName_translationName_andSetsModifiedTimestamp() {
         CodeDefinition code = new CodeDefinition("1A", "de", codeClass, 1, false, 1, c_de, c_en, c_fr);
         code.setNameInLanguage("de", "CODE 2");
         assertThat(code.getName()).isEqualTo("CODE 2");
@@ -105,7 +105,7 @@ public class CodeDefinitionTest {
     }
 
     @Test
-    public void modifyTranslation_withNonMainLanguageTranslationModified_keepsMainName_changesTranslationName_andSetsModifiedTimestamp() {
+    void modifyTranslation_withNonMainLanguageTranslationModified_keepsMainName_changesTranslationName_andSetsModifiedTimestamp() {
         CodeDefinition code = new CodeDefinition("1A", "de", codeClass, 1, false, 1, c_de, c_en, c_fr);
         code.setNameInLanguage("fr", "bar");
         assertThat(code.getName()).isEqualTo("codede2");
@@ -124,7 +124,7 @@ public class CodeDefinitionTest {
     }
 
     @Test
-    public void gettingNameInLanguage_withValidLanguages_returnsNames() {
+    void gettingNameInLanguage_withValidLanguages_returnsNames() {
         CodeDefinition code = new CodeDefinition("1A", "de", codeClass, 1, false, 1, c_de, c_en, c_fr);
         assertThat(code.getNameInLanguage("de")).isEqualTo("codede2");
         assertThat(code.getNameInLanguage("en")).isEqualTo("codeen2");
@@ -132,19 +132,19 @@ public class CodeDefinitionTest {
     }
 
     @Test
-    public void gettingNameInLanguage_withInvalidLanguage_returnsNames() {
+    void gettingNameInLanguage_withInvalidLanguage_returnsNames() {
         CodeDefinition code = new CodeDefinition("1A", "de", codeClass, 1, false, 1, c_de, c_en, c_fr);
         assertThat(code.getNameInLanguage("deX")).isNull();
     }
 
     @Test
-    public void gettingNameInLanguage_withNullLanguage_throws() {
+    void gettingNameInLanguage_withNullLanguage_throws() {
         CodeDefinition code = new CodeDefinition("1A", "de", codeClass, 1, false, 1, c_de, c_en, c_fr);
         TestUtils.assertDegenerateSupplierParameter(() -> code.getNameInLanguage(null), "langCode");
     }
 
     @Test
-    public void withTranslations_moreThanOnePerLanguage() {
+    void withTranslations_moreThanOnePerLanguage() {
         CodeDefinition code = new CodeDefinition("1B", "de", codeClass, 1, false, 1, c_de, c_de2, c_en, c_fr);
         assertThat(code.getCode()).isEqualTo("1B");
         assertThat(code.getName()).isEqualTo("codede2");
@@ -166,14 +166,14 @@ public class CodeDefinitionTest {
     }
 
     @Test
-    public void canGetTranslationsAsString_withTranslationsIncludingMainTranslation_withMultipleTranslations() {
+    void canGetTranslationsAsString_withTranslationsIncludingMainTranslation_withMultipleTranslations() {
         CodeDefinition code = new CodeDefinition("1A", "de", codeClass, 1, false, 1, c_de, c_de2, c_en, c_fr);
         assertThat(code.getTranslationsAsString()).isEqualTo(
             "DE: 'codede2','codede2foo'; EN: 'codeen2'; FR: 'codefr2'");
     }
 
     @Test
-    public void modifyTranslation_withMainLanguageTranslationModified_changesMainName_translationName_andSetsModifiedTimestamp_multipleTranslationsPerLanguage() {
+    void modifyTranslation_withMainLanguageTranslationModified_changesMainName_translationName_andSetsModifiedTimestamp_multipleTranslationsPerLanguage() {
         CodeDefinition code = new CodeDefinition("1A", "de", codeClass, 1, false, 1, c_de, c_de2, c_en, c_fr);
         code.setNameInLanguage("de", "Code 2");
         assertThat(code.getName()).isEqualTo("Code 2");
@@ -186,14 +186,14 @@ public class CodeDefinitionTest {
     }
 
     @Test
-    public void assertCodeFields() {
+    void assertCodeFields() {
         assertThat(CodeDefinition.CodeDefinitionFields.values())
             .extracting("name")
             .containsExactly("code", "mainLanguageCode", "codeClass", "sort", "internal", "name");
     }
 
     @Test
-    public void gettingNulSafeId() {
+    void gettingNulSafeId() {
         CodeDefinition code = new CodeDefinition("1A", "de", codeClass, 1, false, 1, c_de, c_de2, c_en, c_fr);
         assertThat(code.getNullSafeId()).isEqualTo("1A");
     }

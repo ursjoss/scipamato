@@ -7,14 +7,14 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.core.sync.jobs.AbstractItemWriterIntegrationTest;
 import ch.difty.scipamato.publ.db.public_.tables.records.NewsletterRecord;
 
 @SuppressWarnings("SameParameterValue")
-public class NewsletterItemWriterIntegrationTest
+class NewsletterItemWriterIntegrationTest
     extends AbstractItemWriterIntegrationTest<PublicNewsletter, NewsletterItemWriter> {
 
     private static final int ID_EXISTING = 1;
@@ -63,8 +63,8 @@ public class NewsletterItemWriterIntegrationTest
             .build();
     }
 
-    @After
-    public void tearDown() {
+    @AfterEach
+    void tearDown() {
         dsl
             .deleteFrom(NEWSLETTER)
             .where(NEWSLETTER.ID.eq(ID_NEW))
@@ -77,7 +77,7 @@ public class NewsletterItemWriterIntegrationTest
     }
 
     @Test
-    public void insertingNewNewsletter_succeeds() {
+    void insertingNewNewsletter_succeeds() {
         int id = newNewsletter.getId();
         assertNewsletterDoesNotExistWith(id);
         assertThat(getWriter().executeUpdate(newNewsletter)).isEqualTo(1);
@@ -101,7 +101,7 @@ public class NewsletterItemWriterIntegrationTest
     }
 
     @Test
-    public void updatingExistingNewsletter_succeeds() {
+    void updatingExistingNewsletter_succeeds() {
         assertThat(getWriter().executeUpdate(existingNewsletter)).isEqualTo(1);
     }
 

@@ -13,13 +13,13 @@ import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.util.tester.WicketTester;
-import org.junit.Before;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.ApplicationContext;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import ch.difty.scipamato.common.DateTimeService;
@@ -28,7 +28,7 @@ import ch.difty.scipamato.common.web.ScipamatoWebSessionFacade;
 import ch.difty.scipamato.publ.ScipamatoPublicApplication;
 
 @SpringBootTest
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SuppressWarnings("SameParameterValue")
 public abstract class WicketTest {
 
@@ -61,11 +61,11 @@ public abstract class WicketTest {
         return dateTimeService;
     }
 
-    public ItemNavigator<Long> getItemNavigator() {
+    protected ItemNavigator<Long> getItemNavigator() {
         return itemNavigatorMock;
     }
 
-    @Before
+    @BeforeEach
     public final void setUp() {
         application.setHeaderResponseDecorator(
             r -> new ResourceAggregator(new JavaScriptFilteredIntoFooterHeaderResponse(r, "footer-container")));

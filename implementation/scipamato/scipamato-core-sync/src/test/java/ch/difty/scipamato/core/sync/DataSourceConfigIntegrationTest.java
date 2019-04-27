@@ -9,18 +9,18 @@ import org.jooq.Configuration;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DataSourceConnectionProvider;
 import org.jooq.impl.DefaultExecuteListenerProvider;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import ch.difty.scipamato.core.sync.launcher.Warner;
 
 @SpringBootTest
-@RunWith(SpringRunner.class)
-public class DataSourceConfigIntegrationTest {
+@ExtendWith(SpringExtension.class)
+class DataSourceConfigIntegrationTest {
 
     @Autowired
     private Configuration coreConfiguration;
@@ -35,17 +35,17 @@ public class DataSourceConfigIntegrationTest {
     private Warner warner;
 
     @Test
-    public void assertJooqSourceConfigIsProperlyWired() throws SQLException {
+    void assertJooqSourceConfigIsProperlyWired() throws SQLException {
         assertConfiguration(coreConfiguration);
     }
 
     @Test
-    public void assertJooqTargetConfigIsProperlyWired() throws SQLException {
+    void assertJooqTargetConfigIsProperlyWired() throws SQLException {
         assertConfiguration(publicConfiguration);
     }
 
     @Test
-    public void assertJooqBatchConfigIsProperlyWired() throws SQLException {
+    void assertJooqBatchConfigIsProperlyWired() throws SQLException {
         assertConfiguration(batchConfiguration);
     }
 
@@ -83,7 +83,7 @@ public class DataSourceConfigIntegrationTest {
     }
 
     @Test
-    public void assertWarner() {
+    void assertWarner() {
         assertThat(warner).isNotNull();
     }
 

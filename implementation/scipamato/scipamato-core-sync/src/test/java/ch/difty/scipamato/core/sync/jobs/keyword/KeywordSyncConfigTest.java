@@ -9,13 +9,13 @@ import java.sql.Timestamp;
 
 import org.jooq.DeleteConditionStep;
 import org.jooq.TableField;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.springframework.batch.core.Job;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import ch.difty.scipamato.core.db.public_.tables.Keyword;
 import ch.difty.scipamato.core.db.public_.tables.KeywordTr;
@@ -23,8 +23,8 @@ import ch.difty.scipamato.core.sync.jobs.SyncConfigTest;
 import ch.difty.scipamato.publ.db.public_.tables.records.KeywordRecord;
 
 @SpringBootTest
-@RunWith(SpringRunner.class)
-public class KeywordSyncConfigTest extends SyncConfigTest<KeywordRecord> {
+@ExtendWith(SpringExtension.class)
+class KeywordSyncConfigTest extends SyncConfigTest<KeywordRecord> {
 
     @Autowired
     private KeywordSyncConfig config;
@@ -70,7 +70,7 @@ public class KeywordSyncConfigTest extends SyncConfigTest<KeywordRecord> {
     }
 
     @Test
-    public void makingEntity() throws SQLException {
+    void makingEntity() throws SQLException {
         ResultSet rs = Mockito.mock(ResultSet.class);
         when(rs.getInt(KeywordTr.KEYWORD_TR.ID.getName())).thenReturn(1);
         when(rs.getInt("KeywordId")).thenReturn(2);

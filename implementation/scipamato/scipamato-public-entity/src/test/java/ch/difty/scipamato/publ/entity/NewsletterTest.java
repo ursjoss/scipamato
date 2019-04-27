@@ -8,9 +8,9 @@ import java.time.LocalDate;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class NewsletterTest extends PublicEntityTest<Newsletter> {
+class NewsletterTest extends PublicEntityTest<Newsletter> {
 
     @Override
     protected Newsletter newEntity() {
@@ -46,7 +46,7 @@ public class NewsletterTest extends PublicEntityTest<Newsletter> {
     }
 
     @Test
-    public void assertEnumFields() {
+    void assertEnumFields() {
         assertThat(Newsletter.NewsletterFields.values())
             .extracting("name")
             .containsExactly("id", "issue", "issueDate", "monthName");

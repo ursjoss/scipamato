@@ -11,7 +11,7 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.protocol.http.mock.MockHttpServletRequest;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.tester.FormTester;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
@@ -24,7 +24,7 @@ import ch.difty.scipamato.core.persistence.OptimisticLockingException.Type;
 import ch.difty.scipamato.core.web.common.SelfUpdatingPageTest;
 import ch.difty.scipamato.core.web.paper.common.PaperPanel;
 
-public class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
+class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
 
     @MockBean
     private AuthorParserFactory authorParserFactoryMock;
@@ -86,7 +86,7 @@ public class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
     }
 
     @Test
-    public void submitting_withNewPaper_addsIdToPaperManager() {
+    void submitting_withNewPaper_addsIdToPaperManager() {
         Long id = 0L;
         when(persistedPaperMock.getId()).thenReturn(id);
         when(paperServiceMock.saveOrUpdate(isA(Paper.class))).thenReturn(persistedPaperMock);
@@ -103,7 +103,7 @@ public class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
     }
 
     @Test
-    public void submitting_withPersistedPaper_doesNotAddsIdToPaperManagerAfterSaving() {
+    void submitting_withPersistedPaper_doesNotAddsIdToPaperManagerAfterSaving() {
         Long id = 1L;
         when(persistedPaperMock.getId()).thenReturn(id);
         when(paperServiceMock.saveOrUpdate(isA(Paper.class))).thenReturn(persistedPaperMock);
@@ -120,7 +120,7 @@ public class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
     }
 
     @Test
-    public void paperFailingValidation_showsAllValidationMessages() {
+    void paperFailingValidation_showsAllValidationMessages() {
         getTester().startPage(makePage());
         applyTestHackWithNestedMultiPartForms();
         getTester().submitForm("contentPanel:form");
@@ -135,7 +135,7 @@ public class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
     }
 
     @Test
-    public void serviceThrowingError() {
+    void serviceThrowingError() {
         when(paperServiceMock.saveOrUpdate(isA(Paper.class))).thenThrow(new RuntimeException("foo"));
 
         getTester().startPage(makePage());
@@ -160,7 +160,7 @@ public class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
     }
 
     @Test
-    public void serviceThrowingOptimisticLockingException() {
+    void serviceThrowingOptimisticLockingException() {
         when(paperServiceMock.saveOrUpdate(isA(Paper.class))).thenThrow(
             new OptimisticLockingException("paper", "rcd", Type.UPDATE));
 
@@ -176,7 +176,7 @@ public class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
     }
 
     @Test
-    public void serviceReturningNullPaperAfterSave_hasErrorMessage() {
+    void serviceReturningNullPaperAfterSave_hasErrorMessage() {
         when(paperServiceMock.saveOrUpdate(isA(Paper.class))).thenReturn(null);
 
         getTester().startPage(makePage());
@@ -191,7 +191,7 @@ public class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
     }
 
     @Test
-    public void defaultModel_containsNaValuesAndCanSubmitWithoutErrors() {
+    void defaultModel_containsNaValuesAndCanSubmitWithoutErrors() {
         when(paperServiceMock.saveOrUpdate(isA(Paper.class))).thenReturn(persistedPaperMock);
         when(paperServiceMock.findLowestFreeNumberStartingFrom(7L)).thenReturn(19L);
 
@@ -216,7 +216,7 @@ public class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
     }
 
     @Test
-    public void eventTest() {
+    void eventTest() {
         when(persistedPaperMock.getId()).thenReturn(3L);
 
         getTester().startPage(makePage());
@@ -228,7 +228,7 @@ public class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
     }
 
     @Test
-    public void canStartPageWithDefaultConstructor() {
+    void canStartPageWithDefaultConstructor() {
         getTester().startPage(new PaperEntryPage(new PageParameters()));
         getTester().assertRenderedPage(PaperEntryPage.class);
     }

@@ -2,9 +2,9 @@ package ch.difty.scipamato.common;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class PropertyUtilsTest extends FinalClassTest<PropertyUtils> {
+class PropertyUtilsTest extends FinalClassTest<PropertyUtils> {
 
     private static final String PROPERTY_KEY = "propertyKey";
 
@@ -22,30 +22,30 @@ public class PropertyUtilsTest extends FinalClassTest<PropertyUtils> {
         PropertyTestEnum.DEFAULT };
 
     @Test
-    public void fromProperty_withNullProperty_resortsToDefaultValue() {
+    void fromProperty_withNullProperty_resortsToDefaultValue() {
         assertThat(PropertyUtils.fromProperty(null, values, PropertyTestEnum.DEFAULT, PROPERTY_KEY)).isEqualTo(
             PropertyTestEnum.DEFAULT);
     }
 
     @Test
-    public void fromProperty_witValues_retunsValue() {
+    void fromProperty_witValues_retunsValue() {
         assertThat(PropertyUtils.fromProperty("VAL2", values, PropertyTestEnum.DEFAULT, PROPERTY_KEY)).isEqualTo(
             PropertyTestEnum.VAL2);
     }
 
     @Test
-    public void fromProperty_withoutValues_returnsDefault() {
+    void fromProperty_withoutValues_returnsDefault() {
         assertThat(PropertyUtils.fromProperty("VAL2", new PropertyTestEnum[] {}, PropertyTestEnum.DEFAULT,
             PROPERTY_KEY)).isEqualTo(PropertyTestEnum.DEFAULT);
     }
 
     @Test
-    public void parseInt_withValidIntString_returnsParsedInt() {
+    void parseInt_withValidIntString_returnsParsedInt() {
         assertThat(PropertyUtils.parseInt("5", "value", 1, PROPERTY_KEY)).isEqualTo(5);
     }
 
     @Test
-    public void parseInt_withInvValidIntString_returnsDefaultValue() {
+    void parseInt_withInvValidIntString_returnsDefaultValue() {
         assertThat(PropertyUtils.parseInt("foo", "value", 1, PROPERTY_KEY)).isEqualTo(1);
     }
 

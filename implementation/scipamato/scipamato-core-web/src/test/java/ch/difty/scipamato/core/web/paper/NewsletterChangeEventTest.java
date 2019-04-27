@@ -5,13 +5,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.class)
-public class NewsletterChangeEventTest {
+@ExtendWith(MockitoExtension.class)
+class NewsletterChangeEventTest {
 
     private NewsletterChangeEvent e;
 
@@ -19,13 +19,13 @@ public class NewsletterChangeEventTest {
     private AjaxRequestTarget targetMock, targetMock2;
 
     @Test
-    public void canRetrieveTarget() {
+    void canRetrieveTarget() {
         e = new NewsletterChangeEvent(targetMock);
         assertThat(e.getTarget()).isEqualTo(targetMock);
     }
 
     @Test
-    public void canOverrideTarget() {
+    void canOverrideTarget() {
         e = new NewsletterChangeEvent(targetMock);
         assertThat(e.getTarget()).isEqualTo(targetMock);
         e.setTarget(targetMock2);
@@ -33,7 +33,7 @@ public class NewsletterChangeEventTest {
     }
 
     @Test
-    public void equals() {
+    void equals() {
         EqualsVerifier
             .forClass(NewsletterChangeEvent.class)
             .withRedefinedSuperclass()

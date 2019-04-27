@@ -2,19 +2,19 @@ package ch.difty.scipamato.publ.web.resources;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class PymJavaScriptResourceReferenceTest {
+class PymJavaScriptResourceReferenceTest {
 
     private static final PymJavaScriptResourceReference REF = PymJavaScriptResourceReference.get();
 
     @Test
-    public void canGetInstance() {
+    void canGetInstance() {
         assertThat(REF).isInstanceOf(PymJavaScriptResourceReference.class);
     }
 
     @Test
-    public void assertResourceName() {
+    void assertResourceName() {
         assertThat(REF.getName()).isEqualTo("js/pym.v1.js");
     }
 }

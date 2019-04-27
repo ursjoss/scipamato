@@ -6,9 +6,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class CodeTest extends PublicEntityTest<Code> {
+class CodeTest extends PublicEntityTest<Code> {
 
     @Override
     protected Code newEntity() {
@@ -49,12 +49,12 @@ public class CodeTest extends PublicEntityTest<Code> {
     }
 
     @Test
-    public void displayValue() {
+    void displayValue() {
         assertThat(getEntity().getDisplayValue()).isEqualTo("name");
     }
 
     @Test
-    public void assertEnumFields() {
+    void assertEnumFields() {
         assertThat(Code.CodeFields.values())
             .extracting("name")
             .containsExactly("codeClassId", "code", "langCode", "name", "comment", "sort", "displayValue");

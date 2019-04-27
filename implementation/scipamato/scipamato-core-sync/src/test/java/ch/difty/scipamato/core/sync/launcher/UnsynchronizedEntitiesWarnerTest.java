@@ -6,35 +6,22 @@ import static org.mockito.Mockito.*;
 import java.util.Collections;
 import java.util.List;
 
-import org.jooq.DSLContext;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import ch.difty.scipamato.common.TestUtils;
 
-@RunWith(MockitoJUnitRunner.class)
-public class UnsynchronizedEntitiesWarnerTest {
-
-    private UnsynchronizedEntitiesWarner warner;
-
-    @Mock
-    private DSLContext jooqCore;
-
-    @Before
-    public void setUp() {
-        warner = new UnsynchronizedEntitiesWarner(jooqCore);
-    }
+@ExtendWith(MockitoExtension.class)
+class UnsynchronizedEntitiesWarnerTest {
 
     @Test
-    public void degenerateConstruction() {
+    void degenerateConstruction() {
         TestUtils.assertDegenerateSupplierParameter(() -> new UnsynchronizedEntitiesWarner(null), "jooqCore");
     }
 
     @Test
-    public void findingUnsynchronizedPapers_withNoRecords_returnsEmptyOptional() {
+    void findingUnsynchronizedPapers_withNoRecords_returnsEmptyOptional() {
         UnsynchronizedEntitiesWarner warnerSpy = spy(UnsynchronizedEntitiesWarner.class);
         doReturn(Collections.emptyList())
             .when(warnerSpy)
@@ -44,7 +31,7 @@ public class UnsynchronizedEntitiesWarnerTest {
     }
 
     @Test
-    public void findingUnsynchronizedPapers_withRecords_returnsResultingMessage() {
+    void findingUnsynchronizedPapers_withRecords_returnsResultingMessage() {
         final List<Long> numbers = List.of(5L, 18L, 3L);
         UnsynchronizedEntitiesWarner warnerSpy = spy(UnsynchronizedEntitiesWarner.class);
         doReturn(numbers)

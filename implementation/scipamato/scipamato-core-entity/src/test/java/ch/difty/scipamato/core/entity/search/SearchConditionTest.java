@@ -9,14 +9,14 @@ import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.common.NullArgumentException;
 import ch.difty.scipamato.common.entity.CodeClassId;
 import ch.difty.scipamato.core.entity.Code;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic;
 
-public class SearchConditionTest {
+class SearchConditionTest {
 
     private static final long   SEARCH_CONDITION_ID = 1;
     private static final String X                   = "x";
@@ -25,7 +25,7 @@ public class SearchConditionTest {
     private final SearchCondition sc2 = new SearchCondition();
 
     @Test
-    public void allStringSearchTerms() {
+    void allStringSearchTerms() {
         sc1.setDoi(X);
         sc1.setPmId(X);
         sc1.setAuthors(X);
@@ -64,7 +64,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void allIntegerSearchTerms() {
+    void allIntegerSearchTerms() {
         sc1.setId("3");
         sc1.setNumber("30");
         sc1.setPublicationYear("2017");
@@ -80,7 +80,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void allBooleanSearchTerms() {
+    void allBooleanSearchTerms() {
         sc1.setFirstAuthorOverridden(true);
         assertThat(sc1.getStringSearchTerms()).isEmpty();
         assertThat(sc1.getIntegerSearchTerms()).isEmpty();
@@ -93,7 +93,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void allAuditSearchTerms() {
+    void allAuditSearchTerms() {
         sc1.setCreatedDisplayValue(X);
         sc1.setModifiedDisplayValue(X + X);
         assertThat(sc1.getStringSearchTerms()).isEmpty();
@@ -105,7 +105,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void id_extensiveTest() {
+    void id_extensiveTest() {
         assertThat(sc1.getId()).isNull();
         assertThat(sc1.getStringSearchTerms()).isEmpty();
         assertThat(sc1.getIntegerSearchTerms()).isEmpty();
@@ -143,7 +143,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void number_extensiveTest() {
+    void number_extensiveTest() {
         assertThat(sc1.getNumber()).isNull();
         assertThat(sc1.getStringSearchTerms()).isEmpty();
         assertThat(sc1.getIntegerSearchTerms()).isEmpty();
@@ -181,7 +181,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void doi_extensiveTest() {
+    void doi_extensiveTest() {
         assertThat(sc1.getDoi()).isNull();
         assertThat(sc1.getStringSearchTerms()).isEmpty();
         assertThat(sc1.getIntegerSearchTerms()).isEmpty();
@@ -221,7 +221,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void pmId() {
+    void pmId() {
         assertThat(sc1.getPmId()).isNull();
         assertThat(sc1.getStringSearchTerms()).isEmpty();
 
@@ -235,7 +235,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void authors() {
+    void authors() {
         assertThat(sc1.getAuthors()).isNull();
         assertThat(sc1.getStringSearchTerms()).isEmpty();
 
@@ -249,7 +249,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void firstAuthor() {
+    void firstAuthor() {
         assertThat(sc1.getFirstAuthor()).isNull();
         assertThat(sc1.getStringSearchTerms()).isEmpty();
 
@@ -263,7 +263,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void firstAuthorOverridden_extensiveTest() {
+    void firstAuthorOverridden_extensiveTest() {
         assertThat(sc1.isFirstAuthorOverridden()).isNull();
         assertThat(sc1.getStringSearchTerms()).isEmpty();
         assertThat(sc1.getIntegerSearchTerms()).isEmpty();
@@ -303,7 +303,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void title() {
+    void title() {
         assertThat(sc1.getTitle()).isNull();
         assertThat(sc1.getStringSearchTerms()).isEmpty();
 
@@ -317,7 +317,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void location() {
+    void location() {
         assertThat(sc1.getLocation()).isNull();
         assertThat(sc1.getStringSearchTerms()).isEmpty();
 
@@ -331,7 +331,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void publicationYear() {
+    void publicationYear() {
         assertThat(sc1.getPublicationYear()).isNull();
         assertThat(sc1.getIntegerSearchTerms()).isEmpty();
 
@@ -345,7 +345,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void goals() {
+    void goals() {
         assertThat(sc1.getGoals()).isNull();
         assertThat(sc1.getStringSearchTerms()).isEmpty();
 
@@ -359,7 +359,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void population() {
+    void population() {
         assertThat(sc1.getPopulation()).isNull();
         assertThat(sc1.getStringSearchTerms()).isEmpty();
 
@@ -373,7 +373,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void populationPlace() {
+    void populationPlace() {
         assertThat(sc1.getPopulationPlace()).isNull();
         assertThat(sc1.getStringSearchTerms()).isEmpty();
 
@@ -387,7 +387,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void populationParticipants() {
+    void populationParticipants() {
         assertThat(sc1.getPopulationParticipants()).isNull();
         assertThat(sc1.getStringSearchTerms()).isEmpty();
 
@@ -401,7 +401,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void populationDuration() {
+    void populationDuration() {
         assertThat(sc1.getPopulationDuration()).isNull();
         assertThat(sc1.getStringSearchTerms()).isEmpty();
 
@@ -415,7 +415,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void exposurePollutant() {
+    void exposurePollutant() {
         assertThat(sc1.getExposurePollutant()).isNull();
         assertThat(sc1.getStringSearchTerms()).isEmpty();
 
@@ -429,7 +429,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void exposureAssessment() {
+    void exposureAssessment() {
         assertThat(sc1.getExposureAssessment()).isNull();
         assertThat(sc1.getStringSearchTerms()).isEmpty();
 
@@ -443,7 +443,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void methods() {
+    void methods() {
         assertThat(sc1.getMethods()).isNull();
         assertThat(sc1.getStringSearchTerms()).isEmpty();
 
@@ -457,7 +457,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void methodStudyDesign() {
+    void methodStudyDesign() {
         assertThat(sc1.getMethodStudyDesign()).isNull();
         assertThat(sc1.getStringSearchTerms()).isEmpty();
 
@@ -471,7 +471,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void methodOutcome() {
+    void methodOutcome() {
         assertThat(sc1.getMethodOutcome()).isNull();
         assertThat(sc1.getStringSearchTerms()).isEmpty();
 
@@ -485,7 +485,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void methodStatistics() {
+    void methodStatistics() {
         assertThat(sc1.getMethodStatistics()).isNull();
         assertThat(sc1.getStringSearchTerms()).isEmpty();
 
@@ -499,7 +499,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void methodConfounders() {
+    void methodConfounders() {
         assertThat(sc1.getMethodConfounders()).isNull();
         assertThat(sc1.getStringSearchTerms()).isEmpty();
 
@@ -513,7 +513,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void result() {
+    void result() {
         assertThat(sc1.getResult()).isNull();
         assertThat(sc1.getStringSearchTerms()).isEmpty();
 
@@ -527,7 +527,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void resultExposureRange() {
+    void resultExposureRange() {
         assertThat(sc1.getResultExposureRange()).isNull();
         assertThat(sc1.getStringSearchTerms()).isEmpty();
 
@@ -541,7 +541,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void resultEffectEstimate() {
+    void resultEffectEstimate() {
         assertThat(sc1.getResultEffectEstimate()).isNull();
         assertThat(sc1.getStringSearchTerms()).isEmpty();
 
@@ -555,7 +555,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void resultMeasuredOutcome() {
+    void resultMeasuredOutcome() {
         assertThat(sc1.getResultMeasuredOutcome()).isNull();
         assertThat(sc1.getStringSearchTerms()).isEmpty();
 
@@ -569,7 +569,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void conclusion() {
+    void conclusion() {
         assertThat(sc1.getConclusion()).isNull();
         assertThat(sc1.getStringSearchTerms()).isEmpty();
 
@@ -583,7 +583,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void comment() {
+    void comment() {
         assertThat(sc1.getComment()).isNull();
         assertThat(sc1.getStringSearchTerms()).isEmpty();
 
@@ -597,7 +597,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void intern() {
+    void intern() {
         assertThat(sc1.getIntern()).isNull();
         assertThat(sc1.getStringSearchTerms()).isEmpty();
 
@@ -611,7 +611,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void originalAbstract() {
+    void originalAbstract() {
         assertThat(sc1.getOriginalAbstract()).isNull();
         assertThat(sc1.getStringSearchTerms()).isEmpty();
 
@@ -625,7 +625,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void mainCodeOfClass1() {
+    void mainCodeOfClass1() {
         assertThat(sc1.getMainCodeOfCodeclass1()).isNull();
         assertThat(sc1.getStringSearchTerms()).isEmpty();
 
@@ -639,7 +639,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void createdDisplayValue() {
+    void createdDisplayValue() {
         assertThat(sc1.getCreatedDisplayValue()).isNull();
         assertThat(sc1.getStringSearchTerms()).isEmpty();
 
@@ -657,7 +657,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void modifiedDisplayValue() {
+    void modifiedDisplayValue() {
         assertThat(sc1.getModifiedDisplayValue()).isNull();
         assertThat(sc1.getStringSearchTerms()).isEmpty();
 
@@ -675,50 +675,50 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void testDisplayValue_withSingleStringSearchTerms_returnsIt() {
+    void testDisplayValue_withSingleStringSearchTerms_returnsIt() {
         sc1.setAuthors("hoops");
         assertThat(sc1.getDisplayValue()).isEqualTo("hoops");
     }
 
     @Test
-    public void testDisplayValue_withTwoStringSearchTerms_joinsThemUsingAnd() {
+    void testDisplayValue_withTwoStringSearchTerms_joinsThemUsingAnd() {
         sc1.setAuthors("rag");
         sc1.setMethodConfounders("bones");
         assertThat(sc1.getDisplayValue()).isEqualTo("rag AND bones");
     }
 
     @Test
-    public void testDisplayValue_forBooleanSearchTermsBeginFalse() {
+    void testDisplayValue_forBooleanSearchTermsBeginFalse() {
         sc1.setFirstAuthorOverridden(false);
         assertThat(sc1.getDisplayValue()).isEqualTo("-firstAuthorOverridden");
     }
 
     @Test
-    public void testDisplayValue_forIntegerSearchTerms() {
+    void testDisplayValue_forIntegerSearchTerms() {
         sc1.setPublicationYear("2017");
         assertThat(sc1.getDisplayValue()).isEqualTo("2017");
     }
 
     @Test
-    public void testDisplayValue_forAuditSearchTermsForAuthorSearch() {
+    void testDisplayValue_forAuditSearchTermsForAuthorSearch() {
         sc1.setCreatedDisplayValue("mkj");
         assertThat(sc1.getDisplayValue()).isEqualTo("mkj");
     }
 
     @Test
-    public void testDisplayValue_forAuditSearchTermsForDateSearch() {
+    void testDisplayValue_forAuditSearchTermsForDateSearch() {
         sc1.setCreatedDisplayValue(">2017-01-23");
         assertThat(sc1.getDisplayValue()).isEqualTo(">2017-01-23");
     }
 
     @Test
-    public void testDisplayValue_forAuditSearchTermsForCombinedSearch() {
+    void testDisplayValue_forAuditSearchTermsForCombinedSearch() {
         sc1.setModifiedDisplayValue("rk >=2017-01-23");
         assertThat(sc1.getDisplayValue()).isEqualTo("rk >=2017-01-23");
     }
 
     @Test
-    public void testDisplayValue_withMultipleSearchTerms_joinsThemAllUsingAND() {
+    void testDisplayValue_withMultipleSearchTerms_joinsThemAllUsingAND() {
         sc1.setAuthors("fooAuth");
         sc1.setMethodStudyDesign("bar");
         sc1.setDoi("baz");
@@ -728,14 +728,14 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void testDisplayValue_withCodesOnly() {
+    void testDisplayValue_withCodesOnly() {
         sc1.addCode(new Code("1F", "C1F", "", false, 1, "CC1", "", 0));
         sc1.addCode(new Code("5H", "C5H", "", false, 5, "CC5", "", 0));
         assertThat(sc1.getDisplayValue()).isEqualTo("1F&5H");
     }
 
     @Test
-    public void testDisplayValue_withSearchTermsAndCodes() {
+    void testDisplayValue_withSearchTermsAndCodes() {
         sc1.setAuthors("foobar");
         sc1.addCode(new Code("1F", "C1F", "", false, 1, "CC1", "", 0));
         sc1.addCode(new Code("5H", "C5H", "", false, 5, "CC5", "", 0));
@@ -743,46 +743,46 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void testDisplayValue_withNewsletterHeadlineOnly() {
+    void testDisplayValue_withNewsletterHeadlineOnly() {
         sc1.setNewsletterHeadline("foo");
         assertThat(sc1.getDisplayValue()).isEqualTo("headline=foo");
     }
 
     @Test
-    public void testDisplayValue_withNewsletterTopicOnly() {
+    void testDisplayValue_withNewsletterTopicOnly() {
         sc1.setNewsletterTopic(new NewsletterTopic(1, "t1"));
         assertThat(sc1.getDisplayValue()).isEqualTo("topic=t1");
     }
 
     @Test
-    public void testDisplayValue_withNewsletterIssueOnly() {
+    void testDisplayValue_withNewsletterIssueOnly() {
         sc1.setNewsletterIssue("2018/06");
         assertThat(sc1.getDisplayValue()).isEqualTo("issue=2018/06");
     }
 
     @Test
-    public void testDisplayValue_withNewsletterHeadlinePlusSomethingElse() {
+    void testDisplayValue_withNewsletterHeadlinePlusSomethingElse() {
         sc1.setAuthors("foobar");
         sc1.setNewsletterHeadline("foo");
         assertThat(sc1.getDisplayValue()).isEqualTo("foobar AND headline=foo");
     }
 
     @Test
-    public void testDisplayValue_withNewsletterTopicPlusSomethingElse() {
+    void testDisplayValue_withNewsletterTopicPlusSomethingElse() {
         sc1.setAuthors("foobar");
         sc1.setNewsletterTopic(new NewsletterTopic(1, "t1"));
         assertThat(sc1.getDisplayValue()).isEqualTo("foobar AND topic=t1");
     }
 
     @Test
-    public void testDisplayValue_withNewsletterIssuePlusSomethingElse() {
+    void testDisplayValue_withNewsletterIssuePlusSomethingElse() {
         sc1.setAuthors("foobar");
         sc1.setNewsletterIssue("2018/04");
         assertThat(sc1.getDisplayValue()).isEqualTo("foobar AND issue=2018/04");
     }
 
     @Test
-    public void testDisplayValue_withAllNewsletterRelatedFields() {
+    void testDisplayValue_withAllNewsletterRelatedFields() {
         sc1.setNewsletterHeadline("foobar");
         sc1.setNewsletterIssue("2018/02");
         sc1.setNewsletterTopic(new NewsletterTopic(10, "t2"));
@@ -790,7 +790,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void testDisplayValue_withTopicWithNullTitle_dirtyWorksAroundWithDisplayingTopicIdInstead() {
+    void testDisplayValue_withTopicWithNullTitle_dirtyWorksAroundWithDisplayingTopicIdInstead() {
         sc1.setNewsletterHeadline("foobar");
         sc1.setNewsletterIssue("2018/02");
         sc1.setNewsletterTopic(new NewsletterTopic(10, null));
@@ -800,14 +800,14 @@ public class SearchConditionTest {
     @SuppressWarnings({ "unlikely-arg-type", "EqualsWithItself", "ConstantConditions", "ObjectEqualsCanBeEquality",
         "EqualsBetweenInconvertibleTypes" })
     @Test
-    public void equalsAndHash1_ofFieldSc() {
+    void equalsAndHash1_ofFieldSc() {
         assertThat(sc1.equals(sc1)).isTrue();
         assertThat(sc1.equals(null)).isFalse();
         assertThat(sc1.equals("")).isFalse();
     }
 
     @Test
-    public void equalsAndHash2_withEmptySearchConditions() {
+    void equalsAndHash2_withEmptySearchConditions() {
         SearchCondition f1 = new SearchCondition();
         SearchCondition f2 = new SearchCondition();
         assertEquality(f1, f2);
@@ -820,7 +820,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void equalsAndHash3_withSingleAttribute() {
+    void equalsAndHash3_withSingleAttribute() {
         SearchCondition f1 = new SearchCondition();
         f1.setAuthors("foo");
         SearchCondition f2 = new SearchCondition();
@@ -829,7 +829,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void equalsAndHash4_withManyAttributes() {
+    void equalsAndHash4_withManyAttributes() {
         SearchCondition f1 = new SearchCondition();
         f1.setAuthors("foo");
         f1.setComment("bar");
@@ -857,7 +857,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void equalsAndHash5_withDifferentSearchConditionIds() {
+    void equalsAndHash5_withDifferentSearchConditionIds() {
         SearchCondition f1 = new SearchCondition();
         f1.setAuthors("foo");
         SearchCondition f2 = new SearchCondition();
@@ -879,7 +879,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void equalsAndHash6_withCreatedDisplayValue() {
+    void equalsAndHash6_withCreatedDisplayValue() {
         SearchCondition f1 = new SearchCondition();
         f1.setCreatedDisplayValue("foo");
         SearchCondition f2 = new SearchCondition();
@@ -896,7 +896,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void equalsAndHash7_withModifiedDisplayValue() {
+    void equalsAndHash7_withModifiedDisplayValue() {
         SearchCondition f1 = new SearchCondition();
         f1.setModifiedDisplayValue("foo");
         SearchCondition f2 = new SearchCondition();
@@ -913,7 +913,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void equalsAndHash8_withDifferentBooleanSearchTerms() {
+    void equalsAndHash8_withDifferentBooleanSearchTerms() {
         SearchCondition f1 = new SearchCondition();
         f1.addSearchTerm(SearchTerm.newBooleanSearchTerm("f1", "false"));
         SearchCondition f2 = new SearchCondition();
@@ -928,7 +928,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void equalsAndHash8_withDifferentIntegerSearchTerms() {
+    void equalsAndHash8_withDifferentIntegerSearchTerms() {
         SearchCondition f1 = new SearchCondition();
         f1.addSearchTerm(SearchTerm.newIntegerSearchTerm("f1", "1"));
         SearchCondition f2 = new SearchCondition();
@@ -937,7 +937,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void equalsAndHash9_withDifferentStringSearchTerms() {
+    void equalsAndHash9_withDifferentStringSearchTerms() {
         SearchCondition f1 = new SearchCondition();
         f1.addSearchTerm(SearchTerm.newStringSearchTerm("f1", "foo"));
         SearchCondition f2 = new SearchCondition();
@@ -946,7 +946,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void equalsAndHash10_withDifferentStringAuditTerms() {
+    void equalsAndHash10_withDifferentStringAuditTerms() {
         SearchCondition f1 = new SearchCondition();
         f1.addSearchTerm(SearchTerm.newAuditSearchTerm("f1", "foo"));
         SearchCondition f2 = new SearchCondition();
@@ -955,7 +955,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void equalsAndHash11_withDifferentCodes() {
+    void equalsAndHash11_withDifferentCodes() {
         SearchCondition f1 = new SearchCondition();
         f1.addCode(new Code("1F", "C1F", "", false, 1, "CC1", "", 0));
         SearchCondition f2 = new SearchCondition();
@@ -964,7 +964,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void equalsAndHash12_withDifferentNewsletterTopics_notDifferent() {
+    void equalsAndHash12_withDifferentNewsletterTopics_notDifferent() {
         SearchCondition f1 = new SearchCondition();
         f1.setNewsletterTopic(new NewsletterTopic(1, "foo"));
         SearchCondition f2 = new SearchCondition();
@@ -973,7 +973,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void equalsAndHash13_withDifferentNewsletterHeadlines_notDifferent() {
+    void equalsAndHash13_withDifferentNewsletterHeadlines_notDifferent() {
         SearchCondition f1 = new SearchCondition();
         f1.setNewsletterHeadline("foo");
         SearchCondition f2 = new SearchCondition();
@@ -982,7 +982,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void equalsAndHash14_withDifferentNewsletterIssue_notDifferent() {
+    void equalsAndHash14_withDifferentNewsletterIssue_notDifferent() {
         SearchCondition f1 = new SearchCondition();
         f1.setNewsletterIssue("foo");
         SearchCondition f2 = new SearchCondition();
@@ -991,7 +991,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void equalsAndHash15_withDifferentNewsletterTopics_firstNull_notDifferent() {
+    void equalsAndHash15_withDifferentNewsletterTopics_firstNull_notDifferent() {
         SearchCondition f1 = new SearchCondition();
         f1.setNewsletterTopic(null);
         SearchCondition f2 = new SearchCondition();
@@ -1000,7 +1000,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void equalsAndHash16_withDifferentNewsletterHeadlines_firstNull_notDifferent() {
+    void equalsAndHash16_withDifferentNewsletterHeadlines_firstNull_notDifferent() {
         SearchCondition f1 = new SearchCondition();
         f1.setNewsletterHeadline(null);
         SearchCondition f2 = new SearchCondition();
@@ -1009,7 +1009,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void equalsAndHash17_withDifferentNewsletterIssue_firstNull_notDifferent() {
+    void equalsAndHash17_withDifferentNewsletterIssue_firstNull_notDifferent() {
         SearchCondition f1 = new SearchCondition();
         f1.setNewsletterIssue(null);
         SearchCondition f2 = new SearchCondition();
@@ -1018,12 +1018,12 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void newSearchCondition_hasEmptyRemovedKeys() {
+    void newSearchCondition_hasEmptyRemovedKeys() {
         assertThat(new SearchCondition().getRemovedKeys()).isEmpty();
     }
 
     @Test
-    public void addingSearchTerms_leavesRemovedKeysEmpty() {
+    void addingSearchTerms_leavesRemovedKeysEmpty() {
         sc2.setAuthors("foo");
         sc2.setPublicationYear("2014");
         sc2.setFirstAuthorOverridden(true);
@@ -1031,7 +1031,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void removingSearchTerms_addsThemToRemovedKeys() {
+    void removingSearchTerms_addsThemToRemovedKeys() {
         sc2.setAuthors("foo");
         sc2.setPublicationYear("2014");
         sc2.setGoals("bar");
@@ -1043,7 +1043,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void addingSearchTerm_afterRemovingIt_removesItFromRemovedKeys() {
+    void addingSearchTerm_afterRemovingIt_removesItFromRemovedKeys() {
         sc2.setPublicationYear("2014");
         sc2.setPublicationYear(null);
         sc2.setPublicationYear("2015");
@@ -1051,7 +1051,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void clearingRemovedKeys_removesAllPresent() {
+    void clearingRemovedKeys_removesAllPresent() {
         sc1.setAuthors("foo");
         sc1.setAuthors(null);
         sc1.setPublicationYear("2014");
@@ -1063,7 +1063,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void addingBooleanSearchTerm() {
+    void addingBooleanSearchTerm() {
         sc2.addSearchTerm(SearchTerm.newBooleanSearchTerm("fn", "rst"));
         assertThat(sc2.getBooleanSearchTerms()).hasSize(1);
         assertThat(sc2.getIntegerSearchTerms()).isEmpty();
@@ -1072,7 +1072,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void addingIntegerTerm() {
+    void addingIntegerTerm() {
         sc2.addSearchTerm(SearchTerm.newIntegerSearchTerm("fn", "1"));
         assertThat(sc2.getBooleanSearchTerms()).isEmpty();
         assertThat(sc2.getIntegerSearchTerms()).hasSize(1);
@@ -1081,7 +1081,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void addingStringSearchTerm() {
+    void addingStringSearchTerm() {
         sc1.addSearchTerm(SearchTerm.newStringSearchTerm("fn", "rst"));
         assertThat(sc1.getBooleanSearchTerms()).isEmpty();
         assertThat(sc1.getIntegerSearchTerms()).isEmpty();
@@ -1090,7 +1090,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void addingAuditSearchTerm() {
+    void addingAuditSearchTerm() {
         sc2.addSearchTerm(SearchTerm.newAuditSearchTerm("fn", "rst"));
         assertThat(sc2.getBooleanSearchTerms()).isEmpty();
         assertThat(sc2.getIntegerSearchTerms()).isEmpty();
@@ -1099,7 +1099,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void addingUnsupportedSearchTerm() {
+    void addingUnsupportedSearchTerm() {
         SearchTerm stMock = mock(SearchTerm.class);
         when(stMock.getSearchTermType()).thenReturn(SearchTermType.UNSUPPORTED);
         try {
@@ -1113,7 +1113,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void addingNullSearchTerm() {
+    void addingNullSearchTerm() {
         try {
             sc2.addSearchTerm(null);
             fail("should have thrown exception");
@@ -1125,7 +1125,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void addingCodes() {
+    void addingCodes() {
         Code c1 = new Code("c1", "c1", "", false, 1, "cc1", "", 0);
         Code c2 = new Code("c2", "c2", "", false, 2, "cc2", "", 0);
         Code c3 = new Code("c3", "c3", "", false, 3, "cc3", "", 0);
@@ -1141,7 +1141,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void settingAndResettingNewsletterHeadline() {
+    void settingAndResettingNewsletterHeadline() {
         assertThat(sc1.getNewsletterHeadline()).isNull();
 
         sc1.setNewsletterHeadline("foo");
@@ -1152,7 +1152,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void settingAndResettingNewsletterTopic() {
+    void settingAndResettingNewsletterTopic() {
         assertThat(sc1.getNewsletterTopicId()).isNull();
 
         sc1.setNewsletterTopic(new NewsletterTopic(1, "tp1"));
@@ -1163,7 +1163,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void settingAndResettingNewsletterIssue() {
+    void settingAndResettingNewsletterIssue() {
         assertThat(sc1.getNewsletterIssue()).isNull();
 
         sc1.setNewsletterIssue("foo");

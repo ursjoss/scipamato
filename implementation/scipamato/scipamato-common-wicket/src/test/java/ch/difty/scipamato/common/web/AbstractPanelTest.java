@@ -9,26 +9,26 @@ import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.StringResourceModel;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class AbstractPanelTest extends WicketBaseTest {
+class AbstractPanelTest extends WicketBaseTest {
 
     @Test
-    public void testViewMode_withOneArgConstructor() {
+    void testViewMode_withOneArgConstructor() {
         assertViewMode(new AbstractPanel<>("panel") {
             private static final long serialVersionUID = 1L;
         });
     }
 
     @Test
-    public void testViewMode_withTwoArgConstructor() {
+    void testViewMode_withTwoArgConstructor() {
         assertViewMode(new AbstractPanel<>("panel", Model.of(new TestRecord(1, "foo"))) {
             private static final long serialVersionUID = 1L;
         });
     }
 
     @Test
-    public void testViewMode_withThreeArgConstructor() {
+    void testViewMode_withThreeArgConstructor() {
         assertViewMode(new AbstractPanel<>("id", Model.of(new TestRecord(1, "foo")), Mode.VIEW) {
             private static final long serialVersionUID = 1L;
         });
@@ -43,7 +43,7 @@ public class AbstractPanelTest extends WicketBaseTest {
     }
 
     @Test
-    public void testEditMode() {
+    void testEditMode() {
         assertEditMode(new AbstractPanel<>("panel", Model.of(new TestRecord(1, "foo")), Mode.EDIT) {
             private static final long serialVersionUID = 1L;
         });
@@ -58,7 +58,7 @@ public class AbstractPanelTest extends WicketBaseTest {
     }
 
     @Test
-    public void testSearchMode() {
+    void testSearchMode() {
         assertSearchMode(new AbstractPanel<>("panel", Model.of(new TestRecord(1, "foo")), Mode.SEARCH) {
             private static final long serialVersionUID = 1L;
         });
@@ -73,7 +73,7 @@ public class AbstractPanelTest extends WicketBaseTest {
     }
 
     @Test
-    public void assertTestAbstractPanel_inViewMode() {
+    void assertTestAbstractPanel_inViewMode() {
         getTester().startComponentInPage(new TestAbstractPanel("panel", Mode.VIEW));
         assertComponents();
     }
@@ -88,7 +88,7 @@ public class AbstractPanelTest extends WicketBaseTest {
     }
 
     @Test
-    public void queuingFieldAndLabel_withPropertyValidatorInEditMode_addsLatterToComponent() {
+    void queuingFieldAndLabel_withPropertyValidatorInEditMode_addsLatterToComponent() {
         FormComponent<?> fc = mock(FormComponent.class);
         when(fc.getId()).thenReturn("fcId");
         PropertyValidator<?> pv = mock(PropertyValidator.class);
@@ -103,7 +103,7 @@ public class AbstractPanelTest extends WicketBaseTest {
     }
 
     @Test
-    public void queuingFieldAndLabel_withPropertyValidatorInViewMode_addsNothingToComponent() {
+    void queuingFieldAndLabel_withPropertyValidatorInViewMode_addsNothingToComponent() {
         FormComponent<?> fc = mock(FormComponent.class);
         when(fc.getId()).thenReturn("fcId");
         PropertyValidator<?> pv = mock(PropertyValidator.class);
@@ -118,7 +118,7 @@ public class AbstractPanelTest extends WicketBaseTest {
     }
 
     @Test
-    public void queuingFieldAndLabel_withNullPropertyValidator_addsNothingToComponent() {
+    void queuingFieldAndLabel_withNullPropertyValidator_addsNothingToComponent() {
         FormComponent<?> fc = mock(FormComponent.class);
         when(fc.getId()).thenReturn("fcId");
 

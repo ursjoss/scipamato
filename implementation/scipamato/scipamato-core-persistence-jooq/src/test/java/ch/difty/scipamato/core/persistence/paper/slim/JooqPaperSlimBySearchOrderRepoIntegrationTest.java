@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
@@ -14,13 +14,13 @@ import ch.difty.scipamato.core.entity.search.SearchCondition;
 import ch.difty.scipamato.core.entity.search.SearchOrder;
 import ch.difty.scipamato.core.persistence.JooqBaseIntegrationTest;
 
-public class JooqPaperSlimBySearchOrderRepoIntegrationTest extends JooqBaseIntegrationTest {
+class JooqPaperSlimBySearchOrderRepoIntegrationTest extends JooqBaseIntegrationTest {
 
     @Autowired
     private JooqPaperSlimBySearchOrderRepo repo;
 
     @Test
-    public void finding() {
+    void finding() {
         SearchOrder so = new SearchOrder();
         so.setGlobal(true);
 
@@ -29,7 +29,7 @@ public class JooqPaperSlimBySearchOrderRepoIntegrationTest extends JooqBaseInteg
     }
 
     @Test
-    public void findingPaged_withNonMatchingCondition_findsNoRecords() {
+    void findingPaged_withNonMatchingCondition_findsNoRecords() {
         SearchOrder so = new SearchOrder();
         so.setGlobal(true);
 
@@ -40,7 +40,7 @@ public class JooqPaperSlimBySearchOrderRepoIntegrationTest extends JooqBaseInteg
     }
 
     @Test
-    public void findingPaged_withMatchingSearchCondition() {
+    void findingPaged_withMatchingSearchCondition() {
         SearchOrder so = new SearchOrder();
         SearchCondition sc = new SearchCondition();
         sc.setAuthors("Turner");
@@ -53,7 +53,7 @@ public class JooqPaperSlimBySearchOrderRepoIntegrationTest extends JooqBaseInteg
     }
 
     @Test
-    public void counting() {
+    void counting() {
         SearchOrder so = new SearchOrder();
         so.setGlobal(true);
 

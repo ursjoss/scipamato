@@ -10,8 +10,8 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDef
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.util.tester.FormTester;
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationRequest;
@@ -22,7 +22,7 @@ import ch.difty.scipamato.core.persistence.KeywordService;
 import ch.difty.scipamato.core.web.common.BasePageTest;
 
 @SuppressWarnings("SameParameterValue")
-public class KeywordListPageTest extends BasePageTest<KeywordListPage> {
+class KeywordListPageTest extends BasePageTest<KeywordListPage> {
 
     private static final int COLUMN_ID_WITH_LINK = 1;
 
@@ -50,8 +50,8 @@ public class KeywordListPageTest extends BasePageTest<KeywordListPage> {
             isA(PaginationRequest.class))).thenReturn(results.iterator());
     }
 
-    @After
-    public void tearDown() {
+    @AfterEach
+    void tearDown() {
         verifyNoMoreInteractions(keywordServiceMock);
     }
 
@@ -107,7 +107,7 @@ public class KeywordListPageTest extends BasePageTest<KeywordListPage> {
     }
 
     @Test
-    public void clickingOnKeywordTitle_forwardsToKeywordEditPage_withModelLoaded() {
+    void clickingOnKeywordTitle_forwardsToKeywordEditPage_withModelLoaded() {
         getTester().startPage(getPageClass());
 
         getTester().clickLink("resultPanel:results:body:rows:1:cells:" + COLUMN_ID_WITH_LINK + ":cell:link");
@@ -123,7 +123,7 @@ public class KeywordListPageTest extends BasePageTest<KeywordListPage> {
     }
 
     @Test
-    public void clickingNewKeyword_forwardsToKeywordEditPage() {
+    void clickingNewKeyword_forwardsToKeywordEditPage() {
         KeywordTranslation kt_en = new KeywordTranslation(1, "en", "kt_en", 1);
         KeywordDefinition kd = new KeywordDefinition(1, "en", 1, kt_en);
         when(keywordServiceMock.newUnpersistedKeywordDefinition()).thenReturn(kd);

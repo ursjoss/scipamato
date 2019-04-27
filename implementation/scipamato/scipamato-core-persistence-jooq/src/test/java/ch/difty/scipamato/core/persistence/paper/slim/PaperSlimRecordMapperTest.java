@@ -10,7 +10,7 @@ import ch.difty.scipamato.core.db.tables.records.PaperRecord;
 import ch.difty.scipamato.core.entity.projection.PaperSlim;
 import ch.difty.scipamato.core.persistence.RecordMapperTest;
 
-public class PaperSlimRecordMapperTest extends RecordMapperTest<PaperRecord, PaperSlim> {
+class PaperSlimRecordMapperTest extends RecordMapperTest<PaperRecord, PaperSlim> {
 
     public static void entityFixtureWithoutIdFields(PaperSlim entity) {
         when(entity.getNumber()).thenReturn(NUMBER);

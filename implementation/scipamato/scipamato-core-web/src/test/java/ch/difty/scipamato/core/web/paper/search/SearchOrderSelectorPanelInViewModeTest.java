@@ -4,13 +4,12 @@ import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.common.web.Mode;
 import ch.difty.scipamato.core.entity.search.SearchOrder;
 
-@SuppressWarnings("ResultOfMethodCallIgnored")
-public class SearchOrderSelectorPanelInViewModeTest extends SearchOrderSelectorPanelTest {
+class SearchOrderSelectorPanelInViewModeTest extends SearchOrderSelectorPanelTest {
 
     @Override
     Mode getMode() {
@@ -18,7 +17,7 @@ public class SearchOrderSelectorPanelInViewModeTest extends SearchOrderSelectorP
     }
 
     @Test
-    public void withGlobalSearchOrders_withSameOwner_globalCheckBox_disabled() {
+    void withGlobalSearchOrders_withSameOwner_globalCheckBox_disabled() {
         when(searchOrderMock.getName()).thenReturn(VALID_NAME);
         when(searchOrderMock.getOwner()).thenReturn(OWNER_ID);
         getTester().startComponentInPage(makePanel());
@@ -27,7 +26,7 @@ public class SearchOrderSelectorPanelInViewModeTest extends SearchOrderSelectorP
     }
 
     @Test
-    public void withGlobalSearchOrders_withOtherOwner_globalCheckBox_disabled() {
+    void withGlobalSearchOrders_withOtherOwner_globalCheckBox_disabled() {
         when(searchOrderMock.getName()).thenReturn(VALID_NAME);
         when(searchOrderMock.getOwner()).thenReturn(OWNER_ID + 1);
         getTester().startComponentInPage(makePanel());
@@ -36,7 +35,7 @@ public class SearchOrderSelectorPanelInViewModeTest extends SearchOrderSelectorP
     }
 
     @Test
-    public void changingName_forGlobalNotSelfOwnedSearch_disablesName() {
+    void changingName_forGlobalNotSelfOwnedSearch_disablesName() {
         when(searchOrderMock.getName()).thenReturn(VALID_NAME);
         when(searchOrderMock.isGlobal()).thenReturn(true);
         when(searchOrderMock.getOwner()).thenReturn(OWNER_ID + 1);
@@ -49,7 +48,7 @@ public class SearchOrderSelectorPanelInViewModeTest extends SearchOrderSelectorP
     }
 
     @Test
-    public void changingName_forGlobalSelfOwnedSearch_disablesName() {
+    void changingName_forGlobalSelfOwnedSearch_disablesName() {
         when(searchOrderMock.getName()).thenReturn(VALID_NAME);
         when(searchOrderMock.isGlobal()).thenReturn(true);
         when(searchOrderMock.getOwner()).thenReturn(OWNER_ID);
@@ -57,7 +56,7 @@ public class SearchOrderSelectorPanelInViewModeTest extends SearchOrderSelectorP
     }
 
     @Test
-    public void changingName_forNotGlobalNotSelfOwnedSearch_disablesName() {
+    void changingName_forNotGlobalNotSelfOwnedSearch_disablesName() {
         when(searchOrderMock.getName()).thenReturn(VALID_NAME);
         when(searchOrderMock.isGlobal()).thenReturn(false);
         when(searchOrderMock.getOwner()).thenReturn(OWNER_ID + 1);
@@ -65,7 +64,7 @@ public class SearchOrderSelectorPanelInViewModeTest extends SearchOrderSelectorP
     }
 
     @Test
-    public void changingName_forNotGlobalSelfOwnedSearch_doesAddTargetAndSaves() {
+    void changingName_forNotGlobalSelfOwnedSearch_doesAddTargetAndSaves() {
         when(searchOrderMock.getName()).thenReturn(VALID_NAME);
         when(searchOrderMock.isGlobal()).thenReturn(false);
         when(searchOrderMock.getOwner()).thenReturn(OWNER_ID);

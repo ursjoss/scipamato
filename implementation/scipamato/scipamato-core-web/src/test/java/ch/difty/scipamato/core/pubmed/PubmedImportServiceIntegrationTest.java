@@ -6,21 +6,21 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import ch.difty.scipamato.common.TestUtils;
 import ch.difty.scipamato.core.persistence.PaperService;
 import ch.difty.scipamato.core.persistence.ServiceResult;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest
 @ActiveProfiles({ "test" })
-public class PubmedImportServiceIntegrationTest {
+class PubmedImportServiceIntegrationTest {
 
     private static final String XML = "xml/pubmed_result_3studies.xml";
 
@@ -35,7 +35,7 @@ public class PubmedImportServiceIntegrationTest {
     private PaperService paperService;
 
     @Test
-    public void canReadXmlFile_whichHas3Studies() throws IOException {
+    void canReadXmlFile_whichHas3Studies() throws IOException {
         final String xml = TestUtils.readFileAsString(XML);
         assertThat(xml)
             .startsWith("<?xml version")
@@ -46,7 +46,7 @@ public class PubmedImportServiceIntegrationTest {
     }
 
     @Test
-    public void test() throws IOException {
+    void test() throws IOException {
         final String xml = TestUtils.readFileAsString(XML);
 
         final ServiceResult result = importer.persistPubmedArticlesFromXml(xml);

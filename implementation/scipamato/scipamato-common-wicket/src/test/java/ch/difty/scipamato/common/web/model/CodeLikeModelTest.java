@@ -7,18 +7,18 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import ch.difty.scipamato.common.entity.CodeClassId;
 import ch.difty.scipamato.common.entity.CodeLike;
 import ch.difty.scipamato.common.persistence.CodeLikeService;
 
-@RunWith(MockitoJUnitRunner.class)
-public class CodeLikeModelTest {
+@ExtendWith(MockitoExtension.class)
+class CodeLikeModelTest {
 
     private static final String      LANG_CODE = "en";
     private static final CodeClassId CC_ID     = CodeClassId.CC1;
@@ -33,8 +33,8 @@ public class CodeLikeModelTest {
     @Mock
     private CodeLikeService<CodeLike> serviceMock;
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
         model = new CodeLikeModel<>(CC_ID, LANG_CODE, serviceMock) {
             private static final long serialVersionUID = 1L;
 
@@ -46,22 +46,21 @@ public class CodeLikeModelTest {
 
         ccls.add(cclMock);
         ccls.add(cclMock);
-
-        when(serviceMock.findCodesOfClass(CC_ID, LANG_CODE)).thenReturn(ccls);
     }
 
     @Test
-    public void canGetCodeClass() {
+    void canGetCodeClass() {
         assertThat(model.getCodeClassId()).isEqualTo(CC_ID);
     }
 
     @Test
-    public void canGetLanguageCode() {
+    void canGetLanguageCode() {
         assertThat(model.getLanguageCode()).isEqualTo(LANG_CODE);
     }
 
     @Test
-    public void modelObject_gotCodeClassesFromService() {
+    void modelObject_gotCodeClassesFromService() {
+        when(serviceMock.findCodesOfClass(CC_ID, LANG_CODE)).thenReturn(ccls);
         assertThat(model.getObject()).containsExactly(cclMock, cclMock);
         verify(serviceMock).findCodesOfClass(CC_ID, LANG_CODE);
     }

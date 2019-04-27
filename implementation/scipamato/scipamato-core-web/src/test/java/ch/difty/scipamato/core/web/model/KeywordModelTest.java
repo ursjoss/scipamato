@@ -7,24 +7,24 @@ import static org.mockito.Mockito.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.core.entity.keyword.Keyword;
 import ch.difty.scipamato.core.persistence.KeywordService;
 
-public class KeywordModelTest extends ModelTest {
+class KeywordModelTest extends ModelTest {
 
     @MockBean
     private KeywordService serviceMock;
 
     @Test
-    public void instantiating_withNullLanguageCode_throws() {
+    void instantiating_withNullLanguageCode_throws() {
         assertDegenerateSupplierParameter(() -> new KeywordModel(null), "languageCode");
     }
 
     @Test
-    public void loading_delegatesToKeywordService() {
+    void loading_delegatesToKeywordService() {
         String languageCode = "de";
 
         final List<Keyword> topics = new ArrayList<>();

@@ -4,14 +4,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class CodeClassFilterTest {
+class CodeClassFilterTest {
 
     private final CodeClassFilter f = new CodeClassFilter();
 
     @Test
-    public void getAndSet() {
+    void getAndSet() {
         f.setNameMask("nameMask");
         f.setDescriptionMask("descriptionMask");
 
@@ -22,7 +22,7 @@ public class CodeClassFilterTest {
     }
 
     @Test
-    public void equals() {
+    void equals() {
         EqualsVerifier
             .forClass(CodeClassFilter.class)
             .withRedefinedSuperclass()
@@ -31,7 +31,7 @@ public class CodeClassFilterTest {
     }
 
     @Test
-    public void assertEnumFields() {
+    void assertEnumFields() {
         assertThat(CodeClassFilter.CodeClassFilterFields.values())
             .extracting("name")
             .containsExactly("nameMask", "descriptionMask");

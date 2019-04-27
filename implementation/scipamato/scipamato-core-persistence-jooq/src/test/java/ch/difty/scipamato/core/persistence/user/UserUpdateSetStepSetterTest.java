@@ -12,7 +12,7 @@ import ch.difty.scipamato.core.persistence.UpdateSetStepSetter;
 import ch.difty.scipamato.core.persistence.UpdateSetStepSetterTest;
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
-public class UserUpdateSetStepSetterTest extends UpdateSetStepSetterTest<ScipamatoUserRecord, User> {
+class UserUpdateSetStepSetterTest extends UpdateSetStepSetterTest<ScipamatoUserRecord, User> {
 
     private final UpdateSetStepSetter<ScipamatoUserRecord, User> setter = new UserUpdateSetStepSetter();
 
@@ -41,20 +41,40 @@ public class UserUpdateSetStepSetterTest extends UpdateSetStepSetterTest<Scipama
 
     @Override
     protected void stepSetFixtureExceptAudit() {
-        when(getStep().set(SCIPAMATO_USER.USER_NAME, USER_NAME)).thenReturn(getMoreStep());
-        when(getMoreStep().set(SCIPAMATO_USER.FIRST_NAME, FIRST_NAME)).thenReturn(getMoreStep());
-        when(getMoreStep().set(SCIPAMATO_USER.LAST_NAME, LAST_NAME)).thenReturn(getMoreStep());
-        when(getMoreStep().set(SCIPAMATO_USER.EMAIL, EMAIL)).thenReturn(getMoreStep());
-        when(getMoreStep().set(SCIPAMATO_USER.ENABLED, ENABLED)).thenReturn(getMoreStep());
+        doReturn(getMoreStep())
+            .when(getStep())
+            .set(SCIPAMATO_USER.USER_NAME, USER_NAME);
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(SCIPAMATO_USER.FIRST_NAME, FIRST_NAME);
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(SCIPAMATO_USER.LAST_NAME, LAST_NAME);
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(SCIPAMATO_USER.EMAIL, EMAIL);
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(SCIPAMATO_USER.ENABLED, ENABLED);
     }
 
     @Override
     protected void stepSetFixtureAudit() {
-        when(getMoreStep().set(SCIPAMATO_USER.CREATED, CREATED)).thenReturn(getMoreStep());
-        when(getMoreStep().set(SCIPAMATO_USER.CREATED_BY, CREATED_BY)).thenReturn(getMoreStep());
-        when(getMoreStep().set(SCIPAMATO_USER.LAST_MODIFIED, LAST_MOD)).thenReturn(getMoreStep());
-        when(getMoreStep().set(SCIPAMATO_USER.LAST_MODIFIED_BY, LAST_MOD_BY)).thenReturn(getMoreStep());
-        when(getMoreStep().set(SCIPAMATO_USER.PASSWORD, PASSWORD)).thenReturn(getMoreStep());
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(SCIPAMATO_USER.CREATED, CREATED);
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(SCIPAMATO_USER.CREATED_BY, CREATED_BY);
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(SCIPAMATO_USER.LAST_MODIFIED, LAST_MOD);
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(SCIPAMATO_USER.LAST_MODIFIED_BY, LAST_MOD_BY);
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(SCIPAMATO_USER.PASSWORD, PASSWORD);
     }
 
     @Override

@@ -12,8 +12,8 @@ import java.util.Set;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
 import org.apache.bval.jsr.ApacheValidationProvider;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 import ch.difty.scipamato.common.entity.FieldEnumType;
@@ -29,15 +29,15 @@ public abstract class Jsr303ValidatedEntityTest<T extends CoreEntity> {
         this.clazz = clazz;
     }
 
-    @Before
-    public final void setUp() {
+    @BeforeEach
+    final void setUp() {
         validatorFactoryBean = new LocalValidatorFactoryBean();
         validatorFactoryBean.setProviderClass(ApacheValidationProvider.class);
         validatorFactoryBean.afterPropertiesSet();
     }
 
     @Test
-    public void assertCompleteEntityPassesValidation() {
+    void assertCompleteEntityPassesValidation() {
         verifySuccessfulValidation(newValidEntity());
     }
 
@@ -97,7 +97,7 @@ public abstract class Jsr303ValidatedEntityTest<T extends CoreEntity> {
     }
 
     @Test
-    public void toString_isMinimal() {
+    void toString_isMinimal() {
         final T entity = newValidEntity();
         assertThat(entity.toString()).isEqualTo(getToString());
     }
@@ -108,7 +108,7 @@ public abstract class Jsr303ValidatedEntityTest<T extends CoreEntity> {
     protected abstract String getToString();
 
     @Test
-    public void displayValue_isEqualTo() {
+    void displayValue_isEqualTo() {
         final T entity = newValidEntity();
         assertThat(entity.getDisplayValue()).isEqualTo(getDisplayValue());
     }
@@ -119,7 +119,7 @@ public abstract class Jsr303ValidatedEntityTest<T extends CoreEntity> {
     protected abstract String getDisplayValue();
 
     @Test
-    public void verifyEquals() {
+    void verifyEquals() {
         EqualsVerifier
             .forClass(clazz)
             .withRedefinedSuperclass()

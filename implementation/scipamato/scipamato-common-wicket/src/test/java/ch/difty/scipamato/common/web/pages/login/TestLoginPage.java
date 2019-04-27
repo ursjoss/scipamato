@@ -7,7 +7,6 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 public class TestLoginPage extends AbstractLoginPage<TestLoginPage> {
     private static final long serialVersionUID = 1L;
 
-    @SuppressWarnings("WeakerAccess")
     public TestLoginPage(PageParameters parameters) {
         super(parameters);
     }

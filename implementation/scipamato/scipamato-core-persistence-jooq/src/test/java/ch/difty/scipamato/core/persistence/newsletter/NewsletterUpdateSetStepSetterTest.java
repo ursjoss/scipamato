@@ -14,7 +14,7 @@ import ch.difty.scipamato.core.persistence.UpdateSetStepSetter;
 import ch.difty.scipamato.core.persistence.UpdateSetStepSetterTest;
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
-public class NewsletterUpdateSetStepSetterTest extends UpdateSetStepSetterTest<NewsletterRecord, Newsletter> {
+class NewsletterUpdateSetStepSetterTest extends UpdateSetStepSetterTest<NewsletterRecord, Newsletter> {
 
     private final UpdateSetStepSetter<NewsletterRecord, Newsletter> setter = new NewsletterUpdateSetStepSetter();
 
@@ -43,18 +43,34 @@ public class NewsletterUpdateSetStepSetterTest extends UpdateSetStepSetterTest<N
 
     @Override
     protected void stepSetFixtureExceptAudit() {
-        when(getStep().set(NEWSLETTER.ISSUE, ISSUE)).thenReturn(getMoreStep());
-        when(getMoreStep().set(NEWSLETTER.ISSUE_DATE, Date.valueOf(ISSUE_DATE))).thenReturn(getMoreStep());
-        when(getMoreStep().set(NEWSLETTER.PUBLICATION_STATUS, PUBLICATION_STATUS.getId())).thenReturn(getMoreStep());
+        doReturn(getMoreStep())
+            .when(getStep())
+            .set(NEWSLETTER.ISSUE, ISSUE);
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(NEWSLETTER.ISSUE_DATE, Date.valueOf(ISSUE_DATE));
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(NEWSLETTER.PUBLICATION_STATUS, PUBLICATION_STATUS.getId());
     }
 
     @Override
     protected void stepSetFixtureAudit() {
-        when(getMoreStep().set(NEWSLETTER.CREATED, CREATED)).thenReturn(getMoreStep());
-        when(getMoreStep().set(NEWSLETTER.CREATED_BY, CREATED_BY)).thenReturn(getMoreStep());
-        when(getMoreStep().set(NEWSLETTER.LAST_MODIFIED, LAST_MOD)).thenReturn(getMoreStep());
-        when(getMoreStep().set(NEWSLETTER.LAST_MODIFIED_BY, LAST_MOD_BY)).thenReturn(getMoreStep());
-        when(getMoreStep().set(NEWSLETTER.VERSION, VERSION + 1)).thenReturn(getMoreStep());
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(NEWSLETTER.CREATED, CREATED);
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(NEWSLETTER.CREATED_BY, CREATED_BY);
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(NEWSLETTER.LAST_MODIFIED, LAST_MOD);
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(NEWSLETTER.LAST_MODIFIED_BY, LAST_MOD_BY);
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(NEWSLETTER.VERSION, VERSION + 1);
     }
 
     @Override

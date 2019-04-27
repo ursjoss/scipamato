@@ -7,17 +7,17 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import ch.difty.scipamato.common.entity.CodeClassLike;
 import ch.difty.scipamato.common.persistence.CodeClassLikeService;
 
-@RunWith(MockitoJUnitRunner.class)
-public class CodeClassLikeModelTest {
+@ExtendWith(MockitoExtension.class)
+class CodeClassLikeModelTest {
 
     private static final String LANG_CODE = "en";
 
@@ -31,8 +31,8 @@ public class CodeClassLikeModelTest {
     @Mock
     private CodeClassLikeService<CodeClassLike> serviceMock;
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
         model = new CodeClassLikeModel<>(LANG_CODE, serviceMock) {
             private static final long serialVersionUID = 1L;
 
@@ -44,12 +44,11 @@ public class CodeClassLikeModelTest {
 
         ccls.add(cclMock);
         ccls.add(cclMock);
-
-        when(serviceMock.find(LANG_CODE)).thenReturn(ccls);
     }
 
     @Test
-    public void modelObject_gotCodeClassesFromService() {
+    void modelObject_gotCodeClassesFromService() {
+        when(serviceMock.find(LANG_CODE)).thenReturn(ccls);
         assertThat(model.getObject()).containsExactly(cclMock, cclMock);
         verify(serviceMock).find(LANG_CODE);
     }

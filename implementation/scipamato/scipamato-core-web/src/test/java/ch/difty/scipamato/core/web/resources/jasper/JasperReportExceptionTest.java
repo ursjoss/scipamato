@@ -4,21 +4,21 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import net.sf.jasperreports.engine.JRException;
 import org.apache.wicket.util.resource.ResourceStreamNotFoundException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class JasperReportExceptionTest {
+class JasperReportExceptionTest {
 
     private JasperReportException exception;
 
     @Test
-    public void makeJasperReportExceptionWithJRException() {
+    void makeJasperReportExceptionWithJRException() {
         final JRException e = new JRException("foo");
         exception = new JasperReportException(e);
         assertThat(exception.getMessage()).isEqualTo("net.sf.jasperreports.engine.JRException: foo");
     }
 
     @Test
-    public void makeJasperReportExceptionWithResourceStreamNotFoundException() {
+    void makeJasperReportExceptionWithResourceStreamNotFoundException() {
         final ResourceStreamNotFoundException e = new ResourceStreamNotFoundException("foo");
         exception = new JasperReportException(e);
         assertThat(exception.getMessage()).isEqualTo(
@@ -26,7 +26,7 @@ public class JasperReportExceptionTest {
     }
 
     @Test
-    public void makeJasperReportException_withStringMessage() {
+    void makeJasperReportException_withStringMessage() {
         exception = new JasperReportException("foo");
         assertThat(exception.getMessage()).isEqualTo("foo");
     }

@@ -11,12 +11,12 @@ import io.undertow.Undertow;
 import io.undertow.Undertow.Builder;
 import io.undertow.Undertow.ListenerInfo;
 import io.undertow.servlet.api.*;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.web.embedded.undertow.UndertowBuilderCustomizer;
 import org.springframework.boot.web.embedded.undertow.UndertowDeploymentInfoCustomizer;
@@ -33,8 +33,8 @@ import ch.difty.scipamato.common.config.ApplicationProperties;
  *
  * @author u.joss
  */
-@RunWith(MockitoJUnitRunner.class)
-public class UndertowConfigTest {
+@ExtendWith(MockitoExtension.class)
+class UndertowConfigTest {
 
     private UndertowServletWebServerFactory factory;
 
@@ -46,14 +46,14 @@ public class UndertowConfigTest {
     private final Builder        undertowBuilder = Undertow.builder();
     private final DeploymentInfo deploymentInfo  = new DeploymentInfo();
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
         UndertowConfig config = new UndertowConfig(serverPropsMock, scipamatoPropertiesMock);
         factory = (UndertowServletWebServerFactory) config.undertow();
     }
 
-    @After
-    public void tearDown() {
+    @AfterEach
+    void tearDown() {
         verify(scipamatoPropertiesMock).getRedirectFromPort();
         verify(serverPropsMock).getPort();
 
@@ -61,7 +61,7 @@ public class UndertowConfigTest {
     }
 
     @Test
-    public void assertBasicFactoryAttributes() {
+    void assertBasicFactoryAttributes() {
         assertThat(factory.getAccessLogPrefix()).isNull();
         assertThat(factory.getAddress()).isNull();
         assertThat(factory.getCompression()).isNull();
@@ -84,7 +84,7 @@ public class UndertowConfigTest {
     }
 
     @Test
-    public void canStartAndStopUndertowServletContainer() {
+    void canStartAndStopUndertowServletContainer() {
         WebServer server = factory.getWebServer();
         assertThat(server.getPort()).isEqualTo(0);
         try {
@@ -98,7 +98,7 @@ public class UndertowConfigTest {
     }
 
     @Test
-    public void gettingListenerInfo_beforeStartingServer_fails() {
+    void gettingListenerInfo_beforeStartingServer_fails() {
         final Undertow undertow = undertowBuilder.build();
         try {
             undertow.getListenerInfo();
@@ -111,7 +111,7 @@ public class UndertowConfigTest {
     }
 
     @Test
-    public void gettingListenerInfo_afterStartingServer_withNoBuilderCustomizers_hasNoListenerInfo() {
+    void gettingListenerInfo_afterStartingServer_withNoBuilderCustomizers_hasNoListenerInfo() {
         final Undertow undertow = undertowBuilder.build();
         undertow.start();
         assertThat(undertow.getListenerInfo()).isEmpty();
@@ -119,7 +119,7 @@ public class UndertowConfigTest {
     }
 
     @Test
-    public void assertCustomizedUndertowBuilder() {
+    void assertCustomizedUndertowBuilder() {
         assertThat(factory.getBuilderCustomizers()).hasSize(1);
         final UndertowBuilderCustomizer bc = factory
             .getBuilderCustomizers()
@@ -143,7 +143,7 @@ public class UndertowConfigTest {
     }
 
     @Test
-    public void assertingWorkers() {
+    void assertingWorkers() {
         assertThat(factory.getBuilderCustomizers()).hasSize(1);
         final UndertowBuilderCustomizer bc = factory
             .getBuilderCustomizers()
@@ -165,12 +165,12 @@ public class UndertowConfigTest {
     }
 
     @Test
-    public void uncustomizedDeploymentInfo_hasNoSecurityConstraints() {
+    void uncustomizedDeploymentInfo_hasNoSecurityConstraints() {
         assertThat(deploymentInfo.getSecurityConstraints()).isEmpty();
     }
 
     @Test
-    public void assertSecurityConstraints() {
+    void assertSecurityConstraints() {
         assertThat(factory.getDeploymentInfoCustomizers()).hasSize(1);
         final UndertowDeploymentInfoCustomizer dic = factory
             .getDeploymentInfoCustomizers()
@@ -206,12 +206,12 @@ public class UndertowConfigTest {
     }
 
     @Test
-    public void hasMimeMappings() {
+    void hasMimeMappings() {
         assertThat(factory.getMimeMappings()).isNotEmpty();
     }
 
     @Test
-    public void assertJspServlet() {
+    void assertJspServlet() {
         final Jsp jspServlet = factory.getJsp();
         assertThat(jspServlet).isNotNull();
         assertThat(jspServlet.getClassName()).isEqualTo("org.apache.jasper.servlet.JspServlet");

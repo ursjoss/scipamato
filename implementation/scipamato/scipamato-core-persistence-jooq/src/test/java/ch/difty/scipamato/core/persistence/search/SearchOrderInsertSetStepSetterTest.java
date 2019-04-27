@@ -4,7 +4,7 @@ import static ch.difty.scipamato.core.db.tables.SearchOrder.SEARCH_ORDER;
 import static ch.difty.scipamato.core.persistence.search.SearchOrderRecordMapperTest.*;
 import static org.mockito.Mockito.*;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
 import ch.difty.scipamato.core.db.tables.records.SearchOrderRecord;
@@ -13,7 +13,7 @@ import ch.difty.scipamato.core.persistence.InsertSetStepSetter;
 import ch.difty.scipamato.core.persistence.InsertSetStepSetterTest;
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
-public class SearchOrderInsertSetStepSetterTest extends InsertSetStepSetterTest<SearchOrderRecord, SearchOrder> {
+class SearchOrderInsertSetStepSetterTest extends InsertSetStepSetterTest<SearchOrderRecord, SearchOrder> {
 
     private final InsertSetStepSetter<SearchOrderRecord, SearchOrder> setter = new SearchOrderInsertSetStepSetter();
 
@@ -45,17 +45,25 @@ public class SearchOrderInsertSetStepSetterTest extends InsertSetStepSetterTest<
 
     @Override
     protected void stepSetFixtureExceptAudit() {
-        when(getStep().set(SEARCH_ORDER.NAME, NAME)).thenReturn(getMoreStep());
-        when(getMoreStep().set(SEARCH_ORDER.OWNER, OWNER)).thenReturn(getMoreStep());
-        when(getMoreStep().set(SEARCH_ORDER.GLOBAL, GLOBAL)).thenReturn(getMoreStep());
+        doReturn(getMoreStep())
+            .when(getStep())
+            .set(SEARCH_ORDER.NAME, NAME);
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(SEARCH_ORDER.OWNER, OWNER);
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(SEARCH_ORDER.GLOBAL, GLOBAL);
     }
 
     @Override
     protected void setStepFixtureAudit() {
-        when(getMoreStep().set(SEARCH_ORDER.CREATED_BY, SearchOrderRecordMapperTest.CREATED_BY)).thenReturn(
-            getMoreStep());
-        when(getMoreStep().set(SEARCH_ORDER.LAST_MODIFIED_BY, SearchOrderRecordMapperTest.LAST_MOD_BY)).thenReturn(
-            getMoreStep());
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(SEARCH_ORDER.CREATED_BY, SearchOrderRecordMapperTest.CREATED_BY);
+        doReturn(getMoreStep())
+            .when(getMoreStep())
+            .set(SEARCH_ORDER.LAST_MODIFIED_BY, SearchOrderRecordMapperTest.LAST_MOD_BY);
     }
 
     @Override
@@ -79,14 +87,14 @@ public class SearchOrderInsertSetStepSetterTest extends InsertSetStepSetterTest<
     }
 
     @Test
-    public void consideringSettingKeyOf_withNullId_doesNotSetId() {
+    void consideringSettingKeyOf_withNullId_doesNotSetId() {
         when(getEntity().getId()).thenReturn(null);
         getSetter().considerSettingKeyOf(getMoreStep(), getEntity());
         verify(getEntity()).getId();
     }
 
     @Test
-    public void consideringSettingKeyOf_withNonNullId_doesSetId() {
+    void consideringSettingKeyOf_withNonNullId_doesSetId() {
         when(getEntity().getId()).thenReturn(ID);
 
         getSetter().considerSettingKeyOf(getMoreStep(), getEntity());
@@ -96,13 +104,13 @@ public class SearchOrderInsertSetStepSetterTest extends InsertSetStepSetterTest<
     }
 
     @Test
-    public void resettingIdToEntity_withNullRecord_doesNothing() {
+    void resettingIdToEntity_withNullRecord_doesNothing() {
         getSetter().resetIdToEntity(entityMock, null);
         verify(entityMock, never()).setId(anyLong());
     }
 
     @Test
-    public void resettingIdToEntity_withNonNullRecord_setsId() {
+    void resettingIdToEntity_withNonNullRecord_setsId() {
         when(recordMock.getId()).thenReturn(3L);
         getSetter().resetIdToEntity(entityMock, recordMock);
         verify(recordMock).getId();

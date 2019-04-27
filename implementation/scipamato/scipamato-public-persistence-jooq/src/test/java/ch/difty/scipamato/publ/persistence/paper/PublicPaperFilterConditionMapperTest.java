@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.common.persistence.FilterConditionMapperTest;
 import ch.difty.scipamato.common.persistence.GenericFilterConditionMapper;
@@ -18,7 +18,7 @@ import ch.difty.scipamato.publ.entity.PopulationCode;
 import ch.difty.scipamato.publ.entity.StudyDesignCode;
 import ch.difty.scipamato.publ.entity.filter.PublicPaperFilter;
 
-public class PublicPaperFilterConditionMapperTest
+class PublicPaperFilterConditionMapperTest
     extends FilterConditionMapperTest<PaperRecord, ch.difty.scipamato.publ.db.tables.Paper, PublicPaperFilter> {
 
     private final PublicPaperFilterConditionMapper mapper = new PublicPaperFilterConditionMapper();
@@ -41,7 +41,7 @@ public class PublicPaperFilterConditionMapperTest
     }
 
     @Test
-    public void creatingWhereCondition_withNumber_searchesNumber() {
+    void creatingWhereCondition_withNumber_searchesNumber() {
         Long number = 17L;
         filter.setNumber(number);
         assertThat(mapper
@@ -50,7 +50,7 @@ public class PublicPaperFilterConditionMapperTest
     }
 
     @Test
-    public void creatingWhereCondition_withAuthorMask_searchesAuthors() {
+    void creatingWhereCondition_withAuthorMask_searchesAuthors() {
         String pattern = "am";
         filter.setAuthorMask(pattern);
         assertThat(mapper
@@ -59,7 +59,7 @@ public class PublicPaperFilterConditionMapperTest
     }
 
     @Test
-    public void creatingWhereCondition_withTitleMask_searchesTitle() {
+    void creatingWhereCondition_withTitleMask_searchesTitle() {
         String pattern = "tm";
         filter.setTitleMask(pattern);
         assertThat(mapper
@@ -68,7 +68,7 @@ public class PublicPaperFilterConditionMapperTest
     }
 
     @Test
-    public void creatingWhereCondition_withAuthorMaskHoldingMultipleAuthors_searchesForPapersWithBothAuthorsInAnyOrder() {
+    void creatingWhereCondition_withAuthorMaskHoldingMultipleAuthors_searchesForPapersWithBothAuthorsInAnyOrder() {
         String pattern = "foo  bar";
         filter.setAuthorMask(pattern);
         assertThat(mapper
@@ -84,7 +84,7 @@ public class PublicPaperFilterConditionMapperTest
     }
 
     @Test
-    public void creatingWhereCondition_withMethodsMask_searchesMethodFields() {
+    void creatingWhereCondition_withMethodsMask_searchesMethodFields() {
         String pattern = "m";
         filter.setMethodsMask(pattern);
         assertThat(mapper
@@ -93,7 +93,7 @@ public class PublicPaperFilterConditionMapperTest
     }
 
     @Test
-    public void creatingWhereCondition_withMethodsMaskHoldingMultipleKeywords__searchesMethodFieldsWithAllKeywordsInAnyOrder() {
+    void creatingWhereCondition_withMethodsMaskHoldingMultipleKeywords__searchesMethodFieldsWithAllKeywordsInAnyOrder() {
         String pattern = "m1 m2 m3";
         filter.setMethodsMask(pattern);
         assertThat(mapper
@@ -110,7 +110,7 @@ public class PublicPaperFilterConditionMapperTest
     }
 
     @Test
-    public void creatingWhereCondition_withPublicationYearFrom_anBlankYearUntil_searchesExactPublicationYear() {
+    void creatingWhereCondition_withPublicationYearFrom_anBlankYearUntil_searchesExactPublicationYear() {
         filter.setPublicationYearFrom(2016);
         assertThat(filter.getPublicationYearUntil()).isNull();
         assertThat(mapper
@@ -119,7 +119,7 @@ public class PublicPaperFilterConditionMapperTest
     }
 
     @Test
-    public void creatingWhereCondition_withPublicationYearFrom_andPublicationYearUntil_searchesRange() {
+    void creatingWhereCondition_withPublicationYearFrom_andPublicationYearUntil_searchesRange() {
         filter.setPublicationYearFrom(2016);
         filter.setPublicationYearUntil(2017);
         assertThat(mapper
@@ -128,7 +128,7 @@ public class PublicPaperFilterConditionMapperTest
     }
 
     @Test
-    public void creatingWhereCondition_withIdenticalPublicationYearFromAndTo_searchesExactPublicationYear() {
+    void creatingWhereCondition_withIdenticalPublicationYearFromAndTo_searchesExactPublicationYear() {
         filter.setPublicationYearFrom(2016);
         filter.setPublicationYearUntil(2016);
         assertThat(mapper
@@ -137,7 +137,7 @@ public class PublicPaperFilterConditionMapperTest
     }
 
     @Test
-    public void creatingWhereCondition_withPublicationYearUntil_searchesUpToPublicationYear() {
+    void creatingWhereCondition_withPublicationYearUntil_searchesUpToPublicationYear() {
         assertThat(filter.getPublicationYearFrom()).isNull();
         filter.setPublicationYearUntil(2016);
         assertThat(mapper
@@ -146,7 +146,7 @@ public class PublicPaperFilterConditionMapperTest
     }
 
     @Test
-    public void creatingWhereCondition_withPopulationCodes_searchesPopulationCodes() {
+    void creatingWhereCondition_withPopulationCodes_searchesPopulationCodes() {
         filter.setPopulationCodes(Collections.singletonList(PopulationCode.CHILDREN));
         assertThat(mapper
             .map(filter)
@@ -154,7 +154,7 @@ public class PublicPaperFilterConditionMapperTest
     }
 
     @Test
-    public void creatingWhereCondition_withMethodStudyDesignCodes_searchesStudyDesignCodes() {
+    void creatingWhereCondition_withMethodStudyDesignCodes_searchesStudyDesignCodes() {
         filter.setStudyDesignCodes(
             Arrays.asList(StudyDesignCode.EPIDEMIOLOGICAL, StudyDesignCode.OVERVIEW_METHODOLOGY));
         assertThat(mapper
@@ -163,7 +163,7 @@ public class PublicPaperFilterConditionMapperTest
     }
 
     @Test
-    public void creatingWhereCondition_withCodesOfCodeClass1_searchesCodeClasses() {
+    void creatingWhereCondition_withCodesOfCodeClass1_searchesCodeClasses() {
         filter.setCodesOfClass1(Arrays.asList(Code
             .builder()
             .code("c1")
@@ -188,7 +188,7 @@ public class PublicPaperFilterConditionMapperTest
     }
 
     @Test
-    public void creatingWhereCondition_withCodesOfCodeClass2_searchesCodeClasses() {
+    void creatingWhereCondition_withCodesOfCodeClass2_searchesCodeClasses() {
         filter.setCodesOfClass2(Arrays.asList(Code
             .builder()
             .code("c1")
@@ -200,7 +200,7 @@ public class PublicPaperFilterConditionMapperTest
     }
 
     @Test
-    public void creatingWhereCondition_withCodesOfCodeClass3_searchesCodeClasses() {
+    void creatingWhereCondition_withCodesOfCodeClass3_searchesCodeClasses() {
         filter.setCodesOfClass3(Arrays.asList(Code
             .builder()
             .code("c1")
@@ -212,7 +212,7 @@ public class PublicPaperFilterConditionMapperTest
     }
 
     @Test
-    public void creatingWhereCondition_withCodesOfCodeClass4_searchesCodeClasses() {
+    void creatingWhereCondition_withCodesOfCodeClass4_searchesCodeClasses() {
         filter.setCodesOfClass4(Arrays.asList(Code
             .builder()
             .code("c1")
@@ -224,7 +224,7 @@ public class PublicPaperFilterConditionMapperTest
     }
 
     @Test
-    public void creatingWhereCondition_withCodesOfCodeClass5_searchesCodeClasses() {
+    void creatingWhereCondition_withCodesOfCodeClass5_searchesCodeClasses() {
         filter.setCodesOfClass5(Arrays.asList(Code
             .builder()
             .code("c1")
@@ -236,7 +236,7 @@ public class PublicPaperFilterConditionMapperTest
     }
 
     @Test
-    public void creatingWhereCondition_withCodesOfCodeClass6_searchesCodeClasses() {
+    void creatingWhereCondition_withCodesOfCodeClass6_searchesCodeClasses() {
         filter.setCodesOfClass6(Arrays.asList(Code
             .builder()
             .code("c1")
@@ -248,7 +248,7 @@ public class PublicPaperFilterConditionMapperTest
     }
 
     @Test
-    public void creatingWhereCondition_withCodesOfCodeClass7_searchesCodeClasses() {
+    void creatingWhereCondition_withCodesOfCodeClass7_searchesCodeClasses() {
         filter.setCodesOfClass7(Arrays.asList(Code
             .builder()
             .code("c1")
@@ -260,7 +260,7 @@ public class PublicPaperFilterConditionMapperTest
     }
 
     @Test
-    public void creatingWhereCondition_withCodesOfCodeClass8_searchesCodeClasses() {
+    void creatingWhereCondition_withCodesOfCodeClass8_searchesCodeClasses() {
         filter.setCodesOfClass8(Arrays.asList(Code
             .builder()
             .code("c1")
@@ -272,7 +272,7 @@ public class PublicPaperFilterConditionMapperTest
     }
 
     @Test
-    public void creatingWhereCondition_withCodesOfAllCodeClasses_searchesCodeClasses() {
+    void creatingWhereCondition_withCodesOfAllCodeClasses_searchesCodeClasses() {
         filter.setCodesOfClass1(Collections.singletonList(Code
             .builder()
             .code("1A")
@@ -324,7 +324,7 @@ public class PublicPaperFilterConditionMapperTest
     }
 
     @Test
-    public void creatingWhereCondition_withSetButThenClearedCodes_doesNotFilterByCodes() {
+    void creatingWhereCondition_withSetButThenClearedCodes_doesNotFilterByCodes() {
         filter.setCodesOfClass1(new ArrayList<>(Collections.singletonList(Code
             .builder()
             .code("1A")
@@ -338,7 +338,7 @@ public class PublicPaperFilterConditionMapperTest
     }
 
     @Test
-    public void creatingWhereCondition_withAuthorMaskHoldingMultipleQuotedAuthors_searchesForPapersWithBothAuthorsInAnyOrder() {
+    void creatingWhereCondition_withAuthorMaskHoldingMultipleQuotedAuthors_searchesForPapersWithBothAuthorsInAnyOrder() {
         String pattern = "\"Last F\" \"Other S\"";
         filter.setAuthorMask(pattern);
         assertThat(mapper

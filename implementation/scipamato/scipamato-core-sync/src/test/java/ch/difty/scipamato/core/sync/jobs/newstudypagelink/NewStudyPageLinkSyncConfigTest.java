@@ -9,21 +9,21 @@ import java.sql.Timestamp;
 
 import org.jooq.DeleteConditionStep;
 import org.jooq.TableField;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.springframework.batch.core.Job;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import ch.difty.scipamato.core.db.public_.tables.NewStudyPageLink;
 import ch.difty.scipamato.core.sync.jobs.SyncConfigTest;
 import ch.difty.scipamato.publ.db.public_.tables.records.NewStudyPageLinkRecord;
 
 @SpringBootTest
-@RunWith(SpringRunner.class)
-public class NewStudyPageLinkSyncConfigTest extends SyncConfigTest<NewStudyPageLinkRecord> {
+@ExtendWith(SpringExtension.class)
+class NewStudyPageLinkSyncConfigTest extends SyncConfigTest<NewStudyPageLinkRecord> {
 
     @Autowired
     private NewStudyPageLinkSyncConfig config;
@@ -64,7 +64,7 @@ public class NewStudyPageLinkSyncConfigTest extends SyncConfigTest<NewStudyPageL
     }
 
     @Test
-    public void makingEntity() throws SQLException {
+    void makingEntity() throws SQLException {
         ResultSet rs = Mockito.mock(ResultSet.class);
         when(rs.getString(NewStudyPageLink.NEW_STUDY_PAGE_LINK.LANG_CODE.getName())).thenReturn("de");
         when(rs.getInt(NewStudyPageLink.NEW_STUDY_PAGE_LINK.SORT.getName())).thenReturn(1);

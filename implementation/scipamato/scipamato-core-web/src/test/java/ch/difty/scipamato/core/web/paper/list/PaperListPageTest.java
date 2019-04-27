@@ -13,8 +13,8 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarExternalLin
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.form.Form;
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationRequest;
@@ -29,7 +29,7 @@ import ch.difty.scipamato.core.web.common.BasePageTest;
 import ch.difty.scipamato.core.web.paper.entry.PaperEntryPage;
 import ch.difty.scipamato.core.web.paper.result.ResultPanel;
 
-public abstract class PaperListPageTest extends BasePageTest<PaperListPage> {
+abstract class PaperListPageTest extends BasePageTest<PaperListPage> {
 
     static final String LC = "en_us";
 
@@ -60,8 +60,8 @@ public abstract class PaperListPageTest extends BasePageTest<PaperListPage> {
         when(applicationPropertiesMock.getBrand()).thenReturn("scipamato");
     }
 
-    @After
-    public void tearDown() {
+    @AfterEach
+    void tearDown() {
         verifyNoMoreInteractions(paperSlimServiceMock, paperServiceMock, codeServiceMock, codeClassServiceMock,
             paperServiceMock, pubmedImportService);
     }
@@ -114,7 +114,7 @@ public abstract class PaperListPageTest extends BasePageTest<PaperListPage> {
     }
 
     @Test
-    public void clickingOnResultTitle_forwardsToPaperEntryPage() {
+    void clickingOnResultTitle_forwardsToPaperEntryPage() {
         final List<PaperSlim> list = new ArrayList<>();
         long number = 10L;
         list.add(new PaperSlim(1L, number, "author", 2018, "title"));

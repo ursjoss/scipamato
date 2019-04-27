@@ -9,9 +9,9 @@ import java.util.List;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class NewStudyTopicTest extends PublicEntityTest<NewStudyTopic> {
+class NewStudyTopicTest extends PublicEntityTest<NewStudyTopic> {
 
     @Override
     protected NewStudyTopic newEntity() {
@@ -42,14 +42,14 @@ public class NewStudyTopicTest extends PublicEntityTest<NewStudyTopic> {
     }
 
     @Test
-    public void assertEnumFields() {
+    void assertEnumFields() {
         assertThat(NewStudyTopic.NewStudyTopicFields.values())
             .extracting("name")
             .containsExactly("sort", "title", "studies");
     }
 
     @Test
-    public void secondaryConstructor_hasNoStudies() {
+    void secondaryConstructor_hasNoStudies() {
         final NewStudyTopic t = new NewStudyTopic(2, "title2");
         assertThat(t.getSort()).isEqualTo(2);
         assertThat(t.getTitle()).isEqualTo("title2");

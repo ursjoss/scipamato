@@ -7,21 +7,21 @@ import static org.mockito.Mockito.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import ch.difty.scipamato.publ.entity.CodeClass;
 
-@RunWith(MockitoJUnitRunner.class)
-public class JooqCodeClassServiceTest {
+@ExtendWith(MockitoExtension.class)
+class JooqCodeClassServiceTest {
 
     @Mock
     private CodeClassRepository repoMock;
 
     @Test
-    public void findingCodeClass_delegatesToRepo() {
+    void findingCodeClass_delegatesToRepo() {
         JooqCodeClassService service = new JooqCodeClassService(repoMock);
 
         String languageCodeClass = "de";

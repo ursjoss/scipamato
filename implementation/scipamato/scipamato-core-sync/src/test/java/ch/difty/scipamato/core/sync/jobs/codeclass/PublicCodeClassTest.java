@@ -2,14 +2,14 @@ package ch.difty.scipamato.core.sync.jobs.codeclass;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.core.sync.jobs.PublicEntityTest;
 
-public class PublicCodeClassTest extends PublicEntityTest {
+class PublicCodeClassTest extends PublicEntityTest {
 
     @Test
-    public void canSetGet() {
+    void canSetGet() {
         PublicCodeClass pcc = PublicCodeClass
             .builder()
             .codeClassId(1)

@@ -9,12 +9,13 @@ import java.util.List;
 
 import org.jooq.*;
 import org.jooq.impl.TableImpl;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import ch.difty.scipamato.common.NullArgumentException;
 import ch.difty.scipamato.common.config.ApplicationProperties;
@@ -25,7 +26,7 @@ import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.common.persistence.paging.Sort;
 import ch.difty.scipamato.core.entity.IdScipamatoEntity;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 @SuppressWarnings("WeakerAccess")
 public abstract class JooqReadOnlyRepoTest<R extends Record, T extends IdScipamatoEntity<ID>, ID extends Number, TI extends TableImpl<R>, M extends RecordMapper<R, T>, F extends ScipamatoFilter> {
 
@@ -35,23 +36,23 @@ public abstract class JooqReadOnlyRepoTest<R extends Record, T extends IdScipama
     private final List<R> records  = new ArrayList<>();
 
     @Mock
-    private DSLContext                            dslMock;
+    private   DSLContext                            dslMock;
     @Mock
-    private GenericFilterConditionMapper<F>       filterConditionMapperMock;
+    protected GenericFilterConditionMapper<F>       filterConditionMapperMock;
     @Mock
-    private R                                     unpersistedRecord;
+    private   R                                     unpersistedRecord;
     @Mock
-    private JooqSortMapper<R, T, TI>              sortMapperMock;
+    private   JooqSortMapper<R, T, TI>              sortMapperMock;
     @Mock
-    private SelectWhereStep<R>                    selectWhereStepMock;
+    private   SelectWhereStep<R>                    selectWhereStepMock;
     @Mock
-    private SelectConditionStep<R>                selectConditionStepMock;
+    private   SelectConditionStep<R>                selectConditionStepMock;
     @Mock
-    private SelectSelectStep<Record1<Integer>>    selectSelectStepMock;
+    private   SelectSelectStep<Record1<Integer>>    selectSelectStepMock;
     @Mock
-    private SelectJoinStep<Record1<Integer>>      selectJoinStepMock;
+    private   SelectJoinStep<Record1<Integer>>      selectJoinStepMock;
     @Mock
-    private SelectConditionStep<Record1<Integer>> selectConditionStepMock2;
+    private   SelectConditionStep<Record1<Integer>> selectConditionStepMock2;
 
     @Mock
     private PaginationContext        paginationContextMock;
@@ -63,12 +64,12 @@ public abstract class JooqReadOnlyRepoTest<R extends Record, T extends IdScipama
     private SelectSeekStepN<R>       selectSeekStepNMock;
 
     @Mock
-    private Condition conditionMock;
+    Condition conditionMock;
 
     @Mock
     private ApplicationProperties applicationPropertiesMock;
 
-    private final F filterMock = getFilter();
+    final F filterMock = getFilter();
 
     protected DSLContext getDsl() {
         return dslMock;
@@ -135,8 +136,8 @@ public abstract class JooqReadOnlyRepoTest<R extends Record, T extends IdScipama
         return applicationPropertiesMock;
     }
 
-    @Before
-    public final void setUp() {
+    @BeforeEach
+    final void setUp() {
         repo = getRepo();
 
         entities.add(getPersistedEntity());
@@ -145,16 +146,14 @@ public abstract class JooqReadOnlyRepoTest<R extends Record, T extends IdScipama
         records.add(getPersistedRecord());
         records.add(getPersistedRecord());
 
-        when(filterConditionMapperMock.map(filterMock)).thenReturn(conditionMock);
-
         specificSetUp();
     }
 
     protected void specificSetUp() {
     }
 
-    @After
-    public final void tearDown() {
+    @AfterEach
+    final void tearDown() {
         specificTearDown();
         verifyNoMoreInteractions(dslMock, getMapper(), sortMapperMock);
         verifyNoMoreInteractions(getUnpersistedEntity(), getPersistedEntity(), unpersistedRecord, getPersistedRecord());
@@ -169,7 +168,7 @@ public abstract class JooqReadOnlyRepoTest<R extends Record, T extends IdScipama
     }
 
     @Test
-    public final void nullCheck() {
+    final void nullCheck() {
         assertThat(getRepo()).isNotNull();
         assertThat(getDsl()).isNotNull();
         assertThat(getMapper()).isNotNull();
@@ -182,13 +181,14 @@ public abstract class JooqReadOnlyRepoTest<R extends Record, T extends IdScipama
     protected void specificNullCheck() {
     }
 
-    @Test(expected = NullArgumentException.class)
-    public void findingByIdNull_throws() {
-        repo.findById(null, "en");
+    @Test
+    void findingByIdNull_throws() {
+        Assertions.assertThrows(NullArgumentException.class, () -> repo.findById(null, "en"));
     }
 
     @Test
-    public void countingByFilter() {
+    void countingByFilter() {
+        when(filterConditionMapperMock.map(filterMock)).thenReturn(conditionMock);
         when(dslMock.selectOne()).thenReturn(selectSelectStepMock);
         when(selectSelectStepMock.from(getTable())).thenReturn(selectJoinStepMock);
         when(selectJoinStepMock.where(isA(Condition.class))).thenReturn(selectConditionStepMock2);

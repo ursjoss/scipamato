@@ -12,12 +12,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import feign.FeignException;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.oxm.UnmarshallingFailureException;
 import org.springframework.oxm.XmlMappingException;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
@@ -25,8 +25,8 @@ import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import ch.difty.scipamato.common.NullArgumentException;
 import ch.difty.scipamato.core.pubmed.api.*;
 
-@RunWith(MockitoJUnitRunner.class)
-public class PubmedXmlServiceTest {
+@ExtendWith(MockitoExtension.class)
+class PubmedXmlServiceTest {
 
     private PubmedXmlService service;
 
@@ -57,37 +57,28 @@ public class PubmedXmlServiceTest {
     @Mock
     private FeignException     feignExceptionMock;
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
         service = new PubmedXmlService(unmarshallerMock, pubMedMock);
-
-        when(pubmedArticleMock.getMedlineCitation()).thenReturn(medLineCitationMock);
-        when(medLineCitationMock.getArticle()).thenReturn(articleMock);
-        when(articleMock.getJournal()).thenReturn(journalMock);
-        when(medLineCitationMock.getPMID()).thenReturn(pmidMock);
-        when(journalMock.getJournalIssue()).thenReturn(journalIssueMock);
-        when(journalIssueMock.getPubDate()).thenReturn(pubDateMock);
-        when(medLineCitationMock.getMedlineJournalInfo()).thenReturn(medLineJournalInfoMock);
-        when(articleMock.getArticleTitle()).thenReturn(articleTitleMock);
     }
 
-    @After
-    public void tearDown() {
+    @AfterEach
+    void tearDown() {
         verifyNoMoreInteractions(unmarshallerMock, pubMedMock, pubmedArticleSetMock);
     }
 
     @Test
-    public void degenerateConstruction_nullUnmarshaller_throws() {
+    void degenerateConstruction_nullUnmarshaller_throws() {
         assertDegenerateSupplierParameter(() -> new PubmedXmlService(null, pubMedMock), "unmarshaller");
     }
 
     @Test
-    public void degenerateConstruction_nullPubMed_throws() {
+    void degenerateConstruction_nullPubMed_throws() {
         assertDegenerateSupplierParameter(() -> new PubmedXmlService(unmarshallerMock, null), "pubMed");
     }
 
     @Test
-    public void unmarshallingNull_throws() {
+    void unmarshallingNull_throws() {
         try {
             service.unmarshal(null);
             fail("should have thrown exception");
@@ -99,12 +90,21 @@ public class PubmedXmlServiceTest {
     }
 
     @Test
-    public void gettingPubmedArticleWithPmid_withValidId_returnsArticle() {
+    void gettingPubmedArticleWithPmid_withValidId_returnsArticle() {
         final int pmId = 25395026;
         when(pubMedMock.articleWithId(String.valueOf(pmId))).thenReturn(pubmedArticleSetMock);
         final List<Object> objects = new ArrayList<>();
         objects.add(pubmedArticleMock);
         when(pubmedArticleSetMock.getPubmedArticleOrPubmedBookArticle()).thenReturn(objects);
+
+        when(pubmedArticleMock.getMedlineCitation()).thenReturn(medLineCitationMock);
+        when(medLineCitationMock.getArticle()).thenReturn(articleMock);
+        when(articleMock.getJournal()).thenReturn(journalMock);
+        when(medLineCitationMock.getPMID()).thenReturn(pmidMock);
+        when(journalMock.getJournalIssue()).thenReturn(journalIssueMock);
+        when(journalIssueMock.getPubDate()).thenReturn(pubDateMock);
+        when(medLineCitationMock.getMedlineJournalInfo()).thenReturn(medLineJournalInfoMock);
+        when(articleMock.getArticleTitle()).thenReturn(articleTitleMock);
 
         PubmedArticleResult pr = service.getPubmedArticleWithPmid(pmId);
         assertThat(pr.getPubmedArticleFacade()).isNotNull();
@@ -115,7 +115,7 @@ public class PubmedXmlServiceTest {
     }
 
     @Test
-    public void gettingPubmedArticleWithPmid_withInvalidId_returnsNullFacade() {
+    void gettingPubmedArticleWithPmid_withInvalidId_returnsNullFacade() {
         final int pmId = 999999999;
         when(pubMedMock.articleWithId(String.valueOf(pmId))).thenReturn(pubmedArticleSetMock);
         final List<java.lang.Object> objects = new ArrayList<>();
@@ -130,7 +130,7 @@ public class PubmedXmlServiceTest {
     }
 
     @Test
-    public void gettingPubmedArticleWithPmid_withNullObjects_returnsNullFacade() {
+    void gettingPubmedArticleWithPmid_withNullObjects_returnsNullFacade() {
         final int pmId = 999999999;
         when(pubMedMock.articleWithId(String.valueOf(pmId))).thenReturn(pubmedArticleSetMock);
         when(pubmedArticleSetMock.getPubmedArticleOrPubmedBookArticle()).thenReturn(null);
@@ -144,12 +144,21 @@ public class PubmedXmlServiceTest {
     }
 
     @Test
-    public void gettingPubmedArticleWithPmidAndApiKey_withValidId_returnsArticle() {
+    void gettingPubmedArticleWithPmidAndApiKey_withValidId_returnsArticle() {
         final int pmId = 25395026;
         when(pubMedMock.articleWithId(String.valueOf(pmId), "key")).thenReturn(pubmedArticleSetMock);
         final List<java.lang.Object> objects = new ArrayList<>();
         objects.add(pubmedArticleMock);
         when(pubmedArticleSetMock.getPubmedArticleOrPubmedBookArticle()).thenReturn(objects);
+
+        when(pubmedArticleMock.getMedlineCitation()).thenReturn(medLineCitationMock);
+        when(medLineCitationMock.getArticle()).thenReturn(articleMock);
+        when(articleMock.getJournal()).thenReturn(journalMock);
+        when(medLineCitationMock.getPMID()).thenReturn(pmidMock);
+        when(journalMock.getJournalIssue()).thenReturn(journalIssueMock);
+        when(journalIssueMock.getPubDate()).thenReturn(pubDateMock);
+        when(medLineCitationMock.getMedlineJournalInfo()).thenReturn(medLineJournalInfoMock);
+        when(articleMock.getArticleTitle()).thenReturn(articleTitleMock);
 
         PubmedArticleResult pr = service.getPubmedArticleWithPmidAndApiKey(pmId, "key");
         assertThat(pr.getPubmedArticleFacade()).isNotNull();
@@ -160,7 +169,7 @@ public class PubmedXmlServiceTest {
     }
 
     @Test
-    public void gettingPubmedArticle_withInvalidId_returnsEmptyArticleAndRawExceptionMessage() {
+    void gettingPubmedArticle_withInvalidId_returnsEmptyArticleAndRawExceptionMessage() {
         final int pmId = 25395026;
         when(pubMedMock.articleWithId(String.valueOf(pmId), "key")).thenThrow(new RuntimeException("boom"));
 
@@ -172,20 +181,20 @@ public class PubmedXmlServiceTest {
     }
 
     @Test
-    public void nonValidXml_returnsNull() throws XmlMappingException, IOException {
+    void nonValidXml_returnsNull() throws XmlMappingException, IOException {
         assertThat(service.unmarshal("")).isNull();
         verify(unmarshallerMock).unmarshal(isA(StreamSource.class));
     }
 
     @Test
-    public void gettingArticles_withUnmarshallerException_returnsEmptyList() {
+    void gettingArticles_withUnmarshallerException_returnsEmptyList() {
         when(unmarshallerMock.unmarshal(isA(StreamSource.class))).thenThrow(new UnmarshallingFailureException("boom"));
         assertThat(service.extractArticlesFrom("some invalid xml")).isEmpty();
         verify(unmarshallerMock).unmarshal(isA(StreamSource.class));
     }
 
     @Test
-    public void gettingArticles_withPubmedArticleSetWithoutArticleCollection_returnsEmptyList() {
+    void gettingArticles_withPubmedArticleSetWithoutArticleCollection_returnsEmptyList() {
         PubmedArticleSet pubmedArticleSet = new PubmedArticleSet();
         when(unmarshallerMock.unmarshal(isA(StreamSource.class))).thenReturn(pubmedArticleSet);
         assertThat(service.extractArticlesFrom("some valid xml")).isEmpty();
@@ -193,13 +202,13 @@ public class PubmedXmlServiceTest {
     }
 
     @Test
-    public void gettingArticles_withPubmedArticleSetWithoutArticleCollection2_returnsEmptyList() {
+    void gettingArticles_withPubmedArticleSetWithoutArticleCollection2_returnsEmptyList() {
         when(unmarshallerMock.unmarshal(isA(StreamSource.class))).thenReturn(makeMinimalValidPubmedArticleSet());
         assertThat(service.extractArticlesFrom("some valid xml")).isNotEmpty();
         verify(unmarshallerMock).unmarshal(isA(StreamSource.class));
     }
 
-    public static PubmedArticleSet makeMinimalValidPubmedArticleSet() {
+    static PubmedArticleSet makeMinimalValidPubmedArticleSet() {
         PubmedArticleSet pubmedArticleSet = new PubmedArticleSet();
         pubmedArticleSet
             .getPubmedArticleOrPubmedBookArticle()
@@ -208,7 +217,7 @@ public class PubmedXmlServiceTest {
     }
 
     @Test
-    public void gettingPubmedArticleWithPmid_withParsableHtmlError502_hasHttpStatusPopulated() {
+    void gettingPubmedArticleWithPmid_withParsableHtmlError502_hasHttpStatusPopulated() {
         final int pmId = 25395026;
         feignExceptionFixture(502, "status 502 reading PubMed#articleWithId(String,String); content: \nfoo");
         when(pubMedMock.articleWithId(String.valueOf(pmId))).thenThrow(feignExceptionMock);
@@ -222,7 +231,7 @@ public class PubmedXmlServiceTest {
     }
 
     @Test
-    public void gettingPubmedArticleWithPmid_withParsableHtmlError400_hasHttpStatusPopulated() {
+    void gettingPubmedArticleWithPmid_withParsableHtmlError400_hasHttpStatusPopulated() {
         final int pmId = 25395026;
         feignExceptionFixture(400, "status 400 reading PubMed#articleWithId(String,String); content:\n"
                                    + "{\"error\":\"API key invalid\",\"api-key\":\"xxx\",\"type\":\"invalid\",\"status\":\"unknown\"}");
@@ -241,7 +250,7 @@ public class PubmedXmlServiceTest {
     }
 
     @Test
-    public void gettingPubmedArticleWithPmid_withParsableHtmlError400_hasHttpStatusPopulated2() {
+    void gettingPubmedArticleWithPmid_withParsableHtmlError400_hasHttpStatusPopulated2() {
         final int pmId = 25395026;
         when(pubMedMock.articleWithId(String.valueOf(pmId))).thenThrow(new RuntimeException(
             "status 400 reading PubMed#articleWithId(String,String); content:\n"
@@ -256,7 +265,7 @@ public class PubmedXmlServiceTest {
     }
 
     @Test
-    public void gettingPubmedArticleWithPmid_withNoParsableHtmlError_onlyHasMessage() {
+    void gettingPubmedArticleWithPmid_withNoParsableHtmlError_onlyHasMessage() {
         final int pmId = 25395026;
         when(pubMedMock.articleWithId(String.valueOf(pmId))).thenThrow(
             new RuntimeException("The network is not reachable"));

@@ -9,12 +9,12 @@ import java.util.List;
 
 import org.jooq.*;
 import org.jooq.impl.TableImpl;
-import org.junit.After;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Spy;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 
 import ch.difty.scipamato.common.NullArgumentException;
@@ -23,8 +23,8 @@ import ch.difty.scipamato.common.persistence.paging.Sort;
 import ch.difty.scipamato.common.persistence.paging.Sort.Direction;
 import ch.difty.scipamato.common.persistence.paging.Sort.SortProperty;
 
-@RunWith(MockitoJUnitRunner.class)
-public class SortMapperTest {
+@ExtendWith(MockitoExtension.class)
+class SortMapperTest {
 
     @Spy
     private SortMapper<Record, ScipamatoEntity, TableImpl<Record>> mapperSpy;
@@ -40,20 +40,20 @@ public class SortMapperTest {
 
     private final List<SortProperty> sortProps = new ArrayList<>();
 
-    @After
-    public void tearDown() {
+    @AfterEach
+    void tearDown() {
         verifyNoMoreInteractions(tableMock, sortSpecMock, tableFieldMock, sortFieldMock);
     }
 
     @Test
-    public void mapping_withNullSortSpecification_returnsEmptyList() {
+    void mapping_withNullSortSpecification_returnsEmptyList() {
         assertThat(mapperSpy.map(null, tableMock))
             .isNotNull()
             .isEmpty();
     }
 
     @Test
-    public void mapping_withEmptySortProperties_returnsEmptyList() {
+    void mapping_withEmptySortProperties_returnsEmptyList() {
         when(sortSpecMock.iterator()).thenReturn(sortProps.iterator());
         assertThat(mapperSpy.map(sortSpecMock, tableMock))
             .isNotNull()
@@ -62,7 +62,7 @@ public class SortMapperTest {
     }
 
     @Test
-    public void mapping_withSingleAscendingSortProperty_returnsOneAscendingSortField()
+    void mapping_withSingleAscendingSortProperty_returnsOneAscendingSortField()
         throws NoSuchFieldException, SecurityException, IllegalAccessException {
         sortProps.add(new SortProperty("field", Direction.ASC));
         when(sortSpecMock.iterator()).thenReturn(sortProps.iterator());
@@ -79,7 +79,7 @@ public class SortMapperTest {
     }
 
     @Test
-    public void mapping_withTwoDescendingSortProperties_returnsTwoDescendingSortFields()
+    void mapping_withTwoDescendingSortProperties_returnsTwoDescendingSortFields()
         throws NoSuchFieldException, SecurityException, IllegalAccessException {
         sortProps.add(new SortProperty("field", Direction.DESC));
         sortProps.add(new SortProperty("field2", Direction.DESC));
@@ -101,7 +101,7 @@ public class SortMapperTest {
     }
 
     @Test
-    public void mapping_withWrongFieldName_throwsInvalidDataAccessApiUsageException()
+    void mapping_withWrongFieldName_throwsInvalidDataAccessApiUsageException()
         throws NoSuchFieldException, SecurityException, IllegalAccessException {
         sortProps.add(new SortProperty("inexistentField", Direction.ASC));
         when(sortSpecMock.iterator()).thenReturn(sortProps.iterator());
@@ -124,7 +124,7 @@ public class SortMapperTest {
     }
 
     @Test
-    public void mapping_withIllegalAccess_throwsInvalidDataAccessApiUsageException()
+    void mapping_withIllegalAccess_throwsInvalidDataAccessApiUsageException()
         throws NoSuchFieldException, SecurityException, IllegalAccessException {
         sortProps.add(new SortProperty("illegalField", Direction.ASC));
         when(sortSpecMock.iterator()).thenReturn(sortProps.iterator());
@@ -147,7 +147,7 @@ public class SortMapperTest {
     }
 
     @Test
-    public void mapping_withNullTable_throws() throws SecurityException {
+    void mapping_withNullTable_throws() throws SecurityException {
         sortProps.add(new SortProperty("illegalField", Direction.ASC));
         when(sortSpecMock.iterator()).thenReturn(sortProps.iterator());
 
@@ -168,7 +168,7 @@ public class SortMapperTest {
      */
     @SuppressWarnings("unchecked")
     @Test
-    public void tryGettingAsFarAsPossibleIntoMethodGetTableFieldFor()
+    void tryGettingAsFarAsPossibleIntoMethodGetTableFieldFor()
         throws NoSuchFieldException, SecurityException, IllegalAccessException {
         Name name = mock(Name.class);
         Schema schema = mock(Schema.class);

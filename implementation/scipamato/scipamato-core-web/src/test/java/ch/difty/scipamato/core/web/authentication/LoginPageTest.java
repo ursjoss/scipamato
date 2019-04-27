@@ -6,14 +6,14 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.internal.HtmlHeaderContainer;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.tester.FormTester;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.core.web.WicketTest;
 
-public class LoginPageTest extends WicketTest {
+class LoginPageTest extends WicketTest {
 
     @Test
-    public void assertPage() {
+    void assertPage() {
         getTester().startPage(makePage());
         getTester().assertRenderedPage(getPageClass());
 
@@ -42,7 +42,7 @@ public class LoginPageTest extends WicketTest {
     }
 
     @Test
-    public void whenSigningIn_withWrongCredentials_providesErrorMessage() {
+    void whenSigningIn_withWrongCredentials_providesErrorMessage() {
         SecureWebSession session = (SecureWebSession) getTester().getSession();
         session.signOut();
         getTester().startPage(LoginPage.class);

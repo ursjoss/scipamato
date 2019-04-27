@@ -9,7 +9,7 @@ import org.apache.wicket.markup.html.form.CheckBox;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.util.tester.FormTester;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
@@ -23,7 +23,7 @@ import ch.difty.scipamato.core.persistence.SearchOrderService;
 import ch.difty.scipamato.core.web.common.BasePageTest;
 import ch.difty.scipamato.core.web.paper.common.SearchablePaperPanel;
 
-public class PaperSearchCriteriaPageTest extends BasePageTest<PaperSearchCriteriaPage> {
+class PaperSearchCriteriaPageTest extends BasePageTest<PaperSearchCriteriaPage> {
 
     private static final long SEARCH_ORDER_ID = 5;
 
@@ -71,7 +71,7 @@ public class PaperSearchCriteriaPageTest extends BasePageTest<PaperSearchCriteri
     }
 
     @Test
-    public void submittingForm_savesSearchCondition_andRemainsOnPagePage() {
+    void submittingForm_savesSearchCondition_andRemainsOnPagePage() {
         getTester().startPage(makePage());
         getTester().assertRenderedPage(getPageClass());
 
@@ -87,7 +87,7 @@ public class PaperSearchCriteriaPageTest extends BasePageTest<PaperSearchCriteri
     }
 
     @Test
-    public void submittingForm_andClickingSubmitButton_savesSearchConditionAndForwardsToPaperSearchPagex() {
+    void submittingForm_andClickingSubmitButton_savesSearchConditionAndForwardsToPaperSearchPagex() {
         getTester().startPage(makePage());
         getTester().assertRenderedPage(getPageClass());
 
@@ -102,7 +102,7 @@ public class PaperSearchCriteriaPageTest extends BasePageTest<PaperSearchCriteri
     }
 
     @Test
-    public void submittingForm_withErrorInService_addsErrorMessage() {
+    void submittingForm_withErrorInService_addsErrorMessage() {
         when(searchOrderServiceMock.saveOrUpdateSearchCondition(searchConditionMock, SEARCH_ORDER_ID,
             "en_us")).thenThrow(new RuntimeException("foo"));
 

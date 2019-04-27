@@ -4,16 +4,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.sql.Date;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.core.sync.jobs.PublicEntityTest;
 
-public class PublicNewStudyTest extends PublicEntityTest {
+class PublicNewStudyTest extends PublicEntityTest {
 
     private static final Date ISSUE_DATE = Date.valueOf("2018-06-14");
 
     @Test
-    public void canSetGet() {
+    void canSetGet() {
         PublicNewStudy pns = PublicNewStudy
             .builder()
             .newsletterId(1)

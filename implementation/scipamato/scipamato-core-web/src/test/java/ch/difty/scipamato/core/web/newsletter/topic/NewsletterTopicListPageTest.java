@@ -10,8 +10,8 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDef
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.util.tester.FormTester;
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationRequest;
@@ -21,8 +21,8 @@ import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicTranslation;
 import ch.difty.scipamato.core.persistence.NewsletterTopicService;
 import ch.difty.scipamato.core.web.common.BasePageTest;
 
-@SuppressWarnings("SameParameterValue")
-public class NewsletterTopicListPageTest extends BasePageTest<NewsletterTopicListPage> {
+@SuppressWarnings({ "SameParameterValue", "SpellCheckingInspection" })
+class NewsletterTopicListPageTest extends BasePageTest<NewsletterTopicListPage> {
 
     private final List<NewsletterTopicDefinition> results = new ArrayList<>();
 
@@ -48,8 +48,8 @@ public class NewsletterTopicListPageTest extends BasePageTest<NewsletterTopicLis
             isA(PaginationRequest.class))).thenReturn(results.iterator());
     }
 
-    @After
-    public void tearDown() {
+    @AfterEach
+    void tearDown() {
         verifyNoMoreInteractions(newsletterTopicServiceMock);
     }
 
@@ -106,7 +106,7 @@ public class NewsletterTopicListPageTest extends BasePageTest<NewsletterTopicLis
     }
 
     @Test
-    public void clickingOnNewsletterTopicTitle_forwardsToNewsletterTopicEditPage_withModelLoaded() {
+    void clickingOnNewsletterTopicTitle_forwardsToNewsletterTopicEditPage_withModelLoaded() {
         getTester().startPage(getPageClass());
 
         getTester().clickLink("resultPanel:results:body:rows:1:cells:1:cell:link");
@@ -123,7 +123,7 @@ public class NewsletterTopicListPageTest extends BasePageTest<NewsletterTopicLis
     }
 
     @Test
-    public void clickingNewNewsletterTopic_forwardsToNewsletterTopicEditPage() {
+    void clickingNewNewsletterTopic_forwardsToNewsletterTopicEditPage() {
         NewsletterTopicTranslation ntt_en = new NewsletterTopicTranslation(1, "en", "ntt_en", 1);
         NewsletterTopicDefinition ntd = new NewsletterTopicDefinition(1, "en", 1, ntt_en);
         when(newsletterTopicServiceMock.newUnpersistedNewsletterTopicDefinition()).thenReturn(ntd);

@@ -7,15 +7,14 @@ import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.TextArea;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.class)
-public class NewFieldChangeEventTest {
+@ExtendWith(MockitoExtension.class)
+class NewFieldChangeEventTest {
 
     private NewFieldChangeEvent e;
 
@@ -25,46 +24,41 @@ public class NewFieldChangeEventTest {
     @Mock
     private TextArea<?> mockComponent;
 
-    @Before
-    public void setUp() {
-        when(mockComponent.getId()).thenReturn("id");
-        when(mockComponent.getMarkupId()).thenReturn("mId");
-    }
-
-    @After
-    public void tearDown() {
+    @AfterEach
+    void tearDown() {
         verifyNoMoreInteractions(targetMock, targetMock2);
     }
 
     @Test
-    public void canRetrieveTarget() {
+    void canRetrieveTarget() {
         e = new NewFieldChangeEvent(targetMock);
         assertThat(e.getTarget()).isEqualTo(targetMock);
     }
 
     @Test
-    public void usingMinimalConstructor_doesNotSetAnySpecialStuff() {
+    void usingMinimalConstructor_doesNotSetAnySpecialStuff() {
         e = new NewFieldChangeEvent(targetMock);
         assertThat(e.getId()).isNull();
         assertThat(e.getMarkupId()).isNull();
     }
 
     @Test
-    public void usingWithId_doesAddId() {
+    void usingWithId_doesAddId() {
         e = new NewFieldChangeEvent(targetMock).withId("foo");
         assertThat(e.getId()).isEqualTo("foo");
         assertThat(e.getMarkupId()).isNull();
     }
 
     @Test
-    public void usingWithMarkupId_doesAddMarkupId() {
+    void usingWithMarkupId_doesAddMarkupId() {
         e = new NewFieldChangeEvent(targetMock).withMarkupId("bar");
         assertThat(e.getId()).isNull();
         assertThat(e.getMarkupId()).isEqualTo("bar");
     }
 
+    @SuppressWarnings("SpellCheckingInspection")
     @Test
-    public void usingWithIdAndMarkupId_doesAddBoth() {
+    void usingWithIdAndMarkupId_doesAddBoth() {
         e = new NewFieldChangeEvent(targetMock)
             .withId("hups")
             .withMarkupId("goo");
@@ -73,7 +67,7 @@ public class NewFieldChangeEventTest {
     }
 
     @Test
-    public void canOverrideTarget() {
+    void canOverrideTarget() {
         e = new NewFieldChangeEvent(targetMock);
         assertThat(e.getTarget()).isEqualTo(targetMock);
         e.setTarget(targetMock2);
@@ -81,7 +75,7 @@ public class NewFieldChangeEventTest {
     }
 
     @Test
-    public void consideringAddingToTarget_withIdLessEvent_addsTarget() {
+    void consideringAddingToTarget_withIdLessEvent_addsTarget() {
         e = new NewFieldChangeEvent(targetMock);
         assertThat(e.getId()).isNull();
 
@@ -91,7 +85,7 @@ public class NewFieldChangeEventTest {
     }
 
     @Test
-    public void consideringAddingToTarget_withDifferingId_doesNotAddTarget() {
+    void consideringAddingToTarget_withDifferingId_doesNotAddTarget() {
         e = new NewFieldChangeEvent(targetMock)
             .withId("otherId")
             .withMarkupId("mId");
@@ -100,7 +94,9 @@ public class NewFieldChangeEventTest {
     }
 
     @Test
-    public void consideringAddingToTarget_withSameIdButNullMarkupId_addsTarget() {
+    void consideringAddingToTarget_withSameIdButNullMarkupId_addsTarget() {
+        when(mockComponent.getId()).thenReturn("id");
+        when(mockComponent.getMarkupId()).thenReturn("mId");
         e = new NewFieldChangeEvent(targetMock).withId("id");
         assertThat(e.getMarkupId()).isNull();
 
@@ -110,7 +106,9 @@ public class NewFieldChangeEventTest {
     }
 
     @Test
-    public void consideringAddingToTarget_withSameIdAndDifferingMarkupId_addsTarget() {
+    void consideringAddingToTarget_withSameIdAndDifferingMarkupId_addsTarget() {
+        when(mockComponent.getId()).thenReturn("id");
+        when(mockComponent.getMarkupId()).thenReturn("mId");
         e = new NewFieldChangeEvent(targetMock)
             .withId("id")
             .withMarkupId("otherMarkupId");
@@ -119,7 +117,9 @@ public class NewFieldChangeEventTest {
     }
 
     @Test
-    public void consideringAddingToTarget_withSameIdButSameMarkupId_doesNotAddTarget() {
+    void consideringAddingToTarget_withSameIdButSameMarkupId_doesNotAddTarget() {
+        when(mockComponent.getId()).thenReturn("id");
+        when(mockComponent.getMarkupId()).thenReturn("mId");
         e = new NewFieldChangeEvent(targetMock)
             .withId("id")
             .withMarkupId("mId");
@@ -128,7 +128,7 @@ public class NewFieldChangeEventTest {
     }
 
     @Test
-    public void equals() {
+    void equals() {
         EqualsVerifier
             .forClass(NewFieldChangeEvent.class)
             .withRedefinedSuperclass()

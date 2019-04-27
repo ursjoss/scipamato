@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.List;
 import java.util.Optional;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import ch.difty.scipamato.publ.entity.NewStudy;
@@ -15,20 +15,20 @@ import ch.difty.scipamato.publ.entity.Newsletter;
 import ch.difty.scipamato.publ.persistence.JooqBaseIntegrationTest;
 
 @SuppressWarnings("SpellCheckingInspection")
-public class JooqNewStudyRepoIntegrationTest extends JooqBaseIntegrationTest {
+class JooqNewStudyRepoIntegrationTest extends JooqBaseIntegrationTest {
 
     @Autowired
     private NewStudyRepository repo;
 
     @Test
-    public void findingTopicsOfNewsletter1_inEnglish_returnsNoResults() {
+    void findingTopicsOfNewsletter1_inEnglish_returnsNoResults() {
         assertThat(repo.findNewStudyTopicsForNewsletter(1, "en"))
             .isNotNull()
             .isEmpty();
     }
 
     @Test
-    public void findingTopicsOfNewsletter1_inGerman_returnsResults() {
+    void findingTopicsOfNewsletter1_inGerman_returnsResults() {
         List<NewStudyTopic> result = repo.findNewStudyTopicsForNewsletter(1, "de");
         assertThat(result)
             .isNotNull()
@@ -92,14 +92,14 @@ public class JooqNewStudyRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void findingMostRecentNewsletterId() {
+    void findingMostRecentNewsletterId() {
         assertThat(repo.findMostRecentNewsletterId())
             .isPresent()
             .hasValue(2);
     }
 
     @Test
-    public void findingArchivedNewsletters_with14ToFind_returnsUpTo14() {
+    void findingArchivedNewsletters_with14ToFind_returnsUpTo14() {
         final List<Newsletter> results = repo.findArchivedNewsletters(14, "en");
 
         assertThat(results).hasSize(2);
@@ -115,7 +115,7 @@ public class JooqNewStudyRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void findingArchivedNewsletters_withOneToFind_returnsOne() {
+    void findingArchivedNewsletters_withOneToFind_returnsOne() {
         final List<Newsletter> results = repo.findArchivedNewsletters(1, "en");
 
         assertThat(results).hasSize(1);
@@ -131,7 +131,7 @@ public class JooqNewStudyRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void findingNewStudyPageLinks_withEnglish() {
+    void findingNewStudyPageLinks_withEnglish() {
         final List<NewStudyPageLink> results = repo.findNewStudyPageLinks("en");
 
         assertThat(results).hasSize(2);
@@ -150,7 +150,7 @@ public class JooqNewStudyRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void findingNewStudyPageLinks_withGerman() {
+    void findingNewStudyPageLinks_withGerman() {
         final List<NewStudyPageLink> results = repo.findNewStudyPageLinks("de");
 
         assertThat(results).hasSize(2);
@@ -163,7 +163,7 @@ public class JooqNewStudyRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void findingIdOfNewsletterWithIssue_forExistingNewsletter_findsIt() {
+    void findingIdOfNewsletterWithIssue_forExistingNewsletter_findsIt() {
         final Optional<Integer> idOpt = repo.findIdOfNewsletterWithIssue("2018/06");
         assertThat(idOpt).isPresent();
         //noinspection OptionalGetWithoutIsPresent
@@ -171,7 +171,7 @@ public class JooqNewStudyRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void findingIdOfNewsletterWithIssue_forNonExistingNewsletter_returnsEmptyOptional() {
+    void findingIdOfNewsletterWithIssue_forNonExistingNewsletter_returnsEmptyOptional() {
         final Optional<Integer> idOpt = repo.findIdOfNewsletterWithIssue("2018/06xxx");
         assertThat(idOpt).isNotPresent();
     }

@@ -4,17 +4,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.core.entity.CodeClass;
 
-public class CodeFilterTest {
+class CodeFilterTest {
 
     private final CodeFilter f  = new CodeFilter();
     private final CodeClass  cc = new CodeClass(1, "cc1", "");
 
     @Test
-    public void getAndSet() {
+    void getAndSet() {
         f.setCodeClass(cc);
         f.setNameMask("nameMask");
         f.setCommentMask("commentMask");
@@ -30,7 +30,7 @@ public class CodeFilterTest {
     }
 
     @Test
-    public void equals() {
+    void equals() {
         EqualsVerifier
             .forClass(CodeFilter.class)
             .withRedefinedSuperclass()
@@ -39,7 +39,7 @@ public class CodeFilterTest {
     }
 
     @Test
-    public void assertEnumFields() {
+    void assertEnumFields() {
         assertThat(CodeFilter.CodeFilterFields.values())
             .extracting("name")
             .containsExactly("codeClass", "nameMask", "commentMask", "internal");

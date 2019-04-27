@@ -10,10 +10,11 @@ import java.util.List;
 
 import org.jooq.*;
 import org.jooq.impl.TableImpl;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import ch.difty.scipamato.common.DateTimeService;
 import ch.difty.scipamato.common.FrozenDateTimeService;
@@ -34,7 +35,7 @@ import ch.difty.scipamato.core.entity.IdScipamatoEntity;
  * Let's postpone this and remove the ignored test methods for now (gentle
  * pressure of sonarqube :-) )
  */
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SuppressWarnings("WeakerAccess")
 public abstract class JooqEntityRepoTest<R extends Record, T extends IdScipamatoEntity<ID>, ID extends Number, TI extends TableImpl<R>, M extends RecordMapper<R, T>, F extends ScipamatoFilter>
     extends JooqReadOnlyRepoTest<R, T, ID, TI, M, F> {
@@ -107,33 +108,8 @@ public abstract class JooqEntityRepoTest<R extends Record, T extends IdScipamato
     protected abstract TableField<R, Integer> getRecordVersion();
 
     @Override
-    @SuppressWarnings("unchecked")
     protected final void specificSetUp() {
         repo = getRepo();
-
-        entities.add(getPersistedEntity());
-        entities.add(getPersistedEntity());
-
-        records.add(getPersistedRecord());
-        records.add(getPersistedRecord());
-
-        when(getDsl().insertInto(getTable())).thenReturn(insertSetStepMock);
-        when(insertSetStepSetterMock.setNonKeyFieldsFor(insertSetStepMock, getUnpersistedEntity())).thenReturn(
-            insertSetMoreStepMock);
-        when(insertSetStepMock.set(isA(TableField.class), eq(getUnpersistedEntity()))).thenReturn(
-            insertSetMoreStepMock);
-        when(insertSetMoreStepMock.returning()).thenReturn(insertResultStepMock);
-
-        when(getMapper().map(getPersistedRecord())).thenReturn(getPersistedEntity());
-
-        when(getDsl().delete(getTable())).thenReturn(deleteWhereStepMock);
-        when(deleteWhereStepMock.where(getTableId().equal(id))).thenReturn(deleteConditionStep1Mock);
-
-        when(getDsl().update(getTable())).thenReturn(updateSetFirstStepMock);
-        when(updateSetStepSetterMock.setFieldsFor(updateSetFirstStepMock, getUnpersistedEntity())).thenReturn(
-            updateSetMoreStepMock);
-        when(updateConditionStepMock.returning()).thenReturn(updateResultStepMock);
-
         testSpecificSetUp();
     }
 
@@ -177,17 +153,17 @@ public abstract class JooqEntityRepoTest<R extends Record, T extends IdScipamato
     }
 
     @Test
-    public void addingNullEntity_throws() {
+    void addingNullEntity_throws() {
         assertDegenerateSupplierParameter(() -> repo.add(null, "de"), "entity");
     }
 
     @Test
-    public void addingNullLanguageCode_throws() {
+    void addingNullLanguageCode_throws() {
         assertDegenerateSupplierParameter(() -> repo.add(getUnpersistedEntity(), null), "languageCode");
     }
 
     @Test
-    public void adding_withSaveReturningNull_returnsNull() {
+    void adding_withSaveReturningNull_returnsNull() {
         repo = makeRepoSavingReturning(null);
         assertThat(repo.add(getUnpersistedEntity(), "de")).isNull();
     }
@@ -202,13 +178,13 @@ public abstract class JooqEntityRepoTest<R extends Record, T extends IdScipamato
      */
     protected abstract EntityRepository<T, ID, F> makeRepoSavingReturning(R returning);
 
-    @Test(expected = NullArgumentException.class)
-    public void deleting_withIdNull_throws() {
-        repo.delete(null, 1);
+    @Test
+    void deleting_withIdNull_throws() {
+        Assertions.assertThrows(NullArgumentException.class, () -> repo.delete(null, 1));
     }
 
     @Test
-    public void deleting_withIdNotFoundInDb_throwsOptimisticLockingException() {
+    void deleting_withIdNotFoundInDb_throwsOptimisticLockingException() {
         repo = makeRepoFindingEntityById(null);
         try {
             repo.delete(id, 0);
@@ -221,9 +197,11 @@ public abstract class JooqEntityRepoTest<R extends Record, T extends IdScipamato
     }
 
     @Test
-    public void deleting_validPersistentEntity_returnsDeletedEntity() {
+    void deleting_validPersistentEntity_returnsDeletedEntity() {
         repo = makeRepoFindingEntityById(getPersistedEntity());
 
+        when(getDsl().delete(getTable())).thenReturn(deleteWhereStepMock);
+        when(deleteWhereStepMock.where(getTableId().equal(id))).thenReturn(deleteConditionStep1Mock);
         when(deleteConditionStep1Mock.and(getRecordVersion().eq(0))).thenReturn(deleteConditionStep2Mock);
         when(deleteConditionStep2Mock.execute()).thenReturn(1);
 
@@ -236,8 +214,10 @@ public abstract class JooqEntityRepoTest<R extends Record, T extends IdScipamato
     }
 
     @Test
-    public void deleting_validPersistentEntity_withFailingDelete_returnsDeletedEntity() {
+    void deleting_validPersistentEntity_withFailingDelete_returnsDeletedEntity() {
         repo = makeRepoFindingEntityById(getPersistedEntity());
+        when(getDsl().delete(getTable())).thenReturn(deleteWhereStepMock);
+        when(deleteWhereStepMock.where(getTableId().equal(id))).thenReturn(deleteConditionStep1Mock);
         when(deleteConditionStep1Mock.and(getRecordVersion().eq(0))).thenReturn(deleteConditionStep2Mock);
         when(deleteConditionStep2Mock.execute()).thenReturn(0);
 
@@ -255,17 +235,17 @@ public abstract class JooqEntityRepoTest<R extends Record, T extends IdScipamato
     }
 
     @Test
-    public void updating_withEntityNull_throws() {
+    void updating_withEntityNull_throws() {
         assertDegenerateSupplierParameter(() -> repo.update(null, "de"), "entity");
     }
 
     @Test
-    public void updating_withLanguageCodeNull_throws() {
+    void updating_withLanguageCodeNull_throws() {
         assertDegenerateSupplierParameter(() -> repo.update(getPersistedEntity(), null), "languageCode");
     }
 
     @Test
-    public void updating_withEntityIdNull_throws() {
+    void updating_withEntityIdNull_throws() {
         expectUnpersistedEntityIdNull();
         assertDegenerateSupplierParameter(() -> repo.update(getUnpersistedEntity(), "de"), "entity.id");
         verifyUnpersistedEntityId();

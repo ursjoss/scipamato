@@ -9,7 +9,7 @@ import ch.difty.scipamato.core.db.tables.records.SearchOrderRecord;
 import ch.difty.scipamato.core.entity.search.SearchOrder;
 import ch.difty.scipamato.core.persistence.RecordMapperTest;
 
-public class SearchOrderRecordMapperTest extends RecordMapperTest<SearchOrderRecord, SearchOrder> {
+class SearchOrderRecordMapperTest extends RecordMapperTest<SearchOrderRecord, SearchOrder> {
 
     static final Long    ID     = 2L;
     static final String  NAME   = "soName";

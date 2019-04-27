@@ -2,9 +2,9 @@ package ch.difty.scipamato.core.entity.newsletter;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class NewsletterNewsletterTopicTest {
+class NewsletterNewsletterTopicTest {
 
     private final int    newsletterId      = 1;
     private final int    newsletterTopicId = 2;
@@ -15,7 +15,7 @@ public class NewsletterNewsletterTopicTest {
         title);
 
     @Test
-    public void getters() {
+    void getters() {
         assertThat(nnt.getNewsletterId()).isEqualTo(newsletterId);
         assertThat(nnt.getNewsletterTopicId()).isEqualTo(newsletterTopicId);
         assertThat(nnt.getSort()).isEqualTo(sort);
@@ -24,7 +24,7 @@ public class NewsletterNewsletterTopicTest {
     }
 
     @Test
-    public void validatingToString() {
+    void validatingToString() {
         assertThat(nnt.toString()).isEqualTo(
             "NewsletterNewsletterTopic(newsletterId=1, newsletterTopicId=2, sort=3, title=title)");
     }

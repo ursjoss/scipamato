@@ -10,11 +10,11 @@ import java.util.*;
 
 import org.jooq.DSLContext;
 import org.jooq.Result;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import ch.difty.scipamato.common.DateTimeService;
 import ch.difty.scipamato.core.db.tables.records.KeywordTrRecord;
@@ -22,8 +22,9 @@ import ch.difty.scipamato.core.entity.keyword.KeywordDefinition;
 import ch.difty.scipamato.core.entity.keyword.KeywordTranslation;
 import ch.difty.scipamato.core.persistence.OptimisticLockingException;
 
-@RunWith(MockitoJUnitRunner.class)
-public class JooqKeywordRepoTest {
+@SuppressWarnings("ResultOfMethodCallIgnored")
+@ExtendWith(MockitoExtension.class)
+class JooqKeywordRepoTest {
 
     @Mock
     private DSLContext      dslContextMock;
@@ -32,23 +33,23 @@ public class JooqKeywordRepoTest {
 
     private JooqKeywordRepo repo;
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
         repo = new JooqKeywordRepo(dslContextMock, dateTimeServiceMock);
     }
 
     @Test
-    public void findingCodesOfClass_withNullLanguageId_throws() {
+    void findingCodesOfClass_withNullLanguageId_throws() {
         assertDegenerateSupplierParameter(() -> repo.findAll(null), "languageCode");
     }
 
     @Test
-    public void insertingKeywordDefinition_withNullArgument_throws() {
+    void insertingKeywordDefinition_withNullArgument_throws() {
         assertDegenerateSupplierParameter(() -> repo.insert(null), "entity");
     }
 
     @Test
-    public void insertingKeywordDefinition_withEntityWithNonNullId_throws() {
+    void insertingKeywordDefinition_withEntityWithNonNullId_throws() {
         KeywordDefinition ntd = new KeywordDefinition(1, "de", 1);
         try {
             repo.insert(ntd);
@@ -61,19 +62,19 @@ public class JooqKeywordRepoTest {
     }
 
     @Test
-    public void updatingKeywordDefinition_withNullArgument_throws() {
+    void updatingKeywordDefinition_withNullArgument_throws() {
         assertDegenerateSupplierParameter(() -> repo.update(null), "entity");
     }
 
     @Test
-    public void updatingKeywordDefinition_withEntityWithNullId_throws() {
+    void updatingKeywordDefinition_withEntityWithNullId_throws() {
         KeywordDefinition ntd = new KeywordDefinition(null, "de", 1);
         assertDegenerateSupplierParameter(() -> repo.update(ntd), "entity.id");
     }
 
     @Test
     @SuppressWarnings("unchecked")
-    public void removingObsoletePersistedRecords() {
+    void removingObsoletePersistedRecords() {
         final KeywordTranslation kt = new KeywordTranslation(1, "de", "kw1", 1);
         final Result<KeywordTrRecord> resultMock = mock(Result.class);
         final Iterator itMock = mock(Iterator.class);
@@ -98,7 +99,7 @@ public class JooqKeywordRepoTest {
     }
 
     @Test
-    public void removingObsoletePersistedRecords_whenCheckingIfTranslationIsPresentInEntity_doesNotConsiderIdLessEntityTranslations() {
+    void removingObsoletePersistedRecords_whenCheckingIfTranslationIsPresentInEntity_doesNotConsiderIdLessEntityTranslations() {
         final KeywordTranslation ct = new KeywordTranslation(null, "de", "1ade", 1);
         final Result<KeywordTrRecord> resultMock = mock(Result.class);
         final Iterator itMock = mock(Iterator.class);
@@ -120,7 +121,7 @@ public class JooqKeywordRepoTest {
     }
 
     @Test
-    public void managingTranslations() {
+    void managingTranslations() {
         final KeywordDefinition entity = new KeywordDefinition(1, "de", 10);
 
         try {
@@ -135,12 +136,20 @@ public class JooqKeywordRepoTest {
     }
 
     @Test
-    public void addingOrUpdatingTranlsation() {
+    void addingOrUpdatingTranslation() {
         KeywordTrRecord ktrMock = mock(KeywordTrRecord.class);
-        when(ktrMock.get(KEYWORD_TR.ID)).thenReturn(1000);
-        when(ktrMock.get(KEYWORD_TR.LANG_CODE)).thenReturn("de");
-        when(ktrMock.get(KEYWORD_TR.NAME)).thenReturn("someName");
-        when(ktrMock.get(KEYWORD_TR.VERSION)).thenReturn(500);
+        doReturn(1000)
+            .when(ktrMock)
+            .get(KEYWORD_TR.ID);
+        doReturn("de")
+            .when(ktrMock)
+            .get(KEYWORD_TR.LANG_CODE);
+        doReturn("someName")
+            .when(ktrMock)
+            .get(KEYWORD_TR.NAME);
+        doReturn(500)
+            .when(ktrMock)
+            .get(KEYWORD_TR.VERSION);
 
         repo = new JooqKeywordRepo(dslContextMock, dateTimeServiceMock) {
             @Override
@@ -168,7 +177,7 @@ public class JooqKeywordRepoTest {
     }
 
     @Test
-    public void addOrThrow_withNullRecord_throwsOptimisticLockingException() {
+    void addOrThrow_withNullRecord_throwsOptimisticLockingException() {
         try {
             repo.addOrThrow(null, "trslString", new ArrayList<>());
             fail("should have thrown exception");
@@ -181,7 +190,7 @@ public class JooqKeywordRepoTest {
     }
 
     @Test
-    public void loggingOrThrowing_withDeleteCountZero_throws() {
+    void loggingOrThrowing_withDeleteCountZero_throws() {
         try {
             repo.logOrThrow(0, 1, new KeywordDefinition(10, "de", 100));
             fail("should have thrown exception");

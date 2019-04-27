@@ -2,14 +2,14 @@ package ch.difty.scipamato.core.sync.jobs.newsletter;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.core.sync.jobs.PublicEntityTest;
 
-public class PublicNewsletterTopicTest extends PublicEntityTest {
+class PublicNewsletterTopicTest extends PublicEntityTest {
 
     @Test
-    public void canSetGet() {
+    void canSetGet() {
         PublicNewsletterTopic pnt = PublicNewsletterTopic
             .builder()
             .id(1)

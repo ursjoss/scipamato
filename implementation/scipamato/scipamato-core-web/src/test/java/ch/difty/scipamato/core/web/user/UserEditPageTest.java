@@ -13,8 +13,8 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.*;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.tester.FormTester;
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatcher;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
@@ -27,7 +27,7 @@ import ch.difty.scipamato.core.web.CorePageParameters;
 import ch.difty.scipamato.core.web.common.BasePageTest;
 
 @SuppressWarnings("ALL")
-public class UserEditPageTest extends BasePageTest<UserEditPage> {
+class UserEditPageTest extends BasePageTest<UserEditPage> {
 
     private static final String PASSWORD1 = "pw";
     private static final String PW1__HASH = "$2a$04$8r4NZRvT24ggS1TfOqov3eEb0bUN6xwx6zdUFz3XANEQl60M.EFDi";
@@ -55,8 +55,8 @@ public class UserEditPageTest extends BasePageTest<UserEditPage> {
         return "testadmin";
     }
 
-    @After
-    public void tearDown() {
+    @AfterEach
+    void tearDown() {
         verifyNoMoreInteractions(userServiceMock);
     }
 
@@ -120,7 +120,7 @@ public class UserEditPageTest extends BasePageTest<UserEditPage> {
     }
 
     @Test
-    public void assertUserEditPage_inCreateMode() {
+    void assertUserEditPage_inCreateMode() {
         getTester().startPage(newUserEditPageInMode(UserEditPage.Mode.CREATE));
         getTester().assertRenderedPage(getPageClass());
 
@@ -148,7 +148,7 @@ public class UserEditPageTest extends BasePageTest<UserEditPage> {
     }
 
     @Test
-    public void assertUserEditPage_inPasswordChangeMode() {
+    void assertUserEditPage_inPasswordChangeMode() {
         getTester().startPage(newUserEditPageInMode(UserEditPage.Mode.CHANGE_PASSWORD));
         getTester().assertRenderedPage(getPageClass());
 
@@ -176,7 +176,7 @@ public class UserEditPageTest extends BasePageTest<UserEditPage> {
     }
 
     @Test
-    public void assertUserEditPage_inEditMode() {
+    void assertUserEditPage_inEditMode() {
         getTester().startPage(newUserEditPageInMode(UserEditPage.Mode.EDIT));
         getTester().assertRenderedPage(getPageClass());
 
@@ -265,7 +265,7 @@ public class UserEditPageTest extends BasePageTest<UserEditPage> {
     }
 
     @Test
-    public void submitting_inEditMode_delegatesUserSaveWithoutPasswordToService() {
+    void submitting_inEditMode_delegatesUserSaveWithoutPasswordToService() {
         when(userServiceMock.saveOrUpdate(argThat(new UserMatcher(null)))).thenReturn(user_saved);
 
         getTester().startPage(newUserEditPageInMode(UserEditPage.Mode.EDIT));
@@ -282,7 +282,7 @@ public class UserEditPageTest extends BasePageTest<UserEditPage> {
     }
 
     @Test
-    public void submitting_inPWChangeMode_withCurrentPasswordCorrectAndTwoMatchingPasswords_delegatesToService() {
+    void submitting_inPWChangeMode_withCurrentPasswordCorrectAndTwoMatchingPasswords_delegatesToService() {
         when(userServiceMock.saveOrUpdate(argThat(new UserMatcher(PASSWORD2)))).thenReturn(user_saved);
 
         getTester().startPage(newUserEditPageInMode(UserEditPage.Mode.CHANGE_PASSWORD));
@@ -302,7 +302,7 @@ public class UserEditPageTest extends BasePageTest<UserEditPage> {
     }
 
     @Test
-    public void submitting_inPWChangeMode_withCurrentPasswordWrong_fails() {
+    void submitting_inPWChangeMode_withCurrentPasswordWrong_fails() {
         getTester().startPage(newUserEditPageInMode(UserEditPage.Mode.CHANGE_PASSWORD));
         getTester().assertRenderedPage(getPageClass());
 
@@ -318,7 +318,7 @@ public class UserEditPageTest extends BasePageTest<UserEditPage> {
     }
 
     @Test
-    public void submitting_inPWChangeMode_withCurrentPasswordCorrectButNonMatchingNewPasswords_fails() {
+    void submitting_inPWChangeMode_withCurrentPasswordCorrectButNonMatchingNewPasswords_fails() {
         getTester().startPage(newUserEditPageInMode(UserEditPage.Mode.CHANGE_PASSWORD));
         getTester().assertRenderedPage(getPageClass());
 
@@ -334,7 +334,7 @@ public class UserEditPageTest extends BasePageTest<UserEditPage> {
     }
 
     @Test
-    public void submitting_inPWChangeMode_withNoCurrentPassword_doesNotSubmitDueToMissingExistingPassword() {
+    void submitting_inPWChangeMode_withNoCurrentPassword_doesNotSubmitDueToMissingExistingPassword() {
         reset(userServiceMock);
         final User user = new User(1, "user", "first", "last", "foo@bar.baz", null, true,
             Set.of(Role.ADMIN, Role.USER));
@@ -355,7 +355,7 @@ public class UserEditPageTest extends BasePageTest<UserEditPage> {
     }
 
     @Test
-    public void submitting_inManageMode_withNoPasswordsSet_delegatesToService() {
+    void submitting_inManageMode_withNoPasswordsSet_delegatesToService() {
         when(userServiceMock.saveOrUpdate(argThat(new UserMatcher(null)))).thenReturn(user_saved);
 
         getTester().startPage(newUserEditPageInMode(UserEditPage.Mode.MANAGE));
@@ -372,7 +372,7 @@ public class UserEditPageTest extends BasePageTest<UserEditPage> {
     }
 
     @Test
-    public void submitting_inManageMode_withPasswordsSetWithMismatch_fails() {
+    void submitting_inManageMode_withPasswordsSetWithMismatch_fails() {
         getTester().startPage(newUserEditPageInMode(UserEditPage.Mode.MANAGE));
         getTester().assertRenderedPage(getPageClass());
 
@@ -388,7 +388,7 @@ public class UserEditPageTest extends BasePageTest<UserEditPage> {
     }
 
     @Test
-    public void submitting_inManageMode_withPasswordsSetIdentically_delegatesToService() {
+    void submitting_inManageMode_withPasswordsSetIdentically_delegatesToService() {
         when(userServiceMock.saveOrUpdate(argThat(new UserMatcher(PASSWORD2)))).thenReturn(user_saved);
 
         getTester().startPage(newUserEditPageInMode(UserEditPage.Mode.MANAGE));
@@ -407,7 +407,7 @@ public class UserEditPageTest extends BasePageTest<UserEditPage> {
     }
 
     @Test
-    public void submitting_inCreateMode_delegatesCreateToService() {
+    void submitting_inCreateMode_delegatesCreateToService() {
         when(userServiceMock.saveOrUpdate(argThat(new UserMatcher(PASSWORD2)))).thenReturn(user_saved);
 
         getTester().startPage(newUserEditPageInMode(UserEditPage.Mode.CREATE, null));
@@ -431,7 +431,7 @@ public class UserEditPageTest extends BasePageTest<UserEditPage> {
     }
 
     @Test
-    public void submitting_withCreateServiceReturnNull_issuesErrorMessage() {
+    void submitting_withCreateServiceReturnNull_issuesErrorMessage() {
         when(userServiceMock.saveOrUpdate(argThat(new UserMatcher(PASSWORD2)))).thenReturn(null);
 
         getTester().startPage(newUserEditPageInMode(UserEditPage.Mode.MANAGE));
@@ -450,7 +450,7 @@ public class UserEditPageTest extends BasePageTest<UserEditPage> {
     }
 
     @Test
-    public void submitting_withCreateServiceThrowingOptimisticLockingException() {
+    void submitting_withCreateServiceThrowingOptimisticLockingException() {
         when(userServiceMock.saveOrUpdate(argThat(new UserMatcher(PASSWORD2)))).thenThrow(
             new OptimisticLockingException("tblName", OptimisticLockingException.Type.UPDATE));
 
@@ -471,7 +471,7 @@ public class UserEditPageTest extends BasePageTest<UserEditPage> {
     }
 
     @Test
-    public void submitting_withCreateServiceThrowingOtherException() {
+    void submitting_withCreateServiceThrowingOtherException() {
         when(userServiceMock.saveOrUpdate(argThat(new UserMatcher(PASSWORD2)))).thenThrow(
             new RuntimeException("otherExceptionMsg"));
 
@@ -492,7 +492,7 @@ public class UserEditPageTest extends BasePageTest<UserEditPage> {
     }
 
     @Test
-    public void deleting_delegatesToService() {
+    void deleting_delegatesToService() {
         getTester().startPage(newUserEditPageInMode(UserEditPage.Mode.MANAGE));
         getTester().assertRenderedPage(getPageClass());
 
@@ -510,7 +510,7 @@ public class UserEditPageTest extends BasePageTest<UserEditPage> {
     }
 
     @Test
-    public void deleting_withExceptionWhileremoving_delegatesToService() {
+    void deleting_withExceptionWhileremoving_delegatesToService() {
         doThrow(new RuntimeException("foo"))
             .when(userServiceMock)
             .remove(user);
@@ -530,7 +530,7 @@ public class UserEditPageTest extends BasePageTest<UserEditPage> {
     }
 
     @Test
-    public void instantiateUserEditPage_withInvalidMode_throws() {
+    void instantiateUserEditPage_withInvalidMode_throws() {
         final PageParameters pp = new PageParameters();
         pp.add(CorePageParameters.MODE.getName(), "foo");
         try {

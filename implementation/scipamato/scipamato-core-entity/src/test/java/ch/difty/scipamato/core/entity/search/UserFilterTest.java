@@ -4,12 +4,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class UserFilterTest {
+class UserFilterTest {
 
     @Test
-    public void test() {
+    void test() {
         UserFilter f = new UserFilter();
         f.setNameMask("name");
         f.setEmailMask("email");
@@ -23,7 +23,7 @@ public class UserFilterTest {
     }
 
     @Test
-    public void equals() {
+    void equals() {
         EqualsVerifier
             .forClass(UserFilter.class)
             .withRedefinedSuperclass()
@@ -32,7 +32,7 @@ public class UserFilterTest {
     }
 
     @Test
-    public void assertEnumFields() {
+    void assertEnumFields() {
         assertThat(UserFilter.UserFilterFields.values())
             .extracting("name")
             .containsExactly("nameMask", "emailMask", "enabled");

@@ -8,12 +8,12 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
@@ -21,9 +21,9 @@ import ch.difty.scipamato.core.entity.User;
 import ch.difty.scipamato.core.entity.search.UserFilter;
 import ch.difty.scipamato.core.persistence.UserRepository;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 @SuppressWarnings({ "ResultOfMethodCallIgnored", "OptionalGetWithoutIsPresent" })
-public class JooqUserServiceTest {
+class JooqUserServiceTest {
 
     private JooqUserService service;
 
@@ -40,21 +40,21 @@ public class JooqUserServiceTest {
 
     private final List<User> users = new ArrayList<>();
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
         service = new JooqUserService(repoMock, passwordEncoderMock);
 
         users.add(userMock);
         users.add(userMock);
     }
 
-    @After
-    public void tearDown() {
+    @AfterEach
+    void tearDown() {
         verifyNoMoreInteractions(repoMock, passwordEncoderMock, filterMock, paginationContextMock, userMock);
     }
 
     @Test
-    public void findingById_withFoundEntity_returnsOptionalOfIt() {
+    void findingById_withFoundEntity_returnsOptionalOfIt() {
         Integer id = 7;
         when(repoMock.findById(id)).thenReturn(userMock);
 
@@ -66,7 +66,7 @@ public class JooqUserServiceTest {
     }
 
     @Test
-    public void findingById_withNotFoundEntity_returnsOptionalEmpty() {
+    void findingById_withNotFoundEntity_returnsOptionalEmpty() {
         Integer id = 7;
         when(repoMock.findById(id)).thenReturn(null);
 
@@ -78,26 +78,26 @@ public class JooqUserServiceTest {
     }
 
     @Test
-    public void findingByFilter_delegatesToRepo() {
+    void findingByFilter_delegatesToRepo() {
         when(repoMock.findPageByFilter(filterMock, paginationContextMock)).thenReturn(users);
         assertThat(service.findPageByFilter(filterMock, paginationContextMock)).isEqualTo(users);
         verify(repoMock).findPageByFilter(filterMock, paginationContextMock);
     }
 
     @Test
-    public void countingByFilter_delegatesToRepo() {
+    void countingByFilter_delegatesToRepo() {
         when(repoMock.countByFilter(filterMock)).thenReturn(3);
         assertThat(service.countByFilter(filterMock)).isEqualTo(3);
         verify(repoMock).countByFilter(filterMock);
     }
 
     @Test
-    public void savingOrUpdating_withNullUser_simplyReturnsNull() {
+    void savingOrUpdating_withNullUser_simplyReturnsNull() {
         assertThat(service.saveOrUpdate(null)).isNull();
     }
 
     @Test
-    public void savingOrUpdating_withUserWithNullId_hasRepoAddTheUser() {
+    void savingOrUpdating_withUserWithNullId_hasRepoAddTheUser() {
         when(userMock.getId()).thenReturn(null);
         when(repoMock.add(userMock)).thenReturn(userMock);
         assertThat(service.saveOrUpdate(userMock)).isEqualTo(userMock);
@@ -108,7 +108,7 @@ public class JooqUserServiceTest {
     }
 
     @Test
-    public void savingOrUpdating_withUserWithNonNullId_hasRepoUpdateTheUser() {
+    void savingOrUpdating_withUserWithNonNullId_hasRepoUpdateTheUser() {
         when(userMock.getId()).thenReturn(17);
         when(repoMock.update(userMock)).thenReturn(userMock);
         assertThat(service.saveOrUpdate(userMock)).isEqualTo(userMock);
@@ -119,7 +119,7 @@ public class JooqUserServiceTest {
     }
 
     @Test
-    public void savingOrUpdating_withUserWithNullId_withPassword_hasRepoAddTheUserAfterEncodingThePassword() {
+    void savingOrUpdating_withUserWithNullId_withPassword_hasRepoAddTheUserAfterEncodingThePassword() {
         when(userMock.getId()).thenReturn(null);
         when(userMock.getPassword()).thenReturn("foo");
         when(passwordEncoderMock.encode("foo")).thenReturn("bar");
@@ -135,7 +135,7 @@ public class JooqUserServiceTest {
     }
 
     @Test
-    public void savingOrUpdating_withUserWithNonNullId_withPassword_hasRepoUpdateTheUserAfterEncodingThePassword() {
+    void savingOrUpdating_withUserWithNonNullId_withPassword_hasRepoUpdateTheUserAfterEncodingThePassword() {
         when(userMock.getId()).thenReturn(17);
         when(userMock.getPassword()).thenReturn("foo");
         when(passwordEncoderMock.encode("foo")).thenReturn("bar");
@@ -151,34 +151,34 @@ public class JooqUserServiceTest {
     }
 
     @Test
-    public void findingByUserName_withNullName_returnsEmptyOptional() {
+    void findingByUserName_withNullName_returnsEmptyOptional() {
         assertThat(service
             .findByUserName(null)
             .isPresent()).isFalse();
     }
 
     @Test
-    public void findingByUserName_whenFindingUser_delegatesToRepoAndReturnsOptionalOfFoundUser() {
+    void findingByUserName_whenFindingUser_delegatesToRepoAndReturnsOptionalOfFoundUser() {
         when(repoMock.findByUserName("foo")).thenReturn(userMock);
         assertThat(service.findByUserName("foo")).isEqualTo(Optional.of(userMock));
         verify(repoMock).findByUserName("foo");
     }
 
     @Test
-    public void findingByUserName_whenNotFindingUser_delegatesToRepoAndReturnsOptionalEmpty() {
+    void findingByUserName_whenNotFindingUser_delegatesToRepoAndReturnsOptionalEmpty() {
         when(repoMock.findByUserName("foo")).thenReturn(null);
         assertThat(service.findByUserName("foo")).isEqualTo(Optional.empty());
         verify(repoMock).findByUserName("foo");
     }
 
     @Test
-    public void deleting_withNullEntity_doesNothing() {
+    void deleting_withNullEntity_doesNothing() {
         service.remove(null);
         verify(repoMock, never()).delete(anyInt(), anyInt());
     }
 
     @Test
-    public void deleting_withEntityWithNullId_doesNothing() {
+    void deleting_withEntityWithNullId_doesNothing() {
         when(userMock.getId()).thenReturn(null);
 
         service.remove(userMock);
@@ -188,7 +188,7 @@ public class JooqUserServiceTest {
     }
 
     @Test
-    public void deleting_withEntityWithNormalId_delegatesToRepo() {
+    void deleting_withEntityWithNormalId_delegatesToRepo() {
         when(userMock.getId()).thenReturn(3);
         when(userMock.getVersion()).thenReturn(2);
 
@@ -200,7 +200,7 @@ public class JooqUserServiceTest {
     }
 
     @Test
-    public void findingPageOfIdsByFilter_delegatesToRepo() {
+    void findingPageOfIdsByFilter_delegatesToRepo() {
         when(repoMock.findPageOfIdsByFilter(filterMock, paginationContextMock)).thenReturn(Arrays.asList(3, 8, 5));
         assertThat(service.findPageOfIdsByFilter(filterMock, paginationContextMock)).containsExactly(3, 8, 5);
         verify(repoMock).findPageOfIdsByFilter(filterMock, paginationContextMock);

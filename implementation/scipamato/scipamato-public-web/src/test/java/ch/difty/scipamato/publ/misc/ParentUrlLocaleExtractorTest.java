@@ -5,16 +5,16 @@ import static org.mockito.Mockito.when;
 
 import java.util.Locale;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import ch.difty.scipamato.publ.config.ScipamatoPublicProperties;
 
-@RunWith(MockitoJUnitRunner.class)
-public class ParentUrlLocaleExtractorTest {
+@ExtendWith(MockitoExtension.class)
+class ParentUrlLocaleExtractorTest {
 
     private static final Locale DEFAULT_LOCALE = Locale.ENGLISH;
 
@@ -23,55 +23,55 @@ public class ParentUrlLocaleExtractorTest {
     @Mock
     private ScipamatoPublicProperties propertiesMock;
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
         when(propertiesMock.getDefaultLocalization()).thenReturn("en");
         localeExtractor = new ParentUrlLocaleExtractor(propertiesMock);
     }
 
     @Test
-    public void givenNullInput_returnsDefaultLocale() {
+    void givenNullInput_returnsDefaultLocale() {
         assertThat(localeExtractor.extractLocaleFrom(null)).isEqualTo(DEFAULT_LOCALE);
     }
 
     @Test
-    public void givenGarbledInput_returnsDefaultLocale() {
+    void givenGarbledInput_returnsDefaultLocale() {
         String input = "foobar";
         assertThat(localeExtractor.extractLocaleFrom(input)).isEqualTo(DEFAULT_LOCALE);
     }
 
     @Test
-    public void givenGermanParentUrl_returnsDe() {
+    void givenGermanParentUrl_returnsDe() {
         String input = "https://www.foo.ch/de/projects/ludok/datenbank/";
         assertThat(localeExtractor.extractLocaleFrom(input)).isEqualTo(Locale.GERMAN);
     }
 
     @Test
-    public void givenEnglishParentUrl_returnsEn() {
+    void givenEnglishParentUrl_returnsEn() {
         String input = "https://www.foo.ch/en/projects/ludok/datenbank/";
         assertThat(localeExtractor.extractLocaleFrom(input)).isEqualTo(Locale.ENGLISH);
     }
 
     @Test
-    public void givenFrenchParentUrl_returnsFr() {
+    void givenFrenchParentUrl_returnsFr() {
         String input = "https://www.foo.ch/fr/projects/page-daccueil/datenbank/";
         assertThat(localeExtractor.extractLocaleFrom(input)).isEqualTo(Locale.FRENCH);
     }
 
     @Test
-    public void canHandleHttpInsteadOfHttps() {
+    void canHandleHttpInsteadOfHttps() {
         String input = "http://www.foo.swisstph.ch/fr/projects/page-daccueil/datenbank/";
         assertThat(localeExtractor.extractLocaleFrom(input)).isEqualTo(Locale.FRENCH);
     }
 
     @Test
-    public void canHandleCaseVariance() {
+    void canHandleCaseVariance() {
         String input = "htTps://www.foo.swisstPh.ch/fR/projects/page-Daccueil/datenbank/";
         assertThat(localeExtractor.extractLocaleFrom(input)).isEqualTo(Locale.FRENCH);
     }
 
     @Test
-    public void canHandleSingleSlash() {
+    void canHandleSingleSlash() {
         String input = "https:/www.foo.swisstph.ch/fr/projects/page-daccueil/datenbank/";
         assertThat(localeExtractor.extractLocaleFrom(input)).isEqualTo(Locale.FRENCH);
     }

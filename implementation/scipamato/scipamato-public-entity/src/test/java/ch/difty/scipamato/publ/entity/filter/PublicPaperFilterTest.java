@@ -7,17 +7,17 @@ import java.util.List;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.publ.entity.Code;
 import ch.difty.scipamato.publ.entity.Keyword;
 import ch.difty.scipamato.publ.entity.PopulationCode;
 import ch.difty.scipamato.publ.entity.StudyDesignCode;
 
-public class PublicPaperFilterTest {
+class PublicPaperFilterTest {
 
     @Test
-    public void construct() {
+    void construct() {
         PublicPaperFilter filter = new PublicPaperFilter();
         filter.setNumber(1L);
         filter.setAuthorMask("am");
@@ -83,7 +83,7 @@ public class PublicPaperFilterTest {
     }
 
     @Test
-    public void equals() {
+    void equals() {
         EqualsVerifier
             .forClass(PublicPaperFilter.class)
             .withRedefinedSuperclass()
@@ -92,7 +92,7 @@ public class PublicPaperFilterTest {
     }
 
     @Test
-    public void assertEnumFields() {
+    void assertEnumFields() {
         assertThat(PublicPaperFilter.PublicPaperFilterFields.values())
             .extracting("name")
             .containsExactly("number", "authorMask", "titleMask", "methodsMask", "publicationYearFrom",

@@ -9,8 +9,8 @@ import org.apache.wicket.markup.repeater.RefreshingView;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.tester.FormTester;
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.dao.DuplicateKeyException;
 
@@ -22,7 +22,7 @@ import ch.difty.scipamato.core.web.authentication.LogoutPage;
 import ch.difty.scipamato.core.web.code.CodeListPage;
 import ch.difty.scipamato.core.web.common.BasePageTest;
 
-public class CodeClassEditPageTest extends BasePageTest<CodeClassEditPage> {
+class CodeClassEditPageTest extends BasePageTest<CodeClassEditPage> {
 
     private CodeClassDefinition ccd;
 
@@ -38,8 +38,8 @@ public class CodeClassEditPageTest extends BasePageTest<CodeClassEditPage> {
         ccd = new CodeClassDefinition(1, "de", 1, cct_de, cct_en, cct_fr, cct_de2);
     }
 
-    @After
-    public void tearDown() {
+    @AfterEach
+    void tearDown() {
         verifyNoMoreInteractions(codeClassServiceMock);
     }
 
@@ -90,7 +90,7 @@ public class CodeClassEditPageTest extends BasePageTest<CodeClassEditPage> {
     }
 
     @Test
-    public void submitting_withSuccessfulServiceCall_addsInfoMsg() {
+    void submitting_withSuccessfulServiceCall_addsInfoMsg() {
         when(codeClassServiceMock.saveOrUpdate(isA(CodeClassDefinition.class))).thenReturn(ccd);
 
         runSubmitTest();
@@ -112,7 +112,7 @@ public class CodeClassEditPageTest extends BasePageTest<CodeClassEditPage> {
     }
 
     @Test
-    public void submitting_withUnsuccessfulServiceCall_addsErrorMsg() {
+    void submitting_withUnsuccessfulServiceCall_addsErrorMsg() {
         when(codeClassServiceMock.saveOrUpdate(isA(CodeClassDefinition.class))).thenReturn(null);
 
         runSubmitTest();
@@ -122,7 +122,7 @@ public class CodeClassEditPageTest extends BasePageTest<CodeClassEditPage> {
     }
 
     @Test
-    public void submitting_withOptimisticLockingException_addsErrorMsg() {
+    void submitting_withOptimisticLockingException_addsErrorMsg() {
         when(codeClassServiceMock.saveOrUpdate(isA(CodeClassDefinition.class))).thenThrow(
             new OptimisticLockingException("tblName", "rcd", OptimisticLockingException.Type.UPDATE));
 
@@ -134,7 +134,7 @@ public class CodeClassEditPageTest extends BasePageTest<CodeClassEditPage> {
     }
 
     @Test
-    public void submitting_withOtherException_addsErrorMsg() {
+    void submitting_withOtherException_addsErrorMsg() {
         when(codeClassServiceMock.saveOrUpdate(isA(CodeClassDefinition.class))).thenThrow(
             new RuntimeException("fooMsg"));
 
@@ -145,7 +145,7 @@ public class CodeClassEditPageTest extends BasePageTest<CodeClassEditPage> {
     }
 
     @Test
-    public void submitting_withDuplicateKeyConstraintViolationException_addsErrorMsg() {
+    void submitting_withDuplicateKeyConstraintViolationException_addsErrorMsg() {
         String msg = "...Detail: Key (code_class_id, lang_code)=(1, en) already exists.; "
                      + "nested exception is org.postgresql.util.PSQLException: ERROR: duplicate key value violates unique constraint...";
         when(codeClassServiceMock.saveOrUpdate(isA(CodeClassDefinition.class))).thenThrow(
@@ -158,7 +158,7 @@ public class CodeClassEditPageTest extends BasePageTest<CodeClassEditPage> {
     }
 
     @Test
-    public void submitting_withDuplicateKeyConstraintViolationException_withUnexpectedErrorMessage_addsThat() {
+    void submitting_withDuplicateKeyConstraintViolationException_withUnexpectedErrorMessage_addsThat() {
         String msg = "odd";
         when(codeClassServiceMock.saveOrUpdate(isA(CodeClassDefinition.class))).thenThrow(
             new DuplicateKeyException(msg));
@@ -170,7 +170,7 @@ public class CodeClassEditPageTest extends BasePageTest<CodeClassEditPage> {
     }
 
     @Test
-    public void submitting_withDuplicateKeyConstraintViolationException_withNullMsg_addsThatErrorMsg() {
+    void submitting_withDuplicateKeyConstraintViolationException_withNullMsg_addsThatErrorMsg() {
         //noinspection ConstantConditions
         when(codeClassServiceMock.saveOrUpdate(isA(CodeClassDefinition.class))).thenThrow(
             new DuplicateKeyException(null));
@@ -182,7 +182,7 @@ public class CodeClassEditPageTest extends BasePageTest<CodeClassEditPage> {
     }
 
     @Test
-    public void clickingBackButton_withPageWithoutCallingPageRef_forwardsToCodeListPage() {
+    void clickingBackButton_withPageWithoutCallingPageRef_forwardsToCodeListPage() {
         getTester().startPage(new CodeClassEditPage(Model.of(ccd), null));
 
         FormTester formTester = getTester().newFormTester("form");
@@ -195,7 +195,7 @@ public class CodeClassEditPageTest extends BasePageTest<CodeClassEditPage> {
     }
 
     @Test
-    public void clickingBackButton_withPageWithCallingPageRef_forwardsToThat() {
+    void clickingBackButton_withPageWithCallingPageRef_forwardsToThat() {
         getTester().startPage(
             new CodeClassEditPage(Model.of(ccd), new LogoutPage(new PageParameters()).getPageReference()));
 

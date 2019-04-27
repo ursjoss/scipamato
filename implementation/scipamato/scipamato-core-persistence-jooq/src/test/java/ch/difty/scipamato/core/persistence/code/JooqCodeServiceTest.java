@@ -8,12 +8,12 @@ import static org.mockito.Mockito.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import ch.difty.scipamato.common.entity.CodeClassId;
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
@@ -22,8 +22,8 @@ import ch.difty.scipamato.core.entity.CodeClass;
 import ch.difty.scipamato.core.entity.code.CodeDefinition;
 import ch.difty.scipamato.core.entity.code.CodeFilter;
 
-@RunWith(MockitoJUnitRunner.class)
-public class JooqCodeServiceTest {
+@ExtendWith(MockitoExtension.class)
+class JooqCodeServiceTest {
 
     private JooqCodeService service;
 
@@ -52,21 +52,21 @@ public class JooqCodeServiceTest {
     @Mock
     private CodeDefinition codeDefinitionMock, persistedCodeDefinitionMock;
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
         service = new JooqCodeService(repoMock);
 
         codeDefinitions.add(codeDefinitionMock);
         codeDefinitions.add(codeDefinitionMock);
     }
 
-    @After
-    public void specificTearDown() {
+    @AfterEach
+    void specificTearDown() {
         verifyNoMoreInteractions(repoMock, filterMock, paginationContextMock, codeMock, codeDefinitionMock);
     }
 
     @Test
-    public void findingCodes_delegatesToRepo() {
+    void findingCodes_delegatesToRepo() {
         CodeClassId ccId = CodeClassId.CC1;
         String languageCode = "de";
 
@@ -84,21 +84,21 @@ public class JooqCodeServiceTest {
     }
 
     @Test
-    public void newUnpersistedCodeDefinition_delegatesToRepo() {
+    void newUnpersistedCodeDefinition_delegatesToRepo() {
         when(repoMock.newUnpersistedCodeDefinition()).thenReturn(codeDefinitionMock);
         assertThat(service.newUnpersistedCodeDefinition()).isEqualTo(codeDefinitionMock);
         verify(repoMock).newUnpersistedCodeDefinition();
     }
 
     @Test
-    public void findingPageOfCodeDefinitions_delegatesToRepo() {
+    void findingPageOfCodeDefinitions_delegatesToRepo() {
         when(repoMock.findPageOfCodeDefinitions(filterMock, paginationContextMock)).thenReturn(codeDefinitions);
         assertThat(service.findPageOfCodeDefinitions(filterMock, paginationContextMock)).isEqualTo(codeDefinitions);
         verify(repoMock).findPageOfCodeDefinitions(filterMock, paginationContextMock);
     }
 
     @Test
-    public void gettingPageOfEntityDefinitions_delegatesToRepo() {
+    void gettingPageOfEntityDefinitions_delegatesToRepo() {
         when(repoMock.findPageOfCodeDefinitions(filterMock, paginationContextMock)).thenReturn(codeDefinitions);
         assertThat(service.findPageOfEntityDefinitions(filterMock, paginationContextMock)).hasSameElementsAs(
             codeDefinitions);
@@ -106,21 +106,21 @@ public class JooqCodeServiceTest {
     }
 
     @Test
-    public void countingCodes_delegatesToRepo() {
+    void countingCodes_delegatesToRepo() {
         when(repoMock.countByFilter(filterMock)).thenReturn(3);
         assertThat(service.countByFilter(filterMock)).isEqualTo(3);
         verify(repoMock).countByFilter(filterMock);
     }
 
     @Test
-    public void insertingCodeDefinition_delegatesToRepo() {
+    void insertingCodeDefinition_delegatesToRepo() {
         when(repoMock.saveOrUpdate(codeDefinitionMock)).thenReturn(persistedCodeDefinitionMock);
         assertThat(service.saveOrUpdate(codeDefinitionMock)).isEqualTo(persistedCodeDefinitionMock);
         verify(repoMock).saveOrUpdate(codeDefinitionMock);
     }
 
     @Test
-    public void deletingCodeDefinition_delegatesToRepo() {
+    void deletingCodeDefinition_delegatesToRepo() {
         final String code = "1A";
         final int version = 12;
         when(repoMock.delete(code, version)).thenReturn(persistedCodeDefinitionMock);
@@ -129,7 +129,7 @@ public class JooqCodeServiceTest {
     }
 
     @Test
-    public void gettingCodeClass1_delegatesToRepo() {
+    void gettingCodeClass1_delegatesToRepo() {
         CodeClass cc1 = new CodeClass(1, "cc1", null);
         when(repoMock.getCodeClass1("en")).thenReturn(cc1);
 

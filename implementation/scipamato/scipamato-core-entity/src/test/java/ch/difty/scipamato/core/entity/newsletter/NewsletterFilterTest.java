@@ -4,16 +4,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.common.entity.newsletter.PublicationStatus;
 
-public class NewsletterFilterTest {
+class NewsletterFilterTest {
 
     private final NewsletterFilter f = new NewsletterFilter();
 
     @Test
-    public void getAndSet() {
+    void getAndSet() {
         f.setIssueMask("issueMask");
         f.setPublicationStatus(PublicationStatus.CANCELLED);
         f.setNewsletterTopic(new NewsletterTopic(1, "foo"));
@@ -29,7 +29,7 @@ public class NewsletterFilterTest {
     }
 
     @Test
-    public void equals() {
+    void equals() {
         EqualsVerifier
             .forClass(NewsletterFilter.class)
             .withRedefinedSuperclass()
@@ -38,7 +38,7 @@ public class NewsletterFilterTest {
     }
 
     @Test
-    public void assertEnumFields() {
+    void assertEnumFields() {
         assertThat(NewsletterFilter.NewsletterFilterFields.values())
             .extracting("name")
             .containsExactly("issueMask", "publicationStatus", "newsletterTopic");

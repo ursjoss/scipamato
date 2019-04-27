@@ -3,29 +3,28 @@ package ch.difty.scipamato.core.persistence;
 import static ch.difty.scipamato.core.db.Tables.PAPER;
 import static ch.difty.scipamato.core.persistence.TestDbConstants.MAX_ID_PREPOPULATED;
 import static ch.difty.scipamato.core.persistence.TestDbConstants.RECORD_COUNT_PREPOPULATED;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.jooq.DSLContext;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest
 @ActiveProfiles({ "test" })
-public class JooqDslTransactionIntegrationTest {
+class JooqDslTransactionIntegrationTest {
 
     @Autowired
     private DSLContext dsl;
@@ -33,8 +32,8 @@ public class JooqDslTransactionIntegrationTest {
     @Autowired
     private DataSourceTransactionManager txMgr;
 
-    @After
-    public void tearDown() {
+    @AfterEach
+    void tearDown() {
         // Delete all books that were created in any test - just in case
         dsl
             .delete(PAPER)
@@ -43,7 +42,7 @@ public class JooqDslTransactionIntegrationTest {
     }
 
     @Test
-    public void testExplicitTransactions() {
+    void testExplicitTransactions() {
         boolean rollback = false;
 
         TransactionStatus tx = txMgr.getTransaction(new DefaultTransactionDefinition());
@@ -62,19 +61,19 @@ public class JooqDslTransactionIntegrationTest {
                     .set(PAPER.LOCATION, "location")
                     .set(PAPER.GOALS, "goals")
                     .execute();
-            Assert.fail();
+            fail();
         } catch (DataAccessException e) {
             // Upon the constraint violation, we explicitly roll back the transaction.
             txMgr.rollback(tx);
             rollback = true;
         }
 
-        assertEquals(RECORD_COUNT_PREPOPULATED, dsl.fetchCount(PAPER));
-        assertTrue(rollback);
+        assertThat(dsl.fetchCount(PAPER)).isEqualTo(RECORD_COUNT_PREPOPULATED);
+        assertThat(rollback).isTrue();
     }
 
     @Test
-    public void testjOOQTransactionsSimple() {
+    void testjOOQTransactionsSimple() {
         boolean rollback = false;
 
         try {
@@ -93,7 +92,7 @@ public class JooqDslTransactionIntegrationTest {
                         .set(PAPER.LOCATION, "location")
                         .set(PAPER.GOALS, "goals")
                         .execute();
-                Assert.fail();
+                fail();
             });
         } catch (DataAccessException e) {
             // Upon the constraint violation, the transaction must already have been rolled
@@ -101,12 +100,12 @@ public class JooqDslTransactionIntegrationTest {
             rollback = true;
         }
 
-        assertEquals(RECORD_COUNT_PREPOPULATED, dsl.fetchCount(PAPER));
-        assertTrue(rollback);
+        assertThat(dsl.fetchCount(PAPER)).isEqualTo(RECORD_COUNT_PREPOPULATED);
+        assertThat(rollback).isTrue();
     }
 
     @Test
-    public void testjOOQTransactionsNested() {
+    void testjOOQTransactionsNested() {
         AtomicBoolean rollback1 = new AtomicBoolean(false);
         AtomicBoolean rollback2 = new AtomicBoolean(false);
 
@@ -127,7 +126,7 @@ public class JooqDslTransactionIntegrationTest {
                     .set(PAPER.GOALS, "goals")
                     .execute();
 
-                assertEquals(RECORD_COUNT_PREPOPULATED + 1, dsl.fetchCount(PAPER));
+                assertThat(dsl.fetchCount(PAPER)).isEqualTo(RECORD_COUNT_PREPOPULATED + 1);
 
                 try {
                     // Nest transactions using Spring. This should create a savepoint, right here
@@ -147,27 +146,27 @@ public class JooqDslTransactionIntegrationTest {
                                 .set(PAPER.LOCATION, "location")
                                 .set(PAPER.GOALS, "goals")
                                 .execute();
-                        Assert.fail();
+                        fail();
                     });
                 } catch (DataAccessException e) {
                     rollback1.set(true);
                 }
 
                 // We should've rolled back to the savepoint
-                assertEquals(RECORD_COUNT_PREPOPULATED + 1, dsl.fetchCount(PAPER));
+                assertThat(dsl.fetchCount(PAPER)).isEqualTo(RECORD_COUNT_PREPOPULATED + 1);
 
                 throw new org.jooq.exception.DataAccessException("Rollback");
             });
         } catch (org.jooq.exception.DataAccessException e) {
             // Upon the constraint violation, the transaction must already have been rolled
             // back
-            assertEquals("Rollback", e.getMessage());
+            assertThat(e.getMessage()).isEqualTo("Rollback");
             rollback2.set(true);
         }
 
-        assertEquals(RECORD_COUNT_PREPOPULATED, dsl.fetchCount(PAPER));
-        assertTrue(rollback2.get());
-        assertTrue(rollback2.get());
+        assertThat(dsl.fetchCount(PAPER)).isEqualTo(RECORD_COUNT_PREPOPULATED);
+        assertThat(rollback2.get()).isTrue();
+        assertThat(rollback2.get()).isTrue();
     }
 
 }

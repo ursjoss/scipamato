@@ -3,7 +3,7 @@ package ch.difty.scipamato.common.web.pages.login;
 import de.agilecoders.wicket.core.markup.html.bootstrap.common.NotificationPanel;
 import org.apache.wicket.markup.html.form.StatelessForm;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.common.DateTimeService;
@@ -11,7 +11,7 @@ import ch.difty.scipamato.common.config.ApplicationProperties;
 import ch.difty.scipamato.common.web.AbstractPage;
 import ch.difty.scipamato.common.web.WicketBaseTest;
 
-public class AbstractLogoutPageTest extends WicketBaseTest {
+class AbstractLogoutPageTest extends WicketBaseTest {
 
     private AbstractLogoutPage page;
 
@@ -26,7 +26,7 @@ public class AbstractLogoutPageTest extends WicketBaseTest {
     }
 
     @Test
-    public void assertPage() {
+    void assertPage() {
         getTester().startPage(page);
         getTester().assertRenderedPage(AbstractLogoutPage.class);
 
@@ -36,7 +36,7 @@ public class AbstractLogoutPageTest extends WicketBaseTest {
     }
 
     @Test
-    public void submit_withResponsePage() {
+    void submit_withResponsePage() {
         AbstractLogoutPage page2 = new TestLogoutPage(new PageParameters()) {
             @Override
             protected AbstractPage<?> getResponsePage() {
@@ -52,7 +52,7 @@ public class AbstractLogoutPageTest extends WicketBaseTest {
     }
 
     @Test
-    public void submitting_withoutLogoutData_rendersErrorMessages() {
+    void submitting_withoutLogoutData_rendersErrorMessages() {
         getTester().startPage(page);
         getTester().assertRenderedPage(AbstractLogoutPage.class);
         getTester().submitForm("form");

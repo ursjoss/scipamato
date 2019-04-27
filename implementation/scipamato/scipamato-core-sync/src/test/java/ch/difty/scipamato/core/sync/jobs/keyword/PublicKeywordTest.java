@@ -2,14 +2,14 @@ package ch.difty.scipamato.core.sync.jobs.keyword;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.core.sync.jobs.PublicEntityTest;
 
-public class PublicKeywordTest extends PublicEntityTest {
+class PublicKeywordTest extends PublicEntityTest {
 
     @Test
-    public void canSetGet() {
+    void canSetGet() {
         PublicKeyword pc = PublicKeyword
             .builder()
             .id(1)

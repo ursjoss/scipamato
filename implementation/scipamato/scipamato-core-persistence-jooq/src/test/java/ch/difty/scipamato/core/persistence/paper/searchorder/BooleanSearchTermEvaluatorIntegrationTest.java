@@ -2,9 +2,12 @@ package ch.difty.scipamato.core.persistence.paper.searchorder;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import junitparams.Parameters;
+import java.util.stream.Stream;
+
 import org.jooq.Condition;
-import org.junit.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import ch.difty.scipamato.core.entity.search.BooleanSearchTerm;
 import ch.difty.scipamato.core.entity.search.SearchTerm;
@@ -13,17 +16,15 @@ import ch.difty.scipamato.core.entity.search.SearchTermType;
 /**
  * Test class to integration test the search term and the search term evaluator.
  */
+class BooleanSearchTermEvaluatorIntegrationTest extends SearchTermEvaluatorIntegrationTest<BooleanSearchTerm> {
 
-public class BooleanSearchTermEvaluatorIntegrationTest extends SearchTermEvaluatorIntegrationTest<BooleanSearchTerm> {
-
-    @SuppressWarnings("unused")
-    private Object[] booleanParameters() {
-        return new Object[] {
+    private static Stream<Arguments> booleanParameters() {
+        return Stream.of(
             // @formatter:off
-            new Object[] { "true", true, "fn = true" },
-            new Object[] { "false", false, "fn = false" }
+            Arguments.of("true", true, "fn = true" ),
+            Arguments.of( "false", false, "fn = false")
             // @formatter:on
-        };
+        );
     }
 
     @Override
@@ -41,9 +42,9 @@ public class BooleanSearchTermEvaluatorIntegrationTest extends SearchTermEvaluat
         return new BooleanSearchTermEvaluator();
     }
 
-    @Test
-    @Parameters(method = "booleanParameters")
-    public void booleanTest(String rawSearchTerm, Boolean value, String condition) {
+    @ParameterizedTest(name = "[{index}] {0} -> {1} ({4})")
+    @MethodSource("booleanParameters")
+    void booleanTest(String rawSearchTerm, Boolean value, String condition) {
         final BooleanSearchTerm st = makeSearchTerm(rawSearchTerm);
         assertThat(st.getValue()).isEqualTo(value);
 

@@ -6,7 +6,7 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.design.JRDesignField;
-import org.junit.After;
+import org.junit.jupiter.api.AfterEach;
 import org.mockito.Mock;
 
 import ch.difty.scipamato.core.entity.Paper;
@@ -32,7 +32,7 @@ public abstract class PaperDataSourceTest extends WicketTest {
 
     protected PaperFilter paperFilter = new PaperFilter();
 
-    @After
+    @AfterEach
     public final void tearDown() {
         verifyNoMoreInteractions(dataProviderMock, paperFilterMock, searchOrderMock, paperMock,
             shortFieldConcatenatorMock);

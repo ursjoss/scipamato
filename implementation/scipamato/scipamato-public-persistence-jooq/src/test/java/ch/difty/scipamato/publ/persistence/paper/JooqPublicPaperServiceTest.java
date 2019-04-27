@@ -8,19 +8,19 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.publ.entity.PublicPaper;
 import ch.difty.scipamato.publ.entity.filter.PublicPaperFilter;
 
-@RunWith(MockitoJUnitRunner.class)
-public class JooqPublicPaperServiceTest {
+@ExtendWith(MockitoExtension.class)
+class JooqPublicPaperServiceTest {
 
     private static final long ID     = 5;
     private static final long NUMBER = 15;
@@ -40,8 +40,8 @@ public class JooqPublicPaperServiceTest {
 
     private final List<PublicPaper> papers = new ArrayList<>();
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
         service = new JooqPublicPaperService(mockRepo);
 
         publicPaper = PublicPaper
@@ -56,13 +56,13 @@ public class JooqPublicPaperServiceTest {
             .build());
     }
 
-    @After
-    public void tearDown() {
+    @AfterEach
+    void tearDown() {
         verifyNoMoreInteractions(mockRepo);
     }
 
     @Test
-    public void findingByNumber_withRepoFindingRecord_returnsItWrappedAsOptional() {
+    void findingByNumber_withRepoFindingRecord_returnsItWrappedAsOptional() {
         when(mockRepo.findByNumber(NUMBER)).thenReturn(publicPaper);
 
         Optional<PublicPaper> paperOp = service.findByNumber(NUMBER);
@@ -73,7 +73,7 @@ public class JooqPublicPaperServiceTest {
     }
 
     @Test
-    public void findingByNumber_withRepoNotFindingRecord_returnsEmptyOptional() {
+    void findingByNumber_withRepoNotFindingRecord_returnsEmptyOptional() {
         when(mockRepo.findByNumber(NUMBER)).thenReturn(null);
 
         Optional<PublicPaper> paperOp = service.findByNumber(NUMBER);
@@ -83,7 +83,7 @@ public class JooqPublicPaperServiceTest {
     }
 
     @Test
-    public void findingPageByFilter_delegatesToRepo() {
+    void findingPageByFilter_delegatesToRepo() {
         when(mockRepo.findPageByFilter(filterMock, paginationContextMock)).thenReturn(papers);
         assertThat(service.findPageByFilter(filterMock, paginationContextMock))
             .isNotNull()
@@ -93,14 +93,14 @@ public class JooqPublicPaperServiceTest {
     }
 
     @Test
-    public void countingByFilter_delegatesToRepo() {
+    void countingByFilter_delegatesToRepo() {
         when(mockRepo.countByFilter(filterMock)).thenReturn(2);
         assertThat(service.countByFilter(filterMock)).isEqualTo(2);
         verify(mockRepo).countByFilter(filterMock);
     }
 
     @Test
-    public void findingPageOfIdsByFilter_delegatesToRepo() {
+    void findingPageOfIdsByFilter_delegatesToRepo() {
         List<Long> idList = Arrays.asList(3L, 5L);
         when(mockRepo.findPageOfNumbersByFilter(filterMock, paginationContextMock)).thenReturn(idList);
         assertThat(service.findPageOfNumbersByFilter(filterMock, paginationContextMock)).isEqualTo(idList);

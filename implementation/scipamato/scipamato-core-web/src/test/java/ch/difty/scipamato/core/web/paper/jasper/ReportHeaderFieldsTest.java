@@ -4,12 +4,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class ReportHeaderFieldsTest {
+class ReportHeaderFieldsTest {
 
     @Test
-    public void equalsVerify() {
+    void equalsVerify() {
         EqualsVerifier
             .forClass(ReportHeaderFields.class)
             .withRedefinedSuperclass()
@@ -18,7 +18,7 @@ public class ReportHeaderFieldsTest {
     }
 
     @Test
-    public void makeMinimalReportHeaderFields() {
+    void makeMinimalReportHeaderFields() {
         ReportHeaderFields rhf = ReportHeaderFields
             .builder("headerPart", "brand")
             .build();
@@ -27,7 +27,7 @@ public class ReportHeaderFieldsTest {
     }
 
     @Test
-    public void makeReportHeaderFields() {
+    void makeReportHeaderFields() {
         ReportHeaderFields rhf = ReportHeaderFields
             .builder("headerPart1", "brand1")
             .goalsLabel("g")

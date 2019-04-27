@@ -5,20 +5,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 import org.jooq.DSLContext;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import ch.difty.scipamato.common.persistence.JooqSortMapper;
 import ch.difty.scipamato.publ.db.tables.Paper;
 import ch.difty.scipamato.publ.db.tables.records.PaperRecord;
 import ch.difty.scipamato.publ.entity.PublicPaper;
 
-@RunWith(MockitoJUnitRunner.class)
-public class JooqPublicPaperRepoTest {
+@ExtendWith(MockitoExtension.class)
+class JooqPublicPaperRepoTest {
 
     private JooqPublicPaperRepo repo;
 
@@ -33,8 +33,8 @@ public class JooqPublicPaperRepoTest {
     @Mock
     private JournalExtractor                                journalExtractor;
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
         repo = new JooqPublicPaperRepo(dslMock, sortMapperMock, filterConditionMapperMock, authorsAbbreviator,
             journalExtractor) {
             @Override
@@ -44,18 +44,18 @@ public class JooqPublicPaperRepoTest {
         };
     }
 
-    @After
-    public void tearDown() {
+    @AfterEach
+    void tearDown() {
         verifyNoMoreInteractions(dslMock, sortMapperMock, filterConditionMapperMock);
     }
 
     @Test
-    public void findingByNumber_withNullNumber_throws() {
+    void findingByNumber_withNullNumber_throws() {
         assertDegenerateSupplierParameter(() -> repo.findByNumber(null), "number");
     }
 
     @Test
-    public void mapping_withPaperRecordHandingBackNullEvenForAuditDates_doesNotThrow() {
+    void mapping_withPaperRecordHandingBackNullEvenForAuditDates_doesNotThrow() {
         PaperRecord pr = mock(PaperRecord.class);
         PublicPaper pp = repo.map(pr);
         assertThat(pp.getCreated()).isNull();
@@ -63,7 +63,7 @@ public class JooqPublicPaperRepoTest {
     }
 
     @Test
-    public void mapping_callsAuthorsAbbreviator_withAuthors() {
+    void mapping_callsAuthorsAbbreviator_withAuthors() {
         final String authors = "authors";
         final String authorsAbbr = "auths";
         PaperRecord pr = mock(PaperRecord.class);
@@ -79,7 +79,7 @@ public class JooqPublicPaperRepoTest {
     }
 
     @Test
-    public void mapping_callsJournalExtractor_withLocation() {
+    void mapping_callsJournalExtractor_withLocation() {
         final String location = "location";
         final String journal = "journal";
         PaperRecord pr = mock(PaperRecord.class);

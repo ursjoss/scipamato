@@ -3,18 +3,18 @@ package ch.difty.scipamato.common.entity;
 import static ch.difty.scipamato.common.entity.CodeClassId.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("OptionalGetWithoutIsPresent")
-public class CodeClassIdTest {
+class CodeClassIdTest {
 
     @Test
-    public void values() {
+    void values() {
         assertThat(CodeClassId.values()).containsExactly(CC1, CC2, CC3, CC4, CC5, CC6, CC7, CC8);
     }
 
     @Test
-    public void fromId_whenPresent() {
+    void fromId_whenPresent() {
         assertThat(CodeClassId
             .fromId(1)
             .isPresent()).isTrue();
@@ -45,14 +45,14 @@ public class CodeClassIdTest {
     }
 
     @Test
-    public void fromId_whenNotPresent() {
+    void fromId_whenNotPresent() {
         assertThat(CodeClassId
             .fromId(-1)
             .isPresent()).isFalse();
     }
 
     @Test
-    public void getId() {
+    void getId() {
         assertThat(CodeClassId.CC1.getId()).isEqualTo(1);
     }
 

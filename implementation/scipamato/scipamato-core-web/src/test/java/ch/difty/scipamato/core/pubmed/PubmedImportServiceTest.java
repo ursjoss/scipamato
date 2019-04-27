@@ -7,19 +7,19 @@ import static org.mockito.Mockito.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import ch.difty.scipamato.core.config.ApplicationCoreProperties;
 import ch.difty.scipamato.core.persistence.PaperService;
 import ch.difty.scipamato.core.persistence.ServiceResult;
 
-@RunWith(MockitoJUnitRunner.class)
-public class PubmedImportServiceTest {
+@ExtendWith(MockitoExtension.class)
+class PubmedImportServiceTest {
 
     private PubmedImporter pubmedImporter;
 
@@ -36,49 +36,49 @@ public class PubmedImportServiceTest {
 
     private final List<PubmedArticleFacade> pubmedArticles = new ArrayList<>();
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
         pubmedArticles.add(pubmedArticleMock);
         when(applicationPropertiesMock.getMinimumPaperNumberToBeRecycled()).thenReturn(7L);
         pubmedImporter = new PubmedImportService(pubmedArticleServiceMock, paperServiceMock, applicationPropertiesMock);
     }
 
-    @After
-    public void tearDown() {
+    @AfterEach
+    void tearDown() {
         verifyNoMoreInteractions(pubmedArticleServiceMock, paperServiceMock, pubmedArticleMock, serviceResultMock,
             applicationPropertiesMock);
     }
 
     @Test
-    public void degenerateConstruction_withNullPubmedArticleService_throws() {
+    void degenerateConstruction_withNullPubmedArticleService_throws() {
         assertDegenerateSupplierParameter(
             () -> new PubmedImportService(null, paperServiceMock, applicationPropertiesMock), "pubmedArticleService");
         verify(applicationPropertiesMock).getMinimumPaperNumberToBeRecycled();
     }
 
     @Test
-    public void degenerateConstruction_withNullPaperService_throws() {
+    void degenerateConstruction_withNullPaperService_throws() {
         assertDegenerateSupplierParameter(
             () -> new PubmedImportService(pubmedArticleServiceMock, null, applicationPropertiesMock), "paperService");
         verify(applicationPropertiesMock).getMinimumPaperNumberToBeRecycled();
     }
 
     @Test
-    public void degenerateConstruction_withNullApplicationProperties_throws() {
+    void degenerateConstruction_withNullApplicationProperties_throws() {
         assertDegenerateSupplierParameter(
             () -> new PubmedImportService(pubmedArticleServiceMock, paperServiceMock, null), "applicationProperties");
         verify(applicationPropertiesMock).getMinimumPaperNumberToBeRecycled();
     }
 
     @Test
-    public void persistingPubmedArticlesFromXml_withNullXml_fails() {
+    void persistingPubmedArticlesFromXml_withNullXml_fails() {
         final ServiceResult sr = pubmedImporter.persistPubmedArticlesFromXml(null);
         assertThat(sr.getErrorMessages()).containsExactly("xml must not be null.");
         verify(applicationPropertiesMock).getMinimumPaperNumberToBeRecycled();
     }
 
     @Test
-    public void persistingPubmedArticlesFromXml_delegatesExtractionAndPersistingToNestedServices() {
+    void persistingPubmedArticlesFromXml_delegatesExtractionAndPersistingToNestedServices() {
         final long minimumNumber = 7L;
         when(pubmedArticleServiceMock.extractArticlesFrom("content")).thenReturn(pubmedArticles);
         when(paperServiceMock.dumpPubmedArticlesToDb(pubmedArticles, minimumNumber)).thenReturn(serviceResultMock);

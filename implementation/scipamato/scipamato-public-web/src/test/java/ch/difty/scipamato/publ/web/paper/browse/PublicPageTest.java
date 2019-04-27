@@ -16,8 +16,8 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.tester.FormTester;
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
@@ -28,7 +28,7 @@ import ch.difty.scipamato.publ.persistence.api.CodeClassService;
 import ch.difty.scipamato.publ.persistence.api.PublicPaperService;
 import ch.difty.scipamato.publ.web.common.BasePageTest;
 
-public class PublicPageTest extends BasePageTest<PublicPage> {
+class PublicPageTest extends BasePageTest<PublicPage> {
 
     @MockBean
     private PublicPaperService serviceMock;
@@ -58,8 +58,8 @@ public class PublicPageTest extends BasePageTest<PublicPage> {
     protected void doVerify() {
     }
 
-    @After
-    public void tearDown() {
+    @AfterEach
+    void tearDown() {
         verifyNoMoreInteractions(serviceMock, codeClassServiceMock);
     }
 
@@ -111,7 +111,7 @@ public class PublicPageTest extends BasePageTest<PublicPage> {
     }
 
     @Test
-    public void clickingQuery_showsResultPanel() {
+    void clickingQuery_showsResultPanel() {
         getTester().startPage(makePage());
         getTester().assertRenderedPage(getPageClass());
 
@@ -155,7 +155,7 @@ public class PublicPageTest extends BasePageTest<PublicPage> {
     }
 
     @Test
-    public void clickingTab2Title_showsTab2() {
+    void clickingTab2Title_showsTab2() {
         CodeClass cc1 = CodeClass
             .builder()
             .codeClassId(1)
@@ -216,7 +216,7 @@ public class PublicPageTest extends BasePageTest<PublicPage> {
     }
 
     @Test
-    public void clickingTitle_forwardsToDetailsPage() {
+    void clickingTitle_forwardsToDetailsPage() {
         getTester().startPage(makePage());
         getTester().assertRenderedPage(getPageClass());
         getTester()
@@ -234,7 +234,7 @@ public class PublicPageTest extends BasePageTest<PublicPage> {
     }
 
     @Test
-    public void clickingClearSearch() {
+    void clickingClearSearch() {
         getTester().startPage(makePage());
         getTester().assertRenderedPage(getPageClass());
 

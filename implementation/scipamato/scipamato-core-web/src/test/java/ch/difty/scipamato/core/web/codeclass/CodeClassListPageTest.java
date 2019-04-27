@@ -8,8 +8,8 @@ import java.util.List;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.link.Link;
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationRequest;
@@ -20,7 +20,7 @@ import ch.difty.scipamato.core.persistence.CodeClassService;
 import ch.difty.scipamato.core.web.common.BasePageTest;
 
 @SuppressWarnings("SameParameterValue")
-public class CodeClassListPageTest extends BasePageTest<CodeClassListPage> {
+class CodeClassListPageTest extends BasePageTest<CodeClassListPage> {
 
     private static final int COLUMN_ID_WITH_LINK = 2;
 
@@ -48,8 +48,8 @@ public class CodeClassListPageTest extends BasePageTest<CodeClassListPage> {
             isA(PaginationRequest.class))).thenReturn(results.iterator());
     }
 
-    @After
-    public void tearDown() {
+    @AfterEach
+    void tearDown() {
         verifyNoMoreInteractions(codeClassServiceMock);
     }
 
@@ -107,7 +107,7 @@ public class CodeClassListPageTest extends BasePageTest<CodeClassListPage> {
     }
 
     @Test
-    public void clickingOnCodeTitle_forwardsToCodeEditPage_withModelLoaded() {
+    void clickingOnCodeTitle_forwardsToCodeEditPage_withModelLoaded() {
         getTester().startPage(getPageClass());
 
         getTester().clickLink("resultPanel:results:body:rows:1:cells:" + COLUMN_ID_WITH_LINK + ":cell:link");

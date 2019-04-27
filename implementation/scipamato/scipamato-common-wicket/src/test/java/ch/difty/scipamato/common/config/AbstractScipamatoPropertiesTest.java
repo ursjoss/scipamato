@@ -3,16 +3,16 @@ package ch.difty.scipamato.common.config;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 @SuppressWarnings("ResultOfMethodCallIgnored")
-public class AbstractScipamatoPropertiesTest {
+class AbstractScipamatoPropertiesTest {
 
     private AbstractScipamatoProperties<ScipamatoBaseProperties> prop;
 
@@ -21,33 +21,27 @@ public class AbstractScipamatoPropertiesTest {
     @Mock
     private MavenProperties         mavenPropMock;
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
         prop = new AbstractScipamatoProperties<>(scipamatoPropMock, mavenPropMock) {
             private static final long serialVersionUID = 1L;
         };
-
-        when(scipamatoPropMock.getBrand()).thenReturn("brand");
-        when(scipamatoPropMock.getDefaultLocalization()).thenReturn("dl");
-        when(scipamatoPropMock.getPubmedBaseUrl()).thenReturn("pbUrl");
-        when(scipamatoPropMock.getRedirectFromPort()).thenReturn(5678);
-
-        when(mavenPropMock.getVersion()).thenReturn("0.0.1-SNAPSHOT");
     }
 
-    @After
-    public void tearDown() {
+    @AfterEach
+    void tearDown() {
         verifyNoMoreInteractions(scipamatoPropMock, mavenPropMock);
     }
 
     @Test
-    public void gettingBrand_delegatesToScipamatoProps() {
+    void gettingBrand_delegatesToScipamatoProps() {
+        when(scipamatoPropMock.getBrand()).thenReturn("brand");
         assertThat(prop.getBrand()).isEqualTo("brand");
         verify(scipamatoPropMock).getBrand();
     }
 
     @Test
-    public void gettingTitleOrBrand_withPageTitleDefined_delegatesToScipamatoProps_andReturnsPageTitle() {
+    void gettingTitleOrBrand_withPageTitleDefined_delegatesToScipamatoProps_andReturnsPageTitle() {
         when(scipamatoPropMock.getPageTitle()).thenReturn("pt");
         assertThat(prop.getTitleOrBrand()).isEqualTo("pt");
         verify(scipamatoPropMock).getPageTitle();
@@ -55,7 +49,8 @@ public class AbstractScipamatoPropertiesTest {
     }
 
     @Test
-    public void gettingTitleOrBrand_withPageTitleNotDefined_delegatesToScipamatoProps_andReturnsBrand() {
+    void gettingTitleOrBrand_withPageTitleNotDefined_delegatesToScipamatoProps_andReturnsBrand() {
+        when(scipamatoPropMock.getBrand()).thenReturn("brand");
         when(scipamatoPropMock.getPageTitle()).thenReturn(null);
         assertThat(prop.getTitleOrBrand()).isEqualTo("brand");
         verify(scipamatoPropMock).getPageTitle();
@@ -63,31 +58,35 @@ public class AbstractScipamatoPropertiesTest {
     }
 
     @Test
-    public void gettingDefaultLocalization_delegatesToScipamatoProps() {
+    void gettingDefaultLocalization_delegatesToScipamatoProps() {
+        when(scipamatoPropMock.getDefaultLocalization()).thenReturn("dl");
         assertThat(prop.getDefaultLocalization()).isEqualTo("dl");
         verify(scipamatoPropMock).getDefaultLocalization();
     }
 
     @Test
-    public void gettingPubmedBaseUrl_delegatesToScipamatoProps() {
+    void gettingPubmedBaseUrl_delegatesToScipamatoProps() {
+        when(scipamatoPropMock.getPubmedBaseUrl()).thenReturn("pbUrl");
         assertThat(prop.getPubmedBaseUrl()).isEqualTo("pbUrl");
         verify(scipamatoPropMock).getPubmedBaseUrl();
     }
 
     @Test
-    public void gettingBuildVersion_delegatesToMavenProp() {
+    void gettingBuildVersion_delegatesToMavenProp() {
+        when(mavenPropMock.getVersion()).thenReturn("0.0.1-SNAPSHOT");
         assertThat(prop.getBuildVersion()).isEqualTo("0.0.1-SNAPSHOT");
         verify(mavenPropMock).getVersion();
     }
 
     @Test
-    public void gettingRedirectFromPort_delegatesToScipamatoProps() {
+    void gettingRedirectFromPort_delegatesToScipamatoProps() {
+        when(scipamatoPropMock.getRedirectFromPort()).thenReturn(5678);
         assertThat(prop.getRedirectFromPort()).isEqualTo(5678);
         verify(scipamatoPropMock).getRedirectFromPort();
     }
 
     @Test
-    public void gettingMultiSelectBoxActionBoxWithMoreEntriesThan_delegatesToScipamatoProps() {
+    void gettingMultiSelectBoxActionBoxWithMoreEntriesThan_delegatesToScipamatoProps() {
         when(scipamatoPropMock.getMultiSelectBoxActionBoxWithMoreEntriesThan()).thenReturn(4);
         assertThat(prop.getMultiSelectBoxActionBoxWithMoreEntriesThan()).isEqualTo(4);
         verify(scipamatoPropMock).getMultiSelectBoxActionBoxWithMoreEntriesThan();

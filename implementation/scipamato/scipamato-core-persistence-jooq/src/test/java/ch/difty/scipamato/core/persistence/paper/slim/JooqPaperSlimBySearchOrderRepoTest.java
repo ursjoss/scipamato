@@ -5,8 +5,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.jooq.Condition;
 import org.jooq.DSLContext;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
 import ch.difty.scipamato.common.persistence.JooqSortMapper;
@@ -20,7 +20,7 @@ import ch.difty.scipamato.core.entity.search.SearchTerm;
 import ch.difty.scipamato.core.entity.search.SearchTermType;
 import ch.difty.scipamato.core.persistence.paper.searchorder.JooqBySearchOrderRepo;
 
-public class JooqPaperSlimBySearchOrderRepoTest {
+class JooqPaperSlimBySearchOrderRepoTest {
 
     private JooqBySearchOrderRepo<PaperSlim, PaperSlimRecordMapper> finder;
 
@@ -32,30 +32,30 @@ public class JooqPaperSlimBySearchOrderRepoTest {
     @Mock
     private JooqSortMapper<PaperRecord, PaperSlim, ch.difty.scipamato.core.db.tables.Paper> sortMapperMock;
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
         finder = new JooqPaperSlimBySearchOrderRepo(dslMock, mapperMock, sortMapperMock);
     }
 
     @Test
-    public void findingBySearchOrder_withNullSearchOrder_throws() {
+    void findingBySearchOrder_withNullSearchOrder_throws() {
         assertDegenerateSupplierParameter(() -> finder.findBySearchOrder(null), "searchOrder");
     }
 
     @Test
-    public void countingBySearchOrder_withNullSearchOrder_throws() {
+    void countingBySearchOrder_withNullSearchOrder_throws() {
         assertDegenerateSupplierParameter(() -> finder.countBySearchOrder(null), "searchOrder");
     }
 
     @Test
-    public void getConditions_withEmptySearchOrder() {
+    void getConditions_withEmptySearchOrder() {
         SearchOrder searchOrder = new SearchOrder();
         Condition cond = finder.getConditionsFrom(searchOrder);
         assertThat(cond.toString()).isEqualTo("1 = 0");
     }
 
     @Test
-    public void getConditions_withEmptySearchOrderWithExclusion_IgnoresTheExclusions() {
+    void getConditions_withEmptySearchOrderWithExclusion_IgnoresTheExclusions() {
         SearchOrder searchOrder = new SearchOrder();
         searchOrder.addExclusionOfPaperWithId(3);
         Condition cond = finder.getConditionsFrom(searchOrder);
@@ -63,7 +63,7 @@ public class JooqPaperSlimBySearchOrderRepoTest {
     }
 
     @Test
-    public void getConditions_withSearchOrderWithIntegerSearchTerm() {
+    void getConditions_withSearchOrderWithIntegerSearchTerm() {
         SearchOrder searchOrder = new SearchOrder();
         SearchCondition sc1 = new SearchCondition(1L);
         sc1.addSearchTerm(SearchTerm.newSearchTerm(2L, SearchTermType.INTEGER.getId(), 1, "publicationYear", ">2014"));
@@ -74,7 +74,7 @@ public class JooqPaperSlimBySearchOrderRepoTest {
     }
 
     @Test
-    public void getConditions_withSearchOrderWithAuditSearchTermForCreatedUser() {
+    void getConditions_withSearchOrderWithAuditSearchTermForCreatedUser() {
         SearchOrder searchOrder = new SearchOrder();
         SearchCondition sc1 = new SearchCondition(1L);
         sc1.addSearchTerm(SearchTerm.newSearchTerm(2L, SearchTermType.AUDIT.getId(), 1, "paper.created_by", "mkj"));
@@ -94,7 +94,7 @@ public class JooqPaperSlimBySearchOrderRepoTest {
     }
 
     @Test
-    public void getConditions_withSearchOrderWithAuditSearchTermForCreationTimeStamp() {
+    void getConditions_withSearchOrderWithAuditSearchTermForCreationTimeStamp() {
         SearchOrder searchOrder = new SearchOrder();
         SearchCondition sc1 = new SearchCondition(1L);
         SearchTerm st = SearchTerm.newSearchTerm(2L, SearchTermType.AUDIT.getId(), 1, "paper.created",
@@ -107,7 +107,7 @@ public class JooqPaperSlimBySearchOrderRepoTest {
     }
 
     @Test
-    public void getConditions_withSearchOrderWithAuditSearchTermForLastModTimeStamp() {
+    void getConditions_withSearchOrderWithAuditSearchTermForLastModTimeStamp() {
         SearchOrder searchOrder = new SearchOrder();
         SearchCondition sc1 = new SearchCondition(1L);
         SearchTerm st = SearchTerm.newSearchTerm(2L, SearchTermType.AUDIT.getId(), 1, "paper.last_modified",
@@ -120,7 +120,7 @@ public class JooqPaperSlimBySearchOrderRepoTest {
     }
 
     @Test
-    public void getConditions_withSearchOrderWithConditions() {
+    void getConditions_withSearchOrderWithConditions() {
         SearchOrder searchOrder = makeSearchOrderWithConditions();
 
         Condition cond = finder.getConditionsFrom(searchOrder);
@@ -168,7 +168,7 @@ public class JooqPaperSlimBySearchOrderRepoTest {
     }
 
     @Test
-    public void getConditions_withSearchOrderWithConditionsAndExclusions_ignoresExclusions() {
+    void getConditions_withSearchOrderWithConditionsAndExclusions_ignoresExclusions() {
         SearchOrder searchOrder = makeSearchOrderWithConditions();
 
         searchOrder.addExclusionOfPaperWithId(3);
@@ -221,7 +221,7 @@ public class JooqPaperSlimBySearchOrderRepoTest {
     }
 
     @Test
-    public void getConditions_withSearchOrderWithConditionsAndInvertedExclusions_onlySelectsTheExclusions() {
+    void getConditions_withSearchOrderWithConditionsAndInvertedExclusions_onlySelectsTheExclusions() {
         SearchOrder searchOrder = makeSearchOrderWithConditions();
         searchOrder.setShowExcluded(true);
         searchOrder.addExclusionOfPaperWithId(3);
@@ -231,7 +231,7 @@ public class JooqPaperSlimBySearchOrderRepoTest {
     }
 
     @Test
-    public void getConditions_withSearchOrderWithConditionsAndExclusions() {
+    void getConditions_withSearchOrderWithConditionsAndExclusions() {
         SearchOrder searchOrder = makeSearchOrderWithConditions();
 
         searchOrder.addExclusionOfPaperWithId(5);
@@ -305,7 +305,7 @@ public class JooqPaperSlimBySearchOrderRepoTest {
     }
 
     @Test
-    public void getConditions_withSearchOrderWithSingleConditionCoveringNewspaperTopicAndHeadline() {
+    void getConditions_withSearchOrderWithSingleConditionCoveringNewspaperTopicAndHeadline() {
         SearchOrder searchOrder = new SearchOrder();
 
         SearchCondition sc1 = new SearchCondition(1L);
@@ -332,7 +332,7 @@ public class JooqPaperSlimBySearchOrderRepoTest {
     }
 
     @Test
-    public void getConditions_withSearchOrderWithSingleConditionCoveringNewspaperTopic() {
+    void getConditions_withSearchOrderWithSingleConditionCoveringNewspaperTopic() {
         SearchOrder searchOrder = new SearchOrder();
 
         SearchCondition sc1 = new SearchCondition(1L);
@@ -357,7 +357,7 @@ public class JooqPaperSlimBySearchOrderRepoTest {
     }
 
     @Test
-    public void getConditions_withSearchOrderWithSingleConditionCoveringNewspaperHeadline() {
+    void getConditions_withSearchOrderWithSingleConditionCoveringNewspaperHeadline() {
         SearchOrder searchOrder = new SearchOrder();
 
         SearchCondition sc1 = new SearchCondition(1L);
@@ -382,7 +382,7 @@ public class JooqPaperSlimBySearchOrderRepoTest {
     }
 
     @Test
-    public void getConditions_withSearchOrderWithSingleConditionCoveringNewspaperIssue() {
+    void getConditions_withSearchOrderWithSingleConditionCoveringNewspaperIssue() {
         SearchOrder searchOrder = new SearchOrder();
 
         SearchCondition sc1 = new SearchCondition(1L);
@@ -407,7 +407,7 @@ public class JooqPaperSlimBySearchOrderRepoTest {
     }
 
     @Test
-    public void getConditions_withSearchOrderWithTwoConditionsCoveringNewspaperTopicAndHeadline() {
+    void getConditions_withSearchOrderWithTwoConditionsCoveringNewspaperTopicAndHeadline() {
         SearchOrder searchOrder = new SearchOrder();
 
         SearchCondition sc1 = new SearchCondition(1L);

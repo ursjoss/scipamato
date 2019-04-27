@@ -5,19 +5,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 import org.jooq.DeleteConditionStep;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.batch.core.StepContribution;
 import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.repeat.RepeatStatus;
 
 import ch.difty.scipamato.publ.db.public_.tables.records.CodeRecord;
 
-@RunWith(MockitoJUnitRunner.class)
-public class PseudoForeignKeyConstraintEnforcerTest {
+@ExtendWith(MockitoExtension.class)
+class PseudoForeignKeyConstraintEnforcerTest {
 
     private PseudoForeignKeyConstraintEnforcer<CodeRecord> fkce;
 
@@ -28,38 +28,38 @@ public class PseudoForeignKeyConstraintEnforcerTest {
     @Mock
     private ChunkContext                    chunkContextMock;
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
         fkce = new PseudoForeignKeyConstraintEnforcer<>(stepMock, "code", "s");
     }
 
     @Test
-    public void executing_withNullStep_doesNotThrow() {
+    void executing_withNullStep_doesNotThrow() {
         fkce = new PseudoForeignKeyConstraintEnforcer<>(null, "code", "s");
         assertThat(fkce.execute(contributionMock, chunkContextMock)).isEqualTo(RepeatStatus.FINISHED);
     }
 
     @Test
-    public void degenerateConstruction_withNullEntityName_throws() {
+    void degenerateConstruction_withNullEntityName_throws() {
         assertDegenerateSupplierParameter(() -> new PseudoForeignKeyConstraintEnforcer<>(stepMock, null, "s"),
             "entityName");
     }
 
     @Test
-    public void executing_returnsFinishedStatus() {
+    void executing_returnsFinishedStatus() {
         assertThat(fkce.execute(contributionMock, chunkContextMock)).isEqualTo(RepeatStatus.FINISHED);
         verify(stepMock).execute();
     }
 
     @Test
-    public void executing_withNullPlural_returnsFinishedStatus_asIfPluralWereS() {
+    void executing_withNullPlural_returnsFinishedStatus_asIfPluralWereS() {
         fkce = new PseudoForeignKeyConstraintEnforcer<>(stepMock, "code", null);
         assertThat(fkce.execute(contributionMock, chunkContextMock)).isEqualTo(RepeatStatus.FINISHED);
         verify(stepMock).execute();
     }
 
     @Test
-    public void executing_withSingleModifications_logs() {
+    void executing_withSingleModifications_logs() {
         when(stepMock.execute()).thenReturn(1);
         fkce.execute(contributionMock, chunkContextMock);
         verify(stepMock).execute();
@@ -68,7 +68,7 @@ public class PseudoForeignKeyConstraintEnforcerTest {
     }
 
     @Test
-    public void executing_withMultipleModifications_logs() {
+    void executing_withMultipleModifications_logs() {
         when(stepMock.execute()).thenReturn(2);
         fkce.execute(contributionMock, chunkContextMock);
         verify(stepMock).execute();
@@ -77,7 +77,7 @@ public class PseudoForeignKeyConstraintEnforcerTest {
     }
 
     @Test
-    public void executing_withoutModifications_skipsLog() {
+    void executing_withoutModifications_skipsLog() {
         when(stepMock.execute()).thenReturn(0);
         fkce.execute(contributionMock, chunkContextMock);
         verify(stepMock).execute();
@@ -85,13 +85,13 @@ public class PseudoForeignKeyConstraintEnforcerTest {
     }
 
     @Test
-    public void executing_ignoresContributionMock() {
+    void executing_ignoresContributionMock() {
         fkce.execute(contributionMock, chunkContextMock);
         verifyNoMoreInteractions(contributionMock);
     }
 
     @Test
-    public void executing_ignoresChunkContextMock() {
+    void executing_ignoresChunkContextMock() {
         fkce.execute(contributionMock, chunkContextMock);
         verifyNoMoreInteractions(chunkContextMock);
     }

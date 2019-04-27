@@ -8,12 +8,13 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.common.NullArgumentException;
 import ch.difty.scipamato.common.entity.CodeClassId;
 
-public class PaperCodeBoxTest {
+class PaperCodeBoxTest {
 
     private static final LocalDateTime CREAT = LocalDateTime.parse("2017-01-01T08:00:00.123");
     private static final LocalDateTime MOD   = LocalDateTime.parse("2017-01-02T09:00:00.456");
@@ -32,14 +33,14 @@ public class PaperCodeBoxTest {
     }
 
     @Test
-    public void newCodeBox_withNoCodes() {
+    void newCodeBox_withNoCodes() {
         assertThat(codeBox.isEmpty()).isTrue();
         assertThat(codeBox.size()).isEqualTo(0);
         assertThat(codeBox.getCodes()).isEmpty();
     }
 
     @Test
-    public void addingCodes_increasesSize() {
+    void addingCodes_increasesSize() {
         codeBox.addCode(CODE_1F);
         assertThat(codeBox.isEmpty()).isFalse();
         assertThat(codeBox.size()).isEqualTo(1);
@@ -51,29 +52,29 @@ public class PaperCodeBoxTest {
     }
 
     @Test
-    public void addingNull_isIgnored() {
+    void addingNull_isIgnored() {
         codeBox.addCode(null);
         assertThat(codeBox.size()).isEqualTo(0);
         assertThat(codeBox.getCodes()).isEmpty();
     }
 
     @Test
-    public void addingSameCodeTwice_onlyAddsItOnce() {
+    void addingSameCodeTwice_onlyAddsItOnce() {
         codeBox.addCode(CODE_1F);
         codeBox.addCode(CODE_1F);
         assertThat(codeBox.size()).isEqualTo(1);
         assertThat(codeBox.getCodes()).containsExactly(CODE_1F);
     }
 
-    @Test(expected = UnsupportedOperationException.class)
-    public void gettingCodes_andThenAlteringList_throws() {
-        codeBox
+    @Test
+    void gettingCodes_andThenAlteringList_throws() {
+        Assertions.assertThrows(UnsupportedOperationException.class, () -> codeBox
             .getCodes()
-            .add(CODE_5H);
+            .add(CODE_5H));
     }
 
     @Test
-    public void addingMultipleCodesWithNullOrEmptyList_leavesCodesAsIs() {
+    void addingMultipleCodesWithNullOrEmptyList_leavesCodesAsIs() {
         codeBox.addCode(CODE_1F);
         codeBox.addCodes(null);
         codeBox.addCodes(new ArrayList<>());
@@ -81,13 +82,13 @@ public class PaperCodeBoxTest {
     }
 
     @Test
-    public void addingMultipleCodes_addsEachExactlyOnceExceptNull() {
+    void addingMultipleCodes_addsEachExactlyOnceExceptNull() {
         codeBox.addCodes(Arrays.asList(CODE_1F, CODE_5F, null, CODE_5H, CODE_1F));
         assertThat(codeBox.getCodes()).containsExactly(CODE_1F, CODE_5F, CODE_5H);
     }
 
     @Test
-    public void clearingCodes() {
+    void clearingCodes() {
         codeBox.addCodes(Arrays.asList(CODE_1F, CODE_5F));
         assertThat(codeBox.size()).isEqualTo(2);
 
@@ -97,12 +98,12 @@ public class PaperCodeBoxTest {
     }
 
     @Test
-    public void gettingCodesByCodeClass_withNullCodeClassId_throws() {
+    void gettingCodesByCodeClass_withNullCodeClassId_throws() {
         assertDegenerateSupplierParameter(() -> codeBox.getCodesBy(null), "codeClassId");
     }
 
     @Test
-    public void gettingCodesByCodeClass() {
+    void gettingCodesByCodeClass() {
         codeBox.addCodes(Arrays.asList(CODE_1F, CODE_5H, CODE_5F));
 
         assertThat(codeBox.getCodesBy(CodeClassId.CC1)).containsExactly(CODE_1F);
@@ -111,7 +112,7 @@ public class PaperCodeBoxTest {
     }
 
     @Test
-    public void clearingByCodeClassId_withNullParameter_throws() {
+    void clearingByCodeClassId_withNullParameter_throws() {
         try {
             codeBox.clearBy(null);
             fail("should have thrown exception");
@@ -123,7 +124,7 @@ public class PaperCodeBoxTest {
     }
 
     @Test
-    public void clearingByCodeClassId_leavesOtherCategoriesUntouched() {
+    void clearingByCodeClassId_leavesOtherCategoriesUntouched() {
         codeBox.addCodes(Arrays.asList(CODE_1F, CODE_5H, CODE_5F));
         codeBox.clearBy(CodeClassId.CC1);
         assertThat(codeBox.getCodes()).containsExactly(CODE_5H, CODE_5F);
@@ -134,12 +135,12 @@ public class PaperCodeBoxTest {
     }
 
     @Test
-    public void sizePerCodeClass_withNullCodeClass_throws() {
+    void sizePerCodeClass_withNullCodeClass_throws() {
         assertDegenerateSupplierParameter(() -> codeBox.sizeOf(null), "codeClassId");
     }
 
     @Test
-    public void sizePerCodeClass() {
+    void sizePerCodeClass() {
         codeBox.addCodes(Arrays.asList(CODE_1F, CODE_5H, CODE_5F));
         assertThat(codeBox.sizeOf(CodeClassId.CC1)).isEqualTo(1);
         assertThat(codeBox.sizeOf(CodeClassId.CC2)).isEqualTo(0);
@@ -147,13 +148,13 @@ public class PaperCodeBoxTest {
     }
 
     @Test
-    public void assertingToString_withNoCodes() {
+    void assertingToString_withNoCodes() {
         assertThat(codeBox.isEmpty()).isTrue();
         assertThat(codeBox.toString()).isEqualTo("[]");
     }
 
     @Test
-    public void assertingToString_withMembers() {
+    void assertingToString_withMembers() {
         codeBox.addCodes(Arrays.asList(CODE_1F, CODE_5H, CODE_5F));
         assertThat(codeBox.toString()).isEqualTo(
             // @formatter:off
@@ -171,14 +172,14 @@ public class PaperCodeBoxTest {
     }
 
     @Test
-    public void equality_ofEmptyCodeBoxes() {
+    void equality_ofEmptyCodeBoxes() {
         CodeBox cb1 = new PaperCodeBox();
         CodeBox cb2 = new PaperCodeBox();
         assertEqualityOf(cb1, cb2);
     }
 
     @Test
-    public void equality_ofCodeHoldingCodeBoxes() {
+    void equality_ofCodeHoldingCodeBoxes() {
         CodeBox cb1 = new PaperCodeBox();
         cb1.addCode(CODE_1F);
         cb1.addCode(CODE_5H);
@@ -189,7 +190,7 @@ public class PaperCodeBoxTest {
     }
 
     @Test
-    public void equality_ofCodeHoldingCodeBoxes_despiteDifferentOrder() {
+    void equality_ofCodeHoldingCodeBoxes_despiteDifferentOrder() {
         CodeBox cb1 = new PaperCodeBox();
         cb1.addCode(CODE_1F);
         cb1.addCode(CODE_5H);
@@ -212,7 +213,7 @@ public class PaperCodeBoxTest {
     }
 
     @Test
-    public void inequality_ofCodeBoxes() {
+    void inequality_ofCodeBoxes() {
         CodeBox cb1 = new PaperCodeBox();
         cb1.addCode(CODE_1F);
         CodeBox cb2 = new PaperCodeBox();
@@ -222,7 +223,7 @@ public class PaperCodeBoxTest {
     }
 
     @Test
-    public void inequality_ofCodeBoxes2() {
+    void inequality_ofCodeBoxes2() {
         CodeBox cb1 = new PaperCodeBox();
         CodeBox cb2 = new PaperCodeBox();
         cb2.addCode(CODE_5H);

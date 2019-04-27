@@ -6,14 +6,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.core.sync.jobs.AbstractItemWriterIntegrationTest;
 import ch.difty.scipamato.publ.db.public_.tables.records.NewStudyTopicRecord;
 
 @SuppressWarnings("SameParameterValue")
-public class NewStudyTopicItemWriterIntegrationTest
+class NewStudyTopicItemWriterIntegrationTest
     extends AbstractItemWriterIntegrationTest<PublicNewStudyTopic, NewStudyTopicItemWriter> {
 
     private static final int NEWSLETTER_ID                = 2;
@@ -65,8 +65,8 @@ public class NewStudyTopicItemWriterIntegrationTest
             .build();
     }
 
-    @After
-    public void tearDown() {
+    @AfterEach
+    void tearDown() {
         dsl
             .deleteFrom(NEW_STUDY_TOPIC)
             .where(NEW_STUDY_TOPIC.NEWSLETTER_ID
@@ -83,7 +83,7 @@ public class NewStudyTopicItemWriterIntegrationTest
     }
 
     @Test
-    public void insertingNewNewStudyTopic_succeeds() {
+    void insertingNewNewStudyTopic_succeeds() {
         int newsletterId = newNewStudyTopic.getNewsletterId();
         int newsletterTopicId = newNewStudyTopic.getNewsletterTopicId();
         assertNewStudyTopicDoesNotExistWith(newsletterId, newsletterTopicId);
@@ -109,7 +109,7 @@ public class NewStudyTopicItemWriterIntegrationTest
     }
 
     @Test
-    public void updatingExistingNewStudyTopic_succeeds() {
+    void updatingExistingNewStudyTopic_succeeds() {
         assertThat(getWriter().executeUpdate(existingNewStudyTopic)).isEqualTo(1);
     }
 

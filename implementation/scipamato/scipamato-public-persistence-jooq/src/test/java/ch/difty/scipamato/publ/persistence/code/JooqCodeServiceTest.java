@@ -7,22 +7,22 @@ import static org.mockito.Mockito.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import ch.difty.scipamato.common.entity.CodeClassId;
 import ch.difty.scipamato.publ.entity.Code;
 
-@RunWith(MockitoJUnitRunner.class)
-public class JooqCodeServiceTest {
+@ExtendWith(MockitoExtension.class)
+class JooqCodeServiceTest {
 
     @Mock
     private CodeRepository repoMock;
 
     @Test
-    public void findingCodes_delegatesToRepo() {
+    void findingCodes_delegatesToRepo() {
         JooqCodeService service = new JooqCodeService(repoMock);
 
         CodeClassId ccId = CodeClassId.CC1;

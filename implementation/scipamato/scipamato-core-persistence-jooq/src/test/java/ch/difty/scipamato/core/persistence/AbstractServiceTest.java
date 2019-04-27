@@ -2,17 +2,17 @@ package ch.difty.scipamato.core.persistence;
 
 import static org.mockito.Mockito.*;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import ch.difty.scipamato.core.entity.IdScipamatoEntity;
 import ch.difty.scipamato.core.entity.User;
 
-@RunWith(MockitoJUnitRunner.class)
-@SuppressWarnings({ "ResultOfMethodCallIgnored", "WeakerAccess" })
+@ExtendWith(MockitoExtension.class)
+@SuppressWarnings({ "ResultOfMethodCallIgnored" })
 public abstract class AbstractServiceTest<ID extends Number, T extends IdScipamatoEntity<ID>, R extends ReadOnlyRepository<T, ID, ?>> {
 
     protected static final int CREATOR_ID  = 10;
@@ -36,10 +36,9 @@ public abstract class AbstractServiceTest<ID extends Number, T extends IdScipama
      */
     protected abstract T getEntity();
 
-    @Before
-    public final void setUp() {
+    @BeforeEach
+    final void setUp() {
         specificSetUp();
-        auditFixture();
     }
 
     /**
@@ -49,19 +48,33 @@ public abstract class AbstractServiceTest<ID extends Number, T extends IdScipama
     }
 
     protected void auditFixture() {
-        when(getEntity().getCreatedBy()).thenReturn(CREATOR_ID);
-        when(getEntity().getLastModifiedBy()).thenReturn(MODIFIER_ID);
+        doReturn(CREATOR_ID)
+            .when(getEntity())
+            .getCreatedBy();
+        doReturn(MODIFIER_ID)
+            .when(getEntity())
+            .getLastModifiedBy();
 
-        when(creatorMock.getDisplayValue()).thenReturn("creatingUser");
-        when(creatorMock.getFullName()).thenReturn("creatingUserFullName");
-        when(modifierMock.getDisplayValue()).thenReturn("modifyingUser");
+        doReturn("creatingUser")
+            .when(creatorMock)
+            .getDisplayValue();
+        doReturn("creatingUserFullName")
+            .when(creatorMock)
+            .getFullName();
+        doReturn("modifyingUser")
+            .when(modifierMock)
+            .getDisplayValue();
 
-        when(userRepoMock.findById(CREATOR_ID)).thenReturn(creatorMock);
-        when(userRepoMock.findById(MODIFIER_ID)).thenReturn(modifierMock);
+        doReturn(creatorMock)
+            .when(userRepoMock)
+            .findById(CREATOR_ID);
+        doReturn(modifierMock)
+            .when(userRepoMock)
+            .findById(MODIFIER_ID);
     }
 
-    @After
-    public final void tearDown() {
+    @AfterEach
+    final void tearDown() {
         verifyNoMoreInteractions(userRepoMock);
         specificTearDown();
     }

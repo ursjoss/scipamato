@@ -15,7 +15,7 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.protocol.http.mock.MockHttpServletRequest;
-import org.junit.After;
+import org.junit.jupiter.api.AfterEach;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.common.entity.CodeClassId;
@@ -27,6 +27,7 @@ import ch.difty.scipamato.core.persistence.CodeClassService;
 import ch.difty.scipamato.core.persistence.CodeService;
 import ch.difty.scipamato.core.web.common.PanelTest;
 
+@SuppressWarnings("SpellCheckingInspection")
 public abstract class PaperPanelTest<T extends CodeBoxAware & NewsletterAware, P extends PaperPanel<T>>
     extends PanelTest<P> {
 
@@ -85,8 +86,8 @@ public abstract class PaperPanelTest<T extends CodeBoxAware & NewsletterAware, P
     protected void setUpLocalHook() {
     }
 
-    @After
-    public final void tearDown() {
+    @AfterEach
+    final void tearDown() {
         verifyNoMoreInteractions(codeClassServiceMock, codeServiceMock);
 
         tearDownLocalHook();

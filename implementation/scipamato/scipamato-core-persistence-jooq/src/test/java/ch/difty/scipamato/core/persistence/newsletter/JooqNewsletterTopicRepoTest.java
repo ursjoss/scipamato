@@ -11,11 +11,11 @@ import java.util.Collections;
 import org.jooq.DSLContext;
 import org.jooq.SelectJoinStep;
 import org.jooq.impl.DSL;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import ch.difty.scipamato.common.DateTimeService;
 import ch.difty.scipamato.core.db.tables.records.NewsletterTopicRecord;
@@ -23,8 +23,8 @@ import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicDefinition;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicFilter;
 import ch.difty.scipamato.core.persistence.OptimisticLockingException;
 
-@RunWith(MockitoJUnitRunner.class)
-public class JooqNewsletterTopicRepoTest {
+@ExtendWith(MockitoExtension.class)
+class JooqNewsletterTopicRepoTest {
 
     @Mock
     private DSLContext      dslContextMock;
@@ -33,23 +33,23 @@ public class JooqNewsletterTopicRepoTest {
 
     private JooqNewsletterTopicRepo repo;
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
         repo = new JooqNewsletterTopicRepo(dslContextMock, dateTimeServiceMock);
     }
 
     @Test
-    public void findingCodesOfClass_withNullLanguageId_throws() {
+    void findingCodesOfClass_withNullLanguageId_throws() {
         assertDegenerateSupplierParameter(() -> repo.findAll(null), "languageCode");
     }
 
     @Test
-    public void insertingNewsletterTopicDefinition_withNullArgument_throws() {
+    void insertingNewsletterTopicDefinition_withNullArgument_throws() {
         assertDegenerateSupplierParameter(() -> repo.insert(null), "entity");
     }
 
     @Test
-    public void insertingNewsletterTopicDefinition_withEntityWithNonNullId_throws() {
+    void insertingNewsletterTopicDefinition_withEntityWithNonNullId_throws() {
         NewsletterTopicDefinition ntd = new NewsletterTopicDefinition(1, "de", 1);
         try {
             repo.insert(ntd);
@@ -62,25 +62,25 @@ public class JooqNewsletterTopicRepoTest {
     }
 
     @Test
-    public void updatingNewsletterTopicDefinition_withNullArgument_throws() {
+    void updatingNewsletterTopicDefinition_withNullArgument_throws() {
         assertDegenerateSupplierParameter(() -> repo.update(null), "entity");
     }
 
     @Test
-    public void updatingNewsletterTopicDefinition_withEntityWithNullId_throws() {
+    void updatingNewsletterTopicDefinition_withEntityWithNullId_throws() {
         NewsletterTopicDefinition ntd = new NewsletterTopicDefinition(null, "de", 1);
         assertDegenerateSupplierParameter(() -> repo.update(ntd), "entity.id");
     }
 
     @Test
-    public void applyingWhereCondition_withNullFilter_returnsTrueCondition() {
+    void applyingWhereCondition_withNullFilter_returnsTrueCondition() {
         SelectJoinStep<NewsletterTopicRecord> selectStep = mock(SelectJoinStep.class);
         repo.applyWhereCondition(null, selectStep);
         verify(selectStep).where(DSL.trueCondition());
     }
 
     @Test
-    public void applyingWhereCondition_withFilterWithNoTitleMask_returnsTrueCondition() {
+    void applyingWhereCondition_withFilterWithNoTitleMask_returnsTrueCondition() {
         SelectJoinStep<NewsletterTopicRecord> selectStep = mock(SelectJoinStep.class);
         NewsletterTopicFilter filter = new NewsletterTopicFilter();
         assertThat(filter.getTitleMask()).isNull();
@@ -91,7 +91,7 @@ public class JooqNewsletterTopicRepoTest {
     }
 
     @Test
-    public void handlingUpdatedRecord_withNullRecord_throwsOptimisticLockingException() {
+    void handlingUpdatedRecord_withNullRecord_throwsOptimisticLockingException() {
         final NewsletterTopicDefinition entity = new NewsletterTopicDefinition(10, "de", 100);
         final int userId = 5;
         try {
@@ -106,7 +106,7 @@ public class JooqNewsletterTopicRepoTest {
     }
 
     @Test
-    public void addingOrThrowing_withNullRecord_throwsOptimisticLockingException() {
+    void addingOrThrowing_withNullRecord_throwsOptimisticLockingException() {
         try {
             repo.addOrThrow(null, Collections.emptyList(), "nttObject");
             fail("should have thrown exception");
@@ -119,7 +119,7 @@ public class JooqNewsletterTopicRepoTest {
     }
 
     @Test
-    public void logingOrThrowing_withDeleteCount0_throws() {
+    void logingOrThrowing_withDeleteCount0_throws() {
         try {
             repo.logOrThrow(0, 10, "delObj");
             fail("should have thrown exception");

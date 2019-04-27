@@ -16,13 +16,13 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.panel.Panel;
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
 import ch.difty.scipamato.core.web.common.PanelTest;
 
-public class XmlPasteModalPanelTest extends PanelTest<XmlPasteModalPanel> {
+class XmlPasteModalPanelTest extends PanelTest<XmlPasteModalPanel> {
 
     @Mock
     private AjaxRequestTarget requestTargetMock;
@@ -34,8 +34,8 @@ public class XmlPasteModalPanelTest extends PanelTest<XmlPasteModalPanel> {
     @Mock
     private FileItem fileItem;
 
-    @After
-    public void tearDown() {
+    @AfterEach
+    void tearDown() {
         verifyNoMoreInteractions(requestTargetMock, fileItem);
     }
 
@@ -60,7 +60,7 @@ public class XmlPasteModalPanelTest extends PanelTest<XmlPasteModalPanel> {
     }
 
     @Test
-    public void clickingCancel_clearsPastedContentAndClosesWindow() {
+    void clickingCancel_clearsPastedContentAndClosesWindow() {
         XmlPasteModalPanel panel = makePanel();
         getTester().startComponentInPage(panel);
         panel
@@ -79,7 +79,7 @@ public class XmlPasteModalPanelTest extends PanelTest<XmlPasteModalPanel> {
     }
 
     @Test
-    public void clickingSubmit_keepsPastedContentAndClosesWindow() {
+    void clickingSubmit_keepsPastedContentAndClosesWindow() {
         XmlPasteModalPanel panel = makePanel();
         getTester().startComponentInPage(panel);
         panel
@@ -98,19 +98,19 @@ public class XmlPasteModalPanelTest extends PanelTest<XmlPasteModalPanel> {
     }
 
     @Test
-    public void updating_withNullMap_doesNothing() {
+    void updating_withNullMap_doesNothing() {
         XmlPasteModalPanel panel = makePanel();
         panel.doOnUpdate(requestTargetMock, null);
     }
 
     @Test
-    public void updating_withEmptyMap_doesNothing() {
+    void updating_withEmptyMap_doesNothing() {
         XmlPasteModalPanel panel = makePanel();
         panel.doOnUpdate(requestTargetMock, map);
     }
 
     @Test
-    public void updating_withFileKeyNotFoundInMap_doesNothing() {
+    void updating_withFileKeyNotFoundInMap_doesNothing() {
         files.add(fileItem);
         map.put("foo", files);
 
@@ -119,7 +119,7 @@ public class XmlPasteModalPanelTest extends PanelTest<XmlPasteModalPanel> {
     }
 
     @Test
-    public void updating_withFileKeyFoundButEmptyMap_doesNothingExceptForAddingFieldToTarget() {
+    void updating_withFileKeyFoundButEmptyMap_doesNothingExceptForAddingFieldToTarget() {
         map.put("file", files);
 
         XmlPasteModalPanel panel = makePanel();
@@ -130,7 +130,7 @@ public class XmlPasteModalPanelTest extends PanelTest<XmlPasteModalPanel> {
     }
 
     @Test
-    public void updating_withFileWIthWrongContentType_doesNothingExceptForAddingFieldToTarget() {
+    void updating_withFileWIthWrongContentType_doesNothingExceptForAddingFieldToTarget() {
         when(fileItem.getContentType()).thenReturn("foo");
         files.add(fileItem);
         map.put("file", files);
@@ -144,7 +144,7 @@ public class XmlPasteModalPanelTest extends PanelTest<XmlPasteModalPanel> {
     }
 
     @Test
-    public void updating__extractsContentAndAddsContentToTarget() {
+    void updating__extractsContentAndAddsContentToTarget() {
         when(fileItem.getContentType()).thenReturn("text/xml");
         when(fileItem.getName()).thenReturn("fileName");
         when(fileItem.getString()).thenReturn("fileContent");

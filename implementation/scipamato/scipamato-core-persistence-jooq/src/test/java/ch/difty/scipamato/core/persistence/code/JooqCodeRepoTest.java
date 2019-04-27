@@ -12,11 +12,11 @@ import java.util.Iterator;
 
 import org.jooq.DSLContext;
 import org.jooq.Result;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import ch.difty.scipamato.common.DateTimeService;
 import ch.difty.scipamato.common.entity.CodeClassId;
@@ -27,8 +27,8 @@ import ch.difty.scipamato.core.entity.code.CodeTranslation;
 import ch.difty.scipamato.core.persistence.OptimisticLockingException;
 import ch.difty.scipamato.core.persistence.codeclass.CodeClassRepository;
 
-@RunWith(MockitoJUnitRunner.class)
-public class JooqCodeRepoTest {
+@ExtendWith(MockitoExtension.class)
+class JooqCodeRepoTest {
 
     @Mock
     private DSLContext dslContextMock;
@@ -41,56 +41,56 @@ public class JooqCodeRepoTest {
 
     private JooqCodeRepo repo;
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
         repo = new JooqCodeRepo(dslContextMock, dtsMock, codeClassRepoMock);
     }
 
     @Test
-    public void degenerateConstruction_withNullDsl_throws() {
+    void degenerateConstruction_withNullDsl_throws() {
         assertDegenerateSupplierParameter(() -> new JooqCodeRepo(null, dtsMock, codeClassRepoMock), "dsl");
     }
 
     @Test
-    public void degenerateConstruction_withNullDateTimeService_throws() {
+    void degenerateConstruction_withNullDateTimeService_throws() {
         assertDegenerateSupplierParameter(() -> new JooqCodeRepo(dslContextMock, null, codeClassRepoMock),
             "dateTimeService");
     }
 
     @Test
-    public void degenerateConstruction_withNullCodeClassRepo_throws() {
+    void degenerateConstruction_withNullCodeClassRepo_throws() {
         assertDegenerateSupplierParameter(() -> new JooqCodeRepo(dslContextMock, dtsMock, null), "codeClassRepo");
     }
 
     @Test
-    public void findingCodesOfClass_withNullCodeClassId_throws() {
+    void findingCodesOfClass_withNullCodeClassId_throws() {
         assertDegenerateSupplierParameter(() -> repo.findCodesOfClass(null, "de"), "codeClassId");
     }
 
     @Test
-    public void findingCodesOfClass_withNullLanguageId_throws() {
+    void findingCodesOfClass_withNullLanguageId_throws() {
         assertDegenerateSupplierParameter(() -> repo.findCodesOfClass(CodeClassId.CC1, null), "languageCode");
     }
 
     @Test
-    public void insertingOrUpdating_withNullCodeDefinition_throws() {
+    void insertingOrUpdating_withNullCodeDefinition_throws() {
         assertDegenerateSupplierParameter(() -> repo.saveOrUpdate(null), "codeDefinition");
     }
 
     @Test
-    public void insertingOrUpdating_withNullCodeClass_throws() {
+    void insertingOrUpdating_withNullCodeClass_throws() {
         CodeDefinition cd = new CodeDefinition("1Z", "de", null, 1, true, 1);
         assertDegenerateSupplierParameter(() -> repo.saveOrUpdate(cd), "codeDefinition.codeClass");
     }
 
     @Test
-    public void insertingOrUpdating_withNullCodeClassId_throws() {
+    void insertingOrUpdating_withNullCodeClassId_throws() {
         CodeDefinition cd = new CodeDefinition("1Z", "de", new CodeClass(null, "foo", null), 1, true, 1);
         assertDegenerateSupplierParameter(() -> repo.saveOrUpdate(cd), "codeDefinition.codeClass.id");
     }
 
     @Test
-    public void removingObsoletePersistedRecords() {
+    void removingObsoletePersistedRecords() {
         final CodeTranslation ct = new CodeTranslation(1, "de", "1ade", "", 1);
         final Result<CodeTrRecord> resultMock = mock(Result.class);
         final Iterator itMock = mock(Iterator.class);
@@ -115,7 +115,7 @@ public class JooqCodeRepoTest {
     }
 
     @Test
-    public void removingObsoletePersistedRecords_whenCheckingIfTranslationIsPresentInEntity_doesNotConsiderIdLessEntityTranslations() {
+    void removingObsoletePersistedRecords_whenCheckingIfTranslationIsPresentInEntity_doesNotConsiderIdLessEntityTranslations() {
         final CodeTranslation ct = new CodeTranslation(null, "de", "1ade", "", 1);
         final Result<CodeTrRecord> resultMock = mock(Result.class);
         final Iterator itMock = mock(Iterator.class);
@@ -137,7 +137,7 @@ public class JooqCodeRepoTest {
     }
 
     @Test
-    public void consideringAdding_withNullRecord_throwsOptimisticLockingException() {
+    void consideringAdding_withNullRecord_throwsOptimisticLockingException() {
         try {
             repo.considerAdding(null, new ArrayList<>(), new CodeTranslation(1, "de", "c1", "comm", 10));
             fail("should have thrown exception");
@@ -150,7 +150,7 @@ public class JooqCodeRepoTest {
     }
 
     @Test
-    public void logOrThrow_withDeleteCount0_throws() {
+    void logOrThrow_withDeleteCount0_throws() {
         try {
             repo.logOrThrow(0, "1A", "deletedObject");
             fail("should have thrown exception");

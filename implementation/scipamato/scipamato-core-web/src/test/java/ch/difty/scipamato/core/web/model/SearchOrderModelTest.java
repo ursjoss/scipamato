@@ -6,8 +6,8 @@ import static org.mockito.Mockito.*;
 import java.util.Arrays;
 import java.util.Iterator;
 
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatcher;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -19,20 +19,20 @@ import ch.difty.scipamato.core.entity.search.SearchOrder;
 import ch.difty.scipamato.core.entity.search.SearchOrderFilter;
 import ch.difty.scipamato.core.persistence.SearchOrderService;
 
-public class SearchOrderModelTest extends ModelTest {
+class SearchOrderModelTest extends ModelTest {
 
     @MockBean
     private SearchOrderService serviceMock;
     @Mock
     private SearchOrder        mockSearchOrder;
 
-    @After
-    public void tearDown() {
+    @AfterEach
+    void tearDown() {
         verifyNoMoreInteractions(serviceMock, mockSearchOrder);
     }
 
     @Test
-    public void test() {
+    void test() {
         final int owner = 1;
         final int maxRows = 10;
         when(serviceMock.findPageByFilter(isA(SearchOrderFilter.class), isA(PaginationRequest.class))).thenReturn(

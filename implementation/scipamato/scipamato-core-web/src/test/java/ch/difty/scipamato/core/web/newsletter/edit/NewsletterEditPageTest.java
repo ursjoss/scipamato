@@ -14,8 +14,8 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.util.tester.FormTester;
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.common.entity.newsletter.PublicationStatus;
 import ch.difty.scipamato.core.entity.Paper;
@@ -26,7 +26,7 @@ import ch.difty.scipamato.core.web.common.BasePageTest;
 import ch.difty.scipamato.core.web.paper.entry.PaperEntryPage;
 import ch.difty.scipamato.core.web.paper.result.ResultPanel;
 
-public class NewsletterEditPageTest extends BasePageTest<NewsletterEditPage> {
+class NewsletterEditPageTest extends BasePageTest<NewsletterEditPage> {
 
     private final Newsletter nl = Newsletter
         .builder()
@@ -35,8 +35,8 @@ public class NewsletterEditPageTest extends BasePageTest<NewsletterEditPage> {
         .publicationStatus(PublicationStatus.CANCELLED)
         .build();
 
-    @After
-    public void tearDown() {
+    @AfterEach
+    void tearDown() {
         verifyNoMoreInteractions(newsletterServiceMock);
     }
 
@@ -72,7 +72,7 @@ public class NewsletterEditPageTest extends BasePageTest<NewsletterEditPage> {
     }
 
     @Test
-    public void submitting_callsService() {
+    void submitting_callsService() {
         when(newsletterServiceMock.canCreateNewsletterInProgress()).thenReturn(true);
         when(newsletterServiceMock.saveOrUpdate(isA(Newsletter.class))).thenReturn(nl);
 
@@ -89,7 +89,7 @@ public class NewsletterEditPageTest extends BasePageTest<NewsletterEditPage> {
     }
 
     @Test
-    public void submitting_withServiceReturningNull_addsErrorMessage() {
+    void submitting_withServiceReturningNull_addsErrorMessage() {
         when(newsletterServiceMock.canCreateNewsletterInProgress()).thenReturn(true);
         when(newsletterServiceMock.saveOrUpdate(isA(Newsletter.class))).thenReturn(null);
 
@@ -106,7 +106,7 @@ public class NewsletterEditPageTest extends BasePageTest<NewsletterEditPage> {
     }
 
     @Test
-    public void submitting_withServiceReturningOptimisticLockingException() {
+    void submitting_withServiceReturningOptimisticLockingException() {
         when(newsletterServiceMock.canCreateNewsletterInProgress()).thenReturn(true);
         when(newsletterServiceMock.saveOrUpdate(isA(Newsletter.class))).thenThrow(
             new OptimisticLockingException("newsletter", OptimisticLockingException.Type.UPDATE));
@@ -125,7 +125,7 @@ public class NewsletterEditPageTest extends BasePageTest<NewsletterEditPage> {
     }
 
     @Test
-    public void submitting_withIllegalArgumentException() {
+    void submitting_withIllegalArgumentException() {
         when(newsletterServiceMock.canCreateNewsletterInProgress()).thenReturn(true);
         when(newsletterServiceMock.saveOrUpdate(isA(Newsletter.class))).thenThrow(
             new IllegalArgumentException("newsletter.onlyOneInStatusWipAllowed"));
@@ -144,7 +144,7 @@ public class NewsletterEditPageTest extends BasePageTest<NewsletterEditPage> {
     }
 
     @Test
-    public void submitting_withOtherException() {
+    void submitting_withOtherException() {
         when(newsletterServiceMock.canCreateNewsletterInProgress()).thenReturn(true);
         when(newsletterServiceMock.saveOrUpdate(isA(Newsletter.class))).thenThrow(new RuntimeException("boom"));
 
@@ -161,7 +161,7 @@ public class NewsletterEditPageTest extends BasePageTest<NewsletterEditPage> {
     }
 
     @Test
-    public void callingWithoutModel_restrictsToCreatingNewWIPNewsletter() {
+    void callingWithoutModel_restrictsToCreatingNewWIPNewsletter() {
         getTester().startPage(new NewsletterEditPage());
         getTester().assertRenderedPage(getPageClass());
 
@@ -172,7 +172,7 @@ public class NewsletterEditPageTest extends BasePageTest<NewsletterEditPage> {
     }
 
     @Test
-    public void fieldsIssueAndIssueDate_areOnlyEnabledIfNewsletterIsInProgress() {
+    void fieldsIssueAndIssueDate_areOnlyEnabledIfNewsletterIsInProgress() {
         for (final PublicationStatus ps : PublicationStatus.values()) {
             final Newsletter nl = Newsletter
                 .builder()
@@ -195,11 +195,11 @@ public class NewsletterEditPageTest extends BasePageTest<NewsletterEditPage> {
     }
 
     @Test
-    public void clickingTitleInResultPanel_opensPaperEntryPage() {
+    void clickingTitleInResultPanel_opensPaperEntryPage() {
         final List<PaperSlim> papers = new ArrayList<>();
         final PaperSlim ps = new PaperSlim();
-        ps.setId(1l);
-        ps.setNumber(2l);
+        ps.setId(1L);
+        ps.setNumber(2L);
         ps.setTitle("some title");
         ps.setPublicationYear(2019);
         ps.setFirstAuthor("Foo");

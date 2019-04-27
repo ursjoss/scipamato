@@ -6,7 +6,7 @@ import static org.assertj.core.api.Fail.fail;
 import java.util.Collection;
 import java.util.List;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationRequest;
@@ -17,18 +17,18 @@ import ch.difty.scipamato.core.entity.keyword.KeywordTranslation;
 import ch.difty.scipamato.core.persistence.JooqBaseIntegrationTest;
 import ch.difty.scipamato.core.persistence.OptimisticLockingException;
 
-public class JooqKeywordRepoIntegrationTest extends JooqBaseIntegrationTest {
+class JooqKeywordRepoIntegrationTest extends JooqBaseIntegrationTest {
 
     @Autowired
     private JooqKeywordRepo repo;
 
     @Test
-    public void findingAll() {
+    void findingAll() {
         assertThat(repo.findAll("en")).hasSize(3);
     }
 
     @Test
-    public void findingKeywordDefinitions_withUnspecifiedFilter_findsAllDefinitions() {
+    void findingKeywordDefinitions_withUnspecifiedFilter_findsAllDefinitions() {
         final List<KeywordDefinition> kds = repo.findPageOfKeywordDefinitions(new KeywordFilter(),
             new PaginationRequest(Sort.Direction.ASC, "name"));
 
@@ -60,7 +60,7 @@ public class JooqKeywordRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void findingKeywordDefinitions_withFilterMatchingSingleGermanTitle_findsOne() {
+    void findingKeywordDefinitions_withFilterMatchingSingleGermanTitle_findsOne() {
         final KeywordFilter filter = new KeywordFilter();
         filter.setNameMask("Allergie (not Atopie)");
         final List<KeywordDefinition> kds = repo.findPageOfKeywordDefinitions(filter,
@@ -78,7 +78,7 @@ public class JooqKeywordRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void findingKeywordDefinitions_haveVersionFieldsPopulated() {
+    void findingKeywordDefinitions_haveVersionFieldsPopulated() {
         final KeywordFilter filter = new KeywordFilter();
         filter.setNameMask("Allergie");
         final List<KeywordDefinition> kds = repo.findPageOfKeywordDefinitions(filter,
@@ -105,7 +105,7 @@ public class JooqKeywordRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void findingKeywordDefinitions_withFilterMatchingSeveral() {
+    void findingKeywordDefinitions_withFilterMatchingSeveral() {
         final KeywordFilter filter = new KeywordFilter();
         filter.setNameMask("er");
         final List<KeywordDefinition> kds = repo.findPageOfKeywordDefinitions(filter,
@@ -129,43 +129,43 @@ public class JooqKeywordRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void countingKeywords_witNullFilter_findsAllDefinitions() {
+    void countingKeywords_witNullFilter_findsAllDefinitions() {
         assertThat(repo.countByFilter(null)).isEqualTo(3);
     }
 
     @Test
-    public void countingKeywords_withUnspecifiedFilter_findsAllDefinitions() {
+    void countingKeywords_withUnspecifiedFilter_findsAllDefinitions() {
         assertThat(repo.countByFilter(new KeywordFilter())).isEqualTo(3);
     }
 
     @Test
-    public void countingKeywords_withFilter_findsAllMatchingDefinitions() {
+    void countingKeywords_withFilter_findsAllMatchingDefinitions() {
         final KeywordFilter filter = new KeywordFilter();
         filter.setNameMask("es");
         assertThat(repo.countByFilter(filter)).isEqualTo(2);
     }
 
     @Test
-    public void countingKeywords_withNaFilter_findsThem() {
+    void countingKeywords_withNaFilter_findsThem() {
         final KeywordFilter filter = new KeywordFilter();
         filter.setNameMask("n.a.");
         assertThat(repo.countByFilter(filter)).isEqualTo(0);
     }
 
     @Test
-    public void countingKeywords_withNonMatchingFilter_findsNone() {
+    void countingKeywords_withNonMatchingFilter_findsNone() {
         final KeywordFilter filter = new KeywordFilter();
         filter.setNameMask("foobar");
         assertThat(repo.countByFilter(filter)).isEqualTo(0);
     }
 
     @Test
-    public void gettingMainLanguage() {
+    void gettingMainLanguage() {
         assertThat(repo.getMainLanguage()).isEqualTo("de");
     }
 
     @Test
-    public void findingMainLanguage() {
+    void findingMainLanguage() {
         KeywordDefinition ntd = repo.newUnpersistedKeywordDefinition();
 
         assertThat(ntd.getId()).isNull();
@@ -191,12 +191,12 @@ public class JooqKeywordRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void findingKeywordDefinition_withNonExistingId_returnsNull() {
+    void findingKeywordDefinition_withNonExistingId_returnsNull() {
         assertThat(repo.findKeywordDefinitionById(-1)).isNull();
     }
 
     @Test
-    public void findingKeywordDefinition_withExistingId_loadsWithAllLanguages() {
+    void findingKeywordDefinition_withExistingId_loadsWithAllLanguages() {
         final KeywordDefinition existing = repo.findKeywordDefinitionById(1);
 
         assertThat(existing).isNotNull();
@@ -211,7 +211,7 @@ public class JooqKeywordRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void insertingRecord_savesRecordAndRefreshesId() {
+    void insertingRecord_savesRecordAndRefreshesId() {
         final KeywordTranslation kt_de = new KeywordTranslation(null, "de", "foo_de", 0);
         final KeywordTranslation kt_en = new KeywordTranslation(null, "en", "foo1_en", 0);
         final KeywordTranslation kt_fr = new KeywordTranslation(null, "fr", "foo1_fr", 0);
@@ -242,7 +242,7 @@ public class JooqKeywordRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void updatingRecord() {
+    void updatingRecord() {
         final KeywordDefinition ntd = repo.findKeywordDefinitionById(2);
 
         assertThat(ntd).isNotNull();
@@ -300,12 +300,12 @@ public class JooqKeywordRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void deleting_withNonExistingId_returnsNull() {
+    void deleting_withNonExistingId_returnsNull() {
         assertThat(repo.delete(-1, 1)).isNull();
     }
 
     @Test
-    public void deleting_withExistingId_butWrongVersion_throwsOptimisticLockingException() {
+    void deleting_withExistingId_butWrongVersion_throwsOptimisticLockingException() {
         try {
             repo.delete(1, -1);
             fail("should have thrown exception");
@@ -317,7 +317,7 @@ public class JooqKeywordRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void deleting_withExistingIdAndVersion_deletes() {
+    void deleting_withExistingIdAndVersion_deletes() {
         // insert new record to the database and verify it's there
         KeywordDefinition ntd = new KeywordDefinition(null, "de", null);
         KeywordDefinition persisted = repo.insert(ntd);
@@ -335,7 +335,7 @@ public class JooqKeywordRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void canLoadKeywordWithMultipleTranslationsInOneLanguage() {
+    void canLoadKeywordWithMultipleTranslationsInOneLanguage() {
         final KeywordDefinition kd = repo.findKeywordDefinitionById(3);
         assertThat(kd).isNotNull();
         assertThat(kd.getTranslationsAsString()).isEqualTo(
@@ -343,12 +343,12 @@ public class JooqKeywordRepoIntegrationTest extends JooqBaseIntegrationTest {
     }
 
     @Test
-    public void findingKeywordDefinitions_sortedByName() {
+    void findingKeywordDefinitions_sortedByName() {
         assertSortedList("name", 3);
     }
 
     @Test
-    public void findingKeywordDefinitions_sortedByUndefinedProperty() {
+    void findingKeywordDefinitions_sortedByUndefinedProperty() {
         assertSortedList("whatever", 1);
     }
 

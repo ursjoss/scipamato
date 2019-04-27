@@ -4,17 +4,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import ch.difty.scipamato.common.TestUtils;
 import ch.difty.scipamato.publ.config.ApplicationPublicProperties;
 import ch.difty.scipamato.publ.web.resources.SimplonCssResourceReference;
 
-@RunWith(MockitoJUnitRunner.class)
-public class SimplonFontResourceProviderTest {
+@ExtendWith(MockitoExtension.class)
+class SimplonFontResourceProviderTest {
 
     private SimplonFontResourceProvider provider;
 
@@ -22,13 +22,13 @@ public class SimplonFontResourceProviderTest {
     private ApplicationPublicProperties applicationProperties;
 
     @Test
-    public void degenerateConstruction_withNullArgument() {
+    void degenerateConstruction_withNullArgument() {
         TestUtils.assertDegenerateSupplierParameter(() -> new SimplonFontResourceProvider(null),
             "applicationProperties");
     }
 
     @Test
-    public void withNoCommercialFontPresentSetting_getsNull() {
+    void withNoCommercialFontPresentSetting_getsNull() {
         when(applicationProperties.isCommercialFontPresent()).thenReturn(false);
 
         provider = new SimplonFontResourceProvider(applicationProperties);
@@ -39,7 +39,7 @@ public class SimplonFontResourceProviderTest {
     }
 
     @Test
-    public void withCommercialFontPresentSetting_getsReference() {
+    void withCommercialFontPresentSetting_getsReference() {
         when(applicationProperties.isCommercialFontPresent()).thenReturn(true);
 
         provider = new SimplonFontResourceProvider(applicationProperties);

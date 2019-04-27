@@ -4,7 +4,7 @@ import org.jooq.DSLContext;
 
 import ch.difty.scipamato.core.sync.jobs.AbstractItemWriterTest;
 
-public class NewStudyPageLinkWriterTest
+class NewStudyPageLinkWriterTest
     extends AbstractItemWriterTest<PublicNewStudyPageLink, NewStudyPageLinkItemWriter> {
 
     @Override

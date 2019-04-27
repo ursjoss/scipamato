@@ -6,7 +6,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.core.GenericTypeResolver;
 
 /**
@@ -24,7 +24,7 @@ import org.springframework.core.GenericTypeResolver;
 public abstract class FinalClassTest<C> {
 
     @Test
-    public void testConstructorIsPrivate()
+    void testConstructorIsPrivate()
         throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         @SuppressWarnings("unchecked") Class<C> clazz = (Class<C>) GenericTypeResolver.resolveTypeArgument(getClass(),
             FinalClassTest.class);

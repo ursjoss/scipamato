@@ -6,14 +6,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.core.sync.jobs.AbstractItemWriterIntegrationTest;
 import ch.difty.scipamato.publ.db.public_.tables.records.NewStudyPageLinkRecord;
 
 @SuppressWarnings("SameParameterValue")
-public class NewStudyPageLinkItemWriterIntegrationTest
+class NewStudyPageLinkItemWriterIntegrationTest
     extends AbstractItemWriterIntegrationTest<PublicNewStudyPageLink, NewStudyPageLinkItemWriter> {
 
     private static final String LANG_CODE      = "de";
@@ -67,8 +67,8 @@ public class NewStudyPageLinkItemWriterIntegrationTest
             .build();
     }
 
-    @After
-    public void tearDown() {
+    @AfterEach
+    void tearDown() {
         dsl
             .deleteFrom(NEW_STUDY_PAGE_LINK)
             .where(NEW_STUDY_PAGE_LINK.LANG_CODE
@@ -85,7 +85,7 @@ public class NewStudyPageLinkItemWriterIntegrationTest
     }
 
     @Test
-    public void insertingNewNewStudyPageLink_succeeds() {
+    void insertingNewNewStudyPageLink_succeeds() {
         String langCode = newNewStudyPageLink.getLangCode();
         int sort = newNewStudyPageLink.getSort();
         assertNewStudyPageLinkDoesNotExistWith(langCode, sort);
@@ -111,7 +111,7 @@ public class NewStudyPageLinkItemWriterIntegrationTest
     }
 
     @Test
-    public void updatingExistingNewStudyPageLink_succeeds() {
+    void updatingExistingNewStudyPageLink_succeeds() {
         assertThat(getWriter().executeUpdate(existingNewStudyPageLink)).isEqualTo(1);
     }
 

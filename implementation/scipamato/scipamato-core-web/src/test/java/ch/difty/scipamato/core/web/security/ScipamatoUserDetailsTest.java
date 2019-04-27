@@ -11,16 +11,16 @@ import java.util.Set;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.core.auth.Role;
 import ch.difty.scipamato.core.entity.User;
 import ch.difty.scipamato.core.web.authentication.ScipamatoUserDetails;
 
-public class ScipamatoUserDetailsTest {
+class ScipamatoUserDetailsTest {
 
     @Test
-    public void test() {
+    void test() {
         User user = new User(1, "un", "fn", "ln", "em", "pw", true, Set.of(Role.ADMIN, Role.USER));
         ScipamatoUserDetails sud = new ScipamatoUserDetails(user);
 
@@ -44,7 +44,7 @@ public class ScipamatoUserDetailsTest {
     }
 
     @Test
-    public void testToString() {
+    void testToString() {
         User user = new User(1, "un", "fn", "ln", "em", "pw", true, Set.of(Role.ADMIN, Role.USER));
         ScipamatoUserDetails sud = new ScipamatoUserDetails(user);
         final String ts = sud.toString();
@@ -57,7 +57,7 @@ public class ScipamatoUserDetailsTest {
     }
 
     @Test
-    public void equals() {
+    void equals() {
         EqualsVerifier
             .forClass(User.class)
             .withRedefinedSuperclass()

@@ -8,16 +8,15 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 import org.jooq.Record;
 import org.jooq.UpdateSetFirstStep;
 import org.jooq.UpdateSetMoreStep;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import ch.difty.scipamato.core.entity.CoreEntity;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 @SuppressWarnings("ResultOfMethodCallIgnored")
 public abstract class UpdateSetStepSetterTest<R extends Record, E extends CoreEntity> {
 
@@ -38,8 +37,7 @@ public abstract class UpdateSetStepSetterTest<R extends Record, E extends CoreEn
 
     protected abstract E getEntity();
 
-    @Before
-    public void setUp() {
+    private void fullFixture() {
         entityFixture();
         stepSetFixtureExceptAudit();
         stepSetFixtureAudit();
@@ -77,8 +75,8 @@ public abstract class UpdateSetStepSetterTest<R extends Record, E extends CoreEn
      */
     protected abstract void stepSetFixtureAudit();
 
-    @After
-    public void tearDown() {
+    @AfterEach
+    void tearDown() {
         specificTearDown();
         verifyNoMoreInteractions(stepMock, moreStepMock);
     }
@@ -86,23 +84,24 @@ public abstract class UpdateSetStepSetterTest<R extends Record, E extends CoreEn
     protected abstract void specificTearDown();
 
     @Test
-    public void nullCheck() {
+    void nullCheck() {
         assertThat(stepMock).isNotNull();
         assertThat(moreStepMock).isNotNull();
     }
 
     @Test
-    public void settingFields_withNullSetter_throws() {
+    void settingFields_withNullSetter_throws() {
         assertDegenerateSupplierParameter(() -> getSetter().setFieldsFor(null, getEntity()), "step");
     }
 
     @Test
-    public void settingFields_withNullEntity_throws() {
+    void settingFields_withNullEntity_throws() {
         assertDegenerateSupplierParameter(() -> getSetter().setFieldsFor(stepMock, null), "entity");
     }
 
     @Test
-    public void settingNonKeyFields() {
+    void settingNonKeyFields() {
+        fullFixture();
         RecordMapperTest.auditFixtureFor(getEntity());
         RecordMapperTest.auditExtendedFixtureFor(getEntity());
 

@@ -7,16 +7,16 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import ch.difty.scipamato.common.entity.CodeClassLike;
 
-@RunWith(MockitoJUnitRunner.class)
-public class JooqCodeClassLikeServiceTest {
+@ExtendWith(MockitoExtension.class)
+class JooqCodeClassLikeServiceTest {
 
     private static final String LANG_CODE = "en";
 
@@ -30,24 +30,24 @@ public class JooqCodeClassLikeServiceTest {
     @Mock
     private CodeClassLikeRepository<CodeClassLike> repoMock;
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
         service = new JooqCodeClassLikeService<>(repoMock) {
         };
 
         codeClasses.add(cclMock);
         codeClasses.add(cclMock);
 
-        when(repoMock.find(LANG_CODE)).thenReturn(codeClasses);
     }
 
     @Test
-    public void cangetRepo() {
+    void canGetRepo() {
         assertThat(service.getRepo()).isEqualTo(repoMock);
     }
 
     @Test
-    public void finding_delegatesToRepo() {
+    void finding_delegatesToRepo() {
+        when(repoMock.find(LANG_CODE)).thenReturn(codeClasses);
         assertThat(service.find(LANG_CODE)).containsExactly(cclMock, cclMock);
         verify(repoMock).find(LANG_CODE);
     }

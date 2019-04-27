@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.jooq.Record;
 import org.jooq.impl.TableImpl;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.common.entity.filter.ScipamatoFilter;
 
@@ -43,7 +43,7 @@ public abstract class FilterConditionMapperTest<R extends Record, TI extends Tab
     protected abstract TI getTable();
 
     @Test
-    public void mappingFilter_withNullFilter_returnsNoOpCondition() {
+    void mappingFilter_withNullFilter_returnsNoOpCondition() {
         assertThat(getMapper()
             .map(null)
             .toString()).isEqualTo("1 = 1");
@@ -52,7 +52,7 @@ public abstract class FilterConditionMapperTest<R extends Record, TI extends Tab
     protected abstract GenericFilterConditionMapper<F> getMapper();
 
     @Test
-    public void creatingWhereCondition_withNoFilterConditions_returnsNoOpCondition() {
+    void creatingWhereCondition_withNoFilterConditions_returnsNoOpCondition() {
         assertThat(getMapper()
             .map(getFilter())
             .toString()).isEqualTo("1 = 1");

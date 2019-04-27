@@ -9,7 +9,7 @@ import static org.mockito.Mockito.*;
 import java.util.*;
 
 import org.jooq.*;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 
@@ -28,7 +28,7 @@ import ch.difty.scipamato.core.persistence.JooqEntityRepoTest;
 import ch.difty.scipamato.core.persistence.paper.searchorder.PaperBackedSearchOrderRepository;
 
 @SuppressWarnings({ "WeakerAccess", "ResultOfMethodCallIgnored" })
-public class JooqPaperRepoTest extends
+class JooqPaperRepoTest extends
     JooqEntityRepoTest<PaperRecord, Paper, Long, ch.difty.scipamato.core.db.tables.Paper, PaperRecordMapper, PaperFilter> {
 
     private static final Long   SAMPLE_ID = 3L;
@@ -67,10 +67,6 @@ public class JooqPaperRepoTest extends
     protected void testSpecificSetUp() {
         papers.add(paperMock);
         papers.add(paperMock);
-
-        when(unpersistedEntity.getVersion()).thenReturn(0);
-        when(persistedEntity.getVersion()).thenReturn(0);
-        when(persistedRecord.getVersion()).thenReturn(0);
     }
 
     @Override
@@ -176,7 +172,6 @@ public class JooqPaperRepoTest extends
     @Override
     protected void expectUnpersistedEntityIdNull() {
         when(unpersistedEntity.getId()).thenReturn(null);
-        when(unpersistedEntity.getVersion()).thenReturn(0);
     }
 
     @Override
@@ -190,7 +185,7 @@ public class JooqPaperRepoTest extends
     }
 
     @Test
-    public void degenerateConstruction() {
+    void degenerateConstruction() {
         assertDegenerateSupplierParameter(
             () -> new JooqPaperRepo(null, getMapper(), getSortMapper(), getFilterConditionMapper(),
                 getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), searchOrderRepositoryMock,
@@ -230,31 +225,31 @@ public class JooqPaperRepoTest extends
     }
 
     @Test
-    public void gettingTableId() {
+    void gettingTableId() {
         assertThat(repo.getTableId()).isEqualTo(getTableId());
     }
 
     @Test
-    public void gettingRecordVersion() {
+    void gettingRecordVersion() {
         assertThat(repo.getRecordVersion()).isEqualTo(PAPER.VERSION);
     }
 
     @Test
-    public void gettingIdFromPaper() {
+    void gettingIdFromPaper() {
         when(paperMock.getId()).thenReturn(17L);
         assertThat(repo.getIdFrom(paperMock)).isEqualTo(17L);
         verify(paperMock).getId();
     }
 
     @Test
-    public void gettingIdFromPaperRecord() {
+    void gettingIdFromPaperRecord() {
         when(persistedRecord.getId()).thenReturn(17L);
         assertThat(repo.getIdFrom(persistedRecord)).isEqualTo(17L);
         verify(persistedRecord).getId();
     }
 
     @Test
-    public void gettingByIds_withNullIdList_throwsNullArgumentException() {
+    void gettingByIds_withNullIdList_throwsNullArgumentException() {
         try {
             repo.findByIds(null);
         } catch (Exception ex) {
@@ -265,7 +260,7 @@ public class JooqPaperRepoTest extends
     }
 
     @Test
-    public void findingBySearchOrder_delegatesToSearchOrderFinder() {
+    void findingBySearchOrder_delegatesToSearchOrderFinder() {
         when(searchOrderRepositoryMock.findBySearchOrder(searchOrderMock)).thenReturn(papers);
         assertThat(makeRepoStubbingEnriching().findBySearchOrder(searchOrderMock, LC)).containsExactly(paperMock,
             paperMock);
@@ -274,14 +269,14 @@ public class JooqPaperRepoTest extends
     }
 
     @Test
-    public void countingBySearchOrder_delegatesToSearchOrderFinder() {
+    void countingBySearchOrder_delegatesToSearchOrderFinder() {
         when(searchOrderRepositoryMock.countBySearchOrder(searchOrderMock)).thenReturn(2);
         assertThat(repo.countBySearchOrder(searchOrderMock)).isEqualTo(2);
         verify(searchOrderRepositoryMock).countBySearchOrder(searchOrderMock);
     }
 
     @Test
-    public void findingPageBySearchOrder_delegatesToSearchOrderFinder() {
+    void findingPageBySearchOrder_delegatesToSearchOrderFinder() {
         when(searchOrderRepositoryMock.findPageBySearchOrder(searchOrderMock, paginationContextMock)).thenReturn(
             papers);
         assertThat(makeRepoStubbingEnriching().findPageBySearchOrder(searchOrderMock, paginationContextMock,
@@ -291,45 +286,44 @@ public class JooqPaperRepoTest extends
     }
 
     @Test
-    public void gettingPapersByPmIds_withNoPmIds_returnsEmptyList() {
+    void gettingPapersByPmIds_withNoPmIds_returnsEmptyList() {
         assertThat(repo.findByPmIds(new ArrayList<>(), LC)).isEmpty();
     }
 
     @Test
-    public void findingByPmIds_withNullPmIds_returnsEmptyList() {
+    void findingByPmIds_withNullPmIds_returnsEmptyList() {
         assertThat(repo.findByPmIds(null, LC)).isEmpty();
     }
 
     @Test
-    public void findingByNumbers_withNoNumbers_returnsEmptyList() {
+    void findingByNumbers_withNoNumbers_returnsEmptyList() {
         assertThat(repo.findByNumbers(new ArrayList<>(), LC)).isEmpty();
     }
 
     @Test
-    public void findingByNumbers_withNullNumbers_returnsEmptyList() {
+    void findingByNumbers_withNullNumbers_returnsEmptyList() {
         assertThat(repo.findByNumbers(null, LC)).isEmpty();
     }
 
     @Test
-    public void findingByNumber_withNoLanguageCode_throws() {
+    void findingByNumber_withNoLanguageCode_throws() {
         assertDegenerateSupplierParameter(() -> repo.findByNumbers(Collections.singletonList(1L), null),
             "languageCode");
     }
 
     @Test
-    public void findingExistingPmIdsOutOf_withNoPmIds_returnsEmptyList() {
+    void findingExistingPmIdsOutOf_withNoPmIds_returnsEmptyList() {
         assertThat(repo.findExistingPmIdsOutOf(new ArrayList<>())).isEmpty();
     }
 
     @Test
-    public void findingExistingPmIdsOutOf_withNullPmIds_returnsEmptyList() {
+    void findingExistingPmIdsOutOf_withNullPmIds_returnsEmptyList() {
         assertThat(repo.findExistingPmIdsOutOf(null)).isEmpty();
     }
 
     @SuppressWarnings("unchecked")
     @Test
-    public void findingPageByFilter() {
-        List<PaperRecord> paperRecords = new ArrayList<>();
+    void findingPageByFilter() {
         Collection<SortField<Paper>> sortFields = new ArrayList<>();
         Sort sort = new Sort(Direction.DESC, "id");
         when(paginationContextMock.getSort()).thenReturn(sort);
@@ -370,10 +364,9 @@ public class JooqPaperRepoTest extends
 
     @SuppressWarnings("unchecked")
     @Test
-    public void findingPageByFilter_withNoExplicitLanguageCode() {
+    void findingPageByFilter_withNoExplicitLanguageCode() {
         when(getApplicationProperties().getDefaultLocalization()).thenReturn(LC);
 
-        List<PaperRecord> paperRecords = new ArrayList<>();
         Collection<SortField<Paper>> sortFields = new ArrayList<>();
         Sort sort = new Sort(Direction.DESC, "id");
         when(paginationContextMock.getSort()).thenReturn(sort);
@@ -414,7 +407,7 @@ public class JooqPaperRepoTest extends
     }
 
     @Test
-    public void findingPageOfIdsBySearchOrder() {
+    void findingPageOfIdsBySearchOrder() {
         when(searchOrderRepositoryMock.findPageOfIdsBySearchOrder(searchOrderMock, paginationContextMock)).thenReturn(
             Arrays.asList(17L, 3L, 5L));
         assertThat(repo.findPageOfIdsBySearchOrder(searchOrderMock, paginationContextMock)).containsExactly(17L, 3L,
@@ -423,12 +416,12 @@ public class JooqPaperRepoTest extends
     }
 
     @Test
-    public void deletingAttachment_withNullId_returnsNull() {
+    void deletingAttachment_withNullId_returnsNull() {
         assertThat(getRepo().deleteAttachment(null)).isNull();
     }
 
     @Test
-    public void deletingIds() {
+    void deletingIds() {
         List<Long> ids = Arrays.asList(3L, 5L, 7L);
         when(getDsl().deleteFrom(getTable())).thenReturn(deleteWhereStepMock);
         when(deleteWhereStepMock.where(PAPER.ID.in(ids))).thenReturn(deleteConditionStepMock);
@@ -441,12 +434,12 @@ public class JooqPaperRepoTest extends
     }
 
     @Test
-    public void enrichingAssociatedEntitiesOf_withNullEntity_doesNothing() {
+    void enrichingAssociatedEntitiesOf_withNullEntity_doesNothing() {
         repo.enrichAssociatedEntitiesOf(null, "de");
     }
 
     @Test
-    public void enrichingAssociatedEntitiesOf_withNullLanguageCode_withNullPaperId_doesNotCallRepo() {
+    void enrichingAssociatedEntitiesOf_withNullLanguageCode_withNullPaperId_doesNotCallRepo() {
         when(paperMock.getId()).thenReturn(null);
         repo = makeRepoStubbingAttachmentEnriching();
         repo.enrichAssociatedEntitiesOf(paperMock, null);
@@ -455,7 +448,7 @@ public class JooqPaperRepoTest extends
     }
 
     @Test
-    public void enrichingAssociatedEntitiesOf_withNullLanguageCode_withPaperWithId_enrichesAttachments() {
+    void enrichingAssociatedEntitiesOf_withNullLanguageCode_withPaperWithId_enrichesAttachments() {
         when(paperMock.getId()).thenReturn(17L);
         repo = makeRepoStubbingAttachmentEnriching();
         repo.enrichAssociatedEntitiesOf(paperMock, null);
@@ -476,12 +469,12 @@ public class JooqPaperRepoTest extends
     }
 
     @Test
-    public void isDoiAlreadyAssigned_withNullDoi_throws() {
+    void isDoiAlreadyAssigned_withNullDoi_throws() {
         TestUtils.assertDegenerateSupplierParameter(() -> repo.isDoiAlreadyAssigned(null, 1L), "doi");
     }
 
     @Test
-    public void updateAssociatedEntities_withNullPaper_throws() {
+    void updateAssociatedEntities_withNullPaper_throws() {
         try {
             repo.updateAssociatedEntities(null, "de");
             fail("should have thrown exception");
@@ -493,20 +486,20 @@ public class JooqPaperRepoTest extends
     }
 
     @Test
-    public void evaluatingNumbers_withNullRecord_returnsEmpty() {
+    void evaluatingNumbers_withNullRecord_returnsEmpty() {
         assertThat(repo.evaluateNumbers(null)).isEmpty();
     }
 
     @Test
-    public void evaluatingNumbers_withRecordWithNullValue1_returnsEmpty() {
-        Record1<Long[]> numbers = mock(Record1.class);
+    void evaluatingNumbers_withRecordWithNullValue1_returnsEmpty() {
+        @SuppressWarnings("unchecked") Record1<Long[]> numbers = mock(Record1.class);
         when(numbers.value1()).thenReturn(null);
         assertThat(repo.evaluateNumbers(numbers)).isEmpty();
     }
 
     @Test
-    public void evaluatingNumbers_withRecordWithEmptyValue1_returnsEmpty() {
-        Record1<Long[]> numbers = mock(Record1.class);
+    void evaluatingNumbers_withRecordWithEmptyValue1_returnsEmpty() {
+        @SuppressWarnings("unchecked") Record1<Long[]> numbers = mock(Record1.class);
         when(numbers.value1()).thenReturn(new Long[] {});
         assertThat(repo.evaluateNumbers(numbers)).isEmpty();
     }

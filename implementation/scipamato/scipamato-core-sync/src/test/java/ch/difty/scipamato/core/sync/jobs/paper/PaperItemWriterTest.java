@@ -4,7 +4,7 @@ import org.jooq.DSLContext;
 
 import ch.difty.scipamato.core.sync.jobs.AbstractItemWriterTest;
 
-public class PaperItemWriterTest extends AbstractItemWriterTest<PublicPaper, PaperItemWriter> {
+class PaperItemWriterTest extends AbstractItemWriterTest<PublicPaper, PaperItemWriter> {
 
     @Override
     protected PaperItemWriter newWriter(DSLContext dslContextMock) {

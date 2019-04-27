@@ -4,33 +4,33 @@ import static ch.difty.scipamato.common.TestUtils.assertDegenerateSupplierParame
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 import org.jooq.DSLContext;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.class)
-public class JooqCodeClassRepoTest {
+@ExtendWith(MockitoExtension.class)
+class JooqCodeClassRepoTest {
 
     private CodeClassRepository repo;
 
     @Mock
     private DSLContext dslMock;
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
         repo = new JooqCodeClassRepo(dslMock);
     }
 
-    @After
-    public void tearDown() {
+    @AfterEach
+    void tearDown() {
         verifyNoMoreInteractions(dslMock);
     }
 
     @Test
-    public void finding_withNullLanguageCode_throws() {
+    void finding_withNullLanguageCode_throws() {
         assertDegenerateSupplierParameter(() -> repo.find(null), "languageCode");
     }
 }

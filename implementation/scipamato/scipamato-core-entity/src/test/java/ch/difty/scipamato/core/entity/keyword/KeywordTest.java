@@ -3,13 +3,13 @@ package ch.difty.scipamato.core.entity.keyword;
 import static ch.difty.scipamato.core.entity.keyword.Keyword.KeywordFields.NAME;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.core.entity.Jsr303ValidatedEntityTest;
 
-public class KeywordTest extends Jsr303ValidatedEntityTest<Keyword> {
+class KeywordTest extends Jsr303ValidatedEntityTest<Keyword> {
 
-    public KeywordTest() {
+    KeywordTest() {
         super(Keyword.class);
     }
 
@@ -29,7 +29,7 @@ public class KeywordTest extends Jsr303ValidatedEntityTest<Keyword> {
     }
 
     @Test
-    public void get() {
+    void get() {
         Keyword nt = newValidEntity();
         assertThat(nt.getId()).isEqualTo(10);
         assertThat(nt.getName()).isEqualTo("kw");
@@ -37,12 +37,12 @@ public class KeywordTest extends Jsr303ValidatedEntityTest<Keyword> {
     }
 
     @Test
-    public void validatingKeyword_withCompleteInformation_succeeds() {
+    void validatingKeyword_withCompleteInformation_succeeds() {
         verifySuccessfulValidation(newValidEntity());
     }
 
     @Test
-    public void validatingNewsletter_withNullIssue_fails() {
+    void validatingNewsletter_withNullIssue_fails() {
         Keyword nt = newValidEntity();
         nt.setName(null);
         validateAndAssertFailure(nt, NAME, null, "{javax.validation.constraints.NotNull.message}");

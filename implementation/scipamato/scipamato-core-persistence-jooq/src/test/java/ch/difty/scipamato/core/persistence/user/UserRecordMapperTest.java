@@ -3,26 +3,21 @@ package ch.difty.scipamato.core.persistence.user;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.jooq.RecordMapper;
 
 import ch.difty.scipamato.core.db.tables.records.ScipamatoUserRecord;
 import ch.difty.scipamato.core.entity.User;
 import ch.difty.scipamato.core.persistence.RecordMapperTest;
 
-public class UserRecordMapperTest extends RecordMapperTest<ScipamatoUserRecord, User> {
+class UserRecordMapperTest extends RecordMapperTest<ScipamatoUserRecord, User> {
 
     public static final int     ID         = 3;
-    public static final String  USER_NAME  = "userName";
-    public static final String  FIRST_NAME = "firstName";
-    public static final String  LAST_NAME  = "lastName";
-    public static final String  EMAIL      = "email";
-    public static final String  PASSWORD   = "password";
-    public static final Boolean ENABLED    = true;
-
-    public final List<User> users = new ArrayList<>();
+    static final        String  USER_NAME  = "userName";
+    static final        String  FIRST_NAME = "firstName";
+    static final        String  LAST_NAME  = "lastName";
+    static final        String  EMAIL      = "email";
+    static final        String  PASSWORD   = "password";
+    static final        Boolean ENABLED    = true;
 
     public static void entityFixtureWithoutIdFields(User entityMock) {
         when(entityMock.getUserName()).thenReturn(USER_NAME);

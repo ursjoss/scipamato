@@ -1,10 +1,10 @@
 package ch.difty.scipamato.core.web.paper.search;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.common.web.Mode;
 
-public class SearchOrderPanelInEditModeTest extends SearchOrderPanelTest {
+class SearchOrderPanelInEditModeTest extends SearchOrderPanelTest {
 
     @Override
     Mode getMode() {
@@ -12,7 +12,7 @@ public class SearchOrderPanelInEditModeTest extends SearchOrderPanelTest {
     }
 
     @Test
-    public void clickingDeleteIconLink() {
+    void clickingDeleteIconLink() {
         getTester().startComponentInPage(makePanel());
         getTester().assertContains("foo");
         getTester().clickLink("panel:form:searchConditions:body:rows:1:cells:2:cell:link");
