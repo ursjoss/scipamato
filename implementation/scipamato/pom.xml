@@ -80,7 +80,7 @@
                 scipamato-common-wicket, scipamato-core-web and scipamato-public-web redundantly -->
         <wicket.version>8.4.0</wicket.version>
         <wicket-jquery-ui.version>8.3.0</wicket-jquery-ui.version>
-        <wicket-spring-boot-starter.version>2.1.5</wicket-spring-boot-starter.version>
+        <wicket-spring-boot-starter.version>2.1.6</wicket-spring-boot-starter.version>
         <wicket-bootstrap.version>2.0.9</wicket-bootstrap.version>
         <bootstrap.version>3.4.0</bootstrap.version>
         <jasperreports.version>6.8.0</jasperreports.version>
