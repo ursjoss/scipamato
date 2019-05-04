@@ -8,8 +8,10 @@ object Lib {
 
     // Spring
 
-    fun springBootStarter(module: String) = "org.springframework.boot:spring-boot-starter-$module:2.1.4.RELEASE"
+    fun springBootStarter(module: String) = springBoot("starter-$module")
+    fun springBoot(module: String) = "org.springframework.boot:spring-boot-$module:2.1.4.RELEASE"
     fun spring(module: String) = "org.springframework:spring-$module:5.1.6.RELEASE"
+    fun springBootAdmin() = "de.codecentric:spring-boot-admin-starter-client:2.1.4"
 
 
     // Lombok
@@ -31,6 +33,15 @@ object Lib {
     fun postgres() = "org.postgresql:postgresql:42.2.5"
 
 
+    // Wicket
+
+    fun springBootStarterWicket() = "com.giffing.wicket.spring.boot.starter:wicket-spring-boot-starter:2.1.5"
+    fun wicket(module : String) = "org.apache.wicket:wicket-$module:8.4.0"
+    fun wicketStuff(module : String) = "org.wicketstuff:wicketstuff-$module:8.4.0"
+    fun wicketBootstrap(module: String) = "de.agilecoders.wicket:wicket-bootstrap-$module:2.0.9"
+    fun fontAwesome() = "org.webjars:font-awesome:5.7.1"
+
+
     // Utility libraries
 
     fun commonsLang3() = "org.apache.commons:commons-lang3:3.8.1"
@@ -46,4 +57,7 @@ object Lib {
     fun mockito2(module: String) = "org.mockito:mockito-$module:2.23.4"
     fun assertj() = "org.assertj:assertj-core:3.11.1"
     fun equalsverifier() = "nl.jqno.equalsverifier:equalsverifier:3.1.8"
+
+    fun servletApi() = "javax.servlet:javax.servlet-api:4.0.1"
+    fun validationApi() = "javax.validation:validation-api:2.0.1.Final"
 }

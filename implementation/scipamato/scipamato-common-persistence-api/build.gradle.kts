@@ -5,8 +5,9 @@ plugins {
 }
 
 dependencies {
+    api(project(Lib.scipamatoCommon("entity")))
+
     implementation(project(Lib.scipamatoCommon("utils")))
-    implementation(project(Lib.scipamatoCommon("entity")))
 
     testCompile(project(Lib.scipamatoCommon("test")))
 }
