@@ -12,3 +12,4 @@ CHANGELOG.html
 **/*.iml
 s101plugin.*
 log/
+.gradle/
