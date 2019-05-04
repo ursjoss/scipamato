@@ -1,14 +1,14 @@
+description = "SciPaMaTo-Common :: Utilities Project"
+
 plugins {
     `java-library`
 }
 
 dependencies {
-    compile("org.apache.commons:commons-lang3:3.8.1")
-    compile("commons-io:commons-io:2.6")
-    testCompile("org.springframework:spring-core:5.1.6.RELEASE")
+    implementation(Lib.commonsLang3())
+    implementation(Lib.commonsIo())
+    testImplementation(Lib.spring("core"))
 }
-
-description = "SciPaMaTo-Common :: Utilities Project"
 
 tasks {
     val testJar by creating(Jar::class) {

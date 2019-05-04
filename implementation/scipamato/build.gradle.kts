@@ -23,17 +23,19 @@ subprojects {
     apply(plugin = "org.jetbrains.kotlin.jvm")
 
     dependencies {
-        api("org.slf4j:slf4j-api:1.7.26")
-        implementation("ch.qos.logback:logback-core:1.2.3")
-        compileOnly("org.projectlombok:lombok:1.18.6")
-        annotationProcessor("org.projectlombok:lombok:1.18.6")
-        testCompile("org.springframework.boot:spring-boot-starter-test:2.1.4.RELEASE")
-        testCompile("org.junit.jupiter:junit-jupiter:5.4.2")
-        testCompile("org.junit.jupiter:junit-jupiter-params:5.4.2")
-        testCompile("org.mockito:mockito-core:2.23.4")
-        testCompile("org.mockito:mockito-junit-jupiter:2.23.4")
-        testCompile("org.assertj:assertj-core:3.11.1")
-        testCompile("nl.jqno.equalsverifier:equalsverifier:3.1.8")
+        compileOnly(Lib.lombok())
+        annotationProcessor(Lib.lombok())
+
+        implementation(Lib.slf4j())
+        implementation(Lib.logback())
+
+        testImplementation(Lib.springBootStarter("test"))
+        testImplementation(Lib.junit5())
+        testImplementation(Lib.junit5("params"))
+        testImplementation(Lib.mockito2("core"))
+        testImplementation(Lib.mockito2("junit-jupiter"))
+        testImplementation(Lib.assertj())
+        testImplementation(Lib.equalsverifier())
     }
 
     configurations.all {
@@ -47,6 +49,9 @@ subprojects {
             kotlinOptions {
                 jvmTarget = "11"
             }
+        }
+        withType<Test> {
+            useJUnitPlatform()
         }
     }
 }
