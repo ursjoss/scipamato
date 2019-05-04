@@ -1,5 +1,11 @@
 object Lib {
 
+    // SciPaMaTo
+
+    fun scipamatoCommon(module: String) = ":scipamato-common-$module"
+    fun scipamatoCommon(vararg modules: String) = modules.map { "scipamato-common-$it" }.toTypedArray()
+
+
     // Spring
 
     fun springBootStarter(module: String) = "org.springframework.boot:spring-boot-starter-$module:2.1.4.RELEASE"

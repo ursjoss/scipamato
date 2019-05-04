@@ -15,5 +15,5 @@ dependencies {
 
     implementation(Lib.commonsIo())
 
-    implementation(project(":scipamato-common-utils"))
+    implementation(project(Lib.scipamatoCommon("utils")))
 }

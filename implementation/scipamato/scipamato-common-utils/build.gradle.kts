@@ -6,7 +6,10 @@ plugins {
 
 dependencies {
     api(Lib.commonsLang3())
+
     implementation(Lib.commonsIo())
+
+    testImplementation(project(Lib.scipamatoCommon("test")))
+
     testImplementation(Lib.spring("core"))
-    testImplementation(project(":scipamato-common-test"))
 }
