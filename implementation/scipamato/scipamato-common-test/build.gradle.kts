@@ -1,9 +1,5 @@
 description = "SciPaMaTo-Common :: Test Project"
 
-plugins {
-    `java-library`
-}
-
 dependencies {
     api(Lib.assertj())
     api(Lib.springBootStarter("test"))

@@ -1,9 +1,5 @@
 description = "SciPaMaTo-Common :: Persistence jOOQ Project"
 
-plugins {
-    `java-library`
-}
-
 dependencies {
     implementation(project(Lib.scipamatoCommon("entity")))
     implementation(project(Lib.scipamatoCommon("persistence-api")))

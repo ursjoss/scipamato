@@ -1,9 +1,5 @@
 description = "SciPaMaTo-Common :: Utilities Project"
 
-plugins {
-    `java-library`
-}
-
 dependencies {
     api(Lib.commonsLang3())
 

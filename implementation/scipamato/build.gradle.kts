@@ -22,6 +22,10 @@ allprojects {
 subprojects {
     apply(plugin = "org.jetbrains.kotlin.jvm")
 
+    if (!path.endsWith("-web"))
+        apply(plugin = "java-library")
+
+
     dependencies {
         compileOnly(Lib.lombok())
         annotationProcessor(Lib.lombok())

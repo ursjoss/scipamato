@@ -1,9 +1,5 @@
 description = "SciPaMaTo-Common :: Persistence API Project"
 
-plugins {
-    `java-library`
-}
-
 dependencies {
     api(project(Lib.scipamatoCommon("entity")))
 
