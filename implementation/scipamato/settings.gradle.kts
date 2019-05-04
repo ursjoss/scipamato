@@ -1,3 +1,5 @@
 rootProject.name = "scipamato"
 
-include(*Lib.scipamatoCommon("test", "utils", "entity", "persistence-api", "persistence-jooq", "wicket"))
+include(*Lib.scipamatoCommonProjects("test", "utils", "entity", "persistence-api", "persistence-jooq", "wicket"))
+
+include(*Lib.scipamatoPublicProjects("entity"))

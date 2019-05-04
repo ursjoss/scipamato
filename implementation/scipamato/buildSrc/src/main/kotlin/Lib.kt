@@ -3,7 +3,10 @@ object Lib {
     // SciPaMaTo
 
     fun scipamatoCommon(module: String) = ":scipamato-common-$module"
-    fun scipamatoCommon(vararg modules: String) = modules.map { "scipamato-common-$it" }.toTypedArray()
+    fun scipamatoCommonProjects(vararg modules: String) = modules.map { "scipamato-common-$it" }.toTypedArray()
+
+    fun scipamatoPublic(module: String) = ":scipamato-public-$module"
+    fun scipamatoPublicProjects(vararg modules: String) = modules.map { "scipamato-public-$it" }.toTypedArray()
 
 
     // Spring
@@ -36,8 +39,8 @@ object Lib {
     // Wicket
 
     fun springBootStarterWicket() = "com.giffing.wicket.spring.boot.starter:wicket-spring-boot-starter:2.1.5"
-    fun wicket(module : String) = "org.apache.wicket:wicket-$module:8.4.0"
-    fun wicketStuff(module : String) = "org.wicketstuff:wicketstuff-$module:8.4.0"
+    fun wicket(module: String) = "org.apache.wicket:wicket-$module:8.4.0"
+    fun wicketStuff(module: String) = "org.wicketstuff:wicketstuff-$module:8.4.0"
     fun wicketBootstrap(module: String) = "de.agilecoders.wicket:wicket-bootstrap-$module:2.0.9"
     fun fontAwesome() = "org.webjars:font-awesome:5.7.1"
 
