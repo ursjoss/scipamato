@@ -24,11 +24,20 @@ object Lib {
     fun logback() = "ch.qos.logback:logback-core:1.2.3"
 
 
+    // DB
+
+    fun jOOQ() = "org.jooq:jooq:3.11.10"
+    fun flyway() = "org.flywaydb:flyway-core:5.2.4"
+    fun postgres() = "org.postgresql:postgresql:42.2.5"
+
+
     // Utility libraries
 
     fun commonsLang3() = "org.apache.commons:commons-lang3:3.8.1"
     fun commonsIo() = "commons-io:commons-io:2.6"
     fun commonsCollection() = "org.apache.commons:commons-collections4:4.3"
+    fun jool() = "org.jooq:jool-java-8:0.9.14"
+    fun bval() = "org.apache.bval:bval-jsr:2.0.0"
 
 
     // Test Libraries
