@@ -1,0 +1,19 @@
+description = "SciPaMaTo-Common :: Test Project"
+
+plugins {
+    `java-library`
+}
+
+dependencies {
+    api(Lib.assertj())
+    api(Lib.springBootStarter("test"))
+    api(Lib.junit5())
+    api(Lib.junit5("params"))
+    api(Lib.mockito2("core"))
+    api(Lib.mockito2("junit-jupiter"))
+    api(Lib.equalsverifier())
+
+    implementation(Lib.commonsIo())
+
+    implementation(project(":scipamato-common-utils"))
+}

@@ -28,14 +28,6 @@ subprojects {
 
         implementation(Lib.slf4j())
         implementation(Lib.logback())
-
-        testImplementation(Lib.springBootStarter("test"))
-        testImplementation(Lib.junit5())
-        testImplementation(Lib.junit5("params"))
-        testImplementation(Lib.mockito2("core"))
-        testImplementation(Lib.mockito2("junit-jupiter"))
-        testImplementation(Lib.assertj())
-        testImplementation(Lib.equalsverifier())
     }
 
     configurations.all {
@@ -51,6 +43,7 @@ subprojects {
             }
         }
         withType<Test> {
+            @Suppress("UnstableApiUsage")
             useJUnitPlatform()
         }
     }

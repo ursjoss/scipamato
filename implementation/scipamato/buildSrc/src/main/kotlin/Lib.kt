@@ -22,6 +22,7 @@ object Lib {
 
     fun commonsLang3() = "org.apache.commons:commons-lang3:3.8.1"
     fun commonsIo() = "commons-io:commons-io:2.6"
+    fun commonsCollection() = "org.apache.commons:commons-collections4:4.3"
 
 
     // Test Libraries
