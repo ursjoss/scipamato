@@ -6,6 +6,6 @@ pluginManagement {
     }
 }
 
-include(*Lib.scipamatoCommonProjects("test", "utils", "entity", "persistence-api", "persistence-jooq", "wicket"))
+include(*Module.scipamatoCommonProjects("test", "utils", "entity", "persistence-api", "persistence-jooq-test", "persistence-jooq", "wicket"))
 
-include(*Lib.scipamatoPublicProjects("entity", "persistence-api"))
+include(*Module.scipamatoPublicProjects("entity", "persistence-api", "persistence-jooq"))

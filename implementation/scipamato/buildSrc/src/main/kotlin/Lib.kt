@@ -9,15 +9,6 @@ object Lib {
     // so we don't explicitly need to manage the versions here
     //region:dependencies
 
-    // SciPaMaTo
-
-    fun scipamatoCommon(module: String) = ":scipamato-common-$module"
-    fun scipamatoCommonProjects(vararg modules: String) = modules.map { "scipamato-common-$it" }.toTypedArray()
-
-    fun scipamatoPublic(module: String) = ":scipamato-public-$module"
-    fun scipamatoPublicProjects(vararg modules: String) = modules.map { "scipamato-public-$it" }.toTypedArray()
-
-
     // Spring
 
     private const val springBootVersion = "2.1.4.RELEASE"
@@ -104,5 +95,8 @@ fun DependencyHandler.annotationProcessor(dependencyNotation: Dep): Dependency? 
 fun DependencyHandler.api(dependencyNotation: Dep): Dependency? = add("api", dependencyNotation.id)
 fun DependencyHandler.compileOnly(dependencyNotation: Dep): Dependency? = add("compileOnly", dependencyNotation.id)
 fun DependencyHandler.implementation(dependencyNotation: Dep): Dependency? = add("implementation", dependencyNotation.id)
+fun DependencyHandler.runtimeOnly(dependencyNotation: Dep): Dependency? = add("runtimeOnly", dependencyNotation.id)
 fun DependencyHandler.testAnnotationProcessor(dependencyNotation: Dep): Dependency? = add("testAnnotationProcessor", dependencyNotation.id)
-fun DependencyHandler.testImplementation(dependencyNotation: Dep): Dependency? = add("testImplementation", dependencyNotation.id)
+fun DependencyHandler.testCompile(dependencyNotation: Dep): Dependency? = add("testCompile", dependencyNotation.id)
+//fun DependencyHandler.testCompileOnly(dependencyNotation: Dep): Dependency? = add("testCompileOnly", dependencyNotation.id)
+//fun DependencyHandler.testImplementation(dependencyNotation: Dep): Dependency? = add("testImplementation", dependencyNotation.id)

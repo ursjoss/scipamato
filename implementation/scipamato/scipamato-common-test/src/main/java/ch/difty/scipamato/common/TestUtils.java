@@ -36,12 +36,10 @@ public final class TestUtils {
     }
 
     /**
-     * Read the file with the provided name from the system and hand it over as a
-     * string.
+     * Read the file with the provided name from the system and hand it over as a string.
      *
      * @param fileName
-     *     the relative path of the file within the resources folder (e.g.
-     *     'xml/myfile.xml')
+     *     the relative path of the file within the resources folder (e.g. 'xml/myfile.xml')
      * @return file content as string.
      * @throws NullPointerException
      *     if the fileName is null

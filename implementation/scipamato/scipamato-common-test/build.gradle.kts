@@ -1,6 +1,9 @@
 description = "SciPaMaTo-Common :: Test Project"
 
 dependencies {
+    api(project(Module.scipamatoCommon("utils")))
+    api(project(Module.scipamatoCommon("entity")))
+
     api(Lib.assertj())
     api(Lib.springBootStarter("test").id) {
         exclude("junit", "junit")
@@ -13,6 +16,6 @@ dependencies {
     api(Lib.equalsverifier())
 
     implementation(Lib.commonsIo())
+    implementation(Lib.commonsCollection())
 
-    implementation(project(Lib.scipamatoCommon("utils")))
 }

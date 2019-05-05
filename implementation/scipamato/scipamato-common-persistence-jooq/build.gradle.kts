@@ -1,20 +1,20 @@
 description = "SciPaMaTo-Common :: Persistence jOOQ Project"
 
 dependencies {
-    implementation(project(Lib.scipamatoCommon("entity")))
-    implementation(project(Lib.scipamatoCommon("persistence-api")))
-    implementation(project(Lib.scipamatoCommon("utils")))
+    api(Lib.springBootStarter("jooq"))
+    api(Lib.jOOQ())
+    api(project(Module.scipamatoCommon("persistence-api")))
+    api(Lib.flyway())
 
-    implementation(Lib.springBootStarter("security"))
-    implementation(Lib.springBootStarter("jooq"))
+    runtimeOnly(Lib.postgres())
 
-    implementation(Lib.jOOQ())
-    implementation(Lib.flyway())
-    implementation(Lib.postgres())
+    implementation(project(Module.scipamatoCommon("entity")))
+    implementation(project(Module.scipamatoCommon("utils")))
 
     implementation(Lib.jool())
 
-    testImplementation(project(Lib.scipamatoCommon("test")))
+    testCompile(project(Module.scipamatoCommon("test")))
+    testCompile(project(Module.scipamatoCommon("persistence-jooq-test")))
 
     testCompile(Lib.bval())
 }

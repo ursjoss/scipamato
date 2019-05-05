@@ -1,11 +1,12 @@
 description = "SciPaMaTo-Common :: Entity Project"
 
 dependencies {
-    implementation(project(Lib.scipamatoCommon("utils")))
+    implementation(project(Module.scipamatoCommon("utils")))
 
+    implementation(Lib.commonsLang3())
     implementation(Lib.commonsCollection())
 
-    testImplementation(project(Lib.scipamatoCommon("test")))
+    testCompile(project(Module.scipamatoCommon("test")))
 
-    testImplementation(Lib.spring("context"))
+    testCompile(Lib.spring("context"))
 }

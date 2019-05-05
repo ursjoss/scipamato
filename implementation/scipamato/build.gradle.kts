@@ -38,8 +38,8 @@ subprojects {
         compileOnly(Lib.lombok())
         annotationProcessor(Lib.lombok())
 
-        implementation(Lib.slf4j())
-        implementation(Lib.logback())
+        api(Lib.slf4j())
+        runtimeOnly(Lib.logback())
     }
 
     configurations.all {
