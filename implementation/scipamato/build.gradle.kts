@@ -1,8 +1,10 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 plugins {
+    Lib.kotlinPlugin().run { kotlin(id) version version }
     java
-    kotlin("jvm") version "1.3.31"
+    Lib.springBootPlugin().run { id(id) version version }
 }
 
 java {
@@ -17,14 +19,20 @@ allprojects {
         mavenLocal()
         mavenCentral()
     }
+
+    tasks {
+        withType<BootJar> {
+            enabled = false
+        }
+    }
 }
 
 subprojects {
     apply(plugin = "org.jetbrains.kotlin.jvm")
+    apply(plugin = Lib.springDependencyManagementPlugin())
 
-    if (!path.endsWith("-web"))
+    if (!path.isWebProject())
         apply(plugin = "java-library")
-
 
     dependencies {
         compileOnly(Lib.lombok())
@@ -50,5 +58,13 @@ subprojects {
             @Suppress("UnstableApiUsage")
             useJUnitPlatform()
         }
+        withType<Jar> {
+            enabled = !path.isWebProject()
+        }
+        withType<BootJar> {
+            enabled = path.isWebProject()
+        }
     }
 }
+
+fun String.isWebProject() = endsWith("-web")
