@@ -23,15 +23,23 @@ dependencies {
     implementation(project(Module.scipamatoCommon("entity")))
     implementation(project(Module.scipamatoCommon("persistence-api")))
 
-    api(Lib.springBootStarter("web"))
     api(Lib.springBootStarter("undertow"))
     api(Lib.springBootStarter("actuator"))
     api(Lib.springBootStarter("security"))
-    api(Lib.springBoot("configuration-processor"))
+    api(Lib.springBoot("configuration-processor").id) {
+        exclude("com.vaadin.external.google", "android-json")
+    }
     api(Lib.springBootAdmin())
     api(Lib.spring("core"))
 
-    api(Lib.springBootStarterWicket())
+    api(Lib.springBootStarter("web").id) {
+        exclude("org.springframework.boot", "spring-boot-starter-tomcat")
+        exclude("org.hibernate.validator", "hibernate-validator")
+    }
+    api(Lib.springBootStarterWicket().id) {
+        exclude("org.springframework.boot", "spring-boot-starter-tomcat")
+        exclude("org.hibernate.validator", "hibernate-validator")
+    }
     api(Lib.wicket("core"))
     api(Lib.wicket("ioc"))
     api(Lib.wicket("extensions"))
@@ -43,16 +51,19 @@ dependencies {
     api(Lib.wicketStuff("annotation"))
     api(Lib.wicketBootstrap("core"))
     api(Lib.wicketBootstrap("extensions"))
-    api(Lib.wicketBootstrap("less"))
+    api(Lib.wicketBootstrap("less").id) {
+        exclude("commons-collections", "commons-collections")
+        exclude("commons-logging", "commons-logging")
+    }
     api(Lib.wicketBootstrap("themes"))
     api(Lib.fontAwesome())
+    implementation(Lib.bval())
 
     testCompile(project(Module.scipamatoCommon("test")))
 
-    testCompile(Lib.lombok())
+    testApi(Lib.lombok())
     testAnnotationProcessor(Lib.lombok())
 
     testCompile(Lib.servletApi())
     testCompile(Lib.validationApi())
-    testCompile(Lib.bval())
 }

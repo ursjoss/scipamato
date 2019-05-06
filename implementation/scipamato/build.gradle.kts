@@ -4,7 +4,7 @@ import org.springframework.boot.gradle.tasks.bundling.BootJar
 plugins {
     Lib.kotlinPlugin().run { kotlin(id) version version }
     java
-    Lib.springBootPlugin().run { id(id) version version }
+    Lib.springBootPlugin().run { id(id) version version } apply false
 }
 
 java {
@@ -60,9 +60,6 @@ subprojects {
         }
         withType<Jar> {
             enabled = !path.isWebProject()
-        }
-        withType<BootJar> {
-            enabled = path.isWebProject()
         }
     }
 }

@@ -53,6 +53,15 @@ object Lib {
     fun commonsCollection() = Dep("org.apache.commons", "commons-collections4", "4.3")
     fun jool() = Dep("org.jooq", "jool-java-8", "0.9.14")
     fun bval() = Dep("org.apache.bval", "bval-jsr", "2.0.0")
+    fun validationApi() = Dep("javax.validation", "validation-api", "2.0.1.Final")
+    fun javaxActivation() = Dep("com.sun.activation", "javax.activation", "1.2.0")
+
+    // caching
+    fun cacheApi() = Dep("javax.cache", "cache-api", "1.1.0")
+    fun ehcache() = Dep( "org.ehcache", "ehcache", "3.6.3")
+
+    fun jaxbApi() = Dep("javax.xml.bind", "jaxb-api", "2.3.1")
+    fun jaxb(module: String) = Dep("com.sun.xml.bind", "jaxb-$module", "2.3.0.1")
 
 
     // Test Libraries
@@ -63,7 +72,6 @@ object Lib {
     fun equalsverifier() = Dep("nl.jqno.equalsverifier", "equalsverifier", "3.1.8")
 
     fun servletApi() = Dep("javax.servlet", "javax.servlet-api", "4.0.1")
-    fun validationApi() = Dep("javax.validation", "validation-api", "2.0.1.Final")
 
     //endregion
 
@@ -96,6 +104,7 @@ fun DependencyHandler.api(dependencyNotation: Dep): Dependency? = add("api", dep
 fun DependencyHandler.compileOnly(dependencyNotation: Dep): Dependency? = add("compileOnly", dependencyNotation.id)
 fun DependencyHandler.implementation(dependencyNotation: Dep): Dependency? = add("implementation", dependencyNotation.id)
 fun DependencyHandler.runtimeOnly(dependencyNotation: Dep): Dependency? = add("runtimeOnly", dependencyNotation.id)
+fun DependencyHandler.testApi(dependencyNotation: Dep): Dependency? = add("testApi", dependencyNotation.id)
 fun DependencyHandler.testAnnotationProcessor(dependencyNotation: Dep): Dependency? = add("testAnnotationProcessor", dependencyNotation.id)
 fun DependencyHandler.testCompile(dependencyNotation: Dep): Dependency? = add("testCompile", dependencyNotation.id)
 //fun DependencyHandler.testCompileOnly(dependencyNotation: Dep): Dependency? = add("testCompileOnly", dependencyNotation.id)

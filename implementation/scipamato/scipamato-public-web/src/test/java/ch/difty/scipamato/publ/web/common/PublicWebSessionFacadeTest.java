@@ -39,7 +39,7 @@ class PublicWebSessionFacadeTest extends WicketTest {
     @Test
     void hasAtLeastOneRoleOutOf_staticallyReturnsFalse() {
         assertThat(sessionFacade.hasAtLeastOneRoleOutOf()).isFalse();
-        assertThat(sessionFacade.hasAtLeastOneRoleOutOf(null)).isFalse();
+        assertThat(sessionFacade.hasAtLeastOneRoleOutOf((String) null)).isFalse();
         assertThat(sessionFacade.hasAtLeastOneRoleOutOf(Roles.ADMIN, Roles.USER)).isFalse();
     }
 }
