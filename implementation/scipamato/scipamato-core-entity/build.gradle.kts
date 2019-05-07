@@ -4,8 +4,9 @@ dependencies {
     api(project(Module.scipamatoCommon("entity")))
     implementation(project(Module.scipamatoCommon("utils")))
 
+    api(Lib.validationApi())
+
     implementation(Lib.commonsCollection())
-    implementation(Lib.validationApi())
 
     testCompile(project(Module.scipamatoCommon("test")))
 
