@@ -15,6 +15,7 @@ object Lib {
     fun springBootStarter(module: String) = springBoot("starter-$module")
     fun springBoot(module: String) = Dep("org.springframework.boot", "spring-boot-$module", springBootVersion)
     fun spring(module: String) = Dep("org.springframework", "spring-$module", "5.1.6.RELEASE")
+    fun springCloud(module: String) = Dep("org.springframework.cloud", "spring-cloud-starter-$module", "2.1.1.RELEASE")
     fun springBootAdmin() = Dep("de.codecentric", "spring-boot-admin-starter-client", "2.1.4")
 
 
@@ -35,6 +36,10 @@ object Lib {
     fun jOOQ(module: String = "jooq") = Dep("org.jooq", module, "3.11.10")
     fun flyway() = Dep("org.flywaydb", "flyway-core", "5.2.4")
     fun postgres() = Dep("org.postgresql", "postgresql", "42.2.5")
+
+
+    // Cloud
+    fun openfeign(module: String) = Dep("io.github.openfeign", "feign-$module", "10.1.0")
 
 
     // Wicket
@@ -58,10 +63,12 @@ object Lib {
 
     // caching
     fun cacheApi() = Dep("javax.cache", "cache-api", "1.1.0")
-    fun ehcache() = Dep( "org.ehcache", "ehcache", "3.6.3")
+
+    fun ehcache() = Dep("org.ehcache", "ehcache", "3.6.3")
 
     fun jaxbApi() = Dep("javax.xml.bind", "jaxb-api", "2.3.1")
     fun jaxb(module: String) = Dep("com.sun.xml.bind", "jaxb-$module", "2.3.0.1")
+    fun jaxbRuntime() = Dep("org.glassfish.jaxb", "jaxb-runtime", "2.3.1")
 
 
     // Test Libraries
@@ -104,8 +111,8 @@ fun DependencyHandler.api(dependencyNotation: Dep): Dependency? = add("api", dep
 fun DependencyHandler.compileOnly(dependencyNotation: Dep): Dependency? = add("compileOnly", dependencyNotation.id)
 fun DependencyHandler.implementation(dependencyNotation: Dep): Dependency? = add("implementation", dependencyNotation.id)
 fun DependencyHandler.runtimeOnly(dependencyNotation: Dep): Dependency? = add("runtimeOnly", dependencyNotation.id)
+
 fun DependencyHandler.testApi(dependencyNotation: Dep): Dependency? = add("testApi", dependencyNotation.id)
 fun DependencyHandler.testAnnotationProcessor(dependencyNotation: Dep): Dependency? = add("testAnnotationProcessor", dependencyNotation.id)
 fun DependencyHandler.testCompile(dependencyNotation: Dep): Dependency? = add("testCompile", dependencyNotation.id)
-//fun DependencyHandler.testCompileOnly(dependencyNotation: Dep): Dependency? = add("testCompileOnly", dependencyNotation.id)
-//fun DependencyHandler.testImplementation(dependencyNotation: Dep): Dependency? = add("testImplementation", dependencyNotation.id)
+fun DependencyHandler.testRuntimeOnly(dependencyNotation: Dep): Dependency? = add("testRuntimeOnly", dependencyNotation.id)
