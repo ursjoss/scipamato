@@ -6,7 +6,7 @@ dependencies {
     implementation(project(Module.scipamatoCommon("utils")))
 
     // Cloud access
-    implementation(Lib.springCloud("openfeign").id) {
+    api(Lib.springCloud("openfeign").id) {
         exclude("com.netflix.archaius", "archaius-core")
     }
     implementation(Lib.openfeign("jaxb"))

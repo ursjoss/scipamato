@@ -7,6 +7,7 @@ object Lib {
 
     // TODO find a way to utilize the dependencyManagement provided by the dependency-management-plugin using the spring BOM
     // so we don't explicitly need to manage the versions here
+
     //region:dependencies
 
     // Spring
@@ -16,6 +17,7 @@ object Lib {
     fun springBoot(module: String) = Dep("org.springframework.boot", "spring-boot-$module", springBootVersion)
     fun spring(module: String) = Dep("org.springframework", "spring-$module", "5.1.6.RELEASE")
     fun springCloud(module: String) = Dep("org.springframework.cloud", "spring-cloud-starter-$module", "2.1.1.RELEASE")
+    fun springSecurity(module: String) = Dep("org.springframework.security", "spring-security-$module", "5.1.5.RELEASE")
     fun springBootAdmin() = Dep("de.codecentric", "spring-boot-admin-starter-client", "2.1.4")
 
 
