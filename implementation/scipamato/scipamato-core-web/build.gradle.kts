@@ -31,6 +31,7 @@ tasks {
     withType<BootJar> {
         enabled = true
         mainClassName = "ch.difty.scipamato.core.ScipamatoCoreApplication"
+        launchScript()
     }
 }
 
