@@ -5,7 +5,9 @@ plugins {
     Lib.kotlinPlugin().run { kotlin(id) version version }
     java
     Lib.springBootPlugin().run { id(id) version version } apply false
+    Lib.lombokPlugin().run { id(id) version version }
     idea
+    jacoco
 }
 
 java {

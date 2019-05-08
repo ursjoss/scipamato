@@ -98,6 +98,8 @@ object Lib {
     fun springBootPlugin() = Plugin("org.springframework.boot", springBootVersion)
     fun springDependencyManagementPlugin() = Plugin("io.spring.dependency-management")
 
+    fun lombokPlugin() = Plugin("io.freefair.lombok", "3.3.1")
+
     //endregion
 }
 
