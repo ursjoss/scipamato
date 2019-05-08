@@ -5,6 +5,7 @@ plugins {
     Lib.kotlinPlugin().run { kotlin(id) version version }
     java
     Lib.springBootPlugin().run { id(id) version version } apply false
+    idea
 }
 
 java {
