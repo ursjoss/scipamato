@@ -15,3 +15,5 @@ scipamato-public-web/src/main/resources/ch/difty/scipamato/publ/web/resources/fo
 .gradle/
 **/build/
 **/out/
+scipamato.ipr
+scipamato.iws
