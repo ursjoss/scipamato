@@ -50,7 +50,15 @@ object Lib {
     fun wicket(module: String) = Dep("org.apache.wicket", "wicket-$module", "8.4.0")
     fun wicketStuff(module: String) = Dep("org.wicketstuff", "wicketstuff-$module", "8.4.0")
     fun wicketBootstrap(module: String) = Dep("de.agilecoders.wicket", "wicket-bootstrap-$module", "2.0.9")
+    fun wicketJqueryUi(module: String = "") = Dep("com.googlecode.wicket-jquery-ui", "wicket-jquery-ui${if (module.isNotBlank()) "-$module" else ""}", "8.3.0")
     fun fontAwesome() = Dep("org.webjars", "font-awesome", "5.7.1")
+    fun jasperreports(module: String = "") = Dep("net.sf.jasperreports", "jasperreports${if (module.isNotBlank()) "-$module" else ""}", "6.8.0")
+
+
+    // JSR 303 bean validation provider implementation
+
+    fun validationApi() = Dep("javax.validation", "validation-api", "2.0.1.Final")
+    fun bval() = Dep("org.apache.bval", "bval-jsr", "2.0.0")
 
 
     // Utility libraries
@@ -59,13 +67,12 @@ object Lib {
     fun commonsIo() = Dep("commons-io", "commons-io", "2.6")
     fun commonsCollection() = Dep("org.apache.commons", "commons-collections4", "4.3")
     fun jool() = Dep("org.jooq", "jool-java-8", "0.9.14")
-    fun bval() = Dep("org.apache.bval", "bval-jsr", "2.0.0")
-    fun validationApi() = Dep("javax.validation", "validation-api", "2.0.1.Final")
     fun javaxActivation() = Dep("com.sun.activation", "javax.activation", "1.2.0")
 
-    // caching
-    fun cacheApi() = Dep("javax.cache", "cache-api", "1.1.0")
 
+    // Caching: JCache with ehcache as cache provider
+
+    fun cacheApi() = Dep("javax.cache", "cache-api", "1.1.0")
     fun ehcache() = Dep("org.ehcache", "ehcache", "3.6.3")
 
     fun jaxbApi() = Dep("javax.xml.bind", "jaxb-api", "2.3.1")
