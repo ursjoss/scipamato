@@ -69,4 +69,4 @@ subprojects {
     }
 }
 
-fun String.isWebProject() = endsWith("-web")
+fun String.isWebProject() = endsWith("web")
