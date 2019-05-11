@@ -100,6 +100,8 @@ object Lib {
 
     fun lombokPlugin() = Plugin("io.freefair.lombok", "3.3.1")
 
+    fun testSetsPlugin() = Plugin("org.unbroken-dome.test-sets", "2.1.1")
+
     //endregion
 }
 
@@ -127,3 +129,9 @@ fun DependencyHandler.testApi(dependencyNotation: Dep): Dependency? = add("testA
 fun DependencyHandler.testAnnotationProcessor(dependencyNotation: Dep): Dependency? = add("testAnnotationProcessor", dependencyNotation.id)
 fun DependencyHandler.testCompile(dependencyNotation: Dep): Dependency? = add("testCompile", dependencyNotation.id)
 fun DependencyHandler.testRuntimeOnly(dependencyNotation: Dep): Dependency? = add("testRuntimeOnly", dependencyNotation.id)
+fun DependencyHandler.testLibApi(dependencyNotation: Dep): Dependency? = add("testLibApi", dependencyNotation.id)
+fun DependencyHandler.testLibCompile(dependencyNotation: Dep): Dependency? = add("testLibCompile", dependencyNotation.id)
+fun DependencyHandler.testLibAnnotationProcessor(dependencyNotation: Dep): Dependency? = add("testLibAnnotationProcessor", dependencyNotation.id)
+fun DependencyHandler.integrationTestAnnotationProcessor(dependencyNotation: Dep): Dependency? = add("integrationTestAnnotationProcessor", dependencyNotation.id)
+fun DependencyHandler.integrationTestRuntimeOnly(dependencyNotation: Dep): Dependency? = add("integrationTestRuntimeOnly", dependencyNotation.id)
+fun DependencyHandler.testIntegrationTestAnnotationProcessor(dependencyNotation: Dep): Dependency? = add("testIntegrationTestAnnotationProcessor", dependencyNotation.id)

@@ -3,6 +3,10 @@ plugins {
     id "org.flywaydb.flyway" version "5.2.4"
 }
 
+configurations {
+    flywayMigration
+}
+
 dependencies {
     api project(":core-persistence-api")
     api project(":common-persistence-jooq")
@@ -18,10 +22,14 @@ dependencies {
 
     testCompile project(":common-persistence-jooq-test")
     testCompile project(":common-test")
+    testCompile project(":core-entity")
 
     testCompile "org.apache.bval:bval-jsr:2.0.0"
-    testCompileOnly "org.projectlombok:lombok:1.18.6"
+    testCompile "org.projectlombok:lombok:1.18.6"
     testAnnotationProcessor "org.projectlombok:lombok:1.18.6"
+
+    flywayMigration "org.postgresql:postgresql:42.2.5"
+    integrationTestRuntimeOnly "org.postgresql:postgresql:42.2.5"
 }
 
 description = "SciPaMaTo-Core :: Persistence jOOQ Project"
@@ -32,10 +40,14 @@ sourceSets.main.java.srcDirs = [generatedSourcesPath, 'src/main/java']
 def bootProps = new Properties()
 file("src/main/resources/application.properties").withInputStream {
     bootProps.load(it)
-}// TODO mechanism to read "src/test/resources/application.properties"
+}
+
+def bootItProps = new Properties()
+file("src/intTest/resources/application.properties").withInputStream {
+    bootItProps.load(it)
+}
 
 jooq {
-    version = '3.11.10'
     edition = 'OSS'
     scipamatoCore(sourceSets.main) {
         jdbc {
@@ -66,6 +78,35 @@ jooq {
             }
         }
     }
+    scipamatoCoreIt(sourceSets.integrationTest) {
+        jdbc {
+            driver = bootItProps['spring.datasource.driver-class-name']
+            url = bootItProps['spring.datasource.url']
+            user = bootItProps['spring.datasource.hikari.username']
+            password = bootItProps['spring.datasource.hikari.password']
+        }
+        generator {
+            name = 'org.jooq.codegen.DefaultGenerator'
+            strategy {
+                name = 'org.jooq.codegen.DefaultGeneratorStrategy'
+            }
+            database {
+                name = 'org.jooq.meta.postgres.PostgresDatabase'
+                inputSchema = bootItProps['db.schema']
+                recordVersionFields = 'version'
+            }
+            generate {
+                deprecated = false
+                instanceFields = true
+                pojos = false
+                springAnnotations = true
+            }
+            target {
+                packageName = 'ch.difty.scipamato.core.db'
+                directory = generatedSourcesPath
+            }
+        }
+    }
 }
 
 flyway {
@@ -73,6 +114,40 @@ flyway {
     user = bootProps['spring.flyway.user']
     password = bootProps['spring.flyway.password']
     schemas = [bootProps['db.schema']]
+    configurations = ['compile', 'flywayMigration']
 }
 
+task flywayMigrateIt(type: org.flywaydb.gradle.task.FlywayMigrateTask) {
+    description = 'Triggers database migrations for the integration test databases'
+    url = bootItProps['spring.datasource.url']
+    user = bootItProps['spring.flyway.user']
+    password = bootItProps['spring.flyway.password']
+    schemas = [bootItProps['db.schema']]
+    configurations = ['compile', 'flywayMigration']
+}
+
+task flywayCleanIt(type: org.flywaydb.gradle.task.FlywayCleanTask) {
+    description = 'Drops all objects in the configured schemas of the integration test database'
+    url = bootItProps['spring.datasource.url']
+    user = bootItProps['spring.flyway.user']
+    password = bootItProps['spring.flyway.password']
+    schemas = [bootItProps['db.schema']]
+    configurations = ['compile', 'flywayMigration']
+}
+
+task flywayInfoIt(type: org.flywaydb.gradle.task.FlywayInfoTask) {
+    description = 'Prints the details and status information about all the migrations.'
+    url = bootItProps['spring.datasource.url']
+    user = bootItProps['spring.flyway.user']
+    password = bootItProps['spring.flyway.password']
+    schemas = [bootItProps['db.schema']]
+    configurations = ['compile', 'flywayMigration']
+}
+
+
+compileKotlin.dependsOn generateScipamatoCoreJooqSchemaSource
 generateScipamatoCoreJooqSchemaSource.dependsOn flywayMigrate
+generateScipamatoCoreItJooqSchemaSource.dependsOn flywayMigrateIt
+
+project.tasks.getByName('compileJava').dependsOn -= 'generateScipamatoCoreItJooqSchemaSource'
+project.tasks.getByName('integrationTest').dependsOn += 'generateScipamatoCoreItJooqSchemaSource'

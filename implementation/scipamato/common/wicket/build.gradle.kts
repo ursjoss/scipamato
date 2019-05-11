@@ -59,11 +59,14 @@ dependencies {
     api(Lib.fontAwesome())
     implementation(Lib.bval())
 
-    testCompile(project(Module.scipamatoCommon("test")))
-
-    testApi(Lib.lombok())
+    testCompile(Lib.lombok())
     testAnnotationProcessor(Lib.lombok())
 
-    testCompile(Lib.servletApi())
-    testCompile(Lib.validationApi())
+    testLibCompile(project(Module.scipamatoCommon("test")))
+
+    testLibCompile(Lib.lombok())
+    testLibAnnotationProcessor(Lib.lombok())
+
+    testLibCompile(Lib.servletApi())
+    testLibCompile(Lib.validationApi())
 }

@@ -2,12 +2,13 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 plugins {
-    Lib.kotlinPlugin().run { kotlin(id) version version }
     java
+    Lib.kotlinPlugin().run { kotlin(id) version version } apply false
     Lib.springBootPlugin().run { id(id) version version } apply false
-    Lib.lombokPlugin().run { id(id) version version }
+    Lib.lombokPlugin().run { id(id) version version } apply false
     idea
     jacoco
+    Lib.testSetsPlugin().run { id(id) version version }
 }
 
 java {
@@ -35,6 +36,25 @@ allprojects {
 subprojects {
     apply(plugin = "org.jetbrains.kotlin.jvm")
     apply(plugin = Lib.springDependencyManagementPlugin())
+    apply<JavaPlugin>()
+    apply<IdeaPlugin>()
+    apply<JacocoPlugin>()
+    apply(plugin = Lib.testSetsPlugin().id)
+
+    testSets {
+        val testLib by libraries.creating {
+            dirName = "testLib"
+        }
+
+        val integrationTest by registering {
+            dirName = "intTest"
+            imports(testLib)
+        }
+
+        val unitTest by existing {
+            imports(testLib)
+        }
+    }
 
     if (!path.isWebProject())
         apply(plugin = "java-library")
@@ -65,6 +85,14 @@ subprojects {
         }
         withType<Jar> {
             enabled = !path.isWebProject()
+        }
+
+        val integrationTest by existing {
+            mustRunAfter(test)
+        }
+
+        named("check") {
+            dependsOn(integrationTest)
         }
     }
 }

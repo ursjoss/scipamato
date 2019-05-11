@@ -1,4 +1,4 @@
-package ch.difty.scipamato.core.sync;
+package ch.difty.scipamato.core.sync.jobs;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

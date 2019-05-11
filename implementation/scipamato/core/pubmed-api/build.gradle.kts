@@ -20,6 +20,9 @@ dependencies {
 
     implementation(Lib.commonsLang3())
 
-    testCompile(project(Module.scipamatoCommon("test")))
+    testLibCompile(project(Module.scipamatoCommon("test")))
+
+    integrationTestAnnotationProcessor(Lib.lombok())
+    integrationTestRuntimeOnly(Lib.lombok())
 }
 
