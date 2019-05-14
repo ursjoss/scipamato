@@ -34,11 +34,9 @@ dependencies {
 
     api(Lib.springBootStarter("web").id) {
         exclude("org.springframework.boot", "spring-boot-starter-tomcat")
-        exclude("org.hibernate.validator", "hibernate-validator")
     }
     api(Lib.springBootStarterWicket().id) {
         exclude("org.springframework.boot", "spring-boot-starter-tomcat")
-        exclude("org.hibernate.validator", "hibernate-validator")
     }
     api(Lib.wicket("core"))
     api(Lib.wicket("ioc"))
@@ -57,7 +55,6 @@ dependencies {
     }
     api(Lib.wicketBootstrap("themes"))
     api(Lib.fontAwesome())
-    implementation(Lib.bval())
 
     testCompile(Lib.lombok())
     testAnnotationProcessor(Lib.lombok())

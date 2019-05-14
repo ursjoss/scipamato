@@ -23,7 +23,6 @@ dependencies {
 
     testLibCompile project(":common-test")
     testLibCompile project(":common-persistence-jooq-test")
-    testLibCompile "org.apache.bval:bval-jsr:2.0.0"
     testLibCompile "org.jooq:jooq"
 
     testLibCompile "org.projectlombok:lombok:1.18.6"

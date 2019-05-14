@@ -13,7 +13,6 @@ import org.apache.wicket.feedback.ExactLevelFeedbackMessageFilter;
 import org.apache.wicket.feedback.FeedbackMessage;
 import org.apache.wicket.util.tester.FormTester;
 import org.apache.wicket.util.tester.TagTester;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 
@@ -95,7 +94,6 @@ class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
     }
 
     @Test
-    @Disabled("TODO Reactivate with gradle")
     void assertRequiredFields() {
         String b = "panel:form:";
         getTester().startComponentInPage(makePanel());

@@ -16,7 +16,5 @@ dependencies {
 
     testLibApi(project(Module.scipamatoCommon("test")))
     testLibApi(project(Module.scipamatoCommon("persistence-jooq-test")))
-
-    testLibApi(Lib.bval())
 }
 

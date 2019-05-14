@@ -11,7 +11,7 @@ import java.util.Set;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
-import org.apache.bval.jsr.ApacheValidationProvider;
+import org.hibernate.validator.HibernateValidator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
@@ -32,7 +32,7 @@ public abstract class Jsr303ValidatedEntityTest<T extends CoreEntity> {
     @BeforeEach
     final void setUp() {
         validatorFactoryBean = new LocalValidatorFactoryBean();
-        validatorFactoryBean.setProviderClass(ApacheValidationProvider.class);
+        validatorFactoryBean.setProviderClass(HibernateValidator.class);
         validatorFactoryBean.afterPropertiesSet();
     }
 

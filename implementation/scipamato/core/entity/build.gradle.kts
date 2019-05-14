@@ -9,6 +9,7 @@ dependencies {
     implementation(Lib.commonsCollection())
 
     testCompile(project(Module.scipamatoCommon("test")))
-
-    testCompile(Lib.bval())
+    testCompile(Lib.hibernateValidator())
+    testImplementation(Lib.javaxElApi())
+    testImplementation(Lib.javaxElImpl())
 }

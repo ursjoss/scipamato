@@ -58,7 +58,9 @@ object Lib {
     // JSR 303 bean validation provider implementation
 
     fun validationApi() = Dep("javax.validation", "validation-api", "2.0.1.Final")
-    fun bval() = Dep("org.apache.bval", "bval-jsr", "2.0.0")
+    fun hibernateValidator() = Dep("org.hibernate.validator", "hibernate-validator", "6.0.16.Final")
+    fun javaxElApi() = Dep("javax.el", "javax.el-api", "3.0.1-b06")
+    fun javaxElImpl() = Dep("org.glassfish", "javax.el", "3.0.1-b11")
 
 
     // Utility libraries
@@ -128,6 +130,7 @@ fun DependencyHandler.runtimeOnly(dependencyNotation: Dep): Dependency? = add("r
 fun DependencyHandler.testApi(dependencyNotation: Dep): Dependency? = add("testApi", dependencyNotation.id)
 fun DependencyHandler.testAnnotationProcessor(dependencyNotation: Dep): Dependency? = add("testAnnotationProcessor", dependencyNotation.id)
 fun DependencyHandler.testCompile(dependencyNotation: Dep): Dependency? = add("testCompile", dependencyNotation.id)
+fun DependencyHandler.testImplementation(dependencyNotation: Dep): Dependency? = add("testImplementation", dependencyNotation.id)
 fun DependencyHandler.testRuntimeOnly(dependencyNotation: Dep): Dependency? = add("testRuntimeOnly", dependencyNotation.id)
 fun DependencyHandler.testLibApi(dependencyNotation: Dep): Dependency? = add("testLibApi", dependencyNotation.id)
 fun DependencyHandler.testLibCompile(dependencyNotation: Dep): Dependency? = add("testLibCompile", dependencyNotation.id)

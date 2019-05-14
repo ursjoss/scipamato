@@ -14,7 +14,6 @@ import org.apache.wicket.markup.html.form.*;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.tester.FormTester;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatcher;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -27,8 +26,6 @@ import ch.difty.scipamato.core.persistence.UserService;
 import ch.difty.scipamato.core.web.CorePageParameters;
 import ch.difty.scipamato.core.web.common.BasePageTest;
 
-@SuppressWarnings("ALL")
-@Disabled("TODO fix with gradle")
 class UserEditPageTest extends BasePageTest<UserEditPage> {
 
     private static final String PASSWORD1 = "pw";

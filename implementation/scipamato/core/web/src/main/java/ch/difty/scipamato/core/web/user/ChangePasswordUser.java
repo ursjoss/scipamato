@@ -15,7 +15,6 @@ import ch.difty.scipamato.core.entity.User;
  * to the delegate. In addition provides fields for the currentPassword
  * and the passwordConfirmation.
  */
-@SuppressWarnings("WeakerAccess")
 public class ChangePasswordUser implements Serializable {
 
     private static final long serialVersionUID = 1L;

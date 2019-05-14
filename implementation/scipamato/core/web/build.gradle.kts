@@ -70,16 +70,10 @@ dependencies {
     implementation(Lib.javaxActivation())
     implementation(Lib.jaxbRuntime())
 
-    implementation(Lib.bval())
-
     testCompile(project(Module.scipamatoCommon("test")))
     testCompile(project(Module.scipamatoCommon("persistence-jooq-test")))
     testCompile(Lib.servletApi())
     testCompile(Lib.validationApi())
-    testCompile(Lib.bval())
-//    testCompile(Lib.hibernateValidator())
     testCompile(Lib.lombok())
     testAnnotationProcessor(Lib.lombok())
 }
-
-// TODO configure build info
