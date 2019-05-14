@@ -33,7 +33,7 @@ class ScipamatoPubmedArticleIntegrationTest extends PubmedIntegrationTest {
         assertArticle239026(sa);
     }
 
-    static void assertArticle239026(PubmedArticleFacade sa) {
+    private void assertArticle239026(final PubmedArticleFacade sa) {
         assertThat(sa.getPmId()).isEqualTo("25395026");
         assertThat(sa.getAuthors()).isEqualTo(
             "Turner MC, Cohen A, Jerrett M, Gapstur SM, Diver WR, Pope CA 3rd, Krewski D, Beckerman BS, Samet JM.");

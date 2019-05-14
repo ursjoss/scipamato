@@ -51,6 +51,11 @@ subprojects {
             imports(testLib)
         }
 
+        val adhocTest by registering {
+            dirName = "adhocTest"
+            imports(testLib)
+        }
+
         val unitTest by existing {
             imports(testLib)
         }

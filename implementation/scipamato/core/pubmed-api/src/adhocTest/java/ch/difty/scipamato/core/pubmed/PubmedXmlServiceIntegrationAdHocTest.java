@@ -2,7 +2,6 @@ package ch.difty.scipamato.core.pubmed;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +20,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
  */
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
-@Disabled("TODO separate the test set and reactivate")
 class PubmedXmlServiceIntegrationAdHocTest {
 
     @Autowired
@@ -35,7 +33,24 @@ class PubmedXmlServiceIntegrationAdHocTest {
         final PubmedArticleResult result = service.getPubmedArticleWithPmid(pmId);
         assertThat(result.getPubmedArticleFacade()).isNotNull();
         assertThat(result.getErrorMessage()).isNull();
-        ScipamatoPubmedArticleIntegrationTest.assertArticle239026(result.getPubmedArticleFacade());
+        assertArticle239026(result.getPubmedArticleFacade());
+    }
+
+    private void assertArticle239026(final PubmedArticleFacade sa) {
+        assertThat(sa.getPmId()).isEqualTo("25395026");
+        assertThat(sa.getAuthors()).isEqualTo(
+            "Turner MC, Cohen A, Jerrett M, Gapstur SM, Diver WR, Pope CA 3rd, Krewski D, Beckerman BS, Samet JM.");
+        assertThat(sa.getFirstAuthor()).isEqualTo("Turner");
+        assertThat(sa.getPublicationYear()).isEqualTo("2014");
+        assertThat(sa.getLocation()).isEqualTo("Am J Epidemiol. 2014; 180 (12): 1145-1149.");
+        assertThat(sa.getTitle()).isEqualTo(
+            "Interactions between cigarette smoking and fine particulate matter in the Risk of Lung Cancer Mortality in Cancer Prevention Study II.");
+        assertThat(sa.getDoi()).isEqualTo("10.1093/aje/kwu275");
+        assertThat(sa.getOriginalAbstract()).startsWith(
+            "The International Agency for Research on Cancer recently classified outdoor air pollution");
+        assertThat(sa
+            .getOriginalAbstract()
+            .trim()).endsWith("based on reducing exposure to either risk factor alone.");
     }
 
     @Test

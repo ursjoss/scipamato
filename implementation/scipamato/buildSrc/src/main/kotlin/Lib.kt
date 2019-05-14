@@ -135,3 +135,4 @@ fun DependencyHandler.testLibAnnotationProcessor(dependencyNotation: Dep): Depen
 fun DependencyHandler.integrationTestAnnotationProcessor(dependencyNotation: Dep): Dependency? = add("integrationTestAnnotationProcessor", dependencyNotation.id)
 fun DependencyHandler.integrationTestRuntimeOnly(dependencyNotation: Dep): Dependency? = add("integrationTestRuntimeOnly", dependencyNotation.id)
 fun DependencyHandler.testIntegrationTestAnnotationProcessor(dependencyNotation: Dep): Dependency? = add("testIntegrationTestAnnotationProcessor", dependencyNotation.id)
+fun DependencyHandler.adhocTestCompile(dependencyNotation: Dep): Dependency? = add("adhocTestCompile", dependencyNotation.id)

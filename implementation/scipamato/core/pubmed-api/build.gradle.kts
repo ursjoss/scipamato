@@ -1,7 +1,5 @@
 description = "SciPaMaTo-Core :: Pubmed API Project"
 
-// TODO separate task to achieve what profile dtd2java did
-
 dependencies {
     implementation(project(Module.scipamatoCommon("utils")))
 
