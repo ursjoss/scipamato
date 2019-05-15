@@ -36,24 +36,24 @@ description = "SciPaMaTo-Core :: Persistence jOOQ Project"
 def generatedSourcesPath = 'build/generated-src/jooq'
 sourceSets.main.java.srcDirs = [generatedSourcesPath, 'src/main/java']
 
-def bootProps = new Properties()
+def bootCoreProps = new Properties()
 file("src/main/resources/application.properties").withInputStream {
-    bootProps.load(it)
+    bootCoreProps.load(it)
 }
 
-def bootItProps = new Properties()
+def bootCoreItProps = new Properties()
 file("src/intTest/resources/application.properties").withInputStream {
-    bootItProps.load(it)
+    bootCoreItProps.load(it)
 }
 
 jooq {
     edition = 'OSS'
     scipamatoCore(sourceSets.main) {
         jdbc {
-            driver = bootProps['spring.datasource.driver-class-name']
-            url = bootProps['spring.datasource.url']
-            user = bootProps['spring.datasource.hikari.username']
-            password = bootProps['spring.datasource.hikari.password']
+            driver = bootCoreProps['spring.datasource.driver-class-name']
+            url = bootCoreProps['spring.datasource.url']
+            user = bootCoreProps['spring.datasource.hikari.username']
+            password = bootCoreProps['spring.datasource.hikari.password']
         }
         generator {
             name = 'org.jooq.codegen.DefaultGenerator'
@@ -62,7 +62,7 @@ jooq {
             }
             database {
                 name = 'org.jooq.meta.postgres.PostgresDatabase'
-                inputSchema = bootProps['db.schema']
+                inputSchema = bootCoreProps['db.schema']
                 recordVersionFields = 'version'
             }
             generate {
@@ -79,10 +79,10 @@ jooq {
     }
     scipamatoCoreIt(sourceSets.integrationTest) {
         jdbc {
-            driver = bootItProps['spring.datasource.driver-class-name']
-            url = bootItProps['spring.datasource.url']
-            user = bootItProps['spring.datasource.hikari.username']
-            password = bootItProps['spring.datasource.hikari.password']
+            driver = bootCoreItProps['spring.datasource.driver-class-name']
+            url = bootCoreItProps['spring.datasource.url']
+            user = bootCoreItProps['spring.datasource.hikari.username']
+            password = bootCoreItProps['spring.datasource.hikari.password']
         }
         generator {
             name = 'org.jooq.codegen.DefaultGenerator'
@@ -91,7 +91,7 @@ jooq {
             }
             database {
                 name = 'org.jooq.meta.postgres.PostgresDatabase'
-                inputSchema = bootItProps['db.schema']
+                inputSchema = bootCoreItProps['db.schema']
                 recordVersionFields = 'version'
             }
             generate {
@@ -109,37 +109,38 @@ jooq {
 }
 
 flyway {
-    url = bootProps['spring.datasource.url']
-    user = bootProps['spring.flyway.user']
-    password = bootProps['spring.flyway.password']
-    schemas = [bootProps['db.schema']]
+    url = bootCoreProps['spring.datasource.url']
+    user = bootCoreProps['spring.flyway.user']
+    password = bootCoreProps['spring.flyway.password']
+    schemas = [bootCoreProps['db.schema']]
     configurations = ['compile', 'flywayMigration']
 }
 
 task flywayMigrateIt(type: org.flywaydb.gradle.task.FlywayMigrateTask) {
     description = 'Triggers database migrations for the integration test databases'
-    url = bootItProps['spring.datasource.url']
-    user = bootItProps['spring.flyway.user']
-    password = bootItProps['spring.flyway.password']
-    schemas = [bootItProps['db.schema']]
+    url = bootCoreItProps['spring.datasource.url']
+    user = bootCoreItProps['spring.flyway.user']
+    password = bootCoreItProps['spring.flyway.password']
+    schemas = [bootCoreItProps['db.schema']]
+    locations = [bootCoreItProps['spring.flyway.locations']]
     configurations = ['compile', 'flywayMigration']
 }
 
 task flywayCleanIt(type: org.flywaydb.gradle.task.FlywayCleanTask) {
     description = 'Drops all objects in the configured schemas of the integration test database'
-    url = bootItProps['spring.datasource.url']
-    user = bootItProps['spring.flyway.user']
-    password = bootItProps['spring.flyway.password']
-    schemas = [bootItProps['db.schema']]
+    url = bootCoreItProps['spring.datasource.url']
+    user = bootCoreItProps['spring.flyway.user']
+    password = bootCoreItProps['spring.flyway.password']
+    schemas = [bootCoreItProps['db.schema']]
     configurations = ['compile', 'flywayMigration']
 }
 
 task flywayInfoIt(type: org.flywaydb.gradle.task.FlywayInfoTask) {
     description = 'Prints the details and status information about all the migrations.'
-    url = bootItProps['spring.datasource.url']
-    user = bootItProps['spring.flyway.user']
-    password = bootItProps['spring.flyway.password']
-    schemas = [bootItProps['db.schema']]
+    url = bootCoreItProps['spring.datasource.url']
+    user = bootCoreItProps['spring.flyway.user']
+    password = bootCoreItProps['spring.flyway.password']
+    schemas = [bootCoreItProps['db.schema']]
     configurations = ['compile', 'flywayMigration']
 }
 

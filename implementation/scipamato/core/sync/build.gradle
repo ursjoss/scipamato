@@ -35,24 +35,24 @@ dependencies {
 def generatedSourcesPath = 'build/generated-src/jooq'
 sourceSets.main.java.srcDirs = [generatedSourcesPath, 'src/main/java']
 
-def bootProps = new Properties()
+def bootSyncProps = new Properties()
 file('src/main/resources/application.properties').withInputStream {
-    bootProps.load(it)
+    bootSyncProps.load(it)
 }
 
-def bootItProps = new Properties()
+def bootSyncItProps = new Properties()
 file("src/intTest/resources/application.properties").withInputStream {
-    bootItProps.load(it)
+    bootSyncItProps.load(it)
 }
 
 jooq {
     edition = 'OSS'
     scipamatoCore(sourceSets.main) {
         jdbc {
-            driver = bootProps['sync.source.datasource.driver-class-name']
-            url = bootProps['sync.source.datasource.jdbc-url']
-            user = bootProps['sync.source.datasource.username']
-            password = bootProps['sync.source.datasource.password']
+            driver = bootSyncProps['sync.source.datasource.driver-class-name']
+            url = bootSyncProps['sync.source.datasource.jdbc-url']
+            user = bootSyncProps['sync.source.datasource.username']
+            password = bootSyncProps['sync.source.datasource.password']
         }
         generator {
             name = 'org.jooq.codegen.DefaultGenerator'
@@ -61,7 +61,7 @@ jooq {
             }
             database {
                 name = 'org.jooq.meta.postgres.PostgresDatabase'
-                inputSchema = bootProps['db.schema']
+                inputSchema = bootSyncProps['db.schema']
                 includes = 'code_class|code_class_tr|code|code_tr|language|keyword|keyword_tr|paper|paper_code|newsletter|newsletter_topic|newsletter_topic_tr|newsletter_newsletter_topic|paper_newsletter|new_study_page_link'
                 recordVersionFields = 'version'
             }
@@ -79,10 +79,10 @@ jooq {
     }
     scipamatoPublic(sourceSets.main) {
         jdbc {
-            driver = bootProps['sync.target.datasource.driver-class-name']
-            url = bootProps['sync.target.datasource.jdbc-url']
-            user = bootProps['sync.target.datasource.username']
-            password = bootProps['sync.target.datasource.password']
+            driver = bootSyncProps['sync.target.datasource.driver-class-name']
+            url = bootSyncProps['sync.target.datasource.jdbc-url']
+            user = bootSyncProps['sync.target.datasource.username']
+            password = bootSyncProps['sync.target.datasource.password']
         }
         generator {
             name = 'org.jooq.codegen.DefaultGenerator'
@@ -91,7 +91,7 @@ jooq {
             }
             database {
                 name = 'org.jooq.meta.postgres.PostgresDatabase'
-                inputSchema = bootProps['db.schema']
+                inputSchema = bootSyncProps['db.schema']
                 includes = 'code_class|code|language|keyword|paper|new_study|new_study_topic|newsletter|newsletter_topic|new_study_page_link'
                 recordVersionFields = 'version'
             }
@@ -110,10 +110,10 @@ jooq {
 
     scipamatoCoreIt(sourceSets.integrationTest) {
         jdbc {
-            driver = bootItProps['sync.source.datasource.driver-class-name']
-            url = bootItProps['sync.source.datasource.jdbc-url']
-            user = bootItProps['sync.source.datasource.username']
-            password = bootItProps['sync.source.datasource.password']
+            driver = bootSyncItProps['sync.source.datasource.driver-class-name']
+            url = bootSyncItProps['sync.source.datasource.jdbc-url']
+            user = bootSyncItProps['sync.source.datasource.username']
+            password = bootSyncItProps['sync.source.datasource.password']
         }
         generator {
             name = 'org.jooq.codegen.DefaultGenerator'
@@ -122,7 +122,7 @@ jooq {
             }
             database {
                 name = 'org.jooq.meta.postgres.PostgresDatabase'
-                inputSchema = bootItProps['db.schema']
+                inputSchema = bootSyncItProps['db.schema']
                 includes = 'code_class|code_class_tr|code|code_tr|language|keyword|keyword_tr|paper|paper_code|newsletter|newsletter_topic|newsletter_topic_tr|newsletter_newsletter_topic|paper_newsletter|new_study_page_link'
                 recordVersionFields = 'version'
             }
@@ -140,10 +140,10 @@ jooq {
     }
     scipamatoPublicIt(sourceSets.integrationTest) {
         jdbc {
-            driver = bootItProps['sync.target.datasource.driver-class-name']
-            url = bootItProps['sync.target.datasource.jdbc-url']
-            user = bootItProps['sync.target.datasource.username']
-            password = bootItProps['sync.target.datasource.password']
+            driver = bootSyncItProps['sync.target.datasource.driver-class-name']
+            url = bootSyncItProps['sync.target.datasource.jdbc-url']
+            user = bootSyncItProps['sync.target.datasource.username']
+            password = bootSyncItProps['sync.target.datasource.password']
         }
         generator {
             name = 'org.jooq.codegen.DefaultGenerator'
@@ -152,7 +152,7 @@ jooq {
             }
             database {
                 name = 'org.jooq.meta.postgres.PostgresDatabase'
-                inputSchema = bootItProps['db.schema']
+                inputSchema = bootSyncItProps['db.schema']
                 includes = 'code_class|code|language|keyword|paper|new_study|new_study_topic|newsletter|newsletter_topic|new_study_page_link'
                 recordVersionFields = 'version'
             }
