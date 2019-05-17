@@ -1,9 +1,3 @@
-//
-// Diese Datei wurde mit der JavaTM Architecture for XML Binding(JAXB) Reference Implementation, v2.3.0 generiert 
-// Siehe <a href="https://javaee.github.io/jaxb-v2/">https://javaee.github.io/jaxb-v2/</a> 
-// Änderungen an dieser Datei gehen bei einer Neukompilierung des Quellschemas verloren. 
-// Generiert: 2018.09.30 um 04:04:35 PM CEST 
-//
 
 package ch.difty.scipamato.core.pubmed.api;
 
@@ -18,7 +12,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
- *
+ * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
@@ -41,10 +35,11 @@ public class AbstractText {
 
     /**
      * Ruft den Wert der label-Eigenschaft ab.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link String }
+     *     
      */
     public String getLabel() {
         return label;
@@ -52,10 +47,11 @@ public class AbstractText {
 
     /**
      * Legt den Wert der label-Eigenschaft fest.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link String }
+     *     
      */
     public void setLabel(String value) {
         this.label = value;
@@ -63,10 +59,11 @@ public class AbstractText {
 
     /**
      * Ruft den Wert der nlmCategory-Eigenschaft ab.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link String }
+     *     
      */
     public String getNlmCategory() {
         return nlmCategory;
@@ -74,10 +71,11 @@ public class AbstractText {
 
     /**
      * Legt den Wert der nlmCategory-Eigenschaft fest.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link String }
+     *     
      */
     public void setNlmCategory(String value) {
         this.nlmCategory = value;

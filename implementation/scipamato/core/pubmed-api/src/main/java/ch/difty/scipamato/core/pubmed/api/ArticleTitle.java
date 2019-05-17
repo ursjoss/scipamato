@@ -1,10 +1,3 @@
-//
-// Diese Datei wurde mit der JavaTM Architecture for XML Binding(JAXB) Reference Implementation, v2.3.0 generiert 
-// Siehe <a href="https://javaee.github.io/jaxb-v2/">https://javaee.github.io/jaxb-v2/</a> 
-// Änderungen an dieser Datei gehen bei einer Neukompilierung des Quellschemas verloren. 
-// Generiert: 2018.09.30 um 04:04:35 PM CEST 
-//
-
 
 package ch.difty.scipamato.core.pubmed.api;
 
@@ -18,7 +11,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
- *
+ * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
@@ -44,11 +37,11 @@ public class ArticleTitle {
 
     /**
      * Ruft den Wert der book-Eigenschaft ab.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link String }
-     *
+     *     
      */
     public String getBook() {
         return book;
@@ -56,11 +49,11 @@ public class ArticleTitle {
 
     /**
      * Legt den Wert der book-Eigenschaft fest.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link String }
-     *
+     *     
      */
     public void setBook(String value) {
         this.book = value;
@@ -68,11 +61,11 @@ public class ArticleTitle {
 
     /**
      * Ruft den Wert der part-Eigenschaft ab.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link String }
-     *
+     *     
      */
     public String getPart() {
         return part;
@@ -80,11 +73,11 @@ public class ArticleTitle {
 
     /**
      * Legt den Wert der part-Eigenschaft fest.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link String }
-     *
+     *     
      */
     public void setPart(String value) {
         this.part = value;
@@ -92,11 +85,11 @@ public class ArticleTitle {
 
     /**
      * Ruft den Wert der sec-Eigenschaft ab.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link String }
-     *
+     *     
      */
     public String getSec() {
         return sec;
@@ -104,11 +97,11 @@ public class ArticleTitle {
 
     /**
      * Legt den Wert der sec-Eigenschaft fest.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link String }
-     *
+     *     
      */
     public void setSec(String value) {
         this.sec = value;
