@@ -70,6 +70,7 @@ object Lib {
     fun commonsCollection() = Dep("org.apache.commons", "commons-collections4", "4.3")
     fun jool() = Dep("org.jooq", "jool-java-8", "0.9.14")
     fun javaxActivation() = Dep("com.sun.activation", "javax.activation", "1.2.0")
+    fun javaxActivationApi() = Dep("javax.activation", "javax.activation-api", "1.2.0")
 
 
     // Caching: JCache with ehcache as cache provider
@@ -78,8 +79,10 @@ object Lib {
     fun ehcache() = Dep("org.ehcache", "ehcache", "3.6.3")
 
     fun jaxbApi() = Dep("javax.xml.bind", "jaxb-api", "2.3.1")
-    fun jaxb(module: String) = Dep("com.sun.xml.bind", "jaxb-$module", "2.3.0.1")
-    fun jaxbRuntime() = Dep("org.glassfish.jaxb", "jaxb-runtime", "2.3.1")
+    fun jaxb(module: String) = Dep("com.sun.xml.bind", "jaxb-$module", "2.3.2")
+    fun jaxbCore() = Dep("com.sun.xml.bind", "jaxb-core", "2.3.0.1")
+    fun jaxbRuntime() = Dep("org.glassfish.jaxb", "jaxb-runtime", "2.3.2")
+    fun jaxb2Commons(module: String) = Dep("org.jvnet.jaxb2_commons", "jaxb2-basics${if (module.isNotBlank()) "-$module" else ""}", "0.12.0")
 
 
     // Test Libraries
@@ -104,6 +107,7 @@ object Lib {
 
     fun testSetsPlugin() = Plugin("org.unbroken-dome.test-sets", "2.1.1")
 
+    fun jaxbPlugin() = Plugin("com.intershop.gradle.jaxb", "3.0.3")
     //endregion
 }
 
@@ -139,3 +143,4 @@ fun DependencyHandler.integrationTestAnnotationProcessor(dependencyNotation: Dep
 fun DependencyHandler.integrationTestRuntimeOnly(dependencyNotation: Dep): Dependency? = add("integrationTestRuntimeOnly", dependencyNotation.id)
 fun DependencyHandler.testIntegrationTestAnnotationProcessor(dependencyNotation: Dep): Dependency? = add("testIntegrationTestAnnotationProcessor", dependencyNotation.id)
 fun DependencyHandler.adhocTestCompile(dependencyNotation: Dep): Dependency? = add("adhocTestCompile", dependencyNotation.id)
+fun DependencyHandler.jaxb(dependencyNotation: Dep): Dependency? = add("jaxb", dependencyNotation.id)

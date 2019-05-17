@@ -65,7 +65,7 @@ dependencies {
     implementation(Lib.ehcache())
 
     implementation(Lib.jaxbApi())
-    implementation(Lib.jaxb("core"))
+    implementation(Lib.jaxbCore())
     implementation(Lib.jaxb("impl"))
     implementation(Lib.javaxActivation())
     implementation(Lib.jaxbRuntime())
