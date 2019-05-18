@@ -5,109 +5,141 @@ import org.gradle.kotlin.dsl.apply
 
 object Lib {
 
-    // TODO find a way to utilize the dependencyManagement provided by the dependency-management-plugin using the spring BOM
-    // so we don't explicitly need to manage the versions here
+    //region:versions
+    private const val kotlinVersion = "1.3.31"
+    private const val lombokPluginVersion = "3.3.1" // TODO upgrade to 3.5.2
+
+    private const val springBootVersion = "2.1.4.RELEASE" // TODO upgrade to 2.1.5.RELEASE
+    private const val springBootAdminVersion = "2.1.4" // TODO upgrade to 2.1.5
+    private const val springCloudVersion = "2.1.1.RELEASE" // TODO upgrade to 2.1.2
+    private const val springDependencyManagementVersion = "1.0.6.RELEASE"
+
+    private const val wicketSpringBootStarterVersion = "2.1.5"
+    private const val wicketVersion = "8.4.0"
+    private const val wicketJqueryUiVersion = "8.3.0"
+    private const val wicketBootstrapVersion = "2.0.9"
+    private const val jasperReportVersion = "6.8.0"
+
+    private const val openfeignVersion = "10.1.0"
+
+    private const val jaxbCoreVersion = "2.3.0.1"
+    private const val jaxbImplVersion = "2.3.2"
+    private const val javaxActivationVersion = "1.2.0"
+    private const val javaxElApiVersion = "3.0.1-b06"
+    private const val jaxbPluginVersion = "3.0.3"
+
+    private const val fontAwesomeVersion = "5.7.1"
+
+    private const val commonsIoVersion = "2.6"
+    private const val commonsCollectionVersion = "4.3"
+    private const val joolVersion = "0.9.14"
+
+    private const val equalsverifierVersion = "3.1.8" // TODO upgrade to 3.1.9
+
+    private const val junit5Version = "5.4.2"
+    private const val testSetsPluginVersion = "2.1.1"
+    //endregion
 
     //region:dependencies
 
     // Spring
 
-    private const val springBootVersion = "2.1.4.RELEASE"
-    fun springBootStarter(module: String) = springBoot("starter-$module")
     fun springBoot(module: String) = Dep("org.springframework.boot", "spring-boot-$module", springBootVersion)
-    fun spring(module: String) = Dep("org.springframework", "spring-$module", "5.1.6.RELEASE")
-    fun springCloud(module: String) = Dep("org.springframework.cloud", "spring-cloud-starter-$module", "2.1.1.RELEASE")
-    fun springSecurity(module: String) = Dep("org.springframework.security", "spring-security-$module", "5.1.5.RELEASE")
-    fun springBootAdmin() = Dep("de.codecentric", "spring-boot-admin-starter-client", "2.1.4")
+    fun springBootStarter(module: String) = springBoot("starter-$module")
+    fun spring(module: String) = Dep("org.springframework", "spring-$module")
+    fun springSecurity(module: String) = Dep("org.springframework.security", "spring-security-$module")
+    fun springBootAdmin() = Dep("de.codecentric", "spring-boot-admin-starter-client", springBootAdminVersion)
 
 
     // Lombok
 
     @Deprecated("convert to kotlin", ReplaceWith("kotlin data classes, kotlin-logging"))
-    fun lombok() = Dep("org.projectlombok", "lombok", "1.18.6")
+    fun lombok() = Dep("org.projectlombok", "lombok")
 
 
     // Logging
 
-    fun slf4j() = Dep("org.slf4j", "slf4j-api", "1.7.26")
-    fun logback() = Dep("ch.qos.logback", "logback-core", "1.2.3")
+    fun slf4j() = Dep("org.slf4j", "slf4j-api")
+    fun logback() = Dep("ch.qos.logback", "logback-core")
 
 
     // DB
 
-    fun jOOQ(module: String = "jooq") = Dep("org.jooq", module, "3.11.10")
-    fun flyway() = Dep("org.flywaydb", "flyway-core", "5.2.4")
-    fun postgres() = Dep("org.postgresql", "postgresql", "42.2.5")
+    fun jOOQ(module: String = "jooq") = Dep("org.jooq", module)
+    fun flyway() = Dep("org.flywaydb", "flyway-core")
+    fun postgres() = Dep("org.postgresql", "postgresql")
 
 
     // Cloud
-    fun openfeign(module: String) = Dep("io.github.openfeign", "feign-$module", "10.1.0")
+
+    fun springCloud(module: String) = Dep("org.springframework.cloud", "spring-cloud-starter-$module", springCloudVersion)
+    fun openfeign(module: String) = Dep("io.github.openfeign", "feign-$module", openfeignVersion)
 
 
     // Wicket
 
-    fun springBootStarterWicket() = Dep("com.giffing.wicket.spring.boot.starter", "wicket-spring-boot-starter", "2.1.5")
-    fun wicket(module: String) = Dep("org.apache.wicket", "wicket-$module", "8.4.0")
-    fun wicketStuff(module: String) = Dep("org.wicketstuff", "wicketstuff-$module", "8.4.0")
-    fun wicketBootstrap(module: String) = Dep("de.agilecoders.wicket", "wicket-bootstrap-$module", "2.0.9")
-    fun wicketJqueryUi(module: String = "") = Dep("com.googlecode.wicket-jquery-ui", "wicket-jquery-ui${if (module.isNotBlank()) "-$module" else ""}", "8.3.0")
-    fun fontAwesome() = Dep("org.webjars", "font-awesome", "5.7.1")
-    fun jasperreports(module: String = "") = Dep("net.sf.jasperreports", "jasperreports${if (module.isNotBlank()) "-$module" else ""}", "6.8.0")
+    fun springBootStarterWicket() = Dep("com.giffing.wicket.spring.boot.starter", "wicket-spring-boot-starter", wicketSpringBootStarterVersion)
+    fun wicket(module: String) = Dep("org.apache.wicket", "wicket-$module", wicketVersion)
+    fun wicketStuff(module: String) = Dep("org.wicketstuff", "wicketstuff-$module", wicketVersion)
+    fun wicketBootstrap(module: String) = Dep("de.agilecoders.wicket", "wicket-bootstrap-$module", wicketBootstrapVersion)
+    fun wicketJqueryUi(module: String = "") = Dep("com.googlecode.wicket-jquery-ui", "wicket-jquery-ui${if (module.isNotBlank()) "-$module" else ""}", wicketJqueryUiVersion)
+    fun fontAwesome() = Dep("org.webjars", "font-awesome", fontAwesomeVersion)
+    fun jasperreports(module: String = "") = Dep("net.sf.jasperreports", "jasperreports${if (module.isNotBlank()) "-$module" else ""}", jasperReportVersion)
 
 
     // JSR 303 bean validation provider implementation
 
-    fun validationApi() = Dep("javax.validation", "validation-api", "2.0.1.Final")
-    fun hibernateValidator() = Dep("org.hibernate.validator", "hibernate-validator", "6.0.16.Final")
-    fun javaxElApi() = Dep("javax.el", "javax.el-api", "3.0.1-b06")
-    fun javaxElImpl() = Dep("org.glassfish", "javax.el", "3.0.1-b11")
+    fun validationApi() = Dep("javax.validation", "validation-api")
+    fun hibernateValidator() = Dep("org.hibernate.validator", "hibernate-validator")
+    fun javaxElApi() = Dep("javax.el", "javax.el-api", javaxElApiVersion)
+    fun javaxElImpl() = Dep("org.glassfish", "javax.el")
 
 
     // Utility libraries
 
-    fun commonsLang3() = Dep("org.apache.commons", "commons-lang3", "3.8.1")
-    fun commonsIo() = Dep("commons-io", "commons-io", "2.6")
-    fun commonsCollection() = Dep("org.apache.commons", "commons-collections4", "4.3")
-    fun jool() = Dep("org.jooq", "jool-java-8", "0.9.14")
-    fun javaxActivation() = Dep("com.sun.activation", "javax.activation", "1.2.0")
-    fun javaxActivationApi() = Dep("javax.activation", "javax.activation-api", "1.2.0")
+    fun commonsLang3() = Dep("org.apache.commons", "commons-lang3")
+    fun commonsIo() = Dep("commons-io", "commons-io", commonsIoVersion)
+    fun commonsCollection() = Dep("org.apache.commons", "commons-collections4", commonsCollectionVersion)
+    fun jool() = Dep("org.jooq", "jool-java-8", joolVersion)
+    fun javaxActivation() = Dep("com.sun.activation", "javax.activation", javaxActivationVersion)
+    fun javaxActivationApi() = Dep("javax.activation", "javax.activation-api", javaxActivationVersion)
 
 
     // Caching: JCache with ehcache as cache provider
 
-    fun cacheApi() = Dep("javax.cache", "cache-api", "1.1.0")
-    fun ehcache() = Dep("org.ehcache", "ehcache", "3.6.3")
+    fun cacheApi() = Dep("javax.cache", "cache-api")
+    fun ehcache() = Dep("org.ehcache", "ehcache")
 
-    fun jaxbApi() = Dep("javax.xml.bind", "jaxb-api", "2.3.1")
-    fun jaxb(module: String) = Dep("com.sun.xml.bind", "jaxb-$module", "2.3.2")
-    fun jaxbCore() = Dep("com.sun.xml.bind", "jaxb-core", "2.3.0.1")
-    fun jaxbRuntime() = Dep("org.glassfish.jaxb", "jaxb-runtime", "2.3.2")
-    fun jaxb2Commons(module: String) = Dep("org.jvnet.jaxb2_commons", "jaxb2-basics${if (module.isNotBlank()) "-$module" else ""}", "0.12.0")
+    fun jaxbApi() = Dep("javax.xml.bind", "jaxb-api")
+    fun jaxbRuntime() = Dep("org.glassfish.jaxb", "jaxb-runtime")
+    fun jaxbCore() = Dep("com.sun.xml.bind", "jaxb-core", jaxbCoreVersion)
+    fun jaxb(module: String) = Dep("com.sun.xml.bind", "jaxb-$module", jaxbImplVersion)
 
 
     // Test Libraries
 
-    fun junit5(module: String = "") = Dep("org.junit.jupiter", "junit-jupiter${if (module.isNotBlank()) "-$module" else ""}", "5.4.2")
-    fun mockito2(module: String) = Dep("org.mockito", "mockito-$module", "2.23.4")
-    fun assertj() = Dep("org.assertj", "assertj-core", "3.11.1")
-    fun equalsverifier() = Dep("nl.jqno.equalsverifier", "equalsverifier", "3.1.8")
+    fun junit5(module: String = "") = Dep("org.junit.jupiter", "junit-jupiter${if (module.isNotBlank()) "-$module" else ""}", junit5Version)
+    fun mockito2(module: String) = Dep("org.mockito", "mockito-$module")
+    fun assertj() = Dep("org.assertj", "assertj-core")
+    fun equalsverifier() = Dep("nl.jqno.equalsverifier", "equalsverifier", equalsverifierVersion)
 
-    fun servletApi() = Dep("javax.servlet", "javax.servlet-api", "4.0.1")
+    fun servletApi() = Dep("javax.servlet", "javax.servlet-api")
 
     //endregion
 
     //region:plugins
 
-    fun kotlinPlugin() = Plugin("jvm", "1.3.31")
+    fun kotlinJvmPlugin() = Plugin("jvm", kotlinVersion)
+    fun kotlinSpringPlugin() = Plugin("plugin.spring", kotlinVersion)
 
     fun springBootPlugin() = Plugin("org.springframework.boot", springBootVersion)
-    fun springDependencyManagementPlugin() = Plugin("io.spring.dependency-management")
+    fun springDependencyManagementPlugin() = Plugin("io.spring.dependency-management", springDependencyManagementVersion)
 
-    fun lombokPlugin() = Plugin("io.freefair.lombok", "3.3.1")
+    fun lombokPlugin() = Plugin("io.freefair.lombok", lombokPluginVersion)
 
-    fun testSetsPlugin() = Plugin("org.unbroken-dome.test-sets", "2.1.1")
+    fun testSetsPlugin() = Plugin("org.unbroken-dome.test-sets", testSetsPluginVersion)
 
-    fun jaxbPlugin() = Plugin("com.intershop.gradle.jaxb", "3.0.3")
+    fun jaxbPlugin() = Plugin("com.intershop.gradle.jaxb", jaxbPluginVersion)
     //endregion
 }
 

@@ -13,24 +13,24 @@ dependencies {
     implementation project(":public-entity")
     implementation project(":common-utils")
 
-    jooqRuntime "org.postgresql:postgresql:42.2.5"
-    runtimeOnly "org.postgresql:postgresql:42.2.5"
+    jooqRuntime "org.postgresql:postgresql"
+    runtimeOnly "org.postgresql:postgresql"
     api "org.jooq:jooq"
 
-    implementation("org.apache.commons:commons-lang3:3.8.1")
+    implementation("org.apache.commons:commons-lang3")
     implementation("org.apache.commons:commons-collections4:4.3")
 
     testLibCompile project(":common-persistence-jooq-test")
     testLibCompile project(":common-test")
 
-    testLibCompile "org.projectlombok:lombok:1.18.6"
-    testLibAnnotationProcessor "org.projectlombok:lombok:1.18.6"
+    testLibCompile "org.projectlombok:lombok"
+    testLibAnnotationProcessor "org.projectlombok:lombok"
 
-    flywayMigration "org.postgresql:postgresql:42.2.5"
-    integrationTestRuntimeOnly "org.postgresql:postgresql:42.2.5"
+    flywayMigration "org.postgresql:postgresql"
+    integrationTestRuntimeOnly "org.postgresql:postgresql"
 
-    integrationTestCompile "org.projectlombok:lombok:1.18.6"
-    integrationTestAnnotationProcessor "org.projectlombok:lombok:1.18.6"
+    integrationTestCompile "org.projectlombok:lombok"
+    integrationTestAnnotationProcessor "org.projectlombok:lombok"
 }
 
 description = "SciPaMaTo-Public:: Persistence jOOQ Project"

@@ -1,11 +1,16 @@
+import org.jetbrains.kotlin.gradle.plugin.KotlinPlatformJvmPlugin
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.springframework.boot.gradle.plugin.SpringBootPlugin
 import org.springframework.boot.gradle.tasks.bundling.BootJar
+import org.unbrokendome.gradle.plugins.testsets.TestSetsPlugin
+
 
 plugins {
-    java
-    Lib.kotlinPlugin().run { kotlin(id) version version } apply false
     Lib.springBootPlugin().run { id(id) version version } apply false
-    Lib.lombokPlugin().run { id(id) version version } apply false
+    Lib.springDependencyManagementPlugin().run { id(id) version version }
+    Lib.kotlinJvmPlugin().run { kotlin(id) version version }
+    Lib.kotlinSpringPlugin().run { kotlin(id) version version } apply false
+    Lib.lombokPlugin().run { id(id) version version }
     idea
     jacoco
     Lib.testSetsPlugin().run { id(id) version version }
@@ -17,6 +22,14 @@ java {
     targetCompatibility = JavaVersion.VERSION_11
 }
 
+extra["spring.cloudVersion"] = "Greenwhich.SR1"
+
+dependencyManagement {
+    imports {
+        mavenBom(SpringBootPlugin.BOM_COORDINATES)
+    }
+}
+
 allprojects {
     group = "ch.difty"
     version = "1.1.7-SNAPSHOT"
@@ -25,21 +38,16 @@ allprojects {
         mavenLocal()
         mavenCentral()
     }
-
-    tasks {
-        withType<BootJar> {
-            enabled = false
-        }
-    }
 }
 
 subprojects {
-    apply(plugin = "org.jetbrains.kotlin.jvm")
-    apply(plugin = Lib.springDependencyManagementPlugin())
+    apply<SpringBootPlugin>()
+    apply(plugin = Lib.springDependencyManagementPlugin().id)
+    apply<KotlinPlatformJvmPlugin>()
     apply<JavaPlugin>()
     apply<IdeaPlugin>()
     apply<JacocoPlugin>()
-    apply(plugin = Lib.testSetsPlugin().id)
+    apply<TestSetsPlugin>()
 
     testSets {
         val testLib by libraries.creating {
@@ -61,8 +69,9 @@ subprojects {
         }
     }
 
-    if (!path.isWebProject())
+    if (!path.isWebProject()) {
         apply(plugin = "java-library")
+    }
 
     dependencies {
         compileOnly(Lib.lombok())
@@ -90,6 +99,9 @@ subprojects {
         }
         withType<Jar> {
             enabled = !path.isWebProject()
+        }
+        withType<BootJar> {
+            enabled = false
         }
 
         val integrationTest by existing {

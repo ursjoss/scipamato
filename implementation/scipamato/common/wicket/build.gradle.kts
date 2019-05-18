@@ -29,6 +29,7 @@ dependencies {
     api(Lib.springBoot("configuration-processor").id) {
         exclude("com.vaadin.external.google", "android-json")
     }
+    runtimeOnly(Lib.springBoot("devtools"))
     api(Lib.springBootAdmin())
     api(Lib.spring("core"))
 
