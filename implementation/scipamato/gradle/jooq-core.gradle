@@ -1,0 +1,74 @@
+def generatedSourcesPath = '$rootDir/core/persistence-jooq/build/generated-src/jooq'
+sourceSets.main.java.srcDirs = [generatedSourcesPath, 'src/main/java']
+
+def bootCoreProps = new Properties()
+file("$rootDir/core/persistence-jooq/src/main/resources/application.properties").withInputStream {
+    bootCoreProps.load(it)
+}
+
+def bootCoreItProps = new Properties()
+file("$rootDir/core/persistence-jooq/src/intTest/resources/application.properties").withInputStream {
+    bootCoreItProps.load(it)
+}
+
+jooq {
+    edition = 'OSS'
+    scipamatoCore(sourceSets.main) {
+        jdbc {
+            driver = bootCoreProps['spring.datasource.driver-class-name']
+            url = bootCoreProps['spring.datasource.url']
+            user = bootCoreProps['spring.datasource.hikari.username']
+            password = bootCoreProps['spring.datasource.hikari.password']
+        }
+        generator {
+            name = 'org.jooq.codegen.DefaultGenerator'
+            strategy {
+                name = 'org.jooq.codegen.DefaultGeneratorStrategy'
+            }
+            database {
+                name = 'org.jooq.meta.postgres.PostgresDatabase'
+                inputSchema = bootCoreProps['db.schema']
+                recordVersionFields = 'version'
+            }
+            generate {
+                deprecated = false
+                instanceFields = true
+                pojos = false
+                springAnnotations = true
+            }
+            target {
+                packageName = 'ch.difty.scipamato.core.db'
+                directory = generatedSourcesPath
+            }
+        }
+    }
+    scipamatoCoreIt(sourceSets.integrationTest) {
+        jdbc {
+            driver = bootCoreItProps['spring.datasource.driver-class-name']
+            url = bootCoreItProps['spring.datasource.url']
+            user = bootCoreItProps['spring.datasource.hikari.username']
+            password = bootCoreItProps['spring.datasource.hikari.password']
+        }
+        generator {
+            name = 'org.jooq.codegen.DefaultGenerator'
+            strategy {
+                name = 'org.jooq.codegen.DefaultGeneratorStrategy'
+            }
+            database {
+                name = 'org.jooq.meta.postgres.PostgresDatabase'
+                inputSchema = bootCoreItProps['db.schema']
+                recordVersionFields = 'version'
+            }
+            generate {
+                deprecated = false
+                instanceFields = true
+                pojos = false
+                springAnnotations = true
+            }
+            target {
+                packageName = 'ch.difty.scipamato.core.db'
+                directory = generatedSourcesPath
+            }
+        }
+    }
+}

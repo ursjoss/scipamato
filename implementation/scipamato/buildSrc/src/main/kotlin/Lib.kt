@@ -2,6 +2,8 @@ import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.dsl.DependencyHandler
 import org.gradle.api.plugins.PluginAware
 import org.gradle.kotlin.dsl.apply
+import java.io.File
+import java.util.*
 
 object Lib {
 
@@ -37,7 +39,10 @@ object Lib {
     private const val equalsverifierVersion = "3.1.8" // TODO upgrade to 3.1.9
 
     private const val junit5Version = "5.4.2"
+
     private const val testSetsPluginVersion = "2.1.1"
+    private const val jooqPluginVersion = "3.0.3"
+    private const val flywayPluginVersion = "5.2.4"
     //endregion
 
     //region:dependencies
@@ -137,6 +142,9 @@ object Lib {
 
     fun lombokPlugin() = Plugin("io.freefair.lombok", lombokPluginVersion)
 
+    fun jooqPlugin() = Plugin("nu.studer.jooq", jooqPluginVersion)
+    fun flywayPlugin() = Plugin("org.flywaydb.flyway", flywayPluginVersion)
+
     fun testSetsPlugin() = Plugin("org.unbroken-dome.test-sets", testSetsPluginVersion)
 
     fun jaxbPlugin() = Plugin("com.intershop.gradle.jaxb", jaxbPluginVersion)
@@ -176,3 +184,11 @@ fun DependencyHandler.integrationTestRuntimeOnly(dependencyNotation: Dep): Depen
 fun DependencyHandler.testIntegrationTestAnnotationProcessor(dependencyNotation: Dep): Dependency? = add("testIntegrationTestAnnotationProcessor", dependencyNotation.id)
 fun DependencyHandler.adhocTestCompile(dependencyNotation: Dep): Dependency? = add("adhocTestCompile", dependencyNotation.id)
 fun DependencyHandler.jaxb(dependencyNotation: Dep): Dependency? = add("jaxb", dependencyNotation.id)
+fun DependencyHandler.jooqRuntime(dependencyNotation: Dep): Dependency? = add("jooqRuntime", dependencyNotation.id)
+fun DependencyHandler.flywayMigration(dependencyNotation: Dep): Dependency? = add("flywayMigration", dependencyNotation.id)
+
+fun File.asProperties() = Properties().apply {
+    inputStream().use { fis ->
+        load(fis)
+    }
+}
