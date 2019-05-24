@@ -186,6 +186,7 @@ fun DependencyHandler.adhocTestCompile(dependencyNotation: Dep): Dependency? = a
 fun DependencyHandler.jaxb(dependencyNotation: Dep): Dependency? = add("jaxb", dependencyNotation.id)
 fun DependencyHandler.jooqRuntime(dependencyNotation: Dep): Dependency? = add("jooqRuntime", dependencyNotation.id)
 fun DependencyHandler.flywayMigration(dependencyNotation: Dep): Dependency? = add("flywayMigration", dependencyNotation.id)
+fun DependencyHandler.developmentOnly(dependencyNotation: Dep): Dependency? = add("developmentOnly", dependencyNotation.id)
 
 fun File.asProperties() = Properties().apply {
     inputStream().use { fis ->

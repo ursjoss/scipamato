@@ -18,6 +18,11 @@ sourceSets {
     }
 }
 
+configurations {
+    val developmentOnly: Configuration = create("developmentOnly")
+    runtimeClasspath.get().extendsFrom(developmentOnly)
+}
+
 dependencies {
     implementation(project(Module.scipamatoCommon("utils")))
     implementation(project(Module.scipamatoCommon("entity")))
@@ -29,7 +34,6 @@ dependencies {
     api(Lib.springBoot("configuration-processor").id) {
         exclude("com.vaadin.external.google", "android-json")
     }
-    runtimeOnly(Lib.springBoot("devtools"))
     api(Lib.springBootAdmin())
     api(Lib.spring("core"))
 
@@ -67,4 +71,6 @@ dependencies {
 
     testLibCompile(Lib.servletApi())
     testLibCompile(Lib.validationApi())
+
+    developmentOnly(Lib.springBoot("devtools"))
 }
