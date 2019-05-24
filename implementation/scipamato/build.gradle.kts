@@ -115,4 +115,4 @@ subprojects {
     }
 }
 
-fun String.isWebProject() = endsWith("web")
+fun Project.isWebProject() = path.endsWith("web")
