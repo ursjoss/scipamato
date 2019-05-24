@@ -23,6 +23,7 @@ dependencies {
     runtimeOnly(Lib.postgres())
     api(Lib.jOOQ("jooq"))
 
+    implementation(Lib.springSecurity("core"))
     implementation(Lib.commonsLang3())
     implementation(Lib.commonsCollection())
 
