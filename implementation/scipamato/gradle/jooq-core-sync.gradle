@@ -1,39 +1,4 @@
-plugins {
-    id 'nu.studer.jooq' version '3.0.3'
-}
-
-description = "SciPaMaTo-Core :: Synchronization Project"
-
-sourceSets.main.resources.srcDirs = ["src/main/java", "src/main/resources"]
-sourceSets.main.resources.includes = ["**/*.html", "**/*.properties"]
-sourceSets.test.resources.srcDirs = ["src/test/java", "src/test/resources"]
-
-dependencies {
-    implementation project(":common-utils")
-
-    implementation "org.springframework.boot:spring-boot-starter-batch"
-    api("org.springframework.boot:spring-boot-configuration-processor") {
-        exclude group: "com.vaadin.external.google", module: "android-json"
-    }
-
-    implementation "org.springframework.boot:spring-boot-starter-jooq"
-    jooqRuntime "org.postgresql:postgresql"
-    runtimeOnly "org.postgresql:postgresql"
-    implementation "org.jooq:jooq"
-
-    testLibCompile project(":common-test")
-    testLibCompile project(":common-persistence-jooq-test")
-    testLibCompile "org.jooq:jooq"
-
-    testLibCompile "org.projectlombok:lombok"
-    testLibAnnotationProcessor "org.projectlombok:lombok"
-
-    integrationTestRuntimeOnly "org.postgresql:postgresql"
-}
-
-
-def generatedSourcesPath = 'build/generated-src/jooq'
-sourceSets.main.java.srcDirs = [generatedSourcesPath, 'src/main/java']
+def generatedSourcesPath = "build/generated-src/jooq"
 
 def bootSyncProps = new Properties()
 file('src/main/resources/application.properties').withInputStream {
