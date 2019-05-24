@@ -1,26 +1,26 @@
-def generatedPackageName = 'ch.difty.scipamato.core.db'
+def generatedPackageName = 'ch.difty.scipamato.publ.db'
 
-def generatedSourcesPath = "$rootDir/core/persistence-jooq/build/generated-src/jooq"
+def generatedSourcesPath = "$rootDir/public/persistence-jooq/build/generated-src/jooq"
 sourceSets.main.java.srcDirs = [generatedSourcesPath, 'src/main/java']
 
-def bootCoreProps = new Properties()
-file("src/main/resources/application.properties").withInputStream {
-    bootCoreProps.load(it)
+def bootPubProps = new Properties()
+file('src/main/resources/application.properties').withInputStream {
+    bootPubProps.load(it)
 }
 
-def bootCoreItProps = new Properties()
-file("src/intTest/resources/application.properties").withInputStream {
-    bootCoreItProps.load(it)
+def bootPubItProps = new Properties()
+file('src/intTest/resources/application.properties').withInputStream {
+    bootPubItProps.load(it)
 }
 
 jooq {
     edition = 'OSS'
-    scipamatoCore(sourceSets.main) {
+    scipamatoPublic(sourceSets.main) {
         jdbc {
-            driver = bootCoreProps['spring.datasource.driver-class-name']
-            url = bootCoreProps['spring.datasource.url']
-            user = bootCoreProps['spring.datasource.hikari.username']
-            password = bootCoreProps['spring.datasource.hikari.password']
+            driver = bootPubProps['spring.datasource.driver-class-name']
+            url = bootPubProps['spring.datasource.url']
+            user = bootPubProps['spring.datasource.hikari.username']
+            password = bootPubProps['spring.datasource.hikari.password']
         }
         generator {
             name = 'org.jooq.codegen.DefaultGenerator'
@@ -29,7 +29,7 @@ jooq {
             }
             database {
                 name = 'org.jooq.meta.postgres.PostgresDatabase'
-                inputSchema = bootCoreProps['db.schema']
+                inputSchema = bootPubProps['db.schema']
                 recordVersionFields = 'version'
             }
             generate {
@@ -44,12 +44,12 @@ jooq {
             }
         }
     }
-    scipamatoCoreIt(sourceSets.integrationTest) {
+    scipamatoPublicIt(sourceSets.integrationTest) {
         jdbc {
-            driver = bootCoreItProps['spring.datasource.driver-class-name']
-            url = bootCoreItProps['spring.datasource.url']
-            user = bootCoreItProps['spring.datasource.hikari.username']
-            password = bootCoreItProps['spring.datasource.hikari.password']
+            driver = bootPubItProps['spring.datasource.driver-class-name']
+            url = bootPubItProps['spring.datasource.url']
+            user = bootPubItProps['spring.datasource.hikari.username']
+            password = bootPubItProps['spring.datasource.hikari.password']
         }
         generator {
             name = 'org.jooq.codegen.DefaultGenerator'
@@ -58,7 +58,7 @@ jooq {
             }
             database {
                 name = 'org.jooq.meta.postgres.PostgresDatabase'
-                inputSchema = bootCoreItProps['db.schema']
+                inputSchema = bootPubItProps['db.schema']
                 recordVersionFields = 'version'
             }
             generate {

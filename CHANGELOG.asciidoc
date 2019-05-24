@@ -66,6 +66,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 - Bumped versions of spring-boot-starter, wicket, wicket-bootstrap, wicket-webjars, jasperreports and -fonts,
   equalsverifier, spring-boot-admin-starter-client, bootstrap, font-awesome
 - {url-issues}80[#80] - Migrate from JUnit4 and JUnitParams to JUnit5
+- {url-issues}82[#82] - Migrating the build system from using maven to gradle
 
 .Deprecated
 
