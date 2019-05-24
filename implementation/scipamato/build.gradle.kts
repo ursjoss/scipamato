@@ -37,6 +37,7 @@ allprojects {
     repositories {
         mavenLocal()
         mavenCentral()
+        maven { url = uri("http://jaspersoft.jfrog.io/jaspersoft/third-party-ce-artifacts") }
     }
 }
 
