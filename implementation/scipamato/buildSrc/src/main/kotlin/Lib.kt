@@ -9,7 +9,7 @@ object Lib {
 
     //region:versions
     private const val kotlinVersion = "1.3.31"
-    private const val lombokPluginVersion = "3.3.1" // TODO upgrade to 3.5.2
+    private const val lombokPluginVersion = "3.6.4"
 
     private const val springBootVersion = "2.1.5.RELEASE"
     private const val springBootAdminVersion = "2.1.4" // TODO upgrade to 2.1.5
