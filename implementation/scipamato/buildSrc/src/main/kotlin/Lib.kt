@@ -13,7 +13,7 @@ object Lib {
 
     private const val springBootVersion = "2.1.5.RELEASE"
     private const val springBootAdminVersion = "2.1.5"
-    private const val springCloudVersion = "2.1.1.RELEASE" // TODO upgrade to 2.1.2
+    private const val springCloudVersion = "2.1.1.RELEASE"
     private const val springDependencyManagementVersion = "1.0.6.RELEASE"
 
     private const val wicketSpringBootStarterVersion = "2.1.5"
@@ -36,7 +36,7 @@ object Lib {
     private const val commonsCollectionVersion = "4.3"
     private const val joolVersion = "0.9.14"
 
-    private const val equalsverifierVersion = "3.1.8" // TODO upgrade to 3.1.9
+    private const val equalsverifierVersion = "3.1.9"
 
     private const val junit5Version = "5.4.2"
 
