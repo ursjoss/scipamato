@@ -42,7 +42,7 @@ object Lib {
 
     private const val testSetsPluginVersion = "2.1.1"
     private const val jooqPluginVersion = "3.0.3"
-    private const val flywayPluginVersion = "5.2.4"
+    private const val flywayPluginVersion = "6.0.0-beta"
     //endregion
 
     //region:dependencies
