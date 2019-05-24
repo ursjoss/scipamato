@@ -70,7 +70,7 @@ subprojects {
         }
     }
 
-    if (!path.isWebProject()) {
+    if (!isWebProject()) {
         apply(plugin = "java-library")
     }
 
@@ -99,7 +99,7 @@ subprojects {
             useJUnitPlatform()
         }
         withType<Jar> {
-            enabled = !path.isWebProject()
+            enabled = !isWebProject()
         }
         withType<BootJar> {
             enabled = false
