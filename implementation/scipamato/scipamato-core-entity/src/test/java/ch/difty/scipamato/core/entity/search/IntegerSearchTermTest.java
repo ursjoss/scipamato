@@ -129,15 +129,66 @@ class IntegerSearchTermTest {
     }
 
     @Test
+    void incompleteSearchTermEqual() {
+        final String raw = "=";
+        st = new IntegerSearchTerm(CONDITION_ID, FIELD_NAME, raw);
+        assertTerm(MatchType.INCOMPLETE, 0, 0, raw);
+    }
+
+    @Test
+    void incompleteSearchTermRange() {
+        final String raw = "-";
+        st = new IntegerSearchTerm(CONDITION_ID, FIELD_NAME, raw);
+        assertTerm(MatchType.INCOMPLETE, 0, 0, raw);
+    }
+
+    @Test
+    void incompleteSearchTermRangeRighOpen() {
+        final String raw = "2017-";
+        st = new IntegerSearchTerm(CONDITION_ID, FIELD_NAME, raw);
+        assertTerm(MatchType.INCOMPLETE, 0, 0, raw);
+    }
+
+    @Test
+    void incompleteSearchTermRangeLeftOpen() {
+        final String raw = "-2019";
+        st = new IntegerSearchTerm(CONDITION_ID, FIELD_NAME, raw);
+        assertTerm(MatchType.INCOMPLETE, 0, 0, raw);
+    }
+
+    @Test
+    void incompleteSearchTermGreaterThan() {
+        final String raw = ">";
+        st = new IntegerSearchTerm(CONDITION_ID, FIELD_NAME, raw);
+        assertTerm(MatchType.INCOMPLETE, 0, 0, raw);
+    }
+
+    @Test
+    void incompleteSearchTermGreaterThanOrEqual() {
+        final String raw = ">=";
+        st = new IntegerSearchTerm(CONDITION_ID, FIELD_NAME, raw);
+        assertTerm(MatchType.INCOMPLETE, 0, 0, raw);
+    }
+
+    @Test
+    void incompleteSearchTermLessThan() {
+        final String raw = "<";
+        st = new IntegerSearchTerm(CONDITION_ID, FIELD_NAME, raw);
+        assertTerm(MatchType.INCOMPLETE, 0, 0, raw);
+    }
+
+    @Test
+    void incompleteSearchTermLessThanOrEqual() {
+        final String raw = "<=";
+        st = new IntegerSearchTerm(CONDITION_ID, FIELD_NAME, raw);
+        assertTerm(MatchType.INCOMPLETE, 0, 0, raw);
+    }
+
+    @Test
     void invalidSearch_withNonNumericCharacters() {
-        try {
-            new IntegerSearchTerm(CONDITION_ID, FIELD_NAME, "2014a");
-            fail("Should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex)
-                .isInstanceOf(NumberFormatException.class)
-                .hasMessage("For input string: \"2014a\"");
-        }
+        final String raw = "2014a";
+        st = new IntegerSearchTerm(CONDITION_ID, FIELD_NAME, raw);
+        assertTerm(MatchType.INCOMPLETE, 1, 1, raw);
     }
 
     @Test

@@ -1,5 +1,9 @@
 package ch.difty.scipamato.core.entity.search;
 
+import java.util.Arrays;
+
+import org.apache.commons.lang3.math.NumberUtils;
+
 /**
  * Implementation of {@link AbstractSearchTerm} working with Integer fields. The
  * following {@link MatchType}s are implemented:
@@ -13,6 +17,7 @@ package ch.difty.scipamato.core.entity.search;
  * <li><b>RANGE:</b> {@code  2014-2017 }</li>
  * <li><b>MISSING:</b> the field has no value.</li>
  * <li><b>PRESENT:</b> the field has any value.</li>
+ * <li><b>INCOMPLETE:</b> the search term ist not complete yet (partial entry).</li>
  * </ul>
  * <p>
  * All rawValues and their individual parts are trimmed, so the following
@@ -23,6 +28,9 @@ package ch.difty.scipamato.core.entity.search;
  * <li>{@code <= 2014 }</li>
  * <li>{@code  2014  - 2017 }</li>
  * </ul>
+ * <p>
+ * NOTE: The INCOMPLETE will not find any papers. It's more about gracefully handling
+ * unfinished search terms. See https://github.com/ursjoss/scipamato/issues/84
  *
  * @author u.joss
  */
@@ -39,7 +47,23 @@ public class IntegerSearchTerm extends AbstractSearchTerm {
         LESS_OR_EQUAL,
         RANGE,
         MISSING,
-        PRESENT
+        PRESENT,
+        INCOMPLETE
+    }
+
+    private enum Ops {
+        LESS_THAN("<"),
+        LESS_THAN_OR_EQUAL("<="),
+        EQUAL("="),
+        GREATER_THAN_OR_EQUAL(">="),
+        GREATER_THAN(">"),
+        RANGE("-");
+
+        private final String symbol;
+
+        Ops(final String symbol) {
+            this.symbol = symbol;
+        }
     }
 
     private final MatchType type;
@@ -57,7 +81,13 @@ public class IntegerSearchTerm extends AbstractSearchTerm {
     IntegerSearchTerm(final Long id, final Long searchConditionId, final String fieldName, final String rawSearchTerm) {
         super(id, SearchTermType.INTEGER, searchConditionId, fieldName, rawSearchTerm);
         final String rst = rawSearchTerm.trim();
-        if ("=\"\"".equals(rst) || "\"\"".equals(rst)) {
+        if (rst.startsWith(Ops.RANGE.symbol) || rst.endsWith(Ops.RANGE.symbol) || Arrays
+            .stream(Ops.values())
+            .anyMatch(op -> op.symbol.equals(rst))) {
+            this.type = MatchType.INCOMPLETE;
+            this.value = 0;
+            this.value2 = 0;
+        } else if ("=\"\"".equals(rst) || "\"\"".equals(rst)) {
             this.type = MatchType.MISSING;
             this.value = 0;
             this.value2 = 0;
@@ -65,48 +95,54 @@ public class IntegerSearchTerm extends AbstractSearchTerm {
             this.type = MatchType.PRESENT;
             this.value = 0;
             this.value2 = 0;
-        } else if (rst.length() > COMP_SYMBOL_MAX_LENGTH && rst.startsWith(">=")) {
+        } else if (rst.startsWith(Ops.GREATER_THAN_OR_EQUAL.symbol)) {
             this.type = MatchType.GREATER_OR_EQUAL;
             this.value = Integer.parseInt(rst
                 .substring(COMP_SYMBOL_MAX_LENGTH)
                 .trim());
             this.value2 = this.value;
-        } else if (rst.length() > 1 && rst.startsWith(">")) {
+        } else if (rst.startsWith(Ops.GREATER_THAN.symbol)) {
             this.type = MatchType.GREATER_THAN;
             this.value = Integer.parseInt(rst
                 .substring(1)
                 .trim());
             this.value2 = this.value;
-        } else if (rst.length() > COMP_SYMBOL_MAX_LENGTH && rst.startsWith("<=")) {
+        } else if (rst.startsWith(Ops.LESS_THAN_OR_EQUAL.symbol)) {
             this.type = MatchType.LESS_OR_EQUAL;
             this.value = Integer.parseInt(rst
                 .substring(COMP_SYMBOL_MAX_LENGTH)
                 .trim());
             this.value2 = this.value;
-        } else if (rst.length() > 1 && rst.startsWith("<")) {
+        } else if (rst.startsWith(Ops.LESS_THAN.symbol)) {
             this.type = MatchType.LESS_THAN;
             this.value = Integer.parseInt(rst
                 .substring(1)
                 .trim());
             this.value2 = this.value;
-        } else if (rst.length() > 1 && rst.startsWith("=")) {
+        } else if (rst.startsWith(Ops.EQUAL.symbol)) {
             this.type = MatchType.EXACT;
             this.value = Integer.parseInt(rst
                 .substring(1)
                 .trim());
             this.value2 = this.value;
-        } else if (rst.length() > 1 && rst.contains("-")) {
+        } else if (rst.contains(Ops.RANGE.symbol)) {
+            final String symbol = Ops.RANGE.symbol;
+            final int indexOfSymbol = rst.indexOf(symbol);
             this.type = MatchType.RANGE;
             this.value = Integer.parseInt(rst
-                .substring(0, rst.indexOf('-'))
+                .substring(0, indexOfSymbol)
                 .trim());
             this.value2 = Integer.parseInt(rst
-                .substring(rst.indexOf('-') + 1)
+                .substring(indexOfSymbol + 1)
                 .trim());
-        } else {
-            this.type = MatchType.EXACT;
+        } else if (NumberUtils.isCreatable(rst.trim())) {
             this.value = Integer.parseInt(rst.trim());
             this.value2 = this.value;
+            this.type = MatchType.EXACT;
+        } else {
+            this.type = MatchType.INCOMPLETE;
+            this.value = 1; // arbitrary value to make it different from the first block and mute the intellij warning)
+            this.value2 = 1;
         }
     }
 
