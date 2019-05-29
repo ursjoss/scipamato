@@ -39,6 +39,8 @@ public class IntegerSearchTermEvaluator implements SearchTermEvaluator<IntegerSe
             return field.isNull();
         case PRESENT:
             return field.isNotNull();
+        case INCOMPLETE:
+            return DSL.falseCondition();
         default:
             return field.equal(value);
         }

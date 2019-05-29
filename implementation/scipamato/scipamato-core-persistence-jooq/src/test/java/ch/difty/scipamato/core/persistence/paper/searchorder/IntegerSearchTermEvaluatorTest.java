@@ -96,4 +96,11 @@ class IntegerSearchTermEvaluatorTest extends SearchTermEvaluatorTest<IntegerSear
         assertThat(c.toString()).isEqualTo("field_x is not null");
     }
 
+    @Test
+    void buildingCondition_withIncompleteSearchTerm() {
+        when(stMock.getType()).thenReturn(MatchType.INCOMPLETE);
+        Condition c = e.evaluate(stMock);
+        assertThat(c.toString()).isEqualTo("1 = 0");
+    }
+
 }
