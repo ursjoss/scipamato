@@ -13,3 +13,5 @@ CHANGELOG.html
 s101plugin.*
 log/
 .gradle/
+build/
+out/

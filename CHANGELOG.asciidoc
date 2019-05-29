@@ -73,6 +73,8 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Removed
 
 .Fixed
+- {url-issues}69[#69] - Fix Sonar warning: Use project relative paths instead of module relative paths
+- {url-issues}82[#82] - Fix searching for publication year ranges and for ID
 
 .Security
 
