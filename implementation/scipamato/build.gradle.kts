@@ -45,6 +45,7 @@ sonarqube {
     properties {
         property("sonar.exclusions", "**/ch/difty/scipamato/publ/web/themes/markup/html/publ/**/*,${generatedPackages.joinToString(",")}")
         property("sonar.coverage.exclusions", generatedPackages.joinToString(","))
+        property("sonar.coverage.jacoco.xmlReportPaths", "build/reports/jacoco/test/jacocoTestReport.xml")
     }
 }
 
