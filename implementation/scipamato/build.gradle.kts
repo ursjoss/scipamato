@@ -112,6 +112,7 @@ subprojects {
             }
         }
         withType<Test> {
+            maxHeapSize = "2g"
             @Suppress("UnstableApiUsage")
             useJUnitPlatform()
         }
