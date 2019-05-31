@@ -1,9 +1,9 @@
 import org.jetbrains.kotlin.gradle.plugin.KotlinPlatformJvmPlugin
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.sonarqube.gradle.SonarQubeTask
 import org.springframework.boot.gradle.plugin.SpringBootPlugin
 import org.springframework.boot.gradle.tasks.bundling.BootJar
 import org.unbrokendome.gradle.plugins.testsets.TestSetsPlugin
-
 
 plugins {
     Lib.springBootPlugin().run { id(id) version version } apply false
@@ -14,6 +14,7 @@ plugins {
     idea
     jacoco
     Lib.testSetsPlugin().run { id(id) version version }
+    Lib.sonarqubePlugin().run { id(id) version version }
 }
 
 java {
@@ -32,6 +33,18 @@ extra["spring.cloudVersion"] = "Greenwhich.SR1"
 
 jacoco {
     toolVersion = "0.8.4"
+}
+
+val generatedPackages: Set<String> = setOf(
+        "**/ch/difty/scipamato/core/db/**",
+        "**/ch/difty/scipamato/core/pubmed/api/**",
+        "**/ch/difty/scipamato/publ/db/**"
+)
+
+sonarqube {
+    properties {
+        property("sonar.coverage.exclusions", generatedPackages.joinToString(","))
+    }
 }
 
 allprojects {
@@ -114,24 +127,23 @@ subprojects {
         named("check") {
             dependsOn(integrationTest)
         }
-        withType<JacocoReport> {
+        val jacocoTestReport = withType<JacocoReport> {
             dependsOn(integrationTest)
             reports {
                 xml.isEnabled = true
-                html.isEnabled = false
+                html.isEnabled = true
                 csv.isEnabled = false
             }
             afterEvaluate {
                 classDirectories.setFrom((files(classDirectories.files.map {
                     fileTree(it) {
-                        exclude(
-                                "**/ch/difty/scipamato/core/db/**",
-                                "**/ch/difty/scipamato/core/pubmed/api/**",
-                                "**/ch/difty/scipamato/publ/db/**"
-                        )
+                        exclude(generatedPackages)
                     }
                 })))
             }
+        }
+        withType<SonarQubeTask> {
+            dependsOn(test, integrationTest, jacocoTestReport)
         }
     }
 }

@@ -43,6 +43,7 @@ object Lib {
     private const val testSetsPluginVersion = "2.1.1"
     private const val jooqPluginVersion = "3.0.3"
     private const val flywayPluginVersion = "6.0.0-beta"
+    private const val sonarqubePluginVersion = "2.7.1"
     //endregion
 
     //region:dependencies
@@ -148,6 +149,8 @@ object Lib {
     fun testSetsPlugin() = Plugin("org.unbroken-dome.test-sets", testSetsPluginVersion)
 
     fun jaxbPlugin() = Plugin("com.intershop.gradle.jaxb", jaxbPluginVersion)
+
+    fun sonarqubePlugin() = Plugin("org.sonarqube", sonarqubePluginVersion)
     //endregion
 }
 
