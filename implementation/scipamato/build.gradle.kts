@@ -22,12 +22,16 @@ java {
     targetCompatibility = JavaVersion.VERSION_11
 }
 
-extra["spring.cloudVersion"] = "Greenwhich.SR1"
-
 dependencyManagement {
     imports {
         mavenBom(SpringBootPlugin.BOM_COORDINATES)
     }
+}
+
+extra["spring.cloudVersion"] = "Greenwhich.SR1"
+
+jacoco {
+    toolVersion = "0.8.4"
 }
 
 allprojects {
@@ -47,8 +51,8 @@ subprojects {
     apply<KotlinPlatformJvmPlugin>()
     apply<JavaPlugin>()
     apply<IdeaPlugin>()
-    apply<JacocoPlugin>()
     apply<TestSetsPlugin>()
+    apply<JacocoPlugin>()
 
     testSets {
         val testLib by libraries.creating {
@@ -104,13 +108,30 @@ subprojects {
         withType<BootJar> {
             enabled = false
         }
-
         val integrationTest by existing {
-            mustRunAfter(test)
+            dependsOn(test)
         }
-
         named("check") {
             dependsOn(integrationTest)
+        }
+        withType<JacocoReport> {
+            dependsOn(integrationTest)
+            reports {
+                xml.isEnabled = true
+                html.isEnabled = false
+                csv.isEnabled = false
+            }
+            afterEvaluate {
+                classDirectories.setFrom((files(classDirectories.files.map {
+                    fileTree(it) {
+                        exclude(
+                                "**/ch/difty/scipamato/core/db/**",
+                                "**/ch/difty/scipamato/core/pubmed/api/**",
+                                "**/ch/difty/scipamato/publ/db/**"
+                        )
+                    }
+                })))
+            }
         }
     }
 }
