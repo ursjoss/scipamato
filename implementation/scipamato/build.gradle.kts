@@ -40,12 +40,40 @@ val generatedPackages: Set<String> = setOf(
         "**/ch/difty/scipamato/core/pubmed/api/**",
         "**/ch/difty/scipamato/publ/db/**"
 )
+val jacocoTestReportXml = "$buildDir/reports/jacoco/test/jacocoTestReport.xml"
+val jacocoTestPattern = "**/build/jacoco/*.exec"
 
 sonarqube {
     properties {
         property("sonar.exclusions", "**/ch/difty/scipamato/publ/web/themes/markup/html/publ/**/*,${generatedPackages.joinToString(",")}")
         property("sonar.coverage.exclusions", generatedPackages.joinToString(","))
-        property("sonar.coverage.jacoco.xmlReportPaths", "build/reports/jacoco/test/jacocoTestReport.xml")
+        property("sonar.coverage.jacoco.xmlReportPaths", jacocoTestReportXml)
+    }
+}
+
+tasks {
+    val codeCoverageReportRoot by registering(JacocoReport::class) {
+        group = "verification"
+        description = "Collects aggregated coverage report in XML format"
+
+        executionData(fileTree(mapOf(
+                "dir" to project.rootDir.absolutePath,
+                "include" to listOf(jacocoTestPattern))
+        ).files)
+
+        sourceSets += subprojects.map { it.sourceSets.getByName("main") }
+
+        reports {
+            xml.isEnabled = true
+            xml.destination = file(jacocoTestReportXml)
+            html.isEnabled = false
+            csv.isEnabled = false
+        }
+        dependsOn(subprojects.map { it.tasks.getByName("check") })
+        dependsOn(subprojects.map { it.tasks.getByName("jacocoTestReport") })
+    }
+    val sonarqube by existing(SonarQubeTask::class) {
+        dependsOn(codeCoverageReportRoot)
     }
 }
 
@@ -127,11 +155,11 @@ subprojects {
         val integrationTest by existing {
             dependsOn(test)
         }
-        named("check") {
+        val check by existing {
             dependsOn(integrationTest)
         }
         val jacocoTestReport = withType<JacocoReport> {
-            dependsOn(integrationTest)
+            dependsOn(check)
             reports {
                 xml.isEnabled = true
                 html.isEnabled = false
@@ -144,9 +172,6 @@ subprojects {
                     }
                 })))
             }
-        }
-        withType<SonarQubeTask> {
-            dependsOn(test, integrationTest, jacocoTestReport)
         }
     }
 }
