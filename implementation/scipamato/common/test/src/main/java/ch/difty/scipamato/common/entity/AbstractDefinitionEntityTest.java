@@ -15,6 +15,8 @@ import ch.difty.scipamato.common.TestUtils;
 class AbstractDefinitionEntityTest {
 
     private class TestDefinitionEntity extends AbstractDefinitionEntity {
+        private static final long serialVersionUID = 1L;
+
         TestDefinitionEntity(final String mainLanguageCode, final String mainName, final Integer version,
             final DefinitionTranslation[] translations) {
             super(mainLanguageCode, mainName, version, translations);

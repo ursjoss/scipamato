@@ -43,7 +43,7 @@ val generatedPackages: Set<String> = setOf(
 
 sonarqube {
     properties {
-        property("sonar.exclusions", "**/ch/difty/scipamato/publ/web/themes/markup/html/publ/**/*")
+        property("sonar.exclusions", "**/ch/difty/scipamato/publ/web/themes/markup/html/publ/**/*,${generatedPackages.joinToString(",")}")
         property("sonar.coverage.exclusions", generatedPackages.joinToString(","))
     }
 }
