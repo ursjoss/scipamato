@@ -132,7 +132,7 @@ subprojects {
             dependsOn(integrationTest)
             reports {
                 xml.isEnabled = true
-                html.isEnabled = true
+                html.isEnabled = false
                 csv.isEnabled = false
             }
             afterEvaluate {
