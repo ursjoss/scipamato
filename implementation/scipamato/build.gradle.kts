@@ -29,7 +29,7 @@ dependencyManagement {
     }
 }
 
-extra["spring.cloudVersion"] = "Greenwhich.SR1"
+extra["spring.cloudVersion"] = "Greenwich.SR1"
 
 jacoco {
     toolVersion = "0.8.4"
