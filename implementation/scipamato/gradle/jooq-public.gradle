@@ -1,0 +1,76 @@
+def generatedPackageName = 'ch.difty.scipamato.publ.db'
+
+def generatedSourcesPath = "$rootDir/public/persistence-jooq/build/generated-src/jooq"
+sourceSets.main.java.srcDirs = [generatedSourcesPath, 'src/main/java']
+
+def bootPubProps = new Properties()
+file('src/main/resources/application.properties').withInputStream {
+    bootPubProps.load(it)
+}
+
+def bootPubItProps = new Properties()
+file('src/intTest/resources/application.properties').withInputStream {
+    bootPubItProps.load(it)
+}
+
+jooq {
+    edition = 'OSS'
+    scipamatoPublic(sourceSets.main) {
+        jdbc {
+            driver = bootPubProps['spring.datasource.driver-class-name']
+            url = bootPubProps['spring.datasource.url']
+            user = bootPubProps['spring.datasource.hikari.username']
+            password = bootPubProps['spring.datasource.hikari.password']
+        }
+        generator {
+            name = 'org.jooq.codegen.DefaultGenerator'
+            strategy {
+                name = 'org.jooq.codegen.DefaultGeneratorStrategy'
+            }
+            database {
+                name = 'org.jooq.meta.postgres.PostgresDatabase'
+                inputSchema = bootPubProps['db.schema']
+                recordVersionFields = 'version'
+            }
+            generate {
+                deprecated = false
+                instanceFields = true
+                pojos = false
+                springAnnotations = true
+            }
+            target {
+                packageName = generatedPackageName
+                directory = generatedSourcesPath
+            }
+        }
+    }
+    scipamatoPublicIt(sourceSets.integrationTest) {
+        jdbc {
+            driver = bootPubItProps['spring.datasource.driver-class-name']
+            url = bootPubItProps['spring.datasource.url']
+            user = bootPubItProps['spring.datasource.hikari.username']
+            password = bootPubItProps['spring.datasource.hikari.password']
+        }
+        generator {
+            name = 'org.jooq.codegen.DefaultGenerator'
+            strategy {
+                name = 'org.jooq.codegen.DefaultGeneratorStrategy'
+            }
+            database {
+                name = 'org.jooq.meta.postgres.PostgresDatabase'
+                inputSchema = bootPubItProps['db.schema']
+                recordVersionFields = 'version'
+            }
+            generate {
+                deprecated = false
+                instanceFields = true
+                pojos = false
+                springAnnotations = true
+            }
+            target {
+                packageName = generatedPackageName
+                directory = generatedSourcesPath
+            }
+        }
+    }
+}

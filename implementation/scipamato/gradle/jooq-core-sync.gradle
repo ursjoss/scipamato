@@ -1,0 +1,143 @@
+def generatedSourcesPath = "build/generated-src/jooq"
+
+def bootSyncProps = new Properties()
+file('src/main/resources/application.properties').withInputStream {
+    bootSyncProps.load(it)
+}
+
+def bootSyncItProps = new Properties()
+file("src/intTest/resources/application.properties").withInputStream {
+    bootSyncItProps.load(it)
+}
+
+jooq {
+    edition = 'OSS'
+    scipamatoCore(sourceSets.main) {
+        jdbc {
+            driver = bootSyncProps['sync.source.datasource.driver-class-name']
+            url = bootSyncProps['sync.source.datasource.jdbc-url']
+            user = bootSyncProps['sync.source.datasource.username']
+            password = bootSyncProps['sync.source.datasource.password']
+        }
+        generator {
+            name = 'org.jooq.codegen.DefaultGenerator'
+            strategy {
+                name = 'org.jooq.codegen.DefaultGeneratorStrategy'
+            }
+            database {
+                name = 'org.jooq.meta.postgres.PostgresDatabase'
+                inputSchema = bootSyncProps['db.schema']
+                includes = 'code_class|code_class_tr|code|code_tr|language|keyword|keyword_tr|paper|paper_code|newsletter|newsletter_topic|newsletter_topic_tr|newsletter_newsletter_topic|paper_newsletter|new_study_page_link'
+                recordVersionFields = 'version'
+            }
+            generate {
+                deprecated = false
+                instanceFields = true
+                pojos = false
+                springAnnotations = true
+            }
+            target {
+                packageName = 'ch.difty.scipamato.core.db'
+                directory = generatedSourcesPath
+            }
+        }
+    }
+    scipamatoPublic(sourceSets.main) {
+        jdbc {
+            driver = bootSyncProps['sync.target.datasource.driver-class-name']
+            url = bootSyncProps['sync.target.datasource.jdbc-url']
+            user = bootSyncProps['sync.target.datasource.username']
+            password = bootSyncProps['sync.target.datasource.password']
+        }
+        generator {
+            name = 'org.jooq.codegen.DefaultGenerator'
+            strategy {
+                name = 'org.jooq.codegen.DefaultGeneratorStrategy'
+            }
+            database {
+                name = 'org.jooq.meta.postgres.PostgresDatabase'
+                inputSchema = bootSyncProps['db.schema']
+                includes = 'code_class|code|language|keyword|paper|new_study|new_study_topic|newsletter|newsletter_topic|new_study_page_link'
+                recordVersionFields = 'version'
+            }
+            generate {
+                deprecated = false
+                instanceFields = true
+                pojos = true
+                springAnnotations = true
+            }
+            target {
+                packageName = 'ch.difty.scipamato.publ.db'
+                directory = generatedSourcesPath
+            }
+        }
+    }
+
+    scipamatoCoreIt(sourceSets.integrationTest) {
+        jdbc {
+            driver = bootSyncItProps['sync.source.datasource.driver-class-name']
+            url = bootSyncItProps['sync.source.datasource.jdbc-url']
+            user = bootSyncItProps['sync.source.datasource.username']
+            password = bootSyncItProps['sync.source.datasource.password']
+        }
+        generator {
+            name = 'org.jooq.codegen.DefaultGenerator'
+            strategy {
+                name = 'org.jooq.codegen.DefaultGeneratorStrategy'
+            }
+            database {
+                name = 'org.jooq.meta.postgres.PostgresDatabase'
+                inputSchema = bootSyncItProps['db.schema']
+                includes = 'code_class|code_class_tr|code|code_tr|language|keyword|keyword_tr|paper|paper_code|newsletter|newsletter_topic|newsletter_topic_tr|newsletter_newsletter_topic|paper_newsletter|new_study_page_link'
+                recordVersionFields = 'version'
+            }
+            generate {
+                deprecated = false
+                instanceFields = true
+                pojos = false
+                springAnnotations = true
+            }
+            target {
+                packageName = 'ch.difty.scipamato.core.db'
+                directory = generatedSourcesPath
+            }
+        }
+    }
+    scipamatoPublicIt(sourceSets.integrationTest) {
+        jdbc {
+            driver = bootSyncItProps['sync.target.datasource.driver-class-name']
+            url = bootSyncItProps['sync.target.datasource.jdbc-url']
+            user = bootSyncItProps['sync.target.datasource.username']
+            password = bootSyncItProps['sync.target.datasource.password']
+        }
+        generator {
+            name = 'org.jooq.codegen.DefaultGenerator'
+            strategy {
+                name = 'org.jooq.codegen.DefaultGeneratorStrategy'
+            }
+            database {
+                name = 'org.jooq.meta.postgres.PostgresDatabase'
+                inputSchema = bootSyncItProps['db.schema']
+                includes = 'code_class|code|language|keyword|paper|new_study|new_study_topic|newsletter|newsletter_topic|new_study_page_link'
+                recordVersionFields = 'version'
+            }
+            generate {
+                deprecated = false
+                instanceFields = true
+                pojos = true
+                springAnnotations = true
+            }
+            target {
+                packageName = 'ch.difty.scipamato.publ.db'
+                directory = generatedSourcesPath
+            }
+        }
+    }
+}
+
+compileKotlin.dependsOn generateScipamatoPublicJooqSchemaSource
+generateScipamatoPublicJooqSchemaSource.dependsOn generateScipamatoCoreJooqSchemaSource
+project.tasks.getByName('compileJava').dependsOn -= generateScipamatoCoreItJooqSchemaSource
+project.tasks.getByName('compileJava').dependsOn -= generateScipamatoPublicItJooqSchemaSource
+project.tasks.getByName('compileKotlin').dependsOn -= generateScipamatoCoreItJooqSchemaSource
+project.tasks.getByName('compileKotlin').dependsOn -= generateScipamatoPublicItJooqSchemaSource
