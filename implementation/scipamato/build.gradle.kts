@@ -107,9 +107,6 @@ subprojects {
         runtimeOnly(Lib.logback())
     }
 
-    configurations.all {
-    }
-
     tasks {
         withType<JavaCompile> {
             options.encoding = "UTF-8"

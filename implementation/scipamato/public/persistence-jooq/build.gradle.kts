@@ -1,6 +1,8 @@
+import org.flywaydb.gradle.task.AbstractFlywayTask
 import org.flywaydb.gradle.task.FlywayCleanTask
 import org.flywaydb.gradle.task.FlywayInfoTask
 import org.flywaydb.gradle.task.FlywayMigrateTask
+import java.util.*
 
 plugins {
     Lib.jooqPlugin().run { id(id) version version }
@@ -55,58 +57,32 @@ apply(from = "$rootDir/gradle/jooq-public.gradle")
 tasks {
     val flywayMigrate by existing(FlywayMigrateTask::class) {
         description = "Triggers database migrations for the main database"
-        url = bootPubProps.getProperty("spring.datasource.url")
-        user = bootPubProps.getProperty("spring.flyway.user")
-        password = bootPubProps.getProperty("spring.flyway.password")
-        schemas = arrayOf(bootPubProps.getProperty("db.schema"))
-        locations = arrayOf(bootPubProps.getProperty("spring.flyway.locations"))
-        configurations = arrayOf("compile", "flywayMigration")
+        configureApplying(bootPubProps)
     }
 
     val flywayMigrateIt by registering(FlywayMigrateTask::class) {
         description = "Triggers database migrations for the integration test databases"
-        url = bootPubItProps.getProperty("spring.datasource.url")
-        user = bootPubItProps.getProperty("spring.flyway.user")
-        password = bootPubItProps.getProperty("spring.flyway.password")
-        schemas = arrayOf(bootPubItProps.getProperty("db.schema"))
-        locations = arrayOf(bootPubItProps.getProperty("spring.flyway.locations"))
-        configurations = arrayOf("compile", "flywayMigration")
+        configureApplying(bootPubItProps)
     }
 
     val flywayClean by existing(FlywayCleanTask::class) {
         description = "Drops all objects in the configured schemas of the main database"
-        url = bootPubProps.getProperty("spring.datasource.url")
-        user = bootPubProps.getProperty("spring.flyway.user")
-        password = bootPubItProps.getProperty("spring.flyway.password")
-        schemas = arrayOf(bootPubProps.getProperty("db.schema"))
-        configurations = arrayOf("compile", "flywayMigration")
+        configureApplying(bootPubProps)
     }
 
     register<FlywayCleanTask>("flywayCleanIt") {
         description = "Drops all objects in the configured schemas of the integration test database"
-        url = bootPubItProps.getProperty("spring.datasource.url")
-        user = bootPubItProps.getProperty("spring.flyway.user")
-        password = bootPubItProps.getProperty("spring.flyway.password")
-        schemas = arrayOf(bootPubItProps.getProperty("db.schema"))
-        configurations = arrayOf("compile", "flywayMigration")
+        configureApplying(bootPubItProps)
     }
 
     val flywayInfo by existing(FlywayInfoTask::class) {
         description = "Prints the details and status information about all the migrations."
-        url = bootPubProps.getProperty("spring.datasource.url")
-        user = bootPubProps.getProperty("spring.flyway.user")
-        password = bootPubProps.getProperty("spring.flyway.password")
-        schemas = arrayOf(bootPubProps.getProperty("db.schema"))
-        configurations = arrayOf("compile", "flywayMigration")
+        configureApplying(bootPubProps)
     }
 
     register<FlywayInfoTask>("flywayInfoIt") {
         description = "Prints the details and status information about all the migrations."
-        url = bootPubItProps.getProperty("spring.datasource.url")
-        user = bootPubItProps.getProperty("spring.flyway.user")
-        password = bootPubItProps.getProperty("spring.flyway.password")
-        schemas = arrayOf(bootPubItProps.getProperty("db.schema"))
-        configurations = arrayOf("compile", "flywayMigration")
+        configureApplying(bootPubItProps)
     }
 
     getByName("generateScipamatoPublicJooqSchemaSource").dependsOn(flywayMigrate)
@@ -114,4 +90,13 @@ tasks {
     getByName("compileKotlin").dependsOn += "generateScipamatoPublicJooqSchemaSource"
     getByName("compileJava").dependsOn -= "generateScipamatoPublicItJooqSchemaSource"
     getByName("integrationTest").dependsOn -= "generateScipamatoPublicItJooqSchemaSource"
+}
+
+fun AbstractFlywayTask.configureApplying(props: Properties) {
+    url = props.getProperty("spring.datasource.url")
+    user = props.getProperty("spring.flyway.user")
+    password = props.getProperty("spring.flyway.password")
+    schemas = arrayOf(props.getProperty("db.schema"))
+    locations = arrayOf(props.getProperty("spring.flyway.locations"))
+    configurations = arrayOf("compile", "flywayMigration")
 }
