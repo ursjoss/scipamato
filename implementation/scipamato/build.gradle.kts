@@ -40,13 +40,17 @@ val generatedPackages: Set<String> = setOf(
         "**/ch/difty/scipamato/core/pubmed/api/**",
         "**/ch/difty/scipamato/publ/db/**"
 )
+val testPackages = setOf(
+        "common/test/**/*",
+        "common/persistence-jooq-test/**/*"
+)
 val jacocoTestReportXml = "$buildDir/reports/jacoco/test/jacocoTestReport.xml"
 val jacocoTestPattern = "**/build/jacoco/*.exec"
 
 sonarqube {
     properties {
         property("sonar.exclusions", "**/ch/difty/scipamato/publ/web/themes/markup/html/publ/**/*,${generatedPackages.joinToString(",")}")
-        property("sonar.coverage.exclusions", generatedPackages.joinToString(","))
+        property("sonar.coverage.exclusions", (generatedPackages + testPackages).joinToString(","))
         property("sonar.coverage.jacoco.xmlReportPaths", jacocoTestReportXml)
     }
 }
