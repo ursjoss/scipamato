@@ -35,16 +35,15 @@ jacoco {
     toolVersion = "0.8.4"
 }
 
+val testModuleDirs = setOf("common/test", "common/persistence-jooq-test")
+val testModules = testModuleDirs.map { it.replaceFirst("/", "-") }
+val testPackages = testModuleDirs.map { "$it/**/*" }
 val generatedPackages: Set<String> = setOf(
         "**/ch/difty/scipamato/core/db/**",
         "**/ch/difty/scipamato/core/pubmed/api/**",
         "**/ch/difty/scipamato/publ/db/**"
 )
-val testPackages = setOf(
-        "common/test/**/*",
-        "common/persistence-jooq-test/**/*"
-)
-val jacocoTestReportXml = "$buildDir/reports/jacoco/test/jacocoTestReport.xml"
+val jacocoTestReportXml = "build/reports/jacoco/test/jacocoTestReport.xml"
 val jacocoTestPattern = "**/build/jacoco/*.exec"
 
 sonarqube {
@@ -55,31 +54,6 @@ sonarqube {
     }
 }
 
-tasks {
-    val codeCoverageReportRoot by registering(JacocoReport::class) {
-        group = "verification"
-        description = "Collects aggregated coverage report in XML format"
-
-        executionData(fileTree(mapOf(
-                "dir" to project.rootDir.absolutePath,
-                "include" to listOf(jacocoTestPattern))
-        ).files)
-
-        sourceSets += subprojects.map { it.sourceSets.getByName("main") }
-
-        reports {
-            xml.isEnabled = true
-            xml.destination = file(jacocoTestReportXml)
-            html.isEnabled = false
-            csv.isEnabled = false
-        }
-        dependsOn(subprojects.map { it.tasks.getByName("check") })
-        dependsOn(subprojects.map { it.tasks.getByName("jacocoTestReport") })
-    }
-    val sonarqube by existing(SonarQubeTask::class) {
-        dependsOn(codeCoverageReportRoot)
-    }
-}
 
 allprojects {
     group = "ch.difty"
@@ -162,10 +136,11 @@ subprojects {
         val check by existing {
             dependsOn(integrationTest)
         }
-        val jacocoTestReport = withType<JacocoReport> {
-            dependsOn(check)
+        withType<JacocoReport> {
+            enabled = project.name.needsJacocoCoverage()
             reports {
                 xml.isEnabled = true
+                xml.destination = file(jacocoTestReportXml)
                 html.isEnabled = false
                 csv.isEnabled = false
             }
@@ -176,8 +151,20 @@ subprojects {
                     }
                 })))
             }
+            dependsOn(check)
         }
     }
 }
+
+tasks {
+    withType<SonarQubeTask> {
+        dependsOn(subprojects
+                .filter { it.name.needsJacocoCoverage() }
+                .map { it.tasks.getByName("jacocoTestReport") }
+        )
+    }
+}
+
+fun String.needsJacocoCoverage(): Boolean = this !in testModules
 
 fun Project.isWebProject() = path.endsWith("web")
