@@ -63,20 +63,28 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 
 .Changed
-- Bumped versions of spring-boot-starter, wicket, wicket-bootstrap, wicket-webjars, jasperreports and -fonts,
-  equalsverifier, spring-boot-admin-starter-client, bootstrap, font-awesome, flyway, lombok-plugin
-- {url-issues}80[#80] - Migrate from JUnit4 and JUnitParams to JUnit5
-- {url-issues}82[#82] - Migrating the build system from using maven to gradle
 
 .Deprecated
 
 .Removed
 
 .Fixed
-- {url-issues}69[#69] - Fix Sonar warning: Use project relative paths instead of module relative paths
-- {url-issues}82[#82] - Fix searching for publication year ranges and for ID
 
 .Security
+
+
+[[v1.2.0]]
+== [1.2.0] -- 2019-05-04
+
+.Changed
+- Bumped versions of spring-boot-starter, wicket, wicket-bootstrap, wicket-webjars, jasperreports and -fonts,
+  equalsverifier, spring-boot-admin-starter-client, bootstrap, font-awesome, flyway, lombok-plugin
+- {url-issues}80[#80] - Migrate from JUnit4 and JUnitParams to JUnit5
+- {url-issues}82[#82] - Migrating the build system from using maven to gradle
+
+.Fixed
+- {url-issues}69[#69] - Fix Sonar warning: Use project relative paths instead of module relative paths
+- {url-issues}82[#82] - Fix searching for publication year ranges and for ID
 
 
 [[v1.1.6]]
