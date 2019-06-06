@@ -17,7 +17,8 @@ object Lib {
     private const val springDependencyManagementVersion = "1.0.7.RELEASE"
 
     private const val wicketSpringBootStarterVersion = "2.1.7"
-    private const val wicketVersion = "8.4.0"
+    private const val wicketVersion = "8.5.0"
+    private const val wicketstuffVersion = "8.4.0"
     private const val wicketJqueryUiVersion = "8.3.0"
     private const val wicketBootstrapVersion = "2.0.9"
     private const val jasperReportVersion = "6.8.0"
@@ -86,7 +87,7 @@ object Lib {
 
     fun springBootStarterWicket() = Dep("com.giffing.wicket.spring.boot.starter", "wicket-spring-boot-starter", wicketSpringBootStarterVersion)
     fun wicket(module: String) = Dep("org.apache.wicket", "wicket-$module", wicketVersion)
-    fun wicketStuff(module: String) = Dep("org.wicketstuff", "wicketstuff-$module", wicketVersion)
+    fun wicketStuff(module: String) = Dep("org.wicketstuff", "wicketstuff-$module", wicketstuffVersion)
     fun wicketBootstrap(module: String) = Dep("de.agilecoders.wicket", "wicket-bootstrap-$module", wicketBootstrapVersion)
     fun wicketJqueryUi(module: String = "") = Dep("com.googlecode.wicket-jquery-ui", "wicket-jquery-ui${if (module.isNotBlank()) "-$module" else ""}", wicketJqueryUiVersion)
     fun fontAwesome() = Dep("org.webjars", "font-awesome", fontAwesomeVersion)
