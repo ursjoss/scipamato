@@ -29,7 +29,7 @@ object Lib {
     private const val jaxbImplVersion = "2.3.2"
     private const val javaxActivationVersion = "1.2.0"
     private const val javaxElApiVersion = "3.0.1-b06"
-    private const val jaxbPluginVersion = "3.0.3"
+    private const val jaxbPluginVersion = "3.0.4"
 
     private const val fontAwesomeVersion = "5.7.1"
 
