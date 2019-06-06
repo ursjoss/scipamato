@@ -21,7 +21,7 @@ object Lib {
     private const val wicketstuffVersion = "8.4.0"
     private const val wicketJqueryUiVersion = "8.3.0"
     private const val wicketBootstrapVersion = "2.0.9"
-    private const val jasperReportVersion = "6.8.0"
+    private const val jasperReportVersion = "6.8.1"
 
     private const val openfeignVersion = "10.1.0"
 
