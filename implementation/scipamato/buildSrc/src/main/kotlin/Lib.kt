@@ -7,20 +7,20 @@ import java.util.*
 
 object Lib {
 
-    //region:versions
+    //region:dependencyVersions
     private const val kotlinVersion = "1.3.31"
-    private const val lombokPluginVersion = "3.6.4"
 
     private const val springBootVersion = "2.1.5.RELEASE"
     private const val springBootAdminVersion = "2.1.5"
     private const val springCloudVersion = "2.1.1.RELEASE"
-    private const val springDependencyManagementVersion = "1.0.6.RELEASE"
+    private const val springDependencyManagementVersion = "1.0.7.RELEASE"
 
-    private const val wicketSpringBootStarterVersion = "2.1.5"
-    private const val wicketVersion = "8.4.0"
+    private const val wicketSpringBootStarterVersion = "2.1.7"
+    private const val wicketVersion = "8.5.0"
+    private const val wicketstuffVersion = "8.4.0"
     private const val wicketJqueryUiVersion = "8.3.0"
     private const val wicketBootstrapVersion = "2.0.9"
-    private const val jasperReportVersion = "6.8.0"
+    private const val jasperReportVersion = "6.8.1"
 
     private const val openfeignVersion = "10.1.0"
 
@@ -28,9 +28,8 @@ object Lib {
     private const val jaxbImplVersion = "2.3.2"
     private const val javaxActivationVersion = "1.2.0"
     private const val javaxElApiVersion = "3.0.1-b06"
-    private const val jaxbPluginVersion = "3.0.3"
 
-    private const val fontAwesomeVersion = "5.7.1"
+    private const val fontAwesomeVersion = "5.8.1"
 
     private const val commonsIoVersion = "2.6"
     private const val commonsCollectionVersion = "4.3"
@@ -39,10 +38,14 @@ object Lib {
     private const val equalsverifierVersion = "3.1.9"
 
     private const val junit5Version = "5.4.2"
+    //endregion
 
-    private const val testSetsPluginVersion = "2.1.1"
+    //region:pluginVersions
+    private const val lombokPluginVersion = "3.6.4"
     private const val jooqPluginVersion = "3.0.3"
-    private const val flywayPluginVersion = "6.0.0-beta"
+    private const val flywayPluginVersion = "6.0.0-beta2"
+    private const val jaxbPluginVersion = "3.0.4"
+    private const val testSetsPluginVersion = "2.1.1"
     private const val sonarqubePluginVersion = "2.7.1"
     //endregion
 
@@ -86,7 +89,7 @@ object Lib {
 
     fun springBootStarterWicket() = Dep("com.giffing.wicket.spring.boot.starter", "wicket-spring-boot-starter", wicketSpringBootStarterVersion)
     fun wicket(module: String) = Dep("org.apache.wicket", "wicket-$module", wicketVersion)
-    fun wicketStuff(module: String) = Dep("org.wicketstuff", "wicketstuff-$module", wicketVersion)
+    fun wicketStuff(module: String) = Dep("org.wicketstuff", "wicketstuff-$module", wicketstuffVersion)
     fun wicketBootstrap(module: String) = Dep("de.agilecoders.wicket", "wicket-bootstrap-$module", wicketBootstrapVersion)
     fun wicketJqueryUi(module: String = "") = Dep("com.googlecode.wicket-jquery-ui", "wicket-jquery-ui${if (module.isNotBlank()) "-$module" else ""}", wicketJqueryUiVersion)
     fun fontAwesome() = Dep("org.webjars", "font-awesome", fontAwesomeVersion)
