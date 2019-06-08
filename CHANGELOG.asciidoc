@@ -64,7 +64,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Changed
 - Bumped versions of spring-dependency-management, wicket-spring-boot-starter,
-  wicket, jasperreports, font-awesome, flyway-plugin, jaxb-plugin
+  wicket, wicketstuff, jasperreports, font-awesome, flyway-plugin, jaxb-plugin
 
 .Deprecated
 
