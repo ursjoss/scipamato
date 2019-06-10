@@ -1,0 +1,1009 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<local-project language="java" associate="file:/home/urs/structure101-repository/scipamato" version="5.0.14507" xml-version="3" flavor="j2se">
+  <property name="show-as-module" value="false" />
+  <property name="publish-architecture-artifacts" value="true" />
+  <property name="force-classpath" value="false" />
+  <property name="root-file" value="../implementation/scipamato/structure101-settings.java.hsw" />
+  <property name="project-type" value="s101_workspace" />
+  <property name="hide-externals" value="true" />
+  <property name="parse-archive-in-archive" value="false" />
+  <property name="include-injected-dependency" value="false" />
+  <property name="relative-to" value="const(THIS_FILE)" />
+  <property name="action-set-mod" value="1" />
+  <property name="detail-mode" value="true" />
+  <property name="hide-deprecated" value="false" />
+  <property name="resolve-name-clashes" value="true" />
+  <property name="project-excluded" />
+  <property name="show-needs-to-compile" value="false" />
+  <classpath>
+    <classpathentry kind="lib" path="../implementation/scipamato/common/persistence-jooq-test/build/classes/java/main" module="scipamato___common-persistence-jooq-test___main" />
+    <classpathentry kind="lib" path="../implementation/scipamato/public/entity/build/classes/java/main" module="scipamato___public-entity___main" />
+    <classpathentry kind="lib" path="../implementation/scipamato/core/web/build/classes/java/main" module="scipamato___core-web___main" />
+    <classpathentry kind="lib" path="buildSrc/build/classes/java/main" module="scipamato___buildSrc___main" />
+    <classpathentry kind="lib" path="../implementation/scipamato/public/web/build/classes/java/main" module="scipamato___public-web___main" />
+    <classpathentry kind="lib" path="../implementation/scipamato/common/persistence-api/build/classes/java/main" module="scipamato___common-persistence-api___main" />
+    <classpathentry kind="lib" path="../implementation/scipamato/core/logic/build/classes/java/main" module="scipamato___core-logic___main" />
+    <classpathentry kind="lib" path="../implementation/scipamato/common/utils/build/classes/java/main" module="scipamato___common-utils___main" />
+    <classpathentry kind="lib" path="../implementation/scipamato/core/pubmed-api/build/classes/java/integrationTest" module="scipamato___core-pubmed-api___integrationTest" />
+    <classpathentry kind="lib" path="../implementation/scipamato/core/entity/build/classes/java/main" module="scipamato___core-entity___main" />
+    <classpathentry kind="lib" path="../implementation/scipamato/public/persistence-jooq/build/classes/java/main" module="scipamato___public-persistence-jooq___main" />
+    <classpathentry kind="lib" path="../implementation/scipamato/public/persistence-api/build/classes/java/main" module="scipamato___public-persistence-api___main" />
+    <classpathentry kind="lib" path="../implementation/scipamato/common/wicket/build/classes/java/main" module="scipamato___common-wicket___main" />
+    <classpathentry kind="lib" path="../implementation/scipamato/common/persistence-jooq/build/classes/java/main" module="scipamato___common-persistence-jooq___main" />
+    <classpathentry kind="lib" path="../implementation/scipamato/core/persistence-jooq/build/classes/java/main" module="scipamato___core-persistence-jooq___main" />
+    <classpathentry kind="lib" path="../implementation/scipamato/core/sync/build/classes/java/main" module="scipamato___core-sync___main" />
+    <classpathentry kind="lib" path="../implementation/scipamato/common/test/build/classes/java/main" module="scipamato___common-test___main" />
+    <classpathentry kind="lib" path="../implementation/scipamato/core/pubmed-api/build/classes/java/main" module="scipamato___core-pubmed-api___main" />
+    <classpathentry kind="lib" path="../implementation/scipamato/core/persistence-api/build/classes/java/main" module="scipamato___core-persistence-api___main" />
+    <classpathentry kind="lib" path="../implementation/scipamato/common/entity/build/classes/java/main" module="scipamato___common-entity___main" />
+    <classpathentry kind="lib" path="../implementation/scipamato/public/web/build/classes/java/integrationTest" module="scipamato___public-web___integrationTest" />
+  </classpath>
+  <pom-root-files />
+  <modules>
+    <module name="scipamato___public-web" kind="ide-project" />
+    <module name="scipamato___public-persistence-jooq" kind="ide-project" />
+    <module name="scipamato___public-persistence-api" kind="ide-project" />
+    <module name="scipamato___public-entity" kind="ide-project" />
+    <module name="scipamato___main" kind="ide-project" />
+    <module name="scipamato___core-web" kind="ide-project" />
+    <module name="scipamato___core-sync" kind="ide-project" />
+    <module name="scipamato___core-pubmed-api" kind="ide-project" />
+    <module name="scipamato___core-persistence-jooq" kind="ide-project" />
+    <module name="scipamato___core-persistence-api" kind="ide-project" />
+    <module name="scipamato___core-logic" kind="ide-project" />
+    <module name="scipamato___core-entity" kind="ide-project" />
+    <module name="scipamato___common-wicket" kind="ide-project" />
+    <module name="scipamato___common-utils___main" kind="ide-project" />
+    <module name="scipamato___common-utils" kind="ide-project" />
+    <module name="scipamato___common-test" kind="ide-project" />
+    <module name="scipamato___common-persistence-jooq" kind="ide-project" />
+    <module name="scipamato___common-persistence-jooq-test" kind="ide-project" />
+    <module name="scipamato___common-persistence-api" kind="ide-project" />
+    <module name="scipamato___common-entity" kind="ide-project" />
+    <module name="scipamato___buildSrc___main" kind="ide-project" />
+    <module name="scipamato___buildSrc" kind="ide-project" />
+    <module name="scipamato" kind="ide-project" />
+    <module name="scipamato___test" kind="ide-project">
+      <requires name="scipamato___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___core-sync___main" kind="ide-project">
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___core-pubmed-api___main" kind="ide-project">
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___common-utils___testLib" kind="ide-project">
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___common-entity___main" kind="ide-project">
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___buildSrc___test" kind="ide-project">
+      <requires name="scipamato___buildSrc___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___public-entity___main" kind="ide-project">
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___core-entity___main" kind="ide-project">
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___common-test___main" kind="ide-project">
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___common-persistence-api___main" kind="ide-project">
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___common-entity___testLib" kind="ide-project">
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___public-persistence-api___main" kind="ide-project">
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+      <requires name="scipamato___public-entity___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-api___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___public-entity___testLib" kind="ide-project">
+      <requires name="scipamato___public-entity___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___core-pubmed-api___testLib" kind="ide-project">
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+      <requires name="scipamato___core-pubmed-api___main" kind="ide-project" />
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+      <requires name="scipamato___common-test___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___core-persistence-api___main" kind="ide-project">
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+      <requires name="scipamato___core-pubmed-api___main" kind="ide-project" />
+      <requires name="scipamato___core-entity___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-api___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___core-logic___main" kind="ide-project">
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+      <requires name="scipamato___core-entity___main" kind="ide-project" />
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___core-entity___testLib" kind="ide-project">
+      <requires name="scipamato___core-entity___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___common-wicket___main" kind="ide-project">
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-api___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___common-utils___test" kind="ide-project">
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+      <requires name="scipamato___common-utils___testLib" kind="ide-project" />
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+      <requires name="scipamato___common-test___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___common-utils___integrationTest" kind="ide-project">
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+      <requires name="scipamato___common-utils___testLib" kind="ide-project" />
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+      <requires name="scipamato___common-test___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___common-utils___adhocTest" kind="ide-project">
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+      <requires name="scipamato___common-utils___testLib" kind="ide-project" />
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+      <requires name="scipamato___common-test___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___common-test___testLib" kind="ide-project">
+      <requires name="scipamato___common-test___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___common-persistence-jooq___main" kind="ide-project">
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-api___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___common-persistence-api___testLib" kind="ide-project">
+      <requires name="scipamato___common-persistence-api___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___common-entity___test" kind="ide-project">
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+      <requires name="scipamato___common-entity___testLib" kind="ide-project" />
+      <requires name="scipamato___common-test___main" kind="ide-project" />
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___common-entity___integrationTest" kind="ide-project">
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+      <requires name="scipamato___common-entity___testLib" kind="ide-project" />
+      <requires name="scipamato___common-test___main" kind="ide-project" />
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___common-entity___adhocTest" kind="ide-project">
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+      <requires name="scipamato___common-entity___testLib" kind="ide-project" />
+      <requires name="scipamato___common-test___main" kind="ide-project" />
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___public-persistence-jooq___main" kind="ide-project">
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-api___main" kind="ide-project" />
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+      <requires name="scipamato___public-entity___main" kind="ide-project" />
+      <requires name="scipamato___public-persistence-api___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-jooq___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___public-persistence-api___testLib" kind="ide-project">
+      <requires name="scipamato___public-persistence-api___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___public-entity___test" kind="ide-project">
+      <requires name="scipamato___public-entity___main" kind="ide-project" />
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+      <requires name="scipamato___public-entity___testLib" kind="ide-project" />
+      <requires name="scipamato___common-test___main" kind="ide-project" />
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___public-entity___integrationTest" kind="ide-project">
+      <requires name="scipamato___public-entity___main" kind="ide-project" />
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+      <requires name="scipamato___public-entity___testLib" kind="ide-project" />
+      <requires name="scipamato___common-test___main" kind="ide-project" />
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___public-entity___adhocTest" kind="ide-project">
+      <requires name="scipamato___public-entity___main" kind="ide-project" />
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+      <requires name="scipamato___public-entity___testLib" kind="ide-project" />
+      <requires name="scipamato___common-test___main" kind="ide-project" />
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___core-pubmed-api___test" kind="ide-project">
+      <requires name="scipamato___core-pubmed-api___main" kind="ide-project" />
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+      <requires name="scipamato___core-pubmed-api___testLib" kind="ide-project" />
+      <requires name="scipamato___common-test___main" kind="ide-project" />
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___core-pubmed-api___integrationTest" kind="ide-project">
+      <requires name="scipamato___core-pubmed-api___main" kind="ide-project" />
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+      <requires name="scipamato___core-pubmed-api___testLib" kind="ide-project" />
+      <requires name="scipamato___common-test___main" kind="ide-project" />
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___core-pubmed-api___adhocTest" kind="ide-project">
+      <requires name="scipamato___core-pubmed-api___main" kind="ide-project" />
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+      <requires name="scipamato___core-pubmed-api___testLib" kind="ide-project" />
+      <requires name="scipamato___common-test___main" kind="ide-project" />
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___core-persistence-jooq___main" kind="ide-project">
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-api___main" kind="ide-project" />
+      <requires name="scipamato___core-pubmed-api___main" kind="ide-project" />
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+      <requires name="scipamato___core-entity___main" kind="ide-project" />
+      <requires name="scipamato___core-persistence-api___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-jooq___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___core-persistence-api___testLib" kind="ide-project">
+      <requires name="scipamato___core-persistence-api___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___core-logic___testLib" kind="ide-project">
+      <requires name="scipamato___core-logic___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___core-entity___test" kind="ide-project">
+      <requires name="scipamato___core-entity___main" kind="ide-project" />
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+      <requires name="scipamato___core-entity___testLib" kind="ide-project" />
+      <requires name="scipamato___common-test___main" kind="ide-project" />
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___core-entity___integrationTest" kind="ide-project">
+      <requires name="scipamato___core-entity___main" kind="ide-project" />
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+      <requires name="scipamato___core-entity___testLib" kind="ide-project" />
+      <requires name="scipamato___common-test___main" kind="ide-project" />
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___core-entity___adhocTest" kind="ide-project">
+      <requires name="scipamato___core-entity___main" kind="ide-project" />
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+      <requires name="scipamato___core-entity___testLib" kind="ide-project" />
+      <requires name="scipamato___common-test___main" kind="ide-project" />
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___common-wicket___testLib" kind="ide-project">
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+      <requires name="scipamato___common-wicket___main" kind="ide-project" />
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+      <requires name="scipamato___common-test___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___common-test___test" kind="ide-project">
+      <requires name="scipamato___common-test___main" kind="ide-project" />
+      <requires name="scipamato___common-test___testLib" kind="ide-project" />
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___common-test___integrationTest" kind="ide-project">
+      <requires name="scipamato___common-test___main" kind="ide-project" />
+      <requires name="scipamato___common-test___testLib" kind="ide-project" />
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___common-test___adhocTest" kind="ide-project">
+      <requires name="scipamato___common-test___main" kind="ide-project" />
+      <requires name="scipamato___common-test___testLib" kind="ide-project" />
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___common-persistence-jooq-test___main" kind="ide-project">
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-api___main" kind="ide-project" />
+      <requires name="scipamato___common-test___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-jooq___main" kind="ide-project" />
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___common-persistence-api___test" kind="ide-project">
+      <requires name="scipamato___common-persistence-api___testLib" kind="ide-project" />
+      <requires name="scipamato___common-persistence-api___main" kind="ide-project" />
+      <requires name="scipamato___common-test___main" kind="ide-project" />
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___common-persistence-api___integrationTest" kind="ide-project">
+      <requires name="scipamato___common-persistence-api___testLib" kind="ide-project" />
+      <requires name="scipamato___common-persistence-api___main" kind="ide-project" />
+      <requires name="scipamato___common-test___main" kind="ide-project" />
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___common-persistence-api___adhocTest" kind="ide-project">
+      <requires name="scipamato___common-persistence-api___testLib" kind="ide-project" />
+      <requires name="scipamato___common-persistence-api___main" kind="ide-project" />
+      <requires name="scipamato___common-test___main" kind="ide-project" />
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___public-web___main" kind="ide-project">
+      <requires name="scipamato___common-persistence-api___main" kind="ide-project" />
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+      <requires name="scipamato___public-persistence-api___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-jooq___main" kind="ide-project" />
+      <requires name="scipamato___common-wicket___main" kind="ide-project" />
+      <requires name="scipamato___public-entity___main" kind="ide-project" />
+      <requires name="scipamato___public-persistence-jooq___main" kind="ide-project" />
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___public-persistence-jooq___testLib" kind="ide-project">
+      <requires name="scipamato___public-persistence-jooq___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___public-persistence-api___test" kind="ide-project">
+      <requires name="scipamato___public-persistence-api___main" kind="ide-project" />
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+      <requires name="scipamato___public-persistence-api___testLib" kind="ide-project" />
+      <requires name="scipamato___public-entity___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-api___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___public-persistence-api___integrationTest" kind="ide-project">
+      <requires name="scipamato___public-persistence-api___main" kind="ide-project" />
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+      <requires name="scipamato___public-persistence-api___testLib" kind="ide-project" />
+      <requires name="scipamato___public-entity___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-api___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___public-persistence-api___adhocTest" kind="ide-project">
+      <requires name="scipamato___public-persistence-api___main" kind="ide-project" />
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+      <requires name="scipamato___public-persistence-api___testLib" kind="ide-project" />
+      <requires name="scipamato___public-entity___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-api___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___core-web___main" kind="ide-project">
+      <requires name="scipamato___core-pubmed-api___main" kind="ide-project" />
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-jooq___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-api___main" kind="ide-project" />
+      <requires name="scipamato___core-persistence-api___main" kind="ide-project" />
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+      <requires name="scipamato___core-persistence-jooq___main" kind="ide-project" />
+      <requires name="scipamato___common-wicket___main" kind="ide-project" />
+      <requires name="scipamato___core-entity___main" kind="ide-project" />
+      <requires name="scipamato___core-logic___main" kind="ide-project" />
+      <requires name="scipamato___core-sync___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___core-sync___testLib" kind="ide-project">
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+      <requires name="scipamato___core-sync___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-jooq-test___main" kind="ide-project" />
+      <requires name="scipamato___common-test___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___core-persistence-jooq___testLib" kind="ide-project">
+      <requires name="scipamato___core-persistence-jooq___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___core-persistence-api___test" kind="ide-project">
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+      <requires name="scipamato___core-persistence-api___testLib" kind="ide-project" />
+      <requires name="scipamato___core-persistence-api___main" kind="ide-project" />
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+      <requires name="scipamato___common-test___main" kind="ide-project" />
+      <requires name="scipamato___core-pubmed-api___main" kind="ide-project" />
+      <requires name="scipamato___core-entity___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-api___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___core-persistence-api___integrationTest" kind="ide-project">
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+      <requires name="scipamato___core-persistence-api___testLib" kind="ide-project" />
+      <requires name="scipamato___core-persistence-api___main" kind="ide-project" />
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+      <requires name="scipamato___common-test___main" kind="ide-project" />
+      <requires name="scipamato___core-pubmed-api___main" kind="ide-project" />
+      <requires name="scipamato___core-entity___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-api___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___core-persistence-api___adhocTest" kind="ide-project">
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+      <requires name="scipamato___core-persistence-api___testLib" kind="ide-project" />
+      <requires name="scipamato___core-persistence-api___main" kind="ide-project" />
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+      <requires name="scipamato___common-test___main" kind="ide-project" />
+      <requires name="scipamato___core-pubmed-api___main" kind="ide-project" />
+      <requires name="scipamato___core-entity___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-api___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___core-logic___test" kind="ide-project">
+      <requires name="scipamato___core-logic___testLib" kind="ide-project" />
+      <requires name="scipamato___core-logic___main" kind="ide-project" />
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+      <requires name="scipamato___core-entity___main" kind="ide-project" />
+      <requires name="scipamato___common-test___main" kind="ide-project" />
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___core-logic___integrationTest" kind="ide-project">
+      <requires name="scipamato___core-logic___testLib" kind="ide-project" />
+      <requires name="scipamato___core-logic___main" kind="ide-project" />
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+      <requires name="scipamato___core-entity___main" kind="ide-project" />
+      <requires name="scipamato___common-test___main" kind="ide-project" />
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___core-logic___adhocTest" kind="ide-project">
+      <requires name="scipamato___core-logic___testLib" kind="ide-project" />
+      <requires name="scipamato___core-logic___main" kind="ide-project" />
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+      <requires name="scipamato___core-entity___main" kind="ide-project" />
+      <requires name="scipamato___common-test___main" kind="ide-project" />
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___common-wicket___test" kind="ide-project">
+      <requires name="scipamato___common-wicket___testLib" kind="ide-project" />
+      <requires name="scipamato___common-wicket___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-api___main" kind="ide-project" />
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+      <requires name="scipamato___common-test___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___common-wicket___integrationTest" kind="ide-project">
+      <requires name="scipamato___common-wicket___testLib" kind="ide-project" />
+      <requires name="scipamato___common-wicket___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-api___main" kind="ide-project" />
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+      <requires name="scipamato___common-test___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___common-wicket___adhocTest" kind="ide-project">
+      <requires name="scipamato___common-wicket___testLib" kind="ide-project" />
+      <requires name="scipamato___common-wicket___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-api___main" kind="ide-project" />
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+      <requires name="scipamato___common-test___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___common-persistence-jooq___testLib" kind="ide-project">
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-jooq___main" kind="ide-project" />
+      <requires name="scipamato___common-test___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-jooq-test___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___common-persistence-jooq-test___testLib" kind="ide-project">
+      <requires name="scipamato___common-persistence-jooq-test___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___public-web___testLib" kind="ide-project">
+      <requires name="scipamato___public-web___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___public-persistence-jooq___test" kind="ide-project">
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-api___main" kind="ide-project" />
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+      <requires name="scipamato___public-persistence-jooq___testLib" kind="ide-project" />
+      <requires name="scipamato___public-persistence-jooq___main" kind="ide-project" />
+      <requires name="scipamato___public-entity___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-jooq-test___main" kind="ide-project" />
+      <requires name="scipamato___public-persistence-api___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-jooq___main" kind="ide-project" />
+      <requires name="scipamato___common-test___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___public-persistence-jooq___integrationTest" kind="ide-project">
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-api___main" kind="ide-project" />
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+      <requires name="scipamato___public-persistence-jooq___testLib" kind="ide-project" />
+      <requires name="scipamato___public-persistence-jooq___main" kind="ide-project" />
+      <requires name="scipamato___public-entity___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-jooq-test___main" kind="ide-project" />
+      <requires name="scipamato___public-persistence-api___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-jooq___main" kind="ide-project" />
+      <requires name="scipamato___common-test___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___public-persistence-jooq___adhocTest" kind="ide-project">
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-api___main" kind="ide-project" />
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+      <requires name="scipamato___public-persistence-jooq___testLib" kind="ide-project" />
+      <requires name="scipamato___public-persistence-jooq___main" kind="ide-project" />
+      <requires name="scipamato___public-entity___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-jooq-test___main" kind="ide-project" />
+      <requires name="scipamato___public-persistence-api___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-jooq___main" kind="ide-project" />
+      <requires name="scipamato___common-test___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___core-web___testLib" kind="ide-project">
+      <requires name="scipamato___core-web___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___core-sync___test" kind="ide-project">
+      <requires name="scipamato___core-sync___testLib" kind="ide-project" />
+      <requires name="scipamato___core-sync___main" kind="ide-project" />
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+      <requires name="scipamato___common-test___main" kind="ide-project" />
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-jooq-test___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___core-sync___integrationTest" kind="ide-project">
+      <requires name="scipamato___core-sync___testLib" kind="ide-project" />
+      <requires name="scipamato___core-sync___main" kind="ide-project" />
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+      <requires name="scipamato___common-test___main" kind="ide-project" />
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-jooq-test___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___core-sync___adhocTest" kind="ide-project">
+      <requires name="scipamato___core-sync___testLib" kind="ide-project" />
+      <requires name="scipamato___core-sync___main" kind="ide-project" />
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+      <requires name="scipamato___common-test___main" kind="ide-project" />
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-jooq-test___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___core-persistence-jooq___test" kind="ide-project">
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-api___main" kind="ide-project" />
+      <requires name="scipamato___core-pubmed-api___main" kind="ide-project" />
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+      <requires name="scipamato___core-persistence-jooq___testLib" kind="ide-project" />
+      <requires name="scipamato___core-persistence-jooq___main" kind="ide-project" />
+      <requires name="scipamato___core-entity___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-jooq-test___main" kind="ide-project" />
+      <requires name="scipamato___core-persistence-api___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-jooq___main" kind="ide-project" />
+      <requires name="scipamato___common-test___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___core-persistence-jooq___integrationTest" kind="ide-project">
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-api___main" kind="ide-project" />
+      <requires name="scipamato___core-pubmed-api___main" kind="ide-project" />
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+      <requires name="scipamato___core-persistence-jooq___testLib" kind="ide-project" />
+      <requires name="scipamato___core-persistence-jooq___main" kind="ide-project" />
+      <requires name="scipamato___core-entity___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-jooq-test___main" kind="ide-project" />
+      <requires name="scipamato___core-persistence-api___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-jooq___main" kind="ide-project" />
+      <requires name="scipamato___common-test___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___core-persistence-jooq___adhocTest" kind="ide-project">
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-api___main" kind="ide-project" />
+      <requires name="scipamato___core-pubmed-api___main" kind="ide-project" />
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+      <requires name="scipamato___core-persistence-jooq___testLib" kind="ide-project" />
+      <requires name="scipamato___core-persistence-jooq___main" kind="ide-project" />
+      <requires name="scipamato___core-entity___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-jooq-test___main" kind="ide-project" />
+      <requires name="scipamato___core-persistence-api___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-jooq___main" kind="ide-project" />
+      <requires name="scipamato___common-test___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___common-persistence-jooq___test" kind="ide-project">
+      <requires name="scipamato___common-persistence-jooq___testLib" kind="ide-project" />
+      <requires name="scipamato___common-persistence-jooq___main" kind="ide-project" />
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-jooq-test___main" kind="ide-project" />
+      <requires name="scipamato___common-test___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-api___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___common-persistence-jooq___integrationTest" kind="ide-project">
+      <requires name="scipamato___common-persistence-jooq___testLib" kind="ide-project" />
+      <requires name="scipamato___common-persistence-jooq___main" kind="ide-project" />
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-jooq-test___main" kind="ide-project" />
+      <requires name="scipamato___common-test___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-api___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___common-persistence-jooq___adhocTest" kind="ide-project">
+      <requires name="scipamato___common-persistence-jooq___testLib" kind="ide-project" />
+      <requires name="scipamato___common-persistence-jooq___main" kind="ide-project" />
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-jooq-test___main" kind="ide-project" />
+      <requires name="scipamato___common-test___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-api___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___common-persistence-jooq-test___test" kind="ide-project">
+      <requires name="scipamato___common-persistence-jooq-test___testLib" kind="ide-project" />
+      <requires name="scipamato___common-persistence-jooq-test___main" kind="ide-project" />
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-api___main" kind="ide-project" />
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+      <requires name="scipamato___common-test___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-jooq___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___common-persistence-jooq-test___integrationTest" kind="ide-project">
+      <requires name="scipamato___common-persistence-jooq-test___testLib" kind="ide-project" />
+      <requires name="scipamato___common-persistence-jooq-test___main" kind="ide-project" />
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-api___main" kind="ide-project" />
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+      <requires name="scipamato___common-test___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-jooq___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___common-persistence-jooq-test___adhocTest" kind="ide-project">
+      <requires name="scipamato___common-persistence-jooq-test___testLib" kind="ide-project" />
+      <requires name="scipamato___common-persistence-jooq-test___main" kind="ide-project" />
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-api___main" kind="ide-project" />
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+      <requires name="scipamato___common-test___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-jooq___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___public-web___test" kind="ide-project">
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+      <requires name="scipamato___public-persistence-api___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-jooq___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-api___main" kind="ide-project" />
+      <requires name="scipamato___public-web___testLib" kind="ide-project" />
+      <requires name="scipamato___public-web___main" kind="ide-project" />
+      <requires name="scipamato___common-wicket___main" kind="ide-project" />
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+      <requires name="scipamato___public-entity___main" kind="ide-project" />
+      <requires name="scipamato___public-persistence-jooq___main" kind="ide-project" />
+      <requires name="scipamato___common-test___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___public-web___integrationTest" kind="ide-project">
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+      <requires name="scipamato___public-persistence-api___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-jooq___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-api___main" kind="ide-project" />
+      <requires name="scipamato___public-web___testLib" kind="ide-project" />
+      <requires name="scipamato___public-web___main" kind="ide-project" />
+      <requires name="scipamato___common-wicket___main" kind="ide-project" />
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+      <requires name="scipamato___public-entity___main" kind="ide-project" />
+      <requires name="scipamato___public-persistence-jooq___main" kind="ide-project" />
+      <requires name="scipamato___common-test___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___public-web___adhocTest" kind="ide-project">
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+      <requires name="scipamato___public-persistence-api___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-jooq___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-api___main" kind="ide-project" />
+      <requires name="scipamato___public-web___testLib" kind="ide-project" />
+      <requires name="scipamato___public-web___main" kind="ide-project" />
+      <requires name="scipamato___common-wicket___main" kind="ide-project" />
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+      <requires name="scipamato___public-entity___main" kind="ide-project" />
+      <requires name="scipamato___public-persistence-jooq___main" kind="ide-project" />
+      <requires name="scipamato___common-test___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___core-web___test" kind="ide-project">
+      <requires name="scipamato___core-web___testLib" kind="ide-project" />
+      <requires name="scipamato___core-web___main" kind="ide-project" />
+      <requires name="scipamato___core-persistence-api___main" kind="ide-project" />
+      <requires name="scipamato___core-pubmed-api___main" kind="ide-project" />
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-jooq___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-api___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-jooq-test___main" kind="ide-project" />
+      <requires name="scipamato___common-test___main" kind="ide-project" />
+      <requires name="scipamato___core-persistence-jooq___main" kind="ide-project" />
+      <requires name="scipamato___common-wicket___main" kind="ide-project" />
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+      <requires name="scipamato___core-entity___main" kind="ide-project" />
+      <requires name="scipamato___core-logic___main" kind="ide-project" />
+      <requires name="scipamato___core-sync___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___core-web___integrationTest" kind="ide-project">
+      <requires name="scipamato___core-web___testLib" kind="ide-project" />
+      <requires name="scipamato___core-web___main" kind="ide-project" />
+      <requires name="scipamato___core-persistence-api___main" kind="ide-project" />
+      <requires name="scipamato___core-pubmed-api___main" kind="ide-project" />
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-jooq___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-api___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-jooq-test___main" kind="ide-project" />
+      <requires name="scipamato___common-test___main" kind="ide-project" />
+      <requires name="scipamato___core-persistence-jooq___main" kind="ide-project" />
+      <requires name="scipamato___common-wicket___main" kind="ide-project" />
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+      <requires name="scipamato___core-entity___main" kind="ide-project" />
+      <requires name="scipamato___core-logic___main" kind="ide-project" />
+      <requires name="scipamato___core-sync___main" kind="ide-project" />
+    </module>
+    <module name="scipamato___core-web___adhocTest" kind="ide-project">
+      <requires name="scipamato___core-web___testLib" kind="ide-project" />
+      <requires name="scipamato___core-web___main" kind="ide-project" />
+      <requires name="scipamato___core-persistence-api___main" kind="ide-project" />
+      <requires name="scipamato___core-pubmed-api___main" kind="ide-project" />
+      <requires name="scipamato___common-entity___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-jooq___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-api___main" kind="ide-project" />
+      <requires name="scipamato___common-persistence-jooq-test___main" kind="ide-project" />
+      <requires name="scipamato___common-test___main" kind="ide-project" />
+      <requires name="scipamato___core-persistence-jooq___main" kind="ide-project" />
+      <requires name="scipamato___common-wicket___main" kind="ide-project" />
+      <requires name="scipamato___common-utils___main" kind="ide-project" />
+      <requires name="scipamato___core-entity___main" kind="ide-project" />
+      <requires name="scipamato___core-logic___main" kind="ide-project" />
+      <requires name="scipamato___core-sync___main" kind="ide-project" />
+    </module>
+  </modules>
+  <modules-in-scope />
+  <excludes>
+    <exclude expression="scipamato___core-persistence-jooq___main.ch.difty.scipamato.core.db.*" active="true" />
+    <exclude expression="scipamato___core-sync___main.ch.difty.scipamato.core.db.*" active="true" />
+    <exclude expression="scipamato___core-sync___main.ch.difty.scipamato.publ.db.*" active="true" />
+  </excludes>
+  <restructuring>
+    <set version="3" name="Action list 1" hiview="Codemap" active="true" todo="false" list="0">
+      <action type="group-delete" active="true" last-applied="true" description="Remove 1 items">
+        <composite-set>
+          <action type="remove-node" active="true" last-applied="true" description="Remove scipamato___public-web___integrationTest">
+            <params>
+              <source-fqn fqn="scipamato___public-web___integrationTest" type="jar">
+                <node name="scipamato___public-web___integrationTest" type="jar" />
+              </source-fqn>
+            </params>
+          </action>
+        </composite-set>
+      </action>
+      <action type="group-delete" active="true" last-applied="true" description="Remove 1 items">
+        <composite-set>
+          <action type="remove-node" active="true" last-applied="true" description="Remove scipamato___core-pubmed-api___integrationTest">
+            <params>
+              <source-fqn fqn="scipamato___core-pubmed-api___integrationTest" type="jar">
+                <node name="scipamato___core-pubmed-api___integrationTest" type="jar" />
+              </source-fqn>
+            </params>
+          </action>
+        </composite-set>
+      </action>
+      <action type="group-delete" active="true" last-applied="true" description="Remove 1 items">
+        <composite-set>
+          <action type="remove-node" active="true" last-applied="true" description="Remove scipamato___common-test___main">
+            <params>
+              <source-fqn fqn="scipamato___common-test___main" type="jar">
+                <node name="scipamato___common-test___main" type="jar" />
+              </source-fqn>
+            </params>
+          </action>
+        </composite-set>
+      </action>
+      <action type="group-delete" active="true" last-applied="true" description="Remove 1 items">
+        <composite-set>
+          <action type="remove-node" active="true" last-applied="true" description="Remove scipamato___common-persistence-jooq-test___main">
+            <params>
+              <source-fqn fqn="scipamato___common-persistence-jooq-test___main" type="jar">
+                <node name="scipamato___common-persistence-jooq-test___main" type="jar" />
+              </source-fqn>
+            </params>
+          </action>
+        </composite-set>
+      </action>
+      <action type="group-delete" active="true" last-applied="true" description="Remove 1 items">
+        <composite-set>
+          <action type="remove-node" active="true" last-applied="true" description="Remove scipamato___buildSrc___main">
+            <params>
+              <source-fqn fqn="scipamato___buildSrc___main" type="jar">
+                <node name="scipamato___buildSrc___main" type="jar" />
+              </source-fqn>
+            </params>
+          </action>
+        </composite-set>
+      </action>
+    </set>
+  </restructuring>
+  <grid-set sep="." version="5.0.14507">
+    <grid name="architecture-All-Modules" enforce="true" locked="false" strict="false">
+      <row>
+        <cell name="SciPaMaTo-Project" pattern="" vexpanded="true" illegal="false" visibility="public" drill="true">
+          <grid>
+            <row>
+              <cell name="Presentation Layer" pattern="" vexpanded="true" illegal="false" visibility="public" drill="true">
+                <grid>
+                  <row>
+                    <cell name="Presentation Core" pattern="" vexpanded="true" illegal="false" visibility="public" drill="true">
+                      <grid>
+                        <row>
+                          <cell name="core-web" pattern="scipamato___core-web___main.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="153,255,255" />
+                        </row>
+                      </grid>
+                    </cell>
+                    <cell name="Presentation Public" pattern="" vexpanded="true" illegal="false" visibility="public" drill="true">
+                      <grid>
+                        <row>
+                          <cell name="public-web" pattern="scipamato___public-web___main.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="153,255,255" />
+                        </row>
+                      </grid>
+                    </cell>
+                  </row>
+                  <row>
+                    <cell name="common-wicket" pattern="scipamato___common-wicket___main.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="153,255,255" />
+                  </row>
+                </grid>
+              </cell>
+            </row>
+            <row>
+              <cell name="Persistence Layer" pattern="" vexpanded="true" illegal="false" visibility="public" drill="true">
+                <grid>
+                  <row>
+                    <cell name="core-sync" pattern="scipamato___core-sync___main.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="255,204,255" />
+                  </row>
+                  <row>
+                    <cell name="Persistence Core" pattern="" vexpanded="true" illegal="false" visibility="public" drill="true">
+                      <grid>
+                        <row>
+                          <cell name="core-persistence-jooq" pattern="scipamato___core-persistence-jooq___main.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="204,255,204" />
+                        </row>
+                        <row>
+                          <cell name="core-persistence-api" pattern="scipamato___core-persistence-api___main.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="204,255,204" />
+                        </row>
+                      </grid>
+                    </cell>
+                    <cell name="Persistence Public" pattern="" vexpanded="true" illegal="false" visibility="public" drill="true">
+                      <grid>
+                        <row>
+                          <cell name="public-persistence-jooq" pattern="scipamato___public-persistence-jooq___main.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="204,255,204" />
+                        </row>
+                        <row>
+                          <cell name="public-persistence-api" pattern="scipamato___public-persistence-api___main.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="204,255,204" />
+                        </row>
+                      </grid>
+                    </cell>
+                  </row>
+                  <row>
+                    <cell name="common-persistence-jooq" pattern="scipamato___common-persistence-jooq___main.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="204,255,204" />
+                  </row>
+                  <row>
+                    <cell name="common-persistence-api" pattern="scipamato___common-persistence-api___main.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="204,255,204" />
+                  </row>
+                </grid>
+              </cell>
+            </row>
+            <row>
+              <cell name="Business Layer" pattern="" vexpanded="true" illegal="false" visibility="public" drill="true">
+                <grid>
+                  <row>
+                    <cell name="Core" pattern="" vexpanded="true" illegal="false" visibility="public" drill="true">
+                      <grid>
+                        <row>
+                          <cell name="core-logic" pattern="scipamato___core-logic___main.*" vexpanded="false" illegal="false" visibility="public" drill="true" />
+                          <cell name="core-pubmed-api" pattern="scipamato___core-pubmed-api___main.*" vexpanded="false" illegal="false" visibility="public" drill="true" />
+                        </row>
+                        <row>
+                          <cell name="core-entity" pattern="scipamato___core-entity___main.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="204,204,255" />
+                        </row>
+                      </grid>
+                    </cell>
+                    <cell name="Public" pattern="" vexpanded="true" illegal="false" visibility="public" drill="true">
+                      <grid>
+                        <row>
+                          <cell name="public-entity" pattern="scipamato___public-entity___main.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="204,204,255" />
+                        </row>
+                      </grid>
+                    </cell>
+                  </row>
+                  <row>
+                    <cell name="common-entity" pattern="scipamato___common-entity___main.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="204,204,255" />
+                  </row>
+                </grid>
+              </cell>
+            </row>
+            <row>
+              <cell name="common-utils" pattern="scipamato___common-utils___main.*" vexpanded="false" illegal="false" visibility="public" drill="true" />
+            </row>
+          </grid>
+        </cell>
+      </row>
+      <description>Top-level breakout</description>
+    </grid>
+    <grid name="architecture-LSM-Core" enforce="true" locked="false" strict="false">
+      <row>
+        <cell name="SciPaMaTo-Core" pattern="" vexpanded="true" illegal="false" visibility="public" drill="true">
+          <grid>
+            <row>
+              <cell name="Presentation Layer" pattern="" vexpanded="true" illegal="false" visibility="public" drill="true">
+                <grid>
+                  <row>
+                    <cell name="core-web" pattern="scipamato___core-web___main.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="153,255,255" />
+                  </row>
+                  <row>
+                    <cell name="common-wicket" pattern="scipamato___common-wicket___main.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="153,255,255" />
+                  </row>
+                </grid>
+              </cell>
+            </row>
+            <row>
+              <cell name="Persistence Layer" pattern="" vexpanded="true" illegal="false" visibility="public" drill="true">
+                <grid>
+                  <row>
+                    <cell name="core-sync" pattern="scipamato___core-sync___main.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="255,204,255" />
+                  </row>
+                  <row>
+                    <cell name="core-persistence-jooq" pattern="scipamato___core-persistence-jooq___main.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="204,255,204" />
+                  </row>
+                  <row>
+                    <cell name="common-persistence-jooq" pattern="scipamato___common-persistence-jooq___main.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="204,255,204" />
+                  </row>
+                  <row>
+                    <cell name="core-persistence-api" pattern="scipamato___core-persistence-api___main.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="204,255,204" />
+                  </row>
+                  <row>
+                    <cell name="common-persistence-api" pattern="scipamato___common-persistence-api___main.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="204,255,204" />
+                  </row>
+                </grid>
+              </cell>
+            </row>
+            <row>
+              <cell name="Business Layer" pattern="" vexpanded="true" illegal="false" visibility="public" drill="true">
+                <grid>
+                  <row>
+                    <cell name="core-logic" pattern="scipamato___core-logic___main.*" vexpanded="false" illegal="false" visibility="public" drill="true" />
+                    <cell name="core-pubmed-api" pattern="scipamato___core-pubmed-api___main.*" vexpanded="false" illegal="false" visibility="public" drill="true" />
+                  </row>
+                  <row>
+                    <cell name="core-entity" pattern="scipamato___core-entity___main.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="204,204,255" />
+                  </row>
+                  <row>
+                    <cell name="common-entity" pattern="scipamato___common-entity___main.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="204,204,255" />
+                  </row>
+                </grid>
+              </cell>
+            </row>
+            <row>
+              <cell name="common-utils" pattern="scipamato___common-utils___main.*" vexpanded="false" illegal="false" visibility="public" drill="true" />
+            </row>
+          </grid>
+        </cell>
+      </row>
+      <description>Top-level breakout</description>
+    </grid>
+    <grid name="architecture-LSM-Public" enforce="true" locked="false" strict="false">
+      <row>
+        <cell name="SciPaMaTo-Public" pattern="" vexpanded="true" illegal="false" visibility="public" drill="true">
+          <grid>
+            <row>
+              <cell name="Presentation Layer" pattern="" vexpanded="true" illegal="false" visibility="public" drill="true">
+                <grid>
+                  <row>
+                    <cell name="public-web" pattern="scipamato___public-web___main.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="153,255,255" />
+                  </row>
+                  <row>
+                    <cell name="common-wicket" pattern="scipamato___common-wicket___main.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="153,255,255" />
+                  </row>
+                </grid>
+              </cell>
+            </row>
+            <row>
+              <cell name="Persistence Layer" pattern="" vexpanded="true" illegal="false" visibility="public" drill="true">
+                <grid>
+                  <row>
+                    <cell name="public-persistence-jooq" pattern="scipamato___public-persistence-jooq___main.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="204,255,204" />
+                  </row>
+                  <row>
+                    <cell name="common-persistence-jooq" pattern="scipamato___common-persistence-jooq___main.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="204,255,204" />
+                  </row>
+                  <row>
+                    <cell name="public-persistence-api" pattern="scipamato___public-persistence-api___main.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="204,255,204" />
+                  </row>
+                  <row>
+                    <cell name="common-persistence-api" pattern="scipamato___common-persistence-api___main.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="204,255,204" />
+                  </row>
+                </grid>
+              </cell>
+            </row>
+            <row>
+              <cell name="Business Layer" pattern="" vexpanded="true" illegal="false" visibility="public" drill="true">
+                <grid>
+                  <row>
+                    <cell name="public-entity" pattern="scipamato___public-entity___main.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="204,204,255" />
+                  </row>
+                  <row>
+                    <cell name="common-entity" pattern="scipamato___common-entity___main.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="204,204,255" />
+                  </row>
+                </grid>
+              </cell>
+            </row>
+            <row>
+              <cell name="common-utils" pattern="scipamato___common-utils___main.*" vexpanded="false" illegal="false" visibility="public" drill="true" />
+            </row>
+          </grid>
+        </cell>
+      </row>
+      <description>Top-level breakout</description>
+    </grid>
+  </grid-set>
+</local-project>
