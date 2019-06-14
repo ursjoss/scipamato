@@ -126,6 +126,12 @@ subprojects {
                 jvmTarget = "11"
             }
         }
+        val deleteOutFolder by registering(Delete::class) {
+            delete("out")
+        }
+        named("clean") {
+            dependsOn(deleteOutFolder)
+        }
         withType<Test> {
             maxHeapSize = "2g"
             @Suppress("UnstableApiUsage")
