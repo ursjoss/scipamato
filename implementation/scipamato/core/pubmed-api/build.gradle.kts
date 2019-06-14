@@ -43,7 +43,7 @@ dependencies {
 System.setProperty("enableExternalEntityProcessing", "true")
 jaxb {
     javaGen {
-        val pubmed by creating {
+        register("pubmed") {
             setSchema(File("$rootDir/core/pubmed-api/src/main/resources/pubmed_180101.dtd"))
             language = "DTD"
             header = false

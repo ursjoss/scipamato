@@ -65,21 +65,19 @@ tasks {
         configureApplying(bootPubItProps)
     }
 
-    val flywayClean by existing(FlywayCleanTask::class) {
+    flywayClean {
         description = "Drops all objects in the configured schemas of the main database"
         configureApplying(bootPubProps)
     }
-
     register<FlywayCleanTask>("flywayCleanIt") {
         description = "Drops all objects in the configured schemas of the integration test database"
         configureApplying(bootPubItProps)
     }
 
-    val flywayInfo by existing(FlywayInfoTask::class) {
+    flywayInfo {
         description = "Prints the details and status information about all the migrations."
         configureApplying(bootPubProps)
     }
-
     register<FlywayInfoTask>("flywayInfoIt") {
         description = "Prints the details and status information about all the migrations."
         configureApplying(bootPubItProps)

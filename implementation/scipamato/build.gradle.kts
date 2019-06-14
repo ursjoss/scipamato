@@ -80,17 +80,17 @@ subprojects {
             dirName = "testLib"
         }
 
-        val integrationTest by registering {
+        named("unitTest") {
+            imports(testLib)
+        }
+
+        register("integrationTest") {
             dirName = "intTest"
             imports(testLib)
         }
 
-        val adhocTest by registering {
+        register("adhocTest") {
             dirName = "adhocTest"
-            imports(testLib)
-        }
-
-        val unitTest by existing {
             imports(testLib)
         }
     }
@@ -140,11 +140,12 @@ subprojects {
         val integrationTest by existing {
             dependsOn(test)
         }
-        val check by existing {
+        named("check") {
             dependsOn(integrationTest)
         }
         withType<JacocoReport> {
             enabled = project.name.needsJacocoCoverage()
+            @Suppress("UnstableApiUsage")
             reports {
                 xml.isEnabled = true
                 xml.destination = file(jacocoTestReportXml)
@@ -158,7 +159,7 @@ subprojects {
                     }
                 })))
             }
-            dependsOn(check)
+            dependsOn(test, integrationTest)
         }
     }
 }
