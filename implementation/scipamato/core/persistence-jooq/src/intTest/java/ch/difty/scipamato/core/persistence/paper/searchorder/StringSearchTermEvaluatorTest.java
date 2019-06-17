@@ -87,7 +87,7 @@ class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<StringSearch
             "  field_x is null\n" +
             "  or char_length(cast(field_x as varchar)) = 0\n" +
             ")"
-            // @formatter:on);
+            // @formatter:on
         );
     }
 
@@ -260,7 +260,7 @@ class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<StringSearch
     }
 
     @Test
-    void buildingConditionForUnexpected_throws() {
+    void buildingConditionForUnsupported_throws() {
         expectToken(TokenType.UNSUPPORTED, "foo");
         try {
             e.evaluate(stMock);
