@@ -95,14 +95,15 @@ subprojects {
         }
     }
 
-    idea {
-        module {
-            // https://structure101.com/2018/12/01/structure101-workspace-intellij-idea-and-gradle/
-            outputDir = file("$buildDir/classes/java/main")
-            testOutputDir = file("$buildDir/classes/java/test")
-            inheritOutputDirs = false
-        }
-    }
+    // Breaks running the project from the IntelliJ Run Dashboard - disabling for now
+//    idea {
+//        module {
+//            // https://structure101.com/2018/12/01/structure101-workspace-intellij-idea-and-gradle/
+//            outputDir = file("$buildDir/classes/java/main")
+//            testOutputDir = file("$buildDir/classes/java/test")
+//            inheritOutputDirs = false
+//        }
+//    }
 
     if (!isWebProject()) {
         apply(plugin = "java-library")
