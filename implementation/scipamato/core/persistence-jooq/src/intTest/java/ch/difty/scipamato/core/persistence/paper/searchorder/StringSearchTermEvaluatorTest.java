@@ -31,6 +31,7 @@ class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<StringSearch
         return e;
     }
 
+    //region:normalField
     private void expectToken(TokenType type, String term) {
         when(stMock.getFieldName()).thenReturn("field_x");
         tokens.add(new Token(type, term));
@@ -271,5 +272,703 @@ class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<StringSearch
                 .hasMessage("Evaluation of type UNSUPPORTED is not supported...");
         }
     }
+    //endregion
 
+    //region:methodsField
+    private void expectMethodToken(TokenType type, String term) {
+        when(stMock.getFieldName()).thenReturn("methods");
+        tokens.add(new Token(type, term));
+        when(stMock.getTokens()).thenReturn(tokens);
+    }
+
+    @Test
+    void buildingConditionForNotRegex_withMethodsField_appliesNotRegexToAllMethodsFields() {
+        expectMethodToken(TokenType.NOTREGEX, "foo");
+        assertThat(e
+            .evaluate(stMock)
+            .toString()).isEqualTo(concat(
+            //@formatter:off
+            "(",
+                    "  not(lower(cast(methods as varchar)) like_regex 'foo')",
+                    "  and not(lower(cast(method_study_design as varchar)) like_regex 'foo')",
+                    "  and not(lower(cast(population_place as varchar)) like_regex 'foo')",
+                    "  and not(lower(cast(method_outcome as varchar)) like_regex 'foo')",
+                    "  and not(lower(cast(exposure_pollutant as varchar)) like_regex 'foo')",
+                    "  and not(lower(cast(exposure_assessment as varchar)) like_regex 'foo')",
+                    "  and not(lower(cast(method_statistics as varchar)) like_regex 'foo')",
+                    "  and not(lower(cast(method_confounders as varchar)) like_regex 'foo')",
+                 ")"
+            //@formatter:on
+        ));
+    }
+
+    @Test
+    void buildingConditionForRegex_withMethodsField_appliesRegexToAllMethodsFields() {
+        expectMethodToken(TokenType.REGEX, "foo");
+        assertThat(e
+            .evaluate(stMock)
+            .toString()).isEqualTo(concat(
+            //@formatter:off
+            "(",
+                "  lower(cast(methods as varchar)) like_regex 'foo'",
+                "  or lower(cast(method_study_design as varchar)) like_regex 'foo'",
+                "  or lower(cast(population_place as varchar)) like_regex 'foo'",
+                "  or lower(cast(method_outcome as varchar)) like_regex 'foo'",
+                "  or lower(cast(exposure_pollutant as varchar)) like_regex 'foo'",
+                "  or lower(cast(exposure_assessment as varchar)) like_regex 'foo'",
+                "  or lower(cast(method_statistics as varchar)) like_regex 'foo'",
+                "  or lower(cast(method_confounders as varchar)) like_regex 'foo'",
+                ")"
+            //@formatter:on
+        ));
+    }
+
+    @Test
+    void buildingConditionForWhitespace_withMethodField_appliesTrueCondition() {
+        expectMethodToken(TokenType.WHITESPACE, "   ");
+        assertThat(e
+            .evaluate(stMock)
+            .toString()).isEqualTo("1 = 1");
+    }
+
+    @Test
+    void buildingConditionForSome_withMethodField_appliesNotEmpty() {
+        expectMethodToken(TokenType.SOME, "whatever");
+        assertThat(e
+            .evaluate(stMock)
+            .toString()).isEqualTo(concat(
+            // @formatter:off
+                "(",
+                "  (",
+                "    methods is not null",
+                "    and char_length(cast(methods as varchar)) > 0",
+                "  )",
+                "  or (",
+                "    method_study_design is not null",
+                "    and char_length(cast(method_study_design as varchar)) > 0",
+                "  )",
+                "  or (",
+                "    population_place is not null",
+                "    and char_length(cast(population_place as varchar)) > 0",
+                "  )",
+                "  or (",
+                "    method_outcome is not null",
+                "    and char_length(cast(method_outcome as varchar)) > 0",
+                "  )",
+                "  or (",
+                "    exposure_pollutant is not null",
+                "    and char_length(cast(exposure_pollutant as varchar)) > 0",
+                "  )",
+                "  or (",
+                "    exposure_assessment is not null",
+                "    and char_length(cast(exposure_assessment as varchar)) > 0",
+                "  )",
+                "  or (",
+                "    method_statistics is not null",
+                "    and char_length(cast(method_statistics as varchar)) > 0",
+                "  )",
+                "  or (",
+                "    method_confounders is not null",
+                "    and char_length(cast(method_confounders as varchar)) > 0",
+                "  )",
+                ")"
+                // @formatter:on
+        ));
+    }
+
+    @Test
+    void buildingConditionForEmpty_withMethodField_appliesEmptyToAllMethodsFields() {
+        expectMethodToken(TokenType.EMPTY, "whatever");
+        assertThat(e
+            .evaluate(stMock)
+            .toString()).isEqualTo(concat(
+            // @formatter:off
+            "(",
+            "  (",
+            "    methods is null",
+            "    or char_length(cast(methods as varchar)) = 0",
+            "  )",
+            "  and (",
+            "    method_study_design is null",
+            "    or char_length(cast(method_study_design as varchar)) = 0",
+            "  )",
+            "  and (",
+            "    population_place is null",
+            "    or char_length(cast(population_place as varchar)) = 0",
+            "  )",
+            "  and (",
+            "    method_outcome is null",
+            "    or char_length(cast(method_outcome as varchar)) = 0",
+            "  )",
+            "  and (",
+            "    exposure_pollutant is null",
+            "    or char_length(cast(exposure_pollutant as varchar)) = 0",
+            "  )",
+            "  and (",
+            "    exposure_assessment is null",
+            "    or char_length(cast(exposure_assessment as varchar)) = 0",
+            "  )",
+            "  and (",
+            "    method_statistics is null",
+            "    or char_length(cast(method_statistics as varchar)) = 0",
+            "  )",
+            "  and (",
+            "    method_confounders is null",
+            "    or char_length(cast(method_confounders as varchar)) = 0",
+            "  )",
+            ")"
+            // @formatter:on
+        ));
+    }
+
+    @Test
+    void buildingConditionForNotOpenLeftRightQuoted_withMethodField_appliesLikeToAllMethodFields() {
+        expectMethodToken(TokenType.NOTOPENLEFTRIGHTQUOTED, "foo");
+        assertThat(e
+            .evaluate(stMock)
+            .toString()).isEqualTo(concat(
+            // @formatter:off
+            "(",
+                "  lower(cast(methods as varchar)) not like lower('%foo%')",
+                "  and lower(cast(method_study_design as varchar)) not like lower('%foo%')",
+                "  and lower(cast(population_place as varchar)) not like lower('%foo%')",
+                "  and lower(cast(method_outcome as varchar)) not like lower('%foo%')",
+                "  and lower(cast(exposure_pollutant as varchar)) not like lower('%foo%')",
+                "  and lower(cast(exposure_assessment as varchar)) not like lower('%foo%')",
+                "  and lower(cast(method_statistics as varchar)) not like lower('%foo%')",
+                "  and lower(cast(method_confounders as varchar)) not like lower('%foo%')",
+                ")"
+            // @formatter:on
+        ));
+    }
+
+    @Test
+    void buildingConditionForOpenLeftRightQuoted_withMethodField_appliesLikeToAllMethodFields() {
+        expectMethodToken(TokenType.OPENLEFTRIGHTQUOTED, "foo");
+        assertThat(e
+            .evaluate(stMock)
+            .toString()).isEqualTo(concat(
+            // @formatter:off
+                "(",
+                "  lower(cast(methods as varchar)) like lower('%foo%')",
+                "  or lower(cast(method_study_design as varchar)) like lower('%foo%')",
+                "  or lower(cast(population_place as varchar)) like lower('%foo%')",
+                "  or lower(cast(method_outcome as varchar)) like lower('%foo%')",
+                "  or lower(cast(exposure_pollutant as varchar)) like lower('%foo%')",
+                "  or lower(cast(exposure_assessment as varchar)) like lower('%foo%')",
+                "  or lower(cast(method_statistics as varchar)) like lower('%foo%')",
+                "  or lower(cast(method_confounders as varchar)) like lower('%foo%')",
+                ")"
+            // @formatter:on
+        ));
+    }
+
+    @Test
+    void buildingConditionForNotOpenLeftRight_withMethodField_appliesNotLikeToAllMethodFields() {
+        expectMethodToken(TokenType.NOTOPENLEFTRIGHT, "foo");
+        assertThat(e
+            .evaluate(stMock)
+            .toString()).isEqualTo(concat(
+            // @formatter:off
+            "(",
+                "  lower(cast(methods as varchar)) not like lower('%foo%')",
+                "  and lower(cast(method_study_design as varchar)) not like lower('%foo%')",
+                "  and lower(cast(population_place as varchar)) not like lower('%foo%')",
+                "  and lower(cast(method_outcome as varchar)) not like lower('%foo%')",
+                "  and lower(cast(exposure_pollutant as varchar)) not like lower('%foo%')",
+                "  and lower(cast(exposure_assessment as varchar)) not like lower('%foo%')",
+                "  and lower(cast(method_statistics as varchar)) not like lower('%foo%')",
+                "  and lower(cast(method_confounders as varchar)) not like lower('%foo%')",
+                ")"
+            // @formatter:on
+        ));
+    }
+
+    @Test
+    void buildingConditionForOpenLeftRight_withMethodField_appliesLikeToAllMethodFields() {
+        expectMethodToken(TokenType.OPENLEFTRIGHT, "foo");
+        assertThat(e
+            .evaluate(stMock)
+            .toString()).isEqualTo(concat(
+            // @formatter:off
+                "(",
+                "  lower(cast(methods as varchar)) like lower('%foo%')",
+                "  or lower(cast(method_study_design as varchar)) like lower('%foo%')",
+                "  or lower(cast(population_place as varchar)) like lower('%foo%')",
+                "  or lower(cast(method_outcome as varchar)) like lower('%foo%')",
+                "  or lower(cast(exposure_pollutant as varchar)) like lower('%foo%')",
+                "  or lower(cast(exposure_assessment as varchar)) like lower('%foo%')",
+                "  or lower(cast(method_statistics as varchar)) like lower('%foo%')",
+                "  or lower(cast(method_confounders as varchar)) like lower('%foo%')",
+                ")"
+            // @formatter:on
+        ));
+    }
+
+    @Test
+    void buildingConditionForNotOpenRightQuoted_withMethodField_appliesLikeToAllMethodFields() {
+        expectMethodToken(TokenType.NOTOPENRIGHTQUOTED, "foo");
+        assertThat(e
+            .evaluate(stMock)
+            .toString()).isEqualTo(concat(
+            // @formatter:off
+            "(",
+                "  lower(cast(methods as varchar)) not like lower('foo%')",
+                "  and lower(cast(method_study_design as varchar)) not like lower('foo%')",
+                "  and lower(cast(population_place as varchar)) not like lower('foo%')",
+                "  and lower(cast(method_outcome as varchar)) not like lower('foo%')",
+                "  and lower(cast(exposure_pollutant as varchar)) not like lower('foo%')",
+                "  and lower(cast(exposure_assessment as varchar)) not like lower('foo%')",
+                "  and lower(cast(method_statistics as varchar)) not like lower('foo%')",
+                "  and lower(cast(method_confounders as varchar)) not like lower('foo%')",
+                ")"
+            // @formatter:on
+        ));
+    }
+
+    @Test
+    void buildingConditionForOpenRightQuoted_withMethodField_appliesLikeToAllMethodFields() {
+        expectMethodToken(TokenType.OPENRIGHTQUOTED, "foo");
+        assertThat(e
+            .evaluate(stMock)
+            .toString()).isEqualTo(concat(
+            // @formatter:off
+                "(",
+                "  lower(cast(methods as varchar)) like lower('foo%')",
+                "  or lower(cast(method_study_design as varchar)) like lower('foo%')",
+                "  or lower(cast(population_place as varchar)) like lower('foo%')",
+                "  or lower(cast(method_outcome as varchar)) like lower('foo%')",
+                "  or lower(cast(exposure_pollutant as varchar)) like lower('foo%')",
+                "  or lower(cast(exposure_assessment as varchar)) like lower('foo%')",
+                "  or lower(cast(method_statistics as varchar)) like lower('foo%')",
+                "  or lower(cast(method_confounders as varchar)) like lower('foo%')",
+                ")"
+            // @formatter:on
+        ));
+    }
+
+    @Test
+    void buildingConditionForNotOpenRight_withMethodField_appliesNotLikeToAllMethodFields() {
+        expectMethodToken(TokenType.NOTOPENRIGHT, "foo");
+        assertThat(e
+            .evaluate(stMock)
+            .toString()).isEqualTo(concat(
+            // @formatter:off
+            "(",
+                "  lower(cast(methods as varchar)) not like lower('foo%')",
+                "  and lower(cast(method_study_design as varchar)) not like lower('foo%')",
+                "  and lower(cast(population_place as varchar)) not like lower('foo%')",
+                "  and lower(cast(method_outcome as varchar)) not like lower('foo%')",
+                "  and lower(cast(exposure_pollutant as varchar)) not like lower('foo%')",
+                "  and lower(cast(exposure_assessment as varchar)) not like lower('foo%')",
+                "  and lower(cast(method_statistics as varchar)) not like lower('foo%')",
+                "  and lower(cast(method_confounders as varchar)) not like lower('foo%')",
+                ")"
+            // @formatter:on
+        ));
+    }
+
+    @Test
+    void buildingConditionForOpenRight_withMethodField_appliesLikeToAllMethodFields() {
+        expectMethodToken(TokenType.OPENRIGHT, "foo");
+        assertThat(e
+            .evaluate(stMock)
+            .toString()).isEqualTo(concat(
+            // @formatter:off
+                "(",
+                "  lower(cast(methods as varchar)) like lower('foo%')",
+                "  or lower(cast(method_study_design as varchar)) like lower('foo%')",
+                "  or lower(cast(population_place as varchar)) like lower('foo%')",
+                "  or lower(cast(method_outcome as varchar)) like lower('foo%')",
+                "  or lower(cast(exposure_pollutant as varchar)) like lower('foo%')",
+                "  or lower(cast(exposure_assessment as varchar)) like lower('foo%')",
+                "  or lower(cast(method_statistics as varchar)) like lower('foo%')",
+                "  or lower(cast(method_confounders as varchar)) like lower('foo%')",
+                ")"
+            // @formatter:on
+        ));
+    }
+
+    @Test
+    void buildingConditionForNotOpenLeftQuoted_withMethodField_appliesLikeToAllMethodFields() {
+        expectMethodToken(TokenType.NOTOPENLEFTQUOTED, "foo");
+        assertThat(e
+            .evaluate(stMock)
+            .toString()).isEqualTo(concat(
+            // @formatter:off
+            "(",
+                "  lower(cast(methods as varchar)) not like lower('%foo')",
+                "  and lower(cast(method_study_design as varchar)) not like lower('%foo')",
+                "  and lower(cast(population_place as varchar)) not like lower('%foo')",
+                "  and lower(cast(method_outcome as varchar)) not like lower('%foo')",
+                "  and lower(cast(exposure_pollutant as varchar)) not like lower('%foo')",
+                "  and lower(cast(exposure_assessment as varchar)) not like lower('%foo')",
+                "  and lower(cast(method_statistics as varchar)) not like lower('%foo')",
+                "  and lower(cast(method_confounders as varchar)) not like lower('%foo')",
+                ")"
+            // @formatter:on
+        ));
+    }
+
+    @Test
+    void buildingConditionForOpenLeftQuoted_withMethodField_appliesLikeToAllMethodFields() {
+        expectMethodToken(TokenType.OPENLEFTQUOTED, "foo");
+        assertThat(e
+            .evaluate(stMock)
+            .toString()).isEqualTo(concat(
+            // @formatter:off
+            "(",
+                "  lower(cast(methods as varchar)) like lower('%foo')",
+                "  or lower(cast(method_study_design as varchar)) like lower('%foo')",
+                "  or lower(cast(population_place as varchar)) like lower('%foo')",
+                "  or lower(cast(method_outcome as varchar)) like lower('%foo')",
+                "  or lower(cast(exposure_pollutant as varchar)) like lower('%foo')",
+                "  or lower(cast(exposure_assessment as varchar)) like lower('%foo')",
+                "  or lower(cast(method_statistics as varchar)) like lower('%foo')",
+                "  or lower(cast(method_confounders as varchar)) like lower('%foo')",
+                ")"
+            // @formatter:on
+        ));
+    }
+
+    @Test
+    void buildingConditionForNotOpenLeft_withMethodField_appliesNotLikeToAllMethodFields() {
+        expectMethodToken(TokenType.NOTOPENLEFT, "foo");
+        assertThat(e
+            .evaluate(stMock)
+            .toString()).isEqualTo(concat(
+            // @formatter:off
+            "(",
+                "  lower(cast(methods as varchar)) not like lower('%foo')",
+                "  and lower(cast(method_study_design as varchar)) not like lower('%foo')",
+                "  and lower(cast(population_place as varchar)) not like lower('%foo')",
+                "  and lower(cast(method_outcome as varchar)) not like lower('%foo')",
+                "  and lower(cast(exposure_pollutant as varchar)) not like lower('%foo')",
+                "  and lower(cast(exposure_assessment as varchar)) not like lower('%foo')",
+                "  and lower(cast(method_statistics as varchar)) not like lower('%foo')",
+                "  and lower(cast(method_confounders as varchar)) not like lower('%foo')",
+                ")"
+            // @formatter:on
+        ));
+    }
+
+    @Test
+    void buildingConditionForOpenLeft_withMethodField_appliesLikeToAllMethodFields() {
+        expectMethodToken(TokenType.OPENLEFT, "foo");
+        assertThat(e
+            .evaluate(stMock)
+            .toString()).isEqualTo(concat(
+            // @formatter:off
+            "(",
+                "  lower(cast(methods as varchar)) like lower('%foo')",
+                "  or lower(cast(method_study_design as varchar)) like lower('%foo')",
+                "  or lower(cast(population_place as varchar)) like lower('%foo')",
+                "  or lower(cast(method_outcome as varchar)) like lower('%foo')",
+                "  or lower(cast(exposure_pollutant as varchar)) like lower('%foo')",
+                "  or lower(cast(exposure_assessment as varchar)) like lower('%foo')",
+                "  or lower(cast(method_statistics as varchar)) like lower('%foo')",
+                "  or lower(cast(method_confounders as varchar)) like lower('%foo')",
+                ")"
+            // @formatter:on
+        ));
+    }
+
+    @Test
+    void buildingConditionForNotQuoted_withMethodField_appliesUnequalToAllMethodFields() {
+        expectMethodToken(TokenType.NOTQUOTED, "foo");
+        assertThat(e
+            .evaluate(stMock)
+            .toString()).isEqualTo(concat(
+            // @formatter:off
+                "(",
+                "  lower(cast(methods as varchar)) <> lower('foo')",
+                "  and lower(cast(method_study_design as varchar)) <> lower('foo')",
+                "  and lower(cast(population_place as varchar)) <> lower('foo')",
+                "  and lower(cast(method_outcome as varchar)) <> lower('foo')",
+                "  and lower(cast(exposure_pollutant as varchar)) <> lower('foo')",
+                "  and lower(cast(exposure_assessment as varchar)) <> lower('foo')",
+                "  and lower(cast(method_statistics as varchar)) <> lower('foo')",
+                "  and lower(cast(method_confounders as varchar)) <> lower('foo')",
+                ")"
+             // @formatter:on
+        ));
+    }
+
+    @Test
+    void buildingConditionForQuoted_withMethodField_appliesEqualToAllMethodFields() {
+        expectMethodToken(TokenType.QUOTED, "foo");
+        assertThat(e
+            .evaluate(stMock)
+            .toString()).isEqualTo(concat(
+            // @formatter:off
+                "(",
+                "  lower(cast(methods as varchar)) = lower('foo')",
+                "  or lower(cast(method_study_design as varchar)) = lower('foo')",
+                "  or lower(cast(population_place as varchar)) = lower('foo')",
+                "  or lower(cast(method_outcome as varchar)) = lower('foo')",
+                "  or lower(cast(exposure_pollutant as varchar)) = lower('foo')",
+                "  or lower(cast(exposure_assessment as varchar)) = lower('foo')",
+                "  or lower(cast(method_statistics as varchar)) = lower('foo')",
+                "  or lower(cast(method_confounders as varchar)) = lower('foo')",
+                ")"
+             // @formatter:on
+        ));
+    }
+
+    @Test
+    void buildingConditionForNotWord_withMethodField_appliesNotContainsToAllMethodFields() {
+        expectMethodToken(TokenType.NOTWORD, "foo");
+        assertThat(e
+            .evaluate(stMock)
+            .toString()).isEqualTo(concat(
+            // @formatter:off
+                "(",
+                "  not(lower(cast(methods as varchar)) like ('%' || replace(",
+                "    replace(",
+                "      replace(",
+                "        lower('foo'), ",
+                "        '!', ",
+                "        '!!'",
+                "      ), ",
+                "      '%', ",
+                "      '!%'",
+                "    ), ",
+                "    '_', ",
+                "    '!_'",
+                "  ) || '%') escape '!')",
+                "  and not(lower(cast(method_study_design as varchar)) like ('%' || replace(",
+                "    replace(",
+                "      replace(",
+                "        lower('foo'), ",
+                "        '!', ",
+                "        '!!'",
+                "      ), ",
+                "      '%', ",
+                "      '!%'",
+                "    ), ",
+                "    '_', ",
+                "    '!_'",
+                "  ) || '%') escape '!')",
+                "  and not(lower(cast(population_place as varchar)) like ('%' || replace(",
+                "    replace(",
+                "      replace(",
+                "        lower('foo'), ",
+                "        '!', ",
+                "        '!!'",
+                "      ), ",
+                "      '%', ",
+                "      '!%'",
+                "    ), ",
+                "    '_', ",
+                "    '!_'",
+                "  ) || '%') escape '!')",
+                "  and not(lower(cast(method_outcome as varchar)) like ('%' || replace(",
+                "    replace(",
+                "      replace(",
+                "        lower('foo'), ",
+                "        '!', ",
+                "        '!!'",
+                "      ), ",
+                "      '%', ",
+                "      '!%'",
+                "    ), ",
+                "    '_', ",
+                "    '!_'",
+                "  ) || '%') escape '!')",
+                "  and not(lower(cast(exposure_pollutant as varchar)) like ('%' || replace(",
+                "    replace(",
+                "      replace(",
+                "        lower('foo'), ",
+                "        '!', ",
+                "        '!!'",
+                "      ), ",
+                "      '%', ",
+                "      '!%'",
+                "    ), ",
+                "    '_', ",
+                "    '!_'",
+                "  ) || '%') escape '!')",
+                "  and not(lower(cast(exposure_assessment as varchar)) like ('%' || replace(",
+                "    replace(",
+                "      replace(",
+                "        lower('foo'), ",
+                "        '!', ",
+                "        '!!'",
+                "      ), ",
+                "      '%', ",
+                "      '!%'",
+                "    ), ",
+                "    '_', ",
+                "    '!_'",
+                "  ) || '%') escape '!')",
+                "  and not(lower(cast(method_statistics as varchar)) like ('%' || replace(",
+                "    replace(",
+                "      replace(",
+                "        lower('foo'), ",
+                "        '!', ",
+                "        '!!'",
+                "      ), ",
+                "      '%', ",
+                "      '!%'",
+                "    ), ",
+                "    '_', ",
+                "    '!_'",
+                "  ) || '%') escape '!')",
+                "  and not(lower(cast(method_confounders as varchar)) like ('%' || replace(",
+                "    replace(",
+                "      replace(",
+                "        lower('foo'), ",
+                "        '!', ",
+                "        '!!'",
+                "      ), ",
+                "      '%', ",
+                "      '!%'",
+                "    ), ",
+                "    '_', ",
+                "    '!_'",
+                "  ) || '%') escape '!')",
+                ")"
+            // @formatter:on
+        ));
+    }
+
+    @Test
+    void buildingConditionForWord_withMethodField_appliesContainsToAllMethodFields() {
+        expectMethodToken(TokenType.WORD, "foo");
+        assertThat(e
+            .evaluate(stMock)
+            .toString()).isEqualTo(concat(
+            // @formatter:off
+            "(",
+            "  lower(cast(methods as varchar)) like ('%' || replace(",
+            "    replace(",
+            "      replace(",
+            "        lower('foo'), ",
+            "        '!', ",
+            "        '!!'",
+            "      ), ",
+            "      '%', ",
+            "      '!%'",
+            "    ), ",
+            "    '_', ",
+            "    '!_'",
+            "  ) || '%') escape '!'",
+            "  or lower(cast(method_study_design as varchar)) like ('%' || replace(",
+            "    replace(",
+            "      replace(",
+            "        lower('foo'), ",
+            "        '!', ",
+            "        '!!'",
+            "      ), ",
+            "      '%', ",
+            "      '!%'",
+            "    ), ",
+            "    '_', ",
+            "    '!_'",
+            "  ) || '%') escape '!'",
+            "  or lower(cast(population_place as varchar)) like ('%' || replace(",
+            "    replace(",
+            "      replace(",
+            "        lower('foo'), ",
+            "        '!', ",
+            "        '!!'",
+            "      ), ",
+            "      '%', ",
+            "      '!%'",
+            "    ), ",
+            "    '_', ",
+            "    '!_'",
+            "  ) || '%') escape '!'",
+            "  or lower(cast(method_outcome as varchar)) like ('%' || replace(",
+            "    replace(",
+            "      replace(",
+            "        lower('foo'), ",
+            "        '!', ",
+            "        '!!'",
+            "      ), ",
+            "      '%', ",
+            "      '!%'",
+            "    ), ",
+            "    '_', ",
+            "    '!_'",
+            "  ) || '%') escape '!'",
+            "  or lower(cast(exposure_pollutant as varchar)) like ('%' || replace(",
+            "    replace(",
+            "      replace(",
+            "        lower('foo'), ",
+            "        '!', ",
+            "        '!!'",
+            "      ), ",
+            "      '%', ",
+            "      '!%'",
+            "    ), ",
+            "    '_', ",
+            "    '!_'",
+            "  ) || '%') escape '!'",
+            "  or lower(cast(exposure_assessment as varchar)) like ('%' || replace(",
+            "    replace(",
+            "      replace(",
+            "        lower('foo'), ",
+            "        '!', ",
+            "        '!!'",
+            "      ), ",
+            "      '%', ",
+            "      '!%'",
+            "    ), ",
+            "    '_', ",
+            "    '!_'",
+            "  ) || '%') escape '!'",
+            "  or lower(cast(method_statistics as varchar)) like ('%' || replace(",
+            "    replace(",
+            "      replace(",
+            "        lower('foo'), ",
+            "        '!', ",
+            "        '!!'",
+            "      ), ",
+            "      '%', ",
+            "      '!%'",
+            "    ), ",
+            "    '_', ",
+            "    '!_'",
+            "  ) || '%') escape '!'",
+            "  or lower(cast(method_confounders as varchar)) like ('%' || replace(",
+            "    replace(",
+            "      replace(",
+            "        lower('foo'), ",
+            "        '!', ",
+            "        '!!'",
+            "      ), ",
+            "      '%', ",
+            "      '!%'",
+            "    ), ",
+            "    '_', ",
+            "    '!_'",
+            "  ) || '%') escape '!'",
+            ")"
+            // @formatter:on
+        ));
+    }
+
+    @Test
+    void buildingConditionForRaw_withMethodField_appliesDummyTrue() {
+        expectMethodToken(TokenType.RAW, "foo");
+        assertThat(e
+            .evaluate(stMock)
+            .toString()).isEqualTo("1 = 1");
+    }
+
+    @Test
+    void buildingConditionForUnsupported_withMethodField_throws() {
+        expectMethodToken(TokenType.UNSUPPORTED, "foo");
+        try {
+            e.evaluate(stMock);
+            fail("should have thrown exception");
+        } catch (Error ex) {
+            assertThat(ex)
+                .isInstanceOf(AssertionError.class)
+                .hasMessage("Evaluation of type UNSUPPORTED is not supported...");
+        }
+    }
+
+    //endregion
 }
