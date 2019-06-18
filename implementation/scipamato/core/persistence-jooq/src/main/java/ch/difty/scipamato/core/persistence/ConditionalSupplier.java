@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.BinaryOperator;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
@@ -63,29 +64,24 @@ public class ConditionalSupplier {
     }
 
     public Condition combineWithAnd() {
+        return combineWith(Condition::and, DSL::trueCondition);
+    }
+
+    private Condition combineWith(final BinaryOperator<Condition> binOp, final Supplier<Condition> defaultValue) {
         final Tuple2<Optional<Supplier<Condition>>, Seq<Supplier<Condition>>> tuple = splitAtHead(
             conditionSuppliers.stream());
         final Condition head = tuple.v1
-            .orElse(DSL::trueCondition)
+            .orElse(defaultValue)
             .get();
         final Seq<Supplier<Condition>> tail = tuple.v2;
         return tail
             .stream()
             .map(Supplier::get)
-            .reduce(head, Condition::and);
+            .reduce(head, binOp);
     }
 
     public Condition combineWithOr() {
-        final Tuple2<Optional<Supplier<Condition>>, Seq<Supplier<Condition>>> t = splitAtHead(
-            conditionSuppliers.stream());
-        final Condition head = t.v1
-            .orElse(DSL::falseCondition)
-            .get();
-        final Seq<Supplier<Condition>> tail = t.v2;
-        return tail
-            .stream()
-            .map(Supplier::get)
-            .reduce(head, Condition::or);
+        return combineWith(Condition::or, DSL::falseCondition);
     }
 
     private static <T> Tuple2<Optional<T>, Seq<T>> splitAtHead(final Stream<T> stream) {
