@@ -61,12 +61,8 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 == [unreleased]
 
 .Added
-- {url-issues}91[#91] Core - complex search enhancement: Method search to include short study fields
 
 .Changed
-- Bumped versions of spring-dependency-management, wicket-spring-boot-starter,
-  wicket, wicketstuff, wicket-bootstrap, jasperreports, font-awesome, flyway-plugin,
-  jaxb-plugin
 
 .Deprecated
 
@@ -75,6 +71,18 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Fixed
 
 .Security
+
+
+[[v1.2.1]]
+== [1.2.1] -- 2019-06-18
+
+.Added
+- {url-issues}91[#91] Core - complex search enhancement: Method search to include short study fields
+
+.Changed
+- Bumped versions of spring-dependency-management, wicket-spring-boot-starter,
+  wicket, wicketstuff, wicket-bootstrap, jasperreports, font-awesome, flyway-plugin,
+  jaxb-plugin
 
 
 [[v1.2.0]]
