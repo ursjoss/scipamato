@@ -61,6 +61,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 == [unreleased]
 
 .Added
+- {url-issues}91[#91] Core - complex search enhancement: Method search to include short study fields
 
 .Changed
 - Bumped versions of spring-dependency-management, wicket-spring-boot-starter,
