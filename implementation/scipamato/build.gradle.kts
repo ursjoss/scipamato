@@ -43,14 +43,15 @@ val generatedPackages: Set<String> = setOf(
         "**/ch/difty/scipamato/core/pubmed/api/**",
         "**/ch/difty/scipamato/publ/db/**"
 )
-val jacocoTestReportXml = "build/reports/jacoco/test/jacocoTestReport.xml"
+
+val jacocoTestReportFile = "$buildDir/reports/jacoco/test/jacocoTestReport.xml"
 val jacocoTestPattern = "**/build/jacoco/*.exec"
 
 sonarqube {
     properties {
         property("sonar.exclusions", "**/ch/difty/scipamato/publ/web/themes/markup/html/publ/**/*,${generatedPackages.joinToString(",")}")
         property("sonar.coverage.exclusions", (generatedPackages + testPackages).joinToString(","))
-        property("sonar.coverage.jacoco.xmlReportPaths", jacocoTestReportXml)
+        property("sonar.coverage.jacoco.xmlReportPaths", jacocoTestReportFile)
     }
 }
 
@@ -149,12 +150,16 @@ subprojects {
         named("check") {
             dependsOn(integrationTest)
         }
+
+        jacocoTestReport {
+            sourceSets(sourceSets["main"])
+            executionData(fileTree(project.rootDir.absolutePath).include(jacocoTestPattern))
+        }
         withType<JacocoReport> {
-            enabled = project.name.needsJacocoCoverage()
+            enabled = project.name.mayHaveTestCoverage()
             @Suppress("UnstableApiUsage")
             reports {
                 xml.isEnabled = true
-                xml.destination = file(jacocoTestReportXml)
                 html.isEnabled = false
                 csv.isEnabled = false
             }
@@ -165,20 +170,22 @@ subprojects {
                     }
                 })))
             }
-            dependsOn(test, integrationTest)
+            dependsOn(check)
         }
     }
 }
 
 tasks {
+    val projectsWithCoverage = subprojects.filter { it.name.mayHaveTestCoverage() }
     withType<SonarQubeTask> {
-        dependsOn(subprojects
-                .filter { it.name.needsJacocoCoverage() }
-                .map { it.tasks.getByName("jacocoTestReport") }
+        description = "Push jacoco analysis to sonarcloud."
+        group = "Verification"
+        dependsOn(
+                projectsWithCoverage.map { it.tasks.getByName("jacocoTestReport") }
         )
     }
 }
 
-fun String.needsJacocoCoverage(): Boolean = this !in testModules
+fun String.mayHaveTestCoverage(): Boolean = this !in testModules
 
 fun Project.isWebProject() = path.endsWith("web")
