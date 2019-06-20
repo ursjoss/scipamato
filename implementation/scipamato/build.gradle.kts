@@ -97,14 +97,14 @@ subprojects {
     }
 
     // Breaks running the project from the IntelliJ Run Dashboard - disabling for now
-//    idea {
-//        module {
-//            // https://structure101.com/2018/12/01/structure101-workspace-intellij-idea-and-gradle/
-//            outputDir = file("$buildDir/classes/java/main")
-//            testOutputDir = file("$buildDir/classes/java/test")
-//            inheritOutputDirs = false
-//        }
-//    }
+    // idea {
+    //     module {
+    //         // https://structure101.com/2018/12/01/structure101-workspace-intellij-idea-and-gradle/
+    //         outputDir = file("$buildDir/classes/java/main")
+    //         testOutputDir = file("$buildDir/classes/java/test")
+    //         inheritOutputDirs = false
+    //     }
+    // }
 
     if (!isWebProject()) {
         apply(plugin = "java-library")
@@ -127,11 +127,11 @@ subprojects {
                 jvmTarget = "11"
             }
         }
-        val deleteOutFolder by registering(Delete::class) {
+        val deleteOutFolderTask by registering(Delete::class) {
             delete("out")
         }
         named("clean") {
-            dependsOn(deleteOutFolder)
+            dependsOn(deleteOutFolderTask)
         }
         withType<Test> {
             maxHeapSize = "2g"
@@ -145,6 +145,7 @@ subprojects {
             enabled = false
         }
         val integrationTest by existing {
+            description = "Runs the integration tests."
             dependsOn(test)
         }
         named("check") {
