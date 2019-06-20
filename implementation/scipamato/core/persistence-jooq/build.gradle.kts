@@ -63,27 +63,26 @@ tasks {
         description = "Triggers database migrations for the integration test databases"
         configureApplying(bootCoreItProps)
     }
-    val flywayClean by existing(FlywayCleanTask::class) {
+    flywayClean {
         description = "Drops all objects in the configured schemas of the main database"
         configureApplying(bootCoreProps)
     }
-
     register<FlywayCleanTask>("flywayCleanIt") {
         description = "Drops all objects in the configured schemas of the integration test database"
         configureApplying(bootCoreItProps)
     }
-
-    val flywayInfo by existing(FlywayInfoTask::class) {
+    flywayInfo {
         description = "Prints the details and status information about all the migrations."
         configureApplying(bootCoreProps)
     }
-
     register<FlywayInfoTask>("flywayInfoIt") {
         description = "Prints the details and status information about all the migrations."
         configureApplying(bootCoreItProps)
     }
 
-    getByName("generateScipamatoCoreJooqSchemaSource").dependsOn(flywayMigrate)
+    named("generateScipamatoCoreJooqSchemaSource") {
+        dependsOn(flywayMigrate)
+    }
     getByName("generateScipamatoCoreItJooqSchemaSource").dependsOn(flywayMigrateIt)
     getByName("compileKotlin").dependsOn += "generateScipamatoCoreJooqSchemaSource"
     getByName("compileJava").dependsOn -= "generateScipamatoCoreItJooqSchemaSource"

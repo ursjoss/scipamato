@@ -43,14 +43,15 @@ val generatedPackages: Set<String> = setOf(
         "**/ch/difty/scipamato/core/pubmed/api/**",
         "**/ch/difty/scipamato/publ/db/**"
 )
-val jacocoTestReportXml = "build/reports/jacoco/test/jacocoTestReport.xml"
+
+val jacocoTestReportFile = "$buildDir/reports/jacoco/test/jacocoTestReport.xml"
 val jacocoTestPattern = "**/build/jacoco/*.exec"
 
 sonarqube {
     properties {
         property("sonar.exclusions", "**/ch/difty/scipamato/publ/web/themes/markup/html/publ/**/*,${generatedPackages.joinToString(",")}")
         property("sonar.coverage.exclusions", (generatedPackages + testPackages).joinToString(","))
-        property("sonar.coverage.jacoco.xmlReportPaths", jacocoTestReportXml)
+        property("sonar.coverage.jacoco.xmlReportPaths", jacocoTestReportFile)
     }
 }
 
@@ -80,30 +81,30 @@ subprojects {
             dirName = "testLib"
         }
 
-        val integrationTest by registering {
+        named("unitTest") {
+            imports(testLib)
+        }
+
+        register("integrationTest") {
             dirName = "intTest"
             imports(testLib)
         }
 
-        val adhocTest by registering {
+        register("adhocTest") {
             dirName = "adhocTest"
-            imports(testLib)
-        }
-
-        val unitTest by existing {
             imports(testLib)
         }
     }
 
     // Breaks running the project from the IntelliJ Run Dashboard - disabling for now
-//    idea {
-//        module {
-//            // https://structure101.com/2018/12/01/structure101-workspace-intellij-idea-and-gradle/
-//            outputDir = file("$buildDir/classes/java/main")
-//            testOutputDir = file("$buildDir/classes/java/test")
-//            inheritOutputDirs = false
-//        }
-//    }
+    // idea {
+    //     module {
+    //         // https://structure101.com/2018/12/01/structure101-workspace-intellij-idea-and-gradle/
+    //         outputDir = file("$buildDir/classes/java/main")
+    //         testOutputDir = file("$buildDir/classes/java/test")
+    //         inheritOutputDirs = false
+    //     }
+    // }
 
     if (!isWebProject()) {
         apply(plugin = "java-library")
@@ -115,6 +116,8 @@ subprojects {
 
         api(Lib.slf4j())
         runtimeOnly(Lib.logback())
+
+        compileOnly(Lib.jsr305())
     }
 
     tasks {
@@ -125,6 +128,12 @@ subprojects {
             kotlinOptions {
                 jvmTarget = "11"
             }
+        }
+        val deleteOutFolderTask by registering(Delete::class) {
+            delete("out")
+        }
+        named("clean") {
+            dependsOn(deleteOutFolderTask)
         }
         withType<Test> {
             maxHeapSize = "2g"
@@ -138,16 +147,22 @@ subprojects {
             enabled = false
         }
         val integrationTest by existing {
+            description = "Runs the integration tests."
             dependsOn(test)
         }
-        val check by existing {
+        named("check") {
             dependsOn(integrationTest)
         }
+
+        jacocoTestReport {
+            sourceSets(sourceSets["main"])
+            executionData(fileTree(project.rootDir.absolutePath).include(jacocoTestPattern))
+        }
         withType<JacocoReport> {
-            enabled = project.name.needsJacocoCoverage()
+            enabled = project.name.mayHaveTestCoverage()
+            @Suppress("UnstableApiUsage")
             reports {
                 xml.isEnabled = true
-                xml.destination = file(jacocoTestReportXml)
                 html.isEnabled = false
                 csv.isEnabled = false
             }
@@ -164,14 +179,16 @@ subprojects {
 }
 
 tasks {
+    val projectsWithCoverage = subprojects.filter { it.name.mayHaveTestCoverage() }
     withType<SonarQubeTask> {
-        dependsOn(subprojects
-                .filter { it.name.needsJacocoCoverage() }
-                .map { it.tasks.getByName("jacocoTestReport") }
+        description = "Push jacoco analysis to sonarcloud."
+        group = "Verification"
+        dependsOn(
+                projectsWithCoverage.map { it.tasks.getByName("jacocoTestReport") }
         )
     }
 }
 
-fun String.needsJacocoCoverage(): Boolean = this !in testModules
+fun String.mayHaveTestCoverage(): Boolean = this !in testModules
 
 fun Project.isWebProject() = path.endsWith("web")
