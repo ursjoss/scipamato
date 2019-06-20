@@ -38,6 +38,8 @@ object Lib {
     private const val equalsverifierVersion = "3.1.9"
 
     private const val junit5Version = "5.4.2"
+
+    private const val jsr305Version = "3.0.2"
     //endregion
 
     //region:pluginVersions
@@ -133,6 +135,8 @@ object Lib {
     fun equalsverifier() = Dep("nl.jqno.equalsverifier", "equalsverifier", equalsverifierVersion)
 
     fun servletApi() = Dep("javax.servlet", "javax.servlet-api")
+
+    fun jsr305() = Dep("com.google.code.findbugs", "jsr305", jsr305Version)
 
     //endregion
 

@@ -116,6 +116,8 @@ subprojects {
 
         api(Lib.slf4j())
         runtimeOnly(Lib.logback())
+
+        compileOnly(Lib.jsr305())
     }
 
     tasks {
