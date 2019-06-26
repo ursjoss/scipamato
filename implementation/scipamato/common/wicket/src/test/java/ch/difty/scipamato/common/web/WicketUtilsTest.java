@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.common.FinalClassTest;
 
-class WicketUtilsTest extends FinalClassTest<WicketUtils> {
+class WicketUtilsTest implements FinalClassTest<WicketUtils> {
 
     @Test
     void labelTag() {

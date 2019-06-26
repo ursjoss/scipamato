@@ -21,10 +21,10 @@ import org.springframework.core.GenericTypeResolver;
  * @see <a href=
  *     "http://stackoverflow.com/questions/3437897/how-to-get-a-class-instance-of-generics-type-t">http://stackoverflow.com/questions/3437897/how-to-get-a-class-instance-of-generics-type-t</a>
  */
-public abstract class FinalClassTest<C> {
+public interface FinalClassTest<C> {
 
     @Test
-    void testConstructorIsPrivate()
+    default void testConstructorIsPrivate()
         throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         @SuppressWarnings("unchecked") Class<C> clazz = (Class<C>) GenericTypeResolver.resolveTypeArgument(getClass(),
             FinalClassTest.class);
