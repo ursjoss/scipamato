@@ -63,7 +63,6 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 
 .Changed
-- Bumped version of spring-boot-starter, spring-cloud, openfeign, spring-dependency-management, jasperreports, lombok-plugin
 
 .Deprecated
 
@@ -72,6 +71,13 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Fixed
 
 .Security
+
+
+[[v1.2.2]]
+== [1.2.2] -- 2019-06-26
+
+.Changed
+- Bumped version of spring-boot-starter, spring-cloud, openfeign, spring-dependency-management, jasperreports, lombok-plugin
 
 
 [[v1.2.1]]
