@@ -240,20 +240,26 @@ public abstract class ResultPanel extends BasePanel<Void> {
             .on(FontAwesome5IconTypeBuilder.FontAwesome5Regular.envelope)
             .fixedWidth()
             .build();
+        return newLinkIconColumn(id, plusSquare, envelopeOpen, envelope);
+    }
+
+    private LinkIconColumn<PaperSlim> newLinkIconColumn(final String id, final FontAwesome5IconType plusSquare,
+        final FontAwesome5IconType envelopeOpen, final FontAwesome5IconType envelope) {
         return new LinkIconColumn<>(new StringResourceModel(COLUMN_HEADER + id, this, null)) {
             private static final long serialVersionUID = 1L;
 
             @Override
             protected IModel<String> createIconModel(final IModel<PaperSlim> rowModel) {
-                String icon;
-                final PaperSlim paper = rowModel.getObject();
+                return Model.of(newLinkIcon(rowModel.getObject()));
+            }
+
+            private String newLinkIcon(final PaperSlim paper) {
                 if (hasNoNewsletter(paper))
-                    icon = isThereOneNewsletterInStatusWip() ? plusSquare.cssClassName() : "";
+                    return isThereOneNewsletterInStatusWip() ? plusSquare.cssClassName() : "";
                 else if (hasNewsletterWip(paper))
-                    icon = envelopeOpen.cssClassName();
+                    return envelopeOpen.cssClassName();
                 else
-                    icon = envelope.cssClassName();
-                return Model.of(icon);
+                    return envelope.cssClassName();
             }
 
             private boolean hasNoNewsletter(final PaperSlim paper) {
