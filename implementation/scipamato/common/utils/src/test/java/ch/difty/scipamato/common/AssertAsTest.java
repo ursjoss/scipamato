@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.fail;
 
 import org.junit.jupiter.api.Test;
 
-class AssertAsTest extends FinalClassTest<AssertAs> {
+class AssertAsTest implements FinalClassTest<AssertAs> {
 
     @Test
     void assertingNonNullField_doesNothing() {

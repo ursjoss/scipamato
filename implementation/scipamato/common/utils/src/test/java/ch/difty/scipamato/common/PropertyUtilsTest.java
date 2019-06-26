@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 
-class PropertyUtilsTest extends FinalClassTest<PropertyUtils> {
+class PropertyUtilsTest implements FinalClassTest<PropertyUtils> {
 
     private static final String PROPERTY_KEY = "propertyKey";
 

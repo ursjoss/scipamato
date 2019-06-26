@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.common.FinalClassTest;
 
-class RolesTest extends FinalClassTest<Roles> {
+class RolesTest implements FinalClassTest<Roles> {
 
     @Test
     void assertRoleName_User() {

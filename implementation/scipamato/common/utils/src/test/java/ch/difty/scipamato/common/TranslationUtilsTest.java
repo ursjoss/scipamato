@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 
-class TranslationUtilsTest extends FinalClassTest<TranslationUtils> {
+class TranslationUtilsTest implements FinalClassTest<TranslationUtils> {
 
     @Test
     void verifyNotTranslatedString() {

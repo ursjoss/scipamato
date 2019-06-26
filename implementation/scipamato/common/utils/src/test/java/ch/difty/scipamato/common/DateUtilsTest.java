@@ -6,7 +6,7 @@ import java.sql.Timestamp;
 
 import org.junit.jupiter.api.Test;
 
-class DateUtilsTest extends FinalClassTest<DateUtils> {
+class DateUtilsTest implements FinalClassTest<DateUtils> {
 
     @Test
     void tsOf_withNullDate() {
