@@ -10,10 +10,10 @@ object Lib {
     //region:dependencyVersions
     private const val kotlinVersion = "1.3.31"
 
-    private const val springBootVersion = "2.1.5.RELEASE"
+    private const val springBootVersion = "2.1.6.RELEASE"
     private const val springBootAdminVersion = "2.1.5"
-    private const val springCloudVersion = "2.1.1.RELEASE"
-    private const val springDependencyManagementVersion = "1.0.7.RELEASE"
+    private const val springCloudVersion = "2.1.2.RELEASE"
+    private const val springDependencyManagementVersion = "1.0.8.RELEASE"
 
     private const val wicketSpringBootStarterVersion = "2.1.7"
     private const val wicketVersion = "8.5.0"
@@ -22,7 +22,7 @@ object Lib {
     private const val wicketBootstrapVersion = "2.0.10"
     private const val jasperReportVersion = "6.9.0"
 
-    private const val openfeignVersion = "10.1.0"
+    private const val openfeignVersion = "10.2.3"
 
     private const val jaxbCoreVersion = "2.3.0.1"
     private const val jaxbImplVersion = "2.3.2"
@@ -43,7 +43,7 @@ object Lib {
     //endregion
 
     //region:pluginVersions
-    private const val lombokPluginVersion = "3.6.4"
+    private const val lombokPluginVersion = "3.7.5"
     private const val jooqPluginVersion = "3.0.3"
     private const val flywayPluginVersion = "6.0.0-beta2"
     private const val jaxbPluginVersion = "3.0.4"
