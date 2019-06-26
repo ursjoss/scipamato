@@ -7,6 +7,7 @@ import static ch.difty.scipamato.core.web.CorePageParameters.*;
 import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
+import java.util.function.ObjIntConsumer;
 
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
@@ -470,7 +471,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
      */
     @SuppressWarnings("SameParameterValue")
     private void processIntegerField(final String fieldName, final String rawArticleValue,
-        final Function<Paper, Integer> getter, final BiConsumer<Paper, Integer> setter,
+        final Function<Paper, Integer> getter, final ObjIntConsumer<Paper> setter,
         final String conversionResourceString, final Paper p, final ProcessingRecord pr, final AjaxRequestTarget target,
         final FormComponent<?>... fcs) {
         final String localizedFieldName = getLabelResourceFor(fieldName);
@@ -490,8 +491,8 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
     }
 
     private void setPaperFieldFromArticleAndInform(final String fieldName, final int articleValue,
-        final BiConsumer<Paper, Integer> setter, final Paper p, final ProcessingRecord pr,
-        final AjaxRequestTarget target, final FormComponent<?>... fcs) {
+        final ObjIntConsumer<Paper> setter, final Paper p, final ProcessingRecord pr, final AjaxRequestTarget target,
+        final FormComponent<?>... fcs) {
         setter.accept(p, articleValue);
         pr.addChangedField(fieldName);
         addTargets(target, fcs);
