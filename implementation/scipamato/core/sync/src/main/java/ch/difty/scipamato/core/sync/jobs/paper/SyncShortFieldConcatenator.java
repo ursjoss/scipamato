@@ -1,6 +1,5 @@
 package ch.difty.scipamato.core.sync.jobs.paper;
 
-import java.io.Serializable;
 import java.sql.ResultSet;
 
 /**
@@ -9,7 +8,7 @@ import java.sql.ResultSet;
  * <p>
  * The content may either be those fields themselves or some concatenated short fields.
  */
-interface SyncShortFieldConcatenator extends Serializable {
+interface SyncShortFieldConcatenator {
 
     /**
      * @param rs

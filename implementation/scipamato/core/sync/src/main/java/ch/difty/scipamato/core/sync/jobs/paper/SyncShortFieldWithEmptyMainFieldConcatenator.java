@@ -29,8 +29,6 @@ import ch.difty.scipamato.core.db.public_.tables.records.PaperRecord;
 class SyncShortFieldWithEmptyMainFieldConcatenator extends AbstractShortFieldConcatenator
     implements SyncShortFieldConcatenator {
 
-    private static final long serialVersionUID = 1L;
-
     private static final String RS         = "rs";
     private static final String UNABLE_MSG = "Unable to evaluate recordset";
 

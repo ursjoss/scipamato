@@ -1,7 +1,5 @@
 package ch.difty.scipamato.core.web.paper.jasper;
 
-import java.io.Serializable;
-
 import ch.difty.scipamato.core.entity.Paper;
 
 /**
@@ -9,7 +7,7 @@ import ch.difty.scipamato.core.entity.Paper;
  * <p>
  * The content may either be those fields themselves or some concatenated short fields.
  */
-public interface CoreShortFieldConcatenator extends Serializable {
+public interface CoreShortFieldConcatenator {
 
     /**
      * @param paper

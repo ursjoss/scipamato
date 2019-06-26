@@ -19,8 +19,6 @@ import ch.difty.scipamato.core.entity.Paper;
 public class CoreShortFieldWithEmptyMainFieldConcatenator extends AbstractShortFieldConcatenator
     implements CoreShortFieldConcatenator {
 
-    private static final long serialVersionUID = 1L;
-
     private static final String PAPER = "paper";
 
     public CoreShortFieldWithEmptyMainFieldConcatenator() {
