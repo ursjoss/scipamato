@@ -37,7 +37,7 @@ object Lib {
 
     private const val equalsverifierVersion = "3.1.9"
 
-    private const val junit5Version = "5.4.2"
+    private const val junit5Version = "5.5.0"
 
     private const val jsr305Version = "3.0.2"
     //endregion
