@@ -8,7 +8,7 @@ import java.util.*
 object Lib {
 
     //region:dependencyVersions
-    private const val kotlinVersion = "1.3.31"
+    private const val kotlinVersion = "1.3.41"
 
     private const val springBootVersion = "2.1.6.RELEASE"
     private const val springBootAdminVersion = "2.1.5"
@@ -37,13 +37,13 @@ object Lib {
 
     private const val equalsverifierVersion = "3.1.9"
 
-    private const val junit5Version = "5.4.2"
+    private const val junit5Version = "5.5.0"
 
     private const val jsr305Version = "3.0.2"
     //endregion
 
     //region:pluginVersions
-    private const val lombokPluginVersion = "3.7.5"
+    private const val lombokPluginVersion = "3.8.0"
     private const val jooqPluginVersion = "3.0.3"
     private const val flywayPluginVersion = "6.0.0-beta2"
     private const val jaxbPluginVersion = "3.0.4"
