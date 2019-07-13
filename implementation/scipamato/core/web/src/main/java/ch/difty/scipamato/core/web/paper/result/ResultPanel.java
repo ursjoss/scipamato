@@ -57,7 +57,7 @@ import ch.difty.scipamato.core.web.paper.jasper.summarytable.PaperSummaryTableDa
  *
  * @author u.joss
  */
-@SuppressWarnings("SameParameterValue")
+@SuppressWarnings({ "SameParameterValue", "unused" })
 public abstract class ResultPanel extends BasePanel<Void> {
 
     private static final long serialVersionUID = 1L;

@@ -273,7 +273,7 @@ abstract class ResultPanelTest extends PanelTest<ResultPanel> {
     }
 
     // with isOfferingSearchComposition = false
-    private ResultPanel newNonSearchRelevantResultPanel() {
+    ResultPanel newNonSearchRelevantResultPanel() {
         return new ResultPanel(PANEL_ID, new PaperSlimBySearchOrderProvider(searchOrderMock, ROWS_PER_PAGE),
             getMode()) {
             private static final long serialVersionUID = 1L;
