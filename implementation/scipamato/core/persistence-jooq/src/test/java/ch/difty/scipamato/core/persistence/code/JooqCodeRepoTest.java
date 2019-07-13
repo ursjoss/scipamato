@@ -13,6 +13,7 @@ import java.util.Iterator;
 import org.jooq.DSLContext;
 import org.jooq.Result;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -90,6 +91,7 @@ class JooqCodeRepoTest {
     }
 
     @Test
+    @Disabled("Reactivate with mockito-3.0.2+")
     void removingObsoletePersistedRecords() {
         final CodeTranslation ct = new CodeTranslation(1, "de", "1ade", "", 1);
         final Result<CodeTrRecord> resultMock = mock(Result.class);
@@ -115,6 +117,7 @@ class JooqCodeRepoTest {
     }
 
     @Test
+    @Disabled("Reactivate with mockito-3.0.2+")
     void removingObsoletePersistedRecords_whenCheckingIfTranslationIsPresentInEntity_doesNotConsiderIdLessEntityTranslations() {
         final CodeTranslation ct = new CodeTranslation(null, "de", "1ade", "", 1);
         final Result<CodeTrRecord> resultMock = mock(Result.class);
