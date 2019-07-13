@@ -453,7 +453,7 @@ class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, PaperReposit
         Newsletter wipNewsletter = new Newsletter();
         wipNewsletter.setId(newsletterId);
 
-        Paper.NewsletterLink nl = mock(Paper.NewsletterLink.class);
+        Paper.NewsletterLink nl = new Paper.NewsletterLink(1, "link", 2, 3, "topic", "headline");
         when(newsletterRepoMock.getNewsletterInStatusWorkInProgress()).thenReturn(Optional.of(wipNewsletter));
         when(newsletterRepoMock.mergePaperIntoNewsletter(newsletterId, paperId, topicId, langCode)).thenReturn(
             Optional.of(nl));

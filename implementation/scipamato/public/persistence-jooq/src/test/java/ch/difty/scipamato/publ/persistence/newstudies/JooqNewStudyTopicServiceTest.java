@@ -30,8 +30,7 @@ class JooqNewStudyTopicServiceTest {
     @Mock
     private NewStudyRepository repoMock;
 
-    @Mock
-    private NewStudyTopic newStudyTopicMock;
+    private NewStudyTopic newStudyTopicDummy = new NewStudyTopic(1, "title");
 
     private JooqNewStudyTopicService service;
 
@@ -42,8 +41,8 @@ class JooqNewStudyTopicServiceTest {
         service = new JooqNewStudyTopicService(repoMock);
 
         studyTopics = new ArrayList<>();
-        studyTopics.add(newStudyTopicMock);
-        studyTopics.add(newStudyTopicMock);
+        studyTopics.add(newStudyTopicDummy);
+        studyTopics.add(newStudyTopicDummy);
     }
 
     @Test
@@ -56,7 +55,7 @@ class JooqNewStudyTopicServiceTest {
         when(repoMock.findMostRecentNewsletterId()).thenReturn(Optional.of(NL_ID));
         when(repoMock.findNewStudyTopicsForNewsletter(NL_ID, "en")).thenReturn(studyTopics);
 
-        assertThat(service.findMostRecentNewStudyTopics("en")).containsExactly(newStudyTopicMock, newStudyTopicMock);
+        assertThat(service.findMostRecentNewStudyTopics("en")).containsExactly(newStudyTopicDummy, newStudyTopicDummy);
 
         verify(repoMock).findMostRecentNewsletterId();
         verify(repoMock).findNewStudyTopicsForNewsletter(NL_ID, "en");
@@ -79,8 +78,8 @@ class JooqNewStudyTopicServiceTest {
         when(repoMock.findIdOfNewsletterWithIssue("2018/06")).thenReturn(Optional.of(NL_ID));
         when(repoMock.findNewStudyTopicsForNewsletter(NL_ID, "en")).thenReturn(studyTopics);
 
-        assertThat(service.findNewStudyTopicsForNewsletterIssue("2018/06", "en")).containsExactly(newStudyTopicMock,
-            newStudyTopicMock);
+        assertThat(service.findNewStudyTopicsForNewsletterIssue("2018/06", "en")).containsExactly(newStudyTopicDummy,
+            newStudyTopicDummy);
 
         verify(repoMock).findIdOfNewsletterWithIssue("2018/06");
         verify(repoMock).findNewStudyTopicsForNewsletter(NL_ID, "en");
