@@ -63,7 +63,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 
 .Changed
-- Dependency updates for kotlin, junit, lombok-plugin
+- Dependency updates for kotlin, junit, lombok-plugin, gradle-wrapper
 
 .Deprecated
 
