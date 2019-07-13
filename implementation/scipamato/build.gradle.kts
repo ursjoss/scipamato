@@ -29,7 +29,7 @@ dependencyManagement {
     }
 }
 
-extra["spring.cloudVersion"] = "Greenwich.SR1"
+extra["spring.cloudVersion"] = Lib.springCloudVersion
 extra["mockito.version"] = Lib.mockitoVersion
 
 jacoco {
