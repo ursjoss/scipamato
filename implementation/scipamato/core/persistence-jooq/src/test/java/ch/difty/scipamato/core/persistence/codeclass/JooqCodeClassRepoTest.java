@@ -13,7 +13,6 @@ import java.util.Iterator;
 import org.jooq.DSLContext;
 import org.jooq.Result;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -24,6 +23,7 @@ import ch.difty.scipamato.core.db.tables.records.CodeClassTrRecord;
 import ch.difty.scipamato.core.entity.code_class.CodeClassTranslation;
 import ch.difty.scipamato.core.persistence.OptimisticLockingException;
 
+@SuppressWarnings({ "SpellCheckingInspection", "ResultOfMethodCallIgnored" })
 @ExtendWith(MockitoExtension.class)
 class JooqCodeClassRepoTest {
 
@@ -70,10 +70,9 @@ class JooqCodeClassRepoTest {
         assertDegenerateSupplierParameter(() -> repo.delete(null, 1), "id");
     }
 
+    @SuppressWarnings("unchecked")
     @Test
-    @Disabled("Reactivate with mockito-3.0.2+")
     void removingObsoletePersistedRecords() {
-        final Integer codeClassId = 1;
         final CodeClassTranslation cct = new CodeClassTranslation(1, "de", "cc1", "", 1);
         final Result<CodeClassTrRecord> resultMock = mock(Result.class);
         final Iterator itMock = mock(Iterator.class);

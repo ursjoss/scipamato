@@ -7,13 +7,12 @@ import static org.assertj.core.api.Assertions.fail;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
 
 import org.jooq.DSLContext;
 import org.jooq.Result;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -28,6 +27,7 @@ import ch.difty.scipamato.core.entity.code.CodeTranslation;
 import ch.difty.scipamato.core.persistence.OptimisticLockingException;
 import ch.difty.scipamato.core.persistence.codeclass.CodeClassRepository;
 
+@SuppressWarnings("ResultOfMethodCallIgnored")
 @ExtendWith(MockitoExtension.class)
 class JooqCodeRepoTest {
 
@@ -91,7 +91,7 @@ class JooqCodeRepoTest {
     }
 
     @Test
-    @Disabled("Reactivate with mockito-3.0.2+")
+    @SuppressWarnings("unchecked")
     void removingObsoletePersistedRecords() {
         final CodeTranslation ct = new CodeTranslation(1, "de", "1ade", "", 1);
         final Result<CodeTrRecord> resultMock = mock(Result.class);
@@ -104,7 +104,7 @@ class JooqCodeRepoTest {
         when(itMock.hasNext()).thenReturn(true, true, false);
         when(itMock.next()).thenReturn(ctr1, ctr2);
 
-        repo.removeObsoletePersistedRecordsFor(resultMock, Arrays.asList(ct));
+        repo.removeObsoletePersistedRecordsFor(resultMock, Collections.singletonList(ct));
 
         verify(resultMock).iterator();
         verify(itMock, times(3)).hasNext();
@@ -117,7 +117,7 @@ class JooqCodeRepoTest {
     }
 
     @Test
-    @Disabled("Reactivate with mockito-3.0.2+")
+    @SuppressWarnings("unchecked")
     void removingObsoletePersistedRecords_whenCheckingIfTranslationIsPresentInEntity_doesNotConsiderIdLessEntityTranslations() {
         final CodeTranslation ct = new CodeTranslation(null, "de", "1ade", "", 1);
         final Result<CodeTrRecord> resultMock = mock(Result.class);
@@ -128,7 +128,7 @@ class JooqCodeRepoTest {
         when(itMock.hasNext()).thenReturn(true, true, false);
         when(itMock.next()).thenReturn(ctr1, ctr2);
 
-        repo.removeObsoletePersistedRecordsFor(resultMock, Arrays.asList(ct));
+        repo.removeObsoletePersistedRecordsFor(resultMock, Collections.singletonList(ct));
 
         verify(resultMock).iterator();
         verify(itMock, times(3)).hasNext();

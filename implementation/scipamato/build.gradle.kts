@@ -30,6 +30,7 @@ dependencyManagement {
 }
 
 extra["spring.cloudVersion"] = "Greenwich.SR1"
+extra["mockito.version"] = Lib.mockitoVersion
 
 jacoco {
     toolVersion = "0.8.4"
@@ -63,6 +64,7 @@ allprojects {
     repositories {
         mavenLocal()
         mavenCentral()
+        maven { url = uri("https://dl.bintray.com/mockito/maven/") }
         maven { url = uri("http://jaspersoft.jfrog.io/jaspersoft/third-party-ce-artifacts") }
     }
 }
