@@ -13,6 +13,7 @@ import java.util.Iterator;
 import org.jooq.DSLContext;
 import org.jooq.Result;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -70,6 +71,7 @@ class JooqCodeClassRepoTest {
     }
 
     @Test
+    @Disabled("Reactivate with mockito-3.0.2+")
     void removingObsoletePersistedRecords() {
         final Integer codeClassId = 1;
         final CodeClassTranslation cct = new CodeClassTranslation(1, "de", "cc1", "", 1);
