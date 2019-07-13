@@ -1,6 +1,7 @@
 package ch.difty.scipamato.core.web.paper.entry;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.*;
 
@@ -48,6 +49,30 @@ abstract class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePape
 
     @Override
     protected EditablePaperPanel makePanel() {
+        final PageReference pageRef = EditablePaperPanelTest.this.callingPageMock;
+        return newPanel(paperFixture(), pageRef, SEARCH_ORDER_ID, getMode());
+    }
+
+    private EditablePaperPanel newPanel(final Paper p, final PageReference pageRef, final Long searchOrderId,
+        final Mode mode) {
+        return new EditablePaperPanel(PANEL_ID, Model.of(p), pageRef, searchOrderId, SHOW_EXCLUDED, mode, Model.of(0)) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected void onFormSubmit() {
+                // no-op
+            }
+
+            @Override
+            protected PaperEntryPage getResponsePage(Paper p, Long searchOrderId, boolean showingExclusions) {
+                // no-op
+                return null;
+            }
+
+        };
+    }
+
+    private Paper paperFixture() {
         Paper p = new Paper();
         p.setId(1L);
         p.setNumber(100L);
@@ -99,23 +124,7 @@ abstract class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePape
         p.addCode(newC(8, "A"));
 
         p.setOriginalAbstract("oa");
-
-        return new EditablePaperPanel(PANEL_ID, Model.of(p), callingPageMock, SEARCH_ORDER_ID, SHOW_EXCLUDED, getMode(),
-            Model.of(0)) {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            protected void onFormSubmit() {
-                // no-op
-            }
-
-            @Override
-            protected PaperEntryPage getResponsePage(Paper p, Long searchOrderId, boolean showingExclusions) {
-                // no-op
-                return null;
-            }
-
-        };
+        return p;
     }
 
     abstract Mode getMode();
@@ -134,20 +143,7 @@ abstract class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePape
     EditablePaperPanel makePanelWithEmptyPaper(Integer pmId) {
         Paper p = new Paper();
         p.setPmId(pmId);
-        return new EditablePaperPanel(PANEL_ID, Model.of(p), null, null, SHOW_EXCLUDED, getMode(), Model.of(0)) {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            protected void onFormSubmit() {
-                // no-op
-            }
-
-            @Override
-            protected PaperEntryPage getResponsePage(Paper p, Long searchOrderId, boolean showingExclusions) {
-                // no-op
-                return null;
-            }
-        };
+        return newPanel(p, null, null, getMode());
     }
 
     @SuppressWarnings("SameParameterValue")
@@ -156,6 +152,11 @@ abstract class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePape
         Paper p = new Paper();
         p.setId(1L);
         p.setPmId(pmId);
+        return newThrowingPanel(p, callingPage, searchOrderId, showExcluded);
+    }
+
+    private EditablePaperPanel newThrowingPanel(final Paper p, final PageReference callingPage,
+        final Long searchOrderId, final boolean showExcluded) {
         return new EditablePaperPanel(PANEL_ID, Model.of(p), callingPage, searchOrderId, showExcluded, getMode(),
             Model.of(0)) {
             private static final long serialVersionUID = 1L;
@@ -237,4 +238,16 @@ abstract class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePape
         verify(paperServiceMock, times(2)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
     }
 
+    @Test
+    void cannotInstantiateInSearchMode() {
+        try {
+            newPanel(paperFixture(), callingPageMock, SEARCH_ORDER_ID, Mode.SEARCH);
+            fail("should have thrown exception");
+        } catch (Exception ex) {
+            assertThat(ex)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(
+                    "Mode SEARCH is not enabled in class ch.difty.scipamato.core.web.paper.entry.EditablePaperPanelTest$1");
+        }
+    }
 }
