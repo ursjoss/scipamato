@@ -1,3 +1,4 @@
+// Note: The jooqPlugin forces a downgrade of the jooq version defined in the spring depndency management.
 plugins {
     Lib.jooqPlugin().run { id(id) version version }
 }

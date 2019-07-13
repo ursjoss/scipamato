@@ -4,6 +4,8 @@ import org.flywaydb.gradle.task.FlywayInfoTask
 import org.flywaydb.gradle.task.FlywayMigrateTask
 import java.util.*
 
+
+// Note: The jooqPlugin forces a downgrade of the jooq version defined in the spring depndency management.
 plugins {
     Lib.jooqPlugin().run { id(id) version version }
     Lib.flywayPlugin().run { id(id) version version }
