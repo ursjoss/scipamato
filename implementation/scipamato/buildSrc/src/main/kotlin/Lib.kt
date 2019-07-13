@@ -39,6 +39,8 @@ object Lib {
 
     private const val junit5Version = "5.5.0"
 
+    const val mockitoVersion = "3.0.2"
+
     private const val jsr305Version = "3.0.2"
     //endregion
 
@@ -130,7 +132,7 @@ object Lib {
     // Test Libraries
 
     fun junit5(module: String = "") = Dep("org.junit.jupiter", "junit-jupiter${if (module.isNotBlank()) "-$module" else ""}", junit5Version)
-    fun mockito2(module: String) = Dep("org.mockito", "mockito-$module")
+    fun mockito3(module: String) = Dep("org.mockito", "mockito-$module", mockitoVersion)
     fun assertj() = Dep("org.assertj", "assertj-core")
     fun equalsverifier() = Dep("nl.jqno.equalsverifier", "equalsverifier", equalsverifierVersion)
 

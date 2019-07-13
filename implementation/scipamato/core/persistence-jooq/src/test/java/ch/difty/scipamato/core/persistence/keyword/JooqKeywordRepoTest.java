@@ -6,12 +6,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 import static org.mockito.Mockito.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 
 import org.jooq.DSLContext;
 import org.jooq.Result;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -75,7 +77,6 @@ class JooqKeywordRepoTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    @Disabled("Reactivate with mockito-3.0.2+")
     void removingObsoletePersistedRecords() {
         final KeywordTranslation kt = new KeywordTranslation(1, "de", "kw1", 1);
         final Result<KeywordTrRecord> resultMock = mock(Result.class);
@@ -101,7 +102,7 @@ class JooqKeywordRepoTest {
     }
 
     @Test
-    @Disabled("Reactivate with mockito-3.0.2+")
+    @SuppressWarnings("unchecked")
     void removingObsoletePersistedRecords_whenCheckingIfTranslationIsPresentInEntity_doesNotConsiderIdLessEntityTranslations() {
         final KeywordTranslation ct = new KeywordTranslation(null, "de", "1ade", 1);
         final Result<KeywordTrRecord> resultMock = mock(Result.class);
@@ -112,7 +113,7 @@ class JooqKeywordRepoTest {
         when(itMock.hasNext()).thenReturn(true, true, false);
         when(itMock.next()).thenReturn(ctr1, ctr2);
 
-        repo.removeObsoletePersistedRecordsFor(resultMock, Arrays.asList(ct));
+        repo.removeObsoletePersistedRecordsFor(resultMock, Collections.singletonList(ct));
 
         verify(resultMock).iterator();
         verify(itMock, times(3)).hasNext();
@@ -139,7 +140,6 @@ class JooqKeywordRepoTest {
     }
 
     @Test
-    @Disabled("Reactivate with mockito-3.0.2+")
     void addingOrUpdatingTranslation() {
         KeywordTrRecord ktrMock = mock(KeywordTrRecord.class);
         doReturn(1000)
@@ -181,6 +181,7 @@ class JooqKeywordRepoTest {
     }
 
     @Test
+    @SuppressWarnings("SpellCheckingInspection")
     void addOrThrow_withNullRecord_throwsOptimisticLockingException() {
         try {
             repo.addOrThrow(null, "trslString", new ArrayList<>());
