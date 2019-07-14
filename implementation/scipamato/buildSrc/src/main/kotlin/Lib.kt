@@ -40,6 +40,7 @@ object Lib {
 
     private const val junit5Version = "5.5.1"
 
+    @Suppress("MemberVisibilityCanBePrivate")
     const val mockitoVersion = "3.0.6"
 
     private const val jsr305Version = "3.0.2"
@@ -48,6 +49,7 @@ object Lib {
     //region:pluginVersions
     private const val lombokPluginVersion = "3.8.4"
     private const val jooqPluginVersion = "3.0.3"
+    private const val jooqModelatorPluginVersion = "3.5.0"
     private const val flywayPluginVersion = "6.0.0"
     private const val jaxbPluginVersion = "3.0.4"
     private const val testSetsPluginVersion = "2.1.1"
@@ -153,7 +155,10 @@ object Lib {
 
     fun lombokPlugin() = Plugin("io.freefair.lombok", lombokPluginVersion)
 
+    @Deprecated("trying to replace with jooqModelator")
     fun jooqPlugin() = Plugin("nu.studer.jooq", jooqPluginVersion)
+
+    fun jooqModelatorPlugin() = Plugin("ch.ayedo.jooqmodelator", jooqModelatorPluginVersion)
     fun flywayPlugin() = Plugin("org.flywaydb.flyway", flywayPluginVersion)
 
     fun testSetsPlugin() = Plugin("org.unbroken-dome.test-sets", testSetsPluginVersion)
