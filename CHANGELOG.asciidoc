@@ -70,6 +70,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Removed
 
 .Fixed
+- {url-issues}105[#105] Core - Restore ability to create new searches with more than 20 saved searches
 
 .Security
 

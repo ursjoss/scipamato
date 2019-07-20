@@ -38,7 +38,7 @@ public class SearchOrderModel extends InjectedLoadableDetachableModel<SearchOrde
     protected List<SearchOrder> load() {
         final SearchOrderFilter filter = new SearchOrderFilter();
         filter.setOwnerIncludingGlobal(owner);
-        final PaginationContext pc = new PaginationRequest(0, maxRows, Direction.ASC, "global");
+        final PaginationContext pc = new PaginationRequest(0, maxRows, Direction.DESC, "id");
         return service.findPageByFilter(filter, pc);
     }
 
