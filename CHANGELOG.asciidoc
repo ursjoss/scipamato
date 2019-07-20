@@ -63,17 +63,25 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 
 .Changed
-- Dependency updates for kotlin, junit, lombok-plugin, commons-collections4, font-awesome,
-  gradle-wrapper, mockito, spring-boot-admin
 
 .Deprecated
 
 .Removed
 
 .Fixed
-- {url-issues}105[#105] Core - Restore ability to create new searches with more than 20 saved searches
 
 .Security
+
+
+[[v1.2.3]]
+== [1.2.3] -- 2019-07-20
+
+.Changed
+- Dependency updates for kotlin, junit, lombok-plugin, commons-collections4, font-awesome,
+  gradle-wrapper, mockito, spring-boot-admin
+
+.Fixed
+- {url-issues}105[#105] Core - Restore ability to create new searches with more than 20 saved searches
 
 
 [[v1.2.2]]
