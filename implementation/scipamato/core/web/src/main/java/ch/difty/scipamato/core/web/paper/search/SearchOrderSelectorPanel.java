@@ -56,7 +56,7 @@ public class SearchOrderSelectorPanel extends BasePanel<SearchOrder> {
 
     // HARDCODED static number of search orders to be visible in the select box.
     // Might need to become more dynamic
-    private static final int SEARCH_ORDER_MAX = 20;
+    private static final int SEARCH_ORDER_MAX = 200;
 
     @SpringBean
     private SearchOrderService searchOrderService;

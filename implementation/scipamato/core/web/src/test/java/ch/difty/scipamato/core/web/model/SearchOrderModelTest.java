@@ -61,7 +61,7 @@ class SearchOrderModelTest extends ModelTest {
     }
 
     class PaginationRequestWithMaxRows implements ArgumentMatcher<PaginationRequest> {
-        private static final String GLOBAL = "global";
+        private static final String SORT = "id";
 
         private int maxRows;
 
@@ -77,7 +77,7 @@ class SearchOrderModelTest extends ModelTest {
                     .iterator();
                 if (it.hasNext()) {
                     SortProperty sp = it.next();
-                    return GLOBAL.equals(sp.getName()) && sp
+                    return SORT.equals(sp.getName()) && !sp
                         .getDirection()
                         .isAscending();
                 }
