@@ -33,7 +33,7 @@ object Lib {
     private const val fontAwesomeVersion = "5.8.1"
 
     private const val commonsIoVersion = "2.6"
-    private const val commonsCollectionVersion = "4.3"
+    private const val commonsCollectionVersion = "4.4"
     private const val joolVersion = "0.9.14"
 
     private const val equalsverifierVersion = "3.1.9"
