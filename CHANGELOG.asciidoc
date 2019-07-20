@@ -64,7 +64,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Changed
 - Dependency updates for kotlin, junit, lombok-plugin, commons-collections4, font-awesome,
-  gradle-wrapper, mockito
+  gradle-wrapper, mockito, spring-boot-admin
 
 .Deprecated
 
