@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.sync.jobs.newsletter;
 
-import static ch.difty.scipamato.publ.db.public_.tables.Newsletter.NEWSLETTER;
+import static ch.difty.scipamato.publ.db.tables.Newsletter.NEWSLETTER;
 
 import org.jooq.DSLContext;
 import org.springframework.batch.item.ItemWriter;

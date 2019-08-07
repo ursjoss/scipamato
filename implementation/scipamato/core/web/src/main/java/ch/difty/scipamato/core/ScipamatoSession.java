@@ -23,7 +23,7 @@ public final class ScipamatoSession extends SecureWebSession {
 
     private final ItemNavigator<Long> paperIdManager = new LongNavigator();
 
-    ScipamatoSession(final Request request) {
+    public ScipamatoSession(final Request request) {
         super(request);
     }
 

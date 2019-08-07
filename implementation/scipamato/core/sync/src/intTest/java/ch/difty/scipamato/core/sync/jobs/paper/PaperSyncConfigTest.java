@@ -26,11 +26,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 
 import ch.difty.scipamato.common.DateTimeService;
-import ch.difty.scipamato.core.db.public_.tables.Code;
-import ch.difty.scipamato.core.db.public_.tables.Paper;
+import ch.difty.scipamato.core.db.tables.Code;
+import ch.difty.scipamato.core.db.tables.Paper;
 import ch.difty.scipamato.core.sync.code.CodeAggregator;
 import ch.difty.scipamato.core.sync.jobs.SyncConfigTest;
-import ch.difty.scipamato.publ.db.public_.tables.records.PaperRecord;
+import ch.difty.scipamato.publ.db.tables.records.PaperRecord;
 
 @SpringBootTest
 class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
@@ -80,10 +80,10 @@ class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
         when(selectJoinStep.where(Code.CODE.INTERNAL.isTrue())).thenReturn(selectConditionStep);
         when(selectConditionStep.fetch(Code.CODE.CODE_)).thenReturn(internalCodes);
 
-        when(jooqPublic.delete(ch.difty.scipamato.publ.db.public_.tables.Paper.PAPER)).thenReturn(deleteWhereStep);
+        when(jooqPublic.delete(ch.difty.scipamato.publ.db.tables.Paper.PAPER)).thenReturn(deleteWhereStep);
         Timestamp ref = Timestamp.valueOf(LocalDateTime.parse("2016-12-09T05:32:13.0"));
-        when(deleteWhereStep.where(
-            ch.difty.scipamato.publ.db.public_.tables.Paper.PAPER.LAST_SYNCHED.lessThan(ref))).thenReturn(
+        when(
+            deleteWhereStep.where(ch.difty.scipamato.publ.db.tables.Paper.PAPER.LAST_SYNCHED.lessThan(ref))).thenReturn(
             deleteConditionStep);
 
         config = new PaperSyncConfig(codeAggregator, jooqCore, jooqPublic, coreDataSource, jobBuilderFactory,
@@ -148,7 +148,7 @@ class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
 
     @Override
     protected TableField<PaperRecord, Timestamp> expectedLastSyncField() {
-        return ch.difty.scipamato.publ.db.public_.tables.Paper.PAPER.LAST_SYNCHED;
+        return ch.difty.scipamato.publ.db.tables.Paper.PAPER.LAST_SYNCHED;
     }
 
     @Test

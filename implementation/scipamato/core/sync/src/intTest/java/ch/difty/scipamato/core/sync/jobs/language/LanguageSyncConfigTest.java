@@ -15,9 +15,9 @@ import org.springframework.batch.core.Job;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import ch.difty.scipamato.core.db.public_.tables.Language;
+import ch.difty.scipamato.core.db.tables.Language;
 import ch.difty.scipamato.core.sync.jobs.SyncConfigTest;
-import ch.difty.scipamato.publ.db.public_.tables.records.LanguageRecord;
+import ch.difty.scipamato.publ.db.tables.records.LanguageRecord;
 
 @SpringBootTest
 class LanguageSyncConfigTest extends SyncConfigTest<LanguageRecord> {
@@ -57,7 +57,7 @@ class LanguageSyncConfigTest extends SyncConfigTest<LanguageRecord> {
 
     @Override
     protected TableField<LanguageRecord, Timestamp> expectedLastSyncField() {
-        return ch.difty.scipamato.publ.db.public_.tables.Language.LANGUAGE.LAST_SYNCHED;
+        return ch.difty.scipamato.publ.db.tables.Language.LANGUAGE.LAST_SYNCHED;
     }
 
     @Test

@@ -15,10 +15,10 @@ import org.springframework.batch.core.Job;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import ch.difty.scipamato.core.db.public_.tables.Keyword;
-import ch.difty.scipamato.core.db.public_.tables.KeywordTr;
+import ch.difty.scipamato.core.db.tables.Keyword;
+import ch.difty.scipamato.core.db.tables.KeywordTr;
 import ch.difty.scipamato.core.sync.jobs.SyncConfigTest;
-import ch.difty.scipamato.publ.db.public_.tables.records.KeywordRecord;
+import ch.difty.scipamato.publ.db.tables.records.KeywordRecord;
 
 @SpringBootTest
 class KeywordSyncConfigTest extends SyncConfigTest<KeywordRecord> {
@@ -63,7 +63,7 @@ class KeywordSyncConfigTest extends SyncConfigTest<KeywordRecord> {
 
     @Override
     protected TableField<KeywordRecord, Timestamp> expectedLastSyncField() {
-        return ch.difty.scipamato.publ.db.public_.tables.Keyword.KEYWORD.LAST_SYNCHED;
+        return ch.difty.scipamato.publ.db.tables.Keyword.KEYWORD.LAST_SYNCHED;
     }
 
     @Test

@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.sync.jobs.codeclass;
 
-import static ch.difty.scipamato.publ.db.public_.tables.CodeClass.CODE_CLASS;
+import static ch.difty.scipamato.publ.db.tables.CodeClass.CODE_CLASS;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.sql.Timestamp;
@@ -10,7 +10,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.core.sync.jobs.AbstractItemWriterIntegrationTest;
-import ch.difty.scipamato.publ.db.public_.tables.records.CodeClassRecord;
+import ch.difty.scipamato.publ.db.tables.records.CodeClassRecord;
 
 @SuppressWarnings("SameParameterValue")
 class CodeClassItemWriterIntegrationTest

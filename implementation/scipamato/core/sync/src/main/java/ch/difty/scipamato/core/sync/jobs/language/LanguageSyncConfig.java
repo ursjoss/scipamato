@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.sync.jobs.language;
 
-import static ch.difty.scipamato.core.db.public_.tables.Language.LANGUAGE;
+import static ch.difty.scipamato.core.db.tables.Language.LANGUAGE;
 
 import javax.sql.DataSource;
 import java.sql.ResultSet;
@@ -20,7 +20,7 @@ import org.springframework.context.annotation.Profile;
 
 import ch.difty.scipamato.common.DateTimeService;
 import ch.difty.scipamato.core.sync.jobs.SyncConfig;
-import ch.difty.scipamato.publ.db.public_.tables.records.LanguageRecord;
+import ch.difty.scipamato.publ.db.tables.records.LanguageRecord;
 
 /**
  * Defines the language synchronization job.
@@ -30,14 +30,14 @@ import ch.difty.scipamato.publ.db.public_.tables.records.LanguageRecord;
 @Configuration
 @Profile("!wickettest")
 public class LanguageSyncConfig
-    extends SyncConfig<PublicLanguage, ch.difty.scipamato.publ.db.public_.tables.records.LanguageRecord> {
+    extends SyncConfig<PublicLanguage, ch.difty.scipamato.publ.db.tables.records.LanguageRecord> {
 
     private static final String TOPIC      = "language";
     private static final int    CHUNK_SIZE = 100;
 
     // relevant fields of the core Language record
-    private static final TableField<ch.difty.scipamato.core.db.public_.tables.records.LanguageRecord, String>  C_CODE = LANGUAGE.CODE;
-    private static final TableField<ch.difty.scipamato.core.db.public_.tables.records.LanguageRecord, Boolean> C_MAIN = LANGUAGE.MAIN_LANGUAGE;
+    private static final TableField<ch.difty.scipamato.core.db.tables.records.LanguageRecord, String>  C_CODE = LANGUAGE.CODE;
+    private static final TableField<ch.difty.scipamato.core.db.tables.records.LanguageRecord, Boolean> C_MAIN = LANGUAGE.MAIN_LANGUAGE;
 
     protected LanguageSyncConfig(@Qualifier("dslContext") DSLContext jooqCore,
         @Qualifier("publicDslContext") DSLContext jooqPublic, @Qualifier("dataSource") DataSource coreDataSource,
@@ -81,7 +81,7 @@ public class LanguageSyncConfig
 
     @Override
     protected TableField<LanguageRecord, Timestamp> lastSynchedField() {
-        return ch.difty.scipamato.publ.db.public_.tables.Language.LANGUAGE.LAST_SYNCHED;
+        return ch.difty.scipamato.publ.db.tables.Language.LANGUAGE.LAST_SYNCHED;
     }
 
 }

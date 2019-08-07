@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.sync.jobs.keyword;
 
-import static ch.difty.scipamato.publ.db.public_.tables.Keyword.KEYWORD;
+import static ch.difty.scipamato.publ.db.tables.Keyword.KEYWORD;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.sql.Timestamp;
@@ -11,7 +11,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.core.sync.jobs.AbstractItemWriterIntegrationTest;
-import ch.difty.scipamato.publ.db.public_.tables.records.KeywordRecord;
+import ch.difty.scipamato.publ.db.tables.records.KeywordRecord;
 
 @SuppressWarnings("SameParameterValue")
 class KeywordItemWriterIntegrationTest extends AbstractItemWriterIntegrationTest<PublicKeyword, KeywordItemWriter> {

@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.sync.jobs.newsletter;
 
-import static ch.difty.scipamato.publ.db.public_.tables.NewStudy.NEW_STUDY;
+import static ch.difty.scipamato.publ.db.tables.NewStudy.NEW_STUDY;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.sql.Timestamp;
@@ -9,9 +9,9 @@ import java.time.LocalDateTime;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
-import ch.difty.scipamato.core.db.public_.tables.Paper;
+import ch.difty.scipamato.core.db.tables.Paper;
 import ch.difty.scipamato.core.sync.jobs.AbstractItemWriterIntegrationTest;
-import ch.difty.scipamato.publ.db.public_.tables.records.NewStudyRecord;
+import ch.difty.scipamato.publ.db.tables.records.NewStudyRecord;
 
 @SuppressWarnings({ "SameParameterValue", "WeakerAccess" })
 class NewStudyItemWriterIntegrationTest extends AbstractItemWriterIntegrationTest<PublicNewStudy, NewStudyItemWriter> {

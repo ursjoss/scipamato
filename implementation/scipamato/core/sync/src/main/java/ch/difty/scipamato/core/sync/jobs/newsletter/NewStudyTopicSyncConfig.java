@@ -1,9 +1,9 @@
 package ch.difty.scipamato.core.sync.jobs.newsletter;
 
-import static ch.difty.scipamato.core.db.public_.tables.NewsletterNewsletterTopic.NEWSLETTER_NEWSLETTER_TOPIC;
-import static ch.difty.scipamato.core.db.public_.tables.NewsletterTopic.NEWSLETTER_TOPIC;
-import static ch.difty.scipamato.core.db.public_.tables.NewsletterTopicTr.NEWSLETTER_TOPIC_TR;
-import static ch.difty.scipamato.core.db.public_.tables.PaperNewsletter.PAPER_NEWSLETTER;
+import static ch.difty.scipamato.core.db.tables.NewsletterNewsletterTopic.NEWSLETTER_NEWSLETTER_TOPIC;
+import static ch.difty.scipamato.core.db.tables.NewsletterTopic.NEWSLETTER_TOPIC;
+import static ch.difty.scipamato.core.db.tables.NewsletterTopicTr.NEWSLETTER_TOPIC_TR;
+import static ch.difty.scipamato.core.db.tables.PaperNewsletter.PAPER_NEWSLETTER;
 
 import javax.sql.DataSource;
 import java.sql.ResultSet;
@@ -24,14 +24,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import ch.difty.scipamato.common.DateTimeService;
-import ch.difty.scipamato.core.db.public_.tables.Newsletter;
-import ch.difty.scipamato.core.db.public_.tables.records.NewsletterNewsletterTopicRecord;
-import ch.difty.scipamato.core.db.public_.tables.records.NewsletterTopicTrRecord;
-import ch.difty.scipamato.core.db.public_.tables.records.PaperNewsletterRecord;
+import ch.difty.scipamato.core.db.tables.Newsletter;
+import ch.difty.scipamato.core.db.tables.records.NewsletterNewsletterTopicRecord;
+import ch.difty.scipamato.core.db.tables.records.NewsletterTopicTrRecord;
+import ch.difty.scipamato.core.db.tables.records.PaperNewsletterRecord;
 import ch.difty.scipamato.core.sync.jobs.SyncConfig;
-import ch.difty.scipamato.publ.db.public_.tables.NewStudyTopic;
-import ch.difty.scipamato.publ.db.public_.tables.NewsletterTopic;
-import ch.difty.scipamato.publ.db.public_.tables.records.NewStudyTopicRecord;
+import ch.difty.scipamato.publ.db.tables.NewStudyTopic;
+import ch.difty.scipamato.publ.db.tables.NewsletterTopic;
+import ch.difty.scipamato.publ.db.tables.records.NewStudyTopicRecord;
 
 /**
  * Defines the newStudyTopic synchronization job, applying two steps:
@@ -47,7 +47,7 @@ import ch.difty.scipamato.publ.db.public_.tables.records.NewStudyTopicRecord;
 @Profile("!wickettest")
 @SuppressWarnings("SameParameterValue")
 public class NewStudyTopicSyncConfig
-    extends SyncConfig<PublicNewStudyTopic, ch.difty.scipamato.publ.db.public_.tables.records.NewStudyTopicRecord> {
+    extends SyncConfig<PublicNewStudyTopic, ch.difty.scipamato.publ.db.tables.records.NewStudyTopicRecord> {
 
     private static final String TOPIC      = "newStudyTopic";
     private static final int    CHUNK_SIZE = 100;
@@ -139,7 +139,7 @@ public class NewStudyTopicSyncConfig
     }
 
     @Override
-    public DeleteConditionStep<ch.difty.scipamato.publ.db.public_.tables.records.NewStudyTopicRecord> getPseudoFkDcs() {
+    public DeleteConditionStep<ch.difty.scipamato.publ.db.tables.records.NewStudyTopicRecord> getPseudoFkDcs() {
         return getJooqPublic()
             .delete(NewStudyTopic.NEW_STUDY_TOPIC)
             .where(NewStudyTopic.NEW_STUDY_TOPIC.NEWSLETTER_TOPIC_ID.notIn(getJooqPublic()

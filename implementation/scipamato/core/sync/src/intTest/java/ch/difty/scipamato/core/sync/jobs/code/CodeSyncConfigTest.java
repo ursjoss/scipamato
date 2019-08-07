@@ -15,10 +15,10 @@ import org.springframework.batch.core.Job;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import ch.difty.scipamato.core.db.public_.tables.Code;
-import ch.difty.scipamato.core.db.public_.tables.CodeTr;
+import ch.difty.scipamato.core.db.tables.Code;
+import ch.difty.scipamato.core.db.tables.CodeTr;
 import ch.difty.scipamato.core.sync.jobs.SyncConfigTest;
-import ch.difty.scipamato.publ.db.public_.tables.records.CodeRecord;
+import ch.difty.scipamato.publ.db.tables.records.CodeRecord;
 
 @SpringBootTest
 class CodeSyncConfigTest extends SyncConfigTest<CodeRecord> {
@@ -72,7 +72,7 @@ class CodeSyncConfigTest extends SyncConfigTest<CodeRecord> {
 
     @Override
     protected TableField<CodeRecord, Timestamp> expectedLastSyncField() {
-        return ch.difty.scipamato.publ.db.public_.tables.Code.CODE.LAST_SYNCHED;
+        return ch.difty.scipamato.publ.db.tables.Code.CODE.LAST_SYNCHED;
     }
 
     @Override

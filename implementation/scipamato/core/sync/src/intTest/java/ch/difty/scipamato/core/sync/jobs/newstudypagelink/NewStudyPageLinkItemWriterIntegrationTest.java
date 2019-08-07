@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.sync.jobs.newstudypagelink;
 
-import static ch.difty.scipamato.publ.db.public_.tables.NewStudyPageLink.NEW_STUDY_PAGE_LINK;
+import static ch.difty.scipamato.publ.db.tables.NewStudyPageLink.NEW_STUDY_PAGE_LINK;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.sql.Timestamp;
@@ -10,7 +10,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.core.sync.jobs.AbstractItemWriterIntegrationTest;
-import ch.difty.scipamato.publ.db.public_.tables.records.NewStudyPageLinkRecord;
+import ch.difty.scipamato.publ.db.tables.records.NewStudyPageLinkRecord;
 
 @SuppressWarnings("SameParameterValue")
 class NewStudyPageLinkItemWriterIntegrationTest

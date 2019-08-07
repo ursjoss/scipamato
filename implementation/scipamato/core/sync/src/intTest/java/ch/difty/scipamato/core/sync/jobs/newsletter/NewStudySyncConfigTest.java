@@ -15,11 +15,11 @@ import org.springframework.batch.core.Job;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import ch.difty.scipamato.core.db.public_.tables.Paper;
-import ch.difty.scipamato.core.db.public_.tables.PaperNewsletter;
+import ch.difty.scipamato.core.db.tables.Paper;
+import ch.difty.scipamato.core.db.tables.PaperNewsletter;
 import ch.difty.scipamato.core.sync.jobs.SyncConfigTest;
-import ch.difty.scipamato.publ.db.public_.tables.NewStudy;
-import ch.difty.scipamato.publ.db.public_.tables.records.NewStudyRecord;
+import ch.difty.scipamato.publ.db.tables.NewStudy;
+import ch.difty.scipamato.publ.db.tables.records.NewStudyRecord;
 
 @SuppressWarnings("SpellCheckingInspection")
 @SpringBootTest

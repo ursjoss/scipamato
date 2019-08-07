@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.sync.jobs.code;
 
-import static ch.difty.scipamato.publ.db.public_.tables.Code.CODE;
+import static ch.difty.scipamato.publ.db.tables.Code.CODE;
 
 import org.jooq.DSLContext;
 import org.springframework.batch.item.ItemWriter;

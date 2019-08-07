@@ -14,7 +14,7 @@ import org.springframework.batch.core.StepContribution;
 import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.repeat.RepeatStatus;
 
-import ch.difty.scipamato.publ.db.public_.tables.records.CodeRecord;
+import ch.difty.scipamato.publ.db.tables.records.CodeRecord;
 
 @ExtendWith(MockitoExtension.class)
 class PseudoForeignKeyConstraintEnforcerTest {

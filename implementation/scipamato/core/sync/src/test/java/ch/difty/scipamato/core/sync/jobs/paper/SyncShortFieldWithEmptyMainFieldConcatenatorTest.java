@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.sync.jobs.paper;
 
-import static ch.difty.scipamato.core.db.public_.tables.Paper.PAPER;
+import static ch.difty.scipamato.core.db.tables.Paper.PAPER;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -15,7 +15,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import ch.difty.scipamato.common.TestUtils;
-import ch.difty.scipamato.core.db.public_.tables.records.PaperRecord;
+import ch.difty.scipamato.core.db.tables.records.PaperRecord;
 
 @ExtendWith(MockitoExtension.class)
 class SyncShortFieldWithEmptyMainFieldConcatenatorTest {

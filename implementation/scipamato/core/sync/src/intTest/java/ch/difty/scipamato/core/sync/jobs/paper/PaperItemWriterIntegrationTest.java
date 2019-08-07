@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.sync.jobs.paper;
 
-import static ch.difty.scipamato.publ.db.public_.tables.Paper.PAPER;
+import static ch.difty.scipamato.publ.db.tables.Paper.PAPER;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.sql.Timestamp;
@@ -10,7 +10,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.core.sync.jobs.AbstractItemWriterIntegrationTest;
-import ch.difty.scipamato.publ.db.public_.tables.records.PaperRecord;
+import ch.difty.scipamato.publ.db.tables.records.PaperRecord;
 
 @SuppressWarnings("SameParameterValue")
 class PaperItemWriterIntegrationTest extends AbstractItemWriterIntegrationTest<PublicPaper, PaperItemWriter> {

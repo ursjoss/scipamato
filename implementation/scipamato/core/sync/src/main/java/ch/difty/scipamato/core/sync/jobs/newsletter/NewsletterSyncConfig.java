@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.sync.jobs.newsletter;
 
-import static ch.difty.scipamato.core.db.public_.tables.Newsletter.NEWSLETTER;
+import static ch.difty.scipamato.core.db.tables.Newsletter.NEWSLETTER;
 
 import javax.sql.DataSource;
 import java.sql.Date;
@@ -21,8 +21,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import ch.difty.scipamato.common.DateTimeService;
-import ch.difty.scipamato.core.db.public_.tables.Newsletter;
-import ch.difty.scipamato.core.db.public_.tables.records.NewsletterRecord;
+import ch.difty.scipamato.core.db.tables.Newsletter;
+import ch.difty.scipamato.core.db.tables.records.NewsletterRecord;
 import ch.difty.scipamato.core.sync.jobs.SyncConfig;
 
 /**
@@ -38,7 +38,7 @@ import ch.difty.scipamato.core.sync.jobs.SyncConfig;
 @Configuration
 @Profile("!wickettest")
 public class NewsletterSyncConfig
-    extends SyncConfig<PublicNewsletter, ch.difty.scipamato.publ.db.public_.tables.records.NewsletterRecord> {
+    extends SyncConfig<PublicNewsletter, ch.difty.scipamato.publ.db.tables.records.NewsletterRecord> {
 
     private static final String TOPIC      = "newsletter";
     private static final int    CHUNK_SIZE = 50;
@@ -97,8 +97,8 @@ public class NewsletterSyncConfig
     }
 
     @Override
-    protected TableField<ch.difty.scipamato.publ.db.public_.tables.records.NewsletterRecord, Timestamp> lastSynchedField() {
-        return ch.difty.scipamato.publ.db.public_.tables.Newsletter.NEWSLETTER.LAST_SYNCHED;
+    protected TableField<ch.difty.scipamato.publ.db.tables.records.NewsletterRecord, Timestamp> lastSynchedField() {
+        return ch.difty.scipamato.publ.db.tables.Newsletter.NEWSLETTER.LAST_SYNCHED;
     }
 
 }

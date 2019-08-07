@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.sync.jobs.newstudypagelink;
 
-import static ch.difty.scipamato.publ.db.public_.tables.NewStudyPageLink.NEW_STUDY_PAGE_LINK;
+import static ch.difty.scipamato.publ.db.tables.NewStudyPageLink.NEW_STUDY_PAGE_LINK;
 
 import org.jooq.DSLContext;
 import org.springframework.batch.item.ItemWriter;

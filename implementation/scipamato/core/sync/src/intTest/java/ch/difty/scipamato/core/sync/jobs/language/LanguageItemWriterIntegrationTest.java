@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.sync.jobs.language;
 
-import static ch.difty.scipamato.publ.db.public_.tables.Language.LANGUAGE;
+import static ch.difty.scipamato.publ.db.tables.Language.LANGUAGE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.sql.Timestamp;
@@ -11,7 +11,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.core.sync.jobs.AbstractItemWriterIntegrationTest;
-import ch.difty.scipamato.publ.db.public_.tables.records.LanguageRecord;
+import ch.difty.scipamato.publ.db.tables.records.LanguageRecord;
 
 @SuppressWarnings("SameParameterValue")
 class LanguageItemWriterIntegrationTest extends AbstractItemWriterIntegrationTest<PublicLanguage, LanguageItemWriter> {

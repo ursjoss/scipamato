@@ -78,7 +78,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Changed
 - Dependency updates for spring-boot-starter, openfeign, font-awesome, mockito,
-  lombok-plugin, flyway-plugin, gradle-wrapper
+  lombok-plugin, flyway-plugin, gradle-wrapper, jooq
 
 .Fixed
 - {url-issues}109[#109] Core - Restore searching in methods fields (with positive and negative

@@ -16,9 +16,9 @@ import org.springframework.batch.core.Job;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import ch.difty.scipamato.core.db.public_.tables.Newsletter;
+import ch.difty.scipamato.core.db.tables.Newsletter;
 import ch.difty.scipamato.core.sync.jobs.SyncConfigTest;
-import ch.difty.scipamato.publ.db.public_.tables.records.NewsletterRecord;
+import ch.difty.scipamato.publ.db.tables.records.NewsletterRecord;
 
 @SpringBootTest
 class NewsletterSyncConfigTest extends SyncConfigTest<NewsletterRecord> {
@@ -61,7 +61,7 @@ class NewsletterSyncConfigTest extends SyncConfigTest<NewsletterRecord> {
 
     @Override
     protected TableField<NewsletterRecord, Timestamp> expectedLastSyncField() {
-        return ch.difty.scipamato.publ.db.public_.tables.Newsletter.NEWSLETTER.LAST_SYNCHED;
+        return ch.difty.scipamato.publ.db.tables.Newsletter.NEWSLETTER.LAST_SYNCHED;
     }
 
     @Test

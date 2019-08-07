@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.sync.jobs.newsletter;
 
-import static ch.difty.scipamato.publ.db.public_.tables.Newsletter.NEWSLETTER;
+import static ch.difty.scipamato.publ.db.tables.Newsletter.NEWSLETTER;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.sql.Date;
@@ -11,7 +11,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.core.sync.jobs.AbstractItemWriterIntegrationTest;
-import ch.difty.scipamato.publ.db.public_.tables.records.NewsletterRecord;
+import ch.difty.scipamato.publ.db.tables.records.NewsletterRecord;
 
 @SuppressWarnings("SameParameterValue")
 class NewsletterItemWriterIntegrationTest

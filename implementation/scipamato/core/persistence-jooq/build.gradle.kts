@@ -1,19 +1,25 @@
-import org.flywaydb.gradle.task.AbstractFlywayTask
-import org.flywaydb.gradle.task.FlywayCleanTask
-import org.flywaydb.gradle.task.FlywayInfoTask
-import org.flywaydb.gradle.task.FlywayMigrateTask
-import java.util.*
-
-// Note: The jooqPlugin forces a downgrade of the jooq version defined in the spring depndency management.
 plugins {
-    Lib.jooqPlugin().run { id(id) version version }
-    Lib.flywayPlugin().run { id(id) version version }
+    Lib.jooqModelatorPlugin().run { id(id) version version }
 }
 
 description = "SciPaMaTo-Core :: Persistence jOOQ Project"
 
-configurations {
-    create("flywayMigration")
+jooqModelator {
+    jooqVersion = Lib.jooqVersion
+    jooqEdition = "OSS"
+
+    jooqConfigPath = "$rootDir/core/persistence-jooq/src/main/resources/jooqConfig.xml"
+    // Important: this needs to be kept in sync with the path configured in the jooqConfig.xml
+    // the reason it needs to be configured here again is for incremental build support to work
+    jooqOutputPath = "build/generated-src/jooq/ch/difty/scipamato/core/db"
+
+    migrationEngine = "FLYWAY"
+    migrationsPaths = listOf("$rootDir/core/persistence-jooq/src/main/resources/db/migration/")
+
+    dockerTag = "postgres:10"
+    dockerEnv = listOf("POSTGRES_DB=scipamato", "POSTGRES_USER=scipamato", "POSTGRES_PASSWORD=scipamato")
+    dockerHostPort = 15432
+    dockerContainerPort = 5432
 }
 
 dependencies {
@@ -22,7 +28,7 @@ dependencies {
     implementation(project(Module.scipamatoCore("entity")))
     implementation(project(Module.scipamatoCommon("utils")))
 
-    jooqRuntime(Lib.postgres())
+    jooqModelatorRuntime(Lib.postgres())
     runtimeOnly(Lib.postgres())
     api(Lib.jOOQ("jooq"))
 
@@ -37,7 +43,6 @@ dependencies {
     testCompile(Lib.lombok())
     testAnnotationProcessor(Lib.lombok())
 
-    flywayMigration(Lib.postgres())
     integrationTestRuntimeOnly(Lib.postgres())
 }
 
@@ -53,48 +58,6 @@ sourceSets {
     }
 }
 
-apply(from = "$rootDir/gradle/jooq-core.gradle")
-
 tasks {
-    val flywayMigrate by existing(FlywayMigrateTask::class) {
-        description = "Triggers database migrations for the main database"
-        configureApplying(bootCoreProps)
-    }
-    val flywayMigrateIt by registering(FlywayMigrateTask::class) {
-        description = "Triggers database migrations for the integration test databases"
-        configureApplying(bootCoreItProps)
-    }
-    flywayClean {
-        description = "Drops all objects in the configured schemas of the main database"
-        configureApplying(bootCoreProps)
-    }
-    register<FlywayCleanTask>("flywayCleanIt") {
-        description = "Drops all objects in the configured schemas of the integration test database"
-        configureApplying(bootCoreItProps)
-    }
-    flywayInfo {
-        description = "Prints the details and status information about all the migrations."
-        configureApplying(bootCoreProps)
-    }
-    register<FlywayInfoTask>("flywayInfoIt") {
-        description = "Prints the details and status information about all the migrations."
-        configureApplying(bootCoreItProps)
-    }
-
-    named("generateScipamatoCoreJooqSchemaSource") {
-        dependsOn(flywayMigrate)
-    }
-    getByName("generateScipamatoCoreItJooqSchemaSource").dependsOn(flywayMigrateIt)
-    getByName("compileKotlin").dependsOn += "generateScipamatoCoreJooqSchemaSource"
-    getByName("compileJava").dependsOn -= "generateScipamatoCoreItJooqSchemaSource"
-    getByName("integrationTest").dependsOn -= "generateScipamatoCoreItJooqSchemaSource"
-}
-
-fun AbstractFlywayTask.configureApplying(props: Properties) {
-    url = props.getProperty("spring.datasource.url")
-    user = props.getProperty("spring.flyway.user")
-    password = props.getProperty("spring.flyway.password")
-    schemas = arrayOf(props.getProperty("db.schema"))
-    locations = arrayOf(props.getProperty("spring.flyway.locations"))
-    configurations = arrayOf("compile", "flywayMigration")
+    getByName("compileKotlin").dependsOn += "generateJooqMetamodel"
 }

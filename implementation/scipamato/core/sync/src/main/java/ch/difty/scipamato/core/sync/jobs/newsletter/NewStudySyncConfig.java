@@ -1,7 +1,7 @@
 package ch.difty.scipamato.core.sync.jobs.newsletter;
 
-import static ch.difty.scipamato.core.db.public_.tables.Paper.PAPER;
-import static ch.difty.scipamato.core.db.public_.tables.PaperNewsletter.PAPER_NEWSLETTER;
+import static ch.difty.scipamato.core.db.tables.Paper.PAPER;
+import static ch.difty.scipamato.core.db.tables.PaperNewsletter.PAPER_NEWSLETTER;
 
 import javax.sql.DataSource;
 import java.sql.ResultSet;
@@ -22,13 +22,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import ch.difty.scipamato.common.DateTimeService;
-import ch.difty.scipamato.core.db.public_.tables.Newsletter;
-import ch.difty.scipamato.core.db.public_.tables.records.PaperNewsletterRecord;
-import ch.difty.scipamato.core.db.public_.tables.records.PaperRecord;
+import ch.difty.scipamato.core.db.tables.Newsletter;
+import ch.difty.scipamato.core.db.tables.records.PaperNewsletterRecord;
+import ch.difty.scipamato.core.db.tables.records.PaperRecord;
 import ch.difty.scipamato.core.sync.jobs.SyncConfig;
-import ch.difty.scipamato.publ.db.public_.tables.NewStudy;
-import ch.difty.scipamato.publ.db.public_.tables.NewsletterTopic;
-import ch.difty.scipamato.publ.db.public_.tables.records.NewStudyRecord;
+import ch.difty.scipamato.publ.db.tables.NewStudy;
+import ch.difty.scipamato.publ.db.tables.NewsletterTopic;
+import ch.difty.scipamato.publ.db.tables.records.NewStudyRecord;
 
 /**
  * Defines the newStudy synchronization job, applying two steps:
@@ -44,7 +44,7 @@ import ch.difty.scipamato.publ.db.public_.tables.records.NewStudyRecord;
 @Configuration
 @Profile("!wickettest")
 public class NewStudySyncConfig
-    extends SyncConfig<PublicNewStudy, ch.difty.scipamato.publ.db.public_.tables.records.NewStudyRecord> {
+    extends SyncConfig<PublicNewStudy, ch.difty.scipamato.publ.db.tables.records.NewStudyRecord> {
 
     private static final String TOPIC      = "newStudy";
     private static final int    CHUNK_SIZE = 100;
@@ -134,7 +134,7 @@ public class NewStudySyncConfig
     }
 
     @Override
-    public DeleteConditionStep<ch.difty.scipamato.publ.db.public_.tables.records.NewStudyRecord> getPseudoFkDcs() {
+    public DeleteConditionStep<ch.difty.scipamato.publ.db.tables.records.NewStudyRecord> getPseudoFkDcs() {
         return getJooqPublic()
             .delete(NewStudy.NEW_STUDY)
             .where(NewStudy.NEW_STUDY.NEWSLETTER_TOPIC_ID.notIn(getJooqPublic()

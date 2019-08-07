@@ -15,10 +15,10 @@ import org.springframework.batch.core.Job;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import ch.difty.scipamato.core.db.public_.tables.NewsletterTopic;
-import ch.difty.scipamato.core.db.public_.tables.NewsletterTopicTr;
+import ch.difty.scipamato.core.db.tables.NewsletterTopic;
+import ch.difty.scipamato.core.db.tables.NewsletterTopicTr;
 import ch.difty.scipamato.core.sync.jobs.SyncConfigTest;
-import ch.difty.scipamato.publ.db.public_.tables.records.NewsletterTopicRecord;
+import ch.difty.scipamato.publ.db.tables.records.NewsletterTopicRecord;
 
 @SpringBootTest
 class NewsletterTopicSyncConfigTest extends SyncConfigTest<NewsletterTopicRecord> {
@@ -38,7 +38,7 @@ class NewsletterTopicSyncConfigTest extends SyncConfigTest<NewsletterTopicRecord
 
     @Override
     protected TableField<NewsletterTopicRecord, Timestamp> lastSynchedField() {
-        return ch.difty.scipamato.publ.db.public_.tables.NewsletterTopic.NEWSLETTER_TOPIC.LAST_SYNCHED;
+        return ch.difty.scipamato.publ.db.tables.NewsletterTopic.NEWSLETTER_TOPIC.LAST_SYNCHED;
     }
 
     @Override
@@ -61,7 +61,7 @@ class NewsletterTopicSyncConfigTest extends SyncConfigTest<NewsletterTopicRecord
 
     @Override
     protected TableField<NewsletterTopicRecord, Timestamp> expectedLastSyncField() {
-        return ch.difty.scipamato.publ.db.public_.tables.NewsletterTopic.NEWSLETTER_TOPIC.LAST_SYNCHED;
+        return ch.difty.scipamato.publ.db.tables.NewsletterTopic.NEWSLETTER_TOPIC.LAST_SYNCHED;
     }
 
     @Test

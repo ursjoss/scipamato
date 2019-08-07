@@ -1,21 +1,27 @@
-import org.flywaydb.gradle.task.AbstractFlywayTask
-import org.flywaydb.gradle.task.FlywayCleanTask
-import org.flywaydb.gradle.task.FlywayInfoTask
-import org.flywaydb.gradle.task.FlywayMigrateTask
-import java.util.*
-
-
-// Note: The jooqPlugin forces a downgrade of the jooq version defined in the spring depndency management.
 plugins {
-    Lib.jooqPlugin().run { id(id) version version }
-    Lib.flywayPlugin().run { id(id) version version }
+    Lib.jooqModelatorPlugin().run { id(id) version version }
 }
 
 description = "SciPaMaTo-Public:: Persistence jOOQ Project"
 
-configurations {
-    create("flywayMigration")
+jooqModelator {
+    jooqVersion = Lib.jooqVersion
+    jooqEdition = "OSS"
+
+    jooqConfigPath = "$rootDir/public/persistence-jooq/src/main/resources/jooqConfig.xml"
+    // Important: this needs to be kept in sync with the path configured in the jooqConfig.xml
+    // the reason it needs to be configured here again is for incremental build support to work
+    jooqOutputPath = "build/generated-src/jooq/ch/difty/scipamato/publ/db"
+
+    migrationEngine = "FLYWAY"
+    migrationsPaths = listOf("$rootDir/public/persistence-jooq/src/main/resources/db/migration/")
+
+    dockerTag = "postgres:10"
+    dockerEnv = listOf("POSTGRES_DB=scipamato_public", "POSTGRES_USER=scipamatopub", "POSTGRES_PASSWORD=scipamatopub")
+    dockerHostPort = 15432
+    dockerContainerPort = 5432
 }
+
 
 dependencies {
     api(project(Module.scipamatoPublic("persistence-api")))
@@ -23,7 +29,7 @@ dependencies {
     implementation(project(Module.scipamatoPublic("entity")))
     implementation(project(Module.scipamatoCommon("utils")))
 
-    jooqRuntime(Lib.postgres())
+    jooqModelatorRuntime(Lib.postgres())
     runtimeOnly(Lib.postgres())
     api(Lib.jOOQ("jooq"))
 
@@ -35,8 +41,6 @@ dependencies {
 
     testCompile(Lib.lombok())
     testAnnotationProcessor(Lib.lombok())
-
-    flywayMigration(Lib.postgres())
 
     integrationTestRuntimeOnly(Lib.postgres())
     integrationTestAnnotationProcessor(Lib.lombok())
@@ -54,49 +58,6 @@ sourceSets {
     }
 }
 
-apply(from = "$rootDir/gradle/jooq-public.gradle")
-
 tasks {
-    val flywayMigrate by existing(FlywayMigrateTask::class) {
-        description = "Triggers database migrations for the main database"
-        configureApplying(bootPubProps)
-    }
-
-    val flywayMigrateIt by registering(FlywayMigrateTask::class) {
-        description = "Triggers database migrations for the integration test databases"
-        configureApplying(bootPubItProps)
-    }
-
-    flywayClean {
-        description = "Drops all objects in the configured schemas of the main database"
-        configureApplying(bootPubProps)
-    }
-    register<FlywayCleanTask>("flywayCleanIt") {
-        description = "Drops all objects in the configured schemas of the integration test database"
-        configureApplying(bootPubItProps)
-    }
-
-    flywayInfo {
-        description = "Prints the details and status information about all the migrations."
-        configureApplying(bootPubProps)
-    }
-    register<FlywayInfoTask>("flywayInfoIt") {
-        description = "Prints the details and status information about all the migrations."
-        configureApplying(bootPubItProps)
-    }
-
-    getByName("generateScipamatoPublicJooqSchemaSource").dependsOn(flywayMigrate)
-    getByName("generateScipamatoPublicItJooqSchemaSource").dependsOn(flywayMigrateIt)
-    getByName("compileKotlin").dependsOn += "generateScipamatoPublicJooqSchemaSource"
-    getByName("compileJava").dependsOn -= "generateScipamatoPublicItJooqSchemaSource"
-    getByName("integrationTest").dependsOn -= "generateScipamatoPublicItJooqSchemaSource"
-}
-
-fun AbstractFlywayTask.configureApplying(props: Properties) {
-    url = props.getProperty("spring.datasource.url")
-    user = props.getProperty("spring.flyway.user")
-    password = props.getProperty("spring.flyway.password")
-    schemas = arrayOf(props.getProperty("db.schema"))
-    locations = arrayOf(props.getProperty("spring.flyway.locations"))
-    configurations = arrayOf("compile", "flywayMigration")
+    getByName("compileKotlin").dependsOn += "generateJooqMetamodel"
 }

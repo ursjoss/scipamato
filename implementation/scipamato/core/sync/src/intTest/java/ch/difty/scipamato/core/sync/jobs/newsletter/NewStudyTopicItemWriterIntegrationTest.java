@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.sync.jobs.newsletter;
 
-import static ch.difty.scipamato.publ.db.public_.tables.NewStudyTopic.NEW_STUDY_TOPIC;
+import static ch.difty.scipamato.publ.db.tables.NewStudyTopic.NEW_STUDY_TOPIC;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.sql.Timestamp;
@@ -10,7 +10,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.core.sync.jobs.AbstractItemWriterIntegrationTest;
-import ch.difty.scipamato.publ.db.public_.tables.records.NewStudyTopicRecord;
+import ch.difty.scipamato.publ.db.tables.records.NewStudyTopicRecord;
 
 @SuppressWarnings("SameParameterValue")
 class NewStudyTopicItemWriterIntegrationTest

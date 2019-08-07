@@ -15,12 +15,12 @@ import org.springframework.batch.core.Job;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import ch.difty.scipamato.core.db.public_.tables.NewsletterNewsletterTopic;
-import ch.difty.scipamato.core.db.public_.tables.NewsletterTopicTr;
-import ch.difty.scipamato.core.db.public_.tables.PaperNewsletter;
+import ch.difty.scipamato.core.db.tables.NewsletterNewsletterTopic;
+import ch.difty.scipamato.core.db.tables.NewsletterTopicTr;
+import ch.difty.scipamato.core.db.tables.PaperNewsletter;
 import ch.difty.scipamato.core.sync.jobs.SyncConfigTest;
-import ch.difty.scipamato.publ.db.public_.tables.NewStudyTopic;
-import ch.difty.scipamato.publ.db.public_.tables.records.NewStudyTopicRecord;
+import ch.difty.scipamato.publ.db.tables.NewStudyTopic;
+import ch.difty.scipamato.publ.db.tables.records.NewStudyTopicRecord;
 
 @SpringBootTest
 class NewStudyTopicSyncConfigTest extends SyncConfigTest<NewStudyTopicRecord> {

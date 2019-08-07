@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- TODO consider writing this file dynamically from gradle config - https://www.jooq.org/doc/3.11/manual/code-generation/codegen-gradle/ -->
+<configuration>
+    <jdbc>
+        <driver>org.postgresql.Driver</driver>
+        <url>jdbc:postgresql://localhost:15432/scipamato_public?loggerLevel=OFF</url>
+        <user>scipamatopub</user>
+        <password>scipamatopub</password>
+    </jdbc>
+    <generator>
+        <name>org.jooq.codegen.DefaultGenerator</name>
+        <database>
+            <name>org.jooq.meta.postgres.PostgresDatabase</name>
+            <inputSchema>public</inputSchema>
+            <includes>code_class|code|language|keyword|paper|new_study|new_study_topic|newsletter|newsletter_topic|new_study_page_link</includes>
+            <recordVersionFields>version</recordVersionFields>
+        </database>
+        <generate>
+            <deprecated>false</deprecated>
+            <instanceFields>true</instanceFields>
+            <pojos>true</pojos>
+            <springAnnotations>true</springAnnotations>
+        </generate>
+        <!-- Important: Keep in sync with jooqOutputPath build.gradle -->
+        <target>
+            <packageName>ch.difty.scipamato.publ.db</packageName>
+            <directory>core/sync/build/generated-src/jooq</directory>
+        </target>
+    </generator>
+</configuration>
