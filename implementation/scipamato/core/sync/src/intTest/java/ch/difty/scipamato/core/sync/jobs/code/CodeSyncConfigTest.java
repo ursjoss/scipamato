@@ -10,12 +10,10 @@ import java.sql.Timestamp;
 import org.jooq.DeleteConditionStep;
 import org.jooq.TableField;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.springframework.batch.core.Job;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import ch.difty.scipamato.core.db.public_.tables.Code;
 import ch.difty.scipamato.core.db.public_.tables.CodeTr;
@@ -23,7 +21,6 @@ import ch.difty.scipamato.core.sync.jobs.SyncConfigTest;
 import ch.difty.scipamato.publ.db.public_.tables.records.CodeRecord;
 
 @SpringBootTest
-@ExtendWith(SpringExtension.class)
 class CodeSyncConfigTest extends SyncConfigTest<CodeRecord> {
 
     @Autowired

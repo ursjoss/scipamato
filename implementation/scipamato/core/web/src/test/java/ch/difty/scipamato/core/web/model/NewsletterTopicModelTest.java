@@ -8,15 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic;
-import ch.difty.scipamato.core.persistence.NewsletterTopicService;
 
 class NewsletterTopicModelTest extends ModelTest {
-
-    @MockBean
-    private NewsletterTopicService serviceMock;
 
     @Test
     void instantiating_withNullLanguageCode_throws() {
@@ -31,7 +26,7 @@ class NewsletterTopicModelTest extends ModelTest {
         topics.add(new NewsletterTopic(1, "t1"));
         topics.add(new NewsletterTopic(2, "t2"));
 
-        when(serviceMock.findAll(languageCode)).thenReturn(topics);
+        when(newsletterTopicServiceMock.findAll(languageCode)).thenReturn(topics);
 
         final NewsletterTopicModel model = new NewsletterTopicModel("de");
 
@@ -39,9 +34,9 @@ class NewsletterTopicModelTest extends ModelTest {
             .extracting(NewsletterTopic.NewsletterTopicFields.TITLE.getName())
             .containsExactly("t1", "t2");
 
-        verify(serviceMock).findAll(languageCode);
+        verify(newsletterTopicServiceMock).findAll(languageCode);
 
-        verifyNoMoreInteractions(serviceMock);
+        verifyNoMoreInteractions(newsletterTopicServiceMock);
     }
 
 }

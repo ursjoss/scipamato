@@ -15,38 +15,24 @@ import org.apache.wicket.util.tester.WicketTester;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentMatcher;
 import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
-import ch.difty.scipamato.core.ScipamatoCoreApplication;
 import ch.difty.scipamato.core.entity.code_class.CodeClassDefinition;
 import ch.difty.scipamato.core.entity.code_class.CodeClassFilter;
-import ch.difty.scipamato.core.persistence.CodeClassService;
+import ch.difty.scipamato.core.web.AbstractWicketTest;
 
-@ExtendWith(SpringExtension.class)
-@SpringBootTest
-class CodeClassDefinitionProviderTest {
+class CodeClassDefinitionProviderTest extends AbstractWicketTest {
+
     private CodeClassDefinitionProvider provider;
 
-    @MockBean
-    private CodeClassService serviceMock;
-
     @Mock
-    private CodeClassFilter filterMock;
-
+    private CodeClassFilter     filterMock;
     @Mock
     private CodeClassDefinition entityMock;
 
     private List<CodeClassDefinition> codeClasses;
-
-    @Autowired
-    private ScipamatoCoreApplication application;
 
     @BeforeEach
     final void setUp() {
@@ -57,7 +43,7 @@ class CodeClassDefinitionProviderTest {
 
     @AfterEach
     void tearDown() {
-        verifyNoMoreInteractions(serviceMock, entityMock);
+        verifyNoMoreInteractions(codeClassServiceMock, entityMock);
     }
 
     @Test
@@ -75,9 +61,9 @@ class CodeClassDefinitionProviderTest {
     @Test
     void size() {
         int size = 5;
-        when(serviceMock.countByFilter(filterMock)).thenReturn(size);
+        when(codeClassServiceMock.countByFilter(filterMock)).thenReturn(size);
         assertThat(provider.size()).isEqualTo(size);
-        verify(serviceMock).countByFilter(filterMock);
+        verify(codeClassServiceMock).countByFilter(filterMock);
     }
 
     @Test
@@ -121,21 +107,21 @@ class CodeClassDefinitionProviderTest {
     @Test
     void iterating_withNoRecords_returnsNoRecords() {
         codeClasses = Collections.emptyList();
-        when(serviceMock.findPageOfEntityDefinitions(eq(filterMock), isA(PaginationContext.class))).thenReturn(
+        when(codeClassServiceMock.findPageOfEntityDefinitions(eq(filterMock), isA(PaginationContext.class))).thenReturn(
             codeClasses.iterator());
         Iterator<CodeClassDefinition> it = provider.iterator(0, 3);
         assertThat(it.hasNext()).isFalse();
-        verify(serviceMock).findPageOfEntityDefinitions(eq(filterMock),
+        verify(codeClassServiceMock).findPageOfEntityDefinitions(eq(filterMock),
             argThat(new PaginationContextMatcher(3, "id: ASC")));
     }
 
     @Test
     void iterating_throughFirst() {
-        when(serviceMock.findPageOfEntityDefinitions(eq(filterMock), isA(PaginationContext.class))).thenReturn(
+        when(codeClassServiceMock.findPageOfEntityDefinitions(eq(filterMock), isA(PaginationContext.class))).thenReturn(
             codeClasses.iterator());
         Iterator<CodeClassDefinition> it = provider.iterator(0, 3);
         assertRecordsIn(it);
-        verify(serviceMock).findPageOfEntityDefinitions(eq(filterMock),
+        verify(codeClassServiceMock).findPageOfEntityDefinitions(eq(filterMock),
             argThat(new PaginationContextMatcher(3, "id: ASC")));
     }
 
@@ -150,22 +136,22 @@ class CodeClassDefinitionProviderTest {
 
     @Test
     void iterating_throughSecondPage() {
-        when(serviceMock.findPageOfEntityDefinitions(eq(filterMock), isA(PaginationContext.class))).thenReturn(
+        when(codeClassServiceMock.findPageOfEntityDefinitions(eq(filterMock), isA(PaginationContext.class))).thenReturn(
             codeClasses.iterator());
         Iterator<CodeClassDefinition> it = provider.iterator(3, 3);
         assertRecordsIn(it);
-        verify(serviceMock).findPageOfEntityDefinitions(eq(filterMock),
+        verify(codeClassServiceMock).findPageOfEntityDefinitions(eq(filterMock),
             argThat(new PaginationContextMatcher(3, "id: ASC")));
     }
 
     @Test
     void iterating_throughThirdPage() {
         provider.setSort("id", SortOrder.DESCENDING);
-        when(serviceMock.findPageOfEntityDefinitions(eq(filterMock), isA(PaginationContext.class))).thenReturn(
+        when(codeClassServiceMock.findPageOfEntityDefinitions(eq(filterMock), isA(PaginationContext.class))).thenReturn(
             codeClasses.iterator());
         Iterator<CodeClassDefinition> it = provider.iterator(6, 3);
         assertRecordsIn(it);
-        verify(serviceMock).findPageOfEntityDefinitions(eq(filterMock),
+        verify(codeClassServiceMock).findPageOfEntityDefinitions(eq(filterMock),
             argThat(new CodeClassDefinitionProviderTest.PaginationContextMatcher(3, "id: DESC")));
     }
 }

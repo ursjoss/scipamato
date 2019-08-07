@@ -17,7 +17,6 @@ import org.jooq.tools.jdbc.MockArray;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
@@ -25,7 +24,6 @@ import org.springframework.batch.core.configuration.annotation.StepBuilderFactor
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import ch.difty.scipamato.common.DateTimeService;
 import ch.difty.scipamato.core.db.public_.tables.Code;
@@ -35,7 +33,6 @@ import ch.difty.scipamato.core.sync.jobs.SyncConfigTest;
 import ch.difty.scipamato.publ.db.public_.tables.records.PaperRecord;
 
 @SpringBootTest
-@ExtendWith(SpringExtension.class)
 class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
 
     private PaperSyncConfig config;

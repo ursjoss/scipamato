@@ -13,27 +13,14 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.tester.FormTester;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.core.entity.Paper;
-import ch.difty.scipamato.core.logic.parsing.AuthorParserFactory;
-import ch.difty.scipamato.core.persistence.CodeClassService;
-import ch.difty.scipamato.core.persistence.CodeService;
 import ch.difty.scipamato.core.persistence.OptimisticLockingException;
 import ch.difty.scipamato.core.persistence.OptimisticLockingException.Type;
 import ch.difty.scipamato.core.web.common.SelfUpdatingPageTest;
 import ch.difty.scipamato.core.web.paper.common.PaperPanel;
 
 class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
-
-    @MockBean
-    private AuthorParserFactory authorParserFactoryMock;
-
-    @MockBean
-    private CodeService codeServiceMock;
-
-    @MockBean
-    private CodeClassService codeClassServiceMock;
 
     @Mock
     private Paper persistedPaperMock;

@@ -23,7 +23,8 @@ class PaperSlimByPaperFilterProviderTest
 
     @Override
     protected void localFixture() {
-        when(serviceMock.findPageByFilter(eq(filterMock), isA(PaginationContext.class))).thenReturn(pageOfSlimPapers);
+        when(paperSlimServiceMock.findPageByFilter(eq(filterMock), isA(PaginationContext.class))).thenReturn(
+            pageOfSlimPapers);
     }
 
     @Override
@@ -38,7 +39,7 @@ class PaperSlimByPaperFilterProviderTest
 
     @Override
     protected void verifyFilterMock(PaginationContextMatcher matcher) {
-        verify(serviceMock).findPageByFilter(eq(filterMock), argThat(matcher));
+        verify(paperSlimServiceMock).findPageByFilter(eq(filterMock), argThat(matcher));
     }
 
     @Test
@@ -50,9 +51,9 @@ class PaperSlimByPaperFilterProviderTest
     @Test
     void size() {
         int size = 5;
-        when(serviceMock.countByFilter(getFilter())).thenReturn(size);
+        when(paperSlimServiceMock.countByFilter(getFilter())).thenReturn(size);
         assertThat(provider.size()).isEqualTo(size);
-        verify(serviceMock).countByFilter(getFilter());
+        verify(paperSlimServiceMock).countByFilter(getFilter());
     }
 
     @Test

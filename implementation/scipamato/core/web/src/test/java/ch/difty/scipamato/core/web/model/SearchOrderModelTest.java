@@ -11,36 +11,32 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatcher;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationRequest;
 import ch.difty.scipamato.common.persistence.paging.Sort.SortProperty;
 import ch.difty.scipamato.core.entity.search.SearchOrder;
 import ch.difty.scipamato.core.entity.search.SearchOrderFilter;
-import ch.difty.scipamato.core.persistence.SearchOrderService;
 
 class SearchOrderModelTest extends ModelTest {
 
-    @MockBean
-    private SearchOrderService serviceMock;
     @Mock
-    private SearchOrder        mockSearchOrder;
+    private SearchOrder mockSearchOrder;
 
     @AfterEach
     void tearDown() {
-        verifyNoMoreInteractions(serviceMock, mockSearchOrder);
+        verifyNoMoreInteractions(searchOrderServiceMock, mockSearchOrder);
     }
 
     @Test
     void test() {
         final int owner = 1;
         final int maxRows = 10;
-        when(serviceMock.findPageByFilter(isA(SearchOrderFilter.class), isA(PaginationRequest.class))).thenReturn(
-            Arrays.asList(mockSearchOrder, mockSearchOrder));
+        when(searchOrderServiceMock.findPageByFilter(isA(SearchOrderFilter.class),
+            isA(PaginationRequest.class))).thenReturn(Arrays.asList(mockSearchOrder, mockSearchOrder));
         SearchOrderModel m = new SearchOrderModel(owner, maxRows);
         assertThat(m.load()).containsExactly(mockSearchOrder, mockSearchOrder);
 
-        verify(serviceMock).findPageByFilter(Mockito.argThat(new SearchOrderFilterMatcher(owner)),
+        verify(searchOrderServiceMock).findPageByFilter(Mockito.argThat(new SearchOrderFilterMatcher(owner)),
             Mockito.argThat(new PaginationRequestWithMaxRows(maxRows)));
     }
 

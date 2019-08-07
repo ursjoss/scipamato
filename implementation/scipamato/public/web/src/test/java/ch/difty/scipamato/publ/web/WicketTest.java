@@ -14,21 +14,20 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.ApplicationContext;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import ch.difty.scipamato.common.DateTimeService;
 import ch.difty.scipamato.common.navigator.ItemNavigator;
 import ch.difty.scipamato.common.web.ScipamatoWebSessionFacade;
 import ch.difty.scipamato.publ.ScipamatoPublicApplication;
+import ch.difty.scipamato.publ.persistence.api.KeywordService;
+import ch.difty.scipamato.publ.persistence.api.PublicPaperService;
 
 @SpringBootTest
-@ExtendWith(SpringExtension.class)
 @SuppressWarnings("SameParameterValue")
 public abstract class WicketTest {
 
@@ -47,6 +46,12 @@ public abstract class WicketTest {
     @MockBean
     private ItemNavigator<Long> itemNavigatorMock;
 
+    @MockBean
+    private PublicPaperService paperServiceMock;
+
+    @MockBean
+    private KeywordService keywordServiceMock;
+
     private WicketTester tester;
 
     public WebApplication getApplication() {
@@ -63,6 +68,14 @@ public abstract class WicketTest {
 
     protected ItemNavigator<Long> getItemNavigator() {
         return itemNavigatorMock;
+    }
+
+    protected PublicPaperService getPaperService() {
+        return paperServiceMock;
+    }
+
+    protected KeywordService getKeywordService() {
+        return keywordServiceMock;
     }
 
     @BeforeEach

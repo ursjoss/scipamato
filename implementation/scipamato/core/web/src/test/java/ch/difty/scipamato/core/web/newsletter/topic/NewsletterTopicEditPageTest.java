@@ -12,14 +12,12 @@ import org.apache.wicket.util.tester.FormTester;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DuplicateKeyException;
 
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicDefinition;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicFilter;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicTranslation;
-import ch.difty.scipamato.core.persistence.NewsletterTopicService;
 import ch.difty.scipamato.core.persistence.OptimisticLockingException;
 import ch.difty.scipamato.core.web.authentication.LogoutPage;
 import ch.difty.scipamato.core.web.common.BasePageTest;
@@ -28,9 +26,6 @@ import ch.difty.scipamato.core.web.common.BasePageTest;
 class NewsletterTopicEditPageTest extends BasePageTest<NewsletterTopicEditPage> {
 
     private NewsletterTopicDefinition ntd;
-
-    @MockBean
-    private NewsletterTopicService newsletterTopicServiceMock;
 
     @Mock
     private NewsletterTopicDefinition newsletterTopicDefinitionDummy;

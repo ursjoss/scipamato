@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import ch.difty.scipamato.common.AssertAs;
@@ -42,6 +43,7 @@ import ch.difty.scipamato.core.persistence.codeclass.CodeClassRepository;
 @Repository
 @CacheConfig(cacheNames = "codes")
 @Slf4j
+@Profile("!wickettest")
 public class JooqCodeRepo extends AbstractRepo implements CodeRepository {
 
     private final CodeClassRepository codeClassRepo;

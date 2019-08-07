@@ -27,7 +27,7 @@ class PaperSlimBySearchOrderProviderTest
 
     @Override
     protected void localFixture() {
-        when(serviceMock.findPageBySearchOrder(eq(searchOrder), isA(PaginationContext.class))).thenReturn(
+        when(paperSlimServiceMock.findPageBySearchOrder(eq(searchOrder), isA(PaginationContext.class))).thenReturn(
             pageOfSlimPapers);
     }
 
@@ -50,7 +50,7 @@ class PaperSlimBySearchOrderProviderTest
 
     @Override
     protected void verifyFilterMock(PaginationContextMatcher matcher) {
-        verify(serviceMock).findPageBySearchOrder(eq(searchOrder), Mockito.argThat(matcher));
+        verify(paperSlimServiceMock).findPageBySearchOrder(eq(searchOrder), Mockito.argThat(matcher));
     }
 
     @Test
@@ -62,9 +62,9 @@ class PaperSlimBySearchOrderProviderTest
     @Test
     void size() {
         int size = 5;
-        when(serviceMock.countBySearchOrder(getFilter())).thenReturn(size);
+        when(paperSlimServiceMock.countBySearchOrder(getFilter())).thenReturn(size);
         assertThat(provider.size()).isEqualTo(size);
-        verify(serviceMock).countBySearchOrder(getFilter());
+        verify(paperSlimServiceMock).countBySearchOrder(getFilter());
     }
 
     @Test

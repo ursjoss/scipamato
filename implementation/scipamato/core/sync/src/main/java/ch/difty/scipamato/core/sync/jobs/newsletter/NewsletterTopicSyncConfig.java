@@ -17,6 +17,7 @@ import org.springframework.batch.item.ItemWriter;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 import ch.difty.scipamato.common.DateTimeService;
 import ch.difty.scipamato.core.db.public_.tables.records.NewsletterTopicRecord;
@@ -34,6 +35,7 @@ import ch.difty.scipamato.core.sync.jobs.SyncConfig;
  * @author u.joss
  */
 @Configuration
+@Profile("!wickettest")
 public class NewsletterTopicSyncConfig
     extends SyncConfig<PublicNewsletterTopic, ch.difty.scipamato.publ.db.public_.tables.records.NewsletterTopicRecord> {
 

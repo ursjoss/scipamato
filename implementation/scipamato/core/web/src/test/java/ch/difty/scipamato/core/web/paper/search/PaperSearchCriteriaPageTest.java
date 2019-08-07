@@ -11,30 +11,17 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.util.tester.FormTester;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.core.entity.search.SearchCondition;
 import ch.difty.scipamato.core.entity.search.SearchOrder;
 import ch.difty.scipamato.core.entity.search.SearchOrderFilter;
-import ch.difty.scipamato.core.persistence.CodeClassService;
-import ch.difty.scipamato.core.persistence.CodeService;
-import ch.difty.scipamato.core.persistence.SearchOrderService;
 import ch.difty.scipamato.core.web.common.BasePageTest;
 import ch.difty.scipamato.core.web.paper.common.SearchablePaperPanel;
 
 class PaperSearchCriteriaPageTest extends BasePageTest<PaperSearchCriteriaPage> {
 
     private static final long SEARCH_ORDER_ID = 5;
-
-    @MockBean
-    private SearchOrderService searchOrderServiceMock;
-
-    @MockBean
-    private CodeService codeServiceMock;
-
-    @MockBean
-    private CodeClassService codeClassServiceMock;
 
     @Mock
     private SearchCondition searchConditionMock;

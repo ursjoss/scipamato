@@ -14,36 +14,22 @@ import org.apache.wicket.util.tester.WicketTester;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentMatcher;
 import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
-import ch.difty.scipamato.core.ScipamatoCoreApplication;
 import ch.difty.scipamato.core.entity.User;
 import ch.difty.scipamato.core.entity.search.UserFilter;
-import ch.difty.scipamato.core.persistence.UserService;
+import ch.difty.scipamato.core.web.AbstractWicketTest;
 
-@ExtendWith(SpringExtension.class)
-@SpringBootTest
-class UserProviderTest {
+class UserProviderTest extends AbstractWicketTest {
 
     private UserProvider provider;
 
     @Mock
-    private UserService serviceMock;
-
-    @Mock
     private UserFilter filterMock;
-
     @Mock
-    private User entityMock;
-
-    @Autowired
-    private ScipamatoCoreApplication application;
+    private User       entityMock;
 
     private List<User> papers;
 
@@ -51,14 +37,14 @@ class UserProviderTest {
     void setUp() {
         new WicketTester(application);
         provider = new UserProvider(filterMock);
-        provider.setService(serviceMock);
+        provider.setService(userServiceMock);
 
         papers = Arrays.asList(entityMock, entityMock, entityMock);
     }
 
     @AfterEach
     void tearDown() {
-        verifyNoMoreInteractions(serviceMock, entityMock);
+        verifyNoMoreInteractions(userServiceMock, entityMock);
     }
 
     @Test
@@ -76,9 +62,9 @@ class UserProviderTest {
     @Test
     void size() {
         int size = 5;
-        when(serviceMock.countByFilter(filterMock)).thenReturn(size);
+        when(userServiceMock.countByFilter(filterMock)).thenReturn(size);
         assertThat(provider.size()).isEqualTo(size);
-        verify(serviceMock).countByFilter(filterMock);
+        verify(userServiceMock).countByFilter(filterMock);
     }
 
     @Test
@@ -122,19 +108,19 @@ class UserProviderTest {
     @Test
     void iterating_withNoRecords_returnsNoRecords() {
         papers = Collections.emptyList();
-        when(serviceMock.findPageByFilter(eq(filterMock), isA(PaginationContext.class))).thenReturn(papers);
+        when(userServiceMock.findPageByFilter(eq(filterMock), isA(PaginationContext.class))).thenReturn(papers);
         Iterator<User> it = provider.iterator(0, 3);
         assertThat(it.hasNext()).isFalse();
-        verify(serviceMock).findPageByFilter(eq(filterMock),
+        verify(userServiceMock).findPageByFilter(eq(filterMock),
             argThat(new UserProviderTest.PaginationContextMatcher(3, "userName: ASC")));
     }
 
     @Test
     void iterating_throughFirst() {
-        when(serviceMock.findPageByFilter(eq(filterMock), isA(PaginationContext.class))).thenReturn(papers);
+        when(userServiceMock.findPageByFilter(eq(filterMock), isA(PaginationContext.class))).thenReturn(papers);
         Iterator<User> it = provider.iterator(0, 3);
         assertRecordsIn(it);
-        verify(serviceMock).findPageByFilter(eq(filterMock),
+        verify(userServiceMock).findPageByFilter(eq(filterMock),
             argThat(new UserProviderTest.PaginationContextMatcher(3, "userName: ASC")));
     }
 
@@ -149,20 +135,20 @@ class UserProviderTest {
 
     @Test
     void iterating_throughSecondPage() {
-        when(serviceMock.findPageByFilter(eq(filterMock), isA(PaginationContext.class))).thenReturn(papers);
+        when(userServiceMock.findPageByFilter(eq(filterMock), isA(PaginationContext.class))).thenReturn(papers);
         Iterator<User> it = provider.iterator(3, 3);
         assertRecordsIn(it);
-        verify(serviceMock).findPageByFilter(eq(filterMock),
+        verify(userServiceMock).findPageByFilter(eq(filterMock),
             argThat(new UserProviderTest.PaginationContextMatcher(3, "userName: ASC")));
     }
 
     @Test
     void iterating_throughThirdPage() {
         provider.setSort("title", SortOrder.DESCENDING);
-        when(serviceMock.findPageByFilter(eq(filterMock), isA(PaginationContext.class))).thenReturn(papers);
+        when(userServiceMock.findPageByFilter(eq(filterMock), isA(PaginationContext.class))).thenReturn(papers);
         Iterator<User> it = provider.iterator(6, 3);
         assertRecordsIn(it);
-        verify(serviceMock).findPageByFilter(eq(filterMock),
+        verify(userServiceMock).findPageByFilter(eq(filterMock),
             argThat(new UserProviderTest.PaginationContextMatcher(3, "title: DESC")));
     }
 

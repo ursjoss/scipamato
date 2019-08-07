@@ -10,13 +10,11 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.link.Link;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationRequest;
 import ch.difty.scipamato.core.entity.code_class.CodeClassDefinition;
 import ch.difty.scipamato.core.entity.code_class.CodeClassFilter;
 import ch.difty.scipamato.core.entity.code_class.CodeClassTranslation;
-import ch.difty.scipamato.core.persistence.CodeClassService;
 import ch.difty.scipamato.core.web.common.BasePageTest;
 
 @SuppressWarnings("SameParameterValue")
@@ -25,9 +23,6 @@ class CodeClassListPageTest extends BasePageTest<CodeClassListPage> {
     private static final int COLUMN_ID_WITH_LINK = 2;
 
     private final List<CodeClassDefinition> results = new ArrayList<>();
-
-    @MockBean
-    protected CodeClassService codeClassServiceMock;
 
     @Override
     protected void setUpHook() {

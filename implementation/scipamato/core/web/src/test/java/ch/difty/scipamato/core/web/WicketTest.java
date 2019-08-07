@@ -12,82 +12,33 @@ import org.apache.wicket.markup.head.filter.JavaScriptFilteredIntoFooterHeaderRe
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
-import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.util.tester.FormTester;
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.ApplicationContext;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import ch.difty.scipamato.common.DateTimeService;
-import ch.difty.scipamato.common.navigator.ItemNavigator;
-import ch.difty.scipamato.common.web.ScipamatoWebSessionFacade;
-import ch.difty.scipamato.core.ScipamatoCoreApplication;
 import ch.difty.scipamato.core.auth.Roles;
-import ch.difty.scipamato.core.persistence.NewsletterService;
-import ch.difty.scipamato.core.persistence.PaperService;
-import ch.difty.scipamato.core.persistence.PaperSlimService;
+import ch.difty.scipamato.core.config.ApplicationCoreProperties;
+import ch.difty.scipamato.core.logic.parsing.AuthorParserStrategy;
 import ch.difty.scipamato.core.web.authentication.LoginPage;
 import ch.difty.scipamato.core.web.paper.list.PaperListPage;
 import ch.difty.scipamato.core.web.security.TestUserDetailsService;
 
-@SuppressWarnings("SameParameterValue")
 @SpringBootTest
-@ExtendWith(SpringExtension.class)
-public abstract class WicketTest {
+@SuppressWarnings("SameParameterValue")
+@ActiveProfiles({ "wickettest" })
+public abstract class WicketTest extends AbstractWicketTest {
 
     private static final String USERNAME = "testuser";
     private static final String PASSWORD = "secretpw";
 
-    @Autowired
-    private ScipamatoCoreApplication application;
-
-    @Autowired
-    private ApplicationContext applicationContextMock;
-
-    @Autowired
-    private DateTimeService dateTimeService;
-
-    @MockBean
-    private ScipamatoWebSessionFacade sessionFacadeMock;
-
-    @MockBean
-    protected ItemNavigator<Long> itemNavigatorMock;
-
-    // The paper slim service, paper service and newsletter service are used in the home page
-    // PaperListPage
-    @MockBean
-    protected PaperSlimService  paperSlimServiceMock;
-    @MockBean
-    protected PaperService      paperServiceMock;
-    @MockBean
-    protected NewsletterService newsletterServiceMock;
-
     private WicketTester tester;
-
-    public WebApplication getApplication() {
-        return application;
-    }
 
     public WicketTester getTester() {
         return tester;
-    }
-
-    public DateTimeService getDateTimeService() {
-        return dateTimeService;
-    }
-
-    public ItemNavigator<Long> getItemNavigator() {
-        return itemNavigatorMock;
-    }
-
-    protected ScipamatoWebSessionFacade getWebSessionFacade() {
-        return sessionFacadeMock;
     }
 
     @BeforeEach

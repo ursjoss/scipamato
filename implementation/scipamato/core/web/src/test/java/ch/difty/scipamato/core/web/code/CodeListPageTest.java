@@ -3,6 +3,7 @@ package ch.difty.scipamato.core.web.code;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton;
@@ -13,14 +14,12 @@ import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.util.tester.FormTester;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationRequest;
 import ch.difty.scipamato.core.entity.CodeClass;
 import ch.difty.scipamato.core.entity.code.CodeDefinition;
 import ch.difty.scipamato.core.entity.code.CodeFilter;
 import ch.difty.scipamato.core.entity.code.CodeTranslation;
-import ch.difty.scipamato.core.persistence.CodeService;
 import ch.difty.scipamato.core.web.common.BasePageTest;
 
 @SuppressWarnings("SameParameterValue")
@@ -32,9 +31,6 @@ class CodeListPageTest extends BasePageTest<CodeListPage> {
     private final CodeClass cc2 = new CodeClass(2, "cc2", null);
 
     private final List<CodeDefinition> results = new ArrayList<>();
-
-    @MockBean
-    protected CodeService codeServiceMock;
 
     @Override
     protected void setUpHook() {
@@ -53,6 +49,7 @@ class CodeListPageTest extends BasePageTest<CodeListPage> {
         when(codeServiceMock.countByFilter(isA(CodeFilter.class))).thenReturn(results.size());
         when(codeServiceMock.findPageOfEntityDefinitions(isA(CodeFilter.class),
             isA(PaginationRequest.class))).thenReturn(results.iterator());
+        when(codeClassServiceMock.find(anyString())).thenReturn(Arrays.asList(cc1, cc2));
     }
 
     @AfterEach

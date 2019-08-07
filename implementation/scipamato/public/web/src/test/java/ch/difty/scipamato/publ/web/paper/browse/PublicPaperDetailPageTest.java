@@ -12,21 +12,16 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.tester.FormTester;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationRequest;
 import ch.difty.scipamato.publ.entity.PublicPaper;
 import ch.difty.scipamato.publ.entity.filter.PublicPaperFilter;
-import ch.difty.scipamato.publ.persistence.api.PublicPaperService;
 import ch.difty.scipamato.publ.web.PublicPageParameters;
 import ch.difty.scipamato.publ.web.common.BasePageTest;
 
 class PublicPaperDetailPageTest extends BasePageTest<PublicPaperDetailPage> {
 
     private static final long NUMBER = 17L;
-
-    @MockBean
-    private PublicPaperService serviceMock;
 
     @Override
     protected void setUpHook() {
@@ -35,17 +30,17 @@ class PublicPaperDetailPageTest extends BasePageTest<PublicPaperDetailPage> {
         PublicPaper paper = new PublicPaper(1L, NUMBER, 10000, "authors", "auths", "title", "location", "journal", 2017,
             "goals", "methods", "population", "result", "comment");
 
-        when(serviceMock.findByNumber(NUMBER)).thenReturn(Optional.of(paper));
+        when(getPaperService().findByNumber(NUMBER)).thenReturn(Optional.of(paper));
     }
 
     @Override
     protected void doVerify() {
-        verify(serviceMock).findByNumber(NUMBER);
+        verify(getPaperService()).findByNumber(NUMBER);
     }
 
     @AfterEach
     void tearDown() {
-        verifyNoMoreInteractions(serviceMock);
+        verifyNoMoreInteractions(getPaperService());
     }
 
     @Override
@@ -234,7 +229,7 @@ class PublicPaperDetailPageTest extends BasePageTest<PublicPaperDetailPage> {
         verify(getItemNavigator()).previous();
         verify(getItemNavigator()).getItemWithFocus();
 
-        verify(serviceMock).findByNumber(previousId);
+        verify(getPaperService()).findByNumber(previousId);
     }
 
     @Test
@@ -256,7 +251,7 @@ class PublicPaperDetailPageTest extends BasePageTest<PublicPaperDetailPage> {
         verify(getItemNavigator()).next();
         verify(getItemNavigator()).getItemWithFocus();
 
-        verify(serviceMock).findByNumber(nextId);
+        verify(getPaperService()).findByNumber(nextId);
     }
 
     @Test
@@ -277,7 +272,7 @@ class PublicPaperDetailPageTest extends BasePageTest<PublicPaperDetailPage> {
         verify(getItemNavigator()).next();
         verify(getItemNavigator()).getItemWithFocus();
 
-        verify(serviceMock, never()).findByNumber(anyLong());
+        verify(getPaperService(), never()).findByNumber(anyLong());
     }
 
     @Test
@@ -291,7 +286,7 @@ class PublicPaperDetailPageTest extends BasePageTest<PublicPaperDetailPage> {
 
         getTester().assertRenderedPage(PublicPage.class);
 
-        verify(serviceMock).findPageOfNumbersByFilter(isA(PublicPaperFilter.class), isA(PaginationRequest.class));
+        verify(getPaperService()).findPageOfNumbersByFilter(isA(PublicPaperFilter.class), isA(PaginationRequest.class));
     }
 
     @Test
@@ -299,13 +294,13 @@ class PublicPaperDetailPageTest extends BasePageTest<PublicPaperDetailPage> {
         PageParameters pp = new PageParameters();
         pp.set(PublicPageParameters.NUMBER.getName(), NUMBER);
         new PublicPaperDetailPage(pp);
-        verify(serviceMock).findByNumber(NUMBER);
+        verify(getPaperService()).findByNumber(NUMBER);
     }
 
     @Test
     void constructingPage_withoutPageParmeterProvidingNumber_loadsNothing() {
         new PublicPaperDetailPage(new PageParameters());
-        verify(serviceMock, never()).findByNumber(anyLong());
+        verify(getPaperService(), never()).findByNumber(anyLong());
     }
 
 }

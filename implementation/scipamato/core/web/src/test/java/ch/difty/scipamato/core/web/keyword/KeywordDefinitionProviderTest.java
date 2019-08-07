@@ -14,35 +14,20 @@ import org.apache.wicket.util.tester.WicketTester;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentMatcher;
 import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
-import ch.difty.scipamato.core.ScipamatoCoreApplication;
 import ch.difty.scipamato.core.entity.keyword.KeywordDefinition;
 import ch.difty.scipamato.core.entity.keyword.KeywordFilter;
-import ch.difty.scipamato.core.persistence.KeywordService;
+import ch.difty.scipamato.core.web.AbstractWicketTest;
 
-@ExtendWith(SpringExtension.class)
-@SpringBootTest
-class KeywordDefinitionProviderTest {
+class KeywordDefinitionProviderTest extends AbstractWicketTest {
 
     private KeywordDefinitionProvider provider;
 
-    @Autowired
-    private ScipamatoCoreApplication application;
-
-    @MockBean
-    private KeywordService serviceMock;
-
     @Mock
-    private KeywordFilter filterMock;
-
+    private KeywordFilter     filterMock;
     @Mock
     private KeywordDefinition entityMock;
 
@@ -58,7 +43,7 @@ class KeywordDefinitionProviderTest {
 
     @AfterEach
     void tearDown() {
-        verifyNoMoreInteractions(serviceMock, entityMock);
+        verifyNoMoreInteractions(keywordServiceMock, entityMock);
     }
 
     @Test
@@ -76,9 +61,9 @@ class KeywordDefinitionProviderTest {
     @Test
     void size() {
         int size = 5;
-        when(serviceMock.countByFilter(filterMock)).thenReturn(size);
+        when(keywordServiceMock.countByFilter(filterMock)).thenReturn(size);
         assertThat(provider.size()).isEqualTo(size);
-        verify(serviceMock).countByFilter(filterMock);
+        verify(keywordServiceMock).countByFilter(filterMock);
     }
 
     @Test
@@ -122,21 +107,21 @@ class KeywordDefinitionProviderTest {
     @Test
     void iterating_withNoRecords_returnsNoRecords() {
         papers = Collections.emptyList();
-        when(serviceMock.findPageOfEntityDefinitions(eq(filterMock), isA(PaginationContext.class))).thenReturn(
+        when(keywordServiceMock.findPageOfEntityDefinitions(eq(filterMock), isA(PaginationContext.class))).thenReturn(
             papers.iterator());
         Iterator<KeywordDefinition> it = provider.iterator(0, 3);
         assertThat(it.hasNext()).isFalse();
-        verify(serviceMock).findPageOfEntityDefinitions(eq(filterMock),
+        verify(keywordServiceMock).findPageOfEntityDefinitions(eq(filterMock),
             argThat(new KeywordDefinitionProviderTest.PaginationContextMatcher(3, "name: ASC")));
     }
 
     @Test
     void iterating_throughFirst() {
-        when(serviceMock.findPageOfEntityDefinitions(eq(filterMock), isA(PaginationContext.class))).thenReturn(
+        when(keywordServiceMock.findPageOfEntityDefinitions(eq(filterMock), isA(PaginationContext.class))).thenReturn(
             papers.iterator());
         Iterator<KeywordDefinition> it = provider.iterator(0, 3);
         assertRecordsIn(it);
-        verify(serviceMock).findPageOfEntityDefinitions(eq(filterMock),
+        verify(keywordServiceMock).findPageOfEntityDefinitions(eq(filterMock),
             argThat(new KeywordDefinitionProviderTest.PaginationContextMatcher(3, "name: ASC")));
     }
 
@@ -151,22 +136,22 @@ class KeywordDefinitionProviderTest {
 
     @Test
     void iterating_throughSecondPage() {
-        when(serviceMock.findPageOfEntityDefinitions(eq(filterMock), isA(PaginationContext.class))).thenReturn(
+        when(keywordServiceMock.findPageOfEntityDefinitions(eq(filterMock), isA(PaginationContext.class))).thenReturn(
             papers.iterator());
         Iterator<KeywordDefinition> it = provider.iterator(3, 3);
         assertRecordsIn(it);
-        verify(serviceMock).findPageOfEntityDefinitions(eq(filterMock),
+        verify(keywordServiceMock).findPageOfEntityDefinitions(eq(filterMock),
             argThat(new KeywordDefinitionProviderTest.PaginationContextMatcher(3, "name: ASC")));
     }
 
     @Test
     void iterating_throughThirdPage() {
         provider.setSort("name", SortOrder.DESCENDING);
-        when(serviceMock.findPageOfEntityDefinitions(eq(filterMock), isA(PaginationContext.class))).thenReturn(
+        when(keywordServiceMock.findPageOfEntityDefinitions(eq(filterMock), isA(PaginationContext.class))).thenReturn(
             papers.iterator());
         Iterator<KeywordDefinition> it = provider.iterator(6, 3);
         assertRecordsIn(it);
-        verify(serviceMock).findPageOfEntityDefinitions(eq(filterMock),
+        verify(keywordServiceMock).findPageOfEntityDefinitions(eq(filterMock),
             argThat(new KeywordDefinitionProviderTest.PaginationContextMatcher(3, "name: DESC")));
     }
 

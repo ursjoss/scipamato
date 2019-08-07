@@ -2,6 +2,7 @@ package ch.difty.scipamato.core.config;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import javax.sql.DataSource;
 import java.sql.SQLException;
 
 import com.zaxxer.hikari.HikariDataSource;
@@ -9,17 +10,60 @@ import org.jooq.Configuration;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DataSourceConnectionProvider;
 import org.jooq.impl.DefaultExecuteListenerProvider;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@ExtendWith(SpringExtension.class)
-@SpringBootTest
+import ch.difty.scipamato.core.persistence.UserRepository;
+import ch.difty.scipamato.core.persistence.code.CodeRepository;
+import ch.difty.scipamato.core.persistence.codeclass.CodeClassRepository;
+import ch.difty.scipamato.core.persistence.keyword.KeywordRepository;
+import ch.difty.scipamato.core.persistence.newsletter.NewsletterRepository;
+import ch.difty.scipamato.core.persistence.newsletter.NewsletterTopicRepository;
+import ch.difty.scipamato.core.persistence.paper.PaperRepository;
+import ch.difty.scipamato.core.persistence.paper.searchorder.BySearchOrderRepository;
+import ch.difty.scipamato.core.persistence.paper.searchorder.PaperSlimBackedSearchOrderRepository;
+import ch.difty.scipamato.core.persistence.paper.slim.PaperSlimRepository;
+import ch.difty.scipamato.core.persistence.search.SearchOrderRepository;
+import ch.difty.scipamato.core.persistence.user.UserRoleRepository;
+import ch.difty.scipamato.core.pubmed.PubmedImportService;
+
+@SpringBootTest@Disabled("might have to move it into intTest TODO")
 class JooqCoreConfigurationTest {
+
+    @MockBean
+    private PubmedImportService                  pubmedImportServiceMock;
+    @MockBean
+    private UserRepository                       userRepoMock;
+    @MockBean
+    private UserRoleRepository                   userRoleRepoMock;
+    @MockBean
+    private CodeRepository                       codeRepoMock;
+    @MockBean
+    private CodeClassRepository                  codeClassRepoMock;
+    @MockBean
+    private KeywordRepository                    keywordRepoMock;
+    @MockBean
+    private NewsletterRepository                 newsletterRepoMock;
+    @MockBean
+    private NewsletterTopicRepository            newsletterTopicRepoMock;
+    @MockBean
+    @Qualifier("jooqPaperBySearchOrderRepo")
+    private BySearchOrderRepository              bySearchOrderRepoMock;
+    @MockBean
+    private PaperRepository                      paperRepoMock;
+    @MockBean
+    private PaperSlimBackedSearchOrderRepository paperSlimBackedSearchOrderRepositoryMock;
+    @MockBean
+    private PaperSlimRepository                  paperSlimRepositoryMock;
+    @MockBean
+    private SearchOrderRepository                searchOrderRepositoryMock;
+    @MockBean
+    private DataSource                           dataSourceMock;
 
     @Autowired
     @Qualifier("coreConfiguration")

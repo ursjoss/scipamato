@@ -15,13 +15,11 @@ import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.util.tester.FormTester;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationRequest;
 import ch.difty.scipamato.core.auth.Role;
 import ch.difty.scipamato.core.entity.User;
 import ch.difty.scipamato.core.entity.search.UserFilter;
-import ch.difty.scipamato.core.persistence.UserService;
 import ch.difty.scipamato.core.web.common.BasePageTest;
 
 @SuppressWarnings("SameParameterValue")
@@ -32,9 +30,6 @@ class UserListPageAsAdminTest extends BasePageTest<UserListPage> {
     private User disabledUser = new User(2, "disabledUser", "f", "l", "boo@bar.baz", "pw2", false, Set.of(Role.VIEWER));
 
     private final List<User> results = new ArrayList<>();
-
-    @MockBean
-    protected UserService userServiceMock;
 
     @Override
     protected String getUserName() {

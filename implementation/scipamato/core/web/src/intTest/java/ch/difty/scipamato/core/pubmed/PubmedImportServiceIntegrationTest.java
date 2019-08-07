@@ -7,19 +7,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import ch.difty.scipamato.common.TestUtils;
 import ch.difty.scipamato.core.persistence.PaperService;
 import ch.difty.scipamato.core.persistence.ServiceResult;
 
-@ExtendWith(SpringExtension.class)
 @SpringBootTest
-@ActiveProfiles({ "test" })
 class PubmedImportServiceIntegrationTest {
 
     private static final String XML = "xml/pubmed_result_3studies.xml";

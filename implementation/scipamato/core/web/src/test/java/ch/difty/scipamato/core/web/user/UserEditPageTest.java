@@ -16,13 +16,11 @@ import org.apache.wicket.util.tester.FormTester;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatcher;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.core.auth.Role;
 import ch.difty.scipamato.core.entity.User;
 import ch.difty.scipamato.core.entity.search.UserFilter;
 import ch.difty.scipamato.core.persistence.OptimisticLockingException;
-import ch.difty.scipamato.core.persistence.UserService;
 import ch.difty.scipamato.core.web.CorePageParameters;
 import ch.difty.scipamato.core.web.common.BasePageTest;
 
@@ -39,9 +37,6 @@ class UserEditPageTest extends BasePageTest<UserEditPage> {
 
     private User user_saved = new User(1, "user", "first", "last", "foo@bar.baz", PW2__HASH, true,
         Set.of(Role.ADMIN, Role.USER));
-
-    @MockBean
-    private UserService userServiceMock;
 
     @Override
     protected void setUpHook() {

@@ -2,16 +2,25 @@ package ch.difty.scipamato.core.web.user;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.fail;
+import static org.mockito.Mockito.when;
+
+import java.util.Optional;
 
 import org.apache.wicket.authorization.UnauthorizedInstantiationException;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.junit.jupiter.api.Test;
 
+import ch.difty.scipamato.core.entity.User;
 import ch.difty.scipamato.core.web.CorePageParameters;
 import ch.difty.scipamato.core.web.WicketTest;
 
 @SuppressWarnings("SameParameterValue")
 class UserEditPageAsViewerTest extends WicketTest {
+
+    @Override
+    protected void setUpHook() {
+        when(userServiceMock.findById(2)).thenReturn(Optional.of(new User()));
+    }
 
     @Override
     protected String getUserName() {

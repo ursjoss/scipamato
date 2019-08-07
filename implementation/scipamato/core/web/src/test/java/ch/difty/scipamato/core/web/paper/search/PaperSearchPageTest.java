@@ -14,7 +14,6 @@ import org.apache.wicket.util.tester.FormTester;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.common.web.Mode;
@@ -22,11 +21,8 @@ import ch.difty.scipamato.core.entity.projection.PaperSlim;
 import ch.difty.scipamato.core.entity.search.SearchCondition;
 import ch.difty.scipamato.core.entity.search.SearchOrder;
 import ch.difty.scipamato.core.entity.search.SearchOrderFilter;
-import ch.difty.scipamato.core.persistence.CodeClassService;
-import ch.difty.scipamato.core.persistence.CodeService;
 import ch.difty.scipamato.core.persistence.OptimisticLockingException;
 import ch.difty.scipamato.core.persistence.OptimisticLockingException.Type;
-import ch.difty.scipamato.core.persistence.SearchOrderService;
 import ch.difty.scipamato.core.web.common.BasePageTest;
 import ch.difty.scipamato.core.web.paper.result.ResultPanel;
 
@@ -37,16 +33,10 @@ class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
 
     private static final String LABEL = "Label";
 
-    @MockBean
-    private SearchOrderService searchOrderServiceMock;
-    @MockBean
-    private CodeClassService   codeClassServiceMock;
-    @MockBean
-    private CodeService        codeServiceMock;
     @Mock
-    private PaperSlim          paperSlimMock;
+    private PaperSlim   paperSlimMock;
     @Mock
-    private SearchOrder        searchOrderMock, searchOrderMock2;
+    private SearchOrder searchOrderMock, searchOrderMock2;
 
     private final SearchOrder searchOrder = new SearchOrder(SO_ID, "soName", 1, false, null, null);
 

@@ -23,6 +23,7 @@ import org.jooq.*;
 import org.jooq.impl.DSL;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import ch.difty.scipamato.common.AssertAs;
@@ -49,6 +50,7 @@ import ch.difty.scipamato.core.persistence.UpdateSetStepSetter;
  */
 @Repository
 @Slf4j
+@Profile("!wickettest")
 public class JooqSearchOrderRepo extends
     JooqEntityRepo<SearchOrderRecord, SearchOrder, Long, ch.difty.scipamato.core.db.tables.SearchOrder, SearchOrderRecordMapper, SearchOrderFilter>
     implements SearchOrderRepository {

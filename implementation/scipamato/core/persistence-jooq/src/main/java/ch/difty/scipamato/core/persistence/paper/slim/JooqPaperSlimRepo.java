@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.jooq.*;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import ch.difty.scipamato.common.AssertAs;
@@ -26,6 +27,7 @@ import ch.difty.scipamato.core.persistence.JooqReadOnlyRepo;
 import ch.difty.scipamato.core.persistence.paper.searchorder.PaperSlimBackedSearchOrderRepository;
 
 @Repository
+@Profile("!wickettest")
 public class JooqPaperSlimRepo extends
     JooqReadOnlyRepo<PaperRecord, PaperSlim, Long, ch.difty.scipamato.core.db.tables.Paper, PaperSlimRecordMapper, PaperFilter>
     implements PaperSlimRepository {

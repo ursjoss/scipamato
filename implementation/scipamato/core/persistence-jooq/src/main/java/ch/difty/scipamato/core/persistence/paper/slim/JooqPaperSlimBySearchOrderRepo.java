@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.jooq.*;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import ch.difty.scipamato.common.persistence.JooqSortMapper;
@@ -27,6 +28,7 @@ import ch.difty.scipamato.core.persistence.paper.searchorder.PaperSlimBackedSear
  * @author u.joss
  */
 @Repository
+@Profile("!wickettest")
 public class JooqPaperSlimBySearchOrderRepo extends JooqBySearchOrderRepo<PaperSlim, PaperSlimRecordMapper>
     implements PaperSlimBackedSearchOrderRepository {
 

@@ -36,6 +36,7 @@ import ch.difty.scipamato.core.sync.jobs.SyncConfig;
  * @author u.joss
  */
 @Configuration
+@Profile("!wickettest")
 public class CodeClassSyncConfig
     extends SyncConfig<PublicCodeClass, ch.difty.scipamato.publ.db.public_.tables.records.CodeClassRecord> {
 

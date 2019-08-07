@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.jooq.*;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import ch.difty.scipamato.common.DateTimeService;
@@ -32,6 +33,7 @@ import ch.difty.scipamato.core.persistence.UpdateSetStepSetter;
 
 @Repository
 @Slf4j
+@Profile("!wickettest")
 public class JooqNewsletterRepo extends
     JooqEntityRepo<NewsletterRecord, Newsletter, Integer, ch.difty.scipamato.core.db.tables.Newsletter, NewsletterRecordMapper, NewsletterFilter>
     implements NewsletterRepository {
