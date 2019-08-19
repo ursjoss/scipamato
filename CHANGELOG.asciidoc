@@ -63,7 +63,8 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 
 .Changed
-- Dependency updates for spring-boot-starter, openfeign, font-awesome, mockito
+- Dependency updates for spring-boot-starter, openfeign, font-awesome, mockito,
+  lombok-plugin
 
 .Deprecated
 
