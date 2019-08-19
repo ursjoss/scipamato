@@ -40,7 +40,7 @@ object Lib {
 
     private const val junit5Version = "5.5.1"
 
-    const val mockitoVersion = "3.0.2"
+    const val mockitoVersion = "3.0.6"
 
     private const val jsr305Version = "3.0.2"
     //endregion
