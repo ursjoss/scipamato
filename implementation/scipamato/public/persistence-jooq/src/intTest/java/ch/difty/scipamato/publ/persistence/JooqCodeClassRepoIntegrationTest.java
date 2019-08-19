@@ -1,14 +1,18 @@
-package ch.difty.scipamato.publ.persistence.codeclass;
+package ch.difty.scipamato.publ.persistence;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jooq.JooqTest;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
-import ch.difty.scipamato.publ.persistence.JooqBaseIntegrationTest;
+import ch.difty.scipamato.publ.persistence.codeclass.JooqCodeClassRepo;
 
 @SuppressWarnings("SpellCheckingInspection")
-class JooqCodeClassRepoIntegrationTest extends JooqBaseIntegrationTest {
+@JooqTest
+@Testcontainers
+class JooqCodeClassRepoIntegrationTest {
 
     @Autowired
     private JooqCodeClassRepo repo;

@@ -1,4 +1,4 @@
-package ch.difty.scipamato.publ.persistence.paper;
+package ch.difty.scipamato.publ.persistence;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -8,16 +8,20 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jooq.JooqTest;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.common.persistence.paging.PaginationRequest;
 import ch.difty.scipamato.common.persistence.paging.Sort.Direction;
 import ch.difty.scipamato.publ.entity.*;
 import ch.difty.scipamato.publ.entity.filter.PublicPaperFilter;
-import ch.difty.scipamato.publ.persistence.JooqBaseIntegrationTest;
+import ch.difty.scipamato.publ.persistence.paper.JooqPublicPaperRepo;
 
 @SuppressWarnings("SpellCheckingInspection")
-class JooqPublicPaperRepoIntegrationTest extends JooqBaseIntegrationTest {
+@JooqTest
+@Testcontainers
+class JooqPublicPaperRepoIntegrationTest {
 
     @Autowired
     private JooqPublicPaperRepo repo;

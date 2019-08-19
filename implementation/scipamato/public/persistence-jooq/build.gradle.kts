@@ -4,6 +4,8 @@ plugins {
 
 description = "SciPaMaTo-Public:: Persistence jOOQ Project"
 
+val props = file("src/intTest/resources/application.properties").asProperties()
+
 jooqModelator {
     jooqVersion = Lib.jooqVersion
     jooqEdition = "OSS"
@@ -17,11 +19,15 @@ jooqModelator {
     migrationsPaths = listOf("$rootDir/public/persistence-jooq/src/main/resources/db/migration/")
 
     dockerTag = "postgres:10"
-    dockerEnv = listOf("POSTGRES_DB=scipamato_public", "POSTGRES_USER=scipamatopub", "POSTGRES_PASSWORD=scipamatopub")
+
+    dockerEnv = listOf(
+            "POSTGRES_DB=${props.getProperty("db.name")}",
+            "POSTGRES_USER=${props.getProperty("spring.datasource.hikari.username")}",
+            "POSTGRES_PASSWORD=${props.getProperty("spring.datasource.hikari.password")}"
+    )
     dockerHostPort = 15432
     dockerContainerPort = 5432
 }
-
 
 dependencies {
     api(project(Module.scipamatoPublic("persistence-api")))
@@ -42,12 +48,12 @@ dependencies {
     testCompile(Lib.lombok())
     testAnnotationProcessor(Lib.lombok())
 
+    integrationTestCompile(Lib.testcontainers("testcontainers"))
+    integrationTestCompile(Lib.testcontainers("junit-jupiter"))
+    integrationTestCompile(Lib.testcontainers("postgresql"))
     integrationTestRuntimeOnly(Lib.postgres())
     integrationTestAnnotationProcessor(Lib.lombok())
 }
-
-val bootPubProps = file("src/main/resources/application.properties").asProperties()
-val bootPubItProps = file("src/intTest/resources/application.properties").asProperties()
 
 val generatedSourcesPath = "build/generated-src/jooq"
 sourceSets {
@@ -60,4 +66,10 @@ sourceSets {
 
 tasks {
     getByName("compileKotlin").dependsOn += "generateJooqMetamodel"
+}
+
+idea {
+    module {
+        inheritOutputDirs = true
+    }
 }

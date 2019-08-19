@@ -1,4 +1,4 @@
-package ch.difty.scipamato.publ.persistence.code;
+package ch.difty.scipamato.publ.persistence;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -7,13 +7,17 @@ import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jooq.JooqTest;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 import ch.difty.scipamato.common.entity.CodeClassId;
 import ch.difty.scipamato.publ.entity.Code;
-import ch.difty.scipamato.publ.persistence.JooqBaseIntegrationTest;
+import ch.difty.scipamato.publ.persistence.code.JooqCodeRepo;
 
 @Slf4j
-class JooqCodeRepoIntegrationTest extends JooqBaseIntegrationTest {
+@JooqTest
+@Testcontainers
+class JooqCodeRepoIntegrationTest {
 
     @Autowired
     private JooqCodeRepo repo;

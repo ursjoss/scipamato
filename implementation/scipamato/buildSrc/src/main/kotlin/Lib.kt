@@ -41,6 +41,8 @@ object Lib {
 
     private const val junit5Version = "5.5.1"
 
+    private const val testcontainersVersion = "1.12.0"
+
     @Suppress("MemberVisibilityCanBePrivate")
     const val mockitoVersion = "3.0.6"
 
@@ -50,7 +52,6 @@ object Lib {
     //region:pluginVersions
     private const val lombokPluginVersion = "3.8.4"
     private const val jooqModelatorPluginVersion = "3.5.0"
-    private const val flywayPluginVersion = "6.0.0"
     private const val jaxbPluginVersion = "3.0.4"
     private const val testSetsPluginVersion = "2.1.1"
     private const val sonarqubePluginVersion = "2.7.1"
@@ -137,6 +138,7 @@ object Lib {
     fun junit5(module: String = "") = Dep("org.junit.jupiter", "junit-jupiter${if (module.isNotBlank()) "-$module" else ""}", junit5Version)
     fun mockito3(module: String) = Dep("org.mockito", "mockito-$module", mockitoVersion)
     fun assertj() = Dep("org.assertj", "assertj-core")
+    fun testcontainers(module: String) = Dep("org.testcontainers", module, testcontainersVersion)
     fun equalsverifier() = Dep("nl.jqno.equalsverifier", "equalsverifier", equalsverifierVersion)
 
     fun servletApi() = Dep("javax.servlet", "javax.servlet-api")
@@ -156,7 +158,6 @@ object Lib {
     fun lombokPlugin() = Plugin("io.freefair.lombok", lombokPluginVersion)
 
     fun jooqModelatorPlugin() = Plugin("ch.ayedo.jooqmodelator", jooqModelatorPluginVersion)
-    fun flywayPlugin() = Plugin("org.flywaydb.flyway", flywayPluginVersion)
 
     fun testSetsPlugin() = Plugin("org.unbroken-dome.test-sets", testSetsPluginVersion)
 
@@ -194,7 +195,9 @@ fun DependencyHandler.testRuntimeOnly(dependencyNotation: Dep): Dependency? = ad
 fun DependencyHandler.testLibApi(dependencyNotation: Dep): Dependency? = add("testLibApi", dependencyNotation.id)
 fun DependencyHandler.testLibCompile(dependencyNotation: Dep): Dependency? = add("testLibCompile", dependencyNotation.id)
 fun DependencyHandler.testLibAnnotationProcessor(dependencyNotation: Dep): Dependency? = add("testLibAnnotationProcessor", dependencyNotation.id)
+fun DependencyHandler.integrationTestCompile(dependencyNotation: Dep): Dependency? = add("integrationTestCompile", dependencyNotation.id)
 fun DependencyHandler.integrationTestAnnotationProcessor(dependencyNotation: Dep): Dependency? = add("integrationTestAnnotationProcessor", dependencyNotation.id)
+fun DependencyHandler.integrationTestRuntime(dependencyNotation: Dep): Dependency? = add("integrationTestRuntime", dependencyNotation.id)
 fun DependencyHandler.integrationTestRuntimeOnly(dependencyNotation: Dep): Dependency? = add("integrationTestRuntimeOnly", dependencyNotation.id)
 fun DependencyHandler.testIntegrationTestAnnotationProcessor(dependencyNotation: Dep): Dependency? = add("testIntegrationTestAnnotationProcessor", dependencyNotation.id)
 fun DependencyHandler.adhocTestCompile(dependencyNotation: Dep): Dependency? = add("adhocTestCompile", dependencyNotation.id)
