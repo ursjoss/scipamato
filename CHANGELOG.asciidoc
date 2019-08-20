@@ -81,7 +81,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
   lombok-plugin, flyway-plugin
 
 .Fixed
-- {url-issues}106[#106] Core - Restore searching in methods fields (with positive and negative
+- {url-issues}109[#109] Core - Restore searching in methods fields (with positive and negative
   search terms)
 
 
