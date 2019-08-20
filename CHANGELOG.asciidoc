@@ -63,18 +63,26 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 
 .Changed
-- Dependency updates for spring-boot-starter, openfeign, font-awesome, mockito,
-  lombok-plugin, flyway-plugin
 
 .Deprecated
 
 .Removed
 
 .Fixed
-- {url-issues}106[#106] Core - Restore searching in methods fields (with positive and negative
-  search terms)
 
 .Security
+
+
+[[v1.2.4]]
+== [1.2.4] -- 2019-08-20
+
+.Changed
+- Dependency updates for spring-boot-starter, openfeign, font-awesome, mockito,
+  lombok-plugin, flyway-plugin
+
+.Fixed
+- {url-issues}106[#106] Core - Restore searching in methods fields (with positive and negative
+  search terms)
 
 
 [[v1.2.3]]
