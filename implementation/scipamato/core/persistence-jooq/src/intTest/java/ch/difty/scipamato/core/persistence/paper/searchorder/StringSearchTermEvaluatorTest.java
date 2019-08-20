@@ -12,6 +12,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import ch.difty.scipamato.core.entity.search.SearchTerm;
+import ch.difty.scipamato.core.entity.search.SearchTermType;
 import ch.difty.scipamato.core.entity.search.StringSearchTerm;
 import ch.difty.scipamato.core.entity.search.StringSearchTerm.Token;
 import ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType;
@@ -43,7 +45,14 @@ class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<StringSearch
         expectToken(TokenType.NOTREGEX, "foo");
         assertThat(e
             .evaluate(stMock)
-            .toString()).isEqualTo("not(field_x like_regex 'foo')");
+            .toString()).isEqualTo(
+            //@formatter:off
+                "not(coalesce(\n" +
+                "  field_x, \n" +
+                "  ''\n" +
+                ") like_regex 'foo')"
+            //@formatter:on
+        );
     }
 
     @Test
@@ -51,7 +60,14 @@ class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<StringSearch
         expectToken(TokenType.REGEX, "foo");
         assertThat(e
             .evaluate(stMock)
-            .toString()).isEqualTo("field_x like_regex 'foo'");
+            .toString()).isEqualTo(
+            //@formatter:off
+                "coalesce(\n" +
+                "  field_x, \n" +
+                "  ''\n" +
+                ") like_regex 'foo'"
+            //@formatter:on
+        );
     }
 
     @Test
@@ -97,7 +113,14 @@ class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<StringSearch
         expectToken(TokenType.NOTOPENLEFTRIGHTQUOTED, "foo");
         assertThat(e
             .evaluate(stMock)
-            .toString()).isEqualTo("lower(cast(field_x as varchar)) not like lower('%foo%')");
+            .toString()).isEqualTo(
+            //@formatter:off
+                "lower(cast(coalesce(\n" +
+                "  field_x, \n" +
+                "  ''\n" +
+                ") as varchar)) not like lower('%foo%')"
+            //@formatter:on
+        );
     }
 
     @Test
@@ -113,7 +136,14 @@ class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<StringSearch
         expectToken(TokenType.NOTOPENLEFTRIGHT, "foo");
         assertThat(e
             .evaluate(stMock)
-            .toString()).isEqualTo("lower(cast(field_x as varchar)) not like lower('%foo%')");
+            .toString()).isEqualTo(
+            //@formatter:off
+                "lower(cast(coalesce(\n" +
+                "  field_x, \n" +
+                "  ''\n" +
+                ") as varchar)) not like lower('%foo%')"
+            //@formatter:on
+        );
     }
 
     @Test
@@ -129,7 +159,14 @@ class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<StringSearch
         expectToken(TokenType.NOTOPENRIGHTQUOTED, "foo");
         assertThat(e
             .evaluate(stMock)
-            .toString()).isEqualTo("lower(cast(field_x as varchar)) not like lower('foo%')");
+            .toString()).isEqualTo(
+            //@formatter:off
+                "lower(cast(coalesce(\n" +
+                "  field_x, \n" +
+                "  ''\n" +
+                ") as varchar)) not like lower('foo%')"
+            //@formatter:on
+        );
     }
 
     @Test
@@ -145,7 +182,14 @@ class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<StringSearch
         expectToken(TokenType.NOTOPENRIGHT, "foo");
         assertThat(e
             .evaluate(stMock)
-            .toString()).isEqualTo("lower(cast(field_x as varchar)) not like lower('foo%')");
+            .toString()).isEqualTo(
+            //@formatter:off
+                "lower(cast(coalesce(\n" +
+                "  field_x, \n" +
+                "  ''\n" +
+                ") as varchar)) not like lower('foo%')"
+            //@formatter:on
+        );
     }
 
     @Test
@@ -161,7 +205,14 @@ class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<StringSearch
         expectToken(TokenType.NOTOPENLEFTQUOTED, "foo");
         assertThat(e
             .evaluate(stMock)
-            .toString()).isEqualTo("lower(cast(field_x as varchar)) not like lower('%foo')");
+            .toString()).isEqualTo(
+            //@formatter:off
+                "lower(cast(coalesce(\n" +
+                "  field_x, \n" +
+                "  ''\n" +
+                ") as varchar)) not like lower('%foo')"
+            //@formatter:on
+        );
     }
 
     @Test
@@ -177,7 +228,14 @@ class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<StringSearch
         expectToken(TokenType.NOTOPENLEFT, "foo");
         assertThat(e
             .evaluate(stMock)
-            .toString()).isEqualTo("lower(cast(field_x as varchar)) not like lower('%foo')");
+            .toString()).isEqualTo(
+            //@formatter:off
+                "lower(cast(coalesce(\n" +
+                "  field_x, \n" +
+                "  ''\n" +
+                ") as varchar)) not like lower('%foo')"
+            //@formatter:on
+        );
     }
 
     @Test
@@ -211,10 +269,13 @@ class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<StringSearch
             .evaluate(stMock)
             .toString()).isEqualTo(concat(
             // @formatter:off
-            "not(lower(cast(field_x as varchar)) like ('%' || replace(",
+            "not(lower(cast(coalesce(",
+            "  field_x, ",
+            "  ''",
+            ") as varchar)) like lower(('%' || replace(",
             "  replace(",
             "    replace(",
-            "      lower('foo'), ",
+            "      'foo', ",
             "      '!', ",
             "      '!!'",
             "    ), ",
@@ -223,7 +284,7 @@ class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<StringSearch
             "  ), ",
             "  '_', ",
             "  '!_'",
-            ") || '%') escape '!')"
+            ") || '%')) escape '!')"
             // @formatter:on
         ));
     }
@@ -235,10 +296,10 @@ class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<StringSearch
             .evaluate(stMock)
             .toString()).isEqualTo(concat(
             // @formatter:off
-            "lower(cast(field_x as varchar)) like ('%' || replace(",
+            "lower(cast(field_x as varchar)) like lower(('%' || replace(",
             "  replace(",
             "    replace(",
-            "      lower('foo'), ",
+            "      'foo', ",
             "      '!', ",
             "      '!!'",
             "    ), ",
@@ -247,7 +308,7 @@ class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<StringSearch
             "  ), ",
             "  '_', ",
             "  '!_'",
-            ") || '%') escape '!'"
+            ") || '%')) escape '!'"
             // @formatter:on
         ));
     }
@@ -289,14 +350,38 @@ class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<StringSearch
             .toString()).isEqualTo(concat(
             //@formatter:off
             "(",
-                    "  not(lower(cast(methods as varchar)) like_regex 'foo')",
-                    "  and not(lower(cast(method_study_design as varchar)) like_regex 'foo')",
-                    "  and not(lower(cast(population_place as varchar)) like_regex 'foo')",
-                    "  and not(lower(cast(method_outcome as varchar)) like_regex 'foo')",
-                    "  and not(lower(cast(exposure_pollutant as varchar)) like_regex 'foo')",
-                    "  and not(lower(cast(exposure_assessment as varchar)) like_regex 'foo')",
-                    "  and not(lower(cast(method_statistics as varchar)) like_regex 'foo')",
-                    "  and not(lower(cast(method_confounders as varchar)) like_regex 'foo')",
+                    "  not(lower(cast(coalesce(",
+                    "    methods, ",
+                    "    ''",
+                    "  ) as varchar)) like_regex 'foo')",
+                    "  and not(lower(cast(coalesce(",
+                    "    method_study_design, ",
+                    "    ''",
+                    "  ) as varchar)) like_regex 'foo')",
+                    "  and not(lower(cast(coalesce(",
+                    "    population_place, ",
+                    "    ''",
+                    "  ) as varchar)) like_regex 'foo')",
+                    "  and not(lower(cast(coalesce(",
+                    "    method_outcome, ",
+                    "    ''",
+                    "  ) as varchar)) like_regex 'foo')",
+                    "  and not(lower(cast(coalesce(",
+                    "    exposure_pollutant, ",
+                    "    ''",
+                    "  ) as varchar)) like_regex 'foo')",
+                    "  and not(lower(cast(coalesce(",
+                    "    exposure_assessment, ",
+                    "    ''",
+                    "  ) as varchar)) like_regex 'foo')",
+                    "  and not(lower(cast(coalesce(",
+                    "    method_statistics, ",
+                    "    ''",
+                    "  ) as varchar)) like_regex 'foo')",
+                    "  and not(lower(cast(coalesce(",
+                    "    method_confounders, ",
+                    "    ''",
+                    "  ) as varchar)) like_regex 'foo')",
                  ")"
             //@formatter:on
         ));
@@ -310,14 +395,38 @@ class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<StringSearch
             .toString()).isEqualTo(concat(
             //@formatter:off
             "(",
-                "  lower(cast(methods as varchar)) like_regex 'foo'",
-                "  or lower(cast(method_study_design as varchar)) like_regex 'foo'",
-                "  or lower(cast(population_place as varchar)) like_regex 'foo'",
-                "  or lower(cast(method_outcome as varchar)) like_regex 'foo'",
-                "  or lower(cast(exposure_pollutant as varchar)) like_regex 'foo'",
-                "  or lower(cast(exposure_assessment as varchar)) like_regex 'foo'",
-                "  or lower(cast(method_statistics as varchar)) like_regex 'foo'",
-                "  or lower(cast(method_confounders as varchar)) like_regex 'foo'",
+                "  lower(cast(coalesce(",
+                "    methods, ",
+                "    ''",
+                "  ) as varchar)) like_regex 'foo'",
+                "  or lower(cast(coalesce(",
+                "    method_study_design, ",
+                "    ''",
+                "  ) as varchar)) like_regex 'foo'",
+                "  or lower(cast(coalesce(",
+                "    population_place, ",
+                "    ''",
+                "  ) as varchar)) like_regex 'foo'",
+                "  or lower(cast(coalesce(",
+                "    method_outcome, ",
+                "    ''",
+                "  ) as varchar)) like_regex 'foo'",
+                "  or lower(cast(coalesce(",
+                "    exposure_pollutant, ",
+                "    ''",
+                "  ) as varchar)) like_regex 'foo'",
+                "  or lower(cast(coalesce(",
+                "    exposure_assessment, ",
+                "    ''",
+                "  ) as varchar)) like_regex 'foo'",
+                "  or lower(cast(coalesce(",
+                "    method_statistics, ",
+                "    ''",
+                "  ) as varchar)) like_regex 'foo'",
+                "  or lower(cast(coalesce(",
+                "    method_confounders, ",
+                "    ''",
+                "  ) as varchar)) like_regex 'foo'",
                 ")"
             //@formatter:on
         ));
@@ -429,14 +538,38 @@ class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<StringSearch
             .toString()).isEqualTo(concat(
             // @formatter:off
             "(",
-                "  lower(cast(methods as varchar)) not like lower('%foo%')",
-                "  and lower(cast(method_study_design as varchar)) not like lower('%foo%')",
-                "  and lower(cast(population_place as varchar)) not like lower('%foo%')",
-                "  and lower(cast(method_outcome as varchar)) not like lower('%foo%')",
-                "  and lower(cast(exposure_pollutant as varchar)) not like lower('%foo%')",
-                "  and lower(cast(exposure_assessment as varchar)) not like lower('%foo%')",
-                "  and lower(cast(method_statistics as varchar)) not like lower('%foo%')",
-                "  and lower(cast(method_confounders as varchar)) not like lower('%foo%')",
+                "  lower(cast(coalesce(",
+                "    methods, ",
+                "    ''",
+                "  ) as varchar)) not like lower('%foo%')",
+                "  and lower(cast(coalesce(",
+                "    method_study_design, ",
+                "    ''",
+                "  ) as varchar)) not like lower('%foo%')",
+                "  and lower(cast(coalesce(",
+                "    population_place, ",
+                "    ''",
+                "  ) as varchar)) not like lower('%foo%')",
+                "  and lower(cast(coalesce(",
+                "    method_outcome, ",
+                "    ''",
+                "  ) as varchar)) not like lower('%foo%')",
+                "  and lower(cast(coalesce(",
+                "    exposure_pollutant, ",
+                "    ''",
+                "  ) as varchar)) not like lower('%foo%')",
+                "  and lower(cast(coalesce(",
+                "    exposure_assessment, ",
+                "    ''",
+                "  ) as varchar)) not like lower('%foo%')",
+                "  and lower(cast(coalesce(",
+                "    method_statistics, ",
+                "    ''",
+                "  ) as varchar)) not like lower('%foo%')",
+                "  and lower(cast(coalesce(",
+                "    method_confounders, ",
+                "    ''",
+                "  ) as varchar)) not like lower('%foo%')",
                 ")"
             // @formatter:on
         ));
@@ -471,14 +604,38 @@ class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<StringSearch
             .toString()).isEqualTo(concat(
             // @formatter:off
             "(",
-                "  lower(cast(methods as varchar)) not like lower('%foo%')",
-                "  and lower(cast(method_study_design as varchar)) not like lower('%foo%')",
-                "  and lower(cast(population_place as varchar)) not like lower('%foo%')",
-                "  and lower(cast(method_outcome as varchar)) not like lower('%foo%')",
-                "  and lower(cast(exposure_pollutant as varchar)) not like lower('%foo%')",
-                "  and lower(cast(exposure_assessment as varchar)) not like lower('%foo%')",
-                "  and lower(cast(method_statistics as varchar)) not like lower('%foo%')",
-                "  and lower(cast(method_confounders as varchar)) not like lower('%foo%')",
+                "  lower(cast(coalesce(",
+                "    methods, ",
+                "    ''",
+                "  ) as varchar)) not like lower('%foo%')",
+                "  and lower(cast(coalesce(",
+                "    method_study_design, ",
+                "    ''",
+                "  ) as varchar)) not like lower('%foo%')",
+                "  and lower(cast(coalesce(",
+                "    population_place, ",
+                "    ''",
+                "  ) as varchar)) not like lower('%foo%')",
+                "  and lower(cast(coalesce(",
+                "    method_outcome, ",
+                "    ''",
+                "  ) as varchar)) not like lower('%foo%')",
+                "  and lower(cast(coalesce(",
+                "    exposure_pollutant, ",
+                "    ''",
+                "  ) as varchar)) not like lower('%foo%')",
+                "  and lower(cast(coalesce(",
+                "    exposure_assessment, ",
+                "    ''",
+                "  ) as varchar)) not like lower('%foo%')",
+                "  and lower(cast(coalesce(",
+                "    method_statistics, ",
+                "    ''",
+                "  ) as varchar)) not like lower('%foo%')",
+                "  and lower(cast(coalesce(",
+                "    method_confounders, ",
+                "    ''",
+                "  ) as varchar)) not like lower('%foo%')",
                 ")"
             // @formatter:on
         ));
@@ -513,14 +670,38 @@ class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<StringSearch
             .toString()).isEqualTo(concat(
             // @formatter:off
             "(",
-                "  lower(cast(methods as varchar)) not like lower('foo%')",
-                "  and lower(cast(method_study_design as varchar)) not like lower('foo%')",
-                "  and lower(cast(population_place as varchar)) not like lower('foo%')",
-                "  and lower(cast(method_outcome as varchar)) not like lower('foo%')",
-                "  and lower(cast(exposure_pollutant as varchar)) not like lower('foo%')",
-                "  and lower(cast(exposure_assessment as varchar)) not like lower('foo%')",
-                "  and lower(cast(method_statistics as varchar)) not like lower('foo%')",
-                "  and lower(cast(method_confounders as varchar)) not like lower('foo%')",
+                "  lower(cast(coalesce(",
+                "    methods, ",
+                "    ''",
+                "  ) as varchar)) not like lower('foo%')",
+                "  and lower(cast(coalesce(",
+                "    method_study_design, ",
+                "    ''",
+                "  ) as varchar)) not like lower('foo%')",
+                "  and lower(cast(coalesce(",
+                "    population_place, ",
+                "    ''",
+                "  ) as varchar)) not like lower('foo%')",
+                "  and lower(cast(coalesce(",
+                "    method_outcome, ",
+                "    ''",
+                "  ) as varchar)) not like lower('foo%')",
+                "  and lower(cast(coalesce(",
+                "    exposure_pollutant, ",
+                "    ''",
+                "  ) as varchar)) not like lower('foo%')",
+                "  and lower(cast(coalesce(",
+                "    exposure_assessment, ",
+                "    ''",
+                "  ) as varchar)) not like lower('foo%')",
+                "  and lower(cast(coalesce(",
+                "    method_statistics, ",
+                "    ''",
+                "  ) as varchar)) not like lower('foo%')",
+                "  and lower(cast(coalesce(",
+                "    method_confounders, ",
+                "    ''",
+                "  ) as varchar)) not like lower('foo%')",
                 ")"
             // @formatter:on
         ));
@@ -555,14 +736,38 @@ class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<StringSearch
             .toString()).isEqualTo(concat(
             // @formatter:off
             "(",
-                "  lower(cast(methods as varchar)) not like lower('foo%')",
-                "  and lower(cast(method_study_design as varchar)) not like lower('foo%')",
-                "  and lower(cast(population_place as varchar)) not like lower('foo%')",
-                "  and lower(cast(method_outcome as varchar)) not like lower('foo%')",
-                "  and lower(cast(exposure_pollutant as varchar)) not like lower('foo%')",
-                "  and lower(cast(exposure_assessment as varchar)) not like lower('foo%')",
-                "  and lower(cast(method_statistics as varchar)) not like lower('foo%')",
-                "  and lower(cast(method_confounders as varchar)) not like lower('foo%')",
+                "  lower(cast(coalesce(",
+                "    methods, ",
+                "    ''",
+                "  ) as varchar)) not like lower('foo%')",
+                "  and lower(cast(coalesce(",
+                "    method_study_design, ",
+                "    ''",
+                "  ) as varchar)) not like lower('foo%')",
+                "  and lower(cast(coalesce(",
+                "    population_place, ",
+                "    ''",
+                "  ) as varchar)) not like lower('foo%')",
+                "  and lower(cast(coalesce(",
+                "    method_outcome, ",
+                "    ''",
+                "  ) as varchar)) not like lower('foo%')",
+                "  and lower(cast(coalesce(",
+                "    exposure_pollutant, ",
+                "    ''",
+                "  ) as varchar)) not like lower('foo%')",
+                "  and lower(cast(coalesce(",
+                "    exposure_assessment, ",
+                "    ''",
+                "  ) as varchar)) not like lower('foo%')",
+                "  and lower(cast(coalesce(",
+                "    method_statistics, ",
+                "    ''",
+                "  ) as varchar)) not like lower('foo%')",
+                "  and lower(cast(coalesce(",
+                "    method_confounders, ",
+                "    ''",
+                "  ) as varchar)) not like lower('foo%')",
                 ")"
             // @formatter:on
         ));
@@ -597,14 +802,38 @@ class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<StringSearch
             .toString()).isEqualTo(concat(
             // @formatter:off
             "(",
-                "  lower(cast(methods as varchar)) not like lower('%foo')",
-                "  and lower(cast(method_study_design as varchar)) not like lower('%foo')",
-                "  and lower(cast(population_place as varchar)) not like lower('%foo')",
-                "  and lower(cast(method_outcome as varchar)) not like lower('%foo')",
-                "  and lower(cast(exposure_pollutant as varchar)) not like lower('%foo')",
-                "  and lower(cast(exposure_assessment as varchar)) not like lower('%foo')",
-                "  and lower(cast(method_statistics as varchar)) not like lower('%foo')",
-                "  and lower(cast(method_confounders as varchar)) not like lower('%foo')",
+                "  lower(cast(coalesce(",
+                "    methods, ",
+                "    ''",
+                "  ) as varchar)) not like lower('%foo')",
+                "  and lower(cast(coalesce(",
+                "    method_study_design, ",
+                "    ''",
+                "  ) as varchar)) not like lower('%foo')",
+                "  and lower(cast(coalesce(",
+                "    population_place, ",
+                "    ''",
+                "  ) as varchar)) not like lower('%foo')",
+                "  and lower(cast(coalesce(",
+                "    method_outcome, ",
+                "    ''",
+                "  ) as varchar)) not like lower('%foo')",
+                "  and lower(cast(coalesce(",
+                "    exposure_pollutant, ",
+                "    ''",
+                "  ) as varchar)) not like lower('%foo')",
+                "  and lower(cast(coalesce(",
+                "    exposure_assessment, ",
+                "    ''",
+                "  ) as varchar)) not like lower('%foo')",
+                "  and lower(cast(coalesce(",
+                "    method_statistics, ",
+                "    ''",
+                "  ) as varchar)) not like lower('%foo')",
+                "  and lower(cast(coalesce(",
+                "    method_confounders, ",
+                "    ''",
+                "  ) as varchar)) not like lower('%foo')",
                 ")"
             // @formatter:on
         ));
@@ -639,14 +868,38 @@ class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<StringSearch
             .toString()).isEqualTo(concat(
             // @formatter:off
             "(",
-                "  lower(cast(methods as varchar)) not like lower('%foo')",
-                "  and lower(cast(method_study_design as varchar)) not like lower('%foo')",
-                "  and lower(cast(population_place as varchar)) not like lower('%foo')",
-                "  and lower(cast(method_outcome as varchar)) not like lower('%foo')",
-                "  and lower(cast(exposure_pollutant as varchar)) not like lower('%foo')",
-                "  and lower(cast(exposure_assessment as varchar)) not like lower('%foo')",
-                "  and lower(cast(method_statistics as varchar)) not like lower('%foo')",
-                "  and lower(cast(method_confounders as varchar)) not like lower('%foo')",
+                "  lower(cast(coalesce(",
+                "    methods, ",
+                "    ''",
+                "  ) as varchar)) not like lower('%foo')",
+                "  and lower(cast(coalesce(",
+                "    method_study_design, ",
+                "    ''",
+                "  ) as varchar)) not like lower('%foo')",
+                "  and lower(cast(coalesce(",
+                "    population_place, ",
+                "    ''",
+                "  ) as varchar)) not like lower('%foo')",
+                "  and lower(cast(coalesce(",
+                "    method_outcome, ",
+                "    ''",
+                "  ) as varchar)) not like lower('%foo')",
+                "  and lower(cast(coalesce(",
+                "    exposure_pollutant, ",
+                "    ''",
+                "  ) as varchar)) not like lower('%foo')",
+                "  and lower(cast(coalesce(",
+                "    exposure_assessment, ",
+                "    ''",
+                "  ) as varchar)) not like lower('%foo')",
+                "  and lower(cast(coalesce(",
+                "    method_statistics, ",
+                "    ''",
+                "  ) as varchar)) not like lower('%foo')",
+                "  and lower(cast(coalesce(",
+                "    method_confounders, ",
+                "    ''",
+                "  ) as varchar)) not like lower('%foo')",
                 ")"
             // @formatter:on
         ));
@@ -723,10 +976,13 @@ class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<StringSearch
             .toString()).isEqualTo(concat(
             // @formatter:off
                 "(",
-                "  not(lower(cast(methods as varchar)) like ('%' || replace(",
+                "  not(lower(cast(coalesce(",
+                "    methods, ",
+                "    ''",
+                "  ) as varchar)) like lower(('%' || replace(",
                 "    replace(",
                 "      replace(",
-                "        lower('foo'), ",
+                "        'foo', ",
                 "        '!', ",
                 "        '!!'",
                 "      ), ",
@@ -735,11 +991,14 @@ class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<StringSearch
                 "    ), ",
                 "    '_', ",
                 "    '!_'",
-                "  ) || '%') escape '!')",
-                "  and not(lower(cast(method_study_design as varchar)) like ('%' || replace(",
+                "  ) || '%')) escape '!')",
+                "  and not(lower(cast(coalesce(",
+                "    method_study_design, ",
+                "    ''",
+                "  ) as varchar)) like lower(('%' || replace(",
                 "    replace(",
                 "      replace(",
-                "        lower('foo'), ",
+                "        'foo', ",
                 "        '!', ",
                 "        '!!'",
                 "      ), ",
@@ -748,11 +1007,14 @@ class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<StringSearch
                 "    ), ",
                 "    '_', ",
                 "    '!_'",
-                "  ) || '%') escape '!')",
-                "  and not(lower(cast(population_place as varchar)) like ('%' || replace(",
+                "  ) || '%')) escape '!')",
+                "  and not(lower(cast(coalesce(",
+                "    population_place, ",
+                "    ''",
+                "  ) as varchar)) like lower(('%' || replace(",
                 "    replace(",
                 "      replace(",
-                "        lower('foo'), ",
+                "        'foo', ",
                 "        '!', ",
                 "        '!!'",
                 "      ), ",
@@ -761,11 +1023,14 @@ class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<StringSearch
                 "    ), ",
                 "    '_', ",
                 "    '!_'",
-                "  ) || '%') escape '!')",
-                "  and not(lower(cast(method_outcome as varchar)) like ('%' || replace(",
+                "  ) || '%')) escape '!')",
+                "  and not(lower(cast(coalesce(",
+                "    method_outcome, ",
+                "    ''",
+                "  ) as varchar)) like lower(('%' || replace(",
                 "    replace(",
                 "      replace(",
-                "        lower('foo'), ",
+                "        'foo', ",
                 "        '!', ",
                 "        '!!'",
                 "      ), ",
@@ -774,11 +1039,14 @@ class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<StringSearch
                 "    ), ",
                 "    '_', ",
                 "    '!_'",
-                "  ) || '%') escape '!')",
-                "  and not(lower(cast(exposure_pollutant as varchar)) like ('%' || replace(",
+                "  ) || '%')) escape '!')",
+                "  and not(lower(cast(coalesce(",
+                "    exposure_pollutant, ",
+                "    ''",
+                "  ) as varchar)) like lower(('%' || replace(",
                 "    replace(",
                 "      replace(",
-                "        lower('foo'), ",
+                "        'foo', ",
                 "        '!', ",
                 "        '!!'",
                 "      ), ",
@@ -787,11 +1055,14 @@ class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<StringSearch
                 "    ), ",
                 "    '_', ",
                 "    '!_'",
-                "  ) || '%') escape '!')",
-                "  and not(lower(cast(exposure_assessment as varchar)) like ('%' || replace(",
+                "  ) || '%')) escape '!')",
+                "  and not(lower(cast(coalesce(",
+                "    exposure_assessment, ",
+                "    ''",
+                "  ) as varchar)) like lower(('%' || replace(",
                 "    replace(",
                 "      replace(",
-                "        lower('foo'), ",
+                "        'foo', ",
                 "        '!', ",
                 "        '!!'",
                 "      ), ",
@@ -800,11 +1071,14 @@ class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<StringSearch
                 "    ), ",
                 "    '_', ",
                 "    '!_'",
-                "  ) || '%') escape '!')",
-                "  and not(lower(cast(method_statistics as varchar)) like ('%' || replace(",
+                "  ) || '%')) escape '!')",
+                "  and not(lower(cast(coalesce(",
+                "    method_statistics, ",
+                "    ''",
+                "  ) as varchar)) like lower(('%' || replace(",
                 "    replace(",
                 "      replace(",
-                "        lower('foo'), ",
+                "        'foo', ",
                 "        '!', ",
                 "        '!!'",
                 "      ), ",
@@ -813,11 +1087,14 @@ class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<StringSearch
                 "    ), ",
                 "    '_', ",
                 "    '!_'",
-                "  ) || '%') escape '!')",
-                "  and not(lower(cast(method_confounders as varchar)) like ('%' || replace(",
+                "  ) || '%')) escape '!')",
+                "  and not(lower(cast(coalesce(",
+                "    method_confounders, ",
+                "    ''",
+                "  ) as varchar)) like lower(('%' || replace(",
                 "    replace(",
                 "      replace(",
-                "        lower('foo'), ",
+                "        'foo', ",
                 "        '!', ",
                 "        '!!'",
                 "      ), ",
@@ -826,7 +1103,7 @@ class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<StringSearch
                 "    ), ",
                 "    '_', ",
                 "    '!_'",
-                "  ) || '%') escape '!')",
+                "  ) || '%')) escape '!')",
                 ")"
             // @formatter:on
         ));
@@ -840,10 +1117,10 @@ class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<StringSearch
             .toString()).isEqualTo(concat(
             // @formatter:off
             "(",
-            "  lower(cast(methods as varchar)) like ('%' || replace(",
+            "  lower(cast(methods as varchar)) like lower(('%' || replace(",
             "    replace(",
             "      replace(",
-            "        lower('foo'), ",
+            "        'foo', ",
             "        '!', ",
             "        '!!'",
             "      ), ",
@@ -852,11 +1129,11 @@ class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<StringSearch
             "    ), ",
             "    '_', ",
             "    '!_'",
-            "  ) || '%') escape '!'",
-            "  or lower(cast(method_study_design as varchar)) like ('%' || replace(",
+            "  ) || '%')) escape '!'",
+            "  or lower(cast(method_study_design as varchar)) like lower(('%' || replace(",
             "    replace(",
             "      replace(",
-            "        lower('foo'), ",
+            "        'foo', ",
             "        '!', ",
             "        '!!'",
             "      ), ",
@@ -865,11 +1142,11 @@ class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<StringSearch
             "    ), ",
             "    '_', ",
             "    '!_'",
-            "  ) || '%') escape '!'",
-            "  or lower(cast(population_place as varchar)) like ('%' || replace(",
+            "  ) || '%')) escape '!'",
+            "  or lower(cast(population_place as varchar)) like lower(('%' || replace(",
             "    replace(",
             "      replace(",
-            "        lower('foo'), ",
+            "        'foo', ",
             "        '!', ",
             "        '!!'",
             "      ), ",
@@ -878,11 +1155,11 @@ class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<StringSearch
             "    ), ",
             "    '_', ",
             "    '!_'",
-            "  ) || '%') escape '!'",
-            "  or lower(cast(method_outcome as varchar)) like ('%' || replace(",
+            "  ) || '%')) escape '!'",
+            "  or lower(cast(method_outcome as varchar)) like lower(('%' || replace(",
             "    replace(",
             "      replace(",
-            "        lower('foo'), ",
+            "        'foo', ",
             "        '!', ",
             "        '!!'",
             "      ), ",
@@ -891,11 +1168,11 @@ class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<StringSearch
             "    ), ",
             "    '_', ",
             "    '!_'",
-            "  ) || '%') escape '!'",
-            "  or lower(cast(exposure_pollutant as varchar)) like ('%' || replace(",
+            "  ) || '%')) escape '!'",
+            "  or lower(cast(exposure_pollutant as varchar)) like lower(('%' || replace(",
             "    replace(",
             "      replace(",
-            "        lower('foo'), ",
+            "        'foo', ",
             "        '!', ",
             "        '!!'",
             "      ), ",
@@ -904,11 +1181,11 @@ class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<StringSearch
             "    ), ",
             "    '_', ",
             "    '!_'",
-            "  ) || '%') escape '!'",
-            "  or lower(cast(exposure_assessment as varchar)) like ('%' || replace(",
+            "  ) || '%')) escape '!'",
+            "  or lower(cast(exposure_assessment as varchar)) like lower(('%' || replace(",
             "    replace(",
             "      replace(",
-            "        lower('foo'), ",
+            "        'foo', ",
             "        '!', ",
             "        '!!'",
             "      ), ",
@@ -917,11 +1194,11 @@ class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<StringSearch
             "    ), ",
             "    '_', ",
             "    '!_'",
-            "  ) || '%') escape '!'",
-            "  or lower(cast(method_statistics as varchar)) like ('%' || replace(",
+            "  ) || '%')) escape '!'",
+            "  or lower(cast(method_statistics as varchar)) like lower(('%' || replace(",
             "    replace(",
             "      replace(",
-            "        lower('foo'), ",
+            "        'foo', ",
             "        '!', ",
             "        '!!'",
             "      ), ",
@@ -930,11 +1207,11 @@ class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<StringSearch
             "    ), ",
             "    '_', ",
             "    '!_'",
-            "  ) || '%') escape '!'",
-            "  or lower(cast(method_confounders as varchar)) like ('%' || replace(",
+            "  ) || '%')) escape '!'",
+            "  or lower(cast(method_confounders as varchar)) like lower(('%' || replace(",
             "    replace(",
             "      replace(",
-            "        lower('foo'), ",
+            "        'foo', ",
             "        '!', ",
             "        '!!'",
             "      ), ",
@@ -943,7 +1220,7 @@ class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<StringSearch
             "    ), ",
             "    '_', ",
             "    '!_'",
-            "  ) || '%') escape '!'",
+            "  ) || '%')) escape '!'",
             ")"
             // @formatter:on
         ));
@@ -968,6 +1245,254 @@ class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<StringSearch
                 .isInstanceOf(AssertionError.class)
                 .hasMessage("Evaluation of type UNSUPPORTED is not supported...");
         }
+    }
+
+    @Test
+    void buildingConditionForCombinedSearchTerm_withMethodsField_() {
+        StringSearchTerm sst = (StringSearchTerm) SearchTerm.newSearchTerm(1L, SearchTermType.STRING.getId(), 1L,
+            "methods", "foo -bar");
+        assertThat(e
+            .evaluate(sst)
+            .toString()).isEqualTo(concat(
+            //@formatter:off
+            "(",
+            "  (",
+            "    lower(cast(methods as varchar)) like lower(('%' || replace(",
+            "      replace(",
+            "        replace(",
+            "          'foo', ",
+            "          '!', ",
+            "          '!!'",
+            "        ), ",
+            "        '%', ",
+            "        '!%'",
+            "      ), ",
+            "      '_', ",
+            "      '!_'",
+            "    ) || '%')) escape '!'",
+            "    or lower(cast(method_study_design as varchar)) like lower(('%' || replace(",
+            "      replace(",
+            "        replace(",
+            "          'foo', ",
+            "          '!', ",
+            "          '!!'",
+            "        ), ",
+            "        '%', ",
+            "        '!%'",
+            "      ), ",
+            "      '_', ",
+            "      '!_'",
+            "    ) || '%')) escape '!'",
+            "    or lower(cast(population_place as varchar)) like lower(('%' || replace(",
+            "      replace(",
+            "        replace(",
+            "          'foo', ",
+            "          '!', ",
+            "          '!!'",
+            "        ), ",
+            "        '%', ",
+            "        '!%'",
+            "      ), ",
+            "      '_', ",
+            "      '!_'",
+            "    ) || '%')) escape '!'",
+            "    or lower(cast(method_outcome as varchar)) like lower(('%' || replace(",
+            "      replace(",
+            "        replace(",
+            "          'foo', ",
+            "          '!', ",
+            "          '!!'",
+            "        ), ",
+            "        '%', ",
+            "        '!%'",
+            "      ), ",
+            "      '_', ",
+            "      '!_'",
+            "    ) || '%')) escape '!'",
+            "    or lower(cast(exposure_pollutant as varchar)) like lower(('%' || replace(",
+            "      replace(",
+            "        replace(",
+            "          'foo', ",
+            "          '!', ",
+            "          '!!'",
+            "        ), ",
+            "        '%', ",
+            "        '!%'",
+            "      ), ",
+            "      '_', ",
+            "      '!_'",
+            "    ) || '%')) escape '!'",
+            "    or lower(cast(exposure_assessment as varchar)) like lower(('%' || replace(",
+            "      replace(",
+            "        replace(",
+            "          'foo', ",
+            "          '!', ",
+            "          '!!'",
+            "        ), ",
+            "        '%', ",
+            "        '!%'",
+            "      ), ",
+            "      '_', ",
+            "      '!_'",
+            "    ) || '%')) escape '!'",
+            "    or lower(cast(method_statistics as varchar)) like lower(('%' || replace(",
+            "      replace(",
+            "        replace(",
+            "          'foo', ",
+            "          '!', ",
+            "          '!!'",
+            "        ), ",
+            "        '%', ",
+            "        '!%'",
+            "      ), ",
+            "      '_', ",
+            "      '!_'",
+            "    ) || '%')) escape '!'",
+            "    or lower(cast(method_confounders as varchar)) like lower(('%' || replace(",
+            "      replace(",
+            "        replace(",
+            "          'foo', ",
+            "          '!', ",
+            "          '!!'",
+            "        ), ",
+            "        '%', ",
+            "        '!%'",
+            "      ), ",
+            "      '_', ",
+            "      '!_'",
+            "    ) || '%')) escape '!'",
+            "  )",
+            "  and not(lower(cast(coalesce(",
+            "    methods, ",
+            "    ''",
+            "  ) as varchar)) like lower(('%' || replace(",
+            "    replace(",
+            "      replace(",
+            "        'bar', ",
+            "        '!', ",
+            "        '!!'",
+            "      ), ",
+            "      '%', ",
+            "      '!%'",
+            "    ), ",
+            "    '_', ",
+            "    '!_'",
+            "  ) || '%')) escape '!')",
+            "  and not(lower(cast(coalesce(",
+            "    method_study_design, ",
+            "    ''",
+            "  ) as varchar)) like lower(('%' || replace(",
+            "    replace(",
+            "      replace(",
+            "        'bar', ",
+            "        '!', ",
+            "        '!!'",
+            "      ), ",
+            "      '%', ",
+            "      '!%'",
+            "    ), ",
+            "    '_', ",
+            "    '!_'",
+            "  ) || '%')) escape '!')",
+            "  and not(lower(cast(coalesce(",
+            "    population_place, ",
+            "    ''",
+            "  ) as varchar)) like lower(('%' || replace(",
+            "    replace(",
+            "      replace(",
+            "        'bar', ",
+            "        '!', ",
+            "        '!!'",
+            "      ), ",
+            "      '%', ",
+            "      '!%'",
+            "    ), ",
+            "    '_', ",
+            "    '!_'",
+            "  ) || '%')) escape '!')",
+            "  and not(lower(cast(coalesce(",
+            "    method_outcome, ",
+            "    ''",
+            "  ) as varchar)) like lower(('%' || replace(",
+            "    replace(",
+            "      replace(",
+            "        'bar', ",
+            "        '!', ",
+            "        '!!'",
+            "      ), ",
+            "      '%', ",
+            "      '!%'",
+            "    ), ",
+            "    '_', ",
+            "    '!_'",
+            "  ) || '%')) escape '!')",
+            "  and not(lower(cast(coalesce(",
+            "    exposure_pollutant, ",
+            "    ''",
+            "  ) as varchar)) like lower(('%' || replace(",
+            "    replace(",
+            "      replace(",
+            "        'bar', ",
+            "        '!', ",
+            "        '!!'",
+            "      ), ",
+            "      '%', ",
+            "      '!%'",
+            "    ), ",
+            "    '_', ",
+            "    '!_'",
+            "  ) || '%')) escape '!')",
+            "  and not(lower(cast(coalesce(",
+            "    exposure_assessment, ",
+            "    ''",
+            "  ) as varchar)) like lower(('%' || replace(",
+            "    replace(",
+            "      replace(",
+            "        'bar', ",
+            "        '!', ",
+            "        '!!'",
+            "      ), ",
+            "      '%', ",
+            "      '!%'",
+            "    ), ",
+            "    '_', ",
+            "    '!_'",
+            "  ) || '%')) escape '!')",
+            "  and not(lower(cast(coalesce(",
+            "    method_statistics, ",
+            "    ''",
+            "  ) as varchar)) like lower(('%' || replace(",
+            "    replace(",
+            "      replace(",
+            "        'bar', ",
+            "        '!', ",
+            "        '!!'",
+            "      ), ",
+            "      '%', ",
+            "      '!%'",
+            "    ), ",
+            "    '_', ",
+            "    '!_'",
+            "  ) || '%')) escape '!')",
+            "  and not(lower(cast(coalesce(",
+            "    method_confounders, ",
+            "    ''",
+            "  ) as varchar)) like lower(('%' || replace(",
+            "    replace(",
+            "      replace(",
+            "        'bar', ",
+            "        '!', ",
+            "        '!!'",
+            "      ), ",
+            "      '%', ",
+            "      '!%'",
+            "    ), ",
+            "    '_', ",
+            "    '!_'",
+            "  ) || '%')) escape '!')",
+            ")"
+            //@formatter:on
+        ));
     }
 
     //endregion

@@ -129,10 +129,10 @@ class JooqPaperSlimBySearchOrderRepoTest {
             "(\n" +
             "  (\n" +
             "    publication_year between 2014 and 2015\n" +
-            "    and lower(cast(authors as varchar)) like ('%' || replace(\n" +
+            "    and lower(cast(authors as varchar)) like lower(('%' || replace(\n" +
             "      replace(\n" +
             "        replace(\n" +
-            "          lower('turner'), \n" +
+            "          'turner', \n" +
             "          '!', \n" +
             "          '!!'\n" +
             "        ), \n" +
@@ -141,7 +141,7 @@ class JooqPaperSlimBySearchOrderRepoTest {
             "      ), \n" +
             "      '_', \n" +
             "      '!_'\n" +
-            "    ) || '%') escape '!'\n" +
+            "    ) || '%')) escape '!'\n" +
             "  )\n" +
             "  or (\n" +
             "    first_author_overridden = false\n" +
@@ -180,10 +180,10 @@ class JooqPaperSlimBySearchOrderRepoTest {
             "  (\n" +
             "    (\n" +
             "      publication_year between 2014 and 2015\n" +
-            "      and lower(cast(authors as varchar)) like ('%' || replace(\n" +
+            "      and lower(cast(authors as varchar)) like lower(('%' || replace(\n" +
             "        replace(\n" +
             "          replace(\n" +
-            "            lower('turner'), \n" +
+            "            'turner', \n" +
             "            '!', \n" +
             "            '!!'\n" +
             "          ), \n" +
@@ -192,7 +192,7 @@ class JooqPaperSlimBySearchOrderRepoTest {
             "        ), \n" +
             "        '_', \n" +
             "        '!_'\n" +
-            "      ) || '%') escape '!'\n" +
+            "      ) || '%')) escape '!'\n" +
             "    )\n" +
             "    or (\n" +
             "      first_author_overridden = false\n" +
@@ -244,10 +244,10 @@ class JooqPaperSlimBySearchOrderRepoTest {
             "  (\n" +
             "    (\n" +
             "      publication_year between 2014 and 2015\n" +
-            "      and lower(cast(authors as varchar)) like ('%' || replace(\n" +
+            "      and lower(cast(authors as varchar)) like lower(('%' || replace(\n" +
             "        replace(\n" +
             "          replace(\n" +
-            "            lower('turner'), \n" +
+            "            'turner', \n" +
             "            '!', \n" +
             "            '!!'\n" +
             "          ), \n" +
@@ -256,7 +256,7 @@ class JooqPaperSlimBySearchOrderRepoTest {
             "        ), \n" +
             "        '_', \n" +
             "        '!_'\n" +
-            "      ) || '%') escape '!'\n" +
+            "      ) || '%')) escape '!'\n" +
             "    )\n" +
             "    or (\n" +
             "      first_author_overridden = false\n" +
