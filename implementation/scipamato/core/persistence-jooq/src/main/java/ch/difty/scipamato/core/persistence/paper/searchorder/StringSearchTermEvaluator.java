@@ -17,7 +17,7 @@ import ch.difty.scipamato.core.persistence.ConditionalSupplier;
 
 /**
  * {@link SearchTermEvaluator} implementation evaluating string searchTerms.
- *
+ * <p>
  * Note: Searching field methods results in searching associated short study fields too.
  *
  * @author u.joss
@@ -51,22 +51,22 @@ public class StringSearchTermEvaluator implements SearchTermEvaluator<StringSear
 
     private void addToConditions(final ConditionalSupplier cs, final Token tk, final Field<Object> field,
         final Field<String> value) {
-        distinguishConditions(cs, tk, field, value, field.lower(), value.lower(), tk.type.negate);
+        distinguishConditions(cs, tk, field, value, tk.type.negate);
     }
 
     private void distinguishConditions(final ConditionalSupplier cs, final Token tk, final Field<Object> field,
-        final Field<String> value, final Field<String> flc, final Field<String> vlc, final boolean negate) {
+        final Field<String> value, final boolean negate) {
         switch (tk.type.matchType) {
         case NONE:
             break;
         case CONTAINS:
-            containsCondition(cs, field, flc, vlc, negate);
+            containsCondition(cs, field, value, negate);
             break;
         case EQUALS:
-            equalsCondition(cs, field, flc, vlc, negate);
+            equalsCondition(cs, field, value, negate);
             break;
         case LIKE:
-            likeCondition(cs, field, flc, vlc, negate);
+            likeCondition(cs, field, value, negate);
             break;
         case REGEX:
             regexCondition(cs, field, value, negate);
@@ -80,60 +80,56 @@ public class StringSearchTermEvaluator implements SearchTermEvaluator<StringSear
         }
     }
 
-    private void containsCondition(final ConditionalSupplier cs, final Field<Object> field, final Field<String> flc,
-        final Field<String> vlc, final boolean negate) {
+    private void containsCondition(final ConditionalSupplier cs, final Field<Object> field, final Field<String> value,
+        final boolean negate) {
         if (METHODS.equalsIgnoreCase(field.getName())) {
             ConditionalSupplier csSub = new ConditionalSupplier();
-            for (final Field<Object> mf : methodFields) {
+            for (final Field<Object> mf : methodFields)
                 csSub.add(() -> negate ?
-                    DSL.not(mf
-                        .lower()
-                        .contains(vlc)) :
-                    mf
-                        .lower()
-                        .contains(vlc));
-            }
+                    DSL
+                        .coalesce(mf, "")
+                        .notContainsIgnoreCase(value) :
+                    mf.containsIgnoreCase(value));
             cs.add(() -> negate ? csSub.combineWithAnd() : csSub.combineWithOr());
         } else {
-            cs.add(() -> negate ? DSL.not(flc.contains(vlc)) : flc.contains(vlc));
+            cs.add(() -> negate ?
+                DSL
+                    .coalesce(field, "")
+                    .notContainsIgnoreCase(value) :
+                field.containsIgnoreCase(value));
         }
     }
 
-    private void equalsCondition(final ConditionalSupplier cs, final Field<Object> field, final Field<String> flc,
-        final Field<String> vlc, final boolean negate) {
+    private void equalsCondition(final ConditionalSupplier cs, final Field<Object> field, final Field<String> value,
+        final boolean negate) {
         if (METHODS.equalsIgnoreCase(field.getName())) {
             ConditionalSupplier csSub = new ConditionalSupplier();
-            for (final Field<Object> mf : methodFields) {
-                csSub.add(() -> negate ?
-                    mf
-                        .lower()
-                        .notEqual(vlc) :
-                    mf
-                        .lower()
-                        .equal(vlc));
-            }
+            for (final Field<Object> mf : methodFields)
+                csSub.add(() -> negate ? mf.notEqualIgnoreCase(value) : mf.equalIgnoreCase(value));
             cs.add(() -> negate ? csSub.combineWithAnd() : csSub.combineWithOr());
         } else {
-            cs.add(() -> negate ? flc.notEqual(vlc) : flc.equal(vlc));
+            cs.add(() -> negate ? field.notEqualIgnoreCase(value) : field.equalIgnoreCase(value));
         }
     }
 
-    private void likeCondition(final ConditionalSupplier cs, final Field<Object> field, final Field<String> flc,
-        final Field<String> vlc, final boolean negate) {
+    private void likeCondition(final ConditionalSupplier cs, final Field<Object> field, final Field<String> value,
+        final boolean negate) {
         if (METHODS.equalsIgnoreCase(field.getName())) {
             ConditionalSupplier csSub = new ConditionalSupplier();
             for (final Field<Object> mf : methodFields) {
                 csSub.add(() -> negate ?
-                    mf
-                        .lower()
-                        .notLike(vlc) :
-                    mf
-                        .lower()
-                        .like(vlc));
+                    DSL
+                        .coalesce(mf, "")
+                        .notLikeIgnoreCase(value) :
+                    mf.likeIgnoreCase(value));
             }
             cs.add(() -> negate ? csSub.combineWithAnd() : csSub.combineWithOr());
         } else {
-            cs.add(() -> negate ? flc.notLike(vlc) : flc.like(vlc));
+            cs.add(() -> negate ?
+                DSL
+                    .coalesce(field, "")
+                    .notLikeIgnoreCase(value) :
+                field.likeIgnoreCase(value));
         }
     }
 
@@ -143,16 +139,24 @@ public class StringSearchTermEvaluator implements SearchTermEvaluator<StringSear
             ConditionalSupplier csSub = new ConditionalSupplier();
             for (final Field mf : methodFields) {
                 csSub.add(() -> negate ?
-                    mf
+                    DSL
+                        .coalesce(mf, "")
                         .lower()
                         .notLikeRegex(value) :
-                    mf
+                    DSL
+                        .coalesce(mf, "")
                         .lower()
                         .likeRegex(value));
             }
             cs.add(() -> negate ? csSub.combineWithAnd() : csSub.combineWithOr());
         } else {
-            cs.add(() -> negate ? field.notLikeRegex(value) : field.likeRegex(value));
+            cs.add(() -> negate ?
+                DSL
+                    .coalesce(field, "")
+                    .notLikeRegex(value) :
+                DSL
+                    .coalesce(field, "")
+                    .likeRegex(value));
         }
     }
 

@@ -71,6 +71,8 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Removed
 
 .Fixed
+- {url-issues}106[#106] Core - Restore searching in methods fields (with positive and negative
+  search terms)
 
 .Security
 
