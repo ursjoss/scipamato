@@ -1,4 +1,4 @@
-package ch.difty.scipamato.core.persistence.codeclass;
+package ch.difty.scipamato.core.persistence;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
@@ -9,6 +9,8 @@ import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jooq.JooqTest;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationRequest;
 import ch.difty.scipamato.common.persistence.paging.Sort;
@@ -16,12 +18,14 @@ import ch.difty.scipamato.core.entity.CodeClass;
 import ch.difty.scipamato.core.entity.code_class.CodeClassDefinition;
 import ch.difty.scipamato.core.entity.code_class.CodeClassFilter;
 import ch.difty.scipamato.core.entity.code_class.CodeClassTranslation;
-import ch.difty.scipamato.core.persistence.JooqBaseIntegrationTest;
 import ch.difty.scipamato.core.persistence.OptimisticLockingException;
+import ch.difty.scipamato.core.persistence.codeclass.JooqCodeClassRepo;
 
 @SuppressWarnings("SpellCheckingInspection")
 @Slf4j
-class JooqCodeClassRepoIntegrationTest extends JooqBaseIntegrationTest {
+@JooqTest
+@Testcontainers
+class JooqCodeClassRepoIntegrationTest {
 
     private static final int CODE_CLASS_COUNT = 8;
 

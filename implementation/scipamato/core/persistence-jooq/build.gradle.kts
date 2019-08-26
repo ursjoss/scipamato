@@ -4,6 +4,8 @@ plugins {
 
 description = "SciPaMaTo-Core :: Persistence jOOQ Project"
 
+val props = file("src/intTest/resources/application.properties").asProperties()
+
 jooqModelator {
     jooqVersion = Lib.jooqVersion
     jooqEdition = "OSS"
@@ -17,7 +19,11 @@ jooqModelator {
     migrationsPaths = listOf("$rootDir/core/persistence-jooq/src/main/resources/db/migration/")
 
     dockerTag = "postgres:10"
-    dockerEnv = listOf("POSTGRES_DB=scipamato", "POSTGRES_USER=scipamato", "POSTGRES_PASSWORD=scipamato")
+    dockerEnv = listOf(
+            "POSTGRES_DB=scipamato",
+            "POSTGRES_USER=scipamato",
+            "POSTGRES_PASSWORD=scipamato"
+    )
     dockerHostPort = 15432
     dockerContainerPort = 5432
 }
@@ -43,11 +49,12 @@ dependencies {
     testCompile(Lib.lombok())
     testAnnotationProcessor(Lib.lombok())
 
+    integrationTestCompile(Lib.testcontainers("testcontainers"))
+    integrationTestCompile(Lib.testcontainers("junit-jupiter"))
+    integrationTestCompile(Lib.testcontainers("postgresql"))
     integrationTestRuntimeOnly(Lib.postgres())
+    integrationTestAnnotationProcessor(Lib.lombok())
 }
-
-val bootCoreProps = file("src/main/resources/application.properties").asProperties()
-val bootCoreItProps = file("src/intTest/resources/application.properties").asProperties()
 
 val generatedSourcesPath = "build/generated-src/jooq"
 sourceSets {
@@ -60,4 +67,10 @@ sourceSets {
 
 tasks {
     getByName("compileKotlin").dependsOn += "generateJooqMetamodel"
+}
+
+idea {
+    module {
+        inheritOutputDirs = true
+    }
 }

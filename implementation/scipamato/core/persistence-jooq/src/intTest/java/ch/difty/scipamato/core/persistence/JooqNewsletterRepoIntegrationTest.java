@@ -1,4 +1,4 @@
-package ch.difty.scipamato.core.persistence.newsletter;
+package ch.difty.scipamato.core.persistence;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -10,6 +10,8 @@ import java.util.stream.Collectors;
 import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jooq.JooqTest;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 import ch.difty.scipamato.common.entity.newsletter.PublicationStatus;
 import ch.difty.scipamato.common.persistence.paging.PaginationRequest;
@@ -20,10 +22,12 @@ import ch.difty.scipamato.core.entity.newsletter.Newsletter;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterFilter;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic;
 import ch.difty.scipamato.core.entity.projection.PaperSlim;
-import ch.difty.scipamato.core.persistence.JooqBaseIntegrationTest;
+import ch.difty.scipamato.core.persistence.newsletter.JooqNewsletterRepo;
 
 @SuppressWarnings({ "SameParameterValue", "OptionalGetWithoutIsPresent" })
-class JooqNewsletterRepoIntegrationTest extends JooqBaseIntegrationTest {
+@JooqTest
+@Testcontainers
+class JooqNewsletterRepoIntegrationTest {
 
     @Autowired
     private JooqNewsletterRepo repo;

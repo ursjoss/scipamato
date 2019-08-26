@@ -1,4 +1,4 @@
-package ch.difty.scipamato.core.persistence.paper;
+package ch.difty.scipamato.core.persistence;
 
 import static ch.difty.scipamato.core.db.Tables.PAPER_ATTACHMENT;
 import static ch.difty.scipamato.core.persistence.TestDbConstants.MAX_ID_PREPOPULATED;
@@ -15,8 +15,10 @@ import java.util.stream.Collectors;
 import org.jooq.DSLContext;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jooq.JooqTest;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationRequest;
 import ch.difty.scipamato.common.persistence.paging.Sort.Direction;
@@ -30,10 +32,12 @@ import ch.difty.scipamato.core.entity.PaperAttachment;
 import ch.difty.scipamato.core.entity.search.PaperFilter;
 import ch.difty.scipamato.core.entity.search.SearchCondition;
 import ch.difty.scipamato.core.entity.search.SearchOrder;
-import ch.difty.scipamato.core.persistence.JooqBaseIntegrationTest;
+import ch.difty.scipamato.core.persistence.paper.JooqPaperRepo;
 
 @SuppressWarnings("SameParameterValue")
-class JooqPaperRepoIntegrationTest extends JooqBaseIntegrationTest {
+@JooqTest
+@Testcontainers
+class JooqPaperRepoIntegrationTest {
 
     private static final long   TEST_PAPER_ID = 1L;
     private static final String TEST_FILE_1   = "test file";

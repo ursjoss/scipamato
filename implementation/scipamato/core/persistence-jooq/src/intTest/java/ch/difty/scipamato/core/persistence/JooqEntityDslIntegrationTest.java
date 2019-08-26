@@ -7,6 +7,8 @@ import org.jooq.DSLContext;
 import org.jooq.Result;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jooq.JooqTest;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 import ch.difty.scipamato.core.db.tables.records.PaperRecord;
 
@@ -15,7 +17,9 @@ import ch.difty.scipamato.core.db.tables.records.PaperRecord;
  * @author Thomas Darimont
  * @author Urs Joss
  */
-class JooqEntityDslIntegrationTest extends JooqBaseIntegrationTest {
+@JooqTest
+@Testcontainers
+class JooqEntityDslIntegrationTest {
 
     @Autowired
     private DSLContext create;

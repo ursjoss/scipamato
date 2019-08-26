@@ -1,4 +1,4 @@
-package ch.difty.scipamato.core.persistence.user;
+package ch.difty.scipamato.core.persistence;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -6,13 +6,17 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jooq.JooqTest;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 import ch.difty.scipamato.core.auth.Role;
 import ch.difty.scipamato.core.entity.User;
-import ch.difty.scipamato.core.persistence.JooqBaseIntegrationTest;
 import ch.difty.scipamato.core.persistence.OptimisticLockingException;
+import ch.difty.scipamato.core.persistence.user.JooqUserRepo;
 
-class JooqUserRepoIntegrationTest extends JooqBaseIntegrationTest {
+@JooqTest
+@Testcontainers
+class JooqUserRepoIntegrationTest {
 
     private static final Integer MAX_ID_PREPOPULATED       = 8;
     private static final int     RECORD_COUNT_PREPOPULATED = 8;

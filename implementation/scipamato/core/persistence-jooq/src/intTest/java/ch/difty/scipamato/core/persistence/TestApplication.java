@@ -88,7 +88,7 @@ public class TestApplication {
         };
     }
 
-    @Bean
+    @Bean("frozenDateTimeService")
     @Primary
     public DateTimeService dateTimeService() {
         return new FrozenDateTimeService();
