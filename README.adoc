@@ -77,4 +77,3 @@ See https://github.com/ursjoss/scipamato/wiki/Developer-Information[Developer Wi
 == Information for Operations
 
 See https://github.com/ursjoss/scipamato/wiki/Operations[Operations Wiki]
-

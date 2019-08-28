@@ -3,9 +3,10 @@ jdk:
   - openjdk11
 os:
   - linux
-before_install:
-  - chmod +x gradlew
-script:
-  - ./gradlew check
 services:
   - docker
+before_install:
+  - cd implementation/scipamato
+  - chmod +x gradlew
+script:
+  - ./gradlew test --info
