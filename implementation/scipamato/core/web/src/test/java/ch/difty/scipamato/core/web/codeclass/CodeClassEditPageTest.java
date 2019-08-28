@@ -2,6 +2,8 @@ package ch.difty.scipamato.core.web.codeclass;
 
 import static org.mockito.Mockito.*;
 
+import java.util.Arrays;
+
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
@@ -11,12 +13,14 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.tester.FormTester;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.dao.DuplicateKeyException;
 
+import ch.difty.scipamato.common.persistence.paging.PaginationRequest;
+import ch.difty.scipamato.core.entity.CodeClass;
+import ch.difty.scipamato.core.entity.code.CodeDefinition;
+import ch.difty.scipamato.core.entity.code.CodeFilter;
 import ch.difty.scipamato.core.entity.code_class.CodeClassDefinition;
 import ch.difty.scipamato.core.entity.code_class.CodeClassTranslation;
-import ch.difty.scipamato.core.persistence.CodeClassService;
 import ch.difty.scipamato.core.persistence.OptimisticLockingException;
 import ch.difty.scipamato.core.web.authentication.LogoutPage;
 import ch.difty.scipamato.core.web.code.CodeListPage;
@@ -26,9 +30,6 @@ class CodeClassEditPageTest extends BasePageTest<CodeClassEditPage> {
 
     private CodeClassDefinition ccd;
 
-    @MockBean
-    private CodeClassService codeClassServiceMock;
-
     @Override
     public void setUpHook() {
         final CodeClassTranslation cct_de = new CodeClassTranslation(1, "de", "Name1", "some description", 1);
@@ -36,6 +37,9 @@ class CodeClassEditPageTest extends BasePageTest<CodeClassEditPage> {
         final CodeClassTranslation cct_en = new CodeClassTranslation(2, "en", "name1", null, 1);
         final CodeClassTranslation cct_fr = new CodeClassTranslation(3, "fr", "nom1", null, 1);
         ccd = new CodeClassDefinition(1, "de", 1, cct_de, cct_en, cct_fr, cct_de2);
+
+        when(codeClassServiceMock.find(anyString())).thenReturn(
+            Arrays.asList(new CodeClass(1, "cc1", null), new CodeClass(2, "cc2", null), new CodeClass(3, "cc3", null)));
     }
 
     @AfterEach
@@ -183,6 +187,12 @@ class CodeClassEditPageTest extends BasePageTest<CodeClassEditPage> {
 
     @Test
     void clickingBackButton_withPageWithoutCallingPageRef_forwardsToCodeListPage() {
+        when(codeServiceMock.countByFilter(isA(CodeFilter.class))).thenReturn(1);
+        when(codeServiceMock.findPageOfEntityDefinitions(isA(CodeFilter.class),
+            isA(PaginationRequest.class))).thenReturn(Arrays
+            .asList(new CodeDefinition("c1", "en", new CodeClass(1, "cc1", null), 1, false, 1))
+            .iterator());
+
         getTester().startPage(new CodeClassEditPage(Model.of(ccd), null));
 
         FormTester formTester = getTester().newFormTester("form");

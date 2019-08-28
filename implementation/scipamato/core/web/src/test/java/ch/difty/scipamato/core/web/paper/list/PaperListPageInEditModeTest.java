@@ -33,8 +33,8 @@ class PaperListPageInEditModeTest extends PaperListPageTest {
     @Override
     protected void setUpHook() {
         super.setUpHook();
-        when(getWebSessionFacade().hasAtLeastOneRoleOutOf(Roles.USER, Roles.ADMIN)).thenReturn(true);
-        when(getWebSessionFacade().hasAtLeastOneRoleOutOf(Roles.ADMIN)).thenReturn(true);
+        when(sessionFacadeMock.hasAtLeastOneRoleOutOf(Roles.USER, Roles.ADMIN)).thenReturn(true);
+        when(sessionFacadeMock.hasAtLeastOneRoleOutOf(Roles.ADMIN)).thenReturn(true);
     }
 
     @Override
@@ -145,7 +145,7 @@ class PaperListPageInEditModeTest extends PaperListPageTest {
     void onXmlPasteModalPanelClose_withNullContent_doesNotPersists() {
         makePage().onXmlPasteModalPanelClose(null, mock(AjaxRequestTarget.class));
 
-        verify(pubmedImportService, never()).persistPubmedArticlesFromXml(anyString());
+        verify(pubmedImporterMock, never()).persistPubmedArticlesFromXml(anyString());
         verify(paperSlimServiceMock).countByFilter(isA(PaperFilter.class));
         verify(paperServiceMock, times(4)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationRequest.class));
     }
@@ -155,7 +155,7 @@ class PaperListPageInEditModeTest extends PaperListPageTest {
         String content = "";
         makePage().onXmlPasteModalPanelClose(content, mock(AjaxRequestTarget.class));
 
-        verify(pubmedImportService, never()).persistPubmedArticlesFromXml(anyString());
+        verify(pubmedImporterMock, never()).persistPubmedArticlesFromXml(anyString());
         verify(paperSlimServiceMock).countByFilter(isA(PaperFilter.class));
         verify(paperServiceMock, times(4)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationRequest.class));
     }
@@ -163,11 +163,11 @@ class PaperListPageInEditModeTest extends PaperListPageTest {
     @Test
     void onXmlPasteModalPanelClose_withContent_persistsArticlesAndUpdatesNavigateable() {
         String content = "content";
-        when(pubmedImportService.persistPubmedArticlesFromXml(content)).thenReturn(makeServiceResult());
+        when(pubmedImporterMock.persistPubmedArticlesFromXml(content)).thenReturn(makeServiceResult());
 
         makePage().onXmlPasteModalPanelClose("content", mock(AjaxRequestTarget.class));
 
-        verify(pubmedImportService).persistPubmedArticlesFromXml(content);
+        verify(pubmedImporterMock).persistPubmedArticlesFromXml(content);
         verify(paperSlimServiceMock).countByFilter(isA(PaperFilter.class));
         // The third call to findPageOfIds... is to update the Navigateable, the fourth
         // one because of the page redirect

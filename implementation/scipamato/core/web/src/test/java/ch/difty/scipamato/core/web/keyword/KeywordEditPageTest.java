@@ -13,14 +13,12 @@ import org.apache.wicket.util.tester.FormTester;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DuplicateKeyException;
 
 import ch.difty.scipamato.core.entity.keyword.KeywordDefinition;
 import ch.difty.scipamato.core.entity.keyword.KeywordFilter;
 import ch.difty.scipamato.core.entity.keyword.KeywordTranslation;
-import ch.difty.scipamato.core.persistence.KeywordService;
 import ch.difty.scipamato.core.persistence.OptimisticLockingException;
 import ch.difty.scipamato.core.web.authentication.LogoutPage;
 import ch.difty.scipamato.core.web.common.BasePageTest;
@@ -29,9 +27,6 @@ import ch.difty.scipamato.core.web.common.BasePageTest;
 class KeywordEditPageTest extends BasePageTest<KeywordEditPage> {
 
     private KeywordDefinition kd;
-
-    @MockBean
-    private KeywordService keywordServiceMock;
 
     @Mock
     private KeywordDefinition keywordDefinitionDummy;

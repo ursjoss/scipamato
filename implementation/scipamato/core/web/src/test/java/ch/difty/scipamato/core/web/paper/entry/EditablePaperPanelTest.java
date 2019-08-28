@@ -12,16 +12,13 @@ import org.apache.wicket.markup.html.link.ResourceLink;
 import org.apache.wicket.model.Model;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.common.entity.newsletter.PublicationStatus;
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.common.web.Mode;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.search.PaperFilter;
-import ch.difty.scipamato.core.persistence.SearchOrderService;
 import ch.difty.scipamato.core.pubmed.PubmedArticleFacade;
-import ch.difty.scipamato.core.pubmed.PubmedArticleService;
 import ch.difty.scipamato.core.web.paper.common.PaperPanelTest;
 
 abstract class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperPanel> {
@@ -30,17 +27,10 @@ abstract class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePape
     static final long    SEARCH_ORDER_ID = 5678L;
     static final boolean SHOW_EXCLUDED   = false;
 
-    @MockBean
-    PubmedArticleService pubmedArticleServiceMock;
-
     @Mock
     PubmedArticleFacade pubmedArticleMock;
     @Mock
     PageReference       callingPageMock;
-
-    // used for referring to PaperSearchPage - not verifying
-    @MockBean
-    SearchOrderService searchOrderServiceMock;
 
     @Override
     protected void tearDownLocalHook() {

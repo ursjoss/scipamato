@@ -14,36 +14,22 @@ import org.apache.wicket.util.tester.WicketTester;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentMatcher;
 import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
-import ch.difty.scipamato.core.ScipamatoCoreApplication;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.search.PaperFilter;
-import ch.difty.scipamato.core.persistence.PaperService;
+import ch.difty.scipamato.core.web.AbstractWicketTest;
 
-@ExtendWith(SpringExtension.class)
-@SpringBootTest
-class PaperProviderTest {
+class PaperProviderTest extends AbstractWicketTest {
 
     private PaperProvider provider;
 
     @Mock
-    private PaperService serviceMock;
-
-    @Mock
     private PaperFilter filterMock;
-
     @Mock
-    private Paper entityMock;
-
-    @Autowired
-    private ScipamatoCoreApplication application;
+    private Paper       entityMock;
 
     private List<Paper> papers;
 
@@ -51,14 +37,14 @@ class PaperProviderTest {
     void setUp() {
         new WicketTester(application);
         provider = new PaperProvider(filterMock);
-        provider.setService(serviceMock);
+        provider.setService(paperServiceMock);
 
         papers = Arrays.asList(entityMock, entityMock, entityMock);
     }
 
     @AfterEach
     void tearDown() {
-        verifyNoMoreInteractions(serviceMock, entityMock);
+        verifyNoMoreInteractions(paperServiceMock, entityMock);
     }
 
     @Test
@@ -76,9 +62,9 @@ class PaperProviderTest {
     @Test
     void size() {
         int size = 5;
-        when(serviceMock.countByFilter(filterMock)).thenReturn(size);
+        when(paperServiceMock.countByFilter(filterMock)).thenReturn(size);
         assertThat(provider.size()).isEqualTo(size);
-        verify(serviceMock).countByFilter(filterMock);
+        verify(paperServiceMock).countByFilter(filterMock);
     }
 
     @Test
@@ -122,18 +108,20 @@ class PaperProviderTest {
     @Test
     void iterating_withNoRecords_returnsNoRecords() {
         papers = Collections.emptyList();
-        when(serviceMock.findPageByFilter(eq(filterMock), isA(PaginationContext.class))).thenReturn(papers);
+        when(paperServiceMock.findPageByFilter(eq(filterMock), isA(PaginationContext.class))).thenReturn(papers);
         Iterator<Paper> it = provider.iterator(0, 3);
         assertThat(it.hasNext()).isFalse();
-        verify(serviceMock).findPageByFilter(eq(filterMock), argThat(new PaginationContextMatcher(3, "authors: ASC")));
+        verify(paperServiceMock).findPageByFilter(eq(filterMock),
+            argThat(new PaginationContextMatcher(3, "authors: ASC")));
     }
 
     @Test
     void iterating_throughFirst() {
-        when(serviceMock.findPageByFilter(eq(filterMock), isA(PaginationContext.class))).thenReturn(papers);
+        when(paperServiceMock.findPageByFilter(eq(filterMock), isA(PaginationContext.class))).thenReturn(papers);
         Iterator<Paper> it = provider.iterator(0, 3);
         assertRecordsIn(it);
-        verify(serviceMock).findPageByFilter(eq(filterMock), argThat(new PaginationContextMatcher(3, "authors: ASC")));
+        verify(paperServiceMock).findPageByFilter(eq(filterMock),
+            argThat(new PaginationContextMatcher(3, "authors: ASC")));
     }
 
     private void assertRecordsIn(Iterator<Paper> it) {
@@ -147,18 +135,20 @@ class PaperProviderTest {
 
     @Test
     void iterating_throughSecondPage() {
-        when(serviceMock.findPageByFilter(eq(filterMock), isA(PaginationContext.class))).thenReturn(papers);
+        when(paperServiceMock.findPageByFilter(eq(filterMock), isA(PaginationContext.class))).thenReturn(papers);
         Iterator<Paper> it = provider.iterator(3, 3);
         assertRecordsIn(it);
-        verify(serviceMock).findPageByFilter(eq(filterMock), argThat(new PaginationContextMatcher(3, "authors: ASC")));
+        verify(paperServiceMock).findPageByFilter(eq(filterMock),
+            argThat(new PaginationContextMatcher(3, "authors: ASC")));
     }
 
     @Test
     void iterating_throughThirdPage() {
         provider.setSort("title", SortOrder.DESCENDING);
-        when(serviceMock.findPageByFilter(eq(filterMock), isA(PaginationContext.class))).thenReturn(papers);
+        when(paperServiceMock.findPageByFilter(eq(filterMock), isA(PaginationContext.class))).thenReturn(papers);
         Iterator<Paper> it = provider.iterator(6, 3);
         assertRecordsIn(it);
-        verify(serviceMock).findPageByFilter(eq(filterMock), argThat(new PaginationContextMatcher(3, "title: DESC")));
+        verify(paperServiceMock).findPageByFilter(eq(filterMock),
+            argThat(new PaginationContextMatcher(3, "title: DESC")));
     }
 }

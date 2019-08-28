@@ -2,11 +2,11 @@ package ch.difty.scipamato.core.logic.parsing;
 
 import ch.difty.scipamato.common.AssertAs;
 
-class DefaultAuthorParserFactory implements AuthorParserFactory {
+public class DefaultAuthorParserFactory implements AuthorParserFactory {
 
     private final AuthorParserStrategy authorParserStrategy;
 
-    DefaultAuthorParserFactory(final AuthorParserStrategy authorParserStrategy) {
+    public DefaultAuthorParserFactory(final AuthorParserStrategy authorParserStrategy) {
         this.authorParserStrategy = AssertAs.notNull(authorParserStrategy, "authorParserStrategy");
     }
 

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import ch.difty.scipamato.core.auth.Role;
@@ -24,6 +25,7 @@ import ch.difty.scipamato.core.entity.User;
  */
 @Repository
 @CacheConfig(cacheNames = "userRolesByUserId")
+@Profile("!wickettest")
 public class JooqUserRoleRepo implements UserRoleRepository {
 
     private final DSLContext dsl;

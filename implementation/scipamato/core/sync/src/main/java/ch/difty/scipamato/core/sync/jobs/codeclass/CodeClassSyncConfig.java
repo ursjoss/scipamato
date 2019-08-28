@@ -1,7 +1,7 @@
 package ch.difty.scipamato.core.sync.jobs.codeclass;
 
-import static ch.difty.scipamato.core.db.public_.tables.CodeClass.CODE_CLASS;
-import static ch.difty.scipamato.core.db.public_.tables.CodeClassTr.CODE_CLASS_TR;
+import static ch.difty.scipamato.core.db.tables.CodeClass.CODE_CLASS;
+import static ch.difty.scipamato.core.db.tables.CodeClassTr.CODE_CLASS_TR;
 
 import javax.sql.DataSource;
 import java.sql.ResultSet;
@@ -17,12 +17,13 @@ import org.springframework.batch.item.ItemWriter;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 import ch.difty.scipamato.common.DateTimeService;
-import ch.difty.scipamato.core.db.public_.tables.CodeClass;
-import ch.difty.scipamato.core.db.public_.tables.CodeClassTr;
-import ch.difty.scipamato.core.db.public_.tables.records.CodeClassRecord;
-import ch.difty.scipamato.core.db.public_.tables.records.CodeClassTrRecord;
+import ch.difty.scipamato.core.db.tables.CodeClass;
+import ch.difty.scipamato.core.db.tables.CodeClassTr;
+import ch.difty.scipamato.core.db.tables.records.CodeClassRecord;
+import ch.difty.scipamato.core.db.tables.records.CodeClassTrRecord;
 import ch.difty.scipamato.core.sync.jobs.SyncConfig;
 
 /**
@@ -36,8 +37,9 @@ import ch.difty.scipamato.core.sync.jobs.SyncConfig;
  * @author u.joss
  */
 @Configuration
+@Profile("!wickettest")
 public class CodeClassSyncConfig
-    extends SyncConfig<PublicCodeClass, ch.difty.scipamato.publ.db.public_.tables.records.CodeClassRecord> {
+    extends SyncConfig<PublicCodeClass, ch.difty.scipamato.publ.db.tables.records.CodeClassRecord> {
 
     private static final String TOPIC      = "codeClass";
     private static final int    CHUNK_SIZE = 50;
@@ -99,8 +101,8 @@ public class CodeClassSyncConfig
     }
 
     @Override
-    protected TableField<ch.difty.scipamato.publ.db.public_.tables.records.CodeClassRecord, Timestamp> lastSynchedField() {
-        return ch.difty.scipamato.publ.db.public_.tables.CodeClass.CODE_CLASS.LAST_SYNCHED;
+    protected TableField<ch.difty.scipamato.publ.db.tables.records.CodeClassRecord, Timestamp> lastSynchedField() {
+        return ch.difty.scipamato.publ.db.tables.CodeClass.CODE_CLASS.LAST_SYNCHED;
     }
 
 }

@@ -1,7 +1,7 @@
 package ch.difty.scipamato.core.sync.jobs.newsletter;
 
-import static ch.difty.scipamato.core.db.public_.tables.NewsletterTopic.NEWSLETTER_TOPIC;
-import static ch.difty.scipamato.core.db.public_.tables.NewsletterTopicTr.NEWSLETTER_TOPIC_TR;
+import static ch.difty.scipamato.core.db.tables.NewsletterTopic.NEWSLETTER_TOPIC;
+import static ch.difty.scipamato.core.db.tables.NewsletterTopicTr.NEWSLETTER_TOPIC_TR;
 
 import javax.sql.DataSource;
 import java.sql.ResultSet;
@@ -17,10 +17,11 @@ import org.springframework.batch.item.ItemWriter;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 import ch.difty.scipamato.common.DateTimeService;
-import ch.difty.scipamato.core.db.public_.tables.records.NewsletterTopicRecord;
-import ch.difty.scipamato.core.db.public_.tables.records.NewsletterTopicTrRecord;
+import ch.difty.scipamato.core.db.tables.records.NewsletterTopicRecord;
+import ch.difty.scipamato.core.db.tables.records.NewsletterTopicTrRecord;
 import ch.difty.scipamato.core.sync.jobs.SyncConfig;
 
 /**
@@ -34,8 +35,9 @@ import ch.difty.scipamato.core.sync.jobs.SyncConfig;
  * @author u.joss
  */
 @Configuration
+@Profile("!wickettest")
 public class NewsletterTopicSyncConfig
-    extends SyncConfig<PublicNewsletterTopic, ch.difty.scipamato.publ.db.public_.tables.records.NewsletterTopicRecord> {
+    extends SyncConfig<PublicNewsletterTopic, ch.difty.scipamato.publ.db.tables.records.NewsletterTopicRecord> {
 
     private static final String TOPIC      = "newsletterTopic";
     private static final int    CHUNK_SIZE = 50;
@@ -95,8 +97,8 @@ public class NewsletterTopicSyncConfig
     }
 
     @Override
-    protected TableField<ch.difty.scipamato.publ.db.public_.tables.records.NewsletterTopicRecord, Timestamp> lastSynchedField() {
-        return ch.difty.scipamato.publ.db.public_.tables.NewsletterTopic.NEWSLETTER_TOPIC.LAST_SYNCHED;
+    protected TableField<ch.difty.scipamato.publ.db.tables.records.NewsletterTopicRecord, Timestamp> lastSynchedField() {
+        return ch.difty.scipamato.publ.db.tables.NewsletterTopic.NEWSLETTER_TOPIC.LAST_SYNCHED;
     }
 
 }

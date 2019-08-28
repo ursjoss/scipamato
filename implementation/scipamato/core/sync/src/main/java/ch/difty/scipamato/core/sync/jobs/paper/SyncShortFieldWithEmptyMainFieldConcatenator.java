@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.sync.jobs.paper;
 
-import static ch.difty.scipamato.core.db.public_.Tables.PAPER;
+import static ch.difty.scipamato.core.db.Tables.PAPER;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,8 +11,8 @@ import org.springframework.stereotype.Component;
 
 import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.paper.AbstractShortFieldConcatenator;
-import ch.difty.scipamato.core.db.public_.tables.Paper;
-import ch.difty.scipamato.core.db.public_.tables.records.PaperRecord;
+import ch.difty.scipamato.core.db.tables.Paper;
+import ch.difty.scipamato.core.db.tables.records.PaperRecord;
 
 /**
  * Gathers the content for the the fields methods, population and result.

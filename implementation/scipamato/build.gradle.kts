@@ -31,6 +31,7 @@ dependencyManagement {
 
 extra["spring.cloudVersion"] = Lib.springCloudVersion
 extra["mockito.version"] = Lib.mockitoVersion
+extra["jooq.version"] = Lib.jooqVersion
 
 val testModuleDirs = setOf("common/test", "common/persistence-jooq-test")
 val testModules = testModuleDirs.map { it.replaceFirst("/", "-") }

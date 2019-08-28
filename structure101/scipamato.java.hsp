@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<local-project language="java" associate="file:/home/urs/structure101-repository/scipamato" version="5.0.14507" xml-version="3" flavor="j2se">
+<local-project language="java" associate="file:/home/urs/structure101-repository/scipamato" version="5.0.14538" xml-version="3" flavor="j2se">
   <property name="show-as-module" value="false" />
   <property name="publish-architecture-artifacts" value="true" />
   <property name="force-classpath" value="false" />
@@ -784,9 +784,200 @@
           </action>
         </composite-set>
       </action>
+      <action type="auto-structure" active="true" last-applied="true" description="Auto-levelize scipamato___common-persistence-jooq___main">
+        <composite-set>
+          <action type="flatten-v2" active="true" last-applied="true" description="Flatten scipamato___common-persistence-jooq___main">
+            <composite-set>
+              <action type="move" active="true" last-applied="true" description="Move scipamato___common-persistence-jooq___main.ch.difty.scipamato.common.persistence.code.CodeLikeRepository to scipamato___common-persistence-jooq___main">
+                <params>
+                  <source-fqn fqn="scipamato___common-persistence-jooq___main.ch.difty.scipamato.common.persistence.code.CodeLikeRepository" type="class" path="scipamato___common-persistence-jooq___main.ch.difty.scipamato.common.persistence.code.CodeLikeRepository">
+                    <node name="scipamato___common-persistence-jooq___main" type="jar" />
+                    <node name="ch" type="package" />
+                    <node name="difty" type="package" />
+                    <node name="scipamato" type="package" />
+                    <node name="common" type="package" />
+                    <node name="persistence" type="package" />
+                    <node name="code" type="package" />
+                    <node name="CodeLikeRepository" type="class" />
+                  </source-fqn>
+                  <to-fqn fqn="scipamato___common-persistence-jooq___main" type="jar">
+                    <node name="scipamato___common-persistence-jooq___main" type="jar" />
+                  </to-fqn>
+                </params>
+              </action>
+              <action type="move" active="true" last-applied="true" description="Move scipamato___common-persistence-jooq___main.ch.difty.scipamato.common.persistence.code.JooqCodeLikeService to scipamato___common-persistence-jooq___main">
+                <params>
+                  <source-fqn fqn="scipamato___common-persistence-jooq___main.ch.difty.scipamato.common.persistence.code.JooqCodeLikeService" type="class" path="scipamato___common-persistence-jooq___main.ch.difty.scipamato.common.persistence.code.JooqCodeLikeService">
+                    <node name="scipamato___common-persistence-jooq___main" type="jar" />
+                    <node name="ch" type="package" />
+                    <node name="difty" type="package" />
+                    <node name="scipamato" type="package" />
+                    <node name="common" type="package" />
+                    <node name="persistence" type="package" />
+                    <node name="code" type="package" />
+                    <node name="JooqCodeLikeService" type="class" />
+                  </source-fqn>
+                  <to-fqn fqn="scipamato___common-persistence-jooq___main" type="jar">
+                    <node name="scipamato___common-persistence-jooq___main" type="jar" />
+                  </to-fqn>
+                </params>
+              </action>
+              <action type="move" active="true" last-applied="true" description="Move scipamato___common-persistence-jooq___main.ch.difty.scipamato.common.persistence.codeclass.CodeClassLikeRepository to scipamato___common-persistence-jooq___main">
+                <params>
+                  <source-fqn fqn="scipamato___common-persistence-jooq___main.ch.difty.scipamato.common.persistence.codeclass.CodeClassLikeRepository" type="class" path="scipamato___common-persistence-jooq___main.ch.difty.scipamato.common.persistence.codeclass.CodeClassLikeRepository">
+                    <node name="scipamato___common-persistence-jooq___main" type="jar" />
+                    <node name="ch" type="package" />
+                    <node name="difty" type="package" />
+                    <node name="scipamato" type="package" />
+                    <node name="common" type="package" />
+                    <node name="persistence" type="package" />
+                    <node name="codeclass" type="package" />
+                    <node name="CodeClassLikeRepository" type="class" />
+                  </source-fqn>
+                  <to-fqn fqn="scipamato___common-persistence-jooq___main" type="jar">
+                    <node name="scipamato___common-persistence-jooq___main" type="jar" />
+                  </to-fqn>
+                </params>
+              </action>
+              <action type="move" active="true" last-applied="true" description="Move scipamato___common-persistence-jooq___main.ch.difty.scipamato.common.persistence.codeclass.JooqCodeClassLikeService to scipamato___common-persistence-jooq___main">
+                <params>
+                  <source-fqn fqn="scipamato___common-persistence-jooq___main.ch.difty.scipamato.common.persistence.codeclass.JooqCodeClassLikeService" type="class" path="scipamato___common-persistence-jooq___main.ch.difty.scipamato.common.persistence.codeclass.JooqCodeClassLikeService">
+                    <node name="scipamato___common-persistence-jooq___main" type="jar" />
+                    <node name="ch" type="package" />
+                    <node name="difty" type="package" />
+                    <node name="scipamato" type="package" />
+                    <node name="common" type="package" />
+                    <node name="persistence" type="package" />
+                    <node name="codeclass" type="package" />
+                    <node name="JooqCodeClassLikeService" type="class" />
+                  </source-fqn>
+                  <to-fqn fqn="scipamato___common-persistence-jooq___main" type="jar">
+                    <node name="scipamato___common-persistence-jooq___main" type="jar" />
+                  </to-fqn>
+                </params>
+              </action>
+              <action type="move" active="true" last-applied="true" description="Move scipamato___common-persistence-jooq___main.ch.difty.scipamato.common.persistence.config.JooqSpringBootConfiguration to scipamato___common-persistence-jooq___main">
+                <params>
+                  <source-fqn fqn="scipamato___common-persistence-jooq___main.ch.difty.scipamato.common.persistence.config.JooqSpringBootConfiguration" type="class" path="scipamato___common-persistence-jooq___main.ch.difty.scipamato.common.persistence.config.JooqSpringBootConfiguration">
+                    <node name="scipamato___common-persistence-jooq___main" type="jar" />
+                    <node name="ch" type="package" />
+                    <node name="difty" type="package" />
+                    <node name="scipamato" type="package" />
+                    <node name="common" type="package" />
+                    <node name="persistence" type="package" />
+                    <node name="config" type="package" />
+                    <node name="JooqSpringBootConfiguration" type="class" />
+                  </source-fqn>
+                  <to-fqn fqn="scipamato___common-persistence-jooq___main" type="jar">
+                    <node name="scipamato___common-persistence-jooq___main" type="jar" />
+                  </to-fqn>
+                </params>
+              </action>
+              <action type="move" active="true" last-applied="true" description="Move scipamato___common-persistence-jooq___main.ch.difty.scipamato.common.persistence.AbstractFilterConditionMapper to scipamato___common-persistence-jooq___main">
+                <params>
+                  <source-fqn fqn="scipamato___common-persistence-jooq___main.ch.difty.scipamato.common.persistence.AbstractFilterConditionMapper" type="class" path="scipamato___common-persistence-jooq___main.ch.difty.scipamato.common.persistence.AbstractFilterConditionMapper">
+                    <node name="scipamato___common-persistence-jooq___main" type="jar" />
+                    <node name="ch" type="package" />
+                    <node name="difty" type="package" />
+                    <node name="scipamato" type="package" />
+                    <node name="common" type="package" />
+                    <node name="persistence" type="package" />
+                    <node name="AbstractFilterConditionMapper" type="class" />
+                  </source-fqn>
+                  <to-fqn fqn="scipamato___common-persistence-jooq___main" type="jar">
+                    <node name="scipamato___common-persistence-jooq___main" type="jar" />
+                  </to-fqn>
+                </params>
+              </action>
+              <action type="move" active="true" last-applied="true" description="Move scipamato___common-persistence-jooq___main.ch.difty.scipamato.common.persistence.FilterConditionMapper to scipamato___common-persistence-jooq___main">
+                <params>
+                  <source-fqn fqn="scipamato___common-persistence-jooq___main.ch.difty.scipamato.common.persistence.FilterConditionMapper" type="class" path="scipamato___common-persistence-jooq___main.ch.difty.scipamato.common.persistence.FilterConditionMapper">
+                    <node name="scipamato___common-persistence-jooq___main" type="jar" />
+                    <node name="ch" type="package" />
+                    <node name="difty" type="package" />
+                    <node name="scipamato" type="package" />
+                    <node name="common" type="package" />
+                    <node name="persistence" type="package" />
+                    <node name="FilterConditionMapper" type="class" />
+                  </source-fqn>
+                  <to-fqn fqn="scipamato___common-persistence-jooq___main" type="jar">
+                    <node name="scipamato___common-persistence-jooq___main" type="jar" />
+                  </to-fqn>
+                </params>
+              </action>
+              <action type="move" active="true" last-applied="true" description="Move scipamato___common-persistence-jooq___main.ch.difty.scipamato.common.persistence.GenericFilterConditionMapper to scipamato___common-persistence-jooq___main">
+                <params>
+                  <source-fqn fqn="scipamato___common-persistence-jooq___main.ch.difty.scipamato.common.persistence.GenericFilterConditionMapper" type="class" path="scipamato___common-persistence-jooq___main.ch.difty.scipamato.common.persistence.GenericFilterConditionMapper">
+                    <node name="scipamato___common-persistence-jooq___main" type="jar" />
+                    <node name="ch" type="package" />
+                    <node name="difty" type="package" />
+                    <node name="scipamato" type="package" />
+                    <node name="common" type="package" />
+                    <node name="persistence" type="package" />
+                    <node name="GenericFilterConditionMapper" type="class" />
+                  </source-fqn>
+                  <to-fqn fqn="scipamato___common-persistence-jooq___main" type="jar">
+                    <node name="scipamato___common-persistence-jooq___main" type="jar" />
+                  </to-fqn>
+                </params>
+              </action>
+              <action type="move" active="true" last-applied="true" description="Move scipamato___common-persistence-jooq___main.ch.difty.scipamato.common.persistence.JooqSortMapper to scipamato___common-persistence-jooq___main">
+                <params>
+                  <source-fqn fqn="scipamato___common-persistence-jooq___main.ch.difty.scipamato.common.persistence.JooqSortMapper" type="class" path="scipamato___common-persistence-jooq___main.ch.difty.scipamato.common.persistence.JooqSortMapper">
+                    <node name="scipamato___common-persistence-jooq___main" type="jar" />
+                    <node name="ch" type="package" />
+                    <node name="difty" type="package" />
+                    <node name="scipamato" type="package" />
+                    <node name="common" type="package" />
+                    <node name="persistence" type="package" />
+                    <node name="JooqSortMapper" type="class" />
+                  </source-fqn>
+                  <to-fqn fqn="scipamato___common-persistence-jooq___main" type="jar">
+                    <node name="scipamato___common-persistence-jooq___main" type="jar" />
+                  </to-fqn>
+                </params>
+              </action>
+              <action type="move" active="true" last-applied="true" description="Move scipamato___common-persistence-jooq___main.ch.difty.scipamato.common.persistence.SortMapper to scipamato___common-persistence-jooq___main">
+                <params>
+                  <source-fqn fqn="scipamato___common-persistence-jooq___main.ch.difty.scipamato.common.persistence.SortMapper" type="class" path="scipamato___common-persistence-jooq___main.ch.difty.scipamato.common.persistence.SortMapper">
+                    <node name="scipamato___common-persistence-jooq___main" type="jar" />
+                    <node name="ch" type="package" />
+                    <node name="difty" type="package" />
+                    <node name="scipamato" type="package" />
+                    <node name="common" type="package" />
+                    <node name="persistence" type="package" />
+                    <node name="SortMapper" type="class" />
+                  </source-fqn>
+                  <to-fqn fqn="scipamato___common-persistence-jooq___main" type="jar">
+                    <node name="scipamato___common-persistence-jooq___main" type="jar" />
+                  </to-fqn>
+                </params>
+              </action>
+              <action type="remove-node" active="true" last-applied="true" description="Remove scipamato___common-persistence-jooq___main.ch">
+                <params onlyIfEmptyOfEntities="true">
+                  <source-fqn fqn="scipamato___common-persistence-jooq___main.ch" type="package">
+                    <node name="scipamato___common-persistence-jooq___main" type="jar" />
+                    <node name="ch" type="package" />
+                  </source-fqn>
+                </params>
+              </action>
+            </composite-set>
+            <params flattenLeafFolders="true">
+              <container-fqn fqn="scipamato___common-persistence-jooq___main" type="jar">
+                <node name="scipamato___common-persistence-jooq___main" type="jar" />
+              </container-fqn>
+            </params>
+          </action>
+        </composite-set>
+        <params flattenLeafFolders="true">
+          <container-fqn fqn="scipamato___common-persistence-jooq___main" type="jar">
+            <node name="scipamato___common-persistence-jooq___main" type="jar" />
+          </container-fqn>
+        </params>
+      </action>
     </set>
   </restructuring>
-  <grid-set sep="." version="5.0.14507">
+  <grid-set sep="." version="5.0.14538">
     <grid name="architecture-All-Modules" enforce="true" locked="false" strict="false">
       <row>
         <cell name="SciPaMaTo-Project" pattern="" vexpanded="true" illegal="false" visibility="public" drill="true">

@@ -16,15 +16,12 @@ import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.protocol.http.mock.MockHttpServletRequest;
 import org.junit.jupiter.api.AfterEach;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.common.entity.CodeClassId;
 import ch.difty.scipamato.core.NewsletterAware;
 import ch.difty.scipamato.core.entity.Code;
 import ch.difty.scipamato.core.entity.CodeBoxAware;
 import ch.difty.scipamato.core.entity.CodeClass;
-import ch.difty.scipamato.core.persistence.CodeClassService;
-import ch.difty.scipamato.core.persistence.CodeService;
 import ch.difty.scipamato.core.web.common.PanelTest;
 
 @SuppressWarnings("SpellCheckingInspection")
@@ -32,12 +29,6 @@ public abstract class PaperPanelTest<T extends CodeBoxAware & NewsletterAware, P
     extends PanelTest<P> {
 
     private static final String LOCALE = "en_us";
-
-    @MockBean
-    private CodeClassService codeClassServiceMock;
-
-    @MockBean
-    private CodeService codeServiceMock;
 
     private final List<CodeClass> codeClasses   = new ArrayList<>();
     private final List<Code>      codesOfClass1 = new ArrayList<>();

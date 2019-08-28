@@ -14,36 +14,22 @@ import org.apache.wicket.util.tester.WicketTester;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentMatcher;
 import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
-import ch.difty.scipamato.core.ScipamatoCoreApplication;
 import ch.difty.scipamato.core.entity.newsletter.Newsletter;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterFilter;
-import ch.difty.scipamato.core.persistence.NewsletterService;
+import ch.difty.scipamato.core.web.AbstractWicketTest;
 
-@ExtendWith(SpringExtension.class)
-@SpringBootTest
-class NewsletterProviderTest {
+class NewsletterProviderTest extends AbstractWicketTest {
 
     private NewsletterProvider provider;
 
     @Mock
-    private NewsletterService serviceMock;
-
-    @Mock
     private NewsletterFilter filterMock;
-
     @Mock
-    private Newsletter entityMock;
-
-    @Autowired
-    private ScipamatoCoreApplication application;
+    private Newsletter       entityMock;
 
     private List<Newsletter> papers;
 
@@ -51,14 +37,14 @@ class NewsletterProviderTest {
     void setUp() {
         new WicketTester(application);
         provider = new NewsletterProvider(filterMock);
-        provider.setService(serviceMock);
+        provider.setService(newsletterServiceMock);
 
         papers = Arrays.asList(entityMock, entityMock, entityMock);
     }
 
     @AfterEach
     void tearDown() {
-        verifyNoMoreInteractions(serviceMock, entityMock);
+        verifyNoMoreInteractions(newsletterServiceMock, entityMock);
     }
 
     @Test
@@ -76,9 +62,9 @@ class NewsletterProviderTest {
     @Test
     void size() {
         int size = 5;
-        when(serviceMock.countByFilter(filterMock)).thenReturn(size);
+        when(newsletterServiceMock.countByFilter(filterMock)).thenReturn(size);
         assertThat(provider.size()).isEqualTo(size);
-        verify(serviceMock).countByFilter(filterMock);
+        verify(newsletterServiceMock).countByFilter(filterMock);
     }
 
     @Test
@@ -122,19 +108,19 @@ class NewsletterProviderTest {
     @Test
     void iterating_withNoRecords_returnsNoRecords() {
         papers = Collections.emptyList();
-        when(serviceMock.findPageByFilter(eq(filterMock), isA(PaginationContext.class))).thenReturn(papers);
+        when(newsletterServiceMock.findPageByFilter(eq(filterMock), isA(PaginationContext.class))).thenReturn(papers);
         Iterator<Newsletter> it = provider.iterator(0, 3);
         assertThat(it.hasNext()).isFalse();
-        verify(serviceMock).findPageByFilter(eq(filterMock),
+        verify(newsletterServiceMock).findPageByFilter(eq(filterMock),
             argThat(new NewsletterProviderTest.PaginationContextMatcher(3, "issue: DESC")));
     }
 
     @Test
     void iterating_throughFirst() {
-        when(serviceMock.findPageByFilter(eq(filterMock), isA(PaginationContext.class))).thenReturn(papers);
+        when(newsletterServiceMock.findPageByFilter(eq(filterMock), isA(PaginationContext.class))).thenReturn(papers);
         Iterator<Newsletter> it = provider.iterator(0, 3);
         assertRecordsIn(it);
-        verify(serviceMock).findPageByFilter(eq(filterMock),
+        verify(newsletterServiceMock).findPageByFilter(eq(filterMock),
             argThat(new NewsletterProviderTest.PaginationContextMatcher(3, "issue: DESC")));
     }
 
@@ -149,30 +135,30 @@ class NewsletterProviderTest {
 
     @Test
     void iterating_throughSecondPage() {
-        when(serviceMock.findPageByFilter(eq(filterMock), isA(PaginationContext.class))).thenReturn(papers);
+        when(newsletterServiceMock.findPageByFilter(eq(filterMock), isA(PaginationContext.class))).thenReturn(papers);
         Iterator<Newsletter> it = provider.iterator(3, 3);
         assertRecordsIn(it);
-        verify(serviceMock).findPageByFilter(eq(filterMock),
+        verify(newsletterServiceMock).findPageByFilter(eq(filterMock),
             argThat(new NewsletterProviderTest.PaginationContextMatcher(3, "issue: DESC")));
     }
 
     @Test
     void iterating_throughThirdPage() {
         provider.setSort("title", SortOrder.DESCENDING);
-        when(serviceMock.findPageByFilter(eq(filterMock), isA(PaginationContext.class))).thenReturn(papers);
+        when(newsletterServiceMock.findPageByFilter(eq(filterMock), isA(PaginationContext.class))).thenReturn(papers);
         Iterator<Newsletter> it = provider.iterator(6, 3);
         assertRecordsIn(it);
-        verify(serviceMock).findPageByFilter(eq(filterMock),
+        verify(newsletterServiceMock).findPageByFilter(eq(filterMock),
             argThat(new NewsletterProviderTest.PaginationContextMatcher(3, "title: DESC")));
     }
 
     @Test
     void iterating_throughThirdPage_ascendingly() {
         provider.setSort("title", SortOrder.ASCENDING);
-        when(serviceMock.findPageByFilter(eq(filterMock), isA(PaginationContext.class))).thenReturn(papers);
+        when(newsletterServiceMock.findPageByFilter(eq(filterMock), isA(PaginationContext.class))).thenReturn(papers);
         Iterator<Newsletter> it = provider.iterator(6, 3);
         assertRecordsIn(it);
-        verify(serviceMock).findPageByFilter(eq(filterMock),
+        verify(newsletterServiceMock).findPageByFilter(eq(filterMock),
             argThat(new NewsletterProviderTest.PaginationContextMatcher(3, "title: ASC")));
     }
 

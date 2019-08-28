@@ -15,7 +15,6 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.util.tester.FormTester;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.common.web.Mode;
 import ch.difty.scipamato.common.web.component.table.column.LinkIconPanel;
@@ -23,16 +22,9 @@ import ch.difty.scipamato.core.entity.search.SearchCondition;
 import ch.difty.scipamato.core.entity.search.SearchOrder;
 import ch.difty.scipamato.core.entity.search.SearchTerm;
 import ch.difty.scipamato.core.entity.search.SearchTermType;
-import ch.difty.scipamato.core.persistence.CodeClassService;
-import ch.difty.scipamato.core.persistence.CodeService;
 import ch.difty.scipamato.core.web.common.PanelTest;
 
 abstract class SearchOrderPanelTest extends PanelTest<SearchOrderPanel> {
-
-    @MockBean
-    private CodeClassService codeClassServiceMock;
-    @MockBean
-    private CodeService      codeServiceMock;
 
     @Override
     protected SearchOrderPanel makePanel() {

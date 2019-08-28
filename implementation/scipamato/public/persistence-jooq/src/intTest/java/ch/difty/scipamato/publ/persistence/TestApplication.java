@@ -4,10 +4,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Primary;
 
-import ch.difty.scipamato.common.DateTimeService;
-import ch.difty.scipamato.common.FrozenDateTimeService;
 import ch.difty.scipamato.publ.config.ApplicationPublicProperties;
 
 @SpringBootApplication
@@ -109,11 +106,5 @@ public class TestApplication {
                 return 14;
             }
         };
-    }
-
-    @Bean
-    @Primary
-    public DateTimeService dateTimeService() {
-        return new FrozenDateTimeService();
     }
 }

@@ -8,6 +8,8 @@ import org.jooq.Condition;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.springframework.boot.test.autoconfigure.jooq.JooqTest;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 import ch.difty.scipamato.core.entity.search.BooleanSearchTerm;
 import ch.difty.scipamato.core.entity.search.SearchTerm;
@@ -16,6 +18,8 @@ import ch.difty.scipamato.core.entity.search.SearchTermType;
 /**
  * Test class to integration test the search term and the search term evaluator.
  */
+@JooqTest
+@Testcontainers
 class BooleanSearchTermEvaluatorIntegrationTest extends SearchTermEvaluatorIntegrationTest<BooleanSearchTerm> {
 
     private static Stream<Arguments> booleanParameters() {

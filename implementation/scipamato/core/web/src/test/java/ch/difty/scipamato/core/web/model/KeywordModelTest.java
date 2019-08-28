@@ -8,15 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.core.entity.keyword.Keyword;
-import ch.difty.scipamato.core.persistence.KeywordService;
 
 class KeywordModelTest extends ModelTest {
-
-    @MockBean
-    private KeywordService serviceMock;
 
     @Test
     void instantiating_withNullLanguageCode_throws() {
@@ -31,7 +26,7 @@ class KeywordModelTest extends ModelTest {
         topics.add(new Keyword(1, "n1", null));
         topics.add(new Keyword(2, "n2", "nn2"));
 
-        when(serviceMock.findAll(languageCode)).thenReturn(topics);
+        when(keywordServiceMock.findAll(languageCode)).thenReturn(topics);
 
         final KeywordModel model = new KeywordModel("de");
 
@@ -44,9 +39,9 @@ class KeywordModelTest extends ModelTest {
             .extracting(Keyword.KeywordFields.SEARCH_OVERRIDE.getName())
             .containsExactly(null, "nn2");
 
-        verify(serviceMock).findAll(languageCode);
+        verify(keywordServiceMock).findAll(languageCode);
 
-        verifyNoMoreInteractions(serviceMock);
+        verifyNoMoreInteractions(keywordServiceMock);
     }
 
 }

@@ -1,8 +1,3 @@
-// Note: The jooqPlugin forces a downgrade of the jooq version defined in the spring depndency management.
-plugins {
-    Lib.jooqPlugin().run { id(id) version version }
-}
-
 description = "SciPaMaTo-Core :: Synchronization Project"
 
 /**
@@ -35,7 +30,6 @@ dependencies {
         exclude("com.vaadin.external.google", "android-json")
     }
 
-    jooqRuntime(Lib.postgres())
     runtimeOnly(Lib.postgres())
     implementation(Lib.jOOQ("jooq"))
 
@@ -49,8 +43,19 @@ dependencies {
     integrationTestRuntimeOnly(Lib.postgres())
 }
 
-val bootSyncProps = file("src/main/resources/application.properties").asProperties()
-val bootSyncItProps = file("src/intTest/resources/application.properties").asProperties()
+tasks {
+    val copyCoreFiles by registering(Copy::class) {
+        from("$rootDir/core/persistence-jooq/build/generated-src/jooq/ch/difty/scipamato/core")
+        destinationDir = File("$rootDir/core/sync/build/generated-src/jooq/ch/difty/scipamato/core")
+        dependsOn(":core-persistence-jooq:generateJooqMetamodel")
+    }
 
+    val copyPublicFiles by registering(Copy::class) {
+        from("$rootDir/public/persistence-jooq/build/generated-src/jooq/ch/difty/scipamato/publ")
+        destinationDir = File("$rootDir/core/sync/build/generated-src/jooq/ch/difty/scipamato/publ")
+        dependsOn(":public-persistence-jooq:generateJooqMetamodel")
+    }
 
-apply(from = "$rootDir/gradle/jooq-core-sync.gradle")
+    getByName("compileKotlin").dependsOn += copyCoreFiles
+    getByName("compileKotlin").dependsOn += copyPublicFiles
+}

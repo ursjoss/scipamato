@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 import lombok.Builder;
 import lombok.experimental.Delegate;
 
-import ch.difty.scipamato.publ.db.public_.tables.pojos.NewStudyPageLink;
+import ch.difty.scipamato.publ.db.tables.pojos.NewStudyPageLink;
 
 /**
  * Facade to the scipamato-public {@link NewStudyPageLink} so we can refer to it with a

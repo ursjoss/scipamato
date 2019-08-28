@@ -77,3 +77,9 @@ dependencies {
     testCompile(Lib.lombok())
     testAnnotationProcessor(Lib.lombok())
 }
+
+idea {
+    module {
+        inheritOutputDirs = true
+    }
+}

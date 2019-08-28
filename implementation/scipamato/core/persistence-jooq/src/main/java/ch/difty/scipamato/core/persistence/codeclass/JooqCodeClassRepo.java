@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import ch.difty.scipamato.common.AssertAs;
@@ -36,6 +37,7 @@ import ch.difty.scipamato.core.persistence.OptimisticLockingException;
 @Repository
 @CacheConfig(cacheNames = "codeClasses")
 @Slf4j
+@Profile("!wickettest")
 public class JooqCodeClassRepo extends AbstractRepo implements CodeClassRepository {
 
     public JooqCodeClassRepo(@Qualifier("dslContext") final DSLContext dslContext,

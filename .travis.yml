@@ -1,0 +1,11 @@
+language: java
+jdk:
+  - openjdk11
+os:
+  - linux
+before_install:
+  - chmod +x gradlew
+script:
+  - ./gradlew check
+services:
+  - docker

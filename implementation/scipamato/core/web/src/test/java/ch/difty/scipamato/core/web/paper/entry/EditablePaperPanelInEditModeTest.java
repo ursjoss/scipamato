@@ -47,7 +47,7 @@ class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
 
         b += ":form";
         assertTextFieldWithLabel(b + ":id", 1L, "ID");
-        assertTextFieldWithLabel(b + ":number", 100L, "SciPaMaTo-No.");
+        assertTextFieldWithLabel(b + ":number", 100L, "SciPaMaTo-Core-No.");
         assertTextFieldWithLabel(b + ":publicationYear", 2017, "Pub. Year");
         assertTextFieldWithLabel(b + ":pmId", 1234, "PMID");
         getTester().assertComponent(b + ":submit", BootstrapButton.class);
@@ -583,7 +583,7 @@ class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
     @Test
     void clickingExclude_showingExcluded_reIncludesPaperIntoSearchOrder_andSkipsToNextPaper() {
         Long idOfNextPaper = 10L;
-        when(getItemNavigator().getItemWithFocus()).thenReturn(idOfNextPaper);
+        when(itemNavigatorMock.getItemWithFocus()).thenReturn(idOfNextPaper);
         when(paperServiceMock.findById(idOfNextPaper)).thenReturn(Optional.of(mock(Paper.class)));
 
         getTester().startComponentInPage(makePanelWith(PMID, callingPageMock, SEARCH_ORDER_ID, true));
@@ -598,7 +598,7 @@ class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
 
         verify(paperServiceMock).reincludeIntoSearchOrder(SEARCH_ORDER_ID, 1L);
         verify(newsletterServiceMock).canCreateNewsletterInProgress();
-        verify(getItemNavigator()).getItemWithFocus();
+        verify(itemNavigatorMock).getItemWithFocus();
         verify(paperServiceMock).findById(idOfNextPaper);
     }
 

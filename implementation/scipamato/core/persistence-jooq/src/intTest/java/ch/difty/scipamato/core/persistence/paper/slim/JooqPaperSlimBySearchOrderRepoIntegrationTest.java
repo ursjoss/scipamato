@@ -4,15 +4,18 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jooq.JooqTest;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.common.persistence.paging.PaginationRequest;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.search.SearchCondition;
 import ch.difty.scipamato.core.entity.search.SearchOrder;
-import ch.difty.scipamato.core.persistence.JooqBaseIntegrationTest;
 
-class JooqPaperSlimBySearchOrderRepoIntegrationTest extends JooqBaseIntegrationTest {
+@JooqTest
+@Testcontainers
+class JooqPaperSlimBySearchOrderRepoIntegrationTest {
 
     private SearchOrder       so = new SearchOrder();
     private SearchCondition   sc = new SearchCondition();

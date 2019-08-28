@@ -12,22 +12,17 @@ import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.util.tester.FormTester;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationRequest;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicDefinition;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicFilter;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicTranslation;
-import ch.difty.scipamato.core.persistence.NewsletterTopicService;
 import ch.difty.scipamato.core.web.common.BasePageTest;
 
 @SuppressWarnings({ "SameParameterValue", "SpellCheckingInspection" })
 class NewsletterTopicListPageTest extends BasePageTest<NewsletterTopicListPage> {
 
     private final List<NewsletterTopicDefinition> results = new ArrayList<>();
-
-    @MockBean
-    protected NewsletterTopicService newsletterTopicServiceMock;
 
     @Override
     protected void setUpHook() {

@@ -3,6 +3,8 @@ package ch.difty.scipamato.core.web.code;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
+import java.util.Collections;
+
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.checkboxx.CheckBoxX;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelect;
@@ -16,7 +18,6 @@ import org.apache.wicket.util.tester.FormTester;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DuplicateKeyException;
 
@@ -25,7 +26,6 @@ import ch.difty.scipamato.core.entity.CodeClass;
 import ch.difty.scipamato.core.entity.code.CodeDefinition;
 import ch.difty.scipamato.core.entity.code.CodeFilter;
 import ch.difty.scipamato.core.entity.code.CodeTranslation;
-import ch.difty.scipamato.core.persistence.CodeService;
 import ch.difty.scipamato.core.persistence.OptimisticLockingException;
 import ch.difty.scipamato.core.web.authentication.LogoutPage;
 import ch.difty.scipamato.core.web.common.BasePageTest;
@@ -38,9 +38,6 @@ class CodeEditPageTest extends BasePageTest<CodeEditPage> {
 
     @Mock
     private CodeDefinition codeDefinitionDummy;
-
-    @MockBean
-    private CodeService codeServiceMock;
 
     @Mock
     private Form<?> formDummy;
@@ -58,6 +55,8 @@ class CodeEditPageTest extends BasePageTest<CodeEditPage> {
 
         codeField = new TextField<>("code");
         codeClasses = new BootstrapSelect<>("codeClasses");
+
+        when(codeClassServiceMock.find(anyString())).thenReturn(Collections.singletonList(cc2));
     }
 
     @AfterEach

@@ -9,11 +9,15 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+import org.springframework.boot.test.autoconfigure.jooq.JooqTest;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 import ch.difty.scipamato.core.entity.search.AuditSearchTerm;
 import ch.difty.scipamato.core.entity.search.AuditSearchTerm.Token;
 import ch.difty.scipamato.core.entity.search.AuditSearchTerm.TokenType;
 
+@JooqTest
+@Testcontainers
 class AuditSearchTermEvaluatorTest extends SearchTermEvaluatorTest<AuditSearchTerm> {
 
     private final AuditSearchTermEvaluator e = new AuditSearchTermEvaluator();

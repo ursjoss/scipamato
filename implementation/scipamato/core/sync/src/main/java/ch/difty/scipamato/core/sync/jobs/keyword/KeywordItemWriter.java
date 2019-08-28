@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.sync.jobs.keyword;
 
-import static ch.difty.scipamato.publ.db.public_.tables.Keyword.KEYWORD;
+import static ch.difty.scipamato.publ.db.tables.Keyword.KEYWORD;
 
 import org.jooq.DSLContext;
 import org.springframework.batch.item.ItemWriter;

@@ -12,13 +12,11 @@ import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.util.tester.FormTester;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationRequest;
 import ch.difty.scipamato.core.entity.keyword.KeywordDefinition;
 import ch.difty.scipamato.core.entity.keyword.KeywordFilter;
 import ch.difty.scipamato.core.entity.keyword.KeywordTranslation;
-import ch.difty.scipamato.core.persistence.KeywordService;
 import ch.difty.scipamato.core.web.common.BasePageTest;
 
 @SuppressWarnings("SameParameterValue")
@@ -27,9 +25,6 @@ class KeywordListPageTest extends BasePageTest<KeywordListPage> {
     private static final int COLUMN_ID_WITH_LINK = 1;
 
     private final List<KeywordDefinition> results = new ArrayList<>();
-
-    @MockBean
-    protected KeywordService keywordServiceMock;
 
     @Override
     protected void setUpHook() {

@@ -9,11 +9,13 @@ import org.springframework.boot.autoconfigure.batch.BatchProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.io.ResourceLoader;
 
 @Configuration
 @ComponentScan(basePackageClasses = DefaultBatchConfigurer.class)
-@ComponentScan(basePackages = "ch.difty.scipamato")
+@ComponentScan(basePackages = "ch.difty.scipamato.core")
+@Profile("!wickettest")
 public class BatchConfiguration {
 
     private final BatchProperties properties;

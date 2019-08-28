@@ -16,7 +16,6 @@ import org.apache.wicket.util.tester.TagTester;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationRequest;
 import ch.difty.scipamato.common.web.Mode;
@@ -24,8 +23,6 @@ import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.projection.PaperSlim;
 import ch.difty.scipamato.core.entity.search.PaperFilter;
 import ch.difty.scipamato.core.entity.search.SearchOrder;
-import ch.difty.scipamato.core.persistence.CodeClassService;
-import ch.difty.scipamato.core.persistence.CodeService;
 import ch.difty.scipamato.core.web.common.PanelTest;
 import ch.difty.scipamato.core.web.paper.PaperSlimBySearchOrderProvider;
 import ch.difty.scipamato.core.web.paper.entry.PaperEntryPage;
@@ -36,11 +33,6 @@ abstract class ResultPanelTest extends PanelTest<ResultPanel> {
 
     private static final int    ROWS_PER_PAGE = 12;
     private static final String LC            = "en_us";
-
-    @MockBean
-    CodeClassService codeClassServiceMock;
-    @MockBean
-    CodeService      codeServiceMock;
 
     @Mock
     SearchOrder searchOrderMock;

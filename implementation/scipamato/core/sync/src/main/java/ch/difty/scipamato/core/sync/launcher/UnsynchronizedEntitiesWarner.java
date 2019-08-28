@@ -9,8 +9,8 @@ import org.jooq.impl.DSL;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 import ch.difty.scipamato.common.AssertAs;
-import ch.difty.scipamato.core.db.public_.tables.Paper;
-import ch.difty.scipamato.core.db.public_.tables.PaperCode;
+import ch.difty.scipamato.core.db.tables.Paper;
+import ch.difty.scipamato.core.db.tables.PaperCode;
 
 public class UnsynchronizedEntitiesWarner implements Warner {
 

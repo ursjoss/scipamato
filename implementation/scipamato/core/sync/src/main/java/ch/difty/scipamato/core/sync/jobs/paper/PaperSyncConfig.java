@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.sync.jobs.paper;
 
-import static ch.difty.scipamato.core.db.public_.tables.Paper.PAPER;
+import static ch.difty.scipamato.core.db.tables.Paper.PAPER;
 
 import javax.sql.DataSource;
 import java.sql.ResultSet;
@@ -18,12 +18,13 @@ import org.springframework.batch.item.ItemWriter;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 import ch.difty.scipamato.common.DateTimeService;
-import ch.difty.scipamato.core.db.public_.tables.Code;
-import ch.difty.scipamato.core.db.public_.tables.Paper;
-import ch.difty.scipamato.core.db.public_.tables.PaperCode;
-import ch.difty.scipamato.core.db.public_.tables.records.PaperRecord;
+import ch.difty.scipamato.core.db.tables.Code;
+import ch.difty.scipamato.core.db.tables.Paper;
+import ch.difty.scipamato.core.db.tables.PaperCode;
+import ch.difty.scipamato.core.db.tables.records.PaperRecord;
 import ch.difty.scipamato.core.sync.code.CodeAggregator;
 import ch.difty.scipamato.core.sync.jobs.SyncConfig;
 
@@ -39,8 +40,9 @@ import ch.difty.scipamato.core.sync.jobs.SyncConfig;
  */
 @SuppressWarnings("SameParameterValue")
 @Configuration
+@Profile("!wickettest")
 public class PaperSyncConfig
-    extends SyncConfig<PublicPaper, ch.difty.scipamato.publ.db.public_.tables.records.PaperRecord> {
+    extends SyncConfig<PublicPaper, ch.difty.scipamato.publ.db.tables.records.PaperRecord> {
 
     private static final String TOPIC      = "paper";
     private static final int    CHUNK_SIZE = 500;
@@ -179,8 +181,8 @@ public class PaperSyncConfig
     }
 
     @Override
-    protected TableField<ch.difty.scipamato.publ.db.public_.tables.records.PaperRecord, Timestamp> lastSynchedField() {
-        return ch.difty.scipamato.publ.db.public_.tables.Paper.PAPER.LAST_SYNCHED;
+    protected TableField<ch.difty.scipamato.publ.db.tables.records.PaperRecord, Timestamp> lastSynchedField() {
+        return ch.difty.scipamato.publ.db.tables.Paper.PAPER.LAST_SYNCHED;
     }
 
 }

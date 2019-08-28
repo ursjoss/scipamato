@@ -10,15 +10,19 @@ import java.util.Set;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jooq.JooqTest;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 import ch.difty.scipamato.core.entity.Code;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic;
 import ch.difty.scipamato.core.entity.search.SearchCondition;
 import ch.difty.scipamato.core.entity.search.SearchOrder;
-import ch.difty.scipamato.core.persistence.JooqBaseIntegrationTest;
+import ch.difty.scipamato.core.persistence.search.JooqSearchOrderRepo;
 
 @SuppressWarnings("SameParameterValue")
-class JooqSearchOrderRepoIntegrationTest extends JooqBaseIntegrationTest {
+@JooqTest
+@Testcontainers
+class JooqSearchOrderRepoIntegrationTest {
 
     private static final Integer RECORD_COUNT_PREPOPULATED = 4;
     private static final Long    MAX_ID_PREPOPULATED       = 4L;

@@ -1,7 +1,7 @@
 package ch.difty.scipamato.core.sync.jobs.keyword;
 
-import static ch.difty.scipamato.core.db.public_.tables.Keyword.KEYWORD;
-import static ch.difty.scipamato.core.db.public_.tables.KeywordTr.KEYWORD_TR;
+import static ch.difty.scipamato.core.db.tables.Keyword.KEYWORD;
+import static ch.difty.scipamato.core.db.tables.KeywordTr.KEYWORD_TR;
 
 import javax.sql.DataSource;
 import java.sql.ResultSet;
@@ -17,12 +17,13 @@ import org.springframework.batch.item.ItemWriter;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 import ch.difty.scipamato.common.DateTimeService;
-import ch.difty.scipamato.core.db.public_.tables.Keyword;
-import ch.difty.scipamato.core.db.public_.tables.KeywordTr;
-import ch.difty.scipamato.core.db.public_.tables.records.KeywordRecord;
-import ch.difty.scipamato.core.db.public_.tables.records.KeywordTrRecord;
+import ch.difty.scipamato.core.db.tables.Keyword;
+import ch.difty.scipamato.core.db.tables.KeywordTr;
+import ch.difty.scipamato.core.db.tables.records.KeywordRecord;
+import ch.difty.scipamato.core.db.tables.records.KeywordTrRecord;
 import ch.difty.scipamato.core.sync.jobs.SyncConfig;
 
 /**
@@ -37,8 +38,9 @@ import ch.difty.scipamato.core.sync.jobs.SyncConfig;
  * @author u.joss
  */
 @Configuration
+@Profile("!wickettest")
 public class KeywordSyncConfig
-    extends SyncConfig<PublicKeyword, ch.difty.scipamato.publ.db.public_.tables.records.KeywordRecord> {
+    extends SyncConfig<PublicKeyword, ch.difty.scipamato.publ.db.tables.records.KeywordRecord> {
 
     private static final String TOPIC      = "keyword";
     private static final int    CHUNK_SIZE = 100;
@@ -104,7 +106,7 @@ public class KeywordSyncConfig
     }
 
     @Override
-    protected TableField<ch.difty.scipamato.publ.db.public_.tables.records.KeywordRecord, Timestamp> lastSynchedField() {
-        return ch.difty.scipamato.publ.db.public_.tables.Keyword.KEYWORD.LAST_SYNCHED;
+    protected TableField<ch.difty.scipamato.publ.db.tables.records.KeywordRecord, Timestamp> lastSynchedField() {
+        return ch.difty.scipamato.publ.db.tables.Keyword.KEYWORD.LAST_SYNCHED;
     }
 }

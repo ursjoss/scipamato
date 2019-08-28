@@ -53,3 +53,9 @@ jaxb {
         }
     }
 }
+
+idea {
+    module {
+        inheritOutputDirs = true
+    }
+}

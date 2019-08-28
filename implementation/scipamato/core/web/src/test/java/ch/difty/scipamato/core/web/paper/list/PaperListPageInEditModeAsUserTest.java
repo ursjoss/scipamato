@@ -24,9 +24,9 @@ class PaperListPageInEditModeAsUserTest extends PaperListPageTest {
     @Override
     protected void setUpHook() {
         super.setUpHook();
-        when(getWebSessionFacade().hasAtLeastOneRoleOutOf(Roles.USER, Roles.ADMIN)).thenReturn(true);
-        when(getWebSessionFacade().hasAtLeastOneRoleOutOf(Roles.ADMIN)).thenReturn(false);
-        when(getWebSessionFacade().hasAtLeastOneRoleOutOf(Roles.USER)).thenReturn(true);
+        when(sessionFacadeMock.hasAtLeastOneRoleOutOf(Roles.USER, Roles.ADMIN)).thenReturn(true);
+        when(sessionFacadeMock.hasAtLeastOneRoleOutOf(Roles.ADMIN)).thenReturn(false);
+        when(sessionFacadeMock.hasAtLeastOneRoleOutOf(Roles.USER)).thenReturn(true);
     }
 
     @Override

@@ -2,6 +2,7 @@ package ch.difty.scipamato.core.web.paper;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
 import java.util.*;
 
@@ -11,33 +12,23 @@ import org.apache.wicket.util.tester.WicketTester;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.ActiveProfiles;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationContextMatcher;
-import ch.difty.scipamato.core.ScipamatoCoreApplication;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.PaperSlimFilter;
 import ch.difty.scipamato.core.entity.projection.PaperSlim;
-import ch.difty.scipamato.core.persistence.PaperService;
-import ch.difty.scipamato.core.persistence.PaperSlimService;
+import ch.difty.scipamato.core.web.AbstractWicketTest;
 
-@ExtendWith(SpringExtension.class)
 @SpringBootTest
-abstract class AbstractPaperSlimProviderTest<F extends PaperSlimFilter, P extends AbstractPaperSlimProvider<F>> {
+@ActiveProfiles("wickettest")
+abstract class AbstractPaperSlimProviderTest<F extends PaperSlimFilter, P extends AbstractPaperSlimProvider<F>>
+    extends AbstractWicketTest {
 
     static final int PAGE_SIZE = 3;
 
-    @Autowired
-    ScipamatoCoreApplication application;
-
-    @Mock
-    PaperSlimService serviceMock;
-    @Mock
-    PaperService     paperServiceMock;
     @Mock
     private   PaperSlim entityMock;
     @Mock
@@ -57,11 +48,13 @@ abstract class AbstractPaperSlimProviderTest<F extends PaperSlimFilter, P extend
             .setLocale(new Locale("en"));
 
         provider = newProvider();
-        provider.setService(serviceMock);
+        provider.setService(paperSlimServiceMock);
         provider.setPaperService(paperServiceMock);
 
         pageOfSlimPapers = Arrays.asList(entityMock, entityMock, entityMock);
         pageOfPapers = Arrays.asList(paperMock, paperMock, paperMock, paperMock, paperMock);
+
+        when(sessionFacadeMock.getLanguageCode()).thenReturn("en");
 
         localFixture();
     }
@@ -70,7 +63,7 @@ abstract class AbstractPaperSlimProviderTest<F extends PaperSlimFilter, P extend
 
     @AfterEach
     final void tearDown() {
-        verifyNoMoreInteractions(serviceMock, getFilter(), entityMock, paperServiceMock, paperMock);
+        verifyNoMoreInteractions(paperSlimServiceMock, getFilter(), entityMock, paperServiceMock, paperMock);
     }
 
     protected abstract P newProvider();

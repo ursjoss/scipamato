@@ -1,7 +1,7 @@
 package ch.difty.scipamato.core.sync.jobs.code;
 
-import static ch.difty.scipamato.core.db.public_.tables.Code.CODE;
-import static ch.difty.scipamato.core.db.public_.tables.CodeTr.CODE_TR;
+import static ch.difty.scipamato.core.db.tables.Code.CODE;
+import static ch.difty.scipamato.core.db.tables.CodeTr.CODE_TR;
 
 import javax.sql.DataSource;
 import java.sql.ResultSet;
@@ -21,14 +21,15 @@ import org.springframework.batch.item.ItemWriter;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 import ch.difty.scipamato.common.DateTimeService;
-import ch.difty.scipamato.core.db.public_.tables.Code;
-import ch.difty.scipamato.core.db.public_.tables.CodeTr;
-import ch.difty.scipamato.core.db.public_.tables.records.CodeRecord;
-import ch.difty.scipamato.core.db.public_.tables.records.CodeTrRecord;
+import ch.difty.scipamato.core.db.tables.Code;
+import ch.difty.scipamato.core.db.tables.CodeTr;
+import ch.difty.scipamato.core.db.tables.records.CodeRecord;
+import ch.difty.scipamato.core.db.tables.records.CodeTrRecord;
 import ch.difty.scipamato.core.sync.jobs.SyncConfig;
-import ch.difty.scipamato.publ.db.public_.tables.CodeClass;
+import ch.difty.scipamato.publ.db.tables.CodeClass;
 
 /**
  * Defines the code synchronization job, applying two steps:
@@ -42,8 +43,9 @@ import ch.difty.scipamato.publ.db.public_.tables.CodeClass;
  * @author u.joss
  */
 @Configuration
+@Profile("!wickettest")
 public class CodeSyncConfig
-    extends SyncConfig<PublicCode, ch.difty.scipamato.publ.db.public_.tables.records.CodeRecord> {
+    extends SyncConfig<PublicCode, ch.difty.scipamato.publ.db.tables.records.CodeRecord> {
 
     private static final String TOPIC      = "code";
     private static final int    CHUNK_SIZE = 100;
@@ -124,15 +126,15 @@ public class CodeSyncConfig
     }
 
     @Override
-    protected TableField<ch.difty.scipamato.publ.db.public_.tables.records.CodeRecord, Timestamp> lastSynchedField() {
-        return ch.difty.scipamato.publ.db.public_.tables.Code.CODE.LAST_SYNCHED;
+    protected TableField<ch.difty.scipamato.publ.db.tables.records.CodeRecord, Timestamp> lastSynchedField() {
+        return ch.difty.scipamato.publ.db.tables.Code.CODE.LAST_SYNCHED;
     }
 
     @Override
-    public DeleteConditionStep<ch.difty.scipamato.publ.db.public_.tables.records.CodeRecord> getPseudoFkDcs() {
+    public DeleteConditionStep<ch.difty.scipamato.publ.db.tables.records.CodeRecord> getPseudoFkDcs() {
         return getJooqPublic()
-            .delete(ch.difty.scipamato.publ.db.public_.tables.Code.CODE)
-            .where(ch.difty.scipamato.publ.db.public_.tables.Code.CODE.CODE_CLASS_ID.notIn(getJooqPublic()
+            .delete(ch.difty.scipamato.publ.db.tables.Code.CODE)
+            .where(ch.difty.scipamato.publ.db.tables.Code.CODE.CODE_CLASS_ID.notIn(getJooqPublic()
                 .selectDistinct(CodeClass.CODE_CLASS.CODE_CLASS_ID)
                 .from(CodeClass.CODE_CLASS)));
     }

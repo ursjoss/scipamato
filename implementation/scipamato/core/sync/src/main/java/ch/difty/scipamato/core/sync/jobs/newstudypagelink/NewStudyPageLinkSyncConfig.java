@@ -14,11 +14,12 @@ import org.springframework.batch.item.ItemWriter;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 import ch.difty.scipamato.common.DateTimeService;
-import ch.difty.scipamato.core.db.public_.tables.NewStudyPageLink;
+import ch.difty.scipamato.core.db.tables.NewStudyPageLink;
 import ch.difty.scipamato.core.sync.jobs.SyncConfig;
-import ch.difty.scipamato.publ.db.public_.tables.records.NewStudyPageLinkRecord;
+import ch.difty.scipamato.publ.db.tables.records.NewStudyPageLinkRecord;
 
 /**
  * Defines the newStudyPageLink synchronization job.
@@ -26,17 +27,18 @@ import ch.difty.scipamato.publ.db.public_.tables.records.NewStudyPageLinkRecord;
  * @author u.joss
  */
 @Configuration
+@Profile("!wickettest")
 public class NewStudyPageLinkSyncConfig extends
-    SyncConfig<PublicNewStudyPageLink, ch.difty.scipamato.publ.db.public_.tables.records.NewStudyPageLinkRecord> {
+    SyncConfig<PublicNewStudyPageLink, ch.difty.scipamato.publ.db.tables.records.NewStudyPageLinkRecord> {
 
     private static final String TOPIC      = "newStudyPageLink";
     private static final int    CHUNK_SIZE = 50;
 
     // relevant fields of the core Language record
-    private static final TableField<ch.difty.scipamato.core.db.public_.tables.records.NewStudyPageLinkRecord, String>  C_LANG_CODE = NewStudyPageLink.NEW_STUDY_PAGE_LINK.LANG_CODE;
-    private static final TableField<ch.difty.scipamato.core.db.public_.tables.records.NewStudyPageLinkRecord, Integer> C_SORT      = NewStudyPageLink.NEW_STUDY_PAGE_LINK.SORT;
-    private static final TableField<ch.difty.scipamato.core.db.public_.tables.records.NewStudyPageLinkRecord, String>  C_TITLE     = NewStudyPageLink.NEW_STUDY_PAGE_LINK.TITLE;
-    private static final TableField<ch.difty.scipamato.core.db.public_.tables.records.NewStudyPageLinkRecord, String>  C_URL       = NewStudyPageLink.NEW_STUDY_PAGE_LINK.URL;
+    private static final TableField<ch.difty.scipamato.core.db.tables.records.NewStudyPageLinkRecord, String>  C_LANG_CODE = NewStudyPageLink.NEW_STUDY_PAGE_LINK.LANG_CODE;
+    private static final TableField<ch.difty.scipamato.core.db.tables.records.NewStudyPageLinkRecord, Integer> C_SORT      = NewStudyPageLink.NEW_STUDY_PAGE_LINK.SORT;
+    private static final TableField<ch.difty.scipamato.core.db.tables.records.NewStudyPageLinkRecord, String>  C_TITLE     = NewStudyPageLink.NEW_STUDY_PAGE_LINK.TITLE;
+    private static final TableField<ch.difty.scipamato.core.db.tables.records.NewStudyPageLinkRecord, String>  C_URL       = NewStudyPageLink.NEW_STUDY_PAGE_LINK.URL;
 
     protected NewStudyPageLinkSyncConfig(@Qualifier("dslContext") DSLContext jooqCore,
         @Qualifier("publicDslContext") DSLContext jooqPublic, @Qualifier("dataSource") DataSource coreDataSource,
@@ -82,7 +84,7 @@ public class NewStudyPageLinkSyncConfig extends
 
     @Override
     protected TableField<NewStudyPageLinkRecord, Timestamp> lastSynchedField() {
-        return ch.difty.scipamato.publ.db.public_.tables.NewStudyPageLink.NEW_STUDY_PAGE_LINK.LAST_SYNCHED;
+        return ch.difty.scipamato.publ.db.tables.NewStudyPageLink.NEW_STUDY_PAGE_LINK.LAST_SYNCHED;
     }
 
 }

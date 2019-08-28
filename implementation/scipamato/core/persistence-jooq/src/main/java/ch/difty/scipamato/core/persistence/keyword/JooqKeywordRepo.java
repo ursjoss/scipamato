@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.jooq.*;
 import org.jooq.impl.DSL;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import ch.difty.scipamato.common.AssertAs;
@@ -33,6 +34,7 @@ import ch.difty.scipamato.core.persistence.OptimisticLockingException;
 
 @Repository
 @Slf4j
+@Profile("!wickettest")
 public class JooqKeywordRepo extends AbstractRepo implements KeywordRepository {
 
     public JooqKeywordRepo(@Qualifier("dslContext") final DSLContext dslContext, DateTimeService dateTimeService) {

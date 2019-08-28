@@ -5,6 +5,7 @@ import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.dropdown.MenuBookmarkablePageLink;
@@ -21,29 +22,18 @@ import ch.difty.scipamato.common.persistence.paging.PaginationRequest;
 import ch.difty.scipamato.core.config.ApplicationCoreProperties;
 import ch.difty.scipamato.core.entity.projection.PaperSlim;
 import ch.difty.scipamato.core.entity.search.PaperFilter;
-import ch.difty.scipamato.core.logic.parsing.AuthorParserFactory;
-import ch.difty.scipamato.core.persistence.CodeClassService;
-import ch.difty.scipamato.core.persistence.CodeService;
-import ch.difty.scipamato.core.pubmed.PubmedImporter;
+import ch.difty.scipamato.core.logic.parsing.AuthorParserStrategy;
 import ch.difty.scipamato.core.web.common.BasePageTest;
 import ch.difty.scipamato.core.web.paper.entry.PaperEntryPage;
 import ch.difty.scipamato.core.web.paper.result.ResultPanel;
 
+@SuppressWarnings("SameParameterValue")
 abstract class PaperListPageTest extends BasePageTest<PaperListPage> {
 
     static final String LC = "en_us";
 
     @MockBean
-    PubmedImporter            pubmedImportService;
-    @MockBean
-    CodeService               codeServiceMock;
-    @MockBean
-    CodeClassService          codeClassServiceMock;
-    @MockBean
-    ApplicationCoreProperties applicationPropertiesMock;
-
-    @MockBean
-    AuthorParserFactory authorParserFactoryMock;
+    protected ApplicationCoreProperties applicationPropertiesMock;
 
     @Override
     protected PaperListPage makePage() {
@@ -57,13 +47,15 @@ abstract class PaperListPageTest extends BasePageTest<PaperListPage> {
 
     @Override
     protected void setUpHook() {
-        when(applicationPropertiesMock.getBrand()).thenReturn("scipamato");
+        when(applicationPropertiesMock.getBrand()).thenReturn("SciPaMaTo-Core");
+        when(applicationPropertiesMock.getAuthorParserStrategy()).thenReturn(AuthorParserStrategy.PUBMED);
+        when(newsletterTopicServiceMock.findAll("en")).thenReturn(Collections.emptyList());
     }
 
     @AfterEach
     void tearDown() {
         verifyNoMoreInteractions(paperSlimServiceMock, paperServiceMock, codeServiceMock, codeClassServiceMock,
-            paperServiceMock, pubmedImportService);
+            paperServiceMock, pubmedImporterMock);
     }
 
     void assertSearchForm(String b) {
@@ -131,7 +123,7 @@ abstract class PaperListPageTest extends BasePageTest<PaperListPage> {
         verify(paperSlimServiceMock).findPageByFilter(isA(PaperFilter.class), isA(PaginationRequest.class));
         verify(paperServiceMock, times(4)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationRequest.class));
         verify(paperServiceMock).findByNumber(number, LC);
-        verify(pubmedImportService, never()).persistPubmedArticlesFromXml(anyString());
+        verify(pubmedImporterMock, never()).persistPubmedArticlesFromXml(anyString());
     }
 
 }

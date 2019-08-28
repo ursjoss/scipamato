@@ -12,12 +12,10 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.common.entity.newsletter.PublicationStatus;
 import ch.difty.scipamato.core.entity.newsletter.Newsletter;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterNewsletterTopic;
-import ch.difty.scipamato.core.persistence.NewsletterTopicService;
 import ch.difty.scipamato.core.web.authentication.LoginPage;
 import ch.difty.scipamato.core.web.common.BasePageTest;
 import ch.difty.scipamato.core.web.paper.list.PaperListPage;
@@ -25,9 +23,6 @@ import ch.difty.scipamato.core.web.paper.list.PaperListPage;
 class NewsletterTopicSortPageTest extends BasePageTest<NewsletterTopicSortPage> {
 
     private Newsletter newsletter;
-
-    @MockBean
-    private NewsletterTopicService service;
 
     private final List<NewsletterNewsletterTopic> topics = new ArrayList<>();
 
@@ -40,7 +35,7 @@ class NewsletterTopicSortPageTest extends BasePageTest<NewsletterTopicSortPage> 
         topics.add(new NewsletterNewsletterTopic(newsletter.getId(), 1, 0, "topic1"));
         topics.add(new NewsletterNewsletterTopic(newsletter.getId(), 2, 1, "topic2"));
 
-        when(service.getSortedNewsletterTopicsForNewsletter(newsletter.getId())).thenReturn(topics);
+        when(newsletterTopicServiceMock.getSortedNewsletterTopicsForNewsletter(newsletter.getId())).thenReturn(topics);
     }
 
     @Override
@@ -77,13 +72,13 @@ class NewsletterTopicSortPageTest extends BasePageTest<NewsletterTopicSortPage> 
     @Test
     void startingPageWithNonNullModel__loadsSortedNewsletterTopics() {
         getTester().startPage(new NewsletterTopicSortPage(Model.of(newsletter), null));
-        verify(service).getSortedNewsletterTopicsForNewsletter(newsletter.getId());
+        verify(newsletterTopicServiceMock).getSortedNewsletterTopicsForNewsletter(newsletter.getId());
     }
 
     @Test
     void startingPageWithNonModel__loadsSortedNewsletterTopics() {
         getTester().startPage(new NewsletterTopicSortPage(null, null));
-        verify(service, never()).getSortedNewsletterTopicsForNewsletter(anyInt());
+        verify(newsletterTopicServiceMock, never()).getSortedNewsletterTopicsForNewsletter(anyInt());
     }
 
     @Test
@@ -98,7 +93,7 @@ class NewsletterTopicSortPageTest extends BasePageTest<NewsletterTopicSortPage> 
         getTester().assertNoErrorMessage();
         getTester().assertNoInfoMessage();
 
-        verify(service).saveSortedNewsletterTopics(newsletter.getId(), topics);
+        verify(newsletterTopicServiceMock).saveSortedNewsletterTopics(newsletter.getId(), topics);
     }
 
     @Test
@@ -114,13 +109,13 @@ class NewsletterTopicSortPageTest extends BasePageTest<NewsletterTopicSortPage> 
         getTester().assertNoErrorMessage();
         getTester().assertNoInfoMessage();
 
-        verify(service).saveSortedNewsletterTopics(newsletter.getId(), topics);
+        verify(newsletterTopicServiceMock).saveSortedNewsletterTopics(newsletter.getId(), topics);
     }
 
     @Test
     void clickSubmit_withSaveThrowing_addsErrorMessage_andStaysOnPage() {
         doThrow(new RuntimeException("boom"))
-            .when(service)
+            .when(newsletterTopicServiceMock)
             .saveSortedNewsletterTopics(newsletter.getId(), topics);
 
         getTester().startPage(makePage());
@@ -133,7 +128,7 @@ class NewsletterTopicSortPageTest extends BasePageTest<NewsletterTopicSortPage> 
 
         getTester().assertRenderedPage(NewsletterTopicSortPage.class);
 
-        verify(service).saveSortedNewsletterTopics(newsletter.getId(), topics);
+        verify(newsletterTopicServiceMock).saveSortedNewsletterTopics(newsletter.getId(), topics);
     }
 
     @Test
@@ -148,7 +143,7 @@ class NewsletterTopicSortPageTest extends BasePageTest<NewsletterTopicSortPage> 
         getTester().assertNoErrorMessage();
         getTester().assertNoInfoMessage();
 
-        verify(service, never()).saveSortedNewsletterTopics(anyInt(), anyList());
+        verify(newsletterTopicServiceMock, never()).saveSortedNewsletterTopics(anyInt(), anyList());
     }
 
     @Test
@@ -164,7 +159,7 @@ class NewsletterTopicSortPageTest extends BasePageTest<NewsletterTopicSortPage> 
         getTester().assertNoErrorMessage();
         getTester().assertNoInfoMessage();
 
-        verify(service, never()).saveSortedNewsletterTopics(anyInt(), anyList());
+        verify(newsletterTopicServiceMock, never()).saveSortedNewsletterTopics(anyInt(), anyList());
     }
 
 }

@@ -2,6 +2,7 @@ package ch.difty.scipamato.core.persistence.paper;
 
 import org.jooq.DSLContext;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import ch.difty.scipamato.common.persistence.JooqSortMapper;
@@ -16,6 +17,7 @@ import ch.difty.scipamato.core.persistence.paper.searchorder.PaperBackedSearchOr
  * @author u.joss
  */
 @Repository
+@Profile("!wickettest")
 public class JooqPaperBySearchOrderRepo extends JooqBySearchOrderRepo<Paper, PaperRecordMapper>
     implements PaperBackedSearchOrderRepository {
 

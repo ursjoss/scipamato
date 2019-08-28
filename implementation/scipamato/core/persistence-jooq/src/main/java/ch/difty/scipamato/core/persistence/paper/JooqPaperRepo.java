@@ -25,6 +25,7 @@ import org.jooq.*;
 import org.jooq.impl.DSL;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import ch.difty.scipamato.common.AssertAs;
@@ -54,6 +55,7 @@ import ch.difty.scipamato.core.persistence.paper.searchorder.PaperBackedSearchOr
  */
 @Repository
 @Slf4j
+@Profile("!wickettest")
 public class JooqPaperRepo extends
     JooqEntityRepo<PaperRecord, Paper, Long, ch.difty.scipamato.core.db.tables.Paper, PaperRecordMapper, PaperFilter>
     implements PaperRepository {

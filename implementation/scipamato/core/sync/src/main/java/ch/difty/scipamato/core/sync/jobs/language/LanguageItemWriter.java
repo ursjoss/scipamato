@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.sync.jobs.language;
 
-import static ch.difty.scipamato.publ.db.public_.tables.Language.LANGUAGE;
+import static ch.difty.scipamato.publ.db.tables.Language.LANGUAGE;
 
 import org.jooq.DSLContext;
 import org.springframework.batch.item.ItemWriter;

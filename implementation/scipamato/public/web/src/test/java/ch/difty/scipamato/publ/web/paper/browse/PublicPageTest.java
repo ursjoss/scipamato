@@ -25,13 +25,13 @@ import ch.difty.scipamato.publ.entity.CodeClass;
 import ch.difty.scipamato.publ.entity.PublicPaper;
 import ch.difty.scipamato.publ.entity.filter.PublicPaperFilter;
 import ch.difty.scipamato.publ.persistence.api.CodeClassService;
-import ch.difty.scipamato.publ.persistence.api.PublicPaperService;
+import ch.difty.scipamato.publ.persistence.api.CodeService;
 import ch.difty.scipamato.publ.web.common.BasePageTest;
 
 class PublicPageTest extends BasePageTest<PublicPage> {
 
     @MockBean
-    private PublicPaperService serviceMock;
+    private CodeService codeServiceMock;
 
     @MockBean
     private CodeClassService codeClassServiceMock;
@@ -49,8 +49,8 @@ class PublicPageTest extends BasePageTest<PublicPage> {
             new PublicPaper(2L, 20L, 1002, "authors2", "auths2", "title2", "location2", "journal2", 2017, "goals2",
                 "methods2", "population2", "result2", "comment2"));
 
-        when(serviceMock.countByFilter(isA(PublicPaperFilter.class))).thenReturn(papers.size());
-        when(serviceMock.findPageByFilter(isA(PublicPaperFilter.class), isA(PaginationContext.class))).thenReturn(
+        when(getPaperService().countByFilter(isA(PublicPaperFilter.class))).thenReturn(papers.size());
+        when(getPaperService().findPageByFilter(isA(PublicPaperFilter.class), isA(PaginationContext.class))).thenReturn(
             papers);
     }
 
@@ -60,7 +60,7 @@ class PublicPageTest extends BasePageTest<PublicPage> {
 
     @AfterEach
     void tearDown() {
-        verifyNoMoreInteractions(serviceMock, codeClassServiceMock);
+        verifyNoMoreInteractions(getPaperService(), codeClassServiceMock);
     }
 
     @Override
@@ -88,7 +88,7 @@ class PublicPageTest extends BasePageTest<PublicPage> {
         // query was not yet executed and results panel is still invisible
         getTester().assertInvisible("results");
 
-        verify(serviceMock).findPageOfNumbersByFilter(isA(PublicPaperFilter.class), isA(PaginationContext.class));
+        verify(getPaperService()).findPageOfNumbersByFilter(isA(PublicPaperFilter.class), isA(PaginationContext.class));
     }
 
     private void assertTabPanelWithFirstTabVisible(String b) {
@@ -130,10 +130,10 @@ class PublicPageTest extends BasePageTest<PublicPage> {
 
         assertResultsTable();
 
-        verify(serviceMock).countByFilter(isA(PublicPaperFilter.class));
-        verify(serviceMock).findPageByFilter(isA(PublicPaperFilter.class), isA(PaginationContext.class));
+        verify(getPaperService()).countByFilter(isA(PublicPaperFilter.class));
+        verify(getPaperService()).findPageByFilter(isA(PublicPaperFilter.class), isA(PaginationContext.class));
         // used in navigateable
-        verify(serviceMock, times(3)).findPageOfNumbersByFilter(isA(PublicPaperFilter.class),
+        verify(getPaperService(), times(3)).findPageOfNumbersByFilter(isA(PublicPaperFilter.class),
             isA(PaginationContext.class));
     }
 
@@ -178,7 +178,7 @@ class PublicPageTest extends BasePageTest<PublicPage> {
         assertTabPanelWithSecondTabVisible(bb);
 
         verify(codeClassServiceMock).find("en_us");
-        verify(serviceMock, times(2)).findPageOfNumbersByFilter(isA(PublicPaperFilter.class),
+        verify(getPaperService(), times(2)).findPageOfNumbersByFilter(isA(PublicPaperFilter.class),
             isA(PaginationContext.class));
     }
 
@@ -226,10 +226,11 @@ class PublicPageTest extends BasePageTest<PublicPage> {
         getTester().clickLink("results:body:rows:1:cells:2:cell:link");
         getTester().assertRenderedPage(PublicPaperDetailPage.class);
 
-        verify(serviceMock, times(1)).countByFilter(isA(PublicPaperFilter.class));
-        verify(serviceMock, times(1)).findPageByFilter(isA(PublicPaperFilter.class), isA(PaginationContext.class));
+        verify(getPaperService(), times(1)).countByFilter(isA(PublicPaperFilter.class));
+        verify(getPaperService(), times(1)).findPageByFilter(isA(PublicPaperFilter.class),
+            isA(PaginationContext.class));
         // used in navigateable
-        verify(serviceMock, times(3)).findPageOfNumbersByFilter(isA(PublicPaperFilter.class),
+        verify(getPaperService(), times(3)).findPageOfNumbersByFilter(isA(PublicPaperFilter.class),
             isA(PaginationContext.class));
     }
 
@@ -245,7 +246,7 @@ class PublicPageTest extends BasePageTest<PublicPage> {
         getTester().assertRenderedPage(PublicPage.class);
 
         // used in navigateable
-        verify(serviceMock, times(3)).findPageOfNumbersByFilter(isA(PublicPaperFilter.class),
+        verify(getPaperService(), times(3)).findPageOfNumbersByFilter(isA(PublicPaperFilter.class),
             isA(PaginationContext.class));
     }
 
