@@ -134,9 +134,13 @@ class UndertowConfigTest {
             assertThat(listenerInfos).hasSize(1);
 
             final ListenerInfo li = listenerInfos.get(0);
-            assertThat(li
+            final String address = li
                 .getAddress()
-                .toString()).startsWith("/0:0:0:0:0:0:0:0:");
+                .toString();
+            if (address.contains("."))
+                assertThat(address).startsWith("/0.0.0.0:");
+            else
+                assertThat(address).startsWith("/0:0:0:0:0:0:0:0:");
             assertThat(li.getProtcol()).isEqualTo("http");
         }
         undertow.stop();
