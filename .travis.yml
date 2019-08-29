@@ -16,10 +16,9 @@ branches:
 before_install:
   - cd implementation/scipamato
   - chmod +x gradlew
-  - chmod +x travis_script.sh
 
 script:
-  - travis_wait 40 ./travis_script.sh
+  - travis_wait 40 [ -n "${SONAR_TOKEN}" ] && ./gradlew check sonarqube || ./gradlew check
 
 cache:
   directories:
