@@ -49,6 +49,9 @@ val jacocoTestPattern = "**/build/jacoco/*.exec"
 
 sonarqube {
     properties {
+        property("sonar.host.url", "https://sonarcloud.io")
+        property("sonar.projectKey", "ursjoss_scipamato")
+        property("sonar.organization", "ursjoss-github")
         property("sonar.exclusions", "**/ch/difty/scipamato/publ/web/themes/markup/html/publ/**/*,${generatedPackages.joinToString(",")}")
         property("sonar.coverage.exclusions", (generatedPackages + testPackages).joinToString(","))
         property("sonar.coverage.jacoco.xmlReportPaths", jacocoTestReportFile)
