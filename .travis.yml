@@ -18,7 +18,7 @@ before_install:
   - chmod +x gradlew
 
 script:
-  - travis_wait 40 ./gradlew check
+  - travis_wait 40 ./travis_script.sh
 
 cache:
   directories:
