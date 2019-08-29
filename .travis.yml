@@ -1,12 +1,21 @@
 language: java
+
 jdk:
   - openjdk11
+
 os:
   - linux
+
 services:
   - docker
+
+branches:
+  only:
+    - master
+
 before_install:
   - cd implementation/scipamato
   - chmod +x gradlew
+
 script:
   - travis_wait 40 ./gradlew check
