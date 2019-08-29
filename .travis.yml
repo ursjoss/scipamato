@@ -9,4 +9,4 @@ before_install:
   - cd implementation/scipamato
   - chmod +x gradlew
 script:
-  - ./gradlew test --info
+  - ./gradlew test

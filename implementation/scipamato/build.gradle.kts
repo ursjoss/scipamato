@@ -1,3 +1,5 @@
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+import org.gradle.api.tasks.testing.logging.TestLogEvent.*
 import org.jetbrains.kotlin.gradle.plugin.KotlinPlatformJvmPlugin
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.sonarqube.gradle.SonarQubeTask
@@ -185,6 +187,12 @@ tasks {
         dependsOn(
                 projectsWithCoverage.map { it.tasks.getByName("jacocoTestReport") }
         )
+    }
+    withType<Test> {
+        testLogging {
+            events = setOf(FAILED, PASSED, SKIPPED)
+            exceptionFormat = TestExceptionFormat.FULL
+        }
     }
 }
 
