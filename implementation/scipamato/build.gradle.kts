@@ -189,6 +189,7 @@ tasks {
         )
     }
     withType<Test> {
+        failFast = true
         testLogging {
             events = setOf(FAILED, PASSED, SKIPPED)
             exceptionFormat = TestExceptionFormat.FULL
