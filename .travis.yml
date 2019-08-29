@@ -19,3 +19,7 @@ before_install:
 
 script:
   - travis_wait 40 ./gradlew check
+
+cache:
+  directories:
+    - $HOME/.gradle
