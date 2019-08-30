@@ -34,8 +34,10 @@ http://getbootstrap.com/[Bootstrap]
 * Persistence Layer
 ** https://www.jooq.org/[jOOQ]
 ** https://github.com/brettwooldridge/HikariCP[HikariCP]
-** https://www.postgresql.org/[PostgreSQL]
+** https://www.postgresql.org/[PostgreSQL] 
 ** https://flywaydb.org/[Flyway] for database migrations
+** https://github.com/ayedo/jooq-modelator[jOOQ modelator] gradle plugin (running https://www.jooq.org/doc/3.0/manual/code-generation/[jOOQ code generation] against a flyway-migrated dockerized db)
+** https://www.testcontainers.org/[Testcontainers] (running integration tests against the dockerized db)
 ** https://projects.spring.io/spring-batch/[Spring Batch] for pushing data from the core to the public database
 * Caching
 ** JCache with http://www.ehcache.org/[Ehcache3]
