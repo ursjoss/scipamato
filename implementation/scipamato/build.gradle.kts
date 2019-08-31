@@ -7,6 +7,7 @@ import org.springframework.boot.gradle.plugin.SpringBootPlugin
 import org.springframework.boot.gradle.tasks.bundling.BootJar
 import org.unbrokendome.gradle.plugins.testsets.TestSetsPlugin
 
+
 plugins {
     Lib.springBootPlugin().run { id(id) version version } apply false
     Lib.springDependencyManagementPlugin().run { id(id) version version }
@@ -25,15 +26,17 @@ java {
     targetCompatibility = JavaVersion.VERSION_11
 }
 
-dependencyManagement {
-    imports {
-        mavenBom(SpringBootPlugin.BOM_COORDINATES)
-    }
-}
 
 extra["spring.cloudVersion"] = Lib.springCloudVersion
 extra["mockito.version"] = Lib.mockitoVersion
 extra["jooq.version"] = Lib.jooqVersion
+
+dependencyManagement {
+    imports {
+        mavenBom(SpringBootPlugin.BOM_COORDINATES)
+        mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("spring.cloudVersion")}")
+    }
+}
 
 val testModuleDirs = setOf("common/test", "common/persistence-jooq-test")
 val testModules = testModuleDirs.map { it.replaceFirst("/", "-") }
@@ -115,6 +118,9 @@ subprojects {
     }
 
     dependencies {
+        implementation(Lib.kotlin("stdlib-jdk8"))
+        implementation(Lib.kotlin("reflect"))
+
         compileOnly(Lib.lombok())
         annotationProcessor(Lib.lombok())
 
@@ -183,6 +189,12 @@ subprojects {
 }
 
 tasks {
+    withType<KotlinCompile> {
+        kotlinOptions {
+            freeCompilerArgs = listOf("-Xjsr305=strict")
+            jvmTarget = "1.8"
+        }
+    }
     val projectsWithCoverage = subprojects.filter { it.name.mayHaveTestCoverage() }
     withType<SonarQubeTask> {
         description = "Push jacoco analysis to sonarcloud."

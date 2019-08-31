@@ -59,6 +59,10 @@ object Lib {
 
     //region:dependencies
 
+    // Kotlin
+
+    fun kotlin(module: String) = Dep("org.jetbrains.kotlin:kotlin-$module", kotlinVersion)
+
     // Spring
 
     fun springBoot(module: String) = Dep("org.springframework.boot", "spring-boot-$module", springBootVersion)
