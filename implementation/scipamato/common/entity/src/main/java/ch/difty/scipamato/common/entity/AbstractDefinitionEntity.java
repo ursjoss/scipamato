@@ -47,10 +47,10 @@ public abstract class AbstractDefinitionEntity<T extends DefinitionTranslation, 
     public AbstractDefinitionEntity(final String mainLanguageCode, final String mainName, final Integer version,
         final T[] translations) {
         super();
-        this.mainLanguageCode = AssertAs.notNull(mainLanguageCode, "mainLanguageCode");
+        this.mainLanguageCode = AssertAs.INSTANCE.notNull(mainLanguageCode, "mainLanguageCode");
         this.name = mainName;
         this.translations = new ArrayListValuedHashMap<>();
-        for (final T tr : AssertAs.notNull(translations, "translations")) {
+        for (final T tr : AssertAs.INSTANCE.notNull(translations, "translations")) {
             final String langCode = tr.getLangCode();
             this.translations.put(langCode, tr);
         }
@@ -108,7 +108,7 @@ public abstract class AbstractDefinitionEntity<T extends DefinitionTranslation, 
     }
 
     public void setNameInLanguage(final String langCode, final String translatedName) {
-        final Collection<T> trs = translations.get(AssertAs.notNull(langCode, "langCode"));
+        final Collection<T> trs = translations.get(AssertAs.INSTANCE.notNull(langCode, "langCode"));
         if (CollectionUtils.isNotEmpty(trs)) {
             final T tr = trs
                 .iterator()
@@ -132,7 +132,7 @@ public abstract class AbstractDefinitionEntity<T extends DefinitionTranslation, 
      * @return the code - or null if none is available.
      */
     public String getNameInLanguage(final String langCode) {
-        final Collection<T> trs = translations.get(AssertAs.notNull(langCode, "langCode"));
+        final Collection<T> trs = translations.get(AssertAs.INSTANCE.notNull(langCode, "langCode"));
         if (CollectionUtils.isEmpty(trs))
             return null;
         return trs

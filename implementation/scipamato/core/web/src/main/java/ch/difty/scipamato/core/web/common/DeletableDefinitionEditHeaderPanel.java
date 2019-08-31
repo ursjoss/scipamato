@@ -25,7 +25,7 @@ public abstract class DeletableDefinitionEditHeaderPanel<E extends DefinitionEnt
      *     model of type <code>T</code>. Must not be null.
      */
     protected DeletableDefinitionEditHeaderPanel(final String id, final IModel<E> model) {
-        super(id, AssertAs.notNull(model, "model"));
+        super(id, AssertAs.INSTANCE.notNull(model, "model"));
     }
 
     @Override

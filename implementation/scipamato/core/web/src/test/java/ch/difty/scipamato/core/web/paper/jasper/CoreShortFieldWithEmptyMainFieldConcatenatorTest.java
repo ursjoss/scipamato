@@ -12,7 +12,8 @@ class CoreShortFieldWithEmptyMainFieldConcatenatorTest {
 
     private final CoreShortFieldConcatenator sfc = new CoreShortFieldWithEmptyMainFieldConcatenator();
 
-    private final Paper              p   = new Paper();
+    private final Paper p = new Paper();
+
     @SuppressWarnings("SpellCheckingInspection")
     private final ReportHeaderFields rhf = ReportHeaderFields
         .builder("hp", "b")

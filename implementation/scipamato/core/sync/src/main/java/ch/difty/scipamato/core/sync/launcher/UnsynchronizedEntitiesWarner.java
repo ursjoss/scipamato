@@ -17,7 +17,7 @@ public class UnsynchronizedEntitiesWarner implements Warner {
     private final DSLContext jooqCore;
 
     public UnsynchronizedEntitiesWarner(@Qualifier("dslContext") DSLContext jooqCore) {
-        this.jooqCore = AssertAs.notNull(jooqCore, "jooqCore");
+        this.jooqCore = AssertAs.INSTANCE.notNull(jooqCore, "jooqCore");
     }
 
     protected UnsynchronizedEntitiesWarner() {

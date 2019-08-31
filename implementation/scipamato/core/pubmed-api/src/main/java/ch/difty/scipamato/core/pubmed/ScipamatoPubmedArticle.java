@@ -19,14 +19,14 @@ class ScipamatoPubmedArticle extends AbstractPubmedArticleFacade {
     private static final String PII = "pii";
 
     ScipamatoPubmedArticle(final PubmedArticle pubmedArticle) {
-        AssertAs.notNull(pubmedArticle, "pubmedArticle");
-        final MedlineCitation medlineCitation = AssertAs.notNull(pubmedArticle.getMedlineCitation(),
+        AssertAs.INSTANCE.notNull(pubmedArticle, "pubmedArticle");
+        final MedlineCitation medlineCitation = AssertAs.INSTANCE.notNull(pubmedArticle.getMedlineCitation(),
             "pubmedArticle.medlineCitation");
-        final Article article = AssertAs.notNull(medlineCitation.getArticle(), "pubmedArticle.medlineCitation.article");
-        final Journal journal = AssertAs.notNull(article.getJournal(), "pubmedArticle.medlineCitation.article.journal");
+        final Article article = AssertAs.INSTANCE.notNull(medlineCitation.getArticle(), "pubmedArticle.medlineCitation.article");
+        final Journal journal = AssertAs.INSTANCE.notNull(article.getJournal(), "pubmedArticle.medlineCitation.article.journal");
         final AuthorList authorList = article.getAuthorList();
 
-        setPmId(AssertAs
+        setPmId(AssertAs.INSTANCE
             .notNull(medlineCitation.getPMID(), "pubmedArticle.medlineCitation.pmid")
             .getvalue());
         if (authorList != null) {
@@ -42,7 +42,7 @@ class ScipamatoPubmedArticle extends AbstractPubmedArticleFacade {
         setDoi(getDoiFrom(pubmedArticle));
         setLocation(makeLocationFrom(medlineCitation.getMedlineJournalInfo(), journal.getJournalIssue(),
             article.getPaginationOrELocationID(), isAheadOfPrint));
-        setTitle(AssertAs
+        setTitle(AssertAs.INSTANCE
             .notNull(article.getArticleTitle(), "pubmedArticle.medlineCitation.article.articleTitle")
             .getvalue());
         setOriginalAbstract(getAbstractFrom(article.getAbstract()));
@@ -52,9 +52,9 @@ class ScipamatoPubmedArticle extends AbstractPubmedArticleFacade {
      * Get the year from {@link Year} - otherwise from {@link MedlineDate}
      */
     private String getPublicationYearFrom(final Journal journal) {
-        final JournalIssue journalIssue = AssertAs.notNull(journal.getJournalIssue(),
+        final JournalIssue journalIssue = AssertAs.INSTANCE.notNull(journal.getJournalIssue(),
             "pubmedArticle.medlineCitation.article.journal.journalIssue");
-        final PubDate pubDate = AssertAs.notNull(journalIssue.getPubDate(),
+        final PubDate pubDate = AssertAs.INSTANCE.notNull(journalIssue.getPubDate(),
             "pubmedArticle.medlineCitation.article.journal.journalIssue.pubDate");
         final List<java.lang.Object> datishObjects = pubDate.getYearOrMonthOrDayOrSeasonOrMedlineDate();
         return datishObjects
@@ -75,7 +75,7 @@ class ScipamatoPubmedArticle extends AbstractPubmedArticleFacade {
 
     private String makeLocationFrom(final MedlineJournalInfo medlineJournalInfo, final JournalIssue journalIssue,
         final List<java.lang.Object> paginationElocation, boolean aheadOfPrint) {
-        AssertAs.notNull(medlineJournalInfo, "pubmedArticle.medlineCitation.medlineJournalInfo");
+        AssertAs.INSTANCE.notNull(medlineJournalInfo, "pubmedArticle.medlineCitation.medlineJournalInfo");
         final StringBuilder sb = new StringBuilder();
         appendMedlineTa(medlineJournalInfo, sb);
         appendPublicationYearOrDate(journalIssue, aheadOfPrint, sb);
@@ -158,7 +158,7 @@ class ScipamatoPubmedArticle extends AbstractPubmedArticleFacade {
      * For aheadOfPrint papers: Concatenate the Date as {@code Year Month Day} from e.g. the ArticleDate
      */
     private String getAheadOfPrintDateFromArticleDate(final JournalIssue journalIssue) {
-        final PubDate pubDate = AssertAs.notNull(journalIssue.getPubDate(),
+        final PubDate pubDate = AssertAs.INSTANCE.notNull(journalIssue.getPubDate(),
             "pubmedArticle.medlineCitation.article.journal.journalIssue.pubDate");
         final List<java.lang.Object> datishObjects = pubDate.getYearOrMonthOrDayOrSeasonOrMedlineDate();
         final StringBuilder sb = new StringBuilder();

@@ -21,7 +21,7 @@ public class JooqKeywordRepo implements KeywordRepository {
 
     @Override
     public List<Keyword> findKeywords(final String languageCode) {
-        final String lang = TranslationUtils.trimLanguageCode(languageCode);
+        final String lang = TranslationUtils.INSTANCE.trimLanguageCode(languageCode);
         // skipping the audit fields
         return dslContext
             .select(KEYWORD.ID, KEYWORD.KEYWORD_ID, KEYWORD.LANG_CODE, KEYWORD.NAME, KEYWORD.SEARCH_OVERRIDE)

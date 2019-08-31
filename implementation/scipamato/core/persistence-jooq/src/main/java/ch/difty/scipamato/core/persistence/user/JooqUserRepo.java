@@ -55,7 +55,7 @@ public class JooqUserRepo extends
         final ApplicationProperties applicationProperties, final UserRoleRepository userRoleRepo) {
         super(dsl, mapper, sortMapper, filterConditionMapper, dateTimeService, insertSetStepSetter, updateSetStepSetter,
             applicationProperties);
-        this.userRoleRepo = AssertAs.notNull(userRoleRepo, "userRoleRepo");
+        this.userRoleRepo = AssertAs.INSTANCE.notNull(userRoleRepo, "userRoleRepo");
     }
 
     @Override

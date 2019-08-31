@@ -51,23 +51,23 @@ public class JooqCodeRepo extends AbstractRepo implements CodeRepository {
     public JooqCodeRepo(@Qualifier("dslContext") final DSLContext dslContext, final DateTimeService dateTimeService,
         final CodeClassRepository codeClassRepo) {
         super(dslContext, dateTimeService);
-        this.codeClassRepo = AssertAs.notNull(codeClassRepo, "codeClassRepo");
+        this.codeClassRepo = AssertAs.INSTANCE.notNull(codeClassRepo, "codeClassRepo");
     }
 
     @Override
     @Cacheable
     public List<Code> findCodesOfClass(final CodeClassId codeClassId, final String languageCode) {
-        AssertAs.notNull(codeClassId, "codeClassId");
-        final String lang = TranslationUtils.trimLanguageCode(languageCode);
+        AssertAs.INSTANCE.notNull(codeClassId, "codeClassId");
+        final String lang = TranslationUtils.INSTANCE.trimLanguageCode(languageCode);
         // skipping the audit fields
         return getDsl()
             .select(CODE.CODE_.as("C_ID"), DSL
-                    .coalesce(CODE_TR.NAME, TranslationUtils.NOT_TRANSL)
+                    .coalesce(CODE_TR.NAME, TranslationUtils.INSTANCE.getNOT_TRANSL())
                     .as("C_NAME"), CODE_TR.COMMENT.as("C_COMMENT"), CODE.INTERNAL.as("C_INTERNAL"),
                 CODE_CLASS.ID.as("CC_ID"), DSL
-                    .coalesce(CODE_CLASS_TR.NAME, TranslationUtils.NOT_TRANSL)
+                    .coalesce(CODE_CLASS_TR.NAME, TranslationUtils.INSTANCE.getNOT_TRANSL())
                     .as("CC_NAME"), DSL
-                    .coalesce(CODE_CLASS_TR.DESCRIPTION, TranslationUtils.NOT_TRANSL)
+                    .coalesce(CODE_CLASS_TR.DESCRIPTION, TranslationUtils.INSTANCE.getNOT_TRANSL())
                     .as("CC_DESCRIPTION"), CODE.SORT.as("C_SORT"))
             .from(CODE)
             .join(CODE_CLASS)
@@ -249,9 +249,9 @@ public class JooqCodeRepo extends AbstractRepo implements CodeRepository {
     @Override
     @CacheEvict(allEntries = true)
     public CodeDefinition saveOrUpdate(final CodeDefinition codeDefinition) {
-        AssertAs.notNull(codeDefinition, "codeDefinition");
-        AssertAs.notNull(codeDefinition.getCodeClass(), "codeDefinition.codeClass");
-        AssertAs.notNull(codeDefinition
+        AssertAs.INSTANCE.notNull(codeDefinition, "codeDefinition");
+        AssertAs.INSTANCE.notNull(codeDefinition.getCodeClass(), "codeDefinition.codeClass");
+        AssertAs.INSTANCE.notNull(codeDefinition
             .getCodeClass()
             .getId(), "codeDefinition.codeClass.id");
         final int userId = getUserId();
@@ -398,7 +398,7 @@ public class JooqCodeRepo extends AbstractRepo implements CodeRepository {
     @Override
     @CacheEvict(allEntries = true)
     public CodeDefinition delete(final String code, final int version) {
-        AssertAs.notNull(code, "code");
+        AssertAs.INSTANCE.notNull(code, "code");
 
         final CodeDefinition toBeDeleted = findCodeDefinition(code);
         if (toBeDeleted != null) {

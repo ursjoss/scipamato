@@ -27,8 +27,8 @@ public abstract class AbstractRepo {
      *     the {@link DateTimeService} providing access to the system time
      */
     protected AbstractRepo(DSLContext dsl, DateTimeService dateTimeService) {
-        this.dsl = AssertAs.notNull(dsl, "dsl");
-        this.dateTimeService = AssertAs.notNull(dateTimeService, "dateTimeService");
+        this.dsl = AssertAs.INSTANCE.notNull(dsl, "dsl");
+        this.dateTimeService = AssertAs.INSTANCE.notNull(dateTimeService, "dateTimeService");
     }
 
     protected DSLContext getDsl() {

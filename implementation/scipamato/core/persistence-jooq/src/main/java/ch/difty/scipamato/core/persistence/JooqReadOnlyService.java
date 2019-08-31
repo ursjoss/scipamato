@@ -35,8 +35,8 @@ public abstract class JooqReadOnlyService<ID extends Number, T extends IdScipama
     private final UserRepository userRepo;
 
     protected JooqReadOnlyService(final REPO repo, final UserRepository userRepo) {
-        this.repo = AssertAs.notNull(repo, "repo");
-        this.userRepo = AssertAs.notNull(userRepo, "userRepo");
+        this.repo = AssertAs.INSTANCE.notNull(repo, "repo");
+        this.userRepo = AssertAs.INSTANCE.notNull(userRepo, "userRepo");
     }
 
     protected REPO getRepository() {

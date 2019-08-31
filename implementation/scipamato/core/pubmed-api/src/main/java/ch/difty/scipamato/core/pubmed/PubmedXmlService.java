@@ -32,8 +32,8 @@ public class PubmedXmlService implements PubmedArticleService {
     private final PubMed       pubMed;
 
     public PubmedXmlService(final Unmarshaller unmarshaller, final PubMed pubMed) {
-        this.unmarshaller = AssertAs.notNull(unmarshaller, "unmarshaller");
-        this.pubMed = AssertAs.notNull(pubMed, "pubMed");
+        this.unmarshaller = AssertAs.INSTANCE.notNull(unmarshaller, "unmarshaller");
+        this.pubMed = AssertAs.INSTANCE.notNull(pubMed, "pubMed");
     }
 
     @Override
@@ -43,7 +43,7 @@ public class PubmedXmlService implements PubmedArticleService {
 
     @Override
     public PubmedArticleResult getPubmedArticleWithPmidAndApiKey(final int pmId, final String apiKey) {
-        AssertAs.notNull(apiKey, "apiKey");
+        AssertAs.INSTANCE.notNull(apiKey, "apiKey");
         return processArticles(retrievePubmedArticleSet(pmId, apiKey), pmId);
     }
 
@@ -95,7 +95,7 @@ public class PubmedXmlService implements PubmedArticleService {
      */
     @SuppressWarnings("WeakerAccess")
     public PubmedArticleSet unmarshal(final String xmlString) throws IOException {
-        final StringReader reader = new StringReader(AssertAs.notNull(xmlString, "xmlString"));
+        final StringReader reader = new StringReader(AssertAs.INSTANCE.notNull(xmlString, "xmlString"));
         return (PubmedArticleSet) unmarshaller.unmarshal(new StreamSource(reader));
     }
 

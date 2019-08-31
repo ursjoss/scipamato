@@ -56,11 +56,11 @@ public class HouseKeeper<R extends UpdatableRecordImpl<?>> implements Tasklet {
      */
     public HouseKeeper(final DSLContext jooqPublic, final TableField<R, Timestamp> lastSynchedField,
         final DateTimeService dateTimeService, final int graceTimeInMinutes, final String entityName) {
-        this.jooqPublic = AssertAs.notNull(jooqPublic, "jooqPublic");
-        this.lastSynchedField = AssertAs.notNull(lastSynchedField, "lastSynchedField");
-        this.dateTimeService = AssertAs.notNull(dateTimeService, "dateTimeService");
+        this.jooqPublic = AssertAs.INSTANCE.notNull(jooqPublic, "jooqPublic");
+        this.lastSynchedField = AssertAs.INSTANCE.notNull(lastSynchedField, "lastSynchedField");
+        this.dateTimeService = AssertAs.INSTANCE.notNull(dateTimeService, "dateTimeService");
         this.graceTimeInMinutes = graceTimeInMinutes;
-        this.entityName = AssertAs.notNull(entityName, "entityName");
+        this.entityName = AssertAs.INSTANCE.notNull(entityName, "entityName");
     }
 
     @Override

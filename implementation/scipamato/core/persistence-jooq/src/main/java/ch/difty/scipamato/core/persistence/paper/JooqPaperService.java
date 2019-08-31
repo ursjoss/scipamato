@@ -189,7 +189,7 @@ public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter
         final Long idOfCurrentPaper) {
         if (fieldValue == null)
             return Optional.empty();
-        switch (AssertAs.notNull(fieldName, "fieldName")) {
+        switch (AssertAs.INSTANCE.notNull(fieldName, "fieldName")) {
         case "doi":
             return getRepository().isDoiAlreadyAssigned((String) fieldValue, idOfCurrentPaper);
         case "pmId":

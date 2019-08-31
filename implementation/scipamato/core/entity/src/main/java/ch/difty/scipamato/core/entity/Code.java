@@ -60,11 +60,11 @@ public class Code extends CoreEntity implements CodeLike {
         final Integer codeClassId, final String codeClassName, final String codeClassDescription, final int sort,
         final LocalDateTime created, final Integer createdBy, final LocalDateTime lastModified,
         final Integer lastModifiedBy, final Integer version) {
-        this.code = AssertAs.notNull(code, "code");
+        this.code = AssertAs.INSTANCE.notNull(code, "code");
         this.name = name;
         this.comment = comment;
         this.internal = internal;
-        this.codeClass = new CodeClass(AssertAs.notNull(codeClassId, "codeClassId"), codeClassName,
+        this.codeClass = new CodeClass(AssertAs.INSTANCE.notNull(codeClassId, "codeClassId"), codeClassName,
             codeClassDescription);
         this.sort = sort;
         setCreated(created);
@@ -84,11 +84,11 @@ public class Code extends CoreEntity implements CodeLike {
     private Code(final String code, final String name, final String comment, final boolean internal,
         final CodeClass codeClass, final int sort, final LocalDateTime created, final Integer createdBy,
         final LocalDateTime lastModified, final Integer lastModifiedBy, final Integer version) {
-        this.code = AssertAs.notNull(code, CodeFields.CODE.getName());
+        this.code = AssertAs.INSTANCE.notNull(code, CodeFields.CODE.getName());
         this.name = name;
         this.comment = comment;
         this.internal = internal;
-        this.codeClass = AssertAs.notNull(codeClass, CodeFields.CODE_CLASS.getName());
+        this.codeClass = AssertAs.INSTANCE.notNull(codeClass, CodeFields.CODE_CLASS.getName());
         this.sort = sort;
         setCreated(created);
         setCreatedBy(createdBy);

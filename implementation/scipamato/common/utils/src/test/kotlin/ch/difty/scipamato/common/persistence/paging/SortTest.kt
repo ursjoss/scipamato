@@ -12,7 +12,7 @@ internal class SortTest {
 
     private val sortProperties = ArrayList<SortProperty>(4)
 
-    private var sort: Sort? = null
+    private lateinit var sort: Sort
 
     @BeforeEach
     fun setUp() {
@@ -43,9 +43,7 @@ internal class SortTest {
             Sort(Direction.ASC)
             fail<Any>("should have thrown exception")
         } catch (ex: Exception) {
-            assertThat(ex)
-                    .isInstanceOf(IllegalArgumentException::class.java)
-                    .hasMessage("propertyNames can't be empty.")
+            assertThat(ex).isInstanceOf(IllegalArgumentException::class.java).hasMessage("propertyNames can't be empty.")
         }
 
     }
@@ -71,7 +69,7 @@ internal class SortTest {
 
     @Test
     fun creatingSortForFourSortPropertiesWithDifferentSortDirections() {
-        val it = sort!!.iterator()
+        val it = sort.iterator()
         assertSortProperty(it, Direction.ASC, "a")
         assertSortProperty(it, Direction.DESC, "b")
         assertSortProperty(it, Direction.DESC, "c")
@@ -86,48 +84,32 @@ internal class SortTest {
     }
 
     @Test
-    fun gettingSortPropertyFor_withNullName_returnsNull() {
-        assertThat(sort!!.getSortPropertyFor(null)).isNull()
-    }
-
-    @Test
     fun gettingSortPropertyFor_nonExistingName_returnsNull() {
         val p = "x"
-        assertThat(sortProperties)
-                .extracting("name")
-                .doesNotContain(p)
-        assertThat(sort!!.getSortPropertyFor(p)).isNull()
+        assertThat(sortProperties).extracting("name").doesNotContain(p)
+        assertThat(sort.getSortPropertyFor(p)).isNull()
     }
 
     @Test
     fun gettingSortPropertyFor_existingName_returnsRespectiveSortProperty() {
         val p = "c"
-        assertThat(sortProperties)
-                .extracting("name")
-                .contains(p)
-        assertThat(sort!!
-                .getSortPropertyFor(p)!!
-                .name).isEqualTo(p)
+        assertThat(sortProperties).extracting("name").contains(p)
+        assertThat(sort.getSortPropertyFor(p)?.name).isEqualTo(p)
     }
 
     @Test
     fun directionAsc_isAscending() {
-        assertThat(Direction.ASC.isAscending).isTrue()
+        assertThat(Direction.ASC.isAscending()).isTrue()
     }
 
     @Test
     fun directionDesc_isNotAscending() {
-        assertThat(Direction.DESC.isAscending).isFalse()
-    }
-
-    @Test
-    fun sortPropertyWithNullDirection_isAscending() {
-        assertThat(SortProperty("foo", null).direction).isEqualTo(Direction.ASC)
+        assertThat(Direction.DESC.isAscending()).isFalse()
     }
 
     @Test
     fun testingToString() {
-        assertThat(sort!!.toString()).isEqualTo("a: ASC,b: DESC,c: DESC,d: ASC")
+        assertThat(sort.toString()).isEqualTo("a: ASC,b: DESC,c: DESC,d: ASC")
     }
 
     @Test
@@ -141,11 +123,11 @@ internal class SortTest {
         sortProperties2.add(SortProperty("b", Direction.DESC))
         sortProperties2.add(SortProperty("c", Direction.DESC))
         assertThat(sort == Sort(sortProperties2)).isFalse()
-        assertThat(sort!!.hashCode()).isNotEqualTo(Sort(sortProperties2).hashCode())
+        assertThat(sort.hashCode()).isNotEqualTo(Sort(sortProperties2).hashCode())
 
         sortProperties2.add(SortProperty("d", Direction.ASC))
         assertThat(sort == Sort(sortProperties2)).isTrue()
-        assertThat(sort!!.hashCode()).isEqualTo(Sort(sortProperties2).hashCode())
+        assertThat(sort.hashCode()).isEqualTo(Sort(sortProperties2).hashCode())
     }
 
     @Test
@@ -157,6 +139,5 @@ internal class SortTest {
         assertThat(sf1 == SortProperty("foo", Direction.DESC)).isTrue()
         assertThat(sf1 == SortProperty("foo", Direction.ASC)).isFalse()
         assertThat(sf1 == SortProperty("bar", Direction.DESC)).isFalse()
-
     }
 }

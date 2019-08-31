@@ -44,8 +44,8 @@ public class CoreMenuBuilder extends AbstractMenuBuilder {
 
     @Override
     public void addMenuLinksTo(final Navbar navbar, final Page page) {
-        AssertAs.notNull(navbar, "navbar");
-        AssertAs.notNull(page, "page");
+        AssertAs.INSTANCE.notNull(navbar, "navbar");
+        AssertAs.INSTANCE.notNull(page, "page");
 
         newMenu(navbar, page, "papers", GlyphIconType.paperclip, l -> addPaperMenuEntries(l, page));
         if (hasOneOfRoles(Roles.USER, Roles.ADMIN)) {

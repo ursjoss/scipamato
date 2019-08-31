@@ -18,7 +18,7 @@ public class IntegerSearchTermEvaluator implements SearchTermEvaluator<IntegerSe
 
     @Override
     public Condition evaluate(final IntegerSearchTerm searchTerm) {
-        AssertAs.notNull(searchTerm, "searchTerm");
+        AssertAs.INSTANCE.notNull(searchTerm, "searchTerm");
 
         final String fieldName = getFieldName(searchTerm.getFieldName());
         final Field<Object> field = DSL.field(fieldName);
@@ -50,7 +50,7 @@ public class IntegerSearchTermEvaluator implements SearchTermEvaluator<IntegerSe
         if ("id".equals(fieldName))
             return "paper.id";
         else
-            return TranslationUtils.deCamelCase(fieldName);
+            return TranslationUtils.INSTANCE.deCamelCase(fieldName);
     }
 
 }

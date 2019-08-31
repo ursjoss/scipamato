@@ -27,7 +27,7 @@ public class JooqNewStudyTopicService implements NewStudyTopicService {
 
     @Override
     public List<NewStudyTopic> findMostRecentNewStudyTopics(final String languageCode) {
-        AssertAs.notNull(languageCode, "languageCode");
+        AssertAs.INSTANCE.notNull(languageCode, "languageCode");
         return repo
             .findMostRecentNewsletterId()
             .map(id -> repo.findNewStudyTopicsForNewsletter(id, languageCode))
@@ -36,8 +36,8 @@ public class JooqNewStudyTopicService implements NewStudyTopicService {
 
     @Override
     public List<NewStudyTopic> findNewStudyTopicsForNewsletterIssue(final String issue, final String languageCode) {
-        AssertAs.notNull(issue, "issue");
-        AssertAs.notNull(languageCode, "languageCode");
+        AssertAs.INSTANCE.notNull(issue, "issue");
+        AssertAs.INSTANCE.notNull(languageCode, "languageCode");
         return repo
             .findIdOfNewsletterWithIssue(issue)
             .map(id -> repo.findNewStudyTopicsForNewsletter(id, languageCode))

@@ -43,11 +43,11 @@ public class JooqKeywordRepo extends AbstractRepo implements KeywordRepository {
 
     @Override
     public List<Keyword> findAll(final String languageCode) {
-        final String lang = TranslationUtils.trimLanguageCode(languageCode);
+        final String lang = TranslationUtils.INSTANCE.trimLanguageCode(languageCode);
         // skipping the audit fields
         return getDsl()
             .select(KEYWORD.ID.as("K_ID"), DSL
-                .coalesce(KEYWORD_TR.NAME, TranslationUtils.NOT_TRANSL)
+                .coalesce(KEYWORD_TR.NAME, TranslationUtils.INSTANCE.getNOT_TRANSL())
                 .as("K_NAME"), KEYWORD.SEARCH_OVERRIDE)
             .from(KEYWORD)
             .leftOuterJoin(KEYWORD_TR)
@@ -208,7 +208,7 @@ public class JooqKeywordRepo extends AbstractRepo implements KeywordRepository {
 
     @Override
     public KeywordDefinition insert(final KeywordDefinition entity) {
-        AssertAs.notNull(entity, "entity");
+        AssertAs.INSTANCE.notNull(entity, "entity");
         if (entity.getId() != null) {
             throw new IllegalArgumentException("id must be null.");
         }
@@ -246,8 +246,8 @@ public class JooqKeywordRepo extends AbstractRepo implements KeywordRepository {
 
     @Override
     public KeywordDefinition update(final KeywordDefinition entity) {
-        AssertAs.notNull(entity, "entity");
-        AssertAs.notNull(entity.getId(), "entity.id");
+        AssertAs.INSTANCE.notNull(entity, "entity");
+        AssertAs.INSTANCE.notNull(entity.getId(), "entity.id");
 
         final int userId = getUserId();
         final List<KeywordTranslation> persistedTranslations = updateOrInsertAndLoadKeywordTranslations(entity, userId);
@@ -398,7 +398,7 @@ public class JooqKeywordRepo extends AbstractRepo implements KeywordRepository {
 
     @Override
     public KeywordDefinition delete(final Integer id, final int version) {
-        AssertAs.notNull(id, "id");
+        AssertAs.INSTANCE.notNull(id, "id");
 
         final KeywordDefinition toBeDeleted = findKeywordDefinitionById(id);
         if (toBeDeleted != null) {

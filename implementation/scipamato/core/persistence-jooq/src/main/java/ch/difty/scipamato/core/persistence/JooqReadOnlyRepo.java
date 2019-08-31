@@ -63,10 +63,10 @@ public abstract class JooqReadOnlyRepo<R extends Record, T extends CoreEntity, I
         ApplicationProperties applicationProperties) {
         super(dsl, dateTimeService);
 
-        this.mapper = AssertAs.notNull(mapper, "mapper");
-        this.sortMapper = AssertAs.notNull(sortMapper, "sortMapper");
-        this.filterConditionMapper = AssertAs.notNull(filterConditionMapper, "filterConditionMapper");
-        this.applicationProperties = AssertAs.notNull(applicationProperties, "applicationProperties");
+        this.mapper = AssertAs.INSTANCE.notNull(mapper, "mapper");
+        this.sortMapper = AssertAs.INSTANCE.notNull(sortMapper, "sortMapper");
+        this.filterConditionMapper = AssertAs.INSTANCE.notNull(filterConditionMapper, "filterConditionMapper");
+        this.applicationProperties = AssertAs.INSTANCE.notNull(applicationProperties, "applicationProperties");
 
     }
 
@@ -125,7 +125,7 @@ public abstract class JooqReadOnlyRepo<R extends Record, T extends CoreEntity, I
 
     @Override
     public T findById(final ID id, final String languageCode) {
-        AssertAs.notNull(id, "id");
+        AssertAs.INSTANCE.notNull(id, "id");
         T entity = getDsl()
             .selectFrom(getTable())
             .where(getTableId().equal(id))
@@ -141,7 +141,7 @@ public abstract class JooqReadOnlyRepo<R extends Record, T extends CoreEntity, I
 
     @Override
     public T findById(final ID id, final int version, String languageCode) {
-        AssertAs.notNull(id, "id");
+        AssertAs.INSTANCE.notNull(id, "id");
         T entity = getDsl()
             .selectFrom(getTable())
             .where(getTableId().equal(id))

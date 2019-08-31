@@ -3,6 +3,7 @@ package ch.difty.scipamato.common.paper
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
+@Suppress("SpellCheckingInspection")
 internal class AbstractShortFieldConcatenatorWithNewLineTest {
 
     private val concatenator = object : AbstractShortFieldConcatenator(true) {

@@ -271,7 +271,7 @@ public abstract class ResultPanel extends BasePanel<Void> {
             }
 
             private boolean hasNewsletterWip(final PaperSlim paper) {
-                return PublicationStatus
+                return PublicationStatus.Companion
                     .byId(paper
                         .getNewsletterAssociation()
                         .getPublicationStatusId())

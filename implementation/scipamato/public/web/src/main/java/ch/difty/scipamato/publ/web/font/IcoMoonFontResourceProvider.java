@@ -20,7 +20,7 @@ public class IcoMoonFontResourceProvider implements CommercialFontResourceProvid
     private final CssResourceReference cssResourceReference;
 
     public IcoMoonFontResourceProvider(final ApplicationPublicProperties applicationProperties) {
-        AssertAs.notNull(applicationProperties, "applicationProperties");
+        AssertAs.INSTANCE.notNull(applicationProperties, "applicationProperties");
         if (applicationProperties.isCommercialFontPresent()) {
             cssResourceReference = IcoMoonCssResourceReference.get();
         } else {

@@ -24,6 +24,8 @@ object Lib {
     private const val jasperReportVersion = "6.9.0"
     const val jooqVersion = "3.11.12"
 
+    private const val kotlinLoggingVersion = "1.7.6"
+
     private const val openfeignVersion = "10.4.0"
 
     private const val jaxbCoreVersion = "2.3.0.1"
@@ -81,6 +83,7 @@ object Lib {
     // Logging
 
     fun slf4j() = Dep("org.slf4j", "slf4j-api")
+    fun kotlinLogging() = Dep("io.github.microutils", "kotlin-logging", kotlinLoggingVersion)
     fun logback() = Dep("ch.qos.logback", "logback-core")
 
 

@@ -24,7 +24,7 @@ public class NewsletterTopicModel extends InjectedLoadableDetachableModel<Newsle
     private final String languageCode;
 
     public NewsletterTopicModel(final String languageCode) {
-        this.languageCode = AssertAs.notNull(languageCode, "languageCode");
+        this.languageCode = AssertAs.INSTANCE.notNull(languageCode, "languageCode");
     }
 
     public List<NewsletterTopic> load() {

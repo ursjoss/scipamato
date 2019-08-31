@@ -20,9 +20,9 @@ public class PubmedImportService implements PubmedImporter {
 
     public PubmedImportService(final PubmedArticleService pubmedArticleService, final PaperService paperService,
         final ApplicationCoreProperties applicationProperties) {
-        this.pubmedArticleService = AssertAs.notNull(pubmedArticleService, "pubmedArticleService");
-        this.paperService = AssertAs.notNull(paperService, "paperService");
-        this.minimumNumber = AssertAs
+        this.pubmedArticleService = AssertAs.INSTANCE.notNull(pubmedArticleService, "pubmedArticleService");
+        this.paperService = AssertAs.INSTANCE.notNull(paperService, "paperService");
+        this.minimumNumber = AssertAs.INSTANCE
             .notNull(applicationProperties, "applicationProperties")
             .getMinimumPaperNumberToBeRecycled();
     }

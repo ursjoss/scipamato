@@ -1164,8 +1164,8 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
         private final FormComponent<?>[] components;
 
         CodeClass1ConsistencyValidator(BootstrapMultiSelect<Code> codeClass1, TextField<String> mainCodeOfCodeClass1) {
-            AssertAs.notNull(codeClass1);
-            AssertAs.notNull(mainCodeOfCodeClass1);
+            AssertAs.INSTANCE.notNull(codeClass1);
+            AssertAs.INSTANCE.notNull(mainCodeOfCodeClass1);
             components = new FormComponent<?>[] { codeClass1, mainCodeOfCodeClass1 };
         }
 

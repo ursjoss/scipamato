@@ -39,7 +39,7 @@ public class NewsletterRecordMapper extends EntityRecordMapper<NewsletterRecord,
                 .getIssueDate()
                 .toLocalDate() :
             null);
-        to.setPublicationStatus(PublicationStatus.byId(from.getPublicationStatus()));
+        to.setPublicationStatus(PublicationStatus.Companion.byId(from.getPublicationStatus()));
     }
 
 }

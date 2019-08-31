@@ -60,8 +60,8 @@ public class PaperSummaryShortDataSource extends JasperPaperDataSource<PaperSumm
      */
     public PaperSummaryShortDataSource(final Paper paper, final ReportHeaderFields reportHeaderFields,
         ClusterablePdfExporterConfiguration config) {
-        this(Collections.singletonList(new PaperSummaryShort(AssertAs.notNull(paper, "paper"),
-                AssertAs.notNull(reportHeaderFields, "reportHeaderFields"))), config,
+        this(Collections.singletonList(new PaperSummaryShort(AssertAs.INSTANCE.notNull(paper, "paper"),
+                AssertAs.INSTANCE.notNull(reportHeaderFields, "reportHeaderFields"))), config,
             makeSinglePaperBaseName(paper.getNumber() != null ? String.valueOf(paper.getNumber()) : null));
         this.reportHeaderFields = reportHeaderFields;
     }
@@ -76,7 +76,7 @@ public class PaperSummaryShortDataSource extends JasperPaperDataSource<PaperSumm
      *     the {@link ClusterablePdfExporterConfiguration}
      */
     PaperSummaryShortDataSource(final PaperSummaryShort paperSummaryShort, ClusterablePdfExporterConfiguration config) {
-        this(Collections.singletonList(AssertAs.notNull(paperSummaryShort, "paperSummaryShort")), config,
+        this(Collections.singletonList(AssertAs.INSTANCE.notNull(paperSummaryShort, "paperSummaryShort")), config,
             makeSinglePaperBaseName(paperSummaryShort.getNumber()));
     }
 

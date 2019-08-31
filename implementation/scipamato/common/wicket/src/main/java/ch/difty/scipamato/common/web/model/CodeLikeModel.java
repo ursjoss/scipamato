@@ -31,8 +31,8 @@ public abstract class CodeLikeModel<T extends CodeLike, S extends CodeLikeServic
 
     protected CodeLikeModel(final CodeClassId codeClassId, final String languageCode) {
         super();
-        this.codeClassId = AssertAs.notNull(codeClassId, "codeClassId");
-        this.languageCode = AssertAs.notNull(languageCode, "languageCode");
+        this.codeClassId = AssertAs.INSTANCE.notNull(codeClassId, "codeClassId");
+        this.languageCode = AssertAs.INSTANCE.notNull(languageCode, "languageCode");
     }
 
     /**

@@ -1,8 +1,10 @@
 package ch.difty.scipamato.core.logic.parsing
 
-import ch.difty.scipamato.common.PropertyUtils
+import ch.difty.scipamato.common.logger
 import ch.difty.scipamato.core.entity.Paper
 import java.util.regex.Pattern
+
+private val log = logger()
 
 /**
  * Parses a property value to define the AuthorParserStrategy to be used.
@@ -23,7 +25,7 @@ enum class AuthorParserStrategy {
          * Accepts a [propertyKey] for logging purposes
          */
         fun fromProperty(propertyValue: String, propertyKey: String): AuthorParserStrategy =
-                PropertyUtils.fromProperty(propertyValue, STRATEGIES, PUBMED, propertyKey)
+                propertyValue.asProperty(STRATEGIES, PUBMED, propertyKey)
     }
 }
 
@@ -84,4 +86,23 @@ class PubmedAuthorParser(authorsString: String) : AuthorParser {
         private val TOKEN_SEPARATOR_REGEX = " +".toRegex()
         private val CARDINALITY_PATTERN = Pattern.compile("(?:1st|2nd|3rd)|(?:\\d+th)|(?:Jr)")
     }
+}
+
+
+/**
+ * Derive an enum of type [T] from a configuration [this@toProperty], all [values] of the enum (`T.values`),
+ * a [defaultValue] in case the property value does not match and a [propertyKey] used for logging.
+ */
+internal fun <T : Enum<T>> String.asProperty(values: Array<T>, defaultValue: T, propertyKey: String): T {
+    if (isNotBlank()) {
+        values.filter { equals(it.name, ignoreCase = true) }.take(1).apply {
+            if (isNotEmpty()) {
+                log.info("{}={}", propertyKey, this@asProperty)
+                return first()
+            }
+        }
+    }
+    val msg = "{} is not properly defined. Current value: '{}' - now using {} - " + "specify one of {} in your property configuration (e.g. application.properties)."
+    log.warn(msg, propertyKey, this, defaultValue, values)
+    return defaultValue
 }

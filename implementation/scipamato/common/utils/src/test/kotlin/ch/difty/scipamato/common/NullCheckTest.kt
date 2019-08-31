@@ -7,7 +7,7 @@ import org.assertj.core.api.Assertions.fail
 
 import org.junit.jupiter.api.Test
 
-internal class AssertAsTest : FinalClassTest<AssertAs> {
+internal class NullCheckTest {
 
     @Test
     fun assertingNonNullField_doesNothing() {
@@ -33,19 +33,6 @@ internal class AssertAsTest : FinalClassTest<AssertAs> {
     }
 
     @Test
-    fun assertingNullField_withNullName_throwsException() {
-        try {
-            AssertAs.notNull<Any>(null, null)
-            fail<Any>("should have thrown exception")
-        } catch (ex: Exception) {
-            assertThat(ex)
-                    .isInstanceOf(NullArgumentException::class.java)
-                    .hasMessage("Argument must not be null.")
-        }
-
-    }
-
-    @Test
     fun assertingNullField_withoutName_throwsException() {
         try {
             AssertAs.notNull<Any>(null)
@@ -55,7 +42,6 @@ internal class AssertAsTest : FinalClassTest<AssertAs> {
                     .isInstanceOf(NullArgumentException::class.java)
                     .hasMessage("Argument must not be null.")
         }
-
     }
 
 }

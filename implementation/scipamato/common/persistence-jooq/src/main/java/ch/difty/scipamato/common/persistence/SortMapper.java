@@ -55,7 +55,7 @@ public class SortMapper<R extends Record, T extends ScipamatoEntity, TI extends 
     }
 
     private TableField<R, T> getTableField(final String fieldName, final TI table) {
-        AssertAs.notNull(table, "table");
+        AssertAs.INSTANCE.notNull(table, "table");
 
         try {
             return getTableFieldFor(table, deCamelCase(fieldName));
@@ -78,7 +78,7 @@ public class SortMapper<R extends Record, T extends ScipamatoEntity, TI extends 
     }
 
     private String deCamelCase(final String sortFieldName) {
-        return TranslationUtils
+        return TranslationUtils.INSTANCE
             .deCamelCase(sortFieldName)
             .toUpperCase();
     }

@@ -22,8 +22,8 @@ public abstract class ScipamatoItemWriter<T> implements ItemWriter<T> {
     private final String     topic;
 
     protected ScipamatoItemWriter(final DSLContext jooqDslContextPublic, final String topic) {
-        this.dslContext = AssertAs.notNull(jooqDslContextPublic, "jooqDslContextPublic");
-        this.topic = AssertAs.notNull(topic, "topic");
+        this.dslContext = AssertAs.INSTANCE.notNull(jooqDslContextPublic, "jooqDslContextPublic");
+        this.topic = AssertAs.INSTANCE.notNull(topic, "topic");
     }
 
     protected DSLContext getDslContext() {

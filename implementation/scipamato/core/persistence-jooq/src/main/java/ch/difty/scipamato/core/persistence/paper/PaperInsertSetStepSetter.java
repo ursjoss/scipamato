@@ -25,8 +25,8 @@ public class PaperInsertSetStepSetter implements InsertSetStepSetter<PaperRecord
 
     @Override
     public InsertSetMoreStep<PaperRecord> setNonKeyFieldsFor(InsertSetStep<PaperRecord> step, Paper e) {
-        AssertAs.notNull(step, "step");
-        AssertAs.notNull(e, "entity");
+        AssertAs.INSTANCE.notNull(step, "step");
+        AssertAs.INSTANCE.notNull(e, "entity");
 
         return step
             .set(PAPER.NUMBER, e.getNumber())
@@ -72,8 +72,8 @@ public class PaperInsertSetStepSetter implements InsertSetStepSetter<PaperRecord
 
     @Override
     public void considerSettingKeyOf(InsertSetMoreStep<PaperRecord> step, Paper entity) {
-        AssertAs.notNull(step, "step");
-        AssertAs.notNull(entity, "entity");
+        AssertAs.INSTANCE.notNull(step, "step");
+        AssertAs.INSTANCE.notNull(entity, "entity");
         Long id = entity.getId();
         if (id != null)
             step.set(PAPER.ID, id);

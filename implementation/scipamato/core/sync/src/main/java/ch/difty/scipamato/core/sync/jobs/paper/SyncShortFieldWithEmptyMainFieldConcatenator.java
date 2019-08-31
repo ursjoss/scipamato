@@ -38,7 +38,7 @@ class SyncShortFieldWithEmptyMainFieldConcatenator extends AbstractShortFieldCon
 
     @Override
     public String methodsFrom(final ResultSet rs) {
-        AssertAs.notNull(rs, RS);
+        AssertAs.INSTANCE.notNull(rs, RS);
         try {
             return methodsFrom(rs, PAPER.METHODS, PAPER.METHOD_STUDY_DESIGN, PAPER.METHOD_OUTCOME,
                 PAPER.POPULATION_PLACE, PAPER.EXPOSURE_POLLUTANT, PAPER.EXPOSURE_ASSESSMENT, PAPER.METHOD_STATISTICS,
@@ -66,7 +66,7 @@ class SyncShortFieldWithEmptyMainFieldConcatenator extends AbstractShortFieldCon
 
     @Override
     public String populationFrom(final ResultSet rs) {
-        AssertAs.notNull(rs, RS);
+        AssertAs.INSTANCE.notNull(rs, RS);
         try {
             return populationFrom(rs, PAPER.POPULATION, PAPER.POPULATION_PLACE, PAPER.POPULATION_PARTICIPANTS,
                 PAPER.POPULATION_DURATION);
@@ -87,7 +87,7 @@ class SyncShortFieldWithEmptyMainFieldConcatenator extends AbstractShortFieldCon
 
     @Override
     public String resultFrom(final ResultSet rs) {
-        AssertAs.notNull(rs, RS);
+        AssertAs.INSTANCE.notNull(rs, RS);
         try {
             return resultFrom(rs, Paper.PAPER.RESULT, Paper.PAPER.RESULT_MEASURED_OUTCOME,
                 Paper.PAPER.RESULT_EXPOSURE_RANGE, Paper.PAPER.RESULT_EFFECT_ESTIMATE, Paper.PAPER.CONCLUSION);

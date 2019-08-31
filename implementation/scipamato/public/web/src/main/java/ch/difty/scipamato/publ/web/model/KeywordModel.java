@@ -20,7 +20,7 @@ public class KeywordModel extends InjectedLoadableDetachableModel<Keyword> {
 
     public KeywordModel(final String languageCode) {
         super();
-        this.languageCode = AssertAs.notNull(languageCode, "languageCode");
+        this.languageCode = AssertAs.INSTANCE.notNull(languageCode, "languageCode");
     }
 
     @Override

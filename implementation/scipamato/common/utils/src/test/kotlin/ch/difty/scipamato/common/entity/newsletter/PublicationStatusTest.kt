@@ -22,22 +22,22 @@ internal class PublicationStatusTest {
 
     @Test
     fun testById_withValidIds() {
-        assertThat(byId(0)).isEqualTo(WIP)
-        assertThat(byId(1)).isEqualTo(PUBLISHED)
-        assertThat(byId(-1)).isEqualTo(CANCELLED)
+        assertThat(PublicationStatus.byId(0)).isEqualTo(WIP)
+        assertThat(PublicationStatus.byId(1)).isEqualTo(PUBLISHED)
+        assertThat(PublicationStatus.byId(-1)).isEqualTo(CANCELLED)
     }
 
     @Test
     fun assertNames() {
-        assertThat(PublicationStatus.values())
-                .extracting("name")
+        assertThat(values())
+                .extracting("description")
                 .containsExactly("in progress", "published", "cancelled")
     }
 
     @Test
     fun testById_withInvalidIds() {
         try {
-            byId(-2)
+            PublicationStatus.byId(-2)
             fail<Any>("should have thrown")
         } catch (ex: Exception) {
             assertThat(ex)
@@ -46,7 +46,7 @@ internal class PublicationStatusTest {
         }
 
         try {
-            byId(2)
+            PublicationStatus.byId(2)
             fail<Any>("should have thrown")
         } catch (ex: Exception) {
             assertThat(ex)

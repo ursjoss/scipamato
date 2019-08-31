@@ -84,7 +84,7 @@ public abstract class JooqBySearchOrderRepo<T extends IdScipamatoEntity<Long>, M
 
     @Override
     public List<T> findBySearchOrder(final SearchOrder searchOrder) {
-        AssertAs.notNull(searchOrder, "searchOrder");
+        AssertAs.INSTANCE.notNull(searchOrder, "searchOrder");
 
         final Condition paperMatches = getConditionsFrom(searchOrder);
         final List<PaperRecord> queryResults = getDsl()
@@ -213,7 +213,7 @@ public abstract class JooqBySearchOrderRepo<T extends IdScipamatoEntity<Long>, M
 
     @Override
     public int countBySearchOrder(final SearchOrder searchOrder) {
-        AssertAs.notNull(searchOrder, "searchOrder");
+        AssertAs.INSTANCE.notNull(searchOrder, "searchOrder");
 
         final Condition paperMatches = getConditionsFrom(searchOrder);
         return getDsl().fetchCount(getDsl()

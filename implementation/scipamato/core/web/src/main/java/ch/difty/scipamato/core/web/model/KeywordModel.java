@@ -24,7 +24,7 @@ public class KeywordModel extends InjectedLoadableDetachableModel<Keyword> {
     private final String languageCode;
 
     public KeywordModel(final String languageCode) {
-        this.languageCode = AssertAs.notNull(languageCode, "languageCode");
+        this.languageCode = AssertAs.INSTANCE.notNull(languageCode, "languageCode");
     }
 
     public List<Keyword> load() {

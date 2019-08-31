@@ -67,7 +67,7 @@ class JooqNewsletterTopicService implements NewsletterTopicService {
 
     @Override
     public NewsletterTopicDefinition saveOrUpdate(final NewsletterTopicDefinition entity) {
-        AssertAs.notNull(entity, "entity");
+        AssertAs.INSTANCE.notNull(entity, "entity");
         if (entity.getId() == null)
             return getRepo().insert(entity);
         else

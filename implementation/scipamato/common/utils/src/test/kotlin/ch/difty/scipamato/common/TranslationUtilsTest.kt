@@ -1,8 +1,6 @@
 package ch.difty.scipamato.common
 
-import ch.difty.scipamato.common.TestUtils.assertDegenerateSupplierParameter
 import org.assertj.core.api.Assertions.assertThat
-
 import org.junit.jupiter.api.Test
 
 internal class TranslationUtilsTest : FinalClassTest<TranslationUtils> {
@@ -10,11 +8,6 @@ internal class TranslationUtilsTest : FinalClassTest<TranslationUtils> {
     @Test
     fun verifyNotTranslatedString() {
         assertThat(TranslationUtils.NOT_TRANSL).isEqualTo("not translated")
-    }
-
-    @Test
-    fun trimmingLanguageCode_withNullCode_throws() {
-        assertDegenerateSupplierParameter({ TranslationUtils.trimLanguageCode(null) }, "languageCode")
     }
 
     @Test

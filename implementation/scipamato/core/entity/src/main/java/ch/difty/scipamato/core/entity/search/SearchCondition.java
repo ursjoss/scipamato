@@ -79,7 +79,7 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware, Ne
     }
 
     public void addSearchTerm(final SearchTerm searchTerm) {
-        AssertAs.notNull(searchTerm, "searchTerm");
+        AssertAs.INSTANCE.notNull(searchTerm, "searchTerm");
         switch (searchTerm.getSearchTermType()) {
         case BOOLEAN:
             final BooleanSearchTerm bst = (BooleanSearchTerm) searchTerm;

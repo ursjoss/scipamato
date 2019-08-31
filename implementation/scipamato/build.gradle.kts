@@ -125,6 +125,7 @@ subprojects {
         annotationProcessor(Lib.lombok())
 
         api(Lib.slf4j())
+        implementation(Lib.kotlinLogging())
         runtimeOnly(Lib.logback())
 
         compileOnly(Lib.jsr305())

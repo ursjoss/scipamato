@@ -32,7 +32,7 @@ public class JooqNewStudyRepo implements NewStudyRepository {
 
     @Override
     public List<NewStudyTopic> findNewStudyTopicsForNewsletter(final int newsletterId, String languageCode) {
-        AssertAs.notNull(languageCode, LANGUAGE_CODE);
+        AssertAs.INSTANCE.notNull(languageCode, LANGUAGE_CODE);
 
         // References to aliased tables
         final ch.difty.scipamato.publ.db.tables.NewStudyTopic newStudyTopicTable = NEW_STUDY_TOPIC.as("nst");
@@ -130,7 +130,7 @@ public class JooqNewStudyRepo implements NewStudyRepository {
 
     @Override
     public Optional<Integer> findIdOfNewsletterWithIssue(final String issue) {
-        AssertAs.notNull(issue, "issue");
+        AssertAs.INSTANCE.notNull(issue, "issue");
         return Optional.ofNullable(dsl
             .select(NEWSLETTER.ID)
             .from(NEWSLETTER)
@@ -141,7 +141,7 @@ public class JooqNewStudyRepo implements NewStudyRepository {
     @Override
     public List<ch.difty.scipamato.publ.entity.Newsletter> findArchivedNewsletters(final int newsletterCount,
         final String languageCode) {
-        AssertAs.notNull(languageCode, LANGUAGE_CODE);
+        AssertAs.INSTANCE.notNull(languageCode, LANGUAGE_CODE);
         return dsl
             .select(NEWSLETTER.ID, NEWSLETTER.ISSUE, NEWSLETTER.ISSUE_DATE)
             .from(NEWSLETTER)
@@ -152,7 +152,7 @@ public class JooqNewStudyRepo implements NewStudyRepository {
 
     @Override
     public List<ch.difty.scipamato.publ.entity.NewStudyPageLink> findNewStudyPageLinks(final String languageCode) {
-        AssertAs.notNull(languageCode, LANGUAGE_CODE);
+        AssertAs.INSTANCE.notNull(languageCode, LANGUAGE_CODE);
         return dsl
             .select(NEW_STUDY_PAGE_LINK.LANG_CODE, NEW_STUDY_PAGE_LINK.SORT, NEW_STUDY_PAGE_LINK.TITLE,
                 NEW_STUDY_PAGE_LINK.URL)

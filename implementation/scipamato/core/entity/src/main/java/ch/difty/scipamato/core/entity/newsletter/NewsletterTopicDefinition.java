@@ -38,7 +38,7 @@ public class NewsletterTopicDefinition extends AbstractDefinitionEntity<Newslett
      */
     public NewsletterTopicDefinition(final Integer id, final String mainLanguageCode, final Integer version,
         final NewsletterTopicTranslation... translations) {
-        super(AssertAs.notNull(mainLanguageCode, "mainLanguageCode"), Arrays
+        super(AssertAs.INSTANCE.notNull(mainLanguageCode, "mainLanguageCode"), Arrays
             .stream(translations)
             .filter(tr -> mainLanguageCode.equals(tr.getLangCode()))
             .map(NewsletterTopicTranslation::getName)

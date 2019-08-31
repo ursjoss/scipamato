@@ -18,7 +18,7 @@ public abstract class AbstractDefinitionTranslation extends ScipamatoEntity impl
         final Integer version) {
         super();
         setId(id);
-        setLangCode(AssertAs.notNull(langCode, "langCode"));
+        setLangCode(AssertAs.INSTANCE.notNull(langCode, "langCode"));
         setName(name);
         setVersion(version != null ? version : 0);
     }

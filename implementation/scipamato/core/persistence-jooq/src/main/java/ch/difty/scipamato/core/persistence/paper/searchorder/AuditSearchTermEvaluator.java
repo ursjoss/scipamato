@@ -37,7 +37,7 @@ public class AuditSearchTermEvaluator implements SearchTermEvaluator<AuditSearch
 
     @Override
     public Condition evaluate(final AuditSearchTerm searchTerm) {
-        AssertAs.notNull(searchTerm, "searchTerm");
+        AssertAs.INSTANCE.notNull(searchTerm, "searchTerm");
 
         final ConditionalSupplier conditions = new ConditionalSupplier();
 

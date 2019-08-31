@@ -330,7 +330,7 @@ public class JooqSearchOrderRepo extends
     @Override
     public SearchCondition addSearchCondition(SearchCondition searchCondition, long searchOrderId,
         final String languageCode) {
-        AssertAs.notNull(languageCode, "languageCode");
+        AssertAs.INSTANCE.notNull(languageCode, "languageCode");
         final Optional<SearchCondition> optionalPersisted = findEquivalentPersisted(searchCondition, searchOrderId,
             languageCode);
         if (optionalPersisted.isPresent()) {
@@ -430,12 +430,12 @@ public class JooqSearchOrderRepo extends
         String languageCode) {
         return getDsl()
             .select(CODE.CODE_.as("C_ID"), DSL
-                    .coalesce(CODE_TR.NAME, TranslationUtils.NOT_TRANSL)
+                    .coalesce(CODE_TR.NAME, TranslationUtils.INSTANCE.getNOT_TRANSL())
                     .as("C_NAME"), CODE_TR.COMMENT.as("C_COMMENT"), CODE.INTERNAL.as("C_INTERNAL"),
                 CODE_CLASS.ID.as("CC_ID"), DSL
-                    .coalesce(CODE_CLASS_TR.NAME, TranslationUtils.NOT_TRANSL)
+                    .coalesce(CODE_CLASS_TR.NAME, TranslationUtils.INSTANCE.getNOT_TRANSL())
                     .as("CC_NAME"), DSL
-                    .coalesce(CODE_CLASS_TR.DESCRIPTION, TranslationUtils.NOT_TRANSL)
+                    .coalesce(CODE_CLASS_TR.DESCRIPTION, TranslationUtils.INSTANCE.getNOT_TRANSL())
                     .as("CC_DESCRIPTION"), CODE.SORT)
             .from(SEARCH_CONDITION_CODE)
             .join(SEARCH_CONDITION)
@@ -558,7 +558,7 @@ public class JooqSearchOrderRepo extends
     @Override
     public SearchCondition updateSearchCondition(SearchCondition searchCondition, long searchOrderId,
         final String languageCode) {
-        AssertAs.notNull(languageCode, "languageCode");
+        AssertAs.INSTANCE.notNull(languageCode, "languageCode");
         final Condition idMatches = SEARCH_CONDITION.SEARCH_CONDITION_ID.eq(searchCondition.getSearchConditionId());
         getDsl()
             .update(SEARCH_CONDITION)

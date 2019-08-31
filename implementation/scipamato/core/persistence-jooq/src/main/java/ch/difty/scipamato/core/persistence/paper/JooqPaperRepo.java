@@ -73,7 +73,7 @@ public class JooqPaperRepo extends
         final ApplicationProperties applicationProperties) {
         super(dsl, mapper, sortMapper, filterConditionMapper, dateTimeService, insertSetStepSetter, updateSetStepSetter,
             applicationProperties);
-        this.searchOrderRepository = AssertAs.notNull(searchOrderRepository, "searchOrderRepository");
+        this.searchOrderRepository = AssertAs.INSTANCE.notNull(searchOrderRepository, "searchOrderRepository");
     }
 
     @Override
@@ -120,12 +120,12 @@ public class JooqPaperRepo extends
     private void enrichCodesOf(final Paper entity, final String languageCode) {
         final List<Code> codes = getDsl()
             .select(CODE.CODE_.as("C_ID"), DSL
-                    .coalesce(CODE_TR.NAME, TranslationUtils.NOT_TRANSL)
+                    .coalesce(CODE_TR.NAME, TranslationUtils.INSTANCE.getNOT_TRANSL())
                     .as("C_NAME"), CODE_TR.COMMENT.as("C_COMMENT"), CODE.INTERNAL.as("C_INTERNAL"),
                 CODE_CLASS.ID.as("CC_ID"), DSL
-                    .coalesce(CODE_CLASS_TR.NAME, TranslationUtils.NOT_TRANSL)
+                    .coalesce(CODE_CLASS_TR.NAME, TranslationUtils.INSTANCE.getNOT_TRANSL())
                     .as("CC_NAME"), DSL
-                    .coalesce(CODE_CLASS_TR.DESCRIPTION, TranslationUtils.NOT_TRANSL)
+                    .coalesce(CODE_CLASS_TR.DESCRIPTION, TranslationUtils.INSTANCE.getNOT_TRANSL())
                     .as("CC_DESCRIPTION"), CODE.SORT, CODE.CREATED, CODE.CREATED_BY, CODE.LAST_MODIFIED,
                 CODE.LAST_MODIFIED_BY, CODE.VERSION)
             .from(PAPER_CODE)
@@ -195,7 +195,7 @@ public class JooqPaperRepo extends
 
     @Override
     protected void updateAssociatedEntities(final Paper paper, final String languageCode) {
-        AssertAs.notNull(paper, "paper");
+        AssertAs.INSTANCE.notNull(paper, "paper");
         storeNewCodesOf(paper);
         deleteObsoleteCodesFrom(paper);
         considerStoringNewsletterLinkOf(paper);
@@ -256,7 +256,7 @@ public class JooqPaperRepo extends
 
     @Override
     public List<Paper> findByIds(final List<Long> ids) {
-        AssertAs.notNull(ids, "ids");
+        AssertAs.INSTANCE.notNull(ids, "ids");
         return getDsl()
             .selectFrom(PAPER)
             .where(PAPER.ID.in(ids))
@@ -265,7 +265,7 @@ public class JooqPaperRepo extends
 
     @Override
     public List<Paper> findWithCodesByIds(final List<Long> ids, final String languageCode) {
-        AssertAs.notNull(languageCode, LANGUAGE_CODE);
+        AssertAs.INSTANCE.notNull(languageCode, LANGUAGE_CODE);
         final List<Paper> papers = findByIds(ids);
         enrichAssociatedEntitiesOfAll(papers, languageCode);
         return papers;
@@ -273,7 +273,7 @@ public class JooqPaperRepo extends
 
     @Override
     public List<Paper> findBySearchOrder(final SearchOrder searchOrder, final String languageCode) {
-        AssertAs.notNull(languageCode, LANGUAGE_CODE);
+        AssertAs.INSTANCE.notNull(languageCode, LANGUAGE_CODE);
         final List<Paper> papers = searchOrderRepository.findBySearchOrder(searchOrder);
         enrichAssociatedEntitiesOfAll(papers, languageCode);
         return papers;
@@ -282,7 +282,7 @@ public class JooqPaperRepo extends
     @Override
     public List<Paper> findPageBySearchOrder(final SearchOrder searchOrder, final PaginationContext paginationContext,
         final String languageCode) {
-        AssertAs.notNull(languageCode, LANGUAGE_CODE);
+        AssertAs.INSTANCE.notNull(languageCode, LANGUAGE_CODE);
         final List<Paper> entities = searchOrderRepository.findPageBySearchOrder(searchOrder, paginationContext);
         enrichAssociatedEntitiesOfAll(entities, languageCode);
         return entities;
@@ -298,7 +298,7 @@ public class JooqPaperRepo extends
         if (CollectionUtils.isEmpty(pmIds)) {
             return new ArrayList<>();
         } else {
-            AssertAs.notNull(languageCode, LANGUAGE_CODE);
+            AssertAs.INSTANCE.notNull(languageCode, LANGUAGE_CODE);
             final List<Paper> papers = getDsl()
                 .selectFrom(PAPER)
                 .where(PAPER.PM_ID.in(pmIds))
@@ -326,7 +326,7 @@ public class JooqPaperRepo extends
         if (CollectionUtils.isEmpty(numbers)) {
             return new ArrayList<>();
         } else {
-            AssertAs.notNull(languageCode, LANGUAGE_CODE);
+            AssertAs.INSTANCE.notNull(languageCode, LANGUAGE_CODE);
             final List<Paper> papers = getDsl()
                 .selectFrom(PAPER)
                 .where(PAPER.NUMBER.in(numbers))
@@ -465,7 +465,7 @@ public class JooqPaperRepo extends
 
     @Override
     public Optional<String> isDoiAlreadyAssigned(final String doi, final Long idOfCurrentPaper) {
-        AssertAs.notNull(doi, "doi");
+        AssertAs.INSTANCE.notNull(doi, "doi");
         return evaluateNumbers(fetchRecords(idOfCurrentPaper, PAPER.DOI.eq(doi)));
     }
 

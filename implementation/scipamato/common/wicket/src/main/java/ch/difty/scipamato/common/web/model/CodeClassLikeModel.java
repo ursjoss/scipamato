@@ -30,7 +30,7 @@ public abstract class CodeClassLikeModel<T extends CodeClassLike, S extends Code
 
     public CodeClassLikeModel(final String languageCode) {
         super();
-        this.languageCode = AssertAs.notNull(languageCode, "languageCode");
+        this.languageCode = AssertAs.INSTANCE.notNull(languageCode, "languageCode");
     }
 
     /**

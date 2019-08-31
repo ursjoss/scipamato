@@ -23,7 +23,7 @@ public class Newsletter extends PublicEntity {
     private final LocalDate issueDate;
 
     public String getMonthName(final String langCode) {
-        AssertAs.notNull(langCode, "langCode");
+        AssertAs.INSTANCE.notNull(langCode, "langCode");
         return issueDate.format(DateTimeFormatter.ofPattern("MMMM yyyy", Locale.forLanguageTag(langCode)));
     }
 

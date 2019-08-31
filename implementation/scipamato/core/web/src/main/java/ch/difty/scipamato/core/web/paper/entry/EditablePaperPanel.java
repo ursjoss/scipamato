@@ -795,7 +795,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
     @Override
     protected boolean isAssociatedWithWipNewsletter() {
         final Paper.NewsletterLink nl = getModelObject().getNewsletterLink();
-        return nl != null && PublicationStatus
+        return nl != null && PublicationStatus.Companion
             .byId(nl.getPublicationStatusId())
             .isInProgress();
     }
@@ -834,7 +834,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
 
         TextFieldValueMustBeUniqueValidator(final String label, final TextField<Object> field) {
             this.label = label;
-            this.components = new FormComponent<?>[] { AssertAs.notNull(field, "field") };
+            this.components = new FormComponent<?>[] { AssertAs.INSTANCE.notNull(field, "field") };
         }
 
         @Override

@@ -48,13 +48,13 @@ public class JooqCodeClassRepo extends AbstractRepo implements CodeClassReposito
     @Override
     @Cacheable
     public List<CodeClass> find(final String languageCode) {
-        final String lang = TranslationUtils.trimLanguageCode(languageCode);
+        final String lang = TranslationUtils.INSTANCE.trimLanguageCode(languageCode);
         // skipping the audit fields
         return getDsl()
             .select(CODE_CLASS.ID.as("CC_ID"), DSL
-                .coalesce(CODE_CLASS_TR.NAME, TranslationUtils.NOT_TRANSL)
+                .coalesce(CODE_CLASS_TR.NAME, TranslationUtils.INSTANCE.getNOT_TRANSL())
                 .as("CC_NAME"), DSL
-                .coalesce(CODE_CLASS_TR.DESCRIPTION, TranslationUtils.NOT_TRANSL)
+                .coalesce(CODE_CLASS_TR.DESCRIPTION, TranslationUtils.INSTANCE.getNOT_TRANSL())
                 .as("CC_DESCRIPTION"))
             .from(CODE_CLASS)
             .leftOuterJoin(CODE_CLASS_TR)
@@ -192,7 +192,7 @@ public class JooqCodeClassRepo extends AbstractRepo implements CodeClassReposito
 
     @Override
     public CodeClassDefinition findCodeClassDefinition(final Integer id) {
-        AssertAs.notNull(id, "id");
+        AssertAs.INSTANCE.notNull(id, "id");
         final Map<Integer, Result<Record>> records = getDsl()
             .select(CODE_CLASS.fields())
             .select(LANGUAGE.CODE)
@@ -214,7 +214,7 @@ public class JooqCodeClassRepo extends AbstractRepo implements CodeClassReposito
     @Override
     @CacheEvict(allEntries = true)
     public CodeClassDefinition saveOrUpdate(final CodeClassDefinition codeClassDefinition) {
-        AssertAs.notNull(codeClassDefinition, "codeClassDefinition");
+        AssertAs.INSTANCE.notNull(codeClassDefinition, "codeClassDefinition");
         final int userId = getUserId();
 
         final CodeClassRecord ccRecord = getDsl()
@@ -347,7 +347,7 @@ public class JooqCodeClassRepo extends AbstractRepo implements CodeClassReposito
     @Override
     @CacheEvict(allEntries = true)
     public CodeClassDefinition delete(final Integer id, final int version) {
-        AssertAs.notNull(id, "id");
+        AssertAs.INSTANCE.notNull(id, "id");
 
         final CodeClassDefinition toBeDeleted = findCodeClassDefinition(id);
         if (toBeDeleted != null) {

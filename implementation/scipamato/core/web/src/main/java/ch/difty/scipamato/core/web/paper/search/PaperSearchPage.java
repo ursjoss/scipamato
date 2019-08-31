@@ -102,10 +102,10 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
      */
     public PaperSearchPage(final IModel<SearchOrder> searchOrderModel, final Mode mode) {
         super(searchOrderModel);
-        AssertAs.notNull(searchOrderModel, "searchOrderModel");
+        AssertAs.INSTANCE.notNull(searchOrderModel, "searchOrderModel");
         final SearchOrder searchOrder = searchOrderModel.getObject();
-        AssertAs.notNull(searchOrder, "searchOrderModel.object");
-        AssertAs.notNull(searchOrder.getId(), "searchOrderModel.object.id");
+        AssertAs.INSTANCE.notNull(searchOrder, "searchOrderModel.object");
+        AssertAs.INSTANCE.notNull(searchOrder.getId(), "searchOrderModel.object.id");
         getPageParameters().clearNamed();
         getPageParameters().add(SEARCH_ORDER_ID.getName(), searchOrder.getId());
         getPageParameters().add(SHOW_EXCLUDED.getName(), searchOrder.isShowExcluded());

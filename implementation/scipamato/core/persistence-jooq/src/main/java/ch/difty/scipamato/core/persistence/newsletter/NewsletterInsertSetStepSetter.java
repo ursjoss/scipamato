@@ -28,8 +28,8 @@ public class NewsletterInsertSetStepSetter implements InsertSetStepSetter<Newsle
     @Override
     public InsertSetMoreStep<NewsletterRecord> setNonKeyFieldsFor(final InsertSetStep<NewsletterRecord> step,
         final Newsletter e) {
-        AssertAs.notNull(step, "step");
-        AssertAs.notNull(e, "entity");
+        AssertAs.INSTANCE.notNull(step, "step");
+        AssertAs.INSTANCE.notNull(e, "entity");
 
         return step
             .set(NEWSLETTER.ISSUE, e.getIssue())
@@ -44,8 +44,8 @@ public class NewsletterInsertSetStepSetter implements InsertSetStepSetter<Newsle
 
     @Override
     public void considerSettingKeyOf(final InsertSetMoreStep<NewsletterRecord> step, final Newsletter entity) {
-        AssertAs.notNull(step, "step");
-        AssertAs.notNull(entity, "entity");
+        AssertAs.INSTANCE.notNull(step, "step");
+        AssertAs.INSTANCE.notNull(entity, "entity");
         final Integer id = entity.getId();
         if (id != null)
             step.set(NEWSLETTER.ID, id);

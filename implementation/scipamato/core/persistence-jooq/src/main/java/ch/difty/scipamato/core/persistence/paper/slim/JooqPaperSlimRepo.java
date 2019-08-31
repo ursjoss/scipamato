@@ -40,7 +40,7 @@ public class JooqPaperSlimRepo extends
         PaperSlimBackedSearchOrderRepository searchOrderRepository, DateTimeService dateTimeService,
         ApplicationProperties applicationProperties) {
         super(dsl, mapper, sortMapper, filterConditionMapper, dateTimeService, applicationProperties);
-        this.searchOrderRepository = AssertAs.notNull(searchOrderRepository, "searchOrderRepository");
+        this.searchOrderRepository = AssertAs.INSTANCE.notNull(searchOrderRepository, "searchOrderRepository");
     }
 
     @Override
@@ -60,7 +60,7 @@ public class JooqPaperSlimRepo extends
 
     @Override
     public PaperSlim findById(final Long id, final String languageCode) {
-        AssertAs.notNull(id, "id");
+        AssertAs.INSTANCE.notNull(id, "id");
         final Record9<Long, Long, String, Integer, String, Integer, String, Integer, String> record = getBaseQuery()
             .where(getTableId().equal(id))
             .fetchOne();
@@ -89,7 +89,7 @@ public class JooqPaperSlimRepo extends
 
     @Override
     public PaperSlim findById(final Long id, final int version, String languageCode) {
-        AssertAs.notNull(id, "id");
+        AssertAs.INSTANCE.notNull(id, "id");
         final Record9<Long, Long, String, Integer, String, Integer, String, Integer, String> record = getBaseQuery()
             .where(getTableId().equal(id))
             .and(getRecordVersion().equal(version))

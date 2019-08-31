@@ -69,8 +69,8 @@ abstract class CodeEditHeaderPanel extends DeletableDefinitionEditHeaderPanel<Co
 
         CodeMustMatchCodeClassValidator(final TextField<String> codeField,
             final BootstrapSelect<CodeClass> codeClasses) {
-            this.components = new FormComponent<?>[] { AssertAs.notNull(codeField, "field"),
-                AssertAs.notNull(codeClasses, "codeClasses") };
+            this.components = new FormComponent<?>[] { AssertAs.INSTANCE.notNull(codeField, "field"),
+                AssertAs.INSTANCE.notNull(codeClasses, "codeClasses") };
         }
 
         @Override

@@ -27,7 +27,7 @@ public class CoreShortFieldWithEmptyMainFieldConcatenator extends AbstractShortF
 
     @Override
     public String methodsFrom(final Paper p, final ReportHeaderFields rhf) {
-        AssertAs.notNull(p, PAPER);
+        AssertAs.INSTANCE.notNull(p, PAPER);
         return methodsFrom(p.getMethods(), new Tuple(rhf.getMethodStudyDesignLabel(), p.getMethodStudyDesign()),
             new Tuple(rhf.getMethodOutcomeLabel(), p.getMethodOutcome()),
             new Tuple(rhf.getPopulationPlaceLabel(), p.getPopulationPlace()),
@@ -39,7 +39,7 @@ public class CoreShortFieldWithEmptyMainFieldConcatenator extends AbstractShortF
 
     @Override
     public String populationFrom(final Paper p, final ReportHeaderFields rhf) {
-        AssertAs.notNull(p, PAPER);
+        AssertAs.INSTANCE.notNull(p, PAPER);
         return populationFrom(p.getPopulation(), new Tuple(rhf.getPopulationPlaceLabel(), p.getPopulationPlace()),
             new Tuple(rhf.getPopulationParticipantsLabel(), p.getPopulationParticipants()),
             new Tuple(rhf.getPopulationDurationLabel(), p.getPopulationDuration()));
@@ -47,7 +47,7 @@ public class CoreShortFieldWithEmptyMainFieldConcatenator extends AbstractShortF
 
     @Override
     public String resultFrom(final Paper p, final ReportHeaderFields rhf) {
-        AssertAs.notNull(p, PAPER);
+        AssertAs.INSTANCE.notNull(p, PAPER);
         return resultFrom(p.getResult(), new Tuple(rhf.getResultMeasuredOutcomeLabel(), p.getResultMeasuredOutcome()),
             new Tuple(rhf.getResultExposureRangeLabel(), p.getResultExposureRange()),
             new Tuple(rhf.getResultEffectEstimateLabel(), p.getResultEffectEstimate()),
