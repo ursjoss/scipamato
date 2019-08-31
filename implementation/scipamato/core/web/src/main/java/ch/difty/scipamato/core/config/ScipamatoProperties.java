@@ -64,7 +64,7 @@ public class ScipamatoProperties implements ScipamatoBaseProperties {
      * @return the author parser strategy used for interpreting the authors string.
      */
     public AuthorParserStrategy getAuthorParserStrategy() {
-        return AuthorParserStrategy.fromProperty(authorParser, AUTHOR_PARSER_PROPERTY_KEY);
+        return AuthorParserStrategy.Companion.fromProperty(authorParser, AUTHOR_PARSER_PROPERTY_KEY);
     }
 
     /**

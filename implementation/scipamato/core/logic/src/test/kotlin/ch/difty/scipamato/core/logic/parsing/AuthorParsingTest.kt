@@ -2,7 +2,6 @@
 
 package ch.difty.scipamato.core.logic.parsing
 
-import ch.difty.scipamato.common.TestUtils
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -11,8 +10,9 @@ internal class PubmedAuthorParserTest {
     private lateinit var p: PubmedAuthorParser
 
     @Test
-    fun degenerateConstruction() {
-        TestUtils.assertDegenerateSupplierParameter({ PubmedAuthorParser(null) }, "authorsString")
+    fun withNoAuthor_firstAuthorIsNull() {
+        p = PubmedAuthorParser("")
+        assertThat(p.firstAuthor).isNull()
     }
 
     @Test
@@ -24,7 +24,7 @@ internal class PubmedAuthorParserTest {
 
     private fun assertFirstAuthorOf(input: String, expected: String) {
         p = PubmedAuthorParser(input)
-        assertThat(p.firstAuthor.orElse("n.a.")).isEqualTo(expected)
+        assertThat(p.firstAuthor).isNotNull().isEqualTo(expected)
     }
 
     @Test
@@ -55,7 +55,7 @@ internal class PubmedAuthorParserTest {
     @Test
     fun canParseNameWithCardinality() {
         p = PubmedAuthorParser("Ln FN 1st, Ln FN 2nd, Ln FN 3rd, Ln FN 4th, Ln FN 5th, Ln FN 100th, Ln FN.")
-        assertThat(p.firstAuthor.orElse("n.a.")).isEqualTo("Ln")
+        assertThat(p.firstAuthor).isEqualTo("Ln")
         assertThat(p.authors.map { it.lastName }).containsOnly("Ln")
         assertThat(p.authors.map { it.firstName }).containsExactly("FN 1st", "FN 2nd", "FN 3rd", "FN 4th", "FN 5th", "FN 100th", "FN")
     }
@@ -93,6 +93,16 @@ internal class PubmedAuthorParserTest {
         p = PubmedAuthorParser("Flückiger P, Bäni HU.")
         assertThat(p.authors.map { it.lastName }).containsExactly("Flückiger", "Bäni")
         assertThat(p.authors.map { it.firstName }).containsExactly("P", "HU")
+    }
+
+}
+
+internal class AuthorParserFactoryTest {
+
+    @Test
+    fun cratingParser_withNoSetting_usesDefaultAuthorParser() {
+        val parser = AuthorParserFactory.create(AuthorParserStrategy.PUBMED).createParser("Turner MC.")
+        assertThat(parser).isInstanceOf(PubmedAuthorParser::class.java)
     }
 
 }

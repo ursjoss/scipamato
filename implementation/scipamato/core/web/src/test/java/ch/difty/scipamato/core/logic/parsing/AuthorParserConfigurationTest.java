@@ -32,8 +32,7 @@ class AuthorParserConfigurationTest {
 
         assertThat(factory)
             .isNotNull()
-            .isInstanceOf(AuthorParserFactory.class)
-            .isInstanceOf(DefaultAuthorParserFactory.class);
+            .isInstanceOf(AuthorParserFactory.class);
 
         verify(appProperties).getAuthorParserStrategy();
     }

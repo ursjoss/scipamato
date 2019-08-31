@@ -164,9 +164,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
             protected void onUpdate(AjaxRequestTarget target) {
                 if (!overridden.getModelObject()) {
                     AuthorParser p = authorParserFactory.createParser(authors.getValue());
-                    firstAuthor.setModelObject(p
-                        .getFirstAuthor()
-                        .orElse(null));
+                    firstAuthor.setModelObject(p.getFirstAuthor());
                 }
                 target.add(firstAuthor);
             }

@@ -10,6 +10,6 @@ public class TestAuthorParserConfiguration {
     @Bean
     @Primary
     public AuthorParserFactory authorParserFactory() {
-        return new DefaultAuthorParserFactory(AuthorParserStrategy.PUBMED);
+        return AuthorParserFactory.Companion.create(AuthorParserStrategy.PUBMED);
     }
 }

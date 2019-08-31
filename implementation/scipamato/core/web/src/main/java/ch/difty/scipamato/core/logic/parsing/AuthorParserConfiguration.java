@@ -12,6 +12,6 @@ public class AuthorParserConfiguration {
 
     @Bean
     public AuthorParserFactory authorParserFactory(final ApplicationCoreProperties appProperties) {
-        return new DefaultAuthorParserFactory(appProperties.getAuthorParserStrategy());
+        return AuthorParserFactory.Companion.create(appProperties.getAuthorParserStrategy());
     }
 }
