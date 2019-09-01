@@ -54,8 +54,9 @@ class PaperAttachmentTest {
         EqualsVerifier
             .forClass(PaperAttachment.class)
             .withRedefinedSuperclass()
-            .withIgnoredFields(CONTENT.getName(), CREATED.getName(), CREATOR_ID.getName(), MODIFIED.getName(),
-                MODIFIER_ID.getName())
+            .usingGetClass()
+            .withIgnoredFields(CONTENT.getFieldName(), CREATED.getFieldName(), CREATOR_ID.getFieldName(), MODIFIED.getFieldName(),
+                MODIFIER_ID.getFieldName())
             .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
             .verify();
     }

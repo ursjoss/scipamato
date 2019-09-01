@@ -51,7 +51,7 @@ public class Newsletter extends IdScipamatoEntity<Integer> {
         }
 
         @Override
-        public String getName() {
+        public String getFieldName() {
             return name;
         }
     }

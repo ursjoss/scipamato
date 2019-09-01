@@ -66,7 +66,7 @@ public class SimpleFilterPanel extends AbstractPanel<PublicPaperFilter> {
     }
 
     private void addTextFieldTo(String id, PublicPaperFilterFields filterField) {
-        TextField<String> field = new TextField<>(id, PropertyModel.of(getModel(), filterField.getName())) {
+        TextField<String> field = new TextField<>(id, PropertyModel.of(getModel(), filterField.getFieldName())) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -112,7 +112,7 @@ public class SimpleFilterPanel extends AbstractPanel<PublicPaperFilter> {
         StringResourceModel labelModel = new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null);
         queue(new Label(id + LABEL_TAG, labelModel));
 
-        IModel<Collection<C>> model = PropertyModel.of(getModel(), filterField.getName());
+        IModel<Collection<C>> model = PropertyModel.of(getModel(), filterField.getFieldName());
         List<? extends C> choices = Arrays.asList(values);
         final IChoiceRenderer<C> choiceRenderer = new EnumChoiceRenderer<>(this);
         final StringResourceModel noneSelectedModel = new StringResourceModel(CODES_NONE_SELECT_RESOURCE_TAG, this,
@@ -153,7 +153,7 @@ public class SimpleFilterPanel extends AbstractPanel<PublicPaperFilter> {
 
         final KeywordModel choices = new KeywordModel(languageCode);
         final IChoiceRenderer<Keyword> choiceRenderer = new ChoiceRenderer<>(
-            Keyword.KeywordFields.DISPLAY_VALUE.getName(), Keyword.KeywordFields.ID.getName());
+            Keyword.KeywordFields.DISPLAY_VALUE.getFieldName(), Keyword.KeywordFields.ID.getFieldName());
         final StringResourceModel noneSelectedModel = new StringResourceModel(KEYWORDS_NONE_SELECT_RESOURCE_TAG, this,
             null);
         final StringResourceModel selectAllModel = new StringResourceModel(SELECT_ALL_RESOURCE_TAG, this, null);
@@ -167,7 +167,7 @@ public class SimpleFilterPanel extends AbstractPanel<PublicPaperFilter> {
             .withLiveSearch(true)
             .withLiveSearchStyle("startsWith");
 
-        final PropertyModel<List<Keyword>> model = PropertyModel.of(getModel(), filterField.getName());
+        final PropertyModel<List<Keyword>> model = PropertyModel.of(getModel(), filterField.getFieldName());
         final BootstrapMultiSelect<Keyword> multiSelect = new BootstrapMultiSelect<>(id, model, choices,
             choiceRenderer) {
             private static final long serialVersionUID = 1L;

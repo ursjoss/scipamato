@@ -20,6 +20,6 @@ class CodeClassTranslationTest {
 
     @Test
     void field() {
-        assertThat(CodeClassTranslation.CodeClassTranslationFields.DESCRIPTION.getName()).isEqualTo("description");
+        assertThat(CodeClassTranslation.CodeClassTranslationFields.DESCRIPTION.getFieldName()).isEqualTo("description");
     }
 }

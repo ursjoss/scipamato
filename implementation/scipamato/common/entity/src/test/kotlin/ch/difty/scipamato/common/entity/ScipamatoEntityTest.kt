@@ -36,7 +36,8 @@ class ScipamatoEntityTest {
     fun equals() {
         EqualsVerifier
                 .forClass(ScipamatoEntity::class.java)
-                .withIgnoredFields(CREATED.getName(), MODIFIED.getName())
+                .usingGetClass()
+                .withIgnoredFields(CREATED.fieldName, MODIFIED.fieldName)
                 .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
                 .verify()
     }

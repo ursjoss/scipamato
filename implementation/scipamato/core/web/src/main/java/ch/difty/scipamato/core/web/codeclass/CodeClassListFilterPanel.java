@@ -20,11 +20,11 @@ class CodeClassListFilterPanel extends
     }
 
     protected void queueFilterFormFields() {
-        queueFieldAndLabel(new TextField<String>(CodeClassDefinition.CodeClassDefinitionFields.NAME.getName(),
-            PropertyModel.of(getFilter(), CodeClassFilter.CodeClassFilterFields.NAME_MASK.getName())));
+        queueFieldAndLabel(new TextField<String>(CodeClassDefinition.CodeClassDefinitionFields.NAME.getFieldName(),
+            PropertyModel.of(getFilter(), CodeClassFilter.CodeClassFilterFields.NAME_MASK.getFieldName())));
 
-        queueFieldAndLabel(new TextField<String>(CodeClassTranslation.CodeClassTranslationFields.DESCRIPTION.getName(),
-            PropertyModel.of(getFilter(), CodeClassFilter.CodeClassFilterFields.DESCRIPTION_MASK.getName())));
+        queueFieldAndLabel(new TextField<String>(CodeClassTranslation.CodeClassTranslationFields.DESCRIPTION.getFieldName(),
+            PropertyModel.of(getFilter(), CodeClassFilter.CodeClassFilterFields.DESCRIPTION_MASK.getFieldName())));
     }
 
 }

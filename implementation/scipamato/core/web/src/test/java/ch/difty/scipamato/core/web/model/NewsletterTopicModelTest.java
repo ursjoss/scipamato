@@ -31,7 +31,7 @@ class NewsletterTopicModelTest extends ModelTest {
         final NewsletterTopicModel model = new NewsletterTopicModel("de");
 
         assertThat(model.load())
-            .extracting(NewsletterTopic.NewsletterTopicFields.TITLE.getName())
+            .extracting(NewsletterTopic.NewsletterTopicFields.TITLE.getFieldName())
             .containsExactly("t1", "t2");
 
         verify(newsletterTopicServiceMock).findAll(languageCode);

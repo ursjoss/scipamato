@@ -1,6 +1,5 @@
 package ch.difty.scipamato.core.entity.keyword;
 
-import static ch.difty.scipamato.common.TestUtilsKt.assertDegenerateSupplierParameter;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Collection;
@@ -56,7 +55,7 @@ class KeywordDefinitionTest {
             .getTranslations()
             .values();
         assertThat(trs)
-            .extracting(KeywordTranslation.DefinitionTranslationFields.NAME.getName())
+            .extracting(KeywordTranslation.DefinitionTranslationFields.NAME.getFieldName())
             .containsOnly("stichwort2", "keyword2", "motdeclef2");
         for (final KeywordTranslation tr : trs)
             assertThat(tr.getLastModified()).isNull();
@@ -150,11 +149,6 @@ class KeywordDefinitionTest {
     }
 
     @Test
-    void gettingNameInLanguage_withNullLanguage_throws() {
-        assertDegenerateSupplierParameter(() -> new KeywordDefinition(2, "de", 1).getNameInLanguage(null), "langCode");
-    }
-
-    @Test
     void withTranslations_moreThanOnePerLanguage() {
         KeywordDefinition kd = new KeywordDefinition(2, "de", 1, kw_de, kw_de2, kw_en, kw_fr);
         assertThat(kd.getId()).isEqualTo(2);
@@ -170,7 +164,7 @@ class KeywordDefinitionTest {
             .getTranslations()
             .values();
         assertThat(trs)
-            .extracting(KeywordTranslation.DefinitionTranslationFields.NAME.getName())
+            .extracting(KeywordTranslation.DefinitionTranslationFields.NAME.getFieldName())
             .containsOnly("stichwort2", "stichwort2foo", "keyword2", "motdeclef2");
         for (final KeywordTranslation tr : trs)
             assertThat(tr.getLastModified()).isNull();

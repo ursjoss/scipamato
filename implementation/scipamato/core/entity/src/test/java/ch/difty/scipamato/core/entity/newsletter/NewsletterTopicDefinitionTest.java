@@ -39,7 +39,7 @@ class NewsletterTopicDefinitionTest {
             .getTranslations()
             .values();
         assertThat(trs)
-            .extracting(NewsletterTopicTranslation.DefinitionTranslationFields.NAME.getName())
+            .extracting(NewsletterTopicTranslation.DefinitionTranslationFields.NAME.getFieldName())
             .containsOnly("thema2", "topic2", "sujet2");
         for (final NewsletterTopicTranslation tr : trs)
             assertThat(tr.getLastModified()).isNull();

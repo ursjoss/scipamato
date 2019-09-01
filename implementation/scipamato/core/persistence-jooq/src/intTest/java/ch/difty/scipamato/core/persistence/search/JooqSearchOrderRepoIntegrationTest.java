@@ -17,7 +17,6 @@ import ch.difty.scipamato.core.entity.Code;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic;
 import ch.difty.scipamato.core.entity.search.SearchCondition;
 import ch.difty.scipamato.core.entity.search.SearchOrder;
-import ch.difty.scipamato.core.persistence.search.JooqSearchOrderRepo;
 
 @SuppressWarnings("SameParameterValue")
 @JooqTest
@@ -218,7 +217,7 @@ class JooqSearchOrderRepoIntegrationTest {
         assertSearchTermCount(1, 1, 1, 0, modifiedCondition3);
         assertThat(modifiedCondition3.getCodes()).hasSize(1);
         assertThat(modifiedCondition3.getCodes())
-            .extracting(Code.CodeFields.CODE.getName())
+            .extracting(Code.CodeFields.CODE.getFieldName())
             .containsExactly("1A");
         assertThat(repo.findConditionIdsWithSearchTerms(searchOrderId)).hasSize(4);
 

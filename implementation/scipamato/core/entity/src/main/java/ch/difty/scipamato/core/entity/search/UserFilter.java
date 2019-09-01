@@ -30,7 +30,7 @@ public class UserFilter extends ScipamatoFilter implements Serializable {
         }
 
         @Override
-        public String getName() {
+        public String getFieldName() {
             return name;
         }
     }

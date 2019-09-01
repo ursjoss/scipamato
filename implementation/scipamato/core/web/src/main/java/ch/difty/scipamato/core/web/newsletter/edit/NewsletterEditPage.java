@@ -125,9 +125,9 @@ public class NewsletterEditPage extends BasePage<Newsletter> {
     protected void onInitialize() {
         super.onInitialize();
         queueForm("form");
-        queueFieldAndLabel(newIssueField(ISSUE.getName()), new PropertyValidator<String>());
-        queueFieldAndLabel(newIssueDateField(ISSUE_DATE.getName()), new PropertyValidator<LocalDate>());
-        makeAndQueuePublicationStatusSelectBox(PUBLICATION_STATUS.getName());
+        queueFieldAndLabel(newIssueField(ISSUE.getFieldName()), new PropertyValidator<String>());
+        queueFieldAndLabel(newIssueDateField(ISSUE_DATE.getFieldName()), new PropertyValidator<LocalDate>());
+        makeAndQueuePublicationStatusSelectBox(PUBLICATION_STATUS.getFieldName());
         queueSubmitButton("submit");
 
         makeAndQueueResultPanel("resultPanel");
@@ -180,7 +180,7 @@ public class NewsletterEditPage extends BasePage<Newsletter> {
 
     private void makeAndQueuePublicationStatusSelectBox(final String id) {
         BootstrapSelect<PublicationStatus> publicationStatus = new BootstrapSelect<>(id,
-            new PropertyModel<>(getModel(), PUBLICATION_STATUS.getName()), Arrays.asList(PublicationStatus.values()),
+            new PropertyModel<>(getModel(), PUBLICATION_STATUS.getFieldName()), Arrays.asList(PublicationStatus.values()),
             new EnumChoiceRenderer<>(this)) {
 
             @Override

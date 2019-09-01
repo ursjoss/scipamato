@@ -36,7 +36,7 @@ public class NewsletterProvider extends SortableDataProvider<Newsletter, String>
             .get()
             .inject(this);
         this.filter = filter != null ? filter : new NewsletterFilter();
-        setSort(Newsletter.NewsletterFields.ISSUE.getName(), SortOrder.DESCENDING);
+        setSort(Newsletter.NewsletterFields.ISSUE.getFieldName(), SortOrder.DESCENDING);
     }
 
     /** package-private for test purposes */

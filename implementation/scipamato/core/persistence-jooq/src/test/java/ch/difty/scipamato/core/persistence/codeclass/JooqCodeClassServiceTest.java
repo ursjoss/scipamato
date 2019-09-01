@@ -72,7 +72,7 @@ class JooqCodeClassServiceTest {
         ccs.add(new CodeClass(2, "cc2", ""));
         when(repoMock.find(languageCodeClass)).thenReturn(ccs);
 
-        assertThat(extractProperty(NAME.getName()).from(service.find(languageCodeClass))).containsOnly("cc1", "cc2");
+        assertThat(extractProperty(NAME.getFieldName()).from(service.find(languageCodeClass))).containsOnly("cc1", "cc2");
 
         verify(repoMock).find(languageCodeClass);
 

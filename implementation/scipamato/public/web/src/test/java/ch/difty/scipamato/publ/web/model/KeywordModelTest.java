@@ -36,7 +36,7 @@ class KeywordModelTest extends ModelTest {
         final KeywordModel model = new KeywordModel("de");
 
         assertThat(model.load())
-            .extracting(Keyword.KeywordFields.NAME.getName())
+            .extracting(Keyword.KeywordFields.NAME.getFieldName())
             .containsExactly("k1", "k2");
 
         verify(serviceMock).findKeywords(languageCode);

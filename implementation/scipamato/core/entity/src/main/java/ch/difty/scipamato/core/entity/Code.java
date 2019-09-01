@@ -45,7 +45,7 @@ public class Code extends CoreEntity implements CodeLike {
         }
 
         @Override
-        public String getName() {
+        public String getFieldName() {
             return name;
         }
     }
@@ -84,11 +84,11 @@ public class Code extends CoreEntity implements CodeLike {
     private Code(final String code, final String name, final String comment, final boolean internal,
         final CodeClass codeClass, final int sort, final LocalDateTime created, final Integer createdBy,
         final LocalDateTime lastModified, final Integer lastModifiedBy, final Integer version) {
-        this.code = AssertAs.INSTANCE.notNull(code, CodeFields.CODE.getName());
+        this.code = AssertAs.INSTANCE.notNull(code, CodeFields.CODE.getFieldName());
         this.name = name;
         this.comment = comment;
         this.internal = internal;
-        this.codeClass = AssertAs.INSTANCE.notNull(codeClass, CodeFields.CODE_CLASS.getName());
+        this.codeClass = AssertAs.INSTANCE.notNull(codeClass, CodeFields.CODE_CLASS.getFieldName());
         this.sort = sort;
         setCreated(created);
         setCreatedBy(createdBy);

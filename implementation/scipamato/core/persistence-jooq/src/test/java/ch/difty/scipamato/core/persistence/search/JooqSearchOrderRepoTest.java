@@ -200,13 +200,13 @@ class JooqSearchOrderRepoTest extends
             getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), getApplicationProperties()) {
 
             final SearchTerm st1 = SearchTerm.newSearchTerm(1, SearchTermType.STRING.getId(), 3,
-                Paper.PaperFields.AUTHORS.getName(), "joss");
+                Paper.PaperFields.AUTHORS.getFieldName(), "joss");
             final SearchTerm st2 = SearchTerm.newSearchTerm(2, SearchTermType.INTEGER.getId(), 3,
-                Paper.PaperFields.PUBL_YEAR.getName(), "2014");
+                Paper.PaperFields.PUBL_YEAR.getFieldName(), "2014");
             final SearchTerm st3 = SearchTerm.newSearchTerm(3, SearchTermType.INTEGER.getId(), 4,
-                Paper.PaperFields.PUBL_YEAR.getName(), "2014-2016");
+                Paper.PaperFields.PUBL_YEAR.getFieldName(), "2014-2016");
             final SearchTerm st4 = SearchTerm.newSearchTerm(4, SearchTermType.AUDIT.getId(), 5,
-                Paper.PaperFields.CREATED_BY.getName(), "mkj");
+                Paper.PaperFields.CREATED_BY.getFieldName(), "mkj");
 
             @Override
             protected List<SearchTerm> fetchSearchTermsForSearchOrderWithId(long searchOrderId) {

@@ -82,7 +82,7 @@ class JooqPaperSlimBySearchOrderRepoIntegrationTest {
         sc.setMethods("querschnitt");
         so.add(sc);
         assertThat(repo.findPageBySearchOrder(so, pc))
-            .extracting(Paper.PaperFields.NUMBER.getName())
+            .extracting(Paper.PaperFields.NUMBER.getFieldName())
             .containsExactly(15L, 18L, 25L, 29L);
     }
 
@@ -91,7 +91,7 @@ class JooqPaperSlimBySearchOrderRepoIntegrationTest {
         sc.setMethods("querschnitt -regression");
         so.add(sc);
         assertThat(repo.findPageBySearchOrder(so, pc))
-            .extracting(Paper.PaperFields.NUMBER.getName())
+            .extracting(Paper.PaperFields.NUMBER.getFieldName())
             .containsExactly(15L);
     }
 
@@ -100,7 +100,7 @@ class JooqPaperSlimBySearchOrderRepoIntegrationTest {
         sc.setMethods("querschnitt -schweiz");
         so.add(sc);
         assertThat(repo.findPageBySearchOrder(so, pc))
-            .extracting(Paper.PaperFields.NUMBER.getName())
+            .extracting(Paper.PaperFields.NUMBER.getFieldName())
             .containsExactly(15L, 18L, 25L);
     }
 

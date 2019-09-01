@@ -52,7 +52,7 @@ public class SearchOrder extends IdScipamatoEntity<Long> implements PaperSlimFil
         }
 
         @Override
-        public String getName() {
+        public String getFieldName() {
             return name;
         }
     }
@@ -159,5 +159,4 @@ public class SearchOrder extends IdScipamatoEntity<Long> implements PaperSlimFil
             sb.append("*");
         return sb.toString();
     }
-
 }

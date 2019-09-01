@@ -105,9 +105,9 @@ public class NewsletterListPage extends BasePage<Void> {
     private void makeAndQueueFilterForm(final String id) {
         queue(new FilterForm<>(id, dataProvider));
 
-        queueFieldAndLabel(new TextField<String>(ISSUE.getName(), PropertyModel.of(filter, ISSUE_MASK.getName())));
-        queueStatusSelectAndLabel(Newsletter.NewsletterFields.PUBLICATION_STATUS.getName());
-        queueTopicsSelectAndLabel(TOPICS.getName());
+        queueFieldAndLabel(new TextField<String>(ISSUE.getFieldName(), PropertyModel.of(filter, ISSUE_MASK.getFieldName())));
+        queueStatusSelectAndLabel(Newsletter.NewsletterFields.PUBLICATION_STATUS.getFieldName());
+        queueTopicsSelectAndLabel(TOPICS.getFieldName());
         queueNewButton("newNewsletter");
 
     }
@@ -116,7 +116,7 @@ public class NewsletterListPage extends BasePage<Void> {
         StringResourceModel labelModel = new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null);
         queue(new Label(id + LABEL_TAG, labelModel));
 
-        final PropertyModel<PublicationStatus> selectionModel = PropertyModel.of(filter, PUBLICATION_STATUS.getName());
+        final PropertyModel<PublicationStatus> selectionModel = PropertyModel.of(filter, PUBLICATION_STATUS.getFieldName());
         final IModel<List<PublicationStatus>> choicesModel = Model.ofList(Arrays.asList(PublicationStatus.values()));
         BootstrapSelect<PublicationStatus> select = new BootstrapSelect<>(id, selectionModel, choicesModel,
             new EnumChoiceRenderer<>(this));
@@ -138,10 +138,10 @@ public class NewsletterListPage extends BasePage<Void> {
         StringResourceModel labelModel = new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null);
         queue(new Label(id + LABEL_TAG, labelModel));
 
-        final PropertyModel<NewsletterTopic> selectionModel = PropertyModel.of(filter, NEWSLETTER_TOPIC_ID.getName());
+        final PropertyModel<NewsletterTopic> selectionModel = PropertyModel.of(filter, NEWSLETTER_TOPIC_ID.getFieldName());
         final IModel<List<NewsletterTopic>> choicesModel = new NewsletterTopicModel(getLanguageCode());
         final IChoiceRenderer<NewsletterTopic> choiceRenderer = new ChoiceRenderer<>(
-            NewsletterTopic.NewsletterTopicFields.TITLE.getName(), NewsletterTopic.NewsletterTopicFields.ID.getName());
+            NewsletterTopic.NewsletterTopicFields.TITLE.getFieldName(), NewsletterTopic.NewsletterTopicFields.ID.getFieldName());
         final StringResourceModel noneSelectedModel = new StringResourceModel(id + ".noneSelected", this, null);
         final BootstrapSelectConfig config = new BootstrapSelectConfig()
             .withNoneSelectedText(noneSelectedModel.getObject())
@@ -169,9 +169,9 @@ public class NewsletterListPage extends BasePage<Void> {
 
     private List<IColumn<Newsletter, String>> makeTableColumns() {
         final List<IColumn<Newsletter, String>> columns = new ArrayList<>();
-        columns.add(makeClickableColumn(ISSUE.getName(), this::onTitleClick));
-        columns.add(makePropertyColumn(ISSUE_DATE.getName()));
-        columns.add(makeEnumPropertyColumn(Newsletter.NewsletterFields.PUBLICATION_STATUS.getName()));
+        columns.add(makeClickableColumn(ISSUE.getFieldName(), this::onTitleClick));
+        columns.add(makePropertyColumn(ISSUE_DATE.getFieldName()));
+        columns.add(makeEnumPropertyColumn(Newsletter.NewsletterFields.PUBLICATION_STATUS.getFieldName()));
         columns.add(makeSortTopicLinkColumn("sortTopics"));
         columns.add(makeRemoveLinkColumn("remove"));
         return columns;

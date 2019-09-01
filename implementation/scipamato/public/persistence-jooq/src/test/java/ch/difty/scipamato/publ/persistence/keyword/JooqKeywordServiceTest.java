@@ -31,7 +31,7 @@ class JooqKeywordServiceTest {
         when(repoMock.findKeywords(languageCode)).thenReturn(keywords);
 
         assertThat(service.findKeywords(languageCode))
-            .extracting(Keyword.KeywordFields.LANG_CODE.getName())
+            .extracting(Keyword.KeywordFields.LANG_CODE.getFieldName())
             .containsOnly("en", "fr");
 
         verify(repoMock).findKeywords(languageCode);

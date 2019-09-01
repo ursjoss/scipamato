@@ -18,7 +18,7 @@ abstract class KeywordEditHeaderPanel
 
     @Override
     protected void makeAndQueueFilterFields() {
-        queueFieldAndLabel(new TextField<String>(Keyword.KeywordFields.SEARCH_OVERRIDE.getName()));
+        queueFieldAndLabel(new TextField<String>(Keyword.KeywordFields.SEARCH_OVERRIDE.getFieldName()));
     }
 
 }

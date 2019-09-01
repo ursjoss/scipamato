@@ -63,7 +63,7 @@ public class SearchOrderPanel extends BasePanel<SearchOrder> {
             () -> Model.of(new SearchCondition()));
 
         SearchConditionProvider p = new SearchConditionProvider(
-            new PropertyModel<>(getModel(), SearchOrder.SearchOrderFields.CONDITIONS.getName()));
+            new PropertyModel<>(getModel(), SearchOrder.SearchOrderFields.CONDITIONS.getFieldName()));
         searchConditions = new BootstrapDefaultDataTable<>("searchConditions", makeTableColumns(), p, 10);
         searchConditions.setOutputMarkupId(true);
         searchConditions.add(new TableBehavior()

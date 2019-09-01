@@ -41,7 +41,7 @@ class KeywordTest extends PublicEntityTest<Keyword> {
         EqualsVerifier
             .forClass(Keyword.class)
             .withRedefinedSuperclass()
-            .withIgnoredFields(CREATED.getName(), MODIFIED.getName())
+            .withIgnoredFields(CREATED.getFieldName(), MODIFIED.getFieldName())
             .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
             .verify();
     }

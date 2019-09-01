@@ -37,7 +37,7 @@ public class PaperFilter extends ScipamatoFilter implements PaperSlimFilter {
         }
 
         @Override
-        public String getName() {
+        public String getFieldName() {
             return name;
         }
     }

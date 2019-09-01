@@ -21,7 +21,7 @@ public class CodeDefinitionProvider extends DefinitionProvider<CodeDefinition, C
 
     CodeDefinitionProvider(final CodeFilter filter) {
         super(filter);
-        setSort(CodeDefinition.CodeDefinitionFields.SORT.getName(), SortOrder.ASCENDING);
+        setSort(CodeDefinition.CodeDefinitionFields.SORT.getFieldName(), SortOrder.ASCENDING);
     }
 
     @Override

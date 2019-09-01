@@ -188,8 +188,8 @@ public class PublicPage extends BasePage<Void> {
             form.add(new Label(componentId + LABEL_TAG, Model.of(className)));
 
             final CodeModel choices = new CodeModel(codeClassId, getLanguageCode());
-            final IChoiceRenderer<Code> choiceRenderer = new ChoiceRenderer<>(Code.CodeFields.DISPLAY_VALUE.getName(),
-                Code.CodeFields.CODE.getName());
+            final IChoiceRenderer<Code> choiceRenderer = new ChoiceRenderer<>(Code.CodeFields.DISPLAY_VALUE.getFieldName(),
+                Code.CodeFields.CODE.getFieldName());
             final StringResourceModel noneSelectedModel = new StringResourceModel(CODES_NONE_SELECT_RESOURCE_TAG, this,
                 null);
             final StringResourceModel selectAllModel = new StringResourceModel(SELECT_ALL_RESOURCE_TAG, this, null);
@@ -299,15 +299,15 @@ public class PublicPage extends BasePage<Void> {
     }
 
     private PropertyColumn<PublicPaper, String> makePropertyColumn(FieldEnumType fieldType, FieldEnumType sortField) {
-        final String sortExpression = sortField.getName();
-        final String propExpression = fieldType.getName();
+        final String sortExpression = sortField.getFieldName();
+        final String propExpression = fieldType.getFieldName();
         return new PropertyColumn<>(new StringResourceModel(COLUMN_HEADER + propExpression, this, null), sortExpression,
             propExpression);
     }
 
     private ClickablePropertyColumn<PublicPaper, String> makeClickableColumn(FieldEnumType fieldType,
         SerializableConsumer<IModel<PublicPaper>> consumer) {
-        final String propExpression = fieldType.getName();
+        final String propExpression = fieldType.getFieldName();
         return new ClickablePropertyColumn<>(new StringResourceModel(COLUMN_HEADER + propExpression, this, null),
             propExpression, propExpression, consumer, true);
     }

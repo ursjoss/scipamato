@@ -53,11 +53,11 @@ class JooqNewsletterRepoIntegrationTest {
         assertThat(nl.getPublicationStatus()).isEqualTo(PublicationStatus.PUBLISHED);
         assertThat(nl.getPapers()).hasSize(5);
         assertThat(nl.getPapers())
-            .extracting(PaperSlim.PaperSlimFields.FIRST_AUTHOR.getName())
+            .extracting(PaperSlim.PaperSlimFields.FIRST_AUTHOR.getFieldName())
             .containsOnly("Turner", "Lanzinger", "Lanzinger", "Eeftens", "Kubesch");
         assertThat(nl.getTopics()).hasSize(3);
         assertThat(nl.getTopics())
-            .extracting(NewsletterTopic.NewsletterTopicFields.TITLE.getName())
+            .extracting(NewsletterTopic.NewsletterTopicFields.TITLE.getFieldName())
             .containsOnly("Ultrafeine Partikel", "Sterblichkeit", "Gesundheitsfolgenabschätzung");
     }
 

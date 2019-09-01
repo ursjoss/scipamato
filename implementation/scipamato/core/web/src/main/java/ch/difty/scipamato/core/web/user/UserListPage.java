@@ -73,8 +73,8 @@ public class UserListPage extends BasePage<Void> {
     private void makeAndQueueFilterForm(final String id) {
         queue(new FilterForm<>(id, dataProvider));
 
-        queueFieldAndLabel(new TextField<String>(USER_NAME.getName(),
-            PropertyModel.of(filter, UserFilter.UserFilterFields.NAME_MASK.getName())));
+        queueFieldAndLabel(new TextField<String>(USER_NAME.getFieldName(),
+            PropertyModel.of(filter, UserFilter.UserFilterFields.NAME_MASK.getFieldName())));
         queueNewButton("newUser");
     }
 
@@ -100,11 +100,11 @@ public class UserListPage extends BasePage<Void> {
 
     private List<IColumn<User, String>> makeTableColumns() {
         final List<IColumn<User, String>> columns = new ArrayList<>();
-        columns.add(makeClickableColumn(USER_NAME.getName(), this::onTitleClick));
-        columns.add(makePropertyColumn(FIRST_NAME.getName()));
-        columns.add(makePropertyColumn(LAST_NAME.getName()));
-        columns.add(makePropertyColumn(EMAIL.getName()));
-        columns.add(makeBooleanPropertyColumn(ENABLED.getName(), User::isEnabled));
+        columns.add(makeClickableColumn(USER_NAME.getFieldName(), this::onTitleClick));
+        columns.add(makePropertyColumn(FIRST_NAME.getFieldName()));
+        columns.add(makePropertyColumn(LAST_NAME.getFieldName()));
+        columns.add(makePropertyColumn(EMAIL.getFieldName()));
+        columns.add(makeBooleanPropertyColumn(ENABLED.getFieldName(), User::isEnabled));
         return columns;
     }
 

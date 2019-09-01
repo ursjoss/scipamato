@@ -82,17 +82,17 @@ public class SearchOrderSelectorPanel extends BasePanel<SearchOrder> {
         form = new Form<>(id, new CompoundPropertyModel<>(getModel()));
         queue(form);
         makeAndQueueSearchOrderSelectBox("searchOrder");
-        makeAndQueueName(NAME.getName());
-        makeAndQueueGlobalCheckBox(GLOBAL.getName());
+        makeAndQueueName(NAME.getFieldName());
+        makeAndQueueGlobalCheckBox(GLOBAL.getFieldName());
         makeAndQueueNewButton("new");
         makeAndQueueDeleteButton("delete");
-        makeAndQueueShowExcludedCheckBox(SHOW_EXCLUDED.getName());
+        makeAndQueueShowExcludedCheckBox(SHOW_EXCLUDED.getFieldName());
     }
 
     private void makeAndQueueSearchOrderSelectBox(final String id) {
         final SearchOrderModel choices = new SearchOrderModel(getActiveUser().getId(), SEARCH_ORDER_MAX);
         final IChoiceRenderer<SearchOrder> choiceRenderer = new ChoiceRenderer<>(
-            SearchOrder.CoreEntityFields.DISPLAY_VALUE.getName(), SearchOrder.IdScipamatoEntityFields.ID.getName());
+            SearchOrder.CoreEntityFields.DISPLAY_VALUE.getFieldName(), SearchOrder.IdScipamatoEntityFields.ID.getFieldName());
         final StringResourceModel noneSelectedModel = new StringResourceModel(id + ".noneSelected", this, null);
         final BootstrapSelectConfig config = new BootstrapSelectConfig()
             .withNoneSelectedText(noneSelectedModel.getObject())

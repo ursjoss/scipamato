@@ -36,7 +36,7 @@ public class NewStudyTopic extends PublicEntity {
         }
 
         @Override
-        public String getName() {
+        public String getFieldName() {
             return name;
         }
     }

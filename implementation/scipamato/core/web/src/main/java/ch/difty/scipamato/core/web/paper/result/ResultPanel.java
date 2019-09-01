@@ -130,11 +130,11 @@ public abstract class ResultPanel extends BasePanel<Void> {
 
     private List<IColumn<PaperSlim, String>> makeTableColumns() {
         final List<IColumn<PaperSlim, String>> columns = new ArrayList<>();
-        columns.add(makePropertyColumn(Paper.IdScipamatoEntityFields.ID.getName()));
-        columns.add(makePropertyColumn(NUMBER.getName()));
-        columns.add(makePropertyColumn(FIRST_AUTHOR.getName()));
-        columns.add(makePropertyColumn(PUBL_YEAR.getName()));
-        columns.add(makeClickableColumn(TITLE.getName(), this::onTitleClick));
+        columns.add(makePropertyColumn(Paper.IdScipamatoEntityFields.ID.getFieldName()));
+        columns.add(makePropertyColumn(NUMBER.getFieldName()));
+        columns.add(makePropertyColumn(FIRST_AUTHOR.getFieldName()));
+        columns.add(makePropertyColumn(PUBL_YEAR.getFieldName()));
+        columns.add(makeClickableColumn(TITLE.getFieldName(), this::onTitleClick));
         if (mode != Mode.VIEW && isOfferingSearchComposition())
             columns.add(makeExcludeLinkIconColumn("exclude"));
         if (mode != Mode.VIEW)
@@ -323,8 +323,8 @@ public abstract class ResultPanel extends BasePanel<Void> {
         final String pdfCaption =
             brand + "- " + new StringResourceModel("paper_summary.titlePart", this, null).getString();
         final ReportHeaderFields rhf = commonReportHeaderFieldsBuildPart(brand, headerPart)
-            .populationLabel(getLabelResourceFor(POPULATION.getName()))
-            .resultLabel(getLabelResourceFor(RESULT.getName()))
+            .populationLabel(getLabelResourceFor(POPULATION.getFieldName()))
+            .resultLabel(getLabelResourceFor(RESULT.getFieldName()))
             .build();
         final ScipamatoPdfExporterConfiguration config = new ScipamatoPdfExporterConfiguration.Builder(pdfCaption)
             .withAuthor(getActiveUser())
@@ -340,22 +340,22 @@ public abstract class ResultPanel extends BasePanel<Void> {
         final String headerPart) {
         return ReportHeaderFields
             .builder(headerPart, brand)
-            .goalsLabel(getLabelResourceFor(GOALS.getName()))
-            .methodsLabel(getLabelResourceFor(METHODS.getName()))
-            .methodOutcomeLabel(getLabelResourceFor(METHOD_OUTCOME.getName()))
-            .resultMeasuredOutcomeLabel(getLabelResourceFor(RESULT_MEASURED_OUTCOME.getName()))
-            .methodStudyDesignLabel(getLabelResourceFor(METHOD_STUDY_DESIGN.getName()))
-            .populationPlaceLabel(getLabelResourceFor(POPULATION_PLACE.getName()))
-            .populationParticipantsLabel(getLabelResourceFor(POPULATION_PARTICIPANTS.getName()))
-            .populationDurationLabel(getLabelResourceFor(POPULATION_DURATION.getName()))
-            .exposurePollutantLabel(getLabelResourceFor(EXPOSURE_POLLUTANT.getName()))
-            .exposureAssessmentLabel(getLabelResourceFor(EXPOSURE_ASSESSMENT.getName()))
-            .resultExposureRangeLabel(getLabelResourceFor(RESULT_EXPOSURE_RANGE.getName()))
-            .methodStatisticsLabel(getLabelResourceFor(METHOD_STATISTICS.getName()))
-            .methodConfoundersLabel(getLabelResourceFor(METHOD_CONFOUNDERS.getName()))
-            .resultEffectEstimateLabel(getLabelResourceFor(RESULT_EFFECT_ESTIMATE.getName()))
-            .conclusionLabel(getLabelResourceFor(CONCLUSION.getName()))
-            .commentLabel(getLabelResourceFor(COMMENT.getName()));
+            .goalsLabel(getLabelResourceFor(GOALS.getFieldName()))
+            .methodsLabel(getLabelResourceFor(METHODS.getFieldName()))
+            .methodOutcomeLabel(getLabelResourceFor(METHOD_OUTCOME.getFieldName()))
+            .resultMeasuredOutcomeLabel(getLabelResourceFor(RESULT_MEASURED_OUTCOME.getFieldName()))
+            .methodStudyDesignLabel(getLabelResourceFor(METHOD_STUDY_DESIGN.getFieldName()))
+            .populationPlaceLabel(getLabelResourceFor(POPULATION_PLACE.getFieldName()))
+            .populationParticipantsLabel(getLabelResourceFor(POPULATION_PARTICIPANTS.getFieldName()))
+            .populationDurationLabel(getLabelResourceFor(POPULATION_DURATION.getFieldName()))
+            .exposurePollutantLabel(getLabelResourceFor(EXPOSURE_POLLUTANT.getFieldName()))
+            .exposureAssessmentLabel(getLabelResourceFor(EXPOSURE_ASSESSMENT.getFieldName()))
+            .resultExposureRangeLabel(getLabelResourceFor(RESULT_EXPOSURE_RANGE.getFieldName()))
+            .methodStatisticsLabel(getLabelResourceFor(METHOD_STATISTICS.getFieldName()))
+            .methodConfoundersLabel(getLabelResourceFor(METHOD_CONFOUNDERS.getFieldName()))
+            .resultEffectEstimateLabel(getLabelResourceFor(RESULT_EFFECT_ESTIMATE.getFieldName()))
+            .conclusionLabel(getLabelResourceFor(CONCLUSION.getFieldName()))
+            .commentLabel(getLabelResourceFor(COMMENT.getFieldName()));
     }
 
     private void addOrReplacePdfSummaryShortLink(String id) {
@@ -380,19 +380,19 @@ public abstract class ResultPanel extends BasePanel<Void> {
             brand + "- " + new StringResourceModel("paper_review.titlePart", this, null).getString();
         final ReportHeaderFields rhf = ReportHeaderFields
             .builder("", brand)
-            .numberLabel(getLabelResourceFor(NUMBER.getName()))
+            .numberLabel(getLabelResourceFor(NUMBER.getFieldName()))
             .authorYearLabel(getLabelResourceFor("authorYear"))
-            .populationPlaceLabel(getShortLabelResourceFor(POPULATION_PLACE.getName()))
-            .methodOutcomeLabel(getShortLabelResourceFor(METHOD_OUTCOME.getName()))
-            .exposurePollutantLabel(getLabelResourceFor(EXPOSURE_POLLUTANT.getName()))
-            .methodStudyDesignLabel(getShortLabelResourceFor(METHOD_STUDY_DESIGN.getName()))
-            .populationDurationLabel(getShortLabelResourceFor(POPULATION_DURATION.getName()))
-            .populationParticipantsLabel(getShortLabelResourceFor(POPULATION_PARTICIPANTS.getName()))
-            .exposureAssessmentLabel(getShortLabelResourceFor(EXPOSURE_ASSESSMENT.getName()))
-            .resultExposureRangeLabel(getShortLabelResourceFor(RESULT_EXPOSURE_RANGE.getName()))
-            .methodConfoundersLabel(getLabelResourceFor(METHOD_CONFOUNDERS.getName()))
-            .resultEffectEstimateLabel(getShortLabelResourceFor(RESULT_EFFECT_ESTIMATE.getName()))
-            .conclusionLabel(getShortLabelResourceFor(CONCLUSION.getName()))
+            .populationPlaceLabel(getShortLabelResourceFor(POPULATION_PLACE.getFieldName()))
+            .methodOutcomeLabel(getShortLabelResourceFor(METHOD_OUTCOME.getFieldName()))
+            .exposurePollutantLabel(getLabelResourceFor(EXPOSURE_POLLUTANT.getFieldName()))
+            .methodStudyDesignLabel(getShortLabelResourceFor(METHOD_STUDY_DESIGN.getFieldName()))
+            .populationDurationLabel(getShortLabelResourceFor(POPULATION_DURATION.getFieldName()))
+            .populationParticipantsLabel(getShortLabelResourceFor(POPULATION_PARTICIPANTS.getFieldName()))
+            .exposureAssessmentLabel(getShortLabelResourceFor(EXPOSURE_ASSESSMENT.getFieldName()))
+            .resultExposureRangeLabel(getShortLabelResourceFor(RESULT_EXPOSURE_RANGE.getFieldName()))
+            .methodConfoundersLabel(getLabelResourceFor(METHOD_CONFOUNDERS.getFieldName()))
+            .resultEffectEstimateLabel(getShortLabelResourceFor(RESULT_EFFECT_ESTIMATE.getFieldName()))
+            .conclusionLabel(getShortLabelResourceFor(CONCLUSION.getFieldName()))
             .build();
         final ScipamatoPdfExporterConfiguration config = new ScipamatoPdfExporterConfiguration.Builder(pdfCaption)
             .withAuthor(getActiveUser())
@@ -411,7 +411,7 @@ public abstract class ResultPanel extends BasePanel<Void> {
         final String url = getProperties().getPubmedBaseUrl();
         final ReportHeaderFields rhf = ReportHeaderFields
             .builder("", brand)
-            .numberLabel(getLabelResourceFor(NUMBER.getName()))
+            .numberLabel(getLabelResourceFor(NUMBER.getFieldName()))
             .captionLabel(pdfCaption)
             .pubmedBaseUrl(url)
             .build();
@@ -439,7 +439,7 @@ public abstract class ResultPanel extends BasePanel<Void> {
         final String brand = getProperties().getBrand();
         final ReportHeaderFields rhf = ReportHeaderFields
             .builder("", brand)
-            .numberLabel(getLabelResourceFor(NUMBER.getName()))
+            .numberLabel(getLabelResourceFor(NUMBER.getFieldName()))
             .captionLabel(pdfCaption)
             .build();
         final ScipamatoPdfExporterConfiguration config = new ScipamatoPdfExporterConfiguration.Builder(pdfCaption)

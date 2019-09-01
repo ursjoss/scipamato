@@ -35,7 +35,7 @@ public class UserProvider extends SortableDataProvider<User, String> implements 
             .get()
             .inject(this);
         this.filter = filter != null ? filter : new UserFilter();
-        setSort(User.UserFields.USER_NAME.getName(), SortOrder.ASCENDING);
+        setSort(User.UserFields.USER_NAME.getFieldName(), SortOrder.ASCENDING);
     }
 
     /** package-private for test purposes */

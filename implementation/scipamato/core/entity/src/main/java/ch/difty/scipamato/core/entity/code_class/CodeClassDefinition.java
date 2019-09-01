@@ -52,7 +52,7 @@ public class CodeClassDefinition extends AbstractDefinitionEntity<CodeClassTrans
         }
 
         @Override
-        public String getName() {
+        public String getFieldName() {
             return name;
         }
 

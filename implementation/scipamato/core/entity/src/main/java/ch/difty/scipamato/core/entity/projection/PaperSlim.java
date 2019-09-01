@@ -42,7 +42,7 @@ public class PaperSlim extends IdScipamatoEntity<Long> {
         }
 
         @Override
-        public String getName() {
+        public String getFieldName() {
             return name;
         }
     }

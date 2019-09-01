@@ -75,7 +75,7 @@ class JooqCodeServiceTest {
         codes.add(new Code("c2", "Code2", null, false, 1, "cc1", "", 2));
         when(repoMock.findCodesOfClass(ccId, languageCode)).thenReturn(codes);
 
-        assertThat(extractProperty(CODE.getName()).from(service.findCodesOfClass(ccId, languageCode))).containsOnly(
+        assertThat(extractProperty(CODE.getFieldName()).from(service.findCodesOfClass(ccId, languageCode))).containsOnly(
             "c1", "c2");
 
         verify(repoMock).findCodesOfClass(ccId, languageCode);

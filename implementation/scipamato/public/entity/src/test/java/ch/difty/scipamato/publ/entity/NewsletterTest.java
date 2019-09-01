@@ -40,7 +40,7 @@ class NewsletterTest extends PublicEntityTest<Newsletter> {
         EqualsVerifier
             .forClass(NewStudy.class)
             .withRedefinedSuperclass()
-            .withIgnoredFields(CREATED.getName(), MODIFIED.getName())
+            .withIgnoredFields(CREATED.getFieldName(), MODIFIED.getFieldName())
             .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
             .verify();
     }

@@ -81,8 +81,8 @@ public class AuditSearchTermEvaluator implements SearchTermEvaluator<AuditSearch
         final String fieldName) {
         //@formatter:off
         return (
-               createdField.getName().equals(fieldName)
-            || lastModField.getName().equals(fieldName)
+               createdField.getFieldName().equals(fieldName)
+            || lastModField.getFieldName().equals(fieldName)
         );
         //@formatter:on
     }
@@ -91,7 +91,7 @@ public class AuditSearchTermEvaluator implements SearchTermEvaluator<AuditSearch
         String matchType) {
         final String msg = String.format(
             "Field %s is not one of the expected %s fields [%s, %s] entitled to use MatchType.%s", fieldName, fieldType,
-            fld1.getName(), fld2.getName(), matchType);
+            fld1.getFieldName(), fld2.getFieldName(), matchType);
         throw new IllegalArgumentException(msg);
     }
 

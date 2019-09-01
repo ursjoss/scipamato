@@ -32,7 +32,7 @@ class CodeClassModelTest extends ModelTest {
         final CodeClassModel model = new CodeClassModel("de");
 
         assertThat(model.load())
-            .extracting(Keyword.KeywordFields.NAME.getName())
+            .extracting(Keyword.KeywordFields.NAME.getFieldName())
             .containsExactly("cc1", "cc2");
 
         verify(codeClassServiceMock).find(languageCode);

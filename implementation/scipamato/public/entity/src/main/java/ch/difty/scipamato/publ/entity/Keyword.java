@@ -41,7 +41,7 @@ public class Keyword extends PublicEntity {
         }
 
         @Override
-        public String getName() {
+        public String getFieldName() {
             return name;
         }
     }

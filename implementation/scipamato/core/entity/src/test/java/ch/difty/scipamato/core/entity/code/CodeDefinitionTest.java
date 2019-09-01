@@ -1,6 +1,5 @@
 package ch.difty.scipamato.core.entity.code;
 
-import static ch.difty.scipamato.common.TestUtilsKt.assertDegenerateSupplierParameter;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Collection;
@@ -50,7 +49,7 @@ class CodeDefinitionTest {
             .getTranslations()
             .values();
         assertThat(trs)
-            .extracting(CodeTranslation.DefinitionTranslationFields.NAME.getName())
+            .extracting(CodeTranslation.DefinitionTranslationFields.NAME.getFieldName())
             .containsOnly("codede2", "codeen2", "codefr2");
         for (final CodeTranslation tr : trs)
             assertThat(tr.getLastModified()).isNull();
@@ -138,12 +137,6 @@ class CodeDefinitionTest {
     }
 
     @Test
-    void gettingNameInLanguage_withNullLanguage_throws() {
-        CodeDefinition code = new CodeDefinition("1A", "de", codeClass, 1, false, 1, c_de, c_en, c_fr);
-        assertDegenerateSupplierParameter(() -> code.getNameInLanguage(null), "langCode");
-    }
-
-    @Test
     void withTranslations_moreThanOnePerLanguage() {
         CodeDefinition code = new CodeDefinition("1B", "de", codeClass, 1, false, 1, c_de, c_de2, c_en, c_fr);
         assertThat(code.getCode()).isEqualTo("1B");
@@ -159,7 +152,7 @@ class CodeDefinitionTest {
             .getTranslations()
             .values();
         assertThat(trs)
-            .extracting(CodeTranslation.DefinitionTranslationFields.NAME.getName())
+            .extracting(CodeTranslation.DefinitionTranslationFields.NAME.getFieldName())
             .containsOnly("codede2", "codede2foo", "codeen2", "codefr2");
         for (final CodeTranslation tr : trs)
             assertThat(tr.getLastModified()).isNull();

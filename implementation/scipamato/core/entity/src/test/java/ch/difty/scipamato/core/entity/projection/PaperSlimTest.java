@@ -107,7 +107,8 @@ class PaperSlimTest {
         EqualsVerifier
             .forClass(PaperSlim.class)
             .withRedefinedSuperclass()
-            .withIgnoredFields(CREATED.getName(), CREATOR_ID.getName(), MODIFIED.getName(), MODIFIER_ID.getName())
+            .usingGetClass()
+            .withIgnoredFields(CREATED.getFieldName(), CREATOR_ID.getFieldName(), MODIFIED.getFieldName(), MODIFIER_ID.getFieldName())
             .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
             .verify();
     }

@@ -33,7 +33,7 @@ class NewStudyPageLinkTest extends PublicEntityTest<NewStudyPageLink> {
         EqualsVerifier
             .forClass(NewStudy.class)
             .withRedefinedSuperclass()
-            .withIgnoredFields(CREATED.getName(), MODIFIED.getName())
+            .withIgnoredFields(CREATED.getFieldName(), MODIFIED.getFieldName())
             .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
             .verify();
     }

@@ -87,7 +87,7 @@ public abstract class CoreEntity extends ScipamatoEntity {
         }
 
         @Override
-        public String getName() {
+        public String getFieldName() {
             return name;
         }
     }

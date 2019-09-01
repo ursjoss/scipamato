@@ -20,6 +20,6 @@ class CodeTranslationTest {
 
     @Test
     void field() {
-        assertThat(CodeTranslation.CodeTranslationFields.COMMENT.getName()).isEqualTo("comment");
+        assertThat(CodeTranslation.CodeTranslationFields.COMMENT.getFieldName()).isEqualTo("comment");
     }
 }

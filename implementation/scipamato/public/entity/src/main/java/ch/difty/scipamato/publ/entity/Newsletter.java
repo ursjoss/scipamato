@@ -40,7 +40,7 @@ public class Newsletter extends PublicEntity {
         }
 
         @Override
-        public String getName() {
+        public String getFieldName() {
             return name;
         }
     }
