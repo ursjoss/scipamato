@@ -1,5 +1,6 @@
 package ch.difty.scipamato.core.sync.jobs.paper;
 
+import static ch.difty.scipamato.common.TestUtilsKt.assertDegenerateSupplierParameter;
 import static ch.difty.scipamato.core.db.tables.Paper.PAPER;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.mockito.Mockito.*;
@@ -14,7 +15,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import ch.difty.scipamato.common.TestUtils;
 import ch.difty.scipamato.core.db.tables.records.PaperRecord;
 
 @ExtendWith(MockitoExtension.class)
@@ -32,17 +32,17 @@ class SyncShortFieldWithEmptyMainFieldConcatenatorTest {
 
     @Test
     void methods_withNullRecordSet_throws() {
-        TestUtils.assertDegenerateSupplierParameter(() -> sfc.methodsFrom(null), "rs");
+        assertDegenerateSupplierParameter(() -> sfc.methodsFrom(null), "rs");
     }
 
     @Test
     void population_withNullRecordSet_throws() {
-        TestUtils.assertDegenerateSupplierParameter(() -> sfc.populationFrom(null), "rs");
+        assertDegenerateSupplierParameter(() -> sfc.populationFrom(null), "rs");
     }
 
     @Test
     void result_withNullRecordSet_throws() {
-        TestUtils.assertDegenerateSupplierParameter(() -> sfc.resultFrom(null), "rs");
+        assertDegenerateSupplierParameter(() -> sfc.resultFrom(null), "rs");
     }
 
     @Test

@@ -43,6 +43,7 @@ public class JooqKeywordRepo extends AbstractRepo implements KeywordRepository {
 
     @Override
     public List<Keyword> findAll(final String languageCode) {
+        AssertAs.INSTANCE.notNull(languageCode, "languageCode");
         final String lang = TranslationUtils.INSTANCE.trimLanguageCode(languageCode);
         // skipping the audit fields
         return getDsl()

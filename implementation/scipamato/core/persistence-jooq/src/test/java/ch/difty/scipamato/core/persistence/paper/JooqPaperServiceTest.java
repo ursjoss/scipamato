@@ -1,5 +1,6 @@
 package ch.difty.scipamato.core.persistence.paper;
 
+import static ch.difty.scipamato.common.TestUtilsKt.assertDegenerateSupplierParameter;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 import static org.mockito.Mockito.*;
@@ -9,7 +10,6 @@ import java.util.*;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
-import ch.difty.scipamato.common.TestUtils;
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.PaperAttachment;
@@ -487,8 +487,7 @@ class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, PaperReposit
 
     @Test
     void hasDuplicateFieldNextToCurrent_withDegenerateConstruction_nullFieldName_throws() {
-        TestUtils.assertDegenerateSupplierParameter(() -> service.hasDuplicateFieldNextToCurrent(null, "fw", 1L),
-            "fieldName");
+        assertDegenerateSupplierParameter(() -> service.hasDuplicateFieldNextToCurrent(null, "fw", 1L), "fieldName");
     }
 
     @Test

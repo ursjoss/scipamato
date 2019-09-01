@@ -4,9 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 
-import ch.difty.scipamato.common.FinalClassTest;
-
-class WicketUtilsTest implements FinalClassTest<WicketUtils> {
+class WicketUtilsTest {
 
     @Test
     void labelTag() {

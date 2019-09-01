@@ -43,6 +43,7 @@ public class JooqNewsletterTopicRepo extends AbstractRepo implements NewsletterT
 
     @Override
     public List<NewsletterTopic> findAll(final String languageCode) {
+        AssertAs.INSTANCE.notNull(languageCode, "languageCode");
         final String lang = TranslationUtils.INSTANCE.trimLanguageCode(languageCode);
         // skipping the audit fields
         return getDsl()

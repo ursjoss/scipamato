@@ -1,5 +1,6 @@
 package ch.difty.scipamato.common.entity;
 
+import static ch.difty.scipamato.common.TestUtilsKt.assertDegenerateSupplierParameter;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
@@ -9,7 +10,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.common.NullArgumentException;
-import ch.difty.scipamato.common.TestUtils;
 
 @SuppressWarnings("unchecked")
 class AbstractDefinitionEntityTest {
@@ -55,20 +55,18 @@ class AbstractDefinitionEntityTest {
 
     @Test
     void degenerateConstruction_ofEntityDefinition_withNullLanguageCode_throws() {
-        TestUtils.assertDegenerateSupplierParameter(
+        assertDegenerateSupplierParameter(
             () -> new TestDefinitionEntity(null, "some", 1, new DefinitionTranslation[] {}), "mainLanguageCode");
     }
 
     @Test
     void degenerateConstruction_ofEntityDefinition_withNullTranslationArray_throws() {
-        TestUtils.assertDegenerateSupplierParameter(() -> new TestDefinitionEntity("de", "some", 1, null),
-            "translations");
+        assertDegenerateSupplierParameter(() -> new TestDefinitionEntity("de", "some", 1, null), "translations");
     }
 
     @Test
     void degenerateConstruction_ofTranslation_withNullLanguageCode_throws() {
-        TestUtils.assertDegenerateSupplierParameter(() -> new TestDefinitionTranslation(1, null, "some", 1),
-            "langCode");
+        assertDegenerateSupplierParameter(() -> new TestDefinitionTranslation(1, null, "some", 1), "langCode");
     }
 
     @Test

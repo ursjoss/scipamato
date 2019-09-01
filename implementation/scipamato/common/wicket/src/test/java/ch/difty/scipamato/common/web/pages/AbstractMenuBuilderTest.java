@@ -1,5 +1,6 @@
 package ch.difty.scipamato.common.web.pages;
 
+import static ch.difty.scipamato.common.TestUtilsKt.assertDegenerateSupplierParameter;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -24,7 +25,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.common.DateTimeService;
-import ch.difty.scipamato.common.TestUtils;
 import ch.difty.scipamato.common.config.ApplicationProperties;
 import ch.difty.scipamato.common.web.ScipamatoWebSessionFacade;
 import ch.difty.scipamato.common.web.TestHomePage;
@@ -61,14 +61,12 @@ class AbstractMenuBuilderTest {
 
     @Test
     void degenerateConstruction_withNullApplicationProperties_throws() {
-        TestUtils.assertDegenerateSupplierParameter(() -> new TestMenuBuilder(null, webSessionFacade),
-            "applicationProperties");
+        assertDegenerateSupplierParameter(() -> new TestMenuBuilder(null, webSessionFacade), "applicationProperties");
     }
 
     @Test
     void degenerateConstruction_withNullWebSessionFacade_throws() {
-        TestUtils.assertDegenerateSupplierParameter(() -> new TestMenuBuilder(applicationProperties, null),
-            "webSessionFacade");
+        assertDegenerateSupplierParameter(() -> new TestMenuBuilder(applicationProperties, null), "webSessionFacade");
     }
 
     @Test

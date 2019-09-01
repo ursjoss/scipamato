@@ -1,5 +1,6 @@
 package ch.difty.scipamato.core.persistence.keyword;
 
+import static ch.difty.scipamato.common.TestUtilsKt.assertDegenerateSupplierParameter;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -13,7 +14,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import ch.difty.scipamato.common.TestUtils;
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.core.entity.keyword.Keyword;
 import ch.difty.scipamato.core.entity.keyword.KeywordDefinition;
@@ -121,7 +121,7 @@ class JooqKeywordServiceTest {
 
     @Test
     void savingOrUpdatingKeywordDefinition_withNullEntity_throws() {
-        TestUtils.assertDegenerateSupplierParameter(() -> service.saveOrUpdate(null), "entity");
+        assertDegenerateSupplierParameter(() -> service.saveOrUpdate(null), "entity");
     }
 
     @Test

@@ -1,12 +1,12 @@
 package ch.difty.scipamato.core.entity.code;
 
+import static ch.difty.scipamato.common.TestUtilsKt.assertDegenerateSupplierParameter;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Collection;
 
 import org.junit.jupiter.api.Test;
 
-import ch.difty.scipamato.common.TestUtils;
 import ch.difty.scipamato.core.entity.CodeClass;
 
 class CodeDefinitionTest {
@@ -140,7 +140,7 @@ class CodeDefinitionTest {
     @Test
     void gettingNameInLanguage_withNullLanguage_throws() {
         CodeDefinition code = new CodeDefinition("1A", "de", codeClass, 1, false, 1, c_de, c_en, c_fr);
-        TestUtils.assertDegenerateSupplierParameter(() -> code.getNameInLanguage(null), "langCode");
+        assertDegenerateSupplierParameter(() -> code.getNameInLanguage(null), "langCode");
     }
 
     @Test

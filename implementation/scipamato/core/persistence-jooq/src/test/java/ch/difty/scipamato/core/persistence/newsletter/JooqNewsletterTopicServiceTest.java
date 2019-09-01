@@ -1,5 +1,6 @@
 package ch.difty.scipamato.core.persistence.newsletter;
 
+import static ch.difty.scipamato.common.TestUtilsKt.assertDegenerateSupplierParameter;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -14,7 +15,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import ch.difty.scipamato.common.TestUtils;
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterNewsletterTopic;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic;
@@ -127,7 +127,7 @@ class JooqNewsletterTopicServiceTest {
 
     @Test
     void savingOrUpdatingNewsletterTopicDefinition_withNullEntity_throws() {
-        TestUtils.assertDegenerateSupplierParameter(() -> service.saveOrUpdate(null), "entity");
+        assertDegenerateSupplierParameter(() -> service.saveOrUpdate(null), "entity");
     }
 
     @Test

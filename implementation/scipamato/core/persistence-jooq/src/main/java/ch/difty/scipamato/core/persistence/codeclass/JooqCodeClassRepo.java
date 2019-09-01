@@ -48,6 +48,7 @@ public class JooqCodeClassRepo extends AbstractRepo implements CodeClassReposito
     @Override
     @Cacheable
     public List<CodeClass> find(final String languageCode) {
+        AssertAs.INSTANCE.notNull(languageCode, "languageCode");
         final String lang = TranslationUtils.INSTANCE.trimLanguageCode(languageCode);
         // skipping the audit fields
         return getDsl()

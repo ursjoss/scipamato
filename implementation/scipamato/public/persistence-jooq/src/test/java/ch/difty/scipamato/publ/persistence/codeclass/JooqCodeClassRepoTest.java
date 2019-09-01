@@ -1,6 +1,6 @@
 package ch.difty.scipamato.publ.persistence.codeclass;
 
-import static ch.difty.scipamato.common.TestUtils.assertDegenerateSupplierParameter;
+import static ch.difty.scipamato.common.TestUtilsKt.assertDegenerateSupplierParameter;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 import org.jooq.DSLContext;

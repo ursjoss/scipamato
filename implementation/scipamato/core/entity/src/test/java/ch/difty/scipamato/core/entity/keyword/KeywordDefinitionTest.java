@@ -1,12 +1,11 @@
 package ch.difty.scipamato.core.entity.keyword;
 
+import static ch.difty.scipamato.common.TestUtilsKt.assertDegenerateSupplierParameter;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Collection;
 
 import org.junit.jupiter.api.Test;
-
-import ch.difty.scipamato.common.TestUtils;
 
 @SuppressWarnings("SameParameterValue")
 class KeywordDefinitionTest {
@@ -152,8 +151,7 @@ class KeywordDefinitionTest {
 
     @Test
     void gettingNameInLanguage_withNullLanguage_throws() {
-        TestUtils.assertDegenerateSupplierParameter(() -> new KeywordDefinition(2, "de", 1).getNameInLanguage(null),
-            "langCode");
+        assertDegenerateSupplierParameter(() -> new KeywordDefinition(2, "de", 1).getNameInLanguage(null), "langCode");
     }
 
     @Test

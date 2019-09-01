@@ -1,9 +1,8 @@
 package ch.difty.scipamato.core.persistence;
 
-import static ch.difty.scipamato.common.TestUtils.assertDegenerateSupplierParameter;
+import static ch.difty.scipamato.common.TestUtilsKt.assertDegenerateSupplierParameter;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.*;
 
 import org.jooq.Record;
 import org.jooq.UpdateSetFirstStep;
@@ -122,7 +121,7 @@ public abstract class UpdateSetStepSetterTest<R extends Record, E extends CoreEn
         E entityMock = getEntity();
         verify(entityMock).getCreated();
         verify(entityMock).getCreatedBy();
-        verify(entityMock).getLastModified();
+        verify(entityMock, times(3)).getLastModified();
         verify(entityMock).getLastModifiedBy();
         verify(entityMock).getVersion();
     }

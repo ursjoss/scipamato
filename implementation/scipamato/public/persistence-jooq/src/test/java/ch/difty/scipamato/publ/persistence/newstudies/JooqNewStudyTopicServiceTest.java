@@ -1,5 +1,6 @@
 package ch.difty.scipamato.publ.persistence.newstudies;
 
+import static ch.difty.scipamato.common.TestUtilsKt.assertDegenerateSupplierParameter;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -17,7 +18,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import ch.difty.scipamato.common.NullArgumentException;
-import ch.difty.scipamato.common.TestUtils;
 import ch.difty.scipamato.publ.entity.NewStudyPageLink;
 import ch.difty.scipamato.publ.entity.NewStudyTopic;
 import ch.difty.scipamato.publ.entity.Newsletter;
@@ -63,13 +63,12 @@ class JooqNewStudyTopicServiceTest {
 
     @Test
     void findNewStudyTopicsForNewsletterIssue_withNullIssue_throws() {
-        TestUtils.assertDegenerateSupplierParameter(() -> service.findNewStudyTopicsForNewsletterIssue(null, "en"),
-            "issue");
+        assertDegenerateSupplierParameter(() -> service.findNewStudyTopicsForNewsletterIssue(null, "en"), "issue");
     }
 
     @Test
     void findNewStudyTopicsForNewsletterIssue_withNullLanguageCode_throws() {
-        TestUtils.assertDegenerateSupplierParameter(() -> service.findNewStudyTopicsForNewsletterIssue("2018/06", null),
+        assertDegenerateSupplierParameter(() -> service.findNewStudyTopicsForNewsletterIssue("2018/06", null),
             "languageCode");
     }
 

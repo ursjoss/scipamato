@@ -1,5 +1,6 @@
 package ch.difty.scipamato.publ.persistence.paper.authors;
 
+import static ch.difty.scipamato.common.TestUtilsKt.assertDegenerateSupplierParameter;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
@@ -10,7 +11,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import ch.difty.scipamato.common.TestUtils;
 import ch.difty.scipamato.publ.config.ApplicationPublicProperties;
 
 @ExtendWith(MockitoExtension.class)
@@ -38,7 +38,7 @@ class EtAlAuthorsAbbreviatorTest {
 
     @Test
     void constructingAbbreviatorWithNullProperties_throw() {
-        TestUtils.assertDegenerateSupplierParameter(() -> new EtAlAuthorsAbbreviator(null), "properties");
+        assertDegenerateSupplierParameter(() -> new EtAlAuthorsAbbreviator(null), "properties");
     }
 
     @Test

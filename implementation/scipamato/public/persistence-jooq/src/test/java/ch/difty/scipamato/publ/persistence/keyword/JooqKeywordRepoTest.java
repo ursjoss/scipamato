@@ -1,6 +1,6 @@
 package ch.difty.scipamato.publ.persistence.keyword;
 
-import static ch.difty.scipamato.common.TestUtils.assertDegenerateSupplierParameter;
+import static ch.difty.scipamato.common.TestUtilsKt.assertDegenerateSupplierParameter;
 
 import org.jooq.DSLContext;
 import org.junit.jupiter.api.BeforeEach;

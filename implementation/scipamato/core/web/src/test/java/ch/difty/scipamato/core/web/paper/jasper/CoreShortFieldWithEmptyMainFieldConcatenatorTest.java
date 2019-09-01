@@ -1,10 +1,10 @@
 package ch.difty.scipamato.core.web.paper.jasper;
 
+import static ch.difty.scipamato.common.TestUtilsKt.assertDegenerateSupplierParameter;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import org.junit.jupiter.api.Test;
 
-import ch.difty.scipamato.common.TestUtils;
 import ch.difty.scipamato.core.entity.Paper;
 
 @SuppressWarnings("SpellCheckingInspection")
@@ -34,17 +34,17 @@ class CoreShortFieldWithEmptyMainFieldConcatenatorTest {
 
     @Test
     void methods_withNullRecordset_throws() {
-        TestUtils.assertDegenerateSupplierParameter(() -> sfc.methodsFrom(null, rhf), "paper");
+        assertDegenerateSupplierParameter(() -> sfc.methodsFrom(null, rhf), "paper");
     }
 
     @Test
     void population_withNullRecordset_throws() {
-        TestUtils.assertDegenerateSupplierParameter(() -> sfc.populationFrom(null, rhf), "paper");
+        assertDegenerateSupplierParameter(() -> sfc.populationFrom(null, rhf), "paper");
     }
 
     @Test
     void result_withNullRecordset_throws() {
-        TestUtils.assertDegenerateSupplierParameter(() -> sfc.resultFrom(null, rhf), "paper");
+        assertDegenerateSupplierParameter(() -> sfc.resultFrom(null, rhf), "paper");
     }
 
     @Test

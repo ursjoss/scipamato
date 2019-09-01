@@ -1,9 +1,10 @@
 package ch.difty.scipamato.core.sync.jobs.code;
 
+import static ch.difty.scipamato.common.TestUtilsKt.assertDegenerateSupplierParameter;
+
 import org.jooq.DSLContext;
 import org.junit.jupiter.api.Test;
 
-import ch.difty.scipamato.common.TestUtils;
 import ch.difty.scipamato.core.sync.jobs.AbstractItemWriterTest;
 
 class CodeItemWriterTest extends AbstractItemWriterTest<PublicCode, CodeItemWriter> {
@@ -15,7 +16,7 @@ class CodeItemWriterTest extends AbstractItemWriterTest<PublicCode, CodeItemWrit
 
     @Test
     void degenerateConstruction_withNullDslContext_throws() {
-        TestUtils.assertDegenerateSupplierParameter(() -> new CodeItemWriter(null), "jooqDslContextPublic");
+        assertDegenerateSupplierParameter(() -> new CodeItemWriter(null), "jooqDslContextPublic");
     }
 
 }

@@ -1,5 +1,6 @@
 package ch.difty.scipamato.core.sync.launcher;
 
+import static ch.difty.scipamato.common.TestUtilsKt.assertDegenerateSupplierParameter;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -10,14 +11,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import ch.difty.scipamato.common.TestUtils;
-
 @ExtendWith(MockitoExtension.class)
 class UnsynchronizedEntitiesWarnerTest {
 
     @Test
     void degenerateConstruction() {
-        TestUtils.assertDegenerateSupplierParameter(() -> new UnsynchronizedEntitiesWarner(null), "jooqCore");
+        assertDegenerateSupplierParameter(() -> new UnsynchronizedEntitiesWarner(null), "jooqCore");
     }
 
     @Test

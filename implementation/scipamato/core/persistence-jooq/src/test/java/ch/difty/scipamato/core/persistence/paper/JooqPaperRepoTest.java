@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.persistence.paper;
 
-import static ch.difty.scipamato.common.TestUtils.assertDegenerateSupplierParameter;
+import static ch.difty.scipamato.common.TestUtilsKt.assertDegenerateSupplierParameter;
 import static ch.difty.scipamato.core.db.tables.Paper.PAPER;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
@@ -14,7 +14,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import ch.difty.scipamato.common.NullArgumentException;
-import ch.difty.scipamato.common.TestUtils;
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.common.persistence.paging.Sort;
 import ch.difty.scipamato.common.persistence.paging.Sort.Direction;
@@ -470,7 +469,7 @@ class JooqPaperRepoTest extends
 
     @Test
     void isDoiAlreadyAssigned_withNullDoi_throws() {
-        TestUtils.assertDegenerateSupplierParameter(() -> repo.isDoiAlreadyAssigned(null, 1L), "doi");
+        assertDegenerateSupplierParameter(() -> repo.isDoiAlreadyAssigned(null, 1L), "doi");
     }
 
     @Test

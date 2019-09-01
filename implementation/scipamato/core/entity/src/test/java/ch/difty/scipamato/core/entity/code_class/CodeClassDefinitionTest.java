@@ -1,12 +1,11 @@
 package ch.difty.scipamato.core.entity.code_class;
 
+import static ch.difty.scipamato.common.TestUtilsKt.assertDegenerateSupplierParameter;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Collection;
 
 import org.junit.jupiter.api.Test;
-
-import ch.difty.scipamato.common.TestUtils;
 
 class CodeClassDefinitionTest {
 
@@ -134,7 +133,7 @@ class CodeClassDefinitionTest {
     @Test
     void gettingNameInLanguage_withNullLanguage_throws() {
         CodeClassDefinition ccd = new CodeClassDefinition(1, "de", 1, cc_de, cc_en, cc_fr);
-        TestUtils.assertDegenerateSupplierParameter(() -> ccd.getNameInLanguage(null), "langCode");
+        assertDegenerateSupplierParameter(() -> ccd.getNameInLanguage(null), "langCode");
     }
 
     @Test

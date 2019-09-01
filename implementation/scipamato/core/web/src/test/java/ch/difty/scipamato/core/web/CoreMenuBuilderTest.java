@@ -1,5 +1,6 @@
 package ch.difty.scipamato.core.web;
 
+import static ch.difty.scipamato.common.TestUtilsKt.assertDegenerateSupplierParameter;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
@@ -8,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
 import ch.difty.scipamato.common.NullArgumentException;
-import ch.difty.scipamato.common.TestUtils;
 import ch.difty.scipamato.common.config.ApplicationProperties;
 import ch.difty.scipamato.common.web.ScipamatoWebSessionFacade;
 import ch.difty.scipamato.common.web.pages.MenuBuilder;
@@ -34,14 +34,12 @@ class CoreMenuBuilderTest extends WicketTest {
 
     @Test
     void degenerateConstruction_withNullApplicationProperties() {
-        TestUtils.assertDegenerateSupplierParameter(() -> new CoreMenuBuilder(null, webSessionFacade),
-            "applicationProperties");
+        assertDegenerateSupplierParameter(() -> new CoreMenuBuilder(null, webSessionFacade), "applicationProperties");
     }
 
     @Test
     void degenerateConstruction_withNullWebSessionFacade() {
-        TestUtils.assertDegenerateSupplierParameter(() -> new CoreMenuBuilder(applicationProperties, null),
-            "webSessionFacade");
+        assertDegenerateSupplierParameter(() -> new CoreMenuBuilder(applicationProperties, null), "webSessionFacade");
     }
 
     @Test

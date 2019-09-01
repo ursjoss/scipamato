@@ -1,5 +1,6 @@
 package ch.difty.scipamato.core.persistence.paper.slim;
 
+import static ch.difty.scipamato.common.TestUtilsKt.assertDegenerateSupplierParameter;
 import static ch.difty.scipamato.core.db.tables.Paper.PAPER;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
@@ -13,7 +14,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
 import ch.difty.scipamato.common.DateTimeService;
-import ch.difty.scipamato.common.TestUtils;
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.core.db.tables.records.PaperRecord;
 import ch.difty.scipamato.core.entity.projection.PaperSlim;
@@ -169,6 +169,6 @@ class JooqPaperSlimRepoTest extends
 
     @Test
     void findingById_withVersion_withNullId() {
-        TestUtils.assertDegenerateSupplierParameter(() -> repo.findById(null, 1, "de"), "id");
+        assertDegenerateSupplierParameter(() -> repo.findById(null, 1, "de"), "id");
     }
 }

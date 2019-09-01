@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.persistence.user;
 
-import static ch.difty.scipamato.common.TestUtils.assertDegenerateSupplierParameter;
+import static ch.difty.scipamato.common.TestUtilsKt.assertDegenerateSupplierParameter;
 import static ch.difty.scipamato.core.db.tables.ScipamatoUser.SCIPAMATO_USER;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
