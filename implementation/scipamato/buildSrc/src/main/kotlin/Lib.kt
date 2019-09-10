@@ -10,21 +10,21 @@ object Lib {
     //region:dependencyVersions
     private const val kotlinVersion = "1.3.41"
 
-    private const val springBootVersion = "2.1.7.RELEASE"
+    private const val springBootVersion = "2.1.8.RELEASE"
     private const val springBootAdminVersion = "2.1.6"
     const val springCloudVersion = "Greenwich.SR2"
     private const val springCloudStarterVersion = "2.1.2.RELEASE"
     private const val springDependencyManagementVersion = "1.0.8.RELEASE"
 
     private const val wicketSpringBootStarterVersion = "2.1.7"
-    private const val wicketVersion = "8.5.0"
-    private const val wicketstuffVersion = wicketVersion
+    private const val wicketVersion = "8.6.0"
+    private const val wicketstuffVersion = "8.5.0"
     private const val wicketJqueryUiVersion = "8.3.0"
     private const val wicketBootstrapVersion = "2.0.10"
     private const val jasperReportVersion = "6.9.0"
     const val jooqVersion = "3.11.12"
 
-    private const val openfeignVersion = "10.3.0"
+    private const val openfeignVersion = "10.4.0"
 
     private const val jaxbCoreVersion = "2.3.0.1"
     private const val jaxbImplVersion = "2.3.2"
@@ -39,9 +39,9 @@ object Lib {
 
     private const val equalsverifierVersion = "3.1.9"
 
-    private const val junit5Version = "5.5.1"
+    private const val junit5Version = "5.5.2"
 
-    private const val testcontainersVersion = "1.12.0"
+    private const val testcontainersVersion = "1.12.1"
 
     @Suppress("MemberVisibilityCanBePrivate")
     const val mockitoVersion = "3.0.6"
@@ -50,8 +50,8 @@ object Lib {
     //endregion
 
     //region:pluginVersions
-    private const val lombokPluginVersion = "3.8.4"
-    private const val jooqModelatorPluginVersion = "3.5.0"
+    private const val lombokPluginVersion = "4.0.2"
+    private const val jooqModelatorPluginVersion = "3.6.0"
     private const val jaxbPluginVersion = "3.0.4"
     private const val testSetsPluginVersion = "2.1.1"
     private const val sonarqubePluginVersion = "2.7.1"
