@@ -24,7 +24,7 @@ object Lib {
     private const val jasperReportVersion = "6.9.0"
     const val jooqVersion = "3.11.12"
 
-    private const val openfeignVersion = "10.3.0"
+    private const val openfeignVersion = "10.4.0"
 
     private const val jaxbCoreVersion = "2.3.0.1"
     private const val jaxbImplVersion = "2.3.2"
