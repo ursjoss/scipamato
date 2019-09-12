@@ -18,8 +18,9 @@ before_install:
   - chmod +x gradlew
 
 script:
-  - travis_wait 40 [ -n "${SONAR_TOKEN}" ] && ./gradlew sonarqube || ./gradlew check
+  - travis_wait [ -n "${SONAR_TOKEN}" ] && ./gradlew sonarqube || ./gradlew check
 
 cache:
+  timeout: 1000
   directories:
     - $HOME/.gradle
