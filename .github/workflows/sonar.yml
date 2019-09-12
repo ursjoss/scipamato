@@ -20,4 +20,5 @@ jobs:
       working-directory: ./implementation/scipamato
       run: ./gradlew sonarqube --no-daemon --no-build-cache
       env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
