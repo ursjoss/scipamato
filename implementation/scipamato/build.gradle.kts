@@ -194,7 +194,8 @@ tasks {
     withType<Test> {
         failFast = true
         testLogging {
-            events = setOf(FAILED, PASSED, SKIPPED)
+            events = setOf(STARTED, FAILED, PASSED, SKIPPED)
+            showStackTraces = true
             exceptionFormat = TestExceptionFormat.FULL
         }
     }
