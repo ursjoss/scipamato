@@ -6,6 +6,9 @@ on:
     - master
     tags:
     - '*'
+    paths:
+    - 'implementation/scipamato/*'
+
   pull_request:
     branches:
     - master
