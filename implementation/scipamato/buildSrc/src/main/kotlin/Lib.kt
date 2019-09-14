@@ -47,6 +47,7 @@ object Lib {
 
     @Suppress("MemberVisibilityCanBePrivate")
     const val mockitoVersion = "3.0.6"
+    private const val mockitoKotlinVersion = "2.2.0"
 
     private const val jsr305Version = "3.0.2"
     //endregion
@@ -144,6 +145,7 @@ object Lib {
 
     fun junit5(module: String = "") = Dep("org.junit.jupiter", "junit-jupiter${if (module.isNotBlank()) "-$module" else ""}", junit5Version)
     fun mockito3(module: String) = Dep("org.mockito", "mockito-$module", mockitoVersion)
+    fun mockitoKotlin() = Dep("com.nhaarman.mockitokotlin2", "mockito-kotlin", mockitoKotlinVersion)
     fun assertj() = Dep("org.assertj", "assertj-core")
     fun testcontainers(module: String) = Dep("org.testcontainers", module, testcontainersVersion)
     fun equalsverifier() = Dep("nl.jqno.equalsverifier", "equalsverifier", equalsverifierVersion)
