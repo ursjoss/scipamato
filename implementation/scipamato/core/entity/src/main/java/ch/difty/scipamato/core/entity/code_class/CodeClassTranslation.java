@@ -32,7 +32,7 @@ public class CodeClassTranslation extends AbstractDefinitionTranslation {
         }
 
         @Override
-        public String getName() {
+        public String getFieldName() {
             return name;
         }
 

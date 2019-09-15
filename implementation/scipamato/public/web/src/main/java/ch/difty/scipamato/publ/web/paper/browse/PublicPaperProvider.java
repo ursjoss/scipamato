@@ -42,7 +42,7 @@ public class PublicPaperProvider extends SortableDataProvider<PublicPaper, Strin
             .inject(this);
         this.paperFilter = paperFilter != null ? paperFilter : new PublicPaperFilter();
         this.maxRowsPerPage = resultPageSize;
-        setSort(PublicPaper.PublicPaperFields.NUMBER.getName(), SortOrder.DESCENDING);
+        setSort(PublicPaper.PublicPaperFields.NUMBER.getFieldName(), SortOrder.DESCENDING);
     }
 
     /** package-private for test purposes */

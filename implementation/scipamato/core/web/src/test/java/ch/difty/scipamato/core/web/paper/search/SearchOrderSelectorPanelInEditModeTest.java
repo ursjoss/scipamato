@@ -53,10 +53,10 @@ class SearchOrderSelectorPanelInEditModeTest extends SearchOrderSelectorPanelTes
         getTester().executeAjaxEvent(PANEL_ID + ":form:name", "change");
 
         String b = PANEL_ID + ":form:";
-        getTester().assertComponentOnAjaxResponse(b + GLOBAL.getName());
-        getTester().assertComponentOnAjaxResponse(b + NAME.getName());
-        getTester().assertComponentOnAjaxResponse(b + SHOW_EXCLUDED.getName());
-        getTester().assertComponentOnAjaxResponse(b + SHOW_EXCLUDED.getName() + "Label");
+        getTester().assertComponentOnAjaxResponse(b + GLOBAL.getFieldName());
+        getTester().assertComponentOnAjaxResponse(b + NAME.getFieldName());
+        getTester().assertComponentOnAjaxResponse(b + SHOW_EXCLUDED.getFieldName());
+        getTester().assertComponentOnAjaxResponse(b + SHOW_EXCLUDED.getFieldName() + "Label");
 
         verify(searchOrderServiceMock).saveOrUpdate(isA(SearchOrder.class));
     }

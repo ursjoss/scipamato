@@ -22,7 +22,7 @@ public class CodeClassDefinitionProvider
 
     CodeClassDefinitionProvider(final CodeClassFilter filter) {
         super(filter);
-        setSort(CodeClassDefinition.CodeClassDefinitionFields.ID.getName(), SortOrder.ASCENDING);
+        setSort(CodeClassDefinition.CodeClassDefinitionFields.ID.getFieldName(), SortOrder.ASCENDING);
     }
 
     @Override

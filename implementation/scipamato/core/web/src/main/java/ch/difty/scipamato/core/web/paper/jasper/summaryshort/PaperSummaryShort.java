@@ -55,7 +55,7 @@ public class PaperSummaryShort extends PaperSummaryCommon {
      *     the reportHeaderFields with the localized field headers
      */
     public PaperSummaryShort(final Paper p, final ReportHeaderFields rhf) {
-        super(AssertAs.notNull(p, "p"), null, AssertAs.notNull(rhf, "rhf"));
+        super(AssertAs.INSTANCE.notNull(p, "p"), null, AssertAs.INSTANCE.notNull(rhf, "rhf"));
 
         this.methodOutcome = na(p.getMethodOutcome());
         this.resultMeasuredOutcome = na(p.getResultMeasuredOutcome());

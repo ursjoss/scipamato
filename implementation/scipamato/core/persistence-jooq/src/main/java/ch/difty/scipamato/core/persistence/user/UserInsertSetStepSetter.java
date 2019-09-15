@@ -25,8 +25,8 @@ public class UserInsertSetStepSetter implements InsertSetStepSetter<ScipamatoUse
 
     @Override
     public InsertSetMoreStep<ScipamatoUserRecord> setNonKeyFieldsFor(InsertSetStep<ScipamatoUserRecord> step, User e) {
-        AssertAs.notNull(step, "step");
-        AssertAs.notNull(e, "entity");
+        AssertAs.INSTANCE.notNull(step, "step");
+        AssertAs.INSTANCE.notNull(e, "entity");
 
         return step
             .set(SCIPAMATO_USER.USER_NAME, e.getUserName())
@@ -42,8 +42,8 @@ public class UserInsertSetStepSetter implements InsertSetStepSetter<ScipamatoUse
 
     @Override
     public void considerSettingKeyOf(InsertSetMoreStep<ScipamatoUserRecord> step, User entity) {
-        AssertAs.notNull(step, "step");
-        AssertAs.notNull(entity, "entity");
+        AssertAs.INSTANCE.notNull(step, "step");
+        AssertAs.INSTANCE.notNull(entity, "entity");
         Integer id = entity.getId();
         if (id != null)
             step.set(SCIPAMATO_USER.ID, id);

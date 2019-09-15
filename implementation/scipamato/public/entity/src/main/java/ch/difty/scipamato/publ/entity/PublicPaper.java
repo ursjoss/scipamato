@@ -54,7 +54,7 @@ public class PublicPaper extends PublicEntity {
         }
 
         @Override
-        public String getName() {
+        public String getFieldName() {
             return name;
         }
     }

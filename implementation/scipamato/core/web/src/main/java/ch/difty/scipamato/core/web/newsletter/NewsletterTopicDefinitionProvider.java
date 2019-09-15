@@ -23,7 +23,7 @@ public class NewsletterTopicDefinitionProvider
 
     public NewsletterTopicDefinitionProvider(final NewsletterTopicFilter filter) {
         super(filter);
-        setSort(NewsletterTopic.NewsletterTopicFields.TITLE.getName(), SortOrder.ASCENDING);
+        setSort(NewsletterTopic.NewsletterTopicFields.TITLE.getFieldName(), SortOrder.ASCENDING);
     }
 
     @Override

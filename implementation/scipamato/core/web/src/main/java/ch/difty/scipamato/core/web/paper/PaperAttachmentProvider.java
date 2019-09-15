@@ -23,8 +23,8 @@ public class PaperAttachmentProvider extends SortableDataProvider<PaperAttachmen
     private final IModel<List<PaperAttachment>> attachmentsModel;
 
     public PaperAttachmentProvider(final IModel<List<PaperAttachment>> attachmentsModel) {
-        AssertAs.notNull(attachmentsModel, "attachmentsModel");
-        AssertAs.notNull(attachmentsModel.getObject(), "attachments");
+        AssertAs.INSTANCE.notNull(attachmentsModel, "attachmentsModel");
+        AssertAs.INSTANCE.notNull(attachmentsModel.getObject(), "attachments");
         this.attachmentsModel = attachmentsModel;
     }
 

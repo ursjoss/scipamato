@@ -19,8 +19,8 @@ class CurrentPasswordMatchesValidator implements IValidator<String> {
     private final String          currentPasswordHashPersisted;
 
     public CurrentPasswordMatchesValidator(PasswordEncoder passwordEncoder, final String currentPasswordHashPersisted) {
-        this.passwordEncoder = AssertAs.notNull(passwordEncoder, "passwordEncoder");
-        this.currentPasswordHashPersisted = AssertAs.notNull(currentPasswordHashPersisted,
+        this.passwordEncoder = AssertAs.INSTANCE.notNull(passwordEncoder, "passwordEncoder");
+        this.currentPasswordHashPersisted = AssertAs.INSTANCE.notNull(currentPasswordHashPersisted,
             "currentPasswordHashPersisted");
     }
 

@@ -43,11 +43,12 @@ public class JooqNewsletterTopicRepo extends AbstractRepo implements NewsletterT
 
     @Override
     public List<NewsletterTopic> findAll(final String languageCode) {
-        final String lang = TranslationUtils.trimLanguageCode(languageCode);
+        AssertAs.INSTANCE.notNull(languageCode, "languageCode");
+        final String lang = TranslationUtils.INSTANCE.trimLanguageCode(languageCode);
         // skipping the audit fields
         return getDsl()
             .select(NEWSLETTER_TOPIC.ID.as("NT_ID"), DSL
-                .coalesce(NEWSLETTER_TOPIC_TR.TITLE, TranslationUtils.NOT_TRANSL)
+                .coalesce(NEWSLETTER_TOPIC_TR.TITLE, TranslationUtils.INSTANCE.getNOT_TRANSL())
                 .as("NT_TITLE"))
             .from(NEWSLETTER_TOPIC)
             .leftOuterJoin(NEWSLETTER_TOPIC_TR)
@@ -196,7 +197,7 @@ public class JooqNewsletterTopicRepo extends AbstractRepo implements NewsletterT
 
     @Override
     public NewsletterTopicDefinition insert(final NewsletterTopicDefinition entity) {
-        AssertAs.notNull(entity, "entity");
+        AssertAs.INSTANCE.notNull(entity, "entity");
         if (entity.getId() != null) {
             throw new IllegalArgumentException("id must be null.");
         }
@@ -233,8 +234,8 @@ public class JooqNewsletterTopicRepo extends AbstractRepo implements NewsletterT
 
     @Override
     public NewsletterTopicDefinition update(final NewsletterTopicDefinition entity) {
-        AssertAs.notNull(entity, "entity");
-        AssertAs.notNull(entity.getId(), "entity.id");
+        AssertAs.INSTANCE.notNull(entity, "entity");
+        AssertAs.INSTANCE.notNull(entity.getId(), "entity.id");
 
         final int userId = getUserId();
         final int currentVersion = entity.getVersion();
@@ -346,7 +347,7 @@ public class JooqNewsletterTopicRepo extends AbstractRepo implements NewsletterT
 
     @Override
     public NewsletterTopicDefinition delete(final Integer id, final int version) {
-        AssertAs.notNull(id, "id");
+        AssertAs.INSTANCE.notNull(id, "id");
 
         final NewsletterTopicDefinition toBeDeleted = findNewsletterTopicDefinitionById(id);
         if (toBeDeleted != null) {

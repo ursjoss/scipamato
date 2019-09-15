@@ -42,7 +42,7 @@ public class PaperProvider extends SortableDataProvider<Paper, String> implement
             .get()
             .inject(this);
         this.filter = filter != null ? filter : new PaperFilter();
-        setSort(Paper.PaperFields.AUTHORS.getName(), SortOrder.ASCENDING);
+        setSort(Paper.PaperFields.AUTHORS.getFieldName(), SortOrder.ASCENDING);
     }
 
     /** package-private for test purposes */

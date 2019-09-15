@@ -22,7 +22,7 @@ public abstract class DefinitionEditPage<E extends DefinitionEntity> extends Bas
     private Form<E> form;
 
     public DefinitionEditPage(final IModel<E> model, final PageReference callingPageRef) {
-        super(AssertAs.notNull(model, "model"));
+        super(AssertAs.INSTANCE.notNull(model, "model"));
         this.callingPageRef = callingPageRef;
     }
 

@@ -109,10 +109,10 @@ abstract class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelecto
         getTester().executeAjaxEvent(PANEL_ID + ":form:searchOrder", "change");
 
         String b = PANEL_ID + ":form:";
-        getTester().assertComponentOnAjaxResponse(b + GLOBAL.getName());
-        getTester().assertComponentOnAjaxResponse(b + NAME.getName());
-        getTester().assertComponentOnAjaxResponse(b + SHOW_EXCLUDED.getName());
-        getTester().assertComponentOnAjaxResponse(b + SHOW_EXCLUDED.getName() + "Label");
+        getTester().assertComponentOnAjaxResponse(b + GLOBAL.getFieldName());
+        getTester().assertComponentOnAjaxResponse(b + NAME.getFieldName());
+        getTester().assertComponentOnAjaxResponse(b + SHOW_EXCLUDED.getFieldName());
+        getTester().assertComponentOnAjaxResponse(b + SHOW_EXCLUDED.getFieldName() + "Label");
 
         // TODO how to assert the event was actually broadcast
     }
@@ -134,10 +134,10 @@ abstract class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelecto
         formTester.submit("new");
 
         String b = PANEL_ID + ":form:";
-        getTester().assertComponentOnAjaxResponse(b + GLOBAL.getName());
-        getTester().assertComponentOnAjaxResponse(b + NAME.getName());
-        getTester().assertComponentOnAjaxResponse(b + SHOW_EXCLUDED.getName());
-        getTester().assertComponentOnAjaxResponse(b + SHOW_EXCLUDED.getName() + "Label");
+        getTester().assertComponentOnAjaxResponse(b + GLOBAL.getFieldName());
+        getTester().assertComponentOnAjaxResponse(b + NAME.getFieldName());
+        getTester().assertComponentOnAjaxResponse(b + SHOW_EXCLUDED.getFieldName());
+        getTester().assertComponentOnAjaxResponse(b + SHOW_EXCLUDED.getFieldName() + "Label");
 
         verify(searchOrderMock, times(10)).getId();
         verify(searchOrderServiceMock, times(2)).findPageByFilter(isA(SearchOrderFilter.class),

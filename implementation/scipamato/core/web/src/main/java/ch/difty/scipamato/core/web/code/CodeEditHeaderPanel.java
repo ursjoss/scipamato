@@ -28,14 +28,14 @@ abstract class CodeEditHeaderPanel extends DeletableDefinitionEditHeaderPanel<Co
 
     @Override
     protected void makeAndQueueFilterFields() {
-        final TextField<String> code = new TextField<>(CodeDefinition.CodeDefinitionFields.CODE.getName());
+        final TextField<String> code = new TextField<>(CodeDefinition.CodeDefinitionFields.CODE.getFieldName());
         queueFieldAndLabel(code);
         queueBootstrapSelectAndLabel("codeClass");
-        queueFieldAndLabel(new TextField<Integer>(CodeDefinition.CodeDefinitionFields.SORT.getName()));
+        queueFieldAndLabel(new TextField<Integer>(CodeDefinition.CodeDefinitionFields.SORT.getFieldName()));
         queue(new Label("internalLabel",
-            new StringResourceModel(CodeDefinition.CodeDefinitionFields.INTERNAL.getName() + LABEL_RESOURCE_TAG, this,
+            new StringResourceModel(CodeDefinition.CodeDefinitionFields.INTERNAL.getFieldName() + LABEL_RESOURCE_TAG, this,
                 null)));
-        CheckBoxX internal = new CheckBoxX(CodeDefinition.CodeDefinitionFields.INTERNAL.getName());
+        CheckBoxX internal = new CheckBoxX(CodeDefinition.CodeDefinitionFields.INTERNAL.getFieldName());
         internal
             .getConfig()
             .withThreeState(false)
@@ -50,10 +50,10 @@ abstract class CodeEditHeaderPanel extends DeletableDefinitionEditHeaderPanel<Co
     private void queueBootstrapSelectAndLabel(final String id) {
         queue(new Label(id + LABEL_TAG, new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null)));
         final PropertyModel<CodeClass> model = PropertyModel.of(getModel(),
-            CodeFilter.CodeFilterFields.CODE_CLASS.getName());
+            CodeFilter.CodeFilterFields.CODE_CLASS.getFieldName());
         final CodeClassModel choices = new CodeClassModel(getLocale().getLanguage());
         final IChoiceRenderer<CodeClass> choiceRenderer = new ChoiceRenderer<>(
-            CodeClass.CoreEntityFields.DISPLAY_VALUE.getName(), CodeClass.IdScipamatoEntityFields.ID.getName());
+            CodeClass.CoreEntityFields.DISPLAY_VALUE.getFieldName(), CodeClass.IdScipamatoEntityFields.ID.getFieldName());
         codeClasses = new BootstrapSelect<>(id, model, choices, choiceRenderer);
         queue(codeClasses);
     }
@@ -69,8 +69,8 @@ abstract class CodeEditHeaderPanel extends DeletableDefinitionEditHeaderPanel<Co
 
         CodeMustMatchCodeClassValidator(final TextField<String> codeField,
             final BootstrapSelect<CodeClass> codeClasses) {
-            this.components = new FormComponent<?>[] { AssertAs.notNull(codeField, "field"),
-                AssertAs.notNull(codeClasses, "codeClasses") };
+            this.components = new FormComponent<?>[] { AssertAs.INSTANCE.notNull(codeField, "field"),
+                AssertAs.INSTANCE.notNull(codeClasses, "codeClasses") };
         }
 
         @Override

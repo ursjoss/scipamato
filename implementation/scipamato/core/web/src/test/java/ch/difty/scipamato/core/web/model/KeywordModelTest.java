@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.web.model;
 
-import static ch.difty.scipamato.common.TestUtils.assertDegenerateSupplierParameter;
+import static ch.difty.scipamato.common.TestUtilsKt.assertDegenerateSupplierParameter;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -33,10 +33,10 @@ class KeywordModelTest extends ModelTest {
         final List<Keyword> keywords = model.load();
 
         assertThat(keywords)
-            .extracting(Keyword.KeywordFields.NAME.getName())
+            .extracting(Keyword.KeywordFields.NAME.getFieldName())
             .containsExactly("n1", "n2");
         assertThat(keywords)
-            .extracting(Keyword.KeywordFields.SEARCH_OVERRIDE.getName())
+            .extracting(Keyword.KeywordFields.SEARCH_OVERRIDE.getFieldName())
             .containsExactly(null, "nn2");
 
         verify(keywordServiceMock).findAll(languageCode);

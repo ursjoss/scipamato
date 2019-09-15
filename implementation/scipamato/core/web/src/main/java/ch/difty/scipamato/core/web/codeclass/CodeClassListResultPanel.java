@@ -24,7 +24,7 @@ class CodeClassListResultPanel extends
     @Override
     protected List<IColumn<CodeClassDefinition, String>> makeTableColumns() {
         final List<IColumn<CodeClassDefinition, String>> columns = new ArrayList<>();
-        columns.add(makePropertyColumn(CodeClassDefinition.CodeClassDefinitionFields.ID.getName()));
+        columns.add(makePropertyColumn(CodeClassDefinition.CodeClassDefinitionFields.ID.getFieldName()));
         columns.add(makeClickableColumn("translationsAsString", this::onTitleClick));
         return columns;
     }

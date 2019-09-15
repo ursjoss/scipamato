@@ -64,7 +64,7 @@ class JooqKeywordService implements KeywordService {
 
     @Override
     public KeywordDefinition saveOrUpdate(final KeywordDefinition entity) {
-        AssertAs.notNull(entity, "entity");
+        AssertAs.INSTANCE.notNull(entity, "entity");
         if (entity.getId() == null)
             return getRepo().insert(entity);
         else

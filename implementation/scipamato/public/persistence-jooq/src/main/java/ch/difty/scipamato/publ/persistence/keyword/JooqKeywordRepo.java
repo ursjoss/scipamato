@@ -7,6 +7,7 @@ import java.util.List;
 import org.jooq.DSLContext;
 import org.springframework.stereotype.Repository;
 
+import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.TranslationUtils;
 import ch.difty.scipamato.publ.entity.Keyword;
 
@@ -21,7 +22,8 @@ public class JooqKeywordRepo implements KeywordRepository {
 
     @Override
     public List<Keyword> findKeywords(final String languageCode) {
-        final String lang = TranslationUtils.trimLanguageCode(languageCode);
+        AssertAs.INSTANCE.notNull(languageCode, "languageCode");
+        final String lang = TranslationUtils.INSTANCE.trimLanguageCode(languageCode);
         // skipping the audit fields
         return dslContext
             .select(KEYWORD.ID, KEYWORD.KEYWORD_ID, KEYWORD.LANG_CODE, KEYWORD.NAME, KEYWORD.SEARCH_OVERRIDE)

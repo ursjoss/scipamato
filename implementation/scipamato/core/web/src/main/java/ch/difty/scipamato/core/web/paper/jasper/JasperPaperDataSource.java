@@ -46,9 +46,9 @@ public abstract class JasperPaperDataSource<E extends JasperEntity>
     protected JasperPaperDataSource(final ScipamatoPdfResourceHandler handler, final String baseName,
         final Collection<E> jasperEntities) {
         super(handler);
-        this.baseName = AssertAs.notNull(baseName, "baseName");
+        this.baseName = AssertAs.INSTANCE.notNull(baseName, "baseName");
         this.jasperEntities.clear();
-        this.jasperEntities.addAll(AssertAs.notNull(jasperEntities, "jasperEntities"));
+        this.jasperEntities.addAll(AssertAs.INSTANCE.notNull(jasperEntities, "jasperEntities"));
         this.dataProvider = null;
         init();
     }
@@ -67,9 +67,9 @@ public abstract class JasperPaperDataSource<E extends JasperEntity>
     protected JasperPaperDataSource(final ScipamatoPdfResourceHandler handler, final String baseName,
         final AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider) {
         super(handler);
-        this.baseName = AssertAs.notNull(baseName, "baseName");
+        this.baseName = AssertAs.INSTANCE.notNull(baseName, "baseName");
         this.jasperEntities.clear();
-        this.dataProvider = AssertAs.notNull(dataProvider, "dataProvider");
+        this.dataProvider = AssertAs.INSTANCE.notNull(dataProvider, "dataProvider");
         init();
     }
 

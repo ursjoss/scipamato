@@ -43,24 +43,24 @@ class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
         b += ":form";
         getTester().assertComponent(b, Form.class);
 
-        assertLabeledTextArea(b, AUTHORS.getName());
-        assertLabeledTextField(b, FIRST_AUTHOR.getName());
-        assertLabeledCheckBoxX(b, FIRST_AUTHOR_OVERRIDDEN.getName());
-        assertLabeledTextArea(b, TITLE.getName());
-        assertLabeledTextField(b, LOCATION.getName());
+        assertLabeledTextArea(b, AUTHORS.getFieldName());
+        assertLabeledTextField(b, FIRST_AUTHOR.getFieldName());
+        assertLabeledCheckBoxX(b, FIRST_AUTHOR_OVERRIDDEN.getFieldName());
+        assertLabeledTextArea(b, TITLE.getFieldName());
+        assertLabeledTextField(b, LOCATION.getFieldName());
 
-        assertLabeledTextField(b, Paper.IdScipamatoEntityFields.ID.getName());
-        assertLabeledTextField(b, PUBL_YEAR.getName());
-        assertLabeledTextField(b, PMID.getName());
-        assertLabeledTextField(b, DOI.getName());
+        assertLabeledTextField(b, Paper.IdScipamatoEntityFields.ID.getFieldName());
+        assertLabeledTextField(b, PUBL_YEAR.getFieldName());
+        assertLabeledTextField(b, PMID.getFieldName());
+        assertLabeledTextField(b, DOI.getFieldName());
 
         b += ":tabs";
         getTester().assertComponent(b, BootstrapTabbedPanel.class);
         b += ":panel";
-        assertTabPanelFields(1, 1, b, GOALS.getName(), POPULATION.getName(), METHODS.getName(),
-            POPULATION_PLACE.getName(), POPULATION_PARTICIPANTS.getName(), POPULATION_DURATION.getName(),
-            EXPOSURE_POLLUTANT.getName(), EXPOSURE_ASSESSMENT.getName(), METHOD_STUDY_DESIGN.getName(),
-            METHOD_OUTCOME.getName(), METHOD_STATISTICS.getName(), METHOD_CONFOUNDERS.getName());
+        assertTabPanelFields(1, 1, b, GOALS.getFieldName(), POPULATION.getFieldName(), METHODS.getFieldName(),
+            POPULATION_PLACE.getFieldName(), POPULATION_PARTICIPANTS.getFieldName(), POPULATION_DURATION.getFieldName(),
+            EXPOSURE_POLLUTANT.getFieldName(), EXPOSURE_ASSESSMENT.getFieldName(), METHOD_STUDY_DESIGN.getFieldName(),
+            METHOD_OUTCOME.getFieldName(), METHOD_STATISTICS.getFieldName(), METHOD_CONFOUNDERS.getFieldName());
     }
 
     @SuppressWarnings("SameParameterValue")
@@ -186,12 +186,12 @@ class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
 
         FormTester formTester = getTester().newFormTester("contentPanel:form");
 
-        assertThat(formTester.getTextComponentValue(NUMBER.getName())).isNotNull();
-        assertThat(formTester.getTextComponentValue(AUTHORS.getName())).isNotNull();
-        assertThat(formTester.getTextComponentValue(FIRST_AUTHOR.getName())).isNotNull();
-        assertThat(formTester.getTextComponentValue(TITLE.getName())).isNotNull();
-        assertThat(formTester.getTextComponentValue(LOCATION.getName())).isNotNull();
-        assertThat(formTester.getTextComponentValue(PUBL_YEAR.getName())).isNotNull();
+        assertThat(formTester.getTextComponentValue(NUMBER.getFieldName())).isNotNull();
+        assertThat(formTester.getTextComponentValue(AUTHORS.getFieldName())).isNotNull();
+        assertThat(formTester.getTextComponentValue(FIRST_AUTHOR.getFieldName())).isNotNull();
+        assertThat(formTester.getTextComponentValue(TITLE.getFieldName())).isNotNull();
+        assertThat(formTester.getTextComponentValue(LOCATION.getFieldName())).isNotNull();
+        assertThat(formTester.getTextComponentValue(PUBL_YEAR.getFieldName())).isNotNull();
         assertThat(formTester.getTextComponentValue("tabs:panel:tab1Form:goals")).isNotNull();
 
         formTester.submit();

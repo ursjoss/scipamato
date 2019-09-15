@@ -58,8 +58,8 @@ public class PaperSummaryDataSource extends JasperPaperDataSource<PaperSummary> 
      */
     public PaperSummaryDataSource(final Paper paper, final ReportHeaderFields reportHeaderFields,
         final CoreShortFieldConcatenator shortFieldConcatenator, ClusterablePdfExporterConfiguration config) {
-        this(Collections.singletonList(new PaperSummary(AssertAs.notNull(paper, "paper"), shortFieldConcatenator,
-                AssertAs.notNull(reportHeaderFields, "reportHeaderFields"))), config,
+        this(Collections.singletonList(new PaperSummary(AssertAs.INSTANCE.notNull(paper, "paper"), shortFieldConcatenator,
+                AssertAs.INSTANCE.notNull(reportHeaderFields, "reportHeaderFields"))), config,
             makeSinglePaperBaseName(paper.getNumber() != null ? String.valueOf(paper.getNumber()) : null));
         this.reportHeaderFields = reportHeaderFields;
         this.shortFieldConcatenator = shortFieldConcatenator;
@@ -75,7 +75,7 @@ public class PaperSummaryDataSource extends JasperPaperDataSource<PaperSummary> 
      *     the {@link ClusterablePdfExporterConfiguration}
      */
     PaperSummaryDataSource(final PaperSummary paperSummary, ClusterablePdfExporterConfiguration config) {
-        this(Collections.singletonList(AssertAs.notNull(paperSummary, "paperSummary")), config,
+        this(Collections.singletonList(AssertAs.INSTANCE.notNull(paperSummary, "paperSummary")), config,
             makeSinglePaperBaseName(paperSummary.getNumber()));
     }
 

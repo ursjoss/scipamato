@@ -20,7 +20,7 @@ public class SimplonFontResourceProvider implements CommercialFontResourceProvid
     private final CssResourceReference cssResourceReference;
 
     public SimplonFontResourceProvider(final ApplicationPublicProperties applicationProperties) {
-        AssertAs.notNull(applicationProperties, "applicationProperties");
+        AssertAs.INSTANCE.notNull(applicationProperties, "applicationProperties");
         if (applicationProperties.isCommercialFontPresent()) {
             cssResourceReference = SimplonCssResourceReference.get();
         } else {

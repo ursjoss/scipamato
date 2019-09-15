@@ -44,7 +44,7 @@ public class Code extends PublicEntity implements CodeLike {
         }
 
         @Override
-        public String getName() {
+        public String getFieldName() {
             return name;
         }
     }

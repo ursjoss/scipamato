@@ -31,7 +31,7 @@ public class CodeFilter extends ScipamatoFilter {
         }
 
         @Override
-        public String getName() {
+        public String getFieldName() {
             return name;
         }
     }

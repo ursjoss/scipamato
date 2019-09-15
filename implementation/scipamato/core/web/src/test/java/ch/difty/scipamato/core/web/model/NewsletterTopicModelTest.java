@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.web.model;
 
-import static ch.difty.scipamato.common.TestUtils.assertDegenerateSupplierParameter;
+import static ch.difty.scipamato.common.TestUtilsKt.assertDegenerateSupplierParameter;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -31,7 +31,7 @@ class NewsletterTopicModelTest extends ModelTest {
         final NewsletterTopicModel model = new NewsletterTopicModel("de");
 
         assertThat(model.load())
-            .extracting(NewsletterTopic.NewsletterTopicFields.TITLE.getName())
+            .extracting(NewsletterTopic.NewsletterTopicFields.TITLE.getFieldName())
             .containsExactly("t1", "t2");
 
         verify(newsletterTopicServiceMock).findAll(languageCode);

@@ -1,5 +1,6 @@
 package ch.difty.scipamato.publ.web.font;
 
+import static ch.difty.scipamato.common.TestUtilsKt.assertDegenerateSupplierParameter;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -9,7 +10,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import ch.difty.scipamato.common.TestUtils;
 import ch.difty.scipamato.publ.config.ApplicationPublicProperties;
 import ch.difty.scipamato.publ.web.resources.MetaOTCssResourceReference;
 
@@ -23,8 +23,7 @@ class MetaOTFontResourceProviderTest {
 
     @Test
     void degenerateConstruction_withNullArgument() {
-        TestUtils.assertDegenerateSupplierParameter(() -> new MetaOTFontResourceProvider(null),
-            "applicationProperties");
+        assertDegenerateSupplierParameter(() -> new MetaOTFontResourceProvider(null), "applicationProperties");
     }
 
     @Test

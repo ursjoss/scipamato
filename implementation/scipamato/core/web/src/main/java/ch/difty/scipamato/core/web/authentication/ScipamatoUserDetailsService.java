@@ -29,7 +29,7 @@ public class ScipamatoUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(final String username) {
-        final String un = AssertAs.notNull(username, "username");
+        final String un = AssertAs.INSTANCE.notNull(username, "username");
         final Optional<User> userOption = userService.findByUserName(un);
         final User user = userOption.orElseThrow(() -> new UsernameNotFoundException("No user found with name " + un));
         return new ScipamatoUserDetails(user);

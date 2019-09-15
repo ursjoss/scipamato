@@ -24,7 +24,7 @@ public class NewsletterTopicFilter extends ScipamatoFilter {
         }
 
         @Override
-        public String getName() {
+        public String getFieldName() {
             return name;
         }
     }

@@ -1,12 +1,11 @@
 package ch.difty.scipamato.core.web.user;
 
+import static ch.difty.scipamato.common.TestUtilsKt.assertDegenerateSupplierParameter;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.apache.wicket.validation.Validatable;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
-import ch.difty.scipamato.common.TestUtils;
 
 class CurrentPasswordMatchesValidatorTest {
 
@@ -20,14 +19,12 @@ class CurrentPasswordMatchesValidatorTest {
 
     @Test
     void degenerateConstruction_withNullPasswordEncoder_fails() {
-        TestUtils.assertDegenerateSupplierParameter(() -> new CurrentPasswordMatchesValidator(null, "foo"),
-            "passwordEncoder");
+        assertDegenerateSupplierParameter(() -> new CurrentPasswordMatchesValidator(null, "foo"), "passwordEncoder");
     }
 
     @Test
     void degenerateConstruction_withNullPassword_fails() {
-        TestUtils.assertDegenerateSupplierParameter(
-            () -> new CurrentPasswordMatchesValidator(new BCryptPasswordEncoder(), null),
+        assertDegenerateSupplierParameter(() -> new CurrentPasswordMatchesValidator(new BCryptPasswordEncoder(), null),
             "currentPasswordHashPersisted");
     }
 

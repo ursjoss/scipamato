@@ -24,7 +24,7 @@ public abstract class EntityRecordMapper<R extends Record, T extends CoreEntity>
 
     @Override
     public T map(final R from) {
-        AssertAs.notNull(from, "from");
+        AssertAs.INSTANCE.notNull(from, "from");
         final T to = makeEntity();
         mapFields(from, to);
         mapAuditFields(from, to);

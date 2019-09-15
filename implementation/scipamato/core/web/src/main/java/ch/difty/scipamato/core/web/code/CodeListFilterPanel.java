@@ -30,11 +30,11 @@ abstract class CodeListFilterPanel
     protected void queueFilterFormFields() {
         queueBootstrapSelectAndLabel("codeClass");
 
-        queueFieldAndLabel(new TextField<String>(CodeDefinition.CodeDefinitionFields.NAME.getName(),
-            PropertyModel.of(getFilter(), CodeFilter.CodeFilterFields.NAME_MASK.getName())));
+        queueFieldAndLabel(new TextField<String>(CodeDefinition.CodeDefinitionFields.NAME.getFieldName(),
+            PropertyModel.of(getFilter(), CodeFilter.CodeFilterFields.NAME_MASK.getFieldName())));
 
-        queueFieldAndLabel(new TextField<String>(CodeTranslation.CodeTranslationFields.COMMENT.getName(),
-            PropertyModel.of(getFilter(), CodeFilter.CodeFilterFields.COMMENT_MASK.getName())));
+        queueFieldAndLabel(new TextField<String>(CodeTranslation.CodeTranslationFields.COMMENT.getFieldName(),
+            PropertyModel.of(getFilter(), CodeFilter.CodeFilterFields.COMMENT_MASK.getFieldName())));
 
         queueNewCodeButton("newCode");
     }
@@ -43,10 +43,10 @@ abstract class CodeListFilterPanel
         queue(new Label(id + LABEL_TAG, new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null)));
 
         final PropertyModel<CodeClass> model = PropertyModel.of(getFilter(),
-            CodeFilter.CodeFilterFields.CODE_CLASS.getName());
+            CodeFilter.CodeFilterFields.CODE_CLASS.getFieldName());
         final CodeClassModel choices = new CodeClassModel(getLocale().getLanguage());
         final IChoiceRenderer<CodeClass> choiceRenderer = new ChoiceRenderer<>(
-            CodeClass.CoreEntityFields.DISPLAY_VALUE.getName(), CodeClass.IdScipamatoEntityFields.ID.getName());
+            CodeClass.CoreEntityFields.DISPLAY_VALUE.getFieldName(), CodeClass.IdScipamatoEntityFields.ID.getFieldName());
 
         final BootstrapSelect<CodeClass> codeClasses = new BootstrapSelect<>(id, model, choices, choiceRenderer);
         codeClasses.add(new AjaxFormComponentUpdatingBehavior("change") {

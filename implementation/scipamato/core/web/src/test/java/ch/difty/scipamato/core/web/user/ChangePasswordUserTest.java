@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.web.user;
 
-import static ch.difty.scipamato.common.TestUtils.assertDegenerateSupplierParameter;
+import static ch.difty.scipamato.common.TestUtilsKt.assertDegenerateSupplierParameter;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;

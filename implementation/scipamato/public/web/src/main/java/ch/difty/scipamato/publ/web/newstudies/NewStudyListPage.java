@@ -139,7 +139,7 @@ public class NewStudyListPage extends BasePage<Void> {
             @Override
             protected void populateItem(ListItem<NewStudyTopic> topic) {
                 topic.add(new Label("topicTitle",
-                    new PropertyModel<String>(topic.getModel(), NewStudyTopic.NewStudyTopicFields.TITLE.getName())));
+                    new PropertyModel<String>(topic.getModel(), NewStudyTopic.NewStudyTopicFields.TITLE.getFieldName())));
                 topic.add(new ListView<>("topicStudies", topic
                     .getModelObject()
                     .getStudies()) {
@@ -148,9 +148,9 @@ public class NewStudyListPage extends BasePage<Void> {
                     @Override
                     protected void populateItem(ListItem<NewStudy> study) {
                         study.add(new Label("headline",
-                            new PropertyModel<String>(study.getModel(), NewStudy.NewStudyFields.HEADLINE.getName())));
+                            new PropertyModel<String>(study.getModel(), NewStudy.NewStudyFields.HEADLINE.getFieldName())));
                         study.add(new Label("description", new PropertyModel<String>(study.getModel(),
-                            NewStudy.NewStudyFields.DESCRIPTION.getName())));
+                            NewStudy.NewStudyFields.DESCRIPTION.getFieldName())));
                         study.add(newLinkToStudy("reference", study));
                     }
                 });
@@ -202,7 +202,7 @@ public class NewStudyListPage extends BasePage<Void> {
             }
         };
         link.add(new Label(id + "Label",
-            new PropertyModel<String>(study.getModel(), NewStudy.NewStudyFields.REFERENCE.getName())));
+            new PropertyModel<String>(study.getModel(), NewStudy.NewStudyFields.REFERENCE.getFieldName())));
         return link;
     }
 

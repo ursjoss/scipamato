@@ -31,7 +31,7 @@ public class NewStudyPageLink extends PublicEntity {
         }
 
         @Override
-        public String getName() {
+        public String getFieldName() {
             return name;
         }
     }

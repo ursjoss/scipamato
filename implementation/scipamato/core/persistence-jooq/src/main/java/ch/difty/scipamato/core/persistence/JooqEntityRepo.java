@@ -65,8 +65,8 @@ public abstract class JooqEntityRepo<R extends Record, T extends CoreEntity, ID,
         InsertSetStepSetter<R, T> insertSetStepSetter, UpdateSetStepSetter<R, T> updateSetStepSetter,
         ApplicationProperties applicationProperties) {
         super(dsl, mapper, sortMapper, filterConditionMapper, dateTimeService, applicationProperties);
-        this.insertSetStepSetter = AssertAs.notNull(insertSetStepSetter, "insertSetStepSetter");
-        this.updateSetStepSetter = AssertAs.notNull(updateSetStepSetter, "updateSetStepSetter");
+        this.insertSetStepSetter = AssertAs.INSTANCE.notNull(insertSetStepSetter, "insertSetStepSetter");
+        this.updateSetStepSetter = AssertAs.INSTANCE.notNull(updateSetStepSetter, "updateSetStepSetter");
     }
 
     /**
@@ -95,8 +95,8 @@ public abstract class JooqEntityRepo<R extends Record, T extends CoreEntity, ID,
 
     @Override
     public T add(final T entity, final String languageCode) {
-        AssertAs.notNull(entity, "entity");
-        AssertAs.notNull(languageCode, "languageCode");
+        AssertAs.INSTANCE.notNull(entity, "entity");
+        AssertAs.INSTANCE.notNull(languageCode, "languageCode");
 
         R saved = doSave(entity, languageCode);
         if (saved != null) {
@@ -139,7 +139,7 @@ public abstract class JooqEntityRepo<R extends Record, T extends CoreEntity, ID,
 
     @Override
     public T delete(final ID id, int version) {
-        AssertAs.notNull(id, "id");
+        AssertAs.INSTANCE.notNull(id, "id");
 
         final T toBeDeleted = findById(id, version);
         if (toBeDeleted != null) {
@@ -179,9 +179,9 @@ public abstract class JooqEntityRepo<R extends Record, T extends CoreEntity, ID,
 
     @Override
     public T update(final T entity, final String languageCode) {
-        AssertAs.notNull(entity, "entity");
-        AssertAs.notNull(languageCode, "languageCode");
-        ID id = AssertAs.notNull(getIdFrom(entity), "entity.id");
+        AssertAs.INSTANCE.notNull(entity, "entity");
+        AssertAs.INSTANCE.notNull(languageCode, "languageCode");
+        ID id = AssertAs.INSTANCE.notNull(getIdFrom(entity), "entity.id");
 
         entity.setLastModified(now());
         entity.setLastModifiedBy(getUserId());

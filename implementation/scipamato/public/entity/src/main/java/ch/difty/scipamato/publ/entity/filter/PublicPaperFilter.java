@@ -62,7 +62,7 @@ public class PublicPaperFilter extends ScipamatoFilter {
         }
 
         @Override
-        public String getName() {
+        public String getFieldName() {
             return name;
         }
     }

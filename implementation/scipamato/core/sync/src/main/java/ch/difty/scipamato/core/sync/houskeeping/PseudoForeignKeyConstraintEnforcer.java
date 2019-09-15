@@ -51,7 +51,7 @@ public class PseudoForeignKeyConstraintEnforcer<R extends UpdatableRecordImpl<?>
     public PseudoForeignKeyConstraintEnforcer(final DeleteConditionStep<R> deleteDdl, final String entityName,
         final String plural) {
         this.ddl = deleteDdl;
-        this.entityName = AssertAs.notNull(entityName, "entityName");
+        this.entityName = AssertAs.INSTANCE.notNull(entityName, "entityName");
         this.plural = plural != null ? plural : "s";
     }
 

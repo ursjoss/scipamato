@@ -38,7 +38,7 @@ public class PaperSummary extends PaperSummaryCommon {
      */
     public PaperSummary(final Paper p, final CoreShortFieldConcatenator shortFieldConcatenator,
         final ReportHeaderFields rhf) {
-        super(AssertAs.notNull(p, "p"), shortFieldConcatenator, AssertAs.notNull(rhf, "rhf"));
+        super(AssertAs.INSTANCE.notNull(p, "p"), shortFieldConcatenator, AssertAs.INSTANCE.notNull(rhf, "rhf"));
         this.population = na(shortFieldConcatenator.populationFrom(p, rhf));
         this.result = na(shortFieldConcatenator.resultFrom(p, rhf));
 

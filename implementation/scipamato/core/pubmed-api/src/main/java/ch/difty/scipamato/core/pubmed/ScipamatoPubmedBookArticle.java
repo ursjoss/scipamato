@@ -24,8 +24,8 @@ import ch.difty.scipamato.core.pubmed.api.PubmedBookArticle;
 class ScipamatoPubmedBookArticle extends AbstractPubmedArticleFacade {
 
     ScipamatoPubmedBookArticle(final PubmedBookArticle pubmedBookArticle) {
-        AssertAs.notNull(pubmedBookArticle, "pubmedBookArticle");
-        final BookDocument bookDocument = AssertAs.notNull(pubmedBookArticle.getBookDocument(),
+        AssertAs.INSTANCE.notNull(pubmedBookArticle, "pubmedBookArticle");
+        final BookDocument bookDocument = AssertAs.INSTANCE.notNull(pubmedBookArticle.getBookDocument(),
             "pubmedBookArticle.bookDocument");
         final List<AuthorList> authorLists = bookDocument.getAuthorList();
 

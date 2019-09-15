@@ -51,7 +51,7 @@ public class Newsletter extends IdScipamatoEntity<Integer> {
         }
 
         @Override
-        public String getName() {
+        public String getFieldName() {
             return name;
         }
     }
@@ -80,8 +80,8 @@ public class Newsletter extends IdScipamatoEntity<Integer> {
      *     the topic of the new association, may be null indicating 'no topic'
      */
     public void addPaper(final PaperSlim paper, final NewsletterTopic topic) {
-        AssertAs.notNull(paper, "paper");
-        AssertAs.notNull(paper.getId(), "paper.id");
+        AssertAs.INSTANCE.notNull(paper, "paper");
+        AssertAs.INSTANCE.notNull(paper.getId(), "paper.id");
         if (papersByTopic
             .values()
             .stream()

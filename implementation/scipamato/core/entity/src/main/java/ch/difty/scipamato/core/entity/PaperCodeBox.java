@@ -41,7 +41,7 @@ public class PaperCodeBox implements CodeBox {
     }
 
     private CodeClassId nullSafe(final CodeClassId codeClassId) {
-        return AssertAs.notNull(codeClassId, "codeClassId");
+        return AssertAs.INSTANCE.notNull(codeClassId, "codeClassId");
     }
 
     private List<Code> collectBy(final CodeClassId ccId) {

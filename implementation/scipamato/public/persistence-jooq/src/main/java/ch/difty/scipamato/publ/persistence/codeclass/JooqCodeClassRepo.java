@@ -9,6 +9,7 @@ import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
+import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.TranslationUtils;
 import ch.difty.scipamato.publ.entity.CodeClass;
 
@@ -25,7 +26,8 @@ public class JooqCodeClassRepo implements CodeClassRepository {
     @Override
     @Cacheable
     public List<CodeClass> find(final String languageCode) {
-        final String lang = TranslationUtils.trimLanguageCode(languageCode);
+        AssertAs.INSTANCE.notNull(languageCode, "languageCode");
+        final String lang = TranslationUtils.INSTANCE.trimLanguageCode(languageCode);
         // skipping the audit fields
         return dslContext
             .select(CODE_CLASS.CODE_CLASS_ID, CODE_CLASS.LANG_CODE, CODE_CLASS.NAME, CODE_CLASS.DESCRIPTION)

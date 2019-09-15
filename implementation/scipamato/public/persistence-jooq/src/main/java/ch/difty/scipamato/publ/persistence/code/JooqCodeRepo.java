@@ -27,8 +27,9 @@ public class JooqCodeRepo implements CodeRepository {
     @Override
     @Cacheable
     public List<Code> findCodesOfClass(final CodeClassId codeClassId, final String languageCode) {
-        AssertAs.notNull(codeClassId, "codeClassId");
-        final String lang = TranslationUtils.trimLanguageCode(languageCode);
+        AssertAs.INSTANCE.notNull(codeClassId, "codeClassId");
+        AssertAs.INSTANCE.notNull(languageCode, "languageCode");
+        final String lang = TranslationUtils.INSTANCE.trimLanguageCode(languageCode);
         // skipping the audit fields
         return dslContext
             .select(CODE.CODE_CLASS_ID, CODE.CODE_, CODE.LANG_CODE, CODE.NAME, CODE.COMMENT, CODE.SORT)

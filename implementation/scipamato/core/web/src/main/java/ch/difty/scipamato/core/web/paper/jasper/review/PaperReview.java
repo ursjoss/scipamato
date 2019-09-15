@@ -59,12 +59,12 @@ public class PaperReview extends JasperEntity {
      *     the reportHeaderFields with the localized field headers
      */
     public PaperReview(final Paper p, final ReportHeaderFields rhf) {
-        AssertAs.notNull(p, "p");
-        AssertAs.notNull(rhf, "rhf");
+        AssertAs.INSTANCE.notNull(p, "p");
+        AssertAs.INSTANCE.notNull(rhf, "rhf");
 
         final Long no = p.getNumber();
         this.number = no != null ? String.valueOf(no) : "";
-        AssertAs.notNull(p, "paper");
+        AssertAs.INSTANCE.notNull(p, "paper");
         this.authorYear = makeAuthorYearFrom(p);
         this.populationPlace = na(p.getPopulationPlace());
         this.methodOutcome = na(p.getMethodOutcome());

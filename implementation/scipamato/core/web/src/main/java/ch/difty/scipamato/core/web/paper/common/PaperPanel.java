@@ -136,8 +136,8 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
     }
 
     private void queueHeaderFields() {
-        queueAuthorComplex(AUTHORS.getName(), FIRST_AUTHOR.getName(), FIRST_AUTHOR_OVERRIDDEN.getName());
-        title = new TextArea<>(TITLE.getName());
+        queueAuthorComplex(AUTHORS.getFieldName(), FIRST_AUTHOR.getFieldName(), FIRST_AUTHOR_OVERRIDDEN.getFieldName());
+        title = new TextArea<>(TITLE.getFieldName());
 
         final ItemNavigator<Long> pm = getPaperIdManager();
         queue(newNavigationButton("previous", GlyphIconType.stepbackward, pm::hasPrevious, () -> {
@@ -150,30 +150,30 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
         }));
 
         queueFieldAndLabel(title, new PropertyValidator<String>());
-        location = new TextField<>(LOCATION.getName());
+        location = new TextField<>(LOCATION.getFieldName());
         queueFieldAndLabel(location, new PropertyValidator<String>());
 
-        publicationYear = new TextField<>(PUBL_YEAR.getName());
+        publicationYear = new TextField<>(PUBL_YEAR.getFieldName());
         queueFieldAndLabel(publicationYear, new PropertyValidator<Integer>());
-        pmId = new TextField<>(PMID.getName());
+        pmId = new TextField<>(PMID.getFieldName());
         pmId.add(newPmIdChangeBehavior());
         queueFieldAndLabel(pmId);
-        doi = new TextField<>(DOI.getName());
+        doi = new TextField<>(DOI.getFieldName());
         queueFieldAndLabel(doi, new PropertyValidator<String>());
 
         addDisableBehavior(title, location, publicationYear, pmId, doi);
 
-        queueNumberField(NUMBER.getName());
+        queueNumberField(NUMBER.getFieldName());
 
-        TextField<Integer> id = newSelfUpdatingTextField(IdScipamatoEntity.IdScipamatoEntityFields.ID.getName());
+        TextField<Integer> id = newSelfUpdatingTextField(IdScipamatoEntity.IdScipamatoEntityFields.ID.getFieldName());
         id.setEnabled(isSearchMode());
         queueFieldAndLabel(id);
 
-        TextField<String> created = newSelfUpdatingTextField(CoreEntity.CoreEntityFields.CREATED_DV.getName());
+        TextField<String> created = newSelfUpdatingTextField(CoreEntity.CoreEntityFields.CREATED_DV.getFieldName());
         created.setEnabled(isSearchMode());
         queueFieldAndLabel(created);
 
-        TextField<String> modified = newSelfUpdatingTextField(CoreEntity.CoreEntityFields.MODIFIED_DV.getName());
+        TextField<String> modified = newSelfUpdatingTextField(CoreEntity.CoreEntityFields.MODIFIED_DV.getFieldName());
         modified.setEnabled(isSearchMode());
         queueFieldAndLabel(modified);
 
@@ -609,7 +609,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
         }
 
         TextArea<String> queueTo(FieldEnumType fieldType, boolean newField, PropertyValidator<?> pv) {
-            String id = fieldType.getName();
+            String id = fieldType.getFieldName();
             TextArea<String> field = makeField(id, newField);
             field.setOutputMarkupId(true);
             StringResourceModel labelModel = new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null);
@@ -809,7 +809,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
         }
 
         private void makeCodeClass1Complex(final List<CodeClass> codeClasses, Form<T> form) {
-            final TextField<String> mainCodeOfCodeClass1 = new TextField<>(MAIN_CODE_OF_CODECLASS1.getName());
+            final TextField<String> mainCodeOfCodeClass1 = new TextField<>(MAIN_CODE_OF_CODECLASS1.getFieldName());
             final BootstrapMultiSelect<Code> codeClass1 = makeCodeClassComplex(CodeClassId.CC1, codeClasses);
             addCodeClass1ChangeBehavior(mainCodeOfCodeClass1, codeClass1);
             addMainCodeOfClass1(mainCodeOfCodeClass1);
@@ -866,7 +866,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
             };
             final CodeModel choices = new CodeModel(codeClassId, getLocalization());
             final IChoiceRenderer<Code> choiceRenderer = new ChoiceRenderer<>(
-                CoreEntity.CoreEntityFields.DISPLAY_VALUE.getName(), Code.CodeFields.CODE.getName());
+                CoreEntity.CoreEntityFields.DISPLAY_VALUE.getFieldName(), Code.CodeFields.CODE.getFieldName());
             final StringResourceModel noneSelectedModel = new StringResourceModel("codes.noneSelected", this, null);
             final StringResourceModel selectAllModel = new StringResourceModel(SELECT_ALL_RESOURCE_TAG, this, null);
             final StringResourceModel deselectAllModel = new StringResourceModel(DESELECT_ALL_RESOURCE_TAG, this, null);
@@ -1038,7 +1038,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
         }
 
         private void queueHeadline(FieldEnumType fieldType) {
-            String id = fieldType.getName();
+            String id = fieldType.getFieldName();
             TextArea<String> field = new TextArea<>(id) {
                 private static final long serialVersionUID = 1L;
 
@@ -1109,8 +1109,8 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
                 }
             };
             final IChoiceRenderer<NewsletterTopic> choiceRenderer = new ChoiceRenderer<>(
-                NewsletterTopic.NewsletterTopicFields.TITLE.getName(),
-                NewsletterTopic.NewsletterTopicFields.ID.getName());
+                NewsletterTopic.NewsletterTopicFields.TITLE.getFieldName(),
+                NewsletterTopic.NewsletterTopicFields.ID.getFieldName());
 
             final StringResourceModel noneSelectedModel = new StringResourceModel(id + ".noneSelected", this, null);
             final BootstrapSelectConfig config = new BootstrapSelectConfig()
@@ -1164,8 +1164,8 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
         private final FormComponent<?>[] components;
 
         CodeClass1ConsistencyValidator(BootstrapMultiSelect<Code> codeClass1, TextField<String> mainCodeOfCodeClass1) {
-            AssertAs.notNull(codeClass1);
-            AssertAs.notNull(mainCodeOfCodeClass1);
+            AssertAs.INSTANCE.notNull(codeClass1);
+            AssertAs.INSTANCE.notNull(mainCodeOfCodeClass1);
             components = new FormComponent<?>[] { codeClass1, mainCodeOfCodeClass1 };
         }
 

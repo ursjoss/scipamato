@@ -33,7 +33,7 @@ public abstract class IdScipamatoEntity<ID extends Number> extends CoreEntity {
         }
 
         @Override
-        public String getName() {
+        public String getFieldName() {
             return name;
         }
     }

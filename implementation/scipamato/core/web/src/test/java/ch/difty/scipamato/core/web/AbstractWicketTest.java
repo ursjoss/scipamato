@@ -13,7 +13,6 @@ import ch.difty.scipamato.common.navigator.ItemNavigator;
 import ch.difty.scipamato.common.web.ScipamatoWebSessionFacade;
 import ch.difty.scipamato.core.logic.parsing.AuthorParserFactory;
 import ch.difty.scipamato.core.logic.parsing.AuthorParserStrategy;
-import ch.difty.scipamato.core.logic.parsing.DefaultAuthorParserFactory;
 import ch.difty.scipamato.core.persistence.*;
 import ch.difty.scipamato.core.pubmed.PubmedArticleService;
 import ch.difty.scipamato.core.pubmed.PubmedImporter;
@@ -24,7 +23,7 @@ public abstract class AbstractWicketTest {
 
     @Bean
     public AuthorParserFactory authorParserFactory() {
-        return new DefaultAuthorParserFactory(AuthorParserStrategy.PUBMED);
+        return AuthorParserFactory.Companion.create(AuthorParserStrategy.PUBMED);
     }
 
     @Autowired

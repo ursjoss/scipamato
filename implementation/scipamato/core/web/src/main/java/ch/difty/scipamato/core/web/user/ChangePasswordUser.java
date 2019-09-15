@@ -48,7 +48,7 @@ public class ChangePasswordUser implements Serializable {
      *     if true: password will be set to null.
      */
     public ChangePasswordUser(final User user, final boolean clearPassword) {
-        this.user = AssertAs.notNull(user, "user");
+        this.user = AssertAs.INSTANCE.notNull(user, "user");
         if (clearPassword)
             this.user.setPassword(null);
     }

@@ -113,15 +113,15 @@ public class PublicPaperDetailPage extends BasePage<PublicPaper> {
         queuePubmedLink("pubmed");
 
         queueTopic(newLabel("caption", getModel()));
-        queueTopic(null, newField("title", PublicPaper.PublicPaperFields.TITLE.getName()));
-        queueTopic(newLabel("reference"), newField("authors", PublicPaper.PublicPaperFields.AUTHORS.getName()),
-            newField("title2", PublicPaper.PublicPaperFields.TITLE.getName()),
-            newField("location", PublicPaper.PublicPaperFields.LOCATION.getName()));
-        queueTopic(newLabel("goals"), newField("goals", PublicPaper.PublicPaperFields.GOALS.getName()));
-        queueTopic(newLabel("population"), newField("population", PublicPaper.PublicPaperFields.POPULATION.getName()));
-        queueTopic(newLabel("methods"), newField("methods", PublicPaper.PublicPaperFields.METHODS.getName()));
-        queueTopic(newLabel("result"), newField("result", PublicPaper.PublicPaperFields.RESULT.getName()));
-        queueTopic(newLabel("comment"), newField("comment", PublicPaper.PublicPaperFields.COMMENT.getName()));
+        queueTopic(null, newField("title", PublicPaper.PublicPaperFields.TITLE.getFieldName()));
+        queueTopic(newLabel("reference"), newField("authors", PublicPaper.PublicPaperFields.AUTHORS.getFieldName()),
+            newField("title2", PublicPaper.PublicPaperFields.TITLE.getFieldName()),
+            newField("location", PublicPaper.PublicPaperFields.LOCATION.getFieldName()));
+        queueTopic(newLabel("goals"), newField("goals", PublicPaper.PublicPaperFields.GOALS.getFieldName()));
+        queueTopic(newLabel("population"), newField("population", PublicPaper.PublicPaperFields.POPULATION.getFieldName()));
+        queueTopic(newLabel("methods"), newField("methods", PublicPaper.PublicPaperFields.METHODS.getFieldName()));
+        queueTopic(newLabel("result"), newField("result", PublicPaper.PublicPaperFields.RESULT.getFieldName()));
+        queueTopic(newLabel("comment"), newField("comment", PublicPaper.PublicPaperFields.COMMENT.getFieldName()));
     }
 
     private void queuePubmedLink(final String id) {

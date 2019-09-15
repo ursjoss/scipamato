@@ -20,7 +20,7 @@ public class MetaOTFontResourceProvider implements CommercialFontResourceProvide
     private final CssResourceReference cssResourceReference;
 
     public MetaOTFontResourceProvider(final ApplicationPublicProperties applicationProperties) {
-        AssertAs.notNull(applicationProperties, "applicationProperties");
+        AssertAs.INSTANCE.notNull(applicationProperties, "applicationProperties");
         if (applicationProperties.isCommercialFontPresent()) {
             cssResourceReference = MetaOTCssResourceReference.get();
         } else {

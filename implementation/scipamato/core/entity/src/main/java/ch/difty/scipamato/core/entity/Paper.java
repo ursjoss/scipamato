@@ -161,7 +161,7 @@ public class Paper extends IdScipamatoEntity<Long> implements CodeBoxAware, News
         }
 
         @Override
-        public String getName() {
+        public String getFieldName() {
             return name;
         }
     }

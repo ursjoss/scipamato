@@ -26,7 +26,7 @@ public class CodeClassFilter extends ScipamatoFilter {
         }
 
         @Override
-        public String getName() {
+        public String getFieldName() {
             return name;
         }
     }

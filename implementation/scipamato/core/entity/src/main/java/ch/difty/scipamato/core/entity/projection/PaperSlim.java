@@ -42,7 +42,7 @@ public class PaperSlim extends IdScipamatoEntity<Long> {
         }
 
         @Override
-        public String getName() {
+        public String getFieldName() {
             return name;
         }
     }
@@ -90,7 +90,7 @@ public class PaperSlim extends IdScipamatoEntity<Long> {
     public PaperSlim(Long id, Long number, String firstAuthor, Integer publicationYear, String title, int newsletterId,
         String newsletterTitle, int publicationStatusId, String headline) {
         this(id, number, firstAuthor, publicationYear, title,
-            new NewsletterAssociation(newsletterId, AssertAs.notNull(newsletterTitle, "newsletterTitle"),
+            new NewsletterAssociation(newsletterId, AssertAs.INSTANCE.notNull(newsletterTitle, "newsletterTitle"),
                 publicationStatusId, headline));
     }
 

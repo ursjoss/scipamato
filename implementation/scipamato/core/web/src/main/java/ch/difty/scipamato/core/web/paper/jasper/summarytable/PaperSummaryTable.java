@@ -48,8 +48,8 @@ public class PaperSummaryTable extends JasperEntity {
      *     the reportHeaderFields with the localized field headers
      */
     public PaperSummaryTable(final Paper p, final ReportHeaderFields rhf) {
-        AssertAs.notNull(p, "p");
-        AssertAs.notNull(rhf, "rhf");
+        AssertAs.INSTANCE.notNull(p, "p");
+        AssertAs.INSTANCE.notNull(rhf, "rhf");
 
         final Long no = p.getNumber();
         this.number = no != null ? String.valueOf(no) : "";

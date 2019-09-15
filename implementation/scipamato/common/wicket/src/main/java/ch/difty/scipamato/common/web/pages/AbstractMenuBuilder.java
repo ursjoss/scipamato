@@ -35,8 +35,8 @@ public abstract class AbstractMenuBuilder implements MenuBuilder {
      */
     protected AbstractMenuBuilder(final ApplicationProperties applicationProperties,
         final ScipamatoWebSessionFacade webSessionFacade) {
-        this.applicationProperties = AssertAs.notNull(applicationProperties, "applicationProperties");
-        this.webSessionFacade = AssertAs.notNull(webSessionFacade, "webSessionFacade");
+        this.applicationProperties = AssertAs.INSTANCE.notNull(applicationProperties, "applicationProperties");
+        this.webSessionFacade = AssertAs.INSTANCE.notNull(webSessionFacade, "webSessionFacade");
     }
 
     public ApplicationProperties getApplicationProperties() {

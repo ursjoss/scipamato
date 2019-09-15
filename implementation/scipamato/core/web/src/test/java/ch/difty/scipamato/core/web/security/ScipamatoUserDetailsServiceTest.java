@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.web.security;
 
-import static ch.difty.scipamato.common.TestUtils.assertDegenerateSupplierParameter;
+import static ch.difty.scipamato.common.TestUtilsKt.assertDegenerateSupplierParameter;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 import static org.mockito.Mockito.*;

@@ -26,8 +26,8 @@ public class SearchOrderInsertSetStepSetter implements InsertSetStepSetter<Searc
     @Override
     public InsertSetMoreStep<SearchOrderRecord> setNonKeyFieldsFor(InsertSetStep<SearchOrderRecord> step,
         SearchOrder e) {
-        AssertAs.notNull(step, "step");
-        AssertAs.notNull(e, "entity");
+        AssertAs.INSTANCE.notNull(step, "step");
+        AssertAs.INSTANCE.notNull(e, "entity");
 
         return step
             .set(SEARCH_ORDER.NAME, e.getName())
@@ -40,8 +40,8 @@ public class SearchOrderInsertSetStepSetter implements InsertSetStepSetter<Searc
 
     @Override
     public void considerSettingKeyOf(InsertSetMoreStep<SearchOrderRecord> step, SearchOrder entity) {
-        AssertAs.notNull(step, "step");
-        AssertAs.notNull(entity, "entity");
+        AssertAs.INSTANCE.notNull(step, "step");
+        AssertAs.INSTANCE.notNull(entity, "entity");
         Long id = entity.getId();
         if (id != null)
             step.set(SEARCH_ORDER.ID, id);

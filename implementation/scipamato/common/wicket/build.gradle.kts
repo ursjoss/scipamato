@@ -13,7 +13,7 @@ sourceSets {
     /** test: html and properties files */
     test {
         resources {
-            srcDir("src/test/java")
+            srcDir("src/test/kotlin")
         }
     }
 }

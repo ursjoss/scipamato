@@ -34,9 +34,9 @@ public abstract class AbstractSearchTerm extends IdScipamatoEntity<Long> impleme
         final String rawSearchTerm) {
         super(id);
         this.searchConditionId = searchConditionId;
-        this.searchTermType = AssertAs.notNull(type);
-        this.fieldName = AssertAs.notNull(fieldName, "fieldName");
-        this.rawSearchTerm = AssertAs.notNull(rawSearchTerm, "rawSearchTerm");
+        this.searchTermType = AssertAs.INSTANCE.notNull(type);
+        this.fieldName = AssertAs.INSTANCE.notNull(fieldName, "fieldName");
+        this.rawSearchTerm = AssertAs.INSTANCE.notNull(rawSearchTerm, "rawSearchTerm");
     }
 
     @Override

@@ -31,7 +31,7 @@ class EtAlAuthorsAbbreviator implements AuthorsAbbreviator {
      *     authorsAbbreviatedMaxLength setting.
      */
     EtAlAuthorsAbbreviator(final ApplicationPublicProperties properties) {
-        AssertAs.notNull(properties, "properties");
+        AssertAs.INSTANCE.notNull(properties, "properties");
         this.authorsAbbreviatedMaxLength = properties.getAuthorsAbbreviatedMaxLength();
         this.authorsAbbreviatedCutOff = authorsAbbreviatedMaxLength - ET_AL.length();
         this.authorsTruncatedCutOff = authorsAbbreviatedMaxLength - ELLIPSIS.length();

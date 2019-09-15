@@ -125,12 +125,12 @@ public class PaperListPage extends BasePage<Void> {
             }
         });
 
-        queueFieldAndLabel(new TextField<String>("number", PropertyModel.of(filter, NUMBER.getName())));
-        queueFieldAndLabel(new TextField<String>("authorsSearch", PropertyModel.of(filter, AUTHOR_MASK.getName())));
-        queueFieldAndLabel(new TextField<String>("methodsSearch", PropertyModel.of(filter, METHODS_MASK.getName())));
-        queueFieldAndLabel(new TextField<String>("fieldSearch", PropertyModel.of(filter, SEARCH_MASK.getName())));
-        queueFieldAndLabel(new TextField<String>("pubYearFrom", PropertyModel.of(filter, PUB_YEAR_FROM.getName())));
-        queueFieldAndLabel(new TextField<String>("pubYearUntil", PropertyModel.of(filter, PUB_YEAR_UNTIL.getName())));
+        queueFieldAndLabel(new TextField<String>("number", PropertyModel.of(filter, NUMBER.getFieldName())));
+        queueFieldAndLabel(new TextField<String>("authorsSearch", PropertyModel.of(filter, AUTHOR_MASK.getFieldName())));
+        queueFieldAndLabel(new TextField<String>("methodsSearch", PropertyModel.of(filter, METHODS_MASK.getFieldName())));
+        queueFieldAndLabel(new TextField<String>("fieldSearch", PropertyModel.of(filter, SEARCH_MASK.getFieldName())));
+        queueFieldAndLabel(new TextField<String>("pubYearFrom", PropertyModel.of(filter, PUB_YEAR_FROM.getFieldName())));
+        queueFieldAndLabel(new TextField<String>("pubYearUntil", PropertyModel.of(filter, PUB_YEAR_UNTIL.getFieldName())));
 
         queueNewPaperButton("newPaper");
 

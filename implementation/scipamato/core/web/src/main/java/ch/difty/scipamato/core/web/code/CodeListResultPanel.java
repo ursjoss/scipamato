@@ -24,10 +24,10 @@ class CodeListResultPanel
     @Override
     protected List<IColumn<CodeDefinition, String>> makeTableColumns() {
         final List<IColumn<CodeDefinition, String>> columns = new ArrayList<>();
-        columns.add(makePropertyColumn(CodeDefinition.CodeDefinitionFields.CODE.getName()));
+        columns.add(makePropertyColumn(CodeDefinition.CodeDefinitionFields.CODE.getFieldName()));
         columns.add(makeClickableColumn("translationsAsString", this::onTitleClick));
-        columns.add(makePropertyColumn(CodeDefinition.CodeDefinitionFields.SORT.getName()));
-        columns.add(makeBooleanPropertyColumn(CodeDefinition.CodeDefinitionFields.INTERNAL.getName(),
+        columns.add(makePropertyColumn(CodeDefinition.CodeDefinitionFields.SORT.getFieldName()));
+        columns.add(makeBooleanPropertyColumn(CodeDefinition.CodeDefinitionFields.INTERNAL.getFieldName(),
             CodeDefinition::isInternal));
         return columns;
     }

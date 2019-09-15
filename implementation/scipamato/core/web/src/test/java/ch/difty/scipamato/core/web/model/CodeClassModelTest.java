@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.web.model;
 
-import static ch.difty.scipamato.common.TestUtils.assertDegenerateSupplierParameter;
+import static ch.difty.scipamato.common.TestUtilsKt.assertDegenerateSupplierParameter;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -32,7 +32,7 @@ class CodeClassModelTest extends ModelTest {
         final CodeClassModel model = new CodeClassModel("de");
 
         assertThat(model.load())
-            .extracting(Keyword.KeywordFields.NAME.getName())
+            .extracting(Keyword.KeywordFields.NAME.getFieldName())
             .containsExactly("cc1", "cc2");
 
         verify(codeClassServiceMock).find(languageCode);

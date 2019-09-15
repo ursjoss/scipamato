@@ -32,18 +32,18 @@ public class StringSearchTermEvaluator implements SearchTermEvaluator<StringSear
         methodFields.addAll(Stream
             .of(METHODS, "methodStudyDesign", "populationPlace", "methodOutcome", "exposurePollutant",
                 "exposureAssessment", "methodStatistics", "methodConfounders")
-            .map(TranslationUtils::deCamelCase)
+            .map(TranslationUtils.INSTANCE::deCamelCase)
             .map(DSL::field)
             .collect(Collectors.toList()));
     }
 
     @Override
     public Condition evaluate(final StringSearchTerm searchTerm) {
-        AssertAs.notNull(searchTerm, "searchTerm");
+        AssertAs.INSTANCE.notNull(searchTerm, "searchTerm");
 
         final ConditionalSupplier conditions = new ConditionalSupplier();
         for (final Token token : searchTerm.getTokens()) {
-            final String fieldName = TranslationUtils.deCamelCase(searchTerm.getFieldName());
+            final String fieldName = TranslationUtils.INSTANCE.deCamelCase(searchTerm.getFieldName());
             addToConditions(conditions, token, DSL.field(fieldName), DSL.val(token.sqlData));
         }
         return conditions.combineWithAnd();

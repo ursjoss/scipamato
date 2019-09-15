@@ -34,7 +34,7 @@ public class CodeClass extends PublicEntity implements CodeClassLike {
         }
 
         @Override
-        public String getName() {
+        public String getFieldName() {
             return name;
         }
     }

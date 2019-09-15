@@ -1,5 +1,6 @@
 package ch.difty.scipamato.core.web.code;
 
+import static ch.difty.scipamato.common.TestUtilsKt.assertDegenerateSupplierParameter;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -21,7 +22,6 @@ import org.mockito.Mock;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DuplicateKeyException;
 
-import ch.difty.scipamato.common.TestUtils;
 import ch.difty.scipamato.core.entity.CodeClass;
 import ch.difty.scipamato.core.entity.code.CodeDefinition;
 import ch.difty.scipamato.core.entity.code.CodeFilter;
@@ -125,7 +125,7 @@ class CodeEditPageTest extends BasePageTest<CodeEditPage> {
 
     @Test
     void instantiating_with_nullModel_throws() {
-        TestUtils.assertDegenerateSupplierParameter(() -> new CodeEditPage(null, null), "model");
+        assertDegenerateSupplierParameter(() -> new CodeEditPage(null, null), "model");
     }
 
     @Test
@@ -367,13 +367,13 @@ class CodeEditPageTest extends BasePageTest<CodeEditPage> {
 
     @Test
     void constructing_withNullCodeField_throws() {
-        TestUtils.assertDegenerateSupplierParameter(
+        assertDegenerateSupplierParameter(
             () -> new CodeEditHeaderPanel.CodeMustMatchCodeClassValidator(null, codeClasses), "field");
     }
 
     @Test
     void constructing_withNullCodeClassesField_throws() {
-        TestUtils.assertDegenerateSupplierParameter(
+        assertDegenerateSupplierParameter(
             () -> new CodeEditHeaderPanel.CodeMustMatchCodeClassValidator(codeField, null), "codeClasses");
     }
 

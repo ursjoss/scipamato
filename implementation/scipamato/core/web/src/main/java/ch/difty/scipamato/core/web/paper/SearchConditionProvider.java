@@ -23,8 +23,8 @@ public class SearchConditionProvider extends SortableDataProvider<SearchConditio
     private final IModel<List<SearchCondition>> searchConditionsModel;
 
     public SearchConditionProvider(final IModel<List<SearchCondition>> searchConditionsModel) {
-        AssertAs.notNull(searchConditionsModel, "searchConditionsModel");
-        AssertAs.notNull(searchConditionsModel.getObject(), "searchConditions");
+        AssertAs.INSTANCE.notNull(searchConditionsModel, "searchConditionsModel");
+        AssertAs.INSTANCE.notNull(searchConditionsModel.getObject(), "searchConditions");
         this.searchConditionsModel = searchConditionsModel;
     }
 

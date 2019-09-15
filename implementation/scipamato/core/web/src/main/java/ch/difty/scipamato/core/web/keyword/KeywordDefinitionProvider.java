@@ -22,7 +22,7 @@ public class KeywordDefinitionProvider extends DefinitionProvider<KeywordDefinit
 
     KeywordDefinitionProvider(KeywordFilter filter) {
         super(filter);
-        setSort(Keyword.KeywordFields.NAME.getName(), SortOrder.ASCENDING);
+        setSort(Keyword.KeywordFields.NAME.getFieldName(), SortOrder.ASCENDING);
     }
 
     @Override

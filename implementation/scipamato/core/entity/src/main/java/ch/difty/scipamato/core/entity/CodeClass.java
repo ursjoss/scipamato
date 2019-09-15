@@ -30,7 +30,7 @@ public class CodeClass extends IdScipamatoEntity<Integer> implements CodeClassLi
         }
 
         @Override
-        public String getName() {
+        public String getFieldName() {
             return name;
         }
     }

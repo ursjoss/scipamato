@@ -79,7 +79,7 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware, Ne
     }
 
     public void addSearchTerm(final SearchTerm searchTerm) {
-        AssertAs.notNull(searchTerm, "searchTerm");
+        AssertAs.INSTANCE.notNull(searchTerm, "searchTerm");
         switch (searchTerm.getSearchTermType()) {
         case BOOLEAN:
             final BooleanSearchTerm bst = (BooleanSearchTerm) searchTerm;
@@ -449,12 +449,12 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware, Ne
     }
 
     private String getStringValue(final FieldEnumType fieldType) {
-        final StringSearchTerm st = stringSearchTerms.get(fieldType.getName());
+        final StringSearchTerm st = stringSearchTerms.get(fieldType.getFieldName());
         return st != null ? st.getRawSearchTerm() : null;
     }
 
     private void setStringValue(final String value, final FieldEnumType fieldType) {
-        final String key = fieldType.getName();
+        final String key = fieldType.getFieldName();
         if (value != null) {
             stringSearchTerms.put(key, SearchTerm.newStringSearchTerm(key, value));
             getRemovedKeys().remove(key);
@@ -465,12 +465,12 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware, Ne
     }
 
     private String getIntegerValue(final FieldEnumType fieldType) {
-        final IntegerSearchTerm st = integerSearchTerms.get(fieldType.getName());
+        final IntegerSearchTerm st = integerSearchTerms.get(fieldType.getFieldName());
         return st != null ? st.getRawSearchTerm() : null;
     }
 
     private void setIntegerValue(final String value, final FieldEnumType fieldType) {
-        final String key = fieldType.getName();
+        final String key = fieldType.getFieldName();
         if (value != null) {
             integerSearchTerms.put(key, SearchTerm.newIntegerSearchTerm(key, value));
             getRemovedKeys().remove(key);
@@ -481,12 +481,12 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware, Ne
     }
 
     private Boolean getBooleanValue(final FieldEnumType fieldType) {
-        final BooleanSearchTerm st = booleanSearchTerms.get(fieldType.getName());
+        final BooleanSearchTerm st = booleanSearchTerms.get(fieldType.getFieldName());
         return st != null ? st.getValue() : null;
     }
 
     private void setBooleanValue(final Boolean value, final FieldEnumType fieldType) {
-        final String key = fieldType.getName();
+        final String key = fieldType.getFieldName();
         if (value != null) {
             booleanSearchTerms.put(key, SearchTerm.newBooleanSearchTerm(key, value.toString()));
             getRemovedKeys().remove(key);
@@ -497,7 +497,7 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware, Ne
     }
 
     private String getAuditValue(final FieldEnumType fieldType) {
-        final AuditSearchTerm st = auditSearchTerms.get(fieldType.getName());
+        final AuditSearchTerm st = auditSearchTerms.get(fieldType.getFieldName());
         return st != null ? st.getRawSearchTerm() : null;
     }
 
@@ -506,7 +506,7 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware, Ne
      */
     private void setAuditValue(final String value, final FieldEnumType... fieldTypes) {
         for (final FieldEnumType fieldType : fieldTypes) {
-            final String key = fieldType.getName();
+            final String key = fieldType.getFieldName();
             if (value != null) {
                 auditSearchTerms.put(key, SearchTerm.newAuditSearchTerm(key, value));
                 getRemovedKeys().remove(key);

@@ -150,23 +150,23 @@ public class UserEditPage extends BasePage<ChangePasswordUser> {
         final Form<ChangePasswordUser> form = new Form<>("form", new CompoundPropertyModel<>(getModel()));
         queue(form);
 
-        final TextField<String> userNameField = new TextField<>(USER_NAME.getName());
+        final TextField<String> userNameField = new TextField<>(USER_NAME.getFieldName());
         userNameField.setEnabled(isInAdminMode());
         queueFieldAndLabel(userNameField, new PropertyValidator<String>());
 
-        final TextField<String> firstNameField = new TextField<>(FIRST_NAME.getName());
+        final TextField<String> firstNameField = new TextField<>(FIRST_NAME.getFieldName());
         firstNameField.setEnabled(!isInPasswordResetMode());
         queueFieldAndLabel(firstNameField, new PropertyValidator<String>());
 
-        final TextField<String> lastNameField = new TextField<>(LAST_NAME.getName());
+        final TextField<String> lastNameField = new TextField<>(LAST_NAME.getFieldName());
         lastNameField.setEnabled(!isInPasswordResetMode());
         queueFieldAndLabel(lastNameField, new PropertyValidator<String>());
 
-        final EmailTextField emailField = new EmailTextField(EMAIL.getName());
+        final EmailTextField emailField = new EmailTextField(EMAIL.getFieldName());
         emailField.setEnabled(!isInPasswordResetMode());
         queueFieldAndLabel(emailField);
 
-        final CheckBox enabledField = new CheckBox(ENABLED.getName());
+        final CheckBox enabledField = new CheckBox(ENABLED.getFieldName());
         enabledField.setEnabled(isInAdminMode());
         queueFieldAndLabel(enabledField);
 
@@ -201,7 +201,7 @@ public class UserEditPage extends BasePage<ChangePasswordUser> {
             pwcField.add(new CurrentPasswordMatchesValidator(passwordEncoder, currentPassword));
         queueFieldAndLabel(pwcField);
 
-        final PasswordTextField pw1Field = new PasswordTextField(PASSWORD.getName());
+        final PasswordTextField pw1Field = new PasswordTextField(PASSWORD.getFieldName());
         pw1Field.setRequired(isInPasswordResetMode());
         pw1Field.setVisible(canSetPasswords());
         queueFieldAndLabel(pw1Field);
