@@ -107,6 +107,8 @@ abstract class ResultPanelTest extends PanelTest<ResultPanel> {
         getTester().assertComponent(bb, ResourceLink.class);
         bb = b + ":summaryTableLink";
         getTester().assertComponent(bb, ResourceLink.class);
+        bb = b + ":exportRisLink";
+        getTester().assertComponent(bb, AjaxLink.class);
 
         verify(paperSlimServiceMock, times(1)).countBySearchOrder(searchOrderMock);
         verify(paperSlimServiceMock).findPageBySearchOrder(eq(searchOrderMock), isA(PaginationRequest.class));
@@ -245,6 +247,21 @@ abstract class ResultPanelTest extends PanelTest<ResultPanel> {
         getTester().startComponentInPage(makePanel());
         getTester().clickLink(PANEL_ID + ":summaryTableLink");
         verifyPdfExport();
+    }
+
+    @Test
+    void clickingExportRisLink_succeeds() {
+        getTester().startComponentInPage(makePanel());
+        getTester().clickLink(PANEL_ID + ":exportRisLink");
+        verifyRisExport();
+    }
+
+    private void verifyRisExport() {
+        verify(paperSlimServiceMock, times(1)).countBySearchOrder(searchOrderMock);
+        verify(paperSlimServiceMock, times(1)).findPageBySearchOrder(eq(searchOrderMock), isA(PaginationRequest.class));
+        if (getMode() != Mode.VIEW)
+            verify(searchOrderMock, times(2)).isShowExcluded();
+        verify(paperServiceMock).findPageOfIdsBySearchOrder(isA(SearchOrder.class), isA(PaginationRequest.class));
     }
 
     @Test
