@@ -35,4 +35,3 @@ fun String.getPath(project: String): String = when (this) {
     "public" -> Module.scipamatoPublic(project)
     else -> throw IllegalArgumentException("project $project is not handled...")
 }
-
