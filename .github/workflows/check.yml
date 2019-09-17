@@ -1,17 +1,6 @@
 name: Check
 
-on:
-  push:
-    branches:
-    - master
-    tags:
-    - '*'
-    paths:
-    - 'implementation/scipamato/*'
-
-  pull_request:
-    branches:
-    - master
+on: [push, pull_request]
 
 jobs:
   build:

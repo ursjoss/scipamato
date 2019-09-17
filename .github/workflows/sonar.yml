@@ -1,11 +1,6 @@
 name: Sonar
 
-on:
-  push:
-    branches:
-    - master
-    paths:
-    - 'implementation/scipamato/*'
+on: [push]
 
 jobs:
   build:
