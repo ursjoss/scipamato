@@ -1,4 +1,4 @@
-image:https://img.shields.io/github/license/ursjoss/scipamato.svg[LICENSE, link=https://github.com/ursjoss/scipamato/blob/master/LICENSE.adoc] image:https://travis-ci.com/ursjoss/scipamato.svg?branch=master[LICENSE, link=https://travis-ci.com/ursjoss/scipamato] image:https://sonarcloud.io/api/project_badges/measure?project=ursjoss_scipamato&metric=alert_status[Quality Gate, link=https://sonarcloud.io/dashboard?id=ursjoss_scipamato]
+image:https://img.shields.io/github/license/ursjoss/scipamato.svg[LICENSE, link=https://github.com/ursjoss/scipamato/blob/master/LICENSE.adoc] image:https://github.com/ursjoss/scipamato/workflows/Check/badge.svg?branch=master[LICENSE, link=https://github.com/ursjoss/scipamato] image:https://sonarcloud.io/api/project_badges/measure?project=ursjoss_scipamato&metric=alert_status[Quality Gate, link=https://sonarcloud.io/dashboard?id=ursjoss_scipamato]
 
 [[scipamato]]
 == SciPaMaTo
