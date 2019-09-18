@@ -45,4 +45,8 @@ public interface ApplicationProperties extends Serializable {
      */
     int getMultiSelectBoxActionBoxWithMoreEntriesThan();
 
+    /**
+     * @return the url pointing to the CMS page with the study search page
+     */
+    String getCmsUrlSearchPage();
 }

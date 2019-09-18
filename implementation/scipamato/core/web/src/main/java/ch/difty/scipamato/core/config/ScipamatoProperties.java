@@ -61,6 +61,11 @@ public class ScipamatoProperties implements ScipamatoBaseProperties {
     private Integer redirectFromPort;
 
     /**
+     * The URL of the CMS page that points to the paper search page
+     */
+    private String cmsUrlSearchPage;
+
+    /**
      * @return the author parser strategy used for interpreting the authors string.
      */
     public AuthorParserStrategy getAuthorParserStrategy() {
@@ -69,14 +74,15 @@ public class ScipamatoProperties implements ScipamatoBaseProperties {
 
     /**
      * The threshold above which the multi-select box may (if configured) show the
-     *     action box providing the select all/select none buttons
+     * action box providing the select all/select none buttons
      */
     private int multiSelectBoxActionBoxWithMoreEntriesThan = 4;
 
     /**
      * The API Key used for accessing pubmed papers.
-     *
+     * <p>
      * https://ncbiinsights.ncbi.nlm.nih.gov/2017/11/02/new-api-keys-for-the-e-utilities/
      */
     private String pubmedApiKey;
+
 }

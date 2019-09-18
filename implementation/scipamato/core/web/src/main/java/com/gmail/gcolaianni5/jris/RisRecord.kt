@@ -95,7 +95,7 @@ data class RisRecord(
         var referenceId: String? = null,
 
         /** IS */
-        var issueNumber: Int? = null,
+        var issue: String? = null,
 
         /**
          * J1. Max 255 characters.
@@ -157,7 +157,7 @@ data class RisRecord(
         var websiteLink: String? = null,
 
         /** M1 */
-        var number: Int? = null,
+        var number: Long? = null,
 
         /**
          * M2. This is an alphanumeric field and there is no practical limit to the length of this field.

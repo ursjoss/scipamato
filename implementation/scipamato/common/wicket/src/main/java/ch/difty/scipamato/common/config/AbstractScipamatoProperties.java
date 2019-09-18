@@ -58,6 +58,11 @@ public abstract class AbstractScipamatoProperties<SP extends ScipamatoBaseProper
     }
 
     @Override
+    public String getCmsUrlSearchPage() {
+        return getScipamatoProperties().getCmsUrlSearchPage();
+    }
+
+    @Override
     public Integer getRedirectFromPort() {
         return getScipamatoProperties().getRedirectFromPort();
     }

@@ -481,11 +481,15 @@ public abstract class ResultPanel extends BasePanel<Void> {
     }
 
     private void addExportRisAjax() {
+        final String url = getProperties().getPubmedBaseUrl();
+        final String brand = getProperties().getBrand();
+        final String baseUrl = getProperties().getCmsUrlSearchPage();
+        JRisAdapter risAdapter = new JRisAdapter(brand, url, baseUrl);
         risDownload = new AjaxTextDownload(true) {
             @Override
             public void onRequest() {
+                setContent(risAdapter.build(dataProvider.findAllPapersByFilter()));
                 setFileName("export.ris");
-                setContent("TY  - JOUR\nER  - ");
                 super.onRequest();
             }
         };

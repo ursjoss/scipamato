@@ -26,6 +26,11 @@ class ScipamatoPropertiesTest {
     }
 
     @Test
+    void cmsUrlSearchPage_hasNoDefaultValue() {
+        assertThat(sp.getCmsUrlSearchPage()).isNull();
+    }
+
+    @Test
     void authorParser_isDefault() {
         assertThat(sp.getAuthorParser()).isEqualTo("DEFAULT");
     }
