@@ -261,4 +261,28 @@ internal class JRisAdapterTest {
               """.trimMargin()
         assertThat(adapter.build(listOf(paper))).isEqualTo(expected)
     }
+
+    @Test
+    fun canParseDoiNullOrGoalsNull() {
+        val p = paper.apply {
+            doi = null
+            goals = null
+        }
+        val expected =
+                """TY  - JOUR
+                  |A1  - Bond,J.
+                  |AB  - original abstract
+                  |DB  - scipamato
+                  |ID  - 123456
+                  |J1  - location
+                  |L1  - https://scipamato.ch/paper/number/1111
+                  |LK  - http://localhost:8080/123456
+                  |M1  - 1111
+                  |PY  - 2019
+                  |T1  - title
+                  |ER  - 
+                  |
+              """.trimMargin()
+        assertThat(adapter.build(listOf(paper))).isEqualTo(expected)
+    }
 }

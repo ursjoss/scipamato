@@ -33,8 +33,8 @@ class JRisAdapter(private val dbName: String, private val internalUrl: String?, 
                     pdfLinks = publicUrl?.run { mutableListOf("${this}paper/number/${p.number}") } ?: mutableListOf(),
                     number = p.number.toLong(),
                     websiteLink = internalUrl?.run { "$this${p.pmId}" },
-                    miscellaneous2 = p.goals.takeUnless { it.trim().isBlank() },
-                    doi = p.doi.takeUnless { it.trim().isBlank() },
+                    miscellaneous2 = p.goals.takeUnless { it?.trim()?.isBlank() ?: false },
+                    doi = p.doi.takeUnless { it?.trim()?.isBlank() ?: false },
                     databaseName = dbName
             )
         }.toList())
