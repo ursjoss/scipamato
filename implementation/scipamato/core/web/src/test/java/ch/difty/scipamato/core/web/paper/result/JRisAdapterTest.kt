@@ -28,18 +28,18 @@ internal class JRisAdapterTest {
     fun canParseSimplePaperWithOneAuthorAndSipleButNonParseableLocation() {
         val expected =
                 """TY  - JOUR
-                  |AB  - original abstract
                   |AU  - Bond,J.
-                  |DB  - scipamato
-                  |DO  - 10.1016/abcde.2017.07.063
-                  |ID  - 123456
-                  |JO  - location
-                  |L1  - https://scipamato.ch/paper/number/1111
-                  |L2  - http://localhost:8080/123456
-                  |M1  - 1111
-                  |M2  - goals
                   |PY  - 2019
                   |TI  - title
+                  |JO  - location
+                  |ID  - 123456
+                  |DO  - 10.1016/abcde.2017.07.063
+                  |M1  - 1111
+                  |M2  - goals
+                  |AB  - original abstract
+                  |DB  - scipamato
+                  |L1  - https://scipamato.ch/paper/number/1111
+                  |L2  - http://localhost:8080/123456
                   |ER  - 
                   |
               """.trimMargin()
@@ -218,17 +218,17 @@ internal class JRisAdapterTest {
         )
         val expected =
                 """TY  - JOUR
-                  |AB  - original abstract
                   |AU  - Bond,J.
-                  |DB  - scipamato
-                  |DO  - 10.1016/abcde.2017.07.063
-                  |ID  - 123456
-                  |JO  - location
-                  |L1  - https://scipamato.ch/paper/number/1111
-                  |M1  - 1111
-                  |M2  - goals
                   |PY  - 2019
                   |TI  - title
+                  |JO  - location
+                  |ID  - 123456
+                  |DO  - 10.1016/abcde.2017.07.063
+                  |M1  - 1111
+                  |M2  - goals
+                  |AB  - original abstract
+                  |DB  - scipamato
+                  |L1  - https://scipamato.ch/paper/number/1111
                   |ER  - 
                   |
               """.trimMargin()
@@ -245,17 +245,17 @@ internal class JRisAdapterTest {
         )
         val expected =
                 """TY  - JOUR
-                  |AB  - original abstract
                   |AU  - Bond,J.
-                  |DB  - scipamato
-                  |DO  - 10.1016/abcde.2017.07.063
-                  |ID  - 123456
-                  |JO  - location
-                  |L2  - https://localhost:8081/123456
-                  |M1  - 1111
-                  |M2  - goals
                   |PY  - 2019
                   |TI  - title
+                  |JO  - location
+                  |ID  - 123456
+                  |DO  - 10.1016/abcde.2017.07.063
+                  |M1  - 1111
+                  |M2  - goals
+                  |AB  - original abstract
+                  |DB  - scipamato
+                  |L2  - https://localhost:8081/123456
                   |ER  - 
                   |
               """.trimMargin()
@@ -270,20 +270,20 @@ internal class JRisAdapterTest {
         }
         val expected =
                 """TY  - JOUR
-                  |AB  - original abstract
                   |AU  - Bond,J.
-                  |DB  - scipamato
-                  |ID  - 123456
-                  |JO  - location
-                  |L1  - https://scipamato.ch/paper/number/1111
-                  |L2  - http://localhost:8080/123456
-                  |M1  - 1111
                   |PY  - 2019
                   |TI  - title
+                  |JO  - location
+                  |ID  - 123456
+                  |M1  - 1111
+                  |AB  - original abstract
+                  |DB  - scipamato
+                  |L1  - https://scipamato.ch/paper/number/1111
+                  |L2  - http://localhost:8080/123456
                   |ER  - 
                   |
               """.trimMargin()
-        assertThat(adapter.build(listOf(paper))).isEqualTo(expected)
+        assertThat(adapter.build(listOf(p))).isEqualTo(expected)
     }
 
     @Test
@@ -301,23 +301,23 @@ internal class JRisAdapterTest {
         }
         val expected =
                 """TY  - JOUR
-                  |AB  - original abstract
                   |AU  - Bond,J.
                   |AU  - Bourne,J.
-                  |DB  - scipamato
-                  |DO  - 10.1016/abcde.2017.07.063
-                  |EP  - 20
-                  |ID  - 123456
-                  |IS  - 3
+                  |PY  - 2019
+                  |TI  - title
                   |JO  - Whatever Journal
-                  |L1  - https://scipamato.ch/paper/number/1111
-                  |L2  - http://localhost:8080/123456
+                  |SP  - 10
+                  |EP  - 20
+                  |VL  - 34
+                  |IS  - 3
+                  |ID  - 123456
+                  |DO  - 10.1016/abcde.2017.07.063
                   |M1  - 1111
                   |M2  - goals
-                  |PY  - 2019
-                  |SP  - 10
-                  |TI  - title
-                  |VL  - 34
+                  |AB  - original abstract
+                  |DB  - scipamato
+                  |L1  - https://scipamato.ch/paper/number/1111
+                  |L2  - http://localhost:8080/123456
                   |ER  - 
                   |
               """.trimMargin()
