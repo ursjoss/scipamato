@@ -39,7 +39,7 @@ internal class JRisAdapterTest {
                   |M1  - 1111
                   |M2  - goals
                   |PY  - 2019
-                  |T1  - title
+                  |TI  - title
                   |ER  - 
                   |
               """.trimMargin()
@@ -228,7 +228,7 @@ internal class JRisAdapterTest {
                   |M1  - 1111
                   |M2  - goals
                   |PY  - 2019
-                  |T1  - title
+                  |TI  - title
                   |ER  - 
                   |
               """.trimMargin()
@@ -255,7 +255,7 @@ internal class JRisAdapterTest {
                   |M1  - 1111
                   |M2  - goals
                   |PY  - 2019
-                  |T1  - title
+                  |TI  - title
                   |ER  - 
                   |
               """.trimMargin()
@@ -279,7 +279,7 @@ internal class JRisAdapterTest {
                   |LK  - http://localhost:8080/123456
                   |M1  - 1111
                   |PY  - 2019
-                  |T1  - title
+                  |TI  - title
                   |ER  - 
                   |
               """.trimMargin()

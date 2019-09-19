@@ -19,7 +19,7 @@ class JRisAdapter(private val dbName: String, private val internalUrl: String?, 
             RisRecord(
                     type = Type.JOUR,
                     referenceId = p.pmId?.toString(),
-                    primaryTitle = p.title,
+                    title = p.title,
                     authors = p.formattedAuthors().toMutableList(),
                     publicationYear = "${p.publicationYear}",
                     startPage = startPage,
