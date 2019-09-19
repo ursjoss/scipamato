@@ -14,15 +14,13 @@ class JRisAdapter(private val dbName: String, private val internalUrl: String?, 
     fun build(papers: List<Paper>): String {
         return JRis.build(papers.map { p ->
 
-            val authors: List<String> = p.formattedAuthors()
             val (periodical, volume, issue, startPage, endPage) = p.locationComponents()
 
             RisRecord(
                     type = Type.JOUR,
                     referenceId = p.pmId?.toString(),
                     primaryTitle = p.title,
-                    firstAuthors = authors.subList(0, 1).toMutableList(),
-                    authors = authors.drop(1).toMutableList(),
+                    authors = p.formattedAuthors().toMutableList(),
                     publicationYear = "${p.publicationYear}",
                     startPage = startPage,
                     endPage = endPage,

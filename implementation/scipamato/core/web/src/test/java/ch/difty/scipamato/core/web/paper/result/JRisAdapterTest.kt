@@ -28,8 +28,8 @@ internal class JRisAdapterTest {
     fun canParseSimplePaperWithOneAuthorAndSipleButNonParseableLocation() {
         val expected =
                 """TY  - JOUR
-                  |A1  - Bond,J.
                   |AB  - original abstract
+                  |AU  - Bond,J.
                   |DB  - scipamato
                   |DO  - 10.1016/abcde.2017.07.063
                   |ID  - 123456
@@ -50,7 +50,7 @@ internal class JRisAdapterTest {
     fun canParseVariousAuthors() {
         val p = paper.apply { authors = "Bond J, Künzli N, Kutlar Joss M, Probst-Hensch N, D'Agostino RB Sr, Nhung NTT, Some Institute." }
         val expectedParts = setOf(
-                "A1  - Bond,J.",
+                "AU  - Bond,J.",
                 "AU  - Künzli,N.",
                 "AU  - Kutlar Joss,M.",
                 "AU  - Probst-Hensch,N.",
@@ -218,8 +218,8 @@ internal class JRisAdapterTest {
         )
         val expected =
                 """TY  - JOUR
-                  |A1  - Bond,J.
                   |AB  - original abstract
+                  |AU  - Bond,J.
                   |DB  - scipamato
                   |DO  - 10.1016/abcde.2017.07.063
                   |ID  - 123456
@@ -245,8 +245,8 @@ internal class JRisAdapterTest {
         )
         val expected =
                 """TY  - JOUR
-                  |A1  - Bond,J.
                   |AB  - original abstract
+                  |AU  - Bond,J.
                   |DB  - scipamato
                   |DO  - 10.1016/abcde.2017.07.063
                   |ID  - 123456
@@ -270,8 +270,8 @@ internal class JRisAdapterTest {
         }
         val expected =
                 """TY  - JOUR
-                  |A1  - Bond,J.
                   |AB  - original abstract
+                  |AU  - Bond,J.
                   |DB  - scipamato
                   |ID  - 123456
                   |J1  - location
