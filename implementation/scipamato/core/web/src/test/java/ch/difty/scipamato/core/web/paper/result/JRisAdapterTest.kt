@@ -285,4 +285,42 @@ internal class JRisAdapterTest {
               """.trimMargin()
         assertThat(adapter.build(listOf(paper))).isEqualTo(expected)
     }
+
+    @Test
+    fun complexPaper() {
+        val paper = Paper().apply {
+            number = 1111
+            pmId = 123456
+            doi = "10.1016/abcde.2017.07.063"
+            title = "title"
+            authors = "Bond J, Bourne J."
+            publicationYear = 2019
+            location = "Whatever Journal. 2019; 34 (3): 10-20."
+            goals = "goals"
+            originalAbstract = "original abstract"
+        }
+        val expected =
+                """TY  - JOUR
+                  |AB  - original abstract
+                  |AU  - Bond,J.
+                  |AU  - Bourne,J.
+                  |DB  - scipamato
+                  |DO  - 10.1016/abcde.2017.07.063
+                  |EP  - 20
+                  |ID  - 123456
+                  |IS  - 3
+                  |JO  - Whatever Journal
+                  |L1  - https://scipamato.ch/paper/number/1111
+                  |LK  - http://localhost:8080/123456
+                  |M1  - 1111
+                  |M2  - goals
+                  |PY  - 2019
+                  |SP  - 10
+                  |TI  - title
+                  |VL  - 34
+                  |ER  - 
+                  |
+              """.trimMargin()
+        assertThat(adapter.build(listOf(paper))).isEqualTo(expected)
+    }
 }
