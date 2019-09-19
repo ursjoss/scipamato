@@ -33,7 +33,7 @@ internal class JRisAdapterTest {
                   |DB  - scipamato
                   |DO  - 10.1016/abcde.2017.07.063
                   |ID  - 123456
-                  |J1  - location
+                  |JO  - location
                   |L1  - https://scipamato.ch/paper/number/1111
                   |LK  - http://localhost:8080/123456
                   |M1  - 1111
@@ -67,14 +67,14 @@ internal class JRisAdapterTest {
         val loc = "Int J Public Health. 2017; 62 (4): 453-462."
         val p = paper.apply { location = loc }
         val expectedParts = setOf(
-                "J1  - Int J Public Health",
+                "JO  - Int J Public Health",
                 "VL  - 62",
                 "IS  - 4",
                 "SP  - 453",
                 "EP  - 462"
         )
         val unexpectedParts = setOf(
-                "J1  - $loc"
+                "JO  - $loc"
         )
         val ris = adapter.build(listOf(p))
         assertThat(ris.split("\n")).containsAll(expectedParts)
@@ -85,14 +85,14 @@ internal class JRisAdapterTest {
     fun canParseLocationContainingTwoComponentIssue() {
         val p = paper.apply { location = "Int J Hyg Environ Health. 2016; 219 (4-5): 356-363." }
         val expectedParts = setOf(
-                "J1  - Int J Hyg Environ Health",
+                "JO  - Int J Hyg Environ Health",
                 "VL  - 219",
                 "IS  - 4-5",
                 "SP  - 356",
                 "EP  - 363"
         )
         val unexpectedParts = setOf(
-                "J1  - Int J Hyg Environ Health. 2016; 219 (4-5): 356-363."
+                "JO  - Int J Hyg Environ Health. 2016; 219 (4-5): 356-363."
         )
         val ris = adapter.build(listOf(p))
         assertThat(ris.split("\n")).containsAll(expectedParts)
@@ -104,12 +104,12 @@ internal class JRisAdapterTest {
         val loc = "Part Fibre Toxicol. 2015; 12: 6."
         val p = paper.apply { location = loc }
         val expectedParts = setOf(
-                "J1  - Part Fibre Toxicol",
+                "JO  - Part Fibre Toxicol",
                 "VL  - 12",
                 "SP  - 6"
         )
         val unexpectedParts = setOf(
-                "J1  - $loc"
+                "JO  - $loc"
         )
         val ris = adapter.build(listOf(p))
         assertThat(ris.split("\n")).containsAll(expectedParts)
@@ -122,13 +122,13 @@ internal class JRisAdapterTest {
         val loc = "J Pediatr. 2016; 177: 179-183. e1."
         val p = paper.apply { location = loc }
         val expectedParts = setOf(
-                "J1  - J Pediatr",
+                "JO  - J Pediatr",
                 "VL  - 177",
                 "SP  - 179",
                 "EP  - 183"
         )
         val unexpectedParts = setOf(
-                "J1  - $loc"
+                "JO  - $loc"
         )
         val ris = adapter.build(listOf(p))
         assertThat(ris.split("\n")).containsAll(expectedParts)
@@ -140,7 +140,7 @@ internal class JRisAdapterTest {
         val loc = "PLoS One. 2013; 8 (9): e75001."
         val p = paper.apply { location = loc }
         val expectedParts = setOf(
-                "J1  - PLoS One",
+                "JO  - PLoS One",
                 "VL  - 8",
                 "IS  - 9"
         )
@@ -158,13 +158,13 @@ internal class JRisAdapterTest {
         val loc = "Sci Total Environ. 2012; 427-428: 191-202."
         val p = paper.apply { location = loc }
         val expectedParts = setOf(
-                "J1  - Sci Total Environ",
+                "JO  - Sci Total Environ",
                 "VL  - 427-428",
                 "SP  - 191",
                 "EP  - 202"
         )
         val unexpectedParts = setOf(
-                "J1  - $loc"
+                "JO  - $loc"
         )
         val ris = adapter.build(listOf(p))
         assertThat(ris.split("\n")).containsAll(expectedParts)
@@ -176,7 +176,7 @@ internal class JRisAdapterTest {
     fun canParseLocationWithOnlyElectronicPaginationx() {
         val p = paper.apply { location = "PLoS One. 2013; 8 (9): e75001." }
         val expectedParts = setOf(
-                "J1  - PLoS One",
+                "JO  - PLoS One",
                 "VL  - 8",
                 "IS  - 9"
         )
@@ -195,14 +195,14 @@ internal class JRisAdapterTest {
         val loc = "Environ Pollut. 2017; 230: 1000-1008."
         val p = paper.apply { location = loc }
         val expectedParts = setOf(
-                "J1  - Environ Pollut",
+                "JO  - Environ Pollut",
                 "VL  - 230",
                 "SP  - 1000",
                 "EP  - 1008"
         )
         val unexpectedParts = setOf(
                 "IS  -",
-                "J1  - $loc"
+                "JO  - $loc"
         )
         val ris = adapter.build(listOf(p))
         assertThat(ris.split("\n")).containsAll(expectedParts)
@@ -223,7 +223,7 @@ internal class JRisAdapterTest {
                   |DB  - scipamato
                   |DO  - 10.1016/abcde.2017.07.063
                   |ID  - 123456
-                  |J1  - location
+                  |JO  - location
                   |L1  - https://scipamato.ch/paper/number/1111
                   |M1  - 1111
                   |M2  - goals
@@ -250,7 +250,7 @@ internal class JRisAdapterTest {
                   |DB  - scipamato
                   |DO  - 10.1016/abcde.2017.07.063
                   |ID  - 123456
-                  |J1  - location
+                  |JO  - location
                   |LK  - https://localhost:8081/123456
                   |M1  - 1111
                   |M2  - goals
@@ -274,7 +274,7 @@ internal class JRisAdapterTest {
                   |AU  - Bond,J.
                   |DB  - scipamato
                   |ID  - 123456
-                  |J1  - location
+                  |JO  - location
                   |L1  - https://scipamato.ch/paper/number/1111
                   |LK  - http://localhost:8080/123456
                   |M1  - 1111
