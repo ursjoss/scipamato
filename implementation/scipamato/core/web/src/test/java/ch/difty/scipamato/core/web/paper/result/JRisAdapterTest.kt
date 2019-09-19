@@ -35,7 +35,7 @@ internal class JRisAdapterTest {
                   |ID  - 123456
                   |JO  - location
                   |L1  - https://scipamato.ch/paper/number/1111
-                  |LK  - http://localhost:8080/123456
+                  |L2  - http://localhost:8080/123456
                   |M1  - 1111
                   |M2  - goals
                   |PY  - 2019
@@ -251,7 +251,7 @@ internal class JRisAdapterTest {
                   |DO  - 10.1016/abcde.2017.07.063
                   |ID  - 123456
                   |JO  - location
-                  |LK  - https://localhost:8081/123456
+                  |L2  - https://localhost:8081/123456
                   |M1  - 1111
                   |M2  - goals
                   |PY  - 2019
@@ -276,7 +276,7 @@ internal class JRisAdapterTest {
                   |ID  - 123456
                   |JO  - location
                   |L1  - https://scipamato.ch/paper/number/1111
-                  |LK  - http://localhost:8080/123456
+                  |L2  - http://localhost:8080/123456
                   |M1  - 1111
                   |PY  - 2019
                   |TI  - title
@@ -311,7 +311,7 @@ internal class JRisAdapterTest {
                   |IS  - 3
                   |JO  - Whatever Journal
                   |L1  - https://scipamato.ch/paper/number/1111
-                  |LK  - http://localhost:8080/123456
+                  |L2  - http://localhost:8080/123456
                   |M1  - 1111
                   |M2  - goals
                   |PY  - 2019
