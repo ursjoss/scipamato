@@ -8,7 +8,7 @@ package com.gmail.gcolaianni5.jris
  * @since 22 apr 2017
  */
 data class RisRecord(
-        var type: Type? = null, // TY
+        var type: RisType? = null, // TY
         val firstAuthors: MutableList<String> = mutableListOf(), // A1
         val secondaryAuthors: MutableList<String> = mutableListOf(), // A2
         val tertiaryAuthors: MutableList<String> = mutableListOf(), // A3
@@ -175,6 +175,11 @@ data class RisRecord(
          */
         var abstr2: String? = null,
 
+        /**
+         * NV.
+         */
+        var numberOfVolumes: String? = null,
+
         /** OP */
         var originalPublication: String? = null,
 
@@ -226,7 +231,7 @@ data class RisRecord(
         var title: String? = null,
 
         /** TT */
-        var transaltedTitle: String? = null,
+        var translatedTitle: String? = null,
 
         /**
          * U1. User definable 1. This is an alphanumeric field and there is no practical limit to the length of this field.

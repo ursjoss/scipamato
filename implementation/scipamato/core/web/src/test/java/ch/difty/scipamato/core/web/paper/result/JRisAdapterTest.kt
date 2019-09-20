@@ -25,6 +25,29 @@ internal class JRisAdapterTest {
     }
 
     @Test
+    fun buildingWithoutExplicitSortOrder_sortsMostlyAlphabetically() {
+        // TY always first, ER always last
+        val expected =
+                """TY  - JOUR
+                  |AB  - original abstract
+                  |AU  - Bond,J.
+                  |DB  - scipamato
+                  |DO  - 10.1016/abcde.2017.07.063
+                  |ID  - 123456
+                  |JO  - location
+                  |L1  - https://scipamato.ch/paper/number/1111
+                  |L2  - http://localhost:8080/123456
+                  |M1  - 1111
+                  |M2  - goals
+                  |PY  - 2019
+                  |TI  - title
+                  |ER  - 
+                  |
+              """.trimMargin()
+        assertThat(adapter.build(listOf(paper), listOf())).isEqualTo(expected)
+    }
+
+    @Test
     fun canParseSimplePaperWithOneAuthorAndSipleButNonParseableLocation() {
         val expected =
                 """TY  - JOUR
@@ -322,5 +345,23 @@ internal class JRisAdapterTest {
                   |
               """.trimMargin()
         assertThat(adapter.build(listOf(paper))).isEqualTo(expected)
+    }
+
+    @Test
+    fun truncatesToMaxLength() {
+        val p = Paper().apply {
+            authors = "Pan P."
+            location = "0123456789".repeat(30)
+        }
+        val expected = """
+            |TY  - JOUR
+            |AU  - Pan,P.
+            |JO  - 012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234
+            |DB  - scipamato
+            |L1  - https://scipamato.ch/paper/number/null
+            |L2  - http://localhost:8080/null
+            |ER  - 
+            |""".trimMargin();
+        assertThat(adapter.build(listOf(p))).isEqualTo(expected)
     }
 }

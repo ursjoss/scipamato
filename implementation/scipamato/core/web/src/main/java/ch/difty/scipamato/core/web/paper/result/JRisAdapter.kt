@@ -3,39 +3,42 @@ package ch.difty.scipamato.core.web.paper.result
 import ch.difty.scipamato.core.entity.Paper
 import com.gmail.gcolaianni5.jris.JRis
 import com.gmail.gcolaianni5.jris.RisRecord
-import com.gmail.gcolaianni5.jris.Type
+import com.gmail.gcolaianni5.jris.RisType
 import java.io.Serializable
+
+private val defaultSort: List<String> = listOf("AU", "PY", "TI", "JO", "SP", "EP", "VL", "IS", "ID", "DO", "M1", "M2", "AB", "DB", "L1", "L2")
 
 /**
  * Adapter working as a kind of bridge between [Paper]s and the JRis world.
  */
 class JRisAdapter(private val dbName: String, private val internalUrl: String?, private val publicUrl: String?) : Serializable {
 
-    fun build(papers: List<Paper>): String {
-        return JRis.build(papers.map { p ->
-
-            val (periodical, volume, issue, startPage, endPage) = p.locationComponents()
-
-            RisRecord(
-                    type = Type.JOUR,
-                    referenceId = p.pmId?.toString(),
-                    title = p.title,
-                    authors = p.formattedAuthors().toMutableList(),
-                    publicationYear = p.publicationYear?.toString(),
-                    startPage = startPage,
-                    endPage = endPage,
-                    periodicalNameFullFormatJO = periodical,
-                    volumeNumber = volume,
-                    issue = issue,
-                    abstr = p.originalAbstract,
-                    pdfLinks = publicUrl?.run { mutableListOf("${this}paper/number/${p.number}") } ?: mutableListOf(),
-                    number = p.number?.toLong(),
-                    fullTextLinks = internalUrl?.run { mutableListOf("$this${p.pmId}") } ?: mutableListOf(),
-                    miscellaneous2 = p.goals?.takeUnless { it.trim().isBlank() },
-                    doi = p.doi?.takeUnless { it.trim().isBlank() },
-                    databaseName = dbName
-            )
-        }.toList())
+    @JvmOverloads
+    fun build(papers: List<Paper>, sort: List<String> = defaultSort): String {
+        return JRis.build(
+                records = papers.map { p ->
+                    val (periodical, volume, issue, startPage, endPage) = p.locationComponents()
+                    RisRecord(
+                            type = RisType.JOUR,
+                            referenceId = p.pmId?.toString(),
+                            title = p.title,
+                            authors = p.formattedAuthors().toMutableList(),
+                            publicationYear = p.publicationYear?.toString(),
+                            startPage = startPage,
+                            endPage = endPage,
+                            periodicalNameFullFormatJO = periodical,
+                            volumeNumber = volume,
+                            issue = issue,
+                            abstr = p.originalAbstract,
+                            pdfLinks = publicUrl?.run { mutableListOf("${this}paper/number/${p.number}") }
+                                    ?: mutableListOf(),
+                            number = p.number?.toLong(),
+                            fullTextLinks = internalUrl?.run { mutableListOf("$this${p.pmId}") } ?: mutableListOf(),
+                            miscellaneous2 = p.goals?.takeUnless { it.trim().isBlank() },
+                            doi = p.doi?.takeUnless { it.trim().isBlank() },
+                            databaseName = dbName
+                    )
+                }.toList(), sort = sort)
     }
 
     private fun Paper.formattedAuthors(): List<String> {
