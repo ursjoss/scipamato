@@ -8,12 +8,24 @@ package com.gmail.gcolaianni5.jris
  * @since 22 apr 2017
  */
 data class RisRecord(
-        var type: RisType? = null, // TY
-        val firstAuthors: MutableList<String> = mutableListOf(), // A1
-        val secondaryAuthors: MutableList<String> = mutableListOf(), // A2
-        val tertiaryAuthors: MutableList<String> = mutableListOf(), // A3
-        val subsidiaryAuthors: MutableList<String> = mutableListOf(), // A4
-        var authors: MutableList<String> = mutableListOf(), // AU
+
+        /** TY */
+        var type: RisType? = null,
+
+        /** A1 */
+        val firstAuthors: MutableList<String> = mutableListOf(),
+
+        /** A2 */
+        val secondaryAuthors: MutableList<String> = mutableListOf(),
+
+        /** A3 */
+        val tertiaryAuthors: MutableList<String> = mutableListOf(),
+
+        /** A4 */
+        val subsidiaryAuthors: MutableList<String> = mutableListOf(),
+
+        /** AU */
+        var authors: MutableList<String> = mutableListOf(),
 
         /** AB */
         var abstr: String? = null,
@@ -23,7 +35,6 @@ data class RisRecord(
 
         /** AN */
         var accessionNumber: String? = null,
-
 
         /** AV */
         var archivesLocation: String? = null,
@@ -108,7 +119,8 @@ data class RisRecord(
         var alternativeTitle: String? = null,
 
         /**
-         * JA. This is the periodical in which the article was (or is to be, in the case of in-press references) published. This is an alphanumeric field of up to 255 characters.
+         * JA. This is the periodical in which the article was (or is to be, in the case of in-press references) published.
+         *     This is an alphanumeric field of up to 255 characters.
          */
         var periodicalNameStandardAbbrevation: String? = null,
 
@@ -128,12 +140,15 @@ data class RisRecord(
         val keywords: MutableList<String> = mutableListOf(),
 
         /**
-         * L1. There is no practical limit to the length of this field. URL addresses can be entered individually, one per tag or multiple addresses can be entered on one line using a semi-colon as a separator.
+         * L1. There is no practical limit to the length of this field. URL addresses can be entered individually,
+         *     one per tag or multiple addresses can be entered on one line using a semi-colon as a separator.
          */
         val pdfLinks: MutableList<String> = mutableListOf(),
 
         /**
-         * L2. Link to Full-text. There is no practical limit to the length of this field. URL addresses can be entered individually, one per tag or multiple addresses can be entered on one line using a semi-colon as a separator.
+         * L2. Link to Full-text. There is no practical limit to the length of this field.
+         *     URL addresses can be entered individually, one per tag or multiple addresses
+         *     can be entered on one line using a semi-colon as a separator.
          */
         val fullTextLinks: MutableList<String> = mutableListOf(),
 
@@ -171,7 +186,8 @@ data class RisRecord(
         var notes: String? = null,
 
         /**
-         * N2. Abstract. This is a free text field and can contain alphanumeric characters. There is no practical length limit to this field.
+         * N2. Abstract. This is a free text field and can contain alphanumeric characters.
+         *     There is no practical length limit to this field.
          */
         var abstr2: String? = null,
 

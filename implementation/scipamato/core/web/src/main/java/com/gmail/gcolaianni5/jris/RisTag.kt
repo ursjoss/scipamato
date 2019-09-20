@@ -1,20 +1,27 @@
-@file:Suppress("unused")
-
 package com.gmail.gcolaianni5.jris
 
 import kotlin.reflect.KClass
 
 /**
- * The Javadoc comments are copied from https://en.wikipedia.org/wiki/RIS_(file_format)
+ * The enum defines all available Tags that may be used in the RIS format.
+ *
+ * A [description] outlines the purpose of the tag, the [maxLength] property
+ * defines the maximum number of characters (for Strings) - a `null` value indicates
+ * either no restriction or a non-String class (as specified in [kClass]).
+ * The [requiredOrder] property defines the first level of sorting when writing RIS
+ * files. The specification does not enforce any particular order except for `TY`
+ * to be the first one and `ER` to be the last tag in a RIS record. All other tags
+ * share the same value, resulting in either being sorted by tag name alphabetically
+ * or by a custom sort order specified by the caller.
+ *
+ * The class was composed from information available on
+ * [Wikipedia](https://en.wikipedia.org/wiki/RIS_(file_format)).
  */
-enum class RisTag(
-        val description: String,
-        internal val kClass: KClass<*> = String::class,
-        val maxLength: Int? = null,
-        internal val fixOrder: Int? = null,
-        internal val empty: Boolean = false
-) {
-    TY("Type of reference", kClass = RisType::class, fixOrder = 0),
+@Suppress("unused")
+enum class RisTag(val description: String, val maxLength: Int? = null,
+                  internal val kClass: KClass<*> = String::class, internal val requiredOrder: Int = 1000) {
+
+    TY("Type of reference", kClass = RisType::class, requiredOrder = 0), // must be first per record
     A1("First Author"),
     A2("Secondary Author", kClass = List::class),
     A3("Tertiary Author", kClass = List::class),
@@ -93,64 +100,5 @@ enum class RisTag(
     VO("Published Standard number"),
     Y1("Primary Date"),
     Y2("Access Date"),
-    ER("End of Reference", fixOrder = Integer.MAX_VALUE, empty = true) // must be empty and the last tag
-}
-
-
-enum class RisType(val description: String) {
-    ABST("Abstract"),
-    ADVS("Audiovisual material"),
-    AGGR("Aggregated Database"),
-    ANCIENT("Ancient Text"),
-    ART("Art Work"),
-    BILL("Bill"),
-    BLOG("Blog"),
-    BOOK("Whole book"),
-    CASE("Case"),
-    CHAP("Book chapter"),
-    CHART("Chart"),
-    CLSWK("Classical Work"),
-    COMP("Computer program"),
-    CONF("Conference proceeding"),
-    CPAPER("Conference paper"),
-    CTLG("Catalog"),
-    DATA("Data file"),
-    DBASE("Online Database"),
-    DICT("Dictionary"),
-    EBOOK("Electronic Book"),
-    ECHAP("Electronic Book Section"),
-    EDBOOK("Edited Book"),
-    EJOUR("Electronic Article"),
-    ELEC("Web Page"),
-    ENCYC("Encyclopedia"),
-    EQUA("Equation"),
-    FIGURE("Figure"),
-    GEN("Generic"),
-    GOVDOC("Government Document"),
-    GRANT("Grant"),
-    HEAR("Hearing"),
-    ICOMM("Internet Communication"),
-    INPR("In Press"),
-    JFULL("Journal (full)"),
-    JOUR("Journal"),
-    LEGAL("Legal Rule or Regulation"),
-    MANSCPT("Manuscript"),
-    MAP("Map"),
-    MGZN("Magazine article"),
-    MPCT("Motion picture"),
-    MULTI("Online Multimedia"),
-    MUSIC("Music score"),
-    NEWS("Newspaper"),
-    PAMP("Pamphlet"),
-    PAT("Patent"),
-    PCOMM("Personal communication"),
-    RPRT("Report"),
-    SER("Serial publication"),
-    SLIDE("Slide"),
-    SOUND("Sound recording"),
-    STAND("Standard"),
-    STAT("Statute"),
-    THES("Thesis/Dissertation"),
-    UNPB("Unpublished work"),
-    VIDEO("Video recording")
+    ER("End of Reference", requiredOrder = Integer.MAX_VALUE) // must be last per record
 }

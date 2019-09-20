@@ -214,7 +214,7 @@ object JRis {
      * * lastly by tag name
      */
     private fun Map<RisTag, Int>.toComparator(): Comparator<TagAccessor> =
-            compareBy({ it.tag.fixOrder ?: INT_INTERMEDIATE }, { this[it.tag] ?: INT_INTERMEDIATE }, { it.tag.name })
+            compareBy({ it.tag.requiredOrder }, { this[it.tag] ?: INT_INTERMEDIATE }, { it.tag.name })
 
     private fun StringBuilder.collect(risRecord: RisRecord, tagAccessor: TagAccessor) {
         fun TagAccessor.withValue(value: Any): String = "$tag$TAG_SEPARATOR$value$LINE_SEPARATOR"
