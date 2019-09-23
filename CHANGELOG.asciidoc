@@ -61,6 +61,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 == [unreleased]
 
 .Added
+- {url-issues}118[#118] Core - Export stuies in RIS format for import into citiation programs
 
 .Changed
 - Dependency updates for spring-boot-starter, wicket, wicketstuff, openfeign, junit,
