@@ -71,6 +71,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Removed
 
 .Fixed
+- {url-issues}127[#127] Core - Remove LoadingBehavior where not absolutely necessary
 
 .Security
 
