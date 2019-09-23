@@ -7,7 +7,6 @@ import java.util.Optional;
 
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
-import de.agilecoders.wicket.core.markup.html.bootstrap.button.LoadingBehavior;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.confirmation.ConfirmationBehavior;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelectConfig;
@@ -53,7 +52,7 @@ import ch.difty.scipamato.core.web.common.BasePage;
 @MountPath("user")
 @Slf4j
 @AuthorizeInstantiation({ Roles.USER, Roles.ADMIN })
-@SuppressWarnings({ "SameParameterValue" })
+@SuppressWarnings({ "SameParameterValue", "WicketForgeJavaIdInspection" })
 public class UserEditPage extends BasePage<ChangePasswordUser> {
 
     private static final long serialVersionUID = 1L;
@@ -64,9 +63,11 @@ public class UserEditPage extends BasePage<ChangePasswordUser> {
 
     private final Mode mode;
 
+    @SuppressWarnings("unused")
     @SpringBean
     private PasswordEncoder passwordEncoder;
 
+    @SuppressWarnings("unused")
     @SpringBean
     private UserService userService;
 
@@ -229,16 +230,13 @@ public class UserEditPage extends BasePage<ChangePasswordUser> {
     }
 
     private void queueSubmitButton(final String id) {
-        final BootstrapButton submit = new BootstrapButton(id, new StringResourceModel("submit.label"),
-            Buttons.Type.Default) {
+        queue(new BootstrapButton(id, new StringResourceModel("submit.label"), Buttons.Type.Default) {
             @Override
             public void onSubmit() {
                 super.onSubmit();
                 doOnSubmit();
             }
-        };
-        submit.add(new LoadingBehavior(new StringResourceModel(id + LOADING_RESOURCE_TAG, this, null)));
-        queue(submit);
+        });
     }
 
     private void doOnSubmit() {

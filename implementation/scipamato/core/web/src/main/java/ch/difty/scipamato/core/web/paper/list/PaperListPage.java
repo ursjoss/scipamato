@@ -7,7 +7,6 @@ import com.google.common.base.Strings;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxLink;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
-import de.agilecoders.wicket.core.markup.html.bootstrap.button.LoadingBehavior;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome5CDNCSSReference;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -57,6 +56,7 @@ public class PaperListPage extends BasePage<Void> {
 
     private static final int RESULT_PAGE_SIZE = 12;
 
+    @SuppressWarnings("unused")
     @SpringBean
     private PubmedImporter pubmedImportService;
 
@@ -255,7 +255,6 @@ public class PaperListPage extends BasePage<Void> {
             () -> new PaperEntryPage(getPageParameters(), getPage().getPageReference()));
         button.setType(Buttons.Type.Primary);
         button.setVisible(mode != Mode.VIEW);
-        button.add(new LoadingBehavior(new StringResourceModel(id + LOADING_RESOURCE_TAG, this, null)));
         queue(button);
     }
 }

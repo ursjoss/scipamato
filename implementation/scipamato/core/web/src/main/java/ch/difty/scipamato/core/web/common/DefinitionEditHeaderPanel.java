@@ -2,7 +2,6 @@ package ch.difty.scipamato.core.web.common;
 
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
-import de.agilecoders.wicket.core.markup.html.bootstrap.button.LoadingBehavior;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.wicket.Page;
 import org.apache.wicket.PageReference;
@@ -36,10 +35,7 @@ public abstract class DefinitionEditHeaderPanel<E extends DefinitionEntity<ID, T
     }
 
     private BootstrapButton newSubmitButton(final String id) {
-        final BootstrapButton button = new BootstrapButton(id, new StringResourceModel(id + LABEL_RESOURCE_TAG),
-            Buttons.Type.Primary);
-        button.add(new LoadingBehavior(new StringResourceModel(id + LOADING_RESOURCE_TAG, this, null)));
-        return button;
+        return new BootstrapButton(id, new StringResourceModel(id + LABEL_RESOURCE_TAG), Buttons.Type.Primary);
     }
 
     private BootstrapButton newBackButton(final String id) {

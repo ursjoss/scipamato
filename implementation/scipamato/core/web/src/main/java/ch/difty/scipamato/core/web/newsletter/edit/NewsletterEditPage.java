@@ -7,7 +7,6 @@ import java.util.Arrays;
 
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
-import de.agilecoders.wicket.core.markup.html.bootstrap.button.LoadingBehavior;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.LocalDateTextField;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelect;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome5CDNCSSReference;
@@ -48,6 +47,7 @@ public class NewsletterEditPage extends BasePage<Newsletter> {
 
     private static final int RESULT_PAGE_SIZE = 12;
 
+    @SuppressWarnings("unused")
     @SpringBean
     private NewsletterService service;
 
@@ -160,10 +160,7 @@ public class NewsletterEditPage extends BasePage<Newsletter> {
     }
 
     private void queueSubmitButton(final String id) {
-        final BootstrapButton button = new BootstrapButton(id, new StringResourceModel("submit.label"),
-            Buttons.Type.Default);
-        button.add(new LoadingBehavior(new StringResourceModel(id + LOADING_RESOURCE_TAG, this, null)));
-        queue(button);
+        queue(new BootstrapButton(id, new StringResourceModel("submit.label"), Buttons.Type.Default));
     }
 
     private void queueForm(final String id) {
