@@ -11,6 +11,8 @@ import ch.difty.scipamato.TestApplication;
 import ch.difty.scipamato.common.DateTimeService;
 import ch.difty.scipamato.common.navigator.ItemNavigator;
 import ch.difty.scipamato.common.web.ScipamatoWebSessionFacade;
+import ch.difty.scipamato.core.logic.exporting.RisAdapterFactory;
+import ch.difty.scipamato.core.logic.exporting.RisExporterStrategy;
 import ch.difty.scipamato.core.logic.parsing.AuthorParserFactory;
 import ch.difty.scipamato.core.logic.parsing.AuthorParserStrategy;
 import ch.difty.scipamato.core.persistence.*;
@@ -24,6 +26,11 @@ public abstract class AbstractWicketTest {
     @Bean
     public AuthorParserFactory authorParserFactory() {
         return AuthorParserFactory.Companion.create(AuthorParserStrategy.PUBMED);
+    }
+
+    @Bean
+    public RisAdapterFactory risAdapterFactory() {
+        return RisAdapterFactory.Companion.create(RisExporterStrategy.DEFAULT);
     }
 
     @Autowired

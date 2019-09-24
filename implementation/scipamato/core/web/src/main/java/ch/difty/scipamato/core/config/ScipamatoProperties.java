@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import ch.difty.scipamato.common.config.ScipamatoBaseProperties;
 import ch.difty.scipamato.core.logic.parsing.AuthorParserStrategy;
+import ch.difty.scipamato.core.logic.exporting.RisExporterStrategy;
 
 @Component
 @ConfigurationProperties(prefix = "scipamato")
@@ -17,6 +18,7 @@ public class ScipamatoProperties implements ScipamatoBaseProperties {
     private static final long serialVersionUID = 1L;
 
     private static final String AUTHOR_PARSER_PROPERTY_KEY = "scipamato.author-parser";
+    private static final String RIS_EXPORTER_PROPERTY_KEY  = "scipamato.ris-exporter";
 
     /**
      * Brand name of the application. Appears e.g. in the Navbar.
@@ -45,6 +47,12 @@ public class ScipamatoProperties implements ScipamatoBaseProperties {
     private String authorParser = "DEFAULT";
 
     /**
+     * The ris export adapter used for exporting studies into RIS format. Currently only
+     * {@literal DEFAULT} and {@literal DISTILLERSR} is implemented.
+     */
+    private String risExporter = "DEFAULT";
+
+    /**
      * Any free number below this threshold will not be reused.
      */
     private int paperNumberMinimumToBeRecycled;
@@ -70,6 +78,13 @@ public class ScipamatoProperties implements ScipamatoBaseProperties {
      */
     public AuthorParserStrategy getAuthorParserStrategy() {
         return AuthorParserStrategy.Companion.fromProperty(authorParser, AUTHOR_PARSER_PROPERTY_KEY);
+    }
+
+    /**
+     * @return the strategy for exporting studies into RIS file format.
+     */
+    public RisExporterStrategy getRisExporterStrategy() {
+        return RisExporterStrategy.Companion.fromProperty(risExporter, RIS_EXPORTER_PROPERTY_KEY);
     }
 
     /**

@@ -32,6 +32,8 @@ import ch.difty.scipamato.common.web.component.table.column.LinkIconColumn;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.PaperSlimFilter;
 import ch.difty.scipamato.core.entity.projection.PaperSlim;
+import ch.difty.scipamato.core.logic.exporting.RisAdapter;
+import ch.difty.scipamato.core.logic.exporting.RisAdapterFactory;
 import ch.difty.scipamato.core.persistence.NewsletterService;
 import ch.difty.scipamato.core.persistence.PaperService;
 import ch.difty.scipamato.core.web.behavior.AjaxDownload;
@@ -76,6 +78,9 @@ public abstract class ResultPanel extends BasePanel<Void> {
 
     @SpringBean
     private CoreShortFieldConcatenator shortFieldConcatenator;
+
+    @SpringBean
+    private RisAdapterFactory risAdapterFactory;
 
     private final AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider;
 
@@ -484,7 +489,7 @@ public abstract class ResultPanel extends BasePanel<Void> {
         final String url = getProperties().getPubmedBaseUrl();
         final String brand = getProperties().getBrand();
         final String baseUrl = getProperties().getCmsUrlSearchPage();
-        JRisAdapter risAdapter = new JRisAdapter(brand, url, baseUrl);
+        final RisAdapter risAdapter = risAdapterFactory.createRisAdapter(brand, url, baseUrl);
         risDownload = new AjaxTextDownload(true) {
             @Override
             public void onRequest() {

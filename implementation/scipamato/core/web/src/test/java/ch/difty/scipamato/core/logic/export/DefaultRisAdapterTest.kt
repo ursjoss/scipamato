@@ -1,12 +1,15 @@
-package ch.difty.scipamato.core.web.paper.result
+@file:Suppress("SpellCheckingInspection")
+
+package ch.difty.scipamato.core.logic.export
 
 import ch.difty.scipamato.core.entity.Paper
+import ch.difty.scipamato.core.logic.exporting.DefaultRisAdapter
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-internal class JRisAdapterTest {
+internal class DefaultRisAdapterTest {
 
-    private val adapter = JRisAdapter(
+    private val adapter = DefaultRisAdapter(
             dbName = "scipamato",
             internalUrl = "http://localhost:8080/",
             publicUrl = "https://scipamato.ch/"
@@ -234,7 +237,7 @@ internal class JRisAdapterTest {
 
     @Test
     fun withoutInternalUrl_doesNotBuildLK() {
-        val adapter = JRisAdapter(
+        val adapter = DefaultRisAdapter(
                 dbName = "scipamato",
                 internalUrl = null,
                 publicUrl = "https://scipamato.ch/"
@@ -261,7 +264,7 @@ internal class JRisAdapterTest {
 
     @Test
     fun withoutPublicUrl_doesNotBuildL1() {
-        val adapter = JRisAdapter(
+        val adapter = DefaultRisAdapter(
                 dbName = "scipamato",
                 internalUrl = "https://localhost:8081/",
                 publicUrl = null
@@ -361,7 +364,7 @@ internal class JRisAdapterTest {
             |L1  - https://scipamato.ch/paper/number/null
             |L2  - http://localhost:8080/null
             |ER  - 
-            |""".trimMargin();
+            |""".trimMargin()
         assertThat(adapter.build(listOf(p))).isEqualTo(expected)
     }
 }

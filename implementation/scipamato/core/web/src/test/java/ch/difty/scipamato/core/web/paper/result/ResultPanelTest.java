@@ -27,6 +27,7 @@ import ch.difty.scipamato.core.web.common.PanelTest;
 import ch.difty.scipamato.core.web.paper.PaperSlimBySearchOrderProvider;
 import ch.difty.scipamato.core.web.paper.entry.PaperEntryPage;
 
+@SuppressWarnings("ALL")
 abstract class ResultPanelTest extends PanelTest<ResultPanel> {
 
     static final long NUMBER = 2L;
