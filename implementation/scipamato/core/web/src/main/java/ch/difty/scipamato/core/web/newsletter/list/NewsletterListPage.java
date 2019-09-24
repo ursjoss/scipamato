@@ -9,7 +9,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton;
-import de.agilecoders.wicket.core.markup.html.bootstrap.button.LoadingBehavior;
 import de.agilecoders.wicket.core.markup.html.bootstrap.table.TableBehavior;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelect;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelectConfig;
@@ -61,7 +60,7 @@ import ch.difty.scipamato.core.web.newsletter.edit.NewsletterEditPage;
  *
  * @author u.joss
  */
-@SuppressWarnings({ "SameParameterValue", "WeakerAccess" })
+@SuppressWarnings({ "SameParameterValue" })
 @MountPath("/newsletters")
 @AuthorizeInstantiation({ Roles.USER, Roles.ADMIN })
 public class NewsletterListPage extends BasePage<Void> {
@@ -71,6 +70,7 @@ public class NewsletterListPage extends BasePage<Void> {
     private static final String COLUMN_HEADER = "column.header.";
     private static final int    ROWS_PER_PAGE = 10;
 
+    @SuppressWarnings("unused")
     @SpringBean
     private NewsletterService             service;
     private NewsletterFilter              filter;
@@ -273,7 +273,6 @@ public class NewsletterListPage extends BasePage<Void> {
 
     private void queueNewButton(final String id) {
         newNewsletterButton = newResponsePageButton(id, NewsletterEditPage::new);
-        newNewsletterButton.add(new LoadingBehavior(new StringResourceModel(id + LOADING_RESOURCE_TAG, this, null)));
         queue(newNewsletterButton);
     }
 }

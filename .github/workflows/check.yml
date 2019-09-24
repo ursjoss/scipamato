@@ -30,4 +30,3 @@ jobs:
     - name: Check with Gradle
       working-directory: ./implementation/scipamato
       run: ./gradlew check --no-daemon --no-build-cache
-

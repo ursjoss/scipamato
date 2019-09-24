@@ -64,14 +64,15 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 - {url-issues}118[#118] Core - Export stuies in RIS format for import into citiation programs
 
 .Changed
-- Dependency updates for spring-boot-starter, wicket, wicketstuff, openfeign, junit,
-  testcontainers, lombok-plugin, jooqmodelator-plugin
+- Dependency updates for spring-boot-starter, wicket, wicketstuff, wicket-bootstrap, openfeign,
+  junit, testcontainers, lombok-plugin, jooqmodelator-plugin
 
 .Deprecated
 
 .Removed
 
 .Fixed
+- {url-issues}127[#127] Core - Remove LoadingBehavior where not absolutely necessary
 
 .Security
 

@@ -5,8 +5,6 @@ import static ch.difty.scipamato.core.entity.User.UserFields.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton;
-import de.agilecoders.wicket.core.markup.html.bootstrap.button.LoadingBehavior;
 import de.agilecoders.wicket.core.markup.html.bootstrap.table.TableBehavior;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
@@ -51,7 +49,6 @@ public class UserListPage extends BasePage<Void> {
     private UserFilter   filter;
     private UserProvider dataProvider;
 
-    @SuppressWarnings("WeakerAccess")
     public UserListPage(final PageParameters parameters) {
         super(parameters);
         initFilterAndProvider();
@@ -79,13 +76,11 @@ public class UserListPage extends BasePage<Void> {
     }
 
     private void queueNewButton(String id) {
-        BootstrapAjaxButton button = newResponsePageButton(id, () -> {
+        queue(newResponsePageButton(id, () -> {
             final PageParameters pp = new PageParameters();
             pp.set(CorePageParameters.MODE.getName(), UserEditPage.Mode.CREATE);
             return new UserEditPage(pp);
-        });
-        button.add(new LoadingBehavior(new StringResourceModel(id + LOADING_RESOURCE_TAG, this, null)));
-        queue(button);
+        }));
     }
 
     private void makeAndQueueTable(String id) {

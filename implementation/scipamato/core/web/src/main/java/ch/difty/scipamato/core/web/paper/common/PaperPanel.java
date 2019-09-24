@@ -5,7 +5,10 @@ import static ch.difty.scipamato.core.entity.Paper.PaperFields.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.agilecoders.wicket.core.markup.html.bootstrap.button.*;
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxLink;
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.ButtonBehavior;
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons.Size;
 import de.agilecoders.wicket.core.markup.html.bootstrap.image.GlyphIconType;
 import de.agilecoders.wicket.core.markup.html.bootstrap.image.IconType;
@@ -505,7 +508,6 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
                 enableButton(this, !isViewMode(), event);
             }
         };
-        submit.add(new LoadingBehavior(new StringResourceModel(getMode() + LOADING_RESOURCE_TAG, this, null)));
         submit.setDefaultFormProcessing(true);
         submit.setEnabled(!isViewMode());
         submit.setVisible(!isViewMode());
