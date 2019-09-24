@@ -63,8 +63,8 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 
 .Changed
-- Dependency updates for spring-boot-starter, wicket, wicketstuff, openfeign, junit,
-  testcontainers, lombok-plugin, jooqmodelator-plugin
+- Dependency updates for spring-boot-starter, wicket, wicketstuff, wicket-bootstrap, openfeign,
+  junit, testcontainers, lombok-plugin, jooqmodelator-plugin
 
 .Deprecated
 
