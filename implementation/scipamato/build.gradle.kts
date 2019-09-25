@@ -64,7 +64,7 @@ sonarqube {
 
 allprojects {
     group = "ch.difty"
-    version = "1.2.5-SNAPSHOT"
+    version = "1.3.0"
 
     repositories {
         mavenLocal()
