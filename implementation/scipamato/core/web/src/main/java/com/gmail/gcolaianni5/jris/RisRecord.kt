@@ -225,8 +225,8 @@ data class RisRecord(
         /** SN */
         var isbnIssn: String? = null,
 
-        /** SP */
-        var startPage: Int? = null,
+        /** SP - String? instead of Int? for DistillerSr format */
+        var startPage: String? = null,
 
         /** ST */
         var shortTitle: String? = null,

@@ -9,7 +9,8 @@ import com.gmail.gcolaianni5.jris.RisType
 import java.io.Serializable
 
 
-private val defaultSort: List<String> = listOf("AU", "PY", "TI", "JO", "SP", "EP", "VL", "IS", "ID", "DO", "M1", "M2", "M3", "AB", "DB", "L1", "L2")
+private val defaultSort: List<String> = listOf("AU", "PY", "TI", "JO", "SP", "EP", "VL", "IS", "ID", "DO", "M1", "M2", "AB", "DB", "L1", "L2")
+private val defaultDistillerSort: List<String> = listOf("AU", "PY", "TI", "JO", "SP", "EP", "M2", "VL", "IS", "ID", "DO", "M1", "C1", "AB", "DB", "L1", "L2")
 
 /**
  * The implementation of the [RisAdapterFactory] provides a configured [RisAdapter] able export to
@@ -114,7 +115,11 @@ sealed class JRisAdapter(protected val dbName: String, protected val internalUrl
     }
 }
 
+/**
+ * Default mapping of SciPaMaTo fields to the RIS tag that seem most appropriate.
+ */
 class DefaultRisAdapter(dbName: String, internalUrl: String?, publicUrl: String?) : JRisAdapter(dbName, internalUrl, publicUrl) {
+
     override fun newRisRecord(p: Paper, startPage: Int?, endPage: Int?, periodical: String, volume: String?, issue: String?): RisRecord =
             RisRecord(
                     type = RisType.JOUR,
@@ -122,7 +127,7 @@ class DefaultRisAdapter(dbName: String, internalUrl: String?, publicUrl: String?
                     title = p.title,
                     authors = p.formattedAuthors().toMutableList(),
                     publicationYear = p.publicationYear?.toString(),
-                    startPage = startPage,
+                    startPage = startPage?.toString(),
                     endPage = endPage,
                     periodicalNameFullFormatJO = periodical,
                     volumeNumber = volume,
@@ -137,7 +142,18 @@ class DefaultRisAdapter(dbName: String, internalUrl: String?, publicUrl: String?
             )
 }
 
+/**
+ * Mapping of SciPaMaTo-fields to the RIS tags expected to be imported into DistillerSR. Apparently
+ * the folks at Evidence Partners had to adapt the import into their tool to be able to handle
+ * importing from some other exporters:
+ *
+ * * `M2` is mapped to `Start Page` (instead of `SP`)
+ * * `SP` is mapped to `Pages`
+ */
 class DistillerSrRisAdapter(dbName: String, internalUrl: String?, publicUrl: String?) : JRisAdapter(dbName, internalUrl, publicUrl) {
+
+    override fun build(papers: List<Paper>) = build(papers, defaultDistillerSort)
+
     override fun newRisRecord(p: Paper, startPage: Int?, endPage: Int?, periodical: String, volume: String?, issue: String?): RisRecord =
             RisRecord(
                     type = RisType.JOUR,
@@ -145,7 +161,9 @@ class DistillerSrRisAdapter(dbName: String, internalUrl: String?, publicUrl: Str
                     title = p.title,
                     authors = p.formattedAuthors().toMutableList(),
                     publicationYear = p.publicationYear?.toString(),
-                    miscellaneous2 = getPages(startPage, endPage),
+                    miscellaneous2 = startPage?.toString(),
+                    startPage = getPages(startPage, endPage),
+                    endPage = endPage,
                     periodicalNameFullFormatJO = periodical,
                     volumeNumber = volume,
                     issue = issue,
@@ -153,7 +171,7 @@ class DistillerSrRisAdapter(dbName: String, internalUrl: String?, publicUrl: Str
                     pdfLinks = publicUrl?.run { mutableListOf("${this}paper/number/${p.number}") } ?: mutableListOf(),
                     number = p.number?.toLong(),
                     fullTextLinks = internalUrl?.run { mutableListOf("$this${p.pmId}") } ?: mutableListOf(),
-                    typeOfWork = p.goals?.takeUnless { it.trim().isBlank() },
+                    custom1 = p.goals?.takeUnless { it.trim().isBlank() },
                     doi = p.doi?.takeUnless { it.trim().isBlank() },
                     databaseName = dbName
             )

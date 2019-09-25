@@ -28,7 +28,7 @@ internal class DefaultRisAdapterTest {
     }
 
     @Test
-    fun buildingWithoutExplicitSortOrder_sortsMostlyAlphabetically() {
+    fun buildingWithExplicitlyBlankSortOrder_sortsMostlyAlphabetically() {
         // TY always first, ER always last
         val expected =
                 """TY  - JOUR

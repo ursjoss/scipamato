@@ -93,7 +93,7 @@ object JRis {
             TagAccessor(RisTag.RP, { r, v -> r.reprintEdition = v as String? }, { r: RisRecord -> r.reprintEdition }),
             TagAccessor(RisTag.SE, { r, v -> r.section = v as String? }, { r: RisRecord -> r.section }),
             TagAccessor(RisTag.SN, { r, v -> r.isbnIssn = v as String? }, { r: RisRecord -> r.isbnIssn }),
-            TagAccessor(RisTag.SP, { r, v -> r.startPage = v as Int? }, { r: RisRecord -> r.startPage }),
+            TagAccessor(RisTag.SP, { r, v -> r.startPage = v as String? }, { r: RisRecord -> r.startPage }),
             TagAccessor(RisTag.ST, { r, v -> r.shortTitle = v as String? }, { r: RisRecord -> r.shortTitle }),
             TagAccessor(RisTag.T1, { r, v -> r.primaryTitle = v as String? }, { r: RisRecord -> r.primaryTitle }),
             TagAccessor(RisTag.T2, { r, v -> r.secondaryTitle = v as String? }, { r: RisRecord -> r.secondaryTitle }),
@@ -163,6 +163,7 @@ object JRis {
         }
     }
 
+    @Suppress("RemoveRedundantQualifierName")
     private fun RisTag.getAccessor(): TagAccessor = tag2accessor[this.name]
             ?: tag2accessor.getValue(RisTag.AB.name)
 
