@@ -12,6 +12,8 @@ public interface ScipamatoBaseProperties extends Serializable {
 
     String getPubmedBaseUrl();
 
+    String getCmsUrlSearchPage();
+
     Integer getRedirectFromPort();
 
     int getMultiSelectBoxActionBoxWithMoreEntriesThan();

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import ch.difty.scipamato.common.config.AbstractScipamatoProperties;
 import ch.difty.scipamato.common.config.MavenProperties;
 import ch.difty.scipamato.core.logic.parsing.AuthorParserStrategy;
+import ch.difty.scipamato.core.logic.exporting.RisExporterStrategy;
 
 /**
  * This bean is used to evaluate all environment properties used in the
@@ -28,6 +29,11 @@ public class ScipamatoCoreProperties extends AbstractScipamatoProperties<Scipama
     @Override
     public AuthorParserStrategy getAuthorParserStrategy() {
         return getScipamatoProperties().getAuthorParserStrategy();
+    }
+
+    @Override
+    public RisExporterStrategy getRisExporterStrategy() {
+        return getScipamatoProperties().getRisExporterStrategy();
     }
 
     @Override

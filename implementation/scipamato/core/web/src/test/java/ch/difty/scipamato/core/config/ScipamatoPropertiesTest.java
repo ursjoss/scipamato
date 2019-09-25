@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.core.logic.parsing.AuthorParserStrategy;
+import ch.difty.scipamato.core.logic.exporting.RisExporterStrategy;
 
 class ScipamatoPropertiesTest {
 
@@ -26,6 +27,11 @@ class ScipamatoPropertiesTest {
     }
 
     @Test
+    void cmsUrlSearchPage_hasNoDefaultValue() {
+        assertThat(sp.getCmsUrlSearchPage()).isNull();
+    }
+
+    @Test
     void authorParser_isDefault() {
         assertThat(sp.getAuthorParser()).isEqualTo("DEFAULT");
     }
@@ -33,6 +39,11 @@ class ScipamatoPropertiesTest {
     @Test
     void authorParserStrategy_isDefault() {
         assertThat(sp.getAuthorParserStrategy()).isEqualTo(AuthorParserStrategy.PUBMED);
+    }
+
+    @Test
+    void risExporterStrategy_isDefault() {
+        assertThat(sp.getRisExporterStrategy()).isEqualTo(RisExporterStrategy.DEFAULT);
     }
 
     @Test

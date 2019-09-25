@@ -12,7 +12,7 @@ internal class AbstractScipamatoPropertiesTest {
     private val scipamatoPropMock = mock<ScipamatoBaseProperties>()
     private val mavenPropMock = mock<MavenProperties>()
 
-    private val prop = object : AbstractScipamatoProperties<ScipamatoBaseProperties>(scipamatoPropMock, mavenPropMock){}
+    private val prop = object : AbstractScipamatoProperties<ScipamatoBaseProperties>(scipamatoPropMock, mavenPropMock) {}
 
     @AfterEach
     fun tearDown() {
@@ -55,6 +55,13 @@ internal class AbstractScipamatoPropertiesTest {
         whenever(scipamatoPropMock.pubmedBaseUrl).thenReturn("pbUrl")
         assertThat(prop.pubmedBaseUrl).isEqualTo("pbUrl")
         verify(scipamatoPropMock).pubmedBaseUrl
+    }
+
+    @Test
+    fun gettingCmsBaseUrl_delegatesToScipamatoProps() {
+        whenever(scipamatoPropMock.cmsUrlSearchPage).thenReturn("cmsUrl")
+        assertThat(prop.cmsUrlSearchPage).isEqualTo("cmsUrl")
+        verify(scipamatoPropMock).cmsUrlSearchPage
     }
 
     @Test

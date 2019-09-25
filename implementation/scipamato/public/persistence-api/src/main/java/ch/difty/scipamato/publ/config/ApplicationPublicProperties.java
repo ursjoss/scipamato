@@ -21,11 +21,6 @@ public interface ApplicationPublicProperties extends ApplicationProperties {
     boolean isNavbarVisibleByDefault();
 
     /**
-     * @return the url pointing to the CMS page with the study search page
-     */
-    String getCmsUrlSearchPage();
-
-    /**
      * @return the url pointing to the CMS page with the new-study page
      */
     String getCmsUrlNewStudyPage();

@@ -12,6 +12,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import ch.difty.scipamato.common.config.MavenProperties;
 import ch.difty.scipamato.core.logic.parsing.AuthorParserStrategy;
+import ch.difty.scipamato.core.logic.exporting.RisExporterStrategy;
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
 @ExtendWith(MockitoExtension.class)
@@ -84,6 +85,13 @@ class ScipamatoCorePropertiesTest {
         when(scipamatoPropMock.getAuthorParserStrategy()).thenReturn(AuthorParserStrategy.PUBMED);
         assertThat(prop.getAuthorParserStrategy()).isEqualTo(AuthorParserStrategy.PUBMED);
         verify(scipamatoPropMock).getAuthorParserStrategy();
+    }
+
+    @Test
+    void gettingRisExporterStrategy_delegatesToScipamatoProps() {
+        when(scipamatoPropMock.getRisExporterStrategy()).thenReturn(RisExporterStrategy.DISTILLERSR);
+        assertThat(prop.getRisExporterStrategy()).isEqualTo(RisExporterStrategy.DISTILLERSR);
+        verify(scipamatoPropMock).getRisExporterStrategy();
     }
 
     @Test

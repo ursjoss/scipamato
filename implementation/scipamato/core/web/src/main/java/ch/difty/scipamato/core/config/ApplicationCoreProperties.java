@@ -2,6 +2,7 @@ package ch.difty.scipamato.core.config;
 
 import ch.difty.scipamato.common.config.ApplicationProperties;
 import ch.difty.scipamato.core.logic.parsing.AuthorParserStrategy;
+import ch.difty.scipamato.core.logic.exporting.RisExporterStrategy;
 
 /**
  * Extending the generic {@link ApplicationProperties} with SciPaMaTo-Core
@@ -25,5 +26,10 @@ public interface ApplicationCoreProperties extends ApplicationProperties {
      * @return the pubmed api_key or null if none is defined
      */
     String getPubmedApiKey();
+
+    /**
+     * @return the strategy how to export RIS files.
+     */
+    RisExporterStrategy getRisExporterStrategy();
 
 }

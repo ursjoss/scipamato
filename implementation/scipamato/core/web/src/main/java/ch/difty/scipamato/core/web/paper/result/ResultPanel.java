@@ -32,8 +32,12 @@ import ch.difty.scipamato.common.web.component.table.column.LinkIconColumn;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.PaperSlimFilter;
 import ch.difty.scipamato.core.entity.projection.PaperSlim;
+import ch.difty.scipamato.core.logic.exporting.RisAdapter;
+import ch.difty.scipamato.core.logic.exporting.RisAdapterFactory;
 import ch.difty.scipamato.core.persistence.NewsletterService;
 import ch.difty.scipamato.core.persistence.PaperService;
+import ch.difty.scipamato.core.web.behavior.AjaxDownload;
+import ch.difty.scipamato.core.web.behavior.AjaxTextDownload;
 import ch.difty.scipamato.core.web.common.BasePanel;
 import ch.difty.scipamato.core.web.paper.AbstractPaperSlimProvider;
 import ch.difty.scipamato.core.web.paper.NewsletterChangeEvent;
@@ -75,11 +79,17 @@ public abstract class ResultPanel extends BasePanel<Void> {
     @SpringBean
     private CoreShortFieldConcatenator shortFieldConcatenator;
 
+    @SpringBean
+    private RisAdapterFactory risAdapterFactory;
+
     private final AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider;
 
     private DataTable<PaperSlim, String> results;
 
     private final Mode mode;
+
+    private AjaxDownload   risDownload;
+    private AjaxLink<Void> reviewLink;
 
     /**
      * Instantiate the panel.
@@ -101,10 +111,14 @@ public abstract class ResultPanel extends BasePanel<Void> {
         super.onInitialize();
 
         makeAndQueueTable("table");
-        addOrReplaceJasperLinks();
+
+        addExportRisAjax();
+
+        addOrReplaceExportLinks();
     }
 
-    private void addOrReplaceJasperLinks() {
+    private void addOrReplaceExportLinks() {
+        addOrReplaceExportRisLink("exportRisLink");
         addOrReplacePdfSummaryLink("summaryLink");
         addOrReplacePdfSummaryShortLink("summaryShortLink");
         addOrReplacePdfReviewLink("reviewLink");
@@ -332,7 +346,7 @@ public abstract class ResultPanel extends BasePanel<Void> {
             .withCompression()
             .build();
 
-        addOrReplace(newResourceLink(id, "summary",
+        addOrReplace(newJasperResourceLink(id, "summary",
             new PaperSummaryDataSource(dataProvider, rhf, shortFieldConcatenator, config)));
     }
 
@@ -371,7 +385,8 @@ public abstract class ResultPanel extends BasePanel<Void> {
             .withCompression()
             .build();
 
-        addOrReplace(newResourceLink(id, "summary-short", new PaperSummaryShortDataSource(dataProvider, rhf, config)));
+        addOrReplace(
+            newJasperResourceLink(id, "summary-short", new PaperSummaryShortDataSource(dataProvider, rhf, config)));
     }
 
     private void addOrReplacePdfReviewLink(String id) {
@@ -400,7 +415,7 @@ public abstract class ResultPanel extends BasePanel<Void> {
             .withCompression()
             .build();
 
-        addOrReplace(newResourceLink(id, "review", new PaperReviewDataSource(dataProvider, rhf, config)));
+        addOrReplace(newJasperResourceLink(id, "review", new PaperReviewDataSource(dataProvider, rhf, config)));
     }
 
     private void addOrReplacePdfLiteratureReviewLink(final String id, final boolean plus) {
@@ -422,10 +437,10 @@ public abstract class ResultPanel extends BasePanel<Void> {
             .build();
 
         if (plus) {
-            addOrReplace(newResourceLink(id, "literature_review_plus",
+            addOrReplace(newJasperResourceLink(id, "literature_review_plus",
                 new PaperLiteratureReviewPlusDataSource(dataProvider, rhf, config)));
         } else {
-            addOrReplace(newResourceLink(id, "literature_review",
+            addOrReplace(newJasperResourceLink(id, "literature_review",
                 new PaperLiteratureReviewDataSource(dataProvider, rhf, config)));
         }
     }
@@ -447,19 +462,19 @@ public abstract class ResultPanel extends BasePanel<Void> {
             .withCreator(brand)
             .withCompression()
             .build();
-        return newResourceLink(id, resourceKeyPart, new PaperSummaryTableDataSource(dataProvider, rhf, config));
+        return newJasperResourceLink(id, resourceKeyPart, new PaperSummaryTableDataSource(dataProvider, rhf, config));
     }
 
-    private ResourceLink<Void> newResourceLink(String id, final String resourceKeyPart,
+    private ResourceLink<Void> newJasperResourceLink(String id, final String resourceKeyPart,
         final JasperPaperDataSource<?> resource) {
         final String bodyResourceKey = LINK_RESOURCE_PREFIX + resourceKeyPart + LABEL_RESOURCE_TAG;
-        final String tileResourceKey = LINK_RESOURCE_PREFIX + resourceKeyPart + TITLE_RESOURCE_TAG;
+        final String titleResourceKey = LINK_RESOURCE_PREFIX + resourceKeyPart + TITLE_RESOURCE_TAG;
 
         ResourceLink<Void> reviewLink = new ResourceLink<>(id, resource);
         reviewLink.setOutputMarkupId(true);
         reviewLink.setBody(new StringResourceModel(bodyResourceKey));
         reviewLink.add(
-            new AttributeModifier(TITLE_ATTR, new StringResourceModel(tileResourceKey, this, null).getString()));
+            new AttributeModifier(TITLE_ATTR, new StringResourceModel(titleResourceKey, this, null).getString()));
         return reviewLink;
     }
 
@@ -467,7 +482,36 @@ public abstract class ResultPanel extends BasePanel<Void> {
     // see https://github.com/ursjoss/scipamato/issues/2
     private void readObject(final ObjectInputStream s) throws IOException, ClassNotFoundException {
         s.defaultReadObject();
-        addOrReplaceJasperLinks();
+        addOrReplaceExportLinks();
+    }
+
+    private void addExportRisAjax() {
+        final String url = getProperties().getPubmedBaseUrl();
+        final String brand = getProperties().getBrand();
+        final String baseUrl = getProperties().getCmsUrlSearchPage();
+        final RisAdapter risAdapter = risAdapterFactory.createRisAdapter(brand, url, baseUrl);
+        risDownload = new AjaxTextDownload(true) {
+            @Override
+            public void onRequest() {
+                setContent(risAdapter.build(dataProvider.findAllPapersByFilter()));
+                setFileName("export.ris");
+                super.onRequest();
+            }
+        };
+        add(risDownload);
+    }
+
+    private void addOrReplaceExportRisLink(String id) {
+        final String titleResourceKey = LINK_RESOURCE_PREFIX + id + TITLE_RESOURCE_TAG;
+        reviewLink = new AjaxLink<>(id) {
+            @Override
+            public void onClick(final AjaxRequestTarget target) {
+                risDownload.initiate(target);
+            }
+        };
+        reviewLink.add(
+            new AttributeModifier(TITLE_ATTR, new StringResourceModel(titleResourceKey, this, null).getString()));
+        addOrReplace(reviewLink);
     }
 
 }

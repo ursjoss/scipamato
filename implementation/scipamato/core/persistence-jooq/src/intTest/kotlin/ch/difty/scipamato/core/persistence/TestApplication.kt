@@ -33,6 +33,7 @@ open class TestApplication {
                 override fun getBrand() = "scipamato"
                 override fun getTitleOrBrand() = brand
                 override fun getPubmedBaseUrl() = "http://pubmed/"
+                override fun getCmsUrlSearchPage() = "http://localhost/paper/number"
                 override fun getRedirectFromPort() = 8080
                 override fun getMultiSelectBoxActionBoxWithMoreEntriesThan() = 4
             }

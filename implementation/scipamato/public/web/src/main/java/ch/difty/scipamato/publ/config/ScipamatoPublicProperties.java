@@ -39,11 +39,6 @@ public class ScipamatoPublicProperties extends AbstractScipamatoProperties<Scipa
     }
 
     @Override
-    public String getCmsUrlSearchPage() {
-        return getScipamatoProperties().getCmsUrlSearchPage();
-    }
-
-    @Override
     public String getCmsUrlNewStudyPage() {
         return getScipamatoProperties().getCmsUrlNewStudyPage();
     }
