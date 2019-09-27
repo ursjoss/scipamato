@@ -3,6 +3,7 @@ package ch.difty.scipamato.common.web.pages.login;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.LoadingBehavior;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.PasswordTextField;
 import org.apache.wicket.markup.html.form.RequiredTextField;
@@ -19,6 +20,7 @@ import ch.difty.scipamato.common.web.AbstractPage;
  * @param <R>
  *     type of the response page
  */
+@Slf4j
 @SuppressWarnings("SameParameterValue")
 public abstract class AbstractLoginPage<R extends AbstractPage<?>> extends AbstractPage<Void> {
 
@@ -57,8 +59,10 @@ public abstract class AbstractLoginPage<R extends AbstractPage<?>> extends Abstr
             @Override
             protected void onSubmit() {
                 if (signIn(username, password)) {
+                    log.info("User '{}' logged in successfully", username);
                     setResponsePage(getResponsePage());
                 } else {
+                    log.warn("Unsuccessful login attempt by user '{}'.", username);
                     error(getString("msg.login.failure"));
                 }
             }
