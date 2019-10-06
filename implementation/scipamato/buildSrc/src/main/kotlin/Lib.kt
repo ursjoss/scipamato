@@ -25,7 +25,7 @@ object Lib {
 
     private const val kotlinLoggingVersion = "1.7.6"
 
-    private const val openfeignVersion = "10.4.0"
+    private const val openfeignVersion = "10.5.1"
 
     private const val jaxbCoreVersion = "2.3.0.1"
     private const val jaxbImplVersion = "2.3.2"
