@@ -64,7 +64,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Changed
 - Dependency updates for spring-boot-starter
-- Plugin updates for gradle-lombok-plugin, testsets plugin
+- Plugin updates for gradle-lombok-plugin, testsets, sonarqube
 
 .Deprecated
 
