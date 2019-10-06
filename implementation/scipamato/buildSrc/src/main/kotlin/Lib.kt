@@ -14,7 +14,6 @@ object Lib {
     private const val springBootAdminVersion = "2.1.6"
     const val springCloudVersion = "Greenwich.SR3"
     private const val springCloudStarterVersion = "2.1.3.RELEASE"
-    private const val springDependencyManagementVersion = "1.0.8.RELEASE"
 
     private const val wicketSpringBootStarterVersion = "2.1.7"
     private const val wicketVersion = "8.6.1"
@@ -53,6 +52,7 @@ object Lib {
     //endregion
 
     //region:pluginVersions
+    private const val springDependencyManagementPluginVersion = "1.0.8.RELEASE"
     private const val lombokPluginVersion = "4.1.2"
     private const val jooqModelatorPluginVersion = "3.6.0"
     private const val jaxbPluginVersion = "3.0.4"
@@ -162,7 +162,7 @@ object Lib {
     fun kotlinSpringPlugin() = Plugin("plugin.spring", kotlinVersion)
 
     fun springBootPlugin() = Plugin("org.springframework.boot", springBootVersion)
-    fun springDependencyManagementPlugin() = Plugin("io.spring.dependency-management", springDependencyManagementVersion)
+    fun springDependencyManagementPlugin() = Plugin("io.spring.dependency-management", springDependencyManagementPluginVersion)
 
     fun lombokPlugin() = Plugin("io.freefair.lombok", lombokPluginVersion)
 
