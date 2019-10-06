@@ -56,7 +56,8 @@ object Lib {
     private const val lombokPluginVersion = "4.1.2"
     private const val jooqModelatorPluginVersion = "3.6.0"
     private const val jaxbPluginVersion = "3.0.4"
-    private const val testSetsPluginVersion = "2.2.0"
+    // BEWARE: 2.2.0 is broken (see https://github.com/unbroken-dome/gradle-testsets-plugin/pull/89)
+    private const val testSetsPluginVersion = "2.1.0" // TODO upgrade once > 2.2.0 is released
     private const val sonarqubePluginVersion = "2.8"
     //endregion
 

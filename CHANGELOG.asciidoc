@@ -65,7 +65,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Changed
 - Dependency updates for spring-boot-starter, spring-cloud, spring-cloud-starter, openfeign, jasperreports,
   font-awesome, equalsverifier, testcontainers, mockito
-- Plugin updates for gradle-lombok-plugin, testsets, sonarqube
+- Plugin updates for gradle-lombok-plugin, sonarqube
 
 .Deprecated
 
