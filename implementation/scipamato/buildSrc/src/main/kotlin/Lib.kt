@@ -12,7 +12,7 @@ object Lib {
 
     private const val springBootVersion = "2.1.9.RELEASE"
     private const val springBootAdminVersion = "2.1.6"
-    const val springCloudVersion = "Greenwich.SR2"
+    const val springCloudVersion = "Greenwich.SR3"
     private const val springCloudStarterVersion = "2.1.2.RELEASE"
     private const val springDependencyManagementVersion = "1.0.8.RELEASE"
 
