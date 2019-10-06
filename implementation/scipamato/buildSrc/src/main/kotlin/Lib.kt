@@ -56,7 +56,7 @@ object Lib {
     private const val lombokPluginVersion = "4.1.2"
     private const val jooqModelatorPluginVersion = "3.6.0"
     private const val jaxbPluginVersion = "3.0.4"
-    private const val testSetsPluginVersion = "2.1.1"
+    private const val testSetsPluginVersion = "2.2.0"
     private const val sonarqubePluginVersion = "2.7.1"
     //endregion
 
