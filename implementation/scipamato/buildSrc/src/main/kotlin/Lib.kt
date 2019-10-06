@@ -38,7 +38,7 @@ object Lib {
     private const val commonsCollectionVersion = "4.4"
     private const val joolVersion = "0.9.14"
 
-    private const val equalsverifierVersion = "3.1.9"
+    private const val equalsverifierVersion = "3.1.10"
 
     private const val junit5Version = "5.5.2"
 
