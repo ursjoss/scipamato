@@ -32,7 +32,7 @@ object Lib {
     private const val javaxActivationVersion = "1.2.0"
     private const val javaxElApiVersion = "3.0.1-b06"
 
-    private const val fontAwesomeVersion = "5.10.1"
+    private const val fontAwesomeVersion = "5.11.2"
 
     private const val commonsIoVersion = "2.6"
     private const val commonsCollectionVersion = "4.4"
