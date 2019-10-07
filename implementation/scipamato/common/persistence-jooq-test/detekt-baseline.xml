@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <Blacklist></Blacklist>
+  <Whitelist>
+    <ID>FunctionNaming:FilterConditionMapperTest.kt$FilterConditionMapperTest$@Test internal fun creatingWhereCondition_withNoFilterConditions_returnsNoOpCondition()</ID>
+    <ID>FunctionNaming:FilterConditionMapperTest.kt$FilterConditionMapperTest$@Test internal fun mappingFilter_withNullFilter_returnsNoOpCondition()</ID>
+  </Whitelist>
+</SmellBaseline>

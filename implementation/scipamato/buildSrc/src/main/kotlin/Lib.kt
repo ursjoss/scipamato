@@ -48,6 +48,11 @@ object Lib {
     const val mockitoVersion = "3.1.0"
     private const val mockitoKotlinVersion = "2.2.0"
 
+    private const val spekVersion = "2.0.8"
+    private const val kwikVersion = "0.1.0"
+    private const val kluentVersion = "1.56"
+    private const val mockkVersion = "1.9"
+
     private const val jsr305Version = "3.0.2"
     //endregion
 
@@ -59,6 +64,7 @@ object Lib {
     // BEWARE: 2.2.0 is broken (see https://github.com/unbroken-dome/gradle-testsets-plugin/pull/89)
     private const val testSetsPluginVersion = "2.1.0" // TODO upgrade once > 2.2.0 is released
     private const val sonarqubePluginVersion = "2.8"
+    private const val detektPluginVersion = "1.1.0"
     //endregion
 
     //region:dependencies
@@ -150,6 +156,10 @@ object Lib {
     fun assertj() = Dep("org.assertj", "assertj-core")
     fun testcontainers(module: String) = Dep("org.testcontainers", module, testcontainersVersion)
     fun equalsverifier() = Dep("nl.jqno.equalsverifier", "equalsverifier", equalsverifierVersion)
+    fun spek(module: String) = Dep("org.spekframework.spek2", "spek-$module", spekVersion)
+    fun kluent() = Dep("org.amshove.kluent", "kluent", kluentVersion)
+    fun mockk() = Dep("io.mockk", "mockk", mockkVersion)
+    fun kwik() = Dep("com.github.jcornaz.kwik", "kwik-core-jvm", kwikVersion)
 
     fun servletApi() = Dep("javax.servlet", "javax.servlet-api")
 
@@ -172,6 +182,8 @@ object Lib {
     fun testSetsPlugin() = Plugin("org.unbroken-dome.test-sets", testSetsPluginVersion)
 
     fun jaxbPlugin() = Plugin("com.intershop.gradle.jaxb", jaxbPluginVersion)
+
+    fun detektPlugin() = Plugin("io.gitlab.arturbosch.detekt", detektPluginVersion)
 
     fun sonarqubePlugin() = Plugin("org.sonarqube", sonarqubePluginVersion)
     //endregion

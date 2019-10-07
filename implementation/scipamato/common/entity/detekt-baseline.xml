@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <Blacklist></Blacklist>
+  <Whitelist>
+    <ID>ConstructorParameterNaming:Definition.kt$AbstractDefinitionEntity$_translations: Array&lt;out T&gt;</ID>
+    <ID>MagicNumber:CodeRelated.kt$CodeClassId.CC3$3</ID>
+    <ID>MagicNumber:CodeRelated.kt$CodeClassId.CC4$4</ID>
+    <ID>MagicNumber:CodeRelated.kt$CodeClassId.CC5$5</ID>
+    <ID>MagicNumber:CodeRelated.kt$CodeClassId.CC6$6</ID>
+    <ID>MagicNumber:CodeRelated.kt$CodeClassId.CC7$7</ID>
+    <ID>MagicNumber:CodeRelated.kt$CodeClassId.CC8$8</ID>
+    <ID>MaxLineLength:CodeRelated.kt$CodeClassLike : Serializable</ID>
+    <ID>MaxLineLength:Definition.kt$AbstractDefinitionEntity$override fun toString(): String</ID>
+    <ID>MaxLineLength:ScipamatoEntity.kt$ScipamatoEntity$open</ID>
+    <ID>NewLineAtEndOfFile:CodeRelated.kt$ch.difty.scipamato.common.entity.CodeRelated.kt</ID>
+    <ID>NewLineAtEndOfFile:ScipamatoFilter.kt$ch.difty.scipamato.common.entity.filter.ScipamatoFilter.kt</ID>
+  </Whitelist>
+</SmellBaseline>
