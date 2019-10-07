@@ -1,0 +1,9 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <Blacklist></Blacklist>
+  <Whitelist>
+    <ID>MaxLineLength:FrozenDateTimeService.kt$FrozenDateTimeService : DateTimeService</ID>
+    <ID>NewLineAtEndOfFile:PaginationContextMatcher.kt$ch.difty.scipamato.common.persistence.paging.PaginationContextMatcher.kt</ID>
+    <ID>NewLineAtEndOfFile:TestUtils.kt$ch.difty.scipamato.common.TestUtils.kt</ID>
+  </Whitelist>
+</SmellBaseline>

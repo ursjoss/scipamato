@@ -1,0 +1,9 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <Blacklist></Blacklist>
+  <Whitelist>
+    <ID>MaxLineLength:AuthorParsing.kt$AuthorParserFactory</ID>
+    <ID>MaxLineLength:AuthorParsing.kt$AuthorParserFactory$ fun createParser(authorString: String): AuthorParser</ID>
+    <ID>NewLineAtEndOfFile:AuthorParsing.kt$ch.difty.scipamato.core.logic.parsing.AuthorParsing.kt</ID>
+  </Whitelist>
+</SmellBaseline>

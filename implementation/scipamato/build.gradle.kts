@@ -1,3 +1,5 @@
+import io.gitlab.arturbosch.detekt.DetektPlugin
+import io.gitlab.arturbosch.detekt.detekt
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.api.tasks.testing.logging.TestLogEvent.*
 import org.jetbrains.kotlin.gradle.plugin.KotlinPlatformJvmPlugin
@@ -17,6 +19,7 @@ plugins {
     idea
     jacoco
     Lib.testSetsPlugin().run { id(id) version version }
+    Lib.detektPlugin().run { id(id) version version }
     Lib.sonarqubePlugin().run { id(id) version version }
 }
 
@@ -58,6 +61,7 @@ sonarqube {
         property("sonar.exclusions", "**/ch/difty/scipamato/publ/web/themes/markup/html/publ/**/*,${generatedPackages.joinToString(",")}")
         property("sonar.coverage.exclusions", (generatedPackages + testPackages).joinToString(","))
         property("sonar.coverage.jacoco.xmlReportPaths", jacocoTestReportFile)
+        property("sonar.kotlin.detekt.reportPaths", "build/reports/detekt/detekt.xml")
     }
 }
 
@@ -69,6 +73,7 @@ allprojects {
     repositories {
         mavenLocal()
         mavenCentral()
+        jcenter()
         maven { url = uri("https://dl.bintray.com/mockito/maven/") }
         maven { url = uri("http://jaspersoft.jfrog.io/jaspersoft/third-party-ce-artifacts") }
     }
@@ -82,6 +87,7 @@ subprojects {
     apply<IdeaPlugin>()
     apply<TestSetsPlugin>()
     apply<JacocoPlugin>()
+    apply<DetektPlugin>()
 
     testSets {
         val testLib by libraries.creating {
@@ -117,6 +123,18 @@ subprojects {
         apply(plugin = "java-library")
     }
 
+    detekt {
+        failFast = false
+        buildUponDefaultConfig = true
+        config = files("$rootDir/detekt-config.yml")
+        baseline = file("detekt-baseline.xml")
+
+        reports {
+            xml.enabled = true
+            html.enabled = true
+        }
+    }
+
     dependencies {
         implementation(Lib.kotlin("stdlib-jdk8"))
         implementation(Lib.kotlin("reflect"))
@@ -129,6 +147,13 @@ subprojects {
         runtimeOnly(Lib.logback())
 
         compileOnly(Lib.jsr305())
+
+        testImplementation(Lib.spek("dsl-jvm"))
+        testImplementation(Lib.kluent())
+        testImplementation(Lib.mockk())
+        testImplementation(Lib.kwik())
+
+        testRuntimeOnly(Lib.spek("runner-junit5"))
     }
 
     tasks {
@@ -149,7 +174,9 @@ subprojects {
         withType<Test> {
             maxHeapSize = "2g"
             @Suppress("UnstableApiUsage")
-            useJUnitPlatform()
+            useJUnitPlatform {
+                includeEngines("junit-jupiter", "spek2")
+            }
         }
         withType<Jar> {
             enabled = !isWebProject()
@@ -200,9 +227,8 @@ tasks {
     withType<SonarQubeTask> {
         description = "Push jacoco analysis to sonarcloud."
         group = "Verification"
-        dependsOn(
-                projectsWithCoverage.map { it.tasks.getByName("jacocoTestReport") }
-        )
+        dependsOn(projectsWithCoverage.map { it.tasks.getByName("jacocoTestReport") })
+        dependsOn(subprojects.map { it.tasks.getByName("detekt") })
     }
     withType<Test> {
         failFast = true
