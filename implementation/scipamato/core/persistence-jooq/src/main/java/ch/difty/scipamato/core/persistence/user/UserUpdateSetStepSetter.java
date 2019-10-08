@@ -31,7 +31,7 @@ public class UserUpdateSetStepSetter implements UpdateSetStepSetter<ScipamatoUse
         AssertAs.INSTANCE.notNull(step, "step");
         AssertAs.INSTANCE.notNull(e, "entity");
 
-        final Timestamp created = e.getLastModified() == null ? null : UtilsKt.toTimestamp(e.getCreated());
+        final Timestamp created = e.getCreated() == null ? null : UtilsKt.toTimestamp(e.getCreated());
         final Timestamp lastMod = e.getLastModified() == null ? null : UtilsKt.toTimestamp(e.getLastModified());
         final UpdateSetMoreStep<ScipamatoUserRecord> step1 = step
             .set(SCIPAMATO_USER.USER_NAME, e.getUserName())

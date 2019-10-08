@@ -84,9 +84,9 @@ abstract class UpdateSetStepSetterTest<R : Record, E : CoreEntity> {
 
     private fun verifyCallToAuditFields() {
         val entityMock = entity
-        verify(entityMock).created
+        verify(entityMock, times(2)).created
         verify(entityMock).createdBy
-        verify(entityMock, times(3)).lastModified
+        verify(entityMock, times(2)).lastModified
         verify(entityMock).lastModifiedBy
         verify(entityMock).version
     }
