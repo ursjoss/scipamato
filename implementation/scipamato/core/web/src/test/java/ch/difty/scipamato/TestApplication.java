@@ -11,7 +11,6 @@ import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.context.annotation.ComponentScan;
 
 import ch.difty.scipamato.core.ScipamatoSession;
 import ch.difty.scipamato.core.web.paper.list.PaperListPage;

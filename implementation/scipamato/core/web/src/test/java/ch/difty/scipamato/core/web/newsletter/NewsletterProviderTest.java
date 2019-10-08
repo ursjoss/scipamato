@@ -86,7 +86,7 @@ class NewsletterProviderTest extends AbstractWicketTest {
         assertThat(provider.getFilterState()).isEqualTo(filterMock);
     }
 
-    private class PaginationContextMatcher implements ArgumentMatcher<PaginationContext> {
+    private static class PaginationContextMatcher implements ArgumentMatcher<PaginationContext> {
 
         private final int    pageSize;
         private final String sort;
@@ -112,7 +112,7 @@ class NewsletterProviderTest extends AbstractWicketTest {
         Iterator<Newsletter> it = provider.iterator(0, 3);
         assertThat(it.hasNext()).isFalse();
         verify(newsletterServiceMock).findPageByFilter(eq(filterMock),
-            argThat(new NewsletterProviderTest.PaginationContextMatcher(3, "issue: DESC")));
+            argThat(new PaginationContextMatcher(3, "issue: DESC")));
     }
 
     @Test
@@ -121,7 +121,7 @@ class NewsletterProviderTest extends AbstractWicketTest {
         Iterator<Newsletter> it = provider.iterator(0, 3);
         assertRecordsIn(it);
         verify(newsletterServiceMock).findPageByFilter(eq(filterMock),
-            argThat(new NewsletterProviderTest.PaginationContextMatcher(3, "issue: DESC")));
+            argThat(new PaginationContextMatcher(3, "issue: DESC")));
     }
 
     private void assertRecordsIn(Iterator<Newsletter> it) {
@@ -139,7 +139,7 @@ class NewsletterProviderTest extends AbstractWicketTest {
         Iterator<Newsletter> it = provider.iterator(3, 3);
         assertRecordsIn(it);
         verify(newsletterServiceMock).findPageByFilter(eq(filterMock),
-            argThat(new NewsletterProviderTest.PaginationContextMatcher(3, "issue: DESC")));
+            argThat(new PaginationContextMatcher(3, "issue: DESC")));
     }
 
     @Test
@@ -149,7 +149,7 @@ class NewsletterProviderTest extends AbstractWicketTest {
         Iterator<Newsletter> it = provider.iterator(6, 3);
         assertRecordsIn(it);
         verify(newsletterServiceMock).findPageByFilter(eq(filterMock),
-            argThat(new NewsletterProviderTest.PaginationContextMatcher(3, "title: DESC")));
+            argThat(new PaginationContextMatcher(3, "title: DESC")));
     }
 
     @Test
@@ -159,7 +159,7 @@ class NewsletterProviderTest extends AbstractWicketTest {
         Iterator<Newsletter> it = provider.iterator(6, 3);
         assertRecordsIn(it);
         verify(newsletterServiceMock).findPageByFilter(eq(filterMock),
-            argThat(new NewsletterProviderTest.PaginationContextMatcher(3, "title: ASC")));
+            argThat(new PaginationContextMatcher(3, "title: ASC")));
     }
 
 }

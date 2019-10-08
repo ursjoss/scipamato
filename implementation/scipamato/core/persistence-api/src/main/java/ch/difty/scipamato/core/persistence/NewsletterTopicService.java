@@ -15,8 +15,8 @@ import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicFilter;
  *
  * @author Urs Joss
  */
-public interface NewsletterTopicService extends
-    DefinitionProviderService<NewsletterTopicDefinition, NewsletterTopicFilter> {
+public interface NewsletterTopicService
+    extends DefinitionProviderService<NewsletterTopicDefinition, NewsletterTopicFilter> {
 
     /**
      * Find the localized {@link NewsletterTopic}s

@@ -7,7 +7,11 @@ interface FieldEnumType {
     val fieldName: String
 }
 
-open class ScipamatoEntity(var created: LocalDateTime? = null, var lastModified: LocalDateTime? = null, var version: Int = 0) : Serializable {
+open class ScipamatoEntity(
+        var created: LocalDateTime? = null,
+        var lastModified: LocalDateTime? = null,
+        var version: Int = 0
+) : Serializable {
 
     enum class ScipamatoEntityFields(override val fieldName: String) : FieldEnumType {
         CREATED("created"),

@@ -59,8 +59,6 @@ internal class NewsletterAssociationTest {
 
     @Test
     fun assertEnumFields() {
-        assertThat(NewsletterAssociation.NewsletterAssociationFields.values())
-                .extracting("name")
-                .containsExactly("id", "issue", "publicationStatusId", "headline")
+        assertThat(NewsletterAssociation.NewsletterAssociationFields.values().map { it.fieldName }).containsExactly("id", "issue", "publicationStatusId", "headline")
     }
 }

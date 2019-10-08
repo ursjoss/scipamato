@@ -18,7 +18,7 @@ import ch.difty.scipamato.core.web.paper.AbstractPaperSlimProvider;
 import ch.difty.scipamato.core.web.paper.jasper.PaperDataSourceTest;
 import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields;
 
-@SuppressWarnings("ResultOfMethodCallIgnored")
+@SuppressWarnings({ "ResultOfMethodCallIgnored", "SpellCheckingInspection" })
 class PaperSummaryDataSourceTest extends PaperDataSourceTest {
 
     private static final Long   NUMBER     = 100L;

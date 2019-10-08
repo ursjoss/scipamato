@@ -63,12 +63,12 @@ public class JooqCodeRepo extends AbstractRepo implements CodeRepository {
         // skipping the audit fields
         return getDsl()
             .select(CODE.CODE_.as("C_ID"), DSL
-                    .coalesce(CODE_TR.NAME, TranslationUtils.INSTANCE.getNOT_TRANSL())
+                    .coalesce(CODE_TR.NAME, TranslationUtils.NOT_TRANSL)
                     .as("C_NAME"), CODE_TR.COMMENT.as("C_COMMENT"), CODE.INTERNAL.as("C_INTERNAL"),
                 CODE_CLASS.ID.as("CC_ID"), DSL
-                    .coalesce(CODE_CLASS_TR.NAME, TranslationUtils.INSTANCE.getNOT_TRANSL())
+                    .coalesce(CODE_CLASS_TR.NAME, TranslationUtils.NOT_TRANSL)
                     .as("CC_NAME"), DSL
-                    .coalesce(CODE_CLASS_TR.DESCRIPTION, TranslationUtils.INSTANCE.getNOT_TRANSL())
+                    .coalesce(CODE_CLASS_TR.DESCRIPTION, TranslationUtils.NOT_TRANSL)
                     .as("CC_DESCRIPTION"), CODE.SORT.as("C_SORT"))
             .from(CODE)
             .join(CODE_CLASS)
@@ -107,8 +107,8 @@ public class JooqCodeRepo extends AbstractRepo implements CodeRepository {
         // need to page after sorting due to grouping, not profiting from DB filtering :-(
         return results
             .stream()
-            .skip((long) pc.getOffset())
-            .limit((long) pc.getPageSize())
+            .skip(pc.getOffset())
+            .limit(pc.getPageSize())
             .collect(toList());
     }
 

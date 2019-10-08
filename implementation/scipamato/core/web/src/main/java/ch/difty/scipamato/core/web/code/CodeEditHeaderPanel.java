@@ -17,7 +17,7 @@ import ch.difty.scipamato.core.entity.code.CodeTranslation;
 import ch.difty.scipamato.core.web.common.DeletableDefinitionEditHeaderPanel;
 import ch.difty.scipamato.core.web.model.CodeClassModel;
 
-@SuppressWarnings("SameParameterValue")
+@SuppressWarnings({ "SameParameterValue", "WicketForgeJavaIdInspection" })
 abstract class CodeEditHeaderPanel extends DeletableDefinitionEditHeaderPanel<CodeDefinition, CodeTranslation, String> {
 
     private BootstrapSelect<CodeClass> codeClasses;
@@ -33,8 +33,8 @@ abstract class CodeEditHeaderPanel extends DeletableDefinitionEditHeaderPanel<Co
         queueBootstrapSelectAndLabel("codeClass");
         queueFieldAndLabel(new TextField<Integer>(CodeDefinition.CodeDefinitionFields.SORT.getFieldName()));
         queue(new Label("internalLabel",
-            new StringResourceModel(CodeDefinition.CodeDefinitionFields.INTERNAL.getFieldName() + LABEL_RESOURCE_TAG, this,
-                null)));
+            new StringResourceModel(CodeDefinition.CodeDefinitionFields.INTERNAL.getFieldName() + LABEL_RESOURCE_TAG,
+                this, null)));
         CheckBoxX internal = new CheckBoxX(CodeDefinition.CodeDefinitionFields.INTERNAL.getFieldName());
         internal
             .getConfig()
@@ -53,7 +53,8 @@ abstract class CodeEditHeaderPanel extends DeletableDefinitionEditHeaderPanel<Co
             CodeFilter.CodeFilterFields.CODE_CLASS.getFieldName());
         final CodeClassModel choices = new CodeClassModel(getLocale().getLanguage());
         final IChoiceRenderer<CodeClass> choiceRenderer = new ChoiceRenderer<>(
-            CodeClass.CoreEntityFields.DISPLAY_VALUE.getFieldName(), CodeClass.IdScipamatoEntityFields.ID.getFieldName());
+            CodeClass.CoreEntityFields.DISPLAY_VALUE.getFieldName(),
+            CodeClass.IdScipamatoEntityFields.ID.getFieldName());
         codeClasses = new BootstrapSelect<>(id, model, choices, choiceRenderer);
         queue(codeClasses);
     }

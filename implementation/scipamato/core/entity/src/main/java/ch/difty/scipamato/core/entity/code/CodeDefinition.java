@@ -5,6 +5,7 @@ import java.util.Objects;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.jetbrains.annotations.NotNull;
 
 import ch.difty.scipamato.common.entity.AbstractDefinitionEntity;
 import ch.difty.scipamato.common.entity.FieldEnumType;
@@ -61,6 +62,7 @@ public class CodeDefinition extends AbstractDefinitionEntity<CodeTranslation, St
             this.name = name;
         }
 
+        @NotNull
         @Override
         public String getFieldName() {
             return name;

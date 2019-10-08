@@ -11,6 +11,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import java.time.LocalDate
 
+@Suppress("SpellCheckingInspection")
 internal class NewsletterTest : Jsr303ValidatedEntityTest<Newsletter>(Newsletter::class.java) {
 
     private val topic1 = NewsletterTopic(1, "sometopic")
@@ -38,7 +39,7 @@ internal class NewsletterTest : Jsr303ValidatedEntityTest<Newsletter>(Newsletter
             "papersByTopic={null=[PaperSlim(number=null, firstAuthor=null, publicationYear=null, title=otherpaper)], " +
             "NewsletterTopic(title=sometopic)=[PaperSlim(number=null, firstAuthor=null, publicationYear=null, title=somepaper)]})"
 
-    override val displayValue = newValidEntity().issue
+    override val displayValue: String = newValidEntity().issue
 
     @Test
     fun get() {
@@ -95,9 +96,7 @@ internal class NewsletterTest : Jsr303ValidatedEntityTest<Newsletter>(Newsletter
             nl.addPaper(p, NewsletterTopic(1, "t1"))
             Assertions.fail<Any>("should have thrown exception")
         } catch (ex: Exception) {
-            assertThat(ex)
-                    .isInstanceOf(NullArgumentException::class.java)
-                    .hasMessage("$prmName must not be null.")
+            assertThat(ex).isInstanceOf(NullArgumentException::class.java).hasMessage("$prmName must not be null.")
         }
 
     }

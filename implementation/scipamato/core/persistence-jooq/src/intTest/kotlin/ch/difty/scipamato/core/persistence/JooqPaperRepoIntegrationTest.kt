@@ -346,6 +346,7 @@ internal open class JooqPaperRepoIntegrationTest {
         ensureRecordNotPresent(searchOrderId, paperId)
     }
 
+    @Suppress("SameParameterValue")
     private fun ensureRecordNotPresent(searchOrderId: Long, paperId: Long) {
         assertExclusionCount(searchOrderId, paperId, 0)
     }

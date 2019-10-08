@@ -1,7 +1,5 @@
 package ch.difty.scipamato.core.web.paper.result;
 
-import org.apache.wicket.ajax.markup.html.AjaxLink;
-
 import ch.difty.scipamato.common.web.Mode;
 
 class ResultPanelInViewModeTest extends ResultPanelTest {

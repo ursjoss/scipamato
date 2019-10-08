@@ -42,10 +42,9 @@ internal class PaperFilterTest {
 
     @Test
     fun assertEnumFields() {
-        assertThat(PaperFilter.PaperFilterFields.values())
-                .extracting("name")
-                .containsExactly("number", "authorMask", "methodsMask", "searchMask", "publicationYearFrom",
-                        "publicationYearUntil", "newsletterId")
+        assertThat(PaperFilter.PaperFilterFields.values().map { it.fieldName }).containsExactly(
+                "number", "authorMask", "methodsMask", "searchMask", "publicationYearFrom", "publicationYearUntil", "newsletterId"
+        )
     }
 
 }

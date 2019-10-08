@@ -13,7 +13,7 @@ internal class NewsletterTopicTest : Jsr303ValidatedEntityTest<NewsletterTopic>(
 
     override val toString = "NewsletterTopic(title=sometopic)"
 
-    override val displayValue = newValidEntity().title
+    override val displayValue: String = newValidEntity().title
 
     @Test
     fun get() {

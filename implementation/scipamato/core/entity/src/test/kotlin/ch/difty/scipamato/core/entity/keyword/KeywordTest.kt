@@ -12,7 +12,7 @@ internal class KeywordTest : Jsr303ValidatedEntityTest<Keyword>(Keyword::class.j
     }
 
     override val toString: String = "Keyword(name=kw, searchOverride=so)"
-    override val displayValue = newValidEntity().name
+    override val displayValue: String = newValidEntity().name
 
     @Test
     fun get() {

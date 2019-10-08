@@ -10,6 +10,7 @@ import ch.difty.scipamato.core.pubmed.api.PubmedArticleSet;
  *
  * @author u.joss
  */
+@SuppressWarnings("ALL")
 public interface PubMed {
 
     /**

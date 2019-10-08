@@ -36,14 +36,14 @@ class Sort : Iterable<SortProperty>, Serializable {
 
     fun getSortPropertyFor(propertyName: String): SortProperty? = sortProperties.firstOrNull { it.name == propertyName }
 
-    override fun equals(obj: Any?): Boolean {
-        if (obj == null)
+    override fun equals(other: Any?): Boolean {
+        if (other == null)
             return false
-        if (this === obj)
+        if (this === other)
             return true
-        if (this.javaClass != obj.javaClass)
+        if (this.javaClass != other.javaClass)
             return false
-        val that = obj as Sort?
+        val that = other as Sort?
         return this.sortProperties == that!!.sortProperties
     }
 
@@ -53,7 +53,7 @@ class Sort : Iterable<SortProperty>, Serializable {
         return result
     }
 
-    override fun toString(): String = sortProperties.map { it.toString() }.joinToString(",")
+    override fun toString(): String = sortProperties.joinToString(",") { it.toString() }
 
     /**
      * Individual sort specification for a particular property, consisting of a
@@ -75,7 +75,7 @@ class Sort : Iterable<SortProperty>, Serializable {
     enum class Direction {
         ASC, DESC;
 
-        fun isAscending() = this == Sort.Direction.ASC
+        fun isAscending() = this == ASC
     }
 
     companion object {

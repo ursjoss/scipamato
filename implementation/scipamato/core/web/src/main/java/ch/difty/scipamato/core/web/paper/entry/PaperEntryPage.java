@@ -57,7 +57,7 @@ import ch.difty.scipamato.core.web.paper.NewsletterChangeEvent;
  * in some scenarios (access through VPN over public internet - but not when running
  * the application server locally). If somebody changed a field in the EditablePaperPage
  * and then directly clicked the save button without losing the focus of the edited field
- * with another target first, the autosave process and the manual save were not handled
+ * with another target first, the auto-save process and the manual save were not handled
  * sequentially. One of the two was changing the version in the database when the other
  * kicked in and tried to save again before the first process had been able to reload
  * the modified record into the wicket model. Hence the version number of the second save
@@ -109,7 +109,7 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
      * @param callingPage
      *     page reference to the page that called this page. Can be null.
      */
-    @SuppressWarnings({ "SameParameterValue", "WeakerAccess" })
+    @SuppressWarnings({ "SameParameterValue" })
     public PaperEntryPage(IModel<Paper> paperModel, PageReference callingPage) {
         this(paperModel, callingPage, null, false, Model.of(0));
     }
@@ -173,7 +173,6 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
      * @param parameters
      *     page parameters
      */
-    @SuppressWarnings("WeakerAccess")
     public PaperEntryPage(PageParameters parameters) {
         this(parameters, null);
     }

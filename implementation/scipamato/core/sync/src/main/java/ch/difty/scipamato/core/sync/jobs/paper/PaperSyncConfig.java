@@ -41,8 +41,7 @@ import ch.difty.scipamato.core.sync.jobs.SyncConfig;
 @SuppressWarnings("SameParameterValue")
 @Configuration
 @Profile("!wickettest")
-public class PaperSyncConfig
-    extends SyncConfig<PublicPaper, ch.difty.scipamato.publ.db.tables.records.PaperRecord> {
+public class PaperSyncConfig extends SyncConfig<PublicPaper, ch.difty.scipamato.publ.db.tables.records.PaperRecord> {
 
     private static final String TOPIC      = "paper";
     private static final int    CHUNK_SIZE = 500;

@@ -20,7 +20,6 @@ public class SyncJobResult {
         return result == JobResult.SUCCESS;
     }
 
-    @SuppressWarnings("WeakerAccess")
     public boolean isFailed() {
         return result == JobResult.FAILURE;
     }
@@ -58,7 +57,7 @@ public class SyncJobResult {
 
     @Data
     @AllArgsConstructor
-    public class LogMessage {
+    public static class LogMessage {
         private String       message;
         private MessageLevel messageLevel;
     }

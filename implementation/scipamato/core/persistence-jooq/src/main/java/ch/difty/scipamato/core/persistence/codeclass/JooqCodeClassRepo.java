@@ -53,9 +53,9 @@ public class JooqCodeClassRepo extends AbstractRepo implements CodeClassReposito
         // skipping the audit fields
         return getDsl()
             .select(CODE_CLASS.ID.as("CC_ID"), DSL
-                .coalesce(CODE_CLASS_TR.NAME, TranslationUtils.INSTANCE.getNOT_TRANSL())
+                .coalesce(CODE_CLASS_TR.NAME, TranslationUtils.NOT_TRANSL)
                 .as("CC_NAME"), DSL
-                .coalesce(CODE_CLASS_TR.DESCRIPTION, TranslationUtils.INSTANCE.getNOT_TRANSL())
+                .coalesce(CODE_CLASS_TR.DESCRIPTION, TranslationUtils.NOT_TRANSL)
                 .as("CC_DESCRIPTION"))
             .from(CODE_CLASS)
             .leftOuterJoin(CODE_CLASS_TR)
@@ -88,8 +88,8 @@ public class JooqCodeClassRepo extends AbstractRepo implements CodeClassReposito
         // need to page after sorting due to grouping, not profiting from DB filtering :-(
         return results
             .stream()
-            .skip((long) pc.getOffset())
-            .limit((long) pc.getPageSize())
+            .skip(pc.getOffset())
+            .limit(pc.getPageSize())
             .collect(toList());
     }
 

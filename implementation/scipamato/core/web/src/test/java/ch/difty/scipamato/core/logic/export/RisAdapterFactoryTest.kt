@@ -11,7 +11,7 @@ internal class RisAdapterFactoryTest {
 
     @Test
     fun defaultRisExporter() {
-        val factory = RisAdapterFactory.Companion.create(RisExporterStrategy.DEFAULT)
+        val factory = RisAdapterFactory.create(RisExporterStrategy.DEFAULT)
         val risAdapter = factory.createRisAdapter("brand", "iu", "pu")
         assertThat(risAdapter).isInstanceOf(DefaultRisAdapter::class.java)
     }
@@ -19,7 +19,7 @@ internal class RisAdapterFactoryTest {
 
     @Test
     fun distillerSrRisExporter() {
-        val factory = RisAdapterFactory.Companion.create(RisExporterStrategy.DISTILLERSR)
+        val factory = RisAdapterFactory.create(RisExporterStrategy.DISTILLERSR)
         val risAdapter = factory.createRisAdapter("brand", "iu", "pu")
         assertThat(risAdapter).isInstanceOf(DistillerSrRisAdapter::class.java)
     }

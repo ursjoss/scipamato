@@ -32,7 +32,7 @@ internal class UserFilterTest {
 
     @Test
     fun assertEnumFields() {
-        assertThat(UserFilter.UserFilterFields.values()).extracting("name").containsExactly("nameMask", "emailMask", "enabled")
+        assertThat(UserFilter.UserFilterFields.values().map { it.fieldName }).containsExactly("nameMask", "emailMask", "enabled")
     }
 
 }

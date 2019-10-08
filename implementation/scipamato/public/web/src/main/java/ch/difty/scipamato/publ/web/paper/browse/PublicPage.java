@@ -188,8 +188,8 @@ public class PublicPage extends BasePage<Void> {
             form.add(new Label(componentId + LABEL_TAG, Model.of(className)));
 
             final CodeModel choices = new CodeModel(codeClassId, getLanguageCode());
-            final IChoiceRenderer<Code> choiceRenderer = new ChoiceRenderer<>(Code.CodeFields.DISPLAY_VALUE.getFieldName(),
-                Code.CodeFields.CODE.getFieldName());
+            final IChoiceRenderer<Code> choiceRenderer = new ChoiceRenderer<>(
+                Code.CodeFields.DISPLAY_VALUE.getFieldName(), Code.CodeFields.CODE.getFieldName());
             final StringResourceModel noneSelectedModel = new StringResourceModel(CODES_NONE_SELECT_RESOURCE_TAG, this,
                 null);
             final StringResourceModel selectAllModel = new StringResourceModel(SELECT_ALL_RESOURCE_TAG, this, null);
@@ -212,7 +212,7 @@ public class PublicPage extends BasePage<Void> {
         }
     }
 
-    private abstract class AbstractTabPanel extends Panel {
+    private abstract static class AbstractTabPanel extends Panel {
         private static final long serialVersionUID = 1L;
 
         AbstractTabPanel(String id, IModel<?> model) {

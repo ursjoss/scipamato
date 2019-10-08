@@ -129,6 +129,7 @@ public class JooqSearchOrderRepo extends
     }
 
     private List<SearchTerm> getSearchTermsWhere(final Condition condition) {
+        //noinspection SpellCheckingInspection
         return getDsl()
             .select(SEARCH_TERM.ID.as("id"), SEARCH_TERM.SEARCH_TERM_TYPE.as("stt"),
                 SEARCH_TERM.SEARCH_CONDITION_ID.as("scid"), SEARCH_TERM.FIELD_NAME.as("fn"),
@@ -430,12 +431,12 @@ public class JooqSearchOrderRepo extends
         String languageCode) {
         return getDsl()
             .select(CODE.CODE_.as("C_ID"), DSL
-                    .coalesce(CODE_TR.NAME, TranslationUtils.INSTANCE.getNOT_TRANSL())
+                    .coalesce(CODE_TR.NAME, TranslationUtils.NOT_TRANSL)
                     .as("C_NAME"), CODE_TR.COMMENT.as("C_COMMENT"), CODE.INTERNAL.as("C_INTERNAL"),
                 CODE_CLASS.ID.as("CC_ID"), DSL
-                    .coalesce(CODE_CLASS_TR.NAME, TranslationUtils.INSTANCE.getNOT_TRANSL())
+                    .coalesce(CODE_CLASS_TR.NAME, TranslationUtils.NOT_TRANSL)
                     .as("CC_NAME"), DSL
-                    .coalesce(CODE_CLASS_TR.DESCRIPTION, TranslationUtils.INSTANCE.getNOT_TRANSL())
+                    .coalesce(CODE_CLASS_TR.DESCRIPTION, TranslationUtils.NOT_TRANSL)
                     .as("CC_DESCRIPTION"), CODE.SORT)
             .from(SEARCH_CONDITION_CODE)
             .join(SEARCH_CONDITION)

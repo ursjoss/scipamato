@@ -21,7 +21,7 @@ import ch.difty.scipamato.common.web.AbstractPage;
  *     type of the response page
  */
 @Slf4j
-@SuppressWarnings("SameParameterValue")
+@SuppressWarnings("ALL")
 public abstract class AbstractLoginPage<R extends AbstractPage<?>> extends AbstractPage<Void> {
 
     private static final long serialVersionUID = 1L;
@@ -90,8 +90,7 @@ public abstract class AbstractLoginPage<R extends AbstractPage<?>> extends Abstr
     }
 
     private BootstrapButton newButton(String id) {
-        final BootstrapButton button = new BootstrapButton(id, new StringResourceModel(id + ".value", this, null),
-            Buttons.Type.Default);
+        final BootstrapButton button = new BootstrapButton(id, new StringResourceModel(id + ".value", this, null), Buttons.Type.Default);
         button.add(new LoadingBehavior(new StringResourceModel(id + ".loading", this, null)));
         return button;
     }

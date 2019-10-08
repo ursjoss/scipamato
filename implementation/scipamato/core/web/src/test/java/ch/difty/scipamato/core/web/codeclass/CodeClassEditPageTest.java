@@ -3,6 +3,7 @@ package ch.difty.scipamato.core.web.codeclass;
 import static org.mockito.Mockito.*;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
 import org.apache.wicket.markup.html.form.Form;
@@ -189,8 +190,8 @@ class CodeClassEditPageTest extends BasePageTest<CodeClassEditPage> {
     void clickingBackButton_withPageWithoutCallingPageRef_forwardsToCodeListPage() {
         when(codeServiceMock.countByFilter(isA(CodeFilter.class))).thenReturn(1);
         when(codeServiceMock.findPageOfEntityDefinitions(isA(CodeFilter.class),
-            isA(PaginationRequest.class))).thenReturn(Arrays
-            .asList(new CodeDefinition("c1", "en", new CodeClass(1, "cc1", null), 1, false, 1))
+            isA(PaginationRequest.class))).thenReturn(Collections
+            .singletonList(new CodeDefinition("c1", "en", new CodeClass(1, "cc1", null), 1, false, 1))
             .iterator());
 
         getTester().startPage(new CodeClassEditPage(Model.of(ccd), null));

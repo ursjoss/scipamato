@@ -36,8 +36,8 @@ class CodeClassModelTest extends ModelTest {
 
         final CodeClassModel model = new CodeClassModel("de");
 
-        assertThat(extractProperty(CodeClass.CodeClassFields.NAME.getFieldName()).from(model.load())).containsExactly("cc1",
-            "cc2");
+        assertThat(extractProperty(CodeClass.CodeClassFields.NAME.getFieldName()).from(model.load())).containsExactly(
+            "cc1", "cc2");
 
         verify(serviceMock).find(languageCode);
 

@@ -177,8 +177,8 @@ public class NewsletterEditPage extends BasePage<Newsletter> {
 
     private void makeAndQueuePublicationStatusSelectBox(final String id) {
         BootstrapSelect<PublicationStatus> publicationStatus = new BootstrapSelect<>(id,
-            new PropertyModel<>(getModel(), PUBLICATION_STATUS.getFieldName()), Arrays.asList(PublicationStatus.values()),
-            new EnumChoiceRenderer<>(this)) {
+            new PropertyModel<>(getModel(), PUBLICATION_STATUS.getFieldName()),
+            Arrays.asList(PublicationStatus.values()), new EnumChoiceRenderer<>(this)) {
 
             @Override
             protected void onConfigure() {

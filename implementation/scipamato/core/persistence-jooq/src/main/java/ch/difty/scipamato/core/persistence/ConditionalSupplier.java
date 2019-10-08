@@ -31,6 +31,7 @@ import org.jooq.lambda.tuple.Tuple2;
  * @see <a href=
  *     "http://stackoverflow.com/questions/19803058/java-8-stream-getting-head-and-tail">http://stackoverflow.com/questions/19803058/java-8-stream-getting-head-and-tail</a>
  */
+@SuppressWarnings("SpellCheckingInspection")
 public class ConditionalSupplier {
 
     private final List<Supplier<Condition>> conditionSuppliers = new ArrayList<>();

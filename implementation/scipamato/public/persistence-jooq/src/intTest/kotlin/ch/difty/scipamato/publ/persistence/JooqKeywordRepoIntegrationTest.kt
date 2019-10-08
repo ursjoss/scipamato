@@ -32,6 +32,7 @@ internal open class JooqKeywordRepoIntegrationTest {
         keywords.forEach { c -> log.debug(c.toString()) }
     }
 
+    @Suppress("SpellCheckingInspection")
     @Test
     fun findingAllKeywords1InFrench() {
         @Suppress("SpellCheckingInspection")

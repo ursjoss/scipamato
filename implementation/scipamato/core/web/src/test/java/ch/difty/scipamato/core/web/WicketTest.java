@@ -16,13 +16,10 @@ import org.apache.wicket.util.tester.FormTester;
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import ch.difty.scipamato.core.auth.Roles;
-import ch.difty.scipamato.core.config.ApplicationCoreProperties;
-import ch.difty.scipamato.core.logic.parsing.AuthorParserStrategy;
 import ch.difty.scipamato.core.web.authentication.LoginPage;
 import ch.difty.scipamato.core.web.paper.list.PaperListPage;
 import ch.difty.scipamato.core.web.security.TestUserDetailsService;

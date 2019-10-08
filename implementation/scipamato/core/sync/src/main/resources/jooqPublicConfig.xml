@@ -12,7 +12,9 @@
         <database>
             <name>org.jooq.meta.postgres.PostgresDatabase</name>
             <inputSchema>public</inputSchema>
-            <includes>code_class|code|language|keyword|paper|new_study|new_study_topic|newsletter|newsletter_topic|new_study_page_link</includes>
+            <includes>
+                code_class|code|language|keyword|paper|new_study|new_study_topic|newsletter|newsletter_topic|new_study_page_link
+            </includes>
             <recordVersionFields>version</recordVersionFields>
         </database>
         <generate>

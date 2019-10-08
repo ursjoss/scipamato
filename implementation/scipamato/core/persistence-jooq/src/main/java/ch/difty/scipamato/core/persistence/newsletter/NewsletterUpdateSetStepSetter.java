@@ -32,7 +32,7 @@ public class NewsletterUpdateSetStepSetter implements UpdateSetStepSetter<Newsle
         final Newsletter e) {
         AssertAs.INSTANCE.notNull(step, "step");
         AssertAs.INSTANCE.notNull(e, "entity");
-        final Timestamp created = e.getLastModified() == null ? null : UtilsKt.toTimestamp(e.getCreated());
+        final Timestamp created = e.getCreated() == null ? null : UtilsKt.toTimestamp(e.getCreated());
         final Timestamp lastMod = e.getLastModified() == null ? null : UtilsKt.toTimestamp(e.getLastModified());
         return step
             .set(NEWSLETTER.ISSUE, e.getIssue())

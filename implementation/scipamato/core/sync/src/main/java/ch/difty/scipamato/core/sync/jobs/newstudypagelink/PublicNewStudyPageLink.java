@@ -17,7 +17,6 @@ import ch.difty.scipamato.publ.db.tables.pojos.NewStudyPageLink;
  *
  * @author u.joss
  */
-@SuppressWarnings("WeakerAccess")
 public class PublicNewStudyPageLink {
 
     @Delegate

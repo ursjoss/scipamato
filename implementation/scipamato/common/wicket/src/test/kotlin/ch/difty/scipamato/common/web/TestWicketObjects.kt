@@ -12,7 +12,7 @@ import org.apache.wicket.model.Model
 import org.apache.wicket.request.mapper.parameter.PageParameters
 
 @WicketHomePage
-class TestHomePage() : AbstractPage<Void>(PageParameters()) {
+class TestHomePage : AbstractPage<Void>(PageParameters()) {
     override fun getProperties(): ApplicationProperties = TestApplicationProperties()
     override fun isNavbarVisible(): Boolean = true
 }

@@ -13,7 +13,7 @@ internal class AjaxTextDownloadTest : WicketTest() {
 
     private val ad = AjaxTextDownload(false)
 
-    private val targetMock = mock<AjaxRequestTarget>();
+    private val targetMock = mock<AjaxRequestTarget>()
 
     @Test
     fun `can instantiate AjaxTextDownload`() {

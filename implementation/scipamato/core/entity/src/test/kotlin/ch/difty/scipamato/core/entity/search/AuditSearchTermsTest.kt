@@ -50,6 +50,7 @@ internal class AuditSearchTermsTest {
         assertInequalityBetween(st1, st2, 118234894, 1)
     }
 
+    @Suppress("SameParameterValue")
     private fun assertInequalityBetween(st1: AuditSearchTerms, st2: AuditSearchTerms, hashValue1: Int, hashValue2: Int) {
         assertThat(st1 == st2).isFalse()
         assertThat(st2 == st1).isFalse()
@@ -67,7 +68,6 @@ internal class AuditSearchTermsTest {
 
     @Test
     fun compareWithNullSelfOrDifferentClass() {
-        assertThat(st1 == null).isFalse()
         assertThat(st1 == st1).isTrue()
     }
 

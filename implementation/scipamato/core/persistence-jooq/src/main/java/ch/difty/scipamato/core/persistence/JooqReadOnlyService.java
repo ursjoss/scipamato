@@ -27,7 +27,6 @@ import ch.difty.scipamato.core.entity.User;
  * @author u.joss
  */
 @Transactional(readOnly = true)
-@SuppressWarnings("WeakerAccess")
 public abstract class JooqReadOnlyService<ID extends Number, T extends IdScipamatoEntity<ID>, F extends ScipamatoFilter, REPO extends ReadOnlyRepository<T, ID, F>>
     implements ReadOnlyService<ID, T, F> {
 

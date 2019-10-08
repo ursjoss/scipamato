@@ -282,7 +282,7 @@ internal open class JooqKeywordRepoIntegrationTest {
         val persisted = repo.insert(ntd)
         val id = persisted.id
         val version = persisted.version
-        assertThat(repo.findKeywordDefinitionById(id)== null).isFalse()
+        assertThat(repo.findKeywordDefinitionById(id) == null).isFalse()
 
         // delete the record
         val deleted = repo.delete(id, version)

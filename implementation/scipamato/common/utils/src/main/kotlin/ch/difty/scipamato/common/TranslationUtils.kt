@@ -5,7 +5,7 @@ private const val LANG_CODE_BASE_LENGTH = 2
 // TODO move into common-persistence-jooq
 object TranslationUtils {
 
-    val NOT_TRANSL = "not translated"
+    const val NOT_TRANSL = "not translated"
 
     private val DE_CAMEL_REGEX = "(.)(\\p{Upper})".toRegex()
 
@@ -19,8 +19,8 @@ object TranslationUtils {
      * Converts a camel cased string [original] into an underscored one, e.g. `fooBar` -&gt; `foo_bar` (or null if original is null)
      */
     fun deCamelCase(original: String?): String? {
-        if (original == null) return null
         return when {
+            original == null -> null
             original.isEmpty() -> original
             else -> original.replace(DE_CAMEL_REGEX, "$1_$2").toLowerCase()
         }

@@ -48,7 +48,7 @@ public class JooqKeywordRepo extends AbstractRepo implements KeywordRepository {
         // skipping the audit fields
         return getDsl()
             .select(KEYWORD.ID.as("K_ID"), DSL
-                .coalesce(KEYWORD_TR.NAME, TranslationUtils.INSTANCE.getNOT_TRANSL())
+                .coalesce(KEYWORD_TR.NAME, TranslationUtils.NOT_TRANSL)
                 .as("K_NAME"), KEYWORD.SEARCH_OVERRIDE)
             .from(KEYWORD)
             .leftOuterJoin(KEYWORD_TR)
@@ -81,8 +81,8 @@ public class JooqKeywordRepo extends AbstractRepo implements KeywordRepository {
         // need to page after sorting due to grouping, not profiting from DB filtering :-(
         return results
             .stream()
-            .skip((long) pc.getOffset())
-            .limit((long) pc.getPageSize())
+            .skip(pc.getOffset())
+            .limit(pc.getPageSize())
             .collect(toList());
     }
 

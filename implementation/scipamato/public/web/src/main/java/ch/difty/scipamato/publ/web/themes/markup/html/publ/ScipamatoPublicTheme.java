@@ -35,7 +35,7 @@ public class ScipamatoPublicTheme extends Theme {
      * Instantiates a new ScipamatoPublicTheme instance.
      *
      * @param useLessOverCss
-     *     if true: SciPamaTo will dynamically compile the LESS files into
+     *     if true: SciPaMaTo will dynamically compile the LESS files into
      *     CSS. If false, the precompiled CSS is used.
      * @param name
      *     name for the theme

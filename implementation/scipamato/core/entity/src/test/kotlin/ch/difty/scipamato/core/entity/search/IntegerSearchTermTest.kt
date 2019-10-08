@@ -10,6 +10,7 @@ private const val FIELD_NAME = "fn"
 
 internal class IntegerSearchTermTest {
 
+    @Suppress("SameParameterValue")
     private fun assertTerm(st: IntegerSearchTerm, type: MatchType, value: Int, raw: String) {
         assertTerm(st, type, value, value, raw)
     }
@@ -138,7 +139,7 @@ internal class IntegerSearchTermTest {
     }
 
     @Test
-    fun incompleteSearchTermRangeRighOpen() {
+    fun incompleteSearchTermRangeRightOpen() {
         val raw = "2017-"
         val st = IntegerSearchTerm(CONDITION_ID, FIELD_NAME, raw)
         assertTerm(st, MatchType.INCOMPLETE, 0, 0, raw)

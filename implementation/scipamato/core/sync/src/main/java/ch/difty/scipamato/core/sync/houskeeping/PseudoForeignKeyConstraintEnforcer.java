@@ -1,6 +1,7 @@
 package ch.difty.scipamato.core.sync.houskeeping;
 
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.jooq.DeleteConditionStep;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.springframework.batch.core.StepContribution;
@@ -56,7 +57,8 @@ public class PseudoForeignKeyConstraintEnforcer<R extends UpdatableRecordImpl<?>
     }
 
     @Override
-    public RepeatStatus execute(final StepContribution contribution, final ChunkContext chunkContext) {
+    public RepeatStatus execute(@NotNull final StepContribution contribution,
+        @NotNull final ChunkContext chunkContext) {
         if (ddl != null) {
             final int result = ddl.execute();
             if (result > 0)

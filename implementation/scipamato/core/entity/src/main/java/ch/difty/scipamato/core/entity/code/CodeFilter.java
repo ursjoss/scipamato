@@ -2,6 +2,7 @@ package ch.difty.scipamato.core.entity.code;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.jetbrains.annotations.NotNull;
 
 import ch.difty.scipamato.common.entity.FieldEnumType;
 import ch.difty.scipamato.common.entity.filter.ScipamatoFilter;
@@ -30,6 +31,7 @@ public class CodeFilter extends ScipamatoFilter {
             this.name = name;
         }
 
+        @NotNull
         @Override
         public String getFieldName() {
             return name;

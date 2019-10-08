@@ -10,8 +10,8 @@ import org.mockito.Mockito.*
 abstract class AbstractServiceTest<ID : Number, T : IdScipamatoEntity<ID>, R : ReadOnlyRepository<T, ID, *>> {
 
     protected var userRepoMock = mock<UserRepository>()
-    protected var creatorMock = mock<User>()
-    protected var modifierMock = mock<User>()
+    private var creatorMock = mock<User>()
+    private var modifierMock = mock<User>()
 
     /**
      * @return the service specific repo mock

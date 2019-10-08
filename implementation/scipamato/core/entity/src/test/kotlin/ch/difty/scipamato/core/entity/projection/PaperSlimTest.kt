@@ -30,22 +30,19 @@ internal class PaperSlimTest {
         getting(20, "nl", 1, "hl")
     }
 
-    private fun getting(nlId: Int? = null, nlIssue: String? = null, nlStatus: Int? = null, headline: String? = null) {
+    private fun getting(nlId: Int? = null, nlIssue: String? = null, nlStatus: Int? = null, nlHeadline: String? = null) {
         assertThat(ps.id).isEqualTo(1L)
         assertThat(ps.number).isEqualTo(10L)
         assertThat(ps.publicationYear).isEqualTo(2016)
         assertThat(ps.title).isEqualTo("title")
         assertThat(ps.firstAuthor).isEqualTo("firstAuthor")
         if (nlId != null) {
-            assertThat(ps
-                    .newsletterAssociation
-                    .id).isEqualTo(nlId)
-            assertThat(ps
-                    .newsletterAssociation
-                    .issue).isEqualTo(nlIssue)
-            assertThat(ps
-                    .newsletterAssociation
-                    .publicationStatusId).isEqualTo(nlStatus)
+            with(ps.newsletterAssociation) {
+                assertThat(id).isEqualTo(nlId)
+                assertThat(issue).isEqualTo(nlIssue)
+                assertThat(headline).isEqualTo(nlHeadline)
+                assertThat(publicationStatusId).isEqualTo(nlStatus)
+            }
         } else {
             assertThat(ps.newsletterAssociation).isNull()
         }
@@ -65,16 +62,13 @@ internal class PaperSlimTest {
     @Test
     fun testingToString_withNoNewsletter() {
         ps.newsletterAssociation = null
-        assertThat(ps.toString()).isEqualTo(
-                "PaperSlim(number=10, firstAuthor=firstAuthor, publicationYear=2016, title=title)")
+        assertThat(ps.toString()).isEqualTo("PaperSlim(number=10, firstAuthor=firstAuthor, publicationYear=2016, title=title)")
     }
 
     @Test
     fun testingToString_withNoHeadline() {
-        ps
-                .newsletterAssociation.headline = null
-        assertThat(ps.toString()).isEqualTo(
-                "PaperSlim(number=10, firstAuthor=firstAuthor, publicationYear=2016, title=title, newsletter=nl)")
+        ps.newsletterAssociation.headline = null
+        assertThat(ps.toString()).isEqualTo("PaperSlim(number=10, firstAuthor=firstAuthor, publicationYear=2016, title=title, newsletter=nl)")
     }
 
     @Test
@@ -108,10 +102,8 @@ internal class PaperSlimTest {
 
     @Test
     fun fields() {
-        assertThat(PaperSlim.PaperSlimFields.values()).containsExactly(NUMBER, FIRST_AUTHOR, PUBLICATION_YEAR, TITLE, NEWSLETTER_ASSOCIATION)
-        assertThat(PaperSlim.PaperSlimFields.values())
-                .extracting("name")
-                .containsExactly("number", "firstAuthor", "publicationYear", "title", "newsletterAssociation")
+        assertThat(values()).containsExactly(NUMBER, FIRST_AUTHOR, PUBLICATION_YEAR, TITLE, NEWSLETTER_ASSOCIATION)
+        assertThat(values().map { it.fieldName }).containsExactly("number", "firstAuthor", "publicationYear", "title", "newsletterAssociation")
     }
 
 }

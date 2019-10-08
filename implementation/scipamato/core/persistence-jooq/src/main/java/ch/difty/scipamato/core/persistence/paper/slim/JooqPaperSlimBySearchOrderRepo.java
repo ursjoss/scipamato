@@ -63,7 +63,8 @@ public class JooqPaperSlimBySearchOrderRepo extends JooqBySearchOrderRepo<PaperS
             .on(PAPER_NEWSLETTER.NEWSLETTER_ID.eq(NEWSLETTER.ID));
     }
 
-    private PaperSlim newPaperSlim(final Record9<Long, Long, String, Integer, String, Integer, String, Integer, String> r) {
+    private PaperSlim newPaperSlim(
+        final Record9<Long, Long, String, Integer, String, Integer, String, Integer, String> r) {
         final Integer newsletterId = r.value6();
         if (newsletterId != null)
             return new PaperSlim(r.value1(), r.value2(), r.value3(), r.value4(), r.value5(), newsletterId, r.value7(),
@@ -72,7 +73,8 @@ public class JooqPaperSlimBySearchOrderRepo extends JooqBySearchOrderRepo<PaperS
             return new PaperSlim(r.value1(), r.value2(), r.value3(), r.value4(), r.value5());
     }
 
-    private int getStatusId(final Record9<Long, Long, String, Integer, String, Integer, String, Integer, String> record) {
+    private int getStatusId(
+        final Record9<Long, Long, String, Integer, String, Integer, String, Integer, String> record) {
         return record.get(NEWSLETTER.PUBLICATION_STATUS.getName(), Integer.class);
     }
 }

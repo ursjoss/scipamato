@@ -31,7 +31,7 @@ public class SearchOrderUpdateSetStepSetter implements UpdateSetStepSetter<Searc
         SearchOrder e) {
         AssertAs.INSTANCE.notNull(step, "step");
         AssertAs.INSTANCE.notNull(e, "entity");
-        final Timestamp created = e.getLastModified() == null ? null : UtilsKt.toTimestamp(e.getCreated());
+        final Timestamp created = e.getCreated() == null ? null : UtilsKt.toTimestamp(e.getCreated());
         final Timestamp lastMod = e.getLastModified() == null ? null : UtilsKt.toTimestamp(e.getLastModified());
         return step
             .set(SEARCH_ORDER.NAME, e.getName())

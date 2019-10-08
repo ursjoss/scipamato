@@ -43,19 +43,19 @@ interface DefinitionTranslation : Serializable {
  * Abstract base class comprising of the state and behavior common to all [DefinitionEntity] implementations.
  * It contains definition translations of type  [T] and an id of type [ID].
  */
-@Deprecated(message = "directly implement as data classes")
+// TODO directly implement as data classes
 abstract class AbstractDefinitionEntity<T : DefinitionTranslation, ID>(
         val mainLanguageCode: String,
         mainName: String,
         version: Int? = 0, // TODO make non-nullable
-        _translations: Array<out T>
+        translationArray: Array<out T>
 ) : ScipamatoEntity(version = version ?: 0), DefinitionEntity<ID, T> {
 
     override val translations: ListValuedMap<String, T> = ArrayListValuedHashMap()
     var name = mainName
 
     init {
-        _translations.forEach { translations.put(it.langCode, it) }
+        translationArray.forEach { translations.put(it.langCode, it) }
     }
 
     override val displayValue: String
@@ -66,14 +66,14 @@ abstract class AbstractDefinitionEntity<T : DefinitionTranslation, ID>(
             val trs = translations.get(mainLanguageCode)
             if (CollectionUtils.isEmpty(trs)) return null
 
-            val mainNames = trs.map { it.name }.filterNotNull().joinToString("','")
+            val mainNames = trs.mapNotNull { it.name }.joinToString("','")
             val sb = StringBuilder()
             sb.append("${mainLanguageCode.toUpperCase()}: ")
             sb.append(if (mainNames.isEmpty()) "n.a." else "'$mainNames'")
             translations.asMap().filterNot { it.key == mainLanguageCode }.forEach { (kw, value) ->
                 sb.append("; ")
                 sb.append(kw.toUpperCase()).append(": ")
-                val nameString = value.map { it.name }.filterNotNull().joinToString("','")
+                val nameString = value.mapNotNull { it.name }.joinToString("','")
                 if (nameString.isNotBlank()) sb.append("'$nameString'") else sb.append("n.a.")
             }
             return sb.toString()
@@ -119,11 +119,12 @@ abstract class AbstractDefinitionEntity<T : DefinitionTranslation, ID>(
         return result
     }
 
-    override fun toString(): String = "AbstractDefinitionEntity[translations=$translationsAsString, mainLanguageCode=$mainLanguageCode, name=$name]"
+    override fun toString() =
+            "AbstractDefinitionEntity[translations=$translationsAsString, mainLanguageCode=$mainLanguageCode, name=$name]"
 
 }
 
-@Deprecated(message = "directly implement as data classes")
+// TODO directly implement as data classes
 abstract class AbstractDefinitionTranslation(
         var id: Int?,
         override val langCode: String,
@@ -140,9 +141,5 @@ abstract class AbstractDefinitionTranslation(
         ID("id"),
         LANG_CODE("langCode"),
         NAME("name")
-    }
-
-    companion object {
-        private val serialVersionUID = 1L
     }
 }

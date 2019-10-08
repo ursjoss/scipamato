@@ -24,8 +24,7 @@ internal class RoleTest {
 
     @Test
     fun assertDescriptions() {
-        assertThat(extractProperty("description").from(Role.values())).containsExactly("System Administration",
-                "Main SciPaMaTo Users", "Read-only Viewer")
+        assertThat(extractProperty("description").from(Role.values())).containsExactly("System Administration", "Main SciPaMaTo Users", "Read-only Viewer")
     }
 
     @Test
@@ -37,25 +36,23 @@ internal class RoleTest {
 
     @Test
     fun of_withExistingId() {
-        assertThat(Role.of(1)).isEqualTo(ADMIN)
+        assertThat(of(1)).isEqualTo(ADMIN)
     }
 
     @Test
     fun of_withNotExistingId_throws() {
         try {
-            Role.of(0)
+            of(0)
             fail<Any>("Should have thrown exception")
         } catch (ex: Exception) {
-            assertThat(ex)
-                    .isInstanceOf(IllegalArgumentException::class.java)
-                    .hasMessage("No matching type for id 0")
+            assertThat(ex).isInstanceOf(IllegalArgumentException::class.java).hasMessage("No matching type for id 0")
         }
 
     }
 
     @Test
     fun of_withNullId_returnsNull() {
-        assertThat(Role.of(null)).isNull()
+        assertThat(of(null)).isNull()
     }
 
 }

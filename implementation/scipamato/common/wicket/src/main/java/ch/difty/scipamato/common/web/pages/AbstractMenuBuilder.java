@@ -22,6 +22,7 @@ import ch.difty.scipamato.common.web.AbstractPage;
 import ch.difty.scipamato.common.web.ScipamatoWebSessionFacade;
 import ch.difty.scipamato.common.web.component.SerializableConsumer;
 
+@SuppressWarnings("SpellCheckingInspection")
 public abstract class AbstractMenuBuilder implements MenuBuilder {
 
     private final ApplicationProperties     applicationProperties;

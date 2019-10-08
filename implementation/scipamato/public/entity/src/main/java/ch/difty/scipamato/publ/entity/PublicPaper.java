@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Value;
+import org.jetbrains.annotations.NotNull;
 
 import ch.difty.scipamato.common.entity.FieldEnumType;
 
@@ -53,6 +54,7 @@ public class PublicPaper extends PublicEntity {
             this.name = name;
         }
 
+        @NotNull
         @Override
         public String getFieldName() {
             return name;

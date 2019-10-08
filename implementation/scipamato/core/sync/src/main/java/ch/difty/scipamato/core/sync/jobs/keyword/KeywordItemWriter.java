@@ -22,7 +22,6 @@ import ch.difty.scipamato.core.sync.jobs.ScipamatoItemWriter;
  */
 public class KeywordItemWriter extends ScipamatoItemWriter<PublicKeyword> {
 
-    @SuppressWarnings("WeakerAccess")
     public KeywordItemWriter(final DSLContext jooqDslContextPublic) {
         super(jooqDslContextPublic, "keyword");
     }

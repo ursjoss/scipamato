@@ -3,6 +3,7 @@ package ch.difty.scipamato.core.sync.houskeeping;
 import java.sql.Timestamp;
 
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.jooq.DSLContext;
 import org.jooq.TableField;
 import org.jooq.impl.UpdatableRecordImpl;
@@ -32,6 +33,7 @@ import ch.difty.scipamato.common.DateTimeService;
  *     type of {@link UpdatableRecordImpl} - the record to purge.
  * @author u.joss
  */
+@SuppressWarnings("ALL")
 @Slf4j
 public class HouseKeeper<R extends UpdatableRecordImpl<?>> implements Tasklet {
 
@@ -64,7 +66,8 @@ public class HouseKeeper<R extends UpdatableRecordImpl<?>> implements Tasklet {
     }
 
     @Override
-    public RepeatStatus execute(final StepContribution contribution, final ChunkContext chunkContext) {
+    public RepeatStatus execute(@NotNull final StepContribution contribution,
+        @NotNull final ChunkContext chunkContext) {
         final Timestamp cutOff = Timestamp.valueOf(dateTimeService
             .getCurrentDateTime()
             .minusMinutes(graceTimeInMinutes));

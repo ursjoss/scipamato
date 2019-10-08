@@ -17,7 +17,6 @@ import ch.difty.scipamato.publ.db.tables.pojos.Language;
  *
  * @author u.joss
  */
-@SuppressWarnings("WeakerAccess")
 public class PublicLanguage {
 
     @Delegate

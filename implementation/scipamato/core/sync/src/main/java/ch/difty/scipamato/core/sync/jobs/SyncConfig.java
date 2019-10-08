@@ -157,7 +157,7 @@ public abstract class SyncConfig<T, R extends UpdatableRecordImpl<R>> {
 
     /**
      * Override if some pseudo-foreign key constraint needs to be implemented.
-     * In SciPaMaTo-Public, we have some tables that purpously lack proper normalisation, which has the
+     * In SciPaMaTo-Public, we have some tables that purposely lack proper normalisation, which has the
      * benefit of simplicity but the disadvantage that normal referential integrity rules on db level do
      * not apply. E.g. code classes have the same code_class_id (from scipamato-core) more than once, each
      * with a different language flag, once for each language. Therefore code_class_id in table code_class

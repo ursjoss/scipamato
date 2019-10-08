@@ -27,7 +27,7 @@ internal class KeywordFilterTest {
 
     @Test
     fun assertEnumFields() {
-        assertThat(KeywordFilter.KeywordFilterFields.values()).extracting("name").containsExactly("nameMask")
+        assertThat(KeywordFilter.KeywordFilterFields.values().map { it.fieldName }).containsExactly("nameMask")
     }
 
 }

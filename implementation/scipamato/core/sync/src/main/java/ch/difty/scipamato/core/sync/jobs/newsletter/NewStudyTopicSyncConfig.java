@@ -45,7 +45,7 @@ import ch.difty.scipamato.publ.db.tables.records.NewStudyTopicRecord;
  */
 @Configuration
 @Profile("!wickettest")
-@SuppressWarnings("SameParameterValue")
+@SuppressWarnings({ "SameParameterValue", "SpellCheckingInspection" })
 public class NewStudyTopicSyncConfig
     extends SyncConfig<PublicNewStudyTopic, ch.difty.scipamato.publ.db.tables.records.NewStudyTopicRecord> {
 

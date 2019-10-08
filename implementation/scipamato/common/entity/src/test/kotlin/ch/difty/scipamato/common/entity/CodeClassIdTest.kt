@@ -32,7 +32,7 @@ class CodeClassIdTest {
 
     @Test
     fun getId() {
-        assertThat(CodeClassId.CC1.id).isEqualTo(1)
+        assertThat(CC1.id).isEqualTo(1)
     }
 
 }

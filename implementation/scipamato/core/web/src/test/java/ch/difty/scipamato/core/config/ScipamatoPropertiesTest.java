@@ -4,8 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 
-import ch.difty.scipamato.core.logic.parsing.AuthorParserStrategy;
 import ch.difty.scipamato.core.logic.exporting.RisExporterStrategy;
+import ch.difty.scipamato.core.logic.parsing.AuthorParserStrategy;
 
 class ScipamatoPropertiesTest {
 

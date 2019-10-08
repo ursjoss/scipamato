@@ -14,7 +14,6 @@ import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields;
  *
  * @author u.joss
  */
-@SuppressWarnings("WeakerAccess")
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class PaperSummary extends PaperSummaryCommon {

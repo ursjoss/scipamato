@@ -30,7 +30,7 @@ public class PaperUpdateSetStepSetter implements UpdateSetStepSetter<PaperRecord
     public UpdateSetMoreStep<PaperRecord> setFieldsFor(UpdateSetFirstStep<PaperRecord> step, Paper e) {
         AssertAs.INSTANCE.notNull(step, "step");
         AssertAs.INSTANCE.notNull(e, "entity");
-        final Timestamp created = e.getLastModified() == null ? null : UtilsKt.toTimestamp(e.getCreated());
+        final Timestamp created = e.getCreated() == null ? null : UtilsKt.toTimestamp(e.getCreated());
         final Timestamp lastMod = e.getLastModified() == null ? null : UtilsKt.toTimestamp(e.getLastModified());
         return step
             .set(PAPER.NUMBER, e.getNumber())

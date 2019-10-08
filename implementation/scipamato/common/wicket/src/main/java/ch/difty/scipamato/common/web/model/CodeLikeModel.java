@@ -17,9 +17,7 @@ import ch.difty.scipamato.common.persistence.CodeLikeService;
  *     Code entity extending {@link CodeLike}
  * @author u.joss
  */
-@SuppressWarnings("WeakerAccess")
-public abstract class CodeLikeModel<T extends CodeLike, S extends CodeLikeService<T>>
-    extends InjectedLoadableDetachableModel<T> {
+public abstract class CodeLikeModel<T extends CodeLike, S extends CodeLikeService<T>> extends InjectedLoadableDetachableModel<T> {
 
     private static final long serialVersionUID = 1L;
 

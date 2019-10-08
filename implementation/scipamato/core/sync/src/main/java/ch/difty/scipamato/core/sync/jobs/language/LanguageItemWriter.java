@@ -21,7 +21,6 @@ import ch.difty.scipamato.core.sync.jobs.ScipamatoItemWriter;
  */
 public class LanguageItemWriter extends ScipamatoItemWriter<PublicLanguage> {
 
-    @SuppressWarnings("WeakerAccess")
     public LanguageItemWriter(final DSLContext jooqDslContextPublic) {
         super(jooqDslContextPublic, "language");
     }

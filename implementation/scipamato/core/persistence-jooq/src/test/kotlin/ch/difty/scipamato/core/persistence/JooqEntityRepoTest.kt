@@ -54,7 +54,7 @@ abstract class JooqEntityRepoTest<R : Record, T : IdScipamatoEntity<ID>, ID : Nu
     private val entities = mutableListOf<T>()
     private val records = mutableListOf<R>()
 
-    private lateinit var id: ID;
+    private lateinit var id: ID
 
     protected abstract val sampleId: ID
 

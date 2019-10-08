@@ -23,9 +23,9 @@ internal class SearchOrderTest {
     private val so = SearchOrder(10L, SO_NAME, 1, false, null, null)
 
     @Mock
-    private val mockCondition1: SearchCondition? = null
+    private lateinit var mockCondition1: SearchCondition
     @Mock
-    private val mockCondition2: SearchCondition? = null
+    private lateinit var mockCondition2: SearchCondition
 
     private val searchConditions = ArrayList<SearchCondition>()
     private val excludedIds = ArrayList<Long>()
@@ -72,17 +72,15 @@ internal class SearchOrderTest {
 
     @Test
     fun whenInstantiating_withNonEmptyConditionList_hasHandedOverConditions() {
-        searchConditions.addAll(Arrays.asList<SearchCondition>(mockCondition1, mockCondition2))
-        assertThat(SearchOrder(searchConditions).searchConditions).containsExactly(mockCondition1,
-                mockCondition2)
+        searchConditions.addAll(listOf(mockCondition1, mockCondition2))
+        assertThat(SearchOrder(searchConditions).searchConditions).containsExactly(mockCondition1, mockCondition2)
     }
 
     @Test
     fun whenInstantiating_withNonEmptyExclusionList_hasHandedOverExclusions() {
         excludedIds.add(3L)
         excludedIds.add(5L)
-        assertThat(SearchOrder(10L, SO_NAME, 1, false, null, excludedIds).excludedPaperIds).containsExactly(3L,
-                5L)
+        assertThat(SearchOrder(10L, SO_NAME, 1, false, null, excludedIds).excludedPaperIds).containsExactly(3L, 5L)
     }
 
     @Test
@@ -208,11 +206,7 @@ internal class SearchOrderTest {
     fun testingDisplayValue_withoutNameButWithSingleCondition_returnsIt() {
         val so1 = SearchOrder(10L, null, 1, false, null, excludedIds)
         so1.add(object : SearchCondition() {
-            private val serialVersionUID = 1L
-
-            override fun getDisplayValue(): String {
-                return "f1DisplayValue"
-            }
+            override fun getDisplayValue(): String = "f1DisplayValue"
         })
 
         assertThat(so1.displayValue).isEqualTo("f1DisplayValue (10)")
@@ -221,11 +215,7 @@ internal class SearchOrderTest {
     @Test
     fun testingDisplayValue_withSingleCondition_returnsIt() {
         so.add(object : SearchCondition() {
-            private val serialVersionUID = 1L
-
-            override fun getDisplayValue(): String {
-                return "f1DisplayValue"
-            }
+            override fun getDisplayValue(): String = "f1DisplayValue"
         })
 
         assertThat(so.displayValue).isEqualTo("soName: f1DisplayValue (10)")
@@ -234,18 +224,10 @@ internal class SearchOrderTest {
     @Test
     fun testingDisplayValue_withTwoConditions_joinsThemUsingOR() {
         so.add(object : SearchCondition() {
-            private val serialVersionUID = 1L
-
-            override fun getDisplayValue(): String {
-                return "c1DisplayValue"
-            }
+            override fun getDisplayValue(): String = "c1DisplayValue"
         })
         so.add(object : SearchCondition() {
-            private val serialVersionUID = 1L
-
-            override fun getDisplayValue(): String {
-                return "c2DisplayValue"
-            }
+            override fun getDisplayValue(): String = "c2DisplayValue"
         })
 
         assertThat(so.displayValue).isEqualTo("soName: c1DisplayValue; OR c2DisplayValue (10)")

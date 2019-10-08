@@ -20,7 +20,7 @@ public abstract class DefinitionListPage<T extends DefinitionEntity, F extends S
         super(parameters);
     }
 
-    protected F getFilter() {
+    private F getFilter() {
         return filter;
     }
 

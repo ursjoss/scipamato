@@ -23,8 +23,9 @@ class CodeClassListFilterPanel extends
         queueFieldAndLabel(new TextField<String>(CodeClassDefinition.CodeClassDefinitionFields.NAME.getFieldName(),
             PropertyModel.of(getFilter(), CodeClassFilter.CodeClassFilterFields.NAME_MASK.getFieldName())));
 
-        queueFieldAndLabel(new TextField<String>(CodeClassTranslation.CodeClassTranslationFields.DESCRIPTION.getFieldName(),
-            PropertyModel.of(getFilter(), CodeClassFilter.CodeClassFilterFields.DESCRIPTION_MASK.getFieldName())));
+        queueFieldAndLabel(
+            new TextField<String>(CodeClassTranslation.CodeClassTranslationFields.DESCRIPTION.getFieldName(),
+                PropertyModel.of(getFilter(), CodeClassFilter.CodeClassFilterFields.DESCRIPTION_MASK.getFieldName())));
     }
 
 }

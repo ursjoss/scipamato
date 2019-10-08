@@ -28,7 +28,7 @@ import ch.difty.scipamato.common.DateTimeService;
 import ch.difty.scipamato.common.config.ApplicationProperties;
 import ch.difty.scipamato.common.web.component.SerializableSupplier;
 
-@SuppressWarnings({ "SameParameterValue", "WeakerAccess" })
+@SuppressWarnings({ "SameParameterValue", "WeakerAccess", "unused", "SpellCheckingInspection" })
 public abstract class AbstractPage<T> extends GenericWebPage<T> {
 
     private static final long serialVersionUID = 1L;

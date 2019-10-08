@@ -22,7 +22,6 @@ public class ScipamatoPdfResourceHandler extends PdfResourceHandler {
     /**
      * Default constructor creating its own default exporter configuration.
      */
-    @SuppressWarnings("WeakerAccess")
     public ScipamatoPdfResourceHandler() {
         this.config = makeDefaultExporterConfig();
     }

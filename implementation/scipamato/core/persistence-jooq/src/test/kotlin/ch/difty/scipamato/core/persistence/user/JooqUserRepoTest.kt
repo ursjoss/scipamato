@@ -1,5 +1,6 @@
 package ch.difty.scipamato.core.persistence.user
 
+import ch.difty.scipamato.core.db.tables.ScipamatoUser
 import ch.difty.scipamato.core.db.tables.ScipamatoUser.SCIPAMATO_USER
 import ch.difty.scipamato.core.db.tables.records.ScipamatoUserRecord
 import ch.difty.scipamato.core.entity.User
@@ -8,9 +9,10 @@ import ch.difty.scipamato.core.persistence.EntityRepository
 import ch.difty.scipamato.core.persistence.JooqEntityRepoTest
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
+import org.jooq.TableField
 import org.mockito.Mockito.verify
 
-internal class JooqUserRepoTest : JooqEntityRepoTest<ScipamatoUserRecord, User, Int, ch.difty.scipamato.core.db.tables.ScipamatoUser, UserRecordMapper, UserFilter>() {
+internal class JooqUserRepoTest : JooqEntityRepoTest<ScipamatoUserRecord, User, Int, ScipamatoUser, UserRecordMapper, UserFilter>() {
 
     private val userRoleRepoMock = mock<UserRoleRepository>()
 
@@ -23,11 +25,11 @@ internal class JooqUserRepoTest : JooqEntityRepoTest<ScipamatoUserRecord, User, 
     override val mapper = mock<UserRecordMapper>()
     override val filter = mock<UserFilter>()
 
-    override val table = SCIPAMATO_USER
+    override val table: ScipamatoUser = SCIPAMATO_USER
 
-    override val tableId = SCIPAMATO_USER.ID
+    override val tableId: TableField<ScipamatoUserRecord, Int> = SCIPAMATO_USER.ID
 
-    override val recordVersion = SCIPAMATO_USER.VERSION
+    override val recordVersion: TableField<ScipamatoUserRecord, Int> = SCIPAMATO_USER.VERSION
 
     override val repo: JooqUserRepo = JooqUserRepo(dsl, mapper, sortMapper, filterConditionMapper, dateTimeService, insertSetStepSetter, updateSetStepSetter, applicationProperties, userRoleRepoMock)
 

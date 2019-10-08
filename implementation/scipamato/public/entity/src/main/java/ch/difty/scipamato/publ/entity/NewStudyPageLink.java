@@ -3,6 +3,7 @@ package ch.difty.scipamato.publ.entity;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Value;
+import org.jetbrains.annotations.NotNull;
 
 import ch.difty.scipamato.common.entity.FieldEnumType;
 
@@ -30,6 +31,7 @@ public class NewStudyPageLink extends PublicEntity {
             this.name = name;
         }
 
+        @NotNull
         @Override
         public String getFieldName() {
             return name;

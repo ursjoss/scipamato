@@ -9,7 +9,7 @@ import ch.difty.scipamato.core.entity.code.CodeDefinition;
 import ch.difty.scipamato.core.entity.code.CodeTranslation;
 import ch.difty.scipamato.core.web.common.DefinitionEditTranslationPanel;
 
-@SuppressWarnings("SameParameterValue")
+@SuppressWarnings({ "SameParameterValue", "WicketForgeJavaIdInspection" })
 class CodeEditTranslationPanel extends DefinitionEditTranslationPanel<CodeDefinition, CodeTranslation> {
 
     private static final long serialVersionUID = 1L;

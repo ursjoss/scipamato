@@ -115,7 +115,7 @@ public abstract class JasperPaperDataSource<E extends JasperEntity>
      * Overriding in order to not use the deprecated and incompatible methods still
      * used in JRResource (exporter.setParameter)
      */
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @SuppressWarnings({ "unchecked", "rawtypes", "SpellCheckingInspection" })
     @Override
     protected byte[] getExporterData(final JasperPrint print, final JRAbstractExporter exporter) throws JRException {
         // prepare a stream to trap the exporter's output

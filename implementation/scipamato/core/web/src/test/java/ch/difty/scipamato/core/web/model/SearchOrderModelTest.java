@@ -41,7 +41,7 @@ class SearchOrderModelTest extends ModelTest {
     }
 
     @SuppressWarnings("SameParameterValue")
-    class SearchOrderFilterMatcher implements ArgumentMatcher<SearchOrderFilter> {
+    static class SearchOrderFilterMatcher implements ArgumentMatcher<SearchOrderFilter> {
         private int ownerIncludingGlobal;
 
         SearchOrderFilterMatcher(int ownerIncludingGlobal) {
@@ -56,7 +56,7 @@ class SearchOrderModelTest extends ModelTest {
         }
     }
 
-    class PaginationRequestWithMaxRows implements ArgumentMatcher<PaginationRequest> {
+    static class PaginationRequestWithMaxRows implements ArgumentMatcher<PaginationRequest> {
         private static final String SORT = "id";
 
         private int maxRows;

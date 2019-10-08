@@ -10,21 +10,28 @@ package ch.difty.scipamato.common.paper
  */
 abstract class AbstractShortFieldConcatenator protected constructor(private val withNewLine: Boolean) {
 
-    fun methodsFrom(method: String?, methodStudyDesign: String?, methodOutcome: String?, populationPlace: String?, exposurePollutant: String?, exposureAssessment: String?, methodStatistics: String?, methodConfounders: String?) =
-            methodsFrom(method, Tuple("Study Design", methodStudyDesign), Tuple("Outcome", methodOutcome), Tuple("Place", populationPlace),
-                    Tuple("Pollutant", exposurePollutant), Tuple("Exposure Assessment", exposureAssessment), Tuple("Statistical Method", methodStatistics), Tuple("Confounders", methodConfounders))
+    fun methodsFrom(method: String?, methodStudyDesign: String?, methodOutcome: String?, populationPlace: String?,
+                    exposurePollutant: String?, exposureAssessment: String?, methodStatistics: String?, methodConfounders: String?
+    ) = methodsFrom(method, Tuple("Study Design", methodStudyDesign), Tuple("Outcome", methodOutcome),
+            Tuple("Place", populationPlace), Tuple("Pollutant", exposurePollutant),
+            Tuple("Exposure Assessment", exposureAssessment), Tuple("Statistical Method", methodStatistics),
+            Tuple("Confounders", methodConfounders))
 
-    fun methodsFrom(method: String?, methodStudyDesign: Tuple?, methodOutcome: Tuple?, populationPlace: Tuple?, exposurePollutant: Tuple?, exposureAssessment: Tuple?, methodStatistics: Tuple?, methodConfounders: Tuple?) =
-            determineAppropriate(Tuple(null, method), methodStudyDesign, methodOutcome, populationPlace, exposurePollutant, exposureAssessment, methodStatistics, methodConfounders)
+    fun methodsFrom(method: String?, methodStudyDesign: Tuple?, methodOutcome: Tuple?, populationPlace: Tuple?, exposurePollutant: Tuple?,
+                    exposureAssessment: Tuple?, methodStatistics: Tuple?, methodConfounders: Tuple?
+    ) = determineAppropriate(Tuple(null, method), methodStudyDesign, methodOutcome, populationPlace, exposurePollutant, exposureAssessment,
+            methodStatistics, methodConfounders)
 
     fun populationFrom(population: String?, populationPlace: String?, populationParticipants: String?, populationDuration: String?) =
-            populationFrom(population, Tuple("Place", populationPlace), Tuple("Participants", populationParticipants), Tuple("Study Duration", populationDuration))
+            populationFrom(population, Tuple("Place", populationPlace), Tuple("Participants", populationParticipants),
+                    Tuple("Study Duration", populationDuration))
 
     fun populationFrom(population: String?, populationPlace: Tuple?, populationParticipants: Tuple?, populationDuration: Tuple?) =
             determineAppropriate(Tuple(null, population), populationPlace, populationParticipants, populationDuration)
 
     fun resultFrom(result: String?, resultMeasuredOutcome: String?, resultExposureRange: String?, resultEffectEstimate: String?, conclusion: String?) =
-            resultFrom(result, Tuple("Measured Outcome", resultMeasuredOutcome), Tuple("Exposure (Range)", resultExposureRange), Tuple("Effect Estimate", resultEffectEstimate), Tuple("Conclusion", conclusion))
+            resultFrom(result, Tuple("Measured Outcome", resultMeasuredOutcome), Tuple("Exposure (Range)", resultExposureRange),
+                    Tuple("Effect Estimate", resultEffectEstimate), Tuple("Conclusion", conclusion))
 
     fun resultFrom(result: String?, resultMeasuredOutcome: Tuple?, resultExposureRange: Tuple?, resultEffectEstimate: Tuple?, conclusion: Tuple?) =
             determineAppropriate(Tuple(null, result), resultMeasuredOutcome, resultExposureRange, resultEffectEstimate, conclusion)

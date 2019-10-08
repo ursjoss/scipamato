@@ -74,7 +74,7 @@ class PaperSearchCriteriaPageTest extends BasePageTest<PaperSearchCriteriaPage> 
     }
 
     @Test
-    void submittingForm_andClickingSubmitButton_savesSearchConditionAndForwardsToPaperSearchPagex() {
+    void submittingForm_andClickingSubmitButton_savesSearchConditionAndForwardsToPaperSearchPage() {
         getTester().startPage(makePage());
         getTester().assertRenderedPage(getPageClass());
 
