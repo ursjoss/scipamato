@@ -346,7 +346,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
         }
     }
 
-    private class ProcessingRecord {
+    private static class ProcessingRecord {
         private final List<String> modifiedFields  = new ArrayList<>();
         private final List<String> differingFields = new ArrayList<>();
 
@@ -383,13 +383,13 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
 
         processStringField(AUTHORS.getFieldName(), a.getAuthors(), Paper::getAuthors, Paper::setAuthors, p, pr, target,
             authors, firstAuthor);
-        processStringField(FIRST_AUTHOR.getFieldName(), a.getFirstAuthor(), Paper::getFirstAuthor, Paper::setFirstAuthor, p,
-            pr, target, firstAuthor);
+        processStringField(FIRST_AUTHOR.getFieldName(), a.getFirstAuthor(), Paper::getFirstAuthor,
+            Paper::setFirstAuthor, p, pr, target, firstAuthor);
         processStringField(TITLE.getFieldName(), a.getTitle(), Paper::getTitle, Paper::setTitle, p, pr, target, title);
         processIntegerField(PUBL_YEAR.getFieldName(), a.getPublicationYear(), Paper::getPublicationYear,
             Paper::setPublicationYear, "year.parse.error", p, pr, target, publicationYear);
-        processStringField(LOCATION.getFieldName(), a.getLocation(), Paper::getLocation, Paper::setLocation, p, pr, target,
-            location);
+        processStringField(LOCATION.getFieldName(), a.getLocation(), Paper::getLocation, Paper::setLocation, p, pr,
+            target, location);
         processStringField(DOI.getFieldName(), a.getDoi(), Paper::getDoi, Paper::setDoi, p, pr, target, doi);
         processStringField(ORIGINAL_ABSTRACT.getFieldName(), a.getOriginalAbstract(), Paper::getOriginalAbstract,
             Paper::setOriginalAbstract, p, pr, target, originalAbstract);
@@ -428,7 +428,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
         if (paperValue == null || Paper.NA_AUTHORS.equals(paperValue) || Paper.NA_STRING.equals(paperValue)) {
             setPaperFieldFromArticleAndInform(localizedFieldName, articleValue, setter, p, pr, target, fcs);
         } else {
-            warnNonmatchingFields(localizedFieldName, articleValue, paperValue, pr);
+            warnNonMatchingFields(localizedFieldName, articleValue, paperValue, pr);
         }
     }
 
@@ -484,7 +484,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
                     .getString());
             }
         } else {
-            warnNonmatchingFields(localizedFieldName, rawArticleValue, String.valueOf(paperValue), pr);
+            warnNonMatchingFields(localizedFieldName, rawArticleValue, String.valueOf(paperValue), pr);
         }
     }
 
@@ -527,7 +527,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
      * @param pr
      *     ProcessingRecord
      */
-    private void warnNonmatchingFields(String fieldName, String pmField, String paperField, ProcessingRecord pr) {
+    private void warnNonMatchingFields(String fieldName, String pmField, String paperField, ProcessingRecord pr) {
         if (pmField != null && paperField != null && !normalizeLineEnds(pmField).equals(
             normalizeLineEnds(paperField))) {
             warn("PubMed " + fieldName + ": " + pmField);
@@ -536,6 +536,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
     }
 
     // Thanks to Roland Illig - https://codereview.stackexchange.com/questions/140048/comparing-strings-with-different-newlines
+    @SuppressWarnings("SpellCheckingInspection")
     private String normalizeLineEnds(final String s) {
         return s
             .replace("\r\n", "\n")
@@ -684,7 +685,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
             if (prop != null && prop.length() > unit.length() && prop
                 .substring(prop.length() - unit.length())
                 .equalsIgnoreCase(unit))
-                return Integer.valueOf(prop
+                return Integer.parseInt(prop
                     .substring(0, prop.length() - unit.length())
                     .trim());
         } catch (Exception ex) {

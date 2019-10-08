@@ -52,7 +52,7 @@ import ch.difty.scipamato.publ.web.resources.IcoMoonIconType;
  *
  * @author Urs Joss
  */
-@SuppressWarnings("SameParameterValue")
+@SuppressWarnings({ "SameParameterValue", "WicketForgeJavaIdInspection" })
 @MountPath("new-studies")
 @Slf4j
 public class NewStudyListPage extends BasePage<Void> {
@@ -71,7 +71,6 @@ public class NewStudyListPage extends BasePage<Void> {
     @SpringBean(name = "icoMoonFontResourceProvider")
     private CommercialFontResourceProvider icoMoonFontResourceProvider;
 
-    @SuppressWarnings("WeakerAccess")
     public NewStudyListPage(final PageParameters parameters) {
         super(parameters);
     }
@@ -138,8 +137,8 @@ public class NewStudyListPage extends BasePage<Void> {
 
             @Override
             protected void populateItem(ListItem<NewStudyTopic> topic) {
-                topic.add(new Label("topicTitle",
-                    new PropertyModel<String>(topic.getModel(), NewStudyTopic.NewStudyTopicFields.TITLE.getFieldName())));
+                topic.add(new Label("topicTitle", new PropertyModel<String>(topic.getModel(),
+                    NewStudyTopic.NewStudyTopicFields.TITLE.getFieldName())));
                 topic.add(new ListView<>("topicStudies", topic
                     .getModelObject()
                     .getStudies()) {
@@ -147,8 +146,8 @@ public class NewStudyListPage extends BasePage<Void> {
 
                     @Override
                     protected void populateItem(ListItem<NewStudy> study) {
-                        study.add(new Label("headline",
-                            new PropertyModel<String>(study.getModel(), NewStudy.NewStudyFields.HEADLINE.getFieldName())));
+                        study.add(new Label("headline", new PropertyModel<String>(study.getModel(),
+                            NewStudy.NewStudyFields.HEADLINE.getFieldName())));
                         study.add(new Label("description", new PropertyModel<String>(study.getModel(),
                             NewStudy.NewStudyFields.DESCRIPTION.getFieldName())));
                         study.add(newLinkToStudy("reference", study));

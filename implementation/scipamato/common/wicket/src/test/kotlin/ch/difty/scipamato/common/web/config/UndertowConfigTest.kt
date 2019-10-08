@@ -23,7 +23,6 @@ import org.springframework.boot.web.servlet.server.Session
  */
 internal class UndertowConfigTest {
 
-
     private val serverPropsMock = mock<ServerProperties>()
     private val scipamatoPropertiesMock = mock<ApplicationProperties>()
     private val config = UndertowConfig(serverPropsMock, scipamatoPropertiesMock)

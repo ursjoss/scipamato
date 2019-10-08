@@ -85,7 +85,7 @@ class NewsletterTopicDefinitionProviderTest extends AbstractWicketTest {
         assertThat(provider.getFilterState()).isEqualTo(filterMock);
     }
 
-    private class PaginationContextMatcher implements ArgumentMatcher<PaginationContext> {
+    private static class PaginationContextMatcher implements ArgumentMatcher<PaginationContext> {
 
         private final int    pageSize;
         private final String sort;
@@ -112,7 +112,7 @@ class NewsletterTopicDefinitionProviderTest extends AbstractWicketTest {
         Iterator<NewsletterTopicDefinition> it = provider.iterator(0, 3);
         assertThat(it.hasNext()).isFalse();
         verify(newsletterTopicServiceMock).findPageOfEntityDefinitions(eq(filterMock),
-            argThat(new NewsletterTopicDefinitionProviderTest.PaginationContextMatcher(3, "title: ASC")));
+            argThat(new PaginationContextMatcher(3, "title: ASC")));
     }
 
     @Test
@@ -122,7 +122,7 @@ class NewsletterTopicDefinitionProviderTest extends AbstractWicketTest {
         Iterator<NewsletterTopicDefinition> it = provider.iterator(0, 3);
         assertRecordsIn(it);
         verify(newsletterTopicServiceMock).findPageOfEntityDefinitions(eq(filterMock),
-            argThat(new NewsletterTopicDefinitionProviderTest.PaginationContextMatcher(3, "title: ASC")));
+            argThat(new PaginationContextMatcher(3, "title: ASC")));
     }
 
     private void assertRecordsIn(Iterator<NewsletterTopicDefinition> it) {
@@ -141,7 +141,7 @@ class NewsletterTopicDefinitionProviderTest extends AbstractWicketTest {
         Iterator<NewsletterTopicDefinition> it = provider.iterator(3, 3);
         assertRecordsIn(it);
         verify(newsletterTopicServiceMock).findPageOfEntityDefinitions(eq(filterMock),
-            argThat(new NewsletterTopicDefinitionProviderTest.PaginationContextMatcher(3, "title: ASC")));
+            argThat(new PaginationContextMatcher(3, "title: ASC")));
     }
 
     @Test
@@ -152,7 +152,7 @@ class NewsletterTopicDefinitionProviderTest extends AbstractWicketTest {
         Iterator<NewsletterTopicDefinition> it = provider.iterator(6, 3);
         assertRecordsIn(it);
         verify(newsletterTopicServiceMock).findPageOfEntityDefinitions(eq(filterMock),
-            argThat(new NewsletterTopicDefinitionProviderTest.PaginationContextMatcher(3, "title: DESC")));
+            argThat(new PaginationContextMatcher(3, "title: DESC")));
     }
 
 }

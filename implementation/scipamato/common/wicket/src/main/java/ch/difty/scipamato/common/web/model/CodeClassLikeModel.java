@@ -18,8 +18,7 @@ import ch.difty.scipamato.common.persistence.CodeClassLikeService;
  *     service implementations of {@link CodeClassLikeService}
  * @author u.joss
  */
-public abstract class CodeClassLikeModel<T extends CodeClassLike, S extends CodeClassLikeService<T>>
-    extends InjectedLoadableDetachableModel<T> {
+public abstract class CodeClassLikeModel<T extends CodeClassLike, S extends CodeClassLikeService<T>> extends InjectedLoadableDetachableModel<T> {
 
     private static final long serialVersionUID = 1L;
 
@@ -41,7 +40,6 @@ public abstract class CodeClassLikeModel<T extends CodeClassLike, S extends Code
      * @param service
      *     the service to retrieve the code class like entities
      */
-    @SuppressWarnings("WeakerAccess")
     protected CodeClassLikeModel(final String languageCode, final S service) {
         this(languageCode);
         this.service = service;

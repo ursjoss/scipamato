@@ -1,10 +1,9 @@
 package ch.difty.scipamato.core.entity.code_class
 
-import ch.difty.scipamato.common.entity.AbstractDefinitionTranslation
 import org.assertj.core.api.Assertions.assertThat
-
 import org.junit.jupiter.api.Test
 
+@Suppress("SpellCheckingInspection", "PrivatePropertyName")
 internal class CodeClassDefinitionTest {
 
     private val cc_de = CodeClassTranslation(10, "de", "codede2", "beschreibung", 1)
@@ -18,9 +17,7 @@ internal class CodeClassDefinitionTest {
         assertThat(codeClass.id).isEqualTo(1)
         assertThat(codeClass.name).isEqualTo("n.a.")
         assertThat(codeClass.displayValue).isEqualTo("n.a.")
-        assertThat(codeClass
-                .translations
-                .asMap()).isEmpty()
+        assertThat(codeClass.translations.asMap()).isEmpty()
     }
 
     @Test
@@ -30,18 +27,10 @@ internal class CodeClassDefinitionTest {
         assertThat(code.name).isEqualTo("codede2")
         assertThat(code.mainLanguageCode).isEqualTo("de")
         assertThat(code.displayValue).isEqualTo("codede2")
-        assertThat(code
-                .translations
-                .asMap()).hasSize(3)
-        assertThat(code
-                .translations
-                .keySet()).containsExactly("de", "en", "fr")
-        val trs = code
-                .translations
-                .values()
-        assertThat(trs)
-                .extracting(AbstractDefinitionTranslation.DefinitionTranslationFields.NAME.fieldName)
-                .containsOnly("codede2", "codeen2", "codefr2")
+        assertThat(code.translations.asMap()).hasSize(3)
+        assertThat(code.translations.keySet()).containsExactly("de", "en", "fr")
+        val trs = code.translations.values()
+        assertThat(trs.map { it.name }).containsOnly("codede2", "codeen2", "codefr2")
         for (tr in trs)
             assertThat(tr.lastModified).isNull()
     }
@@ -72,24 +61,16 @@ internal class CodeClassDefinitionTest {
 
     private fun assertTranslatedName(code: CodeClassDefinition, lc: String, index: Int,
                                      value: String) {
-        assertThat(code
-                .translations
-                .get(lc)[index]
-                .name).isEqualTo(value)
+        assertThat(code.translations.get(lc)[index].name).isEqualTo(value)
     }
 
+    @Suppress("SameParameterValue")
     private fun assertLastModifiedIsNotNull(code: CodeClassDefinition, lc: String, index: Int) {
-        assertThat(code
-                .translations
-                .get(lc)[index]
-                .lastModified).isNotNull()
+        assertThat(code.translations.get(lc)[index].lastModified).isNotNull()
     }
 
     private fun assertLastModifiedIsNull(code: CodeClassDefinition, lc: String, index: Int) {
-        assertThat(code
-                .translations
-                .get(lc)[index]
-                .lastModified).isNull()
+        assertThat(code.translations.get(lc)[index].lastModified).isNull()
     }
 
     @Test
@@ -98,14 +79,8 @@ internal class CodeClassDefinitionTest {
         code.setNameInLanguage("fr", "bar")
         assertThat(code.name).isEqualTo("codede2")
         assertTranslatedName(code, "fr", 0, "bar")
-        assertThat(code
-                .translations
-                .get("de")[0]
-                .lastModified).isNull()
-        assertThat(code
-                .translations
-                .get("en")[0]
-                .lastModified).isNull()
+        assertThat(code.translations.get("de")[0].lastModified).isNull()
+        assertThat(code.translations.get("en")[0].lastModified).isNull()
         assertLastModifiedIsNotNull(code, "fr", 0)
     }
 
@@ -129,18 +104,10 @@ internal class CodeClassDefinitionTest {
         assertThat(ccd.id).isEqualTo(2)
         assertThat(ccd.name).isEqualTo("codede2")
         assertThat(ccd.displayValue).isEqualTo("codede2")
-        assertThat(ccd
-                .translations
-                .asMap()).hasSize(3)
-        assertThat(ccd
-                .translations
-                .keySet()).containsExactly("de", "en", "fr")
-        val trs = ccd
-                .translations
-                .values()
-        assertThat(trs)
-                .extracting(AbstractDefinitionTranslation.DefinitionTranslationFields.NAME.fieldName)
-                .containsOnly("codede2", "codede2foo", "codeen2", "codefr2")
+        assertThat(ccd.translations.asMap()).hasSize(3)
+        assertThat(ccd.translations.keySet()).containsExactly("de", "en", "fr")
+        val trs = ccd.translations.values()
+        assertThat(trs.map { it.name }).containsOnly("codede2", "codede2foo", "codeen2", "codefr2")
         for (tr in trs)
             assertThat(tr.lastModified).isNull()
     }
@@ -148,8 +115,7 @@ internal class CodeClassDefinitionTest {
     @Test
     fun canGetTranslationsAsString_withTranslationsIncludingMainTranslation_withMultipleTranslations() {
         val code = CodeClassDefinition(1, "de", 1, cc_de, cc_de2, cc_en, cc_fr)
-        assertThat(code.translationsAsString).isEqualTo(
-                "DE: 'codede2','codede2foo'; EN: 'codeen2'; FR: 'codefr2'")
+        assertThat(code.translationsAsString).isEqualTo("DE: 'codede2','codede2foo'; EN: 'codeen2'; FR: 'codefr2'")
     }
 
     @Test
@@ -167,9 +133,7 @@ internal class CodeClassDefinitionTest {
 
     @Test
     fun assertCodeFields() {
-        assertThat(CodeClassDefinition.CodeClassDefinitionFields.values())
-                .extracting("name")
-                .containsExactly("id", "mainLanguageCode", "name")
+        assertThat(CodeClassDefinition.CodeClassDefinitionFields.values().map { it.fieldName }).containsExactly("id", "mainLanguageCode", "name")
     }
 
     @Test

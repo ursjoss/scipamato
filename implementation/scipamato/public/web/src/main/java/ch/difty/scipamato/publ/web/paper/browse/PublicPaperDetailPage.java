@@ -118,7 +118,8 @@ public class PublicPaperDetailPage extends BasePage<PublicPaper> {
             newField("title2", PublicPaper.PublicPaperFields.TITLE.getFieldName()),
             newField("location", PublicPaper.PublicPaperFields.LOCATION.getFieldName()));
         queueTopic(newLabel("goals"), newField("goals", PublicPaper.PublicPaperFields.GOALS.getFieldName()));
-        queueTopic(newLabel("population"), newField("population", PublicPaper.PublicPaperFields.POPULATION.getFieldName()));
+        queueTopic(newLabel("population"),
+            newField("population", PublicPaper.PublicPaperFields.POPULATION.getFieldName()));
         queueTopic(newLabel("methods"), newField("methods", PublicPaper.PublicPaperFields.METHODS.getFieldName()));
         queueTopic(newLabel("result"), newField("result", PublicPaper.PublicPaperFields.RESULT.getFieldName()));
         queueTopic(newLabel("comment"), newField("comment", PublicPaper.PublicPaperFields.COMMENT.getFieldName()));

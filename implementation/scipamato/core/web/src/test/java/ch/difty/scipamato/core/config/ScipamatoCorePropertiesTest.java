@@ -11,8 +11,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import ch.difty.scipamato.common.config.MavenProperties;
-import ch.difty.scipamato.core.logic.parsing.AuthorParserStrategy;
 import ch.difty.scipamato.core.logic.exporting.RisExporterStrategy;
+import ch.difty.scipamato.core.logic.parsing.AuthorParserStrategy;
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
 @ExtendWith(MockitoExtension.class)

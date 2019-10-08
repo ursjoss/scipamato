@@ -1,10 +1,10 @@
 package ch.difty.scipamato.core.entity.keyword
 
-import ch.difty.scipamato.common.entity.AbstractDefinitionTranslation
 import org.assertj.core.api.Assertions.assertThat
 
 import org.junit.jupiter.api.Test
 
+@Suppress("PrivatePropertyName", "PrivatePropertyName", "SpellCheckingInspection")
 internal class KeywordDefinitionTest {
 
     private val kw_de = KeywordTranslation(10, "de", "stichwort2", 1)
@@ -42,8 +42,7 @@ internal class KeywordDefinitionTest {
         assertThat(kd.translations.asMap()).hasSize(3)
         assertThat(kd.translations.keySet()).containsExactly("de", "en", "fr")
         val trs = kd.translations.values()
-        assertThat(trs).extracting(AbstractDefinitionTranslation.DefinitionTranslationFields.NAME.fieldName)
-                .containsOnly("stichwort2", "keyword2", "motdeclef2")
+        assertThat(trs.map { it.name }).containsOnly("stichwort2", "keyword2", "motdeclef2")
         for (tr in trs)
             assertThat(tr.lastModified).isNull()
     }
@@ -82,6 +81,7 @@ internal class KeywordDefinitionTest {
         assertThat(kd.translations.get(lc)[index].name).isEqualTo(value)
     }
 
+    @Suppress("SameParameterValue")
     private fun assertLastModifiedIsNotNull(kd: KeywordDefinition, lc: String, index: Int) {
         assertThat(kd.translations.get(lc)[index].lastModified).isNotNull()
     }
@@ -123,9 +123,7 @@ internal class KeywordDefinitionTest {
         assertThat(kd.translations.asMap()).hasSize(3)
         assertThat(kd.translations.keySet()).containsExactly("de", "en", "fr")
         val trs = kd.translations.values()
-        assertThat(trs)
-                .extracting(AbstractDefinitionTranslation.DefinitionTranslationFields.NAME.fieldName)
-                .containsOnly("stichwort2", "stichwort2foo", "keyword2", "motdeclef2")
+        assertThat(trs.map { it.name }).containsOnly("stichwort2", "stichwort2foo", "keyword2", "motdeclef2")
         for (tr in trs)
             assertThat(tr.lastModified).isNull()
     }

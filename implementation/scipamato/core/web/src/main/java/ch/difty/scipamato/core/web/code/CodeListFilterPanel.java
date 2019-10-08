@@ -46,7 +46,8 @@ abstract class CodeListFilterPanel
             CodeFilter.CodeFilterFields.CODE_CLASS.getFieldName());
         final CodeClassModel choices = new CodeClassModel(getLocale().getLanguage());
         final IChoiceRenderer<CodeClass> choiceRenderer = new ChoiceRenderer<>(
-            CodeClass.CoreEntityFields.DISPLAY_VALUE.getFieldName(), CodeClass.IdScipamatoEntityFields.ID.getFieldName());
+            CodeClass.CoreEntityFields.DISPLAY_VALUE.getFieldName(),
+            CodeClass.IdScipamatoEntityFields.ID.getFieldName());
 
         final BootstrapSelect<CodeClass> codeClasses = new BootstrapSelect<>(id, model, choices, choiceRenderer);
         codeClasses.add(new AjaxFormComponentUpdatingBehavior("change") {

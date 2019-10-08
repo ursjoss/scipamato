@@ -88,8 +88,7 @@ public abstract class ResultPanel extends BasePanel<Void> {
 
     private final Mode mode;
 
-    private AjaxDownload   risDownload;
-    private AjaxLink<Void> reviewLink;
+    private AjaxDownload risDownload;
 
     /**
      * Instantiate the panel.
@@ -503,7 +502,7 @@ public abstract class ResultPanel extends BasePanel<Void> {
 
     private void addOrReplaceExportRisLink(String id) {
         final String titleResourceKey = LINK_RESOURCE_PREFIX + id + TITLE_RESOURCE_TAG;
-        reviewLink = new AjaxLink<>(id) {
+        final AjaxLink<Void> reviewLink = new AjaxLink<>(id) {
             @Override
             public void onClick(final AjaxRequestTarget target) {
                 risDownload.initiate(target);

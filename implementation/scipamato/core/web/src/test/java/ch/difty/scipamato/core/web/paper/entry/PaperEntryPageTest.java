@@ -57,14 +57,14 @@ class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
         b += ":tabs";
         getTester().assertComponent(b, BootstrapTabbedPanel.class);
         b += ":panel";
-        assertTabPanelFields(1, 1, b, GOALS.getFieldName(), POPULATION.getFieldName(), METHODS.getFieldName(),
+        assertTabPanelFields(1, b, GOALS.getFieldName(), POPULATION.getFieldName(), METHODS.getFieldName(),
             POPULATION_PLACE.getFieldName(), POPULATION_PARTICIPANTS.getFieldName(), POPULATION_DURATION.getFieldName(),
             EXPOSURE_POLLUTANT.getFieldName(), EXPOSURE_ASSESSMENT.getFieldName(), METHOD_STUDY_DESIGN.getFieldName(),
             METHOD_OUTCOME.getFieldName(), METHOD_STATISTICS.getFieldName(), METHOD_CONFOUNDERS.getFieldName());
     }
 
     @SuppressWarnings("SameParameterValue")
-    private void assertTabPanelFields(int tabId, int panelId, String b, String... fields) {
+    private void assertTabPanelFields(int tabId, String b, String... fields) {
         final String bb = b + ":tab" + tabId + "Form";
         getTester().assertComponent(bb, Form.class);
         for (String f : fields) {

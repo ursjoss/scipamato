@@ -14,7 +14,7 @@ import ch.difty.scipamato.core.sync.launcher.SyncJobLauncher;
 import ch.difty.scipamato.core.sync.launcher.SyncJobResult;
 import ch.difty.scipamato.core.web.common.BasePage;
 
-@SuppressWarnings({ "SameParameterValue", "WeakerAccess" })
+@SuppressWarnings({ "SameParameterValue", "WicketForgeJavaIdInspection" })
 public class RefDataSyncPage extends BasePage<Void> {
 
     private static final long serialVersionUID = 1L;

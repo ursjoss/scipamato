@@ -44,8 +44,7 @@ import ch.difty.scipamato.publ.db.tables.CodeClass;
  */
 @Configuration
 @Profile("!wickettest")
-public class CodeSyncConfig
-    extends SyncConfig<PublicCode, ch.difty.scipamato.publ.db.tables.records.CodeRecord> {
+public class CodeSyncConfig extends SyncConfig<PublicCode, ch.difty.scipamato.publ.db.tables.records.CodeRecord> {
 
     private static final String TOPIC      = "code";
     private static final int    CHUNK_SIZE = 100;

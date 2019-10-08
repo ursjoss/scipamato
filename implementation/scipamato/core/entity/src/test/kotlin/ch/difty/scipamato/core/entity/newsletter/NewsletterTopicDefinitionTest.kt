@@ -1,10 +1,9 @@
 package ch.difty.scipamato.core.entity.newsletter
 
-import ch.difty.scipamato.common.entity.AbstractDefinitionTranslation
 import org.assertj.core.api.Assertions.assertThat
-
 import org.junit.jupiter.api.Test
 
+@Suppress("PrivatePropertyName", "SpellCheckingInspection")
 internal class NewsletterTopicDefinitionTest {
 
     private val ntt_de = NewsletterTopicTranslation(10, "de", "thema2", 1)
@@ -29,7 +28,7 @@ internal class NewsletterTopicDefinitionTest {
         assertThat(ntd.translations.asMap()).hasSize(3)
         assertThat(ntd.translations.keySet()).containsExactly("de", "en", "fr")
         val trs = ntd.translations.values()
-        assertThat(trs).extracting(AbstractDefinitionTranslation.DefinitionTranslationFields.NAME.fieldName).containsOnly("thema2", "topic2", "sujet2")
+        assertThat(trs.map { it.name }).containsOnly("thema2", "topic2", "sujet2")
         for (tr in trs)
             assertThat(tr.lastModified).isNull()
     }

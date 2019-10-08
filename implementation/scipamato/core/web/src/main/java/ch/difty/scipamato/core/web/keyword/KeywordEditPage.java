@@ -28,7 +28,6 @@ public class KeywordEditPage extends DefinitionEditPage<KeywordDefinition> {
     @SpringBean
     private KeywordService service;
 
-    @SuppressWarnings("WeakerAccess")
     public KeywordEditPage(final IModel<KeywordDefinition> model, final PageReference callingPageRef) {
         super(model, callingPageRef);
     }

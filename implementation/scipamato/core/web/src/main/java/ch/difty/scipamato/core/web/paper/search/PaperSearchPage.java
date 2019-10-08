@@ -50,7 +50,7 @@ import ch.difty.scipamato.core.web.paper.result.ResultPanel;
 @MountPath("search")
 @Slf4j
 @AuthorizeInstantiation({ Roles.USER, Roles.ADMIN, Roles.VIEWER })
-@SuppressWarnings("SameParameterValue")
+@SuppressWarnings({ "SameParameterValue", "SpellCheckingInspection" })
 public class PaperSearchPage extends BasePage<SearchOrder> {
 
     private static final long serialVersionUID = 1L;

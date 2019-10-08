@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Value;
+import org.jetbrains.annotations.NotNull;
 
 import ch.difty.scipamato.common.entity.CodeLike;
 import ch.difty.scipamato.common.entity.FieldEnumType;
@@ -23,7 +24,6 @@ public class Code extends PublicEntity implements CodeLike {
     private final String  comment;
     private final int     sort;
 
-    @SuppressWarnings("WeakerAccess")
     public String getDisplayValue() {
         return name;
     }
@@ -43,6 +43,7 @@ public class Code extends PublicEntity implements CodeLike {
             this.name = name;
         }
 
+        @NotNull
         @Override
         public String getFieldName() {
             return name;

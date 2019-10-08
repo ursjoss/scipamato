@@ -37,9 +37,7 @@ internal class CodeFilterTest {
 
     @Test
     fun assertEnumFields() {
-        assertThat(CodeFilter.CodeFilterFields.values())
-                .extracting("name")
-                .containsExactly("codeClass", "nameMask", "commentMask", "internal")
+        assertThat(CodeFilter.CodeFilterFields.values().map { it.fieldName }).containsExactly("codeClass", "nameMask", "commentMask", "internal")
     }
 
 }

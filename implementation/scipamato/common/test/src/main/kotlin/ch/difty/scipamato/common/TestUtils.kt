@@ -11,7 +11,7 @@ import java.util.function.Supplier
  * Verify the [supplier] function (constructor/function) throws a [NullArgumentException] with a
  * non-nullable parameter passed in as null value. Uses [fieldName] in the exception message.
  */
-@Deprecated("Replace using kotlin non-nullable types")
+// TODO Replace using kotlin non-nullable types
 fun assertDegenerateSupplierParameter(supplier: Supplier<*>, fieldName: String) {
     try {
         supplier.get()

@@ -174,7 +174,6 @@ internal class PaperCodeBoxTest {
     private fun assertEqualityOf(cb1: CodeBox, cb2: CodeBox) {
         assertThat(cb1 == cb1).isTrue()
         assertThat(cb2 == cb2).isTrue()
-        assertThat(cb1 == null).isFalse()
         assertThat(cb1 == cb2).isTrue()
         assertThat(cb1.hashCode()).isEqualTo(cb2.hashCode())
     }

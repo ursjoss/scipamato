@@ -55,12 +55,13 @@ internal open class JooqDslTransactionIntegrationTest {
         assertThat(rollback).isTrue()
     }
 
+    @Suppress("RedundantLambdaArrow")
     @Test
-    fun testjOOQTransactionsSimple() {
+    fun jOOQTransactionsSimple() {
         var rollback = false
 
         try {
-            dsl.transaction { c ->
+            dsl.transaction { _ ->
 
                 // This is a "bug". The same book is created twice, resulting in a
                 // constraint violation exception
@@ -86,14 +87,15 @@ internal open class JooqDslTransactionIntegrationTest {
         assertThat(rollback).isTrue()
     }
 
+    @Suppress("RedundantLambdaArrow")
     @Test
-    fun testjOOQTransactionsNested() {
+    fun jOOQTransactionsNested() {
         val rollback1 = AtomicBoolean(false)
         val rollback2 = AtomicBoolean(false)
 
         try {
             // If using Spring transactions, we don't need the c1 reference
-            dsl.transaction { c1 ->
+            dsl.transaction { _ ->
 
                 // The first insertion will work
                 dsl.insertInto(PAPER)
@@ -112,7 +114,7 @@ internal open class JooqDslTransactionIntegrationTest {
                 try {
                     // Nest transactions using Spring. This should create a savepoint, right here
                     // If using Spring transactions, we don't need the c2 reference
-                    dsl.transaction { c2 ->
+                    dsl.transaction { _ ->
 
                         // The second insertion shouldn't work
                         repeat(2) {

@@ -15,7 +15,7 @@ import ch.difty.scipamato.core.web.common.DefinitionListPage;
 @MountPath("codeclasses")
 @Slf4j
 @AuthorizeInstantiation({ Roles.USER, Roles.ADMIN })
-@SuppressWarnings({ "SameParameterValue", "WeakerAccess" })
+@SuppressWarnings({ "SameParameterValue" })
 public class CodeClassListPage
     extends DefinitionListPage<CodeClassDefinition, CodeClassFilter, CodeClassService, CodeClassDefinitionProvider> {
 

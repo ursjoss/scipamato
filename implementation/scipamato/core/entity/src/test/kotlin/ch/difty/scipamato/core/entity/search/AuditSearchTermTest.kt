@@ -17,22 +17,25 @@ internal class AuditSearchTermTest {
         assertToken(st, 0, tt, userRawData, userData, dateRawData, dateData)
     }
 
+    @Suppress("SameParameterValue")
     private fun assertToken(st: AuditSearchTerm, idx: Int, tt: TokenType, userRawData: String?, userData: String?, dateRawData: String?, dateData: String?) {
-        if (userRawData != null) {
-            assertThat(st.tokens[idx].userRawData).isEqualTo(userRawData)
-            assertThat(st.tokens[idx].userSqlData).isEqualTo(userData)
-        } else {
-            assertThat(st.tokens[idx].userRawData).isNull()
-            assertThat(st.tokens[idx].userSqlData).isNull()
+        with(st.tokens[idx]) {
+            if (userRawData != null) {
+                assertThat(userRawData).isEqualTo(userRawData)
+                assertThat(userSqlData).isEqualTo(userData)
+            } else {
+                assertThat(this.userRawData).isNull()
+                assertThat(userSqlData).isNull()
+            }
+            if (dateRawData != null) {
+                assertThat(dateRawData).isEqualTo(dateRawData)
+                assertThat(dateSqlData).isEqualTo(dateData)
+            } else {
+                assertThat(this.dateRawData).isNull()
+                assertThat(dateSqlData).isNull()
+            }
+            assertThat(type).isEqualTo(tt)
         }
-        if (dateRawData != null) {
-            assertThat(st.tokens[idx].dateRawData).isEqualTo(dateRawData)
-            assertThat(st.tokens[idx].dateSqlData).isEqualTo(dateData)
-        } else {
-            assertThat(st.tokens[idx].dateRawData).isNull()
-            assertThat(st.tokens[idx].dateSqlData).isNull()
-        }
-        assertThat(st.tokens[idx].type).isEqualTo(tt)
     }
 
     @Test

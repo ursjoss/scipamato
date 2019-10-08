@@ -58,8 +58,8 @@ internal class PublicationStatusTest {
 
     @Test
     fun assertIfIsInProgress() {
-        assertThat(PublicationStatus.WIP.isInProgress).isTrue()
-        assertThat(PublicationStatus.PUBLISHED.isInProgress).isFalse()
-        assertThat(PublicationStatus.CANCELLED.isInProgress).isFalse()
+        assertThat(WIP.isInProgress).isTrue()
+        assertThat(PUBLISHED.isInProgress).isFalse()
+        assertThat(CANCELLED.isInProgress).isFalse()
     }
 }

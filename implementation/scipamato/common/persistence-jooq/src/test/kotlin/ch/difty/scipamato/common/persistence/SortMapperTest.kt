@@ -1,6 +1,5 @@
 package ch.difty.scipamato.common.persistence
 
-import ch.difty.scipamato.common.NullArgumentException
 import ch.difty.scipamato.common.entity.ScipamatoEntity
 import ch.difty.scipamato.common.persistence.paging.Sort
 import ch.difty.scipamato.common.persistence.paging.Sort.Direction
@@ -57,9 +56,7 @@ internal class SortMapperTest {
         sortProps.add(SortProperty("field", Direction.ASC))
         whenever(sortSpecMock.iterator()).thenReturn(sortProps.iterator())
         whenever(tableFieldMock.asc()).thenReturn(sortFieldMock)
-        doReturn(tableFieldMock)
-                .whenever<SortMapper<Record, ScipamatoEntity, TableImpl<Record>>>(mapperSpy)
-                .getTableFieldFor(tableMock, "FIELD")
+        doReturn(tableFieldMock).whenever(mapperSpy).getTableFieldFor(tableMock, "FIELD")
 
         assertThat(mapperSpy.map(sortSpecMock, tableMock)).containsExactly(sortFieldMock)
 
@@ -74,12 +71,8 @@ internal class SortMapperTest {
         sortProps.add(SortProperty("field2", Direction.DESC))
         whenever(sortSpecMock.iterator()).thenReturn(sortProps.iterator())
         whenever(tableFieldMock.desc()).thenReturn(sortFieldMock)
-        doReturn(tableFieldMock)
-                .whenever<SortMapper<Record, ScipamatoEntity, TableImpl<Record>>>(mapperSpy)
-                .getTableFieldFor(tableMock, "FIELD")
-        doReturn(tableFieldMock)
-                .whenever<SortMapper<Record, ScipamatoEntity, TableImpl<Record>>>(mapperSpy)
-                .getTableFieldFor(tableMock, "FIELD2")
+        doReturn(tableFieldMock).whenever(mapperSpy).getTableFieldFor(tableMock, "FIELD")
+        doReturn(tableFieldMock).whenever(mapperSpy).getTableFieldFor(tableMock, "FIELD2")
 
         assertThat(mapperSpy.map(sortSpecMock, tableMock)).containsExactly(sortFieldMock, sortFieldMock)
 
@@ -89,13 +82,12 @@ internal class SortMapperTest {
         verify(mapperSpy).getTableFieldFor(tableMock, "FIELD2")
     }
 
+    @Suppress("SpellCheckingInspection")
     @Test
     fun mapping_withWrongFieldName_throwsInvalidDataAccessApiUsageException() {
         sortProps.add(SortProperty("inexistentField", Direction.ASC))
         whenever(sortSpecMock.iterator()).thenReturn(sortProps.iterator())
-        doThrow(NoSuchFieldException())
-                .whenever<SortMapper<Record, ScipamatoEntity, TableImpl<Record>>>(mapperSpy)
-                .getTableFieldFor(tableMock, "INEXISTENT_FIELD")
+        doThrow(NoSuchFieldException()).whenever(mapperSpy).getTableFieldFor(tableMock, "INEXISTENT_FIELD")
 
         try {
             mapperSpy.map(sortSpecMock, tableMock)
@@ -115,9 +107,7 @@ internal class SortMapperTest {
     fun mapping_withIllegalAccess_throwsInvalidDataAccessApiUsageException() {
         sortProps.add(SortProperty("illegalField", Direction.ASC))
         whenever(sortSpecMock.iterator()).thenReturn(sortProps.iterator())
-        doThrow(IllegalAccessException())
-                .whenever<SortMapper<Record, ScipamatoEntity, TableImpl<Record>>>(mapperSpy)
-                .getTableFieldFor(tableMock, "ILLEGAL_FIELD")
+        doThrow(IllegalAccessException()).whenever(mapperSpy).getTableFieldFor(tableMock, "ILLEGAL_FIELD")
 
         try {
             mapperSpy.map(sortSpecMock, tableMock)
@@ -142,9 +132,7 @@ internal class SortMapperTest {
             mapperSpy.map(sortSpecMock, null)
             fail<Any>("should have thrown")
         } catch (ex: Exception) {
-            assertThat(ex)
-                    .isInstanceOf(NullArgumentException::class.java)
-                    .hasMessage("table must not be null.")
+            assertThat(ex).isInstanceOf(NullPointerException::class.java)
         }
 
         verify(sortSpecMock).iterator()

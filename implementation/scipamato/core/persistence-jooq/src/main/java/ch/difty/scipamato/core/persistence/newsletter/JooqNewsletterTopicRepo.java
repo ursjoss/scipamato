@@ -48,7 +48,7 @@ public class JooqNewsletterTopicRepo extends AbstractRepo implements NewsletterT
         // skipping the audit fields
         return getDsl()
             .select(NEWSLETTER_TOPIC.ID.as("NT_ID"), DSL
-                .coalesce(NEWSLETTER_TOPIC_TR.TITLE, TranslationUtils.INSTANCE.getNOT_TRANSL())
+                .coalesce(NEWSLETTER_TOPIC_TR.TITLE, TranslationUtils.NOT_TRANSL)
                 .as("NT_TITLE"))
             .from(NEWSLETTER_TOPIC)
             .leftOuterJoin(NEWSLETTER_TOPIC_TR)
@@ -81,8 +81,8 @@ public class JooqNewsletterTopicRepo extends AbstractRepo implements NewsletterT
         // need to page after sorting due to grouping, not profiting from DB filtering :-(
         return results
             .stream()
-            .skip((long) pc.getOffset())
-            .limit((long) pc.getPageSize())
+            .skip(pc.getOffset())
+            .limit(pc.getPageSize())
             .collect(toList());
     }
 

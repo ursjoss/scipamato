@@ -28,8 +28,8 @@ import ch.difty.scipamato.publ.db.tables.records.NewStudyPageLinkRecord;
  */
 @Configuration
 @Profile("!wickettest")
-public class NewStudyPageLinkSyncConfig extends
-    SyncConfig<PublicNewStudyPageLink, ch.difty.scipamato.publ.db.tables.records.NewStudyPageLinkRecord> {
+public class NewStudyPageLinkSyncConfig
+    extends SyncConfig<PublicNewStudyPageLink, ch.difty.scipamato.publ.db.tables.records.NewStudyPageLinkRecord> {
 
     private static final String TOPIC      = "newStudyPageLink";
     private static final int    CHUNK_SIZE = 50;

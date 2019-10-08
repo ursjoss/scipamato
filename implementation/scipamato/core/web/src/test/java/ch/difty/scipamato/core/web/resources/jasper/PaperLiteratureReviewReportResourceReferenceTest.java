@@ -76,7 +76,7 @@ class PaperLiteratureReviewReportResourceReferenceTest
     }
 
     @Test
-    void compilingReport_throwingJRexception() {
+    void compilingReport_throwingJRException() {
         final JasperReportResourceReference rr = new JasperReportResourceReference(
             PaperLiteratureReviewReportResourceReference.class, "baz", false) {
             @Override

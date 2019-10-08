@@ -86,7 +86,7 @@ class UserProviderTest extends AbstractWicketTest {
         assertThat(provider.getFilterState()).isEqualTo(filterMock);
     }
 
-    private class PaginationContextMatcher implements ArgumentMatcher<PaginationContext> {
+    private static class PaginationContextMatcher implements ArgumentMatcher<PaginationContext> {
 
         private final int    pageSize;
         private final String sort;
@@ -112,7 +112,7 @@ class UserProviderTest extends AbstractWicketTest {
         Iterator<User> it = provider.iterator(0, 3);
         assertThat(it.hasNext()).isFalse();
         verify(userServiceMock).findPageByFilter(eq(filterMock),
-            argThat(new UserProviderTest.PaginationContextMatcher(3, "userName: ASC")));
+            argThat(new PaginationContextMatcher(3, "userName: ASC")));
     }
 
     @Test
@@ -121,7 +121,7 @@ class UserProviderTest extends AbstractWicketTest {
         Iterator<User> it = provider.iterator(0, 3);
         assertRecordsIn(it);
         verify(userServiceMock).findPageByFilter(eq(filterMock),
-            argThat(new UserProviderTest.PaginationContextMatcher(3, "userName: ASC")));
+            argThat(new PaginationContextMatcher(3, "userName: ASC")));
     }
 
     private void assertRecordsIn(Iterator<User> it) {
@@ -139,7 +139,7 @@ class UserProviderTest extends AbstractWicketTest {
         Iterator<User> it = provider.iterator(3, 3);
         assertRecordsIn(it);
         verify(userServiceMock).findPageByFilter(eq(filterMock),
-            argThat(new UserProviderTest.PaginationContextMatcher(3, "userName: ASC")));
+            argThat(new PaginationContextMatcher(3, "userName: ASC")));
     }
 
     @Test
@@ -149,7 +149,7 @@ class UserProviderTest extends AbstractWicketTest {
         Iterator<User> it = provider.iterator(6, 3);
         assertRecordsIn(it);
         verify(userServiceMock).findPageByFilter(eq(filterMock),
-            argThat(new UserProviderTest.PaginationContextMatcher(3, "title: DESC")));
+            argThat(new PaginationContextMatcher(3, "title: DESC")));
     }
 
 }

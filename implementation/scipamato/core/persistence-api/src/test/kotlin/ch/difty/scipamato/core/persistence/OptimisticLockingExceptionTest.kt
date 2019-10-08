@@ -4,6 +4,7 @@ import ch.difty.scipamato.core.persistence.OptimisticLockingException.Type
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
+@Suppress("SpellCheckingInspection")
 internal class OptimisticLockingExceptionTest {
 
     private val ole = OptimisticLockingException("tablefoo", "foo 1", Type.DELETE)

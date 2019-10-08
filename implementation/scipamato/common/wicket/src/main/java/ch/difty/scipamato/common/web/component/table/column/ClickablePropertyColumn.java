@@ -15,6 +15,7 @@ import ch.difty.scipamato.common.web.component.SerializableConsumer;
  *     the type of the sort property
  * @author u.joss
  */
+@SuppressWarnings("SpellCheckingInspection")
 public class ClickablePropertyColumn<T, S> extends AbstractClickablePropertyColumn<T, S> {
     private static final long serialVersionUID = 1L;
 

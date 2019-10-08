@@ -3,6 +3,7 @@ package ch.difty.scipamato.common.persistence;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import org.jetbrains.annotations.NotNull;
 import org.jooq.Record;
 import org.jooq.SortField;
 import org.jooq.TableField;
@@ -10,7 +11,6 @@ import org.jooq.impl.TableImpl;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.stereotype.Component;
 
-import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.TranslationUtils;
 import ch.difty.scipamato.common.entity.ScipamatoEntity;
 import ch.difty.scipamato.common.persistence.paging.Sort;
@@ -31,8 +31,7 @@ import ch.difty.scipamato.common.persistence.paging.Sort;
  * @author u.joss
  */
 @Component
-public class SortMapper<R extends Record, T extends ScipamatoEntity, TI extends TableImpl<R>>
-    implements JooqSortMapper<R, T, TI> {
+public class SortMapper<R extends Record, T extends ScipamatoEntity, TI extends TableImpl<R>> implements JooqSortMapper<R, T, TI> {
 
     @Override
     public Collection<SortField<T>> map(final Sort sortSpecification, final TI table) {
@@ -54,9 +53,7 @@ public class SortMapper<R extends Record, T extends ScipamatoEntity, TI extends 
         return querySortFields;
     }
 
-    private TableField<R, T> getTableField(final String fieldName, final TI table) {
-        AssertAs.INSTANCE.notNull(table, "table");
-
+    private TableField<R, T> getTableField(final @NotNull String fieldName, final @NotNull TI table) {
         try {
             return getTableFieldFor(table, deCamelCase(fieldName));
         } catch (NoSuchFieldException | IllegalAccessException ex) {
@@ -69,22 +66,21 @@ public class SortMapper<R extends Record, T extends ScipamatoEntity, TI extends 
      * reflection based field extraction so we can stub it out in tests
      */
     @SuppressWarnings("unchecked")
-    TableField<R, T> getTableFieldFor(final TI table, final String columnName)
-        throws NoSuchFieldException, IllegalAccessException {
+    TableField<R, T> getTableFieldFor(final TI table, final String columnName) throws NoSuchFieldException, IllegalAccessException {
         return (TableField<R, T>) table
             .getClass()
             .getField(columnName)
             .get(table);
     }
 
-    private String deCamelCase(final String sortFieldName) {
+    @SuppressWarnings("ConstantConditions")
+    private String deCamelCase(final @NotNull String sortFieldName) {
         return TranslationUtils.INSTANCE
             .deCamelCase(sortFieldName)
             .toUpperCase();
     }
 
-    private SortField<T> convertTableFieldToSortField(final TableField<R, T> tableField,
-        final Sort.Direction sortDirection) {
+    private SortField<T> convertTableFieldToSortField(final TableField<R, T> tableField, final Sort.Direction sortDirection) {
         return sortDirection == Sort.Direction.ASC ? tableField.asc() : tableField.desc();
     }
 

@@ -79,7 +79,6 @@ internal class CodeClassTest : Jsr303ValidatedEntityTest<CodeClass>(CodeClass::c
         val cc1 = CodeClass(1, "cc1", DESC)
 
         assertThat(cc1 == cc1).isTrue()
-        assertThat(cc1 == null).isFalse()
     }
 
     @Test
@@ -131,7 +130,7 @@ internal class CodeClassTest : Jsr303ValidatedEntityTest<CodeClass>(CodeClass::c
     }
 
     companion object {
-        private val JAVAX_VALIDATION_CONSTRAINTS_NOT_NULL_MESSAGE = "{javax.validation.constraints.NotNull.message}"
-        private val DESC = "this is cc1"
+        private const val JAVAX_VALIDATION_CONSTRAINTS_NOT_NULL_MESSAGE = "{javax.validation.constraints.NotNull.message}"
+        private const val DESC = "this is cc1"
     }
 }

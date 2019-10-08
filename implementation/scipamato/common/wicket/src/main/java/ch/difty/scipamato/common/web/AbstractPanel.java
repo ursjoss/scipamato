@@ -8,7 +8,7 @@ import org.apache.wicket.markup.html.panel.GenericPanel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.StringResourceModel;
 
-@SuppressWarnings({ "WeakerAccess", "SameParameterValue" })
+@SuppressWarnings({ "SameParameterValue", "SpellCheckingInspection", "unused" })
 public abstract class AbstractPanel<T> extends GenericPanel<T> {
 
     private static final long serialVersionUID = 1L;

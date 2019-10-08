@@ -6,8 +6,7 @@ import ch.difty.scipamato.core.entity.User;
 import ch.difty.scipamato.core.entity.search.UserFilter;
 
 /**
- * The {@link UserService} interface - defining {@link User} specific service
- * methods.
+ * The {@link UserService} interface - defining {@link User} specific service methods.
  *
  * @author u.joss
  */

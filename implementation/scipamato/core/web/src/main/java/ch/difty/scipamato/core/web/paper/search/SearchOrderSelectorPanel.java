@@ -92,7 +92,8 @@ public class SearchOrderSelectorPanel extends BasePanel<SearchOrder> {
     private void makeAndQueueSearchOrderSelectBox(final String id) {
         final SearchOrderModel choices = new SearchOrderModel(getActiveUser().getId(), SEARCH_ORDER_MAX);
         final IChoiceRenderer<SearchOrder> choiceRenderer = new ChoiceRenderer<>(
-            SearchOrder.CoreEntityFields.DISPLAY_VALUE.getFieldName(), SearchOrder.IdScipamatoEntityFields.ID.getFieldName());
+            SearchOrder.CoreEntityFields.DISPLAY_VALUE.getFieldName(),
+            SearchOrder.IdScipamatoEntityFields.ID.getFieldName());
         final StringResourceModel noneSelectedModel = new StringResourceModel(id + ".noneSelected", this, null);
         final BootstrapSelectConfig config = new BootstrapSelectConfig()
             .withNoneSelectedText(noneSelectedModel.getObject())

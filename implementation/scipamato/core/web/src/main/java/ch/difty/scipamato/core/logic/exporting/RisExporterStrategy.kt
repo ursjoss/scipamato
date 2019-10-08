@@ -15,7 +15,7 @@ enum class RisExporterStrategy {
     DEFAULT,
 
     /**
-     * The [RisExportStrategy] targeting https://www.evidencepartners.com/products/distillersr-systematic-review-software/
+     * The [RisExporterStrategy] targeting https://www.evidencepartners.com/products/distillersr-systematic-review-software/
      */
     DISTILLERSR;
 

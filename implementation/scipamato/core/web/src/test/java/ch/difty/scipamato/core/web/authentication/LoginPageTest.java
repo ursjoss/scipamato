@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.core.web.WicketTest;
 
+@SuppressWarnings("SpellCheckingInspection")
 class LoginPageTest extends WicketTest {
 
     @Test

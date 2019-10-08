@@ -12,6 +12,7 @@ import org.apache.wicket.util.resource.StringResourceStream
  * @author Ernesto Reinaldo Barreiro (reiern70@gmail.com)
  * @author Jordi Deu-Pons (jordi@jordeu.net)
  */
+@Suppress("SpellCheckingInspection")
 sealed class AjaxDownload(private val addAntiCache: Boolean) : AbstractAjaxBehavior() {
 
     var fileName: String? = null

@@ -134,7 +134,8 @@ class AbstractDefinitionEntityTest {
     @Test
     fun entity_testingToString() {
         assertThat(tde.toString()).isEqualTo(
-                "AbstractDefinitionEntity[translations=DE: 'deutsch','deutsch2'; EN: 'english'; FR: 'francais', mainLanguageCode=de, name=mainName]")
+                "AbstractDefinitionEntity[translations=DE: 'deutsch','deutsch2'; EN: 'english'; FR: 'francais', mainLanguageCode=de, name=mainName]"
+        )
     }
 
     @Test

@@ -22,6 +22,7 @@ internal class ClickablePropertyColumnTestPanel(id: String, private val consumer
         add(DefaultDataTable("table", columns, TestDataProvider(), 10))
     }
 
+    @Suppress("SameParameterValue")
     private fun makeClickableColumn(id: String, consumer: SerializableConsumer<IModel<TestRecord>>): IColumn<TestRecord, String> =
             object : ClickablePropertyColumn<TestRecord, String>(Model.of(id), null, "name", consumer, inNewTab) {}
 

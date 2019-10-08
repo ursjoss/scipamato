@@ -46,7 +46,8 @@ public class PaperLiteratureReviewPlusDataSource extends JasperPaperDataSource<P
      */
     public PaperLiteratureReviewPlusDataSource(final AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider,
         final ReportHeaderFields reportHeaderFields, ClusterablePdfExporterConfiguration config) {
-        super(new ScipamatoPdfResourceHandler(config), FILE_NAME, AssertAs.INSTANCE.notNull(dataProvider, "dataProvider"));
+        super(new ScipamatoPdfResourceHandler(config), FILE_NAME,
+            AssertAs.INSTANCE.notNull(dataProvider, "dataProvider"));
         this.reportHeaderFields = AssertAs.INSTANCE.notNull(reportHeaderFields, "reportHeaderFields");
     }
 

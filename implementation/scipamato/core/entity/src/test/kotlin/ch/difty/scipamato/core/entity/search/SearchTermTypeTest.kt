@@ -24,30 +24,30 @@ internal class SearchTermTypeTest {
 
     @Test
     fun testById_withValidIds() {
-        assertThat(SearchTermType.byId(0)).isEqualTo(BOOLEAN)
-        assertThat(SearchTermType.byId(1)).isEqualTo(INTEGER)
-        assertThat(SearchTermType.byId(2)).isEqualTo(STRING)
-        assertThat(SearchTermType.byId(3)).isEqualTo(AUDIT)
+        assertThat(byId(0)).isEqualTo(BOOLEAN)
+        assertThat(byId(1)).isEqualTo(INTEGER)
+        assertThat(byId(2)).isEqualTo(STRING)
+        assertThat(byId(3)).isEqualTo(AUDIT)
     }
 
     @Test
     fun testById_withInvalidIds() {
         try {
-            SearchTermType.byId(-2)
+            byId(-2)
             fail<Any>("should have thrown")
         } catch (ex: Exception) {
             assertThat(ex).isInstanceOf(IllegalArgumentException::class.java).hasMessage("id -2 is not supported")
         }
 
         try {
-            SearchTermType.byId(-1)
+            byId(-1)
             fail<Any>("should have thrown")
         } catch (ex: Exception) {
             assertThat(ex).isInstanceOf(IllegalArgumentException::class.java).hasMessage("id -1 is not supported")
         }
 
         try {
-            SearchTermType.byId(4)
+            byId(4)
             fail<Any>("should have thrown")
         } catch (ex: Exception) {
             assertThat(ex).isInstanceOf(IllegalArgumentException::class.java).hasMessage("id 4 is not supported")

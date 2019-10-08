@@ -22,7 +22,6 @@ import ch.difty.scipamato.core.sync.jobs.ScipamatoItemWriter;
  */
 public class CodeItemWriter extends ScipamatoItemWriter<PublicCode> {
 
-    @SuppressWarnings("WeakerAccess")
     public CodeItemWriter(final DSLContext jooqDslContextPublic) {
         super(jooqDslContextPublic, "code");
     }

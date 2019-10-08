@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.jooq.JooqTest
 import org.testcontainers.junit.jupiter.Testcontainers
 
+@Suppress("FunctionName", "SpellCheckingInspection")
 @JooqTest
 @Testcontainers
 internal open class JooqUserRepoIntegrationTest {

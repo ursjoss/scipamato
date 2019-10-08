@@ -14,6 +14,7 @@ import ch.difty.scipamato.core.pubmed.api.*;
  *
  * @author u.joss
  */
+@SuppressWarnings("SpellCheckingInspection")
 class ScipamatoPubmedArticle extends AbstractPubmedArticleFacade {
 
     private static final String PII = "pii";
@@ -22,8 +23,10 @@ class ScipamatoPubmedArticle extends AbstractPubmedArticleFacade {
         AssertAs.INSTANCE.notNull(pubmedArticle, "pubmedArticle");
         final MedlineCitation medlineCitation = AssertAs.INSTANCE.notNull(pubmedArticle.getMedlineCitation(),
             "pubmedArticle.medlineCitation");
-        final Article article = AssertAs.INSTANCE.notNull(medlineCitation.getArticle(), "pubmedArticle.medlineCitation.article");
-        final Journal journal = AssertAs.INSTANCE.notNull(article.getJournal(), "pubmedArticle.medlineCitation.article.journal");
+        final Article article = AssertAs.INSTANCE.notNull(medlineCitation.getArticle(),
+            "pubmedArticle.medlineCitation.article");
+        final Journal journal = AssertAs.INSTANCE.notNull(article.getJournal(),
+            "pubmedArticle.medlineCitation.article.journal");
         final AuthorList authorList = article.getAuthorList();
 
         setPmId(AssertAs.INSTANCE

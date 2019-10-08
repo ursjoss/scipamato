@@ -85,7 +85,7 @@ class KeywordDefinitionProviderTest extends AbstractWicketTest {
         assertThat(provider.getFilterState()).isEqualTo(filterMock);
     }
 
-    private class PaginationContextMatcher implements ArgumentMatcher<PaginationContext> {
+    private static class PaginationContextMatcher implements ArgumentMatcher<PaginationContext> {
 
         private final int    pageSize;
         private final String sort;
@@ -112,7 +112,7 @@ class KeywordDefinitionProviderTest extends AbstractWicketTest {
         Iterator<KeywordDefinition> it = provider.iterator(0, 3);
         assertThat(it.hasNext()).isFalse();
         verify(keywordServiceMock).findPageOfEntityDefinitions(eq(filterMock),
-            argThat(new KeywordDefinitionProviderTest.PaginationContextMatcher(3, "name: ASC")));
+            argThat(new PaginationContextMatcher(3, "name: ASC")));
     }
 
     @Test
@@ -122,7 +122,7 @@ class KeywordDefinitionProviderTest extends AbstractWicketTest {
         Iterator<KeywordDefinition> it = provider.iterator(0, 3);
         assertRecordsIn(it);
         verify(keywordServiceMock).findPageOfEntityDefinitions(eq(filterMock),
-            argThat(new KeywordDefinitionProviderTest.PaginationContextMatcher(3, "name: ASC")));
+            argThat(new PaginationContextMatcher(3, "name: ASC")));
     }
 
     private void assertRecordsIn(Iterator<KeywordDefinition> it) {
@@ -141,7 +141,7 @@ class KeywordDefinitionProviderTest extends AbstractWicketTest {
         Iterator<KeywordDefinition> it = provider.iterator(3, 3);
         assertRecordsIn(it);
         verify(keywordServiceMock).findPageOfEntityDefinitions(eq(filterMock),
-            argThat(new KeywordDefinitionProviderTest.PaginationContextMatcher(3, "name: ASC")));
+            argThat(new PaginationContextMatcher(3, "name: ASC")));
     }
 
     @Test
@@ -152,7 +152,7 @@ class KeywordDefinitionProviderTest extends AbstractWicketTest {
         Iterator<KeywordDefinition> it = provider.iterator(6, 3);
         assertRecordsIn(it);
         verify(keywordServiceMock).findPageOfEntityDefinitions(eq(filterMock),
-            argThat(new KeywordDefinitionProviderTest.PaginationContextMatcher(3, "name: DESC")));
+            argThat(new PaginationContextMatcher(3, "name: DESC")));
     }
 
 }

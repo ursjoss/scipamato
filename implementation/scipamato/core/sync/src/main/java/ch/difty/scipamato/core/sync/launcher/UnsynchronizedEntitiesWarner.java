@@ -20,6 +20,7 @@ public class UnsynchronizedEntitiesWarner implements Warner {
         this.jooqCore = AssertAs.INSTANCE.notNull(jooqCore, "jooqCore");
     }
 
+    @SuppressWarnings("unused")
     protected UnsynchronizedEntitiesWarner() {
         // for test purposes only
         jooqCore = null;

@@ -46,6 +46,7 @@ internal class StringSearchTermsTest {
         assertInequalityBetween(st1, st2, 118234894, 1)
     }
 
+    @Suppress("SameParameterValue")
     private fun assertInequalityBetween(st1: StringSearchTerms, st2: StringSearchTerms, hashValue1: Int, hashValue2: Int) {
         assertThat(st1 == st2).isFalse()
         assertThat(st2 == st1).isFalse()
@@ -63,13 +64,12 @@ internal class StringSearchTermsTest {
 
     @Test
     fun compareWithNullSelfOrDifferentClass() {
-        assertThat(st1 == null).isFalse()
         assertThat(st1 == st1).isTrue()
     }
 
     companion object {
-        private val KEY = "key"
-        private val VALUE = "value"
+        private const val KEY = "key"
+        private const val VALUE = "value"
     }
 
 }

@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import ch.difty.scipamato.core.entity.Code;
 import ch.difty.scipamato.core.entity.User;
 
+@SuppressWarnings("SpellCheckingInspection")
 class ScipamatoPdfExporterConfigurationTest {
 
     private static final String                            TITLE = "title";

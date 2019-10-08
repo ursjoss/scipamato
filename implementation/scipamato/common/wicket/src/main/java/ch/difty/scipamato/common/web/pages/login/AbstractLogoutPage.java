@@ -9,7 +9,7 @@ import ch.difty.scipamato.common.config.ApplicationProperties;
 import ch.difty.scipamato.common.web.AbstractPage;
 
 @MountPath("logout")
-@SuppressWarnings("SameParameterValue")
+@SuppressWarnings({ "SameParameterValue", "unused" })
 public abstract class AbstractLogoutPage<R extends AbstractPage<?>> extends AbstractPage<Void> {
 
     private static final long serialVersionUID = 1L;

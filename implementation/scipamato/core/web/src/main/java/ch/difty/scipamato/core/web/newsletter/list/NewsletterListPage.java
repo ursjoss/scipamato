@@ -105,7 +105,8 @@ public class NewsletterListPage extends BasePage<Void> {
     private void makeAndQueueFilterForm(final String id) {
         queue(new FilterForm<>(id, dataProvider));
 
-        queueFieldAndLabel(new TextField<String>(ISSUE.getFieldName(), PropertyModel.of(filter, ISSUE_MASK.getFieldName())));
+        queueFieldAndLabel(
+            new TextField<String>(ISSUE.getFieldName(), PropertyModel.of(filter, ISSUE_MASK.getFieldName())));
         queueStatusSelectAndLabel(Newsletter.NewsletterFields.PUBLICATION_STATUS.getFieldName());
         queueTopicsSelectAndLabel(TOPICS.getFieldName());
         queueNewButton("newNewsletter");
@@ -116,7 +117,8 @@ public class NewsletterListPage extends BasePage<Void> {
         StringResourceModel labelModel = new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null);
         queue(new Label(id + LABEL_TAG, labelModel));
 
-        final PropertyModel<PublicationStatus> selectionModel = PropertyModel.of(filter, PUBLICATION_STATUS.getFieldName());
+        final PropertyModel<PublicationStatus> selectionModel = PropertyModel.of(filter,
+            PUBLICATION_STATUS.getFieldName());
         final IModel<List<PublicationStatus>> choicesModel = Model.ofList(Arrays.asList(PublicationStatus.values()));
         BootstrapSelect<PublicationStatus> select = new BootstrapSelect<>(id, selectionModel, choicesModel,
             new EnumChoiceRenderer<>(this));
@@ -138,10 +140,12 @@ public class NewsletterListPage extends BasePage<Void> {
         StringResourceModel labelModel = new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null);
         queue(new Label(id + LABEL_TAG, labelModel));
 
-        final PropertyModel<NewsletterTopic> selectionModel = PropertyModel.of(filter, NEWSLETTER_TOPIC_ID.getFieldName());
+        final PropertyModel<NewsletterTopic> selectionModel = PropertyModel.of(filter,
+            NEWSLETTER_TOPIC_ID.getFieldName());
         final IModel<List<NewsletterTopic>> choicesModel = new NewsletterTopicModel(getLanguageCode());
         final IChoiceRenderer<NewsletterTopic> choiceRenderer = new ChoiceRenderer<>(
-            NewsletterTopic.NewsletterTopicFields.TITLE.getFieldName(), NewsletterTopic.NewsletterTopicFields.ID.getFieldName());
+            NewsletterTopic.NewsletterTopicFields.TITLE.getFieldName(),
+            NewsletterTopic.NewsletterTopicFields.ID.getFieldName());
         final StringResourceModel noneSelectedModel = new StringResourceModel(id + ".noneSelected", this, null);
         final BootstrapSelectConfig config = new BootstrapSelectConfig()
             .withNoneSelectedText(noneSelectedModel.getObject())

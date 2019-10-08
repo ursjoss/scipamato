@@ -18,7 +18,7 @@ internal class CodeTest : Jsr303ValidatedEntityTest<Code>(Code::class.java) {
     @Test
     fun constructing_withAllValues_populatesCodeClass() {
         val c1 = Code("C1", "c1", null, false, 10, "cc10", CODECLASS10, 2)
-        assertThat(c1.codeClass).isNotNull()
+        assertThat(c1.codeClass).isNotNull
         assertThat(c1
                 .codeClass
                 .id).isEqualTo(10)
@@ -123,7 +123,6 @@ internal class CodeTest : Jsr303ValidatedEntityTest<Code>(Code::class.java) {
     fun equalingToSpecialCases() {
         val c = newValidEntity()
         assertThat(c == c).isTrue()
-        assertThat(c == null).isFalse()
     }
 
     private fun assertInequality(c1: Code, c2: Code) {
@@ -174,10 +173,11 @@ internal class CodeTest : Jsr303ValidatedEntityTest<Code>(Code::class.java) {
     }
 
     companion object {
-        private val JAVAX_VALIDATION_CONSTRAINTS_NOT_NULL_MESSAGE = "{javax.validation.constraints.NotNull.message}"
+        private const val JAVAX_VALIDATION_CONSTRAINTS_NOT_NULL_MESSAGE = "{javax.validation.constraints.NotNull.message}"
 
-        private val CODE1 = "code1"
-        private val CODECLASS10 = "codeclass10"
+        private const val CODE1 = "code1"
+        private const val CODECLASS10 = "codeclass10"
+
         private val CREATED = LocalDateTime.parse("2017-01-01T08:01:33.821")
         private val LAST_MOD = LocalDateTime.parse("2017-02-02T08:01:33.821")
     }

@@ -42,7 +42,6 @@ public class PaperSearchCriteriaPage extends BasePage<SearchCondition> {
     @SpringBean
     private PageFactory pageFactory;
 
-    @SuppressWarnings("WeakerAccess")
     public PaperSearchCriteriaPage(final IModel<SearchCondition> searchConditionModel, final long searchOrderId) {
         super(searchConditionModel);
         getPageParameters().add(CorePageParameters.SEARCH_ORDER_ID.getName(), searchOrderId);

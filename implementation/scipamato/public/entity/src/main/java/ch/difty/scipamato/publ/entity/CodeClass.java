@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Value;
+import org.jetbrains.annotations.NotNull;
 
 import ch.difty.scipamato.common.entity.CodeClassLike;
 import ch.difty.scipamato.common.entity.FieldEnumType;
@@ -33,6 +34,7 @@ public class CodeClass extends PublicEntity implements CodeClassLike {
             this.name = name;
         }
 
+        @NotNull
         @Override
         public String getFieldName() {
             return name;

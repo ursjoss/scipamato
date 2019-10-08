@@ -34,9 +34,7 @@ internal class NewsletterFilterTest {
 
     @Test
     fun assertEnumFields() {
-        assertThat(NewsletterFilter.NewsletterFilterFields.values())
-                .extracting("name")
-                .containsExactly("issueMask", "publicationStatus", "newsletterTopic")
+        assertThat(NewsletterFilter.NewsletterFilterFields.values().map { it.fieldName }).containsExactly("issueMask", "publicationStatus", "newsletterTopic")
     }
 
 }

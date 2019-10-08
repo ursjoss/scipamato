@@ -9,7 +9,8 @@ import java.util.*
 interface CodeLike : Serializable
 
 /**
- * Marker Interfaces for code class like classes to be used to specify the generics in code class specific service classes.
+ * Marker Interfaces for code class like classes to be used
+ * to specify the generics in code class specific service classes.
  */
 interface CodeClassLike : Serializable
 
@@ -17,6 +18,7 @@ interface CodeClassLike : Serializable
  * Code Classes are collections of code that can be maintained separately for a paper.
  * In order to profit from i18n, there is a separate set of tables with one entry per member here.
  */
+@Suppress("MagicNumber")
 enum class CodeClassId(val id: Int) {
 
     CC1(1),

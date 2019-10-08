@@ -84,7 +84,7 @@ class CodeDefinitionProviderTest extends AbstractWicketTest {
         assertThat(provider.getFilterState()).isEqualTo(filterMock);
     }
 
-    private class PaginationContextMatcher implements ArgumentMatcher<PaginationContext> {
+    private static class PaginationContextMatcher implements ArgumentMatcher<PaginationContext> {
 
         private final int    pageSize;
         private final String sort;
@@ -111,7 +111,7 @@ class CodeDefinitionProviderTest extends AbstractWicketTest {
         Iterator<CodeDefinition> it = provider.iterator(0, 3);
         assertThat(it.hasNext()).isFalse();
         verify(codeServiceMock).findPageOfEntityDefinitions(eq(filterMock),
-            argThat(new CodeDefinitionProviderTest.PaginationContextMatcher(3, "sort: ASC")));
+            argThat(new PaginationContextMatcher(3, "sort: ASC")));
     }
 
     @Test
@@ -121,7 +121,7 @@ class CodeDefinitionProviderTest extends AbstractWicketTest {
         Iterator<CodeDefinition> it = provider.iterator(0, 3);
         assertRecordsIn(it);
         verify(codeServiceMock).findPageOfEntityDefinitions(eq(filterMock),
-            argThat(new CodeDefinitionProviderTest.PaginationContextMatcher(3, "sort: ASC")));
+            argThat(new PaginationContextMatcher(3, "sort: ASC")));
     }
 
     private void assertRecordsIn(Iterator<CodeDefinition> it) {
@@ -140,7 +140,7 @@ class CodeDefinitionProviderTest extends AbstractWicketTest {
         Iterator<CodeDefinition> it = provider.iterator(3, 3);
         assertRecordsIn(it);
         verify(codeServiceMock).findPageOfEntityDefinitions(eq(filterMock),
-            argThat(new CodeDefinitionProviderTest.PaginationContextMatcher(3, "sort: ASC")));
+            argThat(new PaginationContextMatcher(3, "sort: ASC")));
     }
 
     @Test
@@ -151,7 +151,7 @@ class CodeDefinitionProviderTest extends AbstractWicketTest {
         Iterator<CodeDefinition> it = provider.iterator(6, 3);
         assertRecordsIn(it);
         verify(codeServiceMock).findPageOfEntityDefinitions(eq(filterMock),
-            argThat(new CodeDefinitionProviderTest.PaginationContextMatcher(3, "sort: DESC")));
+            argThat(new PaginationContextMatcher(3, "sort: DESC")));
     }
 
 }

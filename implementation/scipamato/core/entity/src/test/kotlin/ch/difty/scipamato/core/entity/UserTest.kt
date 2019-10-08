@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import java.util.*
 
+@Suppress("SpellCheckingInspection")
 internal class UserTest {
 
     private val user = User(ID, USER_NAME, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD)
@@ -26,7 +27,7 @@ internal class UserTest {
 
     @BeforeEach
     fun setUp() {
-        roles.addAll(Arrays.asList(role1, role2))
+        roles.addAll(listOf(role1, role2))
     }
 
     @Test
@@ -164,13 +165,13 @@ internal class UserTest {
     }
 
     companion object {
-        private val ID = 1
-        private val USER_NAME = "username"
-        private val FIRST_NAME = "firstname"
-        private val LAST_NAME = "lastname"
-        private val EMAIL = "email"
-        private val PASSWORD = "password"
-        private val ENABLED = true
+        private const val ID = 1
+        private const val USER_NAME = "username"
+        private const val FIRST_NAME = "firstname"
+        private const val LAST_NAME = "lastname"
+        private const val EMAIL = "email"
+        private const val PASSWORD = "password"
+        private const val ENABLED = true
     }
 
 }

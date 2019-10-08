@@ -15,7 +15,6 @@ import ch.difty.scipamato.common.web.Mode;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.search.PaperFilter;
 
-@SuppressWarnings("SpellCheckingInspection")
 class EditablePaperPanelInViewModeTest extends EditablePaperPanelTest {
 
     @Override

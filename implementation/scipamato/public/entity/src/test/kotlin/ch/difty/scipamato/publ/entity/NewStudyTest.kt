@@ -1,3 +1,5 @@
+@file:Suppress("SpellCheckingInspection")
+
 package ch.difty.scipamato.publ.entity
 
 import ch.difty.scipamato.common.entity.ScipamatoEntity.ScipamatoEntityFields.CREATED

@@ -43,7 +43,7 @@ class ScipamatoEntityTest {
     }
 
     companion object {
-        private val VERSION = 10
+        private const val VERSION = 10
 
         private val CD = LocalDateTime.now().minusDays(1)
         private val LM = LocalDateTime.now().plusDays(1)

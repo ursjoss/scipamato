@@ -93,7 +93,6 @@ public class PubmedXmlService implements PubmedArticleService {
      *     the raw xml string to unmarshal
      * @return {@link PubmedArticleSet}
      */
-    @SuppressWarnings("WeakerAccess")
     public PubmedArticleSet unmarshal(final String xmlString) throws IOException {
         final StringReader reader = new StringReader(AssertAs.INSTANCE.notNull(xmlString, "xmlString"));
         return (PubmedArticleSet) unmarshaller.unmarshal(new StreamSource(reader));
@@ -138,7 +137,7 @@ public class PubmedXmlService implements PubmedArticleService {
      * Data class that will either hold a {@link PubmedArticleSet} or
      * an error message (optionally with an {@link HttpStatus} if available.
      */
-    private class PubmedArticleFeignResult {
+    private static class PubmedArticleFeignResult {
         final PubmedArticleSet pubmedArticleSet;
         final String           errorMessage;
         final HttpStatus       httpStatus;

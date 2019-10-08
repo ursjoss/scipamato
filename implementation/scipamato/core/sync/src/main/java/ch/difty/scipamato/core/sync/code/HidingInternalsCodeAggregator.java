@@ -96,6 +96,7 @@ public class HidingInternalsCodeAggregator implements CodeAggregator {
         return pcs;
     }
 
+    @SuppressWarnings("SpellCheckingInspection")
     private List<Short> gatherCodesStudyDesign() {
         final List<Short> csds = new ArrayList<>();
         if (codes

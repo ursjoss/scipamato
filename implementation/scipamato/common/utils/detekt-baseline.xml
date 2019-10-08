@@ -4,25 +4,5 @@
   <Whitelist>
     <ID>LongParameterList:AbstractShortFieldConcatenator.kt$AbstractShortFieldConcatenator$(method: String?, methodStudyDesign: String?, methodOutcome: String?, populationPlace: String?, exposurePollutant: String?, exposureAssessment: String?, methodStatistics: String?, methodConfounders: String?)</ID>
     <ID>LongParameterList:AbstractShortFieldConcatenator.kt$AbstractShortFieldConcatenator$(method: String?, methodStudyDesign: Tuple?, methodOutcome: Tuple?, populationPlace: Tuple?, exposurePollutant: Tuple?, exposureAssessment: Tuple?, methodStatistics: Tuple?, methodConfounders: Tuple?)</ID>
-    <ID>MaxLineLength:AbstractShortFieldConcatenator.kt$AbstractShortFieldConcatenator$Tuple("Pollutant", exposurePollutant)</ID>
-    <ID>MaxLineLength:AbstractShortFieldConcatenator.kt$AbstractShortFieldConcatenator$determineAppropriate(Tuple(null, method), methodStudyDesign, methodOutcome, populationPlace, exposurePollutant, exposureAssessment, methodStatistics, methodConfounders)</ID>
-    <ID>MaxLineLength:AbstractShortFieldConcatenator.kt$AbstractShortFieldConcatenator$determineAppropriate(Tuple(null, result), resultMeasuredOutcome, resultExposureRange, resultEffectEstimate, conclusion)</ID>
-    <ID>MaxLineLength:AbstractShortFieldConcatenator.kt$AbstractShortFieldConcatenator$fun methodsFrom(method: String?, methodStudyDesign: String?, methodOutcome: String?, populationPlace: String?, exposurePollutant: String?, exposureAssessment: String?, methodStatistics: String?, methodConfounders: String?)</ID>
-    <ID>MaxLineLength:AbstractShortFieldConcatenator.kt$AbstractShortFieldConcatenator$fun methodsFrom(method: String?, methodStudyDesign: Tuple?, methodOutcome: Tuple?, populationPlace: Tuple?, exposurePollutant: Tuple?, exposureAssessment: Tuple?, methodStatistics: Tuple?, methodConfounders: Tuple?)</ID>
-    <ID>MaxLineLength:AbstractShortFieldConcatenator.kt$AbstractShortFieldConcatenator$fun populationFrom(population: String?, populationPlace: String?, populationParticipants: String?, populationDuration: String?)</ID>
-    <ID>MaxLineLength:AbstractShortFieldConcatenator.kt$AbstractShortFieldConcatenator$fun populationFrom(population: String?, populationPlace: Tuple?, populationParticipants: Tuple?, populationDuration: Tuple?)</ID>
-    <ID>MaxLineLength:AbstractShortFieldConcatenator.kt$AbstractShortFieldConcatenator$fun resultFrom(result: String?, resultMeasuredOutcome: String?, resultExposureRange: String?, resultEffectEstimate: String?, conclusion: String?)</ID>
-    <ID>MaxLineLength:AbstractShortFieldConcatenator.kt$AbstractShortFieldConcatenator$fun resultFrom(result: String?, resultMeasuredOutcome: Tuple?, resultExposureRange: Tuple?, resultEffectEstimate: Tuple?, conclusion: Tuple?)</ID>
-    <ID>MaxLineLength:AbstractShortFieldConcatenator.kt$AbstractShortFieldConcatenator$methodsFrom</ID>
-    <ID>MaxLineLength:AbstractShortFieldConcatenator.kt$AbstractShortFieldConcatenator$populationFrom(population, Tuple("Place", populationPlace), Tuple("Participants", populationParticipants), Tuple("Study Duration", populationDuration))</ID>
-    <ID>MaxLineLength:AbstractShortFieldConcatenator.kt$AbstractShortFieldConcatenator$resultFrom(result, Tuple("Measured Outcome", resultMeasuredOutcome), Tuple("Exposure (Range)", resultExposureRange), Tuple("Effect Estimate", resultEffectEstimate), Tuple("Conclusion", conclusion))</ID>
-    <ID>MaxLineLength:Sort.kt$Sort : IterableSerializable</ID>
-    <ID>MaxLineLength:TranslationUtils.kt$TranslationUtils$ fun deCamelCase(original: String?): String?</ID>
-    <ID>MaxLineLength:TranslationUtils.kt$TranslationUtils$if (languageCode.length &lt;= LANG_CODE_BASE_LENGTH) languageCode else languageCode.substring(0, LANG_CODE_BASE_LENGTH)</ID>
-    <ID>MaxLineLength:Utils.kt$val msg = "{} is not properly defined. Current value: '{}' - now using {} - " + "specify one of {} in your property configuration (e.g. application.properties)."</ID>
-    <ID>NewLineAtEndOfFile:DateTimeService.kt$ch.difty.scipamato.common.DateTimeService.kt</ID>
-    <ID>NewLineAtEndOfFile:NullCheck.kt$ch.difty.scipamato.common.NullCheck.kt</ID>
-    <ID>SpreadOperator:AbstractShortFieldConcatenator.kt$AbstractShortFieldConcatenator$(*shortFields)</ID>
-    <ID>UseIfInsteadOfWhen:TranslationUtils.kt$TranslationUtils$when { original.isEmpty() -&gt; original else -&gt; original.replace(DE_CAMEL_REGEX, "$1_$2").toLowerCase() }</ID>
   </Whitelist>
 </SmellBaseline>

@@ -20,12 +20,14 @@ interface AuthorParser {
 }
 
 /**
- * The implementation of the [AuthorParserFactory] provides a configured [AuthorParser] able parse the provided property String `authorString`.
+ * The implementation of the [AuthorParserFactory] provides a configured [AuthorParser]
+ * able parse the provided property String `authorString`.
  */
 interface AuthorParserFactory {
 
     /**
-     * Creates an implementation of an [AuthorParser] depending on the provided `author string`. Returns a `PUBMED` [AuthorParser]
+     * Creates an implementation of an [AuthorParser] depending on the provided `author string`.
+     * Returns a `PUBMED` [AuthorParser]
      */
     fun createParser(authorString: String): AuthorParser
 

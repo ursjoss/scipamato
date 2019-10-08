@@ -81,7 +81,8 @@ public abstract class DeletableDefinitionEditHeaderPanel<E extends DefinitionEnt
 
             @SuppressWarnings("unused")
             private void handleDataIntegrityViolationException(final DataIntegrityViolationException dive) {
-                final String msg = new StringResourceModel("delete.dataintegrityviolation.hint", this, null)
+                @SuppressWarnings("SpellCheckingInspection") final String msg = new StringResourceModel(
+                    "delete.dataintegrityviolation.hint", this, null)
                     .setParameters(DeletableDefinitionEditHeaderPanel.this
                         .getModelObject()
                         .getNullSafeId())

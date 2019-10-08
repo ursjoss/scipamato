@@ -249,27 +249,17 @@ internal class StringSearchTermTest {
     fun tokenToString_forUserField() {
         val st = StringSearchTerm(FIELD_NAME, "pm2.5")
         assertThat(st.tokens).hasSize(1)
-        assertThat(st
-                .tokens[0]
-                .toString()).isEqualTo("(WORD pm2.5)")
+        assertThat(st.tokens[0].toString()).isEqualTo("(WORD pm2.5)")
     }
 
     @Test
     fun differentInterpretationOfQuotedAndWord() {
         val st = StringSearchTerm(FIELD_NAME, "=\"foo\" \"foo\" foo =foo")
         assertThat(st.tokens).hasSize(4)
-        assertThat(st
-                .tokens[0]
-                .toString()).isEqualTo("(QUOTED foo)")
-        assertThat(st
-                .tokens[1]
-                .toString()).isEqualTo("(QUOTED foo)")
-        assertThat(st
-                .tokens[2]
-                .toString()).isEqualTo("(WORD foo)")
-        assertThat(st
-                .tokens[3]
-                .toString()).isEqualTo("(WORD foo)")
+        assertThat(st.tokens[0].toString()).isEqualTo("(QUOTED foo)")
+        assertThat(st.tokens[1].toString()).isEqualTo("(QUOTED foo)")
+        assertThat(st.tokens[2].toString()).isEqualTo("(WORD foo)")
+        assertThat(st.tokens[3].toString()).isEqualTo("(WORD foo)")
     }
 
     @Test

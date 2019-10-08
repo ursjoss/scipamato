@@ -21,9 +21,9 @@ class JooqNewsletterService extends JooqEntityService<Integer, Newsletter, Newsl
 
     @Override
     public boolean canCreateNewsletterInProgress() {
-        return !getRepository()
+        return getRepository()
             .getNewsletterInStatusWorkInProgress()
-            .isPresent();
+            .isEmpty();
     }
 
     @Override

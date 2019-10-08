@@ -23,6 +23,7 @@ import ch.difty.scipamato.core.web.authentication.ScipamatoUserDetails;
  *
  * @author u.joss
  */
+@SuppressWarnings("SpellCheckingInspection")
 @Service
 @Primary
 public class TestUserDetailsService implements UserDetailsService {

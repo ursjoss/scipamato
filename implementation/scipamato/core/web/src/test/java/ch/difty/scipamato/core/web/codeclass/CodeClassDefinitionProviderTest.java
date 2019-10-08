@@ -85,7 +85,7 @@ class CodeClassDefinitionProviderTest extends AbstractWicketTest {
         assertThat(provider.getFilterState()).isEqualTo(filterMock);
     }
 
-    private class PaginationContextMatcher implements ArgumentMatcher<PaginationContext> {
+    private static class PaginationContextMatcher implements ArgumentMatcher<PaginationContext> {
 
         private final int    pageSize;
         private final String sort;
@@ -152,6 +152,6 @@ class CodeClassDefinitionProviderTest extends AbstractWicketTest {
         Iterator<CodeClassDefinition> it = provider.iterator(6, 3);
         assertRecordsIn(it);
         verify(codeClassServiceMock).findPageOfEntityDefinitions(eq(filterMock),
-            argThat(new CodeClassDefinitionProviderTest.PaginationContextMatcher(3, "id: DESC")));
+            argThat(new PaginationContextMatcher(3, "id: DESC")));
     }
 }

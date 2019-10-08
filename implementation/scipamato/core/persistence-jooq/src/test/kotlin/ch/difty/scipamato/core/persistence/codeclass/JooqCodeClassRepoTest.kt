@@ -21,6 +21,7 @@ internal class JooqCodeClassRepoTest {
     private val dtsMock = mock<DateTimeService>()
     private var repo = JooqCodeClassRepo(dslContextMock, dtsMock)
 
+    @Suppress("SpellCheckingInspection")
     @Test
     fun removingObsoletePersistedRecords() {
         val cct = CodeClassTranslation(1, "de", "cc1", "", 1)

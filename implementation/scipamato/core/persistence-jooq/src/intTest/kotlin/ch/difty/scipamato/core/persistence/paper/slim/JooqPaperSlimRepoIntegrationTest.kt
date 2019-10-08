@@ -76,6 +76,7 @@ internal open class JooqPaperSlimRepoIntegrationTest {
         assertThat(papers.map { it.number }).containsExactlyInAnyOrder(33L, 31L)
     }
 
+    @Suppress("DuplicatedCode")
     @Test
     fun bug21_queryingAllFieldsShouldNotThrowAnException() {
         val so = SearchOrder()

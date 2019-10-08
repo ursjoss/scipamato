@@ -6,6 +6,7 @@ import nl.jqno.equalsverifier.Warning
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
+@Suppress("SpellCheckingInspection")
 internal class ScipamatoPubmedArticleTest {
 
     private val pubmedArticle = makeMinimalValidPubmedArticle()

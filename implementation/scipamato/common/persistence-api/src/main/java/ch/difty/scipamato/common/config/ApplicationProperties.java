@@ -43,6 +43,7 @@ public interface ApplicationProperties extends Serializable {
      * @return the threshold above which a multiselectbox
      *     may activate the action box to select all/none entries
      */
+    @SuppressWarnings("SpellCheckingInspection")
     int getMultiSelectBoxActionBoxWithMoreEntriesThan();
 
     /**

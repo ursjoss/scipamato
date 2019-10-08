@@ -15,7 +15,6 @@ import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicFilter;
 import ch.difty.scipamato.core.persistence.NewsletterTopicService;
 
 @Service
-@SuppressWarnings("WeakerAccess")
 class JooqNewsletterTopicService implements NewsletterTopicService {
 
     private final NewsletterTopicRepository repo;

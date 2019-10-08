@@ -24,7 +24,7 @@ import ch.difty.scipamato.core.persistence.NewsletterTopicService;
 import ch.difty.scipamato.core.web.common.BasePage;
 import ch.difty.scipamato.core.web.paper.list.PaperListPage;
 
-@SuppressWarnings("SameParameterValue")
+@SuppressWarnings({ "SameParameterValue", "WicketForgeJavaIdInspection" })
 public class NewsletterTopicSortPage extends BasePage<Newsletter> {
 
     private static final long serialVersionUID = 1L;

@@ -72,8 +72,6 @@ class SearchOrderSelectorPanelInViewModeTest extends SearchOrderSelectorPanelTes
 
         getTester().executeAjaxEvent(PANEL_ID + ":form:name", "change");
 
-        String b = PANEL_ID + ":form:";
-
         verify(searchOrderServiceMock).saveOrUpdate(isA(SearchOrder.class));
     }
 }

@@ -44,6 +44,7 @@ open class TestWicketWebSecurityConfig : WebSecurityConfigurerAdapter() {
      *
      * We're using two hard-coded users, ignoring the database entirely.
      */
+    @Suppress("SpellCheckingInspection")
     class TestUserDetailsService : UserDetailsService {
 
         private val users = mapOf(

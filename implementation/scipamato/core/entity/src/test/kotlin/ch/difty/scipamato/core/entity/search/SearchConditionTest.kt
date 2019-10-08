@@ -12,11 +12,11 @@ import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.mock
-import java.util.*
 
 private const val SEARCH_CONDITION_ID: Long = 1
 private const val X = "x"
 
+@Suppress("SpellCheckingInspection")
 internal class SearchConditionTest {
 
     private val sc1 = SearchCondition(SEARCH_CONDITION_ID)
@@ -254,10 +254,7 @@ internal class SearchConditionTest {
         assertThat(sc1.stringSearchTerms).isEmpty()
         assertThat(sc1.integerSearchTerms).isEmpty()
         assertThat(sc1.booleanSearchTerms).hasSize(1)
-        var st = sc1
-                .booleanSearchTerms
-                .iterator()
-                .next()
+        var st = sc1.booleanSearchTerms.first()
         assertThat(st.fieldName).isEqualTo(FIRST_AUTHOR_OVERRIDDEN.fieldName)
         assertThat(st.rawSearchTerm).isEqualTo("true")
         assertThat(st.value).isTrue()
@@ -267,10 +264,7 @@ internal class SearchConditionTest {
         assertThat(sc1.stringSearchTerms).isEmpty()
         assertThat(sc1.integerSearchTerms).isEmpty()
         assertThat(sc1.booleanSearchTerms).hasSize(1)
-        st = sc1
-                .booleanSearchTerms
-                .iterator()
-                .next()
+        st = sc1.booleanSearchTerms.first()
         assertThat(st.fieldName).isEqualTo(FIRST_AUTHOR_OVERRIDDEN.fieldName)
         assertThat(st.rawSearchTerm).isEqualTo("false")
         assertThat(st.value).isFalse()
@@ -780,7 +774,6 @@ internal class SearchConditionTest {
     @Test
     fun equalsAndHash1_ofFieldSc() {
         assertThat(sc1 == sc1).isTrue()
-        assertThat(sc1 == null).isFalse()
     }
 
     @Test
@@ -1109,7 +1102,7 @@ internal class SearchConditionTest {
         val c2 = Code("c2", "c2", "", false, 2, "cc2", "", 0)
         val c3 = Code("c3", "c3", "", false, 3, "cc3", "", 0)
         val c4 = Code("c4", "c4", "", false, 3, "cc3", "", 0)
-        sc2.addCodes(Arrays.asList(c1, c2, c3, c4))
+        sc2.addCodes(listOf(c1, c2, c3, c4))
         assertThat(sc2.codes).hasSize(4)
         assertThat(sc2.getCodesOf(CodeClassId.CC3)).containsExactly(c3, c4)
 
