@@ -4,7 +4,6 @@ import ch.difty.scipamato.common.NullArgumentException
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
-import java.util.*
 
 internal class NavigatedListTest {
 
@@ -52,8 +51,8 @@ internal class NavigatedListTest {
     @Test
     fun cannotModifyItemsOfResultSet() {
         navigatedList
-                .items
-                .add(100L)
+            .items
+            .add(100L)
         assertThat(navigatedList.items).containsExactlyElementsOf(ids)
     }
 

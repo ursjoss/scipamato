@@ -2,7 +2,7 @@ package ch.difty.scipamato.common.web
 
 import ch.difty.scipamato.common.DateTimeService
 import ch.difty.scipamato.common.config.ApplicationProperties
-import com.nhaarman.mockitokotlin2.verify
+import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.whenever
 import de.agilecoders.wicket.core.markup.html.bootstrap.common.NotificationPanel
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar
@@ -19,7 +19,11 @@ import org.apache.wicket.settings.DebugSettings
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito.*
+import org.mockito.Mockito
+import org.mockito.Mockito.`when`
+import org.mockito.Mockito.times
+import org.mockito.Mockito.verify
+import org.mockito.Mockito.verifyNoMoreInteractions
 import org.springframework.boot.test.mock.mockito.MockBean
 
 internal class AbstractPageTest : WicketBaseTest() {
@@ -123,9 +127,9 @@ internal class AbstractPageTest : WicketBaseTest() {
 
     @Test
     fun queueingFieldAndLabel_withPropertyValidator_addsItToField() {
-        val field = mock(TextField::class.java)
-        whenever(field.id).thenReturn("testField")
-        val pv = mock(PropertyValidator::class.java)
+        val field = Mockito.mock(TextField::class.java)
+        `when`(field.id).thenReturn("testField")
+        val pv = Mockito.mock(PropertyValidator::class.java)
 
         page.queueFieldAndLabel(field, pv)
 
@@ -138,7 +142,7 @@ internal class AbstractPageTest : WicketBaseTest() {
 
     @Test
     fun queueingFieldAndLabel_withNoPropertyValidator_dowNotAddToField() {
-        val field = mock(TextField::class.java)
+        val field = Mockito.mock(TextField::class.java)
         whenever(field.id).thenReturn("testField")
 
         page.queueFieldAndLabel(field, null)
@@ -164,7 +168,7 @@ internal class AbstractPageTest : WicketBaseTest() {
 
     @Test
     fun withDebugEnabled() {
-        val debugSettings = mock(DebugSettings::class.java)
+        val debugSettings = Mockito.mock(DebugSettings::class.java)
         whenever(debugSettings.isDevelopmentUtilitiesEnabled).thenReturn(true)
 
         page = object : AbstractPage<TestRecord>(Model.of(TestRecord(1, "foo"))) {

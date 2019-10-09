@@ -5,9 +5,11 @@ import org.springframework.boot.builder.SpringApplicationBuilder
 
 @SpringBootApplication
 open class TestApplication {
+
+    @Suppress("SpreadOperator")
     fun main(args: Array<String>) {
         SpringApplicationBuilder()
-                .sources(TestApplication::class.java)
-                .run(*args)
+            .sources(TestApplication::class.java)
+            .run(*args)
     }
 }

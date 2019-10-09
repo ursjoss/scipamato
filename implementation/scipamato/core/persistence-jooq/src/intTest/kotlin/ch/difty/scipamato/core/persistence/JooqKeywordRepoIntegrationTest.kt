@@ -15,7 +15,7 @@ import org.testcontainers.junit.jupiter.Testcontainers
 
 @JooqTest
 @Testcontainers
-@Suppress("FunctionName", "DuplicatedCode", "SpellCheckingInspection")
+@Suppress("TooManyFunctions", "FunctionName", "MagicNumber", "DuplicatedCode", "SpellCheckingInspection")
 internal open class JooqKeywordRepoIntegrationTest {
 
     @Autowired
@@ -29,7 +29,7 @@ internal open class JooqKeywordRepoIntegrationTest {
     @Test
     fun findingKeywordDefinitions_withUnspecifiedFilter_findsAllDefinitions() {
         val kds = repo.findPageOfKeywordDefinitions(KeywordFilter(),
-                PaginationRequest(Sort.Direction.ASC, "name"))
+            PaginationRequest(Sort.Direction.ASC, "name"))
 
         assertThat(kds).hasSize(3)
 
@@ -63,7 +63,7 @@ internal open class JooqKeywordRepoIntegrationTest {
         val filter = KeywordFilter()
         filter.nameMask = "Allergie (not Atopie)"
         val kds = repo.findPageOfKeywordDefinitions(filter,
-                PaginationRequest(Sort.Direction.ASC, "name"))
+            PaginationRequest(Sort.Direction.ASC, "name"))
 
         assertThat(kds).hasSize(1)
 
@@ -81,7 +81,7 @@ internal open class JooqKeywordRepoIntegrationTest {
         val filter = KeywordFilter()
         filter.nameMask = "Allergie"
         val kds = repo.findPageOfKeywordDefinitions(filter,
-                PaginationRequest(Sort.Direction.ASC, "name"))
+            PaginationRequest(Sort.Direction.ASC, "name"))
 
         assertThat(kds).hasSize(1)
 
@@ -92,12 +92,12 @@ internal open class JooqKeywordRepoIntegrationTest {
         assertThat(ntd.lastModified == null).isTrue()
 
         val translations = ntd
-                .translations
-                .values()
+            .translations
+            .values()
         assertThat(translations).isNotEmpty
         val tr = translations
-                .iterator()
-                .next()
+            .iterator()
+            .next()
         assertThat(tr.version).isEqualTo(1)
         assertThat(tr.created == null).isTrue()
         assertThat(tr.lastModified == null).isTrue()
@@ -108,7 +108,7 @@ internal open class JooqKeywordRepoIntegrationTest {
         val filter = KeywordFilter()
         filter.nameMask = "er"
         val kds = repo.findPageOfKeywordDefinitions(filter,
-                PaginationRequest(Sort.Direction.ASC, "name"))
+            PaginationRequest(Sort.Direction.ASC, "name"))
 
         assertThat(kds).hasSize(2)
 
@@ -172,21 +172,21 @@ internal open class JooqKeywordRepoIntegrationTest {
         assertThat(ntd.name).isEqualTo("n.a.")
         assertThat(ntd.getNameInLanguage("de") == null).isTrue()
         assertThat(ntd
-                .translations
-                .asMap()).hasSize(3)
+            .translations
+            .asMap()).hasSize(3)
 
         val translations = ntd
-                .translations
-                .values()
+            .translations
+            .values()
         assertThat(translations)
-                .extracting("langCode")
-                .containsOnly("de", "en", "fr")
+            .extracting("langCode")
+            .containsOnly("de", "en", "fr")
         assertThat(translations)
-                .extracting("id")
-                .containsExactly(null, null, null)
+            .extracting("id")
+            .containsExactly(null, null, null)
         assertThat(translations)
-                .extracting("name")
-                .containsExactly(null, null, null)
+            .extracting("name")
+            .containsExactly(null, null, null)
     }
 
     @Test
@@ -207,7 +207,7 @@ internal open class JooqKeywordRepoIntegrationTest {
     }
 
     @Test
-    @Suppress("LocalVariableName")
+    @Suppress("LocalVariableName", "VariableNaming")
     fun insertingRecord_savesRecordAndRefreshesId() {
         val kt_de = KeywordTranslation(null, "de", "foo_de", 0)
         val kt_en = KeywordTranslation(null, "en", "foo1_en", 0)
@@ -262,6 +262,7 @@ internal open class JooqKeywordRepoIntegrationTest {
         assertThat(repo.delete(-1, 1) == null).isTrue()
     }
 
+    @Suppress("TooGenericExceptionCaught")
     @Test
     fun deleting_withExistingId_butWrongVersion_throwsOptimisticLockingException() {
         try {
@@ -269,10 +270,9 @@ internal open class JooqKeywordRepoIntegrationTest {
             fail<Any>("should have thrown exception")
         } catch (ex: Exception) {
             assertThat(ex)
-                    .isInstanceOf(OptimisticLockingException::class.java)
-                    .hasMessage("Record in table 'keyword' has been modified prior to the delete attempt. Aborting....")
+                .isInstanceOf(OptimisticLockingException::class.java)
+                .hasMessage("Record in table 'keyword' has been modified prior to the delete attempt. Aborting....")
         }
-
     }
 
     @Test
@@ -295,7 +295,9 @@ internal open class JooqKeywordRepoIntegrationTest {
     @Test
     fun canLoadKeywordWithMultipleTranslationsInOneLanguage() {
         val kd = repo.findKeywordDefinitionById(3)
-        assertThat(kd.translationsAsString).isEqualTo("DE: 'Allergie (not Atopie)','Allergie'; EN: 'Allergies'; FR: 'Allergie'")
+        assertThat(kd.translationsAsString).isEqualTo(
+            "DE: 'Allergie (not Atopie)','Allergie'; EN: 'Allergies'; FR: 'Allergie'"
+        )
     }
 
     @Test
@@ -310,12 +312,11 @@ internal open class JooqKeywordRepoIntegrationTest {
 
     private fun assertSortedList(sortProperty: String, id: Int?) {
         val cds = repo.findPageOfKeywordDefinitions(KeywordFilter(),
-                PaginationRequest(0, 10, Sort.Direction.DESC, sortProperty))
+            PaginationRequest(0, 10, Sort.Direction.DESC, sortProperty))
 
         assertThat(cds).hasSize(3)
 
         val cd = cds[0]
         assertThat(cd.id).isEqualTo(id)
     }
-
 }

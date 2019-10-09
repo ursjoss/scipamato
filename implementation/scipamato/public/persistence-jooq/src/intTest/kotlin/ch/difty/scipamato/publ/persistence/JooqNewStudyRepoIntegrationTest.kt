@@ -27,8 +27,8 @@ internal open class JooqNewStudyRepoIntegrationTest {
 
         assertThat(result.map { it.sort }).containsExactly(1, 2, 3, 4)
         assertThat(result.map { it.title }).containsExactly(
-                "Tiefe Belastungen", "Hirnleistung und neurodegenerative Erkrankungen",
-                "Feinstaubkomponenten und PAK", "Hirnschlag"
+            "Tiefe Belastungen", "Hirnleistung und neurodegenerative Erkrankungen",
+            "Feinstaubkomponenten und PAK", "Hirnschlag"
         )
 
         assertThat(result[0].studies).hasSize(2)

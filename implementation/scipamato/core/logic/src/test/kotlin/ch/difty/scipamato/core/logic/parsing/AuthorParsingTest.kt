@@ -42,7 +42,11 @@ internal class PubmedAuthorParserTest {
     @Test
     fun canReturnFirstAuthor_withMultipleAuthors() {
         // proper format
-        assertFirstAuthorOf("Turner MC, Cohen A, Jerret M, Gapstur SM, Driver WR, Pope CA 3rd, Krewsky D, Beckermann BS, Samet JM.", "Turner")
+        assertFirstAuthorOf(
+            """Turner MC, Cohen A, Jerret M, Gapstur SM, Driver WR, Pope CA 3rd, Krewsky D
+                |, Beckermann BS, Samet JM.""".trimMargin(),
+            "Turner"
+        )
     }
 
     @Test
@@ -57,7 +61,9 @@ internal class PubmedAuthorParserTest {
         p = PubmedAuthorParser("Ln FN 1st, Ln FN 2nd, Ln FN 3rd, Ln FN 4th, Ln FN 5th, Ln FN 100th, Ln FN.")
         assertThat(p.firstAuthor).isEqualTo("Ln")
         assertThat(p.authors.map { it.lastName }).containsOnly("Ln")
-        assertThat(p.authors.map { it.firstName }).containsExactly("FN 1st", "FN 2nd", "FN 3rd", "FN 4th", "FN 5th", "FN 100th", "FN")
+        assertThat(p.authors.map { it.firstName }).containsExactly(
+            "FN 1st", "FN 2nd", "FN 3rd", "FN 4th", "FN 5th", "FN 100th", "FN"
+        )
     }
 
     @Test
@@ -83,8 +89,12 @@ internal class PubmedAuthorParserTest {
 
     @Test
     fun canReturnAuthors() {
-        p = PubmedAuthorParser("Turner MC, Cohen A, Jerret M, Gapstur SM, Driver WR, Krewsky D, Beckermann BS, Samet JM.")
-        assertThat(p.authors.map { it.lastName }).containsExactly("Turner", "Cohen", "Jerret", "Gapstur", "Driver", "Krewsky", "Beckermann", "Samet")
+        p = PubmedAuthorParser(
+            "Turner MC, Cohen A, Jerret M, Gapstur SM, Driver WR, Krewsky D, Beckermann BS, Samet JM."
+        )
+        assertThat(p.authors.map { it.lastName }).containsExactly(
+            "Turner", "Cohen", "Jerret", "Gapstur", "Driver", "Krewsky", "Beckermann", "Samet"
+        )
         assertThat(p.authors.map { it.firstName }).containsExactly("MC", "A", "M", "SM", "WR", "D", "BS", "JM")
     }
 
@@ -94,7 +104,6 @@ internal class PubmedAuthorParserTest {
         assertThat(p.authors.map { it.lastName }).containsExactly("Flückiger", "Bäni")
         assertThat(p.authors.map { it.firstName }).containsExactly("P", "HU")
     }
-
 }
 
 internal class AuthorParserFactoryTest {
@@ -104,5 +113,4 @@ internal class AuthorParserFactoryTest {
         val parser = AuthorParserFactory.create(AuthorParserStrategy.PUBMED).createParser("Turner MC.")
         assertThat(parser).isInstanceOf(PubmedAuthorParser::class.java)
     }
-
 }

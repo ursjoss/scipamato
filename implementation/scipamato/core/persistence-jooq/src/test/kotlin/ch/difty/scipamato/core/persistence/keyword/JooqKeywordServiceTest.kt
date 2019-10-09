@@ -50,7 +50,7 @@ internal class JooqKeywordServiceTest {
     fun findingPageOfKeywordDefinitions_delegatesToRepo() {
         whenever(repo.findPageOfKeywordDefinitions(filterMock, paginationContextMock)).thenReturn(keywordDefinitions)
         assertThat(service.findPageOfKeywordDefinitions(filterMock, paginationContextMock)).isEqualTo(
-                keywordDefinitions)
+            keywordDefinitions)
         verify(repo).findPageOfKeywordDefinitions(filterMock, paginationContextMock)
     }
 
@@ -58,7 +58,7 @@ internal class JooqKeywordServiceTest {
     fun findingPageOfEntityDefinitions_delegatesToRepo() {
         whenever(repo.findPageOfKeywordDefinitions(filterMock, paginationContextMock)).thenReturn(keywordDefinitions)
         assertThat(service.findPageOfEntityDefinitions(filterMock, paginationContextMock)).hasSameElementsAs(
-                keywordDefinitions)
+            keywordDefinitions)
         verify(repo).findPageOfKeywordDefinitions(filterMock, paginationContextMock)
     }
 
@@ -109,5 +109,4 @@ internal class JooqKeywordServiceTest {
         assertThat(service.delete(id, version)).isEqualTo(persistedKeywordDefinitionMock)
         verify(repo).delete(id, version)
     }
-
 }

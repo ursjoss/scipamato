@@ -92,8 +92,8 @@ internal class PaperCodeBoxTest {
             fail<Any>("should have thrown exception")
         } catch (ex: Exception) {
             assertThat(ex)
-                    .isInstanceOf(NullArgumentException::class.java)
-                    .hasMessage("codeClassId must not be null.")
+                .isInstanceOf(NullArgumentException::class.java)
+                .hasMessage("codeClassId must not be null.")
         }
 
     }
@@ -128,7 +128,7 @@ internal class PaperCodeBoxTest {
     fun assertingToString_withMembers() {
         codeBox.addCodes(listOf(CODE_1F, CODE_5H, CODE_5F))
         assertThat(codeBox.toString()).isEqualTo(
-                // @formatter:off
+            // @formatter:off
               "["
 + "codesOfClass1=["
 + "Code[code=1F,name=Code 1F,comment=<null>,internal=false,codeClass=CodeClass[id=1],sort=1,createdBy=1,lastModifiedBy=2,created=2017-01-01T08:00:00.123,lastModified=2017-01-02T09:00:00.456,version=3]"

@@ -35,11 +35,11 @@ class ScipamatoEntityTest {
     @Test
     fun equals() {
         EqualsVerifier
-                .forClass(ScipamatoEntity::class.java)
-                .usingGetClass()
-                .withIgnoredFields(CREATED.fieldName, MODIFIED.fieldName)
-                .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
-                .verify()
+            .forClass(ScipamatoEntity::class.java)
+            .usingGetClass()
+            .withIgnoredFields(CREATED.fieldName, MODIFIED.fieldName)
+            .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
+            .verify()
     }
 
     companion object {
@@ -48,5 +48,4 @@ class ScipamatoEntityTest {
         private val CD = LocalDateTime.now().minusDays(1)
         private val LM = LocalDateTime.now().plusDays(1)
     }
-
 }

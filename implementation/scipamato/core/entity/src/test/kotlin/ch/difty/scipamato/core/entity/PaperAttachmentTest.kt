@@ -52,11 +52,13 @@ internal class PaperAttachmentTest {
     @Test
     fun equals() {
         EqualsVerifier
-                .forClass(PaperAttachment::class.java)
-                .withRedefinedSuperclass()
-                .usingGetClass()
-                .withIgnoredFields(CONTENT.fieldName, CREATED.fieldName, CREATOR_ID.fieldName, MODIFIED.fieldName, MODIFIER_ID.fieldName)
-                .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
-                .verify()
+            .forClass(PaperAttachment::class.java)
+            .withRedefinedSuperclass()
+            .usingGetClass()
+            .withIgnoredFields(
+                CONTENT.fieldName, CREATED.fieldName, CREATOR_ID.fieldName, MODIFIED.fieldName, MODIFIER_ID.fieldName
+            )
+            .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
+            .verify()
     }
 }

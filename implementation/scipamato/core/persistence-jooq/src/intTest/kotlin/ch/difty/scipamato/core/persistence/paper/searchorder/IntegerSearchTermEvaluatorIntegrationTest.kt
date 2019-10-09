@@ -17,13 +17,14 @@ import org.testcontainers.junit.jupiter.Testcontainers
  */
 @JooqTest
 @Testcontainers
-internal open class IntegerSearchTermEvaluatorIntegrationTest : SearchTermEvaluatorIntegrationTest<IntegerSearchTerm>() {
+open class IntegerSearchTermEvaluatorIntegrationTest : SearchTermEvaluatorIntegrationTest<IntegerSearchTerm>() {
 
     override val searchTermType: Int = SearchTermType.INTEGER.id
 
     private val evaluator: IntegerSearchTermEvaluator = IntegerSearchTermEvaluator()
 
-    override fun makeSearchTerm(rawSearchTerm: String) = SearchTerm.newSearchTerm(ID, searchTermType, SC_ID, FN, rawSearchTerm) as IntegerSearchTerm
+    override fun makeSearchTerm(rawSearchTerm: String) =
+        SearchTerm.newSearchTerm(ID, searchTermType, SC_ID, FN, rawSearchTerm) as IntegerSearchTerm
 
     @Suppress("DuplicatedCode")
     @ParameterizedTest(name = "[{index}] {0} -> [{1},{2}] [type {3}] ({4})")
@@ -42,17 +43,15 @@ internal open class IntegerSearchTermEvaluatorIntegrationTest : SearchTermEvalua
 
     companion object {
         @JvmStatic
-        @Suppress("unused")
+        @Suppress("unused", "MagicNumber")
         private fun integerParameters() = listOf(
-                Arguments.of("<2016", 2016, 2016, LESS_THAN, "fn < 2016"),
-                Arguments.of("<=2016", 2016, 2016, LESS_OR_EQUAL, "fn <= 2016"),
-                Arguments.of("2016", 2016, 2016, EXACT, "fn = 2016"),
-                Arguments.of("=2016", 2016, 2016, EXACT, "fn = 2016"),
-                Arguments.of(">2016", 2016, 2016, GREATER_THAN, "fn > 2016"),
-                Arguments.of(">=2016", 2016, 2016, GREATER_OR_EQUAL, "fn >= 2016"),
-                Arguments.of("2016-2018", 2016, 2018, RANGE, "fn between 2016 and 2018")
+            Arguments.of("<2016", 2016, 2016, LESS_THAN, "fn < 2016"),
+            Arguments.of("<=2016", 2016, 2016, LESS_OR_EQUAL, "fn <= 2016"),
+            Arguments.of("2016", 2016, 2016, EXACT, "fn = 2016"),
+            Arguments.of("=2016", 2016, 2016, EXACT, "fn = 2016"),
+            Arguments.of(">2016", 2016, 2016, GREATER_THAN, "fn > 2016"),
+            Arguments.of(">=2016", 2016, 2016, GREATER_OR_EQUAL, "fn >= 2016"),
+            Arguments.of("2016-2018", 2016, 2018, RANGE, "fn between 2016 and 2018")
         )
-
     }
-
 }

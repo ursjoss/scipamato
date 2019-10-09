@@ -26,13 +26,13 @@ import ch.difty.scipamato.core.web.newsletter.edit.NewsletterEditPage;
 @SuppressWarnings("SameParameterValue")
 class NewsletterListPageTest extends BasePageTest<NewsletterListPage> {
 
-    private Newsletter newsletterInProgress = Newsletter
+    private final Newsletter newsletterInProgress = Newsletter
         .builder()
         .issue("1801")
         .issueDate(LocalDate.parse("2018-01-01"))
         .publicationStatus(PublicationStatus.WIP)
         .build();
-    private Newsletter newsletterPublished  = Newsletter
+    private final Newsletter newsletterPublished  = Newsletter
         .builder()
         .issue("1801")
         .issueDate(LocalDate.parse("2018-01-01"))

@@ -15,7 +15,7 @@ internal class JooqCodeClassLikeServiceTest {
     private val codeClasses = listOf(cclMock, cclMock)
 
     private val service = object :
-            JooqCodeClassLikeService<CodeClassLike, CodeClassLikeRepository<CodeClassLike>>(repoMock) {
+        JooqCodeClassLikeService<CodeClassLike, CodeClassLikeRepository<CodeClassLike>>(repoMock) {
     }
 
     @Test

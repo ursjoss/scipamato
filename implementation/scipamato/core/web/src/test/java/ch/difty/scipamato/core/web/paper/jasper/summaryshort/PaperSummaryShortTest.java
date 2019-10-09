@@ -13,8 +13,9 @@ import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields;
 
 class PaperSummaryShortTest extends JasperEntityTest {
 
-    private PaperSummaryShort  ps;
-    private ReportHeaderFields rhf = newReportHeaderFields();
+    private final ReportHeaderFields rhf = newReportHeaderFields();
+
+    private PaperSummaryShort ps;
 
     @Test
     void degenerateConstruction_withNullPaper() {

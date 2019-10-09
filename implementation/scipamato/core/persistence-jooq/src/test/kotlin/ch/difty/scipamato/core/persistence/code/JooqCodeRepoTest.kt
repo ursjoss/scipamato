@@ -14,8 +14,9 @@ import org.assertj.core.api.Assertions.fail
 import org.jooq.DSLContext
 import org.jooq.Result
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito.*
-import java.util.*
+import org.mockito.Mockito.mock
+import org.mockito.Mockito.times
+import org.mockito.Mockito.verifyNoMoreInteractions
 
 internal class JooqCodeRepoTest {
 
@@ -40,7 +41,7 @@ internal class JooqCodeRepoTest {
 
         repo.removeObsoletePersistedRecordsFor(resultMock, listOf(ct))
 
-        verify<Result<CodeTrRecord>>(resultMock).iterator()
+        verify(resultMock).iterator()
         verify(itMock, times(3)).hasNext()
         verify(itMock, times(2)).next()
         verify(ctr1).get(CODE_TR.ID)
@@ -51,7 +52,7 @@ internal class JooqCodeRepoTest {
     }
 
     @Test
-    fun removingObsoletePersistedRecords_whenCheckingIfTranslationIsPresentInEntity_doesNotConsiderIdLessEntityTranslations() {
+    fun removingObsoletePersistedRecords_whenCheckingIfTranslationIsPresent_doesNotConsiderIdLessEntityTranslations() {
         val ct = CodeTranslation(null, "de", "1ade", "", 1)
         val resultMock: Result<CodeTrRecord> = mock()
         val itMock: MutableIterator<CodeTrRecord> = mock()
@@ -63,7 +64,7 @@ internal class JooqCodeRepoTest {
 
         repo.removeObsoletePersistedRecordsFor(resultMock, listOf(ct))
 
-        verify<Result<CodeTrRecord>>(resultMock).iterator()
+        verify(resultMock).iterator()
         verify(itMock, times(3)).hasNext()
         verify(itMock, times(2)).next()
         verify(ctr1).delete()
@@ -79,10 +80,11 @@ internal class JooqCodeRepoTest {
             fail<Any>("should have thrown exception")
         } catch (ex: Exception) {
             assertThat(ex)
-                    .isInstanceOf(OptimisticLockingException::class.java)
-                    .hasMessage("Record in table 'code_tr' has been modified prior to the update attempt. Aborting.... [CodeTranslation(comment=comm)]")
+                .isInstanceOf(OptimisticLockingException::class.java).hasMessage(
+                    "Record in table 'code_tr' has been modified prior to the update attempt. " +
+                        "Aborting.... [CodeTranslation(comment=comm)]"
+                )
         }
-
     }
 
     @Test
@@ -92,9 +94,10 @@ internal class JooqCodeRepoTest {
             fail<Any>("should have thrown exception")
         } catch (ex: Exception) {
             assertThat(ex)
-                    .isInstanceOf(OptimisticLockingException::class.java)
-                    .hasMessage("Record in table 'code' has been modified prior to the delete attempt. Aborting.... [deletedObject]")
+                .isInstanceOf(OptimisticLockingException::class.java).hasMessage(
+                    "Record in table 'code' has been modified prior to the delete attempt. " +
+                        "Aborting.... [deletedObject]"
+                )
         }
-
     }
 }

@@ -1,7 +1,10 @@
 package ch.difty.scipamato.core.web.paper.search;
 
 import static ch.difty.scipamato.core.web.CorePageParameters.SEARCH_ORDER_ID;
-import static org.mockito.Mockito.*;
+import static com.nhaarman.mockitokotlin2.OngoingStubbingKt.whenever;
+import static com.nhaarman.mockitokotlin2.VerificationKt.*;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.isA;
 
 import java.util.*;
 
@@ -42,11 +45,11 @@ class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
 
     @Override
     protected void setUpHook() {
-        when(searchOrderServiceMock.findById(SO_ID)).thenReturn(Optional.of(searchOrder));
-        when(searchOrderServiceMock.findPageByFilter(isA(SearchOrderFilter.class),
+        whenever(searchOrderServiceMock.findById(SO_ID)).thenReturn(Optional.of(searchOrder));
+        whenever(searchOrderServiceMock.findPageByFilter(isA(SearchOrderFilter.class),
             isA(PaginationContext.class))).thenReturn(Collections.singletonList(searchOrder));
-        when(paperSlimMock.getId()).thenReturn(41L);
-        when(paperSlimMock.getDisplayValue()).thenReturn("ps");
+        whenever(paperSlimMock.getId()).thenReturn(41L);
+        whenever(paperSlimMock.getDisplayValue()).thenReturn("ps");
     }
 
     @AfterEach
@@ -156,9 +159,9 @@ class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
 
     @Test
     void clickingNewSearchCondition_reloadsPage() {
-        when(searchOrderServiceMock.saveOrUpdate(isA(SearchOrder.class))).thenReturn(searchOrderMock);
-        when(searchOrderMock.getId()).thenReturn(27L);
-        when(searchOrderServiceMock.findById(27L)).thenReturn(Optional.of(searchOrderMock2));
+        whenever(searchOrderServiceMock.saveOrUpdate(isA(SearchOrder.class))).thenReturn(searchOrderMock);
+        whenever(searchOrderMock.getId()).thenReturn(27L);
+        whenever(searchOrderServiceMock.findById(27L)).thenReturn(Optional.of(searchOrderMock2));
 
         final String labelDisplayValue = "searchConditionDisplayValue";
         final SearchCondition sc = new SearchCondition() {
@@ -191,8 +194,8 @@ class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
 
     @Test
     void clickingNewSearchCondition_withOptimisticLockingException_failsSaveAndWarns() {
-        when(searchOrderMock.getId()).thenReturn(27L);
-        when(searchOrderServiceMock.saveOrUpdate(isA(SearchOrder.class))).thenThrow(
+        whenever(searchOrderMock.getId()).thenReturn(27L);
+        whenever(searchOrderServiceMock.saveOrUpdate(isA(SearchOrder.class))).thenThrow(
             new OptimisticLockingException("searchOrder", "record", Type.UPDATE));
 
         final String labelDisplayValue = "searchConditionDisplayValue";
@@ -227,12 +230,13 @@ class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
 
     @Test
     void clickingRemoveButtonOnResults_removesResultAndSavesSearchOrder() {
-        when(searchOrderMock.getId()).thenReturn(SO_ID);
+        whenever(searchOrderMock.getId()).thenReturn(SO_ID);
 
-        when(paperSlimServiceMock.countBySearchOrder(eq(searchOrderMock))).thenReturn(1, 0);
-        when(paperSlimServiceMock.findPageBySearchOrder(eq(searchOrderMock), isA(PaginationContext.class))).thenReturn(
+        whenever(paperSlimServiceMock.countBySearchOrder(searchOrderMock)).thenReturn(1, 0);
+        whenever(
+            paperSlimServiceMock.findPageBySearchOrder(eq(searchOrderMock), isA(PaginationContext.class))).thenReturn(
             Collections.singletonList(paperSlimMock));
-        when(searchOrderServiceMock.saveOrUpdate(isA(SearchOrder.class))).thenReturn(searchOrderMock2);
+        whenever(searchOrderServiceMock.saveOrUpdate(isA(SearchOrder.class))).thenReturn(searchOrderMock2);
 
         PaperSearchPage page = new PaperSearchPage(Model.of(searchOrderMock), Mode.EDIT);
 
@@ -249,7 +253,7 @@ class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
 
         verify(searchOrderServiceMock, times(2)).findPageByFilter(isA(SearchOrderFilter.class),
             isA(PaginationContext.class));
-        verify(paperSlimServiceMock, times(1)).countBySearchOrder(eq(searchOrderMock));
+        verify(paperSlimServiceMock, times(1)).countBySearchOrder(searchOrderMock);
         verify(paperSlimServiceMock, times(1)).findPageBySearchOrder(eq(searchOrderMock), isA(PaginationContext.class));
         verify(paperSlimMock, times(2)).getId();
         verify(paperSlimMock, times(2)).getId();
@@ -292,13 +296,14 @@ class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
 
     @Test
     void searchOrderMock_withNoExclusions_hidesShowExcludedButton() {
-        when(searchOrderMock.getId()).thenReturn(SO_ID);
-        when(searchOrderMock.getExcludedPaperIds()).thenReturn(new ArrayList<>());
+        whenever(searchOrderMock.getId()).thenReturn(SO_ID);
+        whenever(searchOrderMock.getExcludedPaperIds()).thenReturn(new ArrayList<>());
 
-        when(paperSlimServiceMock.countBySearchOrder(eq(searchOrderMock))).thenReturn(1, 0);
-        when(paperSlimServiceMock.findPageBySearchOrder(eq(searchOrderMock), isA(PaginationContext.class))).thenReturn(
+        whenever(paperSlimServiceMock.countBySearchOrder(searchOrderMock)).thenReturn(1, 0);
+        whenever(
+            paperSlimServiceMock.findPageBySearchOrder(eq(searchOrderMock), isA(PaginationContext.class))).thenReturn(
             Collections.singletonList(paperSlimMock));
-        when(searchOrderServiceMock.saveOrUpdate(isA(SearchOrder.class))).thenReturn(searchOrderMock2);
+        whenever(searchOrderServiceMock.saveOrUpdate(isA(SearchOrder.class))).thenReturn(searchOrderMock2);
 
         PaperSearchPage page = new PaperSearchPage(Model.of(searchOrderMock), Mode.EDIT);
 
@@ -310,7 +315,7 @@ class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
 
         verify(searchOrderServiceMock, times(1)).findPageByFilter(isA(SearchOrderFilter.class),
             isA(PaginationContext.class));
-        verify(paperSlimServiceMock, times(1)).countBySearchOrder(eq(searchOrderMock));
+        verify(paperSlimServiceMock, times(1)).countBySearchOrder(searchOrderMock);
         verify(paperSlimServiceMock, times(1)).findPageBySearchOrder(eq(searchOrderMock), isA(PaginationContext.class));
         verify(paperSlimMock, times(1)).getId();
         verify(searchOrderMock, times(3)).getExcludedPaperIds();
@@ -318,13 +323,14 @@ class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
 
     @Test
     void searchOrderMock_withExclusions_whenClicking_sendsEvent() {
-        when(searchOrderMock.getId()).thenReturn(SO_ID);
-        when(searchOrderMock.getExcludedPaperIds()).thenReturn(Arrays.asList(5L, 3L));
+        whenever(searchOrderMock.getId()).thenReturn(SO_ID);
+        whenever(searchOrderMock.getExcludedPaperIds()).thenReturn(Arrays.asList(5L, 3L));
 
-        when(paperSlimServiceMock.countBySearchOrder(eq(searchOrderMock))).thenReturn(1, 0);
-        when(paperSlimServiceMock.findPageBySearchOrder(eq(searchOrderMock), isA(PaginationContext.class))).thenReturn(
+        whenever(paperSlimServiceMock.countBySearchOrder(searchOrderMock)).thenReturn(1, 0);
+        whenever(
+            paperSlimServiceMock.findPageBySearchOrder(eq(searchOrderMock), isA(PaginationContext.class))).thenReturn(
             Collections.singletonList(paperSlimMock));
-        when(searchOrderServiceMock.saveOrUpdate(isA(SearchOrder.class))).thenReturn(searchOrderMock2);
+        whenever(searchOrderServiceMock.saveOrUpdate(isA(SearchOrder.class))).thenReturn(searchOrderMock2);
 
         PaperSearchPage page = new PaperSearchPage(Model.of(searchOrderMock), Mode.EDIT);
 
@@ -340,7 +346,7 @@ class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
 
         verify(searchOrderServiceMock, times(1)).findPageByFilter(isA(SearchOrderFilter.class),
             isA(PaginationContext.class));
-        verify(paperSlimServiceMock, atLeast(1)).countBySearchOrder(eq(searchOrderMock));
+        verify(paperSlimServiceMock, atLeast(1)).countBySearchOrder(searchOrderMock);
         verify(paperSlimServiceMock, times(1)).findPageBySearchOrder(eq(searchOrderMock), isA(PaginationContext.class));
         verify(paperSlimMock, atLeast(1)).getId();
         verify(searchOrderMock, times(6)).getExcludedPaperIds();

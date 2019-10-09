@@ -22,9 +22,10 @@ import org.junit.jupiter.api.Test
 import org.mockito.Mockito
 import org.mockito.Mockito.never
 import org.mockito.Mockito.verify
-import java.util.*
 
-internal class JooqPaperRepoTest : JooqEntityRepoTest<PaperRecord, Paper, Long, ch.difty.scipamato.core.db.tables.Paper, PaperRecordMapper, PaperFilter>() {
+internal class JooqPaperRepoTest :
+    JooqEntityRepoTest<PaperRecord, Paper, Long, ch.difty.scipamato.core.db.tables.Paper,
+        PaperRecordMapper, PaperFilter>() {
 
     override val unpersistedEntity = mock<Paper>()
     override val persistedEntity = mock<Paper>()
@@ -52,25 +53,55 @@ internal class JooqPaperRepoTest : JooqEntityRepoTest<PaperRecord, Paper, Long, 
     override val recordVersion: TableField<PaperRecord, Int> = PAPER.VERSION
 
     override val repo = JooqPaperRepo(dsl, mapper, sortMapper, filterConditionMapper,
-            dateTimeService, insertSetStepSetter, updateSetStepSetter, searchOrderRepositoryMock,
-            applicationProperties)
+        dateTimeService, insertSetStepSetter, updateSetStepSetter, searchOrderRepositoryMock,
+        applicationProperties)
 
     override fun makeRepoSavingReturning(returning: PaperRecord): EntityRepository<Paper, Long, PaperFilter> =
-            object : JooqPaperRepo(dsl, mapper, sortMapper, filterConditionMapper, dateTimeService, insertSetStepSetter, updateSetStepSetter, searchOrderRepositoryMock, applicationProperties) {
-                override fun doSave(entity: Paper, languageCode: String): PaperRecord = returning
-            }
+        object : JooqPaperRepo(
+            dsl,
+            mapper,
+            sortMapper,
+            filterConditionMapper,
+            dateTimeService,
+            insertSetStepSetter,
+            updateSetStepSetter,
+            searchOrderRepositoryMock,
+            applicationProperties
+        ) {
+            override fun doSave(entity: Paper, languageCode: String): PaperRecord = returning
+        }
 
     override fun makeRepoFindingEntityById(entity: Paper): EntityRepository<Paper, Long, PaperFilter> =
-            object : JooqPaperRepo(dsl, mapper, sortMapper, filterConditionMapper, dateTimeService, insertSetStepSetter, updateSetStepSetter, searchOrderRepositoryMock, applicationProperties) {
-                override fun findById(id: Long?, version: Int): Paper = entity
-            }
+        object : JooqPaperRepo(
+            dsl,
+            mapper,
+            sortMapper,
+            filterConditionMapper,
+            dateTimeService,
+            insertSetStepSetter,
+            updateSetStepSetter,
+            searchOrderRepositoryMock,
+            applicationProperties
+        ) {
+            override fun findById(id: Long?, version: Int): Paper = entity
+        }
 
     private fun makeRepoStubbingEnriching(): PaperRepository =
-            object : JooqPaperRepo(dsl, mapper, sortMapper, filterConditionMapper, dateTimeService, insertSetStepSetter, updateSetStepSetter, searchOrderRepositoryMock, applicationProperties) {
-                override fun enrichAssociatedEntitiesOf(entity: Paper, language: String) {
-                    enrichedEntities.add(entity)
-                }
+        object : JooqPaperRepo(
+            dsl,
+            mapper,
+            sortMapper,
+            filterConditionMapper,
+            dateTimeService,
+            insertSetStepSetter,
+            updateSetStepSetter,
+            searchOrderRepositoryMock,
+            applicationProperties
+        ) {
+            override fun enrichAssociatedEntitiesOf(entity: Paper, language: String) {
+                enrichedEntities.add(entity)
             }
+        }
 
     override fun expectEntityIdsWithValues() {
         whenever(unpersistedEntity.id).thenReturn(SAMPLE_ID)
@@ -121,8 +152,8 @@ internal class JooqPaperRepoTest : JooqEntityRepoTest<PaperRecord, Paper, Long, 
             repo.findByIds(null)
         } catch (ex: Exception) {
             assertThat(ex)
-                    .isInstanceOf(NullArgumentException::class.java)
-                    .hasMessage("ids must not be null.")
+                .isInstanceOf(NullArgumentException::class.java)
+                .hasMessage("ids must not be null.")
         }
     }
 
@@ -130,7 +161,7 @@ internal class JooqPaperRepoTest : JooqEntityRepoTest<PaperRecord, Paper, Long, 
     fun findingBySearchOrder_delegatesToSearchOrderFinder() {
         whenever(searchOrderRepositoryMock.findBySearchOrder(searchOrderMock)).thenReturn(papers)
         assertThat(makeRepoStubbingEnriching().findBySearchOrder(searchOrderMock, LC)).containsExactly(paperMock,
-                paperMock)
+            paperMock)
         assertThat(enrichedEntities).containsExactly(paperMock, paperMock)
         verify(searchOrderRepositoryMock).findBySearchOrder(searchOrderMock)
     }
@@ -145,9 +176,9 @@ internal class JooqPaperRepoTest : JooqEntityRepoTest<PaperRecord, Paper, Long, 
     @Test
     fun findingPageBySearchOrder_delegatesToSearchOrderFinder() {
         whenever(searchOrderRepositoryMock.findPageBySearchOrder(searchOrderMock, paginationContextMock)).thenReturn(
-                papers)
+            papers)
         assertThat(makeRepoStubbingEnriching().findPageBySearchOrder(searchOrderMock, paginationContextMock,
-                LC)).containsExactly(paperMock, paperMock)
+            LC)).containsExactly(paperMock, paperMock)
         assertThat(enrichedEntities).containsExactly(paperMock, paperMock)
         verify(searchOrderRepositoryMock).findPageBySearchOrder(searchOrderMock, paginationContextMock)
     }
@@ -234,7 +265,6 @@ internal class JooqPaperRepoTest : JooqEntityRepoTest<PaperRecord, Paper, Long, 
         whenever(filterConditionMapper.map(filter)).thenReturn(conditionMock)
         whenever(sortMapper.map(sort, table)).thenReturn(sortFields)
 
-
         val selectWhereStepMock: SelectWhereStep<PaperRecord> = mock()
         whenever(dsl.selectFrom(table)).thenReturn(selectWhereStepMock)
         val selectConditionStepMock: SelectConditionStep<PaperRecord> = mock()
@@ -268,7 +298,8 @@ internal class JooqPaperRepoTest : JooqEntityRepoTest<PaperRecord, Paper, Long, 
 
     @Test
     fun findingPageOfIdsBySearchOrder() {
-        whenever(searchOrderRepositoryMock.findPageOfIdsBySearchOrder(searchOrderMock, paginationContextMock)).thenReturn(listOf(17L, 3L, 5L))
+        whenever(searchOrderRepositoryMock
+            .findPageOfIdsBySearchOrder(searchOrderMock, paginationContextMock)).thenReturn(listOf(17L, 3L, 5L))
         assertThat(repo.findPageOfIdsBySearchOrder(searchOrderMock, paginationContextMock)).containsExactly(17L, 3L, 5L)
         verify(searchOrderRepositoryMock).findPageOfIdsBySearchOrder(searchOrderMock, paginationContextMock)
     }
@@ -315,9 +346,19 @@ internal class JooqPaperRepoTest : JooqEntityRepoTest<PaperRecord, Paper, Long, 
     }
 
     private fun makeRepoStubbingAttachmentEnriching(): JooqPaperRepo =
-            object : JooqPaperRepo(dsl, mapper, sortMapper, filterConditionMapper, dateTimeService, insertSetStepSetter, updateSetStepSetter, searchOrderRepositoryMock, applicationProperties) {
-                override fun loadSlimAttachment(paperId: Long): List<PaperAttachment> = listOf(paperAttachmentMock)
-            }
+        object : JooqPaperRepo(
+            dsl,
+            mapper,
+            sortMapper,
+            filterConditionMapper,
+            dateTimeService,
+            insertSetStepSetter,
+            updateSetStepSetter,
+            searchOrderRepositoryMock,
+            applicationProperties
+        ) {
+            override fun loadSlimAttachment(paperId: Long): List<PaperAttachment> = listOf(paperAttachmentMock)
+        }
 
     @Test
     fun updateAssociatedEntities_withNullPaper_throws() {
@@ -326,10 +367,9 @@ internal class JooqPaperRepoTest : JooqEntityRepoTest<PaperRecord, Paper, Long, 
             fail<Any>("should have thrown exception")
         } catch (ex: Exception) {
             assertThat(ex)
-                    .isInstanceOf(NullArgumentException::class.java)
-                    .hasMessage("paper must not be null.")
+                .isInstanceOf(NullArgumentException::class.java)
+                .hasMessage("paper must not be null.")
         }
-
     }
 
     @Test
@@ -355,5 +395,4 @@ internal class JooqPaperRepoTest : JooqEntityRepoTest<PaperRecord, Paper, Long, 
         private const val SAMPLE_ID = 3L
         private const val LC = "de"
     }
-
 }

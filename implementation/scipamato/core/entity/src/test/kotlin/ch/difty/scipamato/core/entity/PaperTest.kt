@@ -12,45 +12,49 @@ import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
-import java.util.*
 
 @Suppress("SpellCheckingInspection", "SameParameterValue")
 internal class PaperTest : Jsr303ValidatedEntityTest<Paper>(Paper::class.java) {
 
     override val toString: String
         get() = """Paper[number=2,doi=10.1093/aje/kwu275,pmId=1000
-                |,authors=Turner MC, Cohen A, Jerret M, Gapstur SM, Driver WR, Pope CA 3rd, Krewsky D, Beckermann BS, Samet JM.,firstAuthor=Turner MC,firstAuthorOverridden=false
-                |,title=Title,location=foo,publicationYear=2016,goals=foo,population=<null>,populationPlace=<null>,populationParticipants=<null>,populationDuration=<null>
-                |,exposurePollutant=<null>,exposureAssessment=<null>,methods=<null>,methodStudyDesign=<null>,methodOutcome=<null>,methodStatistics=<null>
-                |,methodConfounders=<null>,result=<null>,resultExposureRange=<null>,resultEffectEstimate=<null>,resultMeasuredOutcome=<null>,conclusion=<null>,comment=<null>,intern=<null>,originalAbstract=<null>
-                |,mainCodeOfCodeclass1=<null>,newsletterLink=<null>,attachments=[],codes=[],id=1,createdBy=10,lastModifiedBy=20,created=2017-01-01T22:15:13.111,lastModified=2017-01-10T22:15:13.111,version=10]""".trimMargin()
+                |,authors=Turner MC, Cohen A, Jerret M, Gapstur SM, Driver WR, Pope CA 3rd, Krewsky D, Beckermann BS, Samet JM.
+                |,firstAuthor=Turner MC,firstAuthorOverridden=false
+                |,title=Title,location=foo,publicationYear=2016,goals=foo,population=<null>,populationPlace=<null>
+                |,populationParticipants=<null>,populationDuration=<null>,exposurePollutant=<null>
+                |,exposureAssessment=<null>,methods=<null>,methodStudyDesign=<null>,methodOutcome=<null>,methodStatistics=<null>
+                |,methodConfounders=<null>,result=<null>,resultExposureRange=<null>,resultEffectEstimate=<null>
+                |,resultMeasuredOutcome=<null>,conclusion=<null>,comment=<null>,intern=<null>,originalAbstract=<null>
+                |,mainCodeOfCodeclass1=<null>,newsletterLink=<null>,attachments=[],codes=[],id=1,createdBy=10
+                |,lastModifiedBy=20,created=2017-01-01T22:15:13.111,lastModified=2017-01-10T22:15:13.111,version=10]
+                |""".trimMargin()
 
     override val displayValue: String
         get() = "Turner MC (2016): Title."
 
     override fun newValidEntity(): Paper =
-            Paper().apply {
-                id = 1L
-                number = 2L
-                doi = VALID_DOI
-                pmId = 1000
-                authors = VALID_AUTHORS
-                firstAuthor = VALID_FIRST_AUTHOR
-                isFirstAuthorOverridden = false
-                title = VALID_TITLE
-                location = NON_NULL_STRING
-                publicationYear = 2016
-                goals = NON_NULL_STRING
+        Paper().apply {
+            id = 1L
+            number = 2L
+            doi = VALID_DOI
+            pmId = 1000
+            authors = VALID_AUTHORS
+            firstAuthor = VALID_FIRST_AUTHOR
+            isFirstAuthorOverridden = false
+            title = VALID_TITLE
+            location = NON_NULL_STRING
+            publicationYear = 2016
+            goals = NON_NULL_STRING
 
-                created = LocalDateTime.parse("2017-01-01T22:15:13.111")
-                createdBy = 10
-                createdByName = "creator"
-                createdByFullName = "creator full name"
-                lastModified = LocalDateTime.parse("2017-01-10T22:15:13.111")
-                lastModifiedBy = 20
-                lastModifiedByName = "modifier"
-                version = 10
-            }
+            created = LocalDateTime.parse("2017-01-01T22:15:13.111")
+            createdBy = 10
+            createdByName = "creator"
+            createdByFullName = "creator full name"
+            lastModified = LocalDateTime.parse("2017-01-10T22:15:13.111")
+            lastModifiedBy = 20
+            lastModifiedByName = "modifier"
+            version = 10
+        }
 
     @Test
     fun validatingPaper_withMultipleAuthorsWithFirstname_withPeriod_succeeds() {
@@ -145,7 +149,8 @@ internal class PaperTest : Jsr303ValidatedEntityTest<Paper>(Paper::class.java) {
 
     @Test
     fun validatingPaper_withMultipleAuthorsWithFirstnames_withoutMissingSpace_fails() {
-        val invalidValue = "Turner MC,Cohen A, Jerret M, Gapstur SM, Driver WR, Pope CA 3rd, Krewsky D, Beckermann BS, Samet JM."
+        val invalidValue =
+            "Turner MC,Cohen A, Jerret M, Gapstur SM, Driver WR, Pope CA 3rd, Krewsky D, Beckermann BS, Samet JM."
         val p = newValidEntity()
         p.authors = invalidValue
         verifyFailedAuthorValidation(p, invalidValue)
@@ -240,15 +245,22 @@ internal class PaperTest : Jsr303ValidatedEntityTest<Paper>(Paper::class.java) {
             addCode(makeCode(5, "A"))
             mainCodeOfCodeclass1 = "1D"
         }
-        assertThat(p.toString()).isEqualTo("""Paper[number=2,doi=10.1093/aje/kwu275,pmId=1000
-                |,authors=Turner MC, Cohen A, Jerret M, Gapstur SM, Driver WR, Pope CA 3rd, Krewsky D, Beckermann BS, Samet JM.,firstAuthor=Turner MC,firstAuthorOverridden=false
-                |,title=Title,location=foo,publicationYear=2016,goals=foo,population=<null>,populationPlace=<null>,populationParticipants=<null>,populationDuration=<null>
-                |,exposurePollutant=<null>,exposureAssessment=<null>,methods=<null>,methodStudyDesign=<null>,methodOutcome=<null>,methodStatistics=<null>
-                |,methodConfounders=<null>,result=<null>,resultExposureRange=<null>,resultEffectEstimate=<null>,resultMeasuredOutcome=<null>,conclusion=<null>,comment=<null>,intern=<null>,originalAbstract=<null>
-                |,mainCodeOfCodeclass1=1D,newsletterLink=<null>,attachments=[],codes=[codesOfClass1=[Code[code=1D,name=code 1D,comment=<null>,internal=false,codeClass=CodeClass[id=1],sort=1,createdBy=<null>,lastModifiedBy=<null>,created=<null>,lastModified=<null>,version=0]]
-                |,codesOfClass1=[Code[code=1E,name=code 1E,comment=<null>,internal=false,codeClass=CodeClass[id=1],sort=1,createdBy=<null>,lastModifiedBy=<null>,created=<null>,lastModified=<null>,version=0]]
-                |,codesOfClass5=[Code[code=5A,name=code 5A,comment=<null>,internal=false,codeClass=CodeClass[id=5],sort=1,createdBy=<null>,lastModifiedBy=<null>,created=<null>,lastModified=<null>,version=0]]]
-                |,id=1,createdBy=10,lastModifiedBy=20,created=2017-01-01T22:15:13.111,lastModified=2017-01-10T22:15:13.111,version=10]""".trimMargin())
+        assertThat(p.toString()).isEqualTo(
+            """Paper[number=2,doi=10.1093/aje/kwu275,pmId=1000
+                |,authors=Turner MC, Cohen A, Jerret M, Gapstur SM, Driver WR, Pope CA 3rd, Krewsky D, Beckermann BS, Samet JM.
+                |,firstAuthor=Turner MC,firstAuthorOverridden=false,title=Title,location=foo,publicationYear=2016
+                |,goals=foo,population=<null>,populationPlace=<null>,populationParticipants=<null>,populationDuration=<null>
+                |,exposurePollutant=<null>,exposureAssessment=<null>,methods=<null>,methodStudyDesign=<null>,methodOutcome=<null>
+                |,methodStatistics=<null>,methodConfounders=<null>,result=<null>,resultExposureRange=<null>,resultEffectEstimate=<null>
+                |,resultMeasuredOutcome=<null>,conclusion=<null>,comment=<null>,intern=<null>,originalAbstract=<null>
+                |,mainCodeOfCodeclass1=1D,newsletterLink=<null>,attachments=[],codes=[codesOfClass1=[Code[code=1D,name=code 1D
+                |,comment=<null>,internal=false,codeClass=CodeClass[id=1],sort=1,createdBy=<null>,lastModifiedBy=<null>
+                |,created=<null>,lastModified=<null>,version=0]],codesOfClass1=[Code[code=1E,name=code 1E,comment=<null>
+                |,internal=false,codeClass=CodeClass[id=1],sort=1,createdBy=<null>,lastModifiedBy=<null>,created=<null>
+                |,lastModified=<null>,version=0]],codesOfClass5=[Code[code=5A,name=code 5A,comment=<null>,internal=false
+                |,codeClass=CodeClass[id=5],sort=1,createdBy=<null>,lastModifiedBy=<null>,created=<null>,lastModified=<null>
+                |,version=0]]],id=1,createdBy=10,lastModifiedBy=20,created=2017-01-01T22:15:13.111,lastModified=2017-01-10T22:15:13.111
+                |,version=10]""".trimMargin())
     }
 
     private fun makeCode(codeClassId: Int, codePart: String): Code {
@@ -265,13 +277,17 @@ internal class PaperTest : Jsr303ValidatedEntityTest<Paper>(Paper::class.java) {
                 add(newAttachment(2, 1, "p2"))
             }
         }
-        assertThat(p.toString()).isEqualTo("""Paper[number=2,doi=10.1093/aje/kwu275,pmId=1000
-                |,authors=Turner MC, Cohen A, Jerret M, Gapstur SM, Driver WR, Pope CA 3rd, Krewsky D, Beckermann BS, Samet JM.,firstAuthor=Turner MC,firstAuthorOverridden=false
-                |,title=Title,location=foo,publicationYear=2016,goals=foo,population=<null>,populationPlace=<null>,populationParticipants=<null>,populationDuration=<null>
-                |,exposurePollutant=<null>,exposureAssessment=<null>,methods=<null>,methodStudyDesign=<null>,methodOutcome=<null>,methodStatistics=<null>
-                |,methodConfounders=<null>,result=<null>,resultExposureRange=<null>,resultEffectEstimate=<null>,resultMeasuredOutcome=<null>,conclusion=<null>,comment=<null>,intern=<null>,originalAbstract=<null>
-                |,mainCodeOfCodeclass1=<null>,newsletterLink=<null>,attachments=[PaperAttachment[paperId=1,name=p1,id=1], PaperAttachment[paperId=1,name=p2,id=2]
-                |],codes=[],id=1,createdBy=10,lastModifiedBy=20,created=2017-01-01T22:15:13.111,lastModified=2017-01-10T22:15:13.111,version=10]""".trimMargin())
+        assertThat(p.toString()).isEqualTo(
+            """Paper[number=2,doi=10.1093/aje/kwu275,pmId=1000
+                |,authors=Turner MC, Cohen A, Jerret M, Gapstur SM, Driver WR, Pope CA 3rd, Krewsky D, Beckermann BS, Samet JM.
+                |,firstAuthor=Turner MC,firstAuthorOverridden=false,title=Title,location=foo,publicationYear=2016,goals=foo
+                |,population=<null>,populationPlace=<null>,populationParticipants=<null>,populationDuration=<null>
+                |,exposurePollutant=<null>,exposureAssessment=<null>,methods=<null>,methodStudyDesign=<null>,methodOutcome=<null>,
+                |methodStatistics=<null>,methodConfounders=<null>,result=<null>,resultExposureRange=<null>,resultEffectEstimate=<null>
+                |,resultMeasuredOutcome=<null>,conclusion=<null>,comment=<null>,intern=<null>,originalAbstract=<null>
+                |,mainCodeOfCodeclass1=<null>,newsletterLink=<null>,attachments=[PaperAttachment[paperId=1,name=p1,id=1]
+                |, PaperAttachment[paperId=1,name=p2,id=2]],codes=[],id=1,createdBy=10,lastModifiedBy=20
+                |,created=2017-01-01T22:15:13.111,lastModified=2017-01-10T22:15:13.111,version=10]""".trimMargin())
     }
 
     private fun newAttachment(id: Int, paperId: Long, name: String): PaperAttachment = PaperAttachment().apply {
@@ -287,8 +303,8 @@ internal class PaperTest : Jsr303ValidatedEntityTest<Paper>(Paper::class.java) {
     fun addingCode_addsItAndAllowsToRetrieveIt() {
         val p = newValidEntity()
         assertThat(p.codes)
-                .isNotNull
-                .isEmpty()
+            .isNotNull
+            .isEmpty()
         p.addCode(makeCode(1, "C"))
 
         assertThat(extractProperty(CODE.fieldName).from(p.codes)).containsExactly("1C")
@@ -443,7 +459,8 @@ internal class PaperTest : Jsr303ValidatedEntityTest<Paper>(Paper::class.java) {
         p2.publicationYear = 2017
         assertThat(p1 == p2).isFalse()
         assertThat(p1.hashCode()).isNotEqualTo(p2.hashCode())
-    }// Note: Did not get this to run with equalsverifier due to 'Abstract
+    }
+    // Note: Did not get this to run with equalsverifier due to 'Abstract
     // delegation: Paper's hashCode method delegates to an abstract method' on codes
 
     override fun verifyEquals() {
@@ -485,26 +502,42 @@ internal class PaperTest : Jsr303ValidatedEntityTest<Paper>(Paper::class.java) {
         assertThat(p.newsletterTopicId).isEqualTo(1)
 
         p.newsletterHeadline = "otherHeadline"
-        validateNewsletterLink(p.newsletterLink, 1, "1806", PublicationStatus.WIP, 1, "mytopic", "otherHeadline")
+        validateNewsletterLink(
+            p.newsletterLink, 1, "1806", PublicationStatus.WIP, 1, "mytopic", "otherHeadline"
+        )
 
         p.setNewsletterTopic(NewsletterTopic(10, "someothertopic"))
-        validateNewsletterLink(p.newsletterLink, 1, "1806", PublicationStatus.WIP, 10, "someothertopic", "otherHeadline")
+        validateNewsletterLink(
+            p.newsletterLink, 1, "1806", PublicationStatus.WIP, 10,
+            "someothertopic", "otherHeadline"
+        )
 
         p.setNewsletterTopic(null)
-        validateNewsletterLink(p.newsletterLink, 1, "1806", PublicationStatus.WIP, null, null, "otherHeadline")
+        validateNewsletterLink(
+            p.newsletterLink, 1, "1806", PublicationStatus.WIP,
+            null, null, "otherHeadline"
+        )
 
         p.newsletterHeadline = null
-        validateNewsletterLink(p.newsletterLink, 1, "1806", PublicationStatus.WIP, null, null, null)
+        validateNewsletterLink(
+            p.newsletterLink, 1, "1806", PublicationStatus.WIP, null, null, null
+        )
 
         assertThat(p.newsletterIssue).isEqualTo("1806")
         assertThat(p.newsletterLink).isNotNull
         assertThat(p.newsletterLink.issue).isEqualTo("1806")
-
     }
 
+    @Suppress("LongParameterList")
     private fun validateNewsletterLink(
-            newsletterLink: Paper.NewsletterLink, newsletterId: Int?, issue: String, status: PublicationStatus,
-            topicId: Int?, topic: String?, headline: String?) {
+        newsletterLink: Paper.NewsletterLink,
+        newsletterId: Int?,
+        issue: String,
+        status: PublicationStatus,
+        topicId: Int?,
+        topic: String?,
+        headline: String?
+    ) {
         assertThat(newsletterLink.newsletterId).isEqualTo(newsletterId)
         assertThat(newsletterLink.issue).isEqualTo(issue)
         assertThat(newsletterLink.publicationStatusId).isEqualTo(status.id)
@@ -535,8 +568,11 @@ internal class PaperTest : Jsr303ValidatedEntityTest<Paper>(Paper::class.java) {
     }
 
     companion object {
-        private const val VALID_AUTHORS = "Turner MC, Cohen A, Jerret M, Gapstur SM, Driver WR, Pope CA 3rd, Krewsky D, Beckermann BS, Samet JM."
-        private const val VALID_COLLECTIVE = "Mehta AJ, Thun GA, Imboden M, Ferrarotti I, Keidel D, Künzli N, Kromhout H, Miedinger D, Phuleria H, Rochat T, Russi EW, Schindler C, Schwartz J, Vermeulen R, Luisetti M, Probst-Hensch N; SAPALDIA team."
+        private const val VALID_AUTHORS =
+            "Turner MC, Cohen A, Jerret M, Gapstur SM, Driver WR, Pope CA 3rd, Krewsky D, Beckermann BS, Samet JM."
+        private val VALID_COLLECTIVE =
+            "Mehta AJ, Thun GA, Imboden M, Ferrarotti I, Keidel D, Künzli N, Kromhout H, Miedinger D, Phuleria H, " +
+                "Rochat T, Russi EW, Schindler C, Schwartz J, Vermeulen R, Luisetti M, Probst-Hensch N; SAPALDIA team."
         private const val VALID_FIRST_AUTHOR = "Turner MC"
         private const val VALID_TITLE = "Title"
         private const val VALID_DOI = "10.1093/aje/kwu275"

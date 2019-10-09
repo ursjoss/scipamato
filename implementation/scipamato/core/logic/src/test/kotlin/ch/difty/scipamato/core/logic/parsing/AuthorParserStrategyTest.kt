@@ -21,5 +21,4 @@ internal class AuthorParserStrategyTest {
     fun gettingStrategyByName_withNotExistingName_returnsPubmedStrategy() {
         assertThat(AuthorParserStrategy.fromProperty("ksjdflksjdk", "key")).isEqualTo(PUBMED)
     }
-
 }

@@ -1,7 +1,6 @@
 package ch.difty.scipamato.core.web.common.pastemodal;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
@@ -22,6 +21,7 @@ import org.mockito.Mock;
 
 import ch.difty.scipamato.core.web.common.PanelTest;
 
+@SuppressWarnings("SpellCheckingInspection")
 class XmlPasteModalPanelTest extends PanelTest<XmlPasteModalPanel> {
 
     @Mock

@@ -4,14 +4,11 @@ import static org.mockito.Mockito.when;
 
 import java.util.Locale;
 
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.checkboxx.CheckBoxX;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect;
 import org.apache.wicket.markup.head.ResourceAggregator;
 import org.apache.wicket.markup.head.filter.JavaScriptFilteredIntoFooterHeaderResponse;
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
-import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +34,7 @@ public abstract class WicketTest {
     @Autowired
     private ApplicationContext applicationContextMock;
 
+    @SuppressWarnings("unused")
     @Autowired
     private DateTimeService dateTimeService;
 
@@ -54,16 +52,8 @@ public abstract class WicketTest {
 
     private WicketTester tester;
 
-    public WebApplication getApplication() {
-        return application;
-    }
-
     public WicketTester getTester() {
         return tester;
-    }
-
-    public DateTimeService getDateTimeService() {
-        return dateTimeService;
     }
 
     protected ItemNavigator<Long> getItemNavigator() {
@@ -72,10 +62,6 @@ public abstract class WicketTest {
 
     protected PublicPaperService getPaperService() {
         return paperServiceMock;
-    }
-
-    protected KeywordService getKeywordService() {
-        return keywordServiceMock;
     }
 
     @BeforeEach
@@ -100,22 +86,10 @@ public abstract class WicketTest {
     protected void setUpHook() {
     }
 
-    protected void assertLabeledTextArea(String b, String id) {
-        final String bb = b + ":" + id;
-        getTester().assertComponent(bb + "Label", Label.class);
-        getTester().assertComponent(bb, TextArea.class);
-    }
-
     protected void assertLabeledTextField(String b, String id) {
         final String bb = b + ":" + id;
         getTester().assertComponent(bb + "Label", Label.class);
         getTester().assertComponent(bb, TextField.class);
-    }
-
-    protected void assertLabeledCheckBoxX(String b, String id) {
-        final String bb = b + ":" + id;
-        getTester().assertComponent(bb + "Label", Label.class);
-        getTester().assertComponent(bb, CheckBoxX.class);
     }
 
     protected void assertLabeledMultiSelect(String b, String id) {

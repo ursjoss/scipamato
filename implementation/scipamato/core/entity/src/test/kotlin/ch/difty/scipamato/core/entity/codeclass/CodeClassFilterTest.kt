@@ -1,4 +1,4 @@
-package ch.difty.scipamato.core.entity.code_class
+package ch.difty.scipamato.core.entity.codeclass
 
 import nl.jqno.equalsverifier.EqualsVerifier
 import nl.jqno.equalsverifier.Warning
@@ -23,15 +23,15 @@ internal class CodeClassFilterTest {
     @Test
     fun equals() {
         EqualsVerifier
-                .forClass(CodeClassFilter::class.java)
-                .withRedefinedSuperclass()
-                .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
-                .verify()
+            .forClass(CodeClassFilter::class.java)
+            .withRedefinedSuperclass()
+            .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
+            .verify()
     }
 
     @Test
     fun assertEnumFields() {
-        assertThat(CodeClassFilter.CodeClassFilterFields.values().map { it.fieldName }).containsExactly("nameMask", "descriptionMask")
+        assertThat(CodeClassFilter.CodeClassFilterFields.values().map { it.fieldName })
+            .containsExactly("nameMask", "descriptionMask")
     }
-
 }

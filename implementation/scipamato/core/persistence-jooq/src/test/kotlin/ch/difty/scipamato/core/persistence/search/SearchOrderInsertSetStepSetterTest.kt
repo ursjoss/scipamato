@@ -6,11 +6,9 @@ import ch.difty.scipamato.core.entity.search.SearchOrder
 import ch.difty.scipamato.core.persistence.InsertSetStepSetter
 import ch.difty.scipamato.core.persistence.InsertSetStepSetterTest
 import ch.difty.scipamato.core.persistence.RecordMapperTest
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.whenever
-import org.jooq.InsertSetMoreStep
+import com.nhaarman.mockitokotlin2.*
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito.*
+import org.mockito.ArgumentMatchers.anyLong
 
 internal class SearchOrderInsertSetStepSetterTest : InsertSetStepSetterTest<SearchOrderRecord, SearchOrder>() {
 
@@ -38,9 +36,9 @@ internal class SearchOrderInsertSetStepSetterTest : InsertSetStepSetterTest<Sear
     }
 
     override fun verifyCallToFieldsExceptKeyAndAudit() {
-        verify<SearchOrder>(entity).name
-        verify<SearchOrder>(entity).owner
-        verify<SearchOrder>(entity).isGlobal
+        verify(entity).name
+        verify(entity).owner
+        verify(entity).isGlobal
     }
 
     override fun verifySettingFieldsExceptKeyAndAudit() {
@@ -58,7 +56,7 @@ internal class SearchOrderInsertSetStepSetterTest : InsertSetStepSetterTest<Sear
     fun consideringSettingKeyOf_withNullId_doesNotSetId() {
         whenever(entity.id).thenReturn(null)
         setter.considerSettingKeyOf(moreStep, entity)
-        verify<SearchOrder>(entity).id
+        verify(entity).id
     }
 
     @Test
@@ -67,14 +65,14 @@ internal class SearchOrderInsertSetStepSetterTest : InsertSetStepSetterTest<Sear
 
         setter.considerSettingKeyOf(moreStep, entity)
 
-        verify<SearchOrder>(entity).id
-        verify<InsertSetMoreStep<SearchOrderRecord>>(moreStep).set(SEARCH_ORDER.ID, SearchOrderRecordMapperTest.ID)
+        verify(entity).id
+        verify(moreStep).set(SEARCH_ORDER.ID, SearchOrderRecordMapperTest.ID)
     }
 
     @Test
     fun resettingIdToEntity_withNullRecord_doesNothing() {
         setter.resetIdToEntity(entity, null)
-        verify<SearchOrder>(entity, never()).id = anyLong()
+        verify(entity, never()).id = anyLong()
     }
 
     @Test
@@ -82,7 +80,6 @@ internal class SearchOrderInsertSetStepSetterTest : InsertSetStepSetterTest<Sear
         whenever(recordMock.id).thenReturn(3L)
         setter.resetIdToEntity(entity, recordMock)
         verify(recordMock).id
-        verify<SearchOrder>(entity).id = anyLong()
+        verify(entity).id = anyLong()
     }
-
 }

@@ -12,12 +12,12 @@ import ch.difty.scipamato.core.entity.projection.NewsletterAssociation;
 class ResultPanelInSearchModeTest extends ResultPanelTest {
 
     @Override
-    protected Mode getMode() {
+    Mode getMode() {
         return Mode.SEARCH;
     }
 
     @Override
-    protected void assertTableRow(String bb) {
+    void assertTableRow(String bb) {
         assertEditableTableRow(bb);
     }
 

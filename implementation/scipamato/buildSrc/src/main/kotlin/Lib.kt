@@ -1,10 +1,9 @@
 import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.dsl.DependencyHandler
-import org.gradle.api.plugins.PluginAware
-import org.gradle.kotlin.dsl.apply
 import java.io.File
 import java.util.*
 
+@Suppress("TooManyFunctions", "MaximumLineLength", "MemberVisibilityCanBePrivate", "SpellCheckingInspection")
 object Lib {
 
     //region:dependencyVersions
@@ -81,12 +80,10 @@ object Lib {
     fun springSecurity(module: String) = Dep("org.springframework.security", "spring-security-$module")
     fun springBootAdmin() = Dep("de.codecentric", "spring-boot-admin-starter-client", springBootAdminVersion)
 
-
     // Lombok
 
     @Deprecated("convert to kotlin", ReplaceWith("kotlin data classes, kotlin-logging"))
     fun lombok() = Dep("org.projectlombok", "lombok")
-
 
     // Logging
 
@@ -94,19 +91,16 @@ object Lib {
     fun kotlinLogging() = Dep("io.github.microutils", "kotlin-logging", kotlinLoggingVersion)
     fun logback() = Dep("ch.qos.logback", "logback-core")
 
-
     // DB
 
     fun jOOQ(module: String = "jooq") = Dep("org.jooq", module, jooqVersion)
     fun flyway() = Dep("org.flywaydb", "flyway-core")
     fun postgres() = Dep("org.postgresql", "postgresql")
 
-
     // Cloud
 
     fun springCloud(module: String) = Dep("org.springframework.cloud", "spring-cloud-starter-$module", springCloudStarterVersion)
     fun openfeign(module: String) = Dep("io.github.openfeign", "feign-$module", openfeignVersion)
-
 
     // Wicket
 
@@ -118,14 +112,12 @@ object Lib {
     fun fontAwesome() = Dep("org.webjars", "font-awesome", fontAwesomeVersion)
     fun jasperreports(module: String = "") = Dep("net.sf.jasperreports", "jasperreports${if (module.isNotBlank()) "-$module" else ""}", jasperReportVersion)
 
-
     // JSR 303 bean validation provider implementation
 
     fun validationApi() = Dep("javax.validation", "validation-api")
     fun hibernateValidator() = Dep("org.hibernate.validator", "hibernate-validator")
     fun javaxElApi() = Dep("javax.el", "javax.el-api", javaxElApiVersion)
     fun javaxElImpl() = Dep("org.glassfish", "javax.el")
-
 
     // Utility libraries
 
@@ -136,7 +128,6 @@ object Lib {
     fun javaxActivation() = Dep("com.sun.activation", "javax.activation", javaxActivationVersion)
     fun javaxActivationApi() = Dep("javax.activation", "javax.activation-api", javaxActivationVersion)
 
-
     // Caching: JCache with ehcache as cache provider
 
     fun cacheApi() = Dep("javax.cache", "cache-api")
@@ -146,7 +137,6 @@ object Lib {
     fun jaxbRuntime() = Dep("org.glassfish.jaxb", "jaxb-runtime")
     fun jaxbCore() = Dep("com.sun.xml.bind", "jaxb-core", jaxbCoreVersion)
     fun jaxb(module: String) = Dep("com.sun.xml.bind", "jaxb-$module", jaxbImplVersion)
-
 
     // Test Libraries
 
@@ -201,28 +191,21 @@ class Plugin(val id: String, val version: String? = null) {
     val idVersion: String get() = "$id${if (version != null) ":$version" else ""}"
 }
 
-fun PluginAware.apply(plugin: Plugin) = apply(null, plugin.idVersion, null)
-
 fun DependencyHandler.annotationProcessor(dependencyNotation: Dep): Dependency? = add("annotationProcessor", dependencyNotation.id)
 fun DependencyHandler.api(dependencyNotation: Dep): Dependency? = add("api", dependencyNotation.id)
 fun DependencyHandler.compileOnly(dependencyNotation: Dep): Dependency? = add("compileOnly", dependencyNotation.id)
 fun DependencyHandler.implementation(dependencyNotation: Dep): Dependency? = add("implementation", dependencyNotation.id)
 fun DependencyHandler.runtimeOnly(dependencyNotation: Dep): Dependency? = add("runtimeOnly", dependencyNotation.id)
 
-fun DependencyHandler.testApi(dependencyNotation: Dep): Dependency? = add("testApi", dependencyNotation.id)
 fun DependencyHandler.testAnnotationProcessor(dependencyNotation: Dep): Dependency? = add("testAnnotationProcessor", dependencyNotation.id)
 fun DependencyHandler.testCompile(dependencyNotation: Dep): Dependency? = add("testCompile", dependencyNotation.id)
 fun DependencyHandler.testImplementation(dependencyNotation: Dep): Dependency? = add("testImplementation", dependencyNotation.id)
 fun DependencyHandler.testRuntimeOnly(dependencyNotation: Dep): Dependency? = add("testRuntimeOnly", dependencyNotation.id)
-fun DependencyHandler.testLibApi(dependencyNotation: Dep): Dependency? = add("testLibApi", dependencyNotation.id)
 fun DependencyHandler.testLibCompile(dependencyNotation: Dep): Dependency? = add("testLibCompile", dependencyNotation.id)
 fun DependencyHandler.testLibAnnotationProcessor(dependencyNotation: Dep): Dependency? = add("testLibAnnotationProcessor", dependencyNotation.id)
 fun DependencyHandler.integrationTestCompile(dependencyNotation: Dep): Dependency? = add("integrationTestCompile", dependencyNotation.id)
 fun DependencyHandler.integrationTestAnnotationProcessor(dependencyNotation: Dep): Dependency? = add("integrationTestAnnotationProcessor", dependencyNotation.id)
-fun DependencyHandler.integrationTestRuntime(dependencyNotation: Dep): Dependency? = add("integrationTestRuntime", dependencyNotation.id)
 fun DependencyHandler.integrationTestRuntimeOnly(dependencyNotation: Dep): Dependency? = add("integrationTestRuntimeOnly", dependencyNotation.id)
-fun DependencyHandler.testIntegrationTestAnnotationProcessor(dependencyNotation: Dep): Dependency? = add("testIntegrationTestAnnotationProcessor", dependencyNotation.id)
-fun DependencyHandler.adhocTestCompile(dependencyNotation: Dep): Dependency? = add("adhocTestCompile", dependencyNotation.id)
 fun DependencyHandler.jaxb(dependencyNotation: Dep): Dependency? = add("jaxb", dependencyNotation.id)
 fun DependencyHandler.jooqModelatorRuntime(dependencyNotation: Dep): Dependency? = add("jooqModelatorRuntime", dependencyNotation.id)
 fun DependencyHandler.developmentOnly(dependencyNotation: Dep): Dependency? = add("developmentOnly", dependencyNotation.id)

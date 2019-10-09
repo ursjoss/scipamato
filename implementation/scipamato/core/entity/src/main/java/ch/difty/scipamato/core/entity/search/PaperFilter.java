@@ -1,5 +1,7 @@
 package ch.difty.scipamato.core.entity.search;
 
+import javax.validation.constraints.NotNull;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -36,6 +38,7 @@ public class PaperFilter extends ScipamatoFilter implements PaperSlimFilter {
             this.name = name;
         }
 
+        @NotNull
         @Override
         public String getFieldName() {
             return name;

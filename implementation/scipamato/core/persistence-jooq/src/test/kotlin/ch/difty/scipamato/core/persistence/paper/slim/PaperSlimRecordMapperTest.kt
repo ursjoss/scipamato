@@ -13,13 +13,13 @@ internal class PaperSlimRecordMapperTest : RecordMapperTest<PaperRecord, PaperSl
     override val mapper: RecordMapper<PaperRecord, PaperSlim> = PaperSlimRecordMapper()
 
     override fun makeRecord(): PaperRecord =
-            PaperRecord().apply {
-                id = PaperRecordMapperTest.ID
-                number = PaperRecordMapperTest.NUMBER
-                firstAuthor = PaperRecordMapperTest.FIRST_AUTHOR
-                title = PaperRecordMapperTest.TITLE
-                publicationYear = PaperRecordMapperTest.PUBLICATION_YEAR
-            }
+        PaperRecord().apply {
+            id = PaperRecordMapperTest.ID
+            number = PaperRecordMapperTest.NUMBER
+            firstAuthor = PaperRecordMapperTest.FIRST_AUTHOR
+            title = PaperRecordMapperTest.TITLE
+            publicationYear = PaperRecordMapperTest.PUBLICATION_YEAR
+        }
 
     override fun setAuditFieldsIn(record: PaperRecord) {
         record.created = CREATED
@@ -47,5 +47,4 @@ internal class PaperSlimRecordMapperTest : RecordMapperTest<PaperRecord, PaperSl
             auditFixtureFor(entity)
         }
     }
-
 }

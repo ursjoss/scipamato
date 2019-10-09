@@ -8,9 +8,10 @@ processResources {
         include '**/application*.properties'
         project.properties.findAll().each {
             prop ->
+                String projectPropKey = "project.${prop.key}"
                 if (prop.value != null) {
                     filter(ReplaceTokens, tokens: [(prop.key): prop.value])
-                    filter(ReplaceTokens, tokens: [('project.' + prop.key): prop.value])
+                    filter(ReplaceTokens, tokens: [(projectPropKey): prop.value])
                 }
         }
     }

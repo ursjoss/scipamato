@@ -13,9 +13,10 @@ import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields;
 
 class PaperSummaryTest extends JasperEntityTest {
 
-    private PaperSummary               ps;
-    private ReportHeaderFields         rhf                    = newReportHeaderFields();
-    private CoreShortFieldConcatenator shortFieldConcatenator = new CoreShortFieldWithEmptyMainFieldConcatenator();
+    private final CoreShortFieldConcatenator shortFieldConcatenator = new CoreShortFieldWithEmptyMainFieldConcatenator();
+
+    private PaperSummary       ps;
+    private ReportHeaderFields rhf = newReportHeaderFields();
 
     private ReportHeaderFields newReportHeaderFields() {
         return ReportHeaderFields

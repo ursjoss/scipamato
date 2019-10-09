@@ -14,9 +14,10 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.verify
-import java.util.*
 
-internal class JooqSearchOrderRepoTest : JooqEntityRepoTest<SearchOrderRecord, SearchOrder, Long, ch.difty.scipamato.core.db.tables.SearchOrder, SearchOrderRecordMapper, SearchOrderFilter>() {
+internal class JooqSearchOrderRepoTest :
+    JooqEntityRepoTest<SearchOrderRecord, SearchOrder, Long, ch.difty.scipamato.core.db.tables.SearchOrder,
+        SearchOrderRecordMapper, SearchOrderFilter>() {
 
     override val unpersistedEntity = mock<SearchOrder>()
     override val persistedEntity = mock<SearchOrder>()
@@ -36,17 +37,44 @@ internal class JooqSearchOrderRepoTest : JooqEntityRepoTest<SearchOrderRecord, S
 
     override val recordVersion = SEARCH_ORDER.VERSION!!
 
-    override val repo = JooqSearchOrderRepo(dsl, mapper, sortMapper, filterConditionMapper, dateTimeService, insertSetStepSetter, updateSetStepSetter, applicationProperties)
+    override val repo = JooqSearchOrderRepo(
+        dsl,
+        mapper,
+        sortMapper,
+        filterConditionMapper,
+        dateTimeService,
+        insertSetStepSetter,
+        updateSetStepSetter,
+        applicationProperties
+    )
 
-    override fun makeRepoFindingEntityById(entity: SearchOrder): EntityRepository<SearchOrder, Long, SearchOrderFilter> =
-            object : JooqSearchOrderRepo(dsl, mapper, sortMapper, filterConditionMapper, dateTimeService, insertSetStepSetter, updateSetStepSetter, applicationProperties) {
-                override fun findById(id: Long?, version: Int): SearchOrder = entity
-            }
+    override fun makeRepoFindingEntityById(entity: SearchOrder):
+        EntityRepository<SearchOrder, Long, SearchOrderFilter> = object : JooqSearchOrderRepo(
+        dsl,
+        mapper,
+        sortMapper,
+        filterConditionMapper,
+        dateTimeService,
+        insertSetStepSetter,
+        updateSetStepSetter,
+        applicationProperties
+    ) {
+        override fun findById(id: Long?, version: Int): SearchOrder = entity
+    }
 
-    override fun makeRepoSavingReturning(returning: SearchOrderRecord): EntityRepository<SearchOrder, Long, SearchOrderFilter> =
-            object : JooqSearchOrderRepo(dsl, mapper, sortMapper, filterConditionMapper, dateTimeService, insertSetStepSetter, updateSetStepSetter, applicationProperties) {
-                override fun doSave(entity: SearchOrder, languageCode: String): SearchOrderRecord = returning
-            }
+    override fun makeRepoSavingReturning(returning: SearchOrderRecord):
+        EntityRepository<SearchOrder, Long, SearchOrderFilter> = object : JooqSearchOrderRepo(
+        dsl,
+        mapper,
+        sortMapper,
+        filterConditionMapper,
+        dateTimeService,
+        insertSetStepSetter,
+        updateSetStepSetter,
+        applicationProperties
+    ) {
+        override fun doSave(entity: SearchOrder, languageCode: String): SearchOrderRecord = returning
+    }
 
     override fun expectEntityIdsWithValues() {
         whenever(unpersistedEntity.id).thenReturn(SAMPLE_ID)
@@ -79,36 +107,72 @@ internal class JooqSearchOrderRepoTest : JooqEntityRepoTest<SearchOrderRecord, S
     }
 
     private fun makeRepoFindingNestedEntities(): JooqSearchOrderRepo =
-            object : JooqSearchOrderRepo(dsl, mapper, sortMapper, filterConditionMapper, dateTimeService, insertSetStepSetter, updateSetStepSetter, applicationProperties) {
+        object : JooqSearchOrderRepo(
+            dsl,
+            mapper,
+            sortMapper,
+            filterConditionMapper,
+            dateTimeService,
+            insertSetStepSetter,
+            updateSetStepSetter,
+            applicationProperties
+        ) {
 
-                val st1 = SearchTerm.newSearchTerm(1, SearchTermType.STRING.id, 3, Paper.PaperFields.AUTHORS.fieldName, "joss")
-                val st2 = SearchTerm.newSearchTerm(2, SearchTermType.INTEGER.id, 3, Paper.PaperFields.PUBL_YEAR.fieldName, "2014")
-                val st3 = SearchTerm.newSearchTerm(3, SearchTermType.INTEGER.id, 4, Paper.PaperFields.PUBL_YEAR.fieldName, "2014-2016")
-                val st4 = SearchTerm.newSearchTerm(4, SearchTermType.AUDIT.id, 5, Paper.PaperFields.CREATED_BY.fieldName, "mkj")
+            val st1 = SearchTerm.newSearchTerm(
+                1,
+                SearchTermType.STRING.id,
+                3,
+                Paper.PaperFields.AUTHORS.fieldName,
+                "joss"
+            )
+            val st2 = SearchTerm.newSearchTerm(
+                2,
+                SearchTermType.INTEGER.id,
+                3,
+                Paper.PaperFields.PUBL_YEAR.fieldName,
+                "2014"
+            )
+            val st3 = SearchTerm.newSearchTerm(
+                3,
+                SearchTermType.INTEGER.id,
+                4,
+                Paper.PaperFields.PUBL_YEAR.fieldName,
+                "2014-2016"
+            )
+            val st4 = SearchTerm.newSearchTerm(
+                4,
+                SearchTermType.AUDIT.id,
+                5,
+                Paper.PaperFields.CREATED_BY.fieldName,
+                "mkj"
+            )
 
-                override fun fetchSearchTermsForSearchOrderWithId(searchOrderId: Long): List<SearchTerm> {
-                    return if (searchOrderId == SAMPLE_ID) {
-                        listOf(st1, st2, st3, st4)
-                    } else {
-                        ArrayList()
-                    }
+            override fun fetchSearchTermsForSearchOrderWithId(searchOrderId: Long): List<SearchTerm> {
+                return if (searchOrderId == SAMPLE_ID) {
+                    listOf(st1, st2, st3, st4)
+                } else {
+                    ArrayList()
                 }
-
-                override fun fetchExcludedPaperIdsForSearchOrderWithId(searchOrderId: Long): List<Long> {
-                    return if (searchOrderId == SAMPLE_ID) {
-                        listOf(17L, 33L, 42L)
-                    } else {
-                        ArrayList()
-                    }
-                }
-
-                override fun fetchCodesForSearchConditionWithId(searchCondition: SearchCondition, languageCode: String): List<Code> =
-                        listOf(Code("1F", "Code 1F", "", false, 1, "CC 1", "", 0))
-
-                override fun fetchSearchConditionWithId(scId: Long?): SearchCondition = SearchCondition(scId)
-                override fun findConditionIdsWithSearchTerms(searchOrderId: Long?): List<Long> = ArrayList()
-                override fun findConditionsOf(searchOrderId: Long?): List<SearchCondition> = ArrayList()
             }
+
+            override fun fetchExcludedPaperIdsForSearchOrderWithId(searchOrderId: Long): List<Long> {
+                return if (searchOrderId == SAMPLE_ID) {
+                    listOf(17L, 33L, 42L)
+                } else {
+                    ArrayList()
+                }
+            }
+
+            override fun fetchCodesForSearchConditionWithId(
+                searchCondition: SearchCondition,
+                languageCode: String
+            ): List<Code> =
+                listOf(Code("1F", "Code 1F", "", false, 1, "CC 1", "", 0))
+
+            override fun fetchSearchConditionWithId(scId: Long?): SearchCondition = SearchCondition(scId)
+            override fun findConditionIdsWithSearchTerms(searchOrderId: Long?): List<Long> = ArrayList()
+            override fun findConditionsOf(searchOrderId: Long?): List<SearchCondition> = ArrayList()
+        }
 
     @Test
     fun enrichingAssociatedEntities_withEntityId_fillsTheSearchConditionsAndTerms() {
@@ -122,7 +186,7 @@ internal class JooqSearchOrderRepoTest : JooqEntityRepoTest<SearchOrderRecord, S
         assertThat(so.searchConditions).hasSize(3)
 
         val so1 = so
-                .searchConditions[0]
+            .searchConditions[0]
         assertThat(so1.authors).isEqualTo("joss")
         assertThat(so1.publicationYear).isEqualTo("2014")
         assertThat(so1.displayValue).isEqualTo("joss AND 2014 AND 1F")
@@ -221,11 +285,26 @@ internal class JooqSearchOrderRepoTest : JooqEntityRepoTest<SearchOrderRecord, S
     @Test
     fun addingSearchCondition_nonDirty_returnsPersistedEquivalentSearchCondition() {
         val equivalentPersistedSearchCondition = mock(SearchCondition::class.java)
-        val repo = object : JooqSearchOrderRepo(dsl, mapper, sortMapper, filterConditionMapper, dateTimeService, insertSetStepSetter, updateSetStepSetter, applicationProperties) {
-            override fun findEquivalentPersisted(searchCondition: SearchCondition, searchOrderId: Long, languageCode: String): Optional<SearchCondition> =
-                    Optional.of(equivalentPersistedSearchCondition)
+        val repo = object : JooqSearchOrderRepo(
+            dsl,
+            mapper,
+            sortMapper,
+            filterConditionMapper,
+            dateTimeService,
+            insertSetStepSetter,
+            updateSetStepSetter,
+            applicationProperties
+        ) {
+            override fun findEquivalentPersisted(
+                searchCondition: SearchCondition,
+                searchOrderId: Long,
+                languageCode: String
+            ): java.util.Optional<SearchCondition> = java.util.Optional.of(equivalentPersistedSearchCondition)
 
-            override fun hasDirtyNewsletterFields(searchCondition: SearchCondition, psc: SearchCondition): Boolean = false
+            override fun hasDirtyNewsletterFields(
+                searchCondition: SearchCondition,
+                psc: SearchCondition
+            ): Boolean = false
         }
         assertThat(repo.addSearchCondition(SearchCondition(), 1, "en")).isEqualTo(equivalentPersistedSearchCondition)
     }
@@ -265,9 +344,21 @@ internal class JooqSearchOrderRepoTest : JooqEntityRepoTest<SearchOrderRecord, S
         so.add(sc2)
 
         val updateCalled = longArrayOf(0)
-        val repo = object : JooqSearchOrderRepo(dsl, mapper, sortMapper, filterConditionMapper, dateTimeService, insertSetStepSetter, updateSetStepSetter, applicationProperties) {
-
-            override fun updateSearchCondition(searchCondition: SearchCondition, searchOrderId: Long, languageCode: String): SearchCondition? {
+        val repo = object : JooqSearchOrderRepo(
+            dsl,
+            mapper,
+            sortMapper,
+            filterConditionMapper,
+            dateTimeService,
+            insertSetStepSetter,
+            updateSetStepSetter,
+            applicationProperties
+        ) {
+            override fun updateSearchCondition(
+                searchCondition: SearchCondition,
+                searchOrderId: Long,
+                languageCode: String
+            ): SearchCondition? {
                 updateCalled[0] = updateCalled[0] + searchCondition.searchConditionId
                 return null
             }
@@ -275,7 +366,6 @@ internal class JooqSearchOrderRepoTest : JooqEntityRepoTest<SearchOrderRecord, S
         repo.storeExistingConditionsOf(so, "de")
 
         assertThat(updateCalled[0]).isEqualTo(30L)
-
     }
 
     companion object {

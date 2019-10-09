@@ -4,7 +4,9 @@ import ch.difty.scipamato.common.NullArgumentException
 import ch.difty.scipamato.common.entity.CodeClassId
 import ch.difty.scipamato.core.entity.Code
 import ch.difty.scipamato.core.entity.IdScipamatoEntity.IdScipamatoEntityFields.ID
-import ch.difty.scipamato.core.entity.Paper.PaperFields.*
+import ch.difty.scipamato.core.entity.Paper.PaperFields.DOI
+import ch.difty.scipamato.core.entity.Paper.PaperFields.FIRST_AUTHOR_OVERRIDDEN
+import ch.difty.scipamato.core.entity.Paper.PaperFields.NUMBER
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.fail
@@ -16,7 +18,7 @@ import org.mockito.Mockito.mock
 private const val SEARCH_CONDITION_ID: Long = 1
 private const val X = "x"
 
-@Suppress("SpellCheckingInspection")
+@Suppress("LargeClass", "SpellCheckingInspection")
 internal class SearchConditionTest {
 
     private val sc1 = SearchCondition(SEARCH_CONDITION_ID)
@@ -1008,8 +1010,8 @@ internal class SearchConditionTest {
 
         sc2.publicationYear = null
         assertThat(sc2.removedKeys)
-                .hasSize(1)
-                .containsOnly("publicationYear")
+            .hasSize(1)
+            .containsOnly("publicationYear")
     }
 
     @Test
@@ -1077,10 +1079,9 @@ internal class SearchConditionTest {
             fail<Any>("should have thrown exception")
         } catch (ex: Error) {
             assertThat(ex)
-                    .isInstanceOf(AssertionError::class.java)
-                    .hasMessage("SearchTermType.UNSUPPORTED is not supported")
+                .isInstanceOf(AssertionError::class.java)
+                .hasMessage("SearchTermType.UNSUPPORTED is not supported")
         }
-
     }
 
     @Test
@@ -1090,10 +1091,9 @@ internal class SearchConditionTest {
             fail<Any>("should have thrown exception")
         } catch (ex: Exception) {
             assertThat(ex)
-                    .isInstanceOf(NullArgumentException::class.java)
-                    .hasMessage("searchTerm must not be null.")
+                .isInstanceOf(NullArgumentException::class.java)
+                .hasMessage("searchTerm must not be null.")
         }
-
     }
 
     @Test
@@ -1144,5 +1144,4 @@ internal class SearchConditionTest {
         sc1.newsletterIssue = null
         assertNull(sc1.newsletterIssue)
     }
-
 }

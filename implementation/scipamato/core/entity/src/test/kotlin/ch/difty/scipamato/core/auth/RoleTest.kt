@@ -1,8 +1,12 @@
 package ch.difty.scipamato.core.auth
 
-import ch.difty.scipamato.core.auth.Role.*
-import org.assertj.core.api.Assertions.*
-
+import ch.difty.scipamato.core.auth.Role.ADMIN
+import ch.difty.scipamato.core.auth.Role.USER
+import ch.difty.scipamato.core.auth.Role.VIEWER
+import ch.difty.scipamato.core.auth.Role.of
+import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.extractProperty
+import org.assertj.core.api.Assertions.fail
 import org.junit.jupiter.api.Test
 
 internal class RoleTest {
@@ -24,7 +28,8 @@ internal class RoleTest {
 
     @Test
     fun assertDescriptions() {
-        assertThat(extractProperty("description").from(Role.values())).containsExactly("System Administration", "Main SciPaMaTo Users", "Read-only Viewer")
+        assertThat(Role.values().map { it.description })
+            .containsExactly("System Administration", "Main SciPaMaTo Users", "Read-only Viewer")
     }
 
     @Test
@@ -47,12 +52,10 @@ internal class RoleTest {
         } catch (ex: Exception) {
             assertThat(ex).isInstanceOf(IllegalArgumentException::class.java).hasMessage("No matching type for id 0")
         }
-
     }
 
     @Test
     fun of_withNullId_returnsNull() {
         assertThat(of(null)).isNull()
     }
-
 }

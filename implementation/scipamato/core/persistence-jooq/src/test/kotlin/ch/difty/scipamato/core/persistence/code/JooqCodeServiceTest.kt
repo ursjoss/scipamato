@@ -37,8 +37,8 @@ internal class JooqCodeServiceTest {
         val languageCode = "de"
 
         val codes = listOf(
-                Code("c1", "Code1", null, false, 1, "cc1", "", 1),
-                Code("c2", "Code2", null, false, 1, "cc1", "", 2)
+            Code("c1", "Code1", null, false, 1, "cc1", "", 1),
+            Code("c2", "Code2", null, false, 1, "cc1", "", 2)
         )
         whenever(repo.findCodesOfClass(ccId, languageCode)).thenReturn(codes)
 
@@ -66,7 +66,8 @@ internal class JooqCodeServiceTest {
     @Test
     fun gettingPageOfEntityDefinitions_delegatesToRepo() {
         whenever(repo.findPageOfCodeDefinitions(filterMock, paginationContextMock)).thenReturn(codeDefinitions)
-        assertThat(service.findPageOfEntityDefinitions(filterMock, paginationContextMock)).hasSameElementsAs(codeDefinitions)
+        assertThat(service.findPageOfEntityDefinitions(filterMock, paginationContextMock))
+            .hasSameElementsAs(codeDefinitions)
         verify(repo).findPageOfCodeDefinitions(filterMock, paginationContextMock)
     }
 
@@ -100,5 +101,4 @@ internal class JooqCodeServiceTest {
         assertThat(service.getCodeClass1("en")).isEqualTo(cc1)
         verify(repo).getCodeClass1("en")
     }
-
 }

@@ -1,9 +1,11 @@
 package ch.difty.scipamato.common.entity.newsletter
 
-import ch.difty.scipamato.common.entity.newsletter.PublicationStatus.*
+import ch.difty.scipamato.common.entity.newsletter.PublicationStatus.CANCELLED
+import ch.difty.scipamato.common.entity.newsletter.PublicationStatus.PUBLISHED
+import ch.difty.scipamato.common.entity.newsletter.PublicationStatus.WIP
+import ch.difty.scipamato.common.entity.newsletter.PublicationStatus.values
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.fail
-
 import org.junit.jupiter.api.Test
 
 internal class PublicationStatusTest {
@@ -30,8 +32,8 @@ internal class PublicationStatusTest {
     @Test
     fun assertNames() {
         assertThat(values())
-                .extracting("description")
-                .containsExactly("in progress", "published", "cancelled")
+            .extracting("description")
+            .containsExactly("in progress", "published", "cancelled")
     }
 
     @Test
@@ -41,8 +43,8 @@ internal class PublicationStatusTest {
             fail<Any>("should have thrown")
         } catch (ex: Exception) {
             assertThat(ex)
-                    .isInstanceOf(IllegalArgumentException::class.java)
-                    .hasMessage("id -2 is not supported")
+                .isInstanceOf(IllegalArgumentException::class.java)
+                .hasMessage("id -2 is not supported")
         }
 
         try {
@@ -50,10 +52,9 @@ internal class PublicationStatusTest {
             fail<Any>("should have thrown")
         } catch (ex: Exception) {
             assertThat(ex)
-                    .isInstanceOf(IllegalArgumentException::class.java)
-                    .hasMessage("id 2 is not supported")
+                .isInstanceOf(IllegalArgumentException::class.java)
+                .hasMessage("id 2 is not supported")
         }
-
     }
 
     @Test

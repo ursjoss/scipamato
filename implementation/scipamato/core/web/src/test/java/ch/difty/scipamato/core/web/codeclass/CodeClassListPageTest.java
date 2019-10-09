@@ -12,9 +12,9 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationRequest;
-import ch.difty.scipamato.core.entity.code_class.CodeClassDefinition;
-import ch.difty.scipamato.core.entity.code_class.CodeClassFilter;
-import ch.difty.scipamato.core.entity.code_class.CodeClassTranslation;
+import ch.difty.scipamato.core.entity.codeclass.CodeClassDefinition;
+import ch.difty.scipamato.core.entity.codeclass.CodeClassFilter;
+import ch.difty.scipamato.core.entity.codeclass.CodeClassTranslation;
 import ch.difty.scipamato.core.web.common.BasePageTest;
 
 @SuppressWarnings("SameParameterValue")

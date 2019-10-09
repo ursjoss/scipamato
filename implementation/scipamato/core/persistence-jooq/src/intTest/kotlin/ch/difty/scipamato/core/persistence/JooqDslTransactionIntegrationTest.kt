@@ -14,6 +14,7 @@ import org.springframework.transaction.support.DefaultTransactionDefinition
 import org.testcontainers.junit.jupiter.Testcontainers
 import java.util.concurrent.atomic.AtomicBoolean
 
+@Suppress("MagicNumber")
 @JooqTest
 @Testcontainers
 internal open class JooqDslTransactionIntegrationTest {
@@ -34,15 +35,15 @@ internal open class JooqDslTransactionIntegrationTest {
             // This is a "bug". The same book is created twice, resulting in a constraint violation exception
             repeat(2) {
                 dsl.insertInto(PAPER)
-                        .set(PAPER.ID, MAX_ID_PREPOPULATED + 1)
-                        .set(PAPER.NUMBER, 1000L)
-                        .set(PAPER.AUTHORS, "authors")
-                        .set(PAPER.FIRST_AUTHOR, "firstAuthor")
-                        .set(PAPER.FIRST_AUTHOR_OVERRIDDEN, false)
-                        .set(PAPER.TITLE, "title")
-                        .set(PAPER.LOCATION, "location")
-                        .set(PAPER.GOALS, "goals")
-                        .execute()
+                    .set(PAPER.ID, MAX_ID_PREPOPULATED + 1)
+                    .set(PAPER.NUMBER, 1000L)
+                    .set(PAPER.AUTHORS, "authors")
+                    .set(PAPER.FIRST_AUTHOR, "firstAuthor")
+                    .set(PAPER.FIRST_AUTHOR_OVERRIDDEN, false)
+                    .set(PAPER.TITLE, "title")
+                    .set(PAPER.LOCATION, "location")
+                    .set(PAPER.GOALS, "goals")
+                    .execute()
             }
             fail<Any>()
         } catch (e: DataAccessException) {
@@ -67,14 +68,14 @@ internal open class JooqDslTransactionIntegrationTest {
                 // constraint violation exception
                 repeat(2) {
                     dsl.insertInto(PAPER)
-                            .set(PAPER.ID, MAX_ID_PREPOPULATED + 1)
-                            .set(PAPER.AUTHORS, "authors")
-                            .set(PAPER.FIRST_AUTHOR, "firstAuthor")
-                            .set(PAPER.FIRST_AUTHOR_OVERRIDDEN, false)
-                            .set(PAPER.TITLE, "title")
-                            .set(PAPER.LOCATION, "location")
-                            .set(PAPER.GOALS, "goals")
-                            .execute()
+                        .set(PAPER.ID, MAX_ID_PREPOPULATED + 1)
+                        .set(PAPER.AUTHORS, "authors")
+                        .set(PAPER.FIRST_AUTHOR, "firstAuthor")
+                        .set(PAPER.FIRST_AUTHOR_OVERRIDDEN, false)
+                        .set(PAPER.TITLE, "title")
+                        .set(PAPER.LOCATION, "location")
+                        .set(PAPER.GOALS, "goals")
+                        .execute()
                 }
                 fail<Any>()
             }
@@ -99,15 +100,15 @@ internal open class JooqDslTransactionIntegrationTest {
 
                 // The first insertion will work
                 dsl.insertInto(PAPER)
-                        .set(PAPER.ID, MAX_ID_PREPOPULATED + 1)
-                        .set(PAPER.NUMBER, 1000L)
-                        .set(PAPER.AUTHORS, "authors")
-                        .set(PAPER.FIRST_AUTHOR, "firstAuthor")
-                        .set(PAPER.FIRST_AUTHOR_OVERRIDDEN, false)
-                        .set(PAPER.TITLE, "title2")
-                        .set(PAPER.LOCATION, "location")
-                        .set(PAPER.GOALS, "goals")
-                        .execute()
+                    .set(PAPER.ID, MAX_ID_PREPOPULATED + 1)
+                    .set(PAPER.NUMBER, 1000L)
+                    .set(PAPER.AUTHORS, "authors")
+                    .set(PAPER.FIRST_AUTHOR, "firstAuthor")
+                    .set(PAPER.FIRST_AUTHOR_OVERRIDDEN, false)
+                    .set(PAPER.TITLE, "title2")
+                    .set(PAPER.LOCATION, "location")
+                    .set(PAPER.GOALS, "goals")
+                    .execute()
 
                 assertThat(dsl.fetchCount(PAPER)).isEqualTo(RECORD_COUNT_PREPOPULATED + 1)
 
@@ -119,15 +120,15 @@ internal open class JooqDslTransactionIntegrationTest {
                         // The second insertion shouldn't work
                         repeat(2) {
                             dsl.insertInto(PAPER)
-                                    .set(PAPER.ID, 3L)
-                                    .set(PAPER.NUMBER, 1001L)
-                                    .set(PAPER.AUTHORS, "authors")
-                                    .set(PAPER.FIRST_AUTHOR, "firstAuthor")
-                                    .set(PAPER.FIRST_AUTHOR_OVERRIDDEN, false)
-                                    .set(PAPER.TITLE, "title3")
-                                    .set(PAPER.LOCATION, "location")
-                                    .set(PAPER.GOALS, "goals")
-                                    .execute()
+                                .set(PAPER.ID, 3L)
+                                .set(PAPER.NUMBER, 1001L)
+                                .set(PAPER.AUTHORS, "authors")
+                                .set(PAPER.FIRST_AUTHOR, "firstAuthor")
+                                .set(PAPER.FIRST_AUTHOR_OVERRIDDEN, false)
+                                .set(PAPER.TITLE, "title3")
+                                .set(PAPER.LOCATION, "location")
+                                .set(PAPER.GOALS, "goals")
+                                .execute()
                         }
                         fail<Any>()
                     }
@@ -151,5 +152,4 @@ internal open class JooqDslTransactionIntegrationTest {
         assertThat(rollback2.get()).isTrue()
         assertThat(rollback2.get()).isTrue()
     }
-
 }

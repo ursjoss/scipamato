@@ -1,6 +1,5 @@
 package ch.difty.scipamato.publ.web.paper.browse;
 
-import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
@@ -28,6 +27,7 @@ import ch.difty.scipamato.publ.persistence.api.CodeClassService;
 import ch.difty.scipamato.publ.persistence.api.CodeService;
 import ch.difty.scipamato.publ.web.common.BasePageTest;
 
+@SuppressWarnings("SpellCheckingInspection")
 class PublicPageTest extends BasePageTest<PublicPage> {
 
     @MockBean
@@ -56,6 +56,7 @@ class PublicPageTest extends BasePageTest<PublicPage> {
 
     @Override
     protected void doVerify() {
+        // override if necessary
     }
 
     @AfterEach

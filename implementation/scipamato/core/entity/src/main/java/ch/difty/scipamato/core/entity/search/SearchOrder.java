@@ -1,5 +1,6 @@
 package ch.difty.scipamato.core.entity.search;
 
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -51,6 +52,7 @@ public class SearchOrder extends IdScipamatoEntity<Long> implements PaperSlimFil
             this.name = name;
         }
 
+        @NotNull
         @Override
         public String getFieldName() {
             return name;

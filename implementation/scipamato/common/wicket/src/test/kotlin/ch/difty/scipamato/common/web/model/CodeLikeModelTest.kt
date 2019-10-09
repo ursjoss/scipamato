@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.verify
 
+@Suppress("SpellCheckingInspection")
 internal class CodeLikeModelTest {
 
     private val cclMock = mock<CodeLike>()
@@ -43,5 +44,4 @@ internal class CodeLikeModelTest {
         private const val LANG_CODE = "en"
         private val CC_ID = CodeClassId.CC1
     }
-
 }

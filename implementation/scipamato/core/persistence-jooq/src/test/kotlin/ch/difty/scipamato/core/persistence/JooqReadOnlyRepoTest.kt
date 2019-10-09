@@ -20,7 +20,8 @@ import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
-abstract class JooqReadOnlyRepoTest<R : Record, T : IdScipamatoEntity<ID>, ID : Number, TI : TableImpl<R>, M : RecordMapper<R, T>, F : ScipamatoFilter> {
+abstract class JooqReadOnlyRepoTest<R : Record, T : IdScipamatoEntity<ID>, ID :
+Number, TI : TableImpl<R>, M : RecordMapper<R, T>, F : ScipamatoFilter> {
 
     protected val dsl = mock<DSLContext>()
     protected var filterConditionMapper = mock<GenericFilterConditionMapper<F>>()
@@ -121,5 +122,4 @@ abstract class JooqReadOnlyRepoTest<R : Record, T : IdScipamatoEntity<ID>, ID : 
         verify(selectJoinStepMock).where(isA<Condition>())
         verify(dsl).fetchCount(selectConditionStepMock2)
     }
-
 }

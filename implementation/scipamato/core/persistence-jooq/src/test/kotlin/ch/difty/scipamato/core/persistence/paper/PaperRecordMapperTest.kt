@@ -179,5 +179,4 @@ class PaperRecordMapperTest : RecordMapperTest<PaperRecord, Paper>() {
             auditFixtureFor(entityMock)
         }
     }
-
 }

@@ -5,10 +5,9 @@ import ch.difty.scipamato.core.db.tables.records.NewsletterRecord
 import ch.difty.scipamato.core.entity.newsletter.Newsletter
 import ch.difty.scipamato.core.persistence.InsertSetStepSetterTest
 import ch.difty.scipamato.core.persistence.RecordMapperTest
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.whenever
+import com.nhaarman.mockitokotlin2.*
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito.*
+import org.mockito.ArgumentMatchers.anyInt
 import java.sql.Date
 
 internal class NewsletterInsertSetStepSetterTest : InsertSetStepSetterTest<NewsletterRecord, Newsletter>() {
@@ -30,8 +29,10 @@ internal class NewsletterInsertSetStepSetterTest : InsertSetStepSetterTest<Newsl
 
     override fun stepSetFixtureExceptAudit() {
         doReturn(moreStep).whenever(step).set(NEWSLETTER.ISSUE, NewsletterRecordMapperTest.ISSUE)
-        doReturn(moreStep).whenever(moreStep).set(NEWSLETTER.ISSUE_DATE, Date.valueOf(NewsletterRecordMapperTest.ISSUE_DATE))
-        doReturn(moreStep).whenever(moreStep).set(NEWSLETTER.PUBLICATION_STATUS, NewsletterRecordMapperTest.PUBLICATION_STATUS.id)
+        doReturn(moreStep)
+            .whenever(moreStep).set(NEWSLETTER.ISSUE_DATE, Date.valueOf(NewsletterRecordMapperTest.ISSUE_DATE))
+        doReturn(moreStep)
+            .whenever(moreStep).set(NEWSLETTER.PUBLICATION_STATUS, NewsletterRecordMapperTest.PUBLICATION_STATUS.id)
     }
 
     override fun setStepFixtureAudit() {
@@ -60,7 +61,7 @@ internal class NewsletterInsertSetStepSetterTest : InsertSetStepSetterTest<Newsl
     fun consideringSettingKeyOf_withNullId_doesNotSetId() {
         whenever(entity.id).thenReturn(null)
         setter.considerSettingKeyOf(moreStep, entity)
-        verify<Newsletter>(entity).id
+        verify(entity).id
     }
 
     @Test
@@ -69,7 +70,7 @@ internal class NewsletterInsertSetStepSetterTest : InsertSetStepSetterTest<Newsl
 
         setter.considerSettingKeyOf(moreStep, entity)
 
-        verify<Newsletter>(entity).id
+        verify(entity).id
         verify(moreStep).set(NEWSLETTER.ID, NewsletterRecordMapperTest.ID)
     }
 
@@ -84,7 +85,6 @@ internal class NewsletterInsertSetStepSetterTest : InsertSetStepSetterTest<Newsl
         whenever(recordMock.id).thenReturn(3)
         setter.resetIdToEntity(entityMock, recordMock)
         verify(recordMock).id
-        verify<Newsletter>(entityMock).id = anyInt()
+        verify(entityMock).id = anyInt()
     }
-
 }

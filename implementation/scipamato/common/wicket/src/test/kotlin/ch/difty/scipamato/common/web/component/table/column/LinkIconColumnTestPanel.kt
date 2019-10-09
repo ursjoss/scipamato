@@ -17,20 +17,27 @@ internal abstract class LinkIconColumnTestPanel(id: String, private val titleMod
         super.onInitialize()
 
         val columns = listOf(
-                PropertyColumn(Model.of("name"), "name", "name"),
-                makeLinkIconColumn()
+            PropertyColumn(Model.of("name"), "name", "name"),
+            makeLinkIconColumn()
         )
 
         add(DefaultDataTable("table", columns, TestDataProvider(), 10))
     }
 
-    private fun makeLinkIconColumn(): IColumn<TestRecord, String> = object : LinkIconColumn<TestRecord>(Model.of("linkIconColumnLabel")) {
-        override fun createIconModel(rowModel: IModel<TestRecord>): IModel<String> = Model.of("fa fa-fw fa-filter")
-        override fun createTitleModel(rowModel: IModel<TestRecord>): IModel<String>? = titleModel
-        override fun onClickPerformed(target: AjaxRequestTarget, rowModel: IModel<TestRecord>, link: AjaxLink<Void>) {
-            this@LinkIconColumnTestPanel.onClickPerformed(rowModel, link)
+    private fun makeLinkIconColumn(): IColumn<TestRecord, String> =
+        object : LinkIconColumn<TestRecord>(Model.of("linkIconColumnLabel")) {
+            override fun createIconModel(rowModel: IModel<TestRecord>): IModel<String> =
+                Model.of("fa fa-fw fa-filter")
+
+            override fun createTitleModel(rowModel: IModel<TestRecord>): IModel<String>? = titleModel
+            override fun onClickPerformed(
+                target: AjaxRequestTarget,
+                rowModel: IModel<TestRecord>,
+                link: AjaxLink<Void>
+            ) {
+                this@LinkIconColumnTestPanel.onClickPerformed(rowModel, link)
+            }
         }
-    }
 
     protected abstract fun onClickPerformed(rowModel: IModel<TestRecord>, link: AjaxLink<Void>)
 

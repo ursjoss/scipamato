@@ -97,33 +97,23 @@ public class IntegerSearchTerm extends AbstractSearchTerm {
             this.value2 = 0;
         } else if (rst.startsWith(Ops.GREATER_THAN_OR_EQUAL.symbol)) {
             this.type = MatchType.GREATER_OR_EQUAL;
-            this.value = Integer.parseInt(rst
-                .substring(COMP_SYMBOL_MAX_LENGTH)
-                .trim());
+            this.value = extractInteger(rst, COMP_SYMBOL_MAX_LENGTH);
             this.value2 = this.value;
         } else if (rst.startsWith(Ops.GREATER_THAN.symbol)) {
             this.type = MatchType.GREATER_THAN;
-            this.value = Integer.parseInt(rst
-                .substring(1)
-                .trim());
+            this.value = extractInteger(rst, 1);
             this.value2 = this.value;
         } else if (rst.startsWith(Ops.LESS_THAN_OR_EQUAL.symbol)) {
             this.type = MatchType.LESS_OR_EQUAL;
-            this.value = Integer.parseInt(rst
-                .substring(COMP_SYMBOL_MAX_LENGTH)
-                .trim());
+            this.value = extractInteger(rst, COMP_SYMBOL_MAX_LENGTH);
             this.value2 = this.value;
         } else if (rst.startsWith(Ops.LESS_THAN.symbol)) {
             this.type = MatchType.LESS_THAN;
-            this.value = Integer.parseInt(rst
-                .substring(1)
-                .trim());
+            this.value = extractInteger(rst, 1);
             this.value2 = this.value;
         } else if (rst.startsWith(Ops.EQUAL.symbol)) {
             this.type = MatchType.EXACT;
-            this.value = Integer.parseInt(rst
-                .substring(1)
-                .trim());
+            this.value = extractInteger(rst, 1);
             this.value2 = this.value;
         } else if (rst.contains(Ops.RANGE.symbol)) {
             final String symbol = Ops.RANGE.symbol;
@@ -144,6 +134,12 @@ public class IntegerSearchTerm extends AbstractSearchTerm {
             this.value = 1; // arbitrary value to make it different from the first block and mute the intellij warning)
             this.value2 = 1;
         }
+    }
+
+    private int extractInteger(final String rst, final int compSymbolMaxLength) {
+        return Integer.parseInt(rst
+            .substring(compSymbolMaxLength)
+            .trim());
     }
 
     public int getValue() {

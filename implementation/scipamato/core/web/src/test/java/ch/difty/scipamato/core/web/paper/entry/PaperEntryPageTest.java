@@ -2,7 +2,6 @@ package ch.difty.scipamato.core.web.paper.entry;
 
 import static ch.difty.scipamato.core.entity.Paper.PaperFields.*;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.*;
 
 import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.BootstrapTabbedPanel;

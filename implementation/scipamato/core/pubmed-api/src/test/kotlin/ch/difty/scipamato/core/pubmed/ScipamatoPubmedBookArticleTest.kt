@@ -7,8 +7,8 @@ import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.fail
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import java.util.*
 
+@Suppress("SpellCheckingInspection")
 internal class ScipamatoPubmedBookArticleTest {
 
     private val pubmedBookArticle = PubmedBookArticle()
@@ -59,7 +59,6 @@ internal class ScipamatoPubmedBookArticleTest {
         abstrText.mixedContent = listOf("abstract")
         abstr.abstractText.add(abstrText)
         bookDocument.abstract = abstr
-
     }
 
     private fun makeAuthor(lastName: String, initials: String): Author {
@@ -109,15 +108,17 @@ internal class ScipamatoPubmedBookArticleTest {
         assertThat(pa.originalAbstract).startsWith("ABSTRACT: abstract")
 
         assertThat(pa.toString()).isEqualTo(
-                "AbstractPubmedArticleFacade(pmId=pmid, authors=ln1 i1, ln2 i2, ln3 i3., firstAuthor=ln1, publicationYear=2017, location=ll1 - ll2, title=title, doi=DOI, originalAbstract=ABSTRACT: abstract)")
+            "AbstractPubmedArticleFacade(pmId=pmid, authors=ln1 i1, ln2 i2, ln3 i3., firstAuthor=ln1," +
+                " publicationYear=2017, location=ll1 - ll2, title=title, doi=DOI, originalAbstract=ABSTRACT: abstract)"
+        )
     }
 
     @Test
     fun canParseAbstractWithoutAbstractLabel() {
         pubmedBookArticle
-                .bookDocument
-                .abstract
-                .abstractText[0].label = null
+            .bookDocument
+            .abstract
+            .abstractText[0].label = null
         val pa = ScipamatoPubmedBookArticle(pubmedBookArticle)
         assertThat(pa.originalAbstract).startsWith("abstract")
     }
@@ -125,7 +126,7 @@ internal class ScipamatoPubmedBookArticleTest {
     @Test
     fun withArticleIdListNull_leavesDoiNull() {
         pubmedBookArticle
-                .bookDocument.articleIdList = null
+            .bookDocument.articleIdList = null
 
         val pa = ScipamatoPubmedBookArticle(pubmedBookArticle)
 
@@ -135,9 +136,9 @@ internal class ScipamatoPubmedBookArticleTest {
     @Test
     fun withAuthorsNull_leavesAuthorAndFirstAuthorNull() {
         pubmedBookArticle
-                .bookDocument
-                .authorList
-                .clear()
+            .bookDocument
+            .authorList
+            .clear()
 
         val pa = ScipamatoPubmedBookArticle(pubmedBookArticle)
 
@@ -152,17 +153,16 @@ internal class ScipamatoPubmedBookArticleTest {
             fail<Any>("should have thrown exception")
         } catch (ex: Exception) {
             assertThat(ex)
-                    .isInstanceOf(IllegalArgumentException::class.java)
-                    .hasMessage("Cannot instantiate ScipamatoArticle from provided object 1")
+                .isInstanceOf(IllegalArgumentException::class.java)
+                .hasMessage("Cannot instantiate ScipamatoArticle from provided object 1")
         }
     }
 
     @Test
     fun equals() {
         EqualsVerifier
-                .forClass(ScipamatoPubmedBookArticle::class.java)
-                .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
-                .verify()
+            .forClass(ScipamatoPubmedBookArticle::class.java)
+            .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
+            .verify()
     }
-
 }

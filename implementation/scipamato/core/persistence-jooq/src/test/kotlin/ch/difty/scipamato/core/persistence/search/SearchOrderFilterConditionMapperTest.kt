@@ -8,7 +8,8 @@ import ch.difty.scipamato.core.entity.search.SearchOrderFilter
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-internal class SearchOrderFilterConditionMapperTest : FilterConditionMapperTest<SearchOrderRecord, SearchOrder, SearchOrderFilter>() {
+internal class SearchOrderFilterConditionMapperTest :
+    FilterConditionMapperTest<SearchOrderRecord, SearchOrder, SearchOrderFilter>() {
 
     override val mapper = SearchOrderFilterConditionMapper()
 
@@ -19,13 +20,17 @@ internal class SearchOrderFilterConditionMapperTest : FilterConditionMapperTest<
     @Test
     fun creatingWhereCondition_withNameMask_searchesForName() {
         filter.nameMask = "fOo"
-        assertThat(mapper.map(filter).toString()).isEqualToIgnoringCase("""lower("PUBLIC"."SEARCH_ORDER"."NAME") like ('%' || 'foo' || '%') escape '!'""")
+        assertThat(mapper.map(filter).toString()).isEqualToIgnoringCase(
+            """lower("PUBLIC"."SEARCH_ORDER"."NAME") like ('%' || 'foo' || '%') escape '!'"""
+        )
     }
 
     @Test
     fun creatingWhereCondition_withOwnerIncludingGlobal_searchesForOwnerIdOrGlobal() {
         filter.ownerIncludingGlobal = 10
-        assertThat(mapper.map(filter).toString()).isEqualToIgnoringCase(("(\n  \"PUBLIC\".\"SEARCH_ORDER\".\"OWNER\" = 10\n  or \"PUBLIC\".\"SEARCH_ORDER\".\"GLOBAL\" = true\n)"))
+        assertThat(mapper.map(filter).toString()).isEqualToIgnoringCase(
+            "(\n  \"PUBLIC\".\"SEARCH_ORDER\".\"OWNER\" = 10\n  or \"PUBLIC\".\"SEARCH_ORDER\".\"GLOBAL\" = true\n)"
+        )
     }
 
     @Test
@@ -45,5 +50,4 @@ internal class SearchOrderFilterConditionMapperTest : FilterConditionMapperTest<
         filter.global = false
         assertThat(mapper.map(filter).toString()).isEqualToIgnoringCase(""""PUBLIC"."SEARCH_ORDER"."GLOBAL" = false""")
     }
-
 }

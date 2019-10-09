@@ -24,7 +24,6 @@ import org.mockito.Mockito.verify
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.mock.mockito.MockBean
-import java.util.*
 
 @Suppress("SpellCheckingInspection")
 @SpringBootTest
@@ -35,6 +34,7 @@ internal class AbstractMenuBuilderTest {
     @Autowired
     private lateinit var application: WebApplication
 
+    @Suppress("unused")
     @MockBean
     private lateinit var dateTimeService: DateTimeService
 
@@ -75,7 +75,14 @@ internal class AbstractMenuBuilderTest {
 
     @Test
     fun assertPageLink() {
-        menuBuilder.addPageLink(navbar, TestHomePage(), TestHomePage::class.java, "test", GlyphIconType.volumedown, Navbar.ComponentPosition.LEFT)
+        menuBuilder.addPageLink(
+            navbar,
+            TestHomePage(),
+            TestHomePage::class.java,
+            "test",
+            GlyphIconType.volumedown,
+            Navbar.ComponentPosition.LEFT
+        )
 
         val links = getPageLinksFrom(navbar)
 
@@ -100,7 +107,13 @@ internal class AbstractMenuBuilderTest {
 
     @Test
     fun assertExternalLinkWithIcon() {
-        menuBuilder.addExternalLink(navbar, "http://test.com", "mylabel", GlyphIconType.adjust, Navbar.ComponentPosition.LEFT)
+        menuBuilder.addExternalLink(
+            navbar,
+            "http://test.com",
+            "mylabel",
+            GlyphIconType.adjust,
+            Navbar.ComponentPosition.LEFT
+        )
 
         val links = getExternalLinksFrom(navbar)
 
@@ -127,8 +140,13 @@ internal class AbstractMenuBuilderTest {
         assertThat(icon.type).isNull()
     }
 
-    private class TestMenuBuilder internal constructor(applicationProperties: ApplicationProperties, webSessionFacade: ScipamatoWebSessionFacade) : AbstractMenuBuilder(applicationProperties, webSessionFacade) {
-        override fun addMenuLinksTo(navbar: Navbar, page: Page) {}
+    private class TestMenuBuilder internal constructor(
+        applicationProperties: ApplicationProperties,
+        webSessionFacade: ScipamatoWebSessionFacade
+    ) : AbstractMenuBuilder(applicationProperties, webSessionFacade) {
+        override fun addMenuLinksTo(navbar: Navbar, page: Page) {
+            // override if needed
+        }
     }
 
     @Test

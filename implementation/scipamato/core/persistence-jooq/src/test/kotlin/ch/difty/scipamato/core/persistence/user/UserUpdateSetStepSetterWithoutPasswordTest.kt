@@ -6,10 +6,7 @@ import ch.difty.scipamato.core.entity.User
 import ch.difty.scipamato.core.persistence.RecordMapperTest
 import ch.difty.scipamato.core.persistence.UpdateSetStepSetter
 import ch.difty.scipamato.core.persistence.UpdateSetStepSetterTest
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.whenever
-import org.jooq.UpdateSetMoreStep
-import org.mockito.Mockito.*
+import com.nhaarman.mockitokotlin2.*
 
 internal class UserUpdateSetStepSetterWithoutPasswordTest : UpdateSetStepSetterTest<ScipamatoUserRecord, User>() {
 
@@ -63,11 +60,10 @@ internal class UserUpdateSetStepSetterWithoutPasswordTest : UpdateSetStepSetterT
     }
 
     override fun verifyStepSettingAudit() {
-        verify<UpdateSetMoreStep<ScipamatoUserRecord>>(moreStep).set(SCIPAMATO_USER.CREATED, RecordMapperTest.CREATED)
-        verify<UpdateSetMoreStep<ScipamatoUserRecord>>(moreStep).set(SCIPAMATO_USER.CREATED_BY, RecordMapperTest.CREATED_BY)
-        verify<UpdateSetMoreStep<ScipamatoUserRecord>>(moreStep).set(SCIPAMATO_USER.LAST_MODIFIED, RecordMapperTest.LAST_MOD)
-        verify<UpdateSetMoreStep<ScipamatoUserRecord>>(moreStep).set(SCIPAMATO_USER.LAST_MODIFIED_BY, RecordMapperTest.LAST_MOD_BY)
-        verify<UpdateSetMoreStep<ScipamatoUserRecord>>(moreStep).set(SCIPAMATO_USER.VERSION, RecordMapperTest.VERSION + 1)
+        verify(moreStep).set(SCIPAMATO_USER.CREATED, RecordMapperTest.CREATED)
+        verify(moreStep).set(SCIPAMATO_USER.CREATED_BY, RecordMapperTest.CREATED_BY)
+        verify(moreStep).set(SCIPAMATO_USER.LAST_MODIFIED, RecordMapperTest.LAST_MOD)
+        verify(moreStep).set(SCIPAMATO_USER.LAST_MODIFIED_BY, RecordMapperTest.LAST_MOD_BY)
+        verify(moreStep).set(SCIPAMATO_USER.VERSION, RecordMapperTest.VERSION + 1)
     }
-
 }

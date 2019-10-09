@@ -11,7 +11,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.fail
 import org.junit.jupiter.api.Test
 
-@Suppress("FunctionName", "DuplicatedCode")
+@Suppress("LargeClass", "TooManyFunctions", "FunctionName", "LongMethod", "DuplicatedCode")
 internal class StringSearchTermEvaluatorTest {
 
     private val evaluator = StringSearchTermEvaluator()
@@ -31,7 +31,7 @@ internal class StringSearchTermEvaluatorTest {
     fun buildingConditionForNotRegex_appliesNotRegex() {
         expectToken(TokenType.NOTREGEX, "foo")
         assertThat(evaluator.evaluate(stMock).toString()).isEqualTo(
-                """not(coalesce(
+            """not(coalesce(
                    |  field_x, 
                    |  ''
                    |) like_regex 'foo')""".trimMargin()
@@ -42,9 +42,9 @@ internal class StringSearchTermEvaluatorTest {
     fun buildingConditionForRegex_appliesRegex() {
         expectToken(TokenType.REGEX, "foo")
         assertThat(evaluator
-                .evaluate(stMock)
-                .toString()).isEqualTo(
-                """coalesce(
+            .evaluate(stMock)
+            .toString()).isEqualTo(
+            """coalesce(
                    |  field_x, 
                    |  ''
                    |) like_regex 'foo'""".trimMargin()
@@ -61,7 +61,7 @@ internal class StringSearchTermEvaluatorTest {
     fun buildingConditionForSome_appliesNotEmpty() {
         expectToken(TokenType.SOME, "whatever")
         assertThat(evaluator.evaluate(stMock).toString()).isEqualTo(
-                """(
+            """(
                |  field_x is not null
                |  and char_length(cast(field_x as varchar)) > 0
                |)""".trimMargin()
@@ -72,7 +72,7 @@ internal class StringSearchTermEvaluatorTest {
     fun buildingConditionForEmpty_appliesEmpty() {
         expectToken(TokenType.EMPTY, "whatever")
         assertThat(evaluator.evaluate(stMock).toString()).isEqualTo(
-                """(
+            """(
                |  field_x is null
                |  or char_length(cast(field_x as varchar)) = 0
                |)""".trimMargin()
@@ -83,7 +83,7 @@ internal class StringSearchTermEvaluatorTest {
     fun buildingConditionForNotOpenLeftRightQuoted_appliesLike() {
         expectToken(TokenType.NOTOPENLEFTRIGHTQUOTED, "foo")
         assertThat(evaluator.evaluate(stMock).toString()).isEqualTo(
-                """lower(cast(coalesce(
+            """lower(cast(coalesce(
                    |  field_x, 
                    |  ''
                    |) as varchar)) not like lower('%foo%')""".trimMargin()
@@ -93,14 +93,16 @@ internal class StringSearchTermEvaluatorTest {
     @Test
     fun buildingConditionForOpenLeftRightQuoted_appliesLike() {
         expectToken(TokenType.OPENLEFTRIGHTQUOTED, "foo")
-        assertThat(evaluator.evaluate(stMock).toString()).isEqualTo("lower(cast(field_x as varchar)) like lower('%foo%')")
+        assertThat(evaluator.evaluate(stMock).toString()).isEqualTo(
+            "lower(cast(field_x as varchar)) like lower('%foo%')"
+        )
     }
 
     @Test
     fun buildingConditionForNotOpenLeftRight_appliesNotLike() {
         expectToken(TokenType.NOTOPENLEFTRIGHT, "foo")
         assertThat(evaluator.evaluate(stMock).toString()).isEqualTo(
-                """lower(cast(coalesce(
+            """lower(cast(coalesce(
                    |  field_x, 
                    |  ''
                    |) as varchar)) not like lower('%foo%')""".trimMargin()
@@ -110,16 +112,18 @@ internal class StringSearchTermEvaluatorTest {
     @Test
     fun buildingConditionForOpenLeftRight_appliesLike() {
         expectToken(TokenType.OPENLEFTRIGHT, "foo")
-        assertThat(evaluator.evaluate(stMock).toString()).isEqualTo("lower(cast(field_x as varchar)) like lower('%foo%')")
+        assertThat(evaluator.evaluate(stMock).toString()).isEqualTo(
+            "lower(cast(field_x as varchar)) like lower('%foo%')"
+        )
     }
 
     @Test
     fun buildingConditionForNotOpenRightQuoted_appliesLike() {
         expectToken(TokenType.NOTOPENRIGHTQUOTED, "foo")
         assertThat(evaluator
-                .evaluate(stMock)
-                .toString()).isEqualTo(
-                """lower(cast(coalesce(
+            .evaluate(stMock)
+            .toString()).isEqualTo(
+            """lower(cast(coalesce(
                    |  field_x, 
                    |  ''
                    |) as varchar)) not like lower('foo%')""".trimMargin()
@@ -129,14 +133,16 @@ internal class StringSearchTermEvaluatorTest {
     @Test
     fun buildingConditionForOpenRightQuoted_appliesLike() {
         expectToken(TokenType.OPENRIGHTQUOTED, "foo")
-        assertThat(evaluator.evaluate(stMock).toString()).isEqualTo("lower(cast(field_x as varchar)) like lower('foo%')")
+        assertThat(evaluator.evaluate(stMock).toString()).isEqualTo(
+            "lower(cast(field_x as varchar)) like lower('foo%')"
+        )
     }
 
     @Test
     fun buildingConditionForNotOpenRight_appliesNotLike() {
         expectToken(TokenType.NOTOPENRIGHT, "foo")
         assertThat(evaluator.evaluate(stMock).toString()).isEqualTo(
-                """lower(cast(coalesce(
+            """lower(cast(coalesce(
                    |  field_x, 
                    |  ''
                    |) as varchar)) not like lower('foo%')""".trimMargin()
@@ -146,14 +152,16 @@ internal class StringSearchTermEvaluatorTest {
     @Test
     fun buildingConditionForOpenRight_appliesLike() {
         expectToken(TokenType.OPENRIGHT, "foo")
-        assertThat(evaluator.evaluate(stMock).toString()).isEqualTo("lower(cast(field_x as varchar)) like lower('foo%')")
+        assertThat(evaluator.evaluate(stMock).toString()).isEqualTo(
+            "lower(cast(field_x as varchar)) like lower('foo%')"
+        )
     }
 
     @Test
     fun buildingConditionForNotOpenLeftQuoted_appliesLike() {
         expectToken(TokenType.NOTOPENLEFTQUOTED, "foo")
         assertThat(evaluator.evaluate(stMock).toString()).isEqualTo(
-                """lower(cast(coalesce(
+            """lower(cast(coalesce(
                    |  field_x, 
                    |  ''
                    |) as varchar)) not like lower('%foo')""".trimMargin()
@@ -163,14 +171,16 @@ internal class StringSearchTermEvaluatorTest {
     @Test
     fun buildingConditionForOpenLeftQuoted_appliesLike() {
         expectToken(TokenType.OPENLEFTQUOTED, "foo")
-        assertThat(evaluator.evaluate(stMock).toString()).isEqualTo("lower(cast(field_x as varchar)) like lower('%foo')")
+        assertThat(evaluator.evaluate(stMock).toString()).isEqualTo(
+            "lower(cast(field_x as varchar)) like lower('%foo')"
+        )
     }
 
     @Test
     fun buildingConditionForNotOpenLeft_appliesNotLike() {
         expectToken(TokenType.NOTOPENLEFT, "foo")
         assertThat(evaluator.evaluate(stMock).toString()).isEqualTo(
-                """lower(cast(coalesce(
+            """lower(cast(coalesce(
                    |  field_x, 
                    |  ''
                    |) as varchar)) not like lower('%foo')""".trimMargin()
@@ -180,26 +190,32 @@ internal class StringSearchTermEvaluatorTest {
     @Test
     fun buildingConditionForOpenLeft_appliesLike() {
         expectToken(TokenType.OPENLEFT, "foo")
-        assertThat(evaluator.evaluate(stMock).toString()).isEqualTo("lower(cast(field_x as varchar)) like lower('%foo')")
+        assertThat(evaluator.evaluate(stMock).toString()).isEqualTo(
+            "lower(cast(field_x as varchar)) like lower('%foo')"
+        )
     }
 
     @Test
     fun buildingConditionForNotQuoted_appliesUnequal() {
         expectToken(TokenType.NOTQUOTED, "foo")
-        assertThat(evaluator.evaluate(stMock).toString()).isEqualTo("lower(cast(field_x as varchar)) <> lower('foo')")
+        assertThat(evaluator.evaluate(stMock).toString()).isEqualTo(
+            "lower(cast(field_x as varchar)) <> lower('foo')"
+        )
     }
 
     @Test
     fun buildingConditionForQuoted_appliesEqual() {
         expectToken(TokenType.QUOTED, "foo")
-        assertThat(evaluator.evaluate(stMock).toString()).isEqualTo("lower(cast(field_x as varchar)) = lower('foo')")
+        assertThat(evaluator.evaluate(stMock).toString()).isEqualTo(
+            "lower(cast(field_x as varchar)) = lower('foo')"
+        )
     }
 
     @Test
     fun buildingConditionForNotWord_appliesNotContains() {
         expectToken(TokenType.NOTWORD, "foo")
         assertThat(evaluator.evaluate(stMock).toString()).isEqualTo(
-                """not(lower(cast(coalesce(
+            """not(lower(cast(coalesce(
                |  field_x, 
                |  ''
                |) as varchar)) like lower(('%' || replace(
@@ -222,7 +238,7 @@ internal class StringSearchTermEvaluatorTest {
     fun buildingConditionForWord_appliesContains() {
         expectToken(TokenType.WORD, "foo")
         assertThat(evaluator.evaluate(stMock).toString()).isEqualTo(
-                """lower(cast(field_x as varchar)) like lower(('%' || replace(
+            """lower(cast(field_x as varchar)) like lower(('%' || replace(
                |  replace(
                |    replace(
                |      'foo', 
@@ -252,10 +268,9 @@ internal class StringSearchTermEvaluatorTest {
             fail<Any>("should have thrown exception")
         } catch (ex: Error) {
             assertThat(ex)
-                    .isInstanceOf(AssertionError::class.java)
-                    .hasMessage("Evaluation of type UNSUPPORTED is not supported...")
+                .isInstanceOf(AssertionError::class.java)
+                .hasMessage("Evaluation of type UNSUPPORTED is not supported...")
         }
-
     }
     //endregion
 
@@ -270,9 +285,9 @@ internal class StringSearchTermEvaluatorTest {
     fun buildingConditionForNotRegex_withMethodsField_appliesNotRegexToAllMethodsFields() {
         expectMethodToken(TokenType.NOTREGEX, "foo")
         assertThat(evaluator
-                .evaluate(stMock)
-                .toString()).isEqualTo(
-                """(
+            .evaluate(stMock)
+            .toString()).isEqualTo(
+            """(
                |  not(lower(cast(coalesce(
                |    methods, 
                |    ''
@@ -313,7 +328,7 @@ internal class StringSearchTermEvaluatorTest {
     fun buildingConditionForRegex_withMethodsField_appliesRegexToAllMethodsFields() {
         expectMethodToken(TokenType.REGEX, "foo")
         assertThat(evaluator.evaluate(stMock).toString()).isEqualTo(
-                """(
+            """(
                |  lower(cast(coalesce(
                |    methods, 
                |    ''
@@ -360,7 +375,7 @@ internal class StringSearchTermEvaluatorTest {
     fun buildingConditionForSome_withMethodField_appliesNotEmpty() {
         expectMethodToken(TokenType.SOME, "whatever")
         assertThat(evaluator.evaluate(stMock).toString()).isEqualTo(
-                """(
+            """(
                    |  (
                    |    methods is not null
                    |    and char_length(cast(methods as varchar)) > 0
@@ -401,7 +416,7 @@ internal class StringSearchTermEvaluatorTest {
     fun buildingConditionForEmpty_withMethodField_appliesEmptyToAllMethodsFields() {
         expectMethodToken(TokenType.EMPTY, "whatever")
         assertThat(evaluator.evaluate(stMock).toString()).isEqualTo(
-                """(
+            """(
                |  (
                |    methods is null
                |    or char_length(cast(methods as varchar)) = 0
@@ -442,7 +457,7 @@ internal class StringSearchTermEvaluatorTest {
     fun buildingConditionForNotOpenLeftRightQuoted_withMethodField_appliesLikeToAllMethodFields() {
         expectMethodToken(TokenType.NOTOPENLEFTRIGHTQUOTED, "foo")
         assertThat(evaluator.evaluate(stMock).toString()).isEqualTo(
-                """(
+            """(
                |  lower(cast(coalesce(
                |    methods, 
                |    ''
@@ -483,7 +498,7 @@ internal class StringSearchTermEvaluatorTest {
     fun buildingConditionForOpenLeftRightQuoted_withMethodField_appliesLikeToAllMethodFields() {
         expectMethodToken(TokenType.OPENLEFTRIGHTQUOTED, "foo")
         assertThat(evaluator.evaluate(stMock).toString()).isEqualTo(
-                """(
+            """(
                    |  lower(cast(methods as varchar)) like lower('%foo%')
                    |  or lower(cast(method_study_design as varchar)) like lower('%foo%')
                    |  or lower(cast(population_place as varchar)) like lower('%foo%')
@@ -500,7 +515,7 @@ internal class StringSearchTermEvaluatorTest {
     fun buildingConditionForNotOpenLeftRight_withMethodField_appliesNotLikeToAllMethodFields() {
         expectMethodToken(TokenType.NOTOPENLEFTRIGHT, "foo")
         assertThat(evaluator.evaluate(stMock).toString()).isEqualTo(
-                """(
+            """(
                    |  lower(cast(coalesce(
                    |    methods, 
                    |    ''
@@ -541,7 +556,7 @@ internal class StringSearchTermEvaluatorTest {
     fun buildingConditionForOpenLeftRight_withMethodField_appliesLikeToAllMethodFields() {
         expectMethodToken(TokenType.OPENLEFTRIGHT, "foo")
         assertThat(evaluator.evaluate(stMock).toString()).isEqualTo(
-                """(
+            """(
                    |  lower(cast(methods as varchar)) like lower('%foo%')
                    |  or lower(cast(method_study_design as varchar)) like lower('%foo%')
                    |  or lower(cast(population_place as varchar)) like lower('%foo%')
@@ -558,7 +573,7 @@ internal class StringSearchTermEvaluatorTest {
     fun buildingConditionForNotOpenRightQuoted_withMethodField_appliesLikeToAllMethodFields() {
         expectMethodToken(TokenType.NOTOPENRIGHTQUOTED, "foo")
         assertThat(evaluator.evaluate(stMock).toString()).isEqualTo(
-                """(
+            """(
                    |  lower(cast(coalesce(
                    |    methods, 
                    |    ''
@@ -599,7 +614,7 @@ internal class StringSearchTermEvaluatorTest {
     fun buildingConditionForOpenRightQuoted_withMethodField_appliesLikeToAllMethodFields() {
         expectMethodToken(TokenType.OPENRIGHTQUOTED, "foo")
         assertThat(evaluator.evaluate(stMock).toString()).isEqualTo(
-                """(
+            """(
                    |  lower(cast(methods as varchar)) like lower('foo%')
                    |  or lower(cast(method_study_design as varchar)) like lower('foo%')
                    |  or lower(cast(population_place as varchar)) like lower('foo%')
@@ -616,7 +631,7 @@ internal class StringSearchTermEvaluatorTest {
     fun buildingConditionForNotOpenRight_withMethodField_appliesNotLikeToAllMethodFields() {
         expectMethodToken(TokenType.NOTOPENRIGHT, "foo")
         assertThat(evaluator.evaluate(stMock).toString()).isEqualTo(
-                """(
+            """(
                    |  lower(cast(coalesce(
                    |    methods, 
                    |    ''
@@ -657,7 +672,7 @@ internal class StringSearchTermEvaluatorTest {
     fun buildingConditionForOpenRight_withMethodField_appliesLikeToAllMethodFields() {
         expectMethodToken(TokenType.OPENRIGHT, "foo")
         assertThat(evaluator.evaluate(stMock).toString()).isEqualTo(
-                """(
+            """(
                    |  lower(cast(methods as varchar)) like lower('foo%')
                    |  or lower(cast(method_study_design as varchar)) like lower('foo%')
                    |  or lower(cast(population_place as varchar)) like lower('foo%')
@@ -674,7 +689,7 @@ internal class StringSearchTermEvaluatorTest {
     fun buildingConditionForNotOpenLeftQuoted_withMethodField_appliesLikeToAllMethodFields() {
         expectMethodToken(TokenType.NOTOPENLEFTQUOTED, "foo")
         assertThat(evaluator.evaluate(stMock).toString()).isEqualTo(
-                """(
+            """(
                    |  lower(cast(coalesce(
                    |    methods, 
                    |    ''
@@ -715,7 +730,7 @@ internal class StringSearchTermEvaluatorTest {
     fun buildingConditionForOpenLeftQuoted_withMethodField_appliesLikeToAllMethodFields() {
         expectMethodToken(TokenType.OPENLEFTQUOTED, "foo")
         assertThat(evaluator.evaluate(stMock).toString()).isEqualTo(
-                """(
+            """(
                |  lower(cast(methods as varchar)) like lower('%foo')
                |  or lower(cast(method_study_design as varchar)) like lower('%foo')
                |  or lower(cast(population_place as varchar)) like lower('%foo')
@@ -732,7 +747,7 @@ internal class StringSearchTermEvaluatorTest {
     fun buildingConditionForNotOpenLeft_withMethodField_appliesNotLikeToAllMethodFields() {
         expectMethodToken(TokenType.NOTOPENLEFT, "foo")
         assertThat(evaluator.evaluate(stMock).toString()).isEqualTo(
-                """(
+            """(
                |  lower(cast(coalesce(
                |    methods, 
                |    ''
@@ -773,7 +788,7 @@ internal class StringSearchTermEvaluatorTest {
     fun buildingConditionForOpenLeft_withMethodField_appliesLikeToAllMethodFields() {
         expectMethodToken(TokenType.OPENLEFT, "foo")
         assertThat(evaluator.evaluate(stMock).toString()).isEqualTo(
-                """(
+            """(
                |  lower(cast(methods as varchar)) like lower('%foo')
                |  or lower(cast(method_study_design as varchar)) like lower('%foo')
                |  or lower(cast(population_place as varchar)) like lower('%foo')
@@ -790,7 +805,7 @@ internal class StringSearchTermEvaluatorTest {
     fun buildingConditionForNotQuoted_withMethodField_appliesUnequalToAllMethodFields() {
         expectMethodToken(TokenType.NOTQUOTED, "foo")
         assertThat(evaluator.evaluate(stMock).toString()).isEqualTo(
-                """(
+            """(
                    |  lower(cast(methods as varchar)) <> lower('foo')
                    |  and lower(cast(method_study_design as varchar)) <> lower('foo')
                    |  and lower(cast(population_place as varchar)) <> lower('foo')
@@ -807,7 +822,7 @@ internal class StringSearchTermEvaluatorTest {
     fun buildingConditionForQuoted_withMethodField_appliesEqualToAllMethodFields() {
         expectMethodToken(TokenType.QUOTED, "foo")
         assertThat(evaluator.evaluate(stMock).toString()).isEqualTo(
-                """(
+            """(
                    |  lower(cast(methods as varchar)) = lower('foo')
                    |  or lower(cast(method_study_design as varchar)) = lower('foo')
                    |  or lower(cast(population_place as varchar)) = lower('foo')
@@ -824,7 +839,7 @@ internal class StringSearchTermEvaluatorTest {
     fun buildingConditionForNotWord_withMethodField_appliesNotContainsToAllMethodFields() {
         expectMethodToken(TokenType.NOTWORD, "foo")
         assertThat(evaluator.evaluate(stMock).toString()).isEqualTo(
-                """(
+            """(
                |  not(lower(cast(coalesce(
                |    methods, 
                |    ''
@@ -961,7 +976,7 @@ internal class StringSearchTermEvaluatorTest {
     fun buildingConditionForWord_withMethodField_appliesContainsToAllMethodFields() {
         expectMethodToken(TokenType.WORD, "foo")
         assertThat(evaluator.evaluate(stMock).toString()).isEqualTo(
-                """(
+            """(
                |  lower(cast(methods as varchar)) like lower(('%' || replace(
                |    replace(
                |      replace(
@@ -1076,6 +1091,7 @@ internal class StringSearchTermEvaluatorTest {
         assertThat(evaluator.evaluate(stMock).toString()).isEqualTo("1 = 1")
     }
 
+    @Suppress("TooGenericExceptionCaught")
     @Test
     fun buildingConditionForUnsupported_withMethodField_throws() {
         expectMethodToken(TokenType.UNSUPPORTED, "foo")
@@ -1084,18 +1100,17 @@ internal class StringSearchTermEvaluatorTest {
             fail<Any>("should have thrown exception")
         } catch (ex: Error) {
             assertThat(ex)
-                    .isInstanceOf(AssertionError::class.java)
-                    .hasMessage("Evaluation of type UNSUPPORTED is not supported...")
+                .isInstanceOf(AssertionError::class.java)
+                .hasMessage("Evaluation of type UNSUPPORTED is not supported...")
         }
-
     }
 
     @Test
     fun buildingConditionForCombinedSearchTerm_withMethodsField_() {
         val sst = SearchTerm.newSearchTerm(1L, SearchTermType.STRING.id, 1L,
-                "methods", "foo -bar") as StringSearchTerm
+            "methods", "foo -bar") as StringSearchTerm
         assertThat(evaluator.evaluate(sst).toString()).isEqualTo(
-                """(
+            """(
                |  (
                |    lower(cast(methods as varchar)) like lower(('%' || replace(
                |      replace(

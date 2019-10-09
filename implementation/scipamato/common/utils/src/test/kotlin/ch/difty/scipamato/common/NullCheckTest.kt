@@ -21,10 +21,9 @@ internal class NullCheckTest {
             fail<Any>("should have thrown exception")
         } catch (ex: Exception) {
             assertThat(ex)
-                    .isInstanceOf(NullArgumentException::class.java)
-                    .hasMessage("myparam must not be null.")
+                .isInstanceOf(NullArgumentException::class.java)
+                .hasMessage("myparam must not be null.")
         }
-
     }
 
     @Test
@@ -39,9 +38,8 @@ internal class NullCheckTest {
             fail<Any>("should have thrown exception")
         } catch (ex: Exception) {
             assertThat(ex)
-                    .isInstanceOf(NullArgumentException::class.java)
-                    .hasMessage("Argument must not be null.")
+                .isInstanceOf(NullArgumentException::class.java)
+                .hasMessage("Argument must not be null.")
         }
     }
-
 }

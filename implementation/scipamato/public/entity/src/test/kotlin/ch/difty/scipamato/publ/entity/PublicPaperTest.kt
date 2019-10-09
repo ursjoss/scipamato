@@ -7,27 +7,30 @@ import nl.jqno.equalsverifier.Warning
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
+@Suppress("SpellCheckingInspection")
 internal class PublicPaperTest : PublicEntityTest<PublicPaper>() {
 
     override val toString: String
-        get() = "PublicPaper(id=1, number=2, pmId=1000, authors=authors, authorsAbbreviated=auths, title=title, location=location, journal=journal, publicationYear=2016, goals=goals, methods=methods, population=population, result=result, comment=comment)"
+        get() = "PublicPaper(id=1, number=2, pmId=1000, authors=authors, authorsAbbreviated=auths, title=title, " +
+            "location=location, journal=journal, publicationYear=2016, goals=goals, methods=methods, " +
+            "population=population, result=result, comment=comment)"
 
     override fun newEntity(): PublicPaper = PublicPaper.builder()
-            .id(1L)
-            .number(2L)
-            .pmId(1000)
-            .authors("authors")
-            .authorsAbbreviated("auths")
-            .title("title")
-            .location("location")
-            .journal("journal")
-            .publicationYear(2016)
-            .goals("goals")
-            .methods("methods")
-            .population("population")
-            .result("result")
-            .comment("comment")
-            .build()
+        .id(1L)
+        .number(2L)
+        .pmId(1000)
+        .authors("authors")
+        .authorsAbbreviated("auths")
+        .title("title")
+        .location("location")
+        .journal("journal")
+        .publicationYear(2016)
+        .goals("goals")
+        .methods("methods")
+        .population("population")
+        .result("result")
+        .comment("comment")
+        .build()
 
     override fun assertSpecificGetters() {
         assertThat(entity.id).isEqualTo(1L)
@@ -48,16 +51,16 @@ internal class PublicPaperTest : PublicEntityTest<PublicPaper>() {
 
     public override fun verifyEquals() {
         EqualsVerifier.forClass(PublicPaper::class.java)
-                .withRedefinedSuperclass()
-                .withIgnoredFields(CREATED.fieldName, MODIFIED.fieldName)
-                .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
-                .verify()
+            .withRedefinedSuperclass()
+            .withIgnoredFields(CREATED.fieldName, MODIFIED.fieldName)
+            .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
+            .verify()
     }
 
     @Test
     fun assertEnumFields() {
         assertThat(PublicPaper.PublicPaperFields.values().map { it.fieldName })
-                .containsExactly("id", "number", "pmId", "authors", "authorsAbbreviated", "title", "location", "journal",
-                        "publicationYear", "goals", "methods", "population", "result", "comment")
+            .containsExactly("id", "number", "pmId", "authors", "authorsAbbreviated", "title", "location", "journal",
+                "publicationYear", "goals", "methods", "population", "result", "comment")
     }
 }

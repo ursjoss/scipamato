@@ -29,8 +29,8 @@ internal class JooqNewsletterTopicRepoTest {
             fail<Any>("Should have thrown exception")
         } catch (ex: Exception) {
             assertThat(ex)
-                    .isInstanceOf(IllegalArgumentException::class.java)
-                    .hasMessage("id must be null.")
+                .isInstanceOf(IllegalArgumentException::class.java)
+                .hasMessage("id must be null.")
         }
     }
 
@@ -61,10 +61,12 @@ internal class JooqNewsletterTopicRepoTest {
             fail<Any>("should have thrown exception")
         } catch (ex: Exception) {
             assertThat(ex)
-                    .isInstanceOf(OptimisticLockingException::class.java)
-                    .hasMessage("Record in table 'newsletter_topic' has been modified prior to the update attempt. Aborting.... [NewsletterTopicDefinition(id=10)]")
+                .isInstanceOf(OptimisticLockingException::class.java)
+                .hasMessage(
+                    "Record in table 'newsletter_topic' has been modified prior to the update attempt. " +
+                        "Aborting.... [NewsletterTopicDefinition(id=10)]"
+                )
         }
-
     }
 
     @Test
@@ -74,8 +76,11 @@ internal class JooqNewsletterTopicRepoTest {
             fail<Any>("should have thrown exception")
         } catch (ex: Exception) {
             assertThat(ex)
-                    .isInstanceOf(OptimisticLockingException::class.java)
-                    .hasMessage("Record in table 'newsletter_topic_tr' has been modified prior to the update attempt. Aborting.... [nttObject]")
+                .isInstanceOf(OptimisticLockingException::class.java)
+                .hasMessage(
+                    "Record in table 'newsletter_topic_tr' has been modified prior to the update attempt. " +
+                        "Aborting.... [nttObject]"
+                )
         }
     }
 
@@ -86,8 +91,11 @@ internal class JooqNewsletterTopicRepoTest {
             fail<Any>("should have thrown exception")
         } catch (ex: Exception) {
             assertThat(ex)
-                    .isInstanceOf(OptimisticLockingException::class.java)
-                    .hasMessage("Record in table 'newsletter_topic' has been modified prior to the delete attempt. Aborting.... [delObj]")
+                .isInstanceOf(OptimisticLockingException::class.java)
+                .hasMessage(
+                    "Record in table 'newsletter_topic' has been modified prior to the delete attempt. " +
+                        "Aborting.... [delObj]"
+                )
         }
     }
 }

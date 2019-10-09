@@ -16,7 +16,7 @@ import org.testcontainers.junit.jupiter.Testcontainers
 
 @JooqTest
 @Testcontainers
-@Suppress("FunctionName", "SpellCheckingInspection")
+@Suppress("TooManyFunctions", "FunctionName", "MagicNumber", "SpellCheckingInspection")
 internal open class JooqPublicPaperRepoIntegrationTest {
 
     @Autowired
@@ -35,7 +35,7 @@ internal open class JooqPublicPaperRepoIntegrationTest {
         assertThat(paper.id).isEqualTo(number)
         assertThat(paper.pmId).isEqualTo(25395026)
         assertThat(paper.authors).isEqualTo(
-                "Turner MC, Cohen A, Jerrett M, Gapstur SM, Diver WR, Pope CA 3rd, Krewski D, Beckerman BS, Samet JM.")
+            "Turner MC, Cohen A, Jerrett M, Gapstur SM, Diver WR, Pope CA 3rd, Krewski D, Beckerman BS, Samet JM.")
         assertThat(paper.location).isEqualTo("Am J Epidemiol. 2014; 180 (12): 1145-1149.")
         assertThat(paper.journal).isEqualTo("Am J Epidemiol")
     }
@@ -96,7 +96,7 @@ internal open class JooqPublicPaperRepoIntegrationTest {
         filter.publicationYearFrom = 2015
         filter.publicationYearUntil = 2018
         assertThat(repo.findPageOfNumbersByFilter(filter, allSorted))
-                .containsOnly(8984L, 8934L, 8924L, 2L, 8933L, 8983L, 8993L, 8861L, 8916L, 8973L, 8897L)
+            .containsOnly(8984L, 8934L, 8924L, 2L, 8933L, 8983L, 8993L, 8861L, 8916L, 8973L, 8897L)
     }
 
     private fun newCodes(vararg codes: String): List<Code> = mutableListOf<Code>().apply {
@@ -128,7 +128,7 @@ internal open class JooqPublicPaperRepoIntegrationTest {
         filter.codesOfClass2 = newCodes("2R")
         filter.codesOfClass2.clear()
         assertThat(repo.findPageByFilter(filter, allSorted).map { it.number })
-                .containsOnly(8984L, 8934L, 8924L, 2L, 8933L, 8983L, 8993L, 8861L, 8916L, 8973L, 1L, 3L, 8897L)
+            .containsOnly(8984L, 8934L, 8924L, 2L, 8933L, 8983L, 8993L, 8861L, 8916L, 8973L, 1L, 3L, 8897L)
     }
 
     @Test

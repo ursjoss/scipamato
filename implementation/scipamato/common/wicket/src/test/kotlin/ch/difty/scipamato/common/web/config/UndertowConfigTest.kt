@@ -56,7 +56,6 @@ internal class UndertowConfigTest {
         assertThat(factory.session.storeDir == null).isTrue()
         assertThat(factory.ssl == null).isTrue()
         assertThat(factory.sslStoreProvider == null).isTrue()
-
     }
 
     @Test
@@ -82,7 +81,6 @@ internal class UndertowConfigTest {
         } catch (ex: Exception) {
             assertThat(ex).isInstanceOf(IllegalStateException::class.java).hasMessage("UT000138: Server not started")
         }
-
     }
 
     @Test
@@ -173,5 +171,4 @@ internal class UndertowConfigTest {
         assertThat(jspServlet.initParameters["development"]).isEqualTo("false")
         assertThat(jspServlet.registered).isFalse()
     }
-
 }

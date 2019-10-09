@@ -18,19 +18,19 @@ class AbstractDefinitionEntityTest {
     private val tde_wo_transl_versionNull = TestDefinitionEntity("de", "some", translations = arrayOf())
 
     private inner class TestDefinitionEntity internal constructor(
-            mainLanguageCode: String,
-            mainName: String,
-            version: Int = 0,
-            translations: Array<AbstractDefinitionTranslation>
+        mainLanguageCode: String,
+        mainName: String,
+        version: Int = 0,
+        translations: Array<AbstractDefinitionTranslation>
     ) : AbstractDefinitionEntity<DefinitionTranslation, String>(mainLanguageCode, mainName, version, translations) {
         override val nullSafeId: String? get() = "foo"
     }
 
     private inner class TestDefinitionTranslation(
-            id: Int?,
-            langCode: String,
-            name: String?,
-            version: Int = 0
+        id: Int?,
+        langCode: String,
+        name: String?,
+        version: Int = 0
     ) : AbstractDefinitionTranslation(id, langCode, name, version)
 
     @Test
@@ -134,7 +134,8 @@ class AbstractDefinitionEntityTest {
     @Test
     fun entity_testingToString() {
         assertThat(tde.toString()).isEqualTo(
-                "AbstractDefinitionEntity[translations=DE: 'deutsch','deutsch2'; EN: 'english'; FR: 'francais', mainLanguageCode=de, name=mainName]"
+            "AbstractDefinitionEntity[translations=DE: 'deutsch','deutsch2'; EN: 'english'; FR: 'francais', " +
+                "mainLanguageCode=de, name=mainName]"
         )
     }
 
@@ -182,9 +183,9 @@ class AbstractDefinitionEntityTest {
     @Test
     fun translationFields() {
         assertThat(AbstractDefinitionTranslation.DefinitionTranslationFields.values()).containsExactly(
-                AbstractDefinitionTranslation.DefinitionTranslationFields.ID,
-                AbstractDefinitionTranslation.DefinitionTranslationFields.LANG_CODE,
-                AbstractDefinitionTranslation.DefinitionTranslationFields.NAME)
+            AbstractDefinitionTranslation.DefinitionTranslationFields.ID,
+            AbstractDefinitionTranslation.DefinitionTranslationFields.LANG_CODE,
+            AbstractDefinitionTranslation.DefinitionTranslationFields.NAME)
         assertThat(AbstractDefinitionTranslation.DefinitionTranslationFields.ID.fieldName).isEqualTo("id")
         assertThat(AbstractDefinitionTranslation.DefinitionTranslationFields.LANG_CODE.fieldName).isEqualTo("langCode")
         assertThat(AbstractDefinitionTranslation.DefinitionTranslationFields.NAME.fieldName).isEqualTo("name")
@@ -193,12 +194,12 @@ class AbstractDefinitionEntityTest {
     @Test
     fun equals() {
         EqualsVerifier
-                .forClass(AbstractDefinitionEntity::class.java)
-                .withRedefinedSuperclass()
-                .usingGetClass()
-                .withIgnoredFields(ScipamatoEntity.ScipamatoEntityFields.CREATED.fieldName,
-                        ScipamatoEntity.ScipamatoEntityFields.MODIFIED.fieldName)
-                .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
-                .verify()
+            .forClass(AbstractDefinitionEntity::class.java)
+            .withRedefinedSuperclass()
+            .usingGetClass()
+            .withIgnoredFields(ScipamatoEntity.ScipamatoEntityFields.CREATED.fieldName,
+                ScipamatoEntity.ScipamatoEntityFields.MODIFIED.fieldName)
+            .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
+            .verify()
     }
 }

@@ -29,5 +29,4 @@ internal class CurrentDateTimeServiceTest {
         val ldt = dts.currentTimestamp.toLocalDateTime()
         assertThat(ldt).isBetween(snapshot.minusSeconds(1), snapshot.plusSeconds(1))
     }
-
 }

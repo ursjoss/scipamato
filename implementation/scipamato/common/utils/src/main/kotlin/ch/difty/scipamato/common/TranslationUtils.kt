@@ -13,10 +13,12 @@ object TranslationUtils {
      * Converts an extended language code (e.g. de_CH) into the main one (de)
      */
     fun trimLanguageCode(languageCode: String): String =
-            if (languageCode.length <= LANG_CODE_BASE_LENGTH) languageCode else languageCode.substring(0, LANG_CODE_BASE_LENGTH)
+        if (languageCode.length <= LANG_CODE_BASE_LENGTH) languageCode
+        else languageCode.substring(0, LANG_CODE_BASE_LENGTH)
 
     /**
-     * Converts a camel cased string [original] into an underscored one, e.g. `fooBar` -&gt; `foo_bar` (or null if original is null)
+     * Converts a camel cased string [original] into an underscored one,
+     * e.g. `fooBar` -&gt; `foo_bar` (or null if original is null)
      */
     fun deCamelCase(original: String?): String? {
         return when {
@@ -25,6 +27,4 @@ object TranslationUtils {
             else -> original.replace(DE_CAMEL_REGEX, "$1_$2").toLowerCase()
         }
     }
-
-
 }

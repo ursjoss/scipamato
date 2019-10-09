@@ -1,5 +1,6 @@
 package ch.difty.scipamato.core.entity;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -86,6 +87,7 @@ public abstract class CoreEntity extends ScipamatoEntity {
             this.name = name;
         }
 
+        @NotNull
         @Override
         public String getFieldName() {
             return name;

@@ -4,7 +4,6 @@ import ch.difty.scipamato.common.entity.ScipamatoEntity.ScipamatoEntityFields.CR
 import ch.difty.scipamato.common.entity.ScipamatoEntity.ScipamatoEntityFields.MODIFIED
 import ch.difty.scipamato.core.entity.CoreEntity.CoreEntityFields.CREATOR_ID
 import ch.difty.scipamato.core.entity.CoreEntity.CoreEntityFields.MODIFIER_ID
-import ch.difty.scipamato.core.entity.projection.PaperSlim.PaperSlimFields.*
 import nl.jqno.equalsverifier.EqualsVerifier
 import nl.jqno.equalsverifier.Warning
 import org.assertj.core.api.Assertions.assertThat
@@ -56,19 +55,25 @@ internal class PaperSlimTest {
     @Test
     fun testingToString() {
         assertThat(ps.toString()).isEqualTo(
-                "PaperSlim(number=10, firstAuthor=firstAuthor, publicationYear=2016, title=title, newsletter=nl, headline=hl)")
+            "PaperSlim(number=10, firstAuthor=firstAuthor, publicationYear=2016, " +
+                "title=title, newsletter=nl, headline=hl)"
+        )
     }
 
     @Test
     fun testingToString_withNoNewsletter() {
         ps.newsletterAssociation = null
-        assertThat(ps.toString()).isEqualTo("PaperSlim(number=10, firstAuthor=firstAuthor, publicationYear=2016, title=title)")
+        assertThat(ps.toString()).isEqualTo(
+            "PaperSlim(number=10, firstAuthor=firstAuthor, publicationYear=2016, title=title)"
+        )
     }
 
     @Test
     fun testingToString_withNoHeadline() {
         ps.newsletterAssociation.headline = null
-        assertThat(ps.toString()).isEqualTo("PaperSlim(number=10, firstAuthor=firstAuthor, publicationYear=2016, title=title, newsletter=nl)")
+        assertThat(ps.toString()).isEqualTo(
+            "PaperSlim(number=10, firstAuthor=firstAuthor, publicationYear=2016, title=title, newsletter=nl)"
+        )
     }
 
     @Test
@@ -92,18 +97,11 @@ internal class PaperSlimTest {
     @Test
     fun equals() {
         EqualsVerifier
-                .forClass(PaperSlim::class.java)
-                .withRedefinedSuperclass()
-                .usingGetClass()
-                .withIgnoredFields(CREATED.fieldName, CREATOR_ID.fieldName, MODIFIED.fieldName, MODIFIER_ID.fieldName)
-                .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
-                .verify()
+            .forClass(PaperSlim::class.java)
+            .withRedefinedSuperclass()
+            .usingGetClass()
+            .withIgnoredFields(CREATED.fieldName, CREATOR_ID.fieldName, MODIFIED.fieldName, MODIFIER_ID.fieldName)
+            .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
+            .verify()
     }
-
-    @Test
-    fun fields() {
-        assertThat(values()).containsExactly(NUMBER, FIRST_AUTHOR, PUBLICATION_YEAR, TITLE, NEWSLETTER_ASSOCIATION)
-        assertThat(values().map { it.fieldName }).containsExactly("number", "firstAuthor", "publicationYear", "title", "newsletterAssociation")
-    }
-
 }

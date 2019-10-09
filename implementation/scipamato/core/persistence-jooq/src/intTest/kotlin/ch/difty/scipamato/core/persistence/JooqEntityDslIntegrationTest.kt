@@ -1,3 +1,5 @@
+@file:Suppress("SpellCheckingInspection")
+
 package ch.difty.scipamato.core.persistence
 
 import ch.difty.scipamato.core.db.Tables.PAPER
@@ -25,5 +27,4 @@ internal open class JooqEntityDslIntegrationTest {
         val result = create.selectFrom(PAPER).orderBy(PAPER.ID).fetch()
         assertThat(result).hasSize(RECORD_COUNT_PREPOPULATED)
     }
-
 }

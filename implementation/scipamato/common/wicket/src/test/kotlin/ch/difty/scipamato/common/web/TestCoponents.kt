@@ -43,14 +43,14 @@ class TestWebSessionFacade : ScipamatoWebSessionFacade {
 @Primary
 @Component
 class TestMenuBuilder(
-        applicationProperties: ApplicationProperties,
-        webSessionFacade: ScipamatoWebSessionFacade
+    applicationProperties: ApplicationProperties,
+    webSessionFacade: ScipamatoWebSessionFacade
 ) : AbstractMenuBuilder(applicationProperties, webSessionFacade) {
     override fun addMenuLinksTo(navbar: Navbar, page: Page) {
         addPageLink(navbar, page, TestHomePage::class.java, "menu.home", GlyphIconType.home, Navbar.ComponentPosition.LEFT)
         addExternalLink(navbar, "https://github.com/ursjoss/scipamato/wiki",
-                StringResourceModel("menu.help", page, null).string,
-                GlyphIconType.questionsign, Navbar.ComponentPosition.RIGHT
+            StringResourceModel("menu.help", page, null).string,
+            GlyphIconType.questionsign, Navbar.ComponentPosition.RIGHT
         )
     }
 }

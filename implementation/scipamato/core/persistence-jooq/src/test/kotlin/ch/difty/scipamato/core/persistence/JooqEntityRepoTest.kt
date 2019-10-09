@@ -6,6 +6,8 @@ import ch.difty.scipamato.common.NullArgumentException
 import ch.difty.scipamato.common.entity.filter.ScipamatoFilter
 import ch.difty.scipamato.common.persistence.paging.PaginationContext
 import ch.difty.scipamato.core.entity.IdScipamatoEntity
+import com.nhaarman.mockitokotlin2.verify
+import com.nhaarman.mockitokotlin2.verifyNoMoreInteractions
 import com.nhaarman.mockitokotlin2.whenever
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.fail
@@ -14,8 +16,6 @@ import org.jooq.impl.TableImpl
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
-import org.mockito.Mockito.verify
-import org.mockito.Mockito.verifyNoMoreInteractions
 import org.springframework.test.context.junit.jupiter.SpringExtension
 
 /**
@@ -33,7 +33,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension
  * pressure of sonarqube :-) )
  */
 @ExtendWith(SpringExtension::class)
-abstract class JooqEntityRepoTest<R : Record, T : IdScipamatoEntity<ID>, ID : Number, TI : TableImpl<R>, M : RecordMapper<R, T>, F : ScipamatoFilter> : JooqReadOnlyRepoTest<R, T, ID, TI, M, F>() {
+abstract class JooqEntityRepoTest<R : Record, T : IdScipamatoEntity<ID>, ID : Number, TI : TableImpl<R>,
+    M : RecordMapper<R, T>, F : ScipamatoFilter> : JooqReadOnlyRepoTest<R, T, ID, TI, M, F>() {
 
     protected val insertSetStepSetter = mock<InsertSetStepSetter<R, T>>()
     protected val updateSetStepSetter = mock<UpdateSetStepSetter<R, T>>()
@@ -74,10 +75,10 @@ abstract class JooqEntityRepoTest<R : Record, T : IdScipamatoEntity<ID>, ID : Nu
 
     public override fun specificTearDown() {
         verifyNoMoreInteractions(insertSetStepMock, insertSetMoreStepMock, insertResultStepMock,
-                insertSetStepSetter)
+            insertSetStepSetter)
         verifyNoMoreInteractions(deleteWhereStepMock, deleteConditionStep1Mock, deleteConditionStep2Mock)
         verifyNoMoreInteractions(updateSetFirstStepMock, updateConditionStepMock, updateSetMoreStepMock,
-                updateResultStepMock, updateSetStepSetter)
+            updateResultStepMock, updateSetStepSetter)
     }
 
     /**
@@ -106,7 +107,7 @@ abstract class JooqEntityRepoTest<R : Record, T : IdScipamatoEntity<ID>, ID : Nu
         assertThat(repo.delete(id, 0)).isEqualTo(persistedEntity)
 
         verify(dsl).delete(table)
-        verify<DeleteWhereStep<R>>(deleteWhereStepMock).where(tableId.equal(id))
+        verify(deleteWhereStepMock).where(tableId.equal(id))
         verify(deleteConditionStep1Mock).and(recordVersion.eq(0))
         verify(deleteConditionStep2Mock).execute()
     }
@@ -130,8 +131,7 @@ abstract class JooqEntityRepoTest<R : Record, T : IdScipamatoEntity<ID>, ID : Nu
 
         verify(dsl).delete(table)
         verify(deleteConditionStep1Mock).and(recordVersion.eq(0))
-        verify<DeleteWhereStep<R>>(deleteWhereStepMock).where(tableId.equal(id))
+        verify(deleteWhereStepMock).where(tableId.equal(id))
         verify(deleteConditionStep2Mock).execute()
     }
-
 }

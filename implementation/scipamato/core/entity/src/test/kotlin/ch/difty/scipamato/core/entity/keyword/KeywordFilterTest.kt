@@ -19,15 +19,14 @@ internal class KeywordFilterTest {
     @Test
     fun equals() {
         EqualsVerifier
-                .forClass(KeywordFilter::class.java)
-                .withRedefinedSuperclass()
-                .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
-                .verify()
+            .forClass(KeywordFilter::class.java)
+            .withRedefinedSuperclass()
+            .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
+            .verify()
     }
 
     @Test
     fun assertEnumFields() {
         assertThat(KeywordFilter.KeywordFilterFields.values().map { it.fieldName }).containsExactly("nameMask")
     }
-
 }

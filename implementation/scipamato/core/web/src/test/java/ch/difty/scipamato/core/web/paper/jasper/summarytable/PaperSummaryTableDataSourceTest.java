@@ -40,8 +40,9 @@ class PaperSummaryTableDataSourceTest extends PaperDataSourceTest {
     private final List<Code> codesOfCodeClass4 = new ArrayList<>();
     private final List<Code> codesOfCodeClass7 = new ArrayList<>();
 
+    private final ReportHeaderFields rhf = newReportHeaderFields();
+
     private PaperSummaryTableDataSource ds;
-    private ReportHeaderFields          rhf = newReportHeaderFields();
 
     private ReportHeaderFields newReportHeaderFields() {
         return ReportHeaderFields

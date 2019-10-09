@@ -16,7 +16,6 @@ import org.springframework.oxm.UnmarshallingFailureException
 import org.springframework.oxm.XmlMappingException
 import org.springframework.oxm.jaxb.Jaxb2Marshaller
 import java.io.IOException
-import java.util.*
 import javax.xml.transform.stream.StreamSource
 
 internal class PubmedXmlServiceTest {
@@ -49,8 +48,8 @@ internal class PubmedXmlServiceTest {
             fail<Any>("should have thrown exception")
         } catch (ex: Exception) {
             assertThat(ex)
-                    .isInstanceOf(NullArgumentException::class.java)
-                    .hasMessage("xmlString must not be null.")
+                .isInstanceOf(NullArgumentException::class.java)
+                .hasMessage("xmlString must not be null.")
         }
     }
 
@@ -182,7 +181,7 @@ internal class PubmedXmlServiceTest {
         val pr = service.getPubmedArticleWithPmid(pmId)
         assertThat(pr.pubmedArticleFacade).isNull()
         assertThat(pr.errorMessage).isEqualTo(
-                "Status 502 BAD_GATEWAY: status 502 reading PubMed#articleWithId(String,String); content: \nfoo")
+            "Status 502 BAD_GATEWAY: status 502 reading PubMed#articleWithId(String,String); content: \nfoo")
 
         verify(pubMedMock).articleWithId(pmId.toString())
     }
@@ -190,7 +189,10 @@ internal class PubmedXmlServiceTest {
     @Test
     fun gettingPubmedArticleWithPmid_withParsableHtmlError400_hasHttpStatusPopulated() {
         val pmId = 25395026
-        feignExceptionFixture(400, "status 400 reading PubMed#articleWithId(String,String); content:\n" + "{\"error\":\"API key invalid\",\"api-key\":\"xxx\",\"type\":\"invalid\",\"status\":\"unknown\"}")
+        feignExceptionFixture(400,
+            """status 400 reading PubMed#articleWithId(String,String); content:
+            |{"error":"API key invalid","api-key":"xxx","type":"invalid","status":"unknown"}""".trimMargin()
+        )
         whenever(pubMedMock.articleWithId(pmId.toString())).thenThrow(feignExceptionMock)
 
         val pr = service.getPubmedArticleWithPmid(pmId)
@@ -208,12 +210,19 @@ internal class PubmedXmlServiceTest {
     @Test
     fun gettingPubmedArticleWithPmid_withParsableHtmlError400_hasHttpStatusPopulated2() {
         val pmId = 25395026
-        whenever(pubMedMock.articleWithId(pmId.toString())).thenThrow(RuntimeException(
-                "status 400 reading PubMed#articleWithId(String,String); content:\n" + "{\"error\":\"API key invalid\",\"api-key\":\"xxx\",\"type\":\"invalid\",\"status\":\"unknown\"}"))
+        whenever(pubMedMock.articleWithId(pmId.toString())).thenThrow(
+            RuntimeException(
+                """status 400 reading PubMed#articleWithId(String,String); content:
+                |{"error":"API key invalid","api-key":"xxx","type":"invalid","status":"unknown"}""".trimMargin()
+            )
+        )
 
         val pr = service.getPubmedArticleWithPmid(pmId)
         assertThat(pr.pubmedArticleFacade).isNull()
-        assertThat(pr.errorMessage).isEqualTo("status 400 reading PubMed#articleWithId(String,String); content:\n" + "{\"error\":\"API key invalid\",\"api-key\":\"xxx\",\"type\":\"invalid\",\"status\":\"unknown\"}")
+        assertThat(pr.errorMessage).isEqualTo(
+            """status 400 reading PubMed#articleWithId(String,String); content:
+            |{"error":"API key invalid","api-key":"xxx","type":"invalid","status":"unknown"}""".trimMargin()
+        )
 
         verify(pubMedMock).articleWithId(pmId.toString())
     }
@@ -222,7 +231,7 @@ internal class PubmedXmlServiceTest {
     fun gettingPubmedArticleWithPmid_withNoParsableHtmlError_onlyHasMessage() {
         val pmId = 25395026
         whenever(pubMedMock.articleWithId(pmId.toString())).thenThrow(
-                RuntimeException("The network is not reachable"))
+            RuntimeException("The network is not reachable"))
 
         val pr = service.getPubmedArticleWithPmid(pmId)
         assertThat(pr.pubmedArticleFacade).isNull()
@@ -236,10 +245,9 @@ internal class PubmedXmlServiceTest {
         fun makeMinimalValidPubmedArticleSet(): PubmedArticleSet {
             val pubmedArticleSet = PubmedArticleSet()
             pubmedArticleSet
-                    .pubmedArticleOrPubmedBookArticle
-                    .add(ScipamatoPubmedArticleTest.makeMinimalValidPubmedArticle())
+                .pubmedArticleOrPubmedBookArticle
+                .add(ScipamatoPubmedArticleTest.makeMinimalValidPubmedArticle())
             return pubmedArticleSet
         }
     }
-
 }

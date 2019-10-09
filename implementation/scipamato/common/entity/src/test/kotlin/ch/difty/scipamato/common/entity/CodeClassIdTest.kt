@@ -34,5 +34,4 @@ class CodeClassIdTest {
     fun getId() {
         assertThat(CC1.id).isEqualTo(1)
     }
-
 }

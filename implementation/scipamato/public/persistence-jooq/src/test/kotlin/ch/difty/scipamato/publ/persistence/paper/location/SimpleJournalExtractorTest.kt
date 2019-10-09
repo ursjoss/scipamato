@@ -3,6 +3,7 @@ package ch.difty.scipamato.publ.persistence.paper.location
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
+@Suppress("SpellCheckingInspection")
 internal class SimpleJournalExtractorTest {
 
     private val extractor = SimpleJournalExtractor()
@@ -30,7 +31,6 @@ internal class SimpleJournalExtractorTest {
     @Test
     fun extractingJournal_fromLocationWithDotOnlyLast_returnsJournal() {
         assertThat(extractor.extractJournal("Air Qual Atmos Health (2017) 10: 129-137.")).isEqualTo(
-                "Air Qual Atmos Health")
+            "Air Qual Atmos Health")
     }
-
 }

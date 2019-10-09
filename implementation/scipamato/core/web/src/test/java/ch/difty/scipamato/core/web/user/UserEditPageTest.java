@@ -24,7 +24,7 @@ import ch.difty.scipamato.core.persistence.OptimisticLockingException;
 import ch.difty.scipamato.core.web.CorePageParameters;
 import ch.difty.scipamato.core.web.common.BasePageTest;
 
-@SuppressWarnings("SpellCheckingInspection")
+@SuppressWarnings({ "SpellCheckingInspection", "SameParameterValue" })
 class UserEditPageTest extends BasePageTest<UserEditPage> {
 
     private static final String PASSWORD1 = "pw";
@@ -33,10 +33,10 @@ class UserEditPageTest extends BasePageTest<UserEditPage> {
     private static final String PASSWORD2 = "pw2";
     private static final String PW2__HASH = "$2a$04$w6dFZqhgYL8tm/P2iNCPMOftTdwlU6aBxNZDaXHpfpn5HdBc7V3Bq";
 
-    private User user = new User(1, "user", "first", "last", "foo@bar.baz", PW1__HASH, true,
+    private final User user = new User(1, "user", "first", "last", "foo@bar.baz", PW1__HASH, true,
         Set.of(Role.ADMIN, Role.USER));
 
-    private User user_saved = new User(1, "user", "first", "last", "foo@bar.baz", PW2__HASH, true,
+    private final User user_saved = new User(1, "user", "first", "last", "foo@bar.baz", PW2__HASH, true,
         Set.of(Role.ADMIN, Role.USER));
 
     @Override
@@ -245,7 +245,7 @@ class UserEditPageTest extends BasePageTest<UserEditPage> {
         getTester().assertInvisible(bb + "Label");
     }
 
-    private class UserMatcher implements ArgumentMatcher<User> {
+    private static class UserMatcher implements ArgumentMatcher<User> {
 
         private final String pw;
 

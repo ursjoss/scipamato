@@ -12,7 +12,8 @@ import com.nhaarman.mockitokotlin2.whenever
 import org.jooq.TableField
 import org.mockito.Mockito.verify
 
-internal class JooqUserRepoTest : JooqEntityRepoTest<ScipamatoUserRecord, User, Int, ScipamatoUser, UserRecordMapper, UserFilter>() {
+internal class JooqUserRepoTest :
+    JooqEntityRepoTest<ScipamatoUserRecord, User, Int, ScipamatoUser, UserRecordMapper, UserFilter>() {
 
     private val userRoleRepoMock = mock<UserRoleRepository>()
 
@@ -31,17 +32,47 @@ internal class JooqUserRepoTest : JooqEntityRepoTest<ScipamatoUserRecord, User, 
 
     override val recordVersion: TableField<ScipamatoUserRecord, Int> = SCIPAMATO_USER.VERSION
 
-    override val repo: JooqUserRepo = JooqUserRepo(dsl, mapper, sortMapper, filterConditionMapper, dateTimeService, insertSetStepSetter, updateSetStepSetter, applicationProperties, userRoleRepoMock)
+    override val repo: JooqUserRepo = JooqUserRepo(
+        dsl,
+        mapper,
+        sortMapper,
+        filterConditionMapper,
+        dateTimeService,
+        insertSetStepSetter,
+        updateSetStepSetter,
+        applicationProperties,
+        userRoleRepoMock
+    )
 
     override fun makeRepoFindingEntityById(entity: User): EntityRepository<User, Int, UserFilter> =
-            object : JooqUserRepo(dsl, mapper, sortMapper, filterConditionMapper, dateTimeService, insertSetStepSetter, updateSetStepSetter, applicationProperties, userRoleRepoMock) {
-                override fun findById(id: Int?, version: Int): User = entity
-            }
+        object : JooqUserRepo(
+            dsl,
+            mapper,
+            sortMapper,
+            filterConditionMapper,
+            dateTimeService,
+            insertSetStepSetter,
+            updateSetStepSetter,
+            applicationProperties,
+            userRoleRepoMock
+        ) {
+            override fun findById(id: Int?, version: Int): User = entity
+        }
 
     override fun makeRepoSavingReturning(returning: ScipamatoUserRecord): EntityRepository<User, Int, UserFilter> =
-            object : JooqUserRepo(dsl, mapper, sortMapper, filterConditionMapper, dateTimeService, insertSetStepSetter, updateSetStepSetter, applicationProperties, userRoleRepoMock) {
-                override fun doSave(entity: User, languageCode: String): ScipamatoUserRecord = returning
-            }
+        object : JooqUserRepo(
+            dsl,
+            mapper,
+            sortMapper,
+            filterConditionMapper,
+            dateTimeService,
+            insertSetStepSetter,
+            updateSetStepSetter,
+            applicationProperties,
+            userRoleRepoMock
+        ) {
+            override fun doSave(entity: User, languageCode: String): ScipamatoUserRecord = returning
+        }
 
     override fun expectEntityIdsWithValues() {
         whenever(unpersistedEntity.id).thenReturn(SAMPLE_ID)
@@ -63,5 +94,4 @@ internal class JooqUserRepoTest : JooqEntityRepoTest<ScipamatoUserRecord, User, 
     companion object {
         private const val SAMPLE_ID = 3
     }
-
 }

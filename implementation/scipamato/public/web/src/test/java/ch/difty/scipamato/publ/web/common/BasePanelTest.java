@@ -14,7 +14,7 @@ class BasePanelTest extends WicketTest {
 
     @Test
     void instantiatingWithIdOnly() {
-        panel = new BasePanel<String>("panel") {
+        panel = new BasePanel<>("panel") {
             private static final long serialVersionUID = 1L;
         };
         assertThat(panel.getLocalization()).isEqualTo("en_us");
@@ -22,7 +22,7 @@ class BasePanelTest extends WicketTest {
 
     @Test
     void instantiatingWithIdAndModel() {
-        panel = new BasePanel<String>("panel", Model.of("foo")) {
+        panel = new BasePanel<>("panel", Model.of("foo")) {
             private static final long serialVersionUID = 1L;
         };
         assertThat(panel.getLocalization()).isEqualTo("en_us");
@@ -30,7 +30,7 @@ class BasePanelTest extends WicketTest {
 
     @Test
     void instantiatingWithIdAndModelAndMode() {
-        panel = new BasePanel<String>("panel", Model.of("foo"), Mode.EDIT) {
+        panel = new BasePanel<>("panel", Model.of("foo"), Mode.EDIT) {
             private static final long serialVersionUID = 1L;
         };
         assertThat(panel.getLocalization()).isEqualTo("en_us");

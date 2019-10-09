@@ -13,7 +13,6 @@ import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito.verify
 import org.mockito.Mockito.verifyNoMoreInteractions
-import java.util.*
 
 internal class JooqNewsletterTopicServiceTest {
 
@@ -51,15 +50,19 @@ internal class JooqNewsletterTopicServiceTest {
 
     @Test
     fun findingPageOfNewsletterTopicDefinitions_delegatesToRepo() {
-        whenever(repo.findPageOfNewsletterTopicDefinitions(filterMock, paginationContextMock)).thenReturn(topicDefinitions)
-        assertThat(service.findPageOfNewsletterTopicDefinitions(filterMock, paginationContextMock)).isEqualTo(topicDefinitions)
+        whenever(repo.findPageOfNewsletterTopicDefinitions(filterMock, paginationContextMock))
+            .thenReturn(topicDefinitions)
+        assertThat(service.findPageOfNewsletterTopicDefinitions(filterMock, paginationContextMock))
+            .isEqualTo(topicDefinitions)
         verify(repo).findPageOfNewsletterTopicDefinitions(filterMock, paginationContextMock)
     }
 
     @Test
     fun findingPageOfEntityDefinitions_delegatesToRepo() {
-        whenever(repo.findPageOfNewsletterTopicDefinitions(filterMock, paginationContextMock)).thenReturn(topicDefinitions)
-        assertThat(service.findPageOfEntityDefinitions(filterMock, paginationContextMock)).hasSameElementsAs(topicDefinitions)
+        whenever(repo.findPageOfNewsletterTopicDefinitions(filterMock, paginationContextMock))
+            .thenReturn(topicDefinitions)
+        assertThat(service.findPageOfEntityDefinitions(filterMock, paginationContextMock))
+            .hasSameElementsAs(topicDefinitions)
         verify(repo).findPageOfNewsletterTopicDefinitions(filterMock, paginationContextMock)
     }
 
@@ -83,7 +86,6 @@ internal class JooqNewsletterTopicServiceTest {
         assertThat(service.update(topicDefinitionMock)).isEqualTo(persistedTopicDefinitionMock)
         verify(repo).update(topicDefinitionMock)
     }
-
 
     @Test
     fun savingOrUpdatingNewsletterTopicDefinition_withNullId_callsInsert() {
@@ -131,8 +133,8 @@ internal class JooqNewsletterTopicServiceTest {
         val newsletterId = 12
         val persisted = Lists.emptyList<NewsletterNewsletterTopic>()
         val all = listOf(
-                NewsletterNewsletterTopic(newsletterId, 1, Integer.MAX_VALUE, "topic1"),
-                NewsletterNewsletterTopic(newsletterId, 2, Integer.MAX_VALUE, "topic2"))
+            NewsletterNewsletterTopic(newsletterId, 1, Integer.MAX_VALUE, "topic1"),
+            NewsletterNewsletterTopic(newsletterId, 2, Integer.MAX_VALUE, "topic2"))
 
         whenever(repo.findPersistedSortedNewsletterTopicsForNewsletterWithId(newsletterId)).thenReturn(persisted)
         whenever(repo.findAllSortedNewsletterTopicsForNewsletterWithId(newsletterId)).thenReturn(all)
@@ -153,8 +155,8 @@ internal class JooqNewsletterTopicServiceTest {
     fun gettingSortedNewsletterTopicsForNewsletter_withAllPersistedTopics_returnsThoseOnly() {
         val newsletterId = 12
         val persisted = listOf(
-                NewsletterNewsletterTopic(newsletterId, 1, 0, "topic1"),
-                NewsletterNewsletterTopic(newsletterId, 2, 1, "topic2"))
+            NewsletterNewsletterTopic(newsletterId, 1, 0, "topic1"),
+            NewsletterNewsletterTopic(newsletterId, 2, 1, "topic2"))
         val all = ArrayList<NewsletterNewsletterTopic>(persisted)
 
         whenever(repo.findPersistedSortedNewsletterTopicsForNewsletterWithId(newsletterId)).thenReturn(persisted)
@@ -176,12 +178,12 @@ internal class JooqNewsletterTopicServiceTest {
     fun gettingSortedNewsletterTopicsForNewsletter_withPersistedAndUnpersistedTopics_returnsMergedLists() {
         val newsletterId = 12
         val persisted = listOf(
-                NewsletterNewsletterTopic(newsletterId, 1, 0, "topic1"),
-                NewsletterNewsletterTopic(newsletterId, 2, 1, "topic2"))
+            NewsletterNewsletterTopic(newsletterId, 1, 0, "topic1"),
+            NewsletterNewsletterTopic(newsletterId, 2, 1, "topic2"))
         val all = listOf(
-                NewsletterNewsletterTopic(newsletterId, 1, Integer.MAX_VALUE, "topic1"),
-                NewsletterNewsletterTopic(newsletterId, 2, Integer.MAX_VALUE, "topic2"),
-                NewsletterNewsletterTopic(newsletterId, 3, Integer.MAX_VALUE, "topic3"))
+            NewsletterNewsletterTopic(newsletterId, 1, Integer.MAX_VALUE, "topic1"),
+            NewsletterNewsletterTopic(newsletterId, 2, Integer.MAX_VALUE, "topic2"),
+            NewsletterNewsletterTopic(newsletterId, 3, Integer.MAX_VALUE, "topic3"))
 
         whenever(repo.findPersistedSortedNewsletterTopicsForNewsletterWithId(newsletterId)).thenReturn(persisted)
         whenever(repo.findAllSortedNewsletterTopicsForNewsletterWithId(newsletterId)).thenReturn(all)
@@ -202,8 +204,8 @@ internal class JooqNewsletterTopicServiceTest {
     fun savingSortedNewsletterTopics_withTopics_delegatesSaveToRepo() {
         val newsletterId = 1
         val sortedTopics = listOf(
-                NewsletterNewsletterTopic(newsletterId, 1, 0, "topic1"),
-                NewsletterNewsletterTopic(newsletterId, 2, 1, "topic2"))
+            NewsletterNewsletterTopic(newsletterId, 1, 0, "topic1"),
+            NewsletterNewsletterTopic(newsletterId, 2, 1, "topic2"))
         service.saveSortedNewsletterTopics(newsletterId, sortedTopics)
 
         verify<NewsletterTopicRepository>(repo).saveSortedNewsletterTopics(newsletterId, sortedTopics)

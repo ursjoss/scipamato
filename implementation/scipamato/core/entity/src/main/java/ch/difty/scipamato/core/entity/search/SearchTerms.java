@@ -32,9 +32,7 @@ public abstract class SearchTerms<C extends Serializable> extends LinkedHashMap<
             return false;
         else
             for (final C st : values())
-                if (!other
-                    .values()
-                    .contains(st))
+                if (!other.containsValue(st))
                     return false;
         return true;
     }

@@ -92,5 +92,4 @@ abstract class RecordMapperTest<R : Record, E : CoreEntity> {
             whenever(entityMock.version).thenReturn(VERSION)
         }
     }
-
 }

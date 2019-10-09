@@ -44,6 +44,7 @@ public class Code extends CoreEntity implements CodeLike {
             this.name = name;
         }
 
+        @NotNull
         @Override
         public String getFieldName() {
             return name;

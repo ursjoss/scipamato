@@ -1,14 +1,16 @@
 import io.gitlab.arturbosch.detekt.DetektPlugin
 import io.gitlab.arturbosch.detekt.detekt
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
-import org.gradle.api.tasks.testing.logging.TestLogEvent.*
+import org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED
+import org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED
+import org.gradle.api.tasks.testing.logging.TestLogEvent.SKIPPED
+import org.gradle.api.tasks.testing.logging.TestLogEvent.STARTED
 import org.jetbrains.kotlin.gradle.plugin.KotlinPlatformJvmPlugin
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.sonarqube.gradle.SonarQubeTask
 import org.springframework.boot.gradle.plugin.SpringBootPlugin
 import org.springframework.boot.gradle.tasks.bundling.BootJar
 import org.unbrokendome.gradle.plugins.testsets.TestSetsPlugin
-
 
 plugins {
     Lib.springBootPlugin().run { id(id) version version } apply false
@@ -28,7 +30,6 @@ java {
     sourceCompatibility = JavaVersion.VERSION_11
     targetCompatibility = JavaVersion.VERSION_11
 }
-
 
 extra["spring.cloudVersion"] = Lib.springCloudVersion
 extra["mockito.version"] = Lib.mockitoVersion
@@ -52,19 +53,19 @@ val generatedPackages: Set<String> = setOf(
 
 val jacocoTestReportFile = "$buildDir/reports/jacoco/test/jacocoTestReport.xml"
 val jacocoTestPattern = "**/build/jacoco/*.exec"
+val genPkg = generatedPackages.joinToString(",")
 
 sonarqube {
     properties {
         property("sonar.host.url", "https://sonarcloud.io")
         property("sonar.projectKey", "ursjoss_scipamato")
         property("sonar.organization", "ursjoss-github")
-        property("sonar.exclusions", "**/ch/difty/scipamato/publ/web/themes/markup/html/publ/**/*,${generatedPackages.joinToString(",")}")
+        property("sonar.exclusions", "**/ch/difty/scipamato/publ/web/themes/markup/html/publ/**/*,$genPkg")
         property("sonar.coverage.exclusions", (generatedPackages + testPackages).joinToString(","))
         property("sonar.coverage.jacoco.xmlReportPaths", jacocoTestReportFile)
         property("sonar.kotlin.detekt.reportPaths", "build/reports/detekt/detekt.xml")
     }
 }
-
 
 allprojects {
     group = "ch.difty"

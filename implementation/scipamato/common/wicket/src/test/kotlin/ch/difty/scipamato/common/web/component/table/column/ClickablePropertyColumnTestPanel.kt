@@ -10,21 +10,28 @@ import org.apache.wicket.markup.html.panel.Panel
 import org.apache.wicket.model.IModel
 import org.apache.wicket.model.Model
 
-internal class ClickablePropertyColumnTestPanel(id: String, private val consumer: SerializableConsumer<IModel<TestRecord>>, private val inNewTab: Boolean) : Panel(id) {
+internal class ClickablePropertyColumnTestPanel(
+    id: String,
+    private val consumer: SerializableConsumer<IModel<TestRecord>>,
+    private val inNewTab: Boolean
+) : Panel(id) {
 
     override fun onInitialize() {
         super.onInitialize()
 
         val columns = listOf(
-                PropertyColumn(Model.of("name"), "name", "name"),
-                makeClickableColumn("test", consumer)
+            PropertyColumn(Model.of("name"), "name", "name"),
+            makeClickableColumn("test", consumer)
         )
         add(DefaultDataTable("table", columns, TestDataProvider(), 10))
     }
 
     @Suppress("SameParameterValue")
-    private fun makeClickableColumn(id: String, consumer: SerializableConsumer<IModel<TestRecord>>): IColumn<TestRecord, String> =
-            object : ClickablePropertyColumn<TestRecord, String>(Model.of(id), null, "name", consumer, inNewTab) {}
+    private fun makeClickableColumn(
+        id: String,
+        consumer: SerializableConsumer<IModel<TestRecord>>
+    ): IColumn<TestRecord, String> =
+        object : ClickablePropertyColumn<TestRecord, String>(Model.of(id), null, "name", consumer, inNewTab) {}
 
     internal class TestDataProvider : SortableDataProvider<TestRecord, String>() {
         override fun iterator(first: Long, count: Long): Iterator<TestRecord> = listOf(TestRecord(1, "foo")).iterator()

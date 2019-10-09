@@ -27,14 +27,15 @@ internal class NewsletterTest : PublicEntityTest<Newsletter>() {
 
     override fun verifyEquals() {
         EqualsVerifier.forClass(NewStudy::class.java)
-                .withRedefinedSuperclass()
-                .withIgnoredFields(CREATED.fieldName, MODIFIED.fieldName)
-                .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
-                .verify()
+            .withRedefinedSuperclass()
+            .withIgnoredFields(CREATED.fieldName, MODIFIED.fieldName)
+            .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
+            .verify()
     }
 
     @Test
     fun assertEnumFields() {
-        assertThat(Newsletter.NewsletterFields.values().map { it.fieldName }).containsExactly("id", "issue", "issueDate", "monthName")
+        assertThat(Newsletter.NewsletterFields.values().map { it.fieldName })
+            .containsExactly("id", "issue", "issueDate", "monthName")
     }
 }

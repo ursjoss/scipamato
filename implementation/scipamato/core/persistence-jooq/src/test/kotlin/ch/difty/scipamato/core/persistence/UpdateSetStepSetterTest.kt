@@ -6,7 +6,9 @@ import org.jooq.UpdateSetFirstStep
 import org.jooq.UpdateSetMoreStep
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito.*
+import org.mockito.Mockito.times
+import org.mockito.Mockito.verify
+import org.mockito.Mockito.verifyNoMoreInteractions
 
 abstract class UpdateSetStepSetterTest<R : Record, E : CoreEntity> {
 
@@ -100,5 +102,4 @@ abstract class UpdateSetStepSetterTest<R : Record, E : CoreEntity> {
      * Verify the stepSetting has been called on the audit fields.
      */
     protected abstract fun verifyStepSettingAudit()
-
 }

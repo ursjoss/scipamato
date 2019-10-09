@@ -35,7 +35,7 @@ internal class ClickablePropertyColumnTest : WicketBaseTest() {
     fun testOnClick_withSort() {
         val property = "prop"
         val c = ClickablePropertyColumn(displayModel, property, property,
-                consumerMock)
+            consumerMock)
         val clickModel = Model.of("bar")
         c.onClick(clickModel)
         verify<SerializableConsumer<IModel<String>>>(consumerMock).accept(clickModel)
@@ -45,7 +45,7 @@ internal class ClickablePropertyColumnTest : WicketBaseTest() {
     fun testOnClick_inNewTab() {
         val property = "prop"
         val c = ClickablePropertyColumn(displayModel, property, property,
-                consumerMock, true)
+            consumerMock, true)
         val clickModel = Model.of("bar")
         c.onClick(clickModel)
         verify<SerializableConsumer<IModel<String>>>(consumerMock).accept(clickModel)
@@ -53,29 +53,35 @@ internal class ClickablePropertyColumnTest : WicketBaseTest() {
 
     @Test
     fun testPanel() {
-        tester.startComponentInPage(ClickablePropertyColumnTestPanel("panel", SerializableConsumer { this.setVariable(it) }, false))
+        tester.startComponentInPage(
+            ClickablePropertyColumnTestPanel("panel", SerializableConsumer { this.setVariable(it) }, false)
+        )
         assertComponents()
         assertThat(clickPerformed).isNull()
     }
 
     @Test
     fun clickLink() {
-        tester.startComponentInPage(ClickablePropertyColumnTestPanel("panel", SerializableConsumer { this.setVariable(it) }, false))
+        tester.startComponentInPage(
+            ClickablePropertyColumnTestPanel("panel", SerializableConsumer { this.setVariable(it) }, false)
+        )
         tester.clickLink("panel:table:body:rows:1:cells:2:cell:link")
         assertThat(clickPerformed).isEqualTo("TestRecord(id=1, name=foo)")
     }
 
     @Test
     fun clickLink_inNewTab() {
-        tester.startComponentInPage(ClickablePropertyColumnTestPanel("panel", SerializableConsumer { this.setVariable(it) }, true))
+        tester.startComponentInPage(
+            ClickablePropertyColumnTestPanel("panel", SerializableConsumer { this.setVariable(it) }, true)
+        )
         tester.clickLink("panel:table:body:rows:1:cells:2:cell:link")
         assertThat(clickPerformed).isEqualTo("TestRecord(id=1, name=foo)")
     }
 
     private fun setVariable(trModel: IModel<TestRecord>) {
         clickPerformed = trModel
-                .getObject()
-                .toString()
+            .getObject()
+            .toString()
     }
 
     private fun assertComponents() {

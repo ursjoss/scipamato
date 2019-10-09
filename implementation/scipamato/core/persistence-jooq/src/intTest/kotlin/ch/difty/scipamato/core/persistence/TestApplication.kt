@@ -19,29 +19,33 @@ const val MAX_ID_PREPOPULATED = 41L
 @ComponentScan(basePackages = ["ch.difty.scipamato"])
 open class TestApplication {
 
+    @Suppress("SpreadOperator")
     fun main(args: Array<String>) {
         SpringApplicationBuilder()
-                .sources(TestApplication::class.java)
-                .run(*args)
+            .sources(TestApplication::class.java)
+            .run(*args)
     }
 
     @Bean
     open fun applicationProperties(): ApplicationProperties =
-            object : ApplicationProperties {
-                override fun getBuildVersion() = "vxy"
-                override fun getDefaultLocalization() = "de"
-                override fun getBrand() = "scipamato"
-                override fun getTitleOrBrand() = brand
-                override fun getPubmedBaseUrl() = "http://pubmed/"
-                override fun getCmsUrlSearchPage() = "http://localhost/paper/number"
-                override fun getRedirectFromPort() = 8080
-                override fun getMultiSelectBoxActionBoxWithMoreEntriesThan() = 4
-            }
+        object : ApplicationProperties {
+            override fun getBuildVersion() = "vxy"
+            override fun getDefaultLocalization() = "de"
+            override fun getBrand() = "scipamato"
+            override fun getTitleOrBrand() = brand
+            override fun getPubmedBaseUrl() = "http://pubmed/"
+            override fun getCmsUrlSearchPage() = "http://localhost/paper/number"
+            override fun getRedirectFromPort() = 8080
+            override fun getMultiSelectBoxActionBoxWithMoreEntriesThan() = 4
+        }
 
     @Bean
     open fun noopPubmedArticleService() = object : PubmedArticleService {
-        override fun getPubmedArticleWithPmid(pmId: Int): PubmedArticleResult = PubmedArticleResult(null, null, null)
-        override fun getPubmedArticleWithPmidAndApiKey(pmId: Int, apiKey: String) = PubmedArticleResult(null, null, null)
+        override fun getPubmedArticleWithPmid(pmId: Int): PubmedArticleResult =
+            PubmedArticleResult(null, null, null)
+
+        override fun getPubmedArticleWithPmidAndApiKey(pmId: Int, apiKey: String) =
+            PubmedArticleResult(null, null, null)
 
         override fun extractArticlesFrom(content: String) = listOf<PubmedArticleFacade>()
     }
@@ -50,4 +54,3 @@ open class TestApplication {
     @Primary
     open fun dateTimeService(): DateTimeService = FrozenDateTimeService()
 }
-

@@ -28,8 +28,8 @@ internal class WicketEventTest {
     @Test
     fun equals() {
         EqualsVerifier.forClass(WicketEvent::class.java)
-                .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
-                .verify()
+            .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
+            .verify()
     }
 
     @Test

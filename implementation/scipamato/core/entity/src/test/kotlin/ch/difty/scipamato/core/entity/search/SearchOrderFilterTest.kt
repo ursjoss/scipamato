@@ -20,15 +20,17 @@ internal class SearchOrderFilterTest {
         assertThat(f.ownerIncludingGlobal).isEqualTo(4)
         assertThat(f.global).isEqualTo(true)
 
-        assertThat(f.toString()).isEqualTo("SearchOrderFilter(nameMask=foo, owner=3, global=true, ownerIncludingGlobal=4)")
+        assertThat(f.toString()).isEqualTo(
+            "SearchOrderFilter(nameMask=foo, owner=3, global=true, ownerIncludingGlobal=4)"
+        )
     }
 
     @Test
     fun equals() {
         EqualsVerifier
-                .forClass(SearchOrderFilter::class.java)
-                .withRedefinedSuperclass()
-                .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
-                .verify()
+            .forClass(SearchOrderFilter::class.java)
+            .withRedefinedSuperclass()
+            .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
+            .verify()
     }
 }

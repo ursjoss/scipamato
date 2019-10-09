@@ -13,11 +13,10 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.jooq.JooqTest
 import org.testcontainers.junit.jupiter.Testcontainers
-import java.util.*
 
 @JooqTest
 @Testcontainers
-@Suppress("SpellCheckingInspection", "FunctionName", "DuplicatedCode", "LocalVariableName")
+@Suppress("TooManyFunctions", "SpellCheckingInspection", "FunctionName", "MagicNumber", "DuplicatedCode")
 internal open class JooqNewsletterTopicRepoIntegrationTest {
 
     @Autowired
@@ -31,7 +30,7 @@ internal open class JooqNewsletterTopicRepoIntegrationTest {
     @Test
     fun findingNewsletterTopicDefinitions_withUnspecifiedFilter_findsAllDefinitions() {
         val ntds = repo.findPageOfNewsletterTopicDefinitions(
-                NewsletterTopicFilter(), PaginationRequest(Sort.Direction.ASC, "title"))
+            NewsletterTopicFilter(), PaginationRequest(Sort.Direction.ASC, "title"))
 
         assertThat(ntds).hasSize(3)
 
@@ -60,7 +59,7 @@ internal open class JooqNewsletterTopicRepoIntegrationTest {
     @Test
     fun findingNewsletterTopicDefinitions_withUnspecifiedFilter_sortingDescendingly_findsAllDefinitions() {
         val ntds = repo.findPageOfNewsletterTopicDefinitions(
-                NewsletterTopicFilter(), PaginationRequest(Sort.Direction.DESC, "title"))
+            NewsletterTopicFilter(), PaginationRequest(Sort.Direction.DESC, "title"))
 
         assertThat(ntds).hasSize(3)
 
@@ -72,7 +71,7 @@ internal open class JooqNewsletterTopicRepoIntegrationTest {
     fun findingNewsletterTopicDefinitions_withFilterMatchingSingleGermanTitle_findsOne() {
         val filter = NewsletterTopicFilter().apply { titleMask = "Partikel" }
         val ntds = repo.findPageOfNewsletterTopicDefinitions(filter,
-                PaginationRequest(Sort.Direction.ASC, "title"))
+            PaginationRequest(Sort.Direction.ASC, "title"))
 
         assertThat(ntds).hasSize(1)
 
@@ -88,7 +87,7 @@ internal open class JooqNewsletterTopicRepoIntegrationTest {
     fun findingNewsletterTopicDefinitions_withFilterMatchingNa_findsSomeWithMissingTranslations() {
         val filter = NewsletterTopicFilter().apply { titleMask = "n.a." }
         val ntds = repo.findPageOfNewsletterTopicDefinitions(filter,
-                PaginationRequest(Sort.Direction.ASC, "title"))
+            PaginationRequest(Sort.Direction.ASC, "title"))
 
         assertThat(ntds).hasSize(3)
 
@@ -103,7 +102,7 @@ internal open class JooqNewsletterTopicRepoIntegrationTest {
     fun findingNewsletterTopicDefinitions_haveVersionFieldsPopulated() {
         val filter = NewsletterTopicFilter().apply { titleMask = "Partikel" }
         val ntds = repo.findPageOfNewsletterTopicDefinitions(filter,
-                PaginationRequest(Sort.Direction.ASC, "title"))
+            PaginationRequest(Sort.Direction.ASC, "title"))
 
         assertThat(ntds).hasSize(1)
 
@@ -198,6 +197,7 @@ internal open class JooqNewsletterTopicRepoIntegrationTest {
         assertThat(existing.getTitleInLanguage("fr") == null).isTrue()
     }
 
+    @Suppress("LocalVariableName", "VariableNaming")
     @Test
     fun insertingRecord_savesRecordAndRefreshesId() {
         val ntt_de = NewsletterTopicTranslation(null, "de", "foo_de", 0)
@@ -250,6 +250,7 @@ internal open class JooqNewsletterTopicRepoIntegrationTest {
         assertThat(repo.delete(-1, 1) == null).isTrue()
     }
 
+    @Suppress("TooGenericExceptionCaught")
     @Test
     fun deleting_withExistingId_butWrongVersion_throwsOptimisticLockingException() {
         try {
@@ -257,10 +258,11 @@ internal open class JooqNewsletterTopicRepoIntegrationTest {
             fail<Any>("should have thrown exception")
         } catch (ex: Exception) {
             assertThat(ex)
-                    .isInstanceOf(OptimisticLockingException::class.java)
-                    .hasMessage("Record in table 'newsletter_topic' has been modified prior to the delete attempt. Aborting....")
+                .isInstanceOf(OptimisticLockingException::class.java)
+                .hasMessage(
+                    "Record in table 'newsletter_topic' has been modified prior to the delete attempt. Aborting...."
+                )
         }
-
     }
 
     @Test
@@ -331,7 +333,7 @@ internal open class JooqNewsletterTopicRepoIntegrationTest {
     @Suppress("SameParameterValue")
     private fun assertSortedList(sortProperty: String, id: Int?) {
         val cds = repo.findPageOfNewsletterTopicDefinitions(
-                NewsletterTopicFilter(), PaginationRequest(0, 10, Sort.Direction.DESC, sortProperty))
+            NewsletterTopicFilter(), PaginationRequest(0, 10, Sort.Direction.DESC, sortProperty))
 
         assertThat(cds).hasSize(3)
 

@@ -1,7 +1,5 @@
 package ch.difty.scipamato.core.web.paper.list;
 
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
@@ -30,7 +28,7 @@ import ch.difty.scipamato.core.web.paper.result.ResultPanel;
 @SuppressWarnings("SameParameterValue")
 abstract class PaperListPageTest extends BasePageTest<PaperListPage> {
 
-    static final String LC = "en_us";
+    private static final String LC = "en_us";
 
     @MockBean
     protected ApplicationCoreProperties applicationPropertiesMock;

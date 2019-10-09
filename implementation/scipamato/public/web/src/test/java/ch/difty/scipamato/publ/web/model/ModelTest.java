@@ -36,6 +36,7 @@ public abstract class ModelTest {
      * Override if the actual test class needs a setUp
      */
     protected void setUpLocal() {
+        // override if necessary
     }
 
 }

@@ -25,7 +25,7 @@ public class BooleanSearchTerm extends AbstractSearchTerm {
     BooleanSearchTerm(final Long id, final Long searchConditionId, final String fieldName, final String rawSearchTerm) {
         super(id, SearchTermType.BOOLEAN, searchConditionId, fieldName, rawSearchTerm);
         final String rst = rawSearchTerm.trim();
-        this.value = Boolean.valueOf(rst);
+        this.value = Boolean.parseBoolean(rst);
     }
 
     public boolean getValue() {

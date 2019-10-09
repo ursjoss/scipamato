@@ -46,5 +46,4 @@ internal class TranslationUtilsTest {
     fun deCamelCasing_withoutCaseAndUnderscore_returnsOriginal() {
         assertThat(TranslationUtils.deCamelCase("foo_bar")).isEqualTo("foo_bar")
     }
-
 }

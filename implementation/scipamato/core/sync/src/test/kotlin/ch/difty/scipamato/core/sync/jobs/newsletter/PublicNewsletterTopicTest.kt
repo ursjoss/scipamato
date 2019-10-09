@@ -1,6 +1,5 @@
 package ch.difty.scipamato.core.sync.jobs.newsletter
 
-
 import ch.difty.scipamato.core.sync.jobs.CREATED
 import ch.difty.scipamato.core.sync.jobs.MODIFIED
 import ch.difty.scipamato.core.sync.jobs.SYNCHED
@@ -12,15 +11,15 @@ internal class PublicNewsletterTopicTest {
     @Test
     fun canSetGet() {
         val pnt = PublicNewsletterTopic
-                .builder()
-                .id(1)
-                .langCode("lc")
-                .title("t")
-                .version(3)
-                .created(CREATED)
-                .lastModified(MODIFIED)
-                .lastSynched(SYNCHED)
-                .build()
+            .builder()
+            .id(1)
+            .langCode("lc")
+            .title("t")
+            .version(3)
+            .created(CREATED)
+            .lastModified(MODIFIED)
+            .lastSynched(SYNCHED)
+            .build()
 
         assertThat(pnt.id).isEqualTo(1)
         assertThat(pnt.langCode).isEqualTo("lc")

@@ -54,5 +54,4 @@ internal class SearchOrderRecordMapperTest : RecordMapperTest<SearchOrderRecord,
             auditFixtureFor(entityMock)
         }
     }
-
 }

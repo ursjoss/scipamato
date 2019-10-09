@@ -40,5 +40,4 @@ internal open class JooqKeywordRepoIntegrationTest {
         assertThat(keywords.map { it.name }).containsExactly("Activités réduites", "Aérosol", "Allergie")
         keywords.forEach { c -> log.debug(c.toString()) }
     }
-
 }

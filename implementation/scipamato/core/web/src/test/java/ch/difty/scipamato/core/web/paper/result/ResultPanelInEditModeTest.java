@@ -1,8 +1,6 @@
 package ch.difty.scipamato.core.web.paper.result;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.*;
 
 import org.apache.wicket.feedback.ExactLevelFeedbackMessageFilter;
@@ -18,12 +16,12 @@ import ch.difty.scipamato.core.entity.search.SearchOrder;
 class ResultPanelInEditModeTest extends ResultPanelTest {
 
     @Override
-    protected Mode getMode() {
+    Mode getMode() {
         return Mode.EDIT;
     }
 
     @Override
-    protected void assertTableRow(String bb) {
+    void assertTableRow(String bb) {
         assertEditableTableRow(bb);
     }
 

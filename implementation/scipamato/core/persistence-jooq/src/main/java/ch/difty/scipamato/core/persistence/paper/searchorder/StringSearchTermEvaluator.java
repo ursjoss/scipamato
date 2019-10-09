@@ -24,7 +24,7 @@ import ch.difty.scipamato.core.persistence.ConditionalSupplier;
  */
 public class StringSearchTermEvaluator implements SearchTermEvaluator<StringSearchTerm> {
 
-    public static final String METHODS = "methods";
+    private static final String METHODS = "methods";
 
     private final List<Field<Object>> methodFields = new ArrayList<>();
 
@@ -138,6 +138,7 @@ public class StringSearchTermEvaluator implements SearchTermEvaluator<StringSear
         if (METHODS.equalsIgnoreCase(field.getName())) {
             ConditionalSupplier csSub = new ConditionalSupplier();
             for (final Field mf : methodFields) {
+                //noinspection unchecked
                 csSub.add(() -> negate ?
                     DSL
                         .coalesce(mf, "")

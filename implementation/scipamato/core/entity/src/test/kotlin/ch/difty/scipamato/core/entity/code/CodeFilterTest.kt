@@ -23,21 +23,23 @@ internal class CodeFilterTest {
         assertThat(f.commentMask).isEqualTo("commentMask")
         assertThat(f.internal).isTrue()
 
-        assertThat(f.toString()).isEqualTo("CodeFilter(codeClass=CodeClass[id=1], nameMask=nameMask, commentMask=commentMask, internal=true)")
+        assertThat(f.toString()).isEqualTo(
+            "CodeFilter(codeClass=CodeClass[id=1], nameMask=nameMask, commentMask=commentMask, internal=true)"
+        )
     }
 
     @Test
     fun equals() {
         EqualsVerifier
-                .forClass(CodeFilter::class.java)
-                .withRedefinedSuperclass()
-                .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
-                .verify()
+            .forClass(CodeFilter::class.java)
+            .withRedefinedSuperclass()
+            .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
+            .verify()
     }
 
     @Test
     fun assertEnumFields() {
-        assertThat(CodeFilter.CodeFilterFields.values().map { it.fieldName }).containsExactly("codeClass", "nameMask", "commentMask", "internal")
+        assertThat(CodeFilter.CodeFilterFields.values().map { it.fieldName })
+            .containsExactly("codeClass", "nameMask", "commentMask", "internal")
     }
-
 }

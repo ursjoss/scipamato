@@ -6,13 +6,11 @@ import ch.difty.scipamato.core.entity.Paper
 import ch.difty.scipamato.core.entity.newsletter.Newsletter
 import ch.difty.scipamato.core.entity.newsletter.NewsletterFilter
 import ch.difty.scipamato.core.persistence.AbstractServiceTest
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.whenever
+import com.nhaarman.mockitokotlin2.*
 import org.assertj.core.api.AssertionsForClassTypes.assertThat
 import org.assertj.core.api.AssertionsForClassTypes.fail
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito.*
-import java.util.*
+import org.mockito.ArgumentMatchers.anyInt
 
 internal class JooqNewsletterServiceTest : AbstractServiceTest<Int, Newsletter, NewsletterRepository>() {
 
@@ -77,7 +75,7 @@ internal class JooqNewsletterServiceTest : AbstractServiceTest<Int, Newsletter, 
     fun savingOrUpdating_withUnsavedEntityAndOtherNewsletterInStatusWIP_throws() {
         whenever(newsletterMock.id).thenReturn(null)
         whenever(newsletterMock.publicationStatus).thenReturn(PublicationStatus.WIP)
-        whenever(repoMock.newsletterInStatusWorkInProgress).thenReturn(Optional.of(newsletterWipMock))
+        whenever(repoMock.newsletterInStatusWorkInProgress).thenReturn(java.util.Optional.of(newsletterWipMock))
         whenever(newsletterWipMock.id).thenReturn(1)
 
         try {
@@ -85,8 +83,8 @@ internal class JooqNewsletterServiceTest : AbstractServiceTest<Int, Newsletter, 
             fail("should have thrown exception")
         } catch (ex: Exception) {
             assertThat(ex)
-                    .isInstanceOf(IllegalArgumentException::class.java)
-                    .hasMessage("newsletter.onlyOneInStatusWipAllowed")
+                .isInstanceOf(IllegalArgumentException::class.java)
+                .hasMessage("newsletter.onlyOneInStatusWipAllowed")
         }
 
         verify(newsletterMock).publicationStatus
@@ -99,7 +97,7 @@ internal class JooqNewsletterServiceTest : AbstractServiceTest<Int, Newsletter, 
     fun savingOrUpdating_withSavedEntity_butOtherNewsletterInWipStatus_throws() {
         whenever(newsletterMock.id).thenReturn(2)
         whenever(newsletterMock.publicationStatus).thenReturn(PublicationStatus.WIP)
-        whenever(repoMock.newsletterInStatusWorkInProgress).thenReturn(Optional.of(newsletterWipMock))
+        whenever(repoMock.newsletterInStatusWorkInProgress).thenReturn(java.util.Optional.of(newsletterWipMock))
         whenever(newsletterWipMock.id).thenReturn(1)
 
         try {
@@ -107,8 +105,8 @@ internal class JooqNewsletterServiceTest : AbstractServiceTest<Int, Newsletter, 
             fail("should have thrown exception")
         } catch (ex: Exception) {
             assertThat(ex)
-                    .isInstanceOf(IllegalArgumentException::class.java)
-                    .hasMessage("newsletter.onlyOneInStatusWipAllowed")
+                .isInstanceOf(IllegalArgumentException::class.java)
+                .hasMessage("newsletter.onlyOneInStatusWipAllowed")
         }
 
         verify(newsletterMock).publicationStatus
@@ -123,7 +121,7 @@ internal class JooqNewsletterServiceTest : AbstractServiceTest<Int, Newsletter, 
 
         whenever(newsletterMock.id).thenReturn(newsletterId)
         whenever(newsletterMock.publicationStatus).thenReturn(PublicationStatus.WIP)
-        whenever(repoMock.newsletterInStatusWorkInProgress).thenReturn(Optional.of(newsletterWipMock))
+        whenever(repoMock.newsletterInStatusWorkInProgress).thenReturn(java.util.Optional.of(newsletterWipMock))
         whenever(newsletterWipMock.id).thenReturn(newsletterId)
 
         service.saveOrUpdate(newsletterMock)
@@ -166,7 +164,7 @@ internal class JooqNewsletterServiceTest : AbstractServiceTest<Int, Newsletter, 
         // hypothetical case
         whenever(newsletterMock.id).thenReturn(17)
         whenever(newsletterMock.publicationStatus).thenReturn(PublicationStatus.WIP)
-        whenever(repoMock.newsletterInStatusWorkInProgress).thenReturn(Optional.empty())
+        whenever(repoMock.newsletterInStatusWorkInProgress).thenReturn(java.util.Optional.empty())
         whenever(repoMock.update(newsletterMock)).thenReturn(newsletterMock)
         auditFixture()
 
@@ -182,7 +180,7 @@ internal class JooqNewsletterServiceTest : AbstractServiceTest<Int, Newsletter, 
     @Test
     fun deleting_withNullEntity_doesNothing() {
         service.remove(null)
-        verify<NewsletterRepository>(repoMock, never()).delete(anyInt(), anyInt())
+        verify(repoMock, never()).delete(anyInt(), anyInt())
     }
 
     @Test
@@ -192,7 +190,7 @@ internal class JooqNewsletterServiceTest : AbstractServiceTest<Int, Newsletter, 
         service.remove(newsletterMock)
 
         verify(newsletterMock).id
-        verify<NewsletterRepository>(repoMock, never()).delete(anyInt(), anyInt())
+        verify(repoMock, never()).delete(anyInt(), anyInt())
     }
 
     @Test
@@ -204,19 +202,19 @@ internal class JooqNewsletterServiceTest : AbstractServiceTest<Int, Newsletter, 
 
         verify(newsletterMock, times(2)).id
         verify(newsletterMock, times(1)).version
-        verify<NewsletterRepository>(repoMock, times(1)).delete(3, 17)
+        verify(repoMock, times(1)).delete(3, 17)
     }
 
     @Test
     fun canCreateNewNewsletter_withNoWipNewsletters_isAllowed() {
-        whenever(repoMock.newsletterInStatusWorkInProgress).thenReturn(Optional.empty())
+        whenever(repoMock.newsletterInStatusWorkInProgress).thenReturn(java.util.Optional.empty())
         assertThat(service.canCreateNewsletterInProgress()).isTrue()
         verify(repoMock).newsletterInStatusWorkInProgress
     }
 
     @Test
     fun canCreateNewNewsletter_withOneWipNewsletters_isNotAllowed() {
-        whenever(repoMock.newsletterInStatusWorkInProgress).thenReturn(Optional.of(Newsletter()))
+        whenever(repoMock.newsletterInStatusWorkInProgress).thenReturn(java.util.Optional.of(Newsletter()))
         assertThat(service.canCreateNewsletterInProgress()).isFalse()
         verify(repoMock).newsletterInStatusWorkInProgress
     }
@@ -228,7 +226,7 @@ internal class JooqNewsletterServiceTest : AbstractServiceTest<Int, Newsletter, 
         val newsletterId = 1
         val langCode = "en"
 
-        whenever(repoMock.newsletterInStatusWorkInProgress).thenReturn(Optional.empty())
+        whenever(repoMock.newsletterInStatusWorkInProgress).thenReturn(java.util.Optional.empty())
 
         service.mergePaperIntoWipNewsletter(paperId, newsletterTopicId)
 
@@ -247,9 +245,9 @@ internal class JooqNewsletterServiceTest : AbstractServiceTest<Int, Newsletter, 
         wip.id = newsletterId
 
         val nl = Paper.NewsletterLink(1, "link", 2, 3, "topic", "headline")
-        val nlo = Optional.of(nl)
+        val nlo = java.util.Optional.of(nl)
 
-        whenever(repoMock.newsletterInStatusWorkInProgress).thenReturn(Optional.of(wip))
+        whenever(repoMock.newsletterInStatusWorkInProgress).thenReturn(java.util.Optional.of(wip))
         whenever(repoMock.mergePaperIntoNewsletter(newsletterId, paperId, newsletterTopicId, langCode)).thenReturn(nlo)
 
         service.mergePaperIntoWipNewsletter(paperId, newsletterTopicId)
@@ -263,7 +261,7 @@ internal class JooqNewsletterServiceTest : AbstractServiceTest<Int, Newsletter, 
         val paperId: Long = 5
         val newsletterTopicId = 10
 
-        whenever(repoMock.newsletterInStatusWorkInProgress).thenReturn(Optional.empty())
+        whenever(repoMock.newsletterInStatusWorkInProgress).thenReturn(java.util.Optional.empty())
         service.mergePaperIntoWipNewsletter(paperId, newsletterTopicId)
         verify(repoMock).newsletterInStatusWorkInProgress
     }
@@ -271,7 +269,7 @@ internal class JooqNewsletterServiceTest : AbstractServiceTest<Int, Newsletter, 
     @Test
     fun mergingPaperIntoNewsletter2_withNoWipNewsletterPresent_cannotMerge() {
         val paperId: Long = 5
-        whenever(repoMock.newsletterInStatusWorkInProgress).thenReturn(Optional.empty())
+        whenever(repoMock.newsletterInStatusWorkInProgress).thenReturn(java.util.Optional.empty())
         service.mergePaperIntoWipNewsletter(paperId)
         verify(repoMock).newsletterInStatusWorkInProgress
     }
@@ -283,7 +281,7 @@ internal class JooqNewsletterServiceTest : AbstractServiceTest<Int, Newsletter, 
         val wip = Newsletter()
         wip.id = newsletterId
 
-        whenever(repoMock.newsletterInStatusWorkInProgress).thenReturn(Optional.of(wip))
+        whenever(repoMock.newsletterInStatusWorkInProgress).thenReturn(java.util.Optional.of(wip))
         whenever(repoMock.removePaperFromNewsletter(newsletterId, paperId)).thenReturn(1)
 
         assertThat(service.removePaperFromWipNewsletter(paperId)).isTrue()
@@ -299,7 +297,7 @@ internal class JooqNewsletterServiceTest : AbstractServiceTest<Int, Newsletter, 
         val wip = Newsletter()
         wip.id = newsletterId
 
-        whenever(repoMock.newsletterInStatusWorkInProgress).thenReturn(Optional.of(wip))
+        whenever(repoMock.newsletterInStatusWorkInProgress).thenReturn(java.util.Optional.of(wip))
         whenever(repoMock.removePaperFromNewsletter(newsletterId, paperId)).thenReturn(0)
 
         assertThat(service.removePaperFromWipNewsletter(paperId)).isFalse()
@@ -311,9 +309,8 @@ internal class JooqNewsletterServiceTest : AbstractServiceTest<Int, Newsletter, 
     @Test
     fun removingPaperFromNewsletter_withNoWipNewsletterPresent_cannotRemove() {
         val paperId: Long = 5
-        whenever(repoMock.newsletterInStatusWorkInProgress).thenReturn(Optional.empty())
+        whenever(repoMock.newsletterInStatusWorkInProgress).thenReturn(java.util.Optional.empty())
         assertThat(service.removePaperFromWipNewsletter(paperId)).isFalse()
         verify(repoMock).newsletterInStatusWorkInProgress
     }
-
 }

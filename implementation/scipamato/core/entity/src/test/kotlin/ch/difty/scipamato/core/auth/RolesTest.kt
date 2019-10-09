@@ -1,8 +1,10 @@
 package ch.difty.scipamato.core.auth
 
-import ch.difty.scipamato.core.auth.Roles.*
+import ch.difty.scipamato.core.auth.Roles.ADMIN
+import ch.difty.scipamato.core.auth.Roles.USER
+import ch.difty.scipamato.core.auth.Roles.VIEWER
+import ch.difty.scipamato.core.auth.Roles.dummyMethod
 import org.assertj.core.api.Assertions.assertThat
-
 import org.junit.jupiter.api.Test
 
 internal class RolesTest {
@@ -26,5 +28,4 @@ internal class RolesTest {
     fun dummyTest() {
         assertThat(dummyMethod()).isNull()
     }
-
 }

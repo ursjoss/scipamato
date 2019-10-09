@@ -15,13 +15,14 @@ import org.testcontainers.junit.jupiter.Testcontainers
  */
 @JooqTest
 @Testcontainers
-internal open class BooleanSearchTermEvaluatorIntegrationTest : SearchTermEvaluatorIntegrationTest<BooleanSearchTerm>() {
+open class BooleanSearchTermEvaluatorIntegrationTest : SearchTermEvaluatorIntegrationTest<BooleanSearchTerm>() {
 
     override val searchTermType = SearchTermType.BOOLEAN.id
 
     private val evaluator = BooleanSearchTermEvaluator()
 
-    override fun makeSearchTerm(rawSearchTerm: String) = SearchTerm.newSearchTerm(ID, searchTermType, SC_ID, FN, rawSearchTerm) as BooleanSearchTerm
+    override fun makeSearchTerm(rawSearchTerm: String) =
+        SearchTerm.newSearchTerm(ID, searchTermType, SC_ID, FN, rawSearchTerm) as BooleanSearchTerm
 
     @ParameterizedTest(name = "[{index}] {0} -> {1} ({4})")
     @MethodSource("booleanParameters")
@@ -39,8 +40,8 @@ internal open class BooleanSearchTermEvaluatorIntegrationTest : SearchTermEvalua
         @JvmStatic
         @Suppress("unused")
         private fun booleanParameters() = listOf(
-                Arguments.of("true", true, "fn = true"),
-                Arguments.of("false", false, "fn = false")
+            Arguments.of("true", true, "fn = true"),
+            Arguments.of("false", false, "fn = false")
         )
     }
 }

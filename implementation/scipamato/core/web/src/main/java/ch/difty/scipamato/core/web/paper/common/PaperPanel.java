@@ -85,8 +85,9 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
 
     private final PageReference callingPage;
 
-    private Form<T>         form;
-    private IModel<Integer> tabIndexModel;
+    private final IModel<Integer> tabIndexModel;
+
+    private Form<T> form;
 
     PaperPanel(String id, IModel<T> model, Mode mode) {
         this(id, model, mode, null, Model.of(0));

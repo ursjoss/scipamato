@@ -33,5 +33,4 @@ internal class NewsletterTopicTest : Jsr303ValidatedEntityTest<NewsletterTopic>(
         nt.title = null
         validateAndAssertFailure(nt, TITLE, null, "{javax.validation.constraints.NotNull.message}")
     }
-
 }

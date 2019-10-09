@@ -30,7 +30,7 @@ class BasePageAdditionTest extends WicketTest {
     @Mock
     private ScipamatoPublicProperties applicationProperties;
 
-    private Locale localeZh = Locale.CHINESE;
+    private final Locale localeZh = Locale.CHINESE;
 
     private boolean additionalCommercialFontsRendered = false;
 

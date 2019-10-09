@@ -1,8 +1,6 @@
 package ch.difty.scipamato.core.web.paper.result;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.*;
 
 import java.util.Collections;
@@ -27,7 +25,7 @@ import ch.difty.scipamato.core.web.common.PanelTest;
 import ch.difty.scipamato.core.web.paper.PaperSlimBySearchOrderProvider;
 import ch.difty.scipamato.core.web.paper.entry.PaperEntryPage;
 
-@SuppressWarnings("ALL")
+@SuppressWarnings("ResultOfMethodCallIgnored")
 abstract class ResultPanelTest extends PanelTest<ResultPanel> {
 
     static final long NUMBER = 2L;
@@ -75,7 +73,7 @@ abstract class ResultPanelTest extends PanelTest<ResultPanel> {
         };
     }
 
-    protected abstract Mode getMode();
+    abstract Mode getMode();
 
     void assertEditableTableRow(final String bb) {
         getTester().assertLabel(bb + ":1:cell", "1");
@@ -118,7 +116,7 @@ abstract class ResultPanelTest extends PanelTest<ResultPanel> {
         verify(paperServiceMock).findPageOfIdsBySearchOrder(isA(SearchOrder.class), isA(PaginationRequest.class));
     }
 
-    protected abstract void assertTableRow(String bb);
+    abstract void assertTableRow(String bb);
 
     void assertClickingDeleteIconLink() {
         getTester().startComponentInPage(makePanel());

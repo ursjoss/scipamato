@@ -34,6 +34,7 @@ public class NewsletterAssociation extends IdScipamatoEntity<Integer> {
             this.name = name;
         }
 
+        @NotNull
         @Override
         public String getFieldName() {
             return name;

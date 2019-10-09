@@ -14,11 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.jooq.JooqTest
 import org.testcontainers.junit.jupiter.Testcontainers
 import java.time.LocalDate
-import java.util.*
 
 @JooqTest
 @Testcontainers
-@Suppress("FunctionName", "SpellCheckingInspection", "SameParameterValue")
+@Suppress("TooManyFunctions", "FunctionName", "SpellCheckingInspection", "MagicNumber", "SameParameterValue")
 internal open class JooqNewsletterRepoIntegrationTest {
 
     @Autowired
@@ -41,8 +40,12 @@ internal open class JooqNewsletterRepoIntegrationTest {
         assertThat(nl.issue).isEqualTo("1802")
         assertThat(nl.issueDate).isEqualTo(LocalDate.parse("2018-02-01"))
         assertThat(nl.publicationStatus).isEqualTo(PublicationStatus.PUBLISHED)
-        assertThat(nl.papers.map { it.firstAuthor }).containsOnly("Turner", "Lanzinger", "Lanzinger", "Eeftens", "Kubesch")
-        assertThat(nl.topics.map { it.title }).containsOnly("Ultrafeine Partikel", "Sterblichkeit", "Gesundheitsfolgenabschätzung")
+        assertThat(nl.papers.map { it.firstAuthor }).containsOnly(
+            "Turner", "Lanzinger", "Lanzinger", "Eeftens", "Kubesch"
+        )
+        assertThat(nl.topics.map { it.title }).containsOnly(
+            "Ultrafeine Partikel", "Sterblichkeit", "Gesundheitsfolgenabschätzung"
+        )
     }
 
     @Test
@@ -119,7 +122,8 @@ internal open class JooqNewsletterRepoIntegrationTest {
         var nl = repo.findById(newsletterId)
         assertThat(nl.papers.map { it.id }).doesNotContain(paperId)
 
-        var nlo: Optional<Paper.NewsletterLink> = repo.mergePaperIntoNewsletter(newsletterId, paperId, 1, langCode)
+        var nlo: java.util.Optional<Paper.NewsletterLink> =
+            repo.mergePaperIntoNewsletter(newsletterId, paperId, 1, langCode)
         assertThat(nlo).isPresent
 
         nlo = repo.mergePaperIntoNewsletter(newsletterId, paperId, 1, langCode)

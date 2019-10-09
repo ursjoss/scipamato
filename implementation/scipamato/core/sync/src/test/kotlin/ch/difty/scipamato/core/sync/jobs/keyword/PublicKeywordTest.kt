@@ -11,17 +11,17 @@ internal class PublicKeywordTest {
     @Test
     fun canSetGet() {
         val pc = PublicKeyword
-                .builder()
-                .id(1)
-                .keywordId(2)
-                .langCode("lc")
-                .name("name")
-                .version(3)
-                .created(CREATED)
-                .lastModified(MODIFIED)
-                .lastSynched(SYNCHED)
-                .searchOverride("so")
-                .build()
+            .builder()
+            .id(1)
+            .keywordId(2)
+            .langCode("lc")
+            .name("name")
+            .version(3)
+            .created(CREATED)
+            .lastModified(MODIFIED)
+            .lastSynched(SYNCHED)
+            .searchOverride("so")
+            .build()
 
         assertThat(pc.id).isEqualTo(1)
         assertThat(pc.keywordId).isEqualTo(2)

@@ -8,7 +8,10 @@ import org.assertj.core.api.Assertions.assertThat
 import org.jooq.TableField
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito.*
+import org.mockito.Mockito.anyString
+import org.mockito.Mockito.mock
+import org.mockito.Mockito.verify
+import org.mockito.Mockito.verifyNoMoreInteractions
 import java.sql.ResultSet
 import java.sql.SQLException
 
@@ -20,32 +23,32 @@ internal class SyncShortFieldWithEmptyMainFieldConcatenatorTest {
 
     private val throwingConcatenator = object : SyncShortFieldWithEmptyMainFieldConcatenator() {
         override fun methodsFrom(
-                rs: ResultSet,
-                methodField: TableField<PaperRecord, String>,
-                methodStudyDesignField: TableField<PaperRecord, String>,
-                methodOutcomeField: TableField<PaperRecord, String>,
-                populationPlaceField: TableField<PaperRecord, String>,
-                exposurePollutantField: TableField<PaperRecord, String>,
-                exposureAssessmentField: TableField<PaperRecord, String>,
-                methodStatisticsField: TableField<PaperRecord, String>,
-                methodConfoundersField: TableField<PaperRecord, String>
+            rs: ResultSet,
+            methodField: TableField<PaperRecord, String>,
+            methodStudyDesignField: TableField<PaperRecord, String>,
+            methodOutcomeField: TableField<PaperRecord, String>,
+            populationPlaceField: TableField<PaperRecord, String>,
+            exposurePollutantField: TableField<PaperRecord, String>,
+            exposureAssessmentField: TableField<PaperRecord, String>,
+            methodStatisticsField: TableField<PaperRecord, String>,
+            methodConfoundersField: TableField<PaperRecord, String>
         ): String = throw SQLException("boom")
 
         override fun populationFrom(
-                rs: ResultSet,
-                populationField: TableField<PaperRecord, String>,
-                populationPlaceField: TableField<PaperRecord, String>,
-                populationParticipantsField: TableField<PaperRecord, String>,
-                populationDurationField: TableField<PaperRecord, String>
+            rs: ResultSet,
+            populationField: TableField<PaperRecord, String>,
+            populationPlaceField: TableField<PaperRecord, String>,
+            populationParticipantsField: TableField<PaperRecord, String>,
+            populationDurationField: TableField<PaperRecord, String>
         ): String = throw SQLException("boom")
 
         override fun resultFrom(
-                rs: ResultSet,
-                resultField: TableField<PaperRecord, String>,
-                resultMeasuredOutcomeField: TableField<PaperRecord, String>,
-                resultExposureRangeField: TableField<PaperRecord, String>,
-                resultEffectEstimateField: TableField<PaperRecord, String>,
-                conclusionField: TableField<PaperRecord, String>
+            rs: ResultSet,
+            resultField: TableField<PaperRecord, String>,
+            resultMeasuredOutcomeField: TableField<PaperRecord, String>,
+            resultExposureRangeField: TableField<PaperRecord, String>,
+            resultEffectEstimateField: TableField<PaperRecord, String>,
+            conclusionField: TableField<PaperRecord, String>
         ): String = throw SQLException("boom")
     }
 
@@ -65,10 +68,13 @@ internal class SyncShortFieldWithEmptyMainFieldConcatenatorTest {
     fun methods_withNullMethod_returnsConcatenatedShortMethodFieldsConcatenated() {
         stubMethodFieldsWithMainFieldReturning(null)
         assertThat(sfc.methodsFrom(resultSet)).isEqualTo(
-                "Study Design: msd / Outcome: mo / Place: pp / Pollutant: ep / Exposure Assessment: ea / Statistical Method: ms / Confounders: mc")
+            "Study Design: msd / Outcome: mo / Place: pp / Pollutant: ep / " +
+                "Exposure Assessment: ea / Statistical Method: ms / Confounders: mc"
+        )
         verifyCallingMethodsFields()
     }
 
+    @Suppress("ComplexMethod")
     private fun stubMethodFieldsWithMainFieldReturning(mainFixture: String?) {
         whenever(resultSet.getString(anyString())).thenAnswer { invocationsOnMock ->
             when (invocationsOnMock.arguments[0] as String) {
@@ -139,7 +145,9 @@ internal class SyncShortFieldWithEmptyMainFieldConcatenatorTest {
     @Test
     fun result_withNullResult_returnsResultShortFieldsConcatenated() {
         stubResultFieldsWithMainFieldReturning(null)
-        assertThat(sfc.resultFrom(resultSet)).isEqualTo("Measured Outcome: rmo / Exposure (Range): rer / Effect Estimate: ree / Conclusion: cc")
+        assertThat(sfc.resultFrom(resultSet)).isEqualTo(
+            "Measured Outcome: rmo / Exposure (Range): rer / Effect Estimate: ree / Conclusion: cc"
+        )
         verifyCallingResultFields()
     }
 
@@ -178,5 +186,4 @@ internal class SyncShortFieldWithEmptyMainFieldConcatenatorTest {
     fun resultFrom_withThrowingMethod_returnsNull() {
         assertThat(throwingConcatenator.resultFrom(mock(ResultSet::class.java))).isNull()
     }
-
 }

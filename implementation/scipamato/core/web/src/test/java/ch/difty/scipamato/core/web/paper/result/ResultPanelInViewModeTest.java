@@ -5,7 +5,7 @@ import ch.difty.scipamato.common.web.Mode;
 class ResultPanelInViewModeTest extends ResultPanelTest {
 
     @Override
-    protected Mode getMode() {
+    Mode getMode() {
         return Mode.VIEW;
     }
 

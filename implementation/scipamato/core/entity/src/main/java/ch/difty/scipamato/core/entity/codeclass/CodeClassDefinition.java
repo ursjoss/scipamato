@@ -1,5 +1,6 @@
-package ch.difty.scipamato.core.entity.code_class;
+package ch.difty.scipamato.core.entity.codeclass;
 
+import javax.validation.constraints.NotNull;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -51,6 +52,7 @@ public class CodeClassDefinition extends AbstractDefinitionEntity<CodeClassTrans
             this.name = name;
         }
 
+        @NotNull
         @Override
         public String getFieldName() {
             return name;

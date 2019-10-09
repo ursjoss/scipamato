@@ -10,10 +10,11 @@ import org.springframework.context.annotation.ComponentScan
 @ComponentScan(basePackages = ["ch.difty.scipamato"])
 open class TestApplication {
 
+    @Suppress("SpreadOperator")
     fun main(args: Array<String>) {
         SpringApplicationBuilder()
-                .sources(TestApplication::class.java)
-                .run(*args)
+            .sources(TestApplication::class.java)
+            .run(*args)
     }
 
     @Bean

@@ -3,9 +3,9 @@ package ch.difty.scipamato.core.web.codeclass;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.PropertyModel;
 
-import ch.difty.scipamato.core.entity.code_class.CodeClassDefinition;
-import ch.difty.scipamato.core.entity.code_class.CodeClassFilter;
-import ch.difty.scipamato.core.entity.code_class.CodeClassTranslation;
+import ch.difty.scipamato.core.entity.codeclass.CodeClassDefinition;
+import ch.difty.scipamato.core.entity.codeclass.CodeClassFilter;
+import ch.difty.scipamato.core.entity.codeclass.CodeClassTranslation;
 import ch.difty.scipamato.core.persistence.CodeClassService;
 import ch.difty.scipamato.core.web.common.DefinitionListFilterPanel;
 

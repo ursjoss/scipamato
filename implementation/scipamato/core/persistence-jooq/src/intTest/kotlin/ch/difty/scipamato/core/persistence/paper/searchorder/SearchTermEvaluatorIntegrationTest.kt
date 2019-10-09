@@ -13,5 +13,4 @@ abstract class SearchTermEvaluatorIntegrationTest<T : SearchTerm> {
         const val SC_ID: Long = 10
         const val FN = "fn"
     }
-
 }

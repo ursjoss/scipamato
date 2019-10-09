@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.jooq.JooqTest
 import org.testcontainers.junit.jupiter.Testcontainers
 
-@Suppress("FunctionName", "SpellCheckingInspection")
+@Suppress("TooManyFunctions", "FunctionName", "MagicNumber", "SpellCheckingInspection")
 @JooqTest
 @Testcontainers
 internal open class JooqUserRepoIntegrationTest {
@@ -159,9 +159,9 @@ internal open class JooqUserRepoIntegrationTest {
         val user = makeAndValidateNewUser()
         val secondReloaded = loadSameUserIndependentlyAndModifyAndUpdate(user)
 
-
         user.lastName = "yetanother"
 
+        @Suppress("TooGenericExceptionCaught")
         try {
             repo.update(user)
             fail<Any>("should have thrown exception")
@@ -197,6 +197,7 @@ internal open class JooqUserRepoIntegrationTest {
     fun cannotDeleteUser_thatHasBeenModifiedElsewhereInTheMeanTime() {
         val user = makeAndValidateNewUser()
         val secondReloaded = loadSameUserIndependentlyAndModifyAndUpdate(user)
+        @Suppress("TooGenericExceptionCaught")
         try {
             repo.delete(user.id, user.version)
             fail<Any>("Should have thrown exception")

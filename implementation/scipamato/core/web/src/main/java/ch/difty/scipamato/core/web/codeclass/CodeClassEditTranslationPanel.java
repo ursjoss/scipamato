@@ -6,7 +6,7 @@ import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.model.IModel;
 
 import ch.difty.scipamato.core.entity.code.CodeTranslation;
-import ch.difty.scipamato.core.entity.code_class.CodeClassDefinition;
+import ch.difty.scipamato.core.entity.codeclass.CodeClassDefinition;
 import ch.difty.scipamato.core.web.common.DefinitionEditTranslationPanel;
 
 @SuppressWarnings({ "SameParameterValue", "WicketForgeJavaIdInspection" })

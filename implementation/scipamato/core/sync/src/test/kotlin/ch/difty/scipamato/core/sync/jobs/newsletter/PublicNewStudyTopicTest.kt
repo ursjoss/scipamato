@@ -11,15 +11,15 @@ internal class PublicNewStudyTopicTest {
     @Test
     fun canSetGet() {
         val pnst = PublicNewStudyTopic
-                .builder()
-                .newsletterId(2)
-                .newsletterTopicId(3)
-                .sort(4)
-                .version(5)
-                .created(CREATED)
-                .lastModified(MODIFIED)
-                .lastSynched(SYNCHED)
-                .build()
+            .builder()
+            .newsletterId(2)
+            .newsletterTopicId(3)
+            .sort(4)
+            .version(5)
+            .created(CREATED)
+            .lastModified(MODIFIED)
+            .lastSynched(SYNCHED)
+            .build()
 
         assertThat(pnst.newsletterId).isEqualTo(2)
         assertThat(pnst.newsletterTopicId).isEqualTo(3)
@@ -29,5 +29,4 @@ internal class PublicNewStudyTopicTest {
         assertThat(pnst.lastModified).isEqualTo(MODIFIED)
         assertThat(pnst.lastSynched).isEqualTo(SYNCHED)
     }
-
 }

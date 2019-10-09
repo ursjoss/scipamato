@@ -16,7 +16,14 @@ internal class StringSearchTermTest {
         assertToken(st, 0, tt, rawData, data, negate)
     }
 
-    private fun assertToken(st: StringSearchTerm, idx: Int, tt: TokenType, rawData: String, data: String, negate: Boolean) {
+    private fun assertToken(
+        st: StringSearchTerm,
+        idx: Int,
+        tt: TokenType,
+        rawData: String,
+        data: String,
+        negate: Boolean
+    ) {
         assertThat(st.tokens[idx].rawData).isEqualTo(rawData)
         assertThat(st.tokens[idx].sqlData).isEqualTo(data)
         assertThat(st.tokens[idx].type).isEqualTo(tt)
@@ -200,9 +207,9 @@ internal class StringSearchTermTest {
     @Test
     fun assertTokenTypes() {
         assertThat(values()).containsExactly(NOTREGEX, REGEX, WHITESPACE, SOME, EMPTY,
-                NOTOPENLEFTRIGHTQUOTED, OPENLEFTRIGHTQUOTED, NOTOPENLEFTRIGHT, OPENLEFTRIGHT, NOTOPENRIGHTQUOTED,
-                OPENRIGHTQUOTED, NOTOPENRIGHT, OPENRIGHT, NOTOPENLEFTQUOTED, OPENLEFTQUOTED, NOTOPENLEFT, OPENLEFT,
-                NOTQUOTED, QUOTED, NOTWORD, WORD, RAW, UNSUPPORTED)
+            NOTOPENLEFTRIGHTQUOTED, OPENLEFTRIGHTQUOTED, NOTOPENLEFTRIGHT, OPENLEFTRIGHT, NOTOPENRIGHTQUOTED,
+            OPENRIGHTQUOTED, NOTOPENRIGHT, OPENRIGHT, NOTOPENLEFTQUOTED, OPENLEFTQUOTED, NOTOPENLEFT, OPENLEFT,
+            NOTQUOTED, QUOTED, NOTWORD, WORD, RAW, UNSUPPORTED)
     }
 
     @Test
@@ -218,8 +225,8 @@ internal class StringSearchTermTest {
     @Test
     fun assertTokenTypes_like() {
         assertThat(byMatchType(MatchType.LIKE)).containsExactly(NOTOPENLEFTRIGHTQUOTED, OPENLEFTRIGHTQUOTED,
-                NOTOPENLEFTRIGHT, OPENLEFTRIGHT, NOTOPENRIGHTQUOTED, OPENRIGHTQUOTED, NOTOPENRIGHT, OPENRIGHT,
-                NOTOPENLEFTQUOTED, OPENLEFTQUOTED, NOTOPENLEFT, OPENLEFT)
+            NOTOPENLEFTRIGHT, OPENLEFTRIGHT, NOTOPENRIGHTQUOTED, OPENRIGHTQUOTED, NOTOPENRIGHT, OPENRIGHT,
+            NOTOPENLEFTQUOTED, OPENLEFTQUOTED, NOTOPENLEFT, OPENLEFT)
     }
 
     @Test
@@ -235,7 +242,6 @@ internal class StringSearchTermTest {
     @Test
     fun assertTokenTypes_none() {
         assertThat(byMatchType(MatchType.NONE)).containsExactly(WHITESPACE, RAW)
-
     }
 
     @Test
@@ -267,5 +273,4 @@ internal class StringSearchTermTest {
         val st = StringSearchTerm(FIELD_NAME, "")
         assertSingleToken(st, RAW, "", "", false)
     }
-
 }

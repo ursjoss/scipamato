@@ -14,7 +14,8 @@ import org.junit.jupiter.api.Test
 import org.mockito.Mockito.verify
 import java.sql.Timestamp
 
-internal class JooqNewsletterRepoTest : JooqEntityRepoTest<NewsletterRecord, Newsletter, Int, ch.difty.scipamato.core.db.tables.Newsletter, NewsletterRecordMapper, NewsletterFilter>() {
+internal class JooqNewsletterRepoTest : JooqEntityRepoTest<NewsletterRecord, Newsletter, Int,
+    ch.difty.scipamato.core.db.tables.Newsletter, NewsletterRecordMapper, NewsletterFilter>() {
 
     override val unpersistedEntity = mock<Newsletter>()
     override val persistedEntity = mock<Newsletter>()
@@ -22,21 +23,48 @@ internal class JooqNewsletterRepoTest : JooqEntityRepoTest<NewsletterRecord, New
     override val unpersistedRecord = mock<NewsletterRecord>()
     override val mapper = mock<NewsletterRecordMapper>()
     override val filter = mock<NewsletterFilter>()
-    override val repo: JooqNewsletterRepo = JooqNewsletterRepo(dsl, mapper, sortMapper, filterConditionMapper, dateTimeService, insertSetStepSetter, updateSetStepSetter, applicationProperties)
+    override val repo: JooqNewsletterRepo = JooqNewsletterRepo(
+        dsl,
+        mapper,
+        sortMapper,
+        filterConditionMapper,
+        dateTimeService,
+        insertSetStepSetter,
+        updateSetStepSetter,
+        applicationProperties
+    )
 
     override fun makeRepoSavingReturning(returning: NewsletterRecord) =
-            object : JooqNewsletterRepo(dsl, mapper, sortMapper, filterConditionMapper, dateTimeService, insertSetStepSetter, updateSetStepSetter, applicationProperties) {
-                override fun doSave(entity: Newsletter, languageCode: String) = returning
-            }
+        object : JooqNewsletterRepo(
+            dsl,
+            mapper,
+            sortMapper,
+            filterConditionMapper,
+            dateTimeService,
+            insertSetStepSetter,
+            updateSetStepSetter,
+            applicationProperties
+        ) {
+            override fun doSave(entity: Newsletter, languageCode: String) = returning
+        }
 
     override val sampleId: Int = SAMPLE_ID
     override val table: ch.difty.scipamato.core.db.tables.Newsletter = NEWSLETTER
     override val tableId: TableField<NewsletterRecord, Int> = NEWSLETTER.ID
 
     override fun makeRepoFindingEntityById(entity: Newsletter): EntityRepository<Newsletter, Int, NewsletterFilter> =
-            object : JooqNewsletterRepo(dsl, mapper, sortMapper, filterConditionMapper, dateTimeService, insertSetStepSetter, updateSetStepSetter, applicationProperties) {
-                override fun findById(id: Int?, version: Int): Newsletter? = entity
-            }
+        object : JooqNewsletterRepo(
+            dsl,
+            mapper,
+            sortMapper,
+            filterConditionMapper,
+            dateTimeService,
+            insertSetStepSetter,
+            updateSetStepSetter,
+            applicationProperties
+        ) {
+            override fun findById(id: Int?, version: Int): Newsletter? = entity
+        }
 
     override fun expectEntityIdsWithValues() {
         whenever(unpersistedEntity.id).thenReturn(SAMPLE_ID)
@@ -61,7 +89,16 @@ internal class JooqNewsletterRepoTest : JooqEntityRepoTest<NewsletterRecord, New
 
     @Test
     fun mergingPaperIntoNewsletter_withInsertAttemptNotSucceeding_returnsEmptyOptional() {
-        val repo = object : JooqNewsletterRepo(dsl, mapper, sortMapper, filterConditionMapper, dateTimeService, insertSetStepSetter, updateSetStepSetter, applicationProperties) {
+        val repo = object : JooqNewsletterRepo(
+            dsl,
+            mapper,
+            sortMapper,
+            filterConditionMapper,
+            dateTimeService,
+            insertSetStepSetter,
+            updateSetStepSetter,
+            applicationProperties
+        ) {
             override fun tryInserting(newsletterId: Int, paperId: Long, newsletterTopicId: Int?, ts: Timestamp): Int = 0
         }
         assertThat(repo.mergePaperIntoNewsletter(1, 2L, 3, "en")).isNotPresent
@@ -74,7 +111,16 @@ internal class JooqNewsletterRepoTest : JooqEntityRepoTest<NewsletterRecord, New
 
     @Test
     fun test() {
-        val repo = object : JooqNewsletterRepo(dsl, mapper, sortMapper, filterConditionMapper, dateTimeService, insertSetStepSetter, updateSetStepSetter, applicationProperties) {
+        val repo = object : JooqNewsletterRepo(
+            dsl,
+            mapper,
+            sortMapper,
+            filterConditionMapper,
+            dateTimeService,
+            insertSetStepSetter,
+            updateSetStepSetter,
+            applicationProperties
+        ) {
             override fun fetchMergedNewsletter(newsletterId: Int, paperId: Long, languageCode: String) = null
         }
         assertThat(repo.handleInsertedNewsletter(1, 1, 2, "de")).isEmpty

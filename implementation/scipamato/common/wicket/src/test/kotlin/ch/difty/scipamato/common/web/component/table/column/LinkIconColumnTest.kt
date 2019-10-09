@@ -26,11 +26,11 @@ internal class LinkIconColumnTest : WicketBaseTest() {
     }
 
     private fun newPanelWithTitle(title: String?): LinkIconColumnTestPanel =
-            object : LinkIconColumnTestPanel(ID, title?.let { Model.of(it) }) {
-                override fun onClickPerformed(rowModel: IModel<TestRecord>, link: AjaxLink<Void>) {
-                    clickPerformed = rowModel.getObject().toString()
-                }
+        object : LinkIconColumnTestPanel(ID, title?.let { Model.of(it) }) {
+            override fun onClickPerformed(rowModel: IModel<TestRecord>, link: AjaxLink<Void>) {
+                clickPerformed = rowModel.getObject().toString()
             }
+        }
 
     @Test
     fun testPanel_withTitle() {
@@ -52,8 +52,8 @@ internal class LinkIconColumnTest : WicketBaseTest() {
 
     private fun assertImageTitle() {
         val responseTxt = tester
-                .lastResponse
-                .document
+            .lastResponse
+            .document
         val tagTester = TagTester.createTagByName(responseTxt, "i")
         assertThat(tagTester.getAttribute("title")).isEqualTo("the title")
     }

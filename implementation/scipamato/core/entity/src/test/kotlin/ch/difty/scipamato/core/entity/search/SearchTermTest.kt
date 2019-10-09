@@ -70,10 +70,9 @@ internal class SearchTermTest {
             fail<Any>("should have thrown exception")
         } catch (ex: Error) {
             assertThat(ex)
-                    .isInstanceOf(AssertionError::class.java)
-                    .hasMessage("SearchTermType.UNSUPPORTED is not supported")
+                .isInstanceOf(AssertionError::class.java)
+                .hasMessage("SearchTermType.UNSUPPORTED is not supported")
         }
-
     }
 
     @Test
@@ -146,5 +145,4 @@ internal class SearchTermTest {
         assertThat(st.fieldName).isEqualTo("field")
         assertThat(st.rawSearchTerm).isEqualTo("rawSearchTerm")
     }
-
 }

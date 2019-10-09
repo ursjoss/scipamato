@@ -50,9 +50,9 @@ internal class AbstractSearchTermTest {
     @Test
     fun equality_withNonEqualValuesInNonIds() {
         assertInequalityBetween(SearchTerm.newSearchTerm(12, 2, 3L, "fn4", "foo*"),
-                SearchTerm.newSearchTerm(12, 2, 3L, "fn3", "foo*"))
+            SearchTerm.newSearchTerm(12, 2, 3L, "fn3", "foo*"))
         assertInequalityBetween(SearchTerm.newSearchTerm(12, 2, 3L, "fn3", "bar*"),
-                SearchTerm.newSearchTerm(12, 2, 3L, "fn3", "foo*"))
+            SearchTerm.newSearchTerm(12, 2, 3L, "fn3", "foo*"))
     }
 
     private fun assertInequalityBetween(st1: SearchTerm, st2: SearchTerm) {
@@ -74,5 +74,4 @@ internal class AbstractSearchTermTest {
         assertThat(st).isInstanceOf(IntegerSearchTerm::class.java)
         assertThat(st.displayValue).isEqualTo(st.rawSearchTerm)
     }
-
 }

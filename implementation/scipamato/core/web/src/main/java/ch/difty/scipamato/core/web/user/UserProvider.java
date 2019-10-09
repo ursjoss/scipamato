@@ -17,7 +17,7 @@ import ch.difty.scipamato.core.entity.User;
 import ch.difty.scipamato.core.entity.search.UserFilter;
 import ch.difty.scipamato.core.persistence.UserService;
 
-public class UserProvider extends SortableDataProvider<User, String> implements IFilterStateLocator<UserFilter> {
+class UserProvider extends SortableDataProvider<User, String> implements IFilterStateLocator<UserFilter> {
 
     private static final long serialVersionUID = 1L;
 

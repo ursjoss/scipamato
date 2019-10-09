@@ -13,7 +13,6 @@ import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.Mock
 import org.mockito.junit.jupiter.MockitoExtension
 import java.time.LocalDateTime
-import java.util.*
 
 private const val SO_NAME = "soName"
 
@@ -168,7 +167,9 @@ internal class SearchOrderTest {
         assertThat(so.excludedPaperIds).hasSize(0)
         // TODO
         //        assertThat(so.toString()).isEqualTo(
-        //            "SearchOrder[name=soName,owner=1,global=false,searchConditions=[],excludedPaperIds=[],showExcluded=false,id=10,createdBy=<null>,lastModifiedBy=<null>,created=<null>,lastModified=<null>,version=0]");
+        //            "SearchOrder[name=soName,owner=1,global=false,searchConditions=[],excludedPaperIds=[],
+        //            showExcluded=false,id=10,createdBy=<null>,lastModifiedBy=<null>,created=<null>,
+        //            lastModified=<null>,version=0]");
     }
 
     @Test
@@ -178,7 +179,10 @@ internal class SearchOrderTest {
         so.addExclusionOfPaperWithId(3L)
         so.addExclusionOfPaperWithId(5L)
         // TODO fix
-        // assertThat(so.toString()).isEqualTo("SearchOrder[name=soName,owner=1,global=false,searchConditions=[mockCondition1, mockCondition2],excludedPaperIds=[3, 5],showExcluded=false,id=10,createdBy=<null>,lastModifiedBy=<null>,created=<null>,lastModified=<null>,version=0]");
+        // assertThat(so.toString()).isEqualTo(
+        // "SearchOrder[name=soName,owner=1,global=false,searchConditions=[mockCondition1, mockCondition2],
+        // excludedPaperIds=[3, 5],showExcluded=false,id=10,createdBy=<null>,lastModifiedBy=<null>,created=<null>,
+        // lastModified=<null>,version=0]");
     }
 
     @Test
@@ -287,12 +291,14 @@ internal class SearchOrderTest {
     @Test
     fun equals() {
         EqualsVerifier
-                .forClass(SearchOrder::class.java)
-                .withRedefinedSuperclass()
-                .usingGetClass()
-                .withIgnoredFields(SHOW_EXCLUDED.fieldName, CREATED.fieldName, CREATOR_ID.fieldName, MODIFIED.fieldName, MODIFIER_ID.fieldName)
-                .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
-                .withPrefabValues(SearchCondition::class.java, SearchCondition(1L), SearchCondition(2L))
-                .verify()
+            .forClass(SearchOrder::class.java)
+            .withRedefinedSuperclass()
+            .usingGetClass()
+            .withIgnoredFields(
+                SHOW_EXCLUDED.fieldName, CREATED.fieldName, CREATOR_ID.fieldName,
+                MODIFIED.fieldName, MODIFIER_ID.fieldName)
+            .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
+            .withPrefabValues(SearchCondition::class.java, SearchCondition(1L), SearchCondition(2L))
+            .verify()
     }
 }

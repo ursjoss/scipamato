@@ -41,6 +41,7 @@ public class PaperSlim extends IdScipamatoEntity<Long> {
             this.name = name;
         }
 
+        @NotNull
         @Override
         public String getFieldName() {
             return name;
@@ -125,6 +126,7 @@ public class PaperSlim extends IdScipamatoEntity<Long> {
         return firstAuthor + " (" + publicationYear + "): " + title + ".";
     }
 
+    @NotNull
     @Override
     public String toString() {
         return "PaperSlim(number=" + number + ", firstAuthor=" + firstAuthor + ", publicationYear=" + publicationYear

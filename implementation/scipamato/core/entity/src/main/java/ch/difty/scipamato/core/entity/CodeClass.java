@@ -29,6 +29,7 @@ public class CodeClass extends IdScipamatoEntity<Integer> implements CodeClassLi
             this.name = name;
         }
 
+        @NotNull
         @Override
         public String getFieldName() {
             return name;
@@ -45,6 +46,7 @@ public class CodeClass extends IdScipamatoEntity<Integer> implements CodeClassLi
         this(from.getId(), from.getName(), from.getDescription());
     }
 
+    @NotNull
     @Override
     public String toString() {
         return "CodeClass[id=" + getId() + "]";

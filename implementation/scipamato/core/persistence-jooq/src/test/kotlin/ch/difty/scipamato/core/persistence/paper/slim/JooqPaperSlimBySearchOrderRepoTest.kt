@@ -57,7 +57,7 @@ internal class JooqPaperSlimBySearchOrderRepoTest {
 
         val cond = finder.getConditionsFrom(searchOrder)
         assertThat(cond.toString()).isEqualToIgnoringCase(
-                """"public"."paper"."id" in (
+            """"public"."paper"."id" in (
                   |  select "public"."paper"."id"
                   |  from "public"."paper"
                   |    join "public"."scipamato_user"
@@ -71,7 +71,13 @@ internal class JooqPaperSlimBySearchOrderRepoTest {
     fun getConditions_withSearchOrderWithAuditSearchTermForCreationTimeStamp() {
         val searchOrder = SearchOrder()
         val sc1 = SearchCondition(1L)
-        val st = SearchTerm.newSearchTerm(2L, SearchTermType.AUDIT.id, 1, "paper.created", """>="2017-02-01 23:55:12"""")
+        val st = SearchTerm.newSearchTerm(
+            2L,
+            SearchTermType.AUDIT.id,
+            1,
+            "paper.created",
+            """>="2017-02-01 23:55:12""""
+        )
         sc1.addSearchTerm(st)
         searchOrder.add(sc1)
 
@@ -97,7 +103,7 @@ internal class JooqPaperSlimBySearchOrderRepoTest {
 
         val cond = finder.getConditionsFrom(searchOrder)
         assertThat(cond.toString()).isEqualToIgnoringCase(
-                """(
+            """(
                   |  (
                   |    publication_year between 2014 and 2015
                   |    and lower(cast(authors as varchar)) like lower(('%' || replace(
@@ -145,7 +151,7 @@ internal class JooqPaperSlimBySearchOrderRepoTest {
 
         val cond = finder.getConditionsFrom(searchOrder)
         assertThat(cond.toString()).isEqualToIgnoringCase(
-                """(
+            """(
                   |  (
                   |    (
                   |      publication_year between 2014 and 2015
@@ -207,7 +213,7 @@ internal class JooqPaperSlimBySearchOrderRepoTest {
 
         val cond = finder.getConditionsFrom(searchOrder)
         assertThat(cond.toString()).isEqualToIgnoringCase(
-                """(
+            """(
                   |  (
                   |    (
                   |      publication_year between 2014 and 2015
@@ -279,7 +285,7 @@ internal class JooqPaperSlimBySearchOrderRepoTest {
 
         val cond = finder.getConditionsFrom(searchOrder)
         assertThat(cond.toString()).isEqualToIgnoringCase(
-                """exists (
+            """exists (
                  |  select 1 "one"
                  |  from "public"."paper_newsletter"
                  |    join "public"."newsletter"
@@ -303,7 +309,7 @@ internal class JooqPaperSlimBySearchOrderRepoTest {
 
         val cond = finder.getConditionsFrom(searchOrder)
         assertThat(cond.toString()).isEqualToIgnoringCase(
-                """exists (
+            """exists (
                   |  select 1 "one"
                   |  from "public"."paper_newsletter"
                   |    join "public"."newsletter"
@@ -326,7 +332,7 @@ internal class JooqPaperSlimBySearchOrderRepoTest {
 
         val cond = finder.getConditionsFrom(searchOrder)
         assertThat(cond.toString()).isEqualToIgnoringCase(
-                """exists (
+            """exists (
                   |  select 1 "one"
                   |  from "public"."paper_newsletter"
                   |    join "public"."newsletter"
@@ -349,7 +355,7 @@ internal class JooqPaperSlimBySearchOrderRepoTest {
 
         val cond = finder.getConditionsFrom(searchOrder)
         assertThat(cond.toString()).isEqualToIgnoringCase(
-                """exists (
+            """exists (
                   |  select 1 "one"
                   |  from "public"."paper_newsletter"
                   |    join "public"."newsletter"
@@ -375,7 +381,7 @@ internal class JooqPaperSlimBySearchOrderRepoTest {
 
         val cond = finder.getConditionsFrom(searchOrder)
         assertThat(cond.toString()).isEqualToIgnoringCase(
-                """(
+            """(
                   |  exists (
                   |    select 1 "one"
                   |    from "public"."paper_newsletter"

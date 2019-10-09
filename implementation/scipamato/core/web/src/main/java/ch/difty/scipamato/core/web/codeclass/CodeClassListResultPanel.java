@@ -6,8 +6,8 @@ import java.util.List;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.model.IModel;
 
-import ch.difty.scipamato.core.entity.code_class.CodeClassDefinition;
-import ch.difty.scipamato.core.entity.code_class.CodeClassFilter;
+import ch.difty.scipamato.core.entity.codeclass.CodeClassDefinition;
+import ch.difty.scipamato.core.entity.codeclass.CodeClassFilter;
 import ch.difty.scipamato.core.persistence.CodeClassService;
 import ch.difty.scipamato.core.web.common.DefinitionListResultPanel;
 

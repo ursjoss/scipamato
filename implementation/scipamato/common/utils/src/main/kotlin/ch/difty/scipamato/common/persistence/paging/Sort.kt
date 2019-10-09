@@ -2,7 +2,6 @@ package ch.difty.scipamato.common.persistence.paging
 
 import ch.difty.scipamato.common.persistence.paging.Sort.SortProperty
 import java.io.Serializable
-import java.util.*
 
 /**
  * Sort specification offering a list of [SortProperty] items, each providing a name of the to be sorted property and the sort direction.
@@ -37,12 +36,9 @@ class Sort : Iterable<SortProperty>, Serializable {
     fun getSortPropertyFor(propertyName: String): SortProperty? = sortProperties.firstOrNull { it.name == propertyName }
 
     override fun equals(other: Any?): Boolean {
-        if (other == null)
-            return false
-        if (this === other)
-            return true
-        if (this.javaClass != other.javaClass)
-            return false
+        if (other == null) return false
+        if (this === other) return true
+        if (this.javaClass != other.javaClass) return false
         val that = other as Sort?
         return this.sortProperties == that!!.sortProperties
     }
@@ -81,6 +77,4 @@ class Sort : Iterable<SortProperty>, Serializable {
     companion object {
         private const val serialVersionUID = 1L
     }
-
 }
-

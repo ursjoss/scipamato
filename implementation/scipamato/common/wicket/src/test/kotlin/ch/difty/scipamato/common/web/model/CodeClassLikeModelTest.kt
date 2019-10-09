@@ -16,11 +16,12 @@ internal class CodeClassLikeModelTest {
     private val serviceMock = mock<CodeClassLikeService<CodeClassLike>>()
     private val ccls = listOf(cclMock, cclMock)
 
-    private val model = object : CodeClassLikeModel<CodeClassLike, CodeClassLikeService<CodeClassLike>>(LANG_CODE, serviceMock) {
-        override fun injectThis() {
-            // no-op
+    private val model =
+        object : CodeClassLikeModel<CodeClassLike, CodeClassLikeService<CodeClassLike>>(LANG_CODE, serviceMock) {
+            override fun injectThis() {
+                // no-op
+            }
         }
-    }
 
     @Test
     fun modelObject_gotCodeClassesFromService() {
@@ -32,5 +33,4 @@ internal class CodeClassLikeModelTest {
     companion object {
         private const val LANG_CODE = "en"
     }
-
 }

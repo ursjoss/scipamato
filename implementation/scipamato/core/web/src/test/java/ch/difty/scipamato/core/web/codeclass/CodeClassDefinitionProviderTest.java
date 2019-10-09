@@ -1,7 +1,6 @@
 package ch.difty.scipamato.core.web.codeclass;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
 import java.util.Arrays;
@@ -19,8 +18,8 @@ import org.mockito.ArgumentMatcher;
 import org.mockito.Mock;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
-import ch.difty.scipamato.core.entity.code_class.CodeClassDefinition;
-import ch.difty.scipamato.core.entity.code_class.CodeClassFilter;
+import ch.difty.scipamato.core.entity.codeclass.CodeClassDefinition;
+import ch.difty.scipamato.core.entity.codeclass.CodeClassFilter;
 import ch.difty.scipamato.core.web.AbstractWicketTest;
 
 class CodeClassDefinitionProviderTest extends AbstractWicketTest {

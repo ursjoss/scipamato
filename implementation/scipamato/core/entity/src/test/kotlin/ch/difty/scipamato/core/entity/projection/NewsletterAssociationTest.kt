@@ -49,16 +49,17 @@ internal class NewsletterAssociationTest {
     @Test
     fun equals() {
         EqualsVerifier
-                .forClass(NewsletterAssociation::class.java)
-                .withRedefinedSuperclass()
-                .usingGetClass()
-                .withIgnoredFields(CREATED.fieldName, CREATOR_ID.fieldName, MODIFIED.fieldName, MODIFIER_ID.fieldName)
-                .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
-                .verify()
+            .forClass(NewsletterAssociation::class.java)
+            .withRedefinedSuperclass()
+            .usingGetClass()
+            .withIgnoredFields(CREATED.fieldName, CREATOR_ID.fieldName, MODIFIED.fieldName, MODIFIER_ID.fieldName)
+            .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
+            .verify()
     }
 
     @Test
     fun assertEnumFields() {
-        assertThat(NewsletterAssociation.NewsletterAssociationFields.values().map { it.fieldName }).containsExactly("id", "issue", "publicationStatusId", "headline")
+        assertThat(NewsletterAssociation.NewsletterAssociationFields.values().map { it.fieldName })
+            .containsExactly("id", "issue", "publicationStatusId", "headline")
     }
 }

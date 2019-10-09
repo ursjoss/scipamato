@@ -57,7 +57,7 @@ internal class ConditionalSupplierTest {
         }
         c = cs.combineWithAnd()
         assertThat(c.toString()).isEqualTo(
-                """(
+            """(
                   |  foo = 'bar'
                   |  and baz = 'boo'
                   |)""".trimMargin()
@@ -95,7 +95,7 @@ internal class ConditionalSupplierTest {
         }
         c = cs.combineWithOr()
         assertThat(c.toString()).isEqualTo(
-                """(
+            """(
                    |  foo = 'bar'
                    |  or baz = 'boo'
                    |)""".trimMargin()

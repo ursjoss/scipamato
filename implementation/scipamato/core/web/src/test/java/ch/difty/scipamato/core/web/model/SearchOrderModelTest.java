@@ -42,7 +42,7 @@ class SearchOrderModelTest extends ModelTest {
 
     @SuppressWarnings("SameParameterValue")
     static class SearchOrderFilterMatcher implements ArgumentMatcher<SearchOrderFilter> {
-        private int ownerIncludingGlobal;
+        private final int ownerIncludingGlobal;
 
         SearchOrderFilterMatcher(int ownerIncludingGlobal) {
             this.ownerIncludingGlobal = ownerIncludingGlobal;
@@ -59,7 +59,7 @@ class SearchOrderModelTest extends ModelTest {
     static class PaginationRequestWithMaxRows implements ArgumentMatcher<PaginationRequest> {
         private static final String SORT = "id";
 
-        private int maxRows;
+        private final int maxRows;
 
         PaginationRequestWithMaxRows(int maxRows) {
             this.maxRows = maxRows;

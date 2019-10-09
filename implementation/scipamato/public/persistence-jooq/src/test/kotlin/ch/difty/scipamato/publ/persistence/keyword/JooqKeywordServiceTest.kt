@@ -16,8 +16,8 @@ internal class JooqKeywordServiceTest {
     private val languageCode = "de"
 
     private val keywords = listOf(
-            Keyword(1, 1, "en", "Keyword1", null),
-            Keyword(1, 1, "fr", "Keyword2", null)
+        Keyword(1, 1, "en", "Keyword1", null),
+        Keyword(1, 1, "fr", "Keyword2", null)
     )
 
     @Test

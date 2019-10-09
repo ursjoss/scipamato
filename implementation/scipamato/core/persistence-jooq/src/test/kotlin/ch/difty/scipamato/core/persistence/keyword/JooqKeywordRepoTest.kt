@@ -6,20 +6,19 @@ import ch.difty.scipamato.core.db.tables.records.KeywordTrRecord
 import ch.difty.scipamato.core.entity.keyword.KeywordDefinition
 import ch.difty.scipamato.core.entity.keyword.KeywordTranslation
 import ch.difty.scipamato.core.persistence.OptimisticLockingException
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.whenever
+import ch.difty.scipamato.core.persistence.mock
+import com.nhaarman.mockitokotlin2.*
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.fail
 import org.jooq.DSLContext
 import org.jooq.Result
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito.*
-import java.util.*
+import org.mockito.Mockito
 
 internal class JooqKeywordRepoTest {
 
-    private val dslContextMock = mock<DSLContext>()
-    private val dateTimeServiceMock = mock<DateTimeService>()
+    private val dslContextMock = Mockito.mock(DSLContext::class.java)
+    private val dateTimeServiceMock = Mockito.mock(DateTimeService::class.java)
 
     private var repo = JooqKeywordRepo(dslContextMock, dateTimeServiceMock)
 
@@ -31,8 +30,8 @@ internal class JooqKeywordRepoTest {
             fail<Any>("Should have thrown exception")
         } catch (ex: Exception) {
             assertThat(ex)
-                    .isInstanceOf(IllegalArgumentException::class.java)
-                    .hasMessage("id must be null.")
+                .isInstanceOf(IllegalArgumentException::class.java)
+                .hasMessage("id must be null.")
         }
     }
 
@@ -42,16 +41,16 @@ internal class JooqKeywordRepoTest {
         val resultMock: Result<KeywordTrRecord> = mock()
         val itMock: MutableIterator<KeywordTrRecord> = mock()
         whenever(resultMock.iterator()).thenReturn(itMock)
-        val ktr1 = mock(KeywordTrRecord::class.java)
+        val ktr1 = Mockito.mock(KeywordTrRecord::class.java)
         whenever(ktr1.get(KEYWORD_TR.ID)).thenReturn(1)
-        val ktr2 = mock(KeywordTrRecord::class.java)
+        val ktr2 = Mockito.mock(KeywordTrRecord::class.java)
         whenever(ktr2.get(KEYWORD_TR.ID)).thenReturn(2)
         whenever(itMock.hasNext()).thenReturn(true, true, false)
         whenever<Any>(itMock.next()).thenReturn(ktr1, ktr2)
 
         repo.removeObsoletePersistedRecordsFor(resultMock, listOf(kt))
 
-        verify<Result<KeywordTrRecord>>(resultMock).iterator()
+        verify(resultMock).iterator()
         verify(itMock, times(3)).hasNext()
         verify(itMock, times(2)).next()
         verify(ktr1).get(KEYWORD_TR.ID)
@@ -62,19 +61,19 @@ internal class JooqKeywordRepoTest {
     }
 
     @Test
-    fun removingObsoletePersistedRecords_whenCheckingIfTranslationIsPresentInEntity_doesNotConsiderIdLessEntityTranslations() {
+    fun removingObsoletePersistedRecords_whenCheckingIfTranslationIsPresentInEntity_doesntConsiderIdLessEntityTransl() {
         val ct = KeywordTranslation(null, "de", "1ade", 1)
         val resultMock: Result<KeywordTrRecord> = mock()
         val itMock: MutableIterator<KeywordTrRecord> = mock()
         whenever(resultMock.iterator()).thenReturn(itMock)
-        val ctr1 = mock(KeywordTrRecord::class.java)
-        val ctr2 = mock(KeywordTrRecord::class.java)
+        val ctr1 = Mockito.mock(KeywordTrRecord::class.java)
+        val ctr2 = Mockito.mock(KeywordTrRecord::class.java)
         whenever(itMock.hasNext()).thenReturn(true, true, false)
         whenever(itMock.next()).thenReturn(ctr1, ctr2)
 
         repo.removeObsoletePersistedRecordsFor(resultMock, listOf(ct))
 
-        verify<Result<KeywordTrRecord>>(resultMock).iterator()
+        verify(resultMock).iterator()
         verify(itMock, times(3)).hasNext()
         verify(itMock, times(2)).next()
         verify(ctr1).delete()
@@ -92,15 +91,15 @@ internal class JooqKeywordRepoTest {
             fail<Any>("should have thrown exception")
         } catch (ex: Exception) {
             assertThat(ex)
-                    .isInstanceOf(OptimisticLockingException::class.java)
-                    .hasMessage("Record in table 'keyword' has been modified prior to the update attempt. Aborting.... [KeywordDefinition(id=1, searchOverride=null)]")
+                .isInstanceOf(OptimisticLockingException::class.java).hasMessage(
+                    "Record in table 'keyword' has been modified prior to the update attempt. Aborting...." +
+                        " [KeywordDefinition(id=1, searchOverride=null)]")
         }
-
     }
 
     @Test
     fun addingOrUpdatingTranslation() {
-        val ktrMock = mock(KeywordTrRecord::class.java)
+        val ktrMock = Mockito.mock(KeywordTrRecord::class.java)
         doReturn(1000).whenever(ktrMock).get(KEYWORD_TR.ID)
         doReturn("de").whenever(ktrMock).get(KEYWORD_TR.LANG_CODE)
         doReturn("someName").whenever(ktrMock).get(KEYWORD_TR.NAME)
@@ -135,8 +134,10 @@ internal class JooqKeywordRepoTest {
             fail<Any>("should have thrown exception")
         } catch (ex: Exception) {
             assertThat(ex)
-                    .isInstanceOf(OptimisticLockingException::class.java)
-                    .hasMessage("Record in table 'keyword_tr' has been modified prior to the update attempt. Aborting.... [trslString]")
+                .isInstanceOf(OptimisticLockingException::class.java).hasMessage(
+                    "Record in table 'keyword_tr' has been modified prior to the update attempt." +
+                        " Aborting.... [trslString]"
+                )
         }
     }
 
@@ -147,8 +148,10 @@ internal class JooqKeywordRepoTest {
             fail<Any>("should have thrown exception")
         } catch (ex: Exception) {
             assertThat(ex)
-                    .isInstanceOf(OptimisticLockingException::class.java)
-                    .hasMessage("Record in table 'keyword' has been modified prior to the delete attempt. Aborting.... [KeywordDefinition(id=10, searchOverride=null)]")
+                .isInstanceOf(OptimisticLockingException::class.java).hasMessage(
+                    "Record in table 'keyword' has been modified prior to the delete attempt." +
+                        " Aborting.... [KeywordDefinition(id=10, searchOverride=null)]"
+                )
         }
     }
 }

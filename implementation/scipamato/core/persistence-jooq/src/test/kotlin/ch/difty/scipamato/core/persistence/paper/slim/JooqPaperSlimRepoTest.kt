@@ -17,7 +17,9 @@ import org.jooq.TableField
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito.verify
 
-internal class JooqPaperSlimRepoTest : JooqReadOnlyRepoTest<PaperRecord, PaperSlim, Long, ch.difty.scipamato.core.db.tables.Paper, PaperSlimRecordMapper, PaperFilter>() {
+internal class JooqPaperSlimRepoTest :
+    JooqReadOnlyRepoTest<PaperRecord, PaperSlim, Long, ch.difty.scipamato.core.db.tables.Paper,
+        PaperSlimRecordMapper, PaperFilter>() {
 
     override val unpersistedEntity = mock<PaperSlim>()
     override val persistedEntity = mock<PaperSlim>()
@@ -31,7 +33,15 @@ internal class JooqPaperSlimRepoTest : JooqReadOnlyRepoTest<PaperRecord, PaperSl
     private val pageableMock = mock<PaginationContext>()
     private val dateTimeServiceMock = mock<DateTimeService>()
 
-    override val repo = JooqPaperSlimRepo(dsl, mapper, sortMapper, filterConditionMapper, searchOrderRepositoryMock, dateTimeServiceMock, applicationProperties)
+    override val repo = JooqPaperSlimRepo(
+        dsl,
+        mapper,
+        sortMapper,
+        filterConditionMapper,
+        searchOrderRepositoryMock,
+        dateTimeServiceMock,
+        applicationProperties
+    )
 
     private val paperSlims = listOf(paperSlimMock, paperSlimMock)
 
@@ -40,9 +50,17 @@ internal class JooqPaperSlimRepoTest : JooqReadOnlyRepoTest<PaperRecord, PaperSl
     override val tableId: TableField<PaperRecord, Long> = PAPER.ID
 
     override fun makeRepoFindingEntityById(entity: PaperSlim): ReadOnlyRepository<PaperSlim, Long, PaperFilter> =
-            object : JooqPaperSlimRepo(dsl, mapper, sortMapper, filterConditionMapper, searchOrderRepositoryMock, dateTimeServiceMock, applicationProperties) {
-                override fun findById(id: Long?) = entity
-            }
+        object : JooqPaperSlimRepo(
+            dsl,
+            mapper,
+            sortMapper,
+            filterConditionMapper,
+            searchOrderRepositoryMock,
+            dateTimeServiceMock,
+            applicationProperties
+        ) {
+            override fun findById(id: Long?) = entity
+        }
 
     override fun expectEntityIdsWithValues() {
         whenever(unpersistedEntity.id).thenReturn(SAMPLE_ID)
@@ -84,7 +102,7 @@ internal class JooqPaperSlimRepoTest : JooqReadOnlyRepoTest<PaperRecord, PaperSl
     fun findingPageBySearchOrder_delegatesToSearchOrderFinder() {
         whenever(searchOrderRepositoryMock.findPageBySearchOrder(searchOrderMock, pageableMock)).thenReturn(paperSlims)
         assertThat(repo.findPageBySearchOrder(searchOrderMock, pageableMock)).containsExactly(paperSlimMock,
-                paperSlimMock)
+            paperSlimMock)
         verify(searchOrderRepositoryMock).findPageBySearchOrder(searchOrderMock, pageableMock)
     }
 

@@ -13,13 +13,13 @@ internal class CodeTest : PublicEntityTest<Code>() {
         get() = "Code(codeClassId=1, code=code, langCode=lc, name=name, comment=comment, sort=3)"
 
     override fun newEntity(): Code = Code.builder()
-            .codeClassId(1)
-            .code("code")
-            .langCode("lc")
-            .name("name")
-            .comment("comment")
-            .sort(3)
-            .build()
+        .codeClassId(1)
+        .code("code")
+        .langCode("lc")
+        .name("name")
+        .comment("comment")
+        .sort(3)
+        .build()
 
     override fun assertSpecificGetters() {
         assertThat(entity.codeClassId).isEqualTo(1)
@@ -32,10 +32,10 @@ internal class CodeTest : PublicEntityTest<Code>() {
 
     override fun verifyEquals() {
         EqualsVerifier.forClass(Code::class.java)
-                .withRedefinedSuperclass()
-                .withIgnoredFields(CREATED.fieldName, MODIFIED.fieldName)
-                .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
-                .verify()
+            .withRedefinedSuperclass()
+            .withIgnoredFields(CREATED.fieldName, MODIFIED.fieldName)
+            .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
+            .verify()
     }
 
     @Test
@@ -45,7 +45,7 @@ internal class CodeTest : PublicEntityTest<Code>() {
 
     @Test
     fun assertEnumFields() {
-        assertThat(Code.CodeFields.values().map { it.fieldName }).containsExactly("codeClassId", "code", "langCode", "name", "comment", "sort", "displayValue")
+        assertThat(Code.CodeFields.values().map { it.fieldName })
+            .containsExactly("codeClassId", "code", "langCode", "name", "comment", "sort", "displayValue")
     }
-
 }

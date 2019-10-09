@@ -6,9 +6,7 @@ import ch.difty.scipamato.core.entity.Paper
 import ch.difty.scipamato.core.persistence.RecordMapperTest
 import ch.difty.scipamato.core.persistence.UpdateSetStepSetter
 import ch.difty.scipamato.core.persistence.UpdateSetStepSetterTest
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.whenever
-import org.mockito.Mockito.*
+import com.nhaarman.mockitokotlin2.*
 
 internal class PaperUpdateSetStepSetterTest : UpdateSetStepSetterTest<PaperRecord, Paper>() {
 
@@ -31,7 +29,8 @@ internal class PaperUpdateSetStepSetterTest : UpdateSetStepSetterTest<PaperRecor
         doReturn(moreStep).whenever(moreStep).set(PAPER.DOI, PaperRecordMapperTest.DOI)
         doReturn(moreStep).whenever(moreStep).set(PAPER.AUTHORS, PaperRecordMapperTest.AUTHORS)
         doReturn(moreStep).whenever(moreStep).set(PAPER.FIRST_AUTHOR, PaperRecordMapperTest.FIRST_AUTHOR)
-        doReturn(moreStep).whenever(moreStep).set(PAPER.FIRST_AUTHOR_OVERRIDDEN, PaperRecordMapperTest.FIRST_AUTHOR_OVERRIDDEN)
+        doReturn(moreStep).whenever(moreStep)
+            .set(PAPER.FIRST_AUTHOR_OVERRIDDEN, PaperRecordMapperTest.FIRST_AUTHOR_OVERRIDDEN)
         doReturn(moreStep).whenever(moreStep).set(PAPER.TITLE, PaperRecordMapperTest.TITLE)
         doReturn(moreStep).whenever(moreStep).set(PAPER.LOCATION, PaperRecordMapperTest.LOCATION)
         doReturn(moreStep).whenever(moreStep).set(PAPER.PUBLICATION_YEAR, PaperRecordMapperTest.PUBLICATION_YEAR)
@@ -40,7 +39,8 @@ internal class PaperUpdateSetStepSetterTest : UpdateSetStepSetterTest<PaperRecor
         doReturn(moreStep).whenever(moreStep).set(PAPER.POPULATION, PaperRecordMapperTest.POPULATION)
         doReturn(moreStep).whenever(moreStep).set(PAPER.METHODS, PaperRecordMapperTest.METHODS)
         doReturn(moreStep).whenever(moreStep).set(PAPER.POPULATION_PLACE, PaperRecordMapperTest.POPULATION_PLACE)
-        doReturn(moreStep).whenever(moreStep).set(PAPER.POPULATION_PARTICIPANTS, PaperRecordMapperTest.POPULATION_PARTICIPANTS)
+        doReturn(moreStep).whenever(moreStep)
+            .set(PAPER.POPULATION_PARTICIPANTS, PaperRecordMapperTest.POPULATION_PARTICIPANTS)
         doReturn(moreStep).whenever(moreStep).set(PAPER.POPULATION_DURATION, PaperRecordMapperTest.POPULATION_DURATION)
         doReturn(moreStep).whenever(moreStep).set(PAPER.EXPOSURE_POLLUTANT, PaperRecordMapperTest.EXPOSURE_POLLUTANT)
         doReturn(moreStep).whenever(moreStep).set(PAPER.EXPOSURE_ASSESSMENT, PaperRecordMapperTest.EXPOSURE_ASSESSMENT)
@@ -53,14 +53,18 @@ internal class PaperUpdateSetStepSetterTest : UpdateSetStepSetterTest<PaperRecor
         doReturn(moreStep).whenever(moreStep).set(PAPER.COMMENT, PaperRecordMapperTest.COMMENT)
         doReturn(moreStep).whenever(moreStep).set(PAPER.INTERN, PaperRecordMapperTest.INTERN)
 
-        doReturn(moreStep).whenever(moreStep).set(PAPER.RESULT_EXPOSURE_RANGE, PaperRecordMapperTest.RESULT_EXPOSURE_RANGE)
-        doReturn(moreStep).whenever(moreStep).set(PAPER.RESULT_EFFECT_ESTIMATE, PaperRecordMapperTest.RESULT_EFFECT_ESTIMATE)
-        doReturn(moreStep).whenever(moreStep).set(PAPER.RESULT_MEASURED_OUTCOME, PaperRecordMapperTest.RESULT_MEASURED_OUTCOME)
+        doReturn(moreStep).whenever(moreStep)
+            .set(PAPER.RESULT_EXPOSURE_RANGE, PaperRecordMapperTest.RESULT_EXPOSURE_RANGE)
+        doReturn(moreStep).whenever(moreStep)
+            .set(PAPER.RESULT_EFFECT_ESTIMATE, PaperRecordMapperTest.RESULT_EFFECT_ESTIMATE)
+        doReturn(moreStep).whenever(moreStep)
+            .set(PAPER.RESULT_MEASURED_OUTCOME, PaperRecordMapperTest.RESULT_MEASURED_OUTCOME)
         doReturn(moreStep).whenever(moreStep).set(PAPER.CONCLUSION, PaperRecordMapperTest.CONCLUSION)
 
         doReturn(moreStep).whenever(moreStep).set(PAPER.ORIGINAL_ABSTRACT, PaperRecordMapperTest.ORIGINAL_ABSTRACT)
 
-        doReturn(moreStep).whenever(moreStep).set(PAPER.MAIN_CODE_OF_CODECLASS1, PaperRecordMapperTest.MAIN_CODE_OF_CODECLASS1)
+        doReturn(moreStep).whenever(moreStep)
+            .set(PAPER.MAIN_CODE_OF_CODECLASS1, PaperRecordMapperTest.MAIN_CODE_OF_CODECLASS1)
     }
 
     override fun stepSetFixtureAudit() {
@@ -72,42 +76,42 @@ internal class PaperUpdateSetStepSetterTest : UpdateSetStepSetterTest<PaperRecor
     }
 
     override fun verifyCallToAllFieldsExceptAudit() {
-        verify<Paper>(entity).number
-        verify<Paper>(entity).pmId
-        verify<Paper>(entity).doi
-        verify<Paper>(entity).authors
-        verify<Paper>(entity).firstAuthor
-        verify<Paper>(entity).isFirstAuthorOverridden
-        verify<Paper>(entity).title
-        verify<Paper>(entity).location
-        verify<Paper>(entity).publicationYear
+        verify(entity).number
+        verify(entity).pmId
+        verify(entity).doi
+        verify(entity).authors
+        verify(entity).firstAuthor
+        verify(entity).isFirstAuthorOverridden
+        verify(entity).title
+        verify(entity).location
+        verify(entity).publicationYear
 
-        verify<Paper>(entity).goals
-        verify<Paper>(entity).population
-        verify<Paper>(entity).methods
+        verify(entity).goals
+        verify(entity).population
+        verify(entity).methods
 
-        verify<Paper>(entity).populationPlace
-        verify<Paper>(entity).populationParticipants
-        verify<Paper>(entity).populationDuration
-        verify<Paper>(entity).exposurePollutant
-        verify<Paper>(entity).exposureAssessment
-        verify<Paper>(entity).methodStudyDesign
-        verify<Paper>(entity).methodOutcome
-        verify<Paper>(entity).methodStatistics
-        verify<Paper>(entity).methodConfounders
+        verify(entity).populationPlace
+        verify(entity).populationParticipants
+        verify(entity).populationDuration
+        verify(entity).exposurePollutant
+        verify(entity).exposureAssessment
+        verify(entity).methodStudyDesign
+        verify(entity).methodOutcome
+        verify(entity).methodStatistics
+        verify(entity).methodConfounders
 
-        verify<Paper>(entity).result
-        verify<Paper>(entity).comment
-        verify<Paper>(entity).intern
+        verify(entity).result
+        verify(entity).comment
+        verify(entity).intern
 
-        verify<Paper>(entity).resultExposureRange
-        verify<Paper>(entity).resultEffectEstimate
-        verify<Paper>(entity).resultMeasuredOutcome
-        verify<Paper>(entity).conclusion
+        verify(entity).resultExposureRange
+        verify(entity).resultEffectEstimate
+        verify(entity).resultMeasuredOutcome
+        verify(entity).conclusion
 
-        verify<Paper>(entity).originalAbstract
+        verify(entity).originalAbstract
 
-        verify<Paper>(entity).mainCodeOfCodeclass1
+        verify(entity).mainCodeOfCodeclass1
     }
 
     override fun verifyStepSettingExceptAudit() {
@@ -156,5 +160,4 @@ internal class PaperUpdateSetStepSetterTest : UpdateSetStepSetterTest<PaperRecor
         verify(moreStep).set(PAPER.LAST_MODIFIED_BY, RecordMapperTest.LAST_MOD_BY)
         verify(moreStep).set(PAPER.VERSION, RecordMapperTest.VERSION + 1)
     }
-
 }

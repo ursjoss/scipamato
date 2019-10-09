@@ -8,7 +8,9 @@ import ch.difty.scipamato.core.persistence.UpdateSetStepSetter
 import ch.difty.scipamato.core.persistence.UpdateSetStepSetterTest
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
-import org.mockito.Mockito.*
+import org.mockito.Mockito.doReturn
+import org.mockito.Mockito.verify
+import org.mockito.Mockito.verifyNoMoreInteractions
 
 internal class UserUpdateSetStepSetterTest : UpdateSetStepSetterTest<ScipamatoUserRecord, User>() {
 
@@ -65,5 +67,4 @@ internal class UserUpdateSetStepSetterTest : UpdateSetStepSetterTest<ScipamatoUs
         verify(moreStep).set(SCIPAMATO_USER.LAST_MODIFIED_BY, RecordMapperTest.LAST_MOD_BY)
         verify(moreStep).set(SCIPAMATO_USER.VERSION, RecordMapperTest.VERSION + 1)
     }
-
 }

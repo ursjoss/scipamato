@@ -23,5 +23,4 @@ internal abstract class PubmedIntegrationTest {
         assertThat(xml).isNotNull()
         return service.extractArticlesFrom(xml)
     }
-
 }

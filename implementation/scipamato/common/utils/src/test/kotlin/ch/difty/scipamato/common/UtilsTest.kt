@@ -18,7 +18,6 @@ internal class UtilsTest {
 
     //endregion
 
-
     //region:asProperty
 
     private val values = arrayOf(PropertyTestEnum.VAL1, PropertyTestEnum.VAL2, PropertyTestEnum.DEFAULT)
@@ -28,12 +27,13 @@ internal class UtilsTest {
     @Test
     fun fromProperty_witValues_returnsValue() {
         assertThat("VAL2".asProperty(values, PropertyTestEnum.DEFAULT, PROPERTY_KEY)).isEqualTo(
-                PropertyTestEnum.VAL2)
+            PropertyTestEnum.VAL2)
     }
 
     @Test
     fun fromProperty_withoutValues_returnsDefault() {
-        assertThat("VAL2".asProperty(arrayOf(), PropertyTestEnum.DEFAULT, PROPERTY_KEY)).isEqualTo(PropertyTestEnum.DEFAULT)
+        assertThat("VAL2".asProperty(arrayOf(), PropertyTestEnum.DEFAULT, PROPERTY_KEY))
+            .isEqualTo(PropertyTestEnum.DEFAULT)
     }
 
     //endregion

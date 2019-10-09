@@ -64,5 +64,4 @@ internal class ClickablePropertyColumn2Test {
         c = ClickablePropertyColumn2(displayModel, property, biConsumerMock, supplierMock)
         assertThat(c.property).isEqualTo(property)
     }
-
 }

@@ -5,11 +5,11 @@ import ch.difty.scipamato.core.entity.search.SearchCondition
 import ch.difty.scipamato.core.entity.search.SearchOrder
 import ch.difty.scipamato.core.entity.search.SearchOrderFilter
 import ch.difty.scipamato.core.persistence.AbstractServiceTest
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.whenever
+import com.nhaarman.mockitokotlin2.*
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito.*
+import org.mockito.ArgumentMatchers.anyInt
+import org.mockito.ArgumentMatchers.anyLong
 
 internal class JooqSearchOrderServiceTest : AbstractServiceTest<Long, SearchOrder, SearchOrderRepository>() {
 
@@ -46,7 +46,7 @@ internal class JooqSearchOrderServiceTest : AbstractServiceTest<Long, SearchOrde
         val id = 7L
         doReturn(null).whenever(repo).findById(id)
         assertThat(service.findById(id).isPresent).isFalse()
-        verify<SearchOrderRepository>(repo).findById(id)
+        verify(repo).findById(id)
     }
 
     @Test
@@ -92,7 +92,8 @@ internal class JooqSearchOrderServiceTest : AbstractServiceTest<Long, SearchOrde
         val searchOrderId: Long = 3
         whenever(searchConditionMock.searchConditionId).thenReturn(null)
         whenever(repo.addSearchCondition(searchConditionMock, searchOrderId, LC)).thenReturn(searchConditionMock)
-        assertThat(service.saveOrUpdateSearchCondition(searchConditionMock, searchOrderId, LC)).isEqualTo(searchConditionMock)
+        assertThat(service.saveOrUpdateSearchCondition(searchConditionMock, searchOrderId, LC))
+            .isEqualTo(searchConditionMock)
         verify(repo).addSearchCondition(searchConditionMock, searchOrderId, LC)
         verify(searchConditionMock).searchConditionId
     }
@@ -102,7 +103,8 @@ internal class JooqSearchOrderServiceTest : AbstractServiceTest<Long, SearchOrde
         val searchOrderId: Long = 3
         whenever(searchConditionMock.searchConditionId).thenReturn(17L)
         whenever(repo.updateSearchCondition(searchConditionMock, searchOrderId, LC)).thenReturn(searchConditionMock)
-        assertThat(service.saveOrUpdateSearchCondition(searchConditionMock, searchOrderId, LC)).isEqualTo(searchConditionMock)
+        assertThat(service.saveOrUpdateSearchCondition(searchConditionMock, searchOrderId, LC))
+            .isEqualTo(searchConditionMock)
         verify(repo).updateSearchCondition(searchConditionMock, searchOrderId, LC)
         verify(searchConditionMock).searchConditionId
     }
@@ -110,7 +112,7 @@ internal class JooqSearchOrderServiceTest : AbstractServiceTest<Long, SearchOrde
     @Test
     fun deleting_withNullEntity_doesNothing() {
         service.remove(null)
-        verify<SearchOrderRepository>(repo, never()).delete(anyLong(), anyInt())
+        verify(repo, never()).delete(anyLong(), anyInt())
     }
 
     @Test
@@ -118,7 +120,7 @@ internal class JooqSearchOrderServiceTest : AbstractServiceTest<Long, SearchOrde
         whenever(entity.id).thenReturn(null)
         service.remove(entity)
         verify(entity).id
-        verify<SearchOrderRepository>(repo, never()).delete(anyLong(), anyInt())
+        verify(repo, never()).delete(anyLong(), anyInt())
     }
 
     @Test
@@ -130,24 +132,23 @@ internal class JooqSearchOrderServiceTest : AbstractServiceTest<Long, SearchOrde
 
         verify(entity, times(2)).id
         verify(entity, times(1)).version
-        verify<SearchOrderRepository>(repo, times(1)).delete(3L, 33)
+        verify(repo, times(1)).delete(3L, 33)
     }
 
     @Test
     fun removingSearchConditionWithId_withNullId_doesNothing() {
         service.removeSearchConditionWithId(null)
-        verify<SearchOrderRepository>(repo, never()).deleteSearchConditionWithId(anyLong())
+        verify(repo, never()).deleteSearchConditionWithId(anyLong())
     }
 
     @Test
     fun removingSearchConditionWithId_delegatesToRepo() {
         val id = 3L
         service.removeSearchConditionWithId(id)
-        verify<SearchOrderRepository>(repo, times(1)).deleteSearchConditionWithId(id)
+        verify(repo, times(1)).deleteSearchConditionWithId(id)
     }
 
     companion object {
         private const val LC = "de"
     }
-
 }

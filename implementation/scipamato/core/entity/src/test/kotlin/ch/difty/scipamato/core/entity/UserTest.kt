@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
-import java.util.*
 
 @Suppress("SpellCheckingInspection")
 internal class UserTest {
@@ -69,8 +68,8 @@ internal class UserTest {
         val u = User(ID, USER_NAME, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD)
         assertThat(u.isEnabled).isFalse()
         assertThat(u.roles)
-                .isNotNull
-                .isEmpty()
+            .isNotNull
+            .isEmpty()
 
         u.isEnabled = true
         u.roles = roles
@@ -143,25 +142,28 @@ internal class UserTest {
     @Test
     fun equals() {
         EqualsVerifier
-                .forClass(User::class.java)
-                .withRedefinedSuperclass()
-                .usingGetClass()
-                .withIgnoredFields(CREATED.fieldName, CREATOR_ID.fieldName, MODIFIED.fieldName, MODIFIER_ID.fieldName)
-                .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
-                .verify()
+            .forClass(User::class.java)
+            .withRedefinedSuperclass()
+            .usingGetClass()
+            .withIgnoredFields(CREATED.fieldName, CREATOR_ID.fieldName, MODIFIED.fieldName, MODIFIER_ID.fieldName)
+            .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
+            .verify()
     }
 
     @Test
     @Disabled("TODO")
     fun testingToString() {
         assertThat(user.toString()).isEqualTo(
-                "User[userName=username,firstName=firstname,lastName=lastname,email=email,password=password,enabled=false,roles=[],id=1,createdBy=<null>,lastModifiedBy=<null>,created=<null>,lastModified=<null>,version=0]")
+            """User[userName=username,firstName=firstname,lastName=lastname,email=email,password=password
+                    |,enabled=false,roles=[],id=1,createdBy=<null>,lastModifiedBy=<null>,created=<null>
+                    |,lastModified=<null>,version=0]""".trimMargin()
+        )
     }
 
     @Test
     fun assertEnumFields() {
         assertThat(User.UserFields.values()).extracting("name")
-                .containsExactly("userName", "firstName", "lastName", "email", "password", "enabled", "roles")
+            .containsExactly("userName", "firstName", "lastName", "email", "password", "enabled", "roles")
     }
 
     companion object {
@@ -173,5 +175,4 @@ internal class UserTest {
         private const val PASSWORD = "password"
         private const val ENABLED = true
     }
-
 }

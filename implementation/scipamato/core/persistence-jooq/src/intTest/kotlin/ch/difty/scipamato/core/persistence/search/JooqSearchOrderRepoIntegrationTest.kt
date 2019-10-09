@@ -18,7 +18,7 @@ import org.testcontainers.junit.jupiter.Testcontainers
 
 @JooqTest
 @Testcontainers
-@Suppress("DuplicatedCode", "SpellCheckingInspection", "SameParameterValue")
+@Suppress("TooManyFunctions", "DuplicatedCode", "SpellCheckingInspection", "MagicNumber", "SameParameterValue")
 internal open class JooqSearchOrderRepoIntegrationTest {
 
     @Autowired

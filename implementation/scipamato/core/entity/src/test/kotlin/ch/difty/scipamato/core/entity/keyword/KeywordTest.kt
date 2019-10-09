@@ -33,5 +33,4 @@ internal class KeywordTest : Jsr303ValidatedEntityTest<Keyword>(Keyword::class.j
         nt.name = null
         validateAndAssertFailure(nt, NAME, null, "{javax.validation.constraints.NotNull.message}")
     }
-
 }

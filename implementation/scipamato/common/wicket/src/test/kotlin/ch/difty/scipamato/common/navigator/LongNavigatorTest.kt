@@ -3,7 +3,6 @@ package ch.difty.scipamato.common.navigator
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.fail
 import org.junit.jupiter.api.Test
-import java.util.*
 
 internal class LongNavigatorTest {
 
@@ -119,10 +118,9 @@ internal class LongNavigatorTest {
             fail<Any>("should have thrown exception")
         } catch (ex: Exception) {
             assertThat(ex)
-                    .isInstanceOf(IllegalArgumentException::class.java)
-                    .hasMessage("Cannot set focus to item that is not part of the managed list (item 100).")
+                .isInstanceOf(IllegalArgumentException::class.java)
+                .hasMessage("Cannot set focus to item that is not part of the managed list (item 100).")
         }
-
     }
 
     @Test
@@ -262,5 +260,4 @@ internal class LongNavigatorTest {
         assertThat(nm.isModified).isTrue()
         assertThat(nm.itemWithFocus == null).isTrue()
     }
-
 }

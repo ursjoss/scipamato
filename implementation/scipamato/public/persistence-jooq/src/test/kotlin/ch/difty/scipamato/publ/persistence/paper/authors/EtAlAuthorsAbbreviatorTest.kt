@@ -94,7 +94,9 @@ internal class EtAlAuthorsAbbreviatorTest {
         abbr16 = EtAlAuthorsAbbreviator(propertiesMock)
         whenever(propertiesMock.authorsAbbreviatedMaxLength).thenReturn(0)
         val abbr0 = EtAlAuthorsAbbreviator(propertiesMock)
-        val authors = "Foo B, Foo B, Foo B, Foo B, Foo B, Foo B, Foo B, Foo B, Foo B, Foo B, Foo B, Foo B, Foo B, Foo B, Foo B, Foo B, Foo B, Foo B, Foo B, Foo B, Foo B, Foo B, Foo B, Foo B, Foo B, Foo B, Foo B, Foo B, Foo B, Foo B, Foo B, Foo B, ."
+        val authors = "Foo B, Foo B, Foo B, Foo B, Foo B, Foo B, Foo B, Foo B, Foo B, Foo B, Foo B, " +
+            "Foo B, Foo B, Foo B, Foo B, Foo B, Foo B, Foo B, Foo B, Foo B, Foo B, Foo B, Foo B, Foo B, Foo B, " +
+            "Foo B, Foo B, Foo B, Foo B, Foo B, Foo B, Foo B, ."
 
         assertThat(abbr0.abbreviate(authors)).isEqualTo(authors)
     }

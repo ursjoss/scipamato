@@ -2,7 +2,6 @@ package ch.difty.scipamato.core.web.paper.entry;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
-import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.*;
 
 import java.time.LocalDateTime;
@@ -21,6 +20,7 @@ import ch.difty.scipamato.core.entity.search.PaperFilter;
 import ch.difty.scipamato.core.pubmed.PubmedArticleFacade;
 import ch.difty.scipamato.core.web.paper.common.PaperPanelTest;
 
+@SuppressWarnings("SpellCheckingInspection")
 abstract class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperPanel> {
 
     static final int     PMID            = 1234;

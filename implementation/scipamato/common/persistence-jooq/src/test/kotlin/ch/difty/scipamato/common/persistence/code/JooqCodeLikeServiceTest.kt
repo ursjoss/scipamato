@@ -34,5 +34,4 @@ internal class JooqCodeLikeServiceTest {
         private const val LANG_CODE = "en"
         private val CC_ID = CodeClassId.CC1
     }
-
 }

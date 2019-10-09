@@ -16,8 +16,8 @@ internal class JooqCodeClassServiceTest {
     private val service = JooqCodeClassService(repoMock)
 
     private val ccs = listOf(
-            CodeClass(1, "en", "cc1", ""),
-            CodeClass(2, "en", "cc2", "")
+        CodeClass(1, "en", "cc1", ""),
+        CodeClass(2, "en", "cc2", "")
     )
 
     @Test
@@ -27,5 +27,4 @@ internal class JooqCodeClassServiceTest {
         verify(repoMock).find(languageCodeClass)
         verifyNoMoreInteractions(repoMock)
     }
-
 }

@@ -15,5 +15,4 @@ open class BootstrapConfig : WicketApplicationInitConfiguration {
     override fun init(webApplication: WebApplication) {
         Bootstrap.install(webApplication)
     }
-
 }

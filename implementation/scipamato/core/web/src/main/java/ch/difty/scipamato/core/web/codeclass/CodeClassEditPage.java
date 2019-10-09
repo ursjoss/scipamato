@@ -14,7 +14,7 @@ import org.springframework.dao.DuplicateKeyException;
 import org.wicketstuff.annotation.mount.MountPath;
 
 import ch.difty.scipamato.core.auth.Roles;
-import ch.difty.scipamato.core.entity.code_class.CodeClassDefinition;
+import ch.difty.scipamato.core.entity.codeclass.CodeClassDefinition;
 import ch.difty.scipamato.core.persistence.CodeClassService;
 import ch.difty.scipamato.core.web.code.CodeListPage;
 import ch.difty.scipamato.core.web.common.DefinitionEditHeaderPanel;

@@ -6,8 +6,8 @@ import ch.difty.scipamato.common.NullArgumentException;
 import ch.difty.scipamato.common.persistence.codeclass.CodeClassLikeRepository;
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.core.entity.CodeClass;
-import ch.difty.scipamato.core.entity.code_class.CodeClassDefinition;
-import ch.difty.scipamato.core.entity.code_class.CodeClassFilter;
+import ch.difty.scipamato.core.entity.codeclass.CodeClassDefinition;
+import ch.difty.scipamato.core.entity.codeclass.CodeClassFilter;
 import ch.difty.scipamato.core.persistence.OptimisticLockingException;
 
 /**

@@ -24,6 +24,8 @@ internal class NewsletterNewsletterTopicTest {
 
     @Test
     fun validatingToString() {
-        assertThat(nnt.toString()).isEqualTo("NewsletterNewsletterTopic(newsletterId=1, newsletterTopicId=2, sort=3, title=title)")
+        assertThat(nnt.toString()).isEqualTo(
+            "NewsletterNewsletterTopic(newsletterId=1, newsletterTopicId=2, sort=3, title=title)"
+        )
     }
 }

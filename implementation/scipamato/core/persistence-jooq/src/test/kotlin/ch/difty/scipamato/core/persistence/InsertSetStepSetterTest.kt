@@ -2,6 +2,9 @@ package ch.difty.scipamato.core.persistence
 
 import ch.difty.scipamato.common.NullArgumentException
 import ch.difty.scipamato.core.entity.CoreEntity
+import com.nhaarman.mockitokotlin2.never
+import com.nhaarman.mockitokotlin2.verify
+import com.nhaarman.mockitokotlin2.verifyNoMoreInteractions
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.fail
 import org.jooq.InsertSetMoreStep
@@ -9,7 +12,6 @@ import org.jooq.InsertSetStep
 import org.jooq.Record
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito.*
 
 abstract class InsertSetStepSetterTest<R : Record, E : CoreEntity> {
 
@@ -97,8 +99,8 @@ abstract class InsertSetStepSetterTest<R : Record, E : CoreEntity> {
             fail<Any>("should have thrown exception")
         } catch (ex: Exception) {
             assertThat(ex)
-                    .isInstanceOf(NullArgumentException::class.java)
-                    .hasMessage("step must not be null.")
+                .isInstanceOf(NullArgumentException::class.java)
+                .hasMessage("step must not be null.")
         }
     }
 
@@ -109,9 +111,8 @@ abstract class InsertSetStepSetterTest<R : Record, E : CoreEntity> {
             fail<Any>("should have thrown exception")
         } catch (ex: Exception) {
             assertThat(ex)
-                    .isInstanceOf(NullArgumentException::class.java)
-                    .hasMessage("entity must not be null.")
+                .isInstanceOf(NullArgumentException::class.java)
+                .hasMessage("entity must not be null.")
         }
     }
-
 }

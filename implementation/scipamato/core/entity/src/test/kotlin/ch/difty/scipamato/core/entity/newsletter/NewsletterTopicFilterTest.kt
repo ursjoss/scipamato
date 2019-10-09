@@ -19,15 +19,15 @@ internal class NewsletterTopicFilterTest {
     @Test
     fun equals() {
         EqualsVerifier
-                .forClass(NewsletterTopicFilter::class.java)
-                .withRedefinedSuperclass()
-                .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
-                .verify()
+            .forClass(NewsletterTopicFilter::class.java)
+            .withRedefinedSuperclass()
+            .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
+            .verify()
     }
 
     @Test
     fun assertEnumFields() {
-        assertThat(NewsletterTopicFilter.NewsletterTopicFilterFields.values().map { it.fieldName }).containsExactly("titleMask")
+        assertThat(NewsletterTopicFilter.NewsletterTopicFilterFields.values().map { it.fieldName })
+            .containsExactly("titleMask")
     }
-
 }

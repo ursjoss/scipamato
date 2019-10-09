@@ -1,7 +1,6 @@
 package ch.difty.scipamato.common.entity
 
 import java.io.Serializable
-import java.util.*
 
 /**
  * Marker Interfaces for code like classes to be used to specify the generics in code specific service classes.
@@ -33,8 +32,8 @@ enum class CodeClassId(val id: Int) {
     companion object {
         private val ID2ENUM: Map<Int, CodeClassId> = values().map { it.id to it }.toMap()
 
-        fun fromId(id: Int): Optional<CodeClassId> {
-            return Optional.ofNullable(ID2ENUM[id])
+        fun fromId(id: Int): java.util.Optional<CodeClassId> {
+            return java.util.Optional.ofNullable(ID2ENUM[id])
         }
     }
 }

@@ -13,7 +13,6 @@ private val log = logger()
  */
 fun LocalDateTime.toTimestamp(): Timestamp = Timestamp.valueOf(this)
 
-
 /**
  * Derive an enum of type [T] from a configuration [this@toProperty], all [values] of the enum (`T.values`),
  * a [defaultValue] in case the property value does not match and a [propertyKey] used for logging.

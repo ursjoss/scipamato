@@ -28,23 +28,30 @@ internal class PaperFilterTest {
         assertThat(f.newsletterId).isEqualTo(2)
 
         assertThat(f.toString()).isEqualTo(
-                "PaperFilter(number=1, authorMask=authorMask, methodsMask=methodsMask, searchMask=searchMask, publicationYearFrom=2015, publicationYearUntil=2017, newsletterId=2)")
+            "PaperFilter(number=1, authorMask=authorMask, methodsMask=methodsMask, searchMask=searchMask, " +
+                "publicationYearFrom=2015, publicationYearUntil=2017, newsletterId=2)"
+        )
     }
 
     @Test
     fun equals() {
         EqualsVerifier
-                .forClass(PaperFilter::class.java)
-                .withRedefinedSuperclass()
-                .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
-                .verify()
+            .forClass(PaperFilter::class.java)
+            .withRedefinedSuperclass()
+            .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
+            .verify()
     }
 
     @Test
     fun assertEnumFields() {
         assertThat(PaperFilter.PaperFilterFields.values().map { it.fieldName }).containsExactly(
-                "number", "authorMask", "methodsMask", "searchMask", "publicationYearFrom", "publicationYearUntil", "newsletterId"
+            "number",
+            "authorMask",
+            "methodsMask",
+            "searchMask",
+            "publicationYearFrom",
+            "publicationYearUntil",
+            "newsletterId"
         )
     }
-
 }

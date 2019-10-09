@@ -10,7 +10,8 @@ import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-internal class NewsletterFilterConditionMapperTest : FilterConditionMapperTest<NewsletterRecord, Newsletter, NewsletterFilter>() {
+internal class NewsletterFilterConditionMapperTest
+    : FilterConditionMapperTest<NewsletterRecord, Newsletter, NewsletterFilter>() {
 
     override val mapper = NewsletterFilterConditionMapper()
     override val filter = NewsletterFilter()
@@ -28,14 +29,16 @@ internal class NewsletterFilterConditionMapperTest : FilterConditionMapperTest<N
     @Test
     fun creatingWhereCondition_withPublicationStatus() {
         filter.publicationStatus = PublicationStatus.CANCELLED
-        assertThat(mapper.map(filter).toString()).isEqualToIgnoringCase(""""public"."newsletter"."publication_status" = -1""")
+        assertThat(mapper.map(filter).toString()).isEqualToIgnoringCase(
+            """"public"."newsletter"."publication_status" = -1"""
+        )
     }
 
     @Test
     fun creatingWhereCondition_withNewsletterTopic() {
         filter.newsletterTopic = NewsletterTopic(5, "foo")
         assertThat(mapper.map(filter).toString()).isEqualToIgnoringCase(
-                """"public"."newsletter"."id" in (
+            """"public"."newsletter"."id" in (
             |  select "public"."paper_newsletter"."newsletter_id"
             |  from "public"."paper_newsletter"
             |  where "public"."paper_newsletter"."newsletter_topic_id" = 5

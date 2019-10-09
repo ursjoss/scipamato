@@ -64,6 +64,7 @@ public class User extends IdScipamatoEntity<Integer> {
             this.name = name;
         }
 
+        @NotNull
         @Override
         public String getFieldName() {
             return name;

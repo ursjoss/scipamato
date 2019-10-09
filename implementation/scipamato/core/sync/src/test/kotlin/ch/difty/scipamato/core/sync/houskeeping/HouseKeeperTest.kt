@@ -39,7 +39,8 @@ internal class HouseKeeperTest {
         whenever(lastSynchedField.table).thenReturn(tableMock)
         whenever(dslContextMock.deleteFrom(tableMock)).thenReturn(deleteWhereStepMock)
         whenever(dateTimeServiceMock.currentDateTime).thenReturn(TS)
-        whenever(deleteWhereStepMock.where(lastSynchedField.lessThan(Timestamp.valueOf(TS)))).thenReturn(deleteCondStepMock)
+        whenever(deleteWhereStepMock.where(lastSynchedField.lessThan(Timestamp.valueOf(TS))))
+            .thenReturn(deleteCondStepMock)
     }
 
     @Test

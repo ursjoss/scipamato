@@ -20,7 +20,8 @@ internal class StringSearchTermEvaluatorIntegrationTest : SearchTermEvaluatorInt
 
     private val evaluator = StringSearchTermEvaluator()
 
-    override fun makeSearchTerm(rawSearchTerm: String) = SearchTerm.newSearchTerm(ID, searchTermType, SC_ID, FN, rawSearchTerm) as StringSearchTerm
+    override fun makeSearchTerm(rawSearchTerm: String) =
+        SearchTerm.newSearchTerm(ID, searchTermType, SC_ID, FN, rawSearchTerm) as StringSearchTerm
 
     @ParameterizedTest(name = "[{index}] {0} -> {1} [type {3}]")
     @MethodSource("stringParameters")
@@ -32,11 +33,11 @@ internal class StringSearchTermEvaluatorIntegrationTest : SearchTermEvaluatorInt
     }
 
     companion object {
-        @Suppress("unused")
+        @Suppress("unused", "LongMethod")
         @JvmStatic
         fun stringParameters() = listOf(
-                Arguments.of("foo", "(WORD foo)",
-                        """lower(cast(fn as varchar)) like lower(('%' || replace(
+            Arguments.of("foo", "(WORD foo)",
+                """lower(cast(fn as varchar)) like lower(('%' || replace(
                        |  replace(
                        |    replace(
                        |      'foo', 
@@ -49,8 +50,8 @@ internal class StringSearchTermEvaluatorIntegrationTest : SearchTermEvaluatorInt
                        |  '_', 
                        |  '!_'
                        |) || '%')) escape '!'""".trimMargin(), CONTAINS),
-                Arguments.of("-foo", "(NOTWORD foo)",
-                        """not(lower(cast(coalesce(
+            Arguments.of("-foo", "(NOTWORD foo)",
+                """not(lower(cast(coalesce(
                       |  fn, 
                       |  ''
                       |) as varchar)) like lower(('%' || replace(
@@ -66,41 +67,83 @@ internal class StringSearchTermEvaluatorIntegrationTest : SearchTermEvaluatorInt
                       |  '_', 
                       |  '!_'
                       |) || '%')) escape '!')""".trimMargin(), CONTAINS),
-                Arguments.of(""""foo"""", "(QUOTED foo)", "lower(cast(fn as varchar)) = lower('foo')", EQUALS),
-                Arguments.of("""-"foo"""", "(NOTQUOTED foo)", "lower(cast(fn as varchar)) <> lower('foo')", EQUALS),
-                Arguments.of("""="foo"""", "(QUOTED foo)", "lower(cast(fn as varchar)) = lower('foo')", EQUALS),
+            Arguments.of(""""foo"""", "(QUOTED foo)", "lower(cast(fn as varchar)) = lower('foo')", EQUALS),
+            Arguments.of("""-"foo"""", "(NOTQUOTED foo)", "lower(cast(fn as varchar)) <> lower('foo')", EQUALS),
+            Arguments.of("""="foo"""", "(QUOTED foo)", "lower(cast(fn as varchar)) = lower('foo')", EQUALS),
 
-                Arguments.of("""*foo""", "(OPENLEFT %foo)", "lower(cast(fn as varchar)) like lower('%foo')", LIKE),
-                Arguments.of("""-*foo""", "(NOTOPENLEFT %foo)", "lower(cast(coalesce(\n  fn, \n  ''\n) as varchar)) not like lower('%foo')", LIKE),
-                Arguments.of(""""*foo""""", "(OPENLEFTQUOTED %foo)", "lower(cast(fn as varchar)) like lower('%foo')", LIKE),
-                Arguments.of("""-"*foo"""", "(NOTOPENLEFTQUOTED %foo)", "lower(cast(coalesce(\n  fn, \n  ''\n) as varchar)) not like lower('%foo')", LIKE),
+            Arguments.of("""*foo""", "(OPENLEFT %foo)", "lower(cast(fn as varchar)) like lower('%foo')", LIKE),
+            Arguments.of("""-*foo""", "(NOTOPENLEFT %foo)",
+                """lower(cast(coalesce(
+                |  fn, 
+                |  ''
+                |) as varchar)) not like lower('%foo')""".trimMargin(),
+                LIKE),
+            Arguments.of(""""*foo""""", "(OPENLEFTQUOTED %foo)", "lower(cast(fn as varchar)) like lower('%foo')", LIKE),
+            Arguments.of("""-"*foo"""",
+                "(NOTOPENLEFTQUOTED %foo)",
+                """lower(cast(coalesce(
+                    |  fn, 
+                    |  ''
+                    |) as varchar)) not like lower('%foo')""".trimMargin(),
+                LIKE
+            ),
 
-                Arguments.of("""*foo*""", "(OPENLEFTRIGHT %foo%)", "lower(cast(fn as varchar)) like lower('%foo%')", LIKE),
-                Arguments.of("""-*foo*""", "(NOTOPENLEFTRIGHT %foo%)", "lower(cast(coalesce(\n  fn, \n  ''\n) as varchar)) not like lower('%foo%')", LIKE),
-                Arguments.of(""""*foo*"""", "(OPENLEFTRIGHTQUOTED %foo%)", "lower(cast(fn as varchar)) like lower('%foo%')", LIKE),
-                Arguments.of("""-"*foo*"""", "(NOTOPENLEFTRIGHTQUOTED %foo%)", "lower(cast(coalesce(\n  fn, \n  ''\n) as varchar)) not like lower('%foo%')", LIKE),
+            Arguments.of("""*foo*""", "(OPENLEFTRIGHT %foo%)",
+                "lower(cast(fn as varchar)) like lower('%foo%')",
+                LIKE
+            ),
+            Arguments.of("""-*foo*""", "(NOTOPENLEFTRIGHT %foo%)",
+                """lower(cast(coalesce(
+                    |  fn, 
+                    |  ''
+                    |) as varchar)) not like lower('%foo%')""".trimMargin(),
+                LIKE
+            ),
+            Arguments.of(""""*foo*"""", "(OPENLEFTRIGHTQUOTED %foo%)",
+                "lower(cast(fn as varchar)) like lower('%foo%')",
+                LIKE
+            ),
+            Arguments.of("""-"*foo*"""", "(NOTOPENLEFTRIGHTQUOTED %foo%)",
+                """lower(cast(coalesce(
+                    |  fn, 
+                    |  ''
+                    |) as varchar)) not like lower('%foo%')""".trimMargin(),
+                LIKE
+            ),
 
-                Arguments.of("""foo*""", "(OPENRIGHT foo%)", "lower(cast(fn as varchar)) like lower('foo%')", LIKE),
-                Arguments.of("""-foo*"""", "(NOTOPENRIGHT foo%)", "lower(cast(coalesce(\n  fn, \n  ''\n) as varchar)) not like lower('foo%')", LIKE),
-                Arguments.of(""""foo*"""", "(OPENRIGHTQUOTED foo%)", "lower(cast(fn as varchar)) like lower('foo%')", LIKE),
-                Arguments.of("""-"foo*"""", "(NOTOPENRIGHTQUOTED foo%)", "lower(cast(coalesce(\n  fn, \n  ''\n) as varchar)) not like lower('foo%')", LIKE),
+            Arguments.of("""foo*""", "(OPENRIGHT foo%)", "lower(cast(fn as varchar)) like lower('foo%')", LIKE),
+            Arguments.of("""-foo*"""", "(NOTOPENRIGHT foo%)",
+                """lower(cast(coalesce(
+                    |  fn, 
+                    |  ''
+                    |) as varchar)) not like lower('foo%')""".trimMargin(),
+                LIKE
+            ),
+            Arguments.of(""""foo*"""", "(OPENRIGHTQUOTED foo%)", "lower(cast(fn as varchar)) like lower('foo%')", LIKE),
+            Arguments.of("""-"foo*"""", "(NOTOPENRIGHTQUOTED foo%)",
+                """lower(cast(coalesce(
+                    |  fn, 
+                    |  ''
+                    |) as varchar)) not like lower('foo%')""".trimMargin(),
+                LIKE
+            ),
 
-                Arguments.of(""">""""", """(SOME >"")""",
-                        """(
+            Arguments.of(""">""""", """(SOME >"")""",
+                """(
                       |  fn is not null
                       |  and char_length(cast(fn as varchar)) > 0
                       |)""".trimMargin(), LENGTH),
-                Arguments.of("""=""""", """(EMPTY ="")""",
-                        """(
+            Arguments.of("""=""""", """(EMPTY ="")""",
+                """(
                       |  fn is null
                       |  or char_length(cast(fn as varchar)) = 0
                       |)""".trimMargin(), LENGTH),
-                Arguments.of("""-""""", """(RAW -"")""", "1 = 1", NONE),
+            Arguments.of("""-""""", """(RAW -"")""", "1 = 1", NONE),
 
-                Arguments.of("""s/foo/""", "(REGEX foo)", "coalesce(\n  fn, \n  ''\n) like_regex 'foo'", REGEX),
-                Arguments.of("""-s/foo/""", "(NOTREGEX foo)", "not(coalesce(\n  fn, \n  ''\n) like_regex 'foo')", REGEX),
+            Arguments.of("""s/foo/""", "(REGEX foo)", "coalesce(\n  fn, \n  ''\n) like_regex 'foo'", REGEX),
+            Arguments.of("""-s/foo/""", "(NOTREGEX foo)", "not(coalesce(\n  fn, \n  ''\n) like_regex 'foo')", REGEX),
 
-                Arguments.of("""""""", """(RAW "")""", "1 = 1", NONE)
+            Arguments.of("""""""", """(RAW "")""", "1 = 1", NONE)
         )
     }
 }

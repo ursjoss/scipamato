@@ -11,6 +11,7 @@ import org.testcontainers.junit.jupiter.Testcontainers
 
 private val log = logger()
 
+@Suppress("MagicNumber")
 @JooqTest
 @Testcontainers
 internal open class JooqCodeRepoIntegrationTest {
@@ -38,5 +39,4 @@ internal open class JooqCodeRepoIntegrationTest {
         assertThat(codesOfClass1).hasSize(12)
         codesOfClass1.forEach { c -> log.debug(c.toString()) }
     }
-
 }

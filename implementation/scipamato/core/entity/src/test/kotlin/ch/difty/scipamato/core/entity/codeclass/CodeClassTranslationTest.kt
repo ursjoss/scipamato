@@ -1,4 +1,4 @@
-package ch.difty.scipamato.core.entity.code_class
+package ch.difty.scipamato.core.entity.codeclass
 
 import org.assertj.core.api.Assertions.assertThat
 

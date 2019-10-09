@@ -89,5 +89,4 @@ internal class JooqPaperSlimServiceTest : AbstractServiceTest<Long, PaperSlim, P
         assertThat(service.countBySearchOrder(searchOrderMock)).isEqualTo(2)
         verify(repo).countBySearchOrder(searchOrderMock)
     }
-
 }

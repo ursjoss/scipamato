@@ -2,10 +2,9 @@ package ch.difty.scipamato.core.persistence
 
 import ch.difty.scipamato.core.entity.IdScipamatoEntity
 import ch.difty.scipamato.core.entity.User
-import com.nhaarman.mockitokotlin2.whenever
+import com.nhaarman.mockitokotlin2.*
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
-import org.mockito.Mockito.*
 
 abstract class AbstractServiceTest<ID : Number, T : IdScipamatoEntity<ID>, R : ReadOnlyRepository<T, ID, *>> {
 
@@ -64,11 +63,11 @@ abstract class AbstractServiceTest<ID : Number, T : IdScipamatoEntity<ID>, R : R
      */
     protected fun verifyAudit(times: Int) {
         verify(entity, times(times)).createdBy
-        verify<UserRepository>(userRepoMock, times(times)).findById(CREATOR_ID)
+        verify(userRepoMock, times(times)).findById(CREATOR_ID)
         verify(entity, times(times)).createdByName = "creatingUser"
         verify(entity, times(times)).createdByFullName = "creatingUserFullName"
         verify(entity, times(times)).lastModifiedBy
-        verify<UserRepository>(userRepoMock, times(times)).findById(MODIFIER_ID)
+        verify(userRepoMock, times(times)).findById(MODIFIER_ID)
         verify(entity, times(times)).lastModifiedByName = "modifyingUser"
     }
 
@@ -76,5 +75,4 @@ abstract class AbstractServiceTest<ID : Number, T : IdScipamatoEntity<ID>, R : R
         const val CREATOR_ID = 10
         const val MODIFIER_ID = 20
     }
-
 }

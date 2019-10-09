@@ -4,14 +4,13 @@ import ch.difty.scipamato.common.persistence.paging.PaginationContext
 import ch.difty.scipamato.core.entity.User
 import ch.difty.scipamato.core.entity.search.UserFilter
 import ch.difty.scipamato.core.persistence.UserRepository
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.whenever
+import com.nhaarman.mockitokotlin2.*
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito.*
+import org.mockito.ArgumentMatchers.anyInt
+import org.mockito.ArgumentMatchers.anyString
 import org.springframework.security.crypto.password.PasswordEncoder
-import java.util.*
 
 internal class JooqUserServiceTest {
 
@@ -131,21 +130,21 @@ internal class JooqUserServiceTest {
     @Test
     fun findingByUserName_whenFindingUser_delegatesToRepoAndReturnsOptionalOfFoundUser() {
         whenever(repoMock.findByUserName("foo")).thenReturn(userMock)
-        assertThat(service.findByUserName("foo")).isEqualTo(Optional.of(userMock))
+        assertThat(service.findByUserName("foo")).isEqualTo(java.util.Optional.of(userMock))
         verify(repoMock).findByUserName("foo")
     }
 
     @Test
     fun findingByUserName_whenNotFindingUser_delegatesToRepoAndReturnsOptionalEmpty() {
         whenever(repoMock.findByUserName("foo")).thenReturn(null)
-        assertThat(service.findByUserName("foo")).isEqualTo(Optional.empty<Any>())
+        assertThat(service.findByUserName("foo")).isEqualTo(java.util.Optional.empty<Any>())
         verify(repoMock).findByUserName("foo")
     }
 
     @Test
     fun deleting_withNullEntity_doesNothing() {
         service.remove(null)
-        verify<UserRepository>(repoMock, never()).delete(anyInt(), anyInt())
+        verify(repoMock, never()).delete(anyInt(), anyInt())
     }
 
     @Test
@@ -155,7 +154,7 @@ internal class JooqUserServiceTest {
         service.remove(userMock)
 
         verify(userMock).id
-        verify<UserRepository>(repoMock, never()).delete(anyInt(), anyInt())
+        verify(repoMock, never()).delete(anyInt(), anyInt())
     }
 
     @Test
@@ -167,7 +166,7 @@ internal class JooqUserServiceTest {
 
         verify(userMock, times(2)).id
         verify(userMock, times(1)).version
-        verify<UserRepository>(repoMock, times(1)).delete(3, 2)
+        verify(repoMock, times(1)).delete(3, 2)
     }
 
     @Test
@@ -176,5 +175,4 @@ internal class JooqUserServiceTest {
         assertThat(service.findPageOfIdsByFilter(filterMock, paginationContextMock)).containsExactly(3, 8, 5)
         verify(repoMock).findPageOfIdsByFilter(filterMock, paginationContextMock)
     }
-
 }

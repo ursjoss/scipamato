@@ -48,5 +48,4 @@ internal abstract class PublicEntityTest<T : PublicEntity> {
         private val CREATED_DATE = LocalDateTime.parse("2017-01-01T22:15:13.111")
         private val LASTMOD_DATE = LocalDateTime.parse("2017-01-10T22:15:13.111")
     }
-
 }

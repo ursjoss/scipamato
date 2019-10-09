@@ -1,14 +1,14 @@
 package ch.difty.scipamato.common.web
 
+import com.nhaarman.mockitokotlin2.*
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.checkboxx.CheckBoxX
 import org.apache.wicket.bean.validation.PropertyValidator
 import org.apache.wicket.markup.html.form.FormComponent
 import org.apache.wicket.markup.html.form.TextField
 import org.apache.wicket.model.Model
-import org.apache.wicket.model.StringResourceModel
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito.*
+import org.mockito.Mockito
 
 internal class AbstractPanelTest : WicketBaseTest() {
 
@@ -78,45 +78,44 @@ internal class AbstractPanelTest : WicketBaseTest() {
 
     @Test
     fun queuingFieldAndLabel_withPropertyValidatorInEditMode_addsLatterToComponent() {
-        val fc = mock(FormComponent::class.java)
-        `when`(fc.id).thenReturn("fcId")
-        val pv = mock(PropertyValidator::class.java)
+        val fc = Mockito.mock(FormComponent::class.java)
+        whenever(fc.id).thenReturn("fcId")
+        val pv = Mockito.mock(PropertyValidator::class.java)
 
         val p = TestAbstractPanel("panel", Mode.EDIT)
         p.queueFieldAndLabel(fc, pv)
 
         verify(fc, times(3)).id
-        verify(fc).label = isA(StringResourceModel::class.java)
+        verify(fc).label = any()
         verify(fc).add(pv)
         verifyNoMoreInteractions(fc, pv)
     }
 
     @Test
     fun queuingFieldAndLabel_withPropertyValidatorInViewMode_addsNothingToComponent() {
-        val fc = mock(FormComponent::class.java)
-        `when`(fc.id).thenReturn("fcId")
-        val pv = mock(PropertyValidator::class.java)
+        val fc = Mockito.mock(FormComponent::class.java)
+        whenever(fc.id).thenReturn("fcId")
+        val pv = Mockito.mock(PropertyValidator::class.java)
 
         val p = TestAbstractPanel("panel", Mode.VIEW)
         p.queueFieldAndLabel(fc, pv)
 
         verify(fc, times(3)).id
-        verify(fc).label = isA(StringResourceModel::class.java)
+        verify(fc).label = any()
         verify(fc, never()).add(pv)
         verifyNoMoreInteractions(fc, pv)
     }
 
     @Test
     fun queuingFieldAndLabel_withNullPropertyValidator_addsNothingToComponent() {
-        val fc = mock(FormComponent::class.java)
-        `when`(fc.id).thenReturn("fcId")
+        val fc = Mockito.mock(FormComponent::class.java)
+        whenever(fc.id).thenReturn("fcId")
 
         val p = TestAbstractPanel("panel", Mode.EDIT)
         p.queueFieldAndLabel(fc, null)
 
         verify(fc, times(3)).id
-        verify(fc).label = isA(StringResourceModel::class.java)
+        verify(fc).label = any()
         verifyNoMoreInteractions(fc)
     }
-
 }

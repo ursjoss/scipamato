@@ -90,11 +90,11 @@ abstract class Jsr303ValidatedEntityTest<T : CoreEntity> protected constructor(p
     @Test
     internal open fun verifyEquals() {
         EqualsVerifier
-                .forClass(clazz)
-                .usingGetClass()
-                .withRedefinedSuperclass()
-                .withIgnoredFields(CREATED.fieldName, CREATOR_ID.fieldName, MODIFIED.fieldName, MODIFIER_ID.fieldName)
-                .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
-                .verify()
+            .forClass(clazz)
+            .usingGetClass()
+            .withRedefinedSuperclass()
+            .withIgnoredFields(CREATED.fieldName, CREATOR_ID.fieldName, MODIFIED.fieldName, MODIFIER_ID.fieldName)
+            .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
+            .verify()
     }
 }

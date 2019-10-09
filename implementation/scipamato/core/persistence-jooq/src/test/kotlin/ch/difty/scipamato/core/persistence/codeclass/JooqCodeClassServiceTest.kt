@@ -2,8 +2,8 @@ package ch.difty.scipamato.core.persistence.codeclass
 
 import ch.difty.scipamato.common.persistence.paging.PaginationContext
 import ch.difty.scipamato.core.entity.CodeClass
-import ch.difty.scipamato.core.entity.code_class.CodeClassDefinition
-import ch.difty.scipamato.core.entity.code_class.CodeClassFilter
+import ch.difty.scipamato.core.entity.codeclass.CodeClassDefinition
+import ch.difty.scipamato.core.entity.codeclass.CodeClassFilter
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
 import org.assertj.core.api.Assertions.assertThat
@@ -51,15 +51,19 @@ internal class JooqCodeClassServiceTest {
 
     @Test
     fun findingPageOfCodeClassDefinitions_delegatesToRepo() {
-        whenever(repo.findPageOfCodeClassDefinitions(filterMock, paginationContextMock)).thenReturn(codeClassDefinitions)
-        assertThat(service.findPageOfCodeClassDefinitions(filterMock, paginationContextMock)).isEqualTo(codeClassDefinitions)
+        whenever(repo.findPageOfCodeClassDefinitions(filterMock, paginationContextMock))
+            .thenReturn(codeClassDefinitions)
+        assertThat(service.findPageOfCodeClassDefinitions(filterMock, paginationContextMock))
+            .isEqualTo(codeClassDefinitions)
         verify(repo).findPageOfCodeClassDefinitions(filterMock, paginationContextMock)
     }
 
     @Test
     fun gettingPageOfEntityDefinitions_delegatesToRepo() {
-        whenever(repo.findPageOfCodeClassDefinitions(filterMock, paginationContextMock)).thenReturn(codeClassDefinitions)
-        assertThat(service.findPageOfEntityDefinitions(filterMock, paginationContextMock)).hasSameElementsAs(codeClassDefinitions)
+        whenever(repo.findPageOfCodeClassDefinitions(filterMock, paginationContextMock))
+            .thenReturn(codeClassDefinitions)
+        assertThat(service.findPageOfEntityDefinitions(filterMock, paginationContextMock))
+            .hasSameElementsAs(codeClassDefinitions)
         verify(repo).findPageOfCodeClassDefinitions(filterMock, paginationContextMock)
     }
 
@@ -85,5 +89,4 @@ internal class JooqCodeClassServiceTest {
         assertThat(service.delete(id, version)).isEqualTo(persistedCodeClassDefinitionMock)
         verify(repo).delete(id, version)
     }
-
 }

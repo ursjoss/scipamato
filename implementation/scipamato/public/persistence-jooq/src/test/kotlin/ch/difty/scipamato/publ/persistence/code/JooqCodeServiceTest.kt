@@ -18,8 +18,8 @@ internal class JooqCodeServiceTest {
     private val languageCode = "de"
 
     private val codes = listOf(
-            Code(1, "c1", "en", "Code1", null, 1),
-            Code(1, "c2", "en", "Code2", null, 2)
+        Code(1, "c1", "en", "Code1", null, 1),
+        Code(1, "c2", "en", "Code2", null, 2)
     )
 
     @Test

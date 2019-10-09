@@ -1,5 +1,7 @@
 package ch.difty.scipamato.core.entity;
 
+import javax.validation.constraints.NotNull;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -44,6 +46,7 @@ public class PaperAttachment extends IdScipamatoEntity<Integer> {
             this.name = name;
         }
 
+        @NotNull
         @Override
         public String getFieldName() {
             return name;

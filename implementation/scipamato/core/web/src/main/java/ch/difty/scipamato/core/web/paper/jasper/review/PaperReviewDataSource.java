@@ -28,7 +28,7 @@ public class PaperReviewDataSource extends JasperPaperDataSource<PaperReview> {
 
     private static final long serialVersionUID = 1L;
 
-    private ReportHeaderFields reportHeaderFields;
+    private final ReportHeaderFields reportHeaderFields;
 
     /**
      * Using the dataProvider for the Result Panel as record source. Needs the

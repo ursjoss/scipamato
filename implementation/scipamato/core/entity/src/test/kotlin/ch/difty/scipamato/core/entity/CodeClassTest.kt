@@ -130,7 +130,8 @@ internal class CodeClassTest : Jsr303ValidatedEntityTest<CodeClass>(CodeClass::c
     }
 
     companion object {
-        private const val JAVAX_VALIDATION_CONSTRAINTS_NOT_NULL_MESSAGE = "{javax.validation.constraints.NotNull.message}"
+        private const val JAVAX_VALIDATION_CONSTRAINTS_NOT_NULL_MESSAGE =
+            "{javax.validation.constraints.NotNull.message}"
         private const val DESC = "this is cc1"
     }
 }

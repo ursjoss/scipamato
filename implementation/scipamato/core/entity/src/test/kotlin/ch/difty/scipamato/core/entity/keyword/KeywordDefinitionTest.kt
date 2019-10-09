@@ -56,7 +56,7 @@ internal class KeywordDefinitionTest {
     @Test
     fun canGetTranslationsAsString_withTranslationsIncludingMainTranslation_withPartialTranslation() {
         val kd = KeywordDefinition(2, "de", 1, kw_de, kw_en,
-                KeywordTranslation(12, "fr", null, 1))
+            KeywordTranslation(12, "fr", null, 1))
         assertThat(kd.translationsAsString).isEqualTo("DE: 'stichwort2'; EN: 'keyword2'; FR: n.a.")
     }
 
@@ -67,7 +67,7 @@ internal class KeywordDefinitionTest {
     }
 
     @Test
-    fun modifyTranslation_withMainLanguageTranslationModified_changesMainName_translationName_andSetsModifiedTimestamp() {
+    fun modifyTransl_withMainLangTranslModified_changesMainName_translName_andSetsModifiedTimestamp() {
         val kd = KeywordDefinition(2, "de", 1, kw_de, kw_en, kw_fr)
         kd.setNameInLanguage("de", "KEYWORD 2")
         assertThat(kd.name).isEqualTo("KEYWORD 2")
@@ -91,7 +91,7 @@ internal class KeywordDefinitionTest {
     }
 
     @Test
-    fun modifyTranslation_withNonMainLanguageTranslationModified_keepsMainName_changesTranslationName_andSetsModifiedTimestamp() {
+    fun modifyTransl_withNonMainLangTranslModified_keepsMainName_changesTranslationName_andSetsModifiedTimestamp() {
         val kd = KeywordDefinition(2, "de", 1, kw_de, kw_en, kw_fr)
         kd.setNameInLanguage("fr", "bar")
         assertThat(kd.name).isEqualTo("stichwort2")
@@ -132,11 +132,11 @@ internal class KeywordDefinitionTest {
     fun canGetTranslationsAsString_withTranslationsIncludingMainTranslation_withMultipleTranslations() {
         val kd = KeywordDefinition(2, "de", 1, kw_de, kw_de2, kw_en, kw_fr)
         assertThat(kd.translationsAsString).isEqualTo(
-                "DE: 'stichwort2','stichwort2foo'; EN: 'keyword2'; FR: 'motdeclef2'")
+            "DE: 'stichwort2','stichwort2foo'; EN: 'keyword2'; FR: 'motdeclef2'")
     }
 
     @Test
-    fun modifyTranslation_withMainLanguageTranslationModified_changesMainName_translationName_andSetsModifiedTimestamp_multipleTranslationsPerLanguage() {
+    fun modifyTransl_withMainLangTranslModified_changesMainName_translName_andSetsModTimestamp_multipleTranslPerLang() {
         val kd = KeywordDefinition(2, "de", 1, kw_de, kw_en, kw_fr, kw_de2)
         kd.setNameInLanguage("de", "Stichwort 2")
         assertThat(kd.name).isEqualTo("Stichwort 2")

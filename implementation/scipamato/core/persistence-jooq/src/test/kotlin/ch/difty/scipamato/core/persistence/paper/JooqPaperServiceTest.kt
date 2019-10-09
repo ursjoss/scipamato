@@ -11,13 +11,14 @@ import ch.difty.scipamato.core.persistence.newsletter.NewsletterRepository
 import ch.difty.scipamato.core.pubmed.AbstractPubmedArticleFacade
 import ch.difty.scipamato.core.pubmed.PubmedArticleFacade
 import ch.difty.scipamato.core.pubmed.api.*
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.whenever
+import com.nhaarman.mockitokotlin2.*
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.fail
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito.*
-import java.util.*
+import org.mockito.ArgumentMatchers.anyInt
+import org.mockito.ArgumentMatchers.anyLong
+import org.mockito.ArgumentMatchers.anyString
+import org.mockito.Mockito
 
 internal class JooqPaperServiceTest : AbstractServiceTest<Long, Paper, PaperRepository>() {
 
@@ -104,7 +105,7 @@ internal class JooqPaperServiceTest : AbstractServiceTest<Long, Paper, PaperRepo
     @Test
     fun deleting_withNullEntity_doesNothing() {
         service.remove(null)
-        verify<PaperRepository>(repo, never()).delete(anyLong(), anyInt())
+        verify(repo, never()).delete(anyLong(), anyInt())
     }
 
     @Test
@@ -114,7 +115,7 @@ internal class JooqPaperServiceTest : AbstractServiceTest<Long, Paper, PaperRepo
         service.remove(entity)
 
         verify(entity).id
-        verify<PaperRepository>(repo, never()).delete(anyLong(), anyInt())
+        verify(repo, never()).delete(anyLong(), anyInt())
     }
 
     @Test
@@ -126,7 +127,7 @@ internal class JooqPaperServiceTest : AbstractServiceTest<Long, Paper, PaperRepo
 
         verify(entity, times(2)).id
         verify(entity, times(1)).version
-        verify<PaperRepository>(repo, times(1)).delete(3L, 17)
+        verify(repo, times(1)).delete(3L, 17)
     }
 
     @Test
@@ -185,7 +186,7 @@ internal class JooqPaperServiceTest : AbstractServiceTest<Long, Paper, PaperRepo
         whenever(repo.findExistingPmIdsOutOf(listOf(pmIdValue))).thenReturn(emptyList())
         whenever(repo.findLowestFreeNumberStartingFrom(MINIMUM_NUMBER)).thenReturn(17L)
 
-        whenever(repo.add(isA(Paper::class.java))).thenReturn(paperMock2)
+        whenever(repo.add(any())).thenReturn(paperMock2)
         whenever(paperMock2.id).thenReturn(27L)
         whenever(paperMock2.pmId).thenReturn(pmIdValue)
 
@@ -196,7 +197,7 @@ internal class JooqPaperServiceTest : AbstractServiceTest<Long, Paper, PaperRepo
 
         verify(repo).findExistingPmIdsOutOf(listOf(pmIdValue))
         verify(repo).findLowestFreeNumberStartingFrom(MINIMUM_NUMBER)
-        verify(repo).add(isA(Paper::class.java))
+        verify(repo).add(any())
         verify(paperMock2).id
         verify(paperMock2).pmId
     }
@@ -213,7 +214,7 @@ internal class JooqPaperServiceTest : AbstractServiceTest<Long, Paper, PaperRepo
         assertThat(sr.warnMessages).isEmpty()
         assertThat(sr.errorMessages).isEmpty()
 
-        verify<PaperRepository>(repo, never()).findExistingPmIdsOutOf(listOf(pmIdValue))
+        verify(repo, never()).findExistingPmIdsOutOf(listOf(pmIdValue))
     }
 
     @Test
@@ -228,7 +229,7 @@ internal class JooqPaperServiceTest : AbstractServiceTest<Long, Paper, PaperRepo
         whenever(repo.findExistingPmIdsOutOf(listOf(pmIdValue))).thenReturn(emptyList())
         whenever(repo.findLowestFreeNumberStartingFrom(MINIMUM_NUMBER)).thenReturn(17L)
 
-        whenever(repo.add(isA(Paper::class.java))).thenReturn(paperMock2)
+        whenever(repo.add(any())).thenReturn(paperMock2)
         whenever(paperMock2.id).thenReturn(27L)
         whenever(paperMock2.pmId).thenReturn(pmIdValue)
 
@@ -239,7 +240,7 @@ internal class JooqPaperServiceTest : AbstractServiceTest<Long, Paper, PaperRepo
 
         verify(repo).findExistingPmIdsOutOf(listOf(pmIdValue))
         verify(repo).findLowestFreeNumberStartingFrom(MINIMUM_NUMBER)
-        verify(repo).add(isA(Paper::class.java))
+        verify(repo).add(any())
         verify(paperMock2).id
         verify(paperMock2).pmId
     }
@@ -286,14 +287,14 @@ internal class JooqPaperServiceTest : AbstractServiceTest<Long, Paper, PaperRepo
         assertThat(opt.isPresent).isTrue()
         assertThat(opt.get()).isEqualTo(entity)
 
-        verify<PaperRepository>(repo).findByNumbers(listOf(1L), LC)
+        verify(repo).findByNumbers(listOf(1L), LC)
         verify(userRepoMock).findById(CREATOR_ID)
         verify(userRepoMock).findById(MODIFIER_ID)
-        verify<Paper>(entity).createdBy
-        verify<Paper>(entity).lastModifiedBy
-        verify<Paper>(entity).createdByName = "creatingUser"
-        verify<Paper>(entity).createdByFullName = "creatingUserFullName"
-        verify<Paper>(entity).lastModifiedByName = "modifyingUser"
+        verify(entity).createdBy
+        verify(entity).lastModifiedBy
+        verify(entity).createdByName = "creatingUser"
+        verify(entity).createdByFullName = "creatingUserFullName"
+        verify(entity).lastModifiedByName = "modifyingUser"
     }
 
     @Test
@@ -332,7 +333,7 @@ internal class JooqPaperServiceTest : AbstractServiceTest<Long, Paper, PaperRepo
         val searchOrderId = 4L
         val paperId = 5L
         service.excludeFromSearchOrder(searchOrderId, paperId)
-        verify<PaperRepository>(repo).excludePaperFromSearchOrderResults(searchOrderId, paperId)
+        verify(repo).excludePaperFromSearchOrderResults(searchOrderId, paperId)
     }
 
     @Test
@@ -340,14 +341,14 @@ internal class JooqPaperServiceTest : AbstractServiceTest<Long, Paper, PaperRepo
         val searchOrderId = 4L
         val paperId = 5L
         service.reincludeIntoSearchOrder(searchOrderId, paperId)
-        verify<PaperRepository>(repo).reincludePaperIntoSearchOrderResults(searchOrderId, paperId)
+        verify(repo).reincludePaperIntoSearchOrderResults(searchOrderId, paperId)
     }
 
     @Test
     fun savingAttachment_delegatesToRepo() {
-        val paMock = mock(PaperAttachment::class.java)
+        val paMock = Mockito.mock(PaperAttachment::class.java)
         service.saveAttachment(paMock)
-        verify<PaperRepository>(repo).saveAttachment(paMock)
+        verify(repo).saveAttachment(paMock)
     }
 
     @Test
@@ -370,7 +371,7 @@ internal class JooqPaperServiceTest : AbstractServiceTest<Long, Paper, PaperRepo
     fun deletingByIds_delegatesToRepo() {
         val ids = listOf(5L, 7L, 9L)
         service.deletePapersWithIds(ids)
-        verify<PaperRepository>(repo).delete(ids)
+        verify(repo).delete(ids)
     }
 
     @Test
@@ -399,8 +400,9 @@ internal class JooqPaperServiceTest : AbstractServiceTest<Long, Paper, PaperRepo
         wipNewsletter.id = newsletterId
 
         val nl = Paper.NewsletterLink(1, "link", 2, 3, "topic", "headline")
-        whenever(newsletterRepoMock.newsletterInStatusWorkInProgress).thenReturn(Optional.of(wipNewsletter))
-        whenever(newsletterRepoMock.mergePaperIntoNewsletter(newsletterId, paperId, topicId, langCode)).thenReturn(Optional.of(nl))
+        whenever(newsletterRepoMock.newsletterInStatusWorkInProgress).thenReturn(java.util.Optional.of(wipNewsletter))
+        whenever(newsletterRepoMock.mergePaperIntoNewsletter(newsletterId, paperId, topicId, langCode))
+            .thenReturn(java.util.Optional.of(nl))
         val result = service.mergePaperIntoWipNewsletter(paperId, topicId, langCode)
         assertThat(result).isPresent
         assertThat(result.get()).isEqualTo(nl)
@@ -415,8 +417,9 @@ internal class JooqPaperServiceTest : AbstractServiceTest<Long, Paper, PaperRepo
         val topicId = 3
         val languageCode = "en"
 
-        whenever(newsletterRepoMock.newsletterInStatusWorkInProgress).thenReturn(Optional.empty())
-        assertThat(service.mergePaperIntoWipNewsletter(paperId, topicId, languageCode)).isEqualTo(Optional.empty<Any>())
+        whenever(newsletterRepoMock.newsletterInStatusWorkInProgress).thenReturn(java.util.Optional.empty())
+        assertThat(service.mergePaperIntoWipNewsletter(paperId, topicId, languageCode))
+            .isEqualTo(java.util.Optional.empty<Any>())
         verify(newsletterRepoMock).newsletterInStatusWorkInProgress
     }
 
@@ -436,8 +439,8 @@ internal class JooqPaperServiceTest : AbstractServiceTest<Long, Paper, PaperRepo
             fail<Any>("should have thrown exception")
         } catch (ex: Exception) {
             assertThat(ex)
-                    .isInstanceOf(IllegalArgumentException::class.java)
-                    .hasMessage("Field 'foo' is not supported by this validator.")
+                .isInstanceOf(IllegalArgumentException::class.java)
+                .hasMessage("Field 'foo' is not supported by this validator.")
         }
     }
 
@@ -446,7 +449,7 @@ internal class JooqPaperServiceTest : AbstractServiceTest<Long, Paper, PaperRepo
         val fieldName = "pmId"
         val fieldValue = 11
         val id = 1L
-        whenever(repo.isPmIdAlreadyAssigned(fieldValue, id)).thenReturn(Optional.empty())
+        whenever(repo.isPmIdAlreadyAssigned(fieldValue, id)).thenReturn(java.util.Optional.empty())
 
         assertThat(service.hasDuplicateFieldNextToCurrent(fieldName, fieldValue, id)).isNotPresent
 
@@ -458,7 +461,7 @@ internal class JooqPaperServiceTest : AbstractServiceTest<Long, Paper, PaperRepo
         val fieldName = "pmId"
         val fieldValue = 10
         val id = 1L
-        whenever(repo.isPmIdAlreadyAssigned(fieldValue, id)).thenReturn(Optional.of("2"))
+        whenever(repo.isPmIdAlreadyAssigned(fieldValue, id)).thenReturn(java.util.Optional.of("2"))
         assertThat(service.hasDuplicateFieldNextToCurrent(fieldName, fieldValue, id)).hasValue("2")
         verify(repo).isPmIdAlreadyAssigned(fieldValue, id)
     }
@@ -468,7 +471,7 @@ internal class JooqPaperServiceTest : AbstractServiceTest<Long, Paper, PaperRepo
         val fieldName = "doi"
         val fieldValue = "fw"
         val id = 1L
-        whenever(repo.isDoiAlreadyAssigned(fieldValue, id)).thenReturn(Optional.empty())
+        whenever(repo.isDoiAlreadyAssigned(fieldValue, id)).thenReturn(java.util.Optional.empty())
         assertThat(service.hasDuplicateFieldNextToCurrent(fieldName, fieldValue, id)).isNotPresent
         verify(repo).isDoiAlreadyAssigned(fieldValue, id)
     }
@@ -480,8 +483,8 @@ internal class JooqPaperServiceTest : AbstractServiceTest<Long, Paper, PaperRepo
 
         assertThat(service.hasDuplicateFieldNextToCurrent(fieldName, null, id)).isNotPresent
 
-        verify<PaperRepository>(repo, never()).isPmIdAlreadyAssigned(anyInt(), eq(id))
-        verify<PaperRepository>(repo, never()).isDoiAlreadyAssigned(anyString(), eq(id))
+        verify(repo, never()).isPmIdAlreadyAssigned(anyInt(), eq(id))
+        verify(repo, never()).isDoiAlreadyAssigned(anyString(), eq(id))
     }
 
     @Test
@@ -489,7 +492,7 @@ internal class JooqPaperServiceTest : AbstractServiceTest<Long, Paper, PaperRepo
         val fieldName = "pmId"
         val fieldValue = 10
 
-        whenever(repo.isPmIdAlreadyAssigned(fieldValue, null)).thenReturn(Optional.empty())
+        whenever(repo.isPmIdAlreadyAssigned(fieldValue, null)).thenReturn(java.util.Optional.empty())
 
         assertThat(service.hasDuplicateFieldNextToCurrent(fieldName, fieldValue, null)).isNotPresent
 
@@ -500,5 +503,4 @@ internal class JooqPaperServiceTest : AbstractServiceTest<Long, Paper, PaperRepo
         private const val MINIMUM_NUMBER = 7L
         private const val LC = "de"
     }
-
 }

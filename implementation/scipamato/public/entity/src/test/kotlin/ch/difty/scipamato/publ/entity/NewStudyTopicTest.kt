@@ -6,7 +6,6 @@ import nl.jqno.equalsverifier.EqualsVerifier
 import nl.jqno.equalsverifier.Warning
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import java.util.*
 
 internal class NewStudyTopicTest : PublicEntityTest<NewStudyTopic>() {
 
@@ -23,15 +22,16 @@ internal class NewStudyTopicTest : PublicEntityTest<NewStudyTopic>() {
 
     override fun verifyEquals() {
         EqualsVerifier.forClass(NewStudyTopic::class.java)
-                .withRedefinedSuperclass()
-                .withIgnoredFields(CREATED.fieldName, MODIFIED.fieldName)
-                .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
-                .verify()
+            .withRedefinedSuperclass()
+            .withIgnoredFields(CREATED.fieldName, MODIFIED.fieldName)
+            .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
+            .verify()
     }
 
     @Test
     fun assertEnumFields() {
-        assertThat(NewStudyTopic.NewStudyTopicFields.values().map { it.fieldName }).containsExactly("sort", "title", "studies")
+        assertThat(NewStudyTopic.NewStudyTopicFields.values().map { it.fieldName })
+            .containsExactly("sort", "title", "studies")
     }
 
     @Test
@@ -41,5 +41,4 @@ internal class NewStudyTopicTest : PublicEntityTest<NewStudyTopic>() {
         assertThat(t.title).isEqualTo("title2")
         assertThat(t.studies).isEmpty()
     }
-
 }

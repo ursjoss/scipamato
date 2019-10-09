@@ -12,15 +12,15 @@ internal class PublicNewsletterTest {
     @Test
     fun canSetGet() {
         val pn = PublicNewsletter
-                .builder()
-                .id(1)
-                .issue("i")
-                .issueDate(ISSUE_DATE)
-                .version(3)
-                .created(CREATED)
-                .lastModified(MODIFIED)
-                .lastSynched(SYNCHED)
-                .build()
+            .builder()
+            .id(1)
+            .issue("i")
+            .issueDate(ISSUE_DATE)
+            .version(3)
+            .created(CREATED)
+            .lastModified(MODIFIED)
+            .lastSynched(SYNCHED)
+            .build()
 
         assertThat(pn.id).isEqualTo(1)
         assertThat(pn.issue).isEqualTo("i")

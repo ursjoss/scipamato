@@ -20,7 +20,7 @@ private val log = logger()
 
 @JooqTest
 @Testcontainers
-@Suppress("SpellCheckingInspection", "FunctionName", "DuplicatedCode")
+@Suppress("TooManyFunctions", "SpellCheckingInspection", "FunctionName", "MagicNumber", "DuplicatedCode")
 internal open class JooqCodeRepoIntegrationTest {
 
     @Autowired
@@ -50,7 +50,7 @@ internal open class JooqCodeRepoIntegrationTest {
     @Test
     fun findingCodeDefinitions_withUnspecifiedFilter_findsAllDefinitions() {
         val cds = repo.findPageOfCodeDefinitions(CodeFilter(),
-                PaginationRequest(0, 10, Sort.Direction.ASC, "name"))
+            PaginationRequest(0, 10, Sort.Direction.ASC, "name"))
 
         assertThat(cds).hasSize(10)
 
@@ -80,7 +80,7 @@ internal open class JooqCodeRepoIntegrationTest {
         val filter = CodeFilter()
         filter.nameMask = "Experimentelle Studie unter Belastung / Arbeit"
         val kds = repo.findPageOfCodeDefinitions(filter,
-                PaginationRequest(Sort.Direction.ASC, "name"))
+            PaginationRequest(Sort.Direction.ASC, "name"))
 
         assertThat(kds).hasSize(1)
 
@@ -180,7 +180,7 @@ internal open class JooqCodeRepoIntegrationTest {
     }
 
     @Test
-    @Suppress("LocalVariableName")
+    @Suppress("LocalVariableName", "VariableNaming")
     fun savingNewRecord_savesRecordAndRefreshesId() {
         val ct_de = CodeTranslation(null, "de", "foo_de", "Kommentar", 0)
         val ct_en = CodeTranslation(null, "en", "foo1_en", null, 0)
@@ -233,6 +233,7 @@ internal open class JooqCodeRepoIntegrationTest {
         assertThat(repo.delete("ZZ", 1) == null).isTrue()
     }
 
+    @Suppress("TooGenericExceptionCaught")
     @Test
     fun deleting_withExistingId_butWrongVersion_throwsOptimisticLockingException() {
         try {
@@ -240,8 +241,8 @@ internal open class JooqCodeRepoIntegrationTest {
             fail<Any>("should have thrown exception")
         } catch (ex: Exception) {
             assertThat(ex)
-                    .isInstanceOf(OptimisticLockingException::class.java)
-                    .hasMessage("Record in table 'code' has been modified prior to the delete attempt. Aborting....")
+                .isInstanceOf(OptimisticLockingException::class.java)
+                .hasMessage("Record in table 'code' has been modified prior to the delete attempt. Aborting....")
         }
     }
 
@@ -270,7 +271,7 @@ internal open class JooqCodeRepoIntegrationTest {
 
     private fun assertSortedList(sortProperty: String, code: String) {
         val cds = repo.findPageOfCodeDefinitions(CodeFilter(),
-                PaginationRequest(0, 10, Sort.Direction.DESC, sortProperty))
+            PaginationRequest(0, 10, Sort.Direction.DESC, sortProperty))
 
         assertThat(cds).hasSize(10)
 
@@ -291,7 +292,7 @@ internal open class JooqCodeRepoIntegrationTest {
     @Test
     fun findingCodeDefinitions_sortedByInternal() {
         val cds = repo.findPageOfCodeDefinitions(CodeFilter(),
-                PaginationRequest(0, 10, Sort.Direction.DESC, "internal"))
+            PaginationRequest(0, 10, Sort.Direction.DESC, "internal"))
 
         assertThat(cds).hasSize(10)
 
@@ -310,7 +311,7 @@ internal open class JooqCodeRepoIntegrationTest {
 
     private fun assertFiltering(filter: CodeFilter, count: Int, code: String) {
         val cds = repo.findPageOfCodeDefinitions(filter,
-                PaginationRequest(0, 100, Sort.Direction.DESC, "sort"))
+            PaginationRequest(0, 100, Sort.Direction.DESC, "sort"))
 
         assertThat(cds).hasSize(count)
 
@@ -338,5 +339,4 @@ internal open class JooqCodeRepoIntegrationTest {
         filter.commentMask = "COPD"
         assertFiltering(filter, 1, "4F")
     }
-
 }

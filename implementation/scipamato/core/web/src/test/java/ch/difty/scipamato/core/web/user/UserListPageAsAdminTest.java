@@ -25,9 +25,10 @@ import ch.difty.scipamato.core.web.common.BasePageTest;
 @SuppressWarnings("SameParameterValue")
 class UserListPageAsAdminTest extends BasePageTest<UserListPage> {
 
-    private User enabledUser  = new User(1, "enabledUser", "first", "last", "foo@bar.baz", "pw", true,
+    private final User enabledUser  = new User(1, "enabledUser", "first", "last", "foo@bar.baz", "pw", true,
         Set.of(Role.ADMIN, Role.USER));
-    private User disabledUser = new User(2, "disabledUser", "f", "l", "boo@bar.baz", "pw2", false, Set.of(Role.VIEWER));
+    private final User disabledUser = new User(2, "disabledUser", "f", "l", "boo@bar.baz", "pw2", false,
+        Set.of(Role.VIEWER));
 
     private final List<User> results = new ArrayList<>();
 

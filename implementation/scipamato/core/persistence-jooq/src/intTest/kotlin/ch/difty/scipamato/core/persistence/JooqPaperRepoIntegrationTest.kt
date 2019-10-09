@@ -25,7 +25,7 @@ import org.testcontainers.junit.jupiter.Testcontainers
 
 @JooqTest
 @Testcontainers
-@Suppress("FunctionName", "SpellCheckingInspection")
+@Suppress("TooManyFunctions", "FunctionName", "MagicNumber", "SpellCheckingInspection")
 internal open class JooqPaperRepoIntegrationTest {
 
     @Autowired
@@ -69,8 +69,8 @@ internal open class JooqPaperRepoIntegrationTest {
 
         val saved = repo.add(p)
         assertThat(saved.id)
-                .isNotNull()
-                .isGreaterThan(MAX_ID_PREPOPULATED)
+            .isNotNull()
+            .isGreaterThan(MAX_ID_PREPOPULATED)
         assertThat(saved.authors).isEqualTo("a")
     }
 
@@ -90,8 +90,8 @@ internal open class JooqPaperRepoIntegrationTest {
     fun updatingRecord() {
         val paper = repo.add(makeMinimalPaper())
         assertThat(paper.id)
-                .isNotNull()
-                .isGreaterThan(MAX_ID_PREPOPULATED)
+            .isNotNull()
+            .isGreaterThan(MAX_ID_PREPOPULATED)
         val id = paper.id
         assertThat(paper.authors).isEqualTo("a")
 
@@ -109,19 +109,19 @@ internal open class JooqPaperRepoIntegrationTest {
     fun savingAssociatedEntitiesOf_withCodes() {
         val paper = repo.add(makeMinimalPaper())
         assertThat(paper.id)
-                .isNotNull()
-                .isGreaterThan(MAX_ID_PREPOPULATED)
+            .isNotNull()
+            .isGreaterThan(MAX_ID_PREPOPULATED)
         val id = paper.id
         assertThat(paper.authors).isEqualTo("a")
 
         val cr = dsl.selectFrom(Code.CODE).limit(1).fetchOne()
         val ccr = dsl
-                .selectFrom(CodeClass.CODE_CLASS)
-                .where(CodeClass.CODE_CLASS.ID.eq(cr.codeClassId))
-                .fetchOne()
+            .selectFrom(CodeClass.CODE_CLASS)
+            .where(CodeClass.CODE_CLASS.ID.eq(cr.codeClassId))
+            .fetchOne()
         val codeClass = ch.difty.scipamato.core.entity.CodeClass(ccr.id, "", "")
         val code = ch.difty.scipamato.core.entity.Code(cr.code, "", "", true,
-                codeClass.id, codeClass.name, codeClass.description, cr.sort, null, null, null, null, null)
+            codeClass.id, codeClass.name, codeClass.description, cr.sort, null, null, null, null, null)
         paper.addCode(code)
 
         repo.update(paper)
@@ -154,8 +154,8 @@ internal open class JooqPaperRepoIntegrationTest {
     fun deletingRecord() {
         val paper = repo.add(makeMinimalPaper())
         assertThat(paper.id)
-                .isNotNull()
-                .isGreaterThan(MAX_ID_PREPOPULATED)
+            .isNotNull()
+            .isGreaterThan(MAX_ID_PREPOPULATED)
         val id = paper.id
         assertThat(paper.authors).isEqualTo("a")
 
@@ -170,36 +170,47 @@ internal open class JooqPaperRepoIntegrationTest {
     fun findingById_forPaper1InGerman() {
         val paper = repo.findById(1L)
         assertThat(paper.toString()).isEqualTo(
-                PAPER1_WO_CODE_CLASSES
-                        + ",codes=["
-                        + "codesOfClass1=["
-                        + "Code[code=1F,name=Feinstaub, Partikel,comment=<null>,internal=false,codeClass=CodeClass[id=1],sort=1,createdBy=1,lastModifiedBy=1,created=2017-01-01T08:01:33.821,lastModified=2017-01-01T08:01:33.821,version=1]"
-                        + "],"
-                        + "codesOfClass2=["
-                        + "Code[code=2N,name=Übrige Länder,comment=<null>,internal=false,codeClass=CodeClass[id=2],sort=2,createdBy=1,lastModifiedBy=1,created=2017-01-01T08:01:33.821,lastModified=2017-01-01T08:01:33.821,version=1]"
-                        + "],"
-                        + "codesOfClass3=["
-                        + "Code[code=3C,name=Erwachsene (alle),comment=<null>,internal=false,codeClass=CodeClass[id=3],sort=3,createdBy=1,lastModifiedBy=1,created=2017-01-01T08:01:33.821,lastModified=2017-01-01T08:01:33.821,version=1]"
-                        + "],"
-                        + "codesOfClass4=["
-                        + "Code[code=4G,name=Krebs,comment=<null>,internal=false,codeClass=CodeClass[id=4],sort=7,createdBy=1,lastModifiedBy=1,created=2017-01-01T08:01:33.821,lastModified=2017-01-01T08:01:33.821,version=1]"
-                        + "],"
-                        + "codesOfClass5=["
-                        + "Code[code=5H,name=Kohortenstudie,comment=<null>,internal=false,codeClass=CodeClass[id=5],sort=7,createdBy=1,lastModifiedBy=1,created=2017-01-01T08:01:33.821,lastModified=2017-01-01T08:01:33.821,version=1], "
-                        + "Code[code=5S,name=Statistik,comment=<null>,internal=false,codeClass=CodeClass[id=5],sort=10,createdBy=1,lastModifiedBy=1,created=2017-01-01T08:01:33.821,lastModified=2017-01-01T08:01:33.821,version=1]"
-                        + "],"
-                        + "codesOfClass6=["
-                        + "Code[code=6M,name=Mensch,comment=<null>,internal=false,codeClass=CodeClass[id=6],sort=1,createdBy=1,lastModifiedBy=1,created=2017-01-01T08:01:33.821,lastModified=2017-01-01T08:01:33.821,version=1]"
-                        + "],"
-                        + "codesOfClass7="
-                        + "[Code[code=7L,name=Langfristig,comment=<null>,internal=false,codeClass=CodeClass[id=7],sort=2,createdBy=1,lastModifiedBy=1,created=2017-01-01T08:01:33.821,lastModified=2017-01-01T08:01:33.821,version=1]"
-                        + "],"
-                        + "codesOfClass8=["
-                        + "Code[code=8O,name=Aussenluft,comment=<null>,internal=false,codeClass=CodeClass[id=8],sort=2,createdBy=1,lastModifiedBy=1,created=2017-01-01T08:01:33.821,lastModified=2017-01-01T08:01:33.821,version=1]"
-                        + "]"
-                        + "]"
-                        + ID_PART
-                        + "]")
+            PAPER1_WO_CODE_CLASSES
+                + ",codes=["
+                + "codesOfClass1=["
+                + "Code[code=1F,name=Feinstaub, Partikel,comment=<null>,internal=false,codeClass=CodeClass[id=1],sort=1"
+                + ",createdBy=1,lastModifiedBy=1,created=2017-01-01T08:01:33.821,lastModified=2017-01-01T08:01:33.821"
+                + ",version=1]"
+                + "],"
+                + "codesOfClass2=["
+                + "Code[code=2N,name=Übrige Länder,comment=<null>,internal=false,codeClass=CodeClass[id=2],sort=2"
+                + ",createdBy=1,lastModifiedBy=1,created=2017-01-01T08:01:33.821,lastModified=2017-01-01T08:01:33.821"
+                + ",version=1]"
+                + "],"
+                + "codesOfClass3=["
+                + "Code[code=3C,name=Erwachsene (alle),comment=<null>,internal=false,codeClass=CodeClass[id=3],sort=3"
+                + ",createdBy=1,lastModifiedBy=1,created=2017-01-01T08:01:33.821,lastModified=2017-01-01T08:01:33.821,version=1]"
+                + "],"
+                + "codesOfClass4=["
+                + "Code[code=4G,name=Krebs,comment=<null>,internal=false,codeClass=CodeClass[id=4],sort=7,createdBy=1"
+                + ",lastModifiedBy=1,created=2017-01-01T08:01:33.821,lastModified=2017-01-01T08:01:33.821,version=1]"
+                + "],"
+                + "codesOfClass5=["
+                + "Code[code=5H,name=Kohortenstudie,comment=<null>,internal=false,codeClass=CodeClass[id=5],sort=7"
+                + ",createdBy=1,lastModifiedBy=1,created=2017-01-01T08:01:33.821,lastModified=2017-01-01T08:01:33.821,version=1], "
+                + "Code[code=5S,name=Statistik,comment=<null>,internal=false,codeClass=CodeClass[id=5],sort=10,createdBy=1"
+                + ",lastModifiedBy=1,created=2017-01-01T08:01:33.821,lastModified=2017-01-01T08:01:33.821,version=1]"
+                + "],"
+                + "codesOfClass6=["
+                + "Code[code=6M,name=Mensch,comment=<null>,internal=false,codeClass=CodeClass[id=6],sort=1,createdBy=1"
+                + ",lastModifiedBy=1,created=2017-01-01T08:01:33.821,lastModified=2017-01-01T08:01:33.821,version=1]"
+                + "],"
+                + "codesOfClass7="
+                + "[Code[code=7L,name=Langfristig,comment=<null>,internal=false,codeClass=CodeClass[id=7],sort=2,createdBy=1"
+                + ",lastModifiedBy=1,created=2017-01-01T08:01:33.821,lastModified=2017-01-01T08:01:33.821,version=1]"
+                + "],"
+                + "codesOfClass8=["
+                + "Code[code=8O,name=Aussenluft,comment=<null>,internal=false,codeClass=CodeClass[id=8],sort=2,createdBy=1"
+                + ",lastModifiedBy=1,created=2017-01-01T08:01:33.821,lastModified=2017-01-01T08:01:33.821,version=1]"
+                + "]"
+                + "]"
+                + ID_PART
+                + "]")
         // @formatter:on
     }
 
@@ -353,11 +364,11 @@ internal open class JooqPaperRepoIntegrationTest {
 
     private fun assertExclusionCount(searchOrderId: Long, paperId: Long, count: Int) {
         assertThat(dsl
-                .selectCount()
-                .from(SearchExclusion.SEARCH_EXCLUSION)
-                .where(SearchExclusion.SEARCH_EXCLUSION.SEARCH_ORDER_ID.eq(searchOrderId))
-                .and(SearchExclusion.SEARCH_EXCLUSION.PAPER_ID.eq(paperId))
-                .fetchOne(0, Int::class.javaPrimitiveType)).isEqualTo(count)
+            .selectCount()
+            .from(SearchExclusion.SEARCH_EXCLUSION)
+            .where(SearchExclusion.SEARCH_EXCLUSION.SEARCH_ORDER_ID.eq(searchOrderId))
+            .and(SearchExclusion.SEARCH_EXCLUSION.PAPER_ID.eq(paperId))
+            .fetchOne(0, Int::class.javaPrimitiveType)).isEqualTo(count)
     }
 
     @Test
@@ -406,10 +417,10 @@ internal open class JooqPaperRepoIntegrationTest {
 
         val p = repo.saveAttachment(pa)
         val saved = dsl
-                .select()
-                .from(PAPER_ATTACHMENT)
-                .where(PAPER_ATTACHMENT.PAPER_ID.eq(TEST_PAPER_ID))
-                .fetchOneInto(PaperAttachment::class.java)
+            .select()
+            .from(PAPER_ATTACHMENT)
+            .where(PAPER_ATTACHMENT.PAPER_ID.eq(TEST_PAPER_ID))
+            .fetchOneInto(PaperAttachment::class.java)
 
         assertThat(p.attachments.map { it.id }).contains(saved.id)
 
@@ -433,10 +444,10 @@ internal open class JooqPaperRepoIntegrationTest {
         repo.saveAttachment(pa2)
 
         val saved2 = dsl
-                .select()
-                .from(PAPER_ATTACHMENT)
-                .where(PAPER_ATTACHMENT.PAPER_ID.eq(TEST_PAPER_ID))
-                .fetchOneInto(PaperAttachment::class.java)
+            .select()
+            .from(PAPER_ATTACHMENT)
+            .where(PAPER_ATTACHMENT.PAPER_ID.eq(TEST_PAPER_ID))
+            .fetchOneInto(PaperAttachment::class.java)
 
         assertThat(saved2.name).isEqualTo(pa1.name)
         assertThat(saved2.version).isEqualTo(2)
@@ -450,10 +461,10 @@ internal open class JooqPaperRepoIntegrationTest {
         repo.saveAttachment(pa1)
 
         val id = dsl
-                .select(PAPER_ATTACHMENT.ID)
-                .from(PAPER_ATTACHMENT)
-                .where(PAPER_ATTACHMENT.PAPER_ID.eq(TEST_PAPER_ID))
-                .fetchOneInto(Int::class.java)
+            .select(PAPER_ATTACHMENT.ID)
+            .from(PAPER_ATTACHMENT)
+            .where(PAPER_ATTACHMENT.PAPER_ID.eq(TEST_PAPER_ID))
+            .fetchOneInto(Int::class.java)
         val attachment = repo.loadAttachmentWithContentBy(id)
         assertThat(attachment.content).isNotNull()
         assertThat(String(attachment.content)).isEqualTo(content1)
@@ -463,20 +474,20 @@ internal open class JooqPaperRepoIntegrationTest {
     fun deletingAttachment_deletes() {
         repo.saveAttachment(newPaperAttachment(TEST_FILE_1, "foo"))
         val id = dsl
-                .select(PAPER_ATTACHMENT.ID)
-                .from(PAPER_ATTACHMENT)
-                .where(PAPER_ATTACHMENT.PAPER_ID.eq(TEST_PAPER_ID))
-                .fetchOneInto(Int::class.java)
+            .select(PAPER_ATTACHMENT.ID)
+            .from(PAPER_ATTACHMENT)
+            .where(PAPER_ATTACHMENT.PAPER_ID.eq(TEST_PAPER_ID))
+            .fetchOneInto(Int::class.java)
         assertThat(id).isNotNull()
         val p = repo.deleteAttachment(id)
         assertThat(p.attachments)
-                .extracting("id")
-                .doesNotContain(id)
+            .extracting("id")
+            .doesNotContain(id)
         assertThat(dsl
-                .select(PAPER_ATTACHMENT.ID)
-                .from(PAPER_ATTACHMENT)
-                .where(PAPER_ATTACHMENT.PAPER_ID.eq(TEST_PAPER_ID))
-                .fetchOneInto(Int::class.java) == null).isTrue()
+            .select(PAPER_ATTACHMENT.ID)
+            .from(PAPER_ATTACHMENT)
+            .where(PAPER_ATTACHMENT.PAPER_ID.eq(TEST_PAPER_ID))
+            .fetchOneInto(Int::class.java) == null).isTrue()
     }
 
     /**
@@ -587,13 +598,13 @@ internal open class JooqPaperRepoIntegrationTest {
         private const val ID_PART = ",id=1,createdBy=1,lastModifiedBy=1,created=2016-12-14T14:47:29.431,lastModified=2016-12-14T14:47:29.431,version=1"
 
         private const val PAPER1_WO_CODE_CLASSES = (
-                "Paper[number=1,doi=10.1093/aje/kwu275,pmId=25395026"
-                        + ",authors=Turner MC, Cohen A, Jerrett M, Gapstur SM, Diver WR, Pope CA 3rd, Krewski D, Beckerman BS, Samet JM.,firstAuthor=Turner,firstAuthorOverridden=false"
-                        + ",title=Interactions Between Cigarette Smoking and Fine Particulate Matter in the Risk of Lung Cancer Mortality in Cancer Prevention Study II."
-                        + ",location=Am J Epidemiol. 2014; 180 (12): 1145-1149."
-                        + ",publicationYear=2014,goals=Neue Analyse der Daten der amerikanischen Krebspräventions-Kohertenstudie zur Untersuchung, wie gross das kombinierte Krebsrisiko durch Feinstaub ist."
-                        + ",population=429'406 Teilnehmer, Frauen und Männer aus 50 Staaten der USA, welche in den Jahren 1982/1983 im Alter von mindestens 30 Jahren für die Krebsvorsorgestudie der amerikanischen Kriegsgesellschaft (ACS) rekrutiert worden waren, in den Jahren 1984, 1986 und 1988 wieder kontaktiert worden waren, und seit 1989 mit dem nationalen Sterberegister auf ihr Überleben kontaktiert wurden. Nicht in diese Analyse einbezogen wurden Exrauchende und Pfeifen- oder Zigarrenraucher. USA.,populationPlace=,populationParticipants=,populationDuration=,exposurePollutant=,exposureAssessment=,methods=Da nur bis 1998 individuelle Informationen über das Rauchverhalten vorlagen, wurden nur die ersten 6 Studienjahre in diese Analyse einbzeogen. Die Abschätzung der Belastung mit Feinstaub wurde mit Landnutzungsmodellen für die geocodierten Adressen bei Studieneintritt vorgenommen, welche sich auf Monatsmittelwerte von PM2.5 der Jahre 1999-2004 von 1464 Messstationen abstützten, unter der Annahme, dass die Feinstaubbelastungen über die Jahre eng korreliert seien. Mit proportionalen Hazard-Modellen nach Cox, stratifiziert für Alter, Geschlecht und Rasse wurde das Überleben bzw. die Sterblichkeit an Lungenkrebs in den ersten 6 Jahren in Abhängigkeit der PM2.5-Belastung in verschiedenen Kategorien (über/unter der 50 Perzentile, über der 66. vs. unter der 33. Perzentile, sowie über der 75. vs. unter der 25. Perzentile) und in Abhängigkeit von Rauchen/nicht Rauchen modelliert. Einbezogen wurden folgende invidivuellen Faktoren: Schulbildung, Zivilstand, BMI, Passivrauchen, Ernährung, Alkoholkonsum und berufliche Belastung. Die Effektmodifikation bezüglich Lungenkrebsterblichkeit wurde mit drei Grössen untersucht: das relative zusätzliche Risiko durch die Interatkion (RERI), der der Interaktion anrechenbare Teil des Risikos (AP) und der Synergie-Index (SI). Lungenkrebs, Kohortenstudie, Statistik, epidemiologische Methoden. ACS-Studie. USA.,methodStudyDesign=,methodOutcome=,methodStatistics=,methodConfounders=,result=In 2'509'717 Personen-Jahren der Nachkontrolle ereigneten sich 1921 Todesfälle an Lungenkrebs. Die geschätzte Feinstaubbelastung lag im Durchschnitt bei 12.6 SD 2.85 µg PM2.5/m3, mit der 25. und 75. Perzentile bei 10.59 und 14.44 µg PM2.5/m3. Raucher hatten im Vergleich zu Nichtrauchern ein 13.5 fach erhöhtes Risiko (95%CI 10.2-17.9), an Lungenkrebs zu sterben, wenn ihre PM2.5-Belastung gering war, d.h. unter der 25. Perzentile lag. Nichtraucher hatten ein 1.28 faches Risiko (0.92-1.78), wenn ihre Belastung über der 75. Perzentile der PM2.5-Belastung lag, im Vergleich zu Nichtrauchern mit geringer Belastung. Raucher hatten ein 16 faches Risiko (12.1-21.1), an Lungenkrebs zu sterben, wenn ihre Feinstaubbelastung über der 75. Perzentile lag. Das zusätzliche relative Risiko durch die Interaktion (RERI) für die Kombination von Rauchen und schlechter Luft betrug 2.19 (-0.10;+4.83). Der Risikoanteil, der dem Kombinationseffekt angerechnet werden kann, betrug 14%, der Synergie-Index 1.17. Die Autoren schliessen daraus, dass die Folgen von Rauchen und Luftverschmutzung stärker zusammenwiren als nur additiv. Auch wenn die Lungenkrebfälle am stärksten durch einen Rückgang des Rauchens abnehmen, kann ein solcher Rückgang mit einer Verbesserung der Luftqualität stärker ausfallen als mit einer der beiden Massnahmen allein."
-                        + ",resultExposureRange=,resultEffectEstimate=,resultMeasuredOutcome=,conclusion=<null>,comment=Kommentar von Panagiotou AO, Wacholder S: How Big Is That Interaction (in My Community)-and I. Which Direction? Am. J. Epidemiol. 2014 180: 1150-1158."
-                        + ",intern=,originalAbstract=<null>,mainCodeOfCodeclass1=1F,newsletterLink=<null>,attachments=[]")
+            "Paper[number=1,doi=10.1093/aje/kwu275,pmId=25395026"
+                + ",authors=Turner MC, Cohen A, Jerrett M, Gapstur SM, Diver WR, Pope CA 3rd, Krewski D, Beckerman BS, Samet JM.,firstAuthor=Turner,firstAuthorOverridden=false"
+                + ",title=Interactions Between Cigarette Smoking and Fine Particulate Matter in the Risk of Lung Cancer Mortality in Cancer Prevention Study II."
+                + ",location=Am J Epidemiol. 2014; 180 (12): 1145-1149."
+                + ",publicationYear=2014,goals=Neue Analyse der Daten der amerikanischen Krebspräventions-Kohertenstudie zur Untersuchung, wie gross das kombinierte Krebsrisiko durch Feinstaub ist."
+                + ",population=429'406 Teilnehmer, Frauen und Männer aus 50 Staaten der USA, welche in den Jahren 1982/1983 im Alter von mindestens 30 Jahren für die Krebsvorsorgestudie der amerikanischen Kriegsgesellschaft (ACS) rekrutiert worden waren, in den Jahren 1984, 1986 und 1988 wieder kontaktiert worden waren, und seit 1989 mit dem nationalen Sterberegister auf ihr Überleben kontaktiert wurden. Nicht in diese Analyse einbezogen wurden Exrauchende und Pfeifen- oder Zigarrenraucher. USA.,populationPlace=,populationParticipants=,populationDuration=,exposurePollutant=,exposureAssessment=,methods=Da nur bis 1998 individuelle Informationen über das Rauchverhalten vorlagen, wurden nur die ersten 6 Studienjahre in diese Analyse einbzeogen. Die Abschätzung der Belastung mit Feinstaub wurde mit Landnutzungsmodellen für die geocodierten Adressen bei Studieneintritt vorgenommen, welche sich auf Monatsmittelwerte von PM2.5 der Jahre 1999-2004 von 1464 Messstationen abstützten, unter der Annahme, dass die Feinstaubbelastungen über die Jahre eng korreliert seien. Mit proportionalen Hazard-Modellen nach Cox, stratifiziert für Alter, Geschlecht und Rasse wurde das Überleben bzw. die Sterblichkeit an Lungenkrebs in den ersten 6 Jahren in Abhängigkeit der PM2.5-Belastung in verschiedenen Kategorien (über/unter der 50 Perzentile, über der 66. vs. unter der 33. Perzentile, sowie über der 75. vs. unter der 25. Perzentile) und in Abhängigkeit von Rauchen/nicht Rauchen modelliert. Einbezogen wurden folgende invidivuellen Faktoren: Schulbildung, Zivilstand, BMI, Passivrauchen, Ernährung, Alkoholkonsum und berufliche Belastung. Die Effektmodifikation bezüglich Lungenkrebsterblichkeit wurde mit drei Grössen untersucht: das relative zusätzliche Risiko durch die Interatkion (RERI), der der Interaktion anrechenbare Teil des Risikos (AP) und der Synergie-Index (SI). Lungenkrebs, Kohortenstudie, Statistik, epidemiologische Methoden. ACS-Studie. USA.,methodStudyDesign=,methodOutcome=,methodStatistics=,methodConfounders=,result=In 2'509'717 Personen-Jahren der Nachkontrolle ereigneten sich 1921 Todesfälle an Lungenkrebs. Die geschätzte Feinstaubbelastung lag im Durchschnitt bei 12.6 SD 2.85 µg PM2.5/m3, mit der 25. und 75. Perzentile bei 10.59 und 14.44 µg PM2.5/m3. Raucher hatten im Vergleich zu Nichtrauchern ein 13.5 fach erhöhtes Risiko (95%CI 10.2-17.9), an Lungenkrebs zu sterben, wenn ihre PM2.5-Belastung gering war, d.h. unter der 25. Perzentile lag. Nichtraucher hatten ein 1.28 faches Risiko (0.92-1.78), wenn ihre Belastung über der 75. Perzentile der PM2.5-Belastung lag, im Vergleich zu Nichtrauchern mit geringer Belastung. Raucher hatten ein 16 faches Risiko (12.1-21.1), an Lungenkrebs zu sterben, wenn ihre Feinstaubbelastung über der 75. Perzentile lag. Das zusätzliche relative Risiko durch die Interaktion (RERI) für die Kombination von Rauchen und schlechter Luft betrug 2.19 (-0.10;+4.83). Der Risikoanteil, der dem Kombinationseffekt angerechnet werden kann, betrug 14%, der Synergie-Index 1.17. Die Autoren schliessen daraus, dass die Folgen von Rauchen und Luftverschmutzung stärker zusammenwiren als nur additiv. Auch wenn die Lungenkrebfälle am stärksten durch einen Rückgang des Rauchens abnehmen, kann ein solcher Rückgang mit einer Verbesserung der Luftqualität stärker ausfallen als mit einer der beiden Massnahmen allein."
+                + ",resultExposureRange=,resultEffectEstimate=,resultMeasuredOutcome=,conclusion=<null>,comment=Kommentar von Panagiotou AO, Wacholder S: How Big Is That Interaction (in My Community)-and I. Which Direction? Am. J. Epidemiol. 2014 180: 1150-1158."
+                + ",intern=,originalAbstract=<null>,mainCodeOfCodeclass1=1F,newsletterLink=<null>,attachments=[]")
     }
 }

@@ -5,14 +5,16 @@ import com.nhaarman.mockitokotlin2.whenever
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito.*
+import org.mockito.Mockito.never
+import org.mockito.Mockito.verify
+import org.mockito.Mockito.verifyNoMoreInteractions
 
 internal class AbstractScipamatoPropertiesTest {
 
     private val scipamatoPropMock = mock<ScipamatoBaseProperties>()
     private val mavenPropMock = mock<MavenProperties>()
-
-    private val prop = object : AbstractScipamatoProperties<ScipamatoBaseProperties>(scipamatoPropMock, mavenPropMock) {}
+    private val prop =
+        object : AbstractScipamatoProperties<ScipamatoBaseProperties>(scipamatoPropMock, mavenPropMock) {}
 
     @AfterEach
     fun tearDown() {

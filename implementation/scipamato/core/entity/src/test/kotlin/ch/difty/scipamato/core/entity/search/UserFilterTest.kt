@@ -24,15 +24,15 @@ internal class UserFilterTest {
     @Test
     fun equals() {
         EqualsVerifier
-                .forClass(UserFilter::class.java)
-                .withRedefinedSuperclass()
-                .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
-                .verify()
+            .forClass(UserFilter::class.java)
+            .withRedefinedSuperclass()
+            .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
+            .verify()
     }
 
     @Test
     fun assertEnumFields() {
-        assertThat(UserFilter.UserFilterFields.values().map { it.fieldName }).containsExactly("nameMask", "emailMask", "enabled")
+        assertThat(UserFilter.UserFilterFields.values().map { it.fieldName })
+            .containsExactly("nameMask", "emailMask", "enabled")
     }
-
 }

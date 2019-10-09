@@ -3,9 +3,9 @@ package ch.difty.scipamato.core.persistence
 import ch.difty.scipamato.common.logger
 import ch.difty.scipamato.common.persistence.paging.PaginationRequest
 import ch.difty.scipamato.common.persistence.paging.Sort
-import ch.difty.scipamato.core.entity.code_class.CodeClassDefinition
-import ch.difty.scipamato.core.entity.code_class.CodeClassFilter
-import ch.difty.scipamato.core.entity.code_class.CodeClassTranslation
+import ch.difty.scipamato.core.entity.codeclass.CodeClassDefinition
+import ch.difty.scipamato.core.entity.codeclass.CodeClassFilter
+import ch.difty.scipamato.core.entity.codeclass.CodeClassTranslation
 import ch.difty.scipamato.core.persistence.codeclass.JooqCodeClassRepo
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.fail
@@ -18,7 +18,7 @@ private var log = logger()
 
 @JooqTest
 @Testcontainers
-@Suppress("FunctionName", "SpellCheckingInspection", "DuplicatedCode")
+@Suppress("TooManyFunctions", "FunctionName", "MagicNumber", "SpellCheckingInspection", "DuplicatedCode")
 internal open class JooqCodeClassRepoIntegrationTest {
 
     @Autowired
@@ -48,7 +48,7 @@ internal open class JooqCodeClassRepoIntegrationTest {
     @Test
     fun findingCodeClassDefinitions_withUnspecifiedFilter_findsAllDefinitions() {
         val ccds = repo.findPageOfCodeClassDefinitions(CodeClassFilter(),
-                PaginationRequest(0, 8, Sort.Direction.ASC, "name"))
+            PaginationRequest(0, 8, Sort.Direction.ASC, "name"))
 
         assertThat(ccds).hasSize(8)
 
@@ -68,7 +68,7 @@ internal open class JooqCodeClassRepoIntegrationTest {
     @Test
     fun findingCodeClassDefinitions_sortingByUndefinedField_doesNotSort() {
         val ccds = repo.findPageOfCodeClassDefinitions(CodeClassFilter(),
-                PaginationRequest(0, 8, Sort.Direction.ASC, "foobar"))
+            PaginationRequest(0, 8, Sort.Direction.ASC, "foobar"))
 
         assertThat(ccds).hasSize(8)
         assertThat(ccds[0].name).isEqualTo("Schadstoffe")
@@ -80,7 +80,7 @@ internal open class JooqCodeClassRepoIntegrationTest {
         val filter = CodeClassFilter()
         filter.descriptionMask = "en"
         val ccds = repo.findPageOfCodeClassDefinitions(filter,
-                PaginationRequest(0, 8, Sort.Direction.DESC, "translationsAsString"))
+            PaginationRequest(0, 8, Sort.Direction.DESC, "translationsAsString"))
 
         assertThat(ccds).hasSize(3)
 
@@ -92,7 +92,7 @@ internal open class JooqCodeClassRepoIntegrationTest {
         val filter = CodeClassFilter()
         filter.nameMask = "Zeitdauer"
         val ccds = repo.findPageOfCodeClassDefinitions(filter,
-                PaginationRequest(Sort.Direction.ASC, "name"))
+            PaginationRequest(Sort.Direction.ASC, "name"))
 
         assertThat(ccds).hasSize(1)
 
@@ -108,7 +108,7 @@ internal open class JooqCodeClassRepoIntegrationTest {
         val filter = CodeClassFilter()
         filter.nameMask = "Zeitdauer"
         val ccds = repo.findPageOfCodeClassDefinitions(filter,
-                PaginationRequest(Sort.Direction.DESC, "name"))
+            PaginationRequest(Sort.Direction.DESC, "name"))
 
         assertThat(ccds).hasSize(1)
 
@@ -187,7 +187,7 @@ internal open class JooqCodeClassRepoIntegrationTest {
     }
 
     @Test
-    @Suppress("LocalVariableName")
+    @Suppress("LocalVariableName", "VariableNaming")
     fun savingNewRecord_savesRecordAndRefreshesId() {
         val ct_de = CodeClassTranslation(null, "de", "foo_de", "Kommentar", 0)
         val ct_en = CodeClassTranslation(null, "en", "foo1_en", null, 0)
@@ -236,6 +236,7 @@ internal open class JooqCodeClassRepoIntegrationTest {
         assertThat(repo.delete(-1, 1) == null).isTrue()
     }
 
+    @Suppress("TooGenericExceptionCaught")
     @Test
     fun deleting_withExistingId_butWrongVersion_throwsOptimisticLockingException() {
         try {
@@ -243,10 +244,9 @@ internal open class JooqCodeClassRepoIntegrationTest {
             fail<Any>("should have thrown exception")
         } catch (ex: Exception) {
             assertThat(ex)
-                    .isInstanceOf(OptimisticLockingException::class.java)
-                    .hasMessage("Record in table 'code_class' has been modified prior to the delete attempt. Aborting....")
+                .isInstanceOf(OptimisticLockingException::class.java)
+                .hasMessage("Record in table 'code_class' has been modified prior to the delete attempt. Aborting....")
         }
-
     }
 
     @Test
@@ -269,5 +269,4 @@ internal open class JooqCodeClassRepoIntegrationTest {
     companion object {
         private const val CODE_CLASS_COUNT = 8
     }
-
 }

@@ -13,8 +13,9 @@ import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields;
 
 class PaperReviewTest extends JasperEntityTest {
 
-    private PaperReview        pr;
-    private ReportHeaderFields rhf = newReportHeaderFields();
+    private final ReportHeaderFields rhf = newReportHeaderFields();
+
+    private PaperReview pr;
 
     private ReportHeaderFields newReportHeaderFields() {
         return ReportHeaderFields

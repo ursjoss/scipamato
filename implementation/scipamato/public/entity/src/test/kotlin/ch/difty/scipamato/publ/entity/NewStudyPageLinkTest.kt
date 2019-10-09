@@ -23,14 +23,15 @@ internal class NewStudyPageLinkTest : PublicEntityTest<NewStudyPageLink>() {
 
     override fun verifyEquals() {
         EqualsVerifier.forClass(NewStudy::class.java)
-                .withRedefinedSuperclass()
-                .withIgnoredFields(CREATED.fieldName, MODIFIED.fieldName)
-                .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
-                .verify()
+            .withRedefinedSuperclass()
+            .withIgnoredFields(CREATED.fieldName, MODIFIED.fieldName)
+            .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
+            .verify()
     }
 
     @Test
     fun assertEnumFields() {
-        assertThat(NewStudyPageLink.NewStudyPageLinkFields.values().map { it.fieldName }).containsExactly("langCode", "sort", "title", "url")
+        assertThat(NewStudyPageLink.NewStudyPageLinkFields.values().map { it.fieldName })
+            .containsExactly("langCode", "sort", "title", "url")
     }
 }

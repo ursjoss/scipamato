@@ -45,10 +45,10 @@ interface DefinitionTranslation : Serializable {
  */
 // TODO directly implement as data classes
 abstract class AbstractDefinitionEntity<T : DefinitionTranslation, ID>(
-        val mainLanguageCode: String,
-        mainName: String,
-        version: Int? = 0, // TODO make non-nullable
-        translationArray: Array<out T>
+    val mainLanguageCode: String,
+    mainName: String,
+    version: Int? = 0, // TODO make non-nullable
+    translationArray: Array<out T>
 ) : ScipamatoEntity(version = version ?: 0), DefinitionEntity<ID, T> {
 
     override val translations: ListValuedMap<String, T> = ArrayListValuedHashMap()
@@ -120,16 +120,16 @@ abstract class AbstractDefinitionEntity<T : DefinitionTranslation, ID>(
     }
 
     override fun toString() =
-            "AbstractDefinitionEntity[translations=$translationsAsString, mainLanguageCode=$mainLanguageCode, name=$name]"
+        "AbstractDefinitionEntity[translations=$translationsAsString, mainLanguageCode=$mainLanguageCode, name=$name]"
 
 }
 
 // TODO directly implement as data classes
 abstract class AbstractDefinitionTranslation(
-        var id: Int?,
-        override val langCode: String,
-        override var name: String?,
-        version: Int? = 0 // TODO make non-nullable
+    var id: Int?,
+    override val langCode: String,
+    override var name: String?,
+    version: Int? = 0 // TODO make non-nullable
 ) : ScipamatoEntity(version = version ?: 0), DefinitionTranslation {
 
     override val displayValue: String

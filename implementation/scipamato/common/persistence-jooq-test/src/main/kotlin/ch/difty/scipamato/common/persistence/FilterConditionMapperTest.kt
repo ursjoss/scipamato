@@ -22,7 +22,7 @@ abstract class FilterConditionMapperTest<R : Record, TI : TableImpl<R>, F : Scip
         if (withMultipleFields) sb.append("(").append("\n  ")
         fieldNames.forEach { fieldName ->
             sb.append("lower(\"public\".\"").append(table.name).append("\".\"").append(fieldName)
-                    .append("\") like lower('%").append(pattern).append("%')")
+                .append("\") like lower('%").append(pattern).append("%')")
             if (withMultipleFields) sb.append("\n")
             if (fields-- > 1) sb.append("  or ")
         }
@@ -39,5 +39,4 @@ abstract class FilterConditionMapperTest<R : Record, TI : TableImpl<R>, F : Scip
     internal fun creatingWhereCondition_withNoFilterConditions_returnsNoOpCondition() {
         assertThat(mapper.map(filter).toString()).isEqualTo("1 = 1")
     }
-
 }

@@ -12,7 +12,6 @@ internal class ScipamatoItemWriterTest {
 
     private val dslContext = mock<DSLContext>()
 
-
     private val p1 = PublicPaper.builder().pmId(1).build()
     private val p2 = PublicPaper.builder().pmId(10).build()
 
@@ -24,7 +23,6 @@ internal class ScipamatoItemWriterTest {
             return pp.pmId
         }
     }
-
 
     @Test
     fun writingOnePaper() {

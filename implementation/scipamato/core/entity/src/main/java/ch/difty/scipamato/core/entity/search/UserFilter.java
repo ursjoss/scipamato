@@ -1,5 +1,6 @@
 package ch.difty.scipamato.core.entity.search;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 import lombok.Data;
@@ -29,6 +30,7 @@ public class UserFilter extends ScipamatoFilter implements Serializable {
             this.name = name;
         }
 
+        @NotNull
         @Override
         public String getFieldName() {
             return name;

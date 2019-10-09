@@ -1,4 +1,6 @@
-package ch.difty.scipamato.core.entity.code_class;
+package ch.difty.scipamato.core.entity.codeclass;
+
+import javax.validation.constraints.NotNull;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -25,6 +27,7 @@ public class CodeClassFilter extends ScipamatoFilter {
             this.name = name;
         }
 
+        @NotNull
         @Override
         public String getFieldName() {
             return name;

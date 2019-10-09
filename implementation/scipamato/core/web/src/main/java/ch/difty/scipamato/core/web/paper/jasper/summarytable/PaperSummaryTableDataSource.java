@@ -27,7 +27,7 @@ public class PaperSummaryTableDataSource extends JasperPaperDataSource<PaperSumm
 
     private static final String FILE_NAME = "paper_summary_table";
 
-    private ReportHeaderFields reportHeaderFields;
+    private final ReportHeaderFields reportHeaderFields;
 
     /**
      * Using the dataProvider for the Result Panel as record source. Needs the

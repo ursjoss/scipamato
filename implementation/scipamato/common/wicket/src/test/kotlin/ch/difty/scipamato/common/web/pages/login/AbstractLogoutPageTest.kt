@@ -58,5 +58,4 @@ internal class AbstractLogoutPageTest : WicketBaseTest() {
 
         tester.assertNoErrorMessage()
     }
-
 }

@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package com.gmail.gcolaianni5.jris
 
 import java.io.*
@@ -239,7 +241,7 @@ object JRis {
 fun parse(reader: Reader): List<RisRecord> = JRis.parse(BufferedReader(reader).readLines().asSequence())
 
 @Throws(IOException::class, JRisException::class)
-fun parse(file: File): List<RisRecord> = parse(file.bufferedReader());
+fun parse(file: File): List<RisRecord> = parse(file.bufferedReader())
 
 @Throws(IOException::class, JRisException::class)
 fun parse(filePath: String): List<RisRecord> = parse(File(filePath).bufferedReader())

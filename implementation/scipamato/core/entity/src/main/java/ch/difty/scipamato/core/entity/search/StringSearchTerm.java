@@ -176,9 +176,6 @@ public class StringSearchTerm extends AbstractSearchTerm {
         private String sqlize(final String data) {
             final StringBuilder sb = new StringBuilder();
             switch (type.matchType) {
-            case REGEX:
-                sb.append(data);
-                break;
             case LIKE:
                 if (type.wcLeft)
                     sb.append(RE_WC);
@@ -186,6 +183,7 @@ public class StringSearchTerm extends AbstractSearchTerm {
                 if (type.wcRight)
                     sb.append(RE_WC);
                 break;
+            case REGEX:
             default:
                 sb.append(data);
             }

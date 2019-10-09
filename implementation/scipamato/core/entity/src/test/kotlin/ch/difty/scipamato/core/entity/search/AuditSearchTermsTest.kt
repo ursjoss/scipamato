@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test
 private const val KEY = "key"
 private const val VALUE = "value"
 
-
 internal class AuditSearchTermsTest {
 
     private val st1 = AuditSearchTerms()
@@ -51,7 +50,12 @@ internal class AuditSearchTermsTest {
     }
 
     @Suppress("SameParameterValue")
-    private fun assertInequalityBetween(st1: AuditSearchTerms, st2: AuditSearchTerms, hashValue1: Int, hashValue2: Int) {
+    private fun assertInequalityBetween(
+        st1: AuditSearchTerms,
+        st2: AuditSearchTerms,
+        hashValue1: Int,
+        hashValue2: Int
+    ) {
         assertThat(st1 == st2).isFalse()
         assertThat(st2 == st1).isFalse()
         assertThat(st1.hashCode()).isNotEqualTo(st2.hashCode())

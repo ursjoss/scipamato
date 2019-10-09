@@ -7,7 +7,7 @@ import com.nhaarman.mockitokotlin2.whenever
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-@Suppress("FunctionName")
+@Suppress("FunctionName", "TooManyFunctions", "MagicNumber")
 internal class IntegerSearchTermEvaluatorTest {
 
     private val evaluator = IntegerSearchTermEvaluator()
@@ -98,5 +98,4 @@ internal class IntegerSearchTermEvaluatorTest {
         val c = evaluator.evaluate(stMock)
         assertThat(c.toString()).isEqualTo("paper.id > 10")
     }
-
 }

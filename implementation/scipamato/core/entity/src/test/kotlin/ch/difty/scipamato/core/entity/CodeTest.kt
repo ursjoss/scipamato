@@ -12,7 +12,10 @@ internal class CodeTest : Jsr303ValidatedEntityTest<Code>(Code::class.java) {
         return Code("1A", CODE1, null, false, 1, "c1", "", 1, CREATED, 10, LAST_MOD, 20, 3)
     }
 
-    override val toString = "Code[code=1A,name=code1,comment=<null>,internal=false,codeClass=CodeClass[id=1],sort=1,createdBy=10,lastModifiedBy=20,created=2017-01-01T08:01:33.821,lastModified=2017-02-02T08:01:33.821,version=3]"
+    override val toString =
+        """Code[code=1A,name=code1,comment=<null>,internal=false,codeClass=CodeClass[id=1],sort=1,
+            |createdBy=10,lastModifiedBy=20,created=2017-01-01T08:01:33.821,
+            |lastModified=2017-02-02T08:01:33.821,version=3]""".trimMargin()
     override val displayValue = "code1 (1A)"
 
     @Test
@@ -20,16 +23,15 @@ internal class CodeTest : Jsr303ValidatedEntityTest<Code>(Code::class.java) {
         val c1 = Code("C1", "c1", null, false, 10, "cc10", CODECLASS10, 2)
         assertThat(c1.codeClass).isNotNull
         assertThat(c1
-                .codeClass
-                .id).isEqualTo(10)
+            .codeClass
+            .id).isEqualTo(10)
         assertThat(c1
-                .codeClass
-                .name).isEqualTo("cc10")
+            .codeClass
+            .name).isEqualTo("cc10")
         assertThat(c1
-                .codeClass
-                .description).isEqualTo(CODECLASS10)
+            .codeClass
+            .description).isEqualTo(CODECLASS10)
     }
-
 
     @Test
     fun validatingCode_withNullName_fails() {
@@ -173,7 +175,8 @@ internal class CodeTest : Jsr303ValidatedEntityTest<Code>(Code::class.java) {
     }
 
     companion object {
-        private const val JAVAX_VALIDATION_CONSTRAINTS_NOT_NULL_MESSAGE = "{javax.validation.constraints.NotNull.message}"
+        private const val JAVAX_VALIDATION_CONSTRAINTS_NOT_NULL_MESSAGE =
+            "{javax.validation.constraints.NotNull.message}"
 
         private const val CODE1 = "code1"
         private const val CODECLASS10 = "codeclass10"
@@ -181,5 +184,4 @@ internal class CodeTest : Jsr303ValidatedEntityTest<Code>(Code::class.java) {
         private val CREATED = LocalDateTime.parse("2017-01-01T08:01:33.821")
         private val LAST_MOD = LocalDateTime.parse("2017-02-02T08:01:33.821")
     }
-
 }

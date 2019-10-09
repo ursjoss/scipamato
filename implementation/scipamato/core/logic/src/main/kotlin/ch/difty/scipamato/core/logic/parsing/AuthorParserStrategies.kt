@@ -23,7 +23,7 @@ enum class AuthorParserStrategy {
          * Accepts a [propertyKey] for logging purposes
          */
         fun fromProperty(propertyValue: String, propertyKey: String): AuthorParserStrategy =
-                propertyValue.asProperty(STRATEGIES, PUBMED, propertyKey)
+            propertyValue.asProperty(STRATEGIES, PUBMED, propertyKey)
     }
 }
 

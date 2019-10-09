@@ -10,11 +10,10 @@ import org.assertj.core.api.Assertions.fail
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.autoconfigure.jooq.JooqTest
 import org.testcontainers.junit.jupiter.Testcontainers
-import java.util.*
 
 @JooqTest
 @Testcontainers
-@Suppress("FunctionName")
+@Suppress("TooManyFunctions", "FunctionName")
 internal open class AuditSearchTermEvaluatorTest {
 
     private val e = AuditSearchTermEvaluator()
@@ -62,7 +61,9 @@ internal open class AuditSearchTermEvaluatorTest {
     @Test
     fun buildingConditionForDateRange_applies() {
         expectToken(TokenType.RANGEQUOTED, "2017-01-11 10:00:00-2017-01-12 15:14:13", "paper.created")
-        assertThat(e.evaluate(stMock).toString()).isEqualTo("paper.created between timestamp '2017-01-11 10:00:00.0' and timestamp '2017-01-12 15:14:13.0'")
+        assertThat(e.evaluate(stMock).toString()).isEqualTo(
+            "paper.created between timestamp '2017-01-11 10:00:00.0' and timestamp '2017-01-12 15:14:13.0'"
+        )
     }
 
     @Test
@@ -81,7 +82,7 @@ internal open class AuditSearchTermEvaluatorTest {
     fun buildingConditionForWord_appliesContains() {
         expectToken(TokenType.WORD, "foo", "paper.created_by")
         assertThat(e.evaluate(stMock).toString()).isEqualToIgnoringCase(
-                """"public"."paper"."id" in (
+            """"public"."paper"."id" in (
                    |  select "public"."paper"."id"
                    |  from "public"."paper"
                    |    join "public"."scipamato_user"
@@ -95,7 +96,7 @@ internal open class AuditSearchTermEvaluatorTest {
     fun buildingConditionForWord_appliesContains2() {
         expectToken(TokenType.WORD, "foo", "paper.last_modified_by")
         assertThat(e.evaluate(stMock).toString()).isEqualToIgnoringCase(
-                """"public"."paper"."id" in (
+            """"public"."paper"."id" in (
                   |  select "public"."paper"."id"
                   |  from "public"."paper"
                   |    join "public"."scipamato_user"
@@ -108,13 +109,17 @@ internal open class AuditSearchTermEvaluatorTest {
     @Test
     fun buildingConditionForGreaterOrEquals() {
         expectToken(TokenType.GREATEROREQUAL, "2019-01-05", "paper.created")
-        assertThat(e.evaluate(stMock).toString()).isEqualToIgnoringCase("paper.created >= timestamp '2019-01-05 00:00:00.0'")
+        assertThat(e.evaluate(stMock).toString()).isEqualToIgnoringCase(
+            "paper.created >= timestamp '2019-01-05 00:00:00.0'"
+        )
     }
 
     @Test
     fun buildingConditionForGreaterOrEquals2() {
         expectToken(TokenType.GREATEROREQUAL, "2019-01-05", "paper.last_modified")
-        assertThat(e.evaluate(stMock).toString()).isEqualToIgnoringCase("paper.last_modified >= timestamp '2019-01-05 00:00:00.0'")
+        assertThat(e.evaluate(stMock).toString()).isEqualToIgnoringCase(
+            "paper.last_modified >= timestamp '2019-01-05 00:00:00.0'"
+        )
     }
 
     @Test
@@ -126,27 +131,34 @@ internal open class AuditSearchTermEvaluatorTest {
     @Test
     fun buildingConditionForWrongField_withExactMatch_throws() {
         expectToken(TokenType.EXACT, "foo", "bar")
-        validateDegenerateField("Field bar is not one of the expected date fields [paper.created, paper.last_modified] entitled to use MatchType.EQUALS")
+        validateDegenerateField(
+            "Field bar is not one of the expected date fields [paper.created, " +
+                "paper.last_modified] entitled to use MatchType.EQUALS"
+        )
     }
 
     @Test
     fun buildingConditionForWrongField_withContainedMatch_throws() {
         expectToken(TokenType.WORD, "foo", "baz")
-        validateDegenerateField("Field baz is not one of the expected user fields [paper.created_by, paper.last_modified_by] entitled to use MatchType.CONTAINS")
+        validateDegenerateField(
+            "Field baz is not one of the expected user fields [paper.created_by, " +
+                "paper.last_modified_by] entitled to use MatchType.CONTAINS"
+        )
     }
 
+    @Suppress("TooGenericExceptionCaught")
     private fun validateDegenerateField(msg: String) {
         try {
             e.evaluate(stMock)
             fail<Any>("should have thrown exception")
         } catch (ex: Exception) {
             assertThat(ex)
-                    .isInstanceOf(IllegalArgumentException::class.java)
-                    .hasMessage(msg)
+                .isInstanceOf(IllegalArgumentException::class.java)
+                .hasMessage(msg)
         }
-
     }
 
+    @Suppress("TooGenericExceptionCaught")
     @Test
     fun buildingConditionForWord_withNonUserField_throws() {
         expectToken(TokenType.WORD, "foo", "firstAuthor")
@@ -155,10 +167,11 @@ internal open class AuditSearchTermEvaluatorTest {
             fail<Any>("should have thrown exception")
         } catch (ex: Exception) {
             assertThat(ex)
-                    .isInstanceOf(IllegalArgumentException::class.java)
-                    .hasMessage(
-                            "Field firstAuthor is not one of the expected user fields [paper.created_by, paper.last_modified_by] entitled to use MatchType.CONTAINS")
+                .isInstanceOf(IllegalArgumentException::class.java)
+                .hasMessage(
+                    "Field firstAuthor is not one of the expected user fields [paper.created_by, " +
+                        "paper.last_modified_by] entitled to use MatchType.CONTAINS"
+                )
         }
-
     }
 }

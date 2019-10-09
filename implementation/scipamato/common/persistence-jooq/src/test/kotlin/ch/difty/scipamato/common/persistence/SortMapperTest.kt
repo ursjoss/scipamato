@@ -4,9 +4,7 @@ import ch.difty.scipamato.common.entity.ScipamatoEntity
 import ch.difty.scipamato.common.persistence.paging.Sort
 import ch.difty.scipamato.common.persistence.paging.Sort.Direction
 import ch.difty.scipamato.common.persistence.paging.Sort.SortProperty
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.spy
-import com.nhaarman.mockitokotlin2.whenever
+import com.nhaarman.mockitokotlin2.*
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.fail
 import org.jooq.Record
@@ -15,9 +13,7 @@ import org.jooq.TableField
 import org.jooq.impl.TableImpl
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito.*
 import org.springframework.dao.InvalidDataAccessApiUsageException
-import java.util.*
 
 internal class SortMapperTest {
 
@@ -38,16 +34,16 @@ internal class SortMapperTest {
     @Test
     fun mapping_withNullSortSpecification_returnsEmptyList() {
         assertThat(mapperSpy.map(null, tableMock))
-                .isNotNull
-                .isEmpty()
+            .isNotNull
+            .isEmpty()
     }
 
     @Test
     fun mapping_withEmptySortProperties_returnsEmptyList() {
         whenever(sortSpecMock.iterator()).thenReturn(sortProps.iterator())
         assertThat(mapperSpy.map(sortSpecMock, tableMock))
-                .isNotNull
-                .isEmpty()
+            .isNotNull
+            .isEmpty()
         verify(sortSpecMock).iterator()
     }
 
@@ -94,13 +90,14 @@ internal class SortMapperTest {
             fail<Any>("should have thrown")
         } catch (ex: Exception) {
             assertThat(ex)
-                    .isInstanceOf(InvalidDataAccessApiUsageException::class.java)
-                    .hasMessage(
-                            "Could not find table field: inexistentField; nested exception is java.lang.NoSuchFieldException")
+                .isInstanceOf(InvalidDataAccessApiUsageException::class.java)
+                .hasMessage(
+                    "Could not find table field: inexistentField; nested exception is java.lang.NoSuchFieldException"
+                )
         }
 
         verify(sortSpecMock).iterator()
-        verify<SortMapper<Record, ScipamatoEntity, TableImpl<Record>>>(mapperSpy).getTableFieldFor(tableMock, "INEXISTENT_FIELD")
+        verify(mapperSpy).getTableFieldFor(tableMock, "INEXISTENT_FIELD")
     }
 
     @Test
@@ -114,13 +111,13 @@ internal class SortMapperTest {
             fail<Any>("should have thrown")
         } catch (ex: Exception) {
             assertThat(ex)
-                    .isInstanceOf(InvalidDataAccessApiUsageException::class.java)
-                    .hasMessage(
-                            "Could not find table field: illegalField; nested exception is java.lang.IllegalAccessException")
+                .isInstanceOf(InvalidDataAccessApiUsageException::class.java)
+                .hasMessage(
+                    "Could not find table field: illegalField; nested exception is java.lang.IllegalAccessException")
         }
 
         verify(sortSpecMock).iterator()
-        verify<SortMapper<Record, ScipamatoEntity, TableImpl<Record>>>(mapperSpy).getTableFieldFor(tableMock, "ILLEGAL_FIELD")
+        verify(mapperSpy).getTableFieldFor(tableMock, "ILLEGAL_FIELD")
     }
 
     @Test
@@ -137,5 +134,4 @@ internal class SortMapperTest {
 
         verify(sortSpecMock).iterator()
     }
-
 }

@@ -20,21 +20,24 @@ internal class NewsletterFilterTest {
         assertThat(f.publicationStatus).isEqualTo(PublicationStatus.CANCELLED)
         assertThat(f.newsletterTopic.id).isEqualTo(1)
 
-        assertThat(f.toString()).isEqualTo("NewsletterFilter(issueMask=issueMask, publicationStatus=CANCELLED, newsletterTopic=NewsletterTopic(title=foo))")
+        assertThat(f.toString()).isEqualTo(
+            "NewsletterFilter(issueMask=issueMask, publicationStatus=CANCELLED," +
+                " newsletterTopic=NewsletterTopic(title=foo))"
+        )
     }
 
     @Test
     fun equals() {
         EqualsVerifier
-                .forClass(NewsletterFilter::class.java)
-                .withRedefinedSuperclass()
-                .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
-                .verify()
+            .forClass(NewsletterFilter::class.java)
+            .withRedefinedSuperclass()
+            .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
+            .verify()
     }
 
     @Test
     fun assertEnumFields() {
-        assertThat(NewsletterFilter.NewsletterFilterFields.values().map { it.fieldName }).containsExactly("issueMask", "publicationStatus", "newsletterTopic")
+        assertThat(NewsletterFilter.NewsletterFilterFields.values().map { it.fieldName })
+            .containsExactly("issueMask", "publicationStatus", "newsletterTopic")
     }
-
 }

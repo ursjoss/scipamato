@@ -26,6 +26,7 @@ public abstract class ModelTest extends AbstractWicketTest {
      */
     @SuppressWarnings("WeakerAccess")
     protected void setUpLocal() {
+        // override if necessary
     }
 
 }

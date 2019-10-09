@@ -1,7 +1,6 @@
 package ch.difty.scipamato.core.web.paper.common;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.*;
 
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;

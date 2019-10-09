@@ -9,13 +9,13 @@ internal class PublicNewStudyPageLinkTest {
     @Test
     fun canSetGet_withStandardFieldsPopulated() {
         val pp = PublicNewStudyPageLink
-                .builder()
-                .langCode("en")
-                .sort(1)
-                .title("title")
-                .url("url")
-                .lastSynched(SYNCHED)
-                .build()
+            .builder()
+            .langCode("en")
+            .sort(1)
+            .title("title")
+            .url("url")
+            .lastSynched(SYNCHED)
+            .build()
 
         assertThat(pp.langCode).isEqualTo("en")
         assertThat(pp.sort).isEqualTo(1)

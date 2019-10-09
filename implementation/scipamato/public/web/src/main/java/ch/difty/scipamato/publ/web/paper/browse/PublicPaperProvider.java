@@ -25,7 +25,7 @@ import ch.difty.scipamato.publ.persistence.api.PublicPaperService;
  *
  * @author u.joss
  */
-public class PublicPaperProvider extends SortableDataProvider<PublicPaper, String>
+class PublicPaperProvider extends SortableDataProvider<PublicPaper, String>
     implements ISortableDataProvider<PublicPaper, String>, IFilterStateLocator<PublicPaperFilter> {
 
     private static final long serialVersionUID = 1L;

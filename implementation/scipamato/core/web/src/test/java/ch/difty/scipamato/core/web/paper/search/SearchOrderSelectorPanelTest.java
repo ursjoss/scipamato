@@ -2,7 +2,6 @@ package ch.difty.scipamato.core.web.paper.search;
 
 import static ch.difty.scipamato.core.entity.search.SearchOrder.SearchOrderFields.*;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
@@ -29,6 +28,7 @@ import ch.difty.scipamato.core.entity.search.SearchOrder;
 import ch.difty.scipamato.core.entity.search.SearchOrderFilter;
 import ch.difty.scipamato.core.web.common.PanelTest;
 
+@SuppressWarnings("ResultOfMethodCallIgnored")
 abstract class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorPanel> {
 
     private static final long   ID         = 17L;

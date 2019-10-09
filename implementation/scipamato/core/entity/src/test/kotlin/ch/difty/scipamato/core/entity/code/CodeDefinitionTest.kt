@@ -51,13 +51,15 @@ internal class CodeDefinitionTest {
     @Test
     fun canGetTranslationsAsString_withTranslationsIncludingMainTranslation_withPartialTranslation() {
         val code = CodeDefinition("1A", "de", codeClass, 1, false, 1, c_de, c_en,
-                CodeTranslation(12, "fr", null, "remarc", 1))
+            CodeTranslation(12, "fr", null, "remarc", 1))
         assertThat(code.translationsAsString).isEqualTo("DE: 'codede2'; EN: 'codeen2'; FR: n.a.")
     }
 
     @Test
-    fun modifyTranslation_withMainLanguageTranslationModified_changesMainName_translationName_andSetsModifiedTimestamp() {
-        val code = CodeDefinition("1A", "de", codeClass, 1, false, 1, c_de, c_en, c_fr)
+    fun modifyTranslation_withMainLanguTranslationModified_changesMainName_translationName_andSetsModifiedTimestamp() {
+        val code = CodeDefinition(
+            "1A", "de", codeClass, 1, false, 1, c_de, c_en, c_fr
+        )
         code.setNameInLanguage("de", "CODE 2")
         assertThat(code.name).isEqualTo("CODE 2")
         assertTranslatedName(code, "de", 0, "CODE 2")
@@ -79,8 +81,10 @@ internal class CodeDefinitionTest {
     }
 
     @Test
-    fun modifyTranslation_withNonMainLanguageTranslationModified_keepsMainName_changesTranslationName_andSetsModifiedTimestamp() {
-        val code = CodeDefinition("1A", "de", codeClass, 1, false, 1, c_de, c_en, c_fr)
+    fun modifyTranslation_withNonMainLangTranslModified_keepsMainName_changesTranslName_andSetsModifiedTimestamp() {
+        val code = CodeDefinition(
+            "1A", "de", codeClass, 1, false, 1, c_de, c_en, c_fr
+        )
         code.setNameInLanguage("fr", "bar")
         assertThat(code.name).isEqualTo("codede2")
         assertTranslatedName(code, "fr", 0, "bar")
@@ -91,7 +95,9 @@ internal class CodeDefinitionTest {
 
     @Test
     fun gettingNameInLanguage_withValidLanguages_returnsNames() {
-        val code = CodeDefinition("1A", "de", codeClass, 1, false, 1, c_de, c_en, c_fr)
+        val code = CodeDefinition(
+            "1A", "de", codeClass, 1, false, 1, c_de, c_en, c_fr
+        )
         assertThat(code.getNameInLanguage("de")).isEqualTo("codede2")
         assertThat(code.getNameInLanguage("en")).isEqualTo("codeen2")
         assertThat(code.getNameInLanguage("fr")).isEqualTo("codefr2")
@@ -124,8 +130,10 @@ internal class CodeDefinitionTest {
     }
 
     @Test
-    fun modifyTranslation_withMainLanguageTranslationModified_changesMainName_translationName_andSetsModifiedTimestamp_multipleTranslationsPerLanguage() {
-        val code = CodeDefinition("1A", "de", codeClass, 1, false, 1, c_de, c_de2, c_en, c_fr)
+    fun modifyTransl_withMainLangTranslMod_changesMainName_translName_andSetsModTimestamp_multipleTranslsPerLanguage() {
+        val code = CodeDefinition(
+            "1A", "de", codeClass, 1, false, 1, c_de, c_de2, c_en, c_fr
+        )
         code.setNameInLanguage("de", "Code 2")
         assertThat(code.name).isEqualTo("Code 2")
         assertTranslatedName(code, "de", 0, "Code 2")
@@ -138,7 +146,8 @@ internal class CodeDefinitionTest {
 
     @Test
     fun assertCodeFields() {
-        assertThat(CodeDefinition.CodeDefinitionFields.values().map { it.fieldName }).containsExactly("code", "mainLanguageCode", "codeClass", "sort", "internal", "name")
+        assertThat(CodeDefinition.CodeDefinitionFields.values().map { it.fieldName })
+            .containsExactly("code", "mainLanguageCode", "codeClass", "sort", "internal", "name")
     }
 
     @Test

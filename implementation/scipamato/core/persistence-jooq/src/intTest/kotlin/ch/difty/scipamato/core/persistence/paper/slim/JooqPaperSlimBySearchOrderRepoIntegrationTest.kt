@@ -11,7 +11,7 @@ import org.testcontainers.junit.jupiter.Testcontainers
 
 @JooqTest
 @Testcontainers
-@Suppress("FunctionName", "SpellCheckingInspection")
+@Suppress("FunctionName", "TooManyFunctions", "SpellCheckingInspection", "MagicNumber")
 internal open class JooqPaperSlimBySearchOrderRepoIntegrationTest {
 
     private val so = SearchOrder()
@@ -94,5 +94,4 @@ internal open class JooqPaperSlimBySearchOrderRepoIntegrationTest {
         so.add(sc)
         assertThat(repo.findPageBySearchOrder(so, pc).map { it.number }).containsExactly(15L, 18L, 25L)
     }
-
 }

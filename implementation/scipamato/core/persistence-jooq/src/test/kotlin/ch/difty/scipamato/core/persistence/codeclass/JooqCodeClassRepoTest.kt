@@ -3,7 +3,7 @@ package ch.difty.scipamato.core.persistence.codeclass
 import ch.difty.scipamato.common.DateTimeService
 import ch.difty.scipamato.core.db.tables.CodeClassTr.CODE_CLASS_TR
 import ch.difty.scipamato.core.db.tables.records.CodeClassTrRecord
-import ch.difty.scipamato.core.entity.code_class.CodeClassTranslation
+import ch.difty.scipamato.core.entity.codeclass.CodeClassTranslation
 import ch.difty.scipamato.core.persistence.OptimisticLockingException
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
@@ -12,8 +12,10 @@ import org.assertj.core.api.Assertions.fail
 import org.jooq.DSLContext
 import org.jooq.Result
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito.*
-import java.util.*
+import org.mockito.Mockito.mock
+import org.mockito.Mockito.times
+import org.mockito.Mockito.verify
+import org.mockito.Mockito.verifyNoMoreInteractions
 
 internal class JooqCodeClassRepoTest {
 
@@ -54,8 +56,11 @@ internal class JooqCodeClassRepoTest {
             fail<Any>("should have thrown exception")
         } catch (ex: Exception) {
             assertThat(ex)
-                    .isInstanceOf(OptimisticLockingException::class.java)
-                    .hasMessage("Record in table 'code_class_tr' has been modified prior to the update attempt. Aborting.... [CodeClassTranslation(description=comm)]")
+                .isInstanceOf(OptimisticLockingException::class.java)
+                .hasMessage(
+                    "Record in table 'code_class_tr' has been modified prior to the update attempt. " +
+                        "Aborting.... [CodeClassTranslation(description=comm)]"
+                )
         }
     }
 
@@ -66,8 +71,11 @@ internal class JooqCodeClassRepoTest {
             fail<Any>("should have thrown exception")
         } catch (ex: Exception) {
             assertThat(ex)
-                    .isInstanceOf(OptimisticLockingException::class.java)
-                    .hasMessage("Record in table 'code_class' has been modified prior to the delete attempt. Aborting.... [deletedObject]")
+                .isInstanceOf(OptimisticLockingException::class.java)
+                .hasMessage(
+                    "Record in table 'code_class' has been modified prior to the delete attempt. " +
+                        "Aborting.... [deletedObject]"
+                )
         }
     }
 }

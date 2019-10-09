@@ -132,5 +132,4 @@ internal class PaginationRequestTest {
         val pr2 = ""
         assertThat(pr.hashCode()).isNotEqualTo(pr2.hashCode())
     }
-
 }

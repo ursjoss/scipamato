@@ -7,3 +7,7 @@ complexity:
     active: true
     threshold: 7
     ignoreDefaultParameters: true
+
+formatting:
+  MultiLineIfElse:
+    active: false

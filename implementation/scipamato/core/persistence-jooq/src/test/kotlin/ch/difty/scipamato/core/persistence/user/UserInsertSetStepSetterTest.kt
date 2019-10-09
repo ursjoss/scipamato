@@ -5,10 +5,9 @@ import ch.difty.scipamato.core.db.tables.records.ScipamatoUserRecord
 import ch.difty.scipamato.core.entity.User
 import ch.difty.scipamato.core.persistence.InsertSetStepSetter
 import ch.difty.scipamato.core.persistence.InsertSetStepSetterTest
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.whenever
+import com.nhaarman.mockitokotlin2.*
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito.*
+import org.mockito.ArgumentMatchers.anyInt
 
 internal class UserInsertSetStepSetterTest : InsertSetStepSetterTest<ScipamatoUserRecord, User>() {
 
@@ -35,8 +34,10 @@ internal class UserInsertSetStepSetterTest : InsertSetStepSetterTest<ScipamatoUs
     }
 
     override fun setStepFixtureAudit() {
-        doReturn(moreStep).whenever(moreStep).set(SCIPAMATO_USER.CREATED_BY, ch.difty.scipamato.core.persistence.RecordMapperTest.CREATED_BY)
-        doReturn(moreStep).whenever(moreStep).set(SCIPAMATO_USER.LAST_MODIFIED_BY, ch.difty.scipamato.core.persistence.RecordMapperTest.LAST_MOD_BY)
+        doReturn(moreStep).whenever(moreStep)
+            .set(SCIPAMATO_USER.CREATED_BY, ch.difty.scipamato.core.persistence.RecordMapperTest.CREATED_BY)
+        doReturn(moreStep).whenever(moreStep)
+            .set(SCIPAMATO_USER.LAST_MODIFIED_BY, ch.difty.scipamato.core.persistence.RecordMapperTest.LAST_MOD_BY)
     }
 
     override fun verifyCallToFieldsExceptKeyAndAudit() {
@@ -60,7 +61,8 @@ internal class UserInsertSetStepSetterTest : InsertSetStepSetterTest<ScipamatoUs
 
     override fun verifySettingAuditFields() {
         verify(moreStep).set(SCIPAMATO_USER.CREATED_BY, ch.difty.scipamato.core.persistence.RecordMapperTest.CREATED_BY)
-        verify(moreStep).set(SCIPAMATO_USER.LAST_MODIFIED_BY, ch.difty.scipamato.core.persistence.RecordMapperTest.LAST_MOD_BY)
+        verify(moreStep)
+            .set(SCIPAMATO_USER.LAST_MODIFIED_BY, ch.difty.scipamato.core.persistence.RecordMapperTest.LAST_MOD_BY)
     }
 
     @Test
@@ -91,5 +93,4 @@ internal class UserInsertSetStepSetterTest : InsertSetStepSetterTest<ScipamatoUs
         verify(recordMock).id
         verify<User>(entity).id = anyInt()
     }
-
 }

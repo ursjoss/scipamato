@@ -13,7 +13,7 @@ import ch.difty.scipamato.core.entity.search.SearchTerm;
  * @author u.joss
  */
 @FunctionalInterface
-public interface SearchTermEvaluator<T extends SearchTerm> {
+interface SearchTermEvaluator<T extends SearchTerm> {
 
     /**
      * Evaluates the searchTerm {@code T} to build the {@link Condition}

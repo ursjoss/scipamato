@@ -4,7 +4,7 @@ import ch.difty.scipamato.core.pubmed.api.*
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-@Suppress("SpellCheckingInspection", "FunctionName")
+@Suppress("TooManyFunctions", "SpellCheckingInspection", "FunctionName", "MagicNumber")
 internal class ScipamatoPubmedArticleIntegrationTest : PubmedIntegrationTest() {
 
     @Test
@@ -18,20 +18,21 @@ internal class ScipamatoPubmedArticleIntegrationTest : PubmedIntegrationTest() {
         with(sa) {
             assertThat(pmId).isEqualTo("25395026")
             assertThat(authors).isEqualTo(
-                    "Turner MC, Cohen A, Jerrett M, Gapstur SM, Diver WR, Pope CA 3rd, Krewski D, Beckerman BS, Samet JM."
+                "Turner MC, Cohen A, Jerrett M, Gapstur SM, Diver WR, Pope CA 3rd, Krewski D, Beckerman BS, Samet JM."
             )
             assertThat(firstAuthor).isEqualTo("Turner")
             assertThat(publicationYear).isEqualTo("2014")
             assertThat(location).isEqualTo("Am J Epidemiol. 2014; 180 (12): 1145-1149.")
             assertThat(title).isEqualTo(
-                    "Interactions between cigarette smoking and fine particulate matter in the Risk of Lung Cancer Mortality in Cancer Prevention Study II."
+                "Interactions between cigarette smoking and fine particulate matter in the Risk " +
+                    "of Lung Cancer Mortality in Cancer Prevention Study II."
             )
             assertThat(doi).isEqualTo("10.1093/aje/kwu275")
             assertThat(originalAbstract).startsWith(
-                    "The International Agency for Research on Cancer recently classified outdoor air pollution"
+                "The International Agency for Research on Cancer recently classified outdoor air pollution"
             )
             assertThat(originalAbstract.trim { it <= ' ' }).endsWith(
-                    "based on reducing exposure to either risk factor alone."
+                "based on reducing exposure to either risk factor alone."
             )
         }
     }
@@ -43,15 +44,21 @@ internal class ScipamatoPubmedArticleIntegrationTest : PubmedIntegrationTest() {
         with(articles.first()) {
             assertThat(pmId).isEqualTo("23454700")
             assertThat(authors).isEqualTo(
-                    "Pascal M, Corso M, Chanel O, Declercq C, Badaloni C, Cesaroni G, Henschel S, Meister K, Haluza D, Martin-Olmedo P, Medina S; Aphekom group.")
+                "Pascal M, Corso M, Chanel O, Declercq C, Badaloni C, Cesaroni G, Henschel S, Meister " +
+                    "K, Haluza D, Martin-Olmedo P, Medina S; Aphekom group."
+            )
             assertThat(firstAuthor).isEqualTo("Pascal")
             assertThat(publicationYear).isEqualTo("2013")
             assertThat(location).isEqualTo("Sci Total Environ. 2013; 449: 390-400.")
             assertThat(title).isEqualTo(
-                    "Assessing the public health impacts of urban air pollution in 25 European cities: results of the Aphekom project.")
+                "Assessing the public health impacts of urban air pollution in 25 European cities: " +
+                    "results of the Aphekom project."
+            )
             assertThat(doi).isEqualTo("10.1016/j.scitotenv.2013.01.077")
             assertThat(originalAbstract).startsWith(
-                    "INTRODUCTION: The Aphekom project aimed to provide new, clear, and meaningful information on the health effects of air pollution in Europe.")
+                "INTRODUCTION: The Aphekom project aimed to provide new, clear, " +
+                    "and meaningful information on the health effects of air pollution in Europe."
+            )
             assertThat(originalAbstract).endsWith("EU legislation is being revised for an update in 2013.")
         }
     }
@@ -67,12 +74,18 @@ internal class ScipamatoPubmedArticleIntegrationTest : PubmedIntegrationTest() {
             assertThat(publicationYear).isEqualTo("2015")
             assertThat(location).isEqualTo("J Am Heart Assoc. 2015; 4 (12). pii: e002301.")
             assertThat(title).isEqualTo(
-                    "Effect Modification of Long-Term Air Pollution Exposures and the Risk of Incident Cardiovascular Disease in US Women.")
+                "Effect Modification of Long-Term Air Pollution Exposures and the Risk of " +
+                    "Incident Cardiovascular Disease in US Women."
+            )
             assertThat(doi).isEqualTo("10.1161/JAHA.115.002301")
             assertThat(originalAbstract).startsWith(
-                    "BACKGROUND: Ambient air pollution exposures have been frequently linked to cardiovascular disease (CVD) morbidity and mortality. However, less is known about the populations most susceptible to these adverse effects.")
+                "BACKGROUND: Ambient air pollution exposures have been frequently linked to " +
+                    "cardiovascular disease (CVD) morbidity and mortality. However, less is known " +
+                    "about the populations most susceptible to these adverse effects."
+            )
             assertThat(originalAbstract).endsWith(
-                    "women with diabetes were identified as the subpopulation most sensitive to the adverse cardiovascular health effects of PM.")
+                "women with diabetes were identified as the subpopulation most sensitive to the adverse cardiovascular health effects of PM."
+            )
         }
     }
 
@@ -87,12 +100,18 @@ internal class ScipamatoPubmedArticleIntegrationTest : PubmedIntegrationTest() {
             assertThat(publicationYear).isEqualTo("2016")
             assertThat(location).isEqualTo("Fam Community Health. 2016; 39 (3): 160-168.")
             assertThat(title).isEqualTo(
-                    "Health Status and Residential Exposure to Air Toxics: What Are the Effects on Children's Academic Achievement?")
+                "Health Status and Residential Exposure to Air Toxics: What Are " +
+                    "the Effects on Children's Academic Achievement?"
+            )
             assertThat(doi).isEqualTo("10.1097/FCH.0000000000000112")
             assertThat(originalAbstract).startsWith(
-                    "This article examines the effects of children's subjective health status and exposure to residential environmental toxins")
+                "This article examines the effects of children's subjective health status and " +
+                    "exposure to residential environmental toxins"
+            )
             assertThat(originalAbstract).endsWith(
-                    "there is an independent effect of air pollution on children's academic achievement that cannot be explained by poor health alone.")
+                "there is an independent effect of air pollution on children's academic achievement " +
+                    "that cannot be explained by poor health alone."
+            )
         }
     }
 
@@ -103,17 +122,22 @@ internal class ScipamatoPubmedArticleIntegrationTest : PubmedIntegrationTest() {
         with(articles.first()) {
             assertThat(pmId).isEqualTo("27224452")
             assertThat(authors).isEqualTo(
-                    "Lanzinger S, Schneider A, Breitner S, Stafoggia M, Erzen I, Dostal M, Pastorkova A, Bastian S, Cyrys J, Zscheppang A, Kolodnitska T, Peters A; UFIREG study group.")
+                "Lanzinger S, Schneider A, Breitner S, Stafoggia M, Erzen I, Dostal M, Pastorkova A, Bastian S, " +
+                    "Cyrys J, Zscheppang A, Kolodnitska T, Peters A; UFIREG study group."
+            )
             assertThat(firstAuthor).isEqualTo("Lanzinger")
             assertThat(publicationYear).isEqualTo("2016")
             assertThat(location).isEqualTo("Am J Respir Crit Care Med. 2016; 194 (10): 1233-1241.")
             assertThat(title).isEqualTo(
-                    "Ultrafine and Fine Particles and Hospital Admissions in Central Europe. Results from the UFIREG Study.")
+                "Ultrafine and Fine Particles and Hospital Admissions in Central Europe. Results from the UFIREG Study."
+            )
             assertThat(doi).isEqualTo("10.1164/rccm.201510-2042OC")
             assertThat(originalAbstract).startsWith(
-                    "RATIONALE: Evidence of short-term effects of ultrafine particles (UFP) on health is still inconsistent and few multicenter studies have been conducted so far especially in Europe.")
+                "RATIONALE: Evidence of short-term effects of ultrafine particles (UFP) on health is still " +
+                    "inconsistent and few multicenter studies have been conducted so far especially in Europe."
+            )
             assertThat(originalAbstract).endsWith(
-                    "harmonized UFP measurements to draw definite conclusions on health effects of UFP.")
+                "harmonized UFP measurements to draw definite conclusions on health effects of UFP.")
         }
     }
 
@@ -124,20 +148,28 @@ internal class ScipamatoPubmedArticleIntegrationTest : PubmedIntegrationTest() {
         with(articles.first()) {
             assertThat(pmId).isEqualTo("27258721")
             assertThat(authors).isEqualTo(
-                    "Aguilera I, Dratva J, Caviezel S, Burdet L, de Groot E, Ducret-Stich RE, Eeftens M, Keidel D, Meier R, Perez L, Rothe T, Schaffner E, Schmit-Trucksäss A, Tsai MY, Schindler C, Künzli N, Probst-Hensch N.")
+                "Aguilera I, Dratva J, Caviezel S, Burdet L, de Groot E, Ducret-Stich RE, Eeftens M, Keidel D, " +
+                    "Meier R, Perez L, Rothe T, Schaffner E, Schmit-Trucksäss A, Tsai MY, Schindler C, Künzli N, " +
+                    "Probst-Hensch N."
+            )
             assertThat(firstAuthor).isEqualTo("Aguilera")
             assertThat(publicationYear).isEqualTo("2016")
             assertThat(location).isEqualTo("Environ Health Perspect. 2016; 124 (11): 1700-1706.")
             assertThat(title).isEqualTo(
-                    "Particulate Matter and Subclinical Atherosclerosis: Associations between Different Particle Sizes and Sources with Carotid Intima-Media Thickness in the SAPALDIA Study.")
+                "Particulate Matter and Subclinical Atherosclerosis: Associations between Different Particle Sizes " +
+                    "and Sources with Carotid Intima-Media Thickness in the SAPALDIA Study."
+            )
             assertThat(doi).isEqualTo("10.1289/EHP161")
             assertThat(originalAbstract).startsWith(
-                    "BACKGROUND: Subclinical atherosclerosis has been associated with long-term exposure to particulate matter (PM)")
+                "BACKGROUND: Subclinical atherosclerosis has been associated with long-term exposure to particulate " +
+                    "matter (PM)"
+            )
             assertThat(originalAbstract).endsWith(
-                    "SAPALDIA study. Environ Health Perspect 124:1700-1706; http://dx.doi.org/10.1289/EHP161.")
+                "SAPALDIA study. Environ Health Perspect 124:1700-1706; http://dx.doi.org/10.1289/EHP161.")
         }
     }
 
+    @Suppress("LongMethod")
     @Test
     fun manualExplorationOfFile_25395026() {
         val articleSet = getPubmedArticleSet(XML_2539026)
@@ -167,7 +199,8 @@ internal class ScipamatoPubmedArticleIntegrationTest : PubmedIntegrationTest() {
         assertThat(journal.title).isEqualTo("American journal of epidemiology")
         assertThat(journal.isoAbbreviation).isEqualTo("Am. J. Epidemiol.")
         assertThat(article.articleTitle.getvalue()).isEqualTo(
-                "Interactions between cigarette smoking and fine particulate matter in the Risk of Lung Cancer Mortality in Cancer Prevention Study II."
+            "Interactions between cigarette smoking and fine particulate matter in the Risk " +
+                "of Lung Cancer Mortality in Cancer Prevention Study II."
         )
 
         assertThat(article.paginationOrELocationID).hasSize(2)
@@ -187,7 +220,7 @@ internal class ScipamatoPubmedArticleIntegrationTest : PubmedIntegrationTest() {
 
         assertThat(article.abstract.abstractText).hasSize(1)
         assertThat(article.abstract.abstractText[0].mixedContent[0].toString()).startsWith(
-                "The International Agency for Research on Cancer recently classified outdoor air pollution"
+            "The International Agency for Research on Cancer recently classified outdoor air pollution"
         )
 
         val authorList = article.authorList
@@ -197,10 +230,10 @@ internal class ScipamatoPubmedArticleIntegrationTest : PubmedIntegrationTest() {
         assertThat(authorList.author.map { it.validYN }).containsOnly("Y")
 
         val authorNames = authorList.author
-                .flatMap { it.lastNameOrForeNameOrInitialsOrSuffixOrCollectiveName }
-                .filterIsInstance<LastName>().map { it.getvalue() }
+            .flatMap { it.lastNameOrForeNameOrInitialsOrSuffixOrCollectiveName }
+            .filterIsInstance<LastName>().map { it.getvalue() }
         assertThat(authorNames).contains("Turner", "Cohen", "Jerrett", "Gapstur", "Diver", "Pope", "Krewski",
-                "Beckerman", "Samet")
+            "Beckerman", "Samet")
 
         assertThat(article.articleDate).hasSize(1)
         val articleDate = article.articleDate[0]
@@ -230,13 +263,13 @@ internal class ScipamatoPubmedArticleIntegrationTest : PubmedIntegrationTest() {
         with(articles.first()) {
             assertThat(pmId).isEqualTo("30124840")
             assertThat(authors).isEqualTo(
-                    "Münzel T, Gori T, Al-Kindi S, Deanfield J, Lelieveld J, Daiber A, Rajagopalan S.")
+                "Münzel T, Gori T, Al-Kindi S, Deanfield J, Lelieveld J, Daiber A, Rajagopalan S.")
             assertThat(firstAuthor).isEqualTo("Münzel")
             assertThat(publicationYear).isEqualTo("2018")
             assertThat(location).isEqualTo(
-                    "Eur Heart J. 2018 Aug 14. doi: 10.1093/eurheartj/ehy481. [Epub ahead of print]")
+                "Eur Heart J. 2018 Aug 14. doi: 10.1093/eurheartj/ehy481. [Epub ahead of print]")
             assertThat(title).isEqualTo(
-                    "Effects of gaseous and solid constituents of air pollution on endothelial function.")
+                "Effects of gaseous and solid constituents of air pollution on endothelial function.")
             assertThat(doi).isEqualTo("10.1093/eurheartj/ehy481")
         }
     }
@@ -252,12 +285,19 @@ internal class ScipamatoPubmedArticleIntegrationTest : PubmedIntegrationTest() {
             assertThat(publicationYear).isEqualTo("2017")
             assertThat(location).isEqualTo("Int J Environ Res Public Health. 2017; 14 (11). pii: E1392.")
             assertThat(title).isEqualTo(
-                    "Air Pollution and Dispensed Medications for Asthma, and Possible Effect Modifiers Related to Mental Health and Socio-Economy: A Longitudinal Cohort Study of Swedish Children and Adolescents.")
+                "Air Pollution and Dispensed Medications for Asthma, and Possible Effect Modifiers Related to Mental " +
+                    "Health and Socio-Economy: A Longitudinal Cohort Study of Swedish Children and Adolescents."
+            )
             assertThat(doi).isEqualTo("10.3390/ijerph14111392")
             assertThat(originalAbstract).startsWith(
-                    "It has been suggested that children that are exposed to a stressful environment at home have an increased susceptibility for air pollution-related asthma.")
+                "It has been suggested that children that are exposed to a stressful environment at home have " +
+                    "an increased susceptibility for air pollution-related asthma."
+            )
             assertThat(originalAbstract).endsWith(
-                    "We did not observe support for our hypothesis that stressors linked to socio-economy or mental health problems would increase susceptibility to the effects of air pollution on the development of asthma.")
+                "We did not observe support for our hypothesis that stressors linked to socio-economy or " +
+                    "mental health problems would increase susceptibility to the effects of air pollution " +
+                    "on the development of asthma."
+            )
             assertThat(originalAbstract).hasSize(1844)
         }
     }
@@ -273,12 +313,15 @@ internal class ScipamatoPubmedArticleIntegrationTest : PubmedIntegrationTest() {
             assertThat(publicationYear).isEqualTo("2018")
             assertThat(location).isEqualTo("Environ Res. 2018; 166: 677-689.")
             assertThat(title).isEqualTo(
-                    "The concentration-response between long-term PM2.5 exposure and mortality; A meta-regression approach.")
+                "The concentration-response between long-term PM2.5 exposure and mortality; A meta-regression approach."
+            )
             assertThat(doi).isEqualTo("10.1016/j.envres.2018.06.021")
             assertThat(originalAbstract).startsWith(
-                    "BACKGROUND: Long-term exposure to ambient fine particulate matter (≤ 2.5 μg/m3 in")
+                "BACKGROUND: Long-term exposure to ambient fine particulate matter (≤ 2.5 μg/m3 in")
             assertThat(originalAbstract).endsWith(
-                    "The concentration -response function produced here can be further applied in the global health risk assessment of air particulate matter.")
+                "The concentration -response function produced here can be further applied in the global " +
+                    "health risk assessment of air particulate matter."
+            )
             assertThat(originalAbstract).hasSize(2295)
         }
     }

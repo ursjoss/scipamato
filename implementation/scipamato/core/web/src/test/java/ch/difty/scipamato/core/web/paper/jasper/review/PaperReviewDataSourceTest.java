@@ -21,8 +21,9 @@ class PaperReviewDataSourceTest extends PaperDataSourceTest {
 
     private static final Long NUMBER = 15L;
 
+    private final ReportHeaderFields rhf = newReportHeaderFields();
+
     private PaperReviewDataSource ds;
-    private ReportHeaderFields    rhf = newReportHeaderFields();
 
     private ReportHeaderFields newReportHeaderFields() {
         return ReportHeaderFields

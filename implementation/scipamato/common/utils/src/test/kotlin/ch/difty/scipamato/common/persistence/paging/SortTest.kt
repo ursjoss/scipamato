@@ -6,7 +6,6 @@ import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.fail
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import java.util.*
 
 internal class SortTest {
 
@@ -31,10 +30,9 @@ internal class SortTest {
             fail<Any>("should have thrown exception")
         } catch (ex: Exception) {
             assertThat(ex)
-                    .isInstanceOf(IllegalArgumentException::class.java)
-                    .hasMessage("sortProperties can't be empty.")
+                .isInstanceOf(IllegalArgumentException::class.java)
+                .hasMessage("sortProperties can't be empty.")
         }
-
     }
 
     @Test
@@ -43,9 +41,10 @@ internal class SortTest {
             Sort(Direction.ASC)
             fail<Any>("should have thrown exception")
         } catch (ex: Exception) {
-            assertThat(ex).isInstanceOf(IllegalArgumentException::class.java).hasMessage("propertyNames can't be empty.")
+            assertThat(ex).isInstanceOf(IllegalArgumentException::class.java).hasMessage(
+                "propertyNames can't be empty."
+            )
         }
-
     }
 
     private fun assertSortProperty(dir: Direction, propertyNames: Array<String>) {
@@ -114,7 +113,6 @@ internal class SortTest {
 
     @Test
     fun sortEqualityTests() {
-        assertThat(sort == null).isFalse()
         assertThat(sort == sort).isTrue()
         assertThat(sort == Sort(sortProperties)).isTrue()
 

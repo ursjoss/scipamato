@@ -1,6 +1,9 @@
 package ch.difty.scipamato.core.web.paper.search;
 
-import static org.mockito.Mockito.*;
+import static com.nhaarman.mockitokotlin2.OngoingStubbingKt.whenever;
+import static com.nhaarman.mockitokotlin2.VerificationKt.times;
+import static com.nhaarman.mockitokotlin2.VerificationKt.verify;
+import static org.mockito.ArgumentMatchers.isA;
 
 import java.util.Collections;
 import java.util.Optional;
@@ -30,8 +33,8 @@ class PaperSearchCriteriaPageTest extends BasePageTest<PaperSearchCriteriaPage> 
 
     @Override
     protected void setUpHook() {
-        when(searchOrderServiceMock.findById(SEARCH_ORDER_ID)).thenReturn(Optional.of(searchOrder));
-        when(searchOrderServiceMock.findPageByFilter(isA(SearchOrderFilter.class),
+        whenever(searchOrderServiceMock.findById(SEARCH_ORDER_ID)).thenReturn(Optional.of(searchOrder));
+        whenever(searchOrderServiceMock.findPageByFilter(isA(SearchOrderFilter.class),
             isA(PaginationContext.class))).thenReturn(Collections.singletonList(searchOrder));
     }
 
@@ -69,7 +72,7 @@ class PaperSearchCriteriaPageTest extends BasePageTest<PaperSearchCriteriaPage> 
         getTester().assertNoErrorMessage();
 
         verify(searchOrderServiceMock).saveOrUpdateSearchCondition(searchConditionMock, SEARCH_ORDER_ID, "en_us");
-        verify(searchOrderServiceMock, never()).findPageByFilter(isA(SearchOrderFilter.class),
+        verify(searchOrderServiceMock, times(0)).findPageByFilter(isA(SearchOrderFilter.class),
             isA(PaginationContext.class));
     }
 
@@ -90,7 +93,7 @@ class PaperSearchCriteriaPageTest extends BasePageTest<PaperSearchCriteriaPage> 
 
     @Test
     void submittingForm_withErrorInService_addsErrorMessage() {
-        when(searchOrderServiceMock.saveOrUpdateSearchCondition(searchConditionMock, SEARCH_ORDER_ID,
+        whenever(searchOrderServiceMock.saveOrUpdateSearchCondition(searchConditionMock, SEARCH_ORDER_ID,
             "en_us")).thenThrow(new RuntimeException("foo"));
 
         getTester().startPage(makePage());
@@ -105,7 +108,7 @@ class PaperSearchCriteriaPageTest extends BasePageTest<PaperSearchCriteriaPage> 
 
         verify(searchOrderServiceMock, times(2)).saveOrUpdateSearchCondition(searchConditionMock, SEARCH_ORDER_ID,
             "en_us");
-        verify(searchOrderServiceMock, never()).findPageByFilter(isA(SearchOrderFilter.class),
+        verify(searchOrderServiceMock, times(0)).findPageByFilter(isA(SearchOrderFilter.class),
             isA(PaginationContext.class));
     }
 

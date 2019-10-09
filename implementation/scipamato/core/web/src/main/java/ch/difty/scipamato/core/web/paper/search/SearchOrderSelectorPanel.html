@@ -6,12 +6,12 @@
             <div class="col-md-10">
                 <select wicket:id="searchOrder"></select>
                 <div class="form-group">
-                    <wicket:container wicket:id="nameLabel" class="control-label"/>
+                    <wicket:container id="nameLabel" wicket:id="nameLabel" class="control-label"/>
                     <input wicket:id="name" type="text" class="form-control"></input>
                 </div>
                 <div class="form-group">
                     <label class="checkbox-inline"> <input wicket:id="global" type="checkbox">
-                        <wicket:container
+                        <wicket:container id="globalLabel"
                                 wicket:id="globalLabel"/>
                     </label>
                 </div>
@@ -22,7 +22,7 @@
             <div class="col-md-2">
                 <div class="form-group">
                     <label class="checkbox-inline"> <input wicket:id="showExcluded" type="checkbox">
-                        <wicket:container wicket:id="showExcludedLabel"/>
+                        <wicket:container id="showExcludedLabel" wicket:id="showExcludedLabel"/>
                     </label>
                 </div>
             </div>

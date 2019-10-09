@@ -11,8 +11,10 @@ internal class UserRecordMapperTest : RecordMapperTest<ScipamatoUserRecord, User
 
     override val mapper: RecordMapper<ScipamatoUserRecord, User> = UserRecordMapper()
 
-    override fun makeRecord(): ScipamatoUserRecord =
-            ScipamatoUserRecord(ID, USER_NAME, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, ENABLED, VERSION, CREATED, CREATED_BY, LAST_MOD, LAST_MOD_BY)
+    override fun makeRecord(): ScipamatoUserRecord = ScipamatoUserRecord(
+        ID, USER_NAME, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, ENABLED,
+        VERSION, CREATED, CREATED_BY, LAST_MOD, LAST_MOD_BY
+    )
 
     override fun setAuditFieldsIn(record: ScipamatoUserRecord) {
         // no-op
@@ -48,5 +50,4 @@ internal class UserRecordMapperTest : RecordMapperTest<ScipamatoUserRecord, User
             whenever(entityMock.isEnabled).thenReturn(ENABLED)
         }
     }
-
 }

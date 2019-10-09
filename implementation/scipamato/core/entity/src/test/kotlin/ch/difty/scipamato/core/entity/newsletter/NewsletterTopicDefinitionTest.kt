@@ -42,12 +42,12 @@ internal class NewsletterTopicDefinitionTest {
     @Test
     fun canGetTranslationsAsString_withTranslationsIncludingMainTranslation_withPartialTranslation() {
         val ntd = NewsletterTopicDefinition(2, "de", 1, ntt_de, ntt_en,
-                NewsletterTopicTranslation(12, "fr", null, 1))
+            NewsletterTopicTranslation(12, "fr", null, 1))
         assertThat(ntd.translationsAsString).isEqualTo("DE: 'thema2'; EN: 'topic2'; FR: n.a.")
     }
 
     @Test
-    fun modifyTranslation_withMainLanguageTranslationModified_changesMainTitle_translationTitle_andSetsModifiedTimestamp() {
+    fun modifyTransl_withMainLanguageTranslationModified_changesMainTitle_translationTitle_andSetsModifiedTimestamp() {
         val ntd = NewsletterTopicDefinition(2, "de", 1, ntt_de, ntt_en, ntt_fr)
         ntd.setNameInLanguage("de", "thema 2")
         assertThat(ntd.name).isEqualTo("thema 2")
@@ -58,7 +58,7 @@ internal class NewsletterTopicDefinitionTest {
     }
 
     @Test
-    fun modifyTranslation_withNonMainLanguageTranslationModified_keepsMainTitle_changesTranslationTitle_andSetsModifiedTimestamp() {
+    fun modifyTransl_withNonMainLangTranslModified_keepsMainTitle_changesTranslationTitle_andSetsModifiedTimestamp() {
         val ntd = NewsletterTopicDefinition(2, "de", 1, ntt_de, ntt_en, ntt_fr)
         ntd.setNameInLanguage("fr", "bar")
         assertThat(ntd.name).isEqualTo("thema2")

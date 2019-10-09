@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.context.ApplicationContext
 import org.springframework.test.util.ReflectionTestUtils
-import java.util.*
 
 internal const val USERNAME = "testuser"
 internal const val PASSWORD = "secretpw"
@@ -25,16 +24,15 @@ abstract class WicketBaseTest {
     @Autowired
     private lateinit var applicationContextMock: ApplicationContext
 
-    @Autowired
-    private lateinit var webSessionFacade: ScipamatoWebSessionFacade
-
     @BeforeEach
     internal fun setUp() {
-        wicketApplication.setHeaderResponseDecorator { r -> ResourceAggregator(JavaScriptFilteredIntoFooterHeaderResponse(r, "footer-container")) }
+        wicketApplication.setHeaderResponseDecorator { r ->
+            ResourceAggregator(JavaScriptFilteredIntoFooterHeaderResponse(r, "footer-container"))
+        }
 
         ReflectionTestUtils.setField(wicketApplication, "applicationContext", applicationContextMock)
         tester = WicketTester(wicketApplication)
-        val locale = Locale("en_US")
+        val locale = java.util.Locale("en_US")
         tester.session.locale = locale
         setUpHook()
     }
@@ -43,5 +41,4 @@ abstract class WicketBaseTest {
      * override if needed
      */
     protected open fun setUpHook() {}
-
 }

@@ -194,10 +194,8 @@ internal class IntegerSearchTermTest {
             fail<Any>("Should have thrown exception")
         } catch (ex: Exception) {
             assertThat(ex)
-                    .isInstanceOf(IllegalArgumentException::class.java)
-                    .hasMessage("For input string: \">2014\"")
+                .isInstanceOf(IllegalArgumentException::class.java)
+                .hasMessage("For input string: \">2014\"")
         }
-
     }
-
 }

@@ -52,7 +52,5 @@ internal class SearchTermTypeTest {
         } catch (ex: Exception) {
             assertThat(ex).isInstanceOf(IllegalArgumentException::class.java).hasMessage("id 4 is not supported")
         }
-
     }
-
 }

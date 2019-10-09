@@ -17,8 +17,9 @@ class PaperSummaryTableTest extends JasperEntityTest {
     private static final String CAPTION      = "caption";
     private static final String NUMBER_LABEL = "nl";
 
-    private PaperSummaryTable  pst;
-    private ReportHeaderFields rhf = newReportHeaderFields();
+    private final ReportHeaderFields rhf = newReportHeaderFields();
+
+    private PaperSummaryTable pst;
 
     @Test
     void degenerateConstruction_withNullPaper() {

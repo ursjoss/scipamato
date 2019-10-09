@@ -13,12 +13,12 @@ internal class KeywordTest : PublicEntityTest<Keyword>() {
         get() = "Keyword(id=1, keywordId=2, langCode=lc, name=name, searchOverride=n)"
 
     override fun newEntity(): Keyword = Keyword.builder()
-            .id(1)
-            .keywordId(2)
-            .langCode("lc")
-            .name("name")
-            .searchOverride("n")
-            .build()
+        .id(1)
+        .keywordId(2)
+        .langCode("lc")
+        .name("name")
+        .searchOverride("n")
+        .build()
 
     override fun assertSpecificGetters() {
         assertThat(entity.id).isEqualTo(1)
@@ -30,10 +30,10 @@ internal class KeywordTest : PublicEntityTest<Keyword>() {
 
     override fun verifyEquals() {
         EqualsVerifier.forClass(Keyword::class.java)
-                .withRedefinedSuperclass()
-                .withIgnoredFields(CREATED.fieldName, MODIFIED.fieldName)
-                .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
-                .verify()
+            .withRedefinedSuperclass()
+            .withIgnoredFields(CREATED.fieldName, MODIFIED.fieldName)
+            .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
+            .verify()
     }
 
     @Test
@@ -43,6 +43,7 @@ internal class KeywordTest : PublicEntityTest<Keyword>() {
 
     @Test
     fun assertEnumFields() {
-        assertThat(Keyword.KeywordFields.values().map { it.fieldName }).containsExactly("id", "keywordId", "langCode", "name", "searchOverride", "displayValue")
+        assertThat(Keyword.KeywordFields.values().map { it.fieldName })
+            .containsExactly("id", "keywordId", "langCode", "name", "searchOverride", "displayValue")
     }
 }

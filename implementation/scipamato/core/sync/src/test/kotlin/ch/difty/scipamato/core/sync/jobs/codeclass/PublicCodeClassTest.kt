@@ -11,16 +11,16 @@ internal class PublicCodeClassTest {
     @Test
     fun canSetGet() {
         val pcc = PublicCodeClass
-                .builder()
-                .codeClassId(1)
-                .langCode("lc")
-                .name("name")
-                .description("description")
-                .version(2)
-                .created(CREATED)
-                .lastModified(MODIFIED)
-                .lastSynched(SYNCHED)
-                .build()
+            .builder()
+            .codeClassId(1)
+            .langCode("lc")
+            .name("name")
+            .description("description")
+            .version(2)
+            .created(CREATED)
+            .lastModified(MODIFIED)
+            .lastSynched(SYNCHED)
+            .build()
 
         assertThat(pcc.codeClassId).isEqualTo(1)
         assertThat(pcc.langCode).isEqualTo("lc")

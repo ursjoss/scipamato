@@ -26,15 +26,15 @@ internal class NewStudyTest : PublicEntityTest<NewStudy>() {
 
     override fun verifyEquals() {
         EqualsVerifier.forClass(NewStudy::class.java)
-                .withRedefinedSuperclass()
-                .withIgnoredFields(CREATED.fieldName, MODIFIED.fieldName)
-                .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
-                .verify()
+            .withRedefinedSuperclass()
+            .withIgnoredFields(CREATED.fieldName, MODIFIED.fieldName)
+            .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
+            .verify()
     }
 
     @Test
     fun assertEnumFields() {
-        assertThat(NewStudy.NewStudyFields.values().map { it.fieldName }).containsExactly("sort", "number", "year", "authors", "reference", "headline", "description")
+        assertThat(NewStudy.NewStudyFields.values().map { it.fieldName })
+            .containsExactly("sort", "number", "year", "authors", "reference", "headline", "description")
     }
-
 }

@@ -26,5 +26,4 @@ internal class PopulationCodeTest {
     fun of_withNotExistingId_returnsEmptyOptional() {
         assertThat(PopulationCode.of(0.toShort())).isEmpty
     }
-
 }

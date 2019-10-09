@@ -16,10 +16,8 @@ enum class PublicationStatus(val id: Int, val description: String) {
 
         fun byId(id: Int): PublicationStatus {
             for (t in NEWSLETTER_STATI)
-                if (t.id == id)
-                    return t
+                if (t.id == id) return t
             throw IllegalArgumentException("id $id is not supported")
         }
     }
-
 }

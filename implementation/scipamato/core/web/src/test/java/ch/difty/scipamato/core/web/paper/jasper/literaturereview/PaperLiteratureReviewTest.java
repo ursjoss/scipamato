@@ -15,8 +15,9 @@ class PaperLiteratureReviewTest extends JasperEntityTest {
 
     private static final String PUBMED_BASE_URL = "baseUrl/";
 
+    private final ReportHeaderFields rhf = newReportHeaderFields();
+
     private PaperLiteratureReview plr;
-    private ReportHeaderFields    rhf = newReportHeaderFields();
 
     private ReportHeaderFields newReportHeaderFields() {
         return ReportHeaderFields

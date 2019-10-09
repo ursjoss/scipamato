@@ -8,9 +8,9 @@ interface FieldEnumType {
 }
 
 open class ScipamatoEntity(
-        var created: LocalDateTime? = null,
-        var lastModified: LocalDateTime? = null,
-        var version: Int = 0
+    var created: LocalDateTime? = null,
+    var lastModified: LocalDateTime? = null,
+    var version: Int = 0
 ) : Serializable {
 
     enum class ScipamatoEntityFields(override val fieldName: String) : FieldEnumType {
@@ -30,7 +30,6 @@ open class ScipamatoEntity(
     override fun hashCode(): Int {
         return version
     }
-
 
     companion object {
         private const val serialVersionUID = 1L
