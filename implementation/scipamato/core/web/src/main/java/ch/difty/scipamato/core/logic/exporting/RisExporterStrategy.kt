@@ -20,7 +20,6 @@ enum class RisExporterStrategy {
     DISTILLERSR;
 
     companion object {
-
         private val STRATEGIES = values()
 
         /**
@@ -28,6 +27,6 @@ enum class RisExporterStrategy {
          * Accepts a [propertyKey] for logging purposes
          */
         fun fromProperty(propertyValue: String, propertyKey: String): RisExporterStrategy =
-                propertyValue.asProperty(STRATEGIES, DEFAULT, propertyKey)
+            propertyValue.asProperty(STRATEGIES, DEFAULT, propertyKey)
     }
 }

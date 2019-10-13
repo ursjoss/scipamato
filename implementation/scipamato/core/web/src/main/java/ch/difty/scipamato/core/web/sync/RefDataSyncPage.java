@@ -9,6 +9,8 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import ch.difty.scipamato.core.sync.launcher.SyncJobLauncher;
 import ch.difty.scipamato.core.sync.launcher.SyncJobResult;
@@ -22,7 +24,7 @@ public class RefDataSyncPage extends BasePage<Void> {
     @SpringBean
     private SyncJobLauncher jobLauncher;
 
-    public RefDataSyncPage(PageParameters parameters) {
+    public RefDataSyncPage(@Nullable PageParameters parameters) {
         super(parameters);
     }
 
@@ -39,7 +41,7 @@ public class RefDataSyncPage extends BasePage<Void> {
             private static final long serialVersionUID = 1L;
 
             @Override
-            protected void onSubmit(AjaxRequestTarget target) {
+            protected void onSubmit(@NotNull AjaxRequestTarget target) {
                 super.onSubmit(target);
                 SyncJobResult result = jobLauncher.launch();
                 reportJobResult(result);
@@ -71,5 +73,4 @@ public class RefDataSyncPage extends BasePage<Void> {
 
         }.setEffect(Effect.ZOOM_IN);
     }
-
 }

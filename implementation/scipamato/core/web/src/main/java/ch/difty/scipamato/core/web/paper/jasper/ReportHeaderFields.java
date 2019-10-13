@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.NonNull;
 import lombok.Value;
 import org.apache.wicket.util.io.IClusterable;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Context holder for localized jasper report captions. Uses builder pattern in
@@ -64,10 +65,9 @@ public class ReportHeaderFields implements IClusterable {
      *     the application brand as string
      * @return ReportHeaderFieldsBuilder
      */
-    public static ReportHeaderFieldsBuilder builder(final String headerPart, final String brand) {
+    public static ReportHeaderFieldsBuilder builder(@NotNull final String headerPart, @NotNull final String brand) {
         return hiddenBuilder()
             .headerPart(headerPart)
             .brand(brand);
     }
-
 }

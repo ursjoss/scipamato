@@ -1,5 +1,7 @@
 package ch.difty.scipamato.core.config;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.stereotype.Component;
 
 import ch.difty.scipamato.common.config.AbstractScipamatoProperties;
@@ -21,16 +23,18 @@ public class ScipamatoCoreProperties extends AbstractScipamatoProperties<Scipama
 
     private static final long serialVersionUID = 1L;
 
-    public ScipamatoCoreProperties(final ScipamatoProperties scipamatoProperties,
-        final MavenProperties mavenProperties) {
+    public ScipamatoCoreProperties(@NotNull final ScipamatoProperties scipamatoProperties,
+        @NotNull final MavenProperties mavenProperties) {
         super(scipamatoProperties, mavenProperties);
     }
 
+    @NotNull
     @Override
     public AuthorParserStrategy getAuthorParserStrategy() {
         return getScipamatoProperties().getAuthorParserStrategy();
     }
 
+    @NotNull
     @Override
     public RisExporterStrategy getRisExporterStrategy() {
         return getScipamatoProperties().getRisExporterStrategy();
@@ -41,9 +45,9 @@ public class ScipamatoCoreProperties extends AbstractScipamatoProperties<Scipama
         return getScipamatoProperties().getPaperNumberMinimumToBeRecycled();
     }
 
+    @Nullable
     @Override
     public String getPubmedApiKey() {
         return getScipamatoProperties().getPubmedApiKey();
     }
-
 }

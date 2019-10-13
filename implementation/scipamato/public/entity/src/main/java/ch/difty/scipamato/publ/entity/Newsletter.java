@@ -9,7 +9,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Value;
 import org.jetbrains.annotations.NotNull;
 
-import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.entity.FieldEnumType;
 
 @Value
@@ -23,8 +22,8 @@ public class Newsletter extends PublicEntity {
     private final String    issue;
     private final LocalDate issueDate;
 
-    public String getMonthName(final String langCode) {
-        AssertAs.INSTANCE.notNull(langCode, "langCode");
+    @NotNull
+    public String getMonthName(@NotNull final String langCode) {
         //noinspection SpellCheckingInspection
         return issueDate.format(DateTimeFormatter.ofPattern("MMMM yyyy", Locale.forLanguageTag(langCode)));
     }
@@ -47,5 +46,4 @@ public class Newsletter extends PublicEntity {
             return name;
         }
     }
-
 }

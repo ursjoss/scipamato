@@ -2,6 +2,7 @@ package ch.difty.scipamato.core.sync.jobs.paper;
 
 import static ch.difty.scipamato.publ.db.tables.Paper.PAPER;
 
+import org.jetbrains.annotations.NotNull;
 import org.jooq.DSLContext;
 import org.springframework.batch.item.ItemWriter;
 
@@ -22,12 +23,12 @@ import ch.difty.scipamato.core.sync.jobs.ScipamatoItemWriter;
  */
 public class PaperItemWriter extends ScipamatoItemWriter<PublicPaper> {
 
-    public PaperItemWriter(final DSLContext jooqDslContextPublic) {
+    public PaperItemWriter(@NotNull final DSLContext jooqDslContextPublic) {
         super(jooqDslContextPublic, "paper");
     }
 
     @Override
-    protected int executeUpdate(final PublicPaper p) {
+    protected int executeUpdate(@NotNull final PublicPaper p) {
         return getDslContext()
             .insertInto(PAPER)
             .columns(PAPER.ID, PAPER.NUMBER, PAPER.PM_ID, PAPER.AUTHORS, PAPER.TITLE, PAPER.LOCATION,
@@ -61,5 +62,4 @@ public class PaperItemWriter extends ScipamatoItemWriter<PublicPaper> {
             .where(PAPER.NUMBER.eq(p.getNumber()))
             .execute();
     }
-
 }

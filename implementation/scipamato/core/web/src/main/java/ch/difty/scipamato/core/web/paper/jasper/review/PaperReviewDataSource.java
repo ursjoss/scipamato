@@ -1,8 +1,9 @@
 package ch.difty.scipamato.core.web.paper.jasper.review;
 
 import net.sf.jasperreports.engine.JasperReport;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.PaperSlimFilter;
 import ch.difty.scipamato.core.entity.projection.PaperSlim;
@@ -43,13 +44,13 @@ public class PaperReviewDataSource extends JasperPaperDataSource<PaperReview> {
      * @param config
      *     {@link ClusterablePdfExporterConfiguration}
      */
-    public PaperReviewDataSource(final AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider,
-        final ReportHeaderFields reportHeaderFields, ClusterablePdfExporterConfiguration config) {
-        super(new ScipamatoPdfResourceHandler(config), FILE_BASE_NAME,
-            AssertAs.INSTANCE.notNull(dataProvider, "dataProvider"));
-        this.reportHeaderFields = AssertAs.INSTANCE.notNull(reportHeaderFields, "reportHeaderFields");
+    public PaperReviewDataSource(@NotNull final AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider,
+        @NotNull final ReportHeaderFields reportHeaderFields, @Nullable ClusterablePdfExporterConfiguration config) {
+        super(new ScipamatoPdfResourceHandler(config), FILE_BASE_NAME, dataProvider);
+        this.reportHeaderFields = reportHeaderFields;
     }
 
+    @NotNull
     @Override
     protected JasperReport getReport() {
         return PaperReviewReportResourceReference
@@ -57,9 +58,9 @@ public class PaperReviewDataSource extends JasperPaperDataSource<PaperReview> {
             .getReport();
     }
 
+    @NotNull
     @Override
-    protected PaperReview makeEntity(final Paper p) {
+    protected PaperReview makeEntity(@NotNull final Paper p) {
         return new PaperReview(p, reportHeaderFields);
     }
-
 }

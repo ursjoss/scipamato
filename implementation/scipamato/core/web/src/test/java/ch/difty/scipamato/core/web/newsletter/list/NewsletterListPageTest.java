@@ -256,5 +256,4 @@ class NewsletterListPageTest extends BasePageTest<NewsletterListPage> {
             isA(PaginationRequest.class));
         verify(newsletterServiceMock).canCreateNewsletterInProgress();
     }
-
 }

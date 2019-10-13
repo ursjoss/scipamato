@@ -30,8 +30,6 @@ public abstract class PaperDataSourceTest extends WicketTest {
     @Mock
     protected CoreShortFieldConcatenator             shortFieldConcatenatorMock;
 
-    protected PaperFilter paperFilter = new PaperFilter();
-
     @AfterEach
     public final void tearDown() {
         verifyNoMoreInteractions(dataProviderMock, paperFilterMock, searchOrderMock, paperMock,
@@ -43,5 +41,4 @@ public abstract class PaperDataSourceTest extends WicketTest {
         f.setName(fieldName);
         assertThat(jsds.getFieldValue(f)).isEqualTo(value);
     }
-
 }

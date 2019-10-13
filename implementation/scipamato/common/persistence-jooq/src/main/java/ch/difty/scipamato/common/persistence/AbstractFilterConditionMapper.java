@@ -3,6 +3,8 @@ package ch.difty.scipamato.common.persistence;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.jooq.Condition;
 import org.jooq.impl.DSL;
 
@@ -19,8 +21,9 @@ import ch.difty.scipamato.common.entity.filter.ScipamatoFilter;
 public abstract class AbstractFilterConditionMapper<F extends ScipamatoFilter>
     implements GenericFilterConditionMapper<F> {
 
+    @NotNull
     @Override
-    public final Condition map(final F filter) {
+    public final Condition map(@Nullable final F filter) {
         final List<Condition> conditions = new ArrayList<>();
         if (filter != null)
             map(filter, conditions);
@@ -35,6 +38,6 @@ public abstract class AbstractFilterConditionMapper<F extends ScipamatoFilter>
      * @param conditions
      *     receives of the {@link Condition}s derived from the filter attributes
      */
-    protected abstract void map(F filter, List<Condition> conditions);
+    protected abstract void map(@NotNull F filter, @NotNull List<Condition> conditions);
 
 }

@@ -1,9 +1,11 @@
 package ch.difty.scipamato.core.web.paper.jasper.literaturereview;
 
+import java.util.Objects;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.jetbrains.annotations.NotNull;
 
-import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.web.paper.jasper.JasperEntity;
 import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields;
@@ -40,10 +42,8 @@ public class PaperLiteratureReview extends JasperEntity {
      * @param rhf
      *     the reportHeaderFields with the localized field headers
      */
-    public PaperLiteratureReview(final Paper p, final ReportHeaderFields rhf) {
-        AssertAs.INSTANCE.notNull(p, "p");
-        AssertAs.INSTANCE.notNull(rhf, "rhf");
-        AssertAs.INSTANCE.notNull(rhf.getPubmedBaseUrl(), "pubmedBaseUrl");
+    public PaperLiteratureReview(@NotNull final Paper p, @NotNull final ReportHeaderFields rhf) {
+        Objects.requireNonNull(rhf.getPubmedBaseUrl());
 
         final Long no = p.getNumber();
         this.number = no != null ? String.valueOf(no) : "";
@@ -65,5 +65,4 @@ public class PaperLiteratureReview extends JasperEntity {
         else
             return "";
     }
-
 }

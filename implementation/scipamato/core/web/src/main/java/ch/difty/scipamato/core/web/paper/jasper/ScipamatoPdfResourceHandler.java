@@ -6,6 +6,8 @@ import net.sf.jasperreports.engine.export.JRPdfExporterContext;
 import net.sf.jasperreports.export.OutputStreamExporterOutput;
 import net.sf.jasperreports.export.PdfExporterConfiguration;
 import net.sf.jasperreports.export.PdfReportConfiguration;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.wicketstuff.jasperreports.handlers.PdfResourceHandler;
 
 /**
@@ -33,7 +35,7 @@ public class ScipamatoPdfResourceHandler extends PdfResourceHandler {
      * @param config
      *     the {@link ClusterablePdfExporterConfiguration}
      */
-    public ScipamatoPdfResourceHandler(final ClusterablePdfExporterConfiguration config) {
+    public ScipamatoPdfResourceHandler(@Nullable final ClusterablePdfExporterConfiguration config) {
         if (config != null) {
             this.config = config;
         } else {
@@ -48,11 +50,11 @@ public class ScipamatoPdfResourceHandler extends PdfResourceHandler {
     /**
      * @see org.wicketstuff.jasperreports.handlers.IJRResourceHandler#newExporter()
      */
+    @NotNull
     @Override
     public JRAbstractExporter<PdfReportConfiguration, PdfExporterConfiguration, OutputStreamExporterOutput, JRPdfExporterContext> newExporter() {
         final JRPdfExporter jrPdfExporter = new JRPdfExporter();
         jrPdfExporter.setConfiguration(config);
         return jrPdfExporter;
     }
-
 }

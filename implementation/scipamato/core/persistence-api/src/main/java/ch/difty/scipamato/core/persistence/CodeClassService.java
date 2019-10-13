@@ -2,7 +2,9 @@ package ch.difty.scipamato.core.persistence;
 
 import java.util.List;
 
-import ch.difty.scipamato.common.NullArgumentException;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import ch.difty.scipamato.common.persistence.CodeClassLikeService;
 import ch.difty.scipamato.common.persistence.DefinitionProviderService;
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
@@ -28,8 +30,9 @@ public interface CodeClassService
      *     context defining paging and sorting
      * @return a page of CodeClassDefinition entities as list
      */
-    List<CodeClassDefinition> findPageOfCodeClassDefinitions(CodeClassFilter filter,
-        PaginationContext paginationContext);
+    @NotNull
+    List<CodeClassDefinition> findPageOfCodeClassDefinitions(@Nullable CodeClassFilter filter,
+        @NotNull PaginationContext paginationContext);
 
     /**
      * Counts the number of {@link CodeClassDefinition}s matching the specified filter.
@@ -38,7 +41,7 @@ public interface CodeClassService
      *     of type CodeClassFilter
      * @return entity count
      */
-    int countByFilter(CodeClassFilter filter);
+    int countByFilter(@Nullable CodeClassFilter filter);
 
     /**
      * Creates and returns an unpersisted instance of a CodeClassDefinition
@@ -46,6 +49,7 @@ public interface CodeClassService
      *
      * @return the unpersisted entity
      */
+    @NotNull
     CodeClassDefinition newUnpersistedCodeClassDefinition();
 
     /**
@@ -55,7 +59,8 @@ public interface CodeClassService
      *     the {@link CodeClassDefinition} to be persisted
      * @return the persisted entity.
      */
-    CodeClassDefinition saveOrUpdate(CodeClassDefinition entity);
+    @NotNull
+    CodeClassDefinition saveOrUpdate(@NotNull CodeClassDefinition entity);
 
     /**
      * Remove the persisted entity with the provided id.
@@ -65,10 +70,9 @@ public interface CodeClassService
      * @param version
      *     the record version - used for optimistic locking
      * @return the deleted entity
-     * @throws NullArgumentException
-     *     if the id is null.
      * @throws OptimisticLockingException
      *     if the record version has increased in the mean time
      */
-    CodeClassDefinition delete(Integer id, int version);
+    @Nullable
+    CodeClassDefinition delete(@NotNull Integer id, int version);
 }

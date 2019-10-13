@@ -17,6 +17,8 @@ import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.string.StringValue;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.wicketstuff.annotation.mount.MountPath;
 
 import ch.difty.scipamato.common.web.Mode;
@@ -131,8 +133,8 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
      *     excluded from it. If true, the current paper has already been
      *     excluded from the search order. You can re-include it.
      */
-    public PaperEntryPage(IModel<Paper> paperModel, PageReference callingPage, Long searchOrderId,
-        boolean showingExclusions, Model<Integer> tabIndexModel) {
+    public PaperEntryPage(@Nullable IModel<Paper> paperModel, @Nullable PageReference callingPage,
+        @Nullable Long searchOrderId, boolean showingExclusions, @Nullable Model<Integer> tabIndexModel) {
         super(paperModel);
         this.callingPage = callingPage;
         this.searchOrderId = searchOrderId;
@@ -157,7 +159,7 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
      * @param callingPage
      *     page reference to the page that called this page. Can be null.
      */
-    public PaperEntryPage(PageParameters parameters, PageReference callingPage) {
+    public PaperEntryPage(@Nullable PageParameters parameters, @Nullable PageReference callingPage) {
         super(parameters);
         initDefaultModel();
         this.callingPage = callingPage;
@@ -194,7 +196,7 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
     }
 
     @Override
-    public void renderHead(final IHeaderResponse response) {
+    public void renderHead(@NotNull final IHeaderResponse response) {
         super.renderHead(response);
         response.render(CssHeaderItem.forReference(FontAwesome5CDNCSSReference.instance()));
     }
@@ -229,8 +231,10 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
                 PaperEntryPage.this.doUpdate();
             }
 
+            @NotNull
             @Override
-            protected PaperEntryPage getResponsePage(Paper p, Long searchOrderId, boolean showingExclusions) {
+            protected PaperEntryPage getResponsePage(@NotNull Paper p, @Nullable Long searchOrderId,
+                boolean showingExclusions) {
                 return new PaperEntryPage(Model.of(p), getCallingPage(), searchOrderId, showingExclusions,
                     tabIndexModel);
             }
@@ -262,7 +266,8 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
                 }
             }
         } catch (OptimisticLockingException ole) {
-            final String msg = new StringResourceModel("save.optimisticlockexception.hint", this, null)
+            @SuppressWarnings("SpellCheckingInspection") final String msg = new StringResourceModel(
+                "save.optimisticlockexception.hint", this, null)
                 .setParameters(ole.getTableName(), getNullSafeId())
                 .getString();
             log.error(msg);
@@ -293,13 +298,14 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
             resetFeedbackMessages();
     }
 
+    @NotNull
     @Override
     protected Form<Paper> getForm() {
         return contentPanel.getForm();
     }
 
     @Override
-    public void onEvent(final IEvent<?> event) {
+    public void onEvent(@NotNull final IEvent<?> event) {
         if (event
                 .getPayload()
                 .getClass() == NewsletterChangeEvent.class) {
@@ -311,5 +317,4 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
             event.dontBroadcastDeeper();
         }
     }
-
 }

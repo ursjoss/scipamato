@@ -1,5 +1,7 @@
 package ch.difty.scipamato.core.web;
 
+import org.jetbrains.annotations.NotNull;
+
 public enum CorePageParameters {
 
     SEARCH_ORDER_ID("searchOrderId"),
@@ -10,12 +12,12 @@ public enum CorePageParameters {
 
     private final String name;
 
-    CorePageParameters(final String name) {
+    CorePageParameters(@NotNull final String name) {
         this.name = name;
     }
 
+    @NotNull
     public String getName() {
         return name;
     }
-
 }

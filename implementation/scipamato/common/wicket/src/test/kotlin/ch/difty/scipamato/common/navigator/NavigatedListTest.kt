@@ -1,6 +1,5 @@
 package ch.difty.scipamato.common.navigator
 
-import ch.difty.scipamato.common.NullArgumentException
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
@@ -9,11 +8,6 @@ internal class NavigatedListTest {
 
     private val ids = listOf(13L, 2L, 5L, 27L, 7L, 3L, 30L)
     private val navigatedList = NavigatedList(ids)
-
-    @Test
-    fun passingNull_throws() {
-        Assertions.assertThrows(NullArgumentException::class.java) { NavigatedList<Long>(null) }
-    }
 
     @Test
     fun passingEmptyList_throws() {
@@ -59,11 +53,6 @@ internal class NavigatedListTest {
     @Test
     fun indexOfNewResultSet_isOnFirstItem() {
         assertThat(navigatedList.itemWithFocus).isEqualTo(ids[0])
-    }
-
-    @Test
-    fun settingCurrentItem_withNullParameter_throws() {
-        Assertions.assertThrows(NullArgumentException::class.java) { navigatedList.setFocusToItem(null) }
     }
 
     @Test
@@ -127,11 +116,6 @@ internal class NavigatedListTest {
         assertThat(navigatedList.hasPrevious()).isFalse()
         assertThat(navigatedList.itemWithFocus).isEqualTo(ids[0])
         assertThat(navigatedList.hasPrevious()).isFalse()
-    }
-
-    @Test
-    fun contains_withIdNull_returnsFalse() {
-        assertThat(navigatedList.containsId(null)).isFalse()
     }
 
     @Test

@@ -21,6 +21,8 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import ch.difty.scipamato.common.web.Mode;
 import ch.difty.scipamato.common.web.component.SerializableBiConsumer;
@@ -46,7 +48,7 @@ public class SearchOrderPanel extends BasePanel<SearchOrder> {
     @SpringBean
     private PageFactory pageFactory;
 
-    SearchOrderPanel(String id, IModel<SearchOrder> model, Mode mode) {
+    SearchOrderPanel(@NotNull String id, @Nullable IModel<SearchOrder> model, @NotNull Mode mode) {
         super(id, model, mode);
     }
 
@@ -86,7 +88,7 @@ public class SearchOrderPanel extends BasePanel<SearchOrder> {
             }
 
             @Override
-            protected void onSubmit(AjaxRequestTarget target) {
+            protected void onSubmit(@NotNull AjaxRequestTarget target) {
                 super.onSubmit(target);
                 setResponsePage(pageFunction.apply(modelProvider.get(), SearchOrderPanel.this
                     .getModelObject()
@@ -134,13 +136,13 @@ public class SearchOrderPanel extends BasePanel<SearchOrder> {
             }
 
             @Override
-            protected IModel<String> createIconModel(IModel<SearchCondition> rowModel) {
+            protected IModel<String> createIconModel(@NotNull IModel<SearchCondition> rowModel) {
                 return Model.of(trash.cssClassName() + " text-danger");
             }
 
             @Override
-            protected void onClickPerformed(AjaxRequestTarget target, IModel<SearchCondition> rowModel,
-                AjaxLink<Void> link) {
+            protected void onClickPerformed(@NotNull AjaxRequestTarget target,
+                @NotNull IModel<SearchCondition> rowModel, @NotNull AjaxLink<Void> link) {
                 if (isEntitledToModify(getModelObject())) {
                     consumer.accept(rowModel);
                     target.add(searchConditions);
@@ -155,5 +157,4 @@ public class SearchOrderPanel extends BasePanel<SearchOrder> {
             }
         };
     }
-
 }

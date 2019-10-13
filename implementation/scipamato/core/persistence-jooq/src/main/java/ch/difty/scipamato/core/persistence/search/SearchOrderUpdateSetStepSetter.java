@@ -4,11 +4,11 @@ import static ch.difty.scipamato.core.db.tables.SearchOrder.SEARCH_ORDER;
 
 import java.sql.Timestamp;
 
+import org.jetbrains.annotations.NotNull;
 import org.jooq.UpdateSetFirstStep;
 import org.jooq.UpdateSetMoreStep;
 import org.springframework.stereotype.Component;
 
-import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.UtilsKt;
 import ch.difty.scipamato.core.db.tables.records.SearchOrderRecord;
 import ch.difty.scipamato.core.entity.search.SearchCondition;
@@ -26,11 +26,10 @@ import ch.difty.scipamato.core.persistence.UpdateSetStepSetter;
 @Component
 public class SearchOrderUpdateSetStepSetter implements UpdateSetStepSetter<SearchOrderRecord, SearchOrder> {
 
+    @NotNull
     @Override
-    public UpdateSetMoreStep<SearchOrderRecord> setFieldsFor(UpdateSetFirstStep<SearchOrderRecord> step,
-        SearchOrder e) {
-        AssertAs.INSTANCE.notNull(step, "step");
-        AssertAs.INSTANCE.notNull(e, "entity");
+    public UpdateSetMoreStep<SearchOrderRecord> setFieldsFor(@NotNull UpdateSetFirstStep<SearchOrderRecord> step,
+        @NotNull SearchOrder e) {
         final Timestamp created = e.getCreated() == null ? null : UtilsKt.toTimestamp(e.getCreated());
         final Timestamp lastMod = e.getLastModified() == null ? null : UtilsKt.toTimestamp(e.getLastModified());
         return step
@@ -44,5 +43,4 @@ public class SearchOrderUpdateSetStepSetter implements UpdateSetStepSetter<Searc
             .set(SEARCH_ORDER.LAST_MODIFIED_BY, e.getLastModifiedBy())
             .set(SEARCH_ORDER.VERSION, e.getVersion() + 1);
     }
-
 }

@@ -23,7 +23,7 @@ import ch.difty.scipamato.core.entity.search.PaperFilter;
 import ch.difty.scipamato.core.pubmed.PubmedArticleResult;
 import ch.difty.scipamato.core.web.paper.search.PaperSearchPage;
 
-@SuppressWarnings("SpellCheckingInspection")
+@SuppressWarnings({ "CatchMayIgnoreException", "SpellCheckingInspection" })
 class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
 
     @Override
@@ -653,5 +653,4 @@ class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
         verify(callingPageMock).getPage();
         verify(newsletterServiceMock).canCreateNewsletterInProgress();
     }
-
 }

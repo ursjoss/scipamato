@@ -5,6 +5,7 @@ import static ch.difty.scipamato.core.db.tables.PaperNewsletter.PAPER_NEWSLETTER
 
 import java.util.List;
 
+import org.jetbrains.annotations.NotNull;
 import org.jooq.Condition;
 import org.jooq.impl.DSL;
 
@@ -23,7 +24,7 @@ import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic;
 public class NewsletterFilterConditionMapper extends AbstractFilterConditionMapper<NewsletterFilter> {
 
     @Override
-    public void map(final NewsletterFilter filter, final List<Condition> conditions) {
+    public void map(@NotNull final NewsletterFilter filter, @NotNull final List<Condition> conditions) {
         final String issueMask = filter.getIssueMask();
         if (issueMask != null) {
             final String likeExpression = "%" + issueMask + "%";
@@ -43,5 +44,4 @@ public class NewsletterFilterConditionMapper extends AbstractFilterConditionMapp
                 .where(PAPER_NEWSLETTER.NEWSLETTER_TOPIC_ID.eq(DSL.val(newsletterTopic.getId())))));
         }
     }
-
 }

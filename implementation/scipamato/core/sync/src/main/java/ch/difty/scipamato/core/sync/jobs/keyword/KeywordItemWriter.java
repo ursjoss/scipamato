@@ -2,6 +2,7 @@ package ch.difty.scipamato.core.sync.jobs.keyword;
 
 import static ch.difty.scipamato.publ.db.tables.Keyword.KEYWORD;
 
+import org.jetbrains.annotations.NotNull;
 import org.jooq.DSLContext;
 import org.springframework.batch.item.ItemWriter;
 
@@ -22,12 +23,12 @@ import ch.difty.scipamato.core.sync.jobs.ScipamatoItemWriter;
  */
 public class KeywordItemWriter extends ScipamatoItemWriter<PublicKeyword> {
 
-    public KeywordItemWriter(final DSLContext jooqDslContextPublic) {
+    public KeywordItemWriter(@NotNull final DSLContext jooqDslContextPublic) {
         super(jooqDslContextPublic, "keyword");
     }
 
     @Override
-    protected int executeUpdate(final PublicKeyword c) {
+    protected int executeUpdate(@NotNull final PublicKeyword c) {
         return getDslContext()
             .insertInto(KEYWORD)
             .columns(KEYWORD.ID, KEYWORD.KEYWORD_ID, KEYWORD.LANG_CODE, KEYWORD.NAME, KEYWORD.VERSION, KEYWORD.CREATED,
@@ -47,5 +48,4 @@ public class KeywordItemWriter extends ScipamatoItemWriter<PublicKeyword> {
             .where(KEYWORD.ID.eq(c.getId()))
             .execute();
     }
-
 }

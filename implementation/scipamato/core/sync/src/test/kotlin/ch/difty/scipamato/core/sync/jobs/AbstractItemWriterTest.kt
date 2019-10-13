@@ -13,7 +13,7 @@ abstract class AbstractItemWriterTest<T, W : ItemWriter<T>> {
 
     private lateinit var writer: W
 
-    protected abstract fun newWriter(dslContextMock: DSLContext?): W
+    protected abstract fun newWriter(dslContextMock: DSLContext): W
 
     @BeforeEach
     internal fun setUp() {

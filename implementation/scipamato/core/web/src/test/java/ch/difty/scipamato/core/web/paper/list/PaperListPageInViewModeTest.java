@@ -50,5 +50,4 @@ class PaperListPageInViewModeTest extends PaperListPageTest {
         getTester().assertInvisible(b + ":newPaper");
         getTester().assertInvisible(b + ":showXmlPasteModalLink");
     }
-
 }

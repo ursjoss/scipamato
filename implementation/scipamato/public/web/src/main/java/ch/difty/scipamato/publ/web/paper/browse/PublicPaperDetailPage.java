@@ -16,6 +16,7 @@ import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.jetbrains.annotations.Nullable;
 import org.wicketstuff.annotation.mount.MountPath;
 
 import ch.difty.scipamato.common.navigator.ItemNavigator;
@@ -50,8 +51,7 @@ public class PublicPaperDetailPage extends BasePage<PublicPaper> {
      * @param parameters
      *     page parameters
      */
-    @SuppressWarnings("WeakerAccess")
-    public PublicPaperDetailPage(final PageParameters parameters) {
+    public PublicPaperDetailPage(@Nullable final PageParameters parameters) {
         this(parameters, null);
     }
 
@@ -66,14 +66,16 @@ public class PublicPaperDetailPage extends BasePage<PublicPaper> {
      *     PageReference that will be used to forward to if the user clicks
      *     the back button.
      */
-    public PublicPaperDetailPage(final PageParameters parameters, final PageReference callingPageRef) {
+    public PublicPaperDetailPage(@Nullable final PageParameters parameters,
+        @Nullable final PageReference callingPageRef) {
         super(parameters);
         this.callingPageRef = callingPageRef;
 
         tryLoadingRecord(parameters);
     }
 
-    PublicPaperDetailPage(final IModel<PublicPaper> paperModel, final PageReference callingPageRef) {
+    PublicPaperDetailPage(@Nullable final IModel<PublicPaper> paperModel,
+        @Nullable final PageReference callingPageRef) {
         super(paperModel);
         this.callingPageRef = callingPageRef;
     }
@@ -234,5 +236,4 @@ public class PublicPaperDetailPage extends BasePage<PublicPaper> {
     private Label newField(final String id, final String property) {
         return new Label(id, new PropertyModel<PublicPaper>(getModel(), property));
     }
-
 }

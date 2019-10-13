@@ -6,6 +6,7 @@ import java.util.List;
 import de.agilecoders.wicket.core.settings.Theme;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.HeaderItem;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Java representation of the SciPaMaTo-Public Theme. Is based on TODC Bootstrap
@@ -40,7 +41,7 @@ public class ScipamatoPublicTheme extends Theme {
      * @param name
      *     name for the theme
      */
-    public ScipamatoPublicTheme(final boolean useLessOverCss, final String name) {
+    public ScipamatoPublicTheme(final boolean useLessOverCss, @NotNull final String name) {
         super(name);
         this.useLessOverCss = useLessOverCss;
     }
@@ -57,6 +58,7 @@ public class ScipamatoPublicTheme extends Theme {
         this(useLessOverCss, "scipamato-public");
     }
 
+    @NotNull
     @Override
     public List<HeaderItem> getDependencies() {
         return Collections.singletonList(makeHeaderItem());

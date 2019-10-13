@@ -1,9 +1,11 @@
 package ch.difty.scipamato.core.pubmed;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
-import ch.difty.scipamato.common.AssertAs;
+import org.jetbrains.annotations.NotNull;
+
 import ch.difty.scipamato.core.pubmed.api.AuthorList;
 import ch.difty.scipamato.core.pubmed.api.BookDocument;
 import ch.difty.scipamato.core.pubmed.api.LocationLabel;
@@ -23,10 +25,9 @@ import ch.difty.scipamato.core.pubmed.api.PubmedBookArticle;
  */
 class ScipamatoPubmedBookArticle extends AbstractPubmedArticleFacade {
 
-    ScipamatoPubmedBookArticle(final PubmedBookArticle pubmedBookArticle) {
-        AssertAs.INSTANCE.notNull(pubmedBookArticle, "pubmedBookArticle");
-        final BookDocument bookDocument = AssertAs.INSTANCE.notNull(pubmedBookArticle.getBookDocument(),
-            "pubmedBookArticle.bookDocument");
+    ScipamatoPubmedBookArticle(@NotNull final PubmedBookArticle pubmedBookArticle) {
+        final BookDocument bookDocument = pubmedBookArticle.getBookDocument();
+        Objects.requireNonNull(bookDocument);
         final List<AuthorList> authorLists = bookDocument.getAuthorList();
 
         setPmId(bookDocument.getPMID() != null ?
@@ -62,5 +63,4 @@ class ScipamatoPubmedBookArticle extends AbstractPubmedArticleFacade {
             .map(LocationLabel::getvalue)
             .collect(Collectors.joining(" - "));
     }
-
 }

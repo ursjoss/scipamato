@@ -86,5 +86,4 @@ class SearchOrderChangeEventTest {
             .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
             .verify();
     }
-
 }

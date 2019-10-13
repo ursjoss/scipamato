@@ -2,7 +2,9 @@ package ch.difty.scipamato.core.persistence.keyword;
 
 import java.util.List;
 
-import ch.difty.scipamato.common.NullArgumentException;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.core.entity.keyword.Keyword;
 import ch.difty.scipamato.core.entity.keyword.KeywordDefinition;
@@ -18,7 +20,8 @@ public interface KeywordRepository {
      *     the language code, e.g. 'en' or 'de'
      * @return a list of keywords
      */
-    List<Keyword> findAll(String languageCode);
+    @NotNull
+    List<Keyword> findAll(@NotNull String languageCode);
 
     /**
      * Find the {@link KeywordDefinition} with the provided id
@@ -27,6 +30,7 @@ public interface KeywordRepository {
      *     the id of the record
      * @return the {@link KeywordDefinition} or null if not found
      */
+    @Nullable
     KeywordDefinition findKeywordDefinitionById(int id);
 
     /**
@@ -39,7 +43,9 @@ public interface KeywordRepository {
      *     context defining paging and sorting
      * @return a page of {@link KeywordDefinition}s as list
      */
-    List<KeywordDefinition> findPageOfKeywordDefinitions(KeywordFilter filter, PaginationContext paginationContext);
+    @NotNull
+    List<KeywordDefinition> findPageOfKeywordDefinitions(@Nullable KeywordFilter filter,
+        @NotNull PaginationContext paginationContext);
 
     /**
      * Counts the number of {@link KeywordDefinition}s matching the specified filter.
@@ -48,11 +54,12 @@ public interface KeywordRepository {
      *     of type KeywordFilter
      * @return keyword count
      */
-    int countByFilter(KeywordFilter filter);
+    int countByFilter(@Nullable KeywordFilter filter);
 
     /**
      * @return the main language code as string
      */
+    @NotNull
     String getMainLanguage();
 
     /**
@@ -61,6 +68,7 @@ public interface KeywordRepository {
      *
      * @return the unpersisted entity
      */
+    @NotNull
     KeywordDefinition newUnpersistedKeywordDefinition();
 
     /**
@@ -72,10 +80,9 @@ public interface KeywordRepository {
      * @return the persisted entity, including the generated id and default values - or
      *     {@code null} if it can't be added. Only the version field is populated out of
      *     all the audit fields.
-     * @throws NullArgumentException
-     *     if the entity is null.
      */
-    KeywordDefinition insert(KeywordDefinition entity);
+    @Nullable
+    KeywordDefinition insert(@NotNull KeywordDefinition entity);
 
     /**
      * Update an already persisted {@link KeywordDefinition} including its associated
@@ -87,12 +94,11 @@ public interface KeywordRepository {
      * @return the updated persisted entity, including the generated id and default values - or
      *     {@code null} if it can't be added. Only the version field is populated out of
      *     all the audit fields.
-     * @throws NullArgumentException
-     *     if the entity is null.
      * @throws OptimisticLockingException
      *     if the record version has increased in the mean time
      */
-    KeywordDefinition update(KeywordDefinition entity);
+    @Nullable
+    KeywordDefinition update(@NotNull KeywordDefinition entity);
 
     /**
      * Remove the persisted entity with the provided id.
@@ -102,10 +108,9 @@ public interface KeywordRepository {
      * @param version
      *     the record version - used for optimistic locking
      * @return the deleted entity
-     * @throws NullArgumentException
-     *     if the id is null.
      * @throws OptimisticLockingException
      *     if the record version has increased in the mean time
      */
-    KeywordDefinition delete(Integer id, int version);
+    @Nullable
+    KeywordDefinition delete(@NotNull Integer id, int version);
 }

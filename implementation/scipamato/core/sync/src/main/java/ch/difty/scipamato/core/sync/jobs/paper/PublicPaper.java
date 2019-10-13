@@ -4,6 +4,8 @@ import java.sql.Timestamp;
 
 import lombok.Builder;
 import lombok.experimental.Delegate;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import ch.difty.scipamato.publ.db.tables.pojos.Paper;
 
@@ -25,11 +27,13 @@ public class PublicPaper extends Paper {
     private final Paper delegate;
 
     @Builder
-    private PublicPaper(final Long id, final Long number, final Integer pmId, final String authors, final String title,
-        final String location, final Integer publicationYear, final String goals, final String methods,
-        final String population, final String result, final String comment, final Short[] codesPopulation,
-        final Short[] codesStudyDesign, final String[] codes, final Integer version, final Timestamp created,
-        final Timestamp lastModified, final Timestamp lastSynched) {
+    private PublicPaper(@NotNull final Long id, @NotNull final Long number, @Nullable final Integer pmId,
+        @Nullable final String authors, @Nullable final String title, @Nullable final String location,
+        @Nullable final Integer publicationYear, @Nullable final String goals, @Nullable final String methods,
+        @Nullable final String population, @Nullable final String result, @Nullable final String comment,
+        @NotNull final Short[] codesPopulation, @NotNull final Short[] codesStudyDesign, @NotNull final String[] codes,
+        @Nullable final Integer version, @Nullable final Timestamp created, @Nullable final Timestamp lastModified,
+        @NotNull final Timestamp lastSynched) {
         delegate = new Paper();
         delegate.setId(id);
         delegate.setNumber(number);
@@ -51,5 +55,4 @@ public class PublicPaper extends Paper {
         delegate.setLastModified(lastModified);
         delegate.setLastSynched(lastSynched);
     }
-
 }

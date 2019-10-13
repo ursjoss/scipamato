@@ -16,12 +16,10 @@ internal class RisAdapterFactoryTest {
         assertThat(risAdapter).isInstanceOf(DefaultRisAdapter::class.java)
     }
 
-
     @Test
     fun distillerSrRisExporter() {
         val factory = RisAdapterFactory.create(RisExporterStrategy.DISTILLERSR)
         val risAdapter = factory.createRisAdapter("brand", "iu", "pu")
         assertThat(risAdapter).isInstanceOf(DistillerSrRisAdapter::class.java)
     }
-
 }

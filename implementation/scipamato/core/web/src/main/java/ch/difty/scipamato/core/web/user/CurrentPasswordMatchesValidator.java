@@ -3,9 +3,8 @@ package ch.difty.scipamato.core.web.user;
 import org.apache.wicket.validation.IValidatable;
 import org.apache.wicket.validation.IValidator;
 import org.apache.wicket.validation.ValidationError;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import ch.difty.scipamato.common.AssertAs;
 
 /**
  * Validator to verify if the text field contains a password that matches
@@ -18,14 +17,14 @@ class CurrentPasswordMatchesValidator implements IValidator<String> {
     private final PasswordEncoder passwordEncoder;
     private final String          currentPasswordHashPersisted;
 
-    public CurrentPasswordMatchesValidator(PasswordEncoder passwordEncoder, final String currentPasswordHashPersisted) {
-        this.passwordEncoder = AssertAs.INSTANCE.notNull(passwordEncoder, "passwordEncoder");
-        this.currentPasswordHashPersisted = AssertAs.INSTANCE.notNull(currentPasswordHashPersisted,
-            "currentPasswordHashPersisted");
+    public CurrentPasswordMatchesValidator(@NotNull PasswordEncoder passwordEncoder,
+        @NotNull final String currentPasswordHashPersisted) {
+        this.passwordEncoder = passwordEncoder;
+        this.currentPasswordHashPersisted = currentPasswordHashPersisted;
     }
 
     @Override
-    public void validate(final IValidatable<String> validatable) {
+    public void validate(@NotNull final IValidatable<String> validatable) {
         final String pwCandidate = validatable.getValue();
         if (!passwordEncoder.matches(pwCandidate, currentPasswordHashPersisted)) {
             ValidationError error = new ValidationError();
@@ -33,5 +32,4 @@ class CurrentPasswordMatchesValidator implements IValidator<String> {
             validatable.error(error);
         }
     }
-
 }

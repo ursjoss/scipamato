@@ -1,5 +1,8 @@
 package ch.difty.scipamato.core.persistence;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import ch.difty.scipamato.common.entity.filter.ScipamatoFilter;
 import ch.difty.scipamato.core.entity.CoreEntity;
 import ch.difty.scipamato.core.entity.IdScipamatoEntity;
@@ -28,7 +31,8 @@ public interface EntityService<ID extends Number, T extends IdScipamatoEntity<ID
      * @throws OptimisticLockingException
      *     if the record version has increased in the mean time
      */
-    T saveOrUpdate(T entity);
+    @Nullable
+    T saveOrUpdate(@NotNull T entity);
 
     /**
      * Removes the provided entity.
@@ -38,6 +42,5 @@ public interface EntityService<ID extends Number, T extends IdScipamatoEntity<ID
      * @throws OptimisticLockingException
      *     if the record version has increased in the mean time
      */
-    void remove(T entity);
-
+    void remove(@Nullable T entity);
 }

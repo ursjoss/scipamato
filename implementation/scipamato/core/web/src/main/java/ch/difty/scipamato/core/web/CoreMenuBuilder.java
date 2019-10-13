@@ -8,9 +8,9 @@ import org.apache.wicket.Page;
 import org.apache.wicket.markup.html.link.AbstractLink;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 
-import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.config.ApplicationProperties;
 import ch.difty.scipamato.common.web.ScipamatoWebSessionFacade;
 import ch.difty.scipamato.common.web.pages.AbstractMenuBuilder;
@@ -37,16 +37,13 @@ public class CoreMenuBuilder extends AbstractMenuBuilder {
 
     private static final long serialVersionUID = 1L;
 
-    public CoreMenuBuilder(final ApplicationProperties applicationProperties,
-        final ScipamatoWebSessionFacade webSessionFacade) {
+    public CoreMenuBuilder(@NotNull final ApplicationProperties applicationProperties,
+        @NotNull final ScipamatoWebSessionFacade webSessionFacade) {
         super(applicationProperties, webSessionFacade);
     }
 
     @Override
-    public void addMenuLinksTo(final Navbar navbar, final Page page) {
-        AssertAs.INSTANCE.notNull(navbar, "navbar");
-        AssertAs.INSTANCE.notNull(page, "page");
-
+    public void addMenuLinksTo(@NotNull final Navbar navbar, @NotNull final Page page) {
         newMenu(navbar, page, "papers", GlyphIconType.paperclip, l -> addPaperMenuEntries(l, page));
         if (hasOneOfRoles(Roles.USER, Roles.ADMIN)) {
             newMenu(navbar, page, "newsletters", GlyphIconType.book, l -> addNewsletterMenuEntries(l, page));
@@ -103,5 +100,4 @@ public class CoreMenuBuilder extends AbstractMenuBuilder {
             addEntryToMenu(labelParent + "password", page, UserEditPage.class, GlyphIconType.pencil, links, pp2);
         }
     }
-
 }

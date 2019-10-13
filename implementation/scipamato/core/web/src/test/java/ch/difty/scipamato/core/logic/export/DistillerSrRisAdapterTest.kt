@@ -10,9 +10,9 @@ import org.junit.jupiter.api.Test
 internal class DistillerSrRisAdapterTest {
 
     private val adapter = DistillerSrRisAdapter(
-            dbName = "scipamato",
-            internalUrl = "http://localhost:8080/",
-            publicUrl = "https://scipamato.ch/"
+        dbName = "scipamato",
+        internalUrl = "http://localhost:8080/",
+        publicUrl = "https://scipamato.ch/"
     )
 
     val paper = Paper().apply {
@@ -31,7 +31,7 @@ internal class DistillerSrRisAdapterTest {
     fun buildingWitExplicitlyBlankSortOrder_sortsMostlyAlphabetically() {
         // TY always first, ER always last
         val expected =
-                """TY  - JOUR
+            """TY  - JOUR
                   |AB  - original abstract
                   |AU  - Bond,J.
                   |C1  - goals
@@ -54,7 +54,7 @@ internal class DistillerSrRisAdapterTest {
     fun buildingWitoutExplicitSortOrder() {
         // TY always first, ER always last
         val expected =
-                """TY  - JOUR
+            """TY  - JOUR
                   |AU  - Bond,J.
                   |PY  - 2019
                   |TI  - title
@@ -76,7 +76,7 @@ internal class DistillerSrRisAdapterTest {
     @Test
     fun canParseSimplePaperWithOneAuthorAndSipleButNonParseableLocation() {
         val expected =
-                """TY  - JOUR
+            """TY  - JOUR
                   |AU  - Bond,J.
                   |PY  - 2019
                   |TI  - title
@@ -97,15 +97,17 @@ internal class DistillerSrRisAdapterTest {
 
     @Test
     fun canParseVariousAuthors() {
-        val p = paper.apply { authors = "Bond J, Künzli N, Kutlar Joss M, Probst-Hensch N, D'Agostino RB Sr, Nhung NTT, Some Institute." }
+        val p = paper.apply {
+            authors = "Bond J, Künzli N, Kutlar Joss M, Probst-Hensch N, D'Agostino RB Sr, Nhung NTT, Some Institute."
+        }
         val expectedParts = setOf(
-                "AU  - Bond,J.",
-                "AU  - Künzli,N.",
-                "AU  - Kutlar Joss,M.",
-                "AU  - Probst-Hensch,N.",
-                "AU  - D'Agostino,RB.,Sr.",
-                "AU  - Nhung,NTT.",
-                "AU  - Some Institute."
+            "AU  - Bond,J.",
+            "AU  - Künzli,N.",
+            "AU  - Kutlar Joss,M.",
+            "AU  - Probst-Hensch,N.",
+            "AU  - D'Agostino,RB.,Sr.",
+            "AU  - Nhung,NTT.",
+            "AU  - Some Institute."
         )
         val ris = adapter.build(listOf(p))
         assertThat(ris.split("\n")).containsAll(expectedParts)
@@ -116,15 +118,15 @@ internal class DistillerSrRisAdapterTest {
         val loc = "Int J Public Health. 2017; 62 (4): 453-462."
         val p = paper.apply { location = loc }
         val expectedParts = setOf(
-                "JO  - Int J Public Health",
-                "VL  - 62",
-                "IS  - 4",
-                "SP  - 453-462",
-                "EP  - 462",
-                "M2  - 453"
+            "JO  - Int J Public Health",
+            "VL  - 62",
+            "IS  - 4",
+            "SP  - 453-462",
+            "EP  - 462",
+            "M2  - 453"
         )
         val unexpectedParts = setOf(
-                "JO  - $loc"
+            "JO  - $loc"
         )
         val ris = adapter.build(listOf(p))
         assertThat(ris.split("\n")).containsAll(expectedParts)
@@ -135,15 +137,15 @@ internal class DistillerSrRisAdapterTest {
     fun canParseLocationContainingTwoComponentIssue() {
         val p = paper.apply { location = "Int J Hyg Environ Health. 2016; 219 (4-5): 356-363." }
         val expectedParts = setOf(
-                "JO  - Int J Hyg Environ Health",
-                "VL  - 219",
-                "IS  - 4-5",
-                "SP  - 356-363",
-                "EP  - 363",
-                "M2  - 356"
+            "JO  - Int J Hyg Environ Health",
+            "VL  - 219",
+            "IS  - 4-5",
+            "SP  - 356-363",
+            "EP  - 363",
+            "M2  - 356"
         )
         val unexpectedParts = setOf(
-                "JO  - Int J Hyg Environ Health. 2016; 219 (4-5): 356-363."
+            "JO  - Int J Hyg Environ Health. 2016; 219 (4-5): 356-363."
         )
         val ris = adapter.build(listOf(p))
         assertThat(ris.split("\n")).containsAll(expectedParts)
@@ -155,13 +157,13 @@ internal class DistillerSrRisAdapterTest {
         val loc = "Part Fibre Toxicol. 2015; 12: 6."
         val p = paper.apply { location = loc }
         val expectedParts = setOf(
-                "JO  - Part Fibre Toxicol",
-                "VL  - 12",
-                "SP  - 6",
-                "M2  - 6"
+            "JO  - Part Fibre Toxicol",
+            "VL  - 12",
+            "SP  - 6",
+            "M2  - 6"
         )
         val unexpectedParts = setOf(
-                "JO  - $loc"
+            "JO  - $loc"
         )
         val ris = adapter.build(listOf(p))
         assertThat(ris.split("\n")).containsAll(expectedParts)
@@ -174,14 +176,14 @@ internal class DistillerSrRisAdapterTest {
         val loc = "J Pediatr. 2016; 177: 179-183. e1."
         val p = paper.apply { location = loc }
         val expectedParts = setOf(
-                "JO  - J Pediatr",
-                "VL  - 177",
-                "SP  - 179-183",
-                "EP  - 183",
-                "M2  - 179"
+            "JO  - J Pediatr",
+            "VL  - 177",
+            "SP  - 179-183",
+            "EP  - 183",
+            "M2  - 179"
         )
         val unexpectedParts = setOf(
-                "JO  - $loc"
+            "JO  - $loc"
         )
         val ris = adapter.build(listOf(p))
         assertThat(ris.split("\n")).containsAll(expectedParts)
@@ -193,12 +195,12 @@ internal class DistillerSrRisAdapterTest {
         val loc = "PLoS One. 2013; 8 (9): e75001."
         val p = paper.apply { location = loc }
         val expectedParts = setOf(
-                "JO  - PLoS One",
-                "VL  - 8",
-                "IS  - 9"
+            "JO  - PLoS One",
+            "VL  - 8",
+            "IS  - 9"
         )
         val unexpectedParts = setOf(
-                "J1 -  $loc"
+            "J1 -  $loc"
         )
         val ris = adapter.build(listOf(p))
         assertThat(ris.split("\n")).containsAll(expectedParts)
@@ -211,14 +213,14 @@ internal class DistillerSrRisAdapterTest {
         val loc = "Sci Total Environ. 2012; 427-428: 191-202."
         val p = paper.apply { location = loc }
         val expectedParts = setOf(
-                "JO  - Sci Total Environ",
-                "VL  - 427-428",
-                "SP  - 191-202",
-                "EP  - 202",
-                "M2  - 191"
+            "JO  - Sci Total Environ",
+            "VL  - 427-428",
+            "SP  - 191-202",
+            "EP  - 202",
+            "M2  - 191"
         )
         val unexpectedParts = setOf(
-                "JO  - $loc"
+            "JO  - $loc"
         )
         val ris = adapter.build(listOf(p))
         assertThat(ris.split("\n")).containsAll(expectedParts)
@@ -230,12 +232,12 @@ internal class DistillerSrRisAdapterTest {
     fun canParseLocationWithOnlyElectronicPaginationx() {
         val p = paper.apply { location = "PLoS One. 2013; 8 (9): e75001." }
         val expectedParts = setOf(
-                "JO  - PLoS One",
-                "VL  - 8",
-                "IS  - 9"
+            "JO  - PLoS One",
+            "VL  - 8",
+            "IS  - 9"
         )
         val unexpectedParts = setOf(
-                "PLoS One. 2013; 8 (9): e75001."
+            "PLoS One. 2013; 8 (9): e75001."
         )
         val ris = adapter.build(listOf(p))
         assertThat(ris.split("\n")).containsAll(expectedParts)
@@ -243,21 +245,20 @@ internal class DistillerSrRisAdapterTest {
         assertThat(ris).doesNotContain("EP -  ")
     }
 
-
     @Test
     fun canParseLocationNotContainingIssue() {
         val loc = "Environ Pollut. 2017; 230: 1000-1008."
         val p = paper.apply { location = loc }
         val expectedParts = setOf(
-                "JO  - Environ Pollut",
-                "VL  - 230",
-                "SP  - 1000-1008",
-                "EP  - 1008",
-                "M2  - 1000"
+            "JO  - Environ Pollut",
+            "VL  - 230",
+            "SP  - 1000-1008",
+            "EP  - 1008",
+            "M2  - 1000"
         )
         val unexpectedParts = setOf(
-                "IS  -",
-                "JO  - $loc"
+            "IS  -",
+            "JO  - $loc"
         )
         val ris = adapter.build(listOf(p))
         assertThat(ris.split("\n")).containsAll(expectedParts)
@@ -267,12 +268,12 @@ internal class DistillerSrRisAdapterTest {
     @Test
     fun withoutInternalUrl_doesNotBuildLK() {
         val adapter = DistillerSrRisAdapter(
-                dbName = "scipamato",
-                internalUrl = null,
-                publicUrl = "https://scipamato.ch/"
+            dbName = "scipamato",
+            internalUrl = null,
+            publicUrl = "https://scipamato.ch/"
         )
         val expected =
-                """TY  - JOUR
+            """TY  - JOUR
                   |AU  - Bond,J.
                   |PY  - 2019
                   |TI  - title
@@ -290,16 +291,15 @@ internal class DistillerSrRisAdapterTest {
         assertThat(adapter.build(listOf(paper))).isEqualTo(expected)
     }
 
-
     @Test
     fun withoutPublicUrl_doesNotBuildL1() {
         val adapter = DistillerSrRisAdapter(
-                dbName = "scipamato",
-                internalUrl = "https://localhost:8081/",
-                publicUrl = null
+            dbName = "scipamato",
+            internalUrl = "https://localhost:8081/",
+            publicUrl = null
         )
         val expected =
-                """TY  - JOUR
+            """TY  - JOUR
                   |AU  - Bond,J.
                   |PY  - 2019
                   |TI  - title
@@ -324,7 +324,7 @@ internal class DistillerSrRisAdapterTest {
             goals = null
         }
         val expected =
-                """TY  - JOUR
+            """TY  - JOUR
                   |AU  - Bond,J.
                   |PY  - 2019
                   |TI  - title
@@ -355,7 +355,7 @@ internal class DistillerSrRisAdapterTest {
             originalAbstract = "original abstract"
         }
         val expected =
-                """TY  - JOUR
+            """TY  - JOUR
                   |AU  - Bond,J.
                   |AU  - Bourne,J.
                   |PY  - 2019

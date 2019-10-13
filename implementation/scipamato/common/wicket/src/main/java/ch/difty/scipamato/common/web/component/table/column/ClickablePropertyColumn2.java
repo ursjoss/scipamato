@@ -1,6 +1,8 @@
 package ch.difty.scipamato.common.web.component.table.column;
 
 import org.apache.wicket.model.IModel;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import ch.difty.scipamato.common.web.component.SerializableBiConsumer;
 import ch.difty.scipamato.common.web.component.SerializableSupplier;
@@ -31,26 +33,28 @@ public class ClickablePropertyColumn2<T, S, U> extends AbstractClickableProperty
     private final SerializableBiConsumer<IModel<T>, U> biConsumer;
     private final SerializableSupplier<U>              supplier;
 
-    public ClickablePropertyColumn2(final IModel<String> displayModel, final String property,
-        final SerializableBiConsumer<IModel<T>, U> biConsumer, final SerializableSupplier<U> supplier) {
+    public ClickablePropertyColumn2(@NotNull final IModel<String> displayModel, @Nullable final String property,
+        @NotNull final SerializableBiConsumer<IModel<T>, U> biConsumer,
+        @NotNull final SerializableSupplier<U> supplier) {
         this(displayModel, null, property, biConsumer, supplier, false);
     }
 
-    public ClickablePropertyColumn2(final IModel<String> displayModel, final S sort, final String property,
-        final SerializableBiConsumer<IModel<T>, U> biConsumer, final SerializableSupplier<U> supplier) {
+    public ClickablePropertyColumn2(@NotNull final IModel<String> displayModel, @Nullable final S sort,
+        @NotNull final String property, @NotNull final SerializableBiConsumer<IModel<T>, U> biConsumer,
+        @NotNull final SerializableSupplier<U> supplier) {
         this(displayModel, sort, property, biConsumer, supplier, false);
     }
 
-    public ClickablePropertyColumn2(final IModel<String> displayModel, final S sort, final String property,
-        final SerializableBiConsumer<IModel<T>, U> biConsumer, final SerializableSupplier<U> supplier,
-        final boolean inNewTab) {
+    public ClickablePropertyColumn2(@NotNull final IModel<String> displayModel, @Nullable final S sort,
+        @NotNull final String property, @NotNull final SerializableBiConsumer<IModel<T>, U> biConsumer,
+        @NotNull final SerializableSupplier<U> supplier, final boolean inNewTab) {
         super(displayModel, sort, property, inNewTab);
         this.biConsumer = biConsumer;
         this.supplier = supplier;
     }
 
     @Override
-    protected void onClick(final IModel<T> clicked) {
+    protected void onClick(@NotNull final IModel<T> clicked) {
         biConsumer.accept(clicked, supplier.get());
     }
 

@@ -106,5 +106,4 @@ class PaperLiteratureReviewDataSourceTest extends PaperDataSourceTest {
         verify(paperMock).getDoi();
         verify(paperMock).getPmId();
     }
-
 }

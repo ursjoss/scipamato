@@ -24,6 +24,8 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import ch.difty.scipamato.common.web.Mode;
 import ch.difty.scipamato.core.entity.search.SearchOrder;
@@ -68,7 +70,7 @@ public class SearchOrderSelectorPanel extends BasePanel<SearchOrder> {
     private AjaxCheckBox                 showExcluded;
     private Label                        showExcludedLabel;
 
-    SearchOrderSelectorPanel(String id, IModel<SearchOrder> model, Mode mode) {
+    SearchOrderSelectorPanel(@NotNull String id, @Nullable IModel<SearchOrder> model, @NotNull Mode mode) {
         super(id, model, mode);
     }
 
@@ -103,7 +105,7 @@ public class SearchOrderSelectorPanel extends BasePanel<SearchOrder> {
             private static final long serialVersionUID = 1L;
 
             @Override
-            protected void onUpdate(AjaxRequestTarget target) {
+            protected void onUpdate(@NotNull AjaxRequestTarget target) {
                 modelChanged();
                 target.add(global);
                 target.add(name);
@@ -133,7 +135,7 @@ public class SearchOrderSelectorPanel extends BasePanel<SearchOrder> {
             private static final long serialVersionUID = 1L;
 
             @Override
-            protected void onUpdate(AjaxRequestTarget target) {
+            protected void onUpdate(@NotNull AjaxRequestTarget target) {
                 saveOrUpdate();
                 target.add(name);
                 target.add(global);
@@ -156,7 +158,7 @@ public class SearchOrderSelectorPanel extends BasePanel<SearchOrder> {
             }
 
             @Override
-            protected void onChange(Boolean value, AjaxRequestTarget target) {
+            protected void onChange(@Nullable Boolean value, @NotNull AjaxRequestTarget target) {
                 super.onChange(value, target);
                 saveOrUpdate();
                 target.add(searchOrder);
@@ -175,7 +177,7 @@ public class SearchOrderSelectorPanel extends BasePanel<SearchOrder> {
             private static final long serialVersionUID = 1L;
 
             @Override
-            protected void onSubmit(AjaxRequestTarget target) {
+            protected void onSubmit(@NotNull AjaxRequestTarget target) {
                 super.onSubmit(target);
                 target.add(name);
                 target.add(global);
@@ -225,7 +227,7 @@ public class SearchOrderSelectorPanel extends BasePanel<SearchOrder> {
             }
 
             @Override
-            protected void onSubmit(AjaxRequestTarget target) {
+            protected void onSubmit(@NotNull AjaxRequestTarget target) {
                 super.onSubmit(target);
                 if (getModelObject() != null) {
                     searchOrderService.remove(getModelObject());
@@ -254,7 +256,7 @@ public class SearchOrderSelectorPanel extends BasePanel<SearchOrder> {
             }
 
             @Override
-            protected void onUpdate(AjaxRequestTarget target) {
+            protected void onUpdate(@NotNull AjaxRequestTarget target) {
                 target.add(showExcluded);
                 target.add(showExcludedLabel);
                 send(getPage(), Broadcast.BREADTH, new ToggleExclusionsEvent(target));
@@ -275,5 +277,4 @@ public class SearchOrderSelectorPanel extends BasePanel<SearchOrder> {
         showExcludedLabel.setOutputMarkupPlaceholderTag(true);
         queue(showExcludedLabel);
     }
-
 }

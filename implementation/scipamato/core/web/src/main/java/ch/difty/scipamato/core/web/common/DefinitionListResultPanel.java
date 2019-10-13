@@ -10,6 +10,7 @@ import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColu
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.StringResourceModel;
+import org.jetbrains.annotations.NotNull;
 
 import ch.difty.scipamato.common.entity.DefinitionEntity;
 import ch.difty.scipamato.common.entity.filter.ScipamatoFilter;
@@ -28,7 +29,7 @@ public abstract class DefinitionListResultPanel<T extends DefinitionEntity, F ex
 
     private final P dataProvider;
 
-    protected DefinitionListResultPanel(final String id, final P provider) {
+    protected DefinitionListResultPanel(@NotNull final String id, @NotNull final P provider) {
         super(id);
         this.dataProvider = provider;
     }
@@ -49,21 +50,25 @@ public abstract class DefinitionListResultPanel<T extends DefinitionEntity, F ex
         queue(results);
     }
 
+    @NotNull
     protected abstract List<IColumn<T, String>> makeTableColumns();
 
-    protected PropertyColumn<T, String> makePropertyColumn(final String propExpression) {
+    @NotNull
+    protected PropertyColumn<T, String> makePropertyColumn(@NotNull final String propExpression) {
         return new PropertyColumn<>(new StringResourceModel(COLUMN_HEADER + propExpression, this, null), propExpression,
             propExpression);
     }
 
-    protected ClickablePropertyColumn<T, String> makeClickableColumn(final String propExpression,
-        final SerializableConsumer<IModel<T>> consumer) {
+    @NotNull
+    protected ClickablePropertyColumn<T, String> makeClickableColumn(@NotNull final String propExpression,
+        @NotNull final SerializableConsumer<IModel<T>> consumer) {
         return new ClickablePropertyColumn<>(new StringResourceModel(COLUMN_HEADER + propExpression, this, null),
             propExpression, propExpression, consumer);
     }
 
-    protected PropertyColumn<T, String> makeBooleanPropertyColumn(final String propExpression,
-        final SerializableFunction<T, Boolean> predicate) {
+    @NotNull
+    protected PropertyColumn<T, String> makeBooleanPropertyColumn(@NotNull final String propExpression,
+        @NotNull final SerializableFunction<T, Boolean> predicate) {
         final String trueLabel = new StringResourceModel(propExpression + ".true", this, null).getString();
         final String falseLabel = new StringResourceModel(propExpression + ".false", this, null).getString();
         return new PropertyColumn<>(new StringResourceModel(COLUMN_HEADER + propExpression, this, null), propExpression,
@@ -75,5 +80,4 @@ public abstract class DefinitionListResultPanel<T extends DefinitionEntity, F ex
             }
         };
     }
-
 }

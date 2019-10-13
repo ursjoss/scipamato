@@ -161,5 +161,4 @@ class NewsletterTopicSortPageTest extends BasePageTest<NewsletterTopicSortPage> 
 
         verify(newsletterTopicServiceMock, never()).saveSortedNewsletterTopics(anyInt(), anyList());
     }
-
 }

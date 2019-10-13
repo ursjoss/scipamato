@@ -4,6 +4,8 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.stereotype.Service;
 
 import ch.difty.scipamato.publ.config.ScipamatoPublicProperties;
@@ -27,12 +29,13 @@ public class ParentUrlLocaleExtractor implements LocaleExtractor {
 
     private static final Pattern PATTERN = Pattern.compile("https?://?[^/]+/(\\w\\w)/.+", Pattern.CASE_INSENSITIVE);
 
-    public ParentUrlLocaleExtractor(final ScipamatoPublicProperties properties) {
+    public ParentUrlLocaleExtractor(@NotNull final ScipamatoPublicProperties properties) {
         this.defaultLocale = properties.getDefaultLocalization();
     }
 
+    @NotNull
     @Override
-    public Locale extractLocaleFrom(final String input) {
+    public Locale extractLocaleFrom(@Nullable final String input) {
         final String lt = extractLanguageCode(input);
         return Locale.forLanguageTag(lt);
     }

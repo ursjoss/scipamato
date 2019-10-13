@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
+import org.jetbrains.annotations.NotNull;
 import org.jooq.DSLContext;
 import org.jooq.TableField;
 import org.springframework.batch.core.Job;
@@ -56,28 +57,34 @@ public class KeywordSyncConfig
     private static final TableField<KeywordTrRecord, Timestamp> KT_CREATED         = KEYWORD_TR.CREATED;
     private static final TableField<KeywordTrRecord, Timestamp> KT_LAST_MODIFIED   = KEYWORD_TR.LAST_MODIFIED;
 
-    protected KeywordSyncConfig(@Qualifier("dslContext") DSLContext jooqCore,
-        @Qualifier("publicDslContext") DSLContext jooqPublic, @Qualifier("dataSource") DataSource coreDataSource,
-        JobBuilderFactory jobBuilderFactory, StepBuilderFactory stepBuilderFactory, DateTimeService dateTimeService) {
+    protected KeywordSyncConfig(@Qualifier("dslContext") @NotNull final DSLContext jooqCore,
+        @Qualifier("publicDslContext") @NotNull final DSLContext jooqPublic,
+        @Qualifier("dataSource") @NotNull final DataSource coreDataSource,
+        @NotNull final JobBuilderFactory jobBuilderFactory, @NotNull final StepBuilderFactory stepBuilderFactory,
+        @NotNull final DateTimeService dateTimeService) {
         super(TOPIC, CHUNK_SIZE, jooqCore, jooqPublic, coreDataSource, jobBuilderFactory, stepBuilderFactory,
             dateTimeService);
     }
 
+    @NotNull
     @Bean
     public Job syncKeywordJob() {
         return createJob();
     }
 
+    @NotNull
     @Override
     protected String getJobName() {
         return "syncKeywordJob";
     }
 
+    @NotNull
     @Override
     protected ItemWriter<PublicKeyword> publicWriter() {
         return new KeywordItemWriter(getJooqPublic());
     }
 
+    @NotNull
     @Override
     protected String selectSql() {
         return getJooqCore()
@@ -89,11 +96,13 @@ public class KeywordSyncConfig
             .getSQL();
     }
 
+    @NotNull
     @Override
-    protected PublicKeyword makeEntity(final ResultSet rs) throws SQLException {
+    protected PublicKeyword makeEntity(@NotNull final ResultSet rs) throws SQLException {
+        final Integer value = getInteger(KT_ID, rs);
         return PublicKeyword
             .builder()
-            .id(getInteger(KT_ID, rs))
+            .id(value != null ? value : -1) // TODO think this through
             .keywordId(rs.getInt(ALIAS_KEYWORD_ID))
             .langCode(getString(KT_LANG_CODE, rs))
             .name(getString(KT_NAME, rs))
@@ -105,6 +114,7 @@ public class KeywordSyncConfig
             .build();
     }
 
+    @NotNull
     @Override
     protected TableField<ch.difty.scipamato.publ.db.tables.records.KeywordRecord, Timestamp> lastSynchedField() {
         return ch.difty.scipamato.publ.db.tables.Keyword.KEYWORD.LAST_SYNCHED;

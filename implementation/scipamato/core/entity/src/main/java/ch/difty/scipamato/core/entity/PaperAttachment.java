@@ -1,9 +1,9 @@
 package ch.difty.scipamato.core.entity;
 
-import javax.validation.constraints.NotNull;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import ch.difty.scipamato.common.entity.FieldEnumType;
 
@@ -59,7 +59,7 @@ public class PaperAttachment extends IdScipamatoEntity<Integer> {
     public PaperAttachment() {
     }
 
-    public PaperAttachment(final Integer id, final Long paperId, final String name, final byte[] content,
+    public PaperAttachment(@Nullable final Integer id, final Long paperId, final String name, final byte[] content,
         final String contentType, final Long size) {
         setId(id);
         setPaperId(paperId);
@@ -79,6 +79,7 @@ public class PaperAttachment extends IdScipamatoEntity<Integer> {
     /**
      * @return the size in kilo bytes (rounded up)
      */
+    @Nullable
     public Long getSizeKiloBytes() {
         if (size == null)
             return null;
@@ -92,9 +93,9 @@ public class PaperAttachment extends IdScipamatoEntity<Integer> {
         return name;
     }
 
+    @NotNull
     @Override
     public String toString() {
         return "PaperAttachment[paperId=" + paperId + ",name=" + name + ",id=" + getId() + "]";
     }
-
 }

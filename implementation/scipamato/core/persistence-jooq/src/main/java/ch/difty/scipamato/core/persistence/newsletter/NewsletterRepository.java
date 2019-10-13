@@ -2,6 +2,9 @@ package ch.difty.scipamato.core.persistence.newsletter;
 
 import java.util.Optional;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.newsletter.Newsletter;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterFilter;
@@ -14,6 +17,7 @@ public interface NewsletterRepository extends EntityRepository<Newsletter, Integ
      *
      * @return the newsletter as optional - or an empty optional if none has the status.
      */
+    @NotNull
     Optional<Newsletter> getNewsletterInStatusWorkInProgress();
 
     /**
@@ -30,8 +34,9 @@ public interface NewsletterRepository extends EntityRepository<Newsletter, Integ
      *     the 2 character languageCode, e.g. 'en' or 'de'
      * @return the count of records that were inserted or updated (expected to be 1 all the time)
      */
-    Optional<Paper.NewsletterLink> mergePaperIntoNewsletter(int newsletterId, long paperId, Integer newsletterTopicId,
-        String languageCode);
+    @NotNull
+    Optional<Paper.NewsletterLink> mergePaperIntoNewsletter(int newsletterId, long paperId,
+        @Nullable Integer newsletterTopicId, @NotNull String languageCode);
 
     /**
      * Removes the paper with the specified id from the newsletter with the given id.

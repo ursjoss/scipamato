@@ -1,5 +1,6 @@
 package ch.difty.scipamato.publ.web.config;
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,10 +22,11 @@ public class WicketWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final ScipamatoPublicProperties properties;
 
-    WicketWebSecurityConfig(final ScipamatoPublicProperties properties) {
+    WicketWebSecurityConfig(@NotNull final ScipamatoPublicProperties properties) {
         this.properties = properties;
     }
 
+    @NotNull
     @Bean(name = "authenticationManager")
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
@@ -32,7 +34,7 @@ public class WicketWebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    protected void configure(@NotNull HttpSecurity http) throws Exception {
         // @formatter:off
         http.csrf().disable()
             .headers().frameOptions().disable()
@@ -47,11 +49,13 @@ public class WicketWebSecurityConfig extends WebSecurityConfigurerAdapter {
         // @formatter:on
     }
 
+    @NotNull
     @Bean
     public static PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+    @NotNull
     @Override
     @Bean
     public UserDetailsService userDetailsService() {
@@ -63,5 +67,4 @@ public class WicketWebSecurityConfig extends WebSecurityConfigurerAdapter {
             .build());
         return manager;
     }
-
 }

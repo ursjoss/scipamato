@@ -1,5 +1,6 @@
 package ch.difty.scipamato.core.persistence.paper.searchorder;
 
+import org.jetbrains.annotations.NotNull;
 import org.jooq.Condition;
 
 import ch.difty.scipamato.core.entity.search.SearchTerm;
@@ -22,6 +23,6 @@ interface SearchTermEvaluator<T extends SearchTerm> {
      *     the search term to evaluate
      * @return a jOOQ conditions
      */
-    Condition evaluate(T searchTerm);
-
+    @NotNull
+    Condition evaluate(@NotNull T searchTerm);
 }

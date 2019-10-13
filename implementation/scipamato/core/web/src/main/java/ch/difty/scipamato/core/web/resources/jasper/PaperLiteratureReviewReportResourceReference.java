@@ -1,5 +1,7 @@
 package ch.difty.scipamato.core.web.resources.jasper;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * Resource Reference for the Literature Review Report
  *
@@ -25,8 +27,7 @@ public class PaperLiteratureReviewReportResourceReference extends JasperReportRe
     }
 
     /**
-     * Use this constructor with parameter {@code false} while developing the
-     * report.
+     * Use this constructor with parameter {@code false} while developing the report.
      *
      * @param cacheReport
      *     if {@code true} the compiled report is cached. If {@code false} it
@@ -37,8 +38,8 @@ public class PaperLiteratureReviewReportResourceReference extends JasperReportRe
         super(PaperLiteratureReviewReportResourceReference.class, NAME, cacheReport);
     }
 
+    @NotNull
     public static PaperLiteratureReviewReportResourceReference get() {
         return INSTANCE;
     }
-
 }

@@ -4,8 +4,9 @@ import java.util.Collection;
 import java.util.Collections;
 
 import net.sf.jasperreports.engine.JasperReport;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.PaperSlimFilter;
 import ch.difty.scipamato.core.entity.projection.PaperSlim;
@@ -56,11 +57,10 @@ public class PaperSummaryDataSource extends JasperPaperDataSource<PaperSummary> 
      * @param config
      *     {@link ClusterablePdfExporterConfiguration}
      */
-    public PaperSummaryDataSource(final Paper paper, final ReportHeaderFields reportHeaderFields,
-        final CoreShortFieldConcatenator shortFieldConcatenator, ClusterablePdfExporterConfiguration config) {
-        this(Collections.singletonList(
-            new PaperSummary(AssertAs.INSTANCE.notNull(paper, "paper"), shortFieldConcatenator,
-                AssertAs.INSTANCE.notNull(reportHeaderFields, "reportHeaderFields"))), config,
+    public PaperSummaryDataSource(@NotNull final Paper paper, @NotNull final ReportHeaderFields reportHeaderFields,
+        @NotNull final CoreShortFieldConcatenator shortFieldConcatenator,
+        @Nullable ClusterablePdfExporterConfiguration config) {
+        this(Collections.singletonList(new PaperSummary(paper, shortFieldConcatenator, reportHeaderFields)), config,
             makeSinglePaperBaseName(paper.getNumber() != null ? String.valueOf(paper.getNumber()) : null));
         this.reportHeaderFields = reportHeaderFields;
         this.shortFieldConcatenator = shortFieldConcatenator;
@@ -75,9 +75,9 @@ public class PaperSummaryDataSource extends JasperPaperDataSource<PaperSummary> 
      * @param config
      *     the {@link ClusterablePdfExporterConfiguration}
      */
-    PaperSummaryDataSource(final PaperSummary paperSummary, ClusterablePdfExporterConfiguration config) {
-        this(Collections.singletonList(AssertAs.INSTANCE.notNull(paperSummary, "paperSummary")), config,
-            makeSinglePaperBaseName(paperSummary.getNumber()));
+    PaperSummaryDataSource(@NotNull final PaperSummary paperSummary,
+        @Nullable ClusterablePdfExporterConfiguration config) {
+        this(Collections.singletonList(paperSummary), config, makeSinglePaperBaseName(paperSummary.getNumber()));
     }
 
     /**
@@ -110,14 +110,16 @@ public class PaperSummaryDataSource extends JasperPaperDataSource<PaperSummary> 
      * @param config
      *     {@link ClusterablePdfExporterConfiguration}
      */
-    public PaperSummaryDataSource(final AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider,
-        final ReportHeaderFields reportHeaderFields, final CoreShortFieldConcatenator shortFieldConcatenator,
-        ClusterablePdfExporterConfiguration config) {
+    public PaperSummaryDataSource(@NotNull final AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider,
+        @NotNull final ReportHeaderFields reportHeaderFields,
+        @NotNull final CoreShortFieldConcatenator shortFieldConcatenator,
+        @Nullable ClusterablePdfExporterConfiguration config) {
         super(new ScipamatoPdfResourceHandler(config), BASE_NAME_MULTIPLE, dataProvider);
         this.reportHeaderFields = reportHeaderFields;
         this.shortFieldConcatenator = shortFieldConcatenator;
     }
 
+    @NotNull
     @Override
     protected JasperReport getReport() {
         return PaperSummaryReportResourceReference
@@ -125,8 +127,9 @@ public class PaperSummaryDataSource extends JasperPaperDataSource<PaperSummary> 
             .getReport();
     }
 
+    @NotNull
     @Override
-    protected PaperSummary makeEntity(Paper p) {
+    protected PaperSummary makeEntity(@NotNull Paper p) {
         return new PaperSummary(p, shortFieldConcatenator, reportHeaderFields);
     }
 
@@ -137,5 +140,4 @@ public class PaperSummaryDataSource extends JasperPaperDataSource<PaperSummary> 
             return BASE_NAME_SINGLE_FALLBACK;
         }
     }
-
 }

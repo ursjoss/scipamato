@@ -6,5 +6,4 @@ class UserListPageAsUserTest extends UserListPageAsViewerTest {
     protected String getUserName() {
         return "testuser";
     }
-
 }

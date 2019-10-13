@@ -8,5 +8,4 @@ class SearchOrderPanelInViewModeTest extends SearchOrderPanelTest {
     Mode getMode() {
         return Mode.VIEW;
     }
-
 }

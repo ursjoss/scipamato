@@ -5,6 +5,7 @@ import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic.NewsletterTopic
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
+@Suppress("SpellCheckingInspection")
 internal class NewsletterTopicTest : Jsr303ValidatedEntityTest<NewsletterTopic>(NewsletterTopic::class.java) {
 
     override fun newValidEntity(): NewsletterTopic {

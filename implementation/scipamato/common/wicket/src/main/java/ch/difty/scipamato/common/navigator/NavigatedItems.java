@@ -3,6 +3,9 @@ package ch.difty.scipamato.common.navigator;
 import java.io.Serializable;
 import java.util.List;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 /**
  * Implementations manage an immutable ordered collection of unique non-null
  * items (nulls or duplicates are ignored). It maintains a reference to the
@@ -27,11 +30,13 @@ interface NavigatedItems<T> extends Serializable {
     /**
      * @return the managed items
      */
+    @NotNull
     List<T> getItems();
 
     /**
      * @return the current item
      */
+    @Nullable
     T getItemWithFocus();
 
     /**
@@ -40,7 +45,7 @@ interface NavigatedItems<T> extends Serializable {
      * @param item
      *     the item to set toe focus to
      */
-    void setFocusToItem(T item);
+    void setFocusToItem(@NotNull T item);
 
     /**
      * @return true if can retreat, false otherwise (we're on the first record or
@@ -71,7 +76,7 @@ interface NavigatedItems<T> extends Serializable {
      *     the id that may or may not be part of the collections.
      * @return true if it is contained, false otherwise
      */
-    boolean containsId(T id);
+    boolean containsId(@NotNull T id);
 
     /**
      * Returns a copy of the list without the id passed in as parameter
@@ -80,5 +85,6 @@ interface NavigatedItems<T> extends Serializable {
      *     the id that should be excluded from the new list
      * @return the new list not containing the id passed in
      */
-    List<T> without(T id);
+    @NotNull
+    List<T> without(@NotNull T id);
 }

@@ -2,11 +2,12 @@ package ch.difty.scipamato.core.persistence.paper;
 
 import static ch.difty.scipamato.core.db.tables.Paper.PAPER;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.jooq.InsertSetMoreStep;
 import org.jooq.InsertSetStep;
 import org.springframework.stereotype.Component;
 
-import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.core.db.tables.records.PaperRecord;
 import ch.difty.scipamato.core.entity.Code;
 import ch.difty.scipamato.core.entity.Paper;
@@ -23,11 +24,10 @@ import ch.difty.scipamato.core.persistence.InsertSetStepSetter;
 @Component
 public class PaperInsertSetStepSetter implements InsertSetStepSetter<PaperRecord, Paper> {
 
+    @NotNull
     @Override
-    public InsertSetMoreStep<PaperRecord> setNonKeyFieldsFor(InsertSetStep<PaperRecord> step, Paper e) {
-        AssertAs.INSTANCE.notNull(step, "step");
-        AssertAs.INSTANCE.notNull(e, "entity");
-
+    public InsertSetMoreStep<PaperRecord> setNonKeyFieldsFor(@NotNull InsertSetStep<PaperRecord> step,
+        @NotNull Paper e) {
         return step
             .set(PAPER.NUMBER, e.getNumber())
             .set(PAPER.PM_ID, e.getPmId())
@@ -71,18 +71,15 @@ public class PaperInsertSetStepSetter implements InsertSetStepSetter<PaperRecord
     }
 
     @Override
-    public void considerSettingKeyOf(InsertSetMoreStep<PaperRecord> step, Paper entity) {
-        AssertAs.INSTANCE.notNull(step, "step");
-        AssertAs.INSTANCE.notNull(entity, "entity");
+    public void considerSettingKeyOf(@NotNull InsertSetMoreStep<PaperRecord> step, @NotNull Paper entity) {
         Long id = entity.getId();
         if (id != null)
             step.set(PAPER.ID, id);
     }
 
     @Override
-    public void resetIdToEntity(Paper entity, PaperRecord saved) {
+    public void resetIdToEntity(@NotNull Paper entity, @Nullable PaperRecord saved) {
         if (saved != null)
             entity.setId(saved.getId());
     }
-
 }

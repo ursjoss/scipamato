@@ -1,10 +1,10 @@
 package ch.difty.scipamato.core.web.paper.jasper.literaturereview;
 
-import static ch.difty.scipamato.common.TestUtilsKt.assertDegenerateSupplierParameter;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.core.entity.Paper;
@@ -29,16 +29,6 @@ class PaperLiteratureReviewTest extends JasperEntityTest {
     }
 
     @Test
-    void degenerateConstruction_withNullPaper_throws() {
-        assertDegenerateSupplierParameter(() -> new PaperLiteratureReview(null, rhf), "p");
-    }
-
-    @Test
-    void degenerateConstruction_withNullReportHeaderFields_throws() {
-        assertDegenerateSupplierParameter(() -> new PaperLiteratureReview(new Paper(), null), "rhf");
-    }
-
-    @Test
     void degenerateConstruction_withNullPubmedBaseUrl_throws() {
         ReportHeaderFields rhf2 = ReportHeaderFields
             .builder(HEADER_PART, BRAND)
@@ -46,7 +36,7 @@ class PaperLiteratureReviewTest extends JasperEntityTest {
             .captionLabel(CAPTION)
             .build();
         assertThat(rhf2.getPubmedBaseUrl()).isNull();
-        assertDegenerateSupplierParameter(() -> new PaperLiteratureReview(new Paper(), rhf2), "pubmedBaseUrl");
+        Assertions.assertThrows(NullPointerException.class, () -> new PaperLiteratureReview(new Paper(), rhf2));
     }
 
     @Test
@@ -108,5 +98,4 @@ class PaperLiteratureReviewTest extends JasperEntityTest {
             "PaperLiteratureReview(number=100, authors=authors, publicationYear=2017, title=title, goals=goals, "
             + "location=location, doi=doi, pubmedLink=baseUrl/1234, caption=caption, brand=brand, numberLabel=numberLabel)");
     }
-
 }

@@ -1,6 +1,5 @@
 package ch.difty.scipamato.core.persistence
 
-import ch.difty.scipamato.common.NullArgumentException
 import ch.difty.scipamato.common.config.ApplicationProperties
 import ch.difty.scipamato.common.entity.filter.ScipamatoFilter
 import ch.difty.scipamato.common.persistence.GenericFilterConditionMapper
@@ -16,7 +15,6 @@ import org.assertj.core.api.Assertions.assertThat
 import org.jooq.*
 import org.jooq.impl.TableImpl
 import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
@@ -101,11 +99,6 @@ Number, TI : TableImpl<R>, M : RecordMapper<R, T>, F : ScipamatoFilter> {
     protected open fun specificTearDown() {}
 
     protected open fun specificNullCheck() {}
-
-    @Test
-    internal fun findingByIdNull_throws() {
-        Assertions.assertThrows(NullArgumentException::class.java) { repo.findById(null, "en") }
-    }
 
     @Test
     internal fun countingByFilter() {

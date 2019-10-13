@@ -3,6 +3,9 @@ package ch.difty.scipamato.common.navigator;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 /**
  * {@link ItemNavigator} managing long items.
  * <p>
@@ -18,18 +21,19 @@ public class LongNavigator implements ItemNavigator<Long> {
     private boolean              modified = false;
 
     @Override
-    public void initialize(final List<? extends Long> items) {
-        if (items != null && !items.isEmpty())
+    public void initialize(@NotNull final List<? extends Long> items) {
+        if (!items.isEmpty())
             this.items = new NavigatedList<>(items);
         modified = false;
     }
 
     @Override
-    public void setFocusToItem(final Long item) {
+    public void setFocusToItem(@Nullable final Long item) {
         if (items != null && item != null)
             items.setFocusToItem(item);
     }
 
+    @Nullable
     @Override
     public Long getItemWithFocus() {
         return items != null ? items.getItemWithFocus() : null;
@@ -58,8 +62,8 @@ public class LongNavigator implements ItemNavigator<Long> {
     }
 
     @Override
-    public void setIdToHeadIfNotPresent(final Long idCandidate) {
-        if (idCandidate != null && !items.containsId(idCandidate)) {
+    public void setIdToHeadIfNotPresent(@NotNull final Long idCandidate) {
+        if (!items.containsId(idCandidate)) {
             final List<Long> newItems = new ArrayList<>();
             newItems.add(idCandidate);
             newItems.addAll(items.getItems());
@@ -69,8 +73,8 @@ public class LongNavigator implements ItemNavigator<Long> {
     }
 
     @Override
-    public void remove(final Long id) {
-        if (id == null || !items.containsId(id))
+    public void remove(@NotNull final Long id) {
+        if (!items.containsId(id))
             return;
         if (id.equals(items.getItemWithFocus()))
             moveFocus();

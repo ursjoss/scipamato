@@ -1,6 +1,5 @@
 package ch.difty.scipamato.core.web.security;
 
-import static ch.difty.scipamato.common.TestUtilsKt.assertDegenerateSupplierParameter;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 import static org.mockito.Mockito.*;
@@ -21,6 +20,7 @@ import ch.difty.scipamato.core.persistence.UserService;
 import ch.difty.scipamato.core.web.authentication.ScipamatoUserDetails;
 import ch.difty.scipamato.core.web.authentication.ScipamatoUserDetailsService;
 
+@SuppressWarnings({ "CatchMayIgnoreException", "ResultOfMethodCallIgnored" })
 @ExtendWith(MockitoExtension.class)
 class ScipamatoUserDetailsServiceTest {
 
@@ -38,11 +38,6 @@ class ScipamatoUserDetailsServiceTest {
     @AfterEach
     void tearDown() {
         verifyNoMoreInteractions(userServiceMock);
-    }
-
-    @Test
-    void degenerateCallWithNullUserName_throws() {
-        assertDegenerateSupplierParameter(() -> service.loadUserByUsername(null), "username");
     }
 
     @Test

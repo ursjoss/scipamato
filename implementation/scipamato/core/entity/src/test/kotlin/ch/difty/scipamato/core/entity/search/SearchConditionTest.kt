@@ -1,6 +1,5 @@
 package ch.difty.scipamato.core.entity.search
 
-import ch.difty.scipamato.common.NullArgumentException
 import ch.difty.scipamato.common.entity.CodeClassId
 import ch.difty.scipamato.core.entity.Code
 import ch.difty.scipamato.core.entity.IdScipamatoEntity.IdScipamatoEntityFields.ID
@@ -252,7 +251,7 @@ internal class SearchConditionTest {
         assertThat(sc1.booleanSearchTerms).isEmpty()
 
         sc1.isFirstAuthorOverridden = true
-        assertThat(sc1.isFirstAuthorOverridden).isTrue()
+        assertThat(sc1.isFirstAuthorOverridden == true).isTrue()
         assertThat(sc1.stringSearchTerms).isEmpty()
         assertThat(sc1.integerSearchTerms).isEmpty()
         assertThat(sc1.booleanSearchTerms).hasSize(1)
@@ -262,7 +261,7 @@ internal class SearchConditionTest {
         assertThat(st.value).isTrue()
 
         sc1.isFirstAuthorOverridden = false
-        assertThat(sc1.isFirstAuthorOverridden).isFalse()
+        assertThat(sc1.isFirstAuthorOverridden == true).isFalse()
         assertThat(sc1.stringSearchTerms).isEmpty()
         assertThat(sc1.integerSearchTerms).isEmpty()
         assertThat(sc1.booleanSearchTerms).hasSize(1)
@@ -766,11 +765,11 @@ internal class SearchConditionTest {
     }
 
     @Test
-    fun testDisplayValue_withTopicWithNullTitle_dirtyWorksAroundWithDisplayingTopicIdInstead() {
+    fun testDisplayValue_withNewsletterTopicNull_() {
         sc1.newsletterHeadline = "foobar"
         sc1.newsletterIssue = "2018/02"
-        sc1.setNewsletterTopic(NewsletterTopic(10, null))
-        assertThat(sc1.displayValue).isEqualTo("issue=2018/02 AND headline=foobar AND topic=10")
+        sc1.setNewsletterTopic(null)
+        assertThat(sc1.displayValue).isEqualTo("issue=2018/02 AND headline=foobar")
     }
 
     @Test
@@ -1081,18 +1080,6 @@ internal class SearchConditionTest {
             assertThat(ex)
                 .isInstanceOf(AssertionError::class.java)
                 .hasMessage("SearchTermType.UNSUPPORTED is not supported")
-        }
-    }
-
-    @Test
-    fun addingNullSearchTerm() {
-        try {
-            sc2.addSearchTerm(null)
-            fail<Any>("should have thrown exception")
-        } catch (ex: Exception) {
-            assertThat(ex)
-                .isInstanceOf(NullArgumentException::class.java)
-                .hasMessage("searchTerm must not be null.")
         }
     }
 

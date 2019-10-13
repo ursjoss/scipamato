@@ -8,6 +8,8 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.wicketstuff.annotation.mount.MountPath;
 
 import ch.difty.scipamato.core.auth.Roles;
@@ -28,10 +30,11 @@ public class CodeListPage extends DefinitionListPage<CodeDefinition, CodeFilter,
     @SpringBean
     private CodeService service;
 
-    public CodeListPage(final PageParameters parameters) {
+    public CodeListPage(@Nullable final PageParameters parameters) {
         super(parameters);
     }
 
+    @NotNull
     @Override
     protected CodeFilter newFilter() {
         final CodeFilter filter = new CodeFilter();
@@ -39,23 +42,25 @@ public class CodeListPage extends DefinitionListPage<CodeDefinition, CodeFilter,
         return filter;
     }
 
+    @NotNull
     @Override
-    protected CodeDefinitionProvider newProvider(final CodeFilter filter) {
+    protected CodeDefinitionProvider newProvider(@Nullable final CodeFilter filter) {
         return new CodeDefinitionProvider(filter);
     }
 
+    @NotNull
     @Override
-    protected Panel newFilterPanel(final String id) {
+    protected Panel newFilterPanel(@NotNull final String id) {
         return new CodeListFilterPanel(id, getProvider()) {
 
             @Override
-            protected void doOnUpdate(final AjaxRequestTarget target) {
+            protected void doOnUpdate(@NotNull final AjaxRequestTarget target) {
                 modelChanged();
                 target.add(getResultPanel());
             }
 
             @Override
-            protected BootstrapAjaxButton doQueueNewCodeButton(final String id) {
+            protected BootstrapAjaxButton doQueueNewCodeButton(@NotNull final String id) {
                 return newResponsePageButton(id,
                     () -> new CodeEditPage(Model.of(service.newUnpersistedCodeDefinition()),
                         getPage().getPageReference()));
@@ -63,11 +68,11 @@ public class CodeListPage extends DefinitionListPage<CodeDefinition, CodeFilter,
         };
     }
 
+    @NotNull
     @Override
-    protected Panel newResultPanel(final String id) {
+    protected Panel newResultPanel(@NotNull final String id) {
         final CodeListResultPanel panel = new CodeListResultPanel(id, getProvider());
         panel.setOutputMarkupId(true);
         return panel;
     }
-
 }

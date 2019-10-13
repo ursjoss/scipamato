@@ -6,8 +6,6 @@ import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
 import org.junit.jupiter.api.Test;
 
-import ch.difty.scipamato.common.NullArgumentException;
-import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.web.paper.jasper.JasperEntityTest;
 import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields;
 
@@ -35,28 +33,6 @@ class PaperReviewTest extends JasperEntityTest {
             .conclusionLabel(CONCLUSION_LABEL)
             .commentLabel(COMMENT_LABEL)
             .build();
-    }
-
-    @Test
-    void degenerateConstruction_withNullPaper_throws() {
-        try {
-            new PaperReview(null, rhf);
-        } catch (Exception ex) {
-            assertThat(ex)
-                .isInstanceOf(NullArgumentException.class)
-                .hasMessage("p must not be null.");
-        }
-    }
-
-    @Test
-    void degenerateConstruction_withNullReportHeaderFields_throws() {
-        try {
-            new PaperReview(new Paper(), null);
-        } catch (Exception ex) {
-            assertThat(ex)
-                .isInstanceOf(NullArgumentException.class)
-                .hasMessage("rhf must not be null.");
-        }
     }
 
     @Test
@@ -175,5 +151,4 @@ class PaperReviewTest extends JasperEntityTest {
             .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
             .verify();
     }
-
 }

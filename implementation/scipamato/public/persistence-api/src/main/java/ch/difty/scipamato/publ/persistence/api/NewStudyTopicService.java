@@ -2,6 +2,8 @@ package ch.difty.scipamato.publ.persistence.api;
 
 import java.util.List;
 
+import org.jetbrains.annotations.NotNull;
+
 import ch.difty.scipamato.publ.entity.NewStudyPageLink;
 import ch.difty.scipamato.publ.entity.NewStudyTopic;
 import ch.difty.scipamato.publ.entity.Newsletter;
@@ -16,7 +18,8 @@ public interface NewStudyTopicService {
      *     the two character language code (used to translate the topics)
      * @return list of new study topics, will not be null.
      */
-    List<NewStudyTopic> findMostRecentNewStudyTopics(String languageCode);
+    @NotNull
+    List<NewStudyTopic> findMostRecentNewStudyTopics(@NotNull String languageCode);
 
     /**
      * Finds the all {@link NewStudyTopic}s associated with the newsletter with the specified issue.
@@ -28,7 +31,8 @@ public interface NewStudyTopicService {
      *     the two character language code (used to translate the topics)
      * @return list of new study topics, will not be null
      */
-    List<NewStudyTopic> findNewStudyTopicsForNewsletterIssue(String issue, String languageCode);
+    @NotNull
+    List<NewStudyTopic> findNewStudyTopicsForNewsletterIssue(@NotNull String issue, @NotNull String languageCode);
 
     /**
      * Returns a list with the most recent newsletters.
@@ -39,7 +43,8 @@ public interface NewStudyTopicService {
      *     the two character languageCode (e.g. 'en')
      * @return a list of {@link Newsletter}s
      */
-    List<Newsletter> findArchivedNewsletters(int newsletterCount, String languageCode);
+    @NotNull
+    List<Newsletter> findArchivedNewsletters(int newsletterCount, @NotNull String languageCode);
 
     /**
      * Returns a list with links to display on the new study page.
@@ -48,5 +53,6 @@ public interface NewStudyTopicService {
      *     the two character languageCode (e.g. 'en')
      * @return a list of {@link NewStudyPageLink}s
      */
-    List<NewStudyPageLink> findNewStudyPageLinks(String languageCode);
+    @NotNull
+    List<NewStudyPageLink> findNewStudyPageLinks(@NotNull String languageCode);
 }

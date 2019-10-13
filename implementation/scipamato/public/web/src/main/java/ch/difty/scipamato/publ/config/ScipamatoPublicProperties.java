@@ -1,5 +1,7 @@
 package ch.difty.scipamato.publ.config;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.stereotype.Component;
 
 import ch.difty.scipamato.common.config.AbstractScipamatoProperties;
@@ -19,7 +21,8 @@ public class ScipamatoPublicProperties extends AbstractScipamatoProperties<Scipa
 
     private static final long serialVersionUID = 1L;
 
-    public ScipamatoPublicProperties(ScipamatoProperties scipamatoProperties, MavenProperties mavenProperties) {
+    public ScipamatoPublicProperties(@NotNull ScipamatoProperties scipamatoProperties,
+        @NotNull MavenProperties mavenProperties) {
         super(scipamatoProperties, mavenProperties);
     }
 
@@ -38,6 +41,7 @@ public class ScipamatoPublicProperties extends AbstractScipamatoProperties<Scipa
         return getScipamatoProperties().isNavbarVisibleByDefault();
     }
 
+    @Nullable
     @Override
     public String getCmsUrlNewStudyPage() {
         return getScipamatoProperties().getCmsUrlNewStudyPage();
@@ -53,11 +57,13 @@ public class ScipamatoPublicProperties extends AbstractScipamatoProperties<Scipa
         return getScipamatoProperties().isResponsiveIframeSupportEnabled();
     }
 
+    @NotNull
     @Override
     public String getManagementUserName() {
         return getScipamatoProperties().getManagementUserName();
     }
 
+    @Nullable
     @Override
     public String getManagementUserPassword() {
         return getScipamatoProperties().getManagementUserPassword();
@@ -67,5 +73,4 @@ public class ScipamatoPublicProperties extends AbstractScipamatoProperties<Scipa
     public int getNumberOfPreviousNewslettersInArchive() {
         return getScipamatoProperties().getNumberOfPreviousNewslettersInArchive();
     }
-
 }

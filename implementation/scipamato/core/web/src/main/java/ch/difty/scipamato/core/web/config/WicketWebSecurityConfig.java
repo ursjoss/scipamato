@@ -1,5 +1,6 @@
 package ch.difty.scipamato.core.web.config;
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,10 +19,11 @@ public class WicketWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsService userDetailsService;
 
-    WicketWebSecurityConfig(final UserDetailsService userDetailsService) {
+    WicketWebSecurityConfig(@NotNull final UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
 
+    @NotNull
     @Bean(name = "authenticationManager")
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
@@ -29,19 +31,20 @@ public class WicketWebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(@NotNull final AuthenticationManagerBuilder auth) throws Exception {
         auth
             .userDetailsService(userDetailsService)
             .passwordEncoder(passwordEncoder());
     }
 
+    @NotNull
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    protected void configure(@NotNull HttpSecurity http) throws Exception {
         // @formatter:off
         http.csrf().disable()
             .authorizeRequests()
@@ -53,5 +56,4 @@ public class WicketWebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout().permitAll();
         // @formatter:on
     }
-
 }

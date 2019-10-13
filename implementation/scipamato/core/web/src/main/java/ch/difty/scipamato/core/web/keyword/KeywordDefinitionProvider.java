@@ -2,6 +2,8 @@ package ch.difty.scipamato.core.web.keyword;
 
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import ch.difty.scipamato.core.entity.keyword.Keyword;
 import ch.difty.scipamato.core.entity.keyword.KeywordDefinition;
@@ -20,19 +22,20 @@ public class KeywordDefinitionProvider extends DefinitionProvider<KeywordDefinit
         this(null);
     }
 
-    KeywordDefinitionProvider(KeywordFilter filter) {
+    KeywordDefinitionProvider(@Nullable KeywordFilter filter) {
         super(filter);
         setSort(Keyword.KeywordFields.NAME.getFieldName(), SortOrder.ASCENDING);
     }
 
+    @NotNull
     @Override
     protected KeywordService getService() {
         return service;
     }
 
+    @NotNull
     @Override
     protected KeywordFilter newFilter() {
         return new KeywordFilter();
     }
-
 }

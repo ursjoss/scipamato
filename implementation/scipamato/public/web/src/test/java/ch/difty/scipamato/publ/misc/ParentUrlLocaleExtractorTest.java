@@ -13,6 +13,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import ch.difty.scipamato.publ.config.ScipamatoPublicProperties;
 
+@SuppressWarnings("SpellCheckingInspection")
 @ExtendWith(MockitoExtension.class)
 class ParentUrlLocaleExtractorTest {
 
@@ -75,5 +76,4 @@ class ParentUrlLocaleExtractorTest {
         String input = "https:/www.foo.swisstph.ch/fr/projects/page-daccueil/datenbank/";
         assertThat(localeExtractor.extractLocaleFrom(input)).isEqualTo(Locale.FRENCH);
     }
-
 }

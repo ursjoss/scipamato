@@ -22,5 +22,4 @@ class PublicPageParametersTest {
         assertThat(ISSUE.getName()).isEqualTo("issue");
         assertThat(PARENT_URL.getName()).isEqualTo("parentUrl");
     }
-
 }

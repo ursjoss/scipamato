@@ -39,7 +39,7 @@ internal abstract class LinkIconColumnTestPanel(id: String, private val titleMod
             }
         }
 
-    protected abstract fun onClickPerformed(rowModel: IModel<TestRecord>, link: AjaxLink<Void>)
+    protected abstract fun onClickPerformed(rowModel: IModel<TestRecord>?, link: AjaxLink<Void>)
 
     internal class TestDataProvider : SortableDataProvider<TestRecord, String>() {
         override fun iterator(first: Long, count: Long): Iterator<TestRecord> = listOf(TestRecord(1, "foo")).iterator()

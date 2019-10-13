@@ -21,7 +21,6 @@ class ScipamatoPdfResourceHandlerTest {
         validateDefaultConfig(h);
     }
 
-    @SuppressWarnings("SpellCheckingInspection")
     private void validateDefaultConfig(ScipamatoPdfResourceHandler h) {
         JRAbstractExporter<PdfReportConfiguration, PdfExporterConfiguration, OutputStreamExporterOutput, JRPdfExporterContext> exporter = h.newExporter();
         assertThat(exporter).isNotNull();

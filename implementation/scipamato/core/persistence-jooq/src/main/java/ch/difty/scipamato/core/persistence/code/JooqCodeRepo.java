@@ -13,6 +13,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.jooq.*;
 import org.jooq.impl.DSL;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -22,7 +24,6 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
-import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.DateTimeService;
 import ch.difty.scipamato.common.TranslationUtils;
 import ch.difty.scipamato.common.entity.CodeClassId;
@@ -48,17 +49,16 @@ public class JooqCodeRepo extends AbstractRepo implements CodeRepository {
 
     private final CodeClassRepository codeClassRepo;
 
-    public JooqCodeRepo(@Qualifier("dslContext") final DSLContext dslContext, final DateTimeService dateTimeService,
-        final CodeClassRepository codeClassRepo) {
+    public JooqCodeRepo(@Qualifier("dslContext") @NotNull final DSLContext dslContext,
+        @NotNull final DateTimeService dateTimeService, @NotNull final CodeClassRepository codeClassRepo) {
         super(dslContext, dateTimeService);
-        this.codeClassRepo = AssertAs.INSTANCE.notNull(codeClassRepo, "codeClassRepo");
+        this.codeClassRepo = codeClassRepo;
     }
 
+    @NotNull
     @Override
     @Cacheable
-    public List<Code> findCodesOfClass(final CodeClassId codeClassId, final String languageCode) {
-        AssertAs.INSTANCE.notNull(codeClassId, "codeClassId");
-        AssertAs.INSTANCE.notNull(languageCode, "languageCode");
+    public List<Code> findCodesOfClass(@NotNull final CodeClassId codeClassId, @NotNull final String languageCode) {
         final String lang = TranslationUtils.INSTANCE.trimLanguageCode(languageCode);
         // skipping the audit fields
         return getDsl()
@@ -86,8 +86,10 @@ public class JooqCodeRepo extends AbstractRepo implements CodeRepository {
             .fetchInto(Code.class);
     }
 
+    @NotNull
     @Override
-    public List<CodeDefinition> findPageOfCodeDefinitions(final CodeFilter filter, final PaginationContext pc) {
+    public List<CodeDefinition> findPageOfCodeDefinitions(@Nullable final CodeFilter filter,
+        @NotNull final PaginationContext pc) {
         final SelectOnConditionStep<Record> selectStep = getDsl()
             .select(CODE.fields())
             .select(LANGUAGE.CODE)
@@ -112,15 +114,18 @@ public class JooqCodeRepo extends AbstractRepo implements CodeRepository {
             .collect(toList());
     }
 
+    @NotNull
     @Override
     public String getMainLanguage() {
-        return getDsl()
+        final String lang = getDsl()
             .select(LANGUAGE.CODE)
             .from(LANGUAGE)
             .where(LANGUAGE.MAIN_LANGUAGE.eq(true))
             .fetchOneInto(String.class);
+        return lang != null ? lang : "en";
     }
 
+    @NotNull
     @Override
     public CodeDefinition newUnpersistedCodeDefinition() {
         final List<CodeTranslation> translations = getDsl()
@@ -159,7 +164,7 @@ public class JooqCodeRepo extends AbstractRepo implements CodeRepository {
     }
 
     @Override
-    public int countByFilter(final CodeFilter filter) {
+    public int countByFilter(@Nullable final CodeFilter filter) {
         final SelectJoinStep<Record1<Integer>> selectStep = getDsl()
             .selectCount()
             .from(CODE);
@@ -227,8 +232,9 @@ public class JooqCodeRepo extends AbstractRepo implements CodeRepository {
         return definitions;
     }
 
+    @Nullable
     @Override
-    public CodeDefinition findCodeDefinition(final String code) {
+    public CodeDefinition findCodeDefinition(@NotNull final String code) {
         final Map<String, Result<Record>> records = getDsl()
             .select(CODE.fields())
             .select(LANGUAGE.CODE)
@@ -249,12 +255,12 @@ public class JooqCodeRepo extends AbstractRepo implements CodeRepository {
 
     @Override
     @CacheEvict(allEntries = true)
-    public CodeDefinition saveOrUpdate(final CodeDefinition codeDefinition) {
-        AssertAs.INSTANCE.notNull(codeDefinition, "codeDefinition");
-        AssertAs.INSTANCE.notNull(codeDefinition.getCodeClass(), "codeDefinition.codeClass");
-        AssertAs.INSTANCE.notNull(codeDefinition
+    public CodeDefinition saveOrUpdate(@NotNull final CodeDefinition codeDefinition) {
+        Objects.requireNonNull(codeDefinition.getCodeClass());
+        Objects.requireNonNull(codeDefinition
             .getCodeClass()
-            .getId(), "codeDefinition.codeClass.id");
+            .getId());
+
         final int userId = getUserId();
 
         final CodeRecord cRecord = getDsl()
@@ -396,11 +402,10 @@ public class JooqCodeRepo extends AbstractRepo implements CodeRepository {
             record.get(CODE_TR.COMMENT), record.get(CODE_TR.VERSION));
     }
 
+    @Nullable
     @Override
     @CacheEvict(allEntries = true)
-    public CodeDefinition delete(final String code, final int version) {
-        AssertAs.INSTANCE.notNull(code, "code");
-
+    public CodeDefinition delete(@NotNull final String code, final int version) {
         final CodeDefinition toBeDeleted = findCodeDefinition(code);
         if (toBeDeleted != null) {
             if (toBeDeleted.getVersion() == version) {
@@ -432,13 +437,13 @@ public class JooqCodeRepo extends AbstractRepo implements CodeRepository {
         }
     }
 
+    @NotNull
     @Override
-    public CodeClass getCodeClass1(final String langCode) {
+    public CodeClass getCodeClass1(@NotNull final String langCode) {
         return codeClassRepo
             .find(langCode)
             .stream()
             .findFirst()
-            .orElse(null);
+            .orElseThrow(); // will not happen
     }
-
 }

@@ -1,6 +1,7 @@
 package ch.difty.scipamato.core.web.common;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.jetbrains.annotations.NotNull;
 
 import ch.difty.scipamato.common.web.event.WicketEvent;
 
@@ -11,9 +12,7 @@ import ch.difty.scipamato.common.web.event.WicketEvent;
  * @author u.joss
  */
 public class SelfUpdateEvent extends WicketEvent {
-
-    SelfUpdateEvent(AjaxRequestTarget target) {
+    SelfUpdateEvent(@NotNull AjaxRequestTarget target) {
         super(target);
     }
-
 }

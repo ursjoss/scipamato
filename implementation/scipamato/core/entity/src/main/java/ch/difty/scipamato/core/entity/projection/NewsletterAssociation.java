@@ -1,10 +1,10 @@
 package ch.difty.scipamato.core.entity.projection;
 
-import javax.validation.constraints.NotNull;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import ch.difty.scipamato.common.entity.FieldEnumType;
 import ch.difty.scipamato.core.entity.IdScipamatoEntity;
@@ -16,9 +16,9 @@ public class NewsletterAssociation extends IdScipamatoEntity<Integer> {
 
     private static final long serialVersionUID = 1L;
 
-    @NotNull
+    @javax.validation.constraints.NotNull
     private String  issue;
-    @NotNull
+    @javax.validation.constraints.NotNull
     private Integer publicationStatusId;
     private String  headline;
 
@@ -41,16 +41,17 @@ public class NewsletterAssociation extends IdScipamatoEntity<Integer> {
         }
     }
 
-    public NewsletterAssociation(Integer id, String issue, Integer publicationStatusId, String headline) {
+    public NewsletterAssociation(@Nullable Integer id, @NotNull String issue, @NotNull Integer publicationStatusId,
+        @Nullable String headline) {
         setId(id);
         this.issue = issue;
         this.publicationStatusId = publicationStatusId;
         this.headline = headline;
     }
 
+    @NotNull
     @Override
     public String getDisplayValue() {
         return issue;
     }
-
 }

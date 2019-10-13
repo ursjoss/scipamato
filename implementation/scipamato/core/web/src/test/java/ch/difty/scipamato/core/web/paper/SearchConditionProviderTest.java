@@ -1,6 +1,5 @@
 package ch.difty.scipamato.core.web.paper;
 
-import static ch.difty.scipamato.common.TestUtilsKt.assertDegenerateSupplierParameter;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
@@ -9,6 +8,7 @@ import java.util.List;
 
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -35,13 +35,8 @@ class SearchConditionProviderTest {
     }
 
     @Test
-    void degenerateConstruction_withNullSearchOrderModel() {
-        assertDegenerateSupplierParameter(() -> new SearchConditionProvider(null), "searchConditionsModel");
-    }
-
-    @Test
     void degenerateConstruction_withNullSearchOrderModel1() {
-        assertDegenerateSupplierParameter(() -> new SearchConditionProvider(Model.ofList(null)), "searchConditions");
+        Assertions.assertThrows(NullPointerException.class, () -> new SearchConditionProvider(Model.ofList(null)));
     }
 
     @Test
@@ -70,5 +65,4 @@ class SearchConditionProviderTest {
         IModel<SearchCondition> model = provider.model(mockCondition1);
         assertThat(model.getObject()).isEqualTo(mockCondition1);
     }
-
 }

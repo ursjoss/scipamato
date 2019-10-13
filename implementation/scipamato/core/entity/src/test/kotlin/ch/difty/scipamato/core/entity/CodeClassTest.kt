@@ -1,9 +1,6 @@
 package ch.difty.scipamato.core.entity
 
-import ch.difty.scipamato.core.entity.CodeClass.CodeClassFields.DESCRIPTION
-import ch.difty.scipamato.core.entity.CodeClass.CodeClassFields.NAME
 import org.assertj.core.api.Assertions.assertThat
-
 import org.junit.jupiter.api.Test
 
 internal class CodeClassTest : Jsr303ValidatedEntityTest<CodeClass>(CodeClass::class.java) {
@@ -18,18 +15,6 @@ internal class CodeClassTest : Jsr303ValidatedEntityTest<CodeClass>(CodeClass::c
     @Test
     fun validatingCodeClass_beingValid_succeeds() {
         verifySuccessfulValidation(CodeClass(1, "foo", "bar"))
-    }
-
-    @Test
-    fun validatingCodeClass_withNullName_fails() {
-        val cc = CodeClass(1, null, "bar")
-        validateAndAssertFailure(cc, NAME, null, JAVAX_VALIDATION_CONSTRAINTS_NOT_NULL_MESSAGE)
-    }
-
-    @Test
-    fun validatingCodeClass_withNullDescription_fails() {
-        val cc = CodeClass(1, "foo", null)
-        validateAndAssertFailure(cc, DESCRIPTION, null, JAVAX_VALIDATION_CONSTRAINTS_NOT_NULL_MESSAGE)
     }
 
     @Test
@@ -101,37 +86,7 @@ internal class CodeClassTest : Jsr303ValidatedEntityTest<CodeClass>(CodeClass::c
         assertEquality(cc1, cc2)
     }
 
-    @Test
-    fun differingValues_withNameNullOnOne() {
-        val cc1 = CodeClass(1, null, DESC)
-        val cc2 = CodeClass(1, "cc1", DESC)
-        assertInequality(cc1, cc2)
-    }
-
-    @Test
-    fun differingValues_withNameNullOnBoth() {
-        val cc1 = CodeClass(1, null, DESC)
-        val cc2 = CodeClass(1, null, DESC)
-        assertEquality(cc1, cc2)
-    }
-
-    @Test
-    fun differingValues_withDescriptionNullOnOne() {
-        val cc1 = CodeClass(1, "cc1", DESC)
-        val cc2 = CodeClass(1, "cc1", null)
-        assertInequality(cc1, cc2)
-    }
-
-    @Test
-    fun differingValues_withDescriptionNullOnBoth() {
-        val cc1 = CodeClass(1, "cc1", null)
-        val cc2 = CodeClass(1, "cc1", null)
-        assertEquality(cc1, cc2)
-    }
-
     companion object {
-        private const val JAVAX_VALIDATION_CONSTRAINTS_NOT_NULL_MESSAGE =
-            "{javax.validation.constraints.NotNull.message}"
         private const val DESC = "this is cc1"
     }
 }

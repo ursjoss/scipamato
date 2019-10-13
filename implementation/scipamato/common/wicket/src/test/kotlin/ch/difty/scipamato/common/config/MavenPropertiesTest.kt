@@ -11,6 +11,5 @@ internal class MavenPropertiesTest {
     @Test
     fun noDefaultValues() {
         assertThat(mp.version).isNull()
-        assertThat(mp.timestamp).isNull()
     }
 }

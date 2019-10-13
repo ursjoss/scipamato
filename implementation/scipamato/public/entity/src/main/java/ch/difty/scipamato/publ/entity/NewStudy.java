@@ -43,8 +43,8 @@ public class NewStudy extends PublicEntity {
         }
     }
 
+    @NotNull
     public String getReference() {
         return "(" + authors + "; " + year + ")";
     }
-
 }

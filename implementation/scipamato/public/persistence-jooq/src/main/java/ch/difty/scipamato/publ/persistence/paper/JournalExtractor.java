@@ -1,5 +1,8 @@
 package ch.difty.scipamato.publ.persistence.paper;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 /**
  * Implementations of this interface extract the journal name from the location
  * string.
@@ -16,5 +19,6 @@ public interface JournalExtractor {
      *     location string from which the journal name is extracted
      * @return the journal name
      */
-    String extractJournal(String location);
+    @NotNull
+    String extractJournal(@Nullable String location);
 }

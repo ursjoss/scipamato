@@ -3,6 +3,8 @@ package ch.difty.scipamato.core.persistence.user;
 import java.util.List;
 import java.util.Optional;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -28,30 +30,31 @@ public class JooqUserService implements UserService {
 
     private final PasswordEncoder passwordEncoder;
 
-    public JooqUserService(final UserRepository repo, @Lazy final PasswordEncoder passwordEncoder) {
+    public JooqUserService(@NotNull final UserRepository repo, @Lazy @NotNull final PasswordEncoder passwordEncoder) {
         this.repo = repo;
         this.passwordEncoder = passwordEncoder;
     }
 
+    @NotNull
     @Override
-    public Optional<User> findById(Integer id) {
+    public Optional<User> findById(@NotNull Integer id) {
         return Optional.ofNullable(repo.findById(id));
     }
 
+    @NotNull
     @Override
-    public List<User> findPageByFilter(UserFilter filter, PaginationContext paginationContext) {
+    public List<User> findPageByFilter(@Nullable UserFilter filter, @NotNull PaginationContext paginationContext) {
         return repo.findPageByFilter(filter, paginationContext);
     }
 
     @Override
-    public int countByFilter(UserFilter filter) {
+    public int countByFilter(@Nullable UserFilter filter) {
         return repo.countByFilter(filter);
     }
 
+    @Nullable
     @Override
-    public User saveOrUpdate(User user) {
-        if (user == null)
-            return null;
+    public User saveOrUpdate(@NotNull User user) {
         final String password = user.getPassword();
         if (password != null)
             user.setPassword(passwordEncoder.encode(password));
@@ -61,22 +64,23 @@ public class JooqUserService implements UserService {
             return repo.update(user);
     }
 
+    @NotNull
     @Override
-    public Optional<User> findByUserName(String userName) {
+    public Optional<User> findByUserName(@Nullable String userName) {
         if (userName == null)
             return Optional.empty();
         return Optional.ofNullable(repo.findByUserName(userName));
     }
 
     @Override
-    public void remove(User entity) {
+    public void remove(@Nullable User entity) {
         if (entity != null && entity.getId() != null)
             repo.delete(entity.getId(), entity.getVersion());
     }
 
+    @NotNull
     @Override
-    public List<Integer> findPageOfIdsByFilter(final UserFilter filter, final PaginationContext paginationContext) {
+    public List<Integer> findPageOfIdsByFilter(@Nullable final UserFilter filter, @NotNull final PaginationContext paginationContext) {
         return repo.findPageOfIdsByFilter(filter, paginationContext);
     }
-
 }

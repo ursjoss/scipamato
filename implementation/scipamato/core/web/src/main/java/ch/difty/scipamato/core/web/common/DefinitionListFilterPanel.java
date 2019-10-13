@@ -1,6 +1,8 @@
 package ch.difty.scipamato.core.web.common;
 
 import org.apache.wicket.extensions.markup.html.repeater.data.table.filter.FilterForm;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import ch.difty.scipamato.common.entity.DefinitionEntity;
 import ch.difty.scipamato.common.entity.filter.ScipamatoFilter;
@@ -13,11 +15,12 @@ public abstract class DefinitionListFilterPanel<T extends DefinitionEntity, F ex
 
     private final P dataProvider;
 
-    protected DefinitionListFilterPanel(final String id, final P provider) {
+    protected DefinitionListFilterPanel(@NotNull final String id, @NotNull final P provider) {
         super(id);
         this.dataProvider = provider;
     }
 
+    @Nullable
     protected F getFilter() {
         return dataProvider.getFilterState();
     }
@@ -34,5 +37,4 @@ public abstract class DefinitionListFilterPanel<T extends DefinitionEntity, F ex
     }
 
     protected abstract void queueFilterFormFields();
-
 }

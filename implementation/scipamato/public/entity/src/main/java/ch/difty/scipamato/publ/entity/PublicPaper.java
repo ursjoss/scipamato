@@ -60,5 +60,4 @@ public class PublicPaper extends PublicEntity {
             return name;
         }
     }
-
 }

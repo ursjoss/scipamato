@@ -17,6 +17,8 @@ import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import ch.difty.scipamato.core.entity.newsletter.Newsletter;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterNewsletterTopic;
@@ -37,7 +39,7 @@ public class NewsletterTopicSortPage extends BasePage<Newsletter> {
     @SpringBean
     private NewsletterTopicService service;
 
-    NewsletterTopicSortPage(final IModel<Newsletter> model, final PageReference previous) {
+    NewsletterTopicSortPage(@Nullable final IModel<Newsletter> model, @Nullable final PageReference previous) {
         super(model);
         this.previousPageRef = previous;
     }
@@ -56,7 +58,7 @@ public class NewsletterTopicSortPage extends BasePage<Newsletter> {
         queue(newCancelButton("cancel"));
     }
 
-    private Label newHeader(final String id) {
+    private Label newHeader(@NotNull final String id) {
         final StringResourceModel model = new StringResourceModel(id + LABEL, this, getModel());
         return new Label(id, model);
     }
@@ -84,11 +86,10 @@ public class NewsletterTopicSortPage extends BasePage<Newsletter> {
     private static Sortable.HashListView<NewsletterNewsletterTopic> newListView(String id,
         IModel<List<NewsletterNewsletterTopic>> model) {
         return new Sortable.HashListView<>(id, model) {
-
             private static final long serialVersionUID = 1L;
 
             @Override
-            protected void populateItem(ListItem<NewsletterNewsletterTopic> item) {
+            protected void populateItem(@NotNull ListItem<NewsletterNewsletterTopic> item) {
                 item.add(
                     new EmptyPanel("icon").add(AttributeModifier.append("class", "ui-icon " + JQueryIcon.ARROW_2_N_S)));
                 item.add(new Label("item", item
@@ -96,7 +97,6 @@ public class NewsletterTopicSortPage extends BasePage<Newsletter> {
                     .getDisplayValue()));
                 item.add(AttributeModifier.append("class", "ui-state-default"));
             }
-
         };
     }
 
@@ -104,7 +104,7 @@ public class NewsletterTopicSortPage extends BasePage<Newsletter> {
         return new BootstrapAjaxButton(id, new StringResourceModel(id + LABEL, this, null), Buttons.Type.Primary) {
 
             @Override
-            protected void onSubmit(final AjaxRequestTarget target) {
+            protected void onSubmit(@NotNull final AjaxRequestTarget target) {
                 super.onSubmit(target);
                 alignSortToIndex(topics);
 
@@ -128,7 +128,7 @@ public class NewsletterTopicSortPage extends BasePage<Newsletter> {
         return new BootstrapAjaxButton(id, new StringResourceModel(id + LABEL, this, null), Buttons.Type.Default) {
 
             @Override
-            protected void onSubmit(final AjaxRequestTarget target) {
+            protected void onSubmit(@NotNull final AjaxRequestTarget target) {
                 super.onSubmit(target);
                 if (previousPageRef != null)
                     setResponsePage(previousPageRef.getPage());

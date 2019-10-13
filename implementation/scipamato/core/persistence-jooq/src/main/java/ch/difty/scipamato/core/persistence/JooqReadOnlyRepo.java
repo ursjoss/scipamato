@@ -3,10 +3,11 @@ package ch.difty.scipamato.core.persistence;
 import java.util.Collection;
 import java.util.List;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.jooq.*;
 import org.jooq.impl.TableImpl;
 
-import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.DateTimeService;
 import ch.difty.scipamato.common.config.ApplicationProperties;
 import ch.difty.scipamato.common.entity.filter.ScipamatoFilter;
@@ -58,30 +59,35 @@ public abstract class JooqReadOnlyRepo<R extends Record, T extends CoreEntity, I
      * @param applicationProperties
      *     the object providing the application properties
      */
-    protected JooqReadOnlyRepo(final DSLContext dsl, final M mapper, final JooqSortMapper<R, T, TI> sortMapper,
-        GenericFilterConditionMapper<F> filterConditionMapper, DateTimeService dateTimeService,
-        ApplicationProperties applicationProperties) {
+    protected JooqReadOnlyRepo(@NotNull final DSLContext dsl, @NotNull final M mapper,
+        @NotNull final JooqSortMapper<R, T, TI> sortMapper,
+        @NotNull GenericFilterConditionMapper<F> filterConditionMapper, @NotNull DateTimeService dateTimeService,
+        @NotNull ApplicationProperties applicationProperties) {
         super(dsl, dateTimeService);
 
-        this.mapper = AssertAs.INSTANCE.notNull(mapper, "mapper");
-        this.sortMapper = AssertAs.INSTANCE.notNull(sortMapper, "sortMapper");
-        this.filterConditionMapper = AssertAs.INSTANCE.notNull(filterConditionMapper, "filterConditionMapper");
-        this.applicationProperties = AssertAs.INSTANCE.notNull(applicationProperties, "applicationProperties");
+        this.mapper = mapper;
+        this.sortMapper = sortMapper;
+        this.filterConditionMapper = filterConditionMapper;
+        this.applicationProperties = applicationProperties;
 
     }
 
+    @NotNull
     protected M getMapper() {
         return mapper;
     }
 
+    @NotNull
     protected GenericFilterConditionMapper<F> getFilterConditionMapper() {
         return filterConditionMapper;
     }
 
+    @NotNull
     protected JooqSortMapper<R, T, TI> getSortMapper() {
         return sortMapper;
     }
 
+    @NotNull
     protected ApplicationProperties getApplicationProperties() {
         return applicationProperties;
     }
@@ -89,22 +95,27 @@ public abstract class JooqReadOnlyRepo<R extends Record, T extends CoreEntity, I
     /**
      * @return the jOOQ generated table of type {@code T}
      */
+    @NotNull
     protected abstract TI getTable();
 
     /**
      * @return the jOOQ generated {@link TableField} representing the {@code ID}
      */
+    @NotNull
     protected abstract TableField<R, ID> getTableId();
 
+    @NotNull
     protected abstract TableField<R, Integer> getRecordVersion();
 
+    @NotNull
     @Override
     public List<T> findAll() {
         return findAll(getApplicationProperties().getDefaultLocalization());
     }
 
+    @NotNull
     @Override
-    public List<T> findAll(String languageCode) {
+    public List<T> findAll(@Nullable String languageCode) {
         final List<T> entities = getDsl()
             .selectFrom(getTable())
             .fetch(getMapper());
@@ -112,20 +123,21 @@ public abstract class JooqReadOnlyRepo<R extends Record, T extends CoreEntity, I
         return entities;
     }
 
-    protected void enrichAssociatedEntitiesOfAll(final List<T> entities, final String languageCode) {
+    protected void enrichAssociatedEntitiesOfAll(@NotNull final List<T> entities, @Nullable final String languageCode) {
         for (final T e : entities) {
             enrichAssociatedEntitiesOf(e, languageCode);
         }
     }
 
+    @Nullable
     @Override
-    public T findById(final ID id) {
+    public T findById(@NotNull final ID id) {
         return findById(id, getApplicationProperties().getDefaultLocalization());
     }
 
+    @Nullable
     @Override
-    public T findById(final ID id, final String languageCode) {
-        AssertAs.INSTANCE.notNull(id, "id");
+    public T findById(@NotNull final ID id, @Nullable final String languageCode) {
         T entity = getDsl()
             .selectFrom(getTable())
             .where(getTableId().equal(id))
@@ -134,14 +146,15 @@ public abstract class JooqReadOnlyRepo<R extends Record, T extends CoreEntity, I
         return entity;
     }
 
+    @Nullable
     @Override
-    public T findById(final ID id, final int version) {
+    public T findById(@NotNull final ID id, final int version) {
         return findById(id, version, getApplicationProperties().getDefaultLocalization());
     }
 
+    @Nullable
     @Override
-    public T findById(final ID id, final int version, String languageCode) {
-        AssertAs.INSTANCE.notNull(id, "id");
+    public T findById(@NotNull final ID id, final int version, @Nullable String languageCode) {
         T entity = getDsl()
             .selectFrom(getTable())
             .where(getTableId().equal(id))
@@ -159,11 +172,11 @@ public abstract class JooqReadOnlyRepo<R extends Record, T extends CoreEntity, I
      * @param languageCode
      *     the two character language code
      */
-    protected void enrichAssociatedEntitiesOf(final T entity, final String languageCode) {
+    protected void enrichAssociatedEntitiesOf(@Nullable final T entity, @Nullable final String languageCode) {
     }
 
     @Override
-    public int countByFilter(final F filter) {
+    public int countByFilter(@Nullable final F filter) {
         final Condition conditions = filterConditionMapper.map(filter);
         return getDsl().fetchCount(getDsl()
             .selectOne()
@@ -171,13 +184,16 @@ public abstract class JooqReadOnlyRepo<R extends Record, T extends CoreEntity, I
             .where(conditions));
     }
 
+    @NotNull
     @Override
-    public List<T> findPageByFilter(final F filter, final PaginationContext pc) {
+    public List<T> findPageByFilter(@Nullable final F filter, @NotNull final PaginationContext pc) {
         return findPageByFilter(filter, pc, getApplicationProperties().getDefaultLocalization());
     }
 
+    @NotNull
     @Override
-    public List<T> findPageByFilter(final F filter, final PaginationContext pc, final String languageCode) {
+    public List<T> findPageByFilter(@Nullable final F filter, @NotNull final PaginationContext pc,
+        @Nullable final String languageCode) {
         final Condition conditions = filterConditionMapper.map(filter);
         final Collection<SortField<T>> sortCriteria = getSortMapper().map(pc.getSort(), getTable());
         final List<T> entities = getDsl()
@@ -193,8 +209,9 @@ public abstract class JooqReadOnlyRepo<R extends Record, T extends CoreEntity, I
         return entities;
     }
 
+    @NotNull
     @Override
-    public List<ID> findPageOfIdsByFilter(final F filter, final PaginationContext pc) {
+    public List<ID> findPageOfIdsByFilter(@Nullable final F filter, @NotNull final PaginationContext pc) {
         final Condition conditions = filterConditionMapper.map(filter);
         final Collection<SortField<T>> sortCriteria = getSortMapper().map(pc.getSort(), getTable());
         return getDsl()
@@ -206,5 +223,4 @@ public abstract class JooqReadOnlyRepo<R extends Record, T extends CoreEntity, I
             .offset(pc.getOffset())
             .fetch(getTableId());
     }
-
 }

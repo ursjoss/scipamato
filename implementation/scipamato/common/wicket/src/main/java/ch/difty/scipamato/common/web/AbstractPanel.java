@@ -7,6 +7,8 @@ import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.panel.GenericPanel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.StringResourceModel;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings({ "SameParameterValue", "SpellCheckingInspection", "unused" })
 public abstract class AbstractPanel<T> extends GenericPanel<T> {
@@ -23,15 +25,15 @@ public abstract class AbstractPanel<T> extends GenericPanel<T> {
     private final Mode   mode;
     private final String submitLinkResourceLabel;
 
-    protected AbstractPanel(final String id) {
+    protected AbstractPanel(@NotNull final String id) {
         this(id, null, Mode.VIEW);
     }
 
-    public AbstractPanel(final String id, IModel<T> model) {
+    public AbstractPanel(@NotNull final String id, @NotNull IModel<T> model) {
         this(id, model, Mode.VIEW);
     }
 
-    public AbstractPanel(final String id, IModel<T> model, Mode mode) {
+    public AbstractPanel(@NotNull final String id, @Nullable IModel<T> model, @NotNull Mode mode) {
         super(id, model);
         this.mode = mode;
         switch (mode) {
@@ -47,10 +49,12 @@ public abstract class AbstractPanel<T> extends GenericPanel<T> {
         }
     }
 
+    @NotNull
     protected String getSubmitLinkResourceLabel() {
         return submitLinkResourceLabel;
     }
 
+    @NotNull
     protected Mode getMode() {
         return mode;
     }
@@ -67,11 +71,11 @@ public abstract class AbstractPanel<T> extends GenericPanel<T> {
         return mode == Mode.VIEW;
     }
 
-    protected void queueFieldAndLabel(FormComponent<?> field) {
+    protected void queueFieldAndLabel(@NotNull FormComponent<?> field) {
         queueFieldAndLabel(field, null);
     }
 
-    protected void queueFieldAndLabel(FormComponent<?> field, PropertyValidator<?> pv) {
+    protected void queueFieldAndLabel(@NotNull FormComponent<?> field, @Nullable PropertyValidator<?> pv) {
         String id = field.getId();
         StringResourceModel labelModel = new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null);
         queue(new Label(id + LABEL_TAG, labelModel));
@@ -82,7 +86,7 @@ public abstract class AbstractPanel<T> extends GenericPanel<T> {
             field.add(pv);
     }
 
-    protected void queueCheckBoxAndLabel(CheckBoxX field) {
+    protected void queueCheckBoxAndLabel(@NotNull CheckBoxX field) {
         String id = field.getId();
         StringResourceModel labelModel = new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null);
         queue(new Label(id + LABEL_TAG, labelModel));

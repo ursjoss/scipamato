@@ -28,5 +28,4 @@ public abstract class ModelTest extends AbstractWicketTest {
     protected void setUpLocal() {
         // override if necessary
     }
-
 }

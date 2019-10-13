@@ -8,11 +8,11 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.jetbrains.annotations.NotNull;
 import org.jooq.*;
 import org.jooq.impl.DSL;
 import org.springframework.beans.factory.annotation.Qualifier;
 
-import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.persistence.JooqSortMapper;
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.core.db.Tables;
@@ -59,33 +59,36 @@ public abstract class JooqBySearchOrderRepo<T extends IdScipamatoEntity<Long>, M
      * @param sortMapper
      *     paper or paperSlim specific {@link JooqSortMapper}
      */
-    public JooqBySearchOrderRepo(@Qualifier("dslContext") final DSLContext dsl, final M mapper,
-        final JooqSortMapper<PaperRecord, T, ch.difty.scipamato.core.db.tables.Paper> sortMapper) {
+    public JooqBySearchOrderRepo(@Qualifier("dslContext") @NotNull final DSLContext dsl, @NotNull final M mapper,
+        @NotNull final JooqSortMapper<PaperRecord, T, ch.difty.scipamato.core.db.tables.Paper> sortMapper) {
         this.dsl = dsl;
         this.mapper = mapper;
         this.sortMapper = sortMapper;
     }
 
+    @NotNull
     protected DSLContext getDsl() {
         return dsl;
     }
 
+    @NotNull
     protected M getMapper() {
         return mapper;
     }
 
+    @NotNull
     protected JooqSortMapper<PaperRecord, T, ch.difty.scipamato.core.db.tables.Paper> getSortMapper() {
         return sortMapper;
     }
 
+    @NotNull
     protected Class<? extends PaperRecord> getRecordClass() {
         return PaperRecord.class;
     }
 
+    @NotNull
     @Override
-    public List<T> findBySearchOrder(final SearchOrder searchOrder) {
-        AssertAs.INSTANCE.notNull(searchOrder, "searchOrder");
-
+    public List<T> findBySearchOrder(@NotNull final SearchOrder searchOrder) {
         final Condition paperMatches = getConditionsFrom(searchOrder);
         final List<PaperRecord> queryResults = getDsl()
             .selectFrom(Tables.PAPER)
@@ -111,7 +114,8 @@ public abstract class JooqBySearchOrderRepo<T extends IdScipamatoEntity<Long>, M
      *     the {@link SearchOrder} for which to return the conditions
      * @return {@link Condition}
      */
-    public Condition getConditionsFrom(final SearchOrder searchOrder) {
+    @NotNull
+    public Condition getConditionsFrom(@NotNull final SearchOrder searchOrder) {
         final ConditionalSupplier conditions = new ConditionalSupplier();
         if (searchOrder.isShowExcluded()) {
             return PAPER.ID.in(searchOrder.getExcludedPaperIds());
@@ -194,8 +198,9 @@ public abstract class JooqBySearchOrderRepo<T extends IdScipamatoEntity<Long>, M
         return nlConditions.combineWithAnd();
     }
 
+    @NotNull
     @Override
-    public List<T> findPageBySearchOrder(final SearchOrder searchOrder, final PaginationContext pc) {
+    public List<T> findPageBySearchOrder(@NotNull final SearchOrder searchOrder, @NotNull final PaginationContext pc) {
         final Condition paperMatches = getConditionsFrom(searchOrder);
         final Collection<SortField<T>> sortCriteria = getSortMapper().map(pc.getSort(), PAPER);
         final List<PaperRecord> tuples = getDsl()
@@ -212,9 +217,7 @@ public abstract class JooqBySearchOrderRepo<T extends IdScipamatoEntity<Long>, M
     }
 
     @Override
-    public int countBySearchOrder(final SearchOrder searchOrder) {
-        AssertAs.INSTANCE.notNull(searchOrder, "searchOrder");
-
+    public int countBySearchOrder(@NotNull final SearchOrder searchOrder) {
         final Condition paperMatches = getConditionsFrom(searchOrder);
         return getDsl().fetchCount(getDsl()
             .selectOne()
@@ -222,8 +225,10 @@ public abstract class JooqBySearchOrderRepo<T extends IdScipamatoEntity<Long>, M
             .where(paperMatches));
     }
 
+    @NotNull
     @Override
-    public List<Long> findPageOfIdsBySearchOrder(final SearchOrder searchOrder, final PaginationContext pc) {
+    public List<Long> findPageOfIdsBySearchOrder(@NotNull final SearchOrder searchOrder,
+        @NotNull final PaginationContext pc) {
         final Condition conditions = getConditionsFrom(searchOrder);
         final Collection<SortField<T>> sortCriteria = getSortMapper().map(pc.getSort(), PAPER);
         return getDsl()

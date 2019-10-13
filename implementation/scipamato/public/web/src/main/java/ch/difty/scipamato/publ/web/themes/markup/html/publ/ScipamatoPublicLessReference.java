@@ -7,6 +7,7 @@ import de.agilecoders.wicket.core.util.Dependencies;
 import de.agilecoders.wicket.less.LessResourceReference;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.HeaderItem;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * less resource reference that references the main less file. Can
@@ -36,6 +37,7 @@ public class ScipamatoPublicLessReference extends LessResourceReference {
     /**
      * @return singleton instance of {@link ScipamatoPublicLessReference}
      */
+    @NotNull
     public static ScipamatoPublicLessReference instance() {
         return Holder.INSTANCE;
     }
@@ -47,6 +49,7 @@ public class ScipamatoPublicLessReference extends LessResourceReference {
         private static final ScipamatoPublicLessReference INSTANCE = new ScipamatoPublicLessReference();
     }
 
+    @NotNull
     @Override
     public List<HeaderItem> getDependencies() {
         return Dependencies.combine(super.getDependencies(), CssHeaderItem.forReference(Bootstrap

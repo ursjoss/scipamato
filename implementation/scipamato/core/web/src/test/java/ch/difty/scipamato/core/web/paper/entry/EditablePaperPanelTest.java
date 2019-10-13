@@ -9,6 +9,8 @@ import java.time.LocalDateTime;
 import org.apache.wicket.PageReference;
 import org.apache.wicket.markup.html.link.ResourceLink;
 import org.apache.wicket.model.Model;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
@@ -20,7 +22,7 @@ import ch.difty.scipamato.core.entity.search.PaperFilter;
 import ch.difty.scipamato.core.pubmed.PubmedArticleFacade;
 import ch.difty.scipamato.core.web.paper.common.PaperPanelTest;
 
-@SuppressWarnings("SpellCheckingInspection")
+@SuppressWarnings({ "SpellCheckingInspection", "CatchMayIgnoreException", "ResultOfMethodCallIgnored" })
 abstract class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperPanel> {
 
     static final int     PMID            = 1234;
@@ -53,12 +55,13 @@ abstract class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePape
                 // no-op
             }
 
+            @Nullable
             @Override
-            protected PaperEntryPage getResponsePage(Paper p, Long searchOrderId, boolean showingExclusions) {
+            protected PaperEntryPage getResponsePage(@NotNull Paper p, @Nullable Long searchOrderId,
+                boolean showingExclusions) {
                 // no-op
                 return null;
             }
-
         };
     }
 
@@ -156,8 +159,10 @@ abstract class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePape
                 // no-op
             }
 
+            @NotNull
             @Override
-            protected PaperEntryPage getResponsePage(Paper p, Long searchOrderId, boolean showingExclusions) {
+            protected PaperEntryPage getResponsePage(@NotNull Paper p, @Nullable Long searchOrderId,
+                boolean showingExclusions) {
                 throw new RuntimeException("forward to calling page triggered");
             }
         };

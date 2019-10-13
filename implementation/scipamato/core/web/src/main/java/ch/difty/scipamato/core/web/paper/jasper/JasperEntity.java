@@ -2,13 +2,15 @@ package ch.difty.scipamato.core.web.paper.jasper;
 
 import java.io.Serializable;
 
-import ch.difty.scipamato.common.NullArgumentException;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public abstract class JasperEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    protected String na(final String s) {
+    @NotNull
+    protected String na(@Nullable final String s) {
         return s != null ? s : "";
     }
 
@@ -23,7 +25,8 @@ public abstract class JasperEntity implements Serializable {
      *     label
      * @return label, never null
      */
-    String na(final String label, String value) {
+    @NotNull
+    String na(@Nullable final String label, @Nullable String value) {
         if (value == null || value.isEmpty())
             return "";
         else
@@ -40,16 +43,12 @@ public abstract class JasperEntity implements Serializable {
      *     the value to test against if it is null or blank to not show the
      *     label
      * @return label, never null
-     * @throws NullArgumentException
-     *     in case of a null label
      */
-    protected String na2(final String label, String value) {
-        if (label == null)
-            throw new NullArgumentException("label");
+    @NotNull
+    protected String na2(@NotNull final String label, @Nullable String value) {
         if (value == null || value.isEmpty())
             return "";
         else
             return label;
     }
-
 }

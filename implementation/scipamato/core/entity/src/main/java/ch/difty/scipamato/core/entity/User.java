@@ -1,7 +1,5 @@
 package ch.difty.scipamato.core.entity;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Objects;
@@ -11,6 +9,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import ch.difty.scipamato.common.entity.FieldEnumType;
 import ch.difty.scipamato.core.auth.Role;
@@ -30,17 +30,17 @@ public class User extends IdScipamatoEntity<Integer> {
 
     public static final User NO_USER = new User(-1, "noUser", "n.a", "n.a.", "n.a.", "n.a");
 
-    @NotNull
-    @Size(max = 30)
+    @javax.validation.constraints.NotNull
+    @javax.validation.constraints.Size(max = 30)
     private String userName;
 
-    @NotNull
+    @javax.validation.constraints.NotNull
     private String firstName;
 
-    @NotNull
+    @javax.validation.constraints.NotNull
     private String lastName;
 
-    @NotNull
+    @javax.validation.constraints.NotNull
     private String email;
 
     private String password;
@@ -71,8 +71,9 @@ public class User extends IdScipamatoEntity<Integer> {
         }
     }
 
-    public User(final int id, final String userName, final String firstName, final String lastName, final String email,
-        final String password, final boolean enabled, final Set<Role> roles) {
+    public User(final int id, @NotNull final String userName, @NotNull final String firstName,
+        @NotNull final String lastName, @NotNull final String email, @Nullable final String password,
+        final boolean enabled, @Nullable final Set<Role> roles) {
         setId(id);
         this.userName = userName;
         this.firstName = firstName;
@@ -83,12 +84,12 @@ public class User extends IdScipamatoEntity<Integer> {
         setRoles(roles);
     }
 
-    public User(final int id, final String userName, final String firstName, final String lastName, final String email,
-        final String password) {
+    public User(final int id, @NotNull final String userName, @NotNull final String firstName,
+        @NotNull final String lastName, @NotNull final String email, @Nullable final String password) {
         this(id, userName, firstName, lastName, email, password, false, null);
     }
 
-    public User(final User user) {
+    public User(@NotNull final User user) {
         setId(user.getId());
         this.userName = user.getUserName();
         this.firstName = user.getFirstName();
@@ -99,17 +100,17 @@ public class User extends IdScipamatoEntity<Integer> {
         setRoles(user.getRoles());
     }
 
-    public void setRoles(final Set<Role> roles) {
+    public void setRoles(@Nullable final Set<Role> roles) {
         this.roles.clear();
         if (roles != null)
             this.roles.addAll(roles);
     }
 
-    public void addRole(final Role role) {
+    public void addRole(@NotNull final Role role) {
         this.roles.add(role);
     }
 
-    public void removeRole(final Role role) {
+    public void removeRole(@NotNull final Role role) {
         final Iterator<Role> it = this.roles.iterator();
         while (it.hasNext()) {
             final Role r = it.next();
@@ -120,11 +121,13 @@ public class User extends IdScipamatoEntity<Integer> {
         }
     }
 
+    @NotNull
     @Override
     public String getDisplayValue() {
         return userName;
     }
 
+    @NotNull
     public String getFullName() {
         return firstName + " " + lastName;
     }

@@ -32,5 +32,4 @@ public abstract class BasePageTest<T extends BasePage<?>> extends WicketTest {
      */
     protected void assertSpecificComponents() {
     }
-
 }

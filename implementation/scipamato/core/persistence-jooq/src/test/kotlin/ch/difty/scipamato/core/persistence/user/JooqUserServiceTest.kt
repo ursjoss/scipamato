@@ -64,11 +64,6 @@ internal class JooqUserServiceTest {
     }
 
     @Test
-    fun savingOrUpdating_withNullUser_simplyReturnsNull() {
-        assertThat(service.saveOrUpdate(null)).isNull()
-    }
-
-    @Test
     fun savingOrUpdating_withUserWithNullId_hasRepoAddTheUser() {
         whenever(userMock.id).thenReturn(null)
         whenever(repoMock.add(userMock)).thenReturn(userMock)

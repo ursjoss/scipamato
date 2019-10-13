@@ -4,6 +4,8 @@ import java.util.List;
 
 import net.sf.jasperreports.export.SimplePdfExporterConfiguration;
 import org.apache.commons.collections4.CollectionUtils;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import ch.difty.scipamato.core.entity.Code;
 import ch.difty.scipamato.core.entity.User;
@@ -20,7 +22,7 @@ public class ScipamatoPdfExporterConfiguration extends SimplePdfExporterConfigur
 
     private static final long serialVersionUID = 1L;
 
-    private ScipamatoPdfExporterConfiguration(final Builder builder) {
+    private ScipamatoPdfExporterConfiguration(@NotNull final Builder builder) {
         if (builder.author != null)
             setMetadataAuthor(builder.author);
         if (builder.title != null || builder.paperTitle != null)
@@ -76,7 +78,7 @@ public class ScipamatoPdfExporterConfiguration extends SimplePdfExporterConfigur
          * @param number
          *     the unique number of the paper
          */
-        public Builder(final String headerPart, final Long number) {
+        public Builder(@Nullable final String headerPart, @Nullable final Long number) {
             final StringBuilder sb = new StringBuilder();
             if (headerPart != null) {
                 sb.append(headerPart);
@@ -99,37 +101,37 @@ public class ScipamatoPdfExporterConfiguration extends SimplePdfExporterConfigur
          * @param title
          *     the title
          */
-        public Builder(final String title) {
+        public Builder(@Nullable final String title) {
             this.title = title;
         }
 
-        public Builder withAuthor(final String author) {
+        public Builder withAuthor(@NotNull final String author) {
             this.author = author;
             return this;
         }
 
-        public Builder withAuthor(final User user) {
+        public Builder withAuthor(@Nullable final User user) {
             if (user != null)
                 this.author = user.getFirstName() + " " + user.getLastName();
             return this;
         }
 
-        public Builder withPaperTitle(final String paperTitle) {
+        public Builder withPaperTitle(@NotNull final String paperTitle) {
             this.paperTitle = paperTitle;
             return this;
         }
 
-        public Builder withPaperAuthor(final String paperAuthor) {
+        public Builder withPaperAuthor(@NotNull final String paperAuthor) {
             this.paperAuthor = paperAuthor;
             return this;
         }
 
-        public Builder withSubject(final String subject) {
+        public Builder withSubject(@NotNull final String subject) {
             this.subject = subject;
             return this;
         }
 
-        public Builder withCreator(final String creator) {
+        public Builder withCreator(@NotNull final String creator) {
             this.creator = creator;
             return this;
         }
@@ -139,7 +141,7 @@ public class ScipamatoPdfExporterConfiguration extends SimplePdfExporterConfigur
             return this;
         }
 
-        public Builder withCodes(final List<Code> codes) {
+        public Builder withCodes(@Nullable final List<Code> codes) {
             if (!CollectionUtils.isEmpty(codes)) {
                 final StringBuilder sb = new StringBuilder();
                 for (final Code c : codes) {
@@ -158,14 +160,12 @@ public class ScipamatoPdfExporterConfiguration extends SimplePdfExporterConfigur
             return this;
         }
 
-        private boolean hasSpaces(final String code) {
+        private boolean hasSpaces(@NotNull final String code) {
             return code.contains(" ");
         }
 
         public ScipamatoPdfExporterConfiguration build() {
             return new ScipamatoPdfExporterConfiguration(this);
         }
-
     }
-
 }

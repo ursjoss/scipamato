@@ -1,6 +1,7 @@
 package ch.difty.scipamato.core.web.resources;
 
 import org.apache.wicket.request.resource.CssResourceReference;
+import org.jetbrains.annotations.NotNull;
 
 public class MainCssResourceReference extends CssResourceReference {
 
@@ -12,8 +13,8 @@ public class MainCssResourceReference extends CssResourceReference {
         super(MainCssResourceReference.class, "css/main.css");
     }
 
+    @NotNull
     public static MainCssResourceReference get() {
         return INSTANCE;
     }
-
 }

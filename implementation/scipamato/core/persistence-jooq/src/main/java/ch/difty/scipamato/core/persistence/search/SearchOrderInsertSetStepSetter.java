@@ -2,11 +2,12 @@ package ch.difty.scipamato.core.persistence.search;
 
 import static ch.difty.scipamato.core.db.tables.SearchOrder.SEARCH_ORDER;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.jooq.InsertSetMoreStep;
 import org.jooq.InsertSetStep;
 import org.springframework.stereotype.Component;
 
-import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.core.db.tables.records.SearchOrderRecord;
 import ch.difty.scipamato.core.entity.search.SearchCondition;
 import ch.difty.scipamato.core.entity.search.SearchOrder;
@@ -23,12 +24,10 @@ import ch.difty.scipamato.core.persistence.InsertSetStepSetter;
 @Component
 public class SearchOrderInsertSetStepSetter implements InsertSetStepSetter<SearchOrderRecord, SearchOrder> {
 
+    @NotNull
     @Override
-    public InsertSetMoreStep<SearchOrderRecord> setNonKeyFieldsFor(InsertSetStep<SearchOrderRecord> step,
-        SearchOrder e) {
-        AssertAs.INSTANCE.notNull(step, "step");
-        AssertAs.INSTANCE.notNull(e, "entity");
-
+    public InsertSetMoreStep<SearchOrderRecord> setNonKeyFieldsFor(@NotNull InsertSetStep<SearchOrderRecord> step,
+        @NotNull SearchOrder e) {
         return step
             .set(SEARCH_ORDER.NAME, e.getName())
             .set(SEARCH_ORDER.OWNER, e.getOwner())
@@ -39,16 +38,14 @@ public class SearchOrderInsertSetStepSetter implements InsertSetStepSetter<Searc
     }
 
     @Override
-    public void considerSettingKeyOf(InsertSetMoreStep<SearchOrderRecord> step, SearchOrder entity) {
-        AssertAs.INSTANCE.notNull(step, "step");
-        AssertAs.INSTANCE.notNull(entity, "entity");
+    public void considerSettingKeyOf(@NotNull InsertSetMoreStep<SearchOrderRecord> step, @NotNull SearchOrder entity) {
         Long id = entity.getId();
         if (id != null)
             step.set(SEARCH_ORDER.ID, id);
     }
 
     @Override
-    public void resetIdToEntity(SearchOrder entity, SearchOrderRecord saved) {
+    public void resetIdToEntity(@NotNull SearchOrder entity, @Nullable SearchOrderRecord saved) {
         if (saved != null)
             entity.setId(saved.getId());
     }

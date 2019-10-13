@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder;
 import org.apache.wicket.injection.Injector;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.common.persistence.paging.PaginationRequest;
@@ -32,7 +34,7 @@ public class PaperSlimBySearchOrderProvider extends AbstractPaperSlimProvider<Se
      * @param rowsPerPage
      *     number of rows to place on the page
      */
-    public PaperSlimBySearchOrderProvider(final SearchOrder searchOrder, final int rowsPerPage) {
+    public PaperSlimBySearchOrderProvider(@Nullable final SearchOrder searchOrder, final int rowsPerPage) {
         super(searchOrder != null ? searchOrder : new SearchOrder(), rowsPerPage);
         Injector
             .get()
@@ -40,8 +42,9 @@ public class PaperSlimBySearchOrderProvider extends AbstractPaperSlimProvider<Se
         setSort(Paper.IdScipamatoEntityFields.ID.getFieldName(), SortOrder.DESCENDING);
     }
 
+    @NotNull
     @Override
-    protected Iterator<PaperSlim> findPage(final PaginationContext pc) {
+    protected Iterator<PaperSlim> findPage(@NotNull final PaginationContext pc) {
         return getService()
             .findPageBySearchOrder(getFilterState(), pc)
             .iterator();
@@ -52,17 +55,20 @@ public class PaperSlimBySearchOrderProvider extends AbstractPaperSlimProvider<Se
         return getService().countBySearchOrder(getFilterState());
     }
 
+    @NotNull
     @Override
-    protected List<Paper> findAll(final Direction dir, final String sortProp) {
+    protected List<Paper> findAll(@NotNull final Direction dir, @NotNull final String sortProp) {
         return getPaperService().findPageBySearchOrder(getFilterState(), new PaginationRequest(dir, sortProp),
             getLanguageCode());
     }
 
+    @NotNull
     @Override
-    protected List<Long> findAllIds(Direction dir, String sortProp) {
+    protected List<Long> findAllIds(@NotNull Direction dir, @NotNull String sortProp) {
         return getPaperService().findPageOfIdsBySearchOrder(getFilterState(), new PaginationRequest(dir, sortProp));
     }
 
+    @Nullable
     @Override
     public Long getSearchOrderId() {
         return getFilterState().getId();

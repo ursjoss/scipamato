@@ -9,7 +9,7 @@ import org.testcontainers.junit.jupiter.Testcontainers
 
 @JooqTest
 @Testcontainers
-@Suppress("FunctionName", "SpellCheckingInspection")
+@Suppress("FunctionName", "SpellCheckingInspection", "MagicNumber")
 internal open class JooqNewStudyRepoIntegrationTest {
 
     @Autowired
@@ -47,8 +47,10 @@ internal open class JooqNewStudyRepoIntegrationTest {
         assertThat(ns.year).isEqualTo(2017)
         assertThat(ns.authors).isEqualTo("Di et al.")
         assertThat(ns.reference).isEqualTo("(Di et al.; 2017)")
-        assertThat(ns.headline).startsWith("USA: Grosse Kohortenstudie zeigt, dass auch ein PM2.5-Grenzwert von 12")
-        assertThat(ns.description).startsWith("Registerkohortenstudie in den USA zur Untersuchung, ob die Sterblichkeit")
+        assertThat(ns.headline)
+            .startsWith("USA: Grosse Kohortenstudie zeigt, dass auch ein PM2.5-Grenzwert von 12")
+        assertThat(ns.description)
+            .startsWith("Registerkohortenstudie in den USA zur Untersuchung, ob die Sterblichkeit")
     }
 
     @Test
@@ -82,8 +84,10 @@ internal open class JooqNewStudyRepoIntegrationTest {
         assertThat(results).hasSize(2)
         assertThat(results.map { it.langCode }).containsOnly("en")
         assertThat(results.map { it.sort }).containsExactly(1, 2)
-        assertThat(results.map { it.title }).containsExactly("Search", "Project Repository")
-        assertThat(results.map { it.url }).containsExactly("https://duckduckgo.com/", "https://github.com/ursjoss/scipamato")
+        assertThat(results.map { it.title })
+            .containsExactly("Search", "Project Repository")
+        assertThat(results.map { it.url })
+            .containsExactly("https://duckduckgo.com/", "https://github.com/ursjoss/scipamato")
     }
 
     @Test

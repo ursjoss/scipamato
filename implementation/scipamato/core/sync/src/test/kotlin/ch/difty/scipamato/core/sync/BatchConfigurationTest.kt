@@ -1,7 +1,6 @@
 package ch.difty.scipamato.core.sync
 
 import com.nhaarman.mockitokotlin2.mock
-import org.assertj.core.api.AssertionsForInterfaceTypes.assertThat
 import org.jooq.DSLContext
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito.verifyNoMoreInteractions
@@ -17,9 +16,9 @@ internal class BatchConfigurationTest {
     private val jooqCore = mock<DSLContext>()
 
     @Test
-    fun instantiate() {
+    fun instantiating_doesNotCallServicesYet() {
         val bc = BatchConfiguration(batchProperties)
-        assertThat(bc.batchDataSourceInitializer(dataSource, resourceLoader) == null).isFalse()
+        bc.batchDataSourceInitializer(dataSource, resourceLoader)
         verifyNoMoreInteractions(batchProperties, dataSource, resourceLoader, jooqCore)
     }
 }

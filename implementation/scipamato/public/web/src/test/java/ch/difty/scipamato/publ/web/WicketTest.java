@@ -97,5 +97,4 @@ public abstract class WicketTest {
         getTester().assertComponent(bb + "Label", Label.class);
         getTester().assertComponent(bb, BootstrapMultiSelect.class);
     }
-
 }

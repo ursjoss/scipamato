@@ -2,6 +2,9 @@ package ch.difty.scipamato.publ.misc;
 
 import java.util.Locale;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 /**
  * Implementations of this interface have the ability
  * of parsing some kind of text value to identify and
@@ -20,5 +23,6 @@ public interface LocaleExtractor {
      * @return the locale encoded in the input.
      *     Is never null.
      */
-    Locale extractLocaleFrom(String input);
+    @NotNull
+    Locale extractLocaleFrom(@Nullable String input);
 }

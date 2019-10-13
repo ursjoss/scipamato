@@ -1,5 +1,7 @@
 package ch.difty.scipamato.core.sync.launcher;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * Launcher for spring-batch data synchronization from scipamato-core to
  * scipamato-public.
@@ -14,5 +16,6 @@ public interface SyncJobLauncher {
      *
      * @return {@link SyncJobResult}
      */
+    @NotNull
     SyncJobResult launch();
 }

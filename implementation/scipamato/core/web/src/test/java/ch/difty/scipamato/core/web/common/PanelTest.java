@@ -22,5 +22,4 @@ public abstract class PanelTest<T extends Panel> extends WicketTest {
     protected abstract T makePanel();
 
     protected abstract void assertSpecificComponents();
-
 }

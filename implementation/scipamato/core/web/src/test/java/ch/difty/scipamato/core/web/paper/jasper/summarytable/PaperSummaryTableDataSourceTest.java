@@ -13,7 +13,6 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.design.JRDesignField;
 import org.junit.jupiter.api.Test;
 
-import ch.difty.scipamato.common.NullArgumentException;
 import ch.difty.scipamato.common.entity.CodeClassId;
 import ch.difty.scipamato.core.entity.Code;
 import ch.difty.scipamato.core.web.paper.jasper.PaperDataSourceTest;
@@ -136,16 +135,4 @@ class PaperSummaryTableDataSourceTest extends PaperDataSourceTest {
             .next()).isFalse();
         verify(dataProviderMock).size();
     }
-
-    @Test
-    void instantiatingWithProvider_withNullProvider_throws() {
-        try {
-            new PaperSummaryTableDataSource(null, rhf, pdfExporterConfigMock);
-        } catch (Exception ex) {
-            assertThat(ex)
-                .isInstanceOf(NullArgumentException.class)
-                .hasMessage("dataProvider must not be null.");
-        }
-    }
-
 }

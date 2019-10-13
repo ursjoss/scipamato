@@ -29,6 +29,8 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.wicketstuff.annotation.mount.MountPath;
 
 import ch.difty.scipamato.common.entity.CodeClassId;
@@ -64,7 +66,7 @@ public class PublicPage extends BasePage<Void> {
 
     private boolean queryingInitialized = false;
 
-    public PublicPage(PageParameters parameters) {
+    public PublicPage(@Nullable PageParameters parameters) {
         super(parameters);
         initFilterAndProvider();
     }
@@ -134,7 +136,7 @@ public class PublicPage extends BasePage<Void> {
     private class TabPanel1 extends AbstractTabPanel {
         private static final long serialVersionUID = 1L;
 
-        TabPanel1(String id, IModel<PublicPaperFilter> model) {
+        TabPanel1(@NotNull String id, @Nullable IModel<PublicPaperFilter> model) {
             super(id, model);
         }
 
@@ -150,7 +152,7 @@ public class PublicPage extends BasePage<Void> {
     private class TabPanel2 extends AbstractTabPanel {
         private static final long serialVersionUID = 1L;
 
-        TabPanel2(String id, IModel<PublicPaperFilter> model) {
+        TabPanel2(@NotNull String id, @Nullable IModel<PublicPaperFilter> model) {
             super(id, model);
         }
 
@@ -215,7 +217,7 @@ public class PublicPage extends BasePage<Void> {
     private abstract static class AbstractTabPanel extends Panel {
         private static final long serialVersionUID = 1L;
 
-        AbstractTabPanel(String id, IModel<?> model) {
+        AbstractTabPanel(@NotNull String id, @Nullable IModel<?> model) {
             super(id, model);
         }
     }
@@ -330,5 +332,4 @@ public class PublicPage extends BasePage<Void> {
     private void updateNavigateable() {
         getPaperIdManager().initialize(dataProvider.findAllPaperNumbersByFilter());
     }
-
 }

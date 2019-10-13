@@ -3,6 +3,9 @@ package ch.difty.scipamato.core.entity;
 import java.io.Serializable;
 import java.util.List;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import ch.difty.scipamato.common.entity.CodeClassId;
 
 /**
@@ -17,6 +20,7 @@ public interface CodeBox extends Serializable {
     /**
      * @return all codes contained in the code box.
      */
+    @NotNull
     List<Code> getCodes();
 
     /**
@@ -26,7 +30,8 @@ public interface CodeBox extends Serializable {
      *     the id of the code class to clear all codes for
      * @return a list of codes
      */
-    List<Code> getCodesBy(CodeClassId codeClassId);
+    @NotNull
+    List<Code> getCodesBy(@NotNull CodeClassId codeClassId);
 
     /**
      * Add the code to the code box.
@@ -34,7 +39,7 @@ public interface CodeBox extends Serializable {
      * @param code
      *     the code to add
      */
-    void addCode(Code code);
+    void addCode(@Nullable Code code);
 
     /**
      * Add all codes to the code box
@@ -42,7 +47,7 @@ public interface CodeBox extends Serializable {
      * @param newCodes
      *     the codes to add
      */
-    void addCodes(List<Code> newCodes);
+    void addCodes(@NotNull List<Code> newCodes);
 
     /**
      * Clears all codes in the code box.
@@ -55,11 +60,10 @@ public interface CodeBox extends Serializable {
      * @param codeClassId
      *     the id of the code class to clear all codes for
      */
-    void clearBy(CodeClassId codeClassId);
+    void clearBy(@NotNull CodeClassId codeClassId);
 
     /**
      * @return true if the CodeBox holds not codes - false otherwise
      */
     boolean isEmpty();
-
 }

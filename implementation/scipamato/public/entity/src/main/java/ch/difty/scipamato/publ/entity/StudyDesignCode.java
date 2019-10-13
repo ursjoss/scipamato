@@ -6,6 +6,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Stream;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * StudyDesignCode contains aggregated Codes of Code Class 5:
  * <ol>
@@ -31,6 +33,7 @@ public enum StudyDesignCode {
         this.id = id;
     }
 
+    @NotNull
     public static Optional<StudyDesignCode> of(final short id) {
         return Optional.ofNullable(ID2CODE.get(id));
     }
@@ -38,5 +41,4 @@ public enum StudyDesignCode {
     public short getId() {
         return id;
     }
-
 }

@@ -1,5 +1,6 @@
 package ch.difty.scipamato.core.persistence;
 
+import org.jetbrains.annotations.NotNull;
 import org.jooq.Record;
 import org.jooq.UpdateSetFirstStep;
 import org.jooq.UpdateSetMoreStep;
@@ -27,6 +28,6 @@ public interface UpdateSetStepSetter<R extends Record, T extends CoreEntity> {
      *     the entity to set the values from
      * @return {@link UpdateSetMoreStep} for further usage with jOOQ
      */
-    UpdateSetMoreStep<R> setFieldsFor(UpdateSetFirstStep<R> step, T entity);
-
+    @NotNull
+    UpdateSetMoreStep<R> setFieldsFor(@NotNull UpdateSetFirstStep<R> step, @NotNull T entity);
 }

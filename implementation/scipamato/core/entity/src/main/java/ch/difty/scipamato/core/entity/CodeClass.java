@@ -1,9 +1,9 @@
 package ch.difty.scipamato.core.entity;
 
-import javax.validation.constraints.NotNull;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import ch.difty.scipamato.common.entity.CodeClassLike;
 import ch.difty.scipamato.common.entity.FieldEnumType;
@@ -14,9 +14,9 @@ public class CodeClass extends IdScipamatoEntity<Integer> implements CodeClassLi
 
     private static final long serialVersionUID = 1L;
 
-    @NotNull
+    @javax.validation.constraints.NotNull
     private final String name;
-    @NotNull
+    @javax.validation.constraints.NotNull
     private final String description;
 
     public enum CodeClassFields implements FieldEnumType {
@@ -36,13 +36,13 @@ public class CodeClass extends IdScipamatoEntity<Integer> implements CodeClassLi
         }
     }
 
-    public CodeClass(final Integer id, final String name, final String description) {
+    public CodeClass(@Nullable final Integer id, @NotNull final String name, @NotNull final String description) {
         super(id);
         this.name = name;
         this.description = description;
     }
 
-    public CodeClass(final CodeClass from) {
+    public CodeClass(@NotNull final CodeClass from) {
         this(from.getId(), from.getName(), from.getDescription());
     }
 
@@ -52,9 +52,9 @@ public class CodeClass extends IdScipamatoEntity<Integer> implements CodeClassLi
         return "CodeClass[id=" + getId() + "]";
     }
 
+    @NotNull
     @Override
     public String getDisplayValue() {
         return getId() + " - " + name;
     }
-
 }

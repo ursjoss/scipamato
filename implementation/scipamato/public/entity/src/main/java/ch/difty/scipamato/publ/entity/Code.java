@@ -49,5 +49,4 @@ public class Code extends PublicEntity implements CodeLike {
             return name;
         }
     }
-
 }

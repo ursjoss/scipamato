@@ -37,5 +37,4 @@ public class NewStudyPageLink extends PublicEntity {
             return name;
         }
     }
-
 }

@@ -215,9 +215,4 @@ internal class JooqNewsletterTopicServiceTest {
     fun savingSortedNewsletterTopics_withNoTopics_skipsSaving() {
         service.saveSortedNewsletterTopics(1, Lists.emptyList())
     }
-
-    @Test
-    fun savingSortedNewsletterTopics_withNullTopics_skipsSaving() {
-        service.saveSortedNewsletterTopics(1, null)
-    }
 }

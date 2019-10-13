@@ -10,6 +10,8 @@ import java.util.Comparator;
 import java.util.*;
 
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.jooq.*;
 import org.jooq.impl.DSL;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -19,7 +21,6 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
-import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.DateTimeService;
 import ch.difty.scipamato.common.TranslationUtils;
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
@@ -40,15 +41,15 @@ import ch.difty.scipamato.core.persistence.OptimisticLockingException;
 @Profile("!wickettest")
 public class JooqCodeClassRepo extends AbstractRepo implements CodeClassRepository {
 
-    public JooqCodeClassRepo(@Qualifier("dslContext") final DSLContext dslContext,
-        final DateTimeService dateTimeService) {
+    public JooqCodeClassRepo(@Qualifier("dslContext") @NotNull final DSLContext dslContext,
+        @NotNull final DateTimeService dateTimeService) {
         super(dslContext, dateTimeService);
     }
 
+    @NotNull
     @Override
     @Cacheable
-    public List<CodeClass> find(final String languageCode) {
-        AssertAs.INSTANCE.notNull(languageCode, "languageCode");
+    public List<CodeClass> find(@NotNull final String languageCode) {
         final String lang = TranslationUtils.INSTANCE.trimLanguageCode(languageCode);
         // skipping the audit fields
         return getDsl()
@@ -66,9 +67,10 @@ public class JooqCodeClassRepo extends AbstractRepo implements CodeClassReposito
             .fetchInto(CodeClass.class);
     }
 
+    @NotNull
     @Override
-    public List<CodeClassDefinition> findPageOfCodeClassDefinitions(final CodeClassFilter filter,
-        final PaginationContext pc) {
+    public List<CodeClassDefinition> findPageOfCodeClassDefinitions(@Nullable final CodeClassFilter filter,
+        @NotNull final PaginationContext pc) {
         final SelectOnConditionStep<Record> selectStep = getDsl()
             .select(CODE_CLASS.fields())
             .select(LANGUAGE.CODE)
@@ -93,15 +95,18 @@ public class JooqCodeClassRepo extends AbstractRepo implements CodeClassReposito
             .collect(toList());
     }
 
+    @NotNull
     @Override
     public String getMainLanguage() {
-        return getDsl()
+        final String lang = getDsl()
             .select(LANGUAGE.CODE)
             .from(LANGUAGE)
             .where(LANGUAGE.MAIN_LANGUAGE.eq(true))
             .fetchOneInto(String.class);
+        return lang != null ? lang : "en";
     }
 
+    @NotNull
     @Override
     public CodeClassDefinition newUnpersistedCodeClassDefinition() {
         final List<CodeClassTranslation> translations = getDsl()
@@ -135,7 +140,7 @@ public class JooqCodeClassRepo extends AbstractRepo implements CodeClassReposito
     }
 
     @Override
-    public int countByFilter(final CodeClassFilter filter) {
+    public int countByFilter(@Nullable final CodeClassFilter filter) {
         final SelectJoinStep<Record1<Integer>> selectStep = getDsl()
             .selectCount()
             .from(CODE_CLASS);
@@ -191,9 +196,9 @@ public class JooqCodeClassRepo extends AbstractRepo implements CodeClassReposito
         return definitions;
     }
 
+    @Nullable
     @Override
-    public CodeClassDefinition findCodeClassDefinition(final Integer id) {
-        AssertAs.INSTANCE.notNull(id, "id");
+    public CodeClassDefinition findCodeClassDefinition(@NotNull final Integer id) {
         final Map<Integer, Result<Record>> records = getDsl()
             .select(CODE_CLASS.fields())
             .select(LANGUAGE.CODE)
@@ -212,10 +217,10 @@ public class JooqCodeClassRepo extends AbstractRepo implements CodeClassReposito
             return null;
     }
 
+    @NotNull
     @Override
     @CacheEvict(allEntries = true)
-    public CodeClassDefinition saveOrUpdate(final CodeClassDefinition codeClassDefinition) {
-        AssertAs.INSTANCE.notNull(codeClassDefinition, "codeClassDefinition");
+    public CodeClassDefinition saveOrUpdate(@NotNull final CodeClassDefinition codeClassDefinition) {
         final int userId = getUserId();
 
         final CodeClassRecord ccRecord = getDsl()
@@ -345,11 +350,10 @@ public class JooqCodeClassRepo extends AbstractRepo implements CodeClassReposito
             record.get(CODE_CLASS_TR.NAME), record.get(CODE_CLASS_TR.DESCRIPTION), record.get(CODE_CLASS_TR.VERSION));
     }
 
+    @Nullable
     @Override
     @CacheEvict(allEntries = true)
-    public CodeClassDefinition delete(final Integer id, final int version) {
-        AssertAs.INSTANCE.notNull(id, "id");
-
+    public CodeClassDefinition delete(@NotNull final Integer id, final int version) {
         final CodeClassDefinition toBeDeleted = findCodeClassDefinition(id);
         if (toBeDeleted != null) {
             if (toBeDeleted.getVersion() == version) {
@@ -380,5 +384,4 @@ public class JooqCodeClassRepo extends AbstractRepo implements CodeClassReposito
                 OptimisticLockingException.Type.DELETE);
         }
     }
-
 }

@@ -4,6 +4,8 @@ import java.sql.Timestamp;
 
 import lombok.Builder;
 import lombok.experimental.Delegate;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import ch.difty.scipamato.publ.db.tables.pojos.Code;
 
@@ -23,9 +25,10 @@ class PublicCode {
     private final Code delegate;
 
     @Builder
-    private PublicCode(final String code, final String langCode, final Integer codeClassId, final String name,
-        final String comment, final Integer sort, final Integer version, final Timestamp created,
-        final Timestamp lastModified, final Timestamp lastSynched) {
+    private PublicCode(@NotNull final String code, @NotNull final String langCode, @NotNull final Integer codeClassId,
+        @NotNull final String name, @Nullable final String comment, @NotNull final Integer sort,
+        @Nullable final Integer version, @Nullable final Timestamp created, @Nullable final Timestamp lastModified,
+        @NotNull final Timestamp lastSynched) {
         delegate = new Code();
         delegate.setCode(code);
         delegate.setLangCode(langCode);
@@ -38,5 +41,4 @@ class PublicCode {
         delegate.setLastModified(lastModified);
         delegate.setLastSynched(lastSynched);
     }
-
 }

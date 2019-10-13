@@ -5,5 +5,5 @@ import org.jooq.DSLContext
 
 internal class NewStudyPageLinkWriterTest :
     AbstractItemWriterTest<PublicNewStudyPageLink, NewStudyPageLinkItemWriter>() {
-    override fun newWriter(dslContextMock: DSLContext?) = NewStudyPageLinkItemWriter(dslContextMock)
+    override fun newWriter(dslContextMock: DSLContext) = NewStudyPageLinkItemWriter(dslContextMock)
 }

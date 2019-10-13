@@ -1,10 +1,5 @@
 package ch.difty.scipamato.core.entity;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Pattern.Flag;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +8,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.Value;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import ch.difty.scipamato.common.entity.CodeClassId;
 import ch.difty.scipamato.common.entity.FieldEnumType;
@@ -167,8 +164,8 @@ public class Paper extends IdScipamatoEntity<Long> implements CodeBoxAware, News
         }
     }
 
-    @NotNull
-    @Min(0)
+    @javax.validation.constraints.NotNull
+    @javax.validation.constraints.Min(0)
     private Long number;
 
     /**
@@ -176,29 +173,30 @@ public class Paper extends IdScipamatoEntity<Long> implements CodeBoxAware, News
      * <p>
      * /^10.\d{4,9}/[-._;()/:A-Z0-9]+$/i
      */
-    @Pattern(regexp = DOI_REGEX, flags = { Flag.CASE_INSENSITIVE }, message = "{paper.invalidDOI}")
+    @javax.validation.constraints.Pattern(regexp = DOI_REGEX, flags = {
+        javax.validation.constraints.Pattern.Flag.CASE_INSENSITIVE }, message = "{paper.invalidDOI}")
     private String doi;
 
     private Integer pmId;
 
-    @NotNull
-    @Pattern(regexp = AUTHOR_REGEX, message = "{paper.invalidAuthor}")
+    @javax.validation.constraints.NotNull
+    @javax.validation.constraints.Pattern(regexp = AUTHOR_REGEX, message = "{paper.invalidAuthor}")
     private String authors;
 
-    @NotNull
+    @javax.validation.constraints.NotNull
     private String  firstAuthor;
     private boolean firstAuthorOverridden;
-    @NotNull
+    @javax.validation.constraints.NotNull
     private String  title;
-    @NotNull
+    @javax.validation.constraints.NotNull
     private String  location;
 
-    @NotNull
-    @Min(value = 1500, message = "{paper.invalidPublicationYear}")
-    @Max(value = 2100, message = "{paper.invalidPublicationYear}")
+    @javax.validation.constraints.NotNull
+    @javax.validation.constraints.Min(value = 1500, message = "{paper.invalidPublicationYear}")
+    @javax.validation.constraints.Max(value = 2100, message = "{paper.invalidPublicationYear}")
     private Integer publicationYear;
 
-    @NotNull
+    @javax.validation.constraints.NotNull
     private String goals;
     private String population;
     private String populationPlace;
@@ -229,11 +227,12 @@ public class Paper extends IdScipamatoEntity<Long> implements CodeBoxAware, News
 
     private final CodeBox codes = new PaperCodeBox();
 
+    // @NotNull breaks the tests with java/kotlin interoperability. But conceptually should be non-nullable
     public List<PaperAttachment> getAttachments() {
         return new ArrayList<>(attachments);
     }
 
-    public void setAttachments(final List<PaperAttachment> attachments) {
+    public void setAttachments(@Nullable final List<PaperAttachment> attachments) {
         this.attachments.clear();
         if (attachments != null)
             this.attachments.addAll(attachments);
@@ -244,31 +243,34 @@ public class Paper extends IdScipamatoEntity<Long> implements CodeBoxAware, News
         this.codes.clear();
     }
 
+    @NotNull
     @Override
     public List<Code> getCodes() {
         return this.codes.getCodes();
     }
 
+    @NotNull
     @Override
-    public List<Code> getCodesOf(CodeClassId ccId) {
+    public List<Code> getCodesOf(@NotNull CodeClassId ccId) {
         return this.codes.getCodesBy(ccId);
     }
 
     @Override
-    public void clearCodesOf(CodeClassId ccId) {
+    public void clearCodesOf(@NotNull CodeClassId ccId) {
         this.codes.clearBy(ccId);
     }
 
     @Override
-    public void addCode(Code code) {
+    public void addCode(@Nullable Code code) {
         this.codes.addCode(code);
     }
 
     @Override
-    public void addCodes(List<Code> codes) {
+    public void addCodes(@NotNull List<Code> codes) {
         this.codes.addCodes(codes);
     }
 
+    @NotNull
     @Override
     public String getDisplayValue() {
         return firstAuthor + " (" + publicationYear + "): " + title + ".";
@@ -287,7 +289,7 @@ public class Paper extends IdScipamatoEntity<Long> implements CodeBoxAware, News
     }
 
     @Override
-    public void setNewsletterTopic(final NewsletterTopic newsletterTopic) {
+    public void setNewsletterTopic(@Nullable final NewsletterTopic newsletterTopic) {
         if (newsletterLink != null) {
             final NewsletterLink nl = newsletterLink;
             if (newsletterTopic == null)
@@ -299,13 +301,14 @@ public class Paper extends IdScipamatoEntity<Long> implements CodeBoxAware, News
         }
     }
 
+    @Nullable
     @Override
     public Integer getNewsletterTopicId() {
         return newsletterLink != null ? newsletterLink.getTopicId() : null;
     }
 
     @Override
-    public void setNewsletterHeadline(final String headline) {
+    public void setNewsletterHeadline(@Nullable final String headline) {
         final NewsletterLink nl = newsletterLink;
         if (nl != null)
             setNewsletterLink(nl.getNewsletterId(), nl.getIssue(), nl.getPublicationStatusId(), nl.getTopicId(),
@@ -329,24 +332,26 @@ public class Paper extends IdScipamatoEntity<Long> implements CodeBoxAware, News
      * @param headline
      *     the headline of the paper newsletter association
      */
-    public void setNewsletterLink(final Integer newsletterId, final String issue, final Integer publicationStatusId,
-        final Integer topicId, final String topic, final String headline) {
+    public void setNewsletterLink(@Nullable final Integer newsletterId, @Nullable final String issue,
+        @Nullable final Integer publicationStatusId, @Nullable final Integer topicId, @Nullable final String topic,
+        @Nullable final String headline) {
         this.newsletterLink = new NewsletterLink(newsletterId, issue, publicationStatusId, topicId, topic, headline);
     }
 
+    @Nullable
     @Override
     public String getNewsletterHeadline() {
         return newsletterLink != null ? newsletterLink.getHeadline() : null;
     }
 
+    @Nullable
     @Override
     public String getNewsletterIssue() {
         return newsletterLink != null ? newsletterLink.getIssue() : null;
     }
 
     @Override
-    public void setNewsletterIssue(final String issue) {
+    public void setNewsletterIssue(@Nullable final String issue) {
         // no-op - only used for searching by newsletter issue
     }
-
 }

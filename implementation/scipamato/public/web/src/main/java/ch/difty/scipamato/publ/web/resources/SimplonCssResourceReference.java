@@ -1,6 +1,7 @@
 package ch.difty.scipamato.publ.web.resources;
 
 import org.apache.wicket.request.resource.CssResourceReference;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * This resource reference relies on commercial fonts that are not present in
@@ -20,8 +21,8 @@ public class SimplonCssResourceReference extends CssResourceReference {
         super(SimplonCssResourceReference.class, "css/Simplon.css");
     }
 
+    @NotNull
     public static SimplonCssResourceReference get() {
         return INSTANCE;
     }
-
 }

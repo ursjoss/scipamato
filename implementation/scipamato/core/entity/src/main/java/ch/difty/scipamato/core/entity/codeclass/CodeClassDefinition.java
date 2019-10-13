@@ -1,11 +1,12 @@
 package ch.difty.scipamato.core.entity.codeclass;
 
-import javax.validation.constraints.NotNull;
 import java.util.Arrays;
 import java.util.Objects;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import ch.difty.scipamato.common.entity.AbstractDefinitionEntity;
 import ch.difty.scipamato.common.entity.FieldEnumType;
@@ -23,8 +24,8 @@ public class CodeClassDefinition extends AbstractDefinitionEntity<CodeClassTrans
 
     private Integer id;
 
-    public CodeClassDefinition(final Integer id, final String mainLanguageCode, final Integer version,
-        final CodeClassTranslation... translations) {
+    public CodeClassDefinition(@Nullable final Integer id, @NotNull final String mainLanguageCode,
+        @Nullable final Integer version, final CodeClassTranslation... translations) {
         super(mainLanguageCode, Arrays
             .stream(translations)
             .filter(tr -> mainLanguageCode.equals(tr.getLangCode()))
@@ -36,6 +37,7 @@ public class CodeClassDefinition extends AbstractDefinitionEntity<CodeClassTrans
         this.id = id;
     }
 
+    @NotNull
     @Override
     public Integer getNullSafeId() {
         return id;
@@ -59,5 +61,4 @@ public class CodeClassDefinition extends AbstractDefinitionEntity<CodeClassTrans
         }
 
     }
-
 }

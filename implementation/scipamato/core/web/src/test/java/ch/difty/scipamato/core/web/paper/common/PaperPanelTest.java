@@ -233,5 +233,4 @@ public abstract class PaperPanelTest<T extends CodeBoxAware & NewsletterAware, P
         getTester().assertLabel(bb + "5:link:title", "Attachments");
         getTester().assertLabel(bb + "6:link:title", "Newsletter");
     }
-
 }

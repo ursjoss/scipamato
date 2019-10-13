@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.List;
 
+import org.jetbrains.annotations.NotNull;
 import org.jooq.DSLContext;
 import org.jooq.TableField;
 import org.jooq.impl.DSL;
@@ -83,10 +84,13 @@ public class PaperSyncConfig extends SyncConfig<PublicPaper, ch.difty.scipamato.
     private final CodeAggregator             codeAggregator;
     private final SyncShortFieldConcatenator shortFieldConcatenator;
 
-    protected PaperSyncConfig(CodeAggregator codeAggregator, @Qualifier("dslContext") DSLContext jooqCore,
-        @Qualifier("publicDslContext") DSLContext jooqPublic, @Qualifier("dataSource") DataSource coreDataSource,
-        JobBuilderFactory jobBuilderFactory, StepBuilderFactory stepBuilderFactory, DateTimeService dateTimeService,
-        SyncShortFieldConcatenator shortFieldConcatenator) {
+    protected PaperSyncConfig(@NotNull final CodeAggregator codeAggregator,
+        @Qualifier("dslContext") @NotNull final DSLContext jooqCore,
+        @Qualifier("publicDslContext") @NotNull final DSLContext jooqPublic,
+        @Qualifier("dataSource") @NotNull final DataSource coreDataSource,
+        @NotNull final JobBuilderFactory jobBuilderFactory, @NotNull final StepBuilderFactory stepBuilderFactory,
+        @NotNull final DateTimeService dateTimeService,
+        @NotNull final SyncShortFieldConcatenator shortFieldConcatenator) {
         super(TOPIC, CHUNK_SIZE, jooqCore, jooqPublic, coreDataSource, jobBuilderFactory, stepBuilderFactory,
             dateTimeService);
         this.codeAggregator = codeAggregator;
@@ -106,21 +110,25 @@ public class PaperSyncConfig extends SyncConfig<PublicPaper, ch.difty.scipamato.
             .fetch(Code.CODE.CODE_);
     }
 
+    @NotNull
     @Bean
     public Job syncPaperJob() {
         return createJob();
     }
 
+    @NotNull
     @Override
     protected String getJobName() {
         return "syncPaperJob";
     }
 
+    @NotNull
     @Override
     protected ItemWriter<PublicPaper> publicWriter() {
         return new PaperItemWriter(getJooqPublic());
     }
 
+    @NotNull
     @Override
     protected String selectSql() {
         return getJooqCore()
@@ -144,8 +152,9 @@ public class PaperSyncConfig extends SyncConfig<PublicPaper, ch.difty.scipamato.
             .getSQL();
     }
 
+    @NotNull
     @Override
-    protected PublicPaper makeEntity(final ResultSet rs) throws SQLException {
+    protected PublicPaper makeEntity(@NotNull final ResultSet rs) throws SQLException {
         final PublicPaper paper = PublicPaper
             .builder()
             .id(getLong(C_ID, rs))
@@ -179,9 +188,9 @@ public class PaperSyncConfig extends SyncConfig<PublicPaper, ch.difty.scipamato.
             .getArray();
     }
 
+    @NotNull
     @Override
     protected TableField<ch.difty.scipamato.publ.db.tables.records.PaperRecord, Timestamp> lastSynchedField() {
         return ch.difty.scipamato.publ.db.tables.Paper.PAPER.LAST_SYNCHED;
     }
-
 }

@@ -2,6 +2,8 @@ package ch.difty.scipamato.core.web.keyword;
 
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import ch.difty.scipamato.core.entity.keyword.Keyword;
 import ch.difty.scipamato.core.entity.keyword.KeywordDefinition;
@@ -12,7 +14,7 @@ import ch.difty.scipamato.core.web.common.DeletableDefinitionEditHeaderPanel;
 abstract class KeywordEditHeaderPanel
     extends DeletableDefinitionEditHeaderPanel<KeywordDefinition, KeywordTranslation, Integer> {
 
-    KeywordEditHeaderPanel(final String id, final IModel<KeywordDefinition> model) {
+    KeywordEditHeaderPanel(@NotNull final String id, @Nullable final IModel<KeywordDefinition> model) {
         super(id, model);
     }
 
@@ -20,5 +22,4 @@ abstract class KeywordEditHeaderPanel
     protected void makeAndQueueFilterFields() {
         queueFieldAndLabel(new TextField<String>(Keyword.KeywordFields.SEARCH_OVERRIDE.getFieldName()));
     }
-
 }

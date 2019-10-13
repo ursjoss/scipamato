@@ -3,7 +3,9 @@ package ch.difty.scipamato.core.persistence;
 import java.util.List;
 import java.util.Optional;
 
-import ch.difty.scipamato.common.NullArgumentException;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import ch.difty.scipamato.common.entity.filter.ScipamatoFilter;
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.core.entity.CoreEntity;
@@ -28,10 +30,9 @@ public interface ReadOnlyService<ID extends Number, T extends IdScipamatoEntity<
      * @param id
      *     - must not be null
      * @return Optional
-     * @throws NullArgumentException
-     *     if id is null
      */
-    Optional<T> findById(ID id);
+    @NotNull
+    Optional<T> findById(@NotNull ID id);
 
     /**
      * Finds a page full of records of type {@code T} matching the provided filter
@@ -43,7 +44,8 @@ public interface ReadOnlyService<ID extends Number, T extends IdScipamatoEntity<
      *     context defining paging and sorting
      * @return a page of entities of type {@code T} as list
      */
-    List<T> findPageByFilter(F filter, PaginationContext paginationContext);
+    @NotNull
+    List<T> findPageByFilter(@Nullable F filter, @NotNull PaginationContext paginationContext);
 
     /**
      * Counts the number of entities matching the specified filter.
@@ -52,7 +54,7 @@ public interface ReadOnlyService<ID extends Number, T extends IdScipamatoEntity<
      *     of type {@code F}
      * @return entity count
      */
-    int countByFilter(F filter);
+    int countByFilter(@Nullable F filter);
 
     /**
      * Finds the ids of the persisted entities matching the provided filter and
@@ -64,6 +66,6 @@ public interface ReadOnlyService<ID extends Number, T extends IdScipamatoEntity<
      *     {@link PaginationContext}
      * @return list of the ids of type {@code ID} of matching entities {@code T}
      */
-    List<ID> findPageOfIdsByFilter(F filter, PaginationContext paginationContext);
-
+    @NotNull
+    List<ID> findPageOfIdsByFilter(@Nullable F filter, @NotNull PaginationContext paginationContext);
 }

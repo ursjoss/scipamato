@@ -6,7 +6,7 @@ package com.gmail.gcolaianni5.jris
  * The class was composed from information available on
  * [Wikipedia](https://en.wikipedia.org/wiki/RIS_(file_format)).
  */
-@Suppress("unused")
+@Suppress("unused", "SpellCheckingInspection")
 enum class RisType(val description: String) {
     ABST("Abstract"),
     ADVS("Audiovisual material"),

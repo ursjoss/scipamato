@@ -30,5 +30,4 @@ class BootstrapPropertiesTest {
         bp.setEnabled(false);
         assertThat(bp.isEnabled()).isFalse();
     }
-
 }

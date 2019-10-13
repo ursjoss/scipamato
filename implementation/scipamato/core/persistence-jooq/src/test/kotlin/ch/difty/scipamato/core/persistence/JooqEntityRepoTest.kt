@@ -2,7 +2,6 @@ package ch.difty.scipamato.core.persistence
 
 import ch.difty.scipamato.common.DateTimeService
 import ch.difty.scipamato.common.FrozenDateTimeService
-import ch.difty.scipamato.common.NullArgumentException
 import ch.difty.scipamato.common.entity.filter.ScipamatoFilter
 import ch.difty.scipamato.common.persistence.paging.PaginationContext
 import ch.difty.scipamato.core.entity.IdScipamatoEntity
@@ -13,7 +12,6 @@ import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.fail
 import org.jooq.*
 import org.jooq.impl.TableImpl
-import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.test.context.junit.jupiter.SpringExtension
@@ -89,11 +87,6 @@ abstract class JooqEntityRepoTest<R : Record, T : IdScipamatoEntity<ID>, ID : Nu
      * @return the entity
      */
     protected abstract fun makeRepoSavingReturning(returning: R): EntityRepository<T, ID, F>
-
-    @Test
-    internal fun deleting_withIdNull_throws() {
-        Assertions.assertThrows(NullArgumentException::class.java) { repo.delete(null, 1) }
-    }
 
     @Test
     internal fun deleting_validPersistentEntity_returnsDeletedEntity() {

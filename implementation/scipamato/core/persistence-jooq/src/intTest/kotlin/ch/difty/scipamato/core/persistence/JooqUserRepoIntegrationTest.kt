@@ -27,7 +27,7 @@ internal open class JooqUserRepoIntegrationTest {
 
     @Test
     fun findingById_withExistingId_returnsEntity() {
-        val user = repo.findById(4)
+        val user = repo.findById(4) ?: fail("Unable to find user")
         assertThat(user.id).isEqualTo(4)
         assertThat(user.roles.map { it.id }).containsExactlyInAnyOrder(1, 2)
     }
@@ -42,7 +42,7 @@ internal open class JooqUserRepoIntegrationTest {
         val p = makeMinimalUser()
         assertThat(p.id == null).isTrue()
 
-        val saved = repo.add(p)
+        val saved = repo.add(p) ?: fail("Unable to add user")
         assertThat(saved.id).isGreaterThan(MAX_ID_PREPOPULATED)
         assertThat(saved.userName).isEqualTo("a")
     }
@@ -59,7 +59,7 @@ internal open class JooqUserRepoIntegrationTest {
 
     @Test
     fun updatingRecord() {
-        val user = repo.add(makeMinimalUser())
+        val user = repo.add(makeMinimalUser()) ?: fail("Unable to add user")
         assertThat(user.id).isGreaterThan(MAX_ID_PREPOPULATED)
         val id = user.id
         assertThat(user.userName).isEqualTo("a")
@@ -68,7 +68,7 @@ internal open class JooqUserRepoIntegrationTest {
         repo.update(user)
         assertThat(user.id).isEqualTo(id)
 
-        val newCopy = repo.findById(id)
+        val newCopy = repo.findById(id) ?: fail("Unable to find user")
         assertThat(newCopy).isNotEqualTo(user)
         assertThat(newCopy.id).isEqualTo(id)
         assertThat(newCopy.userName).isEqualTo("b")
@@ -76,7 +76,7 @@ internal open class JooqUserRepoIntegrationTest {
 
     @Test
     fun deletingRecord() {
-        val user = repo.add(makeMinimalUser())
+        val user = repo.add(makeMinimalUser()) ?: fail("Unable to add user")
         assertThat(user.id).isGreaterThan(MAX_ID_PREPOPULATED)
         val id = user.id
         assertThat(user.userName).isEqualTo("a")
@@ -95,7 +95,7 @@ internal open class JooqUserRepoIntegrationTest {
     @Test
     fun findingUserByName_withExistingUserName_returnsUserIncludingRoles() {
         val name = "admin"
-        val admin = repo.findByUserName(name)
+        val admin = repo.findByUserName(name) ?: fail("Unable to find user")
         assertThat(admin.userName).isEqualTo(name)
         assertThat(admin.roles).isNotEmpty
     }
@@ -109,7 +109,7 @@ internal open class JooqUserRepoIntegrationTest {
         removeRoleAdminFrom(id)
     }
 
-    private fun newUserAndSave(): Int? {
+    private fun newUserAndSave(): Int {
         val u = User().apply {
             userName = "test"
             firstName = "fn"
@@ -120,7 +120,7 @@ internal open class JooqUserRepoIntegrationTest {
         }
         assertThat(u.id == null).isTrue()
 
-        val savedUser = repo.add(u)
+        val savedUser = repo.add(u) ?: fail("Unable to add user")
 
         assertThat(savedUser).isNotNull
         assertThat(savedUser.id == null).isFalse()
@@ -131,26 +131,26 @@ internal open class JooqUserRepoIntegrationTest {
         return savedUser.id
     }
 
-    private fun addRoleViewerAndUserToUserWith(id: Int?) {
-        val user = repo.findById(id)
+    private fun addRoleViewerAndUserToUserWith(id: Int) {
+        val user = repo.findById(id) ?: fail("Unable to find user")
         user.addRole(Role.VIEWER)
         user.addRole(Role.USER)
-        val viewer = repo.update(user)
+        val viewer = repo.update(user) ?: fail("Unable to update user")
         assertThat(viewer.roles).containsOnly(Role.VIEWER, Role.USER)
     }
 
-    private fun addRoleAdminAndRemoveRoleViewerFrom(id: Int?) {
-        val user = repo.findById(id)
+    private fun addRoleAdminAndRemoveRoleViewerFrom(id: Int) {
+        val user = repo.findById(id) ?: fail("Unable to find user")
         user.addRole(Role.ADMIN)
         user.removeRole(Role.VIEWER)
-        val u = repo.update(user)
+        val u = repo.update(user) ?: fail("Unable to update user")
         assertThat(u.roles).containsOnly(Role.USER, Role.ADMIN)
     }
 
-    private fun removeRoleAdminFrom(id: Int?) {
-        val user = repo.findById(id)
+    private fun removeRoleAdminFrom(id: Int) {
+        val user = repo.findById(id) ?: fail("Unable to find user")
         user.removeRole(Role.ADMIN)
-        val u = repo.update(user)
+        val u = repo.update(user) ?: fail("Unable to update user")
         assertThat(u.roles).containsOnly(Role.USER)
     }
 
@@ -169,7 +169,7 @@ internal open class JooqUserRepoIntegrationTest {
             assertThat(ex).isInstanceOf(OptimisticLockingException::class.java)
         }
 
-        val reloaded = repo.findById(user.id)
+        val reloaded = repo.findById(user.id) ?: fail("Unable to find user")
         assertThat(reloaded.version).isEqualTo(2)
         assertThat(reloaded.firstName).isEqualTo(secondReloaded.firstName)
         assertThat(reloaded.lastName).isEqualTo(secondReloaded.lastName)
@@ -177,7 +177,7 @@ internal open class JooqUserRepoIntegrationTest {
     }
 
     private fun makeAndValidateNewUser(): User {
-        val user = repo.add(makeMinimalUser())
+        val user = repo.add(makeMinimalUser()) ?: fail("Unable to add user")
         assertThat(user).isNotNull
         assertThat(user.version).isEqualTo(1)
         assertThat(user.id).isGreaterThan(MAX_ID_PREPOPULATED)
@@ -185,10 +185,10 @@ internal open class JooqUserRepoIntegrationTest {
     }
 
     private fun loadSameUserIndependentlyAndModifyAndUpdate(user: User): User {
-        val secondInstance = repo.findById(user.id)
+        val secondInstance = repo.findById(user.id) ?: fail("Unable to find user")
         assertThat(user.version).isEqualTo(secondInstance.version)
         secondInstance.firstName = "changed"
-        val secondReloaded = repo.update(secondInstance)
+        val secondReloaded = repo.update(secondInstance) ?: fail("Unable to update user")
         assertThat(secondReloaded.version).isEqualTo(2)
         return secondReloaded
     }

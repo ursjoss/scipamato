@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.model.IModel;
+import org.jetbrains.annotations.NotNull;
 
 import ch.difty.scipamato.core.entity.keyword.KeywordDefinition;
 import ch.difty.scipamato.core.entity.keyword.KeywordFilter;
@@ -17,10 +18,11 @@ class KeywordListResultPanel
 
     private static final long serialVersionUID = 1L;
 
-    KeywordListResultPanel(final String id, final KeywordDefinitionProvider provider) {
+    KeywordListResultPanel(@NotNull final String id, @NotNull final KeywordDefinitionProvider provider) {
         super(id, provider);
     }
 
+    @NotNull
     protected List<IColumn<KeywordDefinition, String>> makeTableColumns() {
         final List<IColumn<KeywordDefinition, String>> columns = new ArrayList<>();
         columns.add(makeClickableColumn("translationsAsString", this::onTitleClick));
@@ -31,5 +33,4 @@ class KeywordListResultPanel
     private void onTitleClick(final IModel<KeywordDefinition> model) {
         setResponsePage(new KeywordEditPage(model, getPage().getPageReference()));
     }
-
 }

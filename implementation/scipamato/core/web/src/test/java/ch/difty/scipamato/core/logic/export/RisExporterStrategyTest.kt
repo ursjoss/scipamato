@@ -18,10 +18,10 @@ internal class RisExporterStrategyTest {
         assertThat(RisExporterStrategy.fromProperty("DEFAULT", "whatever-key-for-logging-only")).isEqualTo(DEFAULT)
     }
 
-
     @Test
     fun canParseDistillerSr() {
-        assertThat(RisExporterStrategy.fromProperty("DISTILLERSR", "whatever-key-for-logging-only")).isEqualTo(DISTILLERSR)
+        assertThat(RisExporterStrategy
+            .fromProperty("DISTILLERSR", "whatever-key-for-logging-only")).isEqualTo(DISTILLERSR)
     }
 
     @Test
@@ -29,5 +29,4 @@ internal class RisExporterStrategyTest {
     fun gettingStrategyByName_withNotExistingName_returnsDefaultStrategy() {
         assertThat(RisExporterStrategy.fromProperty("ksjdflksjdk", "key")).isEqualTo(DEFAULT)
     }
-
 }

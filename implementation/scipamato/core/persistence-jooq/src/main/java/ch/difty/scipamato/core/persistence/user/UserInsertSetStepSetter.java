@@ -2,11 +2,12 @@ package ch.difty.scipamato.core.persistence.user;
 
 import static ch.difty.scipamato.core.db.tables.ScipamatoUser.SCIPAMATO_USER;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.jooq.InsertSetMoreStep;
 import org.jooq.InsertSetStep;
 import org.springframework.stereotype.Component;
 
-import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.core.auth.Role;
 import ch.difty.scipamato.core.db.tables.records.ScipamatoUserRecord;
 import ch.difty.scipamato.core.entity.User;
@@ -23,11 +24,10 @@ import ch.difty.scipamato.core.persistence.InsertSetStepSetter;
 @Component
 public class UserInsertSetStepSetter implements InsertSetStepSetter<ScipamatoUserRecord, User> {
 
+    @NotNull
     @Override
-    public InsertSetMoreStep<ScipamatoUserRecord> setNonKeyFieldsFor(InsertSetStep<ScipamatoUserRecord> step, User e) {
-        AssertAs.INSTANCE.notNull(step, "step");
-        AssertAs.INSTANCE.notNull(e, "entity");
-
+    public InsertSetMoreStep<ScipamatoUserRecord> setNonKeyFieldsFor(@NotNull InsertSetStep<ScipamatoUserRecord> step,
+        @NotNull User e) {
         return step
             .set(SCIPAMATO_USER.USER_NAME, e.getUserName())
             .set(SCIPAMATO_USER.FIRST_NAME, e.getFirstName())
@@ -41,18 +41,15 @@ public class UserInsertSetStepSetter implements InsertSetStepSetter<ScipamatoUse
     }
 
     @Override
-    public void considerSettingKeyOf(InsertSetMoreStep<ScipamatoUserRecord> step, User entity) {
-        AssertAs.INSTANCE.notNull(step, "step");
-        AssertAs.INSTANCE.notNull(entity, "entity");
+    public void considerSettingKeyOf(@NotNull InsertSetMoreStep<ScipamatoUserRecord> step, @NotNull User entity) {
         Integer id = entity.getId();
         if (id != null)
             step.set(SCIPAMATO_USER.ID, id);
     }
 
     @Override
-    public void resetIdToEntity(User entity, ScipamatoUserRecord saved) {
+    public void resetIdToEntity(@NotNull User entity, @Nullable ScipamatoUserRecord saved) {
         if (saved != null)
             entity.setId(saved.getId());
     }
-
 }

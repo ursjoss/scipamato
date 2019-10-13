@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.model.IModel;
+import org.jetbrains.annotations.NotNull;
 
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicDefinition;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicFilter;
@@ -18,10 +19,12 @@ class NewsletterTopicListResultPanel extends
 
     private static final long serialVersionUID = 1L;
 
-    NewsletterTopicListResultPanel(final String id, final NewsletterTopicDefinitionProvider provider) {
+    NewsletterTopicListResultPanel(@NotNull final String id,
+        @NotNull final NewsletterTopicDefinitionProvider provider) {
         super(id, provider);
     }
 
+    @NotNull
     @Override
     protected List<IColumn<NewsletterTopicDefinition, String>> makeTableColumns() {
         final List<IColumn<NewsletterTopicDefinition, String>> columns = new ArrayList<>();
@@ -32,5 +35,4 @@ class NewsletterTopicListResultPanel extends
     private void onTitleClick(final IModel<NewsletterTopicDefinition> model) {
         setResponsePage(new NewsletterTopicEditPage(model, getPage().getPageReference()));
     }
-
 }

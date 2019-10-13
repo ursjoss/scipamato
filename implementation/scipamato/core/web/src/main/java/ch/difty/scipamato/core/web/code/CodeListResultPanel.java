@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.model.IModel;
+import org.jetbrains.annotations.NotNull;
 
 import ch.difty.scipamato.core.entity.code.CodeDefinition;
 import ch.difty.scipamato.core.entity.code.CodeFilter;
@@ -17,10 +18,11 @@ class CodeListResultPanel
 
     private static final long serialVersionUID = 1L;
 
-    CodeListResultPanel(final String id, final CodeDefinitionProvider provider) {
+    CodeListResultPanel(@NotNull final String id, @NotNull final CodeDefinitionProvider provider) {
         super(id, provider);
     }
 
+    @NotNull
     @Override
     protected List<IColumn<CodeDefinition, String>> makeTableColumns() {
         final List<IColumn<CodeDefinition, String>> columns = new ArrayList<>();
@@ -35,5 +37,4 @@ class CodeListResultPanel
     private void onTitleClick(final IModel<CodeDefinition> model) {
         setResponsePage(new CodeEditPage(model, getPage().getPageReference()));
     }
-
 }

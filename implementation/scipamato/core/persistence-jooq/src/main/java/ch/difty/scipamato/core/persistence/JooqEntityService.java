@@ -1,5 +1,7 @@
 package ch.difty.scipamato.core.persistence;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.transaction.annotation.Transactional;
 
 import ch.difty.scipamato.common.entity.filter.ScipamatoFilter;
@@ -23,13 +25,14 @@ import ch.difty.scipamato.core.entity.IdScipamatoEntity;
 public abstract class JooqEntityService<ID extends Number, T extends IdScipamatoEntity<ID>, F extends ScipamatoFilter, REPO extends EntityRepository<T, ID, F>>
     extends JooqReadOnlyService<ID, T, F, REPO> implements EntityService<ID, T, F> {
 
-    protected JooqEntityService(final REPO repo, final UserRepository userRepo) {
+    protected JooqEntityService(@NotNull final REPO repo, @NotNull final UserRepository userRepo) {
         super(repo, userRepo);
     }
 
+    @Nullable
     @Transactional
     @Override
-    public T saveOrUpdate(T entity) {
+    public T saveOrUpdate(@NotNull T entity) {
         if (entity.getId() == null) {
             T added = getRepository().add(entity);
             enrichAuditNamesOf(added);
@@ -43,10 +46,9 @@ public abstract class JooqEntityService<ID extends Number, T extends IdScipamato
 
     @Override
     @Transactional
-    public void remove(T entity) {
+    public void remove(@Nullable T entity) {
         if (entity != null && entity.getId() != null) {
             getRepository().delete(entity.getId(), entity.getVersion());
         }
     }
-
 }

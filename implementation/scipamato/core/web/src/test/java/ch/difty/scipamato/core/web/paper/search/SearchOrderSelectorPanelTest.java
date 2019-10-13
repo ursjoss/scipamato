@@ -162,5 +162,4 @@ abstract class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelecto
             isA(PaginationContext.class));
         verify(searchOrderServiceMock).remove(searchOrderMock);
     }
-
 }

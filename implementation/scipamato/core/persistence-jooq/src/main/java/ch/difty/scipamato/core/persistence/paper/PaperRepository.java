@@ -3,6 +3,9 @@ package ch.difty.scipamato.core.persistence.paper;
 import java.util.List;
 import java.util.Optional;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.PaperAttachment;
@@ -24,7 +27,8 @@ public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilt
      *     the list of ids of the papers to be returned
      * @return list of papers (codes not available, attachments without content)
      */
-    List<Paper> findByIds(List<Long> ids);
+    @NotNull
+    List<Paper> findByIds(@NotNull List<Long> ids);
 
     /**
      * Find {@link Paper}s (including codes) with the provided ids
@@ -35,7 +39,8 @@ public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilt
      *     the two character language code - must not be null
      * @return list of papers (attachments without content)
      */
-    List<Paper> findWithCodesByIds(List<Long> ids, String languageCode);
+    @NotNull
+    List<Paper> findWithCodesByIds(@NotNull List<Long> ids, @NotNull String languageCode);
 
     /**
      * Finds all {@link Paper}s matching the provided {@link SearchOrder}
@@ -48,7 +53,8 @@ public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilt
      *     - must not be null
      * @return list of entities (attachments without content)
      */
-    List<Paper> findBySearchOrder(SearchOrder searchOrder, String languageCode);
+    @NotNull
+    List<Paper> findBySearchOrder(@NotNull SearchOrder searchOrder, @NotNull String languageCode);
 
     /**
      * Finds a single page of {@link Paper}s matching the provided
@@ -63,8 +69,9 @@ public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilt
      *     the two character language code
      * @return paged list of entities (attachments without content)
      */
-    List<Paper> findPageBySearchOrder(SearchOrder searchOrder, PaginationContext paginationContext,
-        String languageCode);
+    @NotNull
+    List<Paper> findPageBySearchOrder(@NotNull SearchOrder searchOrder, @NotNull PaginationContext paginationContext,
+        @NotNull String languageCode);
 
     /**
      * Counts all persisted entities of type {@code T} matching the provided
@@ -74,7 +81,7 @@ public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilt
      *     the search specification
      * @return T entity count
      */
-    int countBySearchOrder(SearchOrder searchOrder);
+    int countBySearchOrder(@NotNull SearchOrder searchOrder);
 
     /**
      * Finds all {@link Paper}s matching any of the provided {@code pmIds}. The
@@ -87,7 +94,8 @@ public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilt
      *     the two character language code
      * @return list of entities (codes enriched, attachments without content)
      */
-    List<Paper> findByPmIds(List<Integer> pmIds, String languageCode);
+    @NotNull
+    List<Paper> findByPmIds(@NotNull List<Integer> pmIds, @NotNull String languageCode);
 
     /**
      * Returns the PMIDs out of the provided list that have actually been assigned
@@ -97,7 +105,8 @@ public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilt
      *     list of pubmed ids
      * @return list of PMIDs
      */
-    List<Integer> findExistingPmIdsOutOf(List<Integer> pmIds);
+    @NotNull
+    List<Integer> findExistingPmIdsOutOf(@NotNull List<Integer> pmIds);
 
     /**
      * Finds all {@link Paper}s matching any of the provided {@code numbers}. The
@@ -110,7 +119,8 @@ public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilt
      *     the two character language code
      * @return list of entities (codes enriched, attachments without content)
      */
-    List<Paper> findByNumbers(List<Long> numbers, String languageCode);
+    @NotNull
+    List<Paper> findByNumbers(@NotNull List<Long> numbers, @NotNull String languageCode);
 
     /**
      * Finds the lowest free number starting from the supplied minimum parameter.
@@ -134,7 +144,9 @@ public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilt
      *     the pagination specification
      * @return paged list of entity ids
      */
-    List<Long> findPageOfIdsBySearchOrder(SearchOrder searchOrder, PaginationContext paginationContext);
+    @NotNull
+    List<Long> findPageOfIdsBySearchOrder(@NotNull SearchOrder searchOrder,
+        @NotNull PaginationContext paginationContext);
 
     /**
      * Excludes the given paperId from the results of the searchOrder with given
@@ -165,7 +177,8 @@ public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilt
      *     the attachment to save for the paper
      * @return the paper for which the attachment has been added
      */
-    Paper saveAttachment(PaperAttachment paperAttachment);
+    @Nullable
+    Paper saveAttachment(@NotNull PaperAttachment paperAttachment);
 
     /**
      * Loads the {@link PaperAttachment} with provided id including it's content
@@ -174,7 +187,8 @@ public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilt
      *     the id of the paper attachment
      * @return the full attachment including the content.
      */
-    PaperAttachment loadAttachmentWithContentBy(Integer id);
+    @Nullable
+    PaperAttachment loadAttachmentWithContentBy(@NotNull Integer id);
 
     /**
      * Deletes the attachment with given id
@@ -183,7 +197,8 @@ public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilt
      *     the id of the paper attachment to be deleted
      * @return the paper for which the attachment has been deleted
      */
-    Paper deleteAttachment(Integer id);
+    @Nullable
+    Paper deleteAttachment(@NotNull Integer id);
 
     /**
      * Deletes all {@link Paper}s with the provided ids. No version check. More for
@@ -192,7 +207,7 @@ public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilt
      * @param ids
      *     the list of ids to delete
      */
-    void delete(List<Long> ids);
+    void delete(@NotNull List<Long> ids);
 
     /**
      * Checks if another (different id from idOfCurrentPaper) paper has the
@@ -204,10 +219,9 @@ public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilt
      *     the id of the current paper which should not count as duplicate. Can be
      *     null for new Studies that have not been saved yet.
      * @return optional with numbers of violated papers - if found
-     * @throws ch.difty.scipamato.common.NullArgumentException
-     *     if doi is null.
      */
-    Optional<String> isDoiAlreadyAssigned(String doi, Long idOfCurrentPaper);
+    @NotNull
+    Optional<String> isDoiAlreadyAssigned(@NotNull String doi, @NotNull Long idOfCurrentPaper);
 
     /**
      * Checks if another (different id from idOfCurrentPaper) paper has the
@@ -220,5 +234,6 @@ public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilt
      *     null for new Studies that have not been saved yet.
      * @return optional with numbers of violated papers - if found
      */
-    Optional<String> isPmIdAlreadyAssigned(int pmId, Long idOfCurrentPaper);
+    @NotNull
+    Optional<String> isPmIdAlreadyAssigned(int pmId, @Nullable Long idOfCurrentPaper);
 }

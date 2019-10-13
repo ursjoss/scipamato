@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -18,10 +19,7 @@ public class MavenProperties implements Serializable {
     /**
      * The project version supplied by maven, typically {@code @project.version@}
      */
+    @Nullable
     private String version;
 
-    /**
-     * The build timestamp supplied by maven, typically {@code @timestamp@}
-     */
-    private String timestamp;
 }

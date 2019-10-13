@@ -2,6 +2,7 @@ package ch.difty.scipamato.core.sync.code;
 
 import java.util.*;
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -41,19 +42,17 @@ public class HidingInternalsCodeAggregator implements CodeAggregator {
     private final List<Short>  codesStudyDesign = new ArrayList<>();
 
     @Override
-    public void setInternalCodes(final List<String> internalCodes) {
+    public void setInternalCodes(@NotNull final List<String> internalCodes) {
         this.internalCodes.clear();
         this.internalCodes.addAll(internalCodes);
     }
 
     @Override
-    public void load(final String[] codes) {
+    public void load(@NotNull final String[] codes) {
         clearAll();
-        if (codes != null) {
-            this.codes.addAll(aggregateCodes(codes));
-            this.codesPopulation.addAll(gatherCodesPopulation());
-            this.codesStudyDesign.addAll(gatherCodesStudyDesign());
-        }
+        this.codes.addAll(aggregateCodes(codes));
+        this.codesPopulation.addAll(gatherCodesPopulation());
+        this.codesStudyDesign.addAll(gatherCodesStudyDesign());
     }
 
     private void clearAll() {
@@ -114,19 +113,21 @@ public class HidingInternalsCodeAggregator implements CodeAggregator {
         return csds;
     }
 
+    @NotNull
     @Override
     public String[] getAggregatedCodes() {
         return codes.toArray(new String[0]);
     }
 
+    @NotNull
     @Override
     public Short[] getCodesPopulation() {
         return codesPopulation.toArray(new Short[0]);
     }
 
+    @NotNull
     @Override
     public Short[] getCodesStudyDesign() {
         return codesStudyDesign.toArray(new Short[0]);
     }
-
 }

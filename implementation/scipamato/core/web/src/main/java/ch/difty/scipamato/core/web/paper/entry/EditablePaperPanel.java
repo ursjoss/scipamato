@@ -40,9 +40,10 @@ import org.apache.wicket.request.handler.resource.ResourceRequestHandler;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.request.resource.ByteArrayResource;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.core.env.Environment;
 
-import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.entity.FieldEnumType;
 import ch.difty.scipamato.common.entity.newsletter.PublicationStatus;
 import ch.difty.scipamato.common.web.Mode;
@@ -112,8 +113,9 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
     @SpringBean
     private Environment env;
 
-    EditablePaperPanel(String id, IModel<Paper> model, PageReference previousPage, Long searchOrderId,
-        boolean showingExclusions, Mode mode, IModel<Integer> tabIndexModel) {
+    EditablePaperPanel(@NotNull String id, @NotNull IModel<Paper> model, @Nullable PageReference previousPage,
+        @Nullable Long searchOrderId, boolean showingExclusions, @NotNull Mode mode,
+        @NotNull IModel<Integer> tabIndexModel) {
         super(id, model, mode, previousPage, tabIndexModel);
         if (!(mode == Mode.EDIT || mode == Mode.VIEW))
             throw new IllegalArgumentException("Mode " + mode + " is not enabled in " + getClass());
@@ -122,11 +124,12 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
     }
 
     /**
-     * If the user does not choose to override the first author, the field can be
-     * disabled.
+     * If the user does not choose to override the first author, the field can be disabled.
      */
+    @NotNull
     @Override
-    protected TextField<String> makeFirstAuthor(String firstAuthorId, CheckBox firstAuthorOverridden) {
+    protected TextField<String> makeFirstAuthor(@NotNull String firstAuthorId,
+        @NotNull CheckBox firstAuthorOverridden) {
         TextField<String> firstAuthor = new TextField<>(firstAuthorId) {
             private static final long serialVersionUID = 1L;
 
@@ -145,8 +148,8 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
      * overridden).
      */
     @Override
-    protected void addAuthorBehavior(TextArea<String> authors, CheckBox firstAuthorOverridden,
-        TextField<String> firstAuthor) {
+    protected void addAuthorBehavior(@NotNull TextArea<String> authors, @NotNull CheckBox firstAuthorOverridden,
+        @NotNull TextField<String> firstAuthor) {
         firstAuthorOverridden.add(makeFirstAuthorChangeBehavior(authors, firstAuthorOverridden, firstAuthor));
         authors.add(makeFirstAuthorChangeBehavior(authors, firstAuthorOverridden, firstAuthor));
     }
@@ -161,7 +164,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
             private static final long serialVersionUID = 1L;
 
             @Override
-            protected void onUpdate(AjaxRequestTarget target) {
+            protected void onUpdate(@NotNull AjaxRequestTarget target) {
                 if (!overridden.getModelObject()) {
                     AuthorParser p = authorParserFactory.createParser(authors.getValue());
                     firstAuthor.setModelObject(p.getFirstAuthor());
@@ -175,6 +178,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
      * Prepares the {@link PaperSummaryDataSource} for exporting the current entity
      * into the pdf.
      */
+    @NotNull
     @Override
     protected PaperSummaryDataSource getSummaryDataSource() {
         final String brand = getProperties().getBrand();
@@ -222,6 +226,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
      * Prepares the {@link PaperSummaryDataSource} for exporting the current entity
      * into the pdf.
      */
+    @NotNull
     @Override
     protected PaperSummaryShortDataSource getSummaryShortDataSource() {
         final String brand = getProperties().getBrand();
@@ -256,8 +261,8 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
      * automatically.
      */
     @Override
-    protected void addCodeClass1ChangeBehavior(final TextField<String> mainCodeOfCodeClass1,
-        final BootstrapMultiSelect<Code> codeClass1) {
+    protected void addCodeClass1ChangeBehavior(@NotNull final TextField<String> mainCodeOfCodeClass1,
+        @NotNull final BootstrapMultiSelect<Code> codeClass1) {
         codeClass1.add(makeCodeClass1ChangeBehavior(codeClass1, mainCodeOfCodeClass1));
     }
 
@@ -272,7 +277,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
             private static final long serialVersionUID = 1L;
 
             @Override
-            protected void onUpdate(final AjaxRequestTarget target) {
+            protected void onUpdate(@NotNull final AjaxRequestTarget target) {
                 if (codeClass1 != null && codeClass1.getModelObject() != null) {
                     final Collection<Code> codesOfClass1 = codeClass1.getModelObject();
                     switch (codesOfClass1.size()) {
@@ -318,7 +323,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
 
     @SuppressWarnings("unchecked")
     @Override
-    protected void getPubmedArticleAndCompare(AjaxRequestTarget target) {
+    protected void getPubmedArticleAndCompare(@NotNull AjaxRequestTarget target) {
         final Paper paper = getModelObject();
         final Integer pmId = paper.getPmId();
         final String apiKey = getProperties().getPubmedApiKey();
@@ -506,7 +511,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
         }
     }
 
-    private void addTargets(AjaxRequestTarget target, FormComponent<?>... fcs) {
+    private void addTargets(@NotNull AjaxRequestTarget target, @NotNull FormComponent<?>... fcs) {
         if (fcs.length > 0)
             for (FormComponent<?> fc : fcs)
                 if (fc != null)
@@ -548,9 +553,10 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
         return getModelObject().getPmId() != null;
     }
 
+    @NotNull
     @Override
-    protected BootstrapButton newNavigationButton(String id, GlyphIconType icon,
-        SerializableSupplier<Boolean> isEnabled, SerializableSupplier<Long> idSupplier) {
+    protected BootstrapButton newNavigationButton(@NotNull String id, @NotNull GlyphIconType icon,
+        @NotNull SerializableSupplier<Boolean> isEnabled, @NotNull SerializableSupplier<Long> idSupplier) {
         final BootstrapButton btn = new BootstrapButton(id, Model.of(""), Buttons.Type.Default) {
             private static final long serialVersionUID = 1L;
 
@@ -577,11 +583,13 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
         return btn;
     }
 
-    protected abstract GenericWebPage<Paper> getResponsePage(final Paper p, Long searchOrderId,
+    @Nullable
+    protected abstract GenericWebPage<Paper> getResponsePage(@NotNull final Paper p, @Nullable Long searchOrderId,
         boolean showingExclusions);
 
+    @NotNull
     @Override
-    protected BootstrapButton newExcludeButton(String id) {
+    protected BootstrapButton newExcludeButton(@NotNull String id) {
         BootstrapButton exclude = new BootstrapButton(id, Model.of(""), Buttons.Type.Default) {
             private static final long serialVersionUID = 1L;
 
@@ -637,14 +645,15 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
             .accept(pp);
     }
 
+    @NotNull
     @Override
     protected DropZoneFileUpload newDropZoneFileUpload() {
         DropZoneFileUpload upload = new DropZoneFileUpload("dropzone") {
             private static final long serialVersionUID = 1L;
 
             @Override
-            protected void onUpload(AjaxRequestTarget target, Map<String, List<FileItem>> fileMap) {
-                if (fileMap != null && fileMap.containsKey("file")) {
+            protected void onUpload(@NotNull AjaxRequestTarget target, @NotNull Map<String, List<FileItem>> fileMap) {
+                if (fileMap.containsKey("file")) {
                     Paper p = null;
                     for (final FileItem file : fileMap.get("file")) {
                         try {
@@ -666,7 +675,6 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
                 super.onConfigure();
                 setVisible(isEditMode());
             }
-
         };
         upload
             .getConfig()
@@ -710,8 +718,9 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
         return originalFileName.replace(" ", "_");
     }
 
+    @NotNull
     @Override
-    protected DataTable<PaperAttachment, String> newAttachmentTable(String id) {
+    protected DataTable<PaperAttachment, String> newAttachmentTable(@NotNull String id) {
         PropertyModel<List<PaperAttachment>> model = new PropertyModel<>(getModel(), ATTACHMENTS.getFieldName());
         PaperAttachmentProvider provider = new PaperAttachmentProvider(model);
         BootstrapDefaultDataTable<PaperAttachment, String> table = new BootstrapDefaultDataTable<>(id,
@@ -719,7 +728,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
             private static final long serialVersionUID = 1L;
 
             @Override
-            protected Item<PaperAttachment> newRowItem(String id, int index, IModel<PaperAttachment> model) {
+            protected Item<PaperAttachment> newRowItem(@NotNull String id, int index, @NotNull IModel<PaperAttachment> model) {
                 final PaperAttachment pa = model.getObject();
                 final Item<PaperAttachment> item = super.newRowItem(id, index, model);
                 item.add(AttributeModifier.replace(TITLE_ATTR, pa.getSizeKiloBytes() + " kB - " + pa.getContentType()));
@@ -742,8 +751,12 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
             .getObject()
             .getId();
         PaperAttachment pa = paperService.loadAttachmentWithContentBy(id);
-        ByteArrayResource r = new ByteArrayResource(pa.getContentType(), pa.getContent(), pa.getName());
-        getRequestCycle().scheduleRequestHandlerAfterCurrent(new ResourceRequestHandler(r, new PageParameters()));
+        if (pa != null) {
+            ByteArrayResource r = new ByteArrayResource(pa.getContentType(), pa.getContent(), pa.getName());
+            getRequestCycle().scheduleRequestHandlerAfterCurrent(new ResourceRequestHandler(r, new PageParameters()));
+        } else {
+            log.warn("Unexpected condition with paperService unable to load attachment with content by id {}", id);
+        }
     }
 
     @SuppressWarnings("SameParameterValue")
@@ -764,12 +777,12 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
             private static final long serialVersionUID = 1L;
 
             @Override
-            protected IModel<String> createIconModel(IModel<PaperAttachment> rowModel) {
+            protected IModel<String> createIconModel(@NotNull  IModel<PaperAttachment> rowModel) {
                 return Model.of(trash.cssClassName() + " text-danger");
             }
 
             @Override
-            protected IModel<String> createTitleModel(IModel<PaperAttachment> rowModel) {
+            protected IModel<String> createTitleModel(@NotNull IModel<PaperAttachment> rowModel) {
                 return new StringResourceModel("column.title.removeAttachment", EditablePaperPanel.this,
                     null).setParameters(rowModel
                     .getObject()
@@ -777,8 +790,8 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
             }
 
             @Override
-            protected void onClickPerformed(AjaxRequestTarget target, IModel<PaperAttachment> rowModel,
-                AjaxLink<Void> link) {
+            protected void onClickPerformed(@NotNull AjaxRequestTarget target, @NotNull IModel<PaperAttachment> rowModel,
+                @NotNull AjaxLink<Void> link) {
                 final Integer id = rowModel
                     .getObject()
                     .getId();
@@ -802,7 +815,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
     }
 
     @Override
-    protected void modifyNewsletterAssociation(final AjaxRequestTarget target) {
+    protected void modifyNewsletterAssociation(@NotNull final AjaxRequestTarget target) {
         final Paper p = getModelObject();
         if (!isAssociatedWithNewsletter()) {
             if (p.getId() != null) {
@@ -833,11 +846,12 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
         private final String             label;
         private final FormComponent<?>[] components;
 
-        TextFieldValueMustBeUniqueValidator(final String label, final TextField<Object> field) {
+        TextFieldValueMustBeUniqueValidator(@NotNull final String label, @NotNull final TextField<Object> field) {
             this.label = label;
-            this.components = new FormComponent<?>[] { AssertAs.INSTANCE.notNull(field, "field") };
+            this.components = new FormComponent<?>[] { field };
         }
 
+        @NotNull
         @Override
         public FormComponent<?>[] getDependentFormComponents() {
             return components;
@@ -845,7 +859,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
 
         @SuppressWarnings("unchecked")
         @Override
-        public void validate(final Form<?> form) {
+        public void validate(@NotNull final Form<?> form) {
             final TextField<String> field = (TextField<String>) components[0];
             final Object value = field.getConvertedInput();
             final Long id = EditablePaperPanel.this

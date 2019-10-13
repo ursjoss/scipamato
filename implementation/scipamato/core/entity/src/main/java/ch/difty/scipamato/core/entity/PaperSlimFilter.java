@@ -9,5 +9,4 @@ import java.io.Serializable;
  * @author u.joss
  */
 public interface PaperSlimFilter extends Serializable {
-
 }

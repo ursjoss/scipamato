@@ -7,6 +7,7 @@ import de.agilecoders.wicket.core.settings.SingleThemeProvider;
 import de.agilecoders.wicket.less.BootstrapLess;
 import de.agilecoders.wicket.webjars.WicketWebjars;
 import org.apache.wicket.protocol.http.WebApplication;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -24,13 +25,14 @@ public class BootstrapConfig implements WicketApplicationInitConfiguration {
 
     private final ApplicationPublicProperties applicationProperties;
 
-    public BootstrapConfig(BootstrapProperties prop, ApplicationPublicProperties applicationProperties) {
+    public BootstrapConfig(@NotNull BootstrapProperties prop,
+        @NotNull ApplicationPublicProperties applicationProperties) {
         this.prop = prop;
         this.applicationProperties = applicationProperties;
     }
 
     @Override
-    public void init(WebApplication webApplication) {
+    public void init(@NotNull WebApplication webApplication) {
         prop.setThemeProvider(
             new SingleThemeProvider(new ScipamatoPublicTheme(applicationProperties.isLessUsedOverCss())));
 
@@ -40,5 +42,4 @@ public class BootstrapConfig implements WicketApplicationInitConfiguration {
 
         BootstrapLess.install(webApplication);
     }
-
 }

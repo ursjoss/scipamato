@@ -22,6 +22,8 @@ import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.wicketstuff.annotation.mount.MountPath;
 
 import ch.difty.scipamato.common.web.Mode;
@@ -66,7 +68,7 @@ public class PaperListPage extends BasePage<Void> {
     private       ModalWindow                    xmlPasteModalWindow;
     private       ResultPanel                    resultPanel;
 
-    public PaperListPage(PageParameters parameters) {
+    public PaperListPage(@Nullable PageParameters parameters) {
         super(parameters);
         initFilterAndProvider();
         this.mode = evaluateMode();
@@ -97,13 +99,13 @@ public class PaperListPage extends BasePage<Void> {
     }
 
     @Override
-    public void renderHead(final IHeaderResponse response) {
+    public void renderHead(@NotNull final IHeaderResponse response) {
         super.renderHead(response);
         response.render(CssHeaderItem.forReference(FontAwesome5CDNCSSReference.instance()));
     }
 
     @Override
-    public void onEvent(final IEvent<?> event) {
+    public void onEvent(@NotNull final IEvent<?> event) {
         if (event
                 .getPayload()
                 .getClass() == NewsletterChangeEvent.class) {
@@ -191,7 +193,7 @@ public class PaperListPage extends BasePage<Void> {
             private static final long serialVersionUID = 1L;
 
             @Override
-            public void onClick(AjaxRequestTarget target) {
+            public void onClick(@NotNull AjaxRequestTarget target) {
                 xmlPasteModalWindow.show(target);
             }
         };
@@ -212,7 +214,7 @@ public class PaperListPage extends BasePage<Void> {
      * @param target
      *     the AjaxRequestTarget
      */
-    void onXmlPasteModalPanelClose(final String pubmedContent, final AjaxRequestTarget target) {
+    void onXmlPasteModalPanelClose(@Nullable final String pubmedContent, @NotNull final AjaxRequestTarget target) {
         ServiceResult result = null;
         if (!Strings.isNullOrEmpty(pubmedContent)) {
             result = pubmedImportService.persistPubmedArticlesFromXml(pubmedContent);

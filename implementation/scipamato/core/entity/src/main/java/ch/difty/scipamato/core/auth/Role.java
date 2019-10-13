@@ -1,5 +1,8 @@
 package ch.difty.scipamato.core.auth;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 /**
  * The different {@link Role}s users can be assigned to in SciPaMaTo.
  * <p>
@@ -22,13 +25,13 @@ public enum Role {
     private final String  key;
     private final String  description;
 
-    Role(final Integer id, final String key, final String description) {
+    Role(@NotNull final Integer id, @NotNull final String key, @NotNull final String description) {
         this.id = id;
         this.key = key;
         this.description = description;
     }
 
-    public static Role of(final Integer id) {
+    public static Role of(@Nullable final Integer id) {
         if (id == null)
             return null;
         for (final Role r : ROLES)
@@ -37,14 +40,17 @@ public enum Role {
         throw new IllegalArgumentException("No matching type for id " + id);
     }
 
+    @NotNull
     public Integer getId() {
         return id;
     }
 
+    @NotNull
     public String getDescription() {
         return description;
     }
 
+    @NotNull
     public String getKey() {
         return key;
     }

@@ -8,5 +8,4 @@ import ch.difty.scipamato.core.entity.Paper;
  * @author u.joss
  */
 public interface PaperBackedSearchOrderRepository extends BySearchOrderRepository<Paper> {
-
 }

@@ -9,9 +9,10 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.export.SimpleExporterInput;
 import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 import org.apache.wicket.util.io.ByteArrayOutputStream;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.wicketstuff.jasperreports.JRConcreteResource;
 
-import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.PaperSlimFilter;
 import ch.difty.scipamato.core.web.paper.AbstractPaperSlimProvider;
@@ -43,12 +44,11 @@ public abstract class JasperPaperDataSource<E extends JasperEntity>
      *     a collection of {@link JasperEntity} items that will be used for
      *     populating the report.
      */
-    protected JasperPaperDataSource(final ScipamatoPdfResourceHandler handler, final String baseName,
-        final Collection<E> jasperEntities) {
+    protected JasperPaperDataSource(@NotNull final ScipamatoPdfResourceHandler handler, @NotNull final String baseName,
+        @NotNull final Collection<E> jasperEntities) {
         super(handler);
-        this.baseName = AssertAs.INSTANCE.notNull(baseName, "baseName");
-        this.jasperEntities.clear();
-        this.jasperEntities.addAll(AssertAs.INSTANCE.notNull(jasperEntities, "jasperEntities"));
+        this.baseName = baseName;
+        this.jasperEntities.addAll(jasperEntities);
         this.dataProvider = null;
         init();
     }
@@ -64,12 +64,11 @@ public abstract class JasperPaperDataSource<E extends JasperEntity>
      * @param dataProvider
      *     a data provider deriving from {@link AbstractPaperSlimProvider}
      */
-    protected JasperPaperDataSource(final ScipamatoPdfResourceHandler handler, final String baseName,
-        final AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider) {
+    protected JasperPaperDataSource(@NotNull final ScipamatoPdfResourceHandler handler, @NotNull final String baseName,
+        @NotNull final AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider) {
         super(handler);
-        this.baseName = AssertAs.INSTANCE.notNull(baseName, "baseName");
-        this.jasperEntities.clear();
-        this.dataProvider = AssertAs.INSTANCE.notNull(dataProvider, "dataProvider");
+        this.baseName = baseName;
+        this.dataProvider = dataProvider;
         init();
     }
 
@@ -80,12 +79,15 @@ public abstract class JasperPaperDataSource<E extends JasperEntity>
     }
 
     // override if needed
+    @NotNull
     protected HashMap<String, Object> getParameterMap() {
         return new HashMap<>();
     }
 
+    @NotNull
     protected abstract JasperReport getReport();
 
+    @NotNull
     @Override
     public JRDataSource getReportDataSource() {
         fetchEntitiesFromDataProvider();
@@ -109,15 +111,18 @@ public abstract class JasperPaperDataSource<E extends JasperEntity>
      *     the Paper
      * @return the entity
      */
-    protected abstract E makeEntity(final Paper p);
+    @NotNull
+    protected abstract E makeEntity(@NotNull final Paper p);
 
     /**
      * Overriding in order to not use the deprecated and incompatible methods still
      * used in JRResource (exporter.setParameter)
      */
     @SuppressWarnings({ "unchecked", "rawtypes", "SpellCheckingInspection" })
+    @NotNull
     @Override
-    protected byte[] getExporterData(final JasperPrint print, final JRAbstractExporter exporter) throws JRException {
+    protected byte[] getExporterData(@Nullable final JasperPrint print, @NotNull final JRAbstractExporter exporter)
+        throws JRException {
         // prepare a stream to trap the exporter's output
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         exporter.setExporterInput(new SimpleExporterInput(print));
@@ -128,5 +133,4 @@ public abstract class JasperPaperDataSource<E extends JasperEntity>
 
         return baos.toByteArray();
     }
-
 }

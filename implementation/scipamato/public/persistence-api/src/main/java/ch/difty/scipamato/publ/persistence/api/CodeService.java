@@ -9,5 +9,4 @@ import ch.difty.scipamato.publ.entity.Code;
  * @author u.joss
  */
 public interface CodeService extends CodeLikeService<Code> {
-
 }

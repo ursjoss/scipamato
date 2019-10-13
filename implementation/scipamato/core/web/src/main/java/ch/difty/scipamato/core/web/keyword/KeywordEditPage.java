@@ -7,6 +7,8 @@ import org.apache.wicket.authroles.authorization.strategies.role.annotations.Aut
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.dao.DuplicateKeyException;
 import org.wicketstuff.annotation.mount.MountPath;
 
@@ -28,28 +30,34 @@ public class KeywordEditPage extends DefinitionEditPage<KeywordDefinition> {
     @SpringBean
     private KeywordService service;
 
-    public KeywordEditPage(final IModel<KeywordDefinition> model, final PageReference callingPageRef) {
+    public KeywordEditPage(@Nullable final IModel<KeywordDefinition> model,
+        @Nullable final PageReference callingPageRef) {
         super(model, callingPageRef);
     }
 
+    @Nullable
     @Override
     protected KeywordDefinition persistModel() {
         return service.saveOrUpdate(getModelObject());
     }
 
+    @NotNull
     @Override
-    protected DefinitionEditHeaderPanel newDefinitionHeaderPanel(final String id) {
+    protected DefinitionEditHeaderPanel newDefinitionHeaderPanel(@NotNull final String id) {
         return new KeywordEditHeaderPanel(id, getModel()) {
+            @Nullable
             @Override
-            protected KeywordDefinition doDelete(final KeywordDefinition kd, final Integer recordId) {
+            protected KeywordDefinition doDelete(@NotNull final KeywordDefinition kd, @NotNull final Integer recordId) {
                 return service.delete(recordId, kd.getVersion());
             }
 
+            @Nullable
             @Override
             protected PageReference getCallingPageRef() {
                 return KeywordEditPage.this.getCallingPageRef();
             }
 
+            @NotNull
             @Override
             protected Class<? extends Page> staticResponsePage() {
                 return KeywordListPage.class;
@@ -57,9 +65,11 @@ public class KeywordEditPage extends DefinitionEditPage<KeywordDefinition> {
         };
     }
 
+    @NotNull
     @Override
-    protected DefinitionEditTranslationPanel newDefinitionTranslationPanel(final String id) {
+    protected DefinitionEditTranslationPanel newDefinitionTranslationPanel(@NotNull final String id) {
         return new KeywordEditTranslationPanel(id, getModel()) {
+            @NotNull
             @Override
             protected Form getForm() {
                 return KeywordEditPage.this.getForm();
@@ -68,7 +78,7 @@ public class KeywordEditPage extends DefinitionEditPage<KeywordDefinition> {
     }
 
     @Override
-    protected void handleDuplicateKeyException(final DuplicateKeyException dke) {
+    protected void handleDuplicateKeyException(@NotNull final DuplicateKeyException dke) {
         if (dke.getMessage() != null)
             error(dke.getMessage());
         else

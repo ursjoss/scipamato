@@ -59,5 +59,4 @@ class LoginPageTest extends WicketTest {
         getTester().assertComponent("_header_", HtmlHeaderContainer.class);
         getTester().assertInvisible("navbar");
     }
-
 }

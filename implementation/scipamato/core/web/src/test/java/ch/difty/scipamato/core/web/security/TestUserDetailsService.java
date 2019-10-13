@@ -52,5 +52,4 @@ public class TestUserDetailsService implements UserDetailsService {
             return new ScipamatoUserDetails(user);
         }
     }
-
 }

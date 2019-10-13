@@ -17,6 +17,7 @@ import org.apache.wicket.markup.html.link.ExternalLink;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -34,6 +35,7 @@ import ch.difty.scipamato.publ.web.common.BasePageTest;
 import ch.difty.scipamato.publ.web.paper.browse.PublicPaperDetailPage;
 import ch.difty.scipamato.publ.web.resources.IcoMoonIconType;
 
+@SuppressWarnings("SpellCheckingInspection")
 class NewStudyListPageTest extends BasePageTest<NewStudyListPage> {
 
     @MockBean
@@ -227,6 +229,7 @@ class NewStudyListPageTest extends BasePageTest<NewStudyListPage> {
         final ScipamatoPublicProperties applicationProperties = mock(ScipamatoPublicProperties.class);
         when(applicationProperties.isCommercialFontPresent()).thenReturn(true);
         final NewStudyListPage page = new NewStudyListPage(new PageParameters()) {
+            @NotNull
             @Override
             protected ApplicationPublicProperties getProperties() {
                 return applicationProperties;

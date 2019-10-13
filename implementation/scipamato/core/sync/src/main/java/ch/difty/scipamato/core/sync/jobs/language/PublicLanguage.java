@@ -4,6 +4,8 @@ import java.sql.Timestamp;
 
 import lombok.Builder;
 import lombok.experimental.Delegate;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import ch.difty.scipamato.publ.db.tables.pojos.Language;
 
@@ -23,7 +25,8 @@ public class PublicLanguage {
     private final Language delegate;
 
     @Builder
-    private PublicLanguage(final String code, final boolean mainLanguage, final Timestamp lastSynched) {
+    private PublicLanguage(@NotNull final String code, final boolean mainLanguage,
+        @NotNull final Timestamp lastSynched) {
         delegate = new Language();
         delegate.setCode(code);
         delegate.setMainLanguage(mainLanguage);

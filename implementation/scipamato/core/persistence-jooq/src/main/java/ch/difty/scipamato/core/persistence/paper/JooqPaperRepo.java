@@ -21,6 +21,8 @@ import java.util.stream.Collectors;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.jooq.*;
 import org.jooq.impl.DSL;
 import org.slf4j.Logger;
@@ -28,7 +30,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
-import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.DateTimeService;
 import ch.difty.scipamato.common.TranslationUtils;
 import ch.difty.scipamato.common.config.ApplicationProperties;
@@ -60,54 +61,60 @@ public class JooqPaperRepo extends
     JooqEntityRepo<PaperRecord, Paper, Long, ch.difty.scipamato.core.db.tables.Paper, PaperRecordMapper, PaperFilter>
     implements PaperRepository {
 
-    private static final String LANGUAGE_CODE = "languageCode";
-
     private final PaperBackedSearchOrderRepository searchOrderRepository;
 
-    public JooqPaperRepo(@Qualifier("dslContext") final DSLContext dsl, final PaperRecordMapper mapper,
-        final JooqSortMapper<PaperRecord, Paper, ch.difty.scipamato.core.db.tables.Paper> sortMapper,
-        final GenericFilterConditionMapper<PaperFilter> filterConditionMapper, final DateTimeService dateTimeService,
-        final InsertSetStepSetter<PaperRecord, Paper> insertSetStepSetter,
-        final UpdateSetStepSetter<PaperRecord, Paper> updateSetStepSetter,
-        final PaperBackedSearchOrderRepository searchOrderRepository,
-        final ApplicationProperties applicationProperties) {
+    public JooqPaperRepo(@Qualifier("dslContext") @NotNull final DSLContext dsl,
+        @NotNull final PaperRecordMapper mapper,
+        @NotNull final JooqSortMapper<PaperRecord, Paper, ch.difty.scipamato.core.db.tables.Paper> sortMapper,
+        @NotNull final GenericFilterConditionMapper<PaperFilter> filterConditionMapper,
+        @NotNull final DateTimeService dateTimeService,
+        @NotNull final InsertSetStepSetter<PaperRecord, Paper> insertSetStepSetter,
+        @NotNull final UpdateSetStepSetter<PaperRecord, Paper> updateSetStepSetter,
+        @NotNull final PaperBackedSearchOrderRepository searchOrderRepository,
+        @NotNull final ApplicationProperties applicationProperties) {
         super(dsl, mapper, sortMapper, filterConditionMapper, dateTimeService, insertSetStepSetter, updateSetStepSetter,
             applicationProperties);
-        this.searchOrderRepository = AssertAs.INSTANCE.notNull(searchOrderRepository, "searchOrderRepository");
+        this.searchOrderRepository = searchOrderRepository;
     }
 
+    @NotNull
     @Override
     protected Logger getLogger() {
         return log;
     }
 
+    @NotNull
     @Override
     protected ch.difty.scipamato.core.db.tables.Paper getTable() {
         return PAPER;
     }
 
+    @NotNull
     @Override
     protected TableField<PaperRecord, Long> getTableId() {
         return PAPER.ID;
     }
 
+    @NotNull
     @Override
     protected TableField<PaperRecord, Integer> getRecordVersion() {
         return PAPER.VERSION;
     }
 
+    @NotNull
     @Override
-    protected Long getIdFrom(final PaperRecord record) {
+    protected Long getIdFrom(@NotNull final PaperRecord record) {
         return record.getId();
     }
 
+    @NotNull
     @Override
-    protected Long getIdFrom(final Paper entity) {
+    protected Long getIdFrom(@NotNull final Paper entity) {
         return entity.getId();
     }
 
     @Override
-    protected void enrichAssociatedEntitiesOf(final Paper entity, final String languageCode) {
+    protected void enrichAssociatedEntitiesOf(@Nullable final Paper entity, @Nullable final String languageCode) {
         if (entity != null) {
             if (languageCode != null) {
                 enrichCodesOf(entity, languageCode);
@@ -176,6 +183,7 @@ public class JooqPaperRepo extends
             entity.setAttachments(loadSlimAttachment(id));
     }
 
+    @NotNull
     public List<ch.difty.scipamato.core.entity.PaperAttachment> loadSlimAttachment(final long paperId) {
         return getDsl()
             .select(PAPER_ATTACHMENT.ID, PAPER_ATTACHMENT.PAPER_ID, PAPER_ATTACHMENT.NAME,
@@ -189,13 +197,12 @@ public class JooqPaperRepo extends
     }
 
     @Override
-    protected void saveAssociatedEntitiesOf(final Paper paper, final String languageCode) {
+    protected void saveAssociatedEntitiesOf(@NotNull final Paper paper, @NotNull final String languageCode) {
         storeNewCodesOf(paper);
     }
 
     @Override
-    protected void updateAssociatedEntities(final Paper paper, final String languageCode) {
-        AssertAs.INSTANCE.notNull(paper, "paper");
+    protected void updateAssociatedEntities(@NotNull final Paper paper, @NotNull final String languageCode) {
         storeNewCodesOf(paper);
         deleteObsoleteCodesFrom(paper);
         considerStoringNewsletterLinkOf(paper);
@@ -254,51 +261,51 @@ public class JooqPaperRepo extends
         }
     }
 
+    @NotNull
     @Override
-    public List<Paper> findByIds(final List<Long> ids) {
-        AssertAs.INSTANCE.notNull(ids, "ids");
+    public List<Paper> findByIds(@NotNull final List<Long> ids) {
         return getDsl()
             .selectFrom(PAPER)
             .where(PAPER.ID.in(ids))
             .fetch(getMapper());
     }
 
+    @NotNull
     @Override
-    public List<Paper> findWithCodesByIds(final List<Long> ids, final String languageCode) {
-        AssertAs.INSTANCE.notNull(languageCode, LANGUAGE_CODE);
+    public List<Paper> findWithCodesByIds(@NotNull final List<Long> ids, @NotNull final String languageCode) {
         final List<Paper> papers = findByIds(ids);
         enrichAssociatedEntitiesOfAll(papers, languageCode);
         return papers;
     }
 
+    @NotNull
     @Override
-    public List<Paper> findBySearchOrder(final SearchOrder searchOrder, final String languageCode) {
-        AssertAs.INSTANCE.notNull(languageCode, LANGUAGE_CODE);
+    public List<Paper> findBySearchOrder(@NotNull final SearchOrder searchOrder, @NotNull final String languageCode) {
         final List<Paper> papers = searchOrderRepository.findBySearchOrder(searchOrder);
         enrichAssociatedEntitiesOfAll(papers, languageCode);
         return papers;
     }
 
+    @NotNull
     @Override
-    public List<Paper> findPageBySearchOrder(final SearchOrder searchOrder, final PaginationContext paginationContext,
-        final String languageCode) {
-        AssertAs.INSTANCE.notNull(languageCode, LANGUAGE_CODE);
+    public List<Paper> findPageBySearchOrder(@NotNull final SearchOrder searchOrder,
+        @NotNull final PaginationContext paginationContext, @NotNull final String languageCode) {
         final List<Paper> entities = searchOrderRepository.findPageBySearchOrder(searchOrder, paginationContext);
         enrichAssociatedEntitiesOfAll(entities, languageCode);
         return entities;
     }
 
     @Override
-    public int countBySearchOrder(final SearchOrder searchOrder) {
+    public int countBySearchOrder(@NotNull final SearchOrder searchOrder) {
         return searchOrderRepository.countBySearchOrder(searchOrder);
     }
 
+    @NotNull
     @Override
-    public List<Paper> findByPmIds(final List<Integer> pmIds, final String languageCode) {
-        if (CollectionUtils.isEmpty(pmIds)) {
+    public List<Paper> findByPmIds(@NotNull final List<Integer> pmIds, @NotNull final String languageCode) {
+        if (pmIds.isEmpty()) {
             return new ArrayList<>();
         } else {
-            AssertAs.INSTANCE.notNull(languageCode, LANGUAGE_CODE);
             final List<Paper> papers = getDsl()
                 .selectFrom(PAPER)
                 .where(PAPER.PM_ID.in(pmIds))
@@ -308,9 +315,10 @@ public class JooqPaperRepo extends
         }
     }
 
+    @NotNull
     @Override
-    public List<Integer> findExistingPmIdsOutOf(final List<Integer> pmIds) {
-        if (CollectionUtils.isEmpty(pmIds)) {
+    public List<Integer> findExistingPmIdsOutOf(@NotNull final List<Integer> pmIds) {
+        if (pmIds.isEmpty()) {
             return new ArrayList<>();
         } else {
             return getDsl()
@@ -321,12 +329,12 @@ public class JooqPaperRepo extends
         }
     }
 
+    @NotNull
     @Override
-    public List<Paper> findByNumbers(final List<Long> numbers, final String languageCode) {
-        if (CollectionUtils.isEmpty(numbers)) {
+    public List<Paper> findByNumbers(@NotNull final List<Long> numbers, @NotNull final String languageCode) {
+        if (numbers.isEmpty()) {
             return new ArrayList<>();
         } else {
-            AssertAs.INSTANCE.notNull(languageCode, LANGUAGE_CODE);
             final List<Paper> papers = getDsl()
                 .selectFrom(PAPER)
                 .where(PAPER.NUMBER.in(numbers))
@@ -373,9 +381,10 @@ public class JooqPaperRepo extends
         return freeNumber != null ? freeNumber : minimumPaperNumberToBeRecycled;
     }
 
+    @NotNull
     @Override
-    public List<Long> findPageOfIdsBySearchOrder(final SearchOrder searchOrder,
-        final PaginationContext paginationContext) {
+    public List<Long> findPageOfIdsBySearchOrder(@NotNull final SearchOrder searchOrder,
+        @NotNull final PaginationContext paginationContext) {
         return searchOrderRepository.findPageOfIdsBySearchOrder(searchOrder, paginationContext);
     }
 
@@ -399,8 +408,9 @@ public class JooqPaperRepo extends
             .execute();
     }
 
+    @Nullable
     @Override
-    public Paper saveAttachment(final ch.difty.scipamato.core.entity.PaperAttachment pa) {
+    public Paper saveAttachment(@NotNull final ch.difty.scipamato.core.entity.PaperAttachment pa) {
         getDsl()
             .insertInto(PAPER_ATTACHMENT)
             .columns(PAPER_ATTACHMENT.PAPER_ID, PAPER_ATTACHMENT.NAME, PAPER_ATTACHMENT.CONTENT,
@@ -424,8 +434,9 @@ public class JooqPaperRepo extends
         return findById(pa.getPaperId());
     }
 
+    @Nullable
     @Override
-    public PaperAttachment loadAttachmentWithContentBy(final Integer id) {
+    public PaperAttachment loadAttachmentWithContentBy(@NotNull final Integer id) {
         return getDsl()
             .select(PAPER_ATTACHMENT.ID, PAPER_ATTACHMENT.PAPER_ID, PAPER_ATTACHMENT.NAME, PAPER_ATTACHMENT.CONTENT,
                 PAPER_ATTACHMENT.CONTENT_TYPE, PAPER_ATTACHMENT.SIZE, PAPER_ATTACHMENT.CREATED_BY,
@@ -436,36 +447,34 @@ public class JooqPaperRepo extends
             .fetchOneInto(ch.difty.scipamato.core.entity.PaperAttachment.class);
     }
 
+    @Nullable
     @Override
-    public Paper deleteAttachment(final Integer id) {
-        if (id != null) {
-            final Long paperId = getDsl()
-                .select(PAPER_ATTACHMENT.PAPER_ID)
-                .from(PAPER_ATTACHMENT)
-                .where(PAPER_ATTACHMENT.ID.eq(id))
-                .fetchOneInto(Long.class);
-            getDsl()
-                .deleteFrom(PAPER_ATTACHMENT)
-                .where(PAPER_ATTACHMENT.ID.eq(id))
-                .execute();
-            getLogger().info("{} deleted attachment with id {} (Paper with id {}).", getActiveUser().getUserName(), id,
-                paperId);
-            return findById(paperId);
-        }
-        return null;
+    public Paper deleteAttachment(@NotNull final Integer id) {
+        final Long paperId = getDsl()
+            .select(PAPER_ATTACHMENT.PAPER_ID)
+            .from(PAPER_ATTACHMENT)
+            .where(PAPER_ATTACHMENT.ID.eq(id))
+            .fetchOneInto(Long.class);
+        getDsl()
+            .deleteFrom(PAPER_ATTACHMENT)
+            .where(PAPER_ATTACHMENT.ID.eq(id))
+            .execute();
+        getLogger().info("{} deleted attachment with id {} (Paper with id {}).", getActiveUser().getUserName(), id,
+            paperId);
+        return findById(paperId);
     }
 
     @Override
-    public void delete(final List<Long> ids) {
+    public void delete(@NotNull final List<Long> ids) {
         getDsl()
             .deleteFrom(PAPER)
             .where(PAPER.ID.in(ids))
             .execute();
     }
 
+    @NotNull
     @Override
-    public Optional<String> isDoiAlreadyAssigned(final String doi, final Long idOfCurrentPaper) {
-        AssertAs.INSTANCE.notNull(doi, "doi");
+    public Optional<String> isDoiAlreadyAssigned(@NotNull final String doi, @Nullable final Long idOfCurrentPaper) {
         return evaluateNumbers(fetchRecords(idOfCurrentPaper, PAPER.DOI.eq(doi)));
     }
 
@@ -485,7 +494,8 @@ public class JooqPaperRepo extends
             return condition;
     }
 
-    Optional<String> evaluateNumbers(final Record1<Long[]> numbers) {
+    @NotNull
+    Optional<String> evaluateNumbers(@Nullable final Record1<Long[]> numbers) {
         if (numbers == null || numbers.value1() == null || numbers.value1().length == 0)
             return Optional.empty();
         return Optional.of(Arrays
@@ -494,9 +504,9 @@ public class JooqPaperRepo extends
             .collect(Collectors.joining(",")));
     }
 
+    @NotNull
     @Override
-    public Optional<String> isPmIdAlreadyAssigned(final int pmId, final Long idOfCurrentPaper) {
+    public Optional<String> isPmIdAlreadyAssigned(final int pmId, @Nullable final Long idOfCurrentPaper) {
         return evaluateNumbers(fetchRecords(idOfCurrentPaper, PAPER.PM_ID.eq(pmId)));
     }
-
 }

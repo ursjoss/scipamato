@@ -8,6 +8,7 @@ import java.util.function.BinaryOperator;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
+import org.jetbrains.annotations.NotNull;
 import org.jooq.Condition;
 import org.jooq.impl.DSL;
 import org.jooq.lambda.Seq;
@@ -43,7 +44,7 @@ public class ConditionalSupplier {
      *     the supplier to add
      * @return the resulting conditional supplier
      */
-    public ConditionalSupplier add(final Supplier<Condition> conditionSupplier) {
+    public ConditionalSupplier add(@NotNull final Supplier<Condition> conditionSupplier) {
         conditionSuppliers.add(conditionSupplier);
         return this;
     }
@@ -58,12 +59,14 @@ public class ConditionalSupplier {
      *     the supplier to add
      * @return the resulting conditional supplier
      */
-    public ConditionalSupplier add(final boolean isPresent, final Supplier<Condition> conditionSupplier) {
+    @NotNull
+    public ConditionalSupplier add(final boolean isPresent, @NotNull final Supplier<Condition> conditionSupplier) {
         if (isPresent)
             conditionSuppliers.add(conditionSupplier);
         return this;
     }
 
+    @NotNull
     public Condition combineWithAnd() {
         return combineWith(Condition::and, DSL::trueCondition);
     }
@@ -81,6 +84,7 @@ public class ConditionalSupplier {
             .reduce(head, binOp);
     }
 
+    @NotNull
     public Condition combineWithOr() {
         return combineWith(Condition::or, DSL::falseCondition);
     }

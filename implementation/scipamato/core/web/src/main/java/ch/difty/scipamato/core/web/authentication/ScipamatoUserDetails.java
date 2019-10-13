@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Set;
 
 import lombok.EqualsAndHashCode;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,17 +23,19 @@ public class ScipamatoUserDetails extends User implements UserDetails {
 
     private final Set<Role> roles;
 
-    public ScipamatoUserDetails(final User user) {
+    public ScipamatoUserDetails(@NotNull final User user) {
         super(user);
         this.roles = user.getRoles();
     }
 
+    @NotNull
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         final String roleString = StringUtils.collectionToCommaDelimitedString(roles);
         return AuthorityUtils.commaSeparatedStringToAuthorityList(roleString);
     }
 
+    @NotNull
     @Override
     public String getUsername() {
         return super.getUserName();
@@ -52,5 +55,4 @@ public class ScipamatoUserDetails extends User implements UserDetails {
     public boolean isCredentialsNonExpired() {
         return true;
     }
-
 }

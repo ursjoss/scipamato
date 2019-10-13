@@ -2,6 +2,8 @@ package ch.difty.scipamato.common.persistence.code;
 
 import java.util.List;
 
+import org.jetbrains.annotations.NotNull;
+
 import ch.difty.scipamato.common.entity.CodeClassId;
 import ch.difty.scipamato.common.entity.CodeLike;
 import ch.difty.scipamato.common.persistence.CodeLikeService;
@@ -20,16 +22,18 @@ public abstract class JooqCodeLikeService<T extends CodeLike, R extends CodeLike
 
     private final R repo;
 
-    public JooqCodeLikeService(final R repo) {
+    public JooqCodeLikeService(@NotNull final R repo) {
         this.repo = repo;
     }
 
+    @NotNull
     protected R getRepo() {
         return repo;
     }
 
+    @NotNull
     @Override
-    public List<T> findCodesOfClass(final CodeClassId codeClassId, final String languageCode) {
+    public List<T> findCodesOfClass(@NotNull final CodeClassId codeClassId, @NotNull final String languageCode) {
         return repo.findCodesOfClass(codeClassId, languageCode);
     }
 

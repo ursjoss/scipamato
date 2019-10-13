@@ -2,6 +2,8 @@ package ch.difty.scipamato.publ.persistence.api;
 
 import java.util.List;
 
+import org.jetbrains.annotations.NotNull;
+
 import ch.difty.scipamato.publ.entity.Keyword;
 
 /**
@@ -18,5 +20,6 @@ public interface KeywordService {
      *     the language code, e.g. 'en' or 'de'.
      * @return a list of codes
      */
-    List<Keyword> findKeywords(String languageCode);
+    @NotNull
+    List<Keyword> findKeywords(@NotNull String languageCode);
 }

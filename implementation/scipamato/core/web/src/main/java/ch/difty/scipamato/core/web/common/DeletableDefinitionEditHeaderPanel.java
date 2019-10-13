@@ -6,14 +6,15 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.confirmation.Confi
 import lombok.extern.slf4j.Slf4j;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.StringResourceModel;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.dao.DataIntegrityViolationException;
 
-import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.entity.DefinitionEntity;
 import ch.difty.scipamato.common.entity.DefinitionTranslation;
 import ch.difty.scipamato.core.persistence.OptimisticLockingException;
 
-@SuppressWarnings("SameParameterValue")
+@SuppressWarnings({ "SameParameterValue", "SpellCheckingInspection" })
 @Slf4j
 public abstract class DeletableDefinitionEditHeaderPanel<E extends DefinitionEntity<ID, T>, T extends DefinitionTranslation, ID>
     extends DefinitionEditHeaderPanel<E, T, ID> {
@@ -24,8 +25,8 @@ public abstract class DeletableDefinitionEditHeaderPanel<E extends DefinitionEnt
      * @param model
      *     model of type <code>T</code>. Must not be null.
      */
-    protected DeletableDefinitionEditHeaderPanel(final String id, final IModel<E> model) {
-        super(id, AssertAs.INSTANCE.notNull(model, "model"));
+    protected DeletableDefinitionEditHeaderPanel(@NotNull final String id, @Nullable final IModel<E> model) {
+        super(id, model);
     }
 
     @Override
@@ -105,6 +106,6 @@ public abstract class DeletableDefinitionEditHeaderPanel<E extends DefinitionEnt
         return db;
     }
 
-    protected abstract E doDelete(final E ntd, final ID recordId);
-
+    @Nullable
+    protected abstract E doDelete(@NotNull final E ntd, @NotNull final ID recordId);
 }

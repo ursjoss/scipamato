@@ -2,6 +2,7 @@ package ch.difty.scipamato.core.sync.jobs.newsletter;
 
 import static ch.difty.scipamato.publ.db.tables.Newsletter.NEWSLETTER;
 
+import org.jetbrains.annotations.NotNull;
 import org.jooq.DSLContext;
 import org.springframework.batch.item.ItemWriter;
 
@@ -22,12 +23,12 @@ import ch.difty.scipamato.core.sync.jobs.ScipamatoItemWriter;
  */
 public class NewsletterItemWriter extends ScipamatoItemWriter<PublicNewsletter> {
 
-    public NewsletterItemWriter(final DSLContext jooqDslContextPublic) {
+    public NewsletterItemWriter(@NotNull final DSLContext jooqDslContextPublic) {
         super(jooqDslContextPublic, "newsletter");
     }
 
     @Override
-    protected int executeUpdate(final PublicNewsletter p) {
+    protected int executeUpdate(@NotNull final PublicNewsletter p) {
         return getDslContext()
             .insertInto(NEWSLETTER)
             .columns(NEWSLETTER.ID, NEWSLETTER.ISSUE, NEWSLETTER.ISSUE_DATE, NEWSLETTER.VERSION, NEWSLETTER.CREATED,
@@ -45,5 +46,4 @@ public class NewsletterItemWriter extends ScipamatoItemWriter<PublicNewsletter> 
             .where(NEWSLETTER.ID.eq(p.getId()))
             .execute();
     }
-
 }

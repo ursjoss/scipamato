@@ -37,6 +37,8 @@ import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.wicketstuff.annotation.mount.MountPath;
 
 import ch.difty.scipamato.common.entity.newsletter.PublicationStatus;
@@ -78,7 +80,7 @@ public class NewsletterListPage extends BasePage<Void> {
     private DataTable<Newsletter, String> results;
     private BootstrapAjaxButton           newNewsletterButton;
 
-    public NewsletterListPage(final PageParameters parameters) {
+    public NewsletterListPage(@Nullable final PageParameters parameters) {
         super(parameters);
         initFilterAndProvider();
     }
@@ -89,7 +91,7 @@ public class NewsletterListPage extends BasePage<Void> {
     }
 
     @Override
-    public void renderHead(final IHeaderResponse response) {
+    public void renderHead(@NotNull final IHeaderResponse response) {
         super.renderHead(response);
         response.render(CssHeaderItem.forReference(FontAwesome5CDNCSSReference.instance()));
     }
@@ -102,7 +104,7 @@ public class NewsletterListPage extends BasePage<Void> {
         makeAndQueueTable("results");
     }
 
-    private void makeAndQueueFilterForm(final String id) {
+    private void makeAndQueueFilterForm(@NotNull final String id) {
         queue(new FilterForm<>(id, dataProvider));
 
         queueFieldAndLabel(
@@ -113,7 +115,7 @@ public class NewsletterListPage extends BasePage<Void> {
 
     }
 
-    private void queueStatusSelectAndLabel(final String id) {
+    private void queueStatusSelectAndLabel(@NotNull final String id) {
         StringResourceModel labelModel = new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null);
         queue(new Label(id + LABEL_TAG, labelModel));
 
@@ -130,13 +132,13 @@ public class NewsletterListPage extends BasePage<Void> {
     private AjaxFormComponentUpdatingBehavior filterFormFieldUpdatingBehavior() {
         return new AjaxFormComponentUpdatingBehavior("change") {
             @Override
-            protected void onUpdate(final AjaxRequestTarget target) {
+            protected void onUpdate(@NotNull final AjaxRequestTarget target) {
                 target.add(results);
             }
         };
     }
 
-    private void queueTopicsSelectAndLabel(final String id) {
+    private void queueTopicsSelectAndLabel(@NotNull final String id) {
         StringResourceModel labelModel = new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null);
         queue(new Label(id + LABEL_TAG, labelModel));
 
@@ -187,7 +189,7 @@ public class NewsletterListPage extends BasePage<Void> {
             propExpression, propExpression, consumer);
     }
 
-    private void onTitleClick(final IModel<Newsletter> newsletterModel) {
+    private void onTitleClick(@Nullable final IModel<Newsletter> newsletterModel) {
         setResponsePage(new NewsletterEditPage(newsletterModel));
     }
 
@@ -203,7 +205,7 @@ public class NewsletterListPage extends BasePage<Void> {
         return new PropertyColumn<>(new StringResourceModel(COLUMN_HEADER + propExpression, this, null), propExpression,
             propExpression) {
             @Override
-            public IModel<String> getDataModel(final IModel<Newsletter> rowModel) {
+            public IModel<String> getDataModel(@NotNull final IModel<Newsletter> rowModel) {
                 IModel dataModel = super.getDataModel(rowModel);
                 PublicationStatus ps = (PublicationStatus) dataModel.getObject();
                 return new StringResourceModel("PublicationStatus." + ps.name(), NewsletterListPage.this, null);
@@ -220,18 +222,18 @@ public class NewsletterListPage extends BasePage<Void> {
             private static final long serialVersionUID = 1L;
 
             @Override
-            protected IModel<String> createIconModel(final IModel<Newsletter> rowModel) {
+            protected IModel<String> createIconModel(@NotNull final IModel<Newsletter> rowModel) {
                 return Model.of(random.cssClassName());
             }
 
             @Override
-            protected IModel<String> createTitleModel(IModel<Newsletter> rowModel) {
+            protected IModel<String> createTitleModel(@Nullable IModel<Newsletter> rowModel) {
                 return new StringResourceModel("column.title." + id, NewsletterListPage.this, rowModel);
             }
 
             @Override
-            protected void onClickPerformed(AjaxRequestTarget target, IModel<Newsletter> rowModel,
-                AjaxLink<Void> link) {
+            protected void onClickPerformed(@NotNull AjaxRequestTarget target, @NotNull IModel<Newsletter> rowModel,
+                @NotNull AjaxLink<Void> link) {
                 setResponsePage(new NewsletterTopicSortPage(rowModel, getPageReference()));
             }
         };
@@ -246,7 +248,7 @@ public class NewsletterListPage extends BasePage<Void> {
             private static final long serialVersionUID = 1L;
 
             @Override
-            protected IModel<String> createIconModel(final IModel<Newsletter> rowModel) {
+            protected IModel<String> createIconModel(@NotNull final IModel<Newsletter> rowModel) {
                 final boolean canDelete = rowModel
                     .getObject()
                     .isDeletable();
@@ -254,13 +256,13 @@ public class NewsletterListPage extends BasePage<Void> {
             }
 
             @Override
-            protected IModel<String> createTitleModel(IModel<Newsletter> rowModel) {
+            protected IModel<String> createTitleModel(@Nullable IModel<Newsletter> rowModel) {
                 return new StringResourceModel("column.title." + id, NewsletterListPage.this, rowModel);
             }
 
             @Override
-            protected void onClickPerformed(AjaxRequestTarget target, IModel<Newsletter> rowModel,
-                AjaxLink<Void> link) {
+            protected void onClickPerformed(@NotNull AjaxRequestTarget target, @NotNull IModel<Newsletter> rowModel,
+                @NotNull AjaxLink<Void> link) {
                 final Newsletter nl = rowModel.getObject();
                 if (nl.isDeletable()) {
                     service.remove(nl);

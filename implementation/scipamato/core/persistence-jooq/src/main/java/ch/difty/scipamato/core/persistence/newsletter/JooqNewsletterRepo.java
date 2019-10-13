@@ -10,6 +10,8 @@ import java.sql.Timestamp;
 import java.util.Optional;
 
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.jooq.*;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -38,49 +40,56 @@ public class JooqNewsletterRepo extends
     JooqEntityRepo<NewsletterRecord, Newsletter, Integer, ch.difty.scipamato.core.db.tables.Newsletter, NewsletterRecordMapper, NewsletterFilter>
     implements NewsletterRepository {
 
-    protected JooqNewsletterRepo(@Qualifier("dslContext") final DSLContext dsl, final NewsletterRecordMapper mapper,
-        final JooqSortMapper<NewsletterRecord, Newsletter, ch.difty.scipamato.core.db.tables.Newsletter> sortMapper,
-        final GenericFilterConditionMapper<NewsletterFilter> filterConditionMapper,
-        final DateTimeService dateTimeService,
-        final InsertSetStepSetter<NewsletterRecord, Newsletter> insertSetStepSetter,
-        final UpdateSetStepSetter<NewsletterRecord, Newsletter> updateSetStepSetter,
-        final ApplicationProperties applicationProperties) {
+    protected JooqNewsletterRepo(@Qualifier("dslContext") @NotNull final DSLContext dsl,
+        @NotNull final NewsletterRecordMapper mapper,
+        @NotNull final JooqSortMapper<NewsletterRecord, Newsletter, ch.difty.scipamato.core.db.tables.Newsletter> sortMapper,
+        @NotNull final GenericFilterConditionMapper<NewsletterFilter> filterConditionMapper,
+        @NotNull final DateTimeService dateTimeService,
+        @NotNull final InsertSetStepSetter<NewsletterRecord, Newsletter> insertSetStepSetter,
+        @NotNull final UpdateSetStepSetter<NewsletterRecord, Newsletter> updateSetStepSetter,
+        @NotNull final ApplicationProperties applicationProperties) {
         super(dsl, mapper, sortMapper, filterConditionMapper, dateTimeService, insertSetStepSetter, updateSetStepSetter,
             applicationProperties);
     }
 
+    @NotNull
     @Override
     protected Logger getLogger() {
         return log;
     }
 
+    @NotNull
     @Override
-    protected Integer getIdFrom(final NewsletterRecord record) {
+    protected Integer getIdFrom(@NotNull final NewsletterRecord record) {
         return record.getId();
     }
 
+    @NotNull
     @Override
-    protected Integer getIdFrom(final Newsletter entity) {
+    protected Integer getIdFrom(@NotNull final Newsletter entity) {
         return entity.getId();
     }
 
+    @NotNull
     @Override
     protected ch.difty.scipamato.core.db.tables.Newsletter getTable() {
         return NEWSLETTER;
     }
 
+    @NotNull
     @Override
     protected TableField<NewsletterRecord, Integer> getTableId() {
         return NEWSLETTER.ID;
     }
 
+    @NotNull
     @Override
     protected TableField<NewsletterRecord, Integer> getRecordVersion() {
         return NEWSLETTER.VERSION;
     }
 
     @Override
-    protected void enrichAssociatedEntitiesOf(final Newsletter entity, final String languageCode) {
+    protected void enrichAssociatedEntitiesOf(@Nullable final Newsletter entity, @Nullable final String languageCode) {
         if (entity != null)
             enrichPaperAssociationsOf(entity, languageCode);
     }
@@ -149,6 +158,7 @@ public class JooqNewsletterRepo extends
         }
     }
 
+    @NotNull
     @Override
     public Optional<Newsletter> getNewsletterInStatusWorkInProgress() {
         return Optional.ofNullable(getDsl()
@@ -159,9 +169,10 @@ public class JooqNewsletterRepo extends
             .fetchOne(getMapper()));
     }
 
+    @NotNull
     @Override
     public Optional<Paper.NewsletterLink> mergePaperIntoNewsletter(final int newsletterId, final long paperId,
-        final Integer newsletterTopicId, String languageCode) {
+        @Nullable final Integer newsletterTopicId, @NotNull String languageCode) {
         final Timestamp ts = getDateTimeService().getCurrentTimestamp();
         final int count = tryInserting(newsletterId, paperId, newsletterTopicId, ts);
         return handleInsertedNewsletter(count, newsletterId, paperId, languageCode);
@@ -169,8 +180,9 @@ public class JooqNewsletterRepo extends
     }
 
     // package-private for testing purposes
+    @NotNull
     Optional<Paper.NewsletterLink> handleInsertedNewsletter(final int count, final int newsletterId, final long paperId,
-        final String languageCode) {
+        @NotNull final String languageCode) {
         if (count > 0) {
             final Record6<Integer, String, Integer, Integer, String, String> r = fetchMergedNewsletter(newsletterId,
                 paperId, languageCode);
@@ -182,8 +194,9 @@ public class JooqNewsletterRepo extends
     }
 
     // package-private for stubbing purposes
+    @Nullable
     Record6<Integer, String, Integer, Integer, String, String> fetchMergedNewsletter(final int newsletterId,
-        final long paperId, final String languageCode) {
+        final long paperId, @NotNull final String languageCode) {
         return getDsl()
             .select(NEWSLETTER.ID, NEWSLETTER.ISSUE, NEWSLETTER.PUBLICATION_STATUS, NEWSLETTER_TOPIC.ID,
                 NEWSLETTER_TOPIC_TR.TITLE, PAPER_NEWSLETTER.HEADLINE)
@@ -203,7 +216,8 @@ public class JooqNewsletterRepo extends
     }
 
     // package-private for stubbing
-    int tryInserting(final int newsletterId, final long paperId, final Integer newsletterTopicId, final Timestamp ts) {
+    int tryInserting(final int newsletterId, final long paperId, @Nullable final Integer newsletterTopicId,
+        @Nullable final Timestamp ts) {
         return getDsl()
             .insertInto(PAPER_NEWSLETTER)
             .columns(PAPER_NEWSLETTER.PAPER_ID, PAPER_NEWSLETTER.NEWSLETTER_ID, PAPER_NEWSLETTER.NEWSLETTER_TOPIC_ID,

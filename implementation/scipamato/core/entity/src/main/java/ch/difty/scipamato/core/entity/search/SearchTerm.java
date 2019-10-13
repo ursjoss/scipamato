@@ -1,5 +1,8 @@
 package ch.difty.scipamato.core.entity.search;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 public interface SearchTerm {
 
     /**
@@ -19,8 +22,9 @@ public interface SearchTerm {
      *     the search term definition
      * @return one of the implementations of {@link SearchTerm}
      */
+    @NotNull
     static SearchTerm newSearchTerm(final long id, final int searchTermTypeId, final long searchConditionId,
-        final String fieldName, final String rawSearchTerm) {
+        @NotNull final String fieldName, @NotNull final String rawSearchTerm) {
         return newSearchTerm(id, SearchTermType.byId(searchTermTypeId), searchConditionId, fieldName, rawSearchTerm);
     }
 
@@ -40,8 +44,9 @@ public interface SearchTerm {
      *     the search term definition
      * @return one of the implementations of {@link SearchTerm}
      */
-    static SearchTerm newSearchTerm(final long id, final SearchTermType type, final long searchConditionId,
-        final String fieldName, final String rawSearchTerm) {
+    @NotNull
+    static SearchTerm newSearchTerm(final long id, @NotNull final SearchTermType type, final long searchConditionId,
+        @NotNull final String fieldName, @NotNull final String rawSearchTerm) {
         switch (type) {
         case BOOLEAN:
             return new BooleanSearchTerm(id, searchConditionId, fieldName, rawSearchTerm);
@@ -67,7 +72,8 @@ public interface SearchTerm {
      *     the search term definition
      * @return the search term
      */
-    static StringSearchTerm newStringSearchTerm(final String fieldName, final String rawSearchTerm) {
+    @NotNull
+    static StringSearchTerm newStringSearchTerm(@NotNull final String fieldName, @NotNull final String rawSearchTerm) {
         return new StringSearchTerm(fieldName, rawSearchTerm);
     }
 
@@ -81,7 +87,9 @@ public interface SearchTerm {
      *     the search term definition
      * @return the search term
      */
-    static IntegerSearchTerm newIntegerSearchTerm(final String fieldName, final String rawSearchTerm) {
+    @NotNull
+    static IntegerSearchTerm newIntegerSearchTerm(@NotNull final String fieldName,
+        @NotNull final String rawSearchTerm) {
         return new IntegerSearchTerm(fieldName, rawSearchTerm);
     }
 
@@ -95,7 +103,9 @@ public interface SearchTerm {
      *     the search term definition
      * @return the search term
      */
-    static BooleanSearchTerm newBooleanSearchTerm(final String fieldName, final String rawSearchTerm) {
+    @NotNull
+    static BooleanSearchTerm newBooleanSearchTerm(@NotNull final String fieldName,
+        @NotNull final String rawSearchTerm) {
         return new BooleanSearchTerm(fieldName, rawSearchTerm);
     }
 
@@ -109,33 +119,38 @@ public interface SearchTerm {
      *     the raw search term string
      * @return the search term
      */
-    static AuditSearchTerm newAuditSearchTerm(final String fieldName, final String rawSearchTerm) {
+    @NotNull
+    static AuditSearchTerm newAuditSearchTerm(@NotNull final String fieldName, @NotNull final String rawSearchTerm) {
         return new AuditSearchTerm(fieldName, rawSearchTerm);
     }
 
     /**
      * @return the database id of the search condition
      */
+    @Nullable
     Long getSearchConditionId();
 
     /**
      * @return the {@link SearchTermType}
      */
+    @NotNull
     SearchTermType getSearchTermType();
 
     /**
      * @return the name of the field that is searched
      */
+    @NotNull
     String getFieldName();
 
     /**
      * @return the raw search term
      */
+    @NotNull
     String getRawSearchTerm();
 
     /**
      * @return the display value for given search term
      */
+    @NotNull
     String getDisplayValue();
-
 }

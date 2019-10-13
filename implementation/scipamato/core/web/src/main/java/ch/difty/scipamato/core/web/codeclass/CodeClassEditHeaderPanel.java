@@ -2,6 +2,8 @@ package ch.difty.scipamato.core.web.codeclass;
 
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import ch.difty.scipamato.core.entity.codeclass.CodeClassDefinition;
 import ch.difty.scipamato.core.entity.codeclass.CodeClassTranslation;
@@ -11,7 +13,7 @@ import ch.difty.scipamato.core.web.common.DefinitionEditHeaderPanel;
 abstract class CodeClassEditHeaderPanel
     extends DefinitionEditHeaderPanel<CodeClassDefinition, CodeClassTranslation, Integer> {
 
-    CodeClassEditHeaderPanel(final String id, final IModel<CodeClassDefinition> model) {
+    CodeClassEditHeaderPanel(@NotNull final String id, @Nullable final IModel<CodeClassDefinition> model) {
         super(id, model);
     }
 
@@ -22,5 +24,4 @@ abstract class CodeClassEditHeaderPanel
         idField.setEnabled(false);
         queueFieldAndLabel(idField);
     }
-
 }

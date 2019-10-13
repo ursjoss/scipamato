@@ -1,11 +1,11 @@
 package ch.difty.scipamato.core.persistence.paper.searchorder;
 
+import org.jetbrains.annotations.NotNull;
 import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.Param;
 import org.jooq.impl.DSL;
 
-import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.TranslationUtils;
 import ch.difty.scipamato.core.entity.search.IntegerSearchTerm;
 
@@ -16,10 +16,9 @@ import ch.difty.scipamato.core.entity.search.IntegerSearchTerm;
  */
 public class IntegerSearchTermEvaluator implements SearchTermEvaluator<IntegerSearchTerm> {
 
+    @NotNull
     @Override
-    public Condition evaluate(final IntegerSearchTerm searchTerm) {
-        AssertAs.INSTANCE.notNull(searchTerm, "searchTerm");
-
+    public Condition evaluate(@NotNull final IntegerSearchTerm searchTerm) {
         final String fieldName = getFieldName(searchTerm.getFieldName());
         final Field<Object> field = DSL.field(fieldName);
         final Param<Integer> value = DSL.val(searchTerm.getValue());
@@ -52,5 +51,4 @@ public class IntegerSearchTermEvaluator implements SearchTermEvaluator<IntegerSe
         else
             return TranslationUtils.INSTANCE.deCamelCase(fieldName);
     }
-
 }

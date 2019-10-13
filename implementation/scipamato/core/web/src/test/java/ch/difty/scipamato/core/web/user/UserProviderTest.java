@@ -151,5 +151,4 @@ class UserProviderTest extends AbstractWicketTest {
         verify(userServiceMock).findPageByFilter(eq(filterMock),
             argThat(new PaginationContextMatcher(3, "title: DESC")));
     }
-
 }

@@ -4,8 +4,9 @@ import java.util.Collection;
 import java.util.Collections;
 
 import net.sf.jasperreports.engine.JasperReport;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.PaperSlimFilter;
 import ch.difty.scipamato.core.entity.projection.PaperSlim;
@@ -58,10 +59,9 @@ public class PaperSummaryShortDataSource extends JasperPaperDataSource<PaperSumm
      * @param config
      *     {@link ClusterablePdfExporterConfiguration}
      */
-    public PaperSummaryShortDataSource(final Paper paper, final ReportHeaderFields reportHeaderFields,
-        ClusterablePdfExporterConfiguration config) {
-        this(Collections.singletonList(new PaperSummaryShort(AssertAs.INSTANCE.notNull(paper, "paper"),
-                AssertAs.INSTANCE.notNull(reportHeaderFields, "reportHeaderFields"))), config,
+    public PaperSummaryShortDataSource(@NotNull final Paper paper, @NotNull final ReportHeaderFields reportHeaderFields,
+        @Nullable ClusterablePdfExporterConfiguration config) {
+        this(Collections.singletonList(new PaperSummaryShort(paper, reportHeaderFields)), config,
             makeSinglePaperBaseName(paper.getNumber() != null ? String.valueOf(paper.getNumber()) : null));
         this.reportHeaderFields = reportHeaderFields;
     }
@@ -75,8 +75,9 @@ public class PaperSummaryShortDataSource extends JasperPaperDataSource<PaperSumm
      * @param config
      *     the {@link ClusterablePdfExporterConfiguration}
      */
-    PaperSummaryShortDataSource(final PaperSummaryShort paperSummaryShort, ClusterablePdfExporterConfiguration config) {
-        this(Collections.singletonList(AssertAs.INSTANCE.notNull(paperSummaryShort, "paperSummaryShort")), config,
+    PaperSummaryShortDataSource(@NotNull final PaperSummaryShort paperSummaryShort,
+        @Nullable ClusterablePdfExporterConfiguration config) {
+        this(Collections.singletonList(paperSummaryShort), config,
             makeSinglePaperBaseName(paperSummaryShort.getNumber()));
     }
 
@@ -92,8 +93,8 @@ public class PaperSummaryShortDataSource extends JasperPaperDataSource<PaperSumm
      * @param baseName
      *     the file name without the extension (.pdf)
      */
-    private PaperSummaryShortDataSource(final Collection<PaperSummaryShort> paperSummaryShorts,
-        ClusterablePdfExporterConfiguration config, String baseName) {
+    private PaperSummaryShortDataSource(@NotNull final Collection<PaperSummaryShort> paperSummaryShorts,
+        @Nullable ClusterablePdfExporterConfiguration config, @NotNull String baseName) {
         super(new ScipamatoPdfResourceHandler(config), baseName, paperSummaryShorts);
     }
 
@@ -109,12 +110,13 @@ public class PaperSummaryShortDataSource extends JasperPaperDataSource<PaperSumm
      * @param config
      *     {@link ClusterablePdfExporterConfiguration}
      */
-    public PaperSummaryShortDataSource(final AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider,
-        final ReportHeaderFields reportHeaderFields, ClusterablePdfExporterConfiguration config) {
+    public PaperSummaryShortDataSource(@NotNull final AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider,
+        @NotNull final ReportHeaderFields reportHeaderFields, @Nullable ClusterablePdfExporterConfiguration config) {
         super(new ScipamatoPdfResourceHandler(config), BASE_NAME_MULTIPLE, dataProvider);
         this.reportHeaderFields = reportHeaderFields;
     }
 
+    @NotNull
     @Override
     protected JasperReport getReport() {
         return PaperSummaryShortReportResourceReference
@@ -122,8 +124,9 @@ public class PaperSummaryShortDataSource extends JasperPaperDataSource<PaperSumm
             .getReport();
     }
 
+    @NotNull
     @Override
-    protected PaperSummaryShort makeEntity(Paper p) {
+    protected PaperSummaryShort makeEntity(@NotNull Paper p) {
         return new PaperSummaryShort(p, reportHeaderFields);
     }
 
@@ -134,5 +137,4 @@ public class PaperSummaryShortDataSource extends JasperPaperDataSource<PaperSumm
             return BASE_NAME_SINGLE_FALLBACK;
         }
     }
-
 }

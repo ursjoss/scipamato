@@ -5,5 +5,5 @@ import org.jooq.DSLContext
 
 internal class NewsletterTopicItemWriterTest :
     AbstractItemWriterTest<PublicNewsletterTopic, NewsletterTopicItemWriter>() {
-    override fun newWriter(dslContextMock: DSLContext?) = NewsletterTopicItemWriter(dslContextMock)
+    override fun newWriter(dslContextMock: DSLContext) = NewsletterTopicItemWriter(dslContextMock)
 }

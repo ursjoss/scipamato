@@ -1,5 +1,6 @@
 package ch.difty.scipamato.publ.web.common;
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 
 import ch.difty.scipamato.common.navigator.ItemNavigator;
@@ -11,6 +12,7 @@ public class PublicWebSessionFacade implements ScipamatoWebSessionFacade {
 
     private static final long serialVersionUID = 1L;
 
+    @NotNull
     @Override
     public String getLanguageCode() {
         return ScipamatoPublicSession
@@ -19,6 +21,7 @@ public class PublicWebSessionFacade implements ScipamatoWebSessionFacade {
             .getLanguage();
     }
 
+    @NotNull
     @Override
     public ItemNavigator<Long> getPaperIdManager() {
         return ScipamatoPublicSession
@@ -27,8 +30,7 @@ public class PublicWebSessionFacade implements ScipamatoWebSessionFacade {
     }
 
     @Override
-    public boolean hasAtLeastOneRoleOutOf(final String... roles) {
+    public boolean hasAtLeastOneRoleOutOf(@NotNull final String... roles) {
         return false;
     }
-
 }

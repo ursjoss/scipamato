@@ -27,6 +27,8 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.request.resource.CssResourceReference;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.string.StringValue;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.wicketstuff.annotation.mount.MountPath;
 
 import ch.difty.scipamato.publ.entity.NewStudy;
@@ -71,18 +73,18 @@ public class NewStudyListPage extends BasePage<Void> {
     @SpringBean(name = "icoMoonFontResourceProvider")
     private CommercialFontResourceProvider icoMoonFontResourceProvider;
 
-    public NewStudyListPage(final PageParameters parameters) {
+    public NewStudyListPage(@Nullable final PageParameters parameters) {
         super(parameters);
     }
 
     @Override
-    protected void renderAdditionalCommercialFonts(final IHeaderResponse response) {
+    protected void renderAdditionalCommercialFonts(@NotNull final IHeaderResponse response) {
         response.render(CssHeaderItem.forReference(simplonFontResourceProvider.getCssResourceReference()));
         response.render(CssHeaderItem.forReference(icoMoonFontResourceProvider.getCssResourceReference()));
     }
 
     @Override
-    public void renderHead(IHeaderResponse response) {
+    public void renderHead(@NotNull IHeaderResponse response) {
         super.renderHead(response);
         response.render(
             CssHeaderItem.forReference(new CssResourceReference(NewStudyListPage.class, "NewStudyListPage.css")));
@@ -294,5 +296,4 @@ public class NewStudyListPage extends BasePage<Void> {
         link.setIconType(chooseIcon(GlyphIconType.link, IcoMoonIconType.link));
         return link;
     }
-
 }

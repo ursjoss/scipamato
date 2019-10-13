@@ -2,7 +2,7 @@ package ch.difty.scipamato.core.pubmed;
 
 import java.util.List;
 
-import ch.difty.scipamato.common.NullArgumentException;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Service to handle articles from PubMed and present it in a SciPaMaTo specific
@@ -19,6 +19,7 @@ public interface PubmedArticleService {
      *     pubmedId
      * @return {@link PubmedArticleResult} holding the {@link PubmedArticleFacade} and some status information
      */
+    @NotNull
     PubmedArticleResult getPubmedArticleWithPmid(int pmId);
 
     /**
@@ -31,7 +32,8 @@ public interface PubmedArticleService {
      *     the PubmedApi Key - must not be null
      * @return PubmedArticleResult holding the PubmedArticleFacade and some status information
      */
-    PubmedArticleResult getPubmedArticleWithPmidAndApiKey(int pmId, String apiKey);
+    @NotNull
+    PubmedArticleResult getPubmedArticleWithPmidAndApiKey(int pmId, @NotNull String apiKey);
 
     /**
      * Extracts pubmed articles and pubmed book articles from a a source string. It
@@ -41,9 +43,7 @@ public interface PubmedArticleService {
      *     pubmed content, as String. Must not be null.
      * @return List of {@link PubmedArticleFacade} entries. Never null. Will be
      *     empty if there are issues parsing the content.
-     * @throws NullArgumentException
-     *     in case of null content.
      */
-    List<PubmedArticleFacade> extractArticlesFrom(String content);
-
+    @NotNull
+    List<PubmedArticleFacade> extractArticlesFrom(@NotNull String content);
 }

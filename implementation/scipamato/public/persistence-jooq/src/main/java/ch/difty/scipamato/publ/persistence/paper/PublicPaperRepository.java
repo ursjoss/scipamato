@@ -2,7 +2,9 @@ package ch.difty.scipamato.publ.persistence.paper;
 
 import java.util.List;
 
-import ch.difty.scipamato.common.NullArgumentException;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.publ.entity.PublicPaper;
 import ch.difty.scipamato.publ.entity.filter.PublicPaperFilter;
@@ -16,10 +18,9 @@ public interface PublicPaperRepository {
      * @param number
      *     - must not be null
      * @return the persisted {@link PublicPaper} or null if it can't be found.
-     * @throws NullArgumentException
-     *     if the number is null.
      */
-    PublicPaper findByNumber(Long number);
+    @Nullable
+    PublicPaper findByNumber(@NotNull Long number);
 
     /**
      * Finds the persisted {@link PublicPaper}s matching the provided filter and
@@ -31,7 +32,9 @@ public interface PublicPaperRepository {
      *     {@link PaginationContext}
      * @return list of all matching {@link PublicPaper}s
      */
-    List<PublicPaper> findPageByFilter(PublicPaperFilter filter, PaginationContext paginationContext);
+    @NotNull
+    List<PublicPaper> findPageByFilter(@Nullable PublicPaperFilter filter,
+        @NotNull PaginationContext paginationContext);
 
     /**
      * Counts all persisted {@link PublicPaper}s matching the provided filter.
@@ -40,7 +43,7 @@ public interface PublicPaperRepository {
      *     {@link PublicPaper}s
      * @return list of all matching {@link PublicPaper}s
      */
-    int countByFilter(PublicPaperFilter filter);
+    int countByFilter(@Nullable PublicPaperFilter filter);
 
     /**
      * Finds the numbers (business key) of the persisted entities matching the
@@ -52,6 +55,7 @@ public interface PublicPaperRepository {
      *     {@link PaginationContext}
      * @return list of the numbers of type {@code ID} of matching entities {@code T}
      */
-    List<Long> findPageOfNumbersByFilter(PublicPaperFilter filter, PaginationContext paginationContext);
-
+    @NotNull
+    List<Long> findPageOfNumbersByFilter(@Nullable PublicPaperFilter filter,
+        @NotNull PaginationContext paginationContext);
 }

@@ -1,6 +1,5 @@
 package ch.difty.scipamato.core.entity.search;
 
-import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -8,6 +7,8 @@ import java.util.stream.Collectors;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import ch.difty.scipamato.common.entity.FieldEnumType;
 import ch.difty.scipamato.core.entity.IdScipamatoEntity;
@@ -63,12 +64,12 @@ public class SearchOrder extends IdScipamatoEntity<Long> implements PaperSlimFil
         // default constructor
     }
 
-    public SearchOrder(final List<SearchCondition> searchConditions) {
+    public SearchOrder(@Nullable final List<SearchCondition> searchConditions) {
         setSearchConditions(searchConditions);
     }
 
-    public SearchOrder(final long id, final String name, final int owner, final boolean global,
-        final List<SearchCondition> searchConditions, final List<Long> excludedPaperIds) {
+    public SearchOrder(final long id, @Nullable final String name, final int owner, final boolean global,
+        @Nullable final List<SearchCondition> searchConditions, @Nullable final List<Long> excludedPaperIds) {
         setId(id);
         setName(name);
         setOwner(owner);
@@ -90,7 +91,7 @@ public class SearchOrder extends IdScipamatoEntity<Long> implements PaperSlimFil
      * @param searchCondition
      *     to be added.
      */
-    public void add(final SearchCondition searchCondition) {
+    public void add(@Nullable final SearchCondition searchCondition) {
         if (searchCondition != null && !searchConditions.contains(searchCondition))
             searchConditions.add(searchCondition);
     }
@@ -101,17 +102,18 @@ public class SearchOrder extends IdScipamatoEntity<Long> implements PaperSlimFil
      * @param searchCondition
      *     the condition to remove
      */
-    public void remove(final SearchCondition searchCondition) {
+    public void remove(@Nullable final SearchCondition searchCondition) {
         if (searchCondition != null) {
             searchConditions.remove(searchCondition);
         }
     }
 
+    @NotNull
     public List<Long> getExcludedPaperIds() {
         return excludedPaperIds;
     }
 
-    public void setExcludedPaperIds(final List<Long> excludedPaperIds) {
+    public void setExcludedPaperIds(@Nullable final List<Long> excludedPaperIds) {
         if (excludedPaperIds != null) {
             this.excludedPaperIds.clear();
             this.excludedPaperIds.addAll(excludedPaperIds);
@@ -139,6 +141,7 @@ public class SearchOrder extends IdScipamatoEntity<Long> implements PaperSlimFil
         excludedPaperIds.remove(paperId);
     }
 
+    @NotNull
     @Override
     public String getDisplayValue() {
         final StringBuilder sb = new StringBuilder();

@@ -1,5 +1,7 @@
 package ch.difty.scipamato.core.web.paper.jasper;
 
+import org.jetbrains.annotations.NotNull;
+
 import ch.difty.scipamato.core.entity.Paper;
 
 /**
@@ -14,19 +16,22 @@ public interface CoreShortFieldConcatenator {
      *     the paper
      * @return the methods field content
      */
-    String methodsFrom(Paper paper, ReportHeaderFields rhf);
+    @NotNull
+    String methodsFrom(@NotNull Paper paper, @NotNull ReportHeaderFields rhf);
 
     /**
      * @param paper
      *     the paper
      * @return the population field content
      */
-    String populationFrom(Paper paper, ReportHeaderFields rhf);
+    @NotNull
+    String populationFrom(@NotNull Paper paper, @NotNull ReportHeaderFields rhf);
 
     /**
      * @param paper
      *     the paper
      * @return the result field content
      */
-    String resultFrom(Paper paper, ReportHeaderFields rhf);
+    @NotNull
+    String resultFrom(@NotNull Paper paper, @NotNull ReportHeaderFields rhf);
 }

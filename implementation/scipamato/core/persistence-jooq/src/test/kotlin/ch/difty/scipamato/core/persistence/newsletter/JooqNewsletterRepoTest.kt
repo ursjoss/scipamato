@@ -63,7 +63,7 @@ internal class JooqNewsletterRepoTest : JooqEntityRepoTest<NewsletterRecord, New
             updateSetStepSetter,
             applicationProperties
         ) {
-            override fun findById(id: Int?, version: Int): Newsletter? = entity
+            override fun findById(id: Int, version: Int): Newsletter? = entity
         }
 
     override fun expectEntityIdsWithValues() {
@@ -99,7 +99,7 @@ internal class JooqNewsletterRepoTest : JooqEntityRepoTest<NewsletterRecord, New
             updateSetStepSetter,
             applicationProperties
         ) {
-            override fun tryInserting(newsletterId: Int, paperId: Long, newsletterTopicId: Int?, ts: Timestamp): Int = 0
+            override fun tryInserting(newsletterId: Int, paperId: Long, newsletterTopicId: Int?, ts: Timestamp?): Int = 0
         }
         assertThat(repo.mergePaperIntoNewsletter(1, 2L, 3, "en")).isNotPresent
     }

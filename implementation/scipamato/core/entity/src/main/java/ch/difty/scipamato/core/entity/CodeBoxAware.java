@@ -2,6 +2,9 @@ package ch.difty.scipamato.core.entity;
 
 import java.util.List;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import ch.difty.scipamato.common.entity.CodeClassId;
 
 /**
@@ -15,6 +18,7 @@ public interface CodeBoxAware {
     /**
      * @return all {@link Code}s assigned
      */
+    @NotNull
     List<Code> getCodes();
 
     /**
@@ -22,7 +26,8 @@ public interface CodeBoxAware {
      *     the code class id
      * @return all {@link Code}s of a specific {@link CodeClassId} assigned
      */
-    List<Code> getCodesOf(CodeClassId ccId);
+    @NotNull
+    List<Code> getCodesOf(@NotNull CodeClassId ccId);
 
     /**
      * Clear all assigned codes.
@@ -35,7 +40,7 @@ public interface CodeBoxAware {
      * @param ccId
      *     the code class id
      */
-    void clearCodesOf(CodeClassId ccId);
+    void clearCodesOf(@NotNull CodeClassId ccId);
 
     /**
      * Add the specified {@link Code}
@@ -43,7 +48,7 @@ public interface CodeBoxAware {
      * @param code
      *     to add
      */
-    void addCode(Code code);
+    void addCode(@Nullable Code code);
 
     /**
      * Add the entire list of {@link Code}s.
@@ -51,6 +56,5 @@ public interface CodeBoxAware {
      * @param codes
      *     to add
      */
-    void addCodes(List<Code> codes);
-
+    void addCodes(@NotNull List<Code> codes);
 }

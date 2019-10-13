@@ -18,6 +18,7 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.jetbrains.annotations.Nullable;
 import org.wicketstuff.annotation.mount.MountPath;
 
 import ch.difty.scipamato.common.web.component.SerializableConsumer;
@@ -49,7 +50,7 @@ public class UserListPage extends BasePage<Void> {
     private UserFilter   filter;
     private UserProvider dataProvider;
 
-    public UserListPage(final PageParameters parameters) {
+    public UserListPage(@Nullable final PageParameters parameters) {
         super(parameters);
         initFilterAndProvider();
     }
@@ -138,5 +139,4 @@ public class UserListPage extends BasePage<Void> {
             }
         };
     }
-
 }

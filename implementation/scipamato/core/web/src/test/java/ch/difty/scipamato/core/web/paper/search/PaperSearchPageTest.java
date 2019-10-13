@@ -14,6 +14,7 @@ import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.tester.FormTester;
+import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -122,6 +123,7 @@ class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
         final SearchCondition sc = new SearchCondition() {
             private static final long serialVersionUID = 1L;
 
+            @NotNull
             @Override
             public String getDisplayValue() {
                 return labelDisplayValue;
@@ -167,6 +169,7 @@ class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
         final SearchCondition sc = new SearchCondition() {
             private static final long serialVersionUID = 1L;
 
+            @NotNull
             @Override
             public String getDisplayValue() {
                 return labelDisplayValue;
@@ -202,6 +205,7 @@ class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
         final SearchCondition sc = new SearchCondition() {
             private static final long serialVersionUID = 1L;
 
+            @NotNull
             @Override
             public String getDisplayValue() {
                 return labelDisplayValue;
@@ -351,5 +355,4 @@ class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
         verify(paperSlimMock, atLeast(1)).getId();
         verify(searchOrderMock, times(6)).getExcludedPaperIds();
     }
-
 }

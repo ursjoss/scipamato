@@ -4,6 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.wicketstuff.annotation.mount.MountPath;
 
 import ch.difty.scipamato.core.auth.Roles;
@@ -21,28 +23,31 @@ public class CodeClassListPage
 
     private static final long serialVersionUID = 1L;
 
-    public CodeClassListPage(final PageParameters parameters) {
+    public CodeClassListPage(@Nullable final PageParameters parameters) {
         super(parameters);
     }
 
+    @NotNull
     @Override
     protected CodeClassFilter newFilter() {
         return new CodeClassFilter();
     }
 
+    @NotNull
     @Override
-    protected CodeClassDefinitionProvider newProvider(final CodeClassFilter filter) {
+    protected CodeClassDefinitionProvider newProvider(@Nullable final CodeClassFilter filter) {
         return new CodeClassDefinitionProvider(filter);
     }
 
+    @NotNull
     @Override
-    protected Panel newFilterPanel(final String id) {
+    protected Panel newFilterPanel(@NotNull final String id) {
         return new CodeClassListFilterPanel(id, getProvider());
     }
 
+    @NotNull
     @Override
-    protected Panel newResultPanel(final String id) {
+    protected Panel newResultPanel(@NotNull final String id) {
         return new CodeClassListResultPanel(id, getProvider());
     }
-
 }

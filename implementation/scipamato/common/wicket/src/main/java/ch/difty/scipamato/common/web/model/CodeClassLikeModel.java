@@ -3,8 +3,8 @@ package ch.difty.scipamato.common.web.model;
 import java.util.List;
 
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.jetbrains.annotations.NotNull;
 
-import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.entity.CodeClassLike;
 import ch.difty.scipamato.common.persistence.CodeClassLikeService;
 
@@ -18,7 +18,8 @@ import ch.difty.scipamato.common.persistence.CodeClassLikeService;
  *     service implementations of {@link CodeClassLikeService}
  * @author u.joss
  */
-public abstract class CodeClassLikeModel<T extends CodeClassLike, S extends CodeClassLikeService<T>> extends InjectedLoadableDetachableModel<T> {
+public abstract class CodeClassLikeModel<T extends CodeClassLike, S extends CodeClassLikeService<T>>
+    extends InjectedLoadableDetachableModel<T> {
 
     private static final long serialVersionUID = 1L;
 
@@ -27,9 +28,9 @@ public abstract class CodeClassLikeModel<T extends CodeClassLike, S extends Code
 
     private final String languageCode;
 
-    protected CodeClassLikeModel(final String languageCode) {
+    protected CodeClassLikeModel(@NotNull final String languageCode) {
         super();
-        this.languageCode = AssertAs.INSTANCE.notNull(languageCode, "languageCode");
+        this.languageCode = languageCode;
     }
 
     /**
@@ -40,11 +41,12 @@ public abstract class CodeClassLikeModel<T extends CodeClassLike, S extends Code
      * @param service
      *     the service to retrieve the code class like entities
      */
-    protected CodeClassLikeModel(final String languageCode, final S service) {
+    protected CodeClassLikeModel(@NotNull final String languageCode, @NotNull final S service) {
         this(languageCode);
         this.service = service;
     }
 
+    @NotNull
     @Override
     protected List<T> load() {
         return service.find(languageCode);

@@ -5,6 +5,7 @@ import java.time.ZoneId;
 import java.util.Date;
 
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.batch.core.*;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.batch.core.repository.JobExecutionAlreadyRunningException;
@@ -51,15 +52,17 @@ public class RefDataSyncJobLauncher implements SyncJobLauncher {
 
     private final Warner warner;
 
-    public RefDataSyncJobLauncher(final JobLauncher jobLauncher,
-        @Qualifier("syncLanguageJob") final Job syncLanguageJob,
-        @Qualifier("syncNewStudyPageLinkJob") final Job syncNewStudyPageLinkJob,
-        @Qualifier("syncCodeClassJob") final Job syncCodeClassJob, @Qualifier("syncCodeJob") final Job syncCodeJob,
-        @Qualifier("syncPaperJob") final Job syncPaperJob, @Qualifier("syncNewsletterJob") final Job syncNewsletterJob,
-        @Qualifier("syncNewsletterTopicJob") final Job syncNewsletterTopicJob,
-        @Qualifier("syncNewStudyJob") final Job syncNewStudyJob,
-        @Qualifier("syncNewStudyTopicJob") final Job syncNewStudyTopicJob,
-        @Qualifier("syncKeywordJob") final Job syncKeywordJob, final Warner warner) {
+    public RefDataSyncJobLauncher(@NotNull final JobLauncher jobLauncher,
+        @Qualifier("syncLanguageJob") @NotNull final Job syncLanguageJob,
+        @Qualifier("syncNewStudyPageLinkJob") @NotNull final Job syncNewStudyPageLinkJob,
+        @Qualifier("syncCodeClassJob") @NotNull final Job syncCodeClassJob,
+        @Qualifier("syncCodeJob") @NotNull final Job syncCodeJob,
+        @Qualifier("syncPaperJob") @NotNull final Job syncPaperJob,
+        @Qualifier("syncNewsletterJob") @NotNull final Job syncNewsletterJob,
+        @Qualifier("syncNewsletterTopicJob") @NotNull final Job syncNewsletterTopicJob,
+        @Qualifier("syncNewStudyJob") @NotNull final Job syncNewStudyJob,
+        @Qualifier("syncNewStudyTopicJob") @NotNull final Job syncNewStudyTopicJob,
+        @Qualifier("syncKeywordJob") @NotNull final Job syncKeywordJob, @NotNull final Warner warner) {
         this.jobLauncher = jobLauncher;
         this.syncNewStudyPageLinkJob = syncNewStudyPageLinkJob;
         this.syncLanguageJob = syncLanguageJob;
@@ -74,6 +77,7 @@ public class RefDataSyncJobLauncher implements SyncJobLauncher {
         this.warner = warner;
     }
 
+    @NotNull
     @Override
     public SyncJobResult launch() {
         log.info("Starting synchronization job from scipamato-core to scipamato-public...");
@@ -105,6 +109,7 @@ public class RefDataSyncJobLauncher implements SyncJobLauncher {
     }
 
     // package protected for testing
+    @NotNull
     JobParameters getJobParameters() {
         return new JobParametersBuilder()
             .addDate("runDate", Date.from(LocalDateTime
@@ -152,5 +157,4 @@ public class RefDataSyncJobLauncher implements SyncJobLauncher {
             .findUnsynchronizedPapers()
             .ifPresent(result::setWarning);
     }
-
 }

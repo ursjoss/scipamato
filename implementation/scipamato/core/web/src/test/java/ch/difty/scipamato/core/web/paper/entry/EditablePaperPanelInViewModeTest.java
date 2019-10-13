@@ -86,5 +86,4 @@ class EditablePaperPanelInViewModeTest extends EditablePaperPanelTest {
         getTester().isDisabled("panel:form:modifiedDisplayValue");
         verify(paperServiceMock, times(2)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
     }
-
 }

@@ -2,8 +2,9 @@ package ch.difty.scipamato.core.entity.search;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.core.entity.IdScipamatoEntity;
 
 /**
@@ -30,18 +31,18 @@ public abstract class AbstractSearchTerm extends IdScipamatoEntity<Long> impleme
     private final String         fieldName;
     private final String         rawSearchTerm;
 
-    AbstractSearchTerm(final Long id, final SearchTermType type, final Long searchConditionId, final String fieldName,
-        final String rawSearchTerm) {
+    AbstractSearchTerm(@Nullable final Long id, @NotNull final SearchTermType type,
+        @Nullable final Long searchConditionId, @NotNull final String fieldName, @NotNull final String rawSearchTerm) {
         super(id);
         this.searchConditionId = searchConditionId;
-        this.searchTermType = AssertAs.INSTANCE.notNull(type);
-        this.fieldName = AssertAs.INSTANCE.notNull(fieldName, "fieldName");
-        this.rawSearchTerm = AssertAs.INSTANCE.notNull(rawSearchTerm, "rawSearchTerm");
+        this.searchTermType = type;
+        this.fieldName = fieldName;
+        this.rawSearchTerm = rawSearchTerm;
     }
 
+    @NotNull
     @Override
     public String getDisplayValue() {
         return rawSearchTerm;
     }
-
 }

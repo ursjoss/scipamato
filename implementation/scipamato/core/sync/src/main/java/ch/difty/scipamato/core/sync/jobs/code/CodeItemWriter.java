@@ -2,6 +2,7 @@ package ch.difty.scipamato.core.sync.jobs.code;
 
 import static ch.difty.scipamato.publ.db.tables.Code.CODE;
 
+import org.jetbrains.annotations.NotNull;
 import org.jooq.DSLContext;
 import org.springframework.batch.item.ItemWriter;
 
@@ -22,12 +23,12 @@ import ch.difty.scipamato.core.sync.jobs.ScipamatoItemWriter;
  */
 public class CodeItemWriter extends ScipamatoItemWriter<PublicCode> {
 
-    public CodeItemWriter(final DSLContext jooqDslContextPublic) {
+    public CodeItemWriter(@NotNull final DSLContext jooqDslContextPublic) {
         super(jooqDslContextPublic, "code");
     }
 
     @Override
-    protected int executeUpdate(final PublicCode c) {
+    protected int executeUpdate(@NotNull final PublicCode c) {
         return getDslContext()
             .insertInto(CODE)
             .columns(CODE.CODE_, CODE.LANG_CODE, CODE.CODE_CLASS_ID, CODE.NAME, CODE.COMMENT, CODE.SORT, CODE.VERSION,
@@ -49,5 +50,4 @@ public class CodeItemWriter extends ScipamatoItemWriter<PublicCode> {
                 .and(CODE.LANG_CODE.eq(c.getLangCode())))
             .execute();
     }
-
 }

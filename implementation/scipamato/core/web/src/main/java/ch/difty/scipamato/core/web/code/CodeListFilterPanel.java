@@ -10,6 +10,7 @@ import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
+import org.jetbrains.annotations.NotNull;
 
 import ch.difty.scipamato.core.entity.CodeClass;
 import ch.difty.scipamato.core.entity.code.CodeDefinition;
@@ -23,7 +24,7 @@ import ch.difty.scipamato.core.web.model.CodeClassModel;
 abstract class CodeListFilterPanel
     extends DefinitionListFilterPanel<CodeDefinition, CodeFilter, CodeService, CodeDefinitionProvider> {
 
-    CodeListFilterPanel(final String id, final CodeDefinitionProvider provider) {
+    CodeListFilterPanel(@NotNull final String id, @NotNull final CodeDefinitionProvider provider) {
         super(id, provider);
     }
 
@@ -54,19 +55,18 @@ abstract class CodeListFilterPanel
             private static final long serialVersionUID = 1L;
 
             @Override
-            protected void onUpdate(AjaxRequestTarget target) {
+            protected void onUpdate(@NotNull AjaxRequestTarget target) {
                 doOnUpdate(target);
             }
         });
         queue(codeClasses);
     }
 
-    protected abstract void doOnUpdate(final AjaxRequestTarget target);
+    protected abstract void doOnUpdate(@NotNull final AjaxRequestTarget target);
 
-    private void queueNewCodeButton(final String id) {
+    private void queueNewCodeButton(@NotNull final String id) {
         queue(doQueueNewCodeButton(id));
     }
 
-    protected abstract BootstrapAjaxButton doQueueNewCodeButton(final String id);
-
+    protected abstract BootstrapAjaxButton doQueueNewCodeButton(@NotNull final String id);
 }

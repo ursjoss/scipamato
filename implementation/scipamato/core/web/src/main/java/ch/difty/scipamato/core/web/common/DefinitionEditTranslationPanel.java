@@ -9,6 +9,8 @@ import org.apache.wicket.markup.repeater.ReuseIfModelsEqualStrategy;
 import org.apache.wicket.markup.repeater.util.ModelIteratorAdapter;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import ch.difty.scipamato.common.entity.DefinitionEntity;
 import ch.difty.scipamato.common.entity.DefinitionTranslation;
@@ -19,7 +21,7 @@ public abstract class DefinitionEditTranslationPanel<E extends DefinitionEntity,
 
     private static final long serialVersionUID = 1L;
 
-    protected DefinitionEditTranslationPanel(final String id, final IModel<E> model) {
+    protected DefinitionEditTranslationPanel(@NotNull final String id, @Nullable final IModel<E> model) {
         super(id, model);
     }
 
@@ -54,5 +56,5 @@ public abstract class DefinitionEditTranslationPanel<E extends DefinitionEntity,
         return translations;
     }
 
-    protected abstract void addColumns(final Item<T> item);
+    protected abstract void addColumns(@NotNull final Item<T> item);
 }

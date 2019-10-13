@@ -154,5 +154,4 @@ class NewsletterTopicDefinitionProviderTest extends AbstractWicketTest {
         verify(newsletterTopicServiceMock).findPageOfEntityDefinitions(eq(filterMock),
             argThat(new PaginationContextMatcher(3, "title: DESC")));
     }
-
 }

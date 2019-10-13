@@ -3,6 +3,8 @@ package ch.difty.scipamato.core.entity.search;
 import java.util.Arrays;
 
 import org.apache.commons.lang3.math.NumberUtils;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Implementation of {@link AbstractSearchTerm} working with Integer fields. The
@@ -70,15 +72,17 @@ public class IntegerSearchTerm extends AbstractSearchTerm {
     private final int       value;
     private final int       value2;
 
-    IntegerSearchTerm(final String fieldName, final String rawSearchTerm) {
+    IntegerSearchTerm(@NotNull final String fieldName, @NotNull final String rawSearchTerm) {
         this(null, fieldName, rawSearchTerm);
     }
 
-    IntegerSearchTerm(final Long searchConditionId, final String fieldName, final String rawSearchTerm) {
+    IntegerSearchTerm(@Nullable final Long searchConditionId, @NotNull final String fieldName,
+        @NotNull final String rawSearchTerm) {
         this(null, searchConditionId, fieldName, rawSearchTerm);
     }
 
-    IntegerSearchTerm(final Long id, final Long searchConditionId, final String fieldName, final String rawSearchTerm) {
+    IntegerSearchTerm(@Nullable final Long id, @Nullable final Long searchConditionId, @NotNull final String fieldName,
+        @NotNull final String rawSearchTerm) {
         super(id, SearchTermType.INTEGER, searchConditionId, fieldName, rawSearchTerm);
         final String rst = rawSearchTerm.trim();
         if (rst.startsWith(Ops.RANGE.symbol) || rst.endsWith(Ops.RANGE.symbol) || Arrays
@@ -150,8 +154,8 @@ public class IntegerSearchTerm extends AbstractSearchTerm {
         return value2;
     }
 
+    @NotNull
     public MatchType getType() {
         return type;
     }
-
 }

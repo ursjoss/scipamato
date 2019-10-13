@@ -65,7 +65,6 @@ internal class AbstractSearchTermTest {
     fun equality_withSpecialCases() {
         val st1 = SearchTerm.newSearchTerm(12, 2, 3L, "fn3", "foo*")
         assertThat(st1 == st1).isTrue()
-        assertThat(st1 == null).isFalse()
     }
 
     @Test

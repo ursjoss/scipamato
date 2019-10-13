@@ -2,8 +2,8 @@ package ch.difty.scipamato.core.web.paper.jasper.summary;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.jetbrains.annotations.NotNull;
 
-import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.web.paper.jasper.CoreShortFieldConcatenator;
 import ch.difty.scipamato.core.web.paper.jasper.PaperSummaryCommon;
@@ -35,14 +35,13 @@ public class PaperSummary extends PaperSummaryCommon {
      * @param rhf
      *     the reportHeaderFields with the localized field headers
      */
-    public PaperSummary(final Paper p, final CoreShortFieldConcatenator shortFieldConcatenator,
-        final ReportHeaderFields rhf) {
-        super(AssertAs.INSTANCE.notNull(p, "p"), shortFieldConcatenator, AssertAs.INSTANCE.notNull(rhf, "rhf"));
+    public PaperSummary(@NotNull final Paper p, @NotNull final CoreShortFieldConcatenator shortFieldConcatenator,
+        @NotNull final ReportHeaderFields rhf) {
+        super(p, shortFieldConcatenator, rhf);
         this.population = na(shortFieldConcatenator.populationFrom(p, rhf));
         this.result = na(shortFieldConcatenator.resultFrom(p, rhf));
 
         this.populationLabel = na2(rhf.getPopulationLabel(), population);
         this.resultLabel = na2(rhf.getResultLabel(), result);
     }
-
 }

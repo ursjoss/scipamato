@@ -2,7 +2,9 @@ package ch.difty.scipamato.core.persistence;
 
 import java.util.List;
 
-import ch.difty.scipamato.common.NullArgumentException;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import ch.difty.scipamato.common.persistence.CodeLikeService;
 import ch.difty.scipamato.common.persistence.DefinitionProviderService;
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
@@ -28,7 +30,9 @@ public interface CodeService extends CodeLikeService<Code>, DefinitionProviderSe
      *     context defining paging and sorting
      * @return a page of CodeDefinitions as list
      */
-    List<CodeDefinition> findPageOfCodeDefinitions(CodeFilter filter, PaginationContext paginationContext);
+    @NotNull
+    List<CodeDefinition> findPageOfCodeDefinitions(@Nullable CodeFilter filter,
+        @NotNull PaginationContext paginationContext);
 
     /**
      * Counts the number of {@link CodeDefinition}s matching the specified filter.
@@ -37,7 +41,7 @@ public interface CodeService extends CodeLikeService<Code>, DefinitionProviderSe
      *     of type CodeFilter
      * @return entity count
      */
-    int countByFilter(CodeFilter filter);
+    int countByFilter(@Nullable CodeFilter filter);
 
     /**
      * Creates and returns an unpersisted instance of a CodeDefinition
@@ -45,6 +49,7 @@ public interface CodeService extends CodeLikeService<Code>, DefinitionProviderSe
      *
      * @return the unpersisted entity
      */
+    @NotNull
     CodeDefinition newUnpersistedCodeDefinition();
 
     /**
@@ -54,7 +59,8 @@ public interface CodeService extends CodeLikeService<Code>, DefinitionProviderSe
      *     the {@link CodeDefinition} to be persisted
      * @return the persisted entity.
      */
-    CodeDefinition saveOrUpdate(CodeDefinition entity);
+    @Nullable
+    CodeDefinition saveOrUpdate(@NotNull CodeDefinition entity);
 
     /**
      * Remove the persisted entity with the provided id.
@@ -64,12 +70,12 @@ public interface CodeService extends CodeLikeService<Code>, DefinitionProviderSe
      * @param version
      *     the record version - used for optimistic locking
      * @return the deleted entity
-     * @throws NullArgumentException
-     *     if the id is null.
      * @throws OptimisticLockingException
      *     if the record version has increased in the mean time
      */
-    CodeDefinition delete(String code, int version);
+    @Nullable
+    CodeDefinition delete(@NotNull String code, int version);
 
-    CodeClass getCodeClass1(String langCode);
+    @NotNull
+    CodeClass getCodeClass1(@NotNull String langCode);
 }

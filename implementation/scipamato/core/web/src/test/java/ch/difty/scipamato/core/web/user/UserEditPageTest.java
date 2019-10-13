@@ -24,7 +24,8 @@ import ch.difty.scipamato.core.persistence.OptimisticLockingException;
 import ch.difty.scipamato.core.web.CorePageParameters;
 import ch.difty.scipamato.core.web.common.BasePageTest;
 
-@SuppressWarnings({ "SpellCheckingInspection", "SameParameterValue" })
+@SuppressWarnings({ "SpellCheckingInspection", "SameParameterValue", "ResultOfMethodCallIgnored",
+    "CatchMayIgnoreException" })
 class UserEditPageTest extends BasePageTest<UserEditPage> {
 
     private static final String PASSWORD1 = "pw";
@@ -537,5 +538,4 @@ class UserEditPageTest extends BasePageTest<UserEditPage> {
                 .hasMessage("No enum constant ch.difty.scipamato.core.web.user.UserEditPage.Mode.foo");
         }
     }
-
 }

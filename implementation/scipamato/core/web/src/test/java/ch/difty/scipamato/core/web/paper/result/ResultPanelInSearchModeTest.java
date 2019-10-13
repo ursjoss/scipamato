@@ -50,5 +50,4 @@ class ResultPanelInSearchModeTest extends ResultPanelTest {
         paperSlim.setNewsletterAssociation(ns);
         assertNewsletterIcon("far fa-envelope fa-fw", "Newsletter 1802");
     }
-
 }

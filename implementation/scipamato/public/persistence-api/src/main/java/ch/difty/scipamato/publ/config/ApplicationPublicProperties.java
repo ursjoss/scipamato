@@ -1,5 +1,8 @@
 package ch.difty.scipamato.publ.config;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import ch.difty.scipamato.common.config.ApplicationProperties;
 
 public interface ApplicationPublicProperties extends ApplicationProperties {
@@ -23,6 +26,7 @@ public interface ApplicationPublicProperties extends ApplicationProperties {
     /**
      * @return the url pointing to the CMS page with the new-study page
      */
+    @Nullable
     String getCmsUrlNewStudyPage();
 
     /**
@@ -41,11 +45,13 @@ public interface ApplicationPublicProperties extends ApplicationProperties {
     /**
      * @return the user name that is eligible to see the protected actuator end points.
      */
+    @NotNull
     String getManagementUserName();
 
     /**
      * @return the password of the user that is eligible to see the protected actuator end points.
      */
+    @Nullable
     String getManagementUserPassword();
 
     /**
@@ -53,5 +59,4 @@ public interface ApplicationPublicProperties extends ApplicationProperties {
      *     of the new study list page.
      */
     int getNumberOfPreviousNewslettersInArchive();
-
 }

@@ -222,5 +222,4 @@ class NewsletterTopicEditPageTest extends BasePageTest<NewsletterTopicEditPage> 
 
         getTester().assertRenderedPage(LogoutPage.class);
     }
-
 }

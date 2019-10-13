@@ -487,18 +487,6 @@ internal class JooqPaperServiceTest : AbstractServiceTest<Long, Paper, PaperRepo
         verify(repo, never()).isDoiAlreadyAssigned(anyString(), eq(id))
     }
 
-    @Test
-    fun hasDuplicateFieldNextToCurrent_withNullId_withNoOtherStudyMatchingPmId() {
-        val fieldName = "pmId"
-        val fieldValue = 10
-
-        whenever(repo.isPmIdAlreadyAssigned(fieldValue, null)).thenReturn(java.util.Optional.empty())
-
-        assertThat(service.hasDuplicateFieldNextToCurrent(fieldName, fieldValue, null)).isNotPresent
-
-        verify(repo).isPmIdAlreadyAssigned(fieldValue, null)
-    }
-
     companion object {
         private const val MINIMUM_NUMBER = 7L
         private const val LC = "de"

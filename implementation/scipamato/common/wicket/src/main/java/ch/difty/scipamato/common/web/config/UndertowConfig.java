@@ -5,6 +5,7 @@ import io.undertow.servlet.api.SecurityInfo;
 import io.undertow.servlet.api.TransportGuaranteeType;
 import io.undertow.servlet.api.WebResourceCollection;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.web.embedded.undertow.UndertowServletWebServerFactory;
@@ -21,7 +22,8 @@ public class UndertowConfig {
     private final ServerProperties      serverProperties;
     private final ApplicationProperties scipamatoProperties;
 
-    public UndertowConfig(final ServerProperties serverProps, final ApplicationProperties scipamatoProperties) {
+    public UndertowConfig(@NotNull final ServerProperties serverProps,
+        @NotNull final ApplicationProperties scipamatoProperties) {
         this.serverProperties = serverProps;
         this.scipamatoProperties = scipamatoProperties;
     }
@@ -36,6 +38,7 @@ public class UndertowConfig {
      * @return the configured EmbeddedServletContainerFactory
      */
     @Bean
+    @NotNull
     @ConditionalOnProperty(name = "scipamato.redirect-from-port")
     public AbstractServletWebServerFactory undertow() {
         final Integer redirectFromPort = scipamatoProperties.getRedirectFromPort();

@@ -4,6 +4,8 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.model.IModel;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicDefinition;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicTranslation;
@@ -15,12 +17,12 @@ class NewsletterTopicEditTranslationPanel
 
     private static final long serialVersionUID = 1L;
 
-    NewsletterTopicEditTranslationPanel(final String id, final IModel<NewsletterTopicDefinition> model) {
+    NewsletterTopicEditTranslationPanel(@NotNull final String id, @Nullable final IModel<NewsletterTopicDefinition> model) {
         super(id, model);
     }
 
     @Override
-    protected void addColumns(final Item<NewsletterTopicTranslation> item) {
+    protected void addColumns(@NotNull final Item<NewsletterTopicTranslation> item) {
         item.add(new Label("langCode"));
         item.add(new TextField<String>("title"));
     }

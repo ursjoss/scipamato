@@ -38,8 +38,9 @@ import org.apache.wicket.markup.html.form.validation.AbstractFormValidator;
 import org.apache.wicket.markup.html.link.ResourceLink;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.entity.CodeClassId;
 import ch.difty.scipamato.common.entity.FieldEnumType;
 import ch.difty.scipamato.common.navigator.ItemNavigator;
@@ -89,25 +90,28 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
 
     private Form<T> form;
 
-    PaperPanel(String id, IModel<T> model, Mode mode) {
+    PaperPanel(@NotNull String id, @Nullable IModel<T> model, @NotNull Mode mode) {
         this(id, model, mode, null, Model.of(0));
     }
 
-    public PaperPanel(String id, IModel<T> model, Mode mode, PageReference previousPage,
-        IModel<Integer> tabIndexModel) {
+    public PaperPanel(@NotNull String id, @NotNull IModel<T> model, @NotNull Mode mode,
+        @Nullable PageReference previousPage, @NotNull IModel<Integer> tabIndexModel) {
         super(id, model, mode);
         this.callingPage = previousPage;
         this.tabIndexModel = tabIndexModel;
     }
 
+    @Nullable
     protected PageReference getCallingPage() {
         return callingPage;
     }
 
+    @NotNull
     protected DataTable<PaperAttachment, String> getAttachments() {
         return attachments;
     }
 
+    @NotNull
     protected IModel<Integer> getTabIndexModel() {
         return tabIndexModel;
     }
@@ -135,6 +139,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
 
     protected abstract void onFormSubmit();
 
+    @NotNull
     public Form<T> getForm() {
         return form;
     }
@@ -204,7 +209,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
             }
 
             @Override
-            public void onClick(AjaxRequestTarget target) {
+            public void onClick(@NotNull final AjaxRequestTarget target) {
                 modifyNewsletterAssociation(target);
             }
 
@@ -305,7 +310,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
             private static final long serialVersionUID = 1L;
 
             @Override
-            protected void onUpdate(final AjaxRequestTarget target) {
+            protected void onUpdate(@NotNull final AjaxRequestTarget target) {
                 target.add(pubmedRetrieval);
             }
         };
@@ -405,7 +410,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
             for (final FormComponent fc : components) {
                 fc.add(new AjaxFormComponentUpdatingBehavior("input") {
                     @Override
-                    protected void onUpdate(final AjaxRequestTarget target) {
+                    protected void onUpdate(@NotNull final AjaxRequestTarget target) {
                         disableButton(target, submit);
                     }
                 });
@@ -430,7 +435,9 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
      *     the checkbox for firstAuthorOverridden
      * @return the first author TextField
      */
-    protected TextField<String> makeFirstAuthor(final String firstAuthorId, final CheckBox firstAuthorOverridden) {
+    @NotNull
+    protected TextField<String> makeFirstAuthor(@NotNull final String firstAuthorId,
+        @NotNull final CheckBox firstAuthorOverridden) {
         return new TextField<>(firstAuthorId);
     }
 
@@ -444,12 +451,13 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
      * @param firstAuthor
      *     text field for firstAuthor
      */
-    protected void addAuthorBehavior(TextArea<String> authors, CheckBox firstAuthorOverridden,
-        TextField<String> firstAuthor) {
+    protected void addAuthorBehavior(@NotNull TextArea<String> authors, @NotNull CheckBox firstAuthorOverridden,
+        @NotNull TextField<String> firstAuthor) {
     }
 
-    protected abstract BootstrapButton newNavigationButton(String id, GlyphIconType icon,
-        SerializableSupplier<Boolean> isEnabled, SerializableSupplier<Long> idSupplier);
+    @NotNull
+    protected abstract BootstrapButton newNavigationButton(@NotNull String id, @NotNull GlyphIconType icon,
+        @NotNull SerializableSupplier<Boolean> isEnabled, SerializableSupplier<Long> idSupplier);
 
     private void makeAndQueueBackButton(String id, SerializableSupplier<Boolean> forceRequerySupplier) {
         BootstrapButton back = new BootstrapButton(id, new StringResourceModel("button.back.label"),
@@ -478,7 +486,8 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
 
     protected abstract void restartSearchInPaperSearchPage();
 
-    protected abstract BootstrapButton newExcludeButton(String id);
+    @NotNull
+    protected abstract BootstrapButton newExcludeButton(@NotNull String id);
 
     private void makeAndQueueSubmitButton(String id) {
         submit = new BootstrapButton(id, new StringResourceModel(getSubmitLinkResourceLabel()), Buttons.Type.Default) {
@@ -536,6 +545,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
     /**
      * @return {@link PaperSummaryDataSource}
      */
+    @Nullable
     protected abstract PaperSummaryDataSource getSummaryDataSource();
 
     private ResourceLink<Void> makeSummaryShortLink(String id) {
@@ -545,6 +555,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
     /**
      * @return {@link PaperSummaryShortDataSource}
      */
+    @Nullable
     protected abstract PaperSummaryShortDataSource getSummaryShortDataSource();
 
     private ResourceLink<Void> makePdfResourceLink(String id, JasperPaperDataSource<?> dataSource) {
@@ -595,23 +606,26 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
 
         abstract int tabIndex();
 
-        AbstractTabPanel(String id, IModel<?> model) {
+        AbstractTabPanel(@NotNull String id, @NotNull IModel<?> model) {
             super(id, model);
         }
 
+        @NotNull
         TextArea<String> queueTo(FieldEnumType fieldType) {
             return queueTo(fieldType, false, null);
         }
 
-        void queueTo(FieldEnumType fieldType, PropertyValidator<?> pv) {
+        void queueTo(@NotNull FieldEnumType fieldType, @Nullable PropertyValidator<?> pv) {
             queueTo(fieldType, false, pv);
         }
 
-        void queueNewFieldTo(FieldEnumType fieldType) {
+        void queueNewFieldTo(@NotNull FieldEnumType fieldType) {
             queueTo(fieldType, true, null);
         }
 
-        TextArea<String> queueTo(FieldEnumType fieldType, boolean newField, PropertyValidator<?> pv) {
+        @NotNull
+        TextArea<String> queueTo(@NotNull FieldEnumType fieldType, boolean newField,
+            @Nullable PropertyValidator<?> pv) {
             String id = fieldType.getFieldName();
             TextArea<String> field = makeField(id, newField);
             field.setOutputMarkupId(true);
@@ -663,7 +677,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
                 private static final long serialVersionUID = 1L;
 
                 @Override
-                protected void onUpdate(AjaxRequestTarget target) {
+                protected void onUpdate(@NotNull final AjaxRequestTarget target) {
                     final String id = field.getId();
                     final String markupId = field.getMarkupId();
                     send(getPage(), Broadcast.BREADTH, new NewFieldChangeEvent(target)
@@ -683,7 +697,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
     private class TabPanel1 extends AbstractTabPanel {
         private static final long serialVersionUID = 1L;
 
-        TabPanel1(String id, IModel<T> model) {
+        TabPanel1(@NotNull String id, @NotNull IModel<T> model) {
             super(id, model);
         }
 
@@ -730,7 +744,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
     private class TabPanel2 extends AbstractTabPanel {
         private static final long serialVersionUID = 1L;
 
-        TabPanel2(String id, IModel<T> model) {
+        TabPanel2(@NotNull String id, @NotNull IModel<T> model) {
             super(id, model);
         }
 
@@ -772,7 +786,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
 
         private static final String CODES_CLASS_BASE_NAME = "codesClass";
 
-        TabPanel3(String id, IModel<T> model) {
+        TabPanel3(@NotNull String id, @NotNull IModel<T> model) {
             super(id, model);
         }
 
@@ -896,7 +910,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
     private class TabPanel4 extends AbstractTabPanel {
         private static final long serialVersionUID = 1L;
 
-        TabPanel4(String id, IModel<T> model) {
+        TabPanel4(@NotNull String id, @NotNull IModel<T> model) {
             super(id, model);
         }
 
@@ -943,7 +957,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
     private class TabPanel5 extends AbstractTabPanel {
         private static final long serialVersionUID = 1L;
 
-        TabPanel5(String id, IModel<T> model) {
+        TabPanel5(@NotNull String id, @NotNull IModel<T> model) {
             super(id, model);
         }
 
@@ -976,7 +990,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
     private class TabPanel6 extends AbstractTabPanel {
         private static final long serialVersionUID = 1L;
 
-        TabPanel6(String id, IModel<T> model) {
+        TabPanel6(@NotNull String id, @NotNull IModel<T> model) {
             super(id, model);
         }
 
@@ -1011,7 +1025,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
     private class TabPanel7 extends AbstractTabPanel {
         private static final long serialVersionUID = 1L;
 
-        TabPanel7(String id, IModel<T> model) {
+        TabPanel7(@NotNull String id, @NotNull IModel<T> model) {
             super(id, model);
         }
 
@@ -1141,10 +1155,12 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
 
     protected abstract boolean isaNewsletterInStatusWip();
 
-    protected abstract void modifyNewsletterAssociation(final AjaxRequestTarget target);
+    protected abstract void modifyNewsletterAssociation(@NotNull final AjaxRequestTarget target);
 
-    protected abstract DataTable<PaperAttachment, String> newAttachmentTable(String id);
+    @NotNull
+    protected abstract DataTable<PaperAttachment, String> newAttachmentTable(@NotNull String id);
 
+    @NotNull
     protected abstract DropZoneFileUpload newDropZoneFileUpload();
 
     /**
@@ -1155,8 +1171,8 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
      * @param codeClass1
      *     bootstrap multi-select for the codes of code class 1
      */
-    protected void addCodeClass1ChangeBehavior(final TextField<String> mainCodeOfCodeClass1,
-        final BootstrapMultiSelect<Code> codeClass1) {
+    protected void addCodeClass1ChangeBehavior(@NotNull final TextField<String> mainCodeOfCodeClass1,
+        @NotNull final BootstrapMultiSelect<Code> codeClass1) {
     }
 
     @SuppressWarnings("unchecked")
@@ -1166,19 +1182,19 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
 
         private final FormComponent<?>[] components;
 
-        CodeClass1ConsistencyValidator(BootstrapMultiSelect<Code> codeClass1, TextField<String> mainCodeOfCodeClass1) {
-            AssertAs.INSTANCE.notNull(codeClass1);
-            AssertAs.INSTANCE.notNull(mainCodeOfCodeClass1);
+        CodeClass1ConsistencyValidator(@NotNull BootstrapMultiSelect<Code> codeClass1,
+            @NotNull TextField<String> mainCodeOfCodeClass1) {
             components = new FormComponent<?>[] { codeClass1, mainCodeOfCodeClass1 };
         }
 
+        @NotNull
         @Override
         public FormComponent<?>[] getDependentFormComponents() {
             return components;
         }
 
         @Override
-        public void validate(Form<?> form) {
+        public void validate(@NotNull Form<?> form) {
             final BootstrapMultiSelect<Code> codeClass1 = (BootstrapMultiSelect<Code>) components[0];
             final FormComponent<?> mainCode = components[1];
 
@@ -1204,7 +1220,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
             }
 
             @Override
-            public void onClick(AjaxRequestTarget target) {
+            public void onClick(@NotNull final AjaxRequestTarget target) {
                 getPubmedArticleAndCompare(target);
             }
 
@@ -1236,7 +1252,6 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
      * @param target
      *     the ajax request target
      **/
-    protected void getPubmedArticleAndCompare(AjaxRequestTarget target) {
+    protected void getPubmedArticleAndCompare(@NotNull final AjaxRequestTarget target) {
     }
-
 }

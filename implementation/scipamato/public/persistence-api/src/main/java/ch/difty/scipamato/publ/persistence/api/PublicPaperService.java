@@ -3,7 +3,9 @@ package ch.difty.scipamato.publ.persistence.api;
 import java.util.List;
 import java.util.Optional;
 
-import ch.difty.scipamato.common.NullArgumentException;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.publ.entity.PublicPaper;
 import ch.difty.scipamato.publ.entity.filter.PublicPaperFilter;
@@ -17,10 +19,9 @@ public interface PublicPaperService {
      * @param number
      *     - must not be null
      * @return Optional
-     * @throws NullArgumentException
-     *     if id is null
      */
-    Optional<PublicPaper> findByNumber(Long number);
+    @NotNull
+    Optional<PublicPaper> findByNumber(@NotNull Long number);
 
     /**
      * Finds a page full of {@link PublicPaper}s matching the provided filter and
@@ -32,7 +33,9 @@ public interface PublicPaperService {
      *     context defining paging and sorting
      * @return a page of papers as list
      */
-    List<PublicPaper> findPageByFilter(PublicPaperFilter filter, PaginationContext paginationContext);
+    @NotNull
+    List<PublicPaper> findPageByFilter(@Nullable PublicPaperFilter filter,
+        @NotNull PaginationContext paginationContext);
 
     /**
      * Counts the number of entities matching the specified filter.
@@ -41,7 +44,7 @@ public interface PublicPaperService {
      *     the filter specification
      * @return entity count
      */
-    int countByFilter(PublicPaperFilter filter);
+    int countByFilter(@Nullable PublicPaperFilter filter);
 
     /**
      * Finds the numbers (business key) of the persisted papers matching the
@@ -53,6 +56,8 @@ public interface PublicPaperService {
      *     {@link PaginationContext}
      * @return list of the numbers of matching papers
      */
-    List<Long> findPageOfNumbersByFilter(PublicPaperFilter filter, PaginationContext paginationContext);
+    @NotNull
+    List<Long> findPageOfNumbersByFilter(@Nullable PublicPaperFilter filter,
+        @NotNull PaginationContext paginationContext);
 
 }

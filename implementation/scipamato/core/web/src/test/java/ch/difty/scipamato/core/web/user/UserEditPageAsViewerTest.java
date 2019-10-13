@@ -69,5 +69,4 @@ class UserEditPageAsViewerTest extends WicketTest {
         pp.add(CorePageParameters.MODE.getName(), mode);
         return new UserEditPage(pp);
     }
-
 }

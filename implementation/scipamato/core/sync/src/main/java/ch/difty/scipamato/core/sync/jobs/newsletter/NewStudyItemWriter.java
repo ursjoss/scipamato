@@ -2,6 +2,7 @@ package ch.difty.scipamato.core.sync.jobs.newsletter;
 
 import static ch.difty.scipamato.publ.db.tables.NewStudy.NEW_STUDY;
 
+import org.jetbrains.annotations.NotNull;
 import org.jooq.DSLContext;
 import org.springframework.batch.item.ItemWriter;
 
@@ -22,12 +23,12 @@ import ch.difty.scipamato.core.sync.jobs.ScipamatoItemWriter;
  */
 public class NewStudyItemWriter extends ScipamatoItemWriter<PublicNewStudy> {
 
-    public NewStudyItemWriter(final DSLContext jooqDslContextPublic) {
+    public NewStudyItemWriter(@NotNull final DSLContext jooqDslContextPublic) {
         super(jooqDslContextPublic, "newStudy");
     }
 
     @Override
-    protected int executeUpdate(final PublicNewStudy p) {
+    protected int executeUpdate(@NotNull final PublicNewStudy p) {
         return getDslContext()
             .insertInto(NEW_STUDY)
             .columns(NEW_STUDY.NEWSLETTER_ID, NEW_STUDY.NEWSLETTER_TOPIC_ID, NEW_STUDY.SORT, NEW_STUDY.PAPER_NUMBER,
@@ -54,5 +55,4 @@ public class NewStudyItemWriter extends ScipamatoItemWriter<PublicNewStudy> {
                 .and(NEW_STUDY.PAPER_NUMBER.eq(p.getPaperNumber())))
             .execute();
     }
-
 }

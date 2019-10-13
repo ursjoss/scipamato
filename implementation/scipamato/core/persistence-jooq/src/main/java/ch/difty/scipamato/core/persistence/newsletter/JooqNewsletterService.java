@@ -2,6 +2,8 @@ package ch.difty.scipamato.core.persistence.newsletter;
 
 import java.util.Optional;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,7 +17,7 @@ import ch.difty.scipamato.core.persistence.UserRepository;
 class JooqNewsletterService extends JooqEntityService<Integer, Newsletter, NewsletterFilter, NewsletterRepository>
     implements NewsletterService {
 
-    JooqNewsletterService(final NewsletterRepository repo, final UserRepository userRepo) {
+    JooqNewsletterService(@NotNull final NewsletterRepository repo, @NotNull final UserRepository userRepo) {
         super(repo, userRepo);
     }
 
@@ -34,7 +36,7 @@ class JooqNewsletterService extends JooqEntityService<Integer, Newsletter, Newsl
 
     @Override
     @Transactional
-    public void mergePaperIntoWipNewsletter(final long paperId, final Integer newsletterTopicId) {
+    public void mergePaperIntoWipNewsletter(final long paperId, @Nullable final Integer newsletterTopicId) {
         final Optional<Newsletter> opt = getRepository().getNewsletterInStatusWorkInProgress();
         opt.ifPresent(
             newsletter -> getRepository().mergePaperIntoNewsletter(newsletter.getId(), paperId, newsletterTopicId,
@@ -50,8 +52,9 @@ class JooqNewsletterService extends JooqEntityService<Integer, Newsletter, Newsl
             .isPresent();
     }
 
+    @Nullable
     @Override
-    public Newsletter saveOrUpdate(final Newsletter entity) {
+    public Newsletter saveOrUpdate(@NotNull final Newsletter entity) {
         if (entity
             .getPublicationStatus()
             .isInProgress()) {

@@ -1,5 +1,8 @@
 package ch.difty.scipamato.core.pubmed;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import ch.difty.scipamato.core.persistence.ServiceResult;
 
 public interface PubmedImporter {
@@ -9,9 +12,9 @@ public interface PubmedImporter {
      * articles to DB.
      *
      * @param xml
-     *     XML as string must not be null.
+     *     XML as string
      * @return {@link ServiceResult}
      */
-    ServiceResult persistPubmedArticlesFromXml(String xml);
-
+    @NotNull
+    ServiceResult persistPubmedArticlesFromXml(@Nullable String xml);
 }

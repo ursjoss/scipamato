@@ -1,5 +1,8 @@
 package ch.difty.scipamato.core.persistence;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import ch.difty.scipamato.core.entity.search.SearchCondition;
 import ch.difty.scipamato.core.entity.search.SearchOrder;
 import ch.difty.scipamato.core.entity.search.SearchOrderFilter;
@@ -23,8 +26,9 @@ public interface SearchOrderService extends EntityService<Long, SearchOrder, Sea
      *     the language code that was used in the search condition
      * @return the saved search condition
      */
-    SearchCondition saveOrUpdateSearchCondition(SearchCondition searchCondition, long searchOrderId,
-        String languageCode);
+    @Nullable
+    SearchCondition saveOrUpdateSearchCondition(@NotNull SearchCondition searchCondition, long searchOrderId,
+        @NotNull String languageCode);
 
     /**
      * Remove SearchCondition from Database.
@@ -32,6 +36,5 @@ public interface SearchOrderService extends EntityService<Long, SearchOrder, Sea
      * @param searchConditionId
      *     the id of the search condition that shall be removed
      */
-    void removeSearchConditionWithId(Long searchConditionId);
-
+    void removeSearchConditionWithId(@Nullable Long searchConditionId);
 }

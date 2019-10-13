@@ -2,12 +2,13 @@ package ch.difty.scipamato.core.web.paper;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 import org.apache.wicket.extensions.markup.html.repeater.util.SortableDataProvider;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.jetbrains.annotations.NotNull;
 
-import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.core.entity.search.SearchCondition;
 
 /**
@@ -22,9 +23,8 @@ public class SearchConditionProvider extends SortableDataProvider<SearchConditio
 
     private final IModel<List<SearchCondition>> searchConditionsModel;
 
-    public SearchConditionProvider(final IModel<List<SearchCondition>> searchConditionsModel) {
-        AssertAs.INSTANCE.notNull(searchConditionsModel, "searchConditionsModel");
-        AssertAs.INSTANCE.notNull(searchConditionsModel.getObject(), "searchConditions");
+    public SearchConditionProvider(@NotNull final IModel<List<SearchCondition>> searchConditionsModel) {
+        Objects.requireNonNull(searchConditionsModel.getObject());
         this.searchConditionsModel = searchConditionsModel;
     }
 
@@ -37,6 +37,7 @@ public class SearchConditionProvider extends SortableDataProvider<SearchConditio
      *     page size
      * @return iterator
      */
+    @NotNull
     @Override
     public Iterator<SearchCondition> iterator(final long offset, final long size) {
         return searchConditionsModel
@@ -54,9 +55,9 @@ public class SearchConditionProvider extends SortableDataProvider<SearchConditio
             .size();
     }
 
+    @NotNull
     @Override
     public IModel<SearchCondition> model(final SearchCondition searchCondition) {
         return new Model<>(searchCondition);
     }
-
 }

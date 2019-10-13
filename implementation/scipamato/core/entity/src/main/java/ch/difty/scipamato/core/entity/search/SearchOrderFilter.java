@@ -15,5 +15,4 @@ public class SearchOrderFilter extends ScipamatoFilter {
     private Integer owner;
     private Boolean global;
     private Integer ownerIncludingGlobal;
-
 }

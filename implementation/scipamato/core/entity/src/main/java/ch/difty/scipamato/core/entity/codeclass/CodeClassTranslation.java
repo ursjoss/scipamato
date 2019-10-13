@@ -1,9 +1,8 @@
 package ch.difty.scipamato.core.entity.codeclass;
 
-import javax.validation.constraints.NotNull;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.jetbrains.annotations.NotNull;
 
 import ch.difty.scipamato.common.entity.AbstractDefinitionTranslation;
 import ch.difty.scipamato.common.entity.FieldEnumType;
@@ -38,7 +37,5 @@ public class CodeClassTranslation extends AbstractDefinitionTranslation {
         public String getFieldName() {
             return name;
         }
-
     }
-
 }

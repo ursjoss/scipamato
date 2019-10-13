@@ -8,6 +8,8 @@ import org.apache.wicket.extensions.markup.html.repeater.util.SortableDataProvid
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.common.persistence.paging.PaginationRequest;
@@ -53,26 +55,28 @@ public abstract class AbstractPaperSlimProvider<F extends PaperSlimFilter>
      * @param rowsPerPage
      *     number of rows to show in the table
      */
-    AbstractPaperSlimProvider(final F filterState, final Integer rowsPerPage) {
+    AbstractPaperSlimProvider(@NotNull final F filterState, @NotNull final Integer rowsPerPage) {
         this.filterState = filterState;
         this.maxRowsPerPage = rowsPerPage;
     }
 
+    @NotNull
     PaperSlimService getService() {
         return service;
     }
 
     /** package-private for test purposes */
-    void setService(final PaperSlimService service) {
+    void setService(@NotNull final PaperSlimService service) {
         this.service = service;
     }
 
+    @NotNull
     PaperService getPaperService() {
         return paperService;
     }
 
     /** package-private for test purposes */
-    void setPaperService(final PaperService paperService) {
+    void setPaperService(@NotNull final PaperService paperService) {
         this.paperService = paperService;
     }
 
@@ -80,6 +84,7 @@ public abstract class AbstractPaperSlimProvider<F extends PaperSlimFilter>
      * provides an iterator going through the records, starting with the
      * {@literal first} (offset) and providing {@literal count} number of records.
      */
+    @NotNull
     @Override
     public Iterator<PaperSlim> iterator(final long first, final long count) {
         final Direction dir = getSort().isAscending() ? Direction.ASC : Direction.DESC;
@@ -87,7 +92,8 @@ public abstract class AbstractPaperSlimProvider<F extends PaperSlimFilter>
         return findPage(new PaginationRequest((int) first, (int) count, dir, sortProp));
     }
 
-    protected abstract Iterator<PaperSlim> findPage(PaginationContext pc);
+    @NotNull
+    protected abstract Iterator<PaperSlim> findPage(@NotNull PaginationContext pc);
 
     /**
      * Applies the normal filter and the sort aspect of the pageable to return all
@@ -95,12 +101,14 @@ public abstract class AbstractPaperSlimProvider<F extends PaperSlimFilter>
      *
      * @return list of all papers
      */
+    @NotNull
     public List<Paper> findAllPapersByFilter() {
         final Direction dir = getSort().isAscending() ? Direction.ASC : Direction.DESC;
         final String sortProp = getSort().getProperty();
         return findAll(dir, sortProp);
     }
 
+    @NotNull
     protected abstract List<Paper> findAll(Direction dir, String sortProp);
 
     /**
@@ -109,13 +117,15 @@ public abstract class AbstractPaperSlimProvider<F extends PaperSlimFilter>
      *
      * @return list of all paper ids
      */
+    @NotNull
     public List<Long> findAllPaperIdsByFilter() {
         final Direction dir = getSort().isAscending() ? Direction.ASC : Direction.DESC;
         final String sortProp = getSort().getProperty();
         return findAllIds(dir, sortProp);
     }
 
-    protected abstract List<Long> findAllIds(Direction dir, String sortProp);
+    @NotNull
+    protected abstract List<Long> findAllIds(@NotNull Direction dir, @NotNull String sortProp);
 
     @Override
     public long size() {
@@ -124,18 +134,20 @@ public abstract class AbstractPaperSlimProvider<F extends PaperSlimFilter>
 
     protected abstract long getSize();
 
+    @NotNull
     @Override
-    public IModel<PaperSlim> model(final PaperSlim entity) {
+    public IModel<PaperSlim> model(@NotNull final PaperSlim entity) {
         return new Model<>(entity);
     }
 
+    @NotNull
     @Override
     public F getFilterState() {
         return filterState;
     }
 
     @Override
-    public void setFilterState(final F filterState) {
+    public void setFilterState(@NotNull final F filterState) {
         this.filterState = filterState;
     }
 
@@ -178,6 +190,7 @@ public abstract class AbstractPaperSlimProvider<F extends PaperSlimFilter>
     public void setShowExcluded(final boolean showExcluded) {
     }
 
+    @NotNull
     String getLanguageCode() {
         return webSessionFacade.getLanguageCode();
     }

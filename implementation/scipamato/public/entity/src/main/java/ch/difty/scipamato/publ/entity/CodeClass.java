@@ -40,5 +40,4 @@ public class CodeClass extends PublicEntity implements CodeClassLike {
             return name;
         }
     }
-
 }

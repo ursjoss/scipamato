@@ -9,7 +9,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import ch.difty.scipamato.common.NullArgumentException;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * List based implementation of the {@link NavigatedItems} interface.
@@ -32,9 +33,7 @@ class NavigatedList<T extends Serializable> implements NavigatedItems<T> {
      * @param items
      *     collection of items, must not be null or empty.
      */
-    NavigatedList(final Collection<? extends T> items) {
-        if (items == null)
-            throw new NullArgumentException("items");
+    NavigatedList(@NotNull final Collection<? extends T> items) {
         if (items.isEmpty())
             throw new IllegalArgumentException("items must not be empty");
         this.items.addAll(items
@@ -49,20 +48,20 @@ class NavigatedList<T extends Serializable> implements NavigatedItems<T> {
         return items.size();
     }
 
+    @NotNull
     @Override
     public List<T> getItems() {
         return new ArrayList<>(items);
     }
 
+    @Nullable
     @Override
     public T getItemWithFocus() {
         return items.get(index.get());
     }
 
     @Override
-    public void setFocusToItem(final T item) {
-        if (item == null)
-            throw new NullArgumentException("item");
+    public void setFocusToItem(@NotNull final T item) {
         final int idx = items.indexOf(item);
         if (idx == -1)
             throw new IllegalArgumentException(
@@ -76,13 +75,15 @@ class NavigatedList<T extends Serializable> implements NavigatedItems<T> {
             index.incrementAndGet();
     }
 
+    @Nullable
     @Override
-    public boolean containsId(final T id) {
+    public boolean containsId(@NotNull final T id) {
         return items.contains(id);
     }
 
+    @NotNull
     @Override
-    public List<T> without(final T id) {
+    public List<T> without(@NotNull final T id) {
         return items
             .stream()
             .filter(Objects::nonNull)

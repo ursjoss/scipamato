@@ -1,9 +1,8 @@
 package ch.difty.scipamato.core.entity.keyword;
 
-import javax.validation.constraints.NotNull;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.jetbrains.annotations.NotNull;
 
 import ch.difty.scipamato.common.entity.FieldEnumType;
 import ch.difty.scipamato.core.entity.IdScipamatoEntity;
@@ -17,7 +16,7 @@ import ch.difty.scipamato.core.entity.IdScipamatoEntity;
 public class Keyword extends IdScipamatoEntity<Integer> {
     private static final long serialVersionUID = 1L;
 
-    @NotNull
+    @javax.validation.constraints.NotNull
     private String name;
     private String searchOverride;
 
@@ -45,9 +44,9 @@ public class Keyword extends IdScipamatoEntity<Integer> {
         }
     }
 
+    @NotNull
     @Override
     public String getDisplayValue() {
         return getName();
     }
-
 }

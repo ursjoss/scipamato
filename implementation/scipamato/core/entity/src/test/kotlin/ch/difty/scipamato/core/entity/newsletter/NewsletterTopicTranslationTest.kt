@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test
 internal class NewsletterTopicTranslationTest {
 
     @Test
-    fun titleIsAiasForName() {
+    fun titleIsAliasForName() {
         val ntt = NewsletterTopicTranslation(1, "de", "topic1", 1)
         assertThat(ntt.title).isEqualTo(ntt.name)
         ntt.title = "foo"

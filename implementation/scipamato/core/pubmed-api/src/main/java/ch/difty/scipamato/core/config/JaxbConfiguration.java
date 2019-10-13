@@ -6,6 +6,7 @@ import feign.jaxb.JAXBContextFactory;
 import feign.jaxb.JAXBDecoder;
 import feign.okhttp.OkHttpClient;
 import feign.slf4j.Slf4jLogger;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.oxm.Marshaller;
@@ -25,6 +26,7 @@ public class JaxbConfiguration {
         .withMarshallerJAXBEncoding("UTF-8")
         .build();
 
+    @NotNull
     @Bean
     public Marshaller marshaller() {
         Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
@@ -32,6 +34,7 @@ public class JaxbConfiguration {
         return marshaller;
     }
 
+    @NotNull
     @Bean
     public Unmarshaller unmarshaller() {
         Jaxb2Marshaller unmarshaller = new Jaxb2Marshaller();
@@ -40,6 +43,7 @@ public class JaxbConfiguration {
         return unmarshaller;
     }
 
+    @NotNull
     @Bean
     public PubMed pubMed() {
         return Feign

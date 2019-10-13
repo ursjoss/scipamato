@@ -39,12 +39,6 @@ internal class LongNavigatorTest {
     }
 
     @Test
-    fun initializingWithNull_isIgnored() {
-        nm.initialize(null)
-        assertThat(nm.itemWithFocus == null).isTrue()
-    }
-
-    @Test
     fun initializingEmptyList_isIgnored() {
         nm.initialize(ArrayList())
         assertThat(nm.itemWithFocus == null).isTrue()
@@ -128,7 +122,7 @@ internal class LongNavigatorTest {
         assertAddingDoesNothing(triple[1])
     }
 
-    private fun assertAddingDoesNothing(id: Long?) {
+    private fun assertAddingDoesNothing(id: Long) {
         nm.initialize(triple)
         assertThat(nm.itemWithFocus).isEqualTo(5L)
         assertThat(nm.hasPrevious()).isFalse()
@@ -139,11 +133,6 @@ internal class LongNavigatorTest {
         assertThat(nm.itemWithFocus).isEqualTo(5L)
         assertThat(nm.hasPrevious()).isFalse()
         assertThat(nm.hasNext()).isTrue()
-    }
-
-    @Test
-    fun settingIdToHeadIfNotPresent_ifNull_doesNothing() {
-        assertAddingDoesNothing(null)
     }
 
     @Test
@@ -236,13 +225,6 @@ internal class LongNavigatorTest {
         assertThat(nm.itemWithFocus).isEqualTo(12L)
         assertThat(nm.hasPrevious()).isTrue()
         assertThat(nm.hasNext()).isFalse()
-    }
-
-    @Test
-    fun removeFromManager_withNullId_isNotModified() {
-        nm.initialize(triple)
-        nm.remove(null)
-        assertThat(nm.isModified).isFalse()
     }
 
     @Test

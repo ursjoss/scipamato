@@ -2,6 +2,8 @@ package ch.difty.scipamato.core.web.paper.jasper;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import ch.difty.scipamato.core.entity.Paper;
 
@@ -40,8 +42,8 @@ public abstract class PaperSummaryCommon extends JasperEntity {
      * @param rhf
      *     the reportHeaderFields with the localized field headers
      */
-    protected PaperSummaryCommon(final Paper p, final CoreShortFieldConcatenator shortFieldConcatenator,
-        final ReportHeaderFields rhf) {
+    protected PaperSummaryCommon(@NotNull final Paper p,
+        @Nullable final CoreShortFieldConcatenator shortFieldConcatenator, @NotNull final ReportHeaderFields rhf) {
         this(p.getNumber(), p.getAuthors(), p.getTitle(), p.getLocation(), p.getGoals(),
             (shortFieldConcatenator != null ? shortFieldConcatenator.methodsFrom(p, rhf) : p.getMethods()),
             p.getComment(), rhf.getGoalsLabel(), rhf.getMethodsLabel(), rhf.getCommentLabel(), rhf.getHeaderPart(),
@@ -81,5 +83,4 @@ public abstract class PaperSummaryCommon extends JasperEntity {
         }
         return sb.toString();
     }
-
 }

@@ -7,9 +7,10 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.StringResourceModel;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.dao.DuplicateKeyException;
 
-import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.entity.DefinitionEntity;
 import ch.difty.scipamato.core.persistence.OptimisticLockingException;
 
@@ -21,15 +22,17 @@ public abstract class DefinitionEditPage<E extends DefinitionEntity> extends Bas
 
     private Form<E> form;
 
-    protected DefinitionEditPage(final IModel<E> model, final PageReference callingPageRef) {
-        super(AssertAs.INSTANCE.notNull(model, "model"));
+    protected DefinitionEditPage(@Nullable final IModel<E> model, @Nullable final PageReference callingPageRef) {
+        super(model);
         this.callingPageRef = callingPageRef;
     }
 
+    @Nullable
     protected PageReference getCallingPageRef() {
         return callingPageRef;
     }
 
+    @NotNull
     protected Form<E> getForm() {
         return form;
     }
@@ -40,7 +43,7 @@ public abstract class DefinitionEditPage<E extends DefinitionEntity> extends Bas
         queueForm("form");
     }
 
-    private void queueForm(final String id) {
+    private void queueForm(@NotNull final String id) {
         queue(form = newForm(id));
 
         queue(new Label("headerLabel", new StringResourceModel("header" + LABEL_RESOURCE_TAG, this, null)));
@@ -50,7 +53,7 @@ public abstract class DefinitionEditPage<E extends DefinitionEntity> extends Bas
         queue(newDefinitionTranslationPanel("translationsPanel"));
     }
 
-    private Form<E> newForm(final String id) {
+    private Form<E> newForm(@NotNull final String id) {
         return new Form<>(id, new CompoundPropertyModel<>(getModel())) {
             @Override
             protected void onSubmit() {
@@ -98,12 +101,14 @@ public abstract class DefinitionEditPage<E extends DefinitionEntity> extends Bas
         };
     }
 
+    @Nullable
     protected abstract E persistModel();
 
-    protected abstract DefinitionEditHeaderPanel newDefinitionHeaderPanel(final String id);
+    @NotNull
+    protected abstract DefinitionEditHeaderPanel newDefinitionHeaderPanel(@NotNull final String id);
 
-    protected abstract DefinitionEditTranslationPanel newDefinitionTranslationPanel(final String id);
+    @NotNull
+    protected abstract DefinitionEditTranslationPanel newDefinitionTranslationPanel(@NotNull final String id);
 
-    protected abstract void handleDuplicateKeyException(final DuplicateKeyException dke);
-
+    protected abstract void handleDuplicateKeyException(@NotNull final DuplicateKeyException dke);
 }

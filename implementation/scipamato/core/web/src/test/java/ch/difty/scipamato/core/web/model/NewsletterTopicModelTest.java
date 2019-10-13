@@ -1,6 +1,5 @@
 package ch.difty.scipamato.core.web.model;
 
-import static ch.difty.scipamato.common.TestUtilsKt.assertDegenerateSupplierParameter;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -12,11 +11,6 @@ import org.junit.jupiter.api.Test;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic;
 
 class NewsletterTopicModelTest extends ModelTest {
-
-    @Test
-    void instantiating_withNullLanguageCode_throws() {
-        assertDegenerateSupplierParameter(() -> new NewsletterTopicModel(null), "languageCode");
-    }
 
     @Test
     void loading_delegatesToNewsletterTopicService() {
@@ -38,5 +32,4 @@ class NewsletterTopicModelTest extends ModelTest {
 
         verifyNoMoreInteractions(newsletterTopicServiceMock);
     }
-
 }

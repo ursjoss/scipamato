@@ -4,6 +4,8 @@ import java.sql.Timestamp;
 
 import lombok.Builder;
 import lombok.experimental.Delegate;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import ch.difty.scipamato.publ.db.tables.pojos.Keyword;
 
@@ -23,9 +25,9 @@ class PublicKeyword {
     private final Keyword delegate;
 
     @Builder
-    private PublicKeyword(final int id, final int keywordId, final String langCode, final String name,
-        final Integer version, final Timestamp created, final Timestamp lastModified, final Timestamp lastSynched,
-        final String searchOverride) {
+    private PublicKeyword(final int id, final int keywordId, @NotNull final String langCode, @NotNull final String name,
+        @Nullable final Integer version, @Nullable final Timestamp created, @Nullable final Timestamp lastModified,
+        @NotNull final Timestamp lastSynched, @Nullable final String searchOverride) {
         delegate = new Keyword();
         delegate.setId(id);
         delegate.setKeywordId(keywordId);
@@ -37,5 +39,4 @@ class PublicKeyword {
         delegate.setLastSynched(lastSynched);
         delegate.setSearchOverride(searchOverride);
     }
-
 }

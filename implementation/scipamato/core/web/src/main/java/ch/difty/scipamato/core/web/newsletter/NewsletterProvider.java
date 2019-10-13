@@ -9,6 +9,8 @@ import org.apache.wicket.injection.Injector;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.common.persistence.paging.PaginationRequest;
@@ -31,7 +33,7 @@ public class NewsletterProvider extends SortableDataProvider<Newsletter, String>
         this(null);
     }
 
-    public NewsletterProvider(NewsletterFilter filter) {
+    public NewsletterProvider(@Nullable NewsletterFilter filter) {
         Injector
             .get()
             .inject(this);
@@ -40,10 +42,11 @@ public class NewsletterProvider extends SortableDataProvider<Newsletter, String>
     }
 
     /** package-private for test purposes */
-    void setService(NewsletterService service) {
+    void setService(@NotNull NewsletterService service) {
         this.service = service;
     }
 
+    @NotNull
     @Override
     public Iterator<Newsletter> iterator(long offset, long size) {
         Sort.Direction dir = getSort().isAscending() ? Sort.Direction.ASC : Sort.Direction.DESC;
@@ -59,18 +62,20 @@ public class NewsletterProvider extends SortableDataProvider<Newsletter, String>
         return service.countByFilter(filter);
     }
 
+    @NotNull
     @Override
     public IModel<Newsletter> model(Newsletter entity) {
         return new Model<>(entity);
     }
 
+    @NotNull
     @Override
     public NewsletterFilter getFilterState() {
         return filter;
     }
 
     @Override
-    public void setFilterState(NewsletterFilter state) {
+    public void setFilterState(@NotNull NewsletterFilter state) {
         this.filter = state;
     }
 }

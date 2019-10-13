@@ -4,12 +4,12 @@ import static ch.difty.scipamato.publ.db.tables.CodeClass.CODE_CLASS;
 
 import java.util.List;
 
+import org.jetbrains.annotations.NotNull;
 import org.jooq.DSLContext;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
-import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.TranslationUtils;
 import ch.difty.scipamato.publ.entity.CodeClass;
 
@@ -19,14 +19,14 @@ public class JooqCodeClassRepo implements CodeClassRepository {
 
     private final DSLContext dslContext;
 
-    public JooqCodeClassRepo(final DSLContext dslContext) {
+    public JooqCodeClassRepo(@NotNull final DSLContext dslContext) {
         this.dslContext = dslContext;
     }
 
+    @NotNull
     @Override
     @Cacheable
-    public List<CodeClass> find(final String languageCode) {
-        AssertAs.INSTANCE.notNull(languageCode, "languageCode");
+    public List<CodeClass> find(@NotNull final String languageCode) {
         final String lang = TranslationUtils.INSTANCE.trimLanguageCode(languageCode);
         // skipping the audit fields
         return dslContext
@@ -36,5 +36,4 @@ public class JooqCodeClassRepo implements CodeClassRepository {
             .orderBy(CODE_CLASS.CODE_CLASS_ID)
             .fetchInto(CodeClass.class);
     }
-
 }

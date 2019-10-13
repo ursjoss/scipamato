@@ -2,6 +2,7 @@ package ch.difty.scipamato.core.pubmed;
 
 import feign.Param;
 import feign.RequestLine;
+import org.jetbrains.annotations.NotNull;
 
 import ch.difty.scipamato.core.pubmed.api.PubmedArticleSet;
 
@@ -20,8 +21,9 @@ public interface PubMed {
      *     the pubmed id identifying the article
      * @return pubmedArticleSet
      */
+    @NotNull
     @RequestLine("GET efetch.fcgi?db=pubmed&id={pmid}&retmode=xml&version=2.0")
-    PubmedArticleSet articleWithId(@Param("pmid") String pmid);
+    PubmedArticleSet articleWithId(@Param("pmid") @NotNull String pmid);
 
     /**
      * Retrieve a pubmed article with the given PMID.
@@ -32,6 +34,7 @@ public interface PubMed {
      *     the api key used to retrieve the article from pubmed
      * @return pubmedArticleSet
      */
+    @NotNull
     @RequestLine("GET efetch.fcgi?db=pubmed&id={pmid}&api_key={apiKey}&retmode=xml&version=2.0")
-    PubmedArticleSet articleWithId(@Param("pmid") String pmid, @Param("apiKey") String apiKey);
+    PubmedArticleSet articleWithId(@Param("pmid") @NotNull String pmid, @Param("apiKey") @NotNull String apiKey);
 }

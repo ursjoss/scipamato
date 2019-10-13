@@ -181,5 +181,4 @@ class PaperListPageInEditModeTest extends PaperListPageTest {
         serviceResult.addErrorMessage("error");
         return serviceResult;
     }
-
 }

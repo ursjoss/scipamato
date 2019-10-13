@@ -1,6 +1,5 @@
 package ch.difty.scipamato.core.web.paper.jasper;
 
-import static ch.difty.scipamato.common.TestUtilsKt.assertDegenerateSupplierParameter;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import org.junit.jupiter.api.Test;
@@ -31,21 +30,6 @@ class CoreShortFieldWithEmptyMainFieldConcatenatorTest {
         .resultExposureRangeLabel("rerl")
         .conclusionLabel("ccl")
         .build();
-
-    @Test
-    void methods_withNullRecordset_throws() {
-        assertDegenerateSupplierParameter(() -> sfc.methodsFrom(null, rhf), "paper");
-    }
-
-    @Test
-    void population_withNullRecordset_throws() {
-        assertDegenerateSupplierParameter(() -> sfc.populationFrom(null, rhf), "paper");
-    }
-
-    @Test
-    void result_withNullRecordset_throws() {
-        assertDegenerateSupplierParameter(() -> sfc.resultFrom(null, rhf), "paper");
-    }
 
     @Test
     void methods_withNonNullMethod_returnsMethod() {
@@ -117,5 +101,4 @@ class CoreShortFieldWithEmptyMainFieldConcatenatorTest {
 
         assertThat(sfc.resultFrom(p, rhf)).isEqualTo("rmol: rmo\nrerl: rer\nreel: ree\nccl: cc");
     }
-
 }

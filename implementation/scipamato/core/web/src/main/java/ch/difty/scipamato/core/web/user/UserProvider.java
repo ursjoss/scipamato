@@ -9,6 +9,8 @@ import org.apache.wicket.injection.Injector;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.common.persistence.paging.PaginationRequest;
@@ -30,7 +32,7 @@ class UserProvider extends SortableDataProvider<User, String> implements IFilter
         this(null);
     }
 
-    UserProvider(UserFilter filter) {
+    UserProvider(@Nullable final UserFilter filter) {
         Injector
             .get()
             .inject(this);
@@ -39,7 +41,7 @@ class UserProvider extends SortableDataProvider<User, String> implements IFilter
     }
 
     /** package-private for test purposes */
-    void setService(UserService service) {
+    void setService(@NotNull UserService service) {
         this.service = service;
     }
 
@@ -58,18 +60,20 @@ class UserProvider extends SortableDataProvider<User, String> implements IFilter
         return service.countByFilter(filter);
     }
 
+    @NotNull
     @Override
     public IModel<User> model(User entity) {
         return new Model<>(entity);
     }
 
+    @NotNull
     @Override
     public UserFilter getFilterState() {
         return filter;
     }
 
     @Override
-    public void setFilterState(UserFilter state) {
+    public void setFilterState(@NotNull UserFilter state) {
         this.filter = state;
     }
 }

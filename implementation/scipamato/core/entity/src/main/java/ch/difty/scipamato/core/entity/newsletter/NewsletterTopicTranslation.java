@@ -2,6 +2,8 @@ package ch.difty.scipamato.core.entity.newsletter;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import ch.difty.scipamato.common.entity.AbstractDefinitionTranslation;
 
@@ -13,14 +15,15 @@ import ch.difty.scipamato.common.entity.AbstractDefinitionTranslation;
 public class NewsletterTopicTranslation extends AbstractDefinitionTranslation {
     private static final long serialVersionUID = 1L;
 
-    public NewsletterTopicTranslation(final Integer id, final String langCode, final String name,
-        final Integer version) {
+    public NewsletterTopicTranslation(@Nullable final Integer id, @NotNull final String langCode,
+        @Nullable final String name, @Nullable final Integer version) {
         super(id, langCode, name, version);
     }
 
     /**
      * Title as Alias for name, as it's used in the database
      */
+    @Nullable
     public String getTitle() {
         return getName();
     }
@@ -28,7 +31,7 @@ public class NewsletterTopicTranslation extends AbstractDefinitionTranslation {
     /**
      * Title as Alias for name, as it's used in the database
      */
-    public void setTitle(String title) {
+    public void setTitle(@Nullable String title) {
         setName(title);
     }
 

@@ -8,6 +8,7 @@ import org.apache.wicket.markup.html.IPackageResourceGuard;
 import org.apache.wicket.markup.html.SecurePackageResourceGuard;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -21,7 +22,7 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan(basePackages = "ch.difty.scipamato")
 public class ScipamatoCoreApplication extends WicketBootSecuredWebApplication {
 
-    public static void main(String[] args) {
+    public static void main(@NotNull String[] args) {
         new SpringApplicationBuilder()
             .sources(ScipamatoCoreApplication.class)
             .run(args);
@@ -47,9 +48,9 @@ public class ScipamatoCoreApplication extends WicketBootSecuredWebApplication {
         }
     }
 
+    @NotNull
     @Override
-    public Session newSession(Request request, Response response) {
+    public Session newSession(@NotNull Request request, @NotNull Response response) {
         return new ScipamatoSession(request);
     }
-
 }

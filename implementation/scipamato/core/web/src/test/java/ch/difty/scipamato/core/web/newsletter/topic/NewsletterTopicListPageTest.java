@@ -136,5 +136,4 @@ class NewsletterTopicListPageTest extends BasePageTest<NewsletterTopicListPage> 
             isA(PaginationRequest.class));
         verify(newsletterTopicServiceMock).newUnpersistedNewsletterTopicDefinition();
     }
-
 }

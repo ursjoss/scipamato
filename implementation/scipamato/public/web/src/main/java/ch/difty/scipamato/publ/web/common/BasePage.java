@@ -8,6 +8,8 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.string.StringValue;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import ch.difty.scipamato.common.navigator.ItemNavigator;
 import ch.difty.scipamato.common.web.AbstractPage;
@@ -40,14 +42,14 @@ public abstract class BasePage<T> extends AbstractPage<T> {
     @SpringBean(name = "metaOTFontResourceProvider")
     private CommercialFontResourceProvider metaOtFontResourceProvider;
 
-    protected BasePage(final PageParameters parameters) {
+    protected BasePage(@NotNull final PageParameters parameters) {
         super(parameters);
         final StringValue showNavbarValue = parameters.get(PublicPageParameters.SHOW_NAVBAR.getName());
         this.showNavbar = showNavbarValue.toBoolean(getProperties().isNavbarVisibleByDefault());
         considerSettingLocaleFromParentUrl(parameters);
     }
 
-    protected BasePage(final IModel<T> model) {
+    protected BasePage(@Nullable final IModel<T> model) {
         super(model);
         this.showNavbar = getProperties().isNavbarVisibleByDefault();
     }
@@ -66,13 +68,14 @@ public abstract class BasePage<T> extends AbstractPage<T> {
         return showNavbar;
     }
 
+    @NotNull
     @Override
     protected ApplicationPublicProperties getProperties() {
         return applicationProperties;
     }
 
     @Override
-    public void renderHead(IHeaderResponse response) {
+    public void renderHead(@NotNull IHeaderResponse response) {
         super.renderHead(response);
         response.render(CssHeaderItem.forReference(MainCssResourceReference.get()));
 
@@ -96,7 +99,7 @@ public abstract class BasePage<T> extends AbstractPage<T> {
      * @param response
      *     the response to render the css header item references on
      */
-    protected void renderAdditionalCommercialFonts(final IHeaderResponse response) {
+    protected void renderAdditionalCommercialFonts(@NotNull final IHeaderResponse response) {
     }
 
     /**
@@ -112,12 +115,13 @@ public abstract class BasePage<T> extends AbstractPage<T> {
         response.render(new OnLoadHeaderItem(PymScripts.RESIZE.script));
     }
 
+    @NotNull
     protected String getLanguageCode() {
         return sessionFacade.getLanguageCode();
     }
 
+    @NotNull
     protected ItemNavigator<Long> getPaperIdManager() {
         return sessionFacade.getPaperIdManager();
     }
-
 }

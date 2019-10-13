@@ -11,6 +11,8 @@ import org.apache.wicket.injection.Injector;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.common.persistence.paging.PaginationRequest;
@@ -36,7 +38,7 @@ class PublicPaperProvider extends SortableDataProvider<PublicPaper, String>
     @SpringBean
     private PublicPaperService service;
 
-    PublicPaperProvider(final PublicPaperFilter paperFilter, final int resultPageSize) {
+    PublicPaperProvider(@Nullable final PublicPaperFilter paperFilter, final int resultPageSize) {
         Injector
             .get()
             .inject(this);
@@ -46,7 +48,7 @@ class PublicPaperProvider extends SortableDataProvider<PublicPaper, String>
     }
 
     /** package-private for test purposes */
-    void setService(final PublicPaperService service) {
+    void setService(@NotNull final PublicPaperService service) {
         this.service = service;
     }
 
@@ -75,18 +77,20 @@ class PublicPaperProvider extends SortableDataProvider<PublicPaper, String>
         return service.countByFilter(paperFilter);
     }
 
+    @NotNull
     @Override
-    public IModel<PublicPaper> model(PublicPaper entity) {
+    public IModel<PublicPaper> model(@Nullable PublicPaper entity) {
         return new Model<>(entity);
     }
 
+    @Nullable
     @Override
     public PublicPaperFilter getFilterState() {
         return paperFilter;
     }
 
     @Override
-    public void setFilterState(final PublicPaperFilter filterState) {
+    public void setFilterState(@Nullable final PublicPaperFilter filterState) {
         this.paperFilter = filterState;
     }
 
@@ -96,10 +100,10 @@ class PublicPaperProvider extends SortableDataProvider<PublicPaper, String>
      *
      * @return list of all paper numbers
      */
+    @NotNull
     List<Long> findAllPaperNumbersByFilter() {
         final Direction dir = getSort().isAscending() ? Direction.ASC : Direction.DESC;
         final String sortProp = getSort().getProperty();
         return service.findPageOfNumbersByFilter(getFilterState(), new PaginationRequest(dir, sortProp));
     }
-
 }

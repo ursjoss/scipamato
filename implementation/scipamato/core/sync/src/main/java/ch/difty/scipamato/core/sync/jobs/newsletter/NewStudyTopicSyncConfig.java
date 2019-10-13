@@ -10,6 +10,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.jooq.DSLContext;
 import org.jooq.DeleteConditionStep;
 import org.jooq.TableField;
@@ -61,28 +63,34 @@ public class NewStudyTopicSyncConfig
     private static final TableField<NewsletterNewsletterTopicRecord, Integer>   NNT_SORT                = NEWSLETTER_NEWSLETTER_TOPIC.SORT;
     private static final TableField<NewsletterNewsletterTopicRecord, Timestamp> NNT_LAST_MODIFIED       = NEWSLETTER_NEWSLETTER_TOPIC.LAST_MODIFIED;
 
-    protected NewStudyTopicSyncConfig(@Qualifier("dslContext") DSLContext jooqCore,
-        @Qualifier("publicDslContext") DSLContext jooqPublic, @Qualifier("dataSource") DataSource coreDataSource,
-        JobBuilderFactory jobBuilderFactory, StepBuilderFactory stepBuilderFactory, DateTimeService dateTimeService) {
+    protected NewStudyTopicSyncConfig(@Qualifier("dslContext") @NotNull final DSLContext jooqCore,
+        @Qualifier("publicDslContext") @NotNull final DSLContext jooqPublic,
+        @Qualifier("dataSource") @NotNull final DataSource coreDataSource,
+        @NotNull final JobBuilderFactory jobBuilderFactory, @NotNull final StepBuilderFactory stepBuilderFactory,
+        @NotNull final DateTimeService dateTimeService) {
         super(TOPIC, CHUNK_SIZE, jooqCore, jooqPublic, coreDataSource, jobBuilderFactory, stepBuilderFactory,
             dateTimeService);
     }
 
+    @NotNull
     @Bean
     public Job syncNewStudyTopicJob() {
         return createJob();
     }
 
+    @NotNull
     @Override
     protected String getJobName() {
         return "syncNewStudyTopicJob";
     }
 
+    @NotNull
     @Override
     protected ItemWriter<PublicNewStudyTopic> publicWriter() {
         return new NewStudyTopicItemWriter(getJooqPublic());
     }
 
+    @NotNull
     @Override
     protected String selectSql() {
         return getJooqCore()
@@ -102,8 +110,9 @@ public class NewStudyTopicSyncConfig
             .getSQL(ParamType.INLINED);
     }
 
+    @NotNull
     @Override
-    protected PublicNewStudyTopic makeEntity(final ResultSet rs) throws SQLException {
+    protected PublicNewStudyTopic makeEntity(@NotNull final ResultSet rs) throws SQLException {
         return PublicNewStudyTopic
             .builder()
             .newsletterId(getInteger(PN_NEWSLETTER_ID, rs))
@@ -133,11 +142,13 @@ public class NewStudyTopicSyncConfig
             return ts1.after(ts2) ? ts1 : ts2;
     }
 
+    @NotNull
     @Override
     protected TableField<NewStudyTopicRecord, Timestamp> lastSynchedField() {
         return NewStudyTopic.NEW_STUDY_TOPIC.LAST_SYNCHED;
     }
 
+    @Nullable
     @Override
     public DeleteConditionStep<ch.difty.scipamato.publ.db.tables.records.NewStudyTopicRecord> getPseudoFkDcs() {
         return getJooqPublic()
@@ -146,5 +157,4 @@ public class NewStudyTopicSyncConfig
                 .selectDistinct(NewsletterTopic.NEWSLETTER_TOPIC.ID)
                 .from(NewsletterTopic.NEWSLETTER_TOPIC)));
     }
-
 }

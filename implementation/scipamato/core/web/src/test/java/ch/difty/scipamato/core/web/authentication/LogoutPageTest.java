@@ -46,5 +46,4 @@ class LogoutPageTest extends WicketTest {
         getTester().submitForm(FORM);
         getTester().assertRenderedPage(LoginPage.class);
     }
-
 }

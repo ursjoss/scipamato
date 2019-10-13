@@ -10,5 +10,4 @@ import org.apache.wicket.util.io.IClusterable;
  * @author u.joss
  */
 public interface ClusterablePdfExporterConfiguration extends PdfExporterConfiguration, IClusterable {
-
 }

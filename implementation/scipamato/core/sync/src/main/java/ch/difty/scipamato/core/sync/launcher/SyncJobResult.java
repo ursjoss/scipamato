@@ -5,6 +5,7 @@ import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * The {@link SyncJobResult} collects log messages for one or more job steps
@@ -24,22 +25,23 @@ public class SyncJobResult {
         return result == JobResult.FAILURE;
     }
 
+    @NotNull
     public List<LogMessage> getMessages() {
         return new ArrayList<>(logMessages);
     }
 
-    public void setSuccess(final String msg) {
+    public void setSuccess(@NotNull final String msg) {
         if (result != JobResult.FAILURE)
             result = JobResult.SUCCESS;
         logMessages.add(new LogMessage(msg, MessageLevel.INFO));
     }
 
-    public void setFailure(final String msg) {
+    public void setFailure(@NotNull final String msg) {
         result = JobResult.FAILURE;
         logMessages.add(new LogMessage(msg, MessageLevel.ERROR));
     }
 
-    public void setWarning(final String msg) {
+    public void setWarning(@NotNull final String msg) {
         logMessages.add(new LogMessage(msg, MessageLevel.WARNING));
     }
 
@@ -58,8 +60,9 @@ public class SyncJobResult {
     @Data
     @AllArgsConstructor
     public static class LogMessage {
+        @NotNull
         private String       message;
+        @NotNull
         private MessageLevel messageLevel;
     }
-
 }

@@ -8,13 +8,13 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import org.jetbrains.annotations.NotNull;
 import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.SelectConditionStep;
 import org.jooq.impl.DSL;
 
-import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.entity.FieldEnumType;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.search.AuditSearchTerm;
@@ -35,10 +35,9 @@ public class AuditSearchTermEvaluator implements SearchTermEvaluator<AuditSearch
     // chars
     private static final int DATE_RANGE_PATTERN_LENGTH = 39;
 
+    @NotNull
     @Override
-    public Condition evaluate(final AuditSearchTerm searchTerm) {
-        AssertAs.INSTANCE.notNull(searchTerm, "searchTerm");
-
+    public Condition evaluate(@NotNull final AuditSearchTerm searchTerm) {
         final ConditionalSupplier conditions = new ConditionalSupplier();
 
         for (final Token token : searchTerm.getTokens()) {

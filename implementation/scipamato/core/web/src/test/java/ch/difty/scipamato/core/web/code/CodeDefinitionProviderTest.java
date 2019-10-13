@@ -153,5 +153,4 @@ class CodeDefinitionProviderTest extends AbstractWicketTest {
         verify(codeServiceMock).findPageOfEntityDefinitions(eq(filterMock),
             argThat(new PaginationContextMatcher(3, "sort: DESC")));
     }
-
 }

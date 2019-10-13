@@ -15,6 +15,8 @@ import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.StringResourceModel;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("SameParameterValue")
 public class XmlPasteModalPanel extends Panel {
@@ -29,7 +31,7 @@ public class XmlPasteModalPanel extends Panel {
     private Form<Object>     form;
     private TextArea<String> contentField;
 
-    public XmlPasteModalPanel(String id) {
+    public XmlPasteModalPanel(@NotNull String id) {
         super(id);
     }
 
@@ -60,7 +62,7 @@ public class XmlPasteModalPanel extends Panel {
             private static final long serialVersionUID = 1L;
 
             @Override
-            protected void onUpload(AjaxRequestTarget target, Map<String, List<FileItem>> fileMap) {
+            protected void onUpload(@NotNull AjaxRequestTarget target, @NotNull Map<String, List<FileItem>> fileMap) {
                 doOnUpdate(target, fileMap);
             }
         };
@@ -76,7 +78,7 @@ public class XmlPasteModalPanel extends Panel {
     }
 
     /** package private for test purposes */
-    void doOnUpdate(final AjaxRequestTarget target, final Map<String, List<FileItem>> fileMap) {
+    void doOnUpdate(@NotNull final AjaxRequestTarget target, @Nullable final Map<String, List<FileItem>> fileMap) {
         if (fileMap != null && fileMap.containsKey(KEY_FILE)) {
             for (final FileItem file : fileMap.get(KEY_FILE)) {
                 if (file
@@ -98,7 +100,7 @@ public class XmlPasteModalPanel extends Panel {
             private static final long serialVersionUID = 1L;
 
             @Override
-            protected void onAfterSubmit(AjaxRequestTarget target) {
+            protected void onAfterSubmit(@NotNull AjaxRequestTarget target) {
                 super.onAfterSubmit(target);
                 ModalWindow.closeCurrent(target);
             }
@@ -113,22 +115,22 @@ public class XmlPasteModalPanel extends Panel {
             private static final long serialVersionUID = 1L;
 
             @Override
-            protected void onSubmit(AjaxRequestTarget target) {
+            protected void onSubmit(@NotNull AjaxRequestTarget target) {
                 super.onSubmit(target);
                 content = null;
                 getFeedbackMessages().clear();
             }
 
             @Override
-            protected void onAfterSubmit(AjaxRequestTarget target) {
+            protected void onAfterSubmit(@NotNull AjaxRequestTarget target) {
                 super.onAfterSubmit(target);
                 ModalWindow.closeCurrent(target);
             }
         };
     }
 
+    @Nullable
     public String getPastedContent() {
         return content;
     }
-
 }

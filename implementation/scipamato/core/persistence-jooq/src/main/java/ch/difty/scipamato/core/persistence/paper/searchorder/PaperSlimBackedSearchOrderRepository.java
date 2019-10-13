@@ -8,5 +8,4 @@ import ch.difty.scipamato.core.entity.projection.PaperSlim;
  * @author u.joss
  */
 public interface PaperSlimBackedSearchOrderRepository extends BySearchOrderRepository<PaperSlim> {
-
 }
