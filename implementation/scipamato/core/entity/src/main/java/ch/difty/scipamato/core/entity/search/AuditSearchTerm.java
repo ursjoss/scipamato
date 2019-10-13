@@ -6,6 +6,9 @@ import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 /**
  * Implementation of {@link AbstractSearchTerm} working with the two audit
  * fields createdDisplayValue and lastModifiedDisplayValue, both of which handle
@@ -77,15 +80,17 @@ public class AuditSearchTerm extends AbstractSearchTerm {
 
     private final List<Token> tokens;
 
-    AuditSearchTerm(final String fieldName, final String rawSearchTerm) {
+    AuditSearchTerm(@NotNull final String fieldName, @NotNull final String rawSearchTerm) {
         this(null, fieldName, rawSearchTerm);
     }
 
-    private AuditSearchTerm(final Long searchConditionId, final String fieldName, final String rawSearchTerm) {
+    private AuditSearchTerm(@Nullable final Long searchConditionId, @NotNull final String fieldName,
+        @NotNull final String rawSearchTerm) {
         this(null, searchConditionId, fieldName, rawSearchTerm);
     }
 
-    AuditSearchTerm(final Long id, final Long searchConditionId, final String fieldName, final String rawSearchTerm) {
+    AuditSearchTerm(@Nullable final Long id, @Nullable final Long searchConditionId, @NotNull final String fieldName,
+        @NotNull final String rawSearchTerm) {
         super(id, SearchTermType.AUDIT, searchConditionId, fieldName, rawSearchTerm);
         tokens = lex(rawSearchTerm.trim(), isUserTypeSearchTerm(), isDateTypeSearchTerm());
 
@@ -101,6 +106,7 @@ public class AuditSearchTerm extends AbstractSearchTerm {
         return !isUserTypeSearchTerm();
     }
 
+    @NotNull
     public List<Token> getTokens() {
         return tokens;
     }
@@ -156,21 +162,22 @@ public class AuditSearchTerm extends AbstractSearchTerm {
         final         FieldType fieldType;
         private final int       group;
 
-        TokenType(final String pattern, final MatchType matchType, final FieldType fieldType, final int group) {
+        TokenType(@NotNull final String pattern, @NotNull final MatchType matchType, @NotNull final FieldType fieldType,
+            final int group) {
             this.pattern = pattern;
             this.group = group;
             this.fieldType = fieldType;
             this.matchType = matchType;
         }
 
-        public static List<TokenType> byMatchType(final MatchType mt) {
+        @NotNull
+        public static List<TokenType> byMatchType(@NotNull final MatchType mt) {
             final List<TokenType> types = new ArrayList<>();
             for (final TokenType tt : TOKEN_TYPES)
                 if (tt.matchType == mt)
                     types.add(tt);
             return types;
         }
-
     }
 
     public static class Token implements Serializable {
@@ -180,13 +187,14 @@ public class AuditSearchTerm extends AbstractSearchTerm {
         private final Map<FieldType, String> rawDataMap = new EnumMap<>(FieldType.class);
         private final Map<FieldType, String> sqlDataMap = new EnumMap<>(FieldType.class);
 
-        public Token(final TokenType type, final String data) {
+        public Token(@NotNull final TokenType type, @NotNull final String data) {
             this.type = type;
             this.rawDataMap.put(type.fieldType, data);
-            this.sqlDataMap.put(type.fieldType, sqlize(completeDateTimeIfNecessary(type, data)));
+            this.sqlDataMap.put(type.fieldType, completeDateTimeIfNecessary(type, data));
         }
 
-        private String completeDateTimeIfNecessary(final TokenType type, final String data) {
+        @NotNull
+        private String completeDateTimeIfNecessary(@NotNull final TokenType type, @NotNull final String data) {
             if (type.fieldType != FieldType.DATE || data.length() != DATE_TIME_LENGTH) {
                 return data;
             } else {
@@ -197,26 +205,27 @@ public class AuditSearchTerm extends AbstractSearchTerm {
             }
         }
 
-        private String sqlize(final String data) {
-            return data;
-        }
-
+        @NotNull
         public TokenType getType() {
             return type;
         }
 
+        @NotNull
         String getUserRawData() {
             return rawDataMap.get(FieldType.USER);
         }
 
+        @NotNull
         String getDateRawData() {
             return rawDataMap.get(FieldType.DATE);
         }
 
+        @NotNull
         public String getUserSqlData() {
             return sqlDataMap.get(FieldType.USER);
         }
 
+        @NotNull
         public String getDateSqlData() {
             return sqlDataMap.get(FieldType.DATE);
         }
@@ -238,7 +247,8 @@ public class AuditSearchTerm extends AbstractSearchTerm {
         }
     }
 
-    private static List<Token> lex(final String input, final boolean isUserType, final boolean isDateType) {
+    @NotNull
+    private static List<Token> lex(@NotNull final String input, final boolean isUserType, final boolean isDateType) {
         return tokenize(input, buildPattern(), isUserType, isDateType);
     }
 

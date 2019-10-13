@@ -5,6 +5,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.string.StringValue;
+import org.jetbrains.annotations.Nullable;
 
 import ch.difty.scipamato.core.auth.Roles;
 import ch.difty.scipamato.core.entity.search.SearchCondition;
@@ -42,7 +43,7 @@ public class PaperSearchCriteriaPage extends BasePage<SearchCondition> {
     @SpringBean
     private PageFactory pageFactory;
 
-    public PaperSearchCriteriaPage(final IModel<SearchCondition> searchConditionModel, final long searchOrderId) {
+    public PaperSearchCriteriaPage(@Nullable final IModel<SearchCondition> searchConditionModel, final long searchOrderId) {
         super(searchConditionModel);
         getPageParameters().add(CorePageParameters.SEARCH_ORDER_ID.getName(), searchOrderId);
     }
@@ -103,5 +104,4 @@ public class PaperSearchCriteriaPage extends BasePage<SearchCondition> {
     private String getNullSafeId() {
         return getModelObject().getId() != null ? getModelObject().getId() : "";
     }
-
 }

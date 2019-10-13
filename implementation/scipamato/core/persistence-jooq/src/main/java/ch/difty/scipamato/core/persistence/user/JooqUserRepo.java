@@ -8,6 +8,8 @@ import java.util.Set;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.jooq.DSLContext;
 import org.jooq.TableField;
 import org.slf4j.Logger;
@@ -19,7 +21,6 @@ import org.springframework.cache.annotation.Caching;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
-import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.DateTimeService;
 import ch.difty.scipamato.common.config.ApplicationProperties;
 import ch.difty.scipamato.common.persistence.GenericFilterConditionMapper;
@@ -47,49 +48,56 @@ public class JooqUserRepo extends
 
     private final UserRoleRepository userRoleRepo;
 
-    public JooqUserRepo(@Qualifier("dslContext") final DSLContext dsl, final UserRecordMapper mapper,
-        final JooqSortMapper<ScipamatoUserRecord, User, ch.difty.scipamato.core.db.tables.ScipamatoUser> sortMapper,
-        final GenericFilterConditionMapper<UserFilter> filterConditionMapper, final DateTimeService dateTimeService,
-        final InsertSetStepSetter<ScipamatoUserRecord, User> insertSetStepSetter,
-        final UpdateSetStepSetter<ScipamatoUserRecord, User> updateSetStepSetter,
-        final ApplicationProperties applicationProperties, final UserRoleRepository userRoleRepo) {
+    public JooqUserRepo(@Qualifier("dslContext") @NotNull final DSLContext dsl, @NotNull final UserRecordMapper mapper,
+        @NotNull final JooqSortMapper<ScipamatoUserRecord, User, ch.difty.scipamato.core.db.tables.ScipamatoUser> sortMapper,
+        @NotNull final GenericFilterConditionMapper<UserFilter> filterConditionMapper,
+        @NotNull final DateTimeService dateTimeService,
+        @NotNull final InsertSetStepSetter<ScipamatoUserRecord, User> insertSetStepSetter,
+        @NotNull final UpdateSetStepSetter<ScipamatoUserRecord, User> updateSetStepSetter,
+        @NotNull final ApplicationProperties applicationProperties, @NotNull final UserRoleRepository userRoleRepo) {
         super(dsl, mapper, sortMapper, filterConditionMapper, dateTimeService, insertSetStepSetter, updateSetStepSetter,
             applicationProperties);
-        this.userRoleRepo = AssertAs.INSTANCE.notNull(userRoleRepo, "userRoleRepo");
+        this.userRoleRepo = userRoleRepo;
     }
 
+    @NotNull
     @Override
     protected Logger getLogger() {
         return log;
     }
 
+    @NotNull
     @Override
     protected ch.difty.scipamato.core.db.tables.ScipamatoUser getTable() {
         return SCIPAMATO_USER;
     }
 
+    @NotNull
     @Override
     protected TableField<ScipamatoUserRecord, Integer> getTableId() {
         return SCIPAMATO_USER.ID;
     }
 
+    @NotNull
     @Override
     protected TableField<ScipamatoUserRecord, Integer> getRecordVersion() {
         return SCIPAMATO_USER.VERSION;
     }
 
+    @NotNull
     @Override
-    protected Integer getIdFrom(final ScipamatoUserRecord record) {
+    protected Integer getIdFrom(@NotNull final ScipamatoUserRecord record) {
         return record.getId();
     }
 
+    @NotNull
     @Override
-    protected Integer getIdFrom(final User entity) {
+    protected Integer getIdFrom(@NotNull final User entity) {
         return entity.getId();
     }
 
     @Override
-    protected void enrichAssociatedEntitiesOf(final User entity, final String languageCode) {
+    protected void enrichAssociatedEntitiesOf(@Nullable final User entity, @Nullable final String languageCode) {
         if (entity != null) {
             final Set<Role> roles = userRoleRepo.findRolesForUser(entity.getId());
             if (CollectionUtils.isNotEmpty(roles))
@@ -98,12 +106,12 @@ public class JooqUserRepo extends
     }
 
     @Override
-    protected void saveAssociatedEntitiesOf(final User user, final String languageCode) {
+    protected void saveAssociatedEntitiesOf(@NotNull final User user, @NotNull final String languageCode) {
         storeNewRolesOf(user);
     }
 
     @Override
-    protected void updateAssociatedEntities(final User user, final String languageCode) {
+    protected void updateAssociatedEntities(@NotNull final User user, @NotNull final String languageCode) {
         storeNewRolesOf(user);
         deleteObsoleteRolesFrom(user);
     }
@@ -122,9 +130,10 @@ public class JooqUserRepo extends
         userRoleRepo.deleteAllRolesExcept(userId, roleIds);
     }
 
+    @Nullable
     @Override
     @Cacheable(value = "userByName")
-    public User findByUserName(final String userName) {
+    public User findByUserName(@NotNull final String userName) {
         final List<User> users = getDsl()
             .selectFrom(SCIPAMATO_USER)
             .where(SCIPAMATO_USER.USER_NAME.eq(userName))
@@ -138,39 +147,43 @@ public class JooqUserRepo extends
         }
     }
 
+    @Nullable
     @Override
     @Caching(put = { @CachePut(cacheNames = "userByName", key = "#user.userName") }, evict = {
         @CacheEvict(cacheNames = "userRolesByUserId", allEntries = true) })
-    public User add(final User user) {
+    public User add(@NotNull final User user) {
         return super.add(user);
     }
 
+    @Nullable
     @Override
     @Caching(put = { @CachePut(cacheNames = "userByName", key = "#user.userName") }, evict = {
         @CacheEvict(cacheNames = "userRolesByUserId", allEntries = true) })
-    public User add(final User user, final String languageCode) {
+    public User add(@NotNull final User user, @NotNull final String languageCode) {
         return super.add(user, languageCode);
     }
 
+    @NotNull
     @Override
     @Caching(evict = { @CacheEvict(cacheNames = "userByName", allEntries = true),
         @CacheEvict(cacheNames = "userRolesByUserId", allEntries = true) })
-    public User delete(final Integer id, final int version) {
+    public User delete(@NotNull final Integer id, final int version) {
         return super.delete(id, version);
     }
 
+    @Nullable
     @Override
     @Caching(evict = { @CacheEvict(cacheNames = "userByName", allEntries = true),
         @CacheEvict(cacheNames = "userRolesByUserId", allEntries = true) })
-    public User update(final User user) {
+    public User update(@NotNull final User user) {
         return super.update(user);
     }
 
+    @Nullable
     @Override
     @Caching(evict = { @CacheEvict(cacheNames = "userByName", allEntries = true),
         @CacheEvict(cacheNames = "userRolesByUserId", allEntries = true) })
-    public User update(final User user, final String languageCode) {
+    public User update(@NotNull final User user, @NotNull final String languageCode) {
         return super.update(user, languageCode);
     }
-
 }

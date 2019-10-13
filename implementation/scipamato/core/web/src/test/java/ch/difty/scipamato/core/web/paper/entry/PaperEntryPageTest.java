@@ -218,5 +218,4 @@ class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
         getTester().startPage(new PaperEntryPage(new PageParameters()));
         getTester().assertRenderedPage(PaperEntryPage.class);
     }
-
 }

@@ -59,7 +59,7 @@ internal class JooqPaperSlimRepoTest :
             dateTimeServiceMock,
             applicationProperties
         ) {
-            override fun findById(id: Long?) = entity
+            override fun findById(id: Long) = entity
         }
 
     override fun expectEntityIdsWithValues() {

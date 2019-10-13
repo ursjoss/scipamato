@@ -103,5 +103,4 @@ public abstract class JasperEntityTest {
         p.addCode(new Code("4C", "Code4C", "", false, CodeClassId.CC4.getId(), "CC4", "CC4D", 3));
         p.addCode(new Code("7B", "Code7B", "", false, CodeClassId.CC7.getId(), "CC7", "CC7D", 2));
     }
-
 }

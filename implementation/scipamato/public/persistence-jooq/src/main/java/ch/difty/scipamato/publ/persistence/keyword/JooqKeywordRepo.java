@@ -4,10 +4,10 @@ import static ch.difty.scipamato.publ.db.tables.Keyword.KEYWORD;
 
 import java.util.List;
 
+import org.jetbrains.annotations.NotNull;
 import org.jooq.DSLContext;
 import org.springframework.stereotype.Repository;
 
-import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.TranslationUtils;
 import ch.difty.scipamato.publ.entity.Keyword;
 
@@ -16,13 +16,13 @@ public class JooqKeywordRepo implements KeywordRepository {
 
     private final DSLContext dslContext;
 
-    public JooqKeywordRepo(final DSLContext dslContext) {
+    public JooqKeywordRepo(@NotNull final DSLContext dslContext) {
         this.dslContext = dslContext;
     }
 
+    @NotNull
     @Override
-    public List<Keyword> findKeywords(final String languageCode) {
-        AssertAs.INSTANCE.notNull(languageCode, "languageCode");
+    public List<Keyword> findKeywords(@NotNull final String languageCode) {
         final String lang = TranslationUtils.INSTANCE.trimLanguageCode(languageCode);
         // skipping the audit fields
         return dslContext
@@ -32,5 +32,4 @@ public class JooqKeywordRepo implements KeywordRepository {
             .orderBy(KEYWORD.NAME)
             .fetchInto(Keyword.class);
     }
-
 }

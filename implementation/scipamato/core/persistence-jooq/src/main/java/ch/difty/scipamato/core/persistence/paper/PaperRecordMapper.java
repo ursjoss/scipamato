@@ -1,5 +1,6 @@
 package ch.difty.scipamato.core.persistence.paper;
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 
 import ch.difty.scipamato.core.db.tables.records.PaperRecord;
@@ -19,19 +20,21 @@ import ch.difty.scipamato.core.persistence.EntityRecordMapper;
 @Component
 public class PaperRecordMapper extends EntityRecordMapper<PaperRecord, Paper> {
 
+    @NotNull
     @Override
     protected Paper makeEntity() {
         return new Paper();
     }
 
+    @NotNull
     @Override
-    protected AuditFields getAuditFieldsOf(PaperRecord r) {
+    protected AuditFields getAuditFieldsOf(@NotNull PaperRecord r) {
         return new AuditFields(r.getCreated(), r.getCreatedBy(), r.getLastModified(), r.getLastModifiedBy(),
             r.getVersion());
     }
 
     @Override
-    protected void mapFields(PaperRecord from, Paper to) {
+    protected void mapFields(@NotNull PaperRecord from, @NotNull Paper to) {
         to.setId(from.getId());
         to.setNumber(from.getNumber());
         to.setPmId(from.getPmId());
@@ -70,5 +73,4 @@ public class PaperRecordMapper extends EntityRecordMapper<PaperRecord, Paper> {
 
         to.setMainCodeOfCodeclass1(from.getMainCodeOfCodeclass1());
     }
-
 }

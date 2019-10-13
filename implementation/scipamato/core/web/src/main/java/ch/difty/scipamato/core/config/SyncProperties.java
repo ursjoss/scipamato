@@ -2,6 +2,8 @@ package ch.difty.scipamato.core.config;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -15,33 +17,39 @@ public class SyncProperties {
     /**
      * Configuration for the synchronization source datasource (core database).
      */
+    @NotNull
     private Source source = new Source();
 
     /**
      * Configuration for the synchronization target datasource (public database).
      */
+    @NotNull
     private Target target = new Target();
 
     /**
      * Configuration for the database providing the spring batch meta tables.
      */
+    @NotNull
     private Batch batch = new Batch();
 
     @Getter
     @Setter
     public static class Source {
+        @NotNull
         private Datasource datasource = new Datasource();
     }
 
     @Getter
     @Setter
     public static class Target {
+        @NotNull
         private Datasource datasource = new Datasource();
     }
 
     @Getter
     @Setter
     public static class Batch {
+        @NotNull
         private Datasource datasource = new Datasource();
     }
 
@@ -51,21 +59,25 @@ public class SyncProperties {
         /**
          * The database connection string to connect to the database.
          */
+        @Nullable
         private String jdbcUrl;
 
         /**
          * The driver class name for the RDBMS.
          */
+        @NotNull
         private String driverClassName = "org.postgresql.Driver";
 
         /**
          * The database username for the application to connect to the database.
          */
+        @NotNull
         private String username = "scipamato";
 
         /**
          * The password for the application user to connect to the database.
          */
+        @NotNull
         private String password = "scipamato";
 
         /**
@@ -93,7 +105,7 @@ public class SyncProperties {
         /**
          * User-defined name for the connection pool.
          */
+        @Nullable
         private String poolName;
-
     }
 }

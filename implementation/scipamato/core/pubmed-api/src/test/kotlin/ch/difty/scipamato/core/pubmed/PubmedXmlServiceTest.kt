@@ -1,13 +1,11 @@
 package ch.difty.scipamato.core.pubmed
 
-import ch.difty.scipamato.common.NullArgumentException
 import ch.difty.scipamato.core.pubmed.api.*
 import com.nhaarman.mockitokotlin2.isA
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
 import feign.FeignException
 import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.fail
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito.verify
@@ -39,18 +37,6 @@ internal class PubmedXmlServiceTest {
     @AfterEach
     fun tearDown() {
         verifyNoMoreInteractions(unmarshallerMock, pubMedMock, pubmedArticleSetMock)
-    }
-
-    @Test
-    fun unmarshallingNull_throws() {
-        try {
-            service.unmarshal(null)
-            fail<Any>("should have thrown exception")
-        } catch (ex: Exception) {
-            assertThat(ex)
-                .isInstanceOf(NullArgumentException::class.java)
-                .hasMessage("xmlString must not be null.")
-        }
     }
 
     @Test
@@ -241,7 +227,6 @@ internal class PubmedXmlServiceTest {
     }
 
     companion object {
-
         fun makeMinimalValidPubmedArticleSet(): PubmedArticleSet {
             val pubmedArticleSet = PubmedArticleSet()
             pubmedArticleSet

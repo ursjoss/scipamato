@@ -16,6 +16,8 @@ import org.apache.wicket.markup.html.form.*;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import ch.difty.scipamato.common.web.AbstractPanel;
 import ch.difty.scipamato.publ.entity.Keyword;
@@ -45,7 +47,7 @@ public class SimpleFilterPanel extends AbstractPanel<PublicPaperFilter> {
 
     private final String languageCode;
 
-    SimpleFilterPanel(String id, IModel<PublicPaperFilter> model, String languageCode) {
+    SimpleFilterPanel(@NotNull String id, @Nullable IModel<PublicPaperFilter> model, @NotNull String languageCode) {
         super(id, model);
         this.languageCode = languageCode;
     }
@@ -79,7 +81,7 @@ public class SimpleFilterPanel extends AbstractPanel<PublicPaperFilter> {
             private static final long serialVersionUID = 1L;
 
             @Override
-            protected void onUpdate(AjaxRequestTarget target) {
+            protected void onUpdate(@NotNull AjaxRequestTarget target) {
                 sendChangeEvent(target, field);
             }
         });
@@ -98,7 +100,7 @@ public class SimpleFilterPanel extends AbstractPanel<PublicPaperFilter> {
     }
 
     // package private access for testing
-    void handleChangeEvent(final IEvent<?> event, final FormComponent component) {
+    void handleChangeEvent(@NotNull final IEvent<?> event, @NotNull final FormComponent component) {
         if (event
                 .getPayload()
                 .getClass() == SimpleFilterPanelChangeEvent.class) {
@@ -139,7 +141,7 @@ public class SimpleFilterPanel extends AbstractPanel<PublicPaperFilter> {
             private static final long serialVersionUID = 1L;
 
             @Override
-            protected void onUpdate(AjaxRequestTarget target) {
+            protected void onUpdate(@NotNull AjaxRequestTarget target) {
                 sendChangeEvent(target, multiSelect);
             }
         });
@@ -182,11 +184,10 @@ public class SimpleFilterPanel extends AbstractPanel<PublicPaperFilter> {
             private static final long serialVersionUID = 1L;
 
             @Override
-            protected void onUpdate(AjaxRequestTarget target) {
+            protected void onUpdate(@NotNull AjaxRequestTarget target) {
                 sendChangeEvent(target, multiSelect);
             }
         });
         queue(multiSelect);
     }
-
 }

@@ -23,6 +23,8 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.settings.DebugSettings;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.string.Strings;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import ch.difty.scipamato.common.DateTimeService;
 import ch.difty.scipamato.common.config.ApplicationProperties;
@@ -45,28 +47,31 @@ public abstract class AbstractPage<T> extends GenericWebPage<T> {
     private NotificationPanel feedbackPanel;
     private Navbar            navbar;
 
-    public AbstractPage(final PageParameters parameters) {
+    public AbstractPage(@Nullable final PageParameters parameters) {
         super(parameters);
     }
 
-    public AbstractPage(final IModel<T> model) {
+    public AbstractPage(@Nullable final IModel<T> model) {
         super(model);
     }
 
+    @NotNull
     protected DateTimeService getDateTimeService() {
         return dateTimeService;
     }
 
+    @Nullable
     protected Navbar getNavBar() {
         return navbar;
     }
 
+    @NotNull
     public NotificationPanel getFeedbackPanel() {
         return feedbackPanel;
     }
 
     @Override
-    public void renderHead(IHeaderResponse response) {
+    public void renderHead(@NotNull IHeaderResponse response) {
         super.renderHead(response);
 
         response.render(new PriorityHeaderItem(MetaDataHeaderItem.forMetaTag("charset", "utf-8")));
@@ -158,22 +163,24 @@ public abstract class AbstractPage<T> extends GenericWebPage<T> {
         return true;
     }
 
-    String getBrandName(final String brand) {
+    @NotNull
+    String getBrandName(@Nullable final String brand) {
         if (Strings.isEmpty(brand) || "n.a.".equals(brand))
             return new StringResourceModel("brandname", this, null).getString();
         return brand;
     }
 
+    @NotNull
     protected abstract ApplicationProperties getProperties();
 
-    protected void addLinksTo(Navbar nb) {
+    protected void addLinksTo(@NotNull Navbar nb) {
     }
 
-    protected void queueFieldAndLabel(FormComponent<?> field) {
+    protected void queueFieldAndLabel(@NotNull FormComponent<?> field) {
         queueFieldAndLabel(field, null);
     }
 
-    protected void queueFieldAndLabel(FormComponent<?> field, PropertyValidator<?> pv) {
+    protected void queueFieldAndLabel(@NotNull FormComponent<?> field, @Nullable PropertyValidator<?> pv) {
         String id = field.getId();
         StringResourceModel labelModel = new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null);
         final Label label = new Label(id + LABEL_TAG, labelModel);
@@ -186,14 +193,14 @@ public abstract class AbstractPage<T> extends GenericWebPage<T> {
         label.setVisible(field.isVisible());
     }
 
-    protected BootstrapAjaxButton newResponsePageButton(final String id,
-        final SerializableSupplier<AbstractPage<?>> responsePage) {
+    protected BootstrapAjaxButton newResponsePageButton(@NotNull final String id,
+        @NotNull final SerializableSupplier<AbstractPage<?>> responsePage) {
         return new BootstrapAjaxButton(id, new StringResourceModel(id + LABEL_RESOURCE_TAG, AbstractPage.this, null),
             Type.Default) {
             private static final long serialVersionUID = 1L;
 
             @Override
-            protected void onSubmit(final AjaxRequestTarget target) {
+            protected void onSubmit(@NotNull final AjaxRequestTarget target) {
                 super.onSubmit(target);
                 setResponsePage(responsePage.get());
             }
@@ -215,7 +222,7 @@ public abstract class AbstractPage<T> extends GenericWebPage<T> {
         return true;
     }
 
-    protected void queuePanelHeadingFor(String id) {
+    protected void queuePanelHeadingFor(@NotNull String id) {
         queue(new Label(id + LABEL_TAG, new StringResourceModel(id + PANEL_HEADER_RESOURCE_TAG, this, null)));
     }
 
@@ -225,7 +232,7 @@ public abstract class AbstractPage<T> extends GenericWebPage<T> {
             .isSignedIn();
     }
 
-    protected boolean signIn(String username, String password) {
+    protected boolean signIn(@Nullable String username, @Nullable String password) {
         return AuthenticatedWebSession
             .get()
             .signIn(username, password);

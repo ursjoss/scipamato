@@ -2,6 +2,7 @@ package ch.difty.scipamato.core.web.paper.search;
 
 import static ch.difty.scipamato.core.web.CorePageParameters.*;
 
+import java.util.Objects;
 import java.util.Optional;
 
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome5CDNCSSReference;
@@ -18,9 +19,10 @@ import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.string.StringValue;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.wicketstuff.annotation.mount.MountPath;
 
-import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.web.Mode;
 import ch.difty.scipamato.core.auth.Roles;
 import ch.difty.scipamato.core.entity.search.SearchOrder;
@@ -85,7 +87,7 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
      * @param parameters
      *     the page parameters
      */
-    public PaperSearchPage(final PageParameters parameters) {
+    public PaperSearchPage(@Nullable final PageParameters parameters) {
         super(parameters);
         trySettingSearchOrderModelFromDb();
         this.mode = modeFromPageParametersOrUser();
@@ -100,12 +102,11 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
      * @param mode
      *     the mode in which to open the page
      */
-    public PaperSearchPage(final IModel<SearchOrder> searchOrderModel, final Mode mode) {
+    public PaperSearchPage(@NotNull final IModel<SearchOrder> searchOrderModel, @NotNull final Mode mode) {
         super(searchOrderModel);
-        AssertAs.INSTANCE.notNull(searchOrderModel, "searchOrderModel");
         final SearchOrder searchOrder = searchOrderModel.getObject();
-        AssertAs.INSTANCE.notNull(searchOrder, "searchOrderModel.object");
-        AssertAs.INSTANCE.notNull(searchOrder.getId(), "searchOrderModel.object.id");
+        Objects.requireNonNull(searchOrder);
+        Objects.requireNonNull(searchOrder.getId());
         getPageParameters().clearNamed();
         getPageParameters().add(SEARCH_ORDER_ID.getName(), searchOrder.getId());
         getPageParameters().add(SHOW_EXCLUDED.getName(), searchOrder.isShowExcluded());
@@ -162,7 +163,7 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
     }
 
     @Override
-    public void renderHead(final IHeaderResponse response) {
+    public void renderHead(@NotNull final IHeaderResponse response) {
         super.renderHead(response);
         response.render(CssHeaderItem.forReference(FontAwesome5CDNCSSReference.instance()));
     }
@@ -238,7 +239,7 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
     }
 
     @Override
-    public void onEvent(final IEvent<?> event) {
+    public void onEvent(@NotNull final IEvent<?> event) {
         if (event
                 .getPayload()
                 .getClass() == SearchOrderChangeEvent.class)
@@ -376,5 +377,4 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
         getPaperIdManager().setFocusToItem(null);
         getPaperIdManager().initialize(dataProvider.findAllPaperIdsByFilter());
     }
-
 }

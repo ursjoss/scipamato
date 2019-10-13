@@ -1,5 +1,6 @@
 package ch.difty.scipamato.core.persistence.newsletter;
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 
 import ch.difty.scipamato.common.entity.newsletter.PublicationStatus;
@@ -19,19 +20,21 @@ import ch.difty.scipamato.core.persistence.EntityRecordMapper;
 @Component
 public class NewsletterRecordMapper extends EntityRecordMapper<NewsletterRecord, Newsletter> {
 
+    @NotNull
     @Override
     protected Newsletter makeEntity() {
         return new Newsletter();
     }
 
+    @NotNull
     @Override
-    protected AuditFields getAuditFieldsOf(NewsletterRecord r) {
+    protected AuditFields getAuditFieldsOf(@NotNull NewsletterRecord r) {
         return new AuditFields(r.getCreated(), r.getCreatedBy(), r.getLastModified(), r.getLastModifiedBy(),
             r.getVersion());
     }
 
     @Override
-    protected void mapFields(NewsletterRecord from, Newsletter to) {
+    protected void mapFields(@NotNull NewsletterRecord from, @NotNull Newsletter to) {
         to.setId(from.getId());
         to.setIssue(from.getIssue());
         to.setIssueDate(from.getIssueDate() != null ?
@@ -41,5 +44,4 @@ public class NewsletterRecordMapper extends EntityRecordMapper<NewsletterRecord,
             null);
         to.setPublicationStatus(PublicationStatus.Companion.byId(from.getPublicationStatus()));
     }
-
 }

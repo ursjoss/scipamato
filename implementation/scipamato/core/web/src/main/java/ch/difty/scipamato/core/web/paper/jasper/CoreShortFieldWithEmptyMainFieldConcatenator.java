@@ -1,8 +1,8 @@
 package ch.difty.scipamato.core.web.paper.jasper;
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 
-import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.paper.AbstractShortFieldConcatenator;
 import ch.difty.scipamato.core.entity.Paper;
 
@@ -25,9 +25,9 @@ public class CoreShortFieldWithEmptyMainFieldConcatenator extends AbstractShortF
         super(true);
     }
 
+    @NotNull
     @Override
-    public String methodsFrom(final Paper p, final ReportHeaderFields rhf) {
-        AssertAs.INSTANCE.notNull(p, PAPER);
+    public String methodsFrom(@NotNull final Paper p, @NotNull final ReportHeaderFields rhf) {
         return methodsFrom(p.getMethods(), new Tuple(rhf.getMethodStudyDesignLabel(), p.getMethodStudyDesign()),
             new Tuple(rhf.getMethodOutcomeLabel(), p.getMethodOutcome()),
             new Tuple(rhf.getPopulationPlaceLabel(), p.getPopulationPlace()),
@@ -37,21 +37,20 @@ public class CoreShortFieldWithEmptyMainFieldConcatenator extends AbstractShortF
             new Tuple(rhf.getMethodConfoundersLabel(), p.getMethodConfounders()));
     }
 
+    @NotNull
     @Override
-    public String populationFrom(final Paper p, final ReportHeaderFields rhf) {
-        AssertAs.INSTANCE.notNull(p, PAPER);
+    public String populationFrom(@NotNull final Paper p, @NotNull final ReportHeaderFields rhf) {
         return populationFrom(p.getPopulation(), new Tuple(rhf.getPopulationPlaceLabel(), p.getPopulationPlace()),
             new Tuple(rhf.getPopulationParticipantsLabel(), p.getPopulationParticipants()),
             new Tuple(rhf.getPopulationDurationLabel(), p.getPopulationDuration()));
     }
 
+    @NotNull
     @Override
-    public String resultFrom(final Paper p, final ReportHeaderFields rhf) {
-        AssertAs.INSTANCE.notNull(p, PAPER);
+    public String resultFrom(@NotNull final Paper p, @NotNull final ReportHeaderFields rhf) {
         return resultFrom(p.getResult(), new Tuple(rhf.getResultMeasuredOutcomeLabel(), p.getResultMeasuredOutcome()),
             new Tuple(rhf.getResultExposureRangeLabel(), p.getResultExposureRange()),
             new Tuple(rhf.getResultEffectEstimateLabel(), p.getResultEffectEstimate()),
             new Tuple(rhf.getConclusionLabel(), p.getConclusion()));
     }
-
 }

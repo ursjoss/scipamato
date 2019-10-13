@@ -1,5 +1,7 @@
 package ch.difty.scipamato.core;
 
+import org.jetbrains.annotations.Nullable;
+
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic;
 
 /**
@@ -12,6 +14,7 @@ public interface NewsletterAware {
     /**
      * @return the id of the associated NewsletterTopic
      */
+    @Nullable
     Integer getNewsletterTopicId();
 
     /**
@@ -20,7 +23,7 @@ public interface NewsletterAware {
      * @param newsletterTopic
      *     the topic of the newsletter
      */
-    void setNewsletterTopic(NewsletterTopic newsletterTopic);
+    void setNewsletterTopic(@Nullable NewsletterTopic newsletterTopic);
 
     /**
      * Sets the newsletter headline
@@ -28,11 +31,12 @@ public interface NewsletterAware {
      * @param headline
      *     the headline of the paper in the newsletter
      */
-    void setNewsletterHeadline(String headline);
+    void setNewsletterHeadline(@Nullable String headline);
 
     /**
      * @return the headline of the paper in the newsletter
      */
+    @Nullable
     String getNewsletterHeadline();
 
     /**
@@ -41,11 +45,11 @@ public interface NewsletterAware {
      * @param issue
      *     the issue of the paper in the newsletter
      */
-    void setNewsletterIssue(String issue);
+    void setNewsletterIssue(@Nullable String issue);
 
     /**
      * @return the issue of the newsletter assigned to the paper
      */
+    @Nullable
     String getNewsletterIssue();
-
 }

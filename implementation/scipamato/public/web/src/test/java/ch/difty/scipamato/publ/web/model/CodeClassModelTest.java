@@ -1,6 +1,5 @@
 package ch.difty.scipamato.publ.web.model;
 
-import static ch.difty.scipamato.common.TestUtilsKt.assertDegenerateSupplierParameter;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.extractProperty;
 import static org.mockito.Mockito.*;
@@ -18,11 +17,6 @@ class CodeClassModelTest extends ModelTest {
 
     @MockBean
     private CodeClassService serviceMock;
-
-    @Test
-    void instantiating_withNullLanguageCode_throws() {
-        assertDegenerateSupplierParameter(() -> new CodeClassModel(null), "languageCode");
-    }
 
     @Test
     void loading_delegatesToCodeClassService() {

@@ -292,5 +292,4 @@ abstract class ResultPanelTest extends PanelTest<ResultPanel> {
             }
         };
     }
-
 }

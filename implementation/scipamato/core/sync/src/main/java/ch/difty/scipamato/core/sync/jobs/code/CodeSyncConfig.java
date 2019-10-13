@@ -8,6 +8,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.jooq.DSLContext;
 import org.jooq.DeleteConditionStep;
 import org.jooq.Row9;
@@ -42,6 +44,7 @@ import ch.difty.scipamato.publ.db.tables.CodeClass;
  *
  * @author u.joss
  */
+@SuppressWarnings("SpellCheckingInspection")
 @Configuration
 @Profile("!wickettest")
 public class CodeSyncConfig extends SyncConfig<PublicCode, ch.difty.scipamato.publ.db.tables.records.CodeRecord> {
@@ -60,23 +63,28 @@ public class CodeSyncConfig extends SyncConfig<PublicCode, ch.difty.scipamato.pu
     private static final TableField<CodeTrRecord, Timestamp> C_CREATED       = CODE_TR.CREATED;
     private static final TableField<CodeTrRecord, Timestamp> C_LAST_MODIFIED = CODE_TR.LAST_MODIFIED;
 
-    protected CodeSyncConfig(@Qualifier("dslContext") DSLContext jooqCore,
-        @Qualifier("publicDslContext") DSLContext jooqPublic, @Qualifier("dataSource") DataSource coreDataSource,
-        JobBuilderFactory jobBuilderFactory, StepBuilderFactory stepBuilderFactory, DateTimeService dateTimeService) {
+    protected CodeSyncConfig(@Qualifier("dslContext") @NotNull final DSLContext jooqCore,
+        @Qualifier("publicDslContext") @NotNull final DSLContext jooqPublic,
+        @Qualifier("dataSource") @NotNull final DataSource coreDataSource,
+        @NotNull final JobBuilderFactory jobBuilderFactory, @NotNull final StepBuilderFactory stepBuilderFactory,
+        @NotNull final DateTimeService dateTimeService) {
         super(TOPIC, CHUNK_SIZE, jooqCore, jooqPublic, coreDataSource, jobBuilderFactory, stepBuilderFactory,
             dateTimeService);
     }
 
+    @NotNull
     @Bean
     public Job syncCodeJob() {
         return createJob();
     }
 
+    @NotNull
     @Override
     protected String getJobName() {
         return "syncCodeJob";
     }
 
+    @NotNull
     @Override
     protected ItemWriter<PublicCode> publicWriter() {
         return new CodeItemWriter(getJooqPublic());
@@ -86,6 +94,7 @@ public class CodeSyncConfig extends SyncConfig<PublicCode, ch.difty.scipamato.pu
      * HARDCODED consider moving the aggregated code 5abc into some table in
      * scipamato-core. See also HidingInternalsCodeAggregator#filterAndEnrich
      */
+    @NotNull
     @Override
     protected String selectSql() {
         final Timestamp now = getNow();
@@ -107,8 +116,9 @@ public class CodeSyncConfig extends SyncConfig<PublicCode, ch.difty.scipamato.pu
             .getSQL(ParamType.INLINED);
     }
 
+    @NotNull
     @Override
-    protected PublicCode makeEntity(final ResultSet rs) throws SQLException {
+    protected PublicCode makeEntity(@NotNull final ResultSet rs) throws SQLException {
         return PublicCode
             .builder()
             .code(getString(C_CODE, rs))
@@ -124,11 +134,13 @@ public class CodeSyncConfig extends SyncConfig<PublicCode, ch.difty.scipamato.pu
             .build();
     }
 
+    @NotNull
     @Override
     protected TableField<ch.difty.scipamato.publ.db.tables.records.CodeRecord, Timestamp> lastSynchedField() {
         return ch.difty.scipamato.publ.db.tables.Code.CODE.LAST_SYNCHED;
     }
 
+    @Nullable
     @Override
     public DeleteConditionStep<ch.difty.scipamato.publ.db.tables.records.CodeRecord> getPseudoFkDcs() {
         return getJooqPublic()

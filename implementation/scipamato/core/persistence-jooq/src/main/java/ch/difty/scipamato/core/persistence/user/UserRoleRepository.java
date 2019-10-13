@@ -2,6 +2,8 @@ package ch.difty.scipamato.core.persistence.user;
 
 import java.util.Set;
 
+import org.jetbrains.annotations.NotNull;
+
 import ch.difty.scipamato.core.auth.Role;
 
 public interface UserRoleRepository {
@@ -13,7 +15,8 @@ public interface UserRoleRepository {
      *     the id of the user to find roles for
      * @return list of {@link Role}s
      */
-    Set<Role> findRolesForUser(Integer userId);
+    @NotNull
+    Set<Role> findRolesForUser(@NotNull Integer userId);
 
     /**
      * Adds all {@link Role}s to the user with the provided id. If any {@link Role}
@@ -27,7 +30,8 @@ public interface UserRoleRepository {
      *     the {@link Role}s that need to be assigned to the user.
      * @return all roles assigned to the user
      */
-    Set<Role> addNewUserRolesOutOf(Integer userId, Set<Role> roles);
+    @NotNull
+    Set<Role> addNewUserRolesOutOf(@NotNull Integer userId, @NotNull Set<Role> roles);
 
     /**
      * Deletes any {@link Role}s the user might have assigned *except* those in the
@@ -38,6 +42,5 @@ public interface UserRoleRepository {
      * @param roleIds
      *     the role ids that shall *not* be deleted
      */
-    void deleteAllRolesExcept(Integer userId, Set<Integer> roleIds);
-
+    void deleteAllRolesExcept(@NotNull Integer userId, @NotNull Set<Integer> roleIds);
 }

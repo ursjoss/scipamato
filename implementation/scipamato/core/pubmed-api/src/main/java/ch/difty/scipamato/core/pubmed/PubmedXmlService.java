@@ -11,12 +11,12 @@ import java.util.stream.Collectors;
 
 import feign.FeignException;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.http.HttpStatus;
 import org.springframework.oxm.Unmarshaller;
 import org.springframework.stereotype.Service;
 
-import ch.difty.scipamato.common.AssertAs;
-import ch.difty.scipamato.common.NullArgumentException;
 import ch.difty.scipamato.core.pubmed.api.PubmedArticleSet;
 
 /**
@@ -31,19 +31,20 @@ public class PubmedXmlService implements PubmedArticleService {
     private final Unmarshaller unmarshaller;
     private final PubMed       pubMed;
 
-    public PubmedXmlService(final Unmarshaller unmarshaller, final PubMed pubMed) {
-        this.unmarshaller = AssertAs.INSTANCE.notNull(unmarshaller, "unmarshaller");
-        this.pubMed = AssertAs.INSTANCE.notNull(pubMed, "pubMed");
+    public PubmedXmlService(@NotNull final Unmarshaller unmarshaller, @NotNull final PubMed pubMed) {
+        this.unmarshaller = unmarshaller;
+        this.pubMed = pubMed;
     }
 
+    @NotNull
     @Override
     public PubmedArticleResult getPubmedArticleWithPmid(final int pmId) {
         return processArticles(retrievePubmedArticleSet(pmId), pmId);
     }
 
+    @NotNull
     @Override
-    public PubmedArticleResult getPubmedArticleWithPmidAndApiKey(final int pmId, final String apiKey) {
-        AssertAs.INSTANCE.notNull(apiKey, "apiKey");
+    public PubmedArticleResult getPubmedArticleWithPmidAndApiKey(final int pmId, @NotNull final String apiKey) {
         return processArticles(retrievePubmedArticleSet(pmId, apiKey), pmId);
     }
 
@@ -93,8 +94,9 @@ public class PubmedXmlService implements PubmedArticleService {
      *     the raw xml string to unmarshal
      * @return {@link PubmedArticleSet}
      */
-    public PubmedArticleSet unmarshal(final String xmlString) throws IOException {
-        final StringReader reader = new StringReader(AssertAs.INSTANCE.notNull(xmlString, "xmlString"));
+    @NotNull
+    public PubmedArticleSet unmarshal(@NotNull final String xmlString) throws IOException {
+        final StringReader reader = new StringReader(xmlString);
         return (PubmedArticleSet) unmarshaller.unmarshal(new StreamSource(reader));
     }
 
@@ -114,11 +116,10 @@ public class PubmedXmlService implements PubmedArticleService {
      *     pubmed content in XML format, as String. Must not be null.
      * @return List of {@link PubmedArticleFacade} entries. Never null. Will be
      *     empty if there are issues with the XML.
-     * @throws NullArgumentException
-     *     in case of null xmlString.
      */
+    @NotNull
     @Override
-    public List<PubmedArticleFacade> extractArticlesFrom(final String xmlString) {
+    public List<PubmedArticleFacade> extractArticlesFrom(@NotNull final String xmlString) {
         final List<PubmedArticleFacade> articles = new ArrayList<>();
         try {
             final PubmedArticleSet set = unmarshal(xmlString);
@@ -138,28 +139,29 @@ public class PubmedXmlService implements PubmedArticleService {
      * an error message (optionally with an {@link HttpStatus} if available.
      */
     private static class PubmedArticleFeignResult {
+        @Nullable
         final PubmedArticleSet pubmedArticleSet;
+        @Nullable
         final String           errorMessage;
+        @Nullable
         final HttpStatus       httpStatus;
 
-        PubmedArticleFeignResult(final PubmedArticleSet articleSet) {
+        PubmedArticleFeignResult(@NotNull final PubmedArticleSet articleSet) {
             pubmedArticleSet = articleSet;
             errorMessage = null;
             httpStatus = null;
         }
 
-        PubmedArticleFeignResult(final FeignException ex) {
+        PubmedArticleFeignResult(@NotNull final FeignException ex) {
             pubmedArticleSet = null;
             errorMessage = ex.getLocalizedMessage();
             httpStatus = HttpStatus.resolve(ex.status());
         }
 
-        PubmedArticleFeignResult(final String exceptionMessage) {
+        PubmedArticleFeignResult(@NotNull final String exceptionMessage) {
             pubmedArticleSet = null;
             errorMessage = exceptionMessage;
             httpStatus = null;
         }
-
     }
-
 }

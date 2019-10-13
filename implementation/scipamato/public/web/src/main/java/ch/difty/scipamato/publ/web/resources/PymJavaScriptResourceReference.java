@@ -1,6 +1,7 @@
 package ch.difty.scipamato.publ.web.resources;
 
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * JavaScriptResourceReference to pym.js allowing to use SciPaMaTo within a
@@ -20,6 +21,7 @@ public class PymJavaScriptResourceReference extends JavaScriptResourceReference 
         super(PymJavaScriptResourceReference.class, "js/pym.v1.js");
     }
 
+    @NotNull
     public static PymJavaScriptResourceReference get() {
         return INSTANCE;
     }

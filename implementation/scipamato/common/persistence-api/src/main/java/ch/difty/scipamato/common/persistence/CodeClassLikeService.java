@@ -2,6 +2,8 @@ package ch.difty.scipamato.common.persistence;
 
 import java.util.List;
 
+import org.jetbrains.annotations.NotNull;
+
 import ch.difty.scipamato.common.entity.CodeClassLike;
 
 /**
@@ -22,5 +24,6 @@ public interface CodeClassLikeService<T extends CodeClassLike> {
      *     language code, e.g. 'en' or 'de'
      * @return a list of code classes of Type {@code T}
      */
-    List<T> find(String languageCode);
+    @NotNull
+    List<T> find(@NotNull String languageCode);
 }

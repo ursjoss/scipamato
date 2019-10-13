@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 
 import lombok.Builder;
 import lombok.experimental.Delegate;
+import org.jetbrains.annotations.NotNull;
 
 import ch.difty.scipamato.publ.db.tables.pojos.NewStudyPageLink;
 
@@ -23,8 +24,8 @@ public class PublicNewStudyPageLink {
     private final NewStudyPageLink delegate;
 
     @Builder
-    private PublicNewStudyPageLink(final String langCode, final int sort, final String title, final String url,
-        final Timestamp lastSynched) {
+    private PublicNewStudyPageLink(@NotNull final String langCode, final int sort, @NotNull final String title,
+        @NotNull final String url, @NotNull final Timestamp lastSynched) {
         delegate = new NewStudyPageLink();
         delegate.setLangCode(langCode);
         delegate.setSort(sort);

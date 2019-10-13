@@ -2,10 +2,7 @@ package ch.difty.scipamato.core.web.paper.jasper;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import ch.difty.scipamato.common.NullArgumentException;
 
 class JasperEntityCommonTest extends JasperEntity {
 
@@ -69,21 +66,6 @@ class JasperEntityCommonTest extends JasperEntity {
     @Test
     void na_withNonBlankParameterAndNonBlankValue_returnsLabel() {
         assertThat(na("foo", "bar")).isEqualTo("foo");
-    }
-
-    @Test
-    void na2_withNullParameterAndNullValue_throws() {
-        Assertions.assertThrows(NullArgumentException.class, () -> na2(null, null));
-    }
-
-    @Test
-    void na2_withNullParameterAndBlankValue_returnsBlank() {
-        Assertions.assertThrows(NullArgumentException.class, () -> na2(null, ""));
-    }
-
-    @Test
-    void na2_withNullParameterAndNonBlankValue_returnsBlank() {
-        Assertions.assertThrows(NullArgumentException.class, () -> na2(null, "foo"));
     }
 
     @Test

@@ -11,10 +11,7 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.design.JRDesignField;
 import org.junit.jupiter.api.Test;
 
-import ch.difty.scipamato.common.NullArgumentException;
 import ch.difty.scipamato.core.entity.Paper;
-import ch.difty.scipamato.core.entity.PaperSlimFilter;
-import ch.difty.scipamato.core.web.paper.AbstractPaperSlimProvider;
 import ch.difty.scipamato.core.web.paper.jasper.PaperDataSourceTest;
 import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields;
 
@@ -203,18 +200,4 @@ class PaperSummaryDataSourceTest extends PaperDataSourceTest {
             .next()).isFalse();
         verify(dataProviderMock).size();
     }
-
-    @Test
-    void instantiatingWithProvider_withNullProvider_throws() {
-        AbstractPaperSlimProvider<? extends PaperSlimFilter> provider = null;
-        try {
-            //noinspection ConstantConditions
-            new PaperSummaryDataSource(provider, rhf, shortFieldConcatenatorMock, pdfExporterConfigMock);
-        } catch (Exception ex) {
-            assertThat(ex)
-                .isInstanceOf(NullArgumentException.class)
-                .hasMessage("dataProvider must not be null.");
-        }
-    }
-
 }

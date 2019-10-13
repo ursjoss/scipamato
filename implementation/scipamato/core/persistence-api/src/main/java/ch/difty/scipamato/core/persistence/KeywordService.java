@@ -2,7 +2,9 @@ package ch.difty.scipamato.core.persistence;
 
 import java.util.List;
 
-import ch.difty.scipamato.common.NullArgumentException;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import ch.difty.scipamato.common.persistence.DefinitionProviderService;
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.core.entity.keyword.Keyword;
@@ -23,7 +25,8 @@ public interface KeywordService extends DefinitionProviderService<KeywordDefinit
      *     the language code, e.g. 'en' or 'de'
      * @return a list of keywords
      */
-    List<Keyword> findAll(String languageCode);
+    @NotNull
+    List<Keyword> findAll(@NotNull String languageCode);
 
     /**
      * Finds a page full of {@link KeywordDefinition} records matching the provided filter
@@ -35,7 +38,9 @@ public interface KeywordService extends DefinitionProviderService<KeywordDefinit
      *     context defining paging and sorting
      * @return a page of entities of type {@code T} as list
      */
-    List<KeywordDefinition> findPageOfKeywordDefinitions(KeywordFilter filter, PaginationContext paginationContext);
+    @NotNull
+    List<KeywordDefinition> findPageOfKeywordDefinitions(@Nullable KeywordFilter filter,
+        @NotNull PaginationContext paginationContext);
 
     /**
      * Counts the number of {@link KeywordDefinition}s matching the specified filter.
@@ -44,7 +49,7 @@ public interface KeywordService extends DefinitionProviderService<KeywordDefinit
      *     of type KeywordFilter
      * @return entity count
      */
-    int countByFilter(KeywordFilter filter);
+    int countByFilter(@Nullable KeywordFilter filter);
 
     /**
      * Creates and returns an unpersisted instance of a KeywordDefinition
@@ -52,6 +57,7 @@ public interface KeywordService extends DefinitionProviderService<KeywordDefinit
      *
      * @return the unpersisted entity
      */
+    @NotNull
     KeywordDefinition newUnpersistedKeywordDefinition();
 
     /**
@@ -63,10 +69,9 @@ public interface KeywordService extends DefinitionProviderService<KeywordDefinit
      * @return the persisted entity, including the generated id and default values - or
      *     {@code null} if it can't be added. Only the version field is populated out of
      *     all the audit fields.
-     * @throws NullArgumentException
-     *     if the entity is null.
      */
-    KeywordDefinition insert(KeywordDefinition entity);
+    @Nullable
+    KeywordDefinition insert(@NotNull KeywordDefinition entity);
 
     /**
      * Update an already persisted {@link KeywordDefinition} including its associated
@@ -78,10 +83,9 @@ public interface KeywordService extends DefinitionProviderService<KeywordDefinit
      * @return the updated persisted entity, including the generated id and default values - or
      *     {@code null} if it can't be added. Only the version field is populated out of
      *     all the audit fields.
-     * @throws NullArgumentException
-     *     if the entity is null.
      */
-    KeywordDefinition update(KeywordDefinition entity);
+    @Nullable
+    KeywordDefinition update(@NotNull KeywordDefinition entity);
 
     /**
      * Persists the provided entity. Depending on the absence or presence of an ID, the
@@ -91,7 +95,8 @@ public interface KeywordService extends DefinitionProviderService<KeywordDefinit
      *     the {@link KeywordDefinition} to be persisted
      * @return the persisted entity.
      */
-    KeywordDefinition saveOrUpdate(KeywordDefinition entity);
+    @Nullable
+    KeywordDefinition saveOrUpdate(@NotNull KeywordDefinition entity);
 
     /**
      * Remove the persisted entity with the provided id.
@@ -101,11 +106,9 @@ public interface KeywordService extends DefinitionProviderService<KeywordDefinit
      * @param version
      *     the record version - used for optimistic locking
      * @return the deleted entity
-     * @throws NullArgumentException
-     *     if the id is null.
      * @throws OptimisticLockingException
      *     if the record version has increased in the mean time
      */
+    @Nullable
     KeywordDefinition delete(int id, int version);
-
 }

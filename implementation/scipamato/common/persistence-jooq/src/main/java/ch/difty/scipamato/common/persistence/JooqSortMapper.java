@@ -2,6 +2,8 @@ package ch.difty.scipamato.common.persistence;
 
 import java.util.Collection;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.jooq.Record;
 import org.jooq.SortField;
 import org.jooq.impl.TableImpl;
@@ -34,6 +36,7 @@ public interface JooqSortMapper<R extends Record, T extends ScipamatoEntity, TI 
      *     {@code TI}
      * @return collection of {@link SortField}s
      */
-    Collection<SortField<T>> map(Sort sortSpecification, TI table);
+    @NotNull
+    Collection<SortField<T>> map(@Nullable Sort sortSpecification, @NotNull TI table);
 
 }

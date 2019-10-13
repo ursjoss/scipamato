@@ -11,7 +11,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.fail
 import org.junit.jupiter.api.Test
 
-@Suppress("LargeClass", "TooManyFunctions", "FunctionName", "LongMethod", "DuplicatedCode")
+@Suppress("LargeClass", "TooManyFunctions", "FunctionName", "LongMethod", "DuplicatedCode", "TooGenericExceptionCaught")
 internal class StringSearchTermEvaluatorTest {
 
     private val evaluator = StringSearchTermEvaluator()

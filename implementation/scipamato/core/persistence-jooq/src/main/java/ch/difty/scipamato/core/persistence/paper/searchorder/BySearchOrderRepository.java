@@ -2,6 +2,8 @@ package ch.difty.scipamato.core.persistence.paper.searchorder;
 
 import java.util.List;
 
+import org.jetbrains.annotations.NotNull;
+
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.core.entity.IdScipamatoEntity;
 import ch.difty.scipamato.core.entity.search.SearchOrder;
@@ -25,7 +27,8 @@ public interface BySearchOrderRepository<T extends IdScipamatoEntity<Long>> {
      *     {@link SearchOrder} the search specification
      * @return list of entities
      */
-    List<T> findBySearchOrder(SearchOrder searchOrder);
+    @NotNull
+    List<T> findBySearchOrder(@NotNull SearchOrder searchOrder);
 
     /**
      * Finds a single page of entities of type {@code T} matching the provided
@@ -38,7 +41,8 @@ public interface BySearchOrderRepository<T extends IdScipamatoEntity<Long>> {
      * @return paged list of entities
      * @see #findBySearchOrder(SearchOrder)
      */
-    List<T> findPageBySearchOrder(SearchOrder searchOrder, PaginationContext paginationContext);
+    @NotNull
+    List<T> findPageBySearchOrder(@NotNull SearchOrder searchOrder, @NotNull PaginationContext paginationContext);
 
     /**
      * Counts all persisted entities of type {@code T} matching the provided
@@ -48,7 +52,7 @@ public interface BySearchOrderRepository<T extends IdScipamatoEntity<Long>> {
      *     the search specification
      * @return T entity count
      */
-    int countBySearchOrder(SearchOrder searchOrder);
+    int countBySearchOrder(@NotNull SearchOrder searchOrder);
 
     /**
      * Finds a single page of entity ids matching the provided {@link SearchOrder}
@@ -61,6 +65,7 @@ public interface BySearchOrderRepository<T extends IdScipamatoEntity<Long>> {
      * @return paged list of entity ids
      * @see #findBySearchOrder(SearchOrder)
      */
-    List<Long> findPageOfIdsBySearchOrder(SearchOrder searchOrder, PaginationContext paginationContext);
-
+    @NotNull
+    List<Long> findPageOfIdsBySearchOrder(@NotNull SearchOrder searchOrder,
+        @NotNull PaginationContext paginationContext);
 }

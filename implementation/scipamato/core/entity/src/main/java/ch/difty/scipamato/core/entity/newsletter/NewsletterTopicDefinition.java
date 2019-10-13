@@ -5,9 +5,9 @@ import java.util.Objects;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import ch.difty.scipamato.common.AssertAs;
-import ch.difty.scipamato.common.NullArgumentException;
 import ch.difty.scipamato.common.entity.AbstractDefinitionEntity;
 
 /**
@@ -33,12 +33,10 @@ public class NewsletterTopicDefinition extends AbstractDefinitionEntity<Newslett
      *     audit field version
      * @param translations
      *     translations for all relevant languages
-     * @throws NullArgumentException
-     *     if the mainLanguageCode is null
      */
-    public NewsletterTopicDefinition(final Integer id, final String mainLanguageCode, final Integer version,
-        final NewsletterTopicTranslation... translations) {
-        super(AssertAs.INSTANCE.notNull(mainLanguageCode, "mainLanguageCode"), Arrays
+    public NewsletterTopicDefinition(@Nullable final Integer id, @NotNull final String mainLanguageCode,
+        @Nullable final Integer version, @NotNull final NewsletterTopicTranslation... translations) {
+        super(mainLanguageCode, Arrays
             .stream(translations)
             .filter(tr -> mainLanguageCode.equals(tr.getLangCode()))
             .map(NewsletterTopicTranslation::getName)
@@ -48,6 +46,7 @@ public class NewsletterTopicDefinition extends AbstractDefinitionEntity<Newslett
         setId(id);
     }
 
+    @NotNull
     @Override
     public Integer getNullSafeId() {
         return getId() != null ? getId() : 0;
@@ -56,6 +55,7 @@ public class NewsletterTopicDefinition extends AbstractDefinitionEntity<Newslett
     /**
      * Title as Alias for name, as it's used in the database
      */
+    @NotNull
     public String getTitle() {
         return getName();
     }
@@ -63,21 +63,22 @@ public class NewsletterTopicDefinition extends AbstractDefinitionEntity<Newslett
     /**
      * Title as Alias for name, as it's used in the database
      */
-    public void setTitle(String title) {
+    public void setTitle(@NotNull final String title) {
         setName(title);
     }
 
     /**
      * Title as Alias for name, as it's used in the database
      */
-    public String getTitleInLanguage(final String langCode) {
+    @Nullable
+    public String getTitleInLanguage(@NotNull final String langCode) {
         return getNameInLanguage(langCode);
     }
 
     /**
      * Title as Alias for name, as it's used in the database
      */
-    public void setTitleInLanguage(final String langCode, String title) {
+    public void setTitleInLanguage(@NotNull final String langCode, @NotNull String title) {
         setNameInLanguage(langCode, title);
     }
 }

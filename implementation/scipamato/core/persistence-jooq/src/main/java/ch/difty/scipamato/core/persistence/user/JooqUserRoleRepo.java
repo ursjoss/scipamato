@@ -5,6 +5,7 @@ import static ch.difty.scipamato.core.db.tables.UserRole.USER_ROLE;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.jetbrains.annotations.NotNull;
 import org.jooq.DSLContext;
 import org.jooq.InsertValuesStep2;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -34,9 +35,10 @@ public class JooqUserRoleRepo implements UserRoleRepository {
         this.dsl = dsl;
     }
 
+    @NotNull
     @Override
     @Cacheable(key = "#userId")
-    public Set<Role> findRolesForUser(final Integer userId) {
+    public Set<Role> findRolesForUser(@NotNull final Integer userId) {
         return new HashSet<>(dsl
             .select(USER_ROLE.ROLE_ID)
             .from(USER_ROLE)
@@ -45,9 +47,10 @@ public class JooqUserRoleRepo implements UserRoleRepository {
             .map(rec -> Role.of((Integer) rec.getValue(0))));
     }
 
+    @NotNull
     @Override
     @CacheEvict(key = "#userId")
-    public Set<Role> addNewUserRolesOutOf(final Integer userId, final Set<Role> roles) {
+    public Set<Role> addNewUserRolesOutOf(@NotNull final Integer userId, @NotNull final Set<Role> roles) {
         InsertValuesStep2<UserRoleRecord, Integer, Integer> step = dsl.insertInto(USER_ROLE, USER_ROLE.USER_ID,
             USER_ROLE.ROLE_ID);
         for (final Role r : roles)
@@ -60,7 +63,7 @@ public class JooqUserRoleRepo implements UserRoleRepository {
 
     @Override
     @CacheEvict(key = "#userId")
-    public void deleteAllRolesExcept(final Integer userId, final Set<Integer> roleIds) {
+    public void deleteAllRolesExcept(@NotNull final Integer userId, @NotNull final Set<Integer> roleIds) {
         dsl
             .deleteFrom(USER_ROLE)
             .where(USER_ROLE.USER_ID
@@ -68,5 +71,4 @@ public class JooqUserRoleRepo implements UserRoleRepository {
                 .and(USER_ROLE.ROLE_ID.notIn(roleIds)))
             .execute();
     }
-
 }

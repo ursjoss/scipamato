@@ -79,7 +79,6 @@ abstract class AbstractDefinitionEntity<T : DefinitionTranslation, ID>(
             return sb.toString()
         }
 
-
     fun setNameInLanguage(langCode: String, translatedName: String) {
         val trs = translations.get(langCode)
         trs?.firstOrNull()?.let { tr ->
@@ -121,7 +120,6 @@ abstract class AbstractDefinitionEntity<T : DefinitionTranslation, ID>(
 
     override fun toString() =
         "AbstractDefinitionEntity[translations=$translationsAsString, mainLanguageCode=$mainLanguageCode, name=$name]"
-
 }
 
 // TODO directly implement as data classes

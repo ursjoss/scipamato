@@ -1,10 +1,13 @@
 package ch.difty.scipamato.core.persistence;
 
+import java.util.Objects;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.jooq.*;
 import org.jooq.impl.TableImpl;
 import org.slf4j.Logger;
 
-import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.DateTimeService;
 import ch.difty.scipamato.common.config.ApplicationProperties;
 import ch.difty.scipamato.common.entity.filter.ScipamatoFilter;
@@ -60,18 +63,19 @@ public abstract class JooqEntityRepo<R extends Record, T extends CoreEntity, ID,
      * @param applicationProperties
      *     {@link ApplicationProperties}
      */
-    protected JooqEntityRepo(DSLContext dsl, M mapper, JooqSortMapper<R, T, TI> sortMapper,
-        GenericFilterConditionMapper<F> filterConditionMapper, DateTimeService dateTimeService,
-        InsertSetStepSetter<R, T> insertSetStepSetter, UpdateSetStepSetter<R, T> updateSetStepSetter,
-        ApplicationProperties applicationProperties) {
+    protected JooqEntityRepo(@NotNull DSLContext dsl, @NotNull M mapper, @NotNull JooqSortMapper<R, T, TI> sortMapper,
+        @NotNull GenericFilterConditionMapper<F> filterConditionMapper, @NotNull DateTimeService dateTimeService,
+        @NotNull InsertSetStepSetter<R, T> insertSetStepSetter, @NotNull UpdateSetStepSetter<R, T> updateSetStepSetter,
+        @NotNull ApplicationProperties applicationProperties) {
         super(dsl, mapper, sortMapper, filterConditionMapper, dateTimeService, applicationProperties);
-        this.insertSetStepSetter = AssertAs.INSTANCE.notNull(insertSetStepSetter, "insertSetStepSetter");
-        this.updateSetStepSetter = AssertAs.INSTANCE.notNull(updateSetStepSetter, "updateSetStepSetter");
+        this.insertSetStepSetter = insertSetStepSetter;
+        this.updateSetStepSetter = updateSetStepSetter;
     }
 
     /**
      * @return return the Repo specific {@link Logger}
      */
+    @NotNull
     protected abstract Logger getLogger();
 
     /**
@@ -79,25 +83,26 @@ public abstract class JooqEntityRepo<R extends Record, T extends CoreEntity, ID,
      *     persisted record that now holds the ID from the database.
      * @return the id of type {@code ID}
      */
-    protected abstract ID getIdFrom(R record);
+    @NotNull
+    protected abstract ID getIdFrom(@NotNull R record);
 
     /**
      * @param entity
      *     persisted entity that now holds the ID from the database.
      * @return the id of type {@code ID}
      */
-    protected abstract ID getIdFrom(T entity);
+    @Nullable
+    protected abstract ID getIdFrom(@NotNull T entity);
 
+    @Nullable
     @Override
-    public T add(final T entity) {
+    public T add(@NotNull final T entity) {
         return add(entity, getApplicationProperties().getDefaultLocalization());
     }
 
+    @Nullable
     @Override
-    public T add(final T entity, final String languageCode) {
-        AssertAs.INSTANCE.notNull(entity, "entity");
-        AssertAs.INSTANCE.notNull(languageCode, "languageCode");
-
+    public T add(@NotNull final T entity, @NotNull final String languageCode) {
         R saved = doSave(entity, languageCode);
         if (saved != null) {
             getLogger().info("{} inserted 1 record: {} with id {}.", getActiveUser().getUserName(),
@@ -111,7 +116,8 @@ public abstract class JooqEntityRepo<R extends Record, T extends CoreEntity, ID,
         }
     }
 
-    protected R doSave(final T entity, final String languageCode) {
+    @Nullable
+    protected R doSave(@NotNull final T entity, @NotNull final String languageCode) {
         entity.setCreatedBy(getUserId());
         entity.setLastModifiedBy(getUserId());
 
@@ -134,13 +140,12 @@ public abstract class JooqEntityRepo<R extends Record, T extends CoreEntity, ID,
      * @param languageCode
      *     the two character language code
      */
-    protected void saveAssociatedEntitiesOf(T entity, String languageCode) {
+    protected void saveAssociatedEntitiesOf(@NotNull T entity, @NotNull String languageCode) {
     }
 
+    @NotNull
     @Override
-    public T delete(final ID id, int version) {
-        AssertAs.INSTANCE.notNull(id, "id");
-
+    public T delete(@NotNull final ID id, int version) {
         final T toBeDeleted = findById(id, version);
         if (toBeDeleted != null) {
             deleteAssociatedEntitiesOf(toBeDeleted);
@@ -172,16 +177,17 @@ public abstract class JooqEntityRepo<R extends Record, T extends CoreEntity, ID,
     protected void deleteAssociatedEntitiesOf(@SuppressWarnings("unused") T entity) {
     }
 
+    @Nullable
     @Override
-    public T update(final T entity) {
+    public T update(@NotNull final T entity) {
         return update(entity, getApplicationProperties().getDefaultLocalization());
     }
 
+    @Nullable
     @Override
-    public T update(final T entity, final String languageCode) {
-        AssertAs.INSTANCE.notNull(entity, "entity");
-        AssertAs.INSTANCE.notNull(languageCode, "languageCode");
-        ID id = AssertAs.INSTANCE.notNull(getIdFrom(entity), "entity.id");
+    public T update(@NotNull final T entity, @NotNull final String languageCode) {
+        ID id = getIdFrom(entity);
+        Objects.requireNonNull(id);
 
         entity.setLastModified(now());
         entity.setLastModifiedBy(getUserId());
@@ -212,7 +218,6 @@ public abstract class JooqEntityRepo<R extends Record, T extends CoreEntity, ID,
      * @param languageCode
      *     the two character language code
      */
-    protected void updateAssociatedEntities(final T entity, final String languageCode) {
+    protected void updateAssociatedEntities(@NotNull final T entity, @NotNull final String languageCode) {
     }
-
 }

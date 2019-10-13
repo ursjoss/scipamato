@@ -142,5 +142,4 @@ class UserListPageAsAdminTest extends BasePageTest<UserListPage> {
         verify(userServiceMock).countByFilter(isA(UserFilter.class));
         verify(userServiceMock).findPageByFilter(isA(UserFilter.class), isA(PaginationRequest.class));
     }
-
 }

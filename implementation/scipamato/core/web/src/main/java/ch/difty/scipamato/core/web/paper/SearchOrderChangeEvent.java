@@ -3,6 +3,8 @@ package ch.difty.scipamato.core.web.paper;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import ch.difty.scipamato.common.web.event.WicketEvent;
 import ch.difty.scipamato.core.web.paper.search.SearchOrderPanel;
@@ -31,29 +33,31 @@ public class SearchOrderChangeEvent extends WicketEvent {
     private Long    droppedConditionId;
     private boolean newSearchOrderRequested;
 
-    public SearchOrderChangeEvent(final AjaxRequestTarget target) {
+    public SearchOrderChangeEvent(@NotNull final AjaxRequestTarget target) {
         super(target);
     }
 
-    public SearchOrderChangeEvent withExcludedPaperId(Long excludedId) {
+    @NotNull
+    public SearchOrderChangeEvent withExcludedPaperId(@NotNull Long excludedId) {
         this.excludedId = excludedId;
         this.droppedConditionId = null;
         this.newSearchOrderRequested = false;
         return this;
     }
 
-    public SearchOrderChangeEvent withDroppedConditionId(Long id) {
+    @NotNull
+    public SearchOrderChangeEvent withDroppedConditionId(@Nullable Long id) {
         this.droppedConditionId = id;
         this.excludedId = null;
         this.newSearchOrderRequested = false;
         return this;
     }
 
+    @NotNull
     public SearchOrderChangeEvent requestingNewSearchOrder() {
         newSearchOrderRequested = true;
         droppedConditionId = null;
         excludedId = null;
         return this;
     }
-
 }

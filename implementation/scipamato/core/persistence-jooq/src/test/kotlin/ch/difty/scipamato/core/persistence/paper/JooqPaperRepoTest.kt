@@ -1,6 +1,5 @@
 package ch.difty.scipamato.core.persistence.paper
 
-import ch.difty.scipamato.common.NullArgumentException
 import ch.difty.scipamato.common.persistence.paging.PaginationContext
 import ch.difty.scipamato.common.persistence.paging.Sort
 import ch.difty.scipamato.common.persistence.paging.Sort.Direction
@@ -16,7 +15,6 @@ import ch.difty.scipamato.core.persistence.paper.searchorder.PaperBackedSearchOr
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
 import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.fail
 import org.jooq.*
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
@@ -42,7 +40,7 @@ internal class JooqPaperRepoTest :
 
     private val papers = listOf(paperMock, paperMock)
 
-    private val enrichedEntities = ArrayList<Paper>()
+    private val enrichedEntities = ArrayList<Paper?>()
 
     override val sampleId: Long = SAMPLE_ID
 
@@ -83,7 +81,7 @@ internal class JooqPaperRepoTest :
             searchOrderRepositoryMock,
             applicationProperties
         ) {
-            override fun findById(id: Long?, version: Int): Paper = entity
+            override fun findById(id: Long, version: Int): Paper = entity
         }
 
     private fun makeRepoStubbingEnriching(): PaperRepository =
@@ -98,7 +96,7 @@ internal class JooqPaperRepoTest :
             searchOrderRepositoryMock,
             applicationProperties
         ) {
-            override fun enrichAssociatedEntitiesOf(entity: Paper, language: String) {
+            override fun enrichAssociatedEntitiesOf(entity: Paper?, language: String?) {
                 enrichedEntities.add(entity)
             }
         }
@@ -147,17 +145,6 @@ internal class JooqPaperRepoTest :
     }
 
     @Test
-    fun gettingByIds_withNullIdList_throwsNullArgumentException() {
-        try {
-            repo.findByIds(null)
-        } catch (ex: Exception) {
-            assertThat(ex)
-                .isInstanceOf(NullArgumentException::class.java)
-                .hasMessage("ids must not be null.")
-        }
-    }
-
-    @Test
     fun findingBySearchOrder_delegatesToSearchOrderFinder() {
         whenever(searchOrderRepositoryMock.findBySearchOrder(searchOrderMock)).thenReturn(papers)
         assertThat(makeRepoStubbingEnriching().findBySearchOrder(searchOrderMock, LC)).containsExactly(paperMock,
@@ -189,28 +176,13 @@ internal class JooqPaperRepoTest :
     }
 
     @Test
-    fun findingByPmIds_withNullPmIds_returnsEmptyList() {
-        assertThat(repo.findByPmIds(null, LC)).isEmpty()
-    }
-
-    @Test
     fun findingByNumbers_withNoNumbers_returnsEmptyList() {
         assertThat(repo.findByNumbers(ArrayList(), LC)).isEmpty()
     }
 
     @Test
-    fun findingByNumbers_withNullNumbers_returnsEmptyList() {
-        assertThat(repo.findByNumbers(null, LC)).isEmpty()
-    }
-
-    @Test
     fun findingExistingPmIdsOutOf_withNoPmIds_returnsEmptyList() {
         assertThat(repo.findExistingPmIdsOutOf(ArrayList())).isEmpty()
-    }
-
-    @Test
-    fun findingExistingPmIdsOutOf_withNullPmIds_returnsEmptyList() {
-        assertThat(repo.findExistingPmIdsOutOf(null)).isEmpty()
     }
 
     @Test
@@ -305,11 +277,6 @@ internal class JooqPaperRepoTest :
     }
 
     @Test
-    fun deletingAttachment_withNullId_returnsNull() {
-        assertThat(repo.deleteAttachment(null)).isNull()
-    }
-
-    @Test
     fun deletingIds() {
         val ids = listOf(3L, 5L, 7L)
         whenever(dsl.deleteFrom(table)).thenReturn(deleteWhereStepMock)
@@ -359,18 +326,6 @@ internal class JooqPaperRepoTest :
         ) {
             override fun loadSlimAttachment(paperId: Long): List<PaperAttachment> = listOf(paperAttachmentMock)
         }
-
-    @Test
-    fun updateAssociatedEntities_withNullPaper_throws() {
-        try {
-            repo.updateAssociatedEntities(null, "de")
-            fail<Any>("should have thrown exception")
-        } catch (ex: Exception) {
-            assertThat(ex)
-                .isInstanceOf(NullArgumentException::class.java)
-                .hasMessage("paper must not be null.")
-        }
-    }
 
     @Test
     fun evaluatingNumbers_withNullRecord_returnsEmpty() {

@@ -5,6 +5,7 @@ import static org.mockito.Mockito.when;
 
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.Model;
+import org.jetbrains.annotations.Nullable;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
@@ -40,6 +41,7 @@ public abstract class SelfUpdatingPageTest<T extends BasePage<?>> extends BasePa
     @Test
     void test() {
         SelfUpdatingPage p = new SelfUpdatingPage<>(Model.of(new CodeClass(1, "CC1", ""))) {
+            @Nullable
             @Override
             protected Form<CodeClass> getForm() {
                 return null;
@@ -47,5 +49,4 @@ public abstract class SelfUpdatingPageTest<T extends BasePage<?>> extends BasePa
         };
         p.implSpecificOnInitialize();
     }
-
 }

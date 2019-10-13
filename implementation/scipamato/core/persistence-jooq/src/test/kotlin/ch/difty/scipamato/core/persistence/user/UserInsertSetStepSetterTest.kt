@@ -69,14 +69,14 @@ internal class UserInsertSetStepSetterTest : InsertSetStepSetterTest<ScipamatoUs
     fun consideringSettingKeyOf_withNullId_doesNotSetId() {
         whenever(entity.id).thenReturn(null)
         setter.considerSettingKeyOf(moreStep, entity)
-        verify<User>(entity).id
+        verify(entity).id
     }
 
     @Test
     fun consideringSettingKeyOf_withNonNullId_doesSetId() {
         whenever(entity.id).thenReturn(UserRecordMapperTest.ID)
         setter.considerSettingKeyOf(moreStep, entity)
-        verify<User>(entity).id
+        verify(entity).id
         verify(moreStep).set(SCIPAMATO_USER.ID, UserRecordMapperTest.ID)
     }
 
@@ -91,6 +91,6 @@ internal class UserInsertSetStepSetterTest : InsertSetStepSetterTest<ScipamatoUs
         whenever(recordMock.id).thenReturn(3)
         setter.resetIdToEntity(entity, recordMock)
         verify(recordMock).id
-        verify<User>(entity).id = anyInt()
+        verify(entity).id = anyInt()
     }
 }

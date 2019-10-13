@@ -4,11 +4,11 @@ import static ch.difty.scipamato.core.db.tables.Paper.PAPER;
 
 import java.sql.Timestamp;
 
+import org.jetbrains.annotations.NotNull;
 import org.jooq.UpdateSetFirstStep;
 import org.jooq.UpdateSetMoreStep;
 import org.springframework.stereotype.Component;
 
-import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.UtilsKt;
 import ch.difty.scipamato.core.db.tables.records.PaperRecord;
 import ch.difty.scipamato.core.entity.Code;
@@ -26,10 +26,10 @@ import ch.difty.scipamato.core.persistence.UpdateSetStepSetter;
 @Component
 public class PaperUpdateSetStepSetter implements UpdateSetStepSetter<PaperRecord, Paper> {
 
+    @NotNull
     @Override
-    public UpdateSetMoreStep<PaperRecord> setFieldsFor(UpdateSetFirstStep<PaperRecord> step, Paper e) {
-        AssertAs.INSTANCE.notNull(step, "step");
-        AssertAs.INSTANCE.notNull(e, "entity");
+    public UpdateSetMoreStep<PaperRecord> setFieldsFor(@NotNull UpdateSetFirstStep<PaperRecord> step,
+        @NotNull Paper e) {
         final Timestamp created = e.getCreated() == null ? null : UtilsKt.toTimestamp(e.getCreated());
         final Timestamp lastMod = e.getLastModified() == null ? null : UtilsKt.toTimestamp(e.getLastModified());
         return step
@@ -76,5 +76,4 @@ public class PaperUpdateSetStepSetter implements UpdateSetStepSetter<PaperRecord
             .set(PAPER.LAST_MODIFIED_BY, e.getLastModifiedBy())
             .set(PAPER.VERSION, e.getVersion() + 1);
     }
-
 }

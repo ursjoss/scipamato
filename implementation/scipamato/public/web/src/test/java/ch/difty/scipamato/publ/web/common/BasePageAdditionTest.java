@@ -7,6 +7,7 @@ import java.util.Locale;
 
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -38,13 +39,14 @@ class BasePageAdditionTest extends WicketTest {
 
     private BasePage newPageWithParameters(final PageParameters pp) {
         return new BasePage<>(pp) {
+            @NotNull
             @Override
             protected ApplicationPublicProperties getProperties() {
                 return applicationProperties;
             }
 
             @Override
-            protected void renderAdditionalCommercialFonts(final IHeaderResponse response) {
+            protected void renderAdditionalCommercialFonts(@NotNull final IHeaderResponse response) {
                 additionalCommercialFontsRendered = true;
             }
         };
@@ -131,6 +133,7 @@ class BasePageAdditionTest extends WicketTest {
         final IHeaderResponse response = mock(IHeaderResponse.class);
         // call it for coverage
         BasePage page = new BasePage<>(pp) {
+            @NotNull
             @Override
             protected ApplicationPublicProperties getProperties() {
                 return applicationProperties;

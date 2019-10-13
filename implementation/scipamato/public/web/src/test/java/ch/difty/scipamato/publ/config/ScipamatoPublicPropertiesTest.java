@@ -12,6 +12,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import ch.difty.scipamato.common.config.MavenProperties;
 
+@SuppressWarnings("ResultOfMethodCallIgnored")
 @ExtendWith(MockitoExtension.class)
 class ScipamatoPublicPropertiesTest {
 

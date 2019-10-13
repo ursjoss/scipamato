@@ -8,6 +8,7 @@ import ch.difty.scipamato.core.entity.newsletter.Newsletter
 import ch.difty.scipamato.core.entity.newsletter.NewsletterFilter
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic
 import ch.difty.scipamato.core.persistence.newsletter.JooqNewsletterRepo
+import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -35,7 +36,7 @@ internal open class JooqNewsletterRepoIntegrationTest {
 
     @Test
     fun findById_withExistingId_returnsRecord() {
-        val nl = repo.findById(1)
+        val nl = repo.findById(1) ?: Assertions.fail("Unable to add newsletter")
         assertThat(nl.id).isEqualTo(1)
         assertThat(nl.issue).isEqualTo("1802")
         assertThat(nl.issueDate).isEqualTo(LocalDate.parse("2018-02-01"))
@@ -53,7 +54,7 @@ internal open class JooqNewsletterRepoIntegrationTest {
         val nl = makeMinimalNewsletter()
         assertThat(nl.id == null).isTrue()
 
-        val saved = repo.add(nl)
+        val saved = repo.add(nl) ?: Assertions.fail("Unable to add newsletter")
         assertThat(saved.id).isGreaterThan(0)
         assertThat(saved.issue).isEqualTo("test-issue")
     }
@@ -68,7 +69,7 @@ internal open class JooqNewsletterRepoIntegrationTest {
 
     @Test
     fun updatingRecord() {
-        val nl = repo.add(makeMinimalNewsletter())
+        val nl = repo.add(makeMinimalNewsletter()) ?: Assertions.fail("Unable to add newsletter")
         assertThat(nl.id).isGreaterThan(0)
         val id = nl.id
         assertThat(nl.issue).isEqualTo("test-issue")
@@ -77,7 +78,7 @@ internal open class JooqNewsletterRepoIntegrationTest {
         repo.update(nl)
         assertThat(nl.id).isEqualTo(id)
 
-        val newCopy = repo.findById(id)
+        val newCopy = repo.findById(id) ?: Assertions.fail("Unable to find newsletter")
         assertThat(newCopy).isNotEqualTo(nl)
         assertThat(newCopy.id).isEqualTo(id)
         assertThat(newCopy.issue).isEqualTo("test-issue-modified")
@@ -85,7 +86,7 @@ internal open class JooqNewsletterRepoIntegrationTest {
 
     @Test
     fun deletingRecord() {
-        val nl = repo.add(makeMinimalNewsletter())
+        val nl = repo.add(makeMinimalNewsletter()) ?: Assertions.fail("Unable to add newsletter")
         assertThat(nl.id).isGreaterThan(0)
         val id = nl.id
         assertThat(nl.issue).isEqualTo("test-issue")
@@ -119,7 +120,7 @@ internal open class JooqNewsletterRepoIntegrationTest {
         val paperId = 30L
         val langCode = "en"
 
-        var nl = repo.findById(newsletterId)
+        var nl = repo.findById(newsletterId) ?: Assertions.fail("Unable to find newsletter")
         assertThat(nl.papers.map { it.id }).doesNotContain(paperId)
 
         var nlo: java.util.Optional<Paper.NewsletterLink> =
@@ -129,7 +130,7 @@ internal open class JooqNewsletterRepoIntegrationTest {
         nlo = repo.mergePaperIntoNewsletter(newsletterId, paperId, 1, langCode)
         assertThat(nlo).isPresent
 
-        nl = repo.findById(newsletterId)
+        nl = repo.findById(newsletterId) ?: Assertions.fail("Unable to find newsletter")
         assertThat(nl.papers.map { it.id }).contains(paperId)
     }
 
@@ -139,7 +140,7 @@ internal open class JooqNewsletterRepoIntegrationTest {
         val paperId = 39L
         val languageCode = "en"
 
-        var nl = repo.findById(newsletterId)
+        var nl = repo.findById(newsletterId) ?: Assertions.fail("Unable to find newsletter")
         assertThat(nl.papers.map { it.id }).contains(paperId)
         assertPaperIsAssignedToNewsletterWithTopic(null, paperId, nl)
 
@@ -148,7 +149,7 @@ internal open class JooqNewsletterRepoIntegrationTest {
 
         repo.mergePaperIntoNewsletter(newsletterId, paperId, newTopicId, languageCode)
 
-        nl = repo.findById(newsletterId)
+        nl = repo.findById(newsletterId) ?: Assertions.fail("Unable to find newsletter")
 
         assertThat(nl.papers.map { it.id }).contains(paperId)
         assertPaperIsAssignedToNewsletterWithTopic(newTopic, paperId, nl)
@@ -163,13 +164,13 @@ internal open class JooqNewsletterRepoIntegrationTest {
     fun deletingPaperFromNewsletter_withExistingAssociation_managesToDeleteIt() {
         val newsletterId = 2
         val paperId = 39L
-        var nl = repo.findById(newsletterId)
+        var nl = repo.findById(newsletterId) ?: Assertions.fail("Unable to find newsletter")
         assertThat(nl.papers.map { it.id }).contains(paperId)
 
         val count = repo.removePaperFromNewsletter(newsletterId, paperId)
         assertThat(count).isGreaterThan(0)
 
-        nl = repo.findById(newsletterId)
+        nl = repo.findById(newsletterId) ?: Assertions.fail("Unable to find newsletter")
         assertThat(nl.papers.map { it.id }).doesNotContain(paperId)
     }
 
@@ -177,13 +178,13 @@ internal open class JooqNewsletterRepoIntegrationTest {
     fun deletingPaperFromNewsletter_withNonExistingRelation() {
         val newsletterId = 2
         val paperId = -1L
-        var nl = repo.findById(newsletterId)
+        var nl = repo.findById(newsletterId) ?: Assertions.fail("Unable to find newsletter")
         assertThat(nl.papers.map { it.id }).doesNotContain(paperId)
 
         val count = repo.removePaperFromNewsletter(newsletterId, paperId)
         assertThat(count).isEqualTo(0)
 
-        nl = repo.findById(newsletterId)
+        nl = repo.findById(newsletterId) ?: Assertions.fail("Unable to find newsletter")
         assertThat(nl.papers.map { it.id }).doesNotContain(paperId)
     }
 

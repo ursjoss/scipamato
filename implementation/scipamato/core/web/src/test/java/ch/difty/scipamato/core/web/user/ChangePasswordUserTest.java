@@ -1,6 +1,5 @@
 package ch.difty.scipamato.core.web.user;
 
-import static ch.difty.scipamato.common.TestUtilsKt.assertDegenerateSupplierParameter;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
@@ -28,11 +27,6 @@ class ChangePasswordUserTest {
         user.setPassword("pw");
         user.setEnabled(true);
         user.setRoles(Set.of(Role.ADMIN, Role.USER));
-    }
-
-    @Test
-    void degenerateConstruction_cannotInstantiateWithNullUser() {
-        assertDegenerateSupplierParameter(() -> new ChangePasswordUser(null), "user");
     }
 
     @Test

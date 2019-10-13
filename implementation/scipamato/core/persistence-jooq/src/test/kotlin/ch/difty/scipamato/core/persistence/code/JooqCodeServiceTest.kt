@@ -96,7 +96,7 @@ internal class JooqCodeServiceTest {
 
     @Test
     fun gettingCodeClass1_delegatesToRepo() {
-        val cc1 = CodeClass(1, "cc1", null)
+        val cc1 = CodeClass(1, "cc1", "d1")
         whenever(repo.getCodeClass1("en")).thenReturn(cc1)
         assertThat(service.getCodeClass1("en")).isEqualTo(cc1)
         verify(repo).getCodeClass1("en")

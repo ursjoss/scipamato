@@ -2,6 +2,9 @@ package ch.difty.scipamato.core.sync.jobs.paper;
 
 import java.sql.ResultSet;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 /**
  * Gathers the content for the the fields methods, population and result based on a
  * resultSet of papers.
@@ -15,19 +18,22 @@ interface SyncShortFieldConcatenator {
      *     the paper recordset
      * @return the methods field content
      */
-    String methodsFrom(ResultSet rs);
+    @Nullable
+    String methodsFrom(@NotNull ResultSet rs);
 
     /**
      * @param rs
      *     the paper recordset
      * @return the population field content
      */
-    String populationFrom(ResultSet rs);
+    @Nullable
+    String populationFrom(@NotNull ResultSet rs);
 
     /**
      * @param rs
      *     the paper recordset
      * @return the result field content
      */
-    String resultFrom(ResultSet rs);
+    @Nullable
+    String resultFrom(@NotNull ResultSet rs);
 }

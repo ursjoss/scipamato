@@ -7,6 +7,7 @@ import de.agilecoders.wicket.core.settings.ThemeProvider;
 import de.agilecoders.wicket.less.BootstrapLess;
 import de.agilecoders.wicket.themes.markup.html.bootswatch.BootswatchThemeProvider;
 import org.apache.wicket.protocol.http.WebApplication;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -19,7 +20,7 @@ public class BootstrapConfig implements WicketApplicationInitConfiguration {
 
     private final BootstrapProperties prop;
 
-    public BootstrapConfig(BootstrapProperties prop) {
+    public BootstrapConfig(@NotNull BootstrapProperties prop) {
         this.prop = prop;
     }
 
@@ -32,5 +33,4 @@ public class BootstrapConfig implements WicketApplicationInitConfiguration {
 
         BootstrapLess.install(webApplication);
     }
-
 }

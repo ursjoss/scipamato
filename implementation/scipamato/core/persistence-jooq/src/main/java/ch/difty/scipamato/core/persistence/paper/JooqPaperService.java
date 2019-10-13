@@ -6,10 +6,11 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.PaperAttachment;
@@ -31,31 +32,35 @@ public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter
 
     private final NewsletterRepository newsletterRepo;
 
-    protected JooqPaperService(final PaperRepository repo, final NewsletterRepository newsletterRepo,
-        final UserRepository userRepo) {
+    protected JooqPaperService(@NotNull final PaperRepository repo, @NotNull final NewsletterRepository newsletterRepo,
+        @NotNull final UserRepository userRepo) {
         super(repo, userRepo);
         this.newsletterRepo = newsletterRepo;
     }
 
+    @NotNull
     @Override
-    public List<Paper> findBySearchOrder(final SearchOrder searchOrder, final String languageCode) {
+    public List<Paper> findBySearchOrder(@NotNull final SearchOrder searchOrder, @NotNull final String languageCode) {
         return getRepository().findBySearchOrder(searchOrder, languageCode);
     }
 
+    @NotNull
     @Override
-    public List<Paper> findPageBySearchOrder(final SearchOrder searchOrder, final PaginationContext paginationContext,
-        final String languageCode) {
+    public List<Paper> findPageBySearchOrder(@NotNull final SearchOrder searchOrder,
+        @NotNull final PaginationContext paginationContext, @NotNull final String languageCode) {
         return getRepository().findPageBySearchOrder(searchOrder, paginationContext, languageCode);
     }
 
     @Override
-    public int countBySearchOrder(final SearchOrder searchOrder) {
+    public int countBySearchOrder(@NotNull final SearchOrder searchOrder) {
         return getRepository().countBySearchOrder(searchOrder);
     }
 
+    @NotNull
     @Override
     @Transactional
-    public ServiceResult dumpPubmedArticlesToDb(final List<PubmedArticleFacade> articles, final long minimumNumber) {
+    public ServiceResult dumpPubmedArticlesToDb(@NotNull final List<PubmedArticleFacade> articles,
+        final long minimumNumber) {
         final ServiceResult sr = new DefaultServiceResult();
         final List<Integer> pmIdCandidates = articles
             .stream()
@@ -106,8 +111,9 @@ public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter
             .forEach(sr::addInfoMessage);
     }
 
+    @NotNull
     @Override
-    public Optional<Paper> findByNumber(final Long number, final String languageCode) {
+    public Optional<Paper> findByNumber(@NotNull final Long number, @NotNull final String languageCode) {
         final List<Paper> papers = getRepository().findByNumbers(Collections.singletonList(number), languageCode);
         if (!papers.isEmpty()) {
             final Paper paper = papers.get(0);
@@ -124,9 +130,10 @@ public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter
         return getRepository().findLowestFreeNumberStartingFrom(minimumPaperNumberToBeRecycled);
     }
 
+    @NotNull
     @Override
-    public List<Long> findPageOfIdsBySearchOrder(final SearchOrder searchOrder,
-        final PaginationContext paginationContext) {
+    public List<Long> findPageOfIdsBySearchOrder(@NotNull final SearchOrder searchOrder,
+        @NotNull final PaginationContext paginationContext) {
         return getRepository().findPageOfIdsBySearchOrder(searchOrder, paginationContext);
     }
 
@@ -142,40 +149,41 @@ public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter
         getRepository().reincludePaperIntoSearchOrderResults(searchOrderId, paperId);
     }
 
+    @Nullable
     @Transactional
     @Override
-    public Paper saveAttachment(final PaperAttachment paperAttachment) {
+    public Paper saveAttachment(@NotNull final PaperAttachment paperAttachment) {
         return getRepository().saveAttachment(paperAttachment);
     }
 
+    @Nullable
     @Override
-    public PaperAttachment loadAttachmentWithContentBy(final Integer id) {
+    public PaperAttachment loadAttachmentWithContentBy(@NotNull final Integer id) {
         return getRepository().loadAttachmentWithContentBy(id);
     }
 
+    @Nullable
     @Transactional
     @Override
-    public Paper deleteAttachment(final Integer id) {
+    public Paper deleteAttachment(@NotNull final Integer id) {
         return getRepository().deleteAttachment(id);
     }
 
     @Transactional
     @Override
-    public void deletePapersWithIds(final List<Long> ids) {
+    public void deletePapersWithIds(@NotNull final List<Long> ids) {
         getRepository().delete(ids);
     }
 
+    @NotNull
     @Transactional
     @Override
     public Optional<Paper.NewsletterLink> mergePaperIntoWipNewsletter(final long paperId,
-        final Integer newsletterTopicId, final String languageCode) {
+        @Nullable final Integer newsletterTopicId, @NotNull final String languageCode) {
         final Optional<Newsletter> nlo = newsletterRepo.getNewsletterInStatusWorkInProgress();
-        if (nlo.isPresent())
-            return newsletterRepo.mergePaperIntoNewsletter(nlo
-                .get()
-                .getId(), paperId, newsletterTopicId, languageCode);
-        else
-            return Optional.empty();
+        return nlo.flatMap(
+            newsletter -> newsletterRepo.mergePaperIntoNewsletter(newsletter.getId(), paperId, newsletterTopicId,
+                languageCode));
     }
 
     @Transactional
@@ -184,12 +192,13 @@ public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter
         return newsletterRepo.removePaperFromNewsletter(newsletterId, paperId);
     }
 
+    @NotNull
     @Override
-    public Optional<String> hasDuplicateFieldNextToCurrent(final String fieldName, final Object fieldValue,
-        final Long idOfCurrentPaper) {
+    public Optional<String> hasDuplicateFieldNextToCurrent(@NotNull final String fieldName,
+        @Nullable final Object fieldValue, @NotNull final Long idOfCurrentPaper) {
         if (fieldValue == null)
             return Optional.empty();
-        switch (AssertAs.INSTANCE.notNull(fieldName, "fieldName")) {
+        switch (fieldName) {
         case "doi":
             return getRepository().isDoiAlreadyAssigned((String) fieldValue, idOfCurrentPaper);
         case "pmId":
@@ -198,5 +207,4 @@ public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter
             throw new IllegalArgumentException("Field '" + fieldName + "' is not supported by this validator.");
         }
     }
-
 }

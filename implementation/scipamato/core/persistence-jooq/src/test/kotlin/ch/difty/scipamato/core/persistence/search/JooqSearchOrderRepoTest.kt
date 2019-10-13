@@ -59,7 +59,7 @@ internal class JooqSearchOrderRepoTest :
         updateSetStepSetter,
         applicationProperties
     ) {
-        override fun findById(id: Long?, version: Int): SearchOrder = entity
+        override fun findById(id: Long, version: Int): SearchOrder = entity
     }
 
     override fun makeRepoSavingReturning(returning: SearchOrderRecord):
@@ -169,9 +169,9 @@ internal class JooqSearchOrderRepoTest :
             ): List<Code> =
                 listOf(Code("1F", "Code 1F", "", false, 1, "CC 1", "", 0))
 
-            override fun fetchSearchConditionWithId(scId: Long?): SearchCondition = SearchCondition(scId)
-            override fun findConditionIdsWithSearchTerms(searchOrderId: Long?): List<Long> = ArrayList()
-            override fun findConditionsOf(searchOrderId: Long?): List<SearchCondition> = ArrayList()
+            override fun fetchSearchConditionWithId(scId: Long): SearchCondition? = SearchCondition(scId)
+            override fun findConditionIdsWithSearchTerms(searchOrderId: Long): List<Long> = ArrayList()
+            override fun findConditionsOf(searchOrderId: Long): List<SearchCondition> = ArrayList()
         }
 
     @Test
@@ -311,7 +311,7 @@ internal class JooqSearchOrderRepoTest :
 
     @Test
     fun findingTermLessConditions() {
-        val idToSc = HashMap<Long, SearchCondition>()
+        val idToSc = HashMap<Long?, SearchCondition>()
 
         // sc without id - should be filtered out
         val sc1 = SearchCondition()
@@ -359,7 +359,7 @@ internal class JooqSearchOrderRepoTest :
                 searchOrderId: Long,
                 languageCode: String
             ): SearchCondition? {
-                updateCalled[0] = updateCalled[0] + searchCondition.searchConditionId
+                updateCalled[0] = updateCalled[0] + (searchCondition.searchConditionId ?: 0)
                 return null
             }
         }

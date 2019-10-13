@@ -7,6 +7,7 @@ import de.agilecoders.wicket.core.util.Dependencies;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.HeaderItem;
 import org.apache.wicket.request.resource.CssResourceReference;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * css resource reference that references `scipamato-public-bootstrap.css`.
@@ -33,6 +34,7 @@ public class ScipamatoPublicCssReference extends CssResourceReference {
     /**
      * @return singleton instance of {@link ScipamatoPublicCssReference}
      */
+    @NotNull
     public static ScipamatoPublicCssReference instance() {
         return Holder.INSTANCE;
     }
@@ -44,6 +46,7 @@ public class ScipamatoPublicCssReference extends CssResourceReference {
         private static final ScipamatoPublicCssReference INSTANCE = new ScipamatoPublicCssReference();
     }
 
+    @NotNull
     @Override
     public List<HeaderItem> getDependencies() {
         return Dependencies.combine(super.getDependencies(), CssHeaderItem.forReference(Bootstrap

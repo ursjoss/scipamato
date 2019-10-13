@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder;
 import org.apache.wicket.injection.Injector;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.common.persistence.paging.PaginationRequest;
@@ -32,7 +34,7 @@ public class PaperSlimByPaperFilterProvider extends AbstractPaperSlimProvider<Pa
      * @param rowsPerPage
      *     the max numbers of rows per page
      */
-    public PaperSlimByPaperFilterProvider(final PaperFilter filter, final int rowsPerPage) {
+    public PaperSlimByPaperFilterProvider(@Nullable final PaperFilter filter, final int rowsPerPage) {
         super(filter != null ? filter : new PaperFilter(), rowsPerPage);
         Injector
             .get()
@@ -40,8 +42,9 @@ public class PaperSlimByPaperFilterProvider extends AbstractPaperSlimProvider<Pa
         setSort(Paper.IdScipamatoEntityFields.ID.getFieldName(), SortOrder.DESCENDING);
     }
 
+    @NotNull
     @Override
-    protected Iterator<PaperSlim> findPage(final PaginationContext pc) {
+    protected Iterator<PaperSlim> findPage(@NotNull final PaginationContext pc) {
         return getService()
             .findPageByFilter(getFilterState(), pc)
             .iterator();
@@ -52,14 +55,15 @@ public class PaperSlimByPaperFilterProvider extends AbstractPaperSlimProvider<Pa
         return getService().countByFilter(getFilterState());
     }
 
+    @NotNull
     @Override
-    protected List<Paper> findAll(final Direction dir, final String sortProp) {
+    protected List<Paper> findAll(@NotNull final Direction dir, @NotNull final String sortProp) {
         return getPaperService().findPageByFilter(getFilterState(), new PaginationRequest(dir, sortProp));
     }
 
+    @NotNull
     @Override
-    protected List<Long> findAllIds(Direction dir, String sortProp) {
+    protected List<Long> findAllIds(@NotNull Direction dir, @NotNull String sortProp) {
         return getPaperService().findPageOfIdsByFilter(getFilterState(), new PaginationRequest(dir, sortProp));
     }
-
 }

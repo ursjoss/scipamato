@@ -9,6 +9,7 @@ import ch.difty.scipamato.publ.entity.StudyDesignCode
 import ch.difty.scipamato.publ.entity.filter.PublicPaperFilter
 import ch.difty.scipamato.publ.persistence.paper.JooqPublicPaperRepo
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.fail
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.jooq.JooqTest
@@ -31,7 +32,7 @@ internal open class JooqPublicPaperRepoIntegrationTest {
     @Test
     fun findingByNumber_withExistingNumber_returnsEntity() {
         val number: Long = 1
-        val paper = repo.findByNumber(number)
+        val paper = repo.findByNumber(number) ?: fail("Unable to find paper with number $number")
         assertThat(paper.id).isEqualTo(number)
         assertThat(paper.pmId).isEqualTo(25395026)
         assertThat(paper.authors).isEqualTo(

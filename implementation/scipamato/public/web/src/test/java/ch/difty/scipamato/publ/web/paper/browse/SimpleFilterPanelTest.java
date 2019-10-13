@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.apache.wicket.event.IEvent;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.model.Model;
+import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Test;
 
 import ch.difty.scipamato.publ.entity.filter.PublicPaperFilter;
@@ -40,7 +41,7 @@ class SimpleFilterPanelTest extends PanelTest<SimpleFilterPanel> {
     private SimpleFilterPanel makePanelSpy() {
         return new SimpleFilterPanel(PANEL, Model.of(new PublicPaperFilter()), "en") {
             @Override
-            void handleChangeEvent(final IEvent<?> event, final FormComponent component) {
+            void handleChangeEvent(@NotNull final IEvent<?> event, @NotNull final FormComponent component) {
                 super.handleChangeEvent(event, component);
                 eventHandlerCallCount++;
             }

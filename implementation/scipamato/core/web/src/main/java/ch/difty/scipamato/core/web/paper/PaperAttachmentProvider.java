@@ -2,12 +2,13 @@ package ch.difty.scipamato.core.web.paper;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 import org.apache.wicket.extensions.markup.html.repeater.util.SortableDataProvider;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.jetbrains.annotations.NotNull;
 
-import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.core.entity.PaperAttachment;
 
 /**
@@ -22,9 +23,8 @@ public class PaperAttachmentProvider extends SortableDataProvider<PaperAttachmen
 
     private final IModel<List<PaperAttachment>> attachmentsModel;
 
-    public PaperAttachmentProvider(final IModel<List<PaperAttachment>> attachmentsModel) {
-        AssertAs.INSTANCE.notNull(attachmentsModel, "attachmentsModel");
-        AssertAs.INSTANCE.notNull(attachmentsModel.getObject(), "attachments");
+    public PaperAttachmentProvider(@NotNull final IModel<List<PaperAttachment>> attachmentsModel) {
+        Objects.requireNonNull(attachmentsModel.getObject());
         this.attachmentsModel = attachmentsModel;
     }
 
@@ -37,6 +37,7 @@ public class PaperAttachmentProvider extends SortableDataProvider<PaperAttachmen
      *     page size
      * @return iterator
      */
+    @NotNull
     @Override
     public Iterator<PaperAttachment> iterator(final long offset, final long size) {
         return attachmentsModel
@@ -54,9 +55,9 @@ public class PaperAttachmentProvider extends SortableDataProvider<PaperAttachmen
             .size();
     }
 
+    @NotNull
     @Override
-    public IModel<PaperAttachment> model(final PaperAttachment attachment) {
+    public IModel<PaperAttachment> model(@NotNull final PaperAttachment attachment) {
         return new Model<>(attachment);
     }
-
 }

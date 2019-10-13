@@ -2,6 +2,7 @@ package ch.difty.scipamato.core.persistence.newsletter;
 
 import java.util.List;
 
+import org.jetbrains.annotations.NotNull;
 import org.jooq.Condition;
 
 import ch.difty.scipamato.common.persistence.AbstractFilterConditionMapper;
@@ -18,8 +19,7 @@ import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicFilter;
 public class NewsletterTopicFilterConditionMapper extends AbstractFilterConditionMapper<NewsletterTopicFilter> {
 
     @Override
-    public void map(final NewsletterTopicFilter filter, final List<Condition> conditions) {
+    public void map(@NotNull final NewsletterTopicFilter filter, @NotNull final List<Condition> conditions) {
         // currently no fields to be handled
     }
-
 }

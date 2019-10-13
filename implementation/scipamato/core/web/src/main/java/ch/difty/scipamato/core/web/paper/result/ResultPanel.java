@@ -23,6 +23,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.jetbrains.annotations.NotNull;
 
 import ch.difty.scipamato.common.entity.newsletter.PublicationStatus;
 import ch.difty.scipamato.common.web.Mode;
@@ -99,7 +100,8 @@ public abstract class ResultPanel extends BasePanel<Void> {
      *     the data provider extending {@link AbstractPaperSlimProvider}
      *     holding the filter specs
      */
-    protected ResultPanel(String id, AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider, Mode mode) {
+    protected ResultPanel(@NotNull String id,
+        @NotNull AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider, @NotNull Mode mode) {
         super(id);
         this.dataProvider = dataProvider;
         this.mode = mode;
@@ -196,7 +198,7 @@ public abstract class ResultPanel extends BasePanel<Void> {
             private static final long serialVersionUID = 1L;
 
             @Override
-            protected IModel<String> createIconModel(IModel<PaperSlim> rowModel) {
+            protected IModel<String> createIconModel(@NotNull IModel<PaperSlim> rowModel) {
                 final FontAwesome5IconType checkCircle = FontAwesome5IconTypeBuilder
                     .on(FontAwesome5IconTypeBuilder.FontAwesome5Regular.check_circle)
                     .fixedWidth()
@@ -209,14 +211,15 @@ public abstract class ResultPanel extends BasePanel<Void> {
             }
 
             @Override
-            protected IModel<String> createTitleModel(IModel<PaperSlim> rowModel) {
+            protected IModel<String> createTitleModel(@NotNull IModel<PaperSlim> rowModel) {
                 return new StringResourceModel(
                     dataProvider.isShowExcluded() ? "column.title.reinclude" : "column.title.exclude", ResultPanel.this,
                     null);
             }
 
             @Override
-            protected void onClickPerformed(AjaxRequestTarget target, IModel<PaperSlim> rowModel, AjaxLink<Void> link) {
+            protected void onClickPerformed(@NotNull AjaxRequestTarget target, @NotNull IModel<PaperSlim> rowModel,
+                @NotNull AjaxLink<Void> link) {
                 final Long excludedId = rowModel
                     .getObject()
                     .getId();
@@ -262,7 +265,7 @@ public abstract class ResultPanel extends BasePanel<Void> {
             private static final long serialVersionUID = 1L;
 
             @Override
-            protected IModel<String> createIconModel(final IModel<PaperSlim> rowModel) {
+            protected IModel<String> createIconModel(@NotNull final IModel<PaperSlim> rowModel) {
                 return Model.of(newLinkIcon(rowModel.getObject()));
             }
 
@@ -292,7 +295,7 @@ public abstract class ResultPanel extends BasePanel<Void> {
             }
 
             @Override
-            protected IModel<String> createTitleModel(final IModel<PaperSlim> rowModel) {
+            protected IModel<String> createTitleModel(@NotNull final IModel<PaperSlim> rowModel) {
                 final PaperSlim paper = rowModel.getObject();
                 if (hasNoNewsletter(paper)) {
                     if (isThereOneNewsletterInStatusWip())
@@ -308,8 +311,8 @@ public abstract class ResultPanel extends BasePanel<Void> {
             }
 
             @Override
-            protected void onClickPerformed(final AjaxRequestTarget target, final IModel<PaperSlim> rowModel,
-                final AjaxLink<Void> link) {
+            protected void onClickPerformed(@NotNull final AjaxRequestTarget target,
+                @NotNull final IModel<PaperSlim> rowModel, @NotNull final AjaxLink<Void> link) {
                 final PaperSlim paper = rowModel.getObject();
 
                 if (hasNoNewsletter(paper)) {
@@ -504,7 +507,7 @@ public abstract class ResultPanel extends BasePanel<Void> {
         final String titleResourceKey = LINK_RESOURCE_PREFIX + id + TITLE_RESOURCE_TAG;
         final AjaxLink<Void> reviewLink = new AjaxLink<>(id) {
             @Override
-            public void onClick(final AjaxRequestTarget target) {
+            public void onClick(@NotNull final AjaxRequestTarget target) {
                 risDownload.initiate(target);
             }
         };
@@ -512,5 +515,4 @@ public abstract class ResultPanel extends BasePanel<Void> {
             new AttributeModifier(TITLE_ATTR, new StringResourceModel(titleResourceKey, this, null).getString()));
         addOrReplace(reviewLink);
     }
-
 }

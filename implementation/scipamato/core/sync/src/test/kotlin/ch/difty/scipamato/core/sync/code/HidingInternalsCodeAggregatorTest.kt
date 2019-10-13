@@ -11,7 +11,7 @@ internal class HidingInternalsCodeAggregatorTest {
 
     @ParameterizedTest(name = "{index}: code {0} is aggregated to {1}")
     @MethodSource("paramsCodeAggregation")
-    fun gettingAggregatedCodes(input: Array<String>?, codes: Array<String>?) {
+    fun gettingAggregatedCodes(input: Array<String>, codes: Array<String>?) {
         val internals = arrayOf(
             "1N", "1U", "1Z", "3U", "3Z", "4U", "4X", "4Y", "4Z",
             "5A", "5B", "5C", "5D", "5K", "6P", "6Z", "7M", "7Z", "8Z"
@@ -23,14 +23,14 @@ internal class HidingInternalsCodeAggregatorTest {
 
     @ParameterizedTest(name = "{index}: code array {0} results in code population {1}")
     @MethodSource("paramsCodePopulation")
-    fun gettingCodePopulation(input: Array<String>?, codesPopulation: Array<Short>?) {
+    fun gettingCodePopulation(input: Array<String>, codesPopulation: Array<Short>?) {
         ca.load(input)
         assertThat(ca.codesPopulation).isEqualTo(codesPopulation)
     }
 
     @ParameterizedTest(name = "{index}: code array {0} results in code study design {1}")
     @MethodSource("paramsCodeStudyDesign")
-    fun gettingCodeStudyDesign(input: Array<String>?, codesStudyDesign: Array<Short>?) {
+    fun gettingCodeStudyDesign(input: Array<String>, codesStudyDesign: Array<Short>?) {
         ca.load(input)
         assertThat(ca.codesStudyDesign).isEqualTo(codesStudyDesign)
     }
@@ -40,7 +40,7 @@ internal class HidingInternalsCodeAggregatorTest {
     )
     @MethodSource("paramsAll")
     fun gettingAllCodeTypes(
-        input: Array<String>?,
+        input: Array<String>,
         codes: Array<String>,
         codesPopulation: Array<Short>?,
         codesStudyDesign: Array<Short>?
@@ -70,8 +70,7 @@ internal class HidingInternalsCodeAggregatorTest {
          */
         @JvmStatic
         private fun paramsCodeAggregation() = listOf(
-            // can handle null and empty input
-            Arguments.of(null, arrayOf<String>()),
+            // can handle empty input
             Arguments.of(arrayOf<String>(), arrayOf<String>()),
 
             Arguments.of(arrayOf("1A", "2B"), arrayOf("1A", "2B")),
@@ -96,8 +95,7 @@ internal class HidingInternalsCodeAggregatorTest {
          */
         @JvmStatic
         private fun paramsCodePopulation() = listOf(
-            // can handle null and empty input
-            Arguments.of(null, arrayOf<Short>()),
+            // can handle empty input
             Arguments.of(arrayOf<String>(), arrayOf<Short>()),
 
             // irrelevant codes
@@ -119,8 +117,7 @@ internal class HidingInternalsCodeAggregatorTest {
          */
         @JvmStatic
         private fun paramsCodeStudyDesign() = listOf(
-            // can handle null and empty input
-            Arguments.of(null, arrayOf<Short>()),
+            // can handle empty input
             Arguments.of(arrayOf<String>(), arrayOf<Short>()),
 
             Arguments.of(arrayOf("1A", "2B"), arrayOf<Short>()),
@@ -157,8 +154,7 @@ internal class HidingInternalsCodeAggregatorTest {
          */
         @JvmStatic
         private fun paramsAll() = listOf(
-            // can handle null and empty input
-            Arguments.of(null, arrayOf<String>(), arrayOf<Short>(), arrayOf<Short>()),
+            // can handle empty input
             Arguments.of(arrayOf<String>(), arrayOf<String>(), arrayOf<Short>(), arrayOf<Short>()),
 
             Arguments.of(arrayOf("1A", "2B"), arrayOf("1A", "2B"), arrayOf<Short>(), arrayOf<Short>()),

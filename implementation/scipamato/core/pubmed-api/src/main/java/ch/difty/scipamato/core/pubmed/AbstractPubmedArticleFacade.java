@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import lombok.Data;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.util.StringUtils;
 
 import ch.difty.scipamato.core.pubmed.api.*;
@@ -21,6 +23,7 @@ public abstract class AbstractPubmedArticleFacade implements PubmedArticleFacade
 
     protected static final String PAGE_SEPARATOR = "-";
 
+    @Nullable
     private String pmId;
     private String authors;
     private String firstAuthor;
@@ -30,7 +33,8 @@ public abstract class AbstractPubmedArticleFacade implements PubmedArticleFacade
     private String doi;
     private String originalAbstract;
 
-    String getAuthorsFrom(final AuthorList authorList) {
+    @NotNull
+    String getAuthorsFrom(@NotNull final AuthorList authorList) {
         final String individualAuthors = getIndividualAuthors(authorList);
         final String collectives = getCollectives(authorList);
         return combine(individualAuthors, collectives);
@@ -99,7 +103,8 @@ public abstract class AbstractPubmedArticleFacade implements PubmedArticleFacade
         return comb.toString();
     }
 
-    String getFirstAuthorFrom(final AuthorList authorList) {
+    @NotNull
+    String getFirstAuthorFrom(@NotNull final AuthorList authorList) {
         return authorList
             .getAuthor()
             .stream()
@@ -121,7 +126,8 @@ public abstract class AbstractPubmedArticleFacade implements PubmedArticleFacade
                 .orElse(""));
     }
 
-    String getDoiFromArticleIdList(final ArticleIdList articleIdList) {
+    @Nullable
+    String getDoiFromArticleIdList(@Nullable final ArticleIdList articleIdList) {
         if (articleIdList != null) {
             return articleIdList
                 .getArticleId()
@@ -134,7 +140,8 @@ public abstract class AbstractPubmedArticleFacade implements PubmedArticleFacade
         return null;
     }
 
-    String getAbstractFrom(final Abstract abstr) {
+    @Nullable
+    String getAbstractFrom(@Nullable final Abstract abstr) {
         if (abstr == null)
             return null;
         return abstr
@@ -150,5 +157,4 @@ public abstract class AbstractPubmedArticleFacade implements PubmedArticleFacade
         else
             return a.getvalue();
     }
-
 }

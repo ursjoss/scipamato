@@ -9,8 +9,10 @@ import java.io.InputStream;
 import net.sf.jasperreports.engine.JRException;
 import org.apache.wicket.util.resource.IResourceStream;
 import org.apache.wicket.util.resource.ResourceStreamNotFoundException;
+import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Test;
 
+@SuppressWarnings({ "ResultOfMethodCallIgnored", "CatchMayIgnoreException" })
 class PaperLiteratureReviewReportResourceReferenceTest
     extends JasperReportResourceReferenceTest<PaperLiteratureReviewReportResourceReference> {
 
@@ -33,6 +35,7 @@ class PaperLiteratureReviewReportResourceReferenceTest
     void gettingResourceStream_withNullStream() {
         final JasperReportResourceReference rr = new JasperReportResourceReference(
             PaperLiteratureReviewReportResourceReference.class, "baz", false) {
+            @NotNull
             @Override
             IResourceStream getResourceStreamFromResource() {
                 return null;
@@ -54,11 +57,13 @@ class PaperLiteratureReviewReportResourceReferenceTest
         final JasperReportResourceReference rr = new JasperReportResourceReference(
             PaperLiteratureReviewReportResourceReference.class, "baz", false) {
 
+            @NotNull
             @Override
             IResourceStream getResourceStreamFromResource() {
                 return mock(IResourceStream.class);
             }
 
+            @NotNull
             @Override
             InputStream getInputStream(final IResourceStream rs) throws ResourceStreamNotFoundException {
                 throw new ResourceStreamNotFoundException("boom");

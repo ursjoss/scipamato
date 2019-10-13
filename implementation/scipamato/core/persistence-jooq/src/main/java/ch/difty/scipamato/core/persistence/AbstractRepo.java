@@ -3,11 +3,12 @@ package ch.difty.scipamato.core.persistence;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.jooq.DSLContext;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.DateTimeService;
 import ch.difty.scipamato.core.entity.User;
 
@@ -26,15 +27,17 @@ public abstract class AbstractRepo {
      * @param dateTimeService
      *     the {@link DateTimeService} providing access to the system time
      */
-    protected AbstractRepo(DSLContext dsl, DateTimeService dateTimeService) {
-        this.dsl = AssertAs.INSTANCE.notNull(dsl, "dsl");
-        this.dateTimeService = AssertAs.INSTANCE.notNull(dateTimeService, "dateTimeService");
+    protected AbstractRepo(@NotNull DSLContext dsl, @NotNull DateTimeService dateTimeService) {
+        this.dsl = dsl;
+        this.dateTimeService = dateTimeService;
     }
 
+    @NotNull
     protected DSLContext getDsl() {
         return dsl;
     }
 
+    @NotNull
     protected DateTimeService getDateTimeService() {
         return dateTimeService;
     }
@@ -42,6 +45,7 @@ public abstract class AbstractRepo {
     /**
      * @return the current {@link User}
      */
+    @NotNull
     protected User getActiveUser() {
         final Authentication auth = getAuthentication();
         if (auth != null) {
@@ -51,6 +55,7 @@ public abstract class AbstractRepo {
         }
     }
 
+    @Nullable
     Authentication getAuthentication() {
         return SecurityContextHolder
             .getContext()
@@ -60,6 +65,7 @@ public abstract class AbstractRepo {
     /**
      * @return the id of the currently active {@link User}
      */
+    @NotNull
     protected Integer getUserId() {
         return getActiveUser().getId();
     }
@@ -67,6 +73,7 @@ public abstract class AbstractRepo {
     /**
      * @return the current date as {@link Timestamp}
      */
+    @NotNull
     protected Timestamp getTs() {
         return getDateTimeService().getCurrentTimestamp();
     }
@@ -74,8 +81,8 @@ public abstract class AbstractRepo {
     /**
      * @return the current date as {@link Timestamp}
      */
+    @NotNull
     protected LocalDateTime now() {
         return getDateTimeService().getCurrentDateTime();
     }
-
 }

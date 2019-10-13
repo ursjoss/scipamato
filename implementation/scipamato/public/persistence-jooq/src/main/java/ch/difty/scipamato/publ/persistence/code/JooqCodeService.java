@@ -1,5 +1,6 @@
 package ch.difty.scipamato.publ.persistence.code;
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
 import ch.difty.scipamato.common.persistence.code.JooqCodeLikeService;
@@ -14,7 +15,7 @@ import ch.difty.scipamato.publ.persistence.api.CodeService;
 @Service
 public class JooqCodeService extends JooqCodeLikeService<Code, CodeRepository> implements CodeService {
 
-    public JooqCodeService(final CodeRepository codeRepository) {
+    public JooqCodeService(@NotNull final CodeRepository codeRepository) {
         super(codeRepository);
     }
 }

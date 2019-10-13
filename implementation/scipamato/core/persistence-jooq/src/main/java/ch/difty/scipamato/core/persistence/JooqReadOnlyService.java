@@ -3,9 +3,10 @@ package ch.difty.scipamato.core.persistence;
 import java.util.List;
 import java.util.Optional;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.transaction.annotation.Transactional;
 
-import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.entity.filter.ScipamatoFilter;
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.core.entity.CoreEntity;
@@ -33,27 +34,30 @@ public abstract class JooqReadOnlyService<ID extends Number, T extends IdScipama
     private final REPO           repo;
     private final UserRepository userRepo;
 
-    protected JooqReadOnlyService(final REPO repo, final UserRepository userRepo) {
-        this.repo = AssertAs.INSTANCE.notNull(repo, "repo");
-        this.userRepo = AssertAs.INSTANCE.notNull(userRepo, "userRepo");
+    protected JooqReadOnlyService(@NotNull final REPO repo, @NotNull final UserRepository userRepo) {
+        this.repo = repo;
+        this.userRepo = userRepo;
     }
 
+    @NotNull
     protected REPO getRepository() {
         return repo;
     }
 
+    @NotNull
     protected UserRepository getUserRepository() {
         return userRepo;
     }
 
+    @NotNull
     @Override
-    public Optional<T> findById(final ID id) {
+    public Optional<T> findById(@NotNull final ID id) {
         final T entity = repo.findById(id);
         enrichAuditNamesOf(entity);
         return Optional.ofNullable(entity);
     }
 
-    protected void enrichAuditNamesOf(final T entity) {
+    protected void enrichAuditNamesOf(@Nullable final T entity) {
         if (entity != null) {
             setCreatedMetaData(entity);
             setModifiedMeta(entity);
@@ -83,21 +87,23 @@ public abstract class JooqReadOnlyService<ID extends Number, T extends IdScipama
 
     }
 
+    @NotNull
     @Override
-    public List<T> findPageByFilter(final F filter, final PaginationContext paginationContext) {
+    public List<T> findPageByFilter(@Nullable final F filter, @NotNull final PaginationContext paginationContext) {
         final List<T> entities = repo.findPageByFilter(filter, paginationContext);
         entities.forEach(this::enrichAuditNamesOf);
         return entities;
     }
 
     @Override
-    public int countByFilter(final F filter) {
+    public int countByFilter(@Nullable final F filter) {
         return repo.countByFilter(filter);
     }
 
+    @NotNull
     @Override
-    public List<ID> findPageOfIdsByFilter(final F filter, final PaginationContext paginationContext) {
+    public List<ID> findPageOfIdsByFilter(@Nullable final F filter,
+        @NotNull final PaginationContext paginationContext) {
         return repo.findPageOfIdsByFilter(filter, paginationContext);
     }
-
 }

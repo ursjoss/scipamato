@@ -3,6 +3,7 @@ package ch.difty.scipamato.core.web.model;
 import java.util.List;
 
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.jetbrains.annotations.NotNull;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.common.persistence.paging.PaginationRequest;
@@ -34,6 +35,7 @@ public class SearchOrderModel extends InjectedLoadableDetachableModel<SearchOrde
         this.maxRows = maxRows;
     }
 
+    @NotNull
     @Override
     protected List<SearchOrder> load() {
         final SearchOrderFilter filter = new SearchOrderFilter();
@@ -41,5 +43,4 @@ public class SearchOrderModel extends InjectedLoadableDetachableModel<SearchOrde
         final PaginationContext pc = new PaginationRequest(0, maxRows, Direction.DESC, "id");
         return service.findPageByFilter(filter, pc);
     }
-
 }

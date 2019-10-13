@@ -1,16 +1,13 @@
 package ch.difty.scipamato.core.entity.newsletter;
 
-import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import lombok.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.entity.FieldEnumType;
 import ch.difty.scipamato.common.entity.newsletter.PublicationStatus;
 import ch.difty.scipamato.core.entity.IdScipamatoEntity;
@@ -24,10 +21,10 @@ import ch.difty.scipamato.core.entity.projection.PaperSlim;
 public class Newsletter extends IdScipamatoEntity<Integer> {
     private static final long serialVersionUID = 1L;
 
-    @NotNull
+    @javax.validation.constraints.NotNull
     private String            issue;
     private LocalDate         issueDate;
-    @NotNull
+    @javax.validation.constraints.NotNull
     private PublicationStatus publicationStatus;
 
     /**
@@ -57,6 +54,7 @@ public class Newsletter extends IdScipamatoEntity<Integer> {
         }
     }
 
+    @NotNull
     @Override
     public String getDisplayValue() {
         return getIssue();
@@ -80,9 +78,8 @@ public class Newsletter extends IdScipamatoEntity<Integer> {
      * @param topic
      *     the topic of the new association, may be null indicating 'no topic'
      */
-    public void addPaper(final PaperSlim paper, final NewsletterTopic topic) {
-        AssertAs.INSTANCE.notNull(paper, "paper");
-        AssertAs.INSTANCE.notNull(paper.getId(), "paper.id");
+    public void addPaper(@NotNull final PaperSlim paper, @Nullable final NewsletterTopic topic) {
+        Objects.requireNonNull(paper.getId());
         if (papersByTopic
             .values()
             .stream()
@@ -151,6 +148,7 @@ public class Newsletter extends IdScipamatoEntity<Integer> {
     /**
      * @return all associated papers, regardless of the topic.
      */
+    @NotNull
     public List<PaperSlim> getPapers() {
         return this.papersByTopic
             .values()
@@ -162,6 +160,7 @@ public class Newsletter extends IdScipamatoEntity<Integer> {
     /**
      * @return all newsletter topics
      */
+    @NotNull
     public List<NewsletterTopic> getTopics() {
         return new ArrayList<>(this.papersByTopic.keySet());
     }

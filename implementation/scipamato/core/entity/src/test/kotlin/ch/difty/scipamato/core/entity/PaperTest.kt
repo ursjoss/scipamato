@@ -570,7 +570,7 @@ internal class PaperTest : Jsr303ValidatedEntityTest<Paper>(Paper::class.java) {
     companion object {
         private const val VALID_AUTHORS =
             "Turner MC, Cohen A, Jerret M, Gapstur SM, Driver WR, Pope CA 3rd, Krewsky D, Beckermann BS, Samet JM."
-        private val VALID_COLLECTIVE =
+        private const val VALID_COLLECTIVE =
             "Mehta AJ, Thun GA, Imboden M, Ferrarotti I, Keidel D, Künzli N, Kromhout H, Miedinger D, Phuleria H, " +
                 "Rochat T, Russi EW, Schindler C, Schwartz J, Vermeulen R, Luisetti M, Probst-Hensch N; SAPALDIA team."
         private const val VALID_FIRST_AUTHOR = "Turner MC"

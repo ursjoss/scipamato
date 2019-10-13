@@ -5,11 +5,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.jetbrains.annotations.NotNull;
 import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.impl.DSL;
 
-import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.TranslationUtils;
 import ch.difty.scipamato.core.entity.search.StringSearchTerm;
 import ch.difty.scipamato.core.entity.search.StringSearchTerm.Token;
@@ -37,10 +37,9 @@ public class StringSearchTermEvaluator implements SearchTermEvaluator<StringSear
             .collect(Collectors.toList()));
     }
 
+    @NotNull
     @Override
-    public Condition evaluate(final StringSearchTerm searchTerm) {
-        AssertAs.INSTANCE.notNull(searchTerm, "searchTerm");
-
+    public Condition evaluate(@NotNull final StringSearchTerm searchTerm) {
         final ConditionalSupplier conditions = new ConditionalSupplier();
         for (final Token token : searchTerm.getTokens()) {
             final String fieldName = TranslationUtils.INSTANCE.deCamelCase(searchTerm.getFieldName());

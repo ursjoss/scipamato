@@ -7,6 +7,7 @@ import ch.difty.scipamato.core.entity.search.SearchOrder
 import ch.difty.scipamato.core.persistence.MAX_ID_PREPOPULATED
 import ch.difty.scipamato.core.persistence.RECORD_COUNT_PREPOPULATED
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.fail
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.jooq.JooqTest
@@ -28,7 +29,7 @@ internal open class JooqPaperSlimRepoIntegrationTest {
 
     @Test
     fun findingById_withExistingId_returnsEntity() {
-        val paper = repo.findById(MAX_ID_PREPOPULATED)
+        val paper = repo.findById(MAX_ID_PREPOPULATED) ?: fail("Unable to load paper")
         @Suppress("ConstantConditionIf")
         if (MAX_ID_PREPOPULATED > 0)
             assertThat(paper.id).isEqualTo(MAX_ID_PREPOPULATED)
@@ -43,7 +44,7 @@ internal open class JooqPaperSlimRepoIntegrationTest {
 
     @Test
     fun findingById_withExistingIdAndVersion_returnsEntityWithCorrectIdButMissingVersion() {
-        val paper = repo.findById(31L, 11, "en")
+        val paper = repo.findById(31L, 11, "en") ?: fail("Unable to load paper")
         assertThat(paper.id).isEqualTo(31L)
         assertThat(paper.number).isEqualTo(31L)
         assertThat(paper.publicationYear).isEqualTo(2016)
@@ -122,7 +123,7 @@ internal open class JooqPaperSlimRepoIntegrationTest {
 
     @Test
     fun canQueryNewsletterFields() {
-        val paper = repo.findById(31L, "en")
+        val paper = repo.findById(31L, "en") ?: fail("Unable to load paper")
 
         val na = paper.newsletterAssociation
         assertThat(na.issue).isEqualTo("1802")

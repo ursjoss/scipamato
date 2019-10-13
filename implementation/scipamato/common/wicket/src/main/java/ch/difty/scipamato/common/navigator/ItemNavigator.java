@@ -3,6 +3,9 @@ package ch.difty.scipamato.common.navigator;
 import java.io.Serializable;
 import java.util.List;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 /**
  * Implementations of this interface may manage a list of items (ordered,
  * unique, non-null). By default, the focus is on the first item. You can move
@@ -26,21 +29,22 @@ public interface ItemNavigator<T> extends Serializable {
      *     list of items of type {@code T} or a subclass, must not be null
      *     nor empty.
      */
-    void initialize(List<? extends T> items);
+    void initialize(@NotNull List<? extends T> items);
 
     /**
      * Sets the focus to item. Ignores the command if the navigator has not been
      * initialized with at least one item.
      *
      * @param item
-     *     the item the focus is set to
+     *     the item the focus is set to - null if we want to unset the focus
      */
-    void setFocusToItem(T item);
+    void setFocusToItem(@Nullable T item);
 
     /**
      * @return the item with the focus (the first by default) or {@literal null} if
      *     the navigator has not been initialized with at least one item.
      */
+    @Nullable
     T getItemWithFocus();
 
     /**
@@ -74,7 +78,7 @@ public interface ItemNavigator<T> extends Serializable {
      * @param idCandidate
      *     the id candidate
      */
-    void setIdToHeadIfNotPresent(T idCandidate);
+    void setIdToHeadIfNotPresent(@NotNull T idCandidate);
 
     /**
      * Removes the id from the list (if present)
@@ -82,7 +86,7 @@ public interface ItemNavigator<T> extends Serializable {
      * @param id
      *     the id to be removed
      */
-    void remove(T id);
+    void remove(@NotNull T id);
 
     /**
      * @return true if the list was modified, false otherwise

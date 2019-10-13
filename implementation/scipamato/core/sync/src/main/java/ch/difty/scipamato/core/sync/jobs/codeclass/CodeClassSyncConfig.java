@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
+import org.jetbrains.annotations.NotNull;
 import org.jooq.DSLContext;
 import org.jooq.TableField;
 import org.springframework.batch.core.Job;
@@ -53,28 +54,34 @@ public class CodeClassSyncConfig
     private static final TableField<CodeClassTrRecord, Timestamp> C_CREATED       = CODE_CLASS_TR.CREATED;
     private static final TableField<CodeClassTrRecord, Timestamp> C_LAST_MODIFIED = CODE_CLASS_TR.LAST_MODIFIED;
 
-    protected CodeClassSyncConfig(@Qualifier("dslContext") DSLContext jooqCore,
-        @Qualifier("publicDslContext") DSLContext jooqPublic, @Qualifier("dataSource") DataSource coreDataSource,
-        JobBuilderFactory jobBuilderFactory, StepBuilderFactory stepBuilderFactory, DateTimeService dateTimeService) {
+    protected CodeClassSyncConfig(@Qualifier("dslContext") @NotNull final DSLContext jooqCore,
+        @Qualifier("publicDslContext") @NotNull final DSLContext jooqPublic,
+        @Qualifier("dataSource") @NotNull final DataSource coreDataSource,
+        @NotNull final JobBuilderFactory jobBuilderFactory, @NotNull final StepBuilderFactory stepBuilderFactory,
+        @NotNull final DateTimeService dateTimeService) {
         super(TOPIC, CHUNK_SIZE, jooqCore, jooqPublic, coreDataSource, jobBuilderFactory, stepBuilderFactory,
             dateTimeService);
     }
 
+    @NotNull
     @Bean
     public Job syncCodeClassJob() {
         return createJob();
     }
 
+    @NotNull
     @Override
     protected String getJobName() {
         return "syncCodeClassJob";
     }
 
+    @NotNull
     @Override
     protected ItemWriter<PublicCodeClass> publicWriter() {
         return new CodeClassItemWriter(getJooqPublic());
     }
 
+    @NotNull
     @Override
     protected String selectSql() {
         return getJooqCore()
@@ -85,8 +92,9 @@ public class CodeClassSyncConfig
             .getSQL();
     }
 
+    @NotNull
     @Override
-    protected PublicCodeClass makeEntity(final ResultSet rs) throws SQLException {
+    protected PublicCodeClass makeEntity(@NotNull final ResultSet rs) throws SQLException {
         return PublicCodeClass
             .builder()
             .codeClassId(getInteger(C_ID, rs))
@@ -100,9 +108,9 @@ public class CodeClassSyncConfig
             .build();
     }
 
+    @NotNull
     @Override
     protected TableField<ch.difty.scipamato.publ.db.tables.records.CodeClassRecord, Timestamp> lastSynchedField() {
         return ch.difty.scipamato.publ.db.tables.CodeClass.CODE_CLASS.LAST_SYNCHED;
     }
-
 }

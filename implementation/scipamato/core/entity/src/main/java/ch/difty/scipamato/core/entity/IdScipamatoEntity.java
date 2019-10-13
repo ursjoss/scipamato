@@ -1,8 +1,7 @@
 package ch.difty.scipamato.core.entity;
 
-import javax.validation.constraints.NotNull;
-
 import lombok.*;
+import org.jetbrains.annotations.NotNull;
 
 import ch.difty.scipamato.common.entity.FieldEnumType;
 
@@ -40,5 +39,4 @@ public abstract class IdScipamatoEntity<ID extends Number> extends CoreEntity {
             return name;
         }
     }
-
 }

@@ -7,6 +7,9 @@ import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 /**
  * Implementation of {@link AbstractSearchTerm} working with String fields. The
  * search term (applying to one particular field) is lexed and transferred into
@@ -65,19 +68,22 @@ public class StringSearchTerm extends AbstractSearchTerm {
 
     private final List<Token> tokens;
 
-    StringSearchTerm(final String fieldName, final String rawSearchTerm) {
+    StringSearchTerm(@NotNull final String fieldName, @NotNull final String rawSearchTerm) {
         this(null, fieldName, rawSearchTerm);
     }
 
-    private StringSearchTerm(final Long searchConditionId, final String fieldName, final String rawSearchTerm) {
+    private StringSearchTerm(@Nullable final Long searchConditionId, @NotNull final String fieldName,
+        @NotNull final String rawSearchTerm) {
         this(null, searchConditionId, fieldName, rawSearchTerm);
     }
 
-    StringSearchTerm(final Long id, final Long searchConditionId, final String fieldName, final String rawSearchTerm) {
+    StringSearchTerm(@Nullable final Long id, @Nullable final Long searchConditionId, @NotNull final String fieldName,
+        @NotNull final String rawSearchTerm) {
         super(id, SearchTermType.STRING, searchConditionId, fieldName, rawSearchTerm);
         tokens = lex(rawSearchTerm.trim());
     }
 
+    @NotNull
     public List<Token> getTokens() {
         return tokens;
     }
@@ -126,15 +132,15 @@ public class StringSearchTerm extends AbstractSearchTerm {
         // cache values
         private static final TokenType[] TOKEN_TYPES = values();
 
-        final  String    pattern;
+        final         String    pattern;
         public final  MatchType matchType;
         private final int       group;
         private final boolean   wcLeft;
         private final boolean   wcRight;
         public final  boolean   negate;
 
-        TokenType(final String pattern, final MatchType matchType, final int group, final boolean wcLeft,
-            final boolean wcRight, final boolean negate) {
+        TokenType(@NotNull final String pattern, @NotNull final MatchType matchType, final int group,
+            final boolean wcLeft, final boolean wcRight, final boolean negate) {
             this.pattern = pattern;
             this.group = group;
             this.matchType = matchType;
@@ -143,7 +149,8 @@ public class StringSearchTerm extends AbstractSearchTerm {
             this.negate = negate;
         }
 
-        public static List<TokenType> byMatchType(final MatchType mt) {
+        @NotNull
+        public static List<TokenType> byMatchType(@NotNull final MatchType mt) {
             final List<TokenType> types = new ArrayList<>();
             for (final TokenType tt : TOKEN_TYPES)
                 if (tt.matchType == mt)
@@ -166,7 +173,7 @@ public class StringSearchTerm extends AbstractSearchTerm {
         final boolean negate;
         final String  rawData;
 
-        public Token(final TokenType type, final String data) {
+        public Token(@NotNull final TokenType type, @NotNull final String data) {
             this.type = type;
             this.negate = type.negate;
             this.rawData = data;
@@ -227,5 +234,4 @@ public class StringSearchTerm extends AbstractSearchTerm {
         }
         return Optional.empty();
     }
-
 }

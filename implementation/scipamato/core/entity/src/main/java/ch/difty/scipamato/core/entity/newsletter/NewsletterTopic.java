@@ -1,9 +1,9 @@
 package ch.difty.scipamato.core.entity.newsletter;
 
-import javax.validation.constraints.NotNull;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import ch.difty.scipamato.common.entity.FieldEnumType;
 import ch.difty.scipamato.core.entity.IdScipamatoEntity;
@@ -17,10 +17,10 @@ import ch.difty.scipamato.core.entity.IdScipamatoEntity;
 public class NewsletterTopic extends IdScipamatoEntity<Integer> {
     private static final long serialVersionUID = 1L;
 
-    @NotNull
+    @javax.validation.constraints.NotNull
     private String title;
 
-    public NewsletterTopic(final Integer id, final String title) {
+    public NewsletterTopic(@Nullable final Integer id, @NotNull final String title) {
         setId(id);
         this.title = title;
     }
@@ -42,9 +42,9 @@ public class NewsletterTopic extends IdScipamatoEntity<Integer> {
         }
     }
 
+    @NotNull
     @Override
     public String getDisplayValue() {
         return getTitle();
     }
-
 }

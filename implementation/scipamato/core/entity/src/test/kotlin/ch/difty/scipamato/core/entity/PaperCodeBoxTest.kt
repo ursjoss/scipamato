@@ -1,9 +1,7 @@
 package ch.difty.scipamato.core.entity
 
-import ch.difty.scipamato.common.NullArgumentException
 import ch.difty.scipamato.common.entity.CodeClassId
 import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.fail
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
@@ -53,9 +51,8 @@ internal class PaperCodeBoxTest {
     }
 
     @Test
-    fun addingMultipleCodesWithNullOrEmptyList_leavesCodesAsIs() {
+    fun addingMultipleCodesWithEmptyList_leavesCodesAsIs() {
         codeBox.addCode(CODE_1F)
-        codeBox.addCodes(null)
         codeBox.addCodes(emptyList())
         assertThat(codeBox.codes).containsOnly(CODE_1F)
     }
@@ -83,19 +80,6 @@ internal class PaperCodeBoxTest {
         assertThat(codeBox.getCodesBy(CodeClassId.CC1)).containsExactly(CODE_1F)
         assertThat(codeBox.getCodesBy(CodeClassId.CC2)).isEmpty()
         assertThat(codeBox.getCodesBy(CodeClassId.CC5)).containsExactly(CODE_5H, CODE_5F)
-    }
-
-    @Test
-    fun clearingByCodeClassId_withNullParameter_throws() {
-        try {
-            codeBox.clearBy(null)
-            fail<Any>("should have thrown exception")
-        } catch (ex: Exception) {
-            assertThat(ex)
-                .isInstanceOf(NullArgumentException::class.java)
-                .hasMessage("codeClassId must not be null.")
-        }
-
     }
 
     @Test
@@ -129,16 +113,22 @@ internal class PaperCodeBoxTest {
         codeBox.addCodes(listOf(CODE_1F, CODE_5H, CODE_5F))
         assertThat(codeBox.toString()).isEqualTo(
             // @formatter:off
-              "["
-+ "codesOfClass1=["
-+ "Code[code=1F,name=Code 1F,comment=<null>,internal=false,codeClass=CodeClass[id=1],sort=1,createdBy=1,lastModifiedBy=2,created=2017-01-01T08:00:00.123,lastModified=2017-01-02T09:00:00.456,version=3]"
-+ "]"
-+ ",codesOfClass5=["
-+ "Code[code=5H,name=Code 5H,comment=<null>,internal=false,codeClass=CodeClass[id=5],sort=7,createdBy=1,lastModifiedBy=2,created=2017-01-01T08:00:00.123,lastModified=2017-01-02T09:00:00.456,version=3]"
-+ ", Code[code=5F,name=Code 5F,comment=<null>,internal=false,codeClass=CodeClass[id=5],sort=5,createdBy=1,lastModifiedBy=2,created=2017-01-01T08:00:00.123,lastModified=2017-01-02T09:00:00.456,version=3]"
-+ "]"
-+ "]"
- // @formatter:on
+              "[" +
+                "codesOfClass1=[" +
+                    "Code[code=1F,name=Code 1F,comment=<null>,internal=false,codeClass=CodeClass[id=1],sort=1," +
+                         "createdBy=1,lastModifiedBy=2,created=2017-01-01T08:00:00.123," +
+                         "lastModified=2017-01-02T09:00:00.456,version=3]" +
+                "]" +
+                ",codesOfClass5=[" +
+                    "Code[code=5H,name=Code 5H,comment=<null>,internal=false,codeClass=CodeClass[id=5],sort=7," +
+                        "createdBy=1,lastModifiedBy=2,created=2017-01-01T08:00:00.123," +
+                        "lastModified=2017-01-02T09:00:00.456,version=3]" +
+                    ", Code[code=5F,name=Code 5F,comment=<null>,internal=false,codeClass=CodeClass[id=5],sort=5," +
+                         "createdBy=1,lastModifiedBy=2,created=2017-01-01T08:00:00.123," +
+                         "lastModified=2017-01-02T09:00:00.456,version=3]" +
+                    "]" +
+                "]"
+            // @formatter:on
         )
     }
 
@@ -216,5 +206,4 @@ internal class PaperCodeBoxTest {
             return Code(code, "Code $code", null, false, ccId, codeClassId.name, "", sort, CREAT, 1, MOD, 2, 3)
         }
     }
-
 }

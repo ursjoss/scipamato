@@ -19,5 +19,4 @@ class ResultPanelInViewModeTest extends ResultPanelTest {
         getTester().assertContainsNot(bb + ":6:cell:link:image");
         getTester().assertContainsNot(bb + ":7:cell:link:image");
     }
-
 }

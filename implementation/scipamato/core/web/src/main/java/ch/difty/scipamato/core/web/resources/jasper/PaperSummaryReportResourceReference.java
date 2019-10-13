@@ -1,5 +1,7 @@
 package ch.difty.scipamato.core.web.resources.jasper;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * Resource Reference for the Paper Summary Report
  *
@@ -37,8 +39,8 @@ public class PaperSummaryReportResourceReference extends JasperReportResourceRef
         super(PaperSummaryReportResourceReference.class, NAME, cacheReport);
     }
 
+    @NotNull
     public static PaperSummaryReportResourceReference get() {
         return INSTANCE;
     }
-
 }

@@ -1,6 +1,5 @@
 package ch.difty.scipamato.core.pubmed;
 
-import static ch.difty.scipamato.common.TestUtilsKt.assertDegenerateSupplierParameter;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -47,27 +46,6 @@ class PubmedImportServiceTest {
     void tearDown() {
         verifyNoMoreInteractions(pubmedArticleServiceMock, paperServiceMock, pubmedArticleMock, serviceResultMock,
             applicationPropertiesMock);
-    }
-
-    @Test
-    void degenerateConstruction_withNullPubmedArticleService_throws() {
-        assertDegenerateSupplierParameter(
-            () -> new PubmedImportService(null, paperServiceMock, applicationPropertiesMock), "pubmedArticleService");
-        verify(applicationPropertiesMock).getMinimumPaperNumberToBeRecycled();
-    }
-
-    @Test
-    void degenerateConstruction_withNullPaperService_throws() {
-        assertDegenerateSupplierParameter(
-            () -> new PubmedImportService(pubmedArticleServiceMock, null, applicationPropertiesMock), "paperService");
-        verify(applicationPropertiesMock).getMinimumPaperNumberToBeRecycled();
-    }
-
-    @Test
-    void degenerateConstruction_withNullApplicationProperties_throws() {
-        assertDegenerateSupplierParameter(
-            () -> new PubmedImportService(pubmedArticleServiceMock, paperServiceMock, null), "applicationProperties");
-        verify(applicationPropertiesMock).getMinimumPaperNumberToBeRecycled();
     }
 
     @Test

@@ -5,6 +5,7 @@ import static ch.difty.scipamato.core.db.tables.PaperNewsletter.PAPER_NEWSLETTER
 
 import java.util.List;
 
+import org.jetbrains.annotations.NotNull;
 import org.jooq.Condition;
 import org.jooq.impl.DSL;
 
@@ -22,7 +23,7 @@ import ch.difty.scipamato.core.entity.search.PaperFilter;
 public class PaperFilterConditionMapper extends AbstractFilterConditionMapper<PaperFilter> {
 
     @Override
-    public void map(final PaperFilter filter, final List<Condition> conditions) {
+    public void map(@NotNull final PaperFilter filter, @NotNull final List<Condition> conditions) {
         if (filter.getNumber() != null) {
             conditions.add(PAPER.NUMBER.eq(filter.getNumber()));
         }

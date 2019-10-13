@@ -1,6 +1,5 @@
 package ch.difty.scipamato.core.web.user;
 
-import static ch.difty.scipamato.common.TestUtilsKt.assertDegenerateSupplierParameter;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.apache.wicket.validation.Validatable;
@@ -16,17 +15,6 @@ class CurrentPasswordMatchesValidatorTest {
         PW_ADMIN_ENCRYPTED);
 
     private Validatable<String> validatable;
-
-    @Test
-    void degenerateConstruction_withNullPasswordEncoder_fails() {
-        assertDegenerateSupplierParameter(() -> new CurrentPasswordMatchesValidator(null, "foo"), "passwordEncoder");
-    }
-
-    @Test
-    void degenerateConstruction_withNullPassword_fails() {
-        assertDegenerateSupplierParameter(() -> new CurrentPasswordMatchesValidator(new BCryptPasswordEncoder(), null),
-            "currentPasswordHashPersisted");
-    }
 
     @Test
     void withMatchingHash_succeeds() {

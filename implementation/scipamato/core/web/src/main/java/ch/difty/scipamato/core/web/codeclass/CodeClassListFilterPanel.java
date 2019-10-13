@@ -2,6 +2,7 @@ package ch.difty.scipamato.core.web.codeclass;
 
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.PropertyModel;
+import org.jetbrains.annotations.NotNull;
 
 import ch.difty.scipamato.core.entity.codeclass.CodeClassDefinition;
 import ch.difty.scipamato.core.entity.codeclass.CodeClassFilter;
@@ -15,7 +16,7 @@ class CodeClassListFilterPanel extends
 
     private static final long serialVersionUID = 1L;
 
-    CodeClassListFilterPanel(final String id, final CodeClassDefinitionProvider provider) {
+    CodeClassListFilterPanel(@NotNull final String id, @NotNull final CodeClassDefinitionProvider provider) {
         super(id, provider);
     }
 
@@ -27,5 +28,4 @@ class CodeClassListFilterPanel extends
             new TextField<String>(CodeClassTranslation.CodeClassTranslationFields.DESCRIPTION.getFieldName(),
                 PropertyModel.of(getFilter(), CodeClassFilter.CodeClassFilterFields.DESCRIPTION_MASK.getFieldName())));
     }
-
 }

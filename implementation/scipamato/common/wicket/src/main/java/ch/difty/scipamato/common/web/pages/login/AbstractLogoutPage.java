@@ -3,6 +3,8 @@ package ch.difty.scipamato.common.web.pages.login;
 import org.apache.wicket.markup.html.form.StatelessForm;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.wicketstuff.annotation.mount.MountPath;
 
 import ch.difty.scipamato.common.config.ApplicationProperties;
@@ -17,10 +19,11 @@ public abstract class AbstractLogoutPage<R extends AbstractPage<?>> extends Abst
     @SpringBean
     private ApplicationProperties scipamatoProperties;
 
-    public AbstractLogoutPage(PageParameters parameters) {
+    public AbstractLogoutPage(@Nullable PageParameters parameters) {
         super(parameters);
     }
 
+    @NotNull
     @Override
     protected ApplicationProperties getProperties() {
         return scipamatoProperties;
@@ -51,6 +54,7 @@ public abstract class AbstractLogoutPage<R extends AbstractPage<?>> extends Abst
     /**
      * @return the response page
      */
+    @Nullable
     protected abstract R getResponsePage();
 
     @Override

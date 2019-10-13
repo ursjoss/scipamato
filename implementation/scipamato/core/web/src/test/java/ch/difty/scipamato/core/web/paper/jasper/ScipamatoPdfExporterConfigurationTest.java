@@ -242,5 +242,4 @@ class ScipamatoPdfExporterConfigurationTest {
         assertThat(config.getMetadataKeywords()).isNull();
         assertThat(config.isCompressed()).isFalse();
     }
-
 }

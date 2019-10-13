@@ -6,7 +6,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import ch.difty.scipamato.common.AssertAs;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import ch.difty.scipamato.core.auth.Role;
 import ch.difty.scipamato.core.entity.User;
 
@@ -34,7 +36,7 @@ public class ChangePasswordUser implements Serializable {
     /**
      * Instantiates a {@link ChangePasswordUser} from the provided {@link User}
      */
-    public ChangePasswordUser(final User user) {
+    public ChangePasswordUser(@NotNull final User user) {
         this(user, false);
     }
 
@@ -47,8 +49,8 @@ public class ChangePasswordUser implements Serializable {
      * @param clearPassword
      *     if true: password will be set to null.
      */
-    public ChangePasswordUser(final User user, final boolean clearPassword) {
-        this.user = AssertAs.INSTANCE.notNull(user, "user");
+    public ChangePasswordUser(@NotNull final User user, final boolean clearPassword) {
+        this.user = user;
         if (clearPassword)
             this.user.setPassword(null);
     }
@@ -56,10 +58,12 @@ public class ChangePasswordUser implements Serializable {
     /**
      * @return the user. Is never null.
      */
+    @NotNull
     public User toUser() {
         return user;
     }
 
+    @NotNull
     public Integer getId() {
         return user.getId();
     }
@@ -68,6 +72,7 @@ public class ChangePasswordUser implements Serializable {
         user.setId(id);
     }
 
+    @NotNull
     public String getUserName() {
         return user.getUserName();
     }
@@ -76,6 +81,7 @@ public class ChangePasswordUser implements Serializable {
         user.setUserName(value);
     }
 
+    @NotNull
     public String getFirstName() {
         return user.getFirstName();
     }
@@ -84,6 +90,7 @@ public class ChangePasswordUser implements Serializable {
         user.setFirstName(value);
     }
 
+    @NotNull
     public String getLastName() {
         return user.getLastName();
     }
@@ -92,6 +99,7 @@ public class ChangePasswordUser implements Serializable {
         user.setLastName(value);
     }
 
+    @NotNull
     public String getEmail() {
         return user.getEmail();
     }
@@ -100,6 +108,7 @@ public class ChangePasswordUser implements Serializable {
         user.setEmail(value);
     }
 
+    @Nullable
     public String getPassword() {
         return user.getPassword();
     }
@@ -116,6 +125,7 @@ public class ChangePasswordUser implements Serializable {
         user.setEnabled(value);
     }
 
+    @NotNull
     public List<Role> getRoles() {
         return new ArrayList<>(user.getRoles());
     }
@@ -132,10 +142,12 @@ public class ChangePasswordUser implements Serializable {
         user.removeRole(role);
     }
 
+    @NotNull
     public String getFullName() {
         return user.getFullName();
     }
 
+    @NotNull
     public String getDisplayValue() {
         return user.getDisplayValue();
     }
@@ -156,6 +168,7 @@ public class ChangePasswordUser implements Serializable {
         currentPassword = value;
     }
 
+    @NotNull
     public String getRolesString() {
         return user
             .getRoles()

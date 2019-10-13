@@ -23,6 +23,8 @@ import org.apache.wicket.extensions.markup.html.repeater.data.grid.ICellPopulato
 import org.apache.wicket.extensions.markup.html.repeater.data.table.AbstractColumn;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.model.IModel;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * @author Viliam Repan (lazyman)
@@ -31,17 +33,18 @@ public abstract class LinkIconColumn<T extends Serializable> extends AbstractCol
 
     private static final long serialVersionUID = 1L;
 
-    public LinkIconColumn(IModel<String> displayModel) {
+    public LinkIconColumn(@Nullable IModel<String> displayModel) {
         super(displayModel);
     }
 
     @Override
-    public void populateItem(Item<ICellPopulator<T>> cellItem, String componentId, final IModel<T> rowModel) {
+    public void populateItem(@NotNull Item<ICellPopulator<T>> cellItem, @NotNull String componentId,
+        @NotNull final IModel<T> rowModel) {
         cellItem.add(new LinkIconPanel(componentId, createIconModel(rowModel), createTitleModel(rowModel)) {
             private static final long serialVersionUID = 1L;
 
             @Override
-            protected void onClickPerformed(AjaxRequestTarget target) {
+            protected void onClickPerformed(@NotNull AjaxRequestTarget target) {
                 LinkIconColumn.this.onClickPerformed(target, rowModel, getLink());
             }
 
@@ -64,12 +67,14 @@ public abstract class LinkIconColumn<T extends Serializable> extends AbstractCol
      *     the row model to derive the title model from
      * @return title model
      */
-    protected IModel<String> createTitleModel(final IModel<T> rowModel) {
+    @Nullable
+    protected IModel<String> createTitleModel(@NotNull final IModel<T> rowModel) {
         return null;
     }
 
-    protected abstract IModel<String> createIconModel(final IModel<T> rowModel);
+    @Nullable
+    protected abstract IModel<String> createIconModel(@NotNull final IModel<T> rowModel);
 
-    protected abstract void onClickPerformed(AjaxRequestTarget target, IModel<T> rowModel, AjaxLink<Void> link);
-
+    protected abstract void onClickPerformed(@NotNull AjaxRequestTarget target, @NotNull IModel<T> rowModel,
+        @NotNull AjaxLink<Void> link);
 }

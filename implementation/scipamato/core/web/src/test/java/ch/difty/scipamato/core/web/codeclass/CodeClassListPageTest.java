@@ -117,5 +117,4 @@ class CodeClassListPageTest extends BasePageTest<CodeClassListPage> {
         verify(codeClassServiceMock).findPageOfEntityDefinitions(isA(CodeClassFilter.class),
             isA(PaginationRequest.class));
     }
-
 }

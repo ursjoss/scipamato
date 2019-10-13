@@ -135,5 +135,4 @@ class KeywordListPageTest extends BasePageTest<KeywordListPage> {
         verify(keywordServiceMock).findPageOfEntityDefinitions(isA(KeywordFilter.class), isA(PaginationRequest.class));
         verify(keywordServiceMock).newUnpersistedKeywordDefinition();
     }
-
 }

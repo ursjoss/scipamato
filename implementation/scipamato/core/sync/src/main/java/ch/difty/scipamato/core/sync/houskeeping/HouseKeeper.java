@@ -12,7 +12,6 @@ import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.repeat.RepeatStatus;
 
-import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.DateTimeService;
 
 /**
@@ -56,15 +55,17 @@ public class HouseKeeper<R extends UpdatableRecordImpl<?>> implements Tasklet {
      * @param entityName
      *     the name of the managed entity
      */
-    public HouseKeeper(final DSLContext jooqPublic, final TableField<R, Timestamp> lastSynchedField,
-        final DateTimeService dateTimeService, final int graceTimeInMinutes, final String entityName) {
-        this.jooqPublic = AssertAs.INSTANCE.notNull(jooqPublic, "jooqPublic");
-        this.lastSynchedField = AssertAs.INSTANCE.notNull(lastSynchedField, "lastSynchedField");
-        this.dateTimeService = AssertAs.INSTANCE.notNull(dateTimeService, "dateTimeService");
+    public HouseKeeper(@NotNull final DSLContext jooqPublic, @NotNull final TableField<R, Timestamp> lastSynchedField,
+        @NotNull final DateTimeService dateTimeService, final int graceTimeInMinutes,
+        @NotNull final String entityName) {
+        this.jooqPublic = jooqPublic;
+        this.lastSynchedField = lastSynchedField;
+        this.dateTimeService = dateTimeService;
         this.graceTimeInMinutes = graceTimeInMinutes;
-        this.entityName = AssertAs.INSTANCE.notNull(entityName, "entityName");
+        this.entityName = entityName;
     }
 
+    @NotNull
     @Override
     public RepeatStatus execute(@NotNull final StepContribution contribution,
         @NotNull final ChunkContext chunkContext) {
@@ -80,5 +81,4 @@ public class HouseKeeper<R extends UpdatableRecordImpl<?>> implements Tasklet {
                 (result > 1 ? "es" : ""), cutOff);
         return RepeatStatus.FINISHED;
     }
-
 }

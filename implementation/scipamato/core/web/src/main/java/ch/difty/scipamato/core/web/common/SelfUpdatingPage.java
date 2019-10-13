@@ -4,6 +4,8 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import ch.difty.scipamato.core.config.ApplicationCoreProperties;
 
@@ -28,14 +30,15 @@ public abstract class SelfUpdatingPage<T> extends BasePage<T> {
     @SpringBean
     private ApplicationCoreProperties applicationProperties;
 
-    protected SelfUpdatingPage(PageParameters parameters) {
+    protected SelfUpdatingPage(@Nullable PageParameters parameters) {
         super(parameters);
     }
 
-    protected SelfUpdatingPage(IModel<T> model) {
+    protected SelfUpdatingPage(@Nullable IModel<T> model) {
         super(model);
     }
 
+    @NotNull
     protected ApplicationCoreProperties getApplicationProperties() {
         return applicationProperties;
     }
@@ -70,6 +73,7 @@ public abstract class SelfUpdatingPage<T> extends BasePage<T> {
      *
      * @return Form of type {@code T}
      */
+    @NotNull
     protected abstract Form<T> getForm();
 
     /**
@@ -89,5 +93,4 @@ public abstract class SelfUpdatingPage<T> extends BasePage<T> {
     protected void resetFeedbackMessages() {
         getFeedbackPanel().setMaxMessages(Integer.MAX_VALUE);
     }
-
 }

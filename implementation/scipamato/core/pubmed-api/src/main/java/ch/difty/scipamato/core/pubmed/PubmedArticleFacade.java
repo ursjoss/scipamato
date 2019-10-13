@@ -1,5 +1,7 @@
 package ch.difty.scipamato.core.pubmed;
 
+import org.jetbrains.annotations.NotNull;
+
 import ch.difty.scipamato.core.pubmed.api.PubmedArticle;
 import ch.difty.scipamato.core.pubmed.api.PubmedBookArticle;
 
@@ -19,7 +21,7 @@ public interface PubmedArticleFacade {
      *     - if the parameter is of any other class than one of the two
      *     managed ones.
      */
-    static PubmedArticleFacade newPubmedArticleFrom(final java.lang.Object pubmedArticleOrPubmedBookArticle) {
+    static PubmedArticleFacade newPubmedArticleFrom(@NotNull final java.lang.Object pubmedArticleOrPubmedBookArticle) {
         if (pubmedArticleOrPubmedBookArticle instanceof PubmedArticle)
             return new ScipamatoPubmedArticle((PubmedArticle) pubmedArticleOrPubmedBookArticle);
         else if (pubmedArticleOrPubmedBookArticle instanceof PubmedBookArticle)
@@ -28,19 +30,27 @@ public interface PubmedArticleFacade {
             "Cannot instantiate ScipamatoArticle from provided object " + pubmedArticleOrPubmedBookArticle.toString());
     }
 
+    @NotNull
     String getPmId();
 
+    @NotNull
     String getAuthors();
 
+    @NotNull
     String getFirstAuthor();
 
+    @NotNull
     String getPublicationYear();
 
+    @NotNull
     String getLocation();
 
+    @NotNull
     String getTitle();
 
+    @NotNull
     String getDoi();
 
+    @NotNull
     String getOriginalAbstract();
 }

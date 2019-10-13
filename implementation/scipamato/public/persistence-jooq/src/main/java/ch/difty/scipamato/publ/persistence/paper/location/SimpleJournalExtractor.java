@@ -1,6 +1,8 @@
 package ch.difty.scipamato.publ.persistence.paper.location;
 
 import org.apache.commons.lang3.StringUtils;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.stereotype.Component;
 
 import ch.difty.scipamato.publ.persistence.paper.JournalExtractor;
@@ -21,8 +23,9 @@ import ch.difty.scipamato.publ.persistence.paper.JournalExtractor;
 @Component
 public class SimpleJournalExtractor implements JournalExtractor {
 
+    @NotNull
     @Override
-    public String extractJournal(final String location) {
+    public String extractJournal(@Nullable final String location) {
         if (StringUtils.isBlank(location))
             return "";
 
@@ -48,5 +51,4 @@ public class SimpleJournalExtractor implements JournalExtractor {
         else
             return location;
     }
-
 }

@@ -1,5 +1,7 @@
 package ch.difty.scipamato.common.persistence;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.jooq.Condition;
 
 import ch.difty.scipamato.common.entity.filter.ScipamatoFilter;
@@ -21,6 +23,7 @@ public interface GenericFilterConditionMapper<F extends ScipamatoFilter> {
      *     filter class extending {@link ScipamatoFilter}
      * @return the Condition
      */
-    Condition map(F filter);
+    @NotNull
+    Condition map(@Nullable F filter);
 
 }

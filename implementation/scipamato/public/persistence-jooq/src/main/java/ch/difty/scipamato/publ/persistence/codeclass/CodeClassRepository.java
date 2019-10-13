@@ -9,5 +9,4 @@ import ch.difty.scipamato.publ.entity.CodeClass;
  * @author u.joss
  */
 public interface CodeClassRepository extends CodeClassLikeRepository<CodeClass> {
-
 }

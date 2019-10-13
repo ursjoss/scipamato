@@ -42,5 +42,4 @@ public class NewStudyTopic extends PublicEntity {
             return name;
         }
     }
-
 }

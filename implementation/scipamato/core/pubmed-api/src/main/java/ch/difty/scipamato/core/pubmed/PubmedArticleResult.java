@@ -5,6 +5,8 @@ import java.util.regex.Pattern;
 
 import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.http.HttpStatus;
 
 /**
@@ -21,8 +23,8 @@ public class PubmedArticleResult {
     private final PubmedArticleFacade pubmedArticleFacade;
     private final String              errorMessage;
 
-    public PubmedArticleResult(final PubmedArticleFacade pubmedArticleFacade, final HttpStatus httpStatus,
-        final String rawMessage) {
+    public PubmedArticleResult(@Nullable final PubmedArticleFacade pubmedArticleFacade,
+        @Nullable final HttpStatus httpStatus, @Nullable final String rawMessage) {
         this.pubmedArticleFacade = pubmedArticleFacade;
         this.errorMessage = evaluateMessageFrom(httpStatus, rawMessage);
     }
@@ -76,5 +78,4 @@ public class PubmedArticleResult {
             return prependColumn(rawMessage);
         return "";
     }
-
 }

@@ -74,5 +74,4 @@ internal class AuditSearchTermsTest {
     fun compareWithNullSelfOrDifferentClass() {
         assertThat(st1 == st1).isTrue()
     }
-
 }

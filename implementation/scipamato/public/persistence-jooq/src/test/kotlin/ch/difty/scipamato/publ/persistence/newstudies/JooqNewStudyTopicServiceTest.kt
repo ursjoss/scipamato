@@ -1,13 +1,11 @@
 package ch.difty.scipamato.publ.persistence.newstudies
 
-import ch.difty.scipamato.common.NullArgumentException
 import ch.difty.scipamato.publ.entity.NewStudyPageLink
 import ch.difty.scipamato.publ.entity.NewStudyTopic
 import ch.difty.scipamato.publ.entity.Newsletter
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito.verify
 import java.time.LocalDate
@@ -18,11 +16,6 @@ internal class JooqNewStudyTopicServiceTest {
     private val newStudyTopicDummy = NewStudyTopic(1, "title")
     private val service: JooqNewStudyTopicService = JooqNewStudyTopicService(repoMock)
     private var studyTopics = listOf(newStudyTopicDummy, newStudyTopicDummy)
-
-    @Test
-    fun findingMostRecentNewStudyTopics_withNullLanguage_throws() {
-        Assertions.assertThrows(NullArgumentException::class.java) { service.findMostRecentNewStudyTopics(null) }
-    }
 
     @Test
     fun findingMostRecentNewStudyTopics() {
@@ -40,7 +33,8 @@ internal class JooqNewStudyTopicServiceTest {
         whenever(repoMock.findIdOfNewsletterWithIssue("2018/06")).thenReturn(java.util.Optional.of(NL_ID))
         whenever(repoMock.findNewStudyTopicsForNewsletter(NL_ID, "en")).thenReturn(studyTopics)
 
-        assertThat(service.findNewStudyTopicsForNewsletterIssue("2018/06", "en")).containsExactly(newStudyTopicDummy, newStudyTopicDummy)
+        assertThat(service.findNewStudyTopicsForNewsletterIssue("2018/06", "en"))
+            .containsExactly(newStudyTopicDummy, newStudyTopicDummy)
 
         verify(repoMock).findIdOfNewsletterWithIssue("2018/06")
         verify(repoMock).findNewStudyTopicsForNewsletter(NL_ID, "en")

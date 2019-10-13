@@ -1,6 +1,8 @@
 package ch.difty.scipamato.common.web.component.table.column;
 
 import org.apache.wicket.model.IModel;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import ch.difty.scipamato.common.web.component.SerializableConsumer;
 
@@ -21,18 +23,19 @@ public class ClickablePropertyColumn<T, S> extends AbstractClickablePropertyColu
 
     private final SerializableConsumer<IModel<T>> consumer;
 
-    public ClickablePropertyColumn(final IModel<String> displayModel, final String property,
-        final SerializableConsumer<IModel<T>> consumer) {
+    public ClickablePropertyColumn(@NotNull final IModel<String> displayModel, @NotNull final String property,
+        @NotNull final SerializableConsumer<IModel<T>> consumer) {
         this(displayModel, null, property, consumer, false);
     }
 
-    public ClickablePropertyColumn(final IModel<String> displayModel, final S sort, final String property,
-        final SerializableConsumer<IModel<T>> consumer) {
+    public ClickablePropertyColumn(@NotNull final IModel<String> displayModel, @Nullable final S sort,
+        @NotNull final String property, @NotNull final SerializableConsumer<IModel<T>> consumer) {
         this(displayModel, sort, property, consumer, false);
     }
 
-    public ClickablePropertyColumn(final IModel<String> displayModel, final S sort, final String property,
-        final SerializableConsumer<IModel<T>> consumer, final boolean inNewTab) {
+    public ClickablePropertyColumn(@NotNull final IModel<String> displayModel, @Nullable final S sort,
+        @NotNull final String property, @NotNull final SerializableConsumer<IModel<T>> consumer,
+        final boolean inNewTab) {
         super(displayModel, sort, property, inNewTab);
         this.consumer = consumer;
     }

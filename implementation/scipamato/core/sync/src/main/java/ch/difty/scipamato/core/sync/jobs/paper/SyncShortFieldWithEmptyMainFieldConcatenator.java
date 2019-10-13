@@ -6,10 +6,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.jooq.TableField;
 import org.springframework.stereotype.Component;
 
-import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.paper.AbstractShortFieldConcatenator;
 import ch.difty.scipamato.core.db.tables.Paper;
 import ch.difty.scipamato.core.db.tables.records.PaperRecord;
@@ -36,9 +37,9 @@ class SyncShortFieldWithEmptyMainFieldConcatenator extends AbstractShortFieldCon
         super(false);
     }
 
+    @Nullable
     @Override
-    public String methodsFrom(final ResultSet rs) {
-        AssertAs.INSTANCE.notNull(rs, RS);
+    public String methodsFrom(@NotNull final ResultSet rs) {
         try {
             return methodsFrom(rs, PAPER.METHODS, PAPER.METHOD_STUDY_DESIGN, PAPER.METHOD_OUTCOME,
                 PAPER.POPULATION_PLACE, PAPER.EXPOSURE_POLLUTANT, PAPER.EXPOSURE_ASSESSMENT, PAPER.METHOD_STATISTICS,
@@ -50,23 +51,24 @@ class SyncShortFieldWithEmptyMainFieldConcatenator extends AbstractShortFieldCon
     }
 
     // package-private for stubbing purposes
-    String methodsFrom(final ResultSet rs, final TableField<PaperRecord, String> methodField,
-        final TableField<PaperRecord, String> methodStudyDesignField,
-        final TableField<PaperRecord, String> methodOutcomeField,
-        final TableField<PaperRecord, String> populationPlaceField,
-        final TableField<PaperRecord, String> exposurePollutantField,
-        final TableField<PaperRecord, String> exposureAssessmentField,
-        final TableField<PaperRecord, String> methodStatisticsField,
-        final TableField<PaperRecord, String> methodConfoundersField) throws SQLException {
+    @NotNull
+    String methodsFrom(@NotNull final ResultSet rs, @NotNull final TableField<PaperRecord, String> methodField,
+        @NotNull final TableField<PaperRecord, String> methodStudyDesignField,
+        @NotNull final TableField<PaperRecord, String> methodOutcomeField,
+        @NotNull final TableField<PaperRecord, String> populationPlaceField,
+        @NotNull final TableField<PaperRecord, String> exposurePollutantField,
+        @NotNull final TableField<PaperRecord, String> exposureAssessmentField,
+        @NotNull final TableField<PaperRecord, String> methodStatisticsField,
+        @NotNull final TableField<PaperRecord, String> methodConfoundersField) throws SQLException {
         return methodsFrom(rs.getString(methodField.getName()), rs.getString(methodStudyDesignField.getName()),
             rs.getString(methodOutcomeField.getName()), rs.getString(populationPlaceField.getName()),
             rs.getString(exposurePollutantField.getName()), rs.getString(exposureAssessmentField.getName()),
             rs.getString(methodStatisticsField.getName()), rs.getString(methodConfoundersField.getName()));
     }
 
+    @Nullable
     @Override
-    public String populationFrom(final ResultSet rs) {
-        AssertAs.INSTANCE.notNull(rs, RS);
+    public String populationFrom(@NotNull final ResultSet rs) {
         try {
             return populationFrom(rs, PAPER.POPULATION, PAPER.POPULATION_PLACE, PAPER.POPULATION_PARTICIPANTS,
                 PAPER.POPULATION_DURATION);
@@ -77,17 +79,18 @@ class SyncShortFieldWithEmptyMainFieldConcatenator extends AbstractShortFieldCon
     }
 
     // package-private for stubbing purposes
-    String populationFrom(final ResultSet rs, final TableField<PaperRecord, String> populationField,
-        final TableField<PaperRecord, String> populationPlaceField,
-        final TableField<PaperRecord, String> populationParticipantsField,
-        final TableField<PaperRecord, String> populationDurationField) throws SQLException {
+    @NotNull
+    String populationFrom(@NotNull final ResultSet rs, @NotNull final TableField<PaperRecord, String> populationField,
+        @NotNull final TableField<PaperRecord, String> populationPlaceField,
+        @NotNull final TableField<PaperRecord, String> populationParticipantsField,
+        @NotNull final TableField<PaperRecord, String> populationDurationField) throws SQLException {
         return populationFrom(rs.getString(populationField.getName()), rs.getString(populationPlaceField.getName()),
             rs.getString(populationParticipantsField.getName()), rs.getString(populationDurationField.getName()));
     }
 
+    @Nullable
     @Override
-    public String resultFrom(final ResultSet rs) {
-        AssertAs.INSTANCE.notNull(rs, RS);
+    public String resultFrom(@NotNull final ResultSet rs) {
         try {
             return resultFrom(rs, Paper.PAPER.RESULT, Paper.PAPER.RESULT_MEASURED_OUTCOME,
                 Paper.PAPER.RESULT_EXPOSURE_RANGE, Paper.PAPER.RESULT_EFFECT_ESTIMATE, Paper.PAPER.CONCLUSION);
@@ -98,14 +101,14 @@ class SyncShortFieldWithEmptyMainFieldConcatenator extends AbstractShortFieldCon
     }
 
     // package-private for stubbing purposes
-    String resultFrom(final ResultSet rs, final TableField<PaperRecord, String> resultField,
-        final TableField<PaperRecord, String> resultMeasuredOutcomeField,
-        final TableField<PaperRecord, String> resultExposureRangeField,
-        final TableField<PaperRecord, String> resultEffectEstimateField,
-        final TableField<PaperRecord, String> conclusionField) throws SQLException {
+    @NotNull
+    String resultFrom(@NotNull final ResultSet rs, @NotNull final TableField<PaperRecord, String> resultField,
+        @NotNull final TableField<PaperRecord, String> resultMeasuredOutcomeField,
+        @NotNull final TableField<PaperRecord, String> resultExposureRangeField,
+        @NotNull final TableField<PaperRecord, String> resultEffectEstimateField,
+        @NotNull final TableField<PaperRecord, String> conclusionField) throws SQLException {
         return resultFrom(rs.getString(resultField.getName()), rs.getString(resultMeasuredOutcomeField.getName()),
             rs.getString(resultExposureRangeField.getName()), rs.getString(resultEffectEstimateField.getName()),
             rs.getString(conclusionField.getName()));
     }
-
 }

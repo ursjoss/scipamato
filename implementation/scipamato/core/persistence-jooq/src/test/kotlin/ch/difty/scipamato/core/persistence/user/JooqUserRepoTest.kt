@@ -56,7 +56,7 @@ internal class JooqUserRepoTest :
             applicationProperties,
             userRoleRepoMock
         ) {
-            override fun findById(id: Int?, version: Int): User = entity
+            override fun findById(id: Int, version: Int): User = entity
         }
 
     override fun makeRepoSavingReturning(returning: ScipamatoUserRecord): EntityRepository<User, Int, UserFilter> =

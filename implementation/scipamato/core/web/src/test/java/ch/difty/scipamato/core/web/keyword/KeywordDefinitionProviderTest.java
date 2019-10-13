@@ -154,5 +154,4 @@ class KeywordDefinitionProviderTest extends AbstractWicketTest {
         verify(keywordServiceMock).findPageOfEntityDefinitions(eq(filterMock),
             argThat(new PaginationContextMatcher(3, "name: DESC")));
     }
-
 }

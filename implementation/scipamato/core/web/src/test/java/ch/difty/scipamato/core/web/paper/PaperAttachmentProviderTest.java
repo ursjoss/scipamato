@@ -1,6 +1,5 @@
 package ch.difty.scipamato.core.web.paper;
 
-import static ch.difty.scipamato.common.TestUtilsKt.assertDegenerateSupplierParameter;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
@@ -9,6 +8,7 @@ import java.util.List;
 
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -34,13 +34,8 @@ class PaperAttachmentProviderTest {
     }
 
     @Test
-    void degenerateConstruction_withNullSearchOrderModel() {
-        assertDegenerateSupplierParameter(() -> new PaperAttachmentProvider(null), "attachmentsModel");
-    }
-
-    @Test
     void degenerateConstruction_withNullSearchOrderModel1() {
-        assertDegenerateSupplierParameter(() -> new PaperAttachmentProvider(Model.ofList(null)), "attachments");
+        Assertions.assertThrows(NullPointerException.class, () -> new PaperAttachmentProvider(Model.ofList(null)));
     }
 
     @Test
@@ -69,5 +64,4 @@ class PaperAttachmentProviderTest {
         IModel<PaperAttachment> model = provider.model(mockAttachment1);
         assertThat(model.getObject()).isEqualTo(mockAttachment1);
     }
-
 }

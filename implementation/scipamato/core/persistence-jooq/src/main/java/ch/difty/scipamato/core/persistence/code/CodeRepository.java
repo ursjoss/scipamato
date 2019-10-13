@@ -2,7 +2,9 @@ package ch.difty.scipamato.core.persistence.code;
 
 import java.util.List;
 
-import ch.difty.scipamato.common.NullArgumentException;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import ch.difty.scipamato.common.persistence.code.CodeLikeRepository;
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.core.entity.Code;
@@ -25,7 +27,8 @@ public interface CodeRepository extends CodeLikeRepository<Code> {
      *     the code of the record
      * @return the {@link CodeDefinition} or null if not found
      */
-    CodeDefinition findCodeDefinition(String code);
+    @Nullable
+    CodeDefinition findCodeDefinition(@NotNull String code);
 
     /**
      * Finds a page full of {@link CodeDefinition} records matching the provided filter
@@ -37,7 +40,9 @@ public interface CodeRepository extends CodeLikeRepository<Code> {
      *     context defining paging and sorting
      * @return a page of {@link CodeDefinition}s as list
      */
-    List<CodeDefinition> findPageOfCodeDefinitions(CodeFilter filter, PaginationContext paginationContext);
+    @NotNull
+    List<CodeDefinition> findPageOfCodeDefinitions(@Nullable CodeFilter filter,
+        @NotNull PaginationContext paginationContext);
 
     /**
      * Counts the number of {@link CodeDefinition}s matching the specified filter.
@@ -46,11 +51,12 @@ public interface CodeRepository extends CodeLikeRepository<Code> {
      *     of type CodeFilter
      * @return keyword count
      */
-    int countByFilter(CodeFilter filter);
+    int countByFilter(@Nullable CodeFilter filter);
 
     /**
      * @return the main language code as string
      */
+    @NotNull
     String getMainLanguage();
 
     /**
@@ -59,6 +65,7 @@ public interface CodeRepository extends CodeLikeRepository<Code> {
      *
      * @return the unpersisted entity
      */
+    @NotNull
     CodeDefinition newUnpersistedCodeDefinition();
 
     /**
@@ -71,12 +78,11 @@ public interface CodeRepository extends CodeLikeRepository<Code> {
      * @return the updated persisted entity, including default values - or {@code null}
      *     if it can't be added. Only the version field is populated out of
      *     all the audit fields.
-     * @throws NullArgumentException
-     *     if the entity is null.
      * @throws OptimisticLockingException
      *     if the record version has increased in the mean time
      */
-    CodeDefinition saveOrUpdate(CodeDefinition entity);
+    @Nullable
+    CodeDefinition saveOrUpdate(@NotNull CodeDefinition entity);
 
     /**
      * Remove the persisted entity with the provided id.
@@ -85,13 +91,21 @@ public interface CodeRepository extends CodeLikeRepository<Code> {
      *     the code as database id - must not be null
      * @param version
      *     the record version - used for optimistic locking
-     * @return the deleted entity
-     * @throws NullArgumentException
-     *     if the id is null.
+     * @return the deleted entity - or null
      * @throws OptimisticLockingException
      *     if the record version has increased in the mean time
      */
-    CodeDefinition delete(String code, int version);
+    @Nullable
+    CodeDefinition delete(@NotNull String code, int version);
 
-    CodeClass getCodeClass1(final String langCode);
+    /**
+     * Returns code class 1 in the desired translation.
+     * If the translation is not available in the database, we will still
+     * receive a {@link CodeClass}, but with name/description 'not translated'
+     *
+     * @param langCode
+     * @return {@link CodeClass} never null
+     */
+    @NotNull
+    CodeClass getCodeClass1(@NotNull final String langCode);
 }

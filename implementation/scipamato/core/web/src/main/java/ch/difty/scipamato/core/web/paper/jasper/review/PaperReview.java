@@ -2,8 +2,8 @@ package ch.difty.scipamato.core.web.paper.jasper.review;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.jetbrains.annotations.NotNull;
 
-import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.web.paper.jasper.JasperEntity;
 import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields;
@@ -57,13 +57,9 @@ public class PaperReview extends JasperEntity {
      * @param rhf
      *     the reportHeaderFields with the localized field headers
      */
-    public PaperReview(final Paper p, final ReportHeaderFields rhf) {
-        AssertAs.INSTANCE.notNull(p, "p");
-        AssertAs.INSTANCE.notNull(rhf, "rhf");
-
+    public PaperReview(@NotNull final Paper p, @NotNull final ReportHeaderFields rhf) {
         final Long no = p.getNumber();
         this.number = no != null ? String.valueOf(no) : "";
-        AssertAs.INSTANCE.notNull(p, "paper");
         this.authorYear = makeAuthorYearFrom(p);
         this.populationPlace = na(p.getPopulationPlace());
         this.methodOutcome = na(p.getMethodOutcome());
@@ -115,5 +111,4 @@ public class PaperReview extends JasperEntity {
     private boolean isPubYearMissingOrPseudoMissing(final Integer pubYear) {
         return pubYear == null || pubYear == 0;
     }
-
 }

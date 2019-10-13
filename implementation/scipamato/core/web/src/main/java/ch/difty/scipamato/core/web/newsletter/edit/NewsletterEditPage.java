@@ -23,6 +23,8 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.*;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.wicketstuff.annotation.mount.MountPath;
 
 import ch.difty.scipamato.common.entity.newsletter.PublicationStatus;
@@ -60,7 +62,7 @@ public class NewsletterEditPage extends BasePage<Newsletter> {
         newNewsletter = true;
     }
 
-    public NewsletterEditPage(final IModel<Newsletter> model) {
+    public NewsletterEditPage(@Nullable final IModel<Newsletter> model) {
         super(getModelOrDefaultModelFrom(model));
         initFilterAndProvider();
     }
@@ -103,13 +105,13 @@ public class NewsletterEditPage extends BasePage<Newsletter> {
     }
 
     @Override
-    public void renderHead(final IHeaderResponse response) {
+    public void renderHead(@NotNull final IHeaderResponse response) {
         super.renderHead(response);
         response.render(CssHeaderItem.forReference(FontAwesome5CDNCSSReference.instance()));
     }
 
     @Override
-    public void onEvent(final IEvent<?> event) {
+    public void onEvent(@NotNull final IEvent<?> event) {
         super.onEvent(event);
         if (event
                 .getPayload()

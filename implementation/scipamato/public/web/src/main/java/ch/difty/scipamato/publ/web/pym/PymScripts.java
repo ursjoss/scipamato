@@ -1,5 +1,7 @@
 package ch.difty.scipamato.publ.web.pym;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * Enum defining the JavaScript snippets used in the context of
  * providing responsive iframes with pym.js.
@@ -11,9 +13,8 @@ public enum PymScripts {
     public final String id;
     public final String script;
 
-    PymScripts(final String id, final String script) {
+    PymScripts(@NotNull final String id, @NotNull final String script) {
         this.id = id;
         this.script = script;
     }
-
 }

@@ -6,6 +6,7 @@ import org.apache.wicket.markup.head.CssReferenceHeaderItem;
 import org.apache.wicket.request.resource.ResourceReference;
 import org.junit.jupiter.api.Test;
 
+@SuppressWarnings("SpellCheckingInspection")
 class ScipamatoPublicThemeTest {
 
     @Test

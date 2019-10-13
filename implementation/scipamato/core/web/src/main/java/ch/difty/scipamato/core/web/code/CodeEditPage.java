@@ -11,6 +11,8 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.dao.DuplicateKeyException;
 import org.wicketstuff.annotation.mount.MountPath;
 
@@ -36,34 +38,40 @@ public class CodeEditPage extends DefinitionEditPage<CodeDefinition> {
     @SpringBean
     private CodeService service;
 
-    public CodeEditPage(final IModel<CodeDefinition> model, final PageReference callingPageRef) {
+    public CodeEditPage(@Nullable final IModel<CodeDefinition> model, @Nullable final PageReference callingPageRef) {
         super(model, callingPageRef);
     }
 
+    @Nullable
     @Override
     protected CodeDefinition persistModel() {
         return service.saveOrUpdate(getModelObject());
     }
 
+    @NotNull
     @Override
-    protected DefinitionEditHeaderPanel newDefinitionHeaderPanel(final String id) {
+    protected DefinitionEditHeaderPanel newDefinitionHeaderPanel(@NotNull final String id) {
         return new CodeEditHeaderPanel(id, getModel()) {
 
+            @NotNull
             @Override
             protected Form getForm() {
                 return CodeEditPage.this.getForm();
             }
 
+            @Nullable
             @Override
-            protected CodeDefinition doDelete(final CodeDefinition ntd, final String recordId) {
+            protected CodeDefinition doDelete(@NotNull final CodeDefinition ntd, @NotNull final String recordId) {
                 return service.delete(recordId, ntd.getVersion());
             }
 
+            @Nullable
             @Override
             protected PageReference getCallingPageRef() {
                 return CodeEditPage.this.getCallingPageRef();
             }
 
+            @NotNull
             @Override
             protected Class<? extends Page> staticResponsePage() {
                 return CodeListPage.class;
@@ -71,13 +79,14 @@ public class CodeEditPage extends DefinitionEditPage<CodeDefinition> {
         };
     }
 
+    @NotNull
     @Override
-    protected DefinitionEditTranslationPanel newDefinitionTranslationPanel(final String id) {
+    protected DefinitionEditTranslationPanel newDefinitionTranslationPanel(@NotNull final String id) {
         return new CodeEditTranslationPanel(id, getModel());
     }
 
     @Override
-    protected void handleDuplicateKeyException(final DuplicateKeyException dke) {
+    protected void handleDuplicateKeyException(@NotNull final DuplicateKeyException dke) {
         final String errorMsg = dke.getMessage();
         if (errorMsg != null) {
             final Matcher matcher = DUPLICATE_KEY_PATTERN.matcher(errorMsg);

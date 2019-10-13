@@ -17,10 +17,13 @@ import kotlin.reflect.KClass
  * The class was composed from information available on
  * [Wikipedia](https://en.wikipedia.org/wiki/RIS_(file_format)).
  */
-@Suppress("unused")
-enum class RisTag(val description: String, val maxLength: Int? = null,
-                  internal val kClass: KClass<*> = String::class, internal val requiredOrder: Int = 1000) {
-
+@Suppress("unused", "SpellCheckingInspection")
+enum class RisTag(
+    val description: String,
+    val maxLength: Int? = null,
+    internal val kClass: KClass<*> = String::class,
+    internal val requiredOrder: Int = 1000
+) {
     TY("Type of reference", kClass = RisType::class, requiredOrder = 0), // must be first per record
     A1("First Author"),
     A2("Secondary Author", kClass = List::class),
@@ -31,7 +34,8 @@ enum class RisTag(val description: String, val maxLength: Int? = null,
     AN("Accession Number"),
     AU("Author", kClass = List::class),
     AV("Location in Archives"),
-    BT("This field maps to T2 for all reference types except for Whole Book and Unpublished Work references."), // This field maps to T2 for all reference types except for Whole Book and Unpublished Work references.
+    // This field maps to T2 for all reference types except for Whole Book and Unpublished Work references.
+    BT("This field maps to T2 for all reference types except for Whole Book and Unpublished Work references."),
     C1("Custom 1"),
     C2("Custom 2"),
     C3("Custom 3"),
@@ -55,13 +59,17 @@ enum class RisTag(val description: String, val maxLength: Int? = null,
     ID("Reference ID"),
     IS("Issue number"),
     J1("Periodical name: user abbreviation 1.", maxLength = 255),
-    J2("Alternate Title"), // (this field is used for the abbreviated title of a book or journal name, the latter mapped to T2)
-    JA("Periodical name: standard abbreviation.", maxLength = 255), //  This is the periodical in which the article was (or is to be, in the case of in-press references) published.
+    // (this field is used for the abbreviated title of a book or journal name, the latter mapped to T2)
+    J2("Alternate Title"),
+    // This is the periodical in which the article was (or is to be, in the case of in-press references) published.
+    JA("Periodical name: standard abbreviation.", maxLength = 255),
     JF("Journal/Periodical name: full format.", maxLength = 255),
     JO("Journal/Periodical name: full format.", maxLength = 255),
     KW("Keywords", kClass = List::class),
-    L1("Link to PDF.", kClass = List::class), // URL addresses can be entered individually, one per tag or multiple addresses can be entered on one line using a semi-colon as a separator.
-    L2("Link to Full-text.", kClass = List::class), // URL addresses can be entered individually, one per tag or multiple addresses can be entered on one line using a semi-colon as a separator.
+    // URL addresses can be entered individually, one per tag or multiple addresses can be entered on one line using a semi-colon as a separator.
+    L1("Link to PDF.", kClass = List::class),
+    // URL addresses can be entered individually, one per tag or multiple addresses can be entered on one line using a semi-colon as a separator.
+    L2("Link to Full-text.", kClass = List::class),
     L3("Related Records.", kClass = List::class),
     L4("Image(s).", kClass = List::class),
     LA("Language"),
@@ -71,7 +79,8 @@ enum class RisTag(val description: String, val maxLength: Int? = null,
     M2("Miscellaneous 2."),
     M3("Type of Work"),
     N1("Notes"),
-    N2("Abstract."), //  This is a free text field and can contain alphanumeric characters. There is no practical length limit to this field.
+    //  This is a free text field and can contain alphanumeric characters. There is no practical length limit to this field.
+    N2("Abstract."),
     NV("Number of Volumes"),
     OP("Original Publication"),
     PB("Publisher"),

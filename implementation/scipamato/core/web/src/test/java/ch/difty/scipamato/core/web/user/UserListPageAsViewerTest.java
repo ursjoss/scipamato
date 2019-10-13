@@ -26,5 +26,4 @@ class UserListPageAsViewerTest extends WicketTest {
                 .hasMessage("Not authorized to instantiate class ch.difty.scipamato.core.web.user.UserListPage");
         }
     }
-
 }

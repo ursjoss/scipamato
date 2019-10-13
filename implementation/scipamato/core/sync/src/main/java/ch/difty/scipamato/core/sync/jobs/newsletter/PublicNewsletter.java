@@ -5,6 +5,8 @@ import java.sql.Timestamp;
 
 import lombok.Builder;
 import lombok.experimental.Delegate;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import ch.difty.scipamato.publ.db.tables.pojos.Newsletter;
 
@@ -24,8 +26,9 @@ class PublicNewsletter {
     private final Newsletter delegate;
 
     @Builder
-    private PublicNewsletter(final Integer id, final String issue, final Date issueDate, final Integer version,
-        final Timestamp created, final Timestamp lastModified, final Timestamp lastSynched) {
+    private PublicNewsletter(@NotNull final Integer id, @NotNull final String issue, @NotNull final Date issueDate,
+        @Nullable final Integer version, @Nullable final Timestamp created, @Nullable final Timestamp lastModified,
+        @NotNull final Timestamp lastSynched) {
         delegate = new Newsletter();
         delegate.setId(id);
         delegate.setIssue(issue);

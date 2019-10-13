@@ -7,6 +7,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import org.jetbrains.annotations.NotNull;
 import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.TableField;
@@ -29,7 +30,7 @@ public class PublicPaperFilterConditionMapper extends AbstractFilterConditionMap
     private static final int     QUOTED_GROUP_INDEX = 1;
 
     @Override
-    protected void map(final PublicPaperFilter filter, final List<Condition> conditions) {
+    protected void map(@NotNull final PublicPaperFilter filter, @NotNull final List<Condition> conditions) {
         if (filter.getNumber() != null) {
             conditions.add(PAPER.NUMBER.eq(filter.getNumber()));
         }
@@ -176,5 +177,4 @@ public class PublicPaperFilterConditionMapper extends AbstractFilterConditionMap
             .collect(Collectors.toList());
         return PAPER.CODES.contains(DSL.array(convCodes));
     }
-
 }

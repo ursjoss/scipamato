@@ -4,6 +4,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.FormComponent;
+import org.jetbrains.annotations.NotNull;
 
 import ch.difty.scipamato.common.web.event.WicketEvent;
 
@@ -21,16 +22,16 @@ class SimpleFilterPanelChangeEvent extends WicketEvent {
     private String id;
     private String markupId;
 
-    SimpleFilterPanelChangeEvent(AjaxRequestTarget target) {
+    SimpleFilterPanelChangeEvent(@NotNull AjaxRequestTarget target) {
         super(target);
     }
 
-    SimpleFilterPanelChangeEvent withId(String id) {
+    SimpleFilterPanelChangeEvent withId(@NotNull String id) {
         this.id = id;
         return this;
     }
 
-    SimpleFilterPanelChangeEvent withMarkupId(String markupId) {
+    SimpleFilterPanelChangeEvent withMarkupId(@NotNull String markupId) {
         this.markupId = markupId;
         return this;
     }
@@ -47,7 +48,7 @@ class SimpleFilterPanelChangeEvent extends WicketEvent {
      * @param component
      *     the candidate to be added to the target
      */
-    void considerAddingToTarget(final FormComponent<?> component) {
+    void considerAddingToTarget(@NotNull final FormComponent<?> component) {
         if (isValidTarget(component.getId(), component.getMarkupId())) {
             getTarget().add(component);
         }
@@ -56,5 +57,4 @@ class SimpleFilterPanelChangeEvent extends WicketEvent {
     private boolean isValidTarget(final String id, final String markupId) {
         return this.id == null || (this.id.equals(id) && (this.markupId == null || !this.markupId.equals(markupId)));
     }
-
 }

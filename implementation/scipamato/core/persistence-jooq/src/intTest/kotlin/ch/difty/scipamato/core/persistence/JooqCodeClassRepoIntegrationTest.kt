@@ -178,6 +178,7 @@ internal open class JooqCodeClassRepoIntegrationTest {
     @Test
     fun findingCodeClassDefinition_withExistingId_loadsWithAllLanguages() {
         val existing = repo.findCodeClassDefinition(1)
+            ?: fail("could not retrievee code class definition with id 1")
 
         assertThat(existing.name).startsWith("Schadstoffe")
         assertThat(existing.translations.asMap()).hasSize(3)
@@ -206,6 +207,7 @@ internal open class JooqCodeClassRepoIntegrationTest {
     @Test
     fun updatingRecord() {
         val ccd = repo.findCodeClassDefinition(1)
+            ?: fail("unable to retrieve code class definition with id 1")
 
         assertThat(ccd.name).isEqualTo("Schadstoffe")
         assertThat(ccd.translations.asMap()).hasSize(3)
@@ -259,7 +261,7 @@ internal open class JooqCodeClassRepoIntegrationTest {
         assertThat(repo.findCodeClassDefinition(id) == null).isFalse()
 
         // delete the record
-        val deleted = repo.delete(id, version)
+        val deleted = repo.delete(id, version) ?: fail("Unable to delete the record")
         assertThat(deleted.id).isEqualTo(id)
 
         // verify the record is not there anymore

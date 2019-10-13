@@ -10,10 +10,10 @@ import java.util.Map.Entry;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.list.UnmodifiableList;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.entity.CodeClassId;
 
 /**
@@ -36,12 +36,8 @@ public class PaperCodeBox implements CodeBox {
         return codes.size();
     }
 
-    int sizeOf(final CodeClassId codeClassId) {
-        return collectBy(nullSafe(codeClassId)).size();
-    }
-
-    private CodeClassId nullSafe(final CodeClassId codeClassId) {
-        return AssertAs.INSTANCE.notNull(codeClassId, "codeClassId");
+    int sizeOf(@NotNull final CodeClassId codeClassId) {
+        return collectBy(codeClassId).size();
     }
 
     private List<Code> collectBy(final CodeClassId ccId) {
@@ -58,7 +54,7 @@ public class PaperCodeBox implements CodeBox {
     }
 
     @Override
-    public void addCode(final Code code) {
+    public void addCode(@Nullable final Code code) {
         if (isNewAndNonNull(code))
             codes.add(code);
     }
@@ -67,24 +63,25 @@ public class PaperCodeBox implements CodeBox {
         return code != null && !codes.contains(code);
     }
 
+    @NotNull
     @Override
     public List<Code> getCodes() {
         return new UnmodifiableList<>(codes);
     }
 
+    @NotNull
     @Override
-    public List<Code> getCodesBy(final CodeClassId codeClassId) {
-        return new UnmodifiableList<>(collectBy(nullSafe(codeClassId)));
+    public List<Code> getCodesBy(@NotNull final CodeClassId codeClassId) {
+        return new UnmodifiableList<>(collectBy(codeClassId));
     }
 
     @Override
-    public void addCodes(final List<Code> newCodes) {
-        if (!CollectionUtils.isEmpty(newCodes))
-            codes.addAll(newCodes
-                .stream()
-                .distinct()
-                .filter(this::isNewAndNonNull)
-                .collect(Collectors.toList()));
+    public void addCodes(@NotNull final List<Code> newCodes) {
+        codes.addAll(newCodes
+            .stream()
+            .distinct()
+            .filter(this::isNewAndNonNull)
+            .collect(Collectors.toList()));
     }
 
     @Override
@@ -93,10 +90,11 @@ public class PaperCodeBox implements CodeBox {
     }
 
     @Override
-    public void clearBy(final CodeClassId codeClassId) {
-        codes.removeIf(isMatching(nullSafe(codeClassId)));
+    public void clearBy(@NotNull final CodeClassId codeClassId) {
+        codes.removeIf(isMatching(codeClassId));
     }
 
+    @NotNull
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
@@ -145,5 +143,4 @@ public class PaperCodeBox implements CodeBox {
         otherSorted.sort(comparing(Code::getCode));
         return thisSorted.equals(otherSorted);
     }
-
 }

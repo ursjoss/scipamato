@@ -10,30 +10,28 @@ import static java.util.stream.Collectors.toList;
 import java.sql.Timestamp;
 import java.util.*;
 
+import org.jetbrains.annotations.NotNull;
 import org.jooq.*;
 import org.jooq.impl.DSL;
 import org.springframework.stereotype.Repository;
 
-import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.publ.entity.NewStudy;
 import ch.difty.scipamato.publ.entity.NewStudyTopic;
 
 @Repository
-@SuppressWarnings("WeakerAccess")
 public class JooqNewStudyRepo implements NewStudyRepository {
 
     public static final String LANGUAGE_CODE = "languageCode";
 
     private final DSLContext dsl;
 
-    public JooqNewStudyRepo(final DSLContext dsl) {
+    public JooqNewStudyRepo(@NotNull final DSLContext dsl) {
         this.dsl = dsl;
     }
 
+    @NotNull
     @Override
-    public List<NewStudyTopic> findNewStudyTopicsForNewsletter(final int newsletterId, String languageCode) {
-        AssertAs.INSTANCE.notNull(languageCode, LANGUAGE_CODE);
-
+    public List<NewStudyTopic> findNewStudyTopicsForNewsletter(final int newsletterId, @NotNull String languageCode) {
         // References to aliased tables
         final ch.difty.scipamato.publ.db.tables.NewStudyTopic newStudyTopicTable = NEW_STUDY_TOPIC.as("nst");
         final ch.difty.scipamato.publ.db.tables.NewsletterTopic newsletterTopicTable = NEWSLETTER_TOPIC.as("nt");
@@ -118,6 +116,7 @@ public class JooqNewStudyRepo implements NewStudyRepository {
             .collect(toList()));
     }
 
+    @NotNull
     @Override
     public Optional<Integer> findMostRecentNewsletterId() {
         return Optional.ofNullable(dsl
@@ -128,9 +127,9 @@ public class JooqNewStudyRepo implements NewStudyRepository {
             .fetchOneInto(Integer.class));
     }
 
+    @NotNull
     @Override
-    public Optional<Integer> findIdOfNewsletterWithIssue(final String issue) {
-        AssertAs.INSTANCE.notNull(issue, "issue");
+    public Optional<Integer> findIdOfNewsletterWithIssue(@NotNull final String issue) {
         return Optional.ofNullable(dsl
             .select(NEWSLETTER.ID)
             .from(NEWSLETTER)
@@ -138,10 +137,10 @@ public class JooqNewStudyRepo implements NewStudyRepository {
             .fetchOneInto(Integer.class));
     }
 
+    @NotNull
     @Override
     public List<ch.difty.scipamato.publ.entity.Newsletter> findArchivedNewsletters(final int newsletterCount,
-        final String languageCode) {
-        AssertAs.INSTANCE.notNull(languageCode, LANGUAGE_CODE);
+        @NotNull final String languageCode) {
         return dsl
             .select(NEWSLETTER.ID, NEWSLETTER.ISSUE, NEWSLETTER.ISSUE_DATE)
             .from(NEWSLETTER)
@@ -150,9 +149,10 @@ public class JooqNewStudyRepo implements NewStudyRepository {
             .fetchInto(ch.difty.scipamato.publ.entity.Newsletter.class);
     }
 
+    @NotNull
     @Override
-    public List<ch.difty.scipamato.publ.entity.NewStudyPageLink> findNewStudyPageLinks(final String languageCode) {
-        AssertAs.INSTANCE.notNull(languageCode, LANGUAGE_CODE);
+    public List<ch.difty.scipamato.publ.entity.NewStudyPageLink> findNewStudyPageLinks(
+        @NotNull final String languageCode) {
         return dsl
             .select(NEW_STUDY_PAGE_LINK.LANG_CODE, NEW_STUDY_PAGE_LINK.SORT, NEW_STUDY_PAGE_LINK.TITLE,
                 NEW_STUDY_PAGE_LINK.URL)

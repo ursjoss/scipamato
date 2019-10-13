@@ -6,6 +6,7 @@ import java.util.Objects;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import ch.difty.scipamato.common.entity.AbstractDefinitionEntity;
 import ch.difty.scipamato.common.entity.FieldEnumType;
@@ -15,7 +16,6 @@ import ch.difty.scipamato.core.entity.CodeClass;
  * Entity used for managing the codes in all defined languages.
  * This aggregate encapsulates the individual translations for all languages,
  * each captured in a {@link CodeTranslation}.
- * <p>
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -27,8 +27,9 @@ public class CodeDefinition extends AbstractDefinitionEntity<CodeTranslation, St
     private int       sort;
     private boolean   internal;
 
-    public CodeDefinition(final String code, final String mainLanguageCode, final CodeClass codeClass, final int sort,
-        final boolean internal, final Integer version, final CodeTranslation... translations) {
+    public CodeDefinition(@Nullable final String code, @NotNull final String mainLanguageCode,
+        @Nullable final CodeClass codeClass, final int sort, final boolean internal, @Nullable final Integer version,
+        @NotNull final CodeTranslation... translations) {
         super(mainLanguageCode, Arrays
             .stream(translations)
             .filter(tr -> mainLanguageCode.equals(tr.getLangCode()))
@@ -43,9 +44,10 @@ public class CodeDefinition extends AbstractDefinitionEntity<CodeTranslation, St
         this.internal = internal;
     }
 
+    @NotNull
     @Override
     public String getNullSafeId() {
-        return code;
+        return code != null ? code : "n.a.";
     }
 
     public enum CodeDefinitionFields implements FieldEnumType {
@@ -69,5 +71,4 @@ public class CodeDefinition extends AbstractDefinitionEntity<CodeTranslation, St
         }
 
     }
-
 }

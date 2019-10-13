@@ -2,6 +2,7 @@ package ch.difty.scipamato.core.sync.jobs.newstudypagelink;
 
 import static ch.difty.scipamato.publ.db.tables.NewStudyPageLink.NEW_STUDY_PAGE_LINK;
 
+import org.jetbrains.annotations.NotNull;
 import org.jooq.DSLContext;
 import org.springframework.batch.item.ItemWriter;
 
@@ -21,12 +22,12 @@ import ch.difty.scipamato.core.sync.jobs.ScipamatoItemWriter;
  */
 public class NewStudyPageLinkItemWriter extends ScipamatoItemWriter<PublicNewStudyPageLink> {
 
-    public NewStudyPageLinkItemWriter(final DSLContext jooqDslContextPublic) {
+    public NewStudyPageLinkItemWriter(@NotNull final DSLContext jooqDslContextPublic) {
         super(jooqDslContextPublic, "newStudyPageLink");
     }
 
     @Override
-    protected int executeUpdate(final PublicNewStudyPageLink l) {
+    protected int executeUpdate(@NotNull final PublicNewStudyPageLink l) {
         return getDslContext()
             .insertInto(NEW_STUDY_PAGE_LINK)
             .columns(NEW_STUDY_PAGE_LINK.LANG_CODE, NEW_STUDY_PAGE_LINK.SORT, NEW_STUDY_PAGE_LINK.TITLE,
@@ -44,5 +45,4 @@ public class NewStudyPageLinkItemWriter extends ScipamatoItemWriter<PublicNewStu
                 .and(NEW_STUDY_PAGE_LINK.SORT.eq(l.getSort())))
             .execute();
     }
-
 }

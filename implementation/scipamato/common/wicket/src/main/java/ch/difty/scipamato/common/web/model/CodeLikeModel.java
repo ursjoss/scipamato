@@ -3,8 +3,8 @@ package ch.difty.scipamato.common.web.model;
 import java.util.List;
 
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.jetbrains.annotations.NotNull;
 
-import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.entity.CodeClassId;
 import ch.difty.scipamato.common.entity.CodeLike;
 import ch.difty.scipamato.common.persistence.CodeLikeService;
@@ -17,7 +17,8 @@ import ch.difty.scipamato.common.persistence.CodeLikeService;
  *     Code entity extending {@link CodeLike}
  * @author u.joss
  */
-public abstract class CodeLikeModel<T extends CodeLike, S extends CodeLikeService<T>> extends InjectedLoadableDetachableModel<T> {
+public abstract class CodeLikeModel<T extends CodeLike, S extends CodeLikeService<T>>
+    extends InjectedLoadableDetachableModel<T> {
 
     private static final long serialVersionUID = 1L;
 
@@ -27,10 +28,10 @@ public abstract class CodeLikeModel<T extends CodeLike, S extends CodeLikeServic
     private final CodeClassId codeClassId;
     private final String      languageCode;
 
-    protected CodeLikeModel(final CodeClassId codeClassId, final String languageCode) {
+    protected CodeLikeModel(@NotNull final CodeClassId codeClassId, @NotNull final String languageCode) {
         super();
-        this.codeClassId = AssertAs.INSTANCE.notNull(codeClassId, "codeClassId");
-        this.languageCode = AssertAs.INSTANCE.notNull(languageCode, "languageCode");
+        this.codeClassId = codeClassId;
+        this.languageCode = languageCode;
     }
 
     /**
@@ -43,19 +44,23 @@ public abstract class CodeLikeModel<T extends CodeLike, S extends CodeLikeServic
      * @param service
      *     the service with which the code class like entities are retrieved.
      */
-    protected CodeLikeModel(final CodeClassId codeClassId, final String languageCode, final S service) {
+    protected CodeLikeModel(@NotNull final CodeClassId codeClassId, @NotNull final String languageCode,
+        @NotNull final S service) {
         this(codeClassId, languageCode);
         this.service = service;
     }
 
+    @NotNull
     protected CodeClassId getCodeClassId() {
         return codeClassId;
     }
 
+    @NotNull
     protected String getLanguageCode() {
         return languageCode;
     }
 
+    @NotNull
     @Override
     protected List<T> load() {
         return service.findCodesOfClass(getCodeClassId(), getLanguageCode());

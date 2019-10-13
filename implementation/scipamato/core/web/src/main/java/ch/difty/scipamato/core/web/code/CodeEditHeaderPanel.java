@@ -8,8 +8,8 @@ import org.apache.wicket.markup.html.form.validation.AbstractFormValidator;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
+import org.jetbrains.annotations.NotNull;
 
-import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.core.entity.CodeClass;
 import ch.difty.scipamato.core.entity.code.CodeDefinition;
 import ch.difty.scipamato.core.entity.code.CodeFilter;
@@ -22,7 +22,7 @@ abstract class CodeEditHeaderPanel extends DeletableDefinitionEditHeaderPanel<Co
 
     private BootstrapSelect<CodeClass> codeClasses;
 
-    CodeEditHeaderPanel(final String id, final IModel<CodeDefinition> model) {
+    CodeEditHeaderPanel(@NotNull final String id, @NotNull final IModel<CodeDefinition> model) {
         super(id, model);
     }
 
@@ -68,12 +68,12 @@ abstract class CodeEditHeaderPanel extends DeletableDefinitionEditHeaderPanel<Co
 
         private final FormComponent<?>[] components;
 
-        CodeMustMatchCodeClassValidator(final TextField<String> codeField,
-            final BootstrapSelect<CodeClass> codeClasses) {
-            this.components = new FormComponent<?>[] { AssertAs.INSTANCE.notNull(codeField, "field"),
-                AssertAs.INSTANCE.notNull(codeClasses, "codeClasses") };
+        CodeMustMatchCodeClassValidator(@NotNull final TextField<String> codeField,
+            @NotNull final BootstrapSelect<CodeClass> codeClasses) {
+            this.components = new FormComponent<?>[] { codeField, codeClasses };
         }
 
+        @NotNull
         @Override
         public FormComponent<?>[] getDependentFormComponents() {
             return components;
@@ -81,7 +81,7 @@ abstract class CodeEditHeaderPanel extends DeletableDefinitionEditHeaderPanel<Co
 
         @SuppressWarnings("unchecked")
         @Override
-        public void validate(final Form<?> form) {
+        public void validate(@NotNull final Form<?> form) {
             final TextField<String> codeField = (TextField<String>) components[0];
             final BootstrapSelect<CodeClass> codeClassField = (BootstrapSelect<CodeClass>) components[1];
             final String codeValue = codeField.getConvertedInput();
@@ -94,5 +94,4 @@ abstract class CodeEditHeaderPanel extends DeletableDefinitionEditHeaderPanel<Co
                 error(codeField, resourceKey() + ".error");
         }
     }
-
 }

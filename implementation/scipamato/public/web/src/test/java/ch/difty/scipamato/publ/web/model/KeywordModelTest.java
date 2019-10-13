@@ -1,6 +1,5 @@
 package ch.difty.scipamato.publ.web.model;
 
-import static ch.difty.scipamato.common.TestUtilsKt.assertDegenerateSupplierParameter;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -17,11 +16,6 @@ class KeywordModelTest extends ModelTest {
 
     @MockBean
     private KeywordService serviceMock;
-
-    @Test
-    void instantiating_withNullLanguageCode_throws() {
-        assertDegenerateSupplierParameter(() -> new KeywordModel(null), "languageCode");
-    }
 
     @Test
     void loading_delegatesToService() {

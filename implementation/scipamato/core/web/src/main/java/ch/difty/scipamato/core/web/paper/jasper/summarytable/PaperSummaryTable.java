@@ -4,8 +4,8 @@ import java.util.stream.Collectors;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.jetbrains.annotations.NotNull;
 
-import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.entity.CodeClassId;
 import ch.difty.scipamato.core.entity.Code;
 import ch.difty.scipamato.core.entity.Paper;
@@ -46,10 +46,7 @@ public class PaperSummaryTable extends JasperEntity {
      * @param rhf
      *     the reportHeaderFields with the localized field headers
      */
-    public PaperSummaryTable(final Paper p, final ReportHeaderFields rhf) {
-        AssertAs.INSTANCE.notNull(p, "p");
-        AssertAs.INSTANCE.notNull(rhf, "rhf");
-
+    public PaperSummaryTable(@NotNull final Paper p, @NotNull final ReportHeaderFields rhf) {
         final Long no = p.getNumber();
         this.number = no != null ? String.valueOf(no) : "";
         this.firstAuthor = na(p.getFirstAuthor());
@@ -77,5 +74,4 @@ public class PaperSummaryTable extends JasperEntity {
         this.brand = na(rhf.getBrand());
         this.numberLabel = na(rhf.getNumberLabel());
     }
-
 }

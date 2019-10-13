@@ -2,6 +2,8 @@ package ch.difty.scipamato.core.persistence;
 
 import java.util.List;
 
+import org.jetbrains.annotations.NotNull;
+
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.core.entity.projection.PaperSlim;
 import ch.difty.scipamato.core.entity.search.PaperFilter;
@@ -22,7 +24,8 @@ public interface PaperSlimService extends ReadOnlyService<Long, PaperSlim, Paper
      *     {@link SearchOrder}
      * @return list of {@link PaperSlim}s
      */
-    List<PaperSlim> findBySearchOrder(SearchOrder searchOrder);
+    @NotNull
+    List<PaperSlim> findBySearchOrder(@NotNull SearchOrder searchOrder);
 
     /**
      * Finds a page full of {@link PaperSlim}s matching the provided
@@ -34,7 +37,9 @@ public interface PaperSlimService extends ReadOnlyService<Long, PaperSlim, Paper
      *     context defining paging and sorting
      * @return paged list of papers
      */
-    List<PaperSlim> findPageBySearchOrder(SearchOrder searchOrder, PaginationContext paginationContext);
+    @NotNull
+    List<PaperSlim> findPageBySearchOrder(@NotNull SearchOrder searchOrder,
+        @NotNull PaginationContext paginationContext);
 
     /**
      * Counts the number of entities matching the specified {@link SearchOrder}.
@@ -43,6 +48,5 @@ public interface PaperSlimService extends ReadOnlyService<Long, PaperSlim, Paper
      *     {@link SearchOrder}
      * @return paper count
      */
-    int countBySearchOrder(SearchOrder searchOrder);
-
+    int countBySearchOrder(@NotNull SearchOrder searchOrder);
 }

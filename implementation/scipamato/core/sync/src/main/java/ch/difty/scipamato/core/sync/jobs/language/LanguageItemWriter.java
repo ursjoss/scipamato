@@ -2,6 +2,7 @@ package ch.difty.scipamato.core.sync.jobs.language;
 
 import static ch.difty.scipamato.publ.db.tables.Language.LANGUAGE;
 
+import org.jetbrains.annotations.NotNull;
 import org.jooq.DSLContext;
 import org.springframework.batch.item.ItemWriter;
 
@@ -21,12 +22,12 @@ import ch.difty.scipamato.core.sync.jobs.ScipamatoItemWriter;
  */
 public class LanguageItemWriter extends ScipamatoItemWriter<PublicLanguage> {
 
-    public LanguageItemWriter(final DSLContext jooqDslContextPublic) {
+    public LanguageItemWriter(@NotNull final DSLContext jooqDslContextPublic) {
         super(jooqDslContextPublic, "language");
     }
 
     @Override
-    protected int executeUpdate(final PublicLanguage l) {
+    protected int executeUpdate(@NotNull final PublicLanguage l) {
         return getDslContext()
             .insertInto(LANGUAGE)
             .columns(LANGUAGE.CODE, LANGUAGE.MAIN_LANGUAGE, LANGUAGE.LAST_SYNCHED)
@@ -39,5 +40,4 @@ public class LanguageItemWriter extends ScipamatoItemWriter<PublicLanguage> {
             .where(LANGUAGE.CODE.eq(l.getCode()))
             .execute();
     }
-
 }

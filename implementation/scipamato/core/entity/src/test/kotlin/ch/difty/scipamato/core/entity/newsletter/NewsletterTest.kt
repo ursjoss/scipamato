@@ -1,13 +1,12 @@
 package ch.difty.scipamato.core.entity.newsletter
 
-import ch.difty.scipamato.common.NullArgumentException
 import ch.difty.scipamato.common.entity.newsletter.PublicationStatus
 import ch.difty.scipamato.core.entity.Jsr303ValidatedEntityTest
 import ch.difty.scipamato.core.entity.newsletter.Newsletter.NewsletterFields.ISSUE
 import ch.difty.scipamato.core.entity.newsletter.Newsletter.NewsletterFields.PUBLICATION_STATUS
 import ch.difty.scipamato.core.entity.projection.PaperSlim
-import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import java.time.LocalDate
 
@@ -82,21 +81,9 @@ internal class NewsletterTest : Jsr303ValidatedEntityTest<Newsletter>(Newsletter
     }
 
     @Test
-    fun cannotAddNullPaper() {
-        assertDegenerateParameter(newValidEntity(), null, "paper")
-    }
-
-    @Test
     fun cannotAddPaperWithNullId() {
-        assertDegenerateParameter(newValidEntity(), PaperSlim(), "paper.id")
-    }
-
-    private fun assertDegenerateParameter(nl: Newsletter, p: PaperSlim?, prmName: String) {
-        try {
-            nl.addPaper(p, NewsletterTopic(1, "t1"))
-            Assertions.fail<Any>("should have thrown exception")
-        } catch (ex: Exception) {
-            assertThat(ex).isInstanceOf(NullArgumentException::class.java).hasMessage("$prmName must not be null.")
+        Assertions.assertThrows(NullPointerException::class.java) {
+            newValidEntity().addPaper(PaperSlim(), NewsletterTopic(1, "t1"))
         }
     }
 

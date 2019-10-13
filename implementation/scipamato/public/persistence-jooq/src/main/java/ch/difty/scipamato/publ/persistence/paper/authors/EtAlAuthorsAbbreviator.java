@@ -1,8 +1,9 @@
 package ch.difty.scipamato.publ.persistence.paper.authors;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.stereotype.Component;
 
-import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.publ.config.ApplicationPublicProperties;
 import ch.difty.scipamato.publ.persistence.paper.AuthorsAbbreviator;
 
@@ -30,15 +31,15 @@ class EtAlAuthorsAbbreviator implements AuthorsAbbreviator {
      *     the public scipamato properties with the
      *     authorsAbbreviatedMaxLength setting.
      */
-    EtAlAuthorsAbbreviator(final ApplicationPublicProperties properties) {
-        AssertAs.INSTANCE.notNull(properties, "properties");
+    EtAlAuthorsAbbreviator(@NotNull final ApplicationPublicProperties properties) {
         this.authorsAbbreviatedMaxLength = properties.getAuthorsAbbreviatedMaxLength();
         this.authorsAbbreviatedCutOff = authorsAbbreviatedMaxLength - ET_AL.length();
         this.authorsTruncatedCutOff = authorsAbbreviatedMaxLength - ELLIPSIS.length();
     }
 
+    @NotNull
     @Override
-    public String abbreviate(final String authors) {
+    public String abbreviate(@Nullable final String authors) {
         if (authors == null)
             return "";
         if (noNeedToAbbreviate(authors))

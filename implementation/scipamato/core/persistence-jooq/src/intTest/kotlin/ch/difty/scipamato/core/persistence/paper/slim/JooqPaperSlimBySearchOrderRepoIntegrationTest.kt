@@ -22,12 +22,6 @@ internal open class JooqPaperSlimBySearchOrderRepoIntegrationTest {
     private lateinit var repo: JooqPaperSlimBySearchOrderRepo
 
     @Test
-    fun finding() {
-        so.isGlobal = true
-        assertThat(repo.findBySearchOrder(so) == null).isFalse()
-    }
-
-    @Test
     fun findingPaged_withNonMatchingCondition_findsNoRecords() {
         so.isGlobal = true
         assertThat(repo.findPageBySearchOrder(so, pc)).isEmpty()

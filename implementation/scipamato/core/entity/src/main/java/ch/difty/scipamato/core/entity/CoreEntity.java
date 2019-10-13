@@ -1,17 +1,16 @@
 package ch.difty.scipamato.core.entity;
 
-import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import org.jetbrains.annotations.NotNull;
 
 import ch.difty.scipamato.common.entity.FieldEnumType;
 import ch.difty.scipamato.common.entity.ScipamatoEntity;
 
-@SuppressWarnings("WeakerAccess")
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = true, exclude = { "createdBy", "createdByName", "createdByFullName", "lastModifiedBy",
@@ -94,6 +93,7 @@ public abstract class CoreEntity extends ScipamatoEntity {
         }
     }
 
+    @NotNull
     public String getCreatedDisplayValue() {
         return makeDisplayValue(createdByName, getCreated());
     }
@@ -116,6 +116,7 @@ public abstract class CoreEntity extends ScipamatoEntity {
         return sb.toString();
     }
 
+    @NotNull
     public String getModifiedDisplayValue() {
         return makeDisplayValue(lastModifiedByName, getLastModified());
     }

@@ -2,7 +2,9 @@ package ch.difty.scipamato.core.persistence.newsletter;
 
 import java.util.List;
 
-import ch.difty.scipamato.common.NullArgumentException;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterNewsletterTopic;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic;
@@ -19,7 +21,8 @@ public interface NewsletterTopicRepository {
      *     the language code, e.g. 'en' or 'de'
      * @return a list of newsletterAssociation topics
      */
-    List<NewsletterTopic> findAll(String languageCode);
+    @NotNull
+    List<NewsletterTopic> findAll(@NotNull String languageCode);
 
     /**
      * Find the {@link NewsletterTopicDefinition} with the provided id
@@ -28,6 +31,7 @@ public interface NewsletterTopicRepository {
      *     the id of the record
      * @return the {@link NewsletterTopicDefinition} or null if not found
      */
+    @Nullable
     NewsletterTopicDefinition findNewsletterTopicDefinitionById(int id);
 
     /**
@@ -40,8 +44,9 @@ public interface NewsletterTopicRepository {
      *     context defining paging and sorting
      * @return a page of {@link NewsletterTopicDefinition}s as list
      */
-    List<NewsletterTopicDefinition> findPageOfNewsletterTopicDefinitions(NewsletterTopicFilter filter,
-        PaginationContext paginationContext);
+    @NotNull
+    List<NewsletterTopicDefinition> findPageOfNewsletterTopicDefinitions(@Nullable NewsletterTopicFilter filter,
+        @NotNull PaginationContext paginationContext);
 
     /**
      * Counts the number of {@link NewsletterTopicDefinition}s matching the specified filter.
@@ -50,11 +55,12 @@ public interface NewsletterTopicRepository {
      *     of type NewsletterTopicFilter
      * @return entity count
      */
-    int countByFilter(NewsletterTopicFilter filter);
+    int countByFilter(@Nullable NewsletterTopicFilter filter);
 
     /**
      * @return the main language code as string
      */
+    @NotNull
     String getMainLanguage();
 
     /**
@@ -63,6 +69,7 @@ public interface NewsletterTopicRepository {
      *
      * @return the unpersisted entity
      */
+    @NotNull
     NewsletterTopicDefinition newUnpersistedNewsletterTopicDefinition();
 
     /**
@@ -74,10 +81,9 @@ public interface NewsletterTopicRepository {
      * @return the persisted entity, including the generated id and default values - or
      *     {@code null} if it can't be added. Only the version field is populated out of
      *     all the audit fields.
-     * @throws NullArgumentException
-     *     if the entity is null.
      */
-    NewsletterTopicDefinition insert(NewsletterTopicDefinition entity);
+    @Nullable
+    NewsletterTopicDefinition insert(@NotNull NewsletterTopicDefinition entity);
 
     /**
      * Update an already persisted {@link NewsletterTopicDefinition} including its associated
@@ -89,12 +95,11 @@ public interface NewsletterTopicRepository {
      * @return the updated persisted entity, including the generated id and default values - or
      *     {@code null} if it can't be added. Only the version field is populated out of
      *     all the audit fields.
-     * @throws NullArgumentException
-     *     if the entity is null.
      * @throws OptimisticLockingException
      *     if the record version has increased in the mean time
      */
-    NewsletterTopicDefinition update(NewsletterTopicDefinition entity);
+    @Nullable
+    NewsletterTopicDefinition update(@NotNull NewsletterTopicDefinition entity);
 
     /**
      * Remove the persisted entity with the provided id.
@@ -104,12 +109,11 @@ public interface NewsletterTopicRepository {
      * @param version
      *     the record version - used for optimistic locking
      * @return the deleted entity
-     * @throws NullArgumentException
-     *     if the id is null.
      * @throws OptimisticLockingException
      *     if the record version has increased in the mean time
      */
-    NewsletterTopicDefinition delete(Integer id, int version);
+    @Nullable
+    NewsletterTopicDefinition delete(@NotNull Integer id, int version);
 
     /**
      * Finds the persisted sorted newsletter topics for the newsletter with given id.
@@ -121,6 +125,7 @@ public interface NewsletterTopicRepository {
      *     the id of the newsletter for which to retrieve the sorted topics
      * @return the list of explicitly sorted topics
      */
+    @NotNull
     List<NewsletterNewsletterTopic> findPersistedSortedNewsletterTopicsForNewsletterWithId(int newsletterId);
 
     /**
@@ -131,6 +136,7 @@ public interface NewsletterTopicRepository {
      *     the id of the newsletter for which to retrieve the sorted topics
      * @return the list of not yet persisted sorted topics
      */
+    @NotNull
     List<NewsletterNewsletterTopic> findAllSortedNewsletterTopicsForNewsletterWithId(int newsletterId);
 
     /**
@@ -149,5 +155,5 @@ public interface NewsletterTopicRepository {
      * @param topics
      *     a list of topics to store
      */
-    void saveSortedNewsletterTopics(int newsletterId, List<NewsletterNewsletterTopic> topics);
+    void saveSortedNewsletterTopics(int newsletterId, @NotNull List<NewsletterNewsletterTopic> topics);
 }

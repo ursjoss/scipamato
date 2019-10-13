@@ -1,6 +1,8 @@
 package ch.difty.scipamato.core.persistence;
 
-import ch.difty.scipamato.common.NullArgumentException;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import ch.difty.scipamato.common.entity.filter.ScipamatoFilter;
 import ch.difty.scipamato.core.entity.CoreEntity;
 
@@ -25,10 +27,9 @@ public interface EntityRepository<T extends CoreEntity, ID, F extends ScipamatoF
      *     - must not be null
      * @return the added entity, including the generated default values - or
      *     {@code null} if it can't be added.
-     * @throws NullArgumentException
-     *     if the entity is null.
      */
-    T add(T entity);
+    @Nullable
+    T add(@NotNull T entity);
 
     /**
      * Add an entity {@code T} to the database.
@@ -39,10 +40,9 @@ public interface EntityRepository<T extends CoreEntity, ID, F extends ScipamatoF
      *     - must not be null
      * @return the added entity, including the generated default values - or
      *     {@code null} if it can't be added.
-     * @throws NullArgumentException
-     *     if the entity is null.
      */
-    T add(T entity, String languageCode);
+    @Nullable
+    T add(@NotNull T entity, @NotNull String languageCode);
 
     /**
      * Remove the persisted entity with the provided id.
@@ -52,12 +52,11 @@ public interface EntityRepository<T extends CoreEntity, ID, F extends ScipamatoF
      * @param version
      *     the record version - used for optimistic locking
      * @return the deleted entity
-     * @throws NullArgumentException
-     *     if the id is null.
      * @throws OptimisticLockingException
      *     if the record version has increased in the mean time
      */
-    T delete(ID id, int version);
+    @NotNull
+    T delete(@NotNull ID id, int version);
 
     /**
      * Searches the persistent entity {@code T} and modifies it according to the
@@ -66,12 +65,11 @@ public interface EntityRepository<T extends CoreEntity, ID, F extends ScipamatoF
      * @param entity
      *     the entity with some changed values - must not be null.
      * @return the modified persisted entity
-     * @throws NullArgumentException
-     *     if the entity is null.
      * @throws OptimisticLockingException
      *     if the record version has increased in the mean time
      */
-    T update(T entity);
+    @Nullable
+    T update(@NotNull T entity);
 
     /**
      * Searches the persistent entity {@code T} and modifies it according to the
@@ -82,11 +80,9 @@ public interface EntityRepository<T extends CoreEntity, ID, F extends ScipamatoF
      * @param languageCode
      *     the language code (e.g. 'en') - must not be null.
      * @return the modified persisted entity
-     * @throws NullArgumentException
-     *     if the entity or the language code is null.
      * @throws OptimisticLockingException
      *     if the record version has increased in the mean time
      */
-    T update(T entity, String languageCode);
-
+    @Nullable
+    T update(@NotNull T entity, @NotNull String languageCode);
 }

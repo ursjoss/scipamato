@@ -15,6 +15,8 @@ import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.StringResourceModel;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import ch.difty.scipamato.common.web.Mode;
 import ch.difty.scipamato.common.web.component.SerializableSupplier;
@@ -37,15 +39,17 @@ public abstract class SearchablePaperPanel extends PaperPanel<SearchCondition> {
 
     private static final long serialVersionUID = 1L;
 
-    protected SearchablePaperPanel(String id, IModel<SearchCondition> model) {
+    protected SearchablePaperPanel(@NotNull String id, @Nullable IModel<SearchCondition> model) {
         super(id, model, Mode.SEARCH);
     }
 
+    @Nullable
     @Override
     protected PaperSummaryDataSource getSummaryDataSource() {
         return null;
     }
 
+    @Nullable
     @Override
     protected PaperSummaryShortDataSource getSummaryShortDataSource() {
         return null;
@@ -56,29 +60,32 @@ public abstract class SearchablePaperPanel extends PaperPanel<SearchCondition> {
         return false;
     }
 
+    @NotNull
     @Override
-    protected BootstrapButton newNavigationButton(String id, GlyphIconType icon,
-        SerializableSupplier<Boolean> isEnabled, SerializableSupplier<Long> idSupplier) {
+    protected BootstrapButton newNavigationButton(@NotNull String id, @NotNull GlyphIconType icon,
+        @NotNull SerializableSupplier<Boolean> isEnabled, @Nullable SerializableSupplier<Long> idSupplier) {
         final BootstrapButton btn = new BootstrapButton(id, Model.of(""), Buttons.Type.Default);
         btn.setVisible(false);
         return btn;
     }
 
+    @NotNull
     @Override
-    protected BootstrapButton newExcludeButton(String id) {
+    protected BootstrapButton newExcludeButton(@NotNull String id) {
         final BootstrapButton exclude = new BootstrapButton(id, new StringResourceModel("button.exclude.label"),
             Buttons.Type.Default);
         exclude.setVisible(false);
         return exclude;
     }
 
+    @NotNull
     @Override
     protected DropZoneFileUpload newDropZoneFileUpload() {
         DropZoneFileUpload dropZoneFileUpload = new DropZoneFileUpload("dropzone") {
             private static final long serialVersionUID = 1L;
 
             @Override
-            protected void onUpload(AjaxRequestTarget target, Map<String, List<FileItem>> fileMap) {
+            protected void onUpload(@NotNull AjaxRequestTarget target, @NotNull Map<String, List<FileItem>> fileMap) {
                 // no-op, as it's not visible anyway
             }
         };
@@ -86,8 +93,9 @@ public abstract class SearchablePaperPanel extends PaperPanel<SearchCondition> {
         return dropZoneFileUpload;
     }
 
+    @NotNull
     @Override
-    protected DataTable<PaperAttachment, String> newAttachmentTable(String id) {
+    protected DataTable<PaperAttachment, String> newAttachmentTable(@NotNull String id) {
         PaperAttachmentProvider provider = new PaperAttachmentProvider(Model.ofList(new ArrayList<>()));
         DataTable<PaperAttachment, String> attachments = new BootstrapDefaultDataTable<>(id, new ArrayList<>(),
             provider, 10);
@@ -106,7 +114,7 @@ public abstract class SearchablePaperPanel extends PaperPanel<SearchCondition> {
     }
 
     @Override
-    protected void modifyNewsletterAssociation(final AjaxRequestTarget target) {
+    protected void modifyNewsletterAssociation(@NotNull final AjaxRequestTarget target) {
         // no-op
     }
 

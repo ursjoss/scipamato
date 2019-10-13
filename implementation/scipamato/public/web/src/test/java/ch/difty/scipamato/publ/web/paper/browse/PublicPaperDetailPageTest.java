@@ -19,6 +19,7 @@ import ch.difty.scipamato.publ.entity.filter.PublicPaperFilter;
 import ch.difty.scipamato.publ.web.PublicPageParameters;
 import ch.difty.scipamato.publ.web.common.BasePageTest;
 
+@SuppressWarnings("SpellCheckingInspection")
 class PublicPaperDetailPageTest extends BasePageTest<PublicPaperDetailPage> {
 
     private static final long NUMBER = 17L;

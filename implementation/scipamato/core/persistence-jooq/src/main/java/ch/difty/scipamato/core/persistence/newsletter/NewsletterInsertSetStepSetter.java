@@ -4,11 +4,12 @@ import static ch.difty.scipamato.core.db.tables.Newsletter.NEWSLETTER;
 
 import java.sql.Date;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.jooq.InsertSetMoreStep;
 import org.jooq.InsertSetStep;
 import org.springframework.stereotype.Component;
 
-import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.core.db.tables.records.NewsletterRecord;
 import ch.difty.scipamato.core.entity.newsletter.Newsletter;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic;
@@ -17,7 +18,6 @@ import ch.difty.scipamato.core.persistence.InsertSetStepSetter;
 /**
  * The insert step setter used for inserting new {@link Newsletter}s.
  *
- *
  * <b>Note:</b> the {@link NewsletterTopic}s are not inserted here.
  *
  * @author u.joss
@@ -25,12 +25,10 @@ import ch.difty.scipamato.core.persistence.InsertSetStepSetter;
 @Component
 public class NewsletterInsertSetStepSetter implements InsertSetStepSetter<NewsletterRecord, Newsletter> {
 
+    @NotNull
     @Override
-    public InsertSetMoreStep<NewsletterRecord> setNonKeyFieldsFor(final InsertSetStep<NewsletterRecord> step,
-        final Newsletter e) {
-        AssertAs.INSTANCE.notNull(step, "step");
-        AssertAs.INSTANCE.notNull(e, "entity");
-
+    public InsertSetMoreStep<NewsletterRecord> setNonKeyFieldsFor(@NotNull final InsertSetStep<NewsletterRecord> step,
+        @NotNull final Newsletter e) {
         return step
             .set(NEWSLETTER.ISSUE, e.getIssue())
             .set(NEWSLETTER.ISSUE_DATE, Date.valueOf(e.getIssueDate()))
@@ -43,18 +41,16 @@ public class NewsletterInsertSetStepSetter implements InsertSetStepSetter<Newsle
     }
 
     @Override
-    public void considerSettingKeyOf(final InsertSetMoreStep<NewsletterRecord> step, final Newsletter entity) {
-        AssertAs.INSTANCE.notNull(step, "step");
-        AssertAs.INSTANCE.notNull(entity, "entity");
+    public void considerSettingKeyOf(@NotNull final InsertSetMoreStep<NewsletterRecord> step,
+        @NotNull final Newsletter entity) {
         final Integer id = entity.getId();
         if (id != null)
             step.set(NEWSLETTER.ID, id);
     }
 
     @Override
-    public void resetIdToEntity(Newsletter entity, NewsletterRecord saved) {
+    public void resetIdToEntity(@NotNull Newsletter entity, @Nullable NewsletterRecord saved) {
         if (saved != null)
             entity.setId(saved.getId());
     }
-
 }

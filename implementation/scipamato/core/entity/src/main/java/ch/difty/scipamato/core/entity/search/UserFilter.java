@@ -1,10 +1,10 @@
 package ch.difty.scipamato.core.entity.search;
 
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.jetbrains.annotations.NotNull;
 
 import ch.difty.scipamato.common.entity.FieldEnumType;
 import ch.difty.scipamato.common.entity.filter.ScipamatoFilter;
@@ -36,5 +36,4 @@ public class UserFilter extends ScipamatoFilter implements Serializable {
             return name;
         }
     }
-
 }

@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import ch.difty.scipamato.common.web.Mode;
 import ch.difty.scipamato.core.entity.search.SearchOrder;
 
+@SuppressWarnings("ResultOfMethodCallIgnored")
 class SearchOrderSelectorPanelInEditModeTest extends SearchOrderSelectorPanelTest {
 
     @Override

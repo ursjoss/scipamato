@@ -2,6 +2,7 @@ package ch.difty.scipamato.publ.persistence.keyword;
 
 import java.util.List;
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
 import ch.difty.scipamato.publ.entity.Keyword;
@@ -17,12 +18,13 @@ public class JooqKeywordService implements KeywordService {
 
     private final KeywordRepository repo;
 
-    public JooqKeywordService(final KeywordRepository repo) {
+    public JooqKeywordService(@NotNull final KeywordRepository repo) {
         this.repo = repo;
     }
 
+    @NotNull
     @Override
-    public List<Keyword> findKeywords(final String languageCode) {
+    public List<Keyword> findKeywords(@NotNull final String languageCode) {
         return repo.findKeywords(languageCode);
     }
 }

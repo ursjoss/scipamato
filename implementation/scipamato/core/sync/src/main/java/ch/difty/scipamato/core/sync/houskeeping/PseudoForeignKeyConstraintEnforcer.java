@@ -2,14 +2,13 @@ package ch.difty.scipamato.core.sync.houskeeping;
 
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.jooq.DeleteConditionStep;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.springframework.batch.core.StepContribution;
 import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.repeat.RepeatStatus;
-
-import ch.difty.scipamato.common.AssertAs;
 
 /**
  * {@link Tasklet} used for enforcing pseudo-referential integrity rules. This is necessary
@@ -49,13 +48,14 @@ public class PseudoForeignKeyConstraintEnforcer<R extends UpdatableRecordImpl<?>
      * @param plural
      *     the suffix indicating more than one of the entities (e.g. 's' -&gt; 'code' + 's' = 'codes')
      */
-    public PseudoForeignKeyConstraintEnforcer(final DeleteConditionStep<R> deleteDdl, final String entityName,
-        final String plural) {
+    public PseudoForeignKeyConstraintEnforcer(@Nullable final DeleteConditionStep<R> deleteDdl,
+        @NotNull final String entityName, @Nullable final String plural) {
         this.ddl = deleteDdl;
-        this.entityName = AssertAs.INSTANCE.notNull(entityName, "entityName");
+        this.entityName = entityName;
         this.plural = plural != null ? plural : "s";
     }
 
+    @NotNull
     @Override
     public RepeatStatus execute(@NotNull final StepContribution contribution,
         @NotNull final ChunkContext chunkContext) {
@@ -68,5 +68,4 @@ public class PseudoForeignKeyConstraintEnforcer<R extends UpdatableRecordImpl<?>
         }
         return RepeatStatus.FINISHED;
     }
-
 }

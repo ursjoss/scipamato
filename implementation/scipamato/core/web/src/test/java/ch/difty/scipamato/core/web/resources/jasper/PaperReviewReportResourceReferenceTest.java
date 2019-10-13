@@ -17,5 +17,4 @@ class PaperReviewReportResourceReferenceTest
     protected String getResourceReferencePath() {
         return "ch.difty.scipamato.core.web.resources.jasper.PaperReviewReportResourceReference";
     }
-
 }

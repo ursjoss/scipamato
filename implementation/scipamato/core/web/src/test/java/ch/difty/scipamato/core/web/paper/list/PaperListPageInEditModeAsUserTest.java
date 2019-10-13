@@ -88,5 +88,4 @@ class PaperListPageInEditModeAsUserTest extends PaperListPageTest {
             "https://github.com/ursjoss/scipamato/blob/master/CHANGELOG.asciidoc");
         assertPageLinkButton(2, "Right", "Logout");
     }
-
 }

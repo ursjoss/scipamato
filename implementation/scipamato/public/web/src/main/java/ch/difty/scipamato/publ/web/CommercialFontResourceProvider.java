@@ -1,6 +1,7 @@
 package ch.difty.scipamato.publ.web;
 
 import org.apache.wicket.request.resource.CssResourceReference;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Commercial fonts are not part of the open-source distribution of SciPaMaTo.
@@ -24,6 +25,6 @@ public interface CommercialFontResourceProvider {
     /**
      * @return the configured {@link CssResourceReference} or null if not configured
      */
+    @Nullable
     CssResourceReference getCssResourceReference();
-
 }

@@ -33,29 +33,29 @@ internal open class JooqKeywordRepoIntegrationTest {
 
         assertThat(kds).hasSize(3)
 
-        var ntd = kds[0]
-        assertThat(ntd.id).isEqualTo(1)
-        assertThat(ntd.name).isEqualTo("Aerosol")
-        assertThat(ntd.searchOverride == null).isTrue()
-        assertThat(ntd.getNameInLanguage("de")).isEqualTo("Aerosol")
-        assertThat(ntd.getNameInLanguage("en")).isEqualTo("Aerosol")
-        assertThat(ntd.getNameInLanguage("fr")).isEqualTo("Aérosol")
+        var kd = kds[0]
+        assertThat(kd.id).isEqualTo(1)
+        assertThat(kd.name).isEqualTo("Aerosol")
+        assertThat(kd.searchOverride == null).isTrue()
+        assertThat(kd.getNameInLanguage("de")).isEqualTo("Aerosol")
+        assertThat(kd.getNameInLanguage("en")).isEqualTo("Aerosol")
+        assertThat(kd.getNameInLanguage("fr")).isEqualTo("Aérosol")
 
-        ntd = kds[1]
-        assertThat(ntd.id).isEqualTo(2)
-        assertThat(ntd.name).isEqualTo("Aktivität, eingeschränkte")
-        assertThat(ntd.searchOverride).isEqualTo("Aktivität")
-        assertThat(ntd.getNameInLanguage("de")).isEqualTo("Aktivität, eingeschränkte")
-        assertThat(ntd.getNameInLanguage("en")).isEqualTo("Restricted activity")
-        assertThat(ntd.getNameInLanguage("fr")).isEqualTo("Activités réduites")
+        kd = kds[1]
+        assertThat(kd.id).isEqualTo(2)
+        assertThat(kd.name).isEqualTo("Aktivität, eingeschränkte")
+        assertThat(kd.searchOverride).isEqualTo("Aktivität")
+        assertThat(kd.getNameInLanguage("de")).isEqualTo("Aktivität, eingeschränkte")
+        assertThat(kd.getNameInLanguage("en")).isEqualTo("Restricted activity")
+        assertThat(kd.getNameInLanguage("fr")).isEqualTo("Activités réduites")
 
-        ntd = kds[2]
-        assertThat(ntd.id).isEqualTo(3)
-        assertThat(ntd.name).isEqualTo("Allergie (not Atopie)")
-        assertThat(ntd.searchOverride == null).isTrue()
-        assertThat(ntd.getNameInLanguage("de")).isEqualTo("Allergie (not Atopie)")
-        assertThat(ntd.getNameInLanguage("en")).isEqualTo("Allergies")
-        assertThat(ntd.getNameInLanguage("fr")).isEqualTo("Allergie")
+        kd = kds[2]
+        assertThat(kd.id).isEqualTo(3)
+        assertThat(kd.name).isEqualTo("Allergie (not Atopie)")
+        assertThat(kd.searchOverride == null).isTrue()
+        assertThat(kd.getNameInLanguage("de")).isEqualTo("Allergie (not Atopie)")
+        assertThat(kd.getNameInLanguage("en")).isEqualTo("Allergies")
+        assertThat(kd.getNameInLanguage("fr")).isEqualTo("Allergie")
     }
 
     @Test
@@ -67,13 +67,13 @@ internal open class JooqKeywordRepoIntegrationTest {
 
         assertThat(kds).hasSize(1)
 
-        val ntd = kds[0]
-        assertThat(ntd.id).isEqualTo(3)
-        assertThat(ntd.name).isEqualTo("Allergie (not Atopie)")
-        assertThat(ntd.searchOverride == null).isTrue()
-        assertThat(ntd.getNameInLanguage("de")).isEqualTo("Allergie (not Atopie)")
-        assertThat(ntd.getNameInLanguage("en")).isEqualTo("Allergies")
-        assertThat(ntd.getNameInLanguage("fr")).isEqualTo("Allergie")
+        val kd = kds[0]
+        assertThat(kd.id).isEqualTo(3)
+        assertThat(kd.name).isEqualTo("Allergie (not Atopie)")
+        assertThat(kd.searchOverride == null).isTrue()
+        assertThat(kd.getNameInLanguage("de")).isEqualTo("Allergie (not Atopie)")
+        assertThat(kd.getNameInLanguage("en")).isEqualTo("Allergies")
+        assertThat(kd.getNameInLanguage("fr")).isEqualTo("Allergie")
     }
 
     @Test
@@ -197,6 +197,7 @@ internal open class JooqKeywordRepoIntegrationTest {
     @Test
     fun findingKeywordDefinition_withExistingId_loadsWithAllLanguages() {
         val existing = repo.findKeywordDefinitionById(1)
+            ?: fail("Unable to find keyword definition with id 1")
 
         assertThat(existing.id).isEqualTo(1)
         assertThat(existing.name).isEqualTo("Aerosol")
@@ -212,12 +213,12 @@ internal open class JooqKeywordRepoIntegrationTest {
         val kt_de = KeywordTranslation(null, "de", "foo_de", 0)
         val kt_en = KeywordTranslation(null, "en", "foo1_en", 0)
         val kt_fr = KeywordTranslation(null, "fr", "foo1_fr", 0)
-        val ntd = KeywordDefinition(null, "de", 0, kt_de, kt_en, kt_fr)
+        val kd = KeywordDefinition(null, "de", 0, kt_de, kt_en, kt_fr)
 
-        assertThat(ntd.id == null).isTrue()
-        assertThat(ntd.translations.values().map { it.id }).containsExactly(null, null, null)
+        assertThat(kd.id == null).isTrue()
+        assertThat(kd.translations.values().map { it.id }).containsExactly(null, null, null)
 
-        val saved = repo.insert(ntd)
+        val saved = repo.insert(kd) ?: fail("Unable to insert keyword definition")
 
         assertThat(saved.id).isGreaterThan(0)
         assertThat(saved.name).isEqualTo("foo_de")
@@ -227,22 +228,23 @@ internal open class JooqKeywordRepoIntegrationTest {
 
     @Test
     fun updatingRecord() {
-        val ntd = repo.findKeywordDefinitionById(2)
+        val kd = repo.findKeywordDefinitionById(2)
+            ?: fail("Unable to find keyword definition with id 2")
 
-        assertThat(ntd.id).isEqualTo(2)
-        assertThat(ntd.searchOverride).isEqualTo("Aktivität")
-        assertThat(ntd.translations.asMap()).hasSize(3)
-        assertThat(ntd.getNameInLanguage("de")).isEqualTo("Aktivität, eingeschränkte")
-        assertThat(ntd.getNameInLanguage("en")).isEqualTo("Restricted activity")
-        assertThat(ntd.getNameInLanguage("fr")).isEqualTo("Activités réduites")
-        assertThat(ntd.translations.get("de").first().version).isEqualTo(1)
-        assertThat(ntd.translations.get("en").first().version).isEqualTo(1)
+        assertThat(kd.id).isEqualTo(2)
+        assertThat(kd.searchOverride).isEqualTo("Aktivität")
+        assertThat(kd.translations.asMap()).hasSize(3)
+        assertThat(kd.getNameInLanguage("de")).isEqualTo("Aktivität, eingeschränkte")
+        assertThat(kd.getNameInLanguage("en")).isEqualTo("Restricted activity")
+        assertThat(kd.getNameInLanguage("fr")).isEqualTo("Activités réduites")
+        assertThat(kd.translations.get("de").first().version).isEqualTo(1)
+        assertThat(kd.translations.get("en").first().version).isEqualTo(1)
 
-        ntd.searchOverride = "a"
-        ntd.setNameInLanguage("de", "ae")
-        ntd.setNameInLanguage("fr", "ar")
+        kd.searchOverride = "a"
+        kd.setNameInLanguage("de", "ae")
+        kd.setNameInLanguage("fr", "ar")
 
-        val updated = repo.update(ntd)
+        val updated = repo.update(kd)
 
         assertThat(updated.id).isEqualTo(2)
         assertThat(updated.searchOverride).isEqualTo("a")
@@ -278,14 +280,14 @@ internal open class JooqKeywordRepoIntegrationTest {
     @Test
     fun deleting_withExistingIdAndVersion_deletes() {
         // insert new record to the database and verify it's there
-        val ntd = KeywordDefinition(null, "de", null)
-        val persisted = repo.insert(ntd)
+        val kd = KeywordDefinition(null, "de", null)
+        val persisted = repo.insert(kd) ?: fail("Unable to insert keyword definition")
         val id = persisted.id
         val version = persisted.version
         assertThat(repo.findKeywordDefinitionById(id) == null).isFalse()
 
         // delete the record
-        val deleted = repo.delete(id, version)
+        val deleted = repo.delete(id, version) ?: fail("Unable to delete keyword definition")
         assertThat(deleted.id).isEqualTo(id)
 
         // verify the record is not there anymore
@@ -294,7 +296,7 @@ internal open class JooqKeywordRepoIntegrationTest {
 
     @Test
     fun canLoadKeywordWithMultipleTranslationsInOneLanguage() {
-        val kd = repo.findKeywordDefinitionById(3)
+        val kd = repo.findKeywordDefinitionById(3) ?: fail("Unable to find keyword definition with id 3")
         assertThat(kd.translationsAsString).isEqualTo(
             "DE: 'Allergie (not Atopie)','Allergie'; EN: 'Allergies'; FR: 'Allergie'"
         )

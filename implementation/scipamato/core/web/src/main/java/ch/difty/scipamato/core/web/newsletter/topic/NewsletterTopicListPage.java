@@ -7,6 +7,8 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.wicketstuff.annotation.mount.MountPath;
 
 import ch.difty.scipamato.core.auth.Roles;
@@ -29,26 +31,30 @@ public class NewsletterTopicListPage extends
     @SpringBean
     private NewsletterTopicService service;
 
-    public NewsletterTopicListPage(final PageParameters parameters) {
+    public NewsletterTopicListPage(@Nullable final PageParameters parameters) {
         super(parameters);
     }
 
+    @NotNull
     @Override
     protected NewsletterTopicFilter newFilter() {
         return new NewsletterTopicFilter();
     }
 
+    @NotNull
     @Override
-    protected NewsletterTopicDefinitionProvider newProvider(final NewsletterTopicFilter filter) {
+    protected NewsletterTopicDefinitionProvider newProvider(@Nullable final NewsletterTopicFilter filter) {
         return new NewsletterTopicDefinitionProvider(filter);
     }
 
+    @NotNull
     @Override
-    protected Panel newFilterPanel(final String id) {
+    protected Panel newFilterPanel(@NotNull final String id) {
         return new NewsletterTopicListFilterPanel(id, getProvider()) {
 
+            @NotNull
             @Override
-            protected BootstrapAjaxButton doQueueNewNewsletterTopicButton(final String id) {
+            protected BootstrapAjaxButton doQueueNewNewsletterTopicButton(@NotNull final String id) {
                 return newResponsePageButton(id,
                     () -> new NewsletterTopicEditPage(Model.of(service.newUnpersistedNewsletterTopicDefinition()),
                         getPage().getPageReference()));
@@ -56,9 +62,9 @@ public class NewsletterTopicListPage extends
         };
     }
 
+    @NotNull
     @Override
-    protected Panel newResultPanel(final String id) {
+    protected Panel newResultPanel(@NotNull final String id) {
         return new NewsletterTopicListResultPanel(id, getProvider());
     }
-
 }

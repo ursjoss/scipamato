@@ -8,12 +8,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.jooq.*;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
-import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.DateTimeService;
 import ch.difty.scipamato.common.config.ApplicationProperties;
 import ch.difty.scipamato.common.persistence.GenericFilterConditionMapper;
@@ -34,33 +35,37 @@ public class JooqPaperSlimRepo extends
 
     private final PaperSlimBackedSearchOrderRepository searchOrderRepository;
 
-    public JooqPaperSlimRepo(@Qualifier("dslContext") DSLContext dsl, PaperSlimRecordMapper mapper,
-        JooqSortMapper<PaperRecord, PaperSlim, ch.difty.scipamato.core.db.tables.Paper> sortMapper,
-        GenericFilterConditionMapper<PaperFilter> filterConditionMapper,
-        PaperSlimBackedSearchOrderRepository searchOrderRepository, DateTimeService dateTimeService,
-        ApplicationProperties applicationProperties) {
+    public JooqPaperSlimRepo(@Qualifier("dslContext") @NotNull final DSLContext dsl,
+        @NotNull final PaperSlimRecordMapper mapper,
+        @NotNull final JooqSortMapper<PaperRecord, PaperSlim, ch.difty.scipamato.core.db.tables.Paper> sortMapper,
+        @NotNull final GenericFilterConditionMapper<PaperFilter> filterConditionMapper,
+        @NotNull final PaperSlimBackedSearchOrderRepository searchOrderRepository,
+        @NotNull final DateTimeService dateTimeService, @NotNull final ApplicationProperties applicationProperties) {
         super(dsl, mapper, sortMapper, filterConditionMapper, dateTimeService, applicationProperties);
-        this.searchOrderRepository = AssertAs.INSTANCE.notNull(searchOrderRepository, "searchOrderRepository");
+        this.searchOrderRepository = searchOrderRepository;
     }
 
+    @NotNull
     @Override
     protected ch.difty.scipamato.core.db.tables.Paper getTable() {
         return PAPER;
     }
 
+    @NotNull
     @Override
     protected TableField<PaperRecord, Long> getTableId() {
         return PAPER.ID;
     }
 
+    @NotNull
     @Override
     protected TableField<PaperRecord, Integer> getRecordVersion() {
         return PAPER.VERSION;
     }
 
+    @Nullable
     @Override
-    public PaperSlim findById(final Long id, final String languageCode) {
-        AssertAs.INSTANCE.notNull(id, "id");
+    public PaperSlim findById(@NotNull final Long id, @Nullable final String languageCode) {
         final Record9<Long, Long, String, Integer, String, Integer, String, Integer, String> record = getBaseQuery()
             .where(getTableId().equal(id))
             .fetchOne();
@@ -87,9 +92,9 @@ public class JooqPaperSlimRepo extends
         return record.get(NEWSLETTER.PUBLICATION_STATUS.getName(), Integer.class);
     }
 
+    @Nullable
     @Override
-    public PaperSlim findById(final Long id, final int version, String languageCode) {
-        AssertAs.INSTANCE.notNull(id, "id");
+    public PaperSlim findById(@NotNull final Long id, final int version, @Nullable String languageCode) {
         final Record9<Long, Long, String, Integer, String, Integer, String, Integer, String> record = getBaseQuery()
             .where(getTableId().equal(id))
             .and(getRecordVersion().equal(version))
@@ -100,8 +105,9 @@ public class JooqPaperSlimRepo extends
             return null;
     }
 
+    @NotNull
     @Override
-    public List<PaperSlim> findAll(String languageCode) {
+    public List<PaperSlim> findAll(@Nullable String languageCode) {
         final List<PaperSlim> results = new ArrayList<>();
         for (final Record9<Long, Long, String, Integer, String, Integer, String, Integer, String> r : getBaseQuery().fetch())
             results.add(newPaperSlim(r));
@@ -118,9 +124,10 @@ public class JooqPaperSlimRepo extends
             return new PaperSlim(r.value1(), r.value2(), r.value3(), r.value4(), r.value5());
     }
 
+    @NotNull
     @Override
-    public List<PaperSlim> findPageByFilter(final PaperFilter filter, final PaginationContext pc,
-        final String languageCode) {
+    public List<PaperSlim> findPageByFilter(final PaperFilter filter, @NotNull final PaginationContext pc,
+        @Nullable final String languageCode) {
         final List<PaperSlim> results = new ArrayList<>();
         final Condition conditions = getFilterConditionMapper().map(filter);
         final Collection<SortField<PaperSlim>> sortCriteria = getSortMapper().map(pc.getSort(), getTable());
@@ -134,23 +141,25 @@ public class JooqPaperSlimRepo extends
         return results;
     }
 
+    @NotNull
     @Override
-    public List<PaperSlim> findBySearchOrder(final SearchOrder searchOrder) {
+    public List<PaperSlim> findBySearchOrder(@NotNull final SearchOrder searchOrder) {
         List<PaperSlim> papers = searchOrderRepository.findBySearchOrder(searchOrder);
         enrichAssociatedEntitiesOfAll(papers, null);
         return papers;
     }
 
+    @NotNull
     @Override
-    public List<PaperSlim> findPageBySearchOrder(SearchOrder searchOrder, PaginationContext paginationContext) {
+    public List<PaperSlim> findPageBySearchOrder(@NotNull SearchOrder searchOrder,
+        @NotNull PaginationContext paginationContext) {
         final List<PaperSlim> entities = searchOrderRepository.findPageBySearchOrder(searchOrder, paginationContext);
         enrichAssociatedEntitiesOfAll(entities, null);
         return entities;
     }
 
     @Override
-    public int countBySearchOrder(SearchOrder searchOrder) {
+    public int countBySearchOrder(@NotNull SearchOrder searchOrder) {
         return searchOrderRepository.countBySearchOrder(searchOrder);
     }
-
 }

@@ -3,6 +3,7 @@ package ch.difty.scipamato.publ;
 import com.giffing.wicket.spring.boot.starter.configuration.extensions.external.spring.security.SecureWebSession;
 import org.apache.wicket.Session;
 import org.apache.wicket.request.Request;
+import org.jetbrains.annotations.NotNull;
 
 import ch.difty.scipamato.common.navigator.ItemNavigator;
 import ch.difty.scipamato.common.navigator.LongNavigator;
@@ -19,7 +20,7 @@ public final class ScipamatoPublicSession extends SecureWebSession {
 
     private final ItemNavigator<Long> paperIdManager = new LongNavigator();
 
-    public ScipamatoPublicSession(final Request request) {
+    public ScipamatoPublicSession(@NotNull final Request request) {
         super(request);
     }
 
@@ -27,6 +28,7 @@ public final class ScipamatoPublicSession extends SecureWebSession {
         return (ScipamatoPublicSession) Session.get();
     }
 
+    @NotNull
     public ItemNavigator<Long> getPaperIdManager() {
         return paperIdManager;
     }

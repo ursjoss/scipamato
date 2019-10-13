@@ -132,5 +132,4 @@ public abstract class WicketTest extends AbstractWicketTest {
         getTester().assertComponent(bb + "Label", Label.class);
         getTester().assertComponent(bb, BootstrapSelect.class);
     }
-
 }

@@ -29,8 +29,8 @@ open class TestApplication {
         override fun isCommercialFontPresent() = false
         override fun isLessUsedOverCss() = false
         override fun isNavbarVisibleByDefault() = false
-        override fun getCmsUrlSearchPage() = null
-        override fun getCmsUrlNewStudyPage() = null
+        override fun getCmsUrlSearchPage(): String? = null
+        override fun getCmsUrlNewStudyPage(): String? = null
         override fun getAuthorsAbbreviatedMaxLength() = 50
         override fun isResponsiveIframeSupportEnabled() = false
         override fun getManagementUserName() = "admin"

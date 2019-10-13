@@ -1,5 +1,8 @@
 package ch.difty.scipamato.core.entity.search;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 /**
  * Implementation of {@link AbstractSearchTerm} working with Boolean fields.
  * <p>
@@ -14,15 +17,17 @@ public class BooleanSearchTerm extends AbstractSearchTerm {
 
     private final boolean value;
 
-    BooleanSearchTerm(final String fieldName, final String rawSearchTerm) {
+    BooleanSearchTerm(@NotNull final String fieldName, @NotNull final String rawSearchTerm) {
         this(null, null, fieldName, rawSearchTerm);
     }
 
-    BooleanSearchTerm(final Long searchConditionId, final String fieldName, final String rawSearchTerm) {
+    BooleanSearchTerm(@Nullable final Long searchConditionId, @NotNull final String fieldName,
+        @NotNull final String rawSearchTerm) {
         this(null, searchConditionId, fieldName, rawSearchTerm);
     }
 
-    BooleanSearchTerm(final Long id, final Long searchConditionId, final String fieldName, final String rawSearchTerm) {
+    BooleanSearchTerm(@Nullable final Long id, @Nullable final Long searchConditionId, @NotNull final String fieldName,
+        @NotNull final String rawSearchTerm) {
         super(id, SearchTermType.BOOLEAN, searchConditionId, fieldName, rawSearchTerm);
         final String rst = rawSearchTerm.trim();
         this.value = Boolean.parseBoolean(rst);
@@ -35,6 +40,7 @@ public class BooleanSearchTerm extends AbstractSearchTerm {
     /**
      * If true: {@code fieldName}. If false: {@code -fieldName}
      */
+    @NotNull
     @Override
     public String getDisplayValue() {
         if (getValue()) {

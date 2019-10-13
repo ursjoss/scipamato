@@ -111,5 +111,4 @@ abstract class SearchOrderPanelTest extends PanelTest<SearchOrderPanel> {
         SearchOrderPanel p = new SearchOrderPanel(PANEL_ID, Model.of(searchOrder), getMode());
         assertThat(p.isSearchOrderIdDefined()).isFalse();
     }
-
 }

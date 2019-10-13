@@ -11,6 +11,7 @@ import net.sf.jasperreports.engine.JasperReport;
 import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.util.resource.IResourceStream;
 import org.apache.wicket.util.resource.ResourceStreamNotFoundException;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Static resource reference for a jasper report, wrapping the xml report
@@ -45,7 +46,7 @@ public abstract class JasperReportResourceReference extends PackageResourceRefer
      *     if {@code true} the report is only compiled from xml when the
      *     report is requested for the first time.
      */
-    JasperReportResourceReference(final Class<?> scope, final String name, final boolean cacheReport) {
+    JasperReportResourceReference(@NotNull final Class<?> scope, @NotNull final String name, final boolean cacheReport) {
         super(scope, name + ".jrxml");
         this.cacheReport = cacheReport;
     }
@@ -56,6 +57,7 @@ public abstract class JasperReportResourceReference extends PackageResourceRefer
      *     an unchecked runtime exception wrapping two checked exceptions
      *     ({@link ResourceStreamNotFoundException} and {@link JRException})
      */
+    @NotNull
     public JasperReport getReport() {
         if (!cacheReport || report == null) {
             try {
@@ -85,10 +87,12 @@ public abstract class JasperReportResourceReference extends PackageResourceRefer
         }
     }
 
+    @NotNull
     InputStream getInputStream(final IResourceStream rs) throws ResourceStreamNotFoundException {
         return rs.getInputStream();
     }
 
+    @NotNull
     IResourceStream getResourceStreamFromResource() {
         return getResource().getResourceStream();
     }

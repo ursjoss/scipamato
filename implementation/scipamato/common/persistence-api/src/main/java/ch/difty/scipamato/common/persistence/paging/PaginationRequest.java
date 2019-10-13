@@ -1,6 +1,7 @@
 package ch.difty.scipamato.common.persistence.paging;
 
 import lombok.Value;
+import org.jetbrains.annotations.Nullable;
 
 import ch.difty.scipamato.common.persistence.paging.Sort.Direction;
 
@@ -24,6 +25,7 @@ public class PaginationRequest implements PaginationContext {
 
     private final int  offset;
     private final int  pageSize;
+    @Nullable
     private final Sort sort;
 
     /**
@@ -81,7 +83,7 @@ public class PaginationRequest implements PaginationContext {
      * @param sort
      *     - can be {@literal null}.
      */
-    public PaginationRequest(final int offset, final int pageSize, final Sort sort) {
+    public PaginationRequest(final int offset, final int pageSize, @Nullable final Sort sort) {
         checkConstraints(offset, pageSize);
         this.offset = offset;
         this.pageSize = pageSize;

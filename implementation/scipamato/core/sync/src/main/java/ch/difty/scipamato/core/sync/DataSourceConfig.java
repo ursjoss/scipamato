@@ -3,6 +3,7 @@ package ch.difty.scipamato.core.sync;
 import javax.sql.DataSource;
 
 import com.zaxxer.hikari.HikariDataSource;
+import org.jetbrains.annotations.NotNull;
 import org.jooq.DSLContext;
 import org.jooq.ExecuteListenerProvider;
 import org.jooq.conf.Settings;
@@ -34,10 +35,11 @@ public class DataSourceConfig {
 
     private final JooqProperties jooqProperties;
 
-    public DataSourceConfig(JooqProperties jooqProperties) {
+    public DataSourceConfig(@NotNull JooqProperties jooqProperties) {
         this.jooqProperties = jooqProperties;
     }
 
+    @NotNull
     @Bean
     public Settings settings() {
         return new DefaultConfiguration()
@@ -45,6 +47,7 @@ public class DataSourceConfig {
             .withExecuteWithOptimisticLocking(true);
     }
 
+    @NotNull
     @Bean
     public ExecuteListenerProvider executeListenerProvider() {
         return new DefaultExecuteListenerProvider(new JooqExceptionTranslator());
@@ -53,6 +56,7 @@ public class DataSourceConfig {
     /**
      * @return Scipamato-Core datasource.
      */
+    @NotNull
     @Bean(destroyMethod = "")
     @ConfigurationProperties(prefix = "sync.source.datasource")
     public DataSource hikariCoreDataSource() {
@@ -62,18 +66,21 @@ public class DataSourceConfig {
             .build();
     }
 
+    @NotNull
     @Bean(destroyMethod = "")
     @Primary
     public TransactionAwareDataSourceProxy dataSource() {
         return new TransactionAwareDataSourceProxy(hikariCoreDataSource());
     }
 
+    @NotNull
     @Bean
     @Primary
     public PlatformTransactionManager coreTransactionManager() {
         return new DataSourceTransactionManager(dataSource());
     }
 
+    @NotNull
     @Bean
     @Primary
     public SpringTransactionProvider coreTransactionProvider() {
@@ -83,6 +90,7 @@ public class DataSourceConfig {
     /**
      * @return {@link org.jooq.Configuration} for scipamato-core
      */
+    @NotNull
     @Bean
     @Primary
     public org.jooq.Configuration coreConfiguration() {
@@ -102,6 +110,7 @@ public class DataSourceConfig {
     /**
      * @return {@link DSLContext} for scipamato-core
      */
+    @NotNull
     @Bean
     @Primary
     public DSLContext dslContext() {
@@ -111,6 +120,7 @@ public class DataSourceConfig {
     /**
      * @return Scipamato-Public datasource.
      */
+    @NotNull
     @Bean(destroyMethod = "")
     @ConfigurationProperties(prefix = "sync.target.datasource")
     public DataSource hikariPublicDataSource() {
@@ -120,16 +130,19 @@ public class DataSourceConfig {
             .build();
     }
 
+    @NotNull
     @Bean(destroyMethod = "")
     public TransactionAwareDataSourceProxy publicDataSource() {
         return new TransactionAwareDataSourceProxy(hikariPublicDataSource());
     }
 
+    @NotNull
     @Bean
     public PlatformTransactionManager publicTransactionManager() {
         return new DataSourceTransactionManager(publicDataSource());
     }
 
+    @NotNull
     @Bean
     public SpringTransactionProvider publicTransactionProvider() {
         return new SpringTransactionProvider(publicTransactionManager());
@@ -138,6 +151,7 @@ public class DataSourceConfig {
     /**
      * @return {@link org.jooq.Configuration} for scipamato-public
      */
+    @NotNull
     @Bean
     public org.jooq.Configuration publicConfiguration() {
         return newJooqConfiguration(publicDataSource(), publicTransactionProvider());
@@ -146,6 +160,7 @@ public class DataSourceConfig {
     /**
      * @return {@link DSLContext} for scipamato-public
      */
+    @NotNull
     @Bean
     public DSLContext publicDslContext() {
         return DSL.using(publicConfiguration());
@@ -154,6 +169,7 @@ public class DataSourceConfig {
     /**
      * @return Scipamato-Core as batch datasource. Needs to create the batch meta tables.
      */
+    @NotNull
     @Bean(destroyMethod = "")
     @ConfigurationProperties(prefix = "sync.batch.datasource")
     public DataSource hikariBatchDataSource() {
@@ -163,16 +179,19 @@ public class DataSourceConfig {
             .build();
     }
 
+    @NotNull
     @Bean
     public TransactionAwareDataSourceProxy batchDataSource() {
         return new TransactionAwareDataSourceProxy(hikariBatchDataSource());
     }
 
+    @NotNull
     @Bean
     public PlatformTransactionManager batchTransactionManager() {
         return new DataSourceTransactionManager(batchDataSource());
     }
 
+    @NotNull
     @Bean
     public SpringTransactionProvider batchTransactionProvider() {
         return new SpringTransactionProvider(batchTransactionManager());
@@ -181,6 +200,7 @@ public class DataSourceConfig {
     /**
      * @return {@link org.jooq.Configuration} for spring batch
      */
+    @NotNull
     @Bean
     public org.jooq.Configuration batchConfiguration() {
         return newJooqConfiguration(batchDataSource(), batchTransactionProvider());
@@ -189,11 +209,13 @@ public class DataSourceConfig {
     /**
      * @return {@link DSLContext} for batch on scipamato-core
      */
+    @NotNull
     @Bean
     public DSLContext batchDslContext() {
         return DSL.using(batchConfiguration());
     }
 
+    @NotNull
     @Bean
     public Warner unsynchronizedEntitiesWarner(@Qualifier("dslContext") DSLContext jooqCore) {
         return new UnsynchronizedEntitiesWarner(jooqCore);

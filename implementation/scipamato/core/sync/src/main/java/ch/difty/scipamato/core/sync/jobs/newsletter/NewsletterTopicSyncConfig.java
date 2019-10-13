@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
+import org.jetbrains.annotations.NotNull;
 import org.jooq.DSLContext;
 import org.jooq.TableField;
 import org.springframework.batch.core.Job;
@@ -50,28 +51,34 @@ public class NewsletterTopicSyncConfig
     private static final TableField<NewsletterTopicTrRecord, Timestamp> C_CREATED       = NEWSLETTER_TOPIC_TR.CREATED;
     private static final TableField<NewsletterTopicTrRecord, Timestamp> C_LAST_MODIFIED = NEWSLETTER_TOPIC_TR.LAST_MODIFIED;
 
-    protected NewsletterTopicSyncConfig(@Qualifier("dslContext") DSLContext jooqCore,
-        @Qualifier("publicDslContext") DSLContext jooqPublic, @Qualifier("dataSource") DataSource coreDataSource,
-        JobBuilderFactory jobBuilderFactory, StepBuilderFactory stepBuilderFactory, DateTimeService dateTimeService) {
+    protected NewsletterTopicSyncConfig(@Qualifier("dslContext") @NotNull final DSLContext jooqCore,
+        @Qualifier("publicDslContext") @NotNull final DSLContext jooqPublic,
+        @Qualifier("dataSource") @NotNull final DataSource coreDataSource,
+        @NotNull final JobBuilderFactory jobBuilderFactory, @NotNull final StepBuilderFactory stepBuilderFactory,
+        @NotNull final DateTimeService dateTimeService) {
         super(TOPIC, CHUNK_SIZE, jooqCore, jooqPublic, coreDataSource, jobBuilderFactory, stepBuilderFactory,
             dateTimeService);
     }
 
+    @NotNull
     @Bean
     public Job syncNewsletterTopicJob() {
         return createJob();
     }
 
+    @NotNull
     @Override
     protected String getJobName() {
         return "syncNewsletterTopicJob";
     }
 
+    @NotNull
     @Override
     protected ItemWriter<PublicNewsletterTopic> publicWriter() {
         return new NewsletterTopicItemWriter(getJooqPublic());
     }
 
+    @NotNull
     @Override
     protected String selectSql() {
         return getJooqCore()
@@ -82,8 +89,9 @@ public class NewsletterTopicSyncConfig
             .getSQL();
     }
 
+    @NotNull
     @Override
-    protected PublicNewsletterTopic makeEntity(final ResultSet rs) throws SQLException {
+    protected PublicNewsletterTopic makeEntity(@NotNull final ResultSet rs) throws SQLException {
         return PublicNewsletterTopic
             .builder()
             .id(getInteger(C_ID, rs))
@@ -96,9 +104,9 @@ public class NewsletterTopicSyncConfig
             .build();
     }
 
+    @NotNull
     @Override
     protected TableField<ch.difty.scipamato.publ.db.tables.records.NewsletterTopicRecord, Timestamp> lastSynchedField() {
         return ch.difty.scipamato.publ.db.tables.NewsletterTopic.NEWSLETTER_TOPIC.LAST_SYNCHED;
     }
-
 }

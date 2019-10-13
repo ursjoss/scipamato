@@ -7,6 +7,7 @@ import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicDefinition
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicFilter
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicTranslation
 import ch.difty.scipamato.core.persistence.newsletter.JooqNewsletterTopicRepo
+import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Fail.fail
 import org.junit.jupiter.api.Test
@@ -188,6 +189,7 @@ internal open class JooqNewsletterTopicRepoIntegrationTest {
     @Test
     fun findingNewsletterTopicDefinition_withExistingId_loadsWithAllLanguages() {
         val existing = repo.findNewsletterTopicDefinitionById(1)
+            ?: Assertions.fail("Unable to find newsletter topic definition")
 
         assertThat(existing.id).isEqualTo(1)
         assertThat(existing.title).isEqualTo("Ultrafeine Partikel")
@@ -208,7 +210,7 @@ internal open class JooqNewsletterTopicRepoIntegrationTest {
         assertThat(ntd.id == null).isTrue()
         assertThat(ntd.translations.values().map { it.id }).containsExactly(null, null, null)
 
-        val saved = repo.insert(ntd)
+        val saved = repo.insert(ntd) ?: Assertions.fail("Unable to insert newsletter topic definition")
 
         assertThat(saved.id).isGreaterThan(0)
         assertThat(saved.title).isEqualTo("foo_de")
@@ -219,6 +221,7 @@ internal open class JooqNewsletterTopicRepoIntegrationTest {
     @Test
     fun updatingRecord() {
         val ntd = repo.findNewsletterTopicDefinitionById(1)
+            ?: Assertions.fail("Unable to find newsletter topic definition")
 
         assertThat(ntd.id).isEqualTo(1)
         assertThat(ntd.translations.asMap()).hasSize(3)
@@ -231,7 +234,7 @@ internal open class JooqNewsletterTopicRepoIntegrationTest {
         ntd.setTitleInLanguage("de", "ufp")
         ntd.setTitleInLanguage("fr", "foo")
 
-        val updated = repo.update(ntd)
+        val updated = repo.update(ntd) ?: Assertions.fail("Unable to update newsletter topic definition")
 
         assertThat(updated.id).isEqualTo(1)
         assertThat(updated.translations.asMap()).hasSize(3)
@@ -269,13 +272,13 @@ internal open class JooqNewsletterTopicRepoIntegrationTest {
     fun deleting_withExistingIdAndVersion_deletes() {
         // insert new record to the database and verify it's there
         val ntd = NewsletterTopicDefinition(null, "de", null)
-        val persisted = repo.insert(ntd)
+        val persisted = repo.insert(ntd) ?: Assertions.fail("Unable to insert newsletter topic definition")
         val id = persisted.id
         val version = persisted.version
         assertThat(repo.findNewsletterTopicDefinitionById(id) == null).isFalse()
 
         // delete the record
-        val deleted = repo.delete(id, version)
+        val deleted = repo.delete(id, version) ?: Assertions.fail("Unable to delete newsletter topic definition")
         assertThat(deleted.id).isEqualTo(id)
 
         // verify the record is not there anymore

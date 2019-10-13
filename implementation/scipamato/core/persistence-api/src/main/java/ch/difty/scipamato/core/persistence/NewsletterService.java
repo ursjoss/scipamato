@@ -1,5 +1,7 @@
 package ch.difty.scipamato.core.persistence;
 
+import org.jetbrains.annotations.Nullable;
+
 import ch.difty.scipamato.core.entity.newsletter.Newsletter;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterFilter;
 
@@ -29,7 +31,7 @@ public interface NewsletterService extends EntityService<Integer, Newsletter, Ne
      * @param newsletterTopicId
      *     the id of the topic - or null if no topic is to be assigned.
      */
-    void mergePaperIntoWipNewsletter(final long paperId, final Integer newsletterTopicId);
+    void mergePaperIntoWipNewsletter(final long paperId, @Nullable final Integer newsletterTopicId);
 
     /**
      * Ensures the specified paper is associated with the (single) newsletter that is in status 'work in progress'.

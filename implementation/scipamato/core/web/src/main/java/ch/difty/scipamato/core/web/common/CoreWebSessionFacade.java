@@ -3,6 +3,7 @@ package ch.difty.scipamato.core.web.common;
 import java.util.Arrays;
 
 import org.apache.wicket.authroles.authorization.strategies.role.Roles;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 
 import ch.difty.scipamato.common.navigator.ItemNavigator;
@@ -14,6 +15,7 @@ public class CoreWebSessionFacade implements ScipamatoWebSessionFacade {
 
     private static final long serialVersionUID = 1L;
 
+    @NotNull
     @Override
     public String getLanguageCode() {
         return ScipamatoSession
@@ -22,6 +24,7 @@ public class CoreWebSessionFacade implements ScipamatoWebSessionFacade {
             .getLanguage();
     }
 
+    @NotNull
     @Override
     public ItemNavigator<Long> getPaperIdManager() {
         return ScipamatoSession
@@ -30,7 +33,7 @@ public class CoreWebSessionFacade implements ScipamatoWebSessionFacade {
     }
 
     @Override
-    public boolean hasAtLeastOneRoleOutOf(final String... roles) {
+    public boolean hasAtLeastOneRoleOutOf(@NotNull final String... roles) {
         final Roles authorizedRoles = ScipamatoSession
             .get()
             .getRoles();
@@ -38,5 +41,4 @@ public class CoreWebSessionFacade implements ScipamatoWebSessionFacade {
             .stream(roles)
             .anyMatch(authorizedRoles::hasRole);
     }
-
 }

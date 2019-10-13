@@ -3,8 +3,9 @@ package ch.difty.scipamato.core.web.paper.jasper.literaturereview;
 import java.util.HashMap;
 
 import net.sf.jasperreports.engine.JasperReport;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.PaperSlimFilter;
 import ch.difty.scipamato.core.entity.projection.PaperSlim;
@@ -44,13 +45,14 @@ public class PaperLiteratureReviewDataSource extends JasperPaperDataSource<Paper
      * @param config
      *     {@link ClusterablePdfExporterConfiguration}
      */
-    public PaperLiteratureReviewDataSource(final AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider,
-        final ReportHeaderFields reportHeaderFields, ClusterablePdfExporterConfiguration config) {
-        super(new ScipamatoPdfResourceHandler(config), FILE_NAME,
-            AssertAs.INSTANCE.notNull(dataProvider, "dataProvider"));
-        this.reportHeaderFields = AssertAs.INSTANCE.notNull(reportHeaderFields, "reportHeaderFields");
+    public PaperLiteratureReviewDataSource(
+        @NotNull final AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider,
+        @NotNull final ReportHeaderFields reportHeaderFields, @Nullable ClusterablePdfExporterConfiguration config) {
+        super(new ScipamatoPdfResourceHandler(config), FILE_NAME, dataProvider);
+        this.reportHeaderFields = reportHeaderFields;
     }
 
+    @NotNull
     @Override
     protected HashMap<String, Object> getParameterMap() {
         final HashMap<String, Object> map = new HashMap<>();
@@ -58,6 +60,7 @@ public class PaperLiteratureReviewDataSource extends JasperPaperDataSource<Paper
         return map;
     }
 
+    @NotNull
     @Override
     protected JasperReport getReport() {
         return PaperLiteratureReviewReportResourceReference
@@ -65,9 +68,9 @@ public class PaperLiteratureReviewDataSource extends JasperPaperDataSource<Paper
             .getReport();
     }
 
+    @NotNull
     @Override
-    protected PaperLiteratureReview makeEntity(Paper p) {
+    protected PaperLiteratureReview makeEntity(@NotNull Paper p) {
         return new PaperLiteratureReview(p, reportHeaderFields);
     }
-
 }

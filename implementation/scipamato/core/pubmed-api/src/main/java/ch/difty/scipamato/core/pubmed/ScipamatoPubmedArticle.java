@@ -1,11 +1,12 @@
 package ch.difty.scipamato.core.pubmed;
 
 import java.util.List;
+import java.util.Objects;
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
-import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.core.pubmed.api.*;
 
 /**
@@ -19,19 +20,18 @@ class ScipamatoPubmedArticle extends AbstractPubmedArticleFacade {
 
     private static final String PII = "pii";
 
-    ScipamatoPubmedArticle(final PubmedArticle pubmedArticle) {
-        AssertAs.INSTANCE.notNull(pubmedArticle, "pubmedArticle");
-        final MedlineCitation medlineCitation = AssertAs.INSTANCE.notNull(pubmedArticle.getMedlineCitation(),
-            "pubmedArticle.medlineCitation");
-        final Article article = AssertAs.INSTANCE.notNull(medlineCitation.getArticle(),
-            "pubmedArticle.medlineCitation.article");
-        final Journal journal = AssertAs.INSTANCE.notNull(article.getJournal(),
-            "pubmedArticle.medlineCitation.article.journal");
-        final AuthorList authorList = article.getAuthorList();
+    ScipamatoPubmedArticle(@NotNull final PubmedArticle pubmedArticle) {
+        final MedlineCitation medlineCitation = pubmedArticle.getMedlineCitation();
+        Objects.requireNonNull(medlineCitation);
+        final Article article = medlineCitation.getArticle();
+        Objects.requireNonNull(article);
+        final Journal journal = article.getJournal();
+        Objects.requireNonNull(journal);
+        final PMID pmid = medlineCitation.getPMID();
+        Objects.requireNonNull(pmid);
 
-        setPmId(AssertAs.INSTANCE
-            .notNull(medlineCitation.getPMID(), "pubmedArticle.medlineCitation.pmid")
-            .getvalue());
+        setPmId(pmid.getvalue());
+        final AuthorList authorList = article.getAuthorList();
         if (authorList != null) {
             setAuthors(getAuthorsFrom(authorList));
             setFirstAuthor(getFirstAuthorFrom(authorList));
@@ -45,9 +45,10 @@ class ScipamatoPubmedArticle extends AbstractPubmedArticleFacade {
         setDoi(getDoiFrom(pubmedArticle));
         setLocation(makeLocationFrom(medlineCitation.getMedlineJournalInfo(), journal.getJournalIssue(),
             article.getPaginationOrELocationID(), isAheadOfPrint));
-        setTitle(AssertAs.INSTANCE
-            .notNull(article.getArticleTitle(), "pubmedArticle.medlineCitation.article.articleTitle")
-            .getvalue());
+
+        final ArticleTitle articleTitle = article.getArticleTitle();
+        Objects.requireNonNull(articleTitle);
+        setTitle(articleTitle.getvalue());
         setOriginalAbstract(getAbstractFrom(article.getAbstract()));
     }
 
@@ -55,10 +56,10 @@ class ScipamatoPubmedArticle extends AbstractPubmedArticleFacade {
      * Get the year from {@link Year} - otherwise from {@link MedlineDate}
      */
     private String getPublicationYearFrom(final Journal journal) {
-        final JournalIssue journalIssue = AssertAs.INSTANCE.notNull(journal.getJournalIssue(),
-            "pubmedArticle.medlineCitation.article.journal.journalIssue");
-        final PubDate pubDate = AssertAs.INSTANCE.notNull(journalIssue.getPubDate(),
-            "pubmedArticle.medlineCitation.article.journal.journalIssue.pubDate");
+        final JournalIssue journalIssue = journal.getJournalIssue();
+        Objects.requireNonNull(journalIssue);
+        final PubDate pubDate = journalIssue.getPubDate();
+        Objects.requireNonNull(pubDate);
         final List<java.lang.Object> datishObjects = pubDate.getYearOrMonthOrDayOrSeasonOrMedlineDate();
         return datishObjects
             .stream()
@@ -76,9 +77,8 @@ class ScipamatoPubmedArticle extends AbstractPubmedArticleFacade {
                 .orElse("0"));
     }
 
-    private String makeLocationFrom(final MedlineJournalInfo medlineJournalInfo, final JournalIssue journalIssue,
-        final List<java.lang.Object> paginationElocation, boolean aheadOfPrint) {
-        AssertAs.INSTANCE.notNull(medlineJournalInfo, "pubmedArticle.medlineCitation.medlineJournalInfo");
+    private String makeLocationFrom(@NotNull final MedlineJournalInfo medlineJournalInfo,
+        final JournalIssue journalIssue, final List<java.lang.Object> paginationElocation, boolean aheadOfPrint) {
         final StringBuilder sb = new StringBuilder();
         appendMedlineTa(medlineJournalInfo, sb);
         appendPublicationYearOrDate(journalIssue, aheadOfPrint, sb);
@@ -161,8 +161,8 @@ class ScipamatoPubmedArticle extends AbstractPubmedArticleFacade {
      * For aheadOfPrint papers: Concatenate the Date as {@code Year Month Day} from e.g. the ArticleDate
      */
     private String getAheadOfPrintDateFromArticleDate(final JournalIssue journalIssue) {
-        final PubDate pubDate = AssertAs.INSTANCE.notNull(journalIssue.getPubDate(),
-            "pubmedArticle.medlineCitation.article.journal.journalIssue.pubDate");
+        final PubDate pubDate = journalIssue.getPubDate();
+        Objects.requireNonNull(pubDate);
         final List<java.lang.Object> datishObjects = pubDate.getYearOrMonthOrDayOrSeasonOrMedlineDate();
         final StringBuilder sb = new StringBuilder();
         for (final java.lang.Object o : datishObjects)
@@ -171,7 +171,7 @@ class ScipamatoPubmedArticle extends AbstractPubmedArticleFacade {
     }
 
     // package-private for testing
-    void handleDatishObject(final StringBuilder sb, final java.lang.Object o) {
+    void handleDatishObject(@NotNull final StringBuilder sb, @NotNull final java.lang.Object o) {
         if (o instanceof Year) {
             sb.append(((Year) o).getvalue());
             sb.append(" ");
@@ -230,5 +230,4 @@ class ScipamatoPubmedArticle extends AbstractPubmedArticleFacade {
         }
         return doi;
     }
-
 }

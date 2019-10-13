@@ -4,6 +4,7 @@ import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.markup.html.GenericWebPage;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.jetbrains.annotations.NotNull;
 
 import ch.difty.scipamato.common.web.component.SerializableBiConsumer;
 import ch.difty.scipamato.common.web.component.SerializableBiFunction;
@@ -30,8 +31,9 @@ public interface PageFactory {
      * @return the SerializableBiConsumer you then can let accept the constructor
      *     arguments of the PaperSearchCriteriaPage
      */
+    @NotNull
     SerializableBiConsumer<IModel<SearchCondition>, Long> setResponsePageToPaperSearchCriteriaPageConsumer(
-        MarkupContainer container);
+        @NotNull MarkupContainer container);
 
     /**
      * Returns a consumer that sets the responsePage of the provided container
@@ -43,7 +45,8 @@ public interface PageFactory {
      * @return the SerializableConsumer you can then let accept the constructor
      *     argument (pageParameters) of the PaperSearchPageWithPage
      */
-    SerializableConsumer<PageParameters> setResponsePageToPaperSearchPageConsumer(MarkupContainer container);
+    @NotNull
+    SerializableConsumer<PageParameters> setResponsePageToPaperSearchPageConsumer(@NotNull MarkupContainer container);
 
     /**
      * Returns a (bi) function that instantiates a new instance of a
@@ -53,6 +56,6 @@ public interface PageFactory {
      * @return the SerializableBiFunction on which you can then apply the
      *     constructor arguments of the PaperSearchCriteriaPage
      */
+    @NotNull
     SerializableBiFunction<IModel<SearchCondition>, Long, GenericWebPage<SearchCondition>> newPaperSearchCriteriaPage();
-
 }

@@ -1,6 +1,8 @@
 package ch.difty.scipamato.core.web.paper.jasper.summarytable;
 
 import net.sf.jasperreports.engine.JasperReport;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.PaperSlimFilter;
@@ -41,12 +43,13 @@ public class PaperSummaryTableDataSource extends JasperPaperDataSource<PaperSumm
      * @param config
      *     {@link ClusterablePdfExporterConfiguration}
      */
-    public PaperSummaryTableDataSource(final AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider,
-        final ReportHeaderFields reportHeaderFields, ClusterablePdfExporterConfiguration config) {
+    public PaperSummaryTableDataSource(@NotNull final AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider,
+        @NotNull final ReportHeaderFields reportHeaderFields, @Nullable ClusterablePdfExporterConfiguration config) {
         super(new ScipamatoPdfResourceHandler(config), FILE_NAME, dataProvider);
         this.reportHeaderFields = reportHeaderFields;
     }
 
+    @NotNull
     @Override
     protected JasperReport getReport() {
         return PaperSummaryTableReportResourceReference
@@ -54,9 +57,9 @@ public class PaperSummaryTableDataSource extends JasperPaperDataSource<PaperSumm
             .getReport();
     }
 
+    @NotNull
     @Override
-    protected PaperSummaryTable makeEntity(Paper p) {
+    protected PaperSummaryTable makeEntity(@NotNull Paper p) {
         return new PaperSummaryTable(p, reportHeaderFields);
     }
-
 }

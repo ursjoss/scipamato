@@ -5,11 +5,11 @@ import static ch.difty.scipamato.core.db.tables.Newsletter.NEWSLETTER;
 import java.sql.Date;
 import java.sql.Timestamp;
 
+import org.jetbrains.annotations.NotNull;
 import org.jooq.UpdateSetFirstStep;
 import org.jooq.UpdateSetMoreStep;
 import org.springframework.stereotype.Component;
 
-import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.UtilsKt;
 import ch.difty.scipamato.core.db.tables.records.NewsletterRecord;
 import ch.difty.scipamato.core.entity.newsletter.Newsletter;
@@ -27,11 +27,10 @@ import ch.difty.scipamato.core.persistence.UpdateSetStepSetter;
 @Component
 public class NewsletterUpdateSetStepSetter implements UpdateSetStepSetter<NewsletterRecord, Newsletter> {
 
+    @NotNull
     @Override
-    public UpdateSetMoreStep<NewsletterRecord> setFieldsFor(final UpdateSetFirstStep<NewsletterRecord> step,
-        final Newsletter e) {
-        AssertAs.INSTANCE.notNull(step, "step");
-        AssertAs.INSTANCE.notNull(e, "entity");
+    public UpdateSetMoreStep<NewsletterRecord> setFieldsFor(@NotNull final UpdateSetFirstStep<NewsletterRecord> step,
+        @NotNull final Newsletter e) {
         final Timestamp created = e.getCreated() == null ? null : UtilsKt.toTimestamp(e.getCreated());
         final Timestamp lastMod = e.getLastModified() == null ? null : UtilsKt.toTimestamp(e.getLastModified());
         return step
@@ -46,5 +45,4 @@ public class NewsletterUpdateSetStepSetter implements UpdateSetStepSetter<Newsle
             .set(NEWSLETTER.LAST_MODIFIED_BY, e.getLastModifiedBy())
             .set(NEWSLETTER.VERSION, e.getVersion() + 1);
     }
-
 }

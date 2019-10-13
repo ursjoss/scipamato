@@ -21,5 +21,4 @@ class CorePageParametersTest {
         assertThat(MODE.getName()).isEqualTo("mode");
         assertThat(TAB_INDEX.getName()).isEqualTo("tabIndex");
     }
-
 }

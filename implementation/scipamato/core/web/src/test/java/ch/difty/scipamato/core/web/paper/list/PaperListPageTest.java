@@ -123,5 +123,4 @@ abstract class PaperListPageTest extends BasePageTest<PaperListPage> {
         verify(paperServiceMock).findByNumber(number, LC);
         verify(pubmedImporterMock, never()).persistPubmedArticlesFromXml(anyString());
     }
-
 }

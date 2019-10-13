@@ -16,5 +16,4 @@ public class BootstrapProperties extends BootstrapSettings {
     private boolean enabled = true;
 
     private BootswatchTheme theme = BootswatchTheme.Sandstone;
-
 }

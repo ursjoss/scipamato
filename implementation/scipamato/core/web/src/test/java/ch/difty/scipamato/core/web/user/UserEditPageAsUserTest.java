@@ -44,5 +44,4 @@ class UserEditPageAsUserTest extends UserEditPageAsViewerTest {
     void userCannotAccessUserEditPageInChangePasswordMode() {
         // no-op
     }
-
 }

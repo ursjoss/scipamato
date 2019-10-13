@@ -16,5 +16,4 @@ public class KeywordTranslation extends AbstractDefinitionTranslation {
     public KeywordTranslation(final Integer id, final String langCode, final String name, final Integer version) {
         super(id, langCode, name, version);
     }
-
 }

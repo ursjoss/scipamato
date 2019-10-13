@@ -21,7 +21,6 @@ import org.mockito.Mock;
 
 import ch.difty.scipamato.core.web.common.PanelTest;
 
-@SuppressWarnings("SpellCheckingInspection")
 class XmlPasteModalPanelTest extends PanelTest<XmlPasteModalPanel> {
 
     @Mock
@@ -162,6 +161,5 @@ class XmlPasteModalPanelTest extends PanelTest<XmlPasteModalPanel> {
         verify(fileItem, times(2)).getContentType();
         verify(fileItem).getString();
         verify(fileItem).getName();
-
     }
 }

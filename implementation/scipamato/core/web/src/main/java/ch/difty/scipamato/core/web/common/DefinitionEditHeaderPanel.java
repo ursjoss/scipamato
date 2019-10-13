@@ -7,6 +7,8 @@ import org.apache.wicket.Page;
 import org.apache.wicket.PageReference;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.StringResourceModel;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import ch.difty.scipamato.common.entity.DefinitionEntity;
 import ch.difty.scipamato.common.entity.DefinitionTranslation;
@@ -16,7 +18,7 @@ import ch.difty.scipamato.common.entity.DefinitionTranslation;
 public abstract class DefinitionEditHeaderPanel<E extends DefinitionEntity<ID, T>, T extends DefinitionTranslation, ID>
     extends BasePanel<E> {
 
-    protected DefinitionEditHeaderPanel(final String id, final IModel<E> model) {
+    protected DefinitionEditHeaderPanel(@NotNull final String id, @Nullable final IModel<E> model) {
         super(id, model);
     }
 
@@ -55,8 +57,9 @@ public abstract class DefinitionEditHeaderPanel<E extends DefinitionEntity<ID, T
         return back;
     }
 
+    @Nullable
     protected abstract PageReference getCallingPageRef();
 
+    @NotNull
     protected abstract Class<? extends Page> staticResponsePage();
-
 }

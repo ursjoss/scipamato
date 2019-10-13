@@ -27,8 +27,8 @@ class CodeListPageTest extends BasePageTest<CodeListPage> {
 
     private static final int COLUMN_ID_WITH_LINK = 2;
 
-    private final CodeClass cc1 = new CodeClass(1, "cc1", null);
-    private final CodeClass cc2 = new CodeClass(2, "cc2", null);
+    private final CodeClass cc1 = new CodeClass(1, "cc1", "d1");
+    private final CodeClass cc2 = new CodeClass(2, "cc2", "d2");
 
     private final List<CodeDefinition> results = new ArrayList<>();
 
@@ -167,5 +167,4 @@ class CodeListPageTest extends BasePageTest<CodeListPage> {
         verify(codeServiceMock, times(2)).findPageOfEntityDefinitions(isA(CodeFilter.class),
             isA(PaginationRequest.class));
     }
-
 }

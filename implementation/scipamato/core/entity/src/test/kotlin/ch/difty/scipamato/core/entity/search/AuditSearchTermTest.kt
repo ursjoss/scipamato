@@ -368,11 +368,6 @@ internal class AuditSearchTermTest {
     }
 
     @Test
-    fun byMatchType_withNullMatchType_isEmpty() {
-        assertThat(TokenType.byMatchType(null)).isEmpty()
-    }
-
-    @Test
     fun byMatchType_withValidMatchTypeNONE() {
         assertThat(TokenType.byMatchType(MatchType.NONE)).containsExactly(TokenType.WHITESPACE, TokenType.RAW)
     }

@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.jooq.DSLContext;
 import org.jooq.DeleteConditionStep;
 import org.jooq.TableField;
@@ -53,9 +55,12 @@ public abstract class SyncConfig<T, R extends UpdatableRecordImpl<R>> {
     private final String topic;
     private final int    chunkSize;
 
-    protected SyncConfig(final String topic, final int chunkSize, @Qualifier("dslContext") DSLContext jooqCore,
-        @Qualifier("publicDslContext") DSLContext jooqPublic, @Qualifier("dataSource") DataSource coreDataSource,
-        JobBuilderFactory jobBuilderFactory, StepBuilderFactory stepBuilderFactory, DateTimeService dateTimeService) {
+    protected SyncConfig(@NotNull final String topic, final int chunkSize,
+        @Qualifier("dslContext") @NotNull final DSLContext jooqCore,
+        @Qualifier("publicDslContext") @NotNull final DSLContext jooqPublic,
+        @Qualifier("dataSource") @NotNull final DataSource coreDataSource,
+        @NotNull final JobBuilderFactory jobBuilderFactory, @NotNull final StepBuilderFactory stepBuilderFactory,
+        @NotNull final DateTimeService dateTimeService) {
         this.topic = topic;
         this.chunkSize = chunkSize;
         this.jooqCore = jooqCore;
@@ -66,22 +71,27 @@ public abstract class SyncConfig<T, R extends UpdatableRecordImpl<R>> {
         this.dateTimeService = dateTimeService;
     }
 
+    @NotNull
     private StepBuilderFactory getStepBuilderFactory() {
         return stepBuilderFactory;
     }
 
+    @NotNull
     protected DSLContext getJooqCore() {
         return jooqCore;
     }
 
+    @NotNull
     protected DSLContext getJooqPublic() {
         return jooqPublic;
     }
 
+    @NotNull
     private DateTimeService getDateTimeService() {
         return dateTimeService;
     }
 
+    @NotNull
     protected final Job createJob() {
         return jobBuilderFactory
             .get(getJobName())
@@ -96,6 +106,7 @@ public abstract class SyncConfig<T, R extends UpdatableRecordImpl<R>> {
     /**
      * @return name of the synchronization job
      */
+    @NotNull
     protected abstract String getJobName();
 
     private Step insertingOrUpdatingStep() {
@@ -109,6 +120,7 @@ public abstract class SyncConfig<T, R extends UpdatableRecordImpl<R>> {
      * @return implementation of the {@link ItemWriter} interface to insert/update
      *     type {@literal T}
      */
+    @NotNull
     protected abstract ItemWriter<T> publicWriter();
 
     private ItemReader<? extends T> coreReader() {
@@ -122,6 +134,7 @@ public abstract class SyncConfig<T, R extends UpdatableRecordImpl<R>> {
     /**
      * @return SQL string to fetch the records from scipamato-core
      */
+    @NotNull
     protected abstract String selectSql();
 
     /**
@@ -133,7 +146,8 @@ public abstract class SyncConfig<T, R extends UpdatableRecordImpl<R>> {
      * @throws SQLException
      *     in case the recordset cannot be evaluated properly
      */
-    protected abstract T makeEntity(ResultSet rs) throws SQLException;
+    @NotNull
+    protected abstract T makeEntity(@NotNull ResultSet rs) throws SQLException;
 
     private Step purgingStep() {
         return stepBuilderFactory
@@ -142,6 +156,7 @@ public abstract class SyncConfig<T, R extends UpdatableRecordImpl<R>> {
             .build();
     }
 
+    @NotNull
     protected abstract TableField<R, Timestamp> lastSynchedField();
 
     private Step pseudoForeignKeyConstraintStep() {
@@ -151,6 +166,7 @@ public abstract class SyncConfig<T, R extends UpdatableRecordImpl<R>> {
             .build();
     }
 
+    @NotNull
     protected String getPlural() {
         return "s";
     }
@@ -169,15 +185,20 @@ public abstract class SyncConfig<T, R extends UpdatableRecordImpl<R>> {
      * @return the deleteConditionStep or null if no such enforcement is required. The latter will result in a
      *     no-op operation in the tasklet running the task.
      */
+    @Nullable
     public DeleteConditionStep<R> getPseudoFkDcs() {
         return null;
     }
 
-    protected String getString(final TableField<?, String> field, final ResultSet rs) throws SQLException {
+    @Nullable
+    protected String getString(@NotNull final TableField<?, String> field, @NotNull final ResultSet rs)
+        throws SQLException {
         return rs.getString(field.getName());
     }
 
-    protected Boolean getBoolean(final TableField<?, Boolean> field, final ResultSet rs) throws SQLException {
+    @Nullable
+    protected Boolean getBoolean(@NotNull final TableField<?, Boolean> field, @NotNull final ResultSet rs)
+        throws SQLException {
         return rs.getBoolean(field.getName());
     }
 
@@ -191,7 +212,9 @@ public abstract class SyncConfig<T, R extends UpdatableRecordImpl<R>> {
      * @throws SQLException
      *     if the columnLabel is not valid; if a database access error occurs or this method is called on a closed result set
      */
-    protected Integer getInteger(final TableField<?, Integer> field, final ResultSet rs) throws SQLException {
+    @Nullable
+    protected Integer getInteger(@NotNull final TableField<?, Integer> field, @NotNull final ResultSet rs)
+        throws SQLException {
         final int val = rs.getInt(field.getName());
         return rs.wasNull() ? null : val;
     }
@@ -205,25 +228,30 @@ public abstract class SyncConfig<T, R extends UpdatableRecordImpl<R>> {
      * @throws SQLException
      *     if the columnLabel is not valid; if a database access error occurs or this method is called on a closed result set
      */
-    protected Long getLong(final TableField<?, Long> field, final ResultSet rs) throws SQLException {
+    @Nullable
+    protected Long getLong(@NotNull final TableField<?, Long> field, @NotNull final ResultSet rs) throws SQLException {
         final long val = rs.getLong(field.getName());
         return rs.wasNull() ? null : val;
     }
 
-    protected Timestamp getTimestamp(final TableField<?, Timestamp> field, final ResultSet rs) throws SQLException {
+    @Nullable
+    protected Timestamp getTimestamp(@NotNull final TableField<?, Timestamp> field, @NotNull final ResultSet rs)
+        throws SQLException {
         return rs.getTimestamp(field.getName());
     }
 
-    protected Timestamp getTimestamp(final String alias, final ResultSet rs) throws SQLException {
+    @Nullable
+    protected Timestamp getTimestamp(@NotNull final String alias, @NotNull final ResultSet rs) throws SQLException {
         return rs.getTimestamp(alias);
     }
 
-    protected Date getDate(final TableField<?, Date> field, final ResultSet rs) throws SQLException {
+    @Nullable
+    protected Date getDate(@NotNull final TableField<?, Date> field, @NotNull final ResultSet rs) throws SQLException {
         return rs.getDate(field.getName());
     }
 
+    @NotNull
     protected Timestamp getNow() {
         return getDateTimeService().getCurrentTimestamp();
     }
-
 }

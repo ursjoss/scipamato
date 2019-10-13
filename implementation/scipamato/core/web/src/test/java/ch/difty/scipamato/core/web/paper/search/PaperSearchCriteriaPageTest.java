@@ -111,5 +111,4 @@ class PaperSearchCriteriaPageTest extends BasePageTest<PaperSearchCriteriaPage> 
         verify(searchOrderServiceMock, times(0)).findPageByFilter(isA(SearchOrderFilter.class),
             isA(PaginationContext.class));
     }
-
 }

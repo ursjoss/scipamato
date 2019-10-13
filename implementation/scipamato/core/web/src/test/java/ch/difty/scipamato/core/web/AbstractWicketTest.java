@@ -67,5 +67,4 @@ public abstract class AbstractWicketTest {
     protected SearchOrderService     searchOrderServiceMock;
     @MockBean
     protected UserService            userServiceMock;
-
 }

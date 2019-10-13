@@ -3,6 +3,8 @@ package ch.difty.scipamato.core.persistence.codeclass;
 import java.util.Iterator;
 import java.util.List;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.stereotype.Service;
 
 import ch.difty.scipamato.common.persistence.codeclass.JooqCodeClassLikeService;
@@ -21,40 +23,44 @@ import ch.difty.scipamato.core.persistence.CodeClassService;
 public class JooqCodeClassService extends JooqCodeClassLikeService<CodeClass, CodeClassRepository>
     implements CodeClassService {
 
-    public JooqCodeClassService(final CodeClassRepository codeClassRepository) {
+    public JooqCodeClassService(@NotNull final CodeClassRepository codeClassRepository) {
         super(codeClassRepository);
     }
 
+    @NotNull
     @Override
-    public List<CodeClassDefinition> findPageOfCodeClassDefinitions(final CodeClassFilter filter,
-        final PaginationContext paginationContext) {
+    public List<CodeClassDefinition> findPageOfCodeClassDefinitions(@Nullable final CodeClassFilter filter,
+        @NotNull final PaginationContext paginationContext) {
         return getRepo().findPageOfCodeClassDefinitions(filter, paginationContext);
     }
 
+    @NotNull
     @Override
-    public Iterator<CodeClassDefinition> findPageOfEntityDefinitions(final CodeClassFilter filter,
-        final PaginationContext paginationContext) {
+    public Iterator<CodeClassDefinition> findPageOfEntityDefinitions(@Nullable final CodeClassFilter filter,
+        @NotNull final PaginationContext paginationContext) {
         return findPageOfCodeClassDefinitions(filter, paginationContext).iterator();
     }
 
     @Override
-    public int countByFilter(final CodeClassFilter filter) {
+    public int countByFilter(@Nullable final CodeClassFilter filter) {
         return getRepo().countByFilter(filter);
     }
 
+    @NotNull
     @Override
     public CodeClassDefinition newUnpersistedCodeClassDefinition() {
         return getRepo().newUnpersistedCodeClassDefinition();
     }
 
+    @NotNull
     @Override
-    public CodeClassDefinition saveOrUpdate(final CodeClassDefinition entity) {
+    public CodeClassDefinition saveOrUpdate(@NotNull final CodeClassDefinition entity) {
         return getRepo().saveOrUpdate(entity);
     }
 
+    @Nullable
     @Override
-    public CodeClassDefinition delete(final Integer id, final int version) {
+    public CodeClassDefinition delete(@NotNull final Integer id, final int version) {
         return getRepo().delete(id, version);
     }
-
 }

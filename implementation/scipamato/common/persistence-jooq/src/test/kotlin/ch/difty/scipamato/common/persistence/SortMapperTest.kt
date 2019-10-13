@@ -119,19 +119,4 @@ internal class SortMapperTest {
         verify(sortSpecMock).iterator()
         verify(mapperSpy).getTableFieldFor(tableMock, "ILLEGAL_FIELD")
     }
-
-    @Test
-    fun mapping_withNullTable_throws() {
-        sortProps.add(SortProperty("illegalField", Direction.ASC))
-        whenever(sortSpecMock.iterator()).thenReturn(sortProps.iterator())
-
-        try {
-            mapperSpy.map(sortSpecMock, null)
-            fail<Any>("should have thrown")
-        } catch (ex: Exception) {
-            assertThat(ex).isInstanceOf(NullPointerException::class.java)
-        }
-
-        verify(sortSpecMock).iterator()
-    }
 }

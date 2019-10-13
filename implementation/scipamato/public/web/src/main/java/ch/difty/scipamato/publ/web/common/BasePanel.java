@@ -2,6 +2,8 @@ package ch.difty.scipamato.publ.web.common;
 
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import ch.difty.scipamato.common.web.AbstractPanel;
 import ch.difty.scipamato.common.web.Mode;
@@ -15,20 +17,20 @@ public abstract class BasePanel<T> extends AbstractPanel<T> {
     @SpringBean
     private ScipamatoWebSessionFacade sessionFacade;
 
-    public BasePanel(final String id) {
+    public BasePanel(@NotNull final String id) {
         this(id, null, Mode.VIEW);
     }
 
-    public BasePanel(final String id, IModel<T> model) {
+    public BasePanel(@NotNull final String id, @Nullable IModel<T> model) {
         this(id, model, Mode.VIEW);
     }
 
-    public BasePanel(final String id, IModel<T> model, Mode mode) {
+    public BasePanel(@NotNull final String id, @Nullable IModel<T> model, @NotNull Mode mode) {
         super(id, model, mode);
     }
 
+    @NotNull
     protected String getLocalization() {
         return sessionFacade.getLanguageCode();
     }
-
 }

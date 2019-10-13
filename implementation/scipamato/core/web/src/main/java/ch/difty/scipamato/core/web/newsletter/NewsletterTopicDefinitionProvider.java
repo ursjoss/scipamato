@@ -2,6 +2,8 @@ package ch.difty.scipamato.core.web.newsletter;
 
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicDefinition;
@@ -21,19 +23,20 @@ public class NewsletterTopicDefinitionProvider
         this(null);
     }
 
-    public NewsletterTopicDefinitionProvider(final NewsletterTopicFilter filter) {
+    public NewsletterTopicDefinitionProvider(@Nullable final NewsletterTopicFilter filter) {
         super(filter);
         setSort(NewsletterTopic.NewsletterTopicFields.TITLE.getFieldName(), SortOrder.ASCENDING);
     }
 
+    @NotNull
     @Override
     protected NewsletterTopicService getService() {
         return service;
     }
 
+    @NotNull
     @Override
     protected NewsletterTopicFilter newFilter() {
         return new NewsletterTopicFilter();
     }
-
 }

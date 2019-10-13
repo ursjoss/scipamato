@@ -7,6 +7,8 @@ import org.apache.wicket.extensions.markup.html.repeater.util.SortableDataProvid
 import org.apache.wicket.injection.Injector;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import ch.difty.scipamato.common.entity.DefinitionEntity;
 import ch.difty.scipamato.common.entity.filter.ScipamatoFilter;
@@ -22,7 +24,7 @@ public abstract class DefinitionProvider<T extends DefinitionEntity, F extends S
     
     private F filter;
 
-    protected DefinitionProvider(final F filter) {
+    protected DefinitionProvider(@Nullable final F filter) {
         Injector
             .get()
             .inject(this);
@@ -30,8 +32,10 @@ public abstract class DefinitionProvider<T extends DefinitionEntity, F extends S
         this.filter = filter != null ? filter : newFilter();
     }
 
+    @NotNull
     protected abstract S getService();
 
+    @NotNull
     protected abstract F newFilter();
 
     @Override
@@ -47,18 +51,20 @@ public abstract class DefinitionProvider<T extends DefinitionEntity, F extends S
         return service.countByFilter(filter);
     }
 
+    @NotNull
     @Override
-    public IModel<T> model(T entity) {
+    public IModel<T> model(@NotNull T entity) {
         return new Model<>(entity);
     }
 
+    @NotNull
     @Override
     public F getFilterState() {
         return filter;
     }
 
     @Override
-    public void setFilterState(F state) {
+    public void setFilterState(@NotNull F state) {
         this.filter = state;
     }
 }

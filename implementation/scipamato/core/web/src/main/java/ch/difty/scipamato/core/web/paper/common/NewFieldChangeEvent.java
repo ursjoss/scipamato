@@ -4,6 +4,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.TextArea;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import ch.difty.scipamato.common.web.event.WicketEvent;
 
@@ -20,16 +22,16 @@ public class NewFieldChangeEvent extends WicketEvent {
     private String id;
     private String markupId;
 
-    public NewFieldChangeEvent(AjaxRequestTarget target) {
+    public NewFieldChangeEvent(@NotNull AjaxRequestTarget target) {
         super(target);
     }
 
-    public NewFieldChangeEvent withId(String id) {
+    public NewFieldChangeEvent withId(@NotNull String id) {
         this.id = id;
         return this;
     }
 
-    public NewFieldChangeEvent withMarkupId(String markupId) {
+    public NewFieldChangeEvent withMarkupId(@NotNull String markupId) {
         this.markupId = markupId;
         return this;
     }
@@ -46,14 +48,13 @@ public class NewFieldChangeEvent extends WicketEvent {
      * @param component
      *     the candidate to be added to the target
      */
-    public void considerAddingToTarget(final TextArea<?> component) {
+    public void considerAddingToTarget(@NotNull final TextArea<?> component) {
         if (isValidTarget(component.getId(), component.getMarkupId())) {
             getTarget().add(component);
         }
     }
 
-    private boolean isValidTarget(final String id, final String markupId) {
+    private boolean isValidTarget(@Nullable final String id, @Nullable final String markupId) {
         return this.id == null || (this.id.equals(id) && (this.markupId == null || !this.markupId.equals(markupId)));
     }
-
 }

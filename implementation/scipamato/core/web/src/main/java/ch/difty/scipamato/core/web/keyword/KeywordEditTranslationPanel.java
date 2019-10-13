@@ -12,6 +12,8 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.StringResourceModel;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import ch.difty.scipamato.core.entity.keyword.KeywordDefinition;
 import ch.difty.scipamato.core.entity.keyword.KeywordTranslation;
@@ -21,24 +23,24 @@ import ch.difty.scipamato.core.web.common.DefinitionEditTranslationPanel;
 abstract class KeywordEditTranslationPanel
     extends DefinitionEditTranslationPanel<KeywordDefinition, KeywordTranslation> {
 
-    KeywordEditTranslationPanel(final String id, final IModel<KeywordDefinition> model) {
+    KeywordEditTranslationPanel(@NotNull final String id, @Nullable final IModel<KeywordDefinition> model) {
         super(id, model);
     }
 
     @Override
-    protected void addColumns(final Item<KeywordTranslation> item) {
+    protected void addColumns(@NotNull final Item<KeywordTranslation> item) {
         item.add(new Label("langCode"));
         item.add(new TextField<String>("name"));
         item.add(newAddLink("addTranslation", item));
         item.add(newRemoveLink("removeTranslation", item));
     }
 
-    private AjaxLink<Void> newAddLink(final String id, final Item<KeywordTranslation> item) {
+    private AjaxLink<Void> newAddLink(@NotNull final String id, @NotNull final Item<KeywordTranslation> item) {
         final AjaxLink<Void> newLink = new AjaxLink<>(id) {
             private static final long serialVersionUID = 1L;
 
             @Override
-            public void onClick(final AjaxRequestTarget target) {
+            public void onClick(@NotNull final AjaxRequestTarget target) {
                 final KeywordTranslation currentKt = item.getModelObject();
                 final String langCode = currentKt.getLangCode();
                 final KeywordTranslation newKt = new KeywordTranslation(null, langCode, null, 1);
@@ -54,12 +56,12 @@ abstract class KeywordEditTranslationPanel
         return newLink;
     }
 
-    private AjaxLink<Void> newRemoveLink(final String id, final Item<KeywordTranslation> item) {
+    private AjaxLink<Void> newRemoveLink(@NotNull final String id, @NotNull final Item<KeywordTranslation> item) {
         final AjaxLink<Void> newLink = new AjaxLink<>(id) {
             private static final long serialVersionUID = 1L;
 
             @Override
-            public void onClick(final AjaxRequestTarget target) {
+            public void onClick(@NotNull final AjaxRequestTarget target) {
                 final KeywordTranslation currentKt = item.getModelObject();
                 final String langCode = currentKt.getLangCode();
                 final Iterator<KeywordTranslation> it = KeywordEditTranslationPanel.this
@@ -83,5 +85,6 @@ abstract class KeywordEditTranslationPanel
         return newLink;
     }
 
+    @NotNull
     protected abstract Form getForm();
 }

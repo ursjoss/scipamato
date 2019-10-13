@@ -3,8 +3,8 @@ package ch.difty.scipamato.core.web.model;
 import java.util.List;
 
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.jetbrains.annotations.NotNull;
 
-import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.web.model.InjectedLoadableDetachableModel;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic;
 import ch.difty.scipamato.core.persistence.NewsletterTopicService;
@@ -23,12 +23,12 @@ public class NewsletterTopicModel extends InjectedLoadableDetachableModel<Newsle
 
     private final String languageCode;
 
-    public NewsletterTopicModel(final String languageCode) {
-        this.languageCode = AssertAs.INSTANCE.notNull(languageCode, "languageCode");
+    public NewsletterTopicModel(@NotNull final String languageCode) {
+        this.languageCode = languageCode;
     }
 
+    @NotNull
     public List<NewsletterTopic> load() {
         return service.findAll(languageCode);
     }
-
 }

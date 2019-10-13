@@ -2,6 +2,8 @@ package ch.difty.scipamato.core.web.code;
 
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import ch.difty.scipamato.core.entity.code.CodeDefinition;
 import ch.difty.scipamato.core.entity.code.CodeFilter;
@@ -19,19 +21,20 @@ public class CodeDefinitionProvider extends DefinitionProvider<CodeDefinition, C
         this(null);
     }
 
-    CodeDefinitionProvider(final CodeFilter filter) {
+    CodeDefinitionProvider(@Nullable final CodeFilter filter) {
         super(filter);
         setSort(CodeDefinition.CodeDefinitionFields.SORT.getFieldName(), SortOrder.ASCENDING);
     }
 
+    @NotNull
     @Override
     protected CodeService getService() {
         return service;
     }
 
+    @NotNull
     @Override
     protected CodeFilter newFilter() {
         return new CodeFilter();
     }
-
 }

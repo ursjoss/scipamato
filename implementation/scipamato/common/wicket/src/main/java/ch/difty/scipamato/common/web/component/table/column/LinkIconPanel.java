@@ -21,6 +21,8 @@ import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * @author Viliam Repan (lazyman)
@@ -35,7 +37,7 @@ public abstract class LinkIconPanel extends Panel {
 
     private final IModel<String> titleModel;
 
-    protected LinkIconPanel(String id, IModel<String> model, IModel<String> titleModel) {
+    protected LinkIconPanel(@NotNull String id, @Nullable IModel<String> model, @Nullable IModel<String> titleModel) {
         super(id, model);
         this.titleModel = titleModel;
     }
@@ -51,7 +53,7 @@ public abstract class LinkIconPanel extends Panel {
             private static final long serialVersionUID = 1L;
 
             @Override
-            public void onClick(AjaxRequestTarget target) {
+            public void onClick(@NotNull AjaxRequestTarget target) {
                 onClickPerformed(target);
             }
         };
@@ -70,9 +72,10 @@ public abstract class LinkIconPanel extends Panel {
     }
 
     @SuppressWarnings("unchecked")
+    @NotNull
     protected AjaxLink<Void> getLink() {
         return (AjaxLink<Void>) get(ID_LINK);
     }
 
-    protected abstract void onClickPerformed(AjaxRequestTarget target);
+    protected abstract void onClickPerformed(@NotNull AjaxRequestTarget target);
 }

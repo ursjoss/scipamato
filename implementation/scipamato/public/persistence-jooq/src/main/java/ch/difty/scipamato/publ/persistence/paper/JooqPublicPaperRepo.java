@@ -9,13 +9,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.jooq.Condition;
 import org.jooq.DSLContext;
 import org.jooq.SortField;
 import org.jooq.impl.DSL;
 import org.springframework.stereotype.Repository;
 
-import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.persistence.JooqSortMapper;
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.publ.db.tables.Language;
@@ -39,9 +40,10 @@ public class JooqPublicPaperRepo implements PublicPaperRepository {
     private final AuthorsAbbreviator                              authorsAbbreviator;
     private final JournalExtractor                                journalExtractor;
 
-    public JooqPublicPaperRepo(final DSLContext dsl, final JooqSortMapper<PaperRecord, PublicPaper, Paper> sortMapper,
-        final PublicPaperFilterConditionMapper filterConditionMapper, final AuthorsAbbreviator authorsAbbreviator,
-        final JournalExtractor journalExtractor) {
+    public JooqPublicPaperRepo(@NotNull final DSLContext dsl,
+        @NotNull final JooqSortMapper<PaperRecord, PublicPaper, Paper> sortMapper,
+        @NotNull final PublicPaperFilterConditionMapper filterConditionMapper,
+        @NotNull final AuthorsAbbreviator authorsAbbreviator, @NotNull final JournalExtractor journalExtractor) {
         this.dsl = dsl;
         this.sortMapper = sortMapper;
         this.filterConditionMapper = filterConditionMapper;
@@ -65,9 +67,9 @@ public class JooqPublicPaperRepo implements PublicPaperRepository {
         return PaperRecord.class;
     }
 
+    @Nullable
     @Override
-    public PublicPaper findByNumber(final Long number) {
-        AssertAs.INSTANCE.notNull(number, "number");
+    public PublicPaper findByNumber(@NotNull final Long number) {
         final PaperRecord tuple = getDsl()
             .selectFrom(getTable())
             .where(PAPER.NUMBER.equal(number))
@@ -78,8 +80,10 @@ public class JooqPublicPaperRepo implements PublicPaperRepository {
             return null;
     }
 
+    @NotNull
     @Override
-    public List<PublicPaper> findPageByFilter(final PublicPaperFilter filter, final PaginationContext pc) {
+    public List<PublicPaper> findPageByFilter(@Nullable final PublicPaperFilter filter,
+        @NotNull final PaginationContext pc) {
         final Condition conditions = getConditions(filter);
         final Collection<SortField<PublicPaper>> sortCriteria = getSortMapper().map(pc.getSort(), getTable());
         final List<PaperRecord> tuples = getDsl()
@@ -129,7 +133,7 @@ public class JooqPublicPaperRepo implements PublicPaperRepository {
     }
 
     @Override
-    public int countByFilter(final PublicPaperFilter filter) {
+    public int countByFilter(@Nullable final PublicPaperFilter filter) {
         final Condition conditions = getConditions(filter);
         return getDsl().fetchCount(getDsl()
             .selectOne()
@@ -137,8 +141,10 @@ public class JooqPublicPaperRepo implements PublicPaperRepository {
             .where(conditions));
     }
 
+    @NotNull
     @Override
-    public List<Long> findPageOfNumbersByFilter(final PublicPaperFilter filter, final PaginationContext pc) {
+    public List<Long> findPageOfNumbersByFilter(@Nullable final PublicPaperFilter filter,
+        @NotNull final PaginationContext pc) {
         final Condition conditions = getConditions(filter);
         final Collection<SortField<PublicPaper>> sortCriteria = getSortMapper().map(pc.getSort(), getTable());
         return getDsl()

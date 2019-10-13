@@ -10,6 +10,7 @@ import org.apache.wicket.model.IModel
 import org.apache.wicket.model.Model
 import org.apache.wicket.util.tester.TagTester
 import org.assertj.core.api.Assertions.assertThat
+import org.jetbrains.annotations.NotNull
 import org.junit.jupiter.api.Test
 
 internal class LinkIconColumnTest : WicketBaseTest() {
@@ -17,18 +18,17 @@ internal class LinkIconColumnTest : WicketBaseTest() {
     private var clickPerformed: String? = null
 
     private val lc = object : LinkIconColumn<TestRecord>(Model.of("headerText")) {
-
         override fun createIconModel(rowModel: IModel<TestRecord>): IModel<String> = Model.of("the iconModel")
 
         override fun onClickPerformed(target: AjaxRequestTarget, rowModel: IModel<TestRecord>, link: AjaxLink<Void>) {
-            clickPerformed = rowModel.getObject().toString()
+            clickPerformed = rowModel.getObject()?.toString()
         }
     }
 
     private fun newPanelWithTitle(title: String?): LinkIconColumnTestPanel =
         object : LinkIconColumnTestPanel(ID, title?.let { Model.of(it) }) {
-            override fun onClickPerformed(rowModel: IModel<TestRecord>, link: AjaxLink<Void>) {
-                clickPerformed = rowModel.getObject().toString()
+            override fun onClickPerformed(rowModel: IModel<TestRecord>?, link: AjaxLink<Void>) {
+                clickPerformed = rowModel?.getObject()?.toString()
             }
         }
 

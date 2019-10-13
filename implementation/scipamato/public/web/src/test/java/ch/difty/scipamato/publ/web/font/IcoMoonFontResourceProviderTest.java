@@ -1,6 +1,5 @@
 package ch.difty.scipamato.publ.web.font;
 
-import static ch.difty.scipamato.common.TestUtilsKt.assertDegenerateSupplierParameter;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -20,11 +19,6 @@ class IcoMoonFontResourceProviderTest {
 
     @Mock
     private ApplicationPublicProperties applicationProperties;
-
-    @Test
-    void degenerateConstruction_withNullArgument() {
-        assertDegenerateSupplierParameter(() -> new IcoMoonFontResourceProvider(null), "applicationProperties");
-    }
 
     @Test
     void withNoCommercialFontPresentSetting_getsNull() {

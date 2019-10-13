@@ -1,9 +1,9 @@
 package ch.difty.scipamato.core.persistence;
 
+import org.jetbrains.annotations.NotNull;
 import org.jooq.Record;
 import org.jooq.RecordMapper;
 
-import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.core.entity.CoreEntity;
 
 /**
@@ -22,9 +22,9 @@ import ch.difty.scipamato.core.entity.CoreEntity;
  */
 public abstract class EntityRecordMapper<R extends Record, T extends CoreEntity> implements RecordMapper<R, T> {
 
+    @NotNull
     @Override
-    public T map(final R from) {
-        AssertAs.INSTANCE.notNull(from, "from");
+    public T map(@NotNull final R from) {
         final T to = makeEntity();
         mapFields(from, to);
         mapAuditFields(from, to);
@@ -34,6 +34,7 @@ public abstract class EntityRecordMapper<R extends Record, T extends CoreEntity>
     /**
      * @return an empty instance of entity {@code T}
      */
+    @NotNull
     protected abstract T makeEntity();
 
     /**
@@ -43,7 +44,8 @@ public abstract class EntityRecordMapper<R extends Record, T extends CoreEntity>
      *     <p>
      *     {@code return new AuditFields(r.getCreated(), r.getCreatedBy(), r.getLastModified(), r.getLastModifiedBy(), r.getVersion())}
      */
-    protected abstract AuditFields getAuditFieldsOf(R record);
+    @NotNull
+    protected abstract AuditFields getAuditFieldsOf(@NotNull R record);
 
     /**
      * Implement the mapping of the normal (i.e. non-audit) fields from record into
@@ -54,7 +56,7 @@ public abstract class EntityRecordMapper<R extends Record, T extends CoreEntity>
      * @param to
      *     the entity to fill the fields into
      */
-    protected abstract void mapFields(R from, T to);
+    protected abstract void mapFields(@NotNull R from, @NotNull T to);
 
     /**
      * Maps the audit fields form the record to the entity.
@@ -64,7 +66,7 @@ public abstract class EntityRecordMapper<R extends Record, T extends CoreEntity>
      * @param to
      *     the entity to fill the audit fields into
      */
-    private void mapAuditFields(final R from, final T to) {
+    private void mapAuditFields(@NotNull final R from, @NotNull final T to) {
         final AuditFields af = getAuditFieldsOf(from);
         to.setCreated(af.created);
         to.setCreatedBy(af.createdBy);
@@ -72,5 +74,4 @@ public abstract class EntityRecordMapper<R extends Record, T extends CoreEntity>
         to.setLastModifiedBy(af.lastModifiedBy);
         to.setVersion(af.version);
     }
-
 }

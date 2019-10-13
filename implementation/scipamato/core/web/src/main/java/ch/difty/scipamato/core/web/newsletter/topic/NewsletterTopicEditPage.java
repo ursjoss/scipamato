@@ -6,6 +6,8 @@ import org.apache.wicket.PageReference;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.dao.DuplicateKeyException;
 import org.wicketstuff.annotation.mount.MountPath;
 
@@ -26,29 +28,34 @@ public class NewsletterTopicEditPage extends DefinitionEditPage<NewsletterTopicD
     @SpringBean
     private NewsletterTopicService service;
 
-    NewsletterTopicEditPage(final IModel<NewsletterTopicDefinition> model, final PageReference callingPageRef) {
+    NewsletterTopicEditPage(@Nullable final IModel<NewsletterTopicDefinition> model, @Nullable final PageReference callingPageRef) {
         super(model, callingPageRef);
     }
 
+    @Nullable
     @Override
     protected NewsletterTopicDefinition persistModel() {
         return service.saveOrUpdate(getModelObject());
     }
 
+    @NotNull
     @Override
-    protected NewsletterTopicEditHeaderPanel newDefinitionHeaderPanel(final String id) {
+    protected NewsletterTopicEditHeaderPanel newDefinitionHeaderPanel(@NotNull final String id) {
         return new NewsletterTopicEditHeaderPanel(id, getModel()) {
 
+            @Nullable
             @Override
-            protected NewsletterTopicDefinition doDelete(final NewsletterTopicDefinition ntd, final Integer recordId) {
+            protected NewsletterTopicDefinition doDelete(@NotNull final NewsletterTopicDefinition ntd, @NotNull final Integer recordId) {
                 return service.delete(recordId, ntd.getVersion());
             }
 
+            @Nullable
             @Override
             protected PageReference getCallingPageRef() {
                 return NewsletterTopicEditPage.this.getCallingPageRef();
             }
 
+            @NotNull
             @Override
             protected Class<? extends Page> staticResponsePage() {
                 return NewsletterTopicListPage.class;
@@ -56,13 +63,14 @@ public class NewsletterTopicEditPage extends DefinitionEditPage<NewsletterTopicD
         };
     }
 
+    @NotNull
     @Override
-    protected DefinitionEditTranslationPanel newDefinitionTranslationPanel(final String id) {
+    protected DefinitionEditTranslationPanel newDefinitionTranslationPanel(@NotNull final String id) {
         return new NewsletterTopicEditTranslationPanel(id, getModel());
     }
 
     @Override
-    protected void handleDuplicateKeyException(final DuplicateKeyException dke) {
+    protected void handleDuplicateKeyException(@NotNull final DuplicateKeyException dke) {
         if (dke.getMessage() != null)
             error(dke.getMessage());
         else

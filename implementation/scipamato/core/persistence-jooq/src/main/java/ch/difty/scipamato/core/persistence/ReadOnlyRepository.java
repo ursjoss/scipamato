@@ -2,7 +2,9 @@ package ch.difty.scipamato.core.persistence;
 
 import java.util.List;
 
-import ch.difty.scipamato.common.NullArgumentException;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import ch.difty.scipamato.common.entity.filter.ScipamatoFilter;
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.core.entity.CoreEntity;
@@ -26,6 +28,7 @@ public interface ReadOnlyRepository<T extends CoreEntity, ID, F extends Scipamat
      *
      * @return list of all entities {@code T}
      */
+    @NotNull
     List<T> findAll();
 
     /**
@@ -35,7 +38,8 @@ public interface ReadOnlyRepository<T extends CoreEntity, ID, F extends Scipamat
      *     required for some repos only.
      * @return list of all entities {@code T}
      */
-    List<T> findAll(String languageCode);
+    @NotNull
+    List<T> findAll(@Nullable String languageCode);
 
     /**
      * Finds the persistent entities {@code T} with the provided id. If a repo
@@ -44,10 +48,9 @@ public interface ReadOnlyRepository<T extends CoreEntity, ID, F extends Scipamat
      * @param id
      *     - must not be null
      * @return the persisted entity {@code T} or null if it can't be found.
-     * @throws NullArgumentException
-     *     if the id is null.
      */
-    T findById(ID id);
+    @Nullable
+    T findById(@NotNull ID id);
 
     /**
      * Finds the persistent entities {@code T} with the provided id.
@@ -57,10 +60,9 @@ public interface ReadOnlyRepository<T extends CoreEntity, ID, F extends Scipamat
      * @param languageCode
      *     required for some repos only.
      * @return the persisted entity {@code T} or null if it can't be found.
-     * @throws NullArgumentException
-     *     if the id is null.
      */
-    T findById(ID id, String languageCode);
+    @Nullable
+    T findById(@NotNull ID id, @Nullable String languageCode);
 
     /**
      * Finds the persistent entities {@code T} with the provided id. If a repo
@@ -71,10 +73,9 @@ public interface ReadOnlyRepository<T extends CoreEntity, ID, F extends Scipamat
      * @param version
      *     the record version - implementing optimistic locking
      * @return the persisted entity {@code T} or null if it can't be found.
-     * @throws NullArgumentException
-     *     if the id is null.
      */
-    T findById(ID id, int version);
+    @Nullable
+    T findById(@NotNull ID id, int version);
 
     /**
      * Finds the persistent entities {@code T} with the provided id.
@@ -86,10 +87,9 @@ public interface ReadOnlyRepository<T extends CoreEntity, ID, F extends Scipamat
      * @param languageCode
      *     required for some repos only.
      * @return the persisted entity {@code T} or null if it can't be found.
-     * @throws NullArgumentException
-     *     if the id is null.
      */
-    T findById(ID id, int version, String languageCode);
+    @Nullable
+    T findById(@NotNull ID id, int version, @Nullable String languageCode);
 
     /**
      * Finds the persisted entities matching the provided filter and pagination
@@ -102,7 +102,8 @@ public interface ReadOnlyRepository<T extends CoreEntity, ID, F extends Scipamat
      *     {@link PaginationContext}
      * @return list of all matching entities {@code T}
      */
-    List<T> findPageByFilter(F filter, PaginationContext paginationContext);
+    @NotNull
+    List<T> findPageByFilter(@Nullable F filter, @NotNull PaginationContext paginationContext);
 
     /**
      * Finds the persisted entities matching the provided filter and pagination
@@ -116,7 +117,9 @@ public interface ReadOnlyRepository<T extends CoreEntity, ID, F extends Scipamat
      *     required for some repos only.
      * @return list of all matching entities {@code T}
      */
-    List<T> findPageByFilter(F filter, PaginationContext paginationContext, String languageCode);
+    @NotNull
+    List<T> findPageByFilter(@Nullable F filter, @NotNull PaginationContext paginationContext,
+        @Nullable String languageCode);
 
     /**
      * Counts all persisted entities matching the provided filter.
@@ -125,7 +128,7 @@ public interface ReadOnlyRepository<T extends CoreEntity, ID, F extends Scipamat
      *     of type {@code F}
      * @return list of all matching entities {@code T}
      */
-    int countByFilter(F filter);
+    int countByFilter(@Nullable F filter);
 
     /**
      * Finds the ids of the persisted entities matching the provided filter and
@@ -138,6 +141,6 @@ public interface ReadOnlyRepository<T extends CoreEntity, ID, F extends Scipamat
      *     {@link PaginationContext}
      * @return list of the ids of type {@code ID} of matching entities {@code T}
      */
-    List<ID> findPageOfIdsByFilter(F filter, PaginationContext paginationContext);
-
+    @NotNull
+    List<ID> findPageOfIdsByFilter(@Nullable F filter, @NotNull PaginationContext paginationContext);
 }

@@ -12,15 +12,17 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.jooq.*;
 import org.jooq.impl.DSL;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
-import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.DateTimeService;
 import ch.difty.scipamato.common.TranslationUtils;
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
@@ -36,14 +38,14 @@ import ch.difty.scipamato.core.persistence.OptimisticLockingException;
 @Profile("!wickettest")
 public class JooqNewsletterTopicRepo extends AbstractRepo implements NewsletterTopicRepository {
 
-    public JooqNewsletterTopicRepo(@Qualifier("dslContext") final DSLContext dslContext,
-        DateTimeService dateTimeService) {
+    public JooqNewsletterTopicRepo(@Qualifier("dslContext") @NotNull final DSLContext dslContext,
+        @NotNull DateTimeService dateTimeService) {
         super(dslContext, dateTimeService);
     }
 
+    @NotNull
     @Override
-    public List<NewsletterTopic> findAll(final String languageCode) {
-        AssertAs.INSTANCE.notNull(languageCode, "languageCode");
+    public List<NewsletterTopic> findAll(@NotNull final String languageCode) {
         final String lang = TranslationUtils.INSTANCE.trimLanguageCode(languageCode);
         // skipping the audit fields
         return getDsl()
@@ -59,9 +61,10 @@ public class JooqNewsletterTopicRepo extends AbstractRepo implements NewsletterT
             .fetchInto(NewsletterTopic.class);
     }
 
+    @NotNull
     @Override
-    public List<NewsletterTopicDefinition> findPageOfNewsletterTopicDefinitions(final NewsletterTopicFilter filter,
-        final PaginationContext pc) {
+    public List<NewsletterTopicDefinition> findPageOfNewsletterTopicDefinitions(
+        @Nullable final NewsletterTopicFilter filter, @NotNull final PaginationContext pc) {
         final SelectOnConditionStep<Record> selectStep = getDsl()
             .select(NEWSLETTER_TOPIC.fields())
             .select(LANGUAGE.CODE)
@@ -87,8 +90,9 @@ public class JooqNewsletterTopicRepo extends AbstractRepo implements NewsletterT
     }
 
     // package-private for test purposes
-    <R extends Record> SelectConditionStep<R> applyWhereCondition(final NewsletterTopicFilter filter,
-        final SelectJoinStep<R> selectStep) {
+    @NotNull
+    <R extends Record> SelectConditionStep<R> applyWhereCondition(@Nullable final NewsletterTopicFilter filter,
+        @NotNull final SelectJoinStep<R> selectStep) {
         if (filter != null && filter.getTitleMask() != null) {
             final String titleMask = filter.getTitleMask();
             if ("n.a.".equals(titleMask))
@@ -130,6 +134,7 @@ public class JooqNewsletterTopicRepo extends AbstractRepo implements NewsletterT
         return definitions;
     }
 
+    @NotNull
     @Override
     public String getMainLanguage() {
         return getDsl()
@@ -139,6 +144,7 @@ public class JooqNewsletterTopicRepo extends AbstractRepo implements NewsletterT
             .fetchOneInto(String.class);
     }
 
+    @NotNull
     @Override
     public NewsletterTopicDefinition newUnpersistedNewsletterTopicDefinition() {
         final List<NewsletterTopicTranslation> translations = getDsl()
@@ -169,13 +175,14 @@ public class JooqNewsletterTopicRepo extends AbstractRepo implements NewsletterT
     }
 
     @Override
-    public int countByFilter(final NewsletterTopicFilter filter) {
+    public int countByFilter(@Nullable final NewsletterTopicFilter filter) {
         final SelectJoinStep<Record1<Integer>> selectStep = getDsl()
             .selectCount()
             .from(NEWSLETTER_TOPIC);
         return applyWhereCondition(filter, selectStep).fetchOneInto(Integer.class);
     }
 
+    @Nullable
     @Override
     public NewsletterTopicDefinition findNewsletterTopicDefinitionById(final int id) {
         final Map<Integer, Result<Record>> records = getDsl()
@@ -195,9 +202,9 @@ public class JooqNewsletterTopicRepo extends AbstractRepo implements NewsletterT
             return null;
     }
 
+    @Nullable
     @Override
-    public NewsletterTopicDefinition insert(final NewsletterTopicDefinition entity) {
-        AssertAs.INSTANCE.notNull(entity, "entity");
+    public NewsletterTopicDefinition insert(@NotNull final NewsletterTopicDefinition entity) {
         if (entity.getId() != null) {
             throw new IllegalArgumentException("id must be null.");
         }
@@ -232,10 +239,10 @@ public class JooqNewsletterTopicRepo extends AbstractRepo implements NewsletterT
         return nttPersisted;
     }
 
+    @Nullable
     @Override
-    public NewsletterTopicDefinition update(final NewsletterTopicDefinition entity) {
-        AssertAs.INSTANCE.notNull(entity, "entity");
-        AssertAs.INSTANCE.notNull(entity.getId(), "entity.id");
+    public NewsletterTopicDefinition update(@NotNull final NewsletterTopicDefinition entity) {
+        Objects.requireNonNull(entity.getId());
 
         final int userId = getUserId();
         final int currentVersion = entity.getVersion();
@@ -245,8 +252,9 @@ public class JooqNewsletterTopicRepo extends AbstractRepo implements NewsletterT
     }
 
     // package-private for testing purposes
-    NewsletterTopicDefinition handleUpdatedRecord(final NewsletterTopicRecord record,
-        final NewsletterTopicDefinition entity, final int userId) {
+    @NotNull
+    NewsletterTopicDefinition handleUpdatedRecord(@Nullable final NewsletterTopicRecord record,
+        @NotNull final NewsletterTopicDefinition entity, final int userId) {
         if (record != null) {
             final List<NewsletterTopicTranslation> persistedTranslations = updateOrInsertAndLoadNewsletterTopicTranslations(
                 entity, userId);
@@ -329,7 +337,7 @@ public class JooqNewsletterTopicRepo extends AbstractRepo implements NewsletterT
     }
 
     // package-private for test purposes
-    void addOrThrow(final NewsletterTopicTrRecord nttRecord, final List<NewsletterTopicTranslation> nttPersisted,
+    void addOrThrow(@Nullable final NewsletterTopicTrRecord nttRecord, @NotNull final List<NewsletterTopicTranslation> nttPersisted,
         final String nttAsString) {
         if (nttRecord != null) {
             nttPersisted.add(toTopicTranslation(nttRecord));
@@ -345,10 +353,9 @@ public class JooqNewsletterTopicRepo extends AbstractRepo implements NewsletterT
             record.get(NEWSLETTER_TOPIC_TR.VERSION));
     }
 
+    @Nullable
     @Override
-    public NewsletterTopicDefinition delete(final Integer id, final int version) {
-        AssertAs.INSTANCE.notNull(id, "id");
-
+    public NewsletterTopicDefinition delete(@NotNull final Integer id, final int version) {
         final NewsletterTopicDefinition toBeDeleted = findNewsletterTopicDefinitionById(id);
         if (toBeDeleted != null) {
             if (toBeDeleted.getVersion() == version) {
@@ -371,7 +378,7 @@ public class JooqNewsletterTopicRepo extends AbstractRepo implements NewsletterT
     }
 
     // package-private for test purposes
-    void logOrThrow(final int deleteCount, final Integer id, final String deletedAsString) {
+    void logOrThrow(final int deleteCount, @NotNull final Integer id, @NotNull final String deletedAsString) {
         if (deleteCount > 0) {
             log.info("{} deleted {} record: {} with id {}.", getActiveUser().getUserName(), deleteCount,
                 NEWSLETTER_TOPIC.getName(), id);
@@ -381,6 +388,7 @@ public class JooqNewsletterTopicRepo extends AbstractRepo implements NewsletterT
         }
     }
 
+    @NotNull
     @Override
     public List<NewsletterNewsletterTopic> findPersistedSortedNewsletterTopicsForNewsletterWithId(
         final int newsletterId) {
@@ -396,6 +404,7 @@ public class JooqNewsletterTopicRepo extends AbstractRepo implements NewsletterT
             .fetchInto(NewsletterNewsletterTopic.class);
     }
 
+    @NotNull
     @Override
     public List<NewsletterNewsletterTopic> findAllSortedNewsletterTopicsForNewsletterWithId(final int newsletterId) {
         return getDsl()
@@ -427,7 +436,8 @@ public class JooqNewsletterTopicRepo extends AbstractRepo implements NewsletterT
     }
 
     @Override
-    public void saveSortedNewsletterTopics(final int newsletterId, final List<NewsletterNewsletterTopic> topics) {
+    public void saveSortedNewsletterTopics(final int newsletterId,
+        @NotNull final List<NewsletterNewsletterTopic> topics) {
         final Timestamp ts = getDateTimeService().getCurrentTimestamp();
         topics
             .stream()
@@ -445,5 +455,4 @@ public class JooqNewsletterTopicRepo extends AbstractRepo implements NewsletterT
                 .set(NEWSLETTER_NEWSLETTER_TOPIC.LAST_MODIFIED_BY, getUserId())
                 .execute());
     }
-
 }

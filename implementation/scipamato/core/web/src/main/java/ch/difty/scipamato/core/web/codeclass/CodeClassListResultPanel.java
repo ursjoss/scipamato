@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.model.IModel;
+import org.jetbrains.annotations.NotNull;
 
 import ch.difty.scipamato.core.entity.codeclass.CodeClassDefinition;
 import ch.difty.scipamato.core.entity.codeclass.CodeClassFilter;
@@ -17,10 +18,11 @@ class CodeClassListResultPanel extends
 
     private static final long serialVersionUID = 1L;
 
-    CodeClassListResultPanel(final String id, final CodeClassDefinitionProvider provider) {
+    CodeClassListResultPanel(@NotNull final String id, @NotNull final CodeClassDefinitionProvider provider) {
         super(id, provider);
     }
 
+    @NotNull
     @Override
     protected List<IColumn<CodeClassDefinition, String>> makeTableColumns() {
         final List<IColumn<CodeClassDefinition, String>> columns = new ArrayList<>();
@@ -29,8 +31,7 @@ class CodeClassListResultPanel extends
         return columns;
     }
 
-    private void onTitleClick(final IModel<CodeClassDefinition> model) {
+    private void onTitleClick(@NotNull final IModel<CodeClassDefinition> model) {
         setResponsePage(new CodeClassEditPage(model, getPage().getPageReference()));
     }
-
 }

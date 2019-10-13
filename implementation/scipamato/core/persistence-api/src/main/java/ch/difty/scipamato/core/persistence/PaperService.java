@@ -3,7 +3,9 @@ package ch.difty.scipamato.core.persistence;
 import java.util.List;
 import java.util.Optional;
 
-import ch.difty.scipamato.common.NullArgumentException;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.PaperAttachment;
@@ -28,7 +30,8 @@ public interface PaperService extends EntityService<Long, Paper, PaperFilter> {
      *     the language code (e.g. 'en') to fetch the paper in
      * @return list of {@link Paper}s
      */
-    List<Paper> findBySearchOrder(SearchOrder searchOrder, String languageCode);
+    @NotNull
+    List<Paper> findBySearchOrder(@NotNull SearchOrder searchOrder, @NotNull String languageCode);
 
     /**
      * Finds a page full of papers as list matching the provided {@link SearchOrder}
@@ -42,8 +45,9 @@ public interface PaperService extends EntityService<Long, Paper, PaperFilter> {
      *     the language code (e.g. 'en') to fetch the paper in
      * @return paged list of papers
      */
-    List<Paper> findPageBySearchOrder(SearchOrder searchOrder, PaginationContext paginationContext,
-        String languageCode);
+    @NotNull
+    List<Paper> findPageBySearchOrder(@NotNull SearchOrder searchOrder, @NotNull PaginationContext paginationContext,
+        @NotNull String languageCode);
 
     /**
      * Finds a page full of ids of papers as list matching the provided
@@ -55,7 +59,9 @@ public interface PaperService extends EntityService<Long, Paper, PaperFilter> {
      *     context defining paging and sorting
      * @return paged list of paper ids
      */
-    List<Long> findPageOfIdsBySearchOrder(SearchOrder searchOrder, PaginationContext paginationContext);
+    @NotNull
+    List<Long> findPageOfIdsBySearchOrder(@NotNull SearchOrder searchOrder,
+        @NotNull PaginationContext paginationContext);
 
     /**
      * Counts the number of entities matching the specified {@link SearchOrder}.
@@ -64,7 +70,7 @@ public interface PaperService extends EntityService<Long, Paper, PaperFilter> {
      *     {@link SearchOrder}
      * @return paper count
      */
-    int countBySearchOrder(SearchOrder searchOrder);
+    int countBySearchOrder(@NotNull SearchOrder searchOrder);
 
     /**
      * Saves some minimally filled {@link Paper}s based on the information received
@@ -76,7 +82,8 @@ public interface PaperService extends EntityService<Long, Paper, PaperFilter> {
      *     The lowest number that could be recycled
      * @return {@link ServiceResult}
      */
-    ServiceResult dumpPubmedArticlesToDb(List<PubmedArticleFacade> articles, long minimumNumber);
+    @NotNull
+    ServiceResult dumpPubmedArticlesToDb(@NotNull List<PubmedArticleFacade> articles, long minimumNumber);
 
     /**
      * Finds an individual paper by number. Returns it as an optional of type
@@ -88,10 +95,9 @@ public interface PaperService extends EntityService<Long, Paper, PaperFilter> {
      *     the language code (e.g. 'en') to fetch the paper in
      * @return Optional paper. Codes are enriched and attachments present (but
      *     without content)
-     * @throws NullArgumentException
-     *     if number is null
      */
-    Optional<Paper> findByNumber(Long number, String languageCode);
+    @NotNull
+    Optional<Paper> findByNumber(@NotNull Long number, @NotNull String languageCode);
 
     /**
      * Finds the lowest free number starting from the supplied value.
@@ -130,7 +136,8 @@ public interface PaperService extends EntityService<Long, Paper, PaperFilter> {
      *     the attachment to save into the paper
      * @return the paper for which the attachment was added
      */
-    Paper saveAttachment(PaperAttachment paperAttachment);
+    @Nullable
+    Paper saveAttachment(@NotNull PaperAttachment paperAttachment);
 
     /**
      * Loads the {@link PaperAttachment} matching the provided id including its
@@ -140,7 +147,8 @@ public interface PaperService extends EntityService<Long, Paper, PaperFilter> {
      *     the id of the paper attachment
      * @return paper attachment
      */
-    PaperAttachment loadAttachmentWithContentBy(Integer id);
+    @Nullable
+    PaperAttachment loadAttachmentWithContentBy(@NotNull Integer id);
 
     /**
      * Deletes the attachment with given id
@@ -149,7 +157,8 @@ public interface PaperService extends EntityService<Long, Paper, PaperFilter> {
      *     the id of the paper attachment to be deleted
      * @return the paper for which the attachment was deleted
      */
-    Paper deleteAttachment(Integer id);
+    @Nullable
+    Paper deleteAttachment(@NotNull Integer id);
 
     /**
      * Deletes the papers with the provided ids.
@@ -157,7 +166,7 @@ public interface PaperService extends EntityService<Long, Paper, PaperFilter> {
      * @param ids
      *     ids of the papers to be deleted.
      */
-    void deletePapersWithIds(List<Long> ids);
+    void deletePapersWithIds(@NotNull List<Long> ids);
 
     /**
      * Assigns the paper to the newsletter with the given topic by either adding a new
@@ -171,8 +180,9 @@ public interface PaperService extends EntityService<Long, Paper, PaperFilter> {
      *     the two digit language Code, e.g. 'en' or 'de'
      * @return optional of NewsletterLink
      */
-    Optional<Paper.NewsletterLink> mergePaperIntoWipNewsletter(long paperId, Integer newsletterTopicId,
-        String languageCode);
+    @NotNull
+    Optional<Paper.NewsletterLink> mergePaperIntoWipNewsletter(long paperId, @Nullable Integer newsletterTopicId,
+        @NotNull String languageCode);
 
     /**
      * Removes the paper with the specified id from the newsletter with the given id.
@@ -199,5 +209,7 @@ public interface PaperService extends EntityService<Long, Paper, PaperFilter> {
      *     the id of the current paper
      * @return optional of numbers of violated papers
      */
-    Optional<String> hasDuplicateFieldNextToCurrent(String fieldName, Object fieldValue, Long idOfCurrentPaper);
+    @NotNull
+    Optional<String> hasDuplicateFieldNextToCurrent(@NotNull String fieldName, @Nullable Object fieldValue,
+        @NotNull Long idOfCurrentPaper);
 }

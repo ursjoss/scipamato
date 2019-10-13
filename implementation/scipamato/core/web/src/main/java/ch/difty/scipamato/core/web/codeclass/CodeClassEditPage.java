@@ -10,6 +10,8 @@ import org.apache.wicket.authroles.authorization.strategies.role.annotations.Aut
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.dao.DuplicateKeyException;
 import org.wicketstuff.annotation.mount.MountPath;
 
@@ -36,24 +38,28 @@ public class CodeClassEditPage extends DefinitionEditPage<CodeClassDefinition> {
     @SpringBean
     private CodeClassService service;
 
-    CodeClassEditPage(final IModel<CodeClassDefinition> model, final PageReference callingPageRef) {
+    CodeClassEditPage(@Nullable final IModel<CodeClassDefinition> model, @Nullable final PageReference callingPageRef) {
         super(model, callingPageRef);
     }
 
+    @Nullable
     @Override
     protected CodeClassDefinition persistModel() {
         return service.saveOrUpdate(getModelObject());
     }
 
+    @NotNull
     @Override
-    protected DefinitionEditHeaderPanel newDefinitionHeaderPanel(final String id) {
+    protected DefinitionEditHeaderPanel newDefinitionHeaderPanel(@NotNull final String id) {
         return new CodeClassEditHeaderPanel(id, getModel()) {
 
+            @Nullable
             @Override
             protected PageReference getCallingPageRef() {
                 return CodeClassEditPage.this.getCallingPageRef();
             }
 
+            @NotNull
             @Override
             protected Class<? extends Page> staticResponsePage() {
                 return CodeListPage.class;
@@ -61,13 +67,14 @@ public class CodeClassEditPage extends DefinitionEditPage<CodeClassDefinition> {
         };
     }
 
+    @NotNull
     @Override
-    protected DefinitionEditTranslationPanel newDefinitionTranslationPanel(final String id) {
+    protected DefinitionEditTranslationPanel newDefinitionTranslationPanel(@NotNull final String id) {
         return new CodeClassEditTranslationPanel(id, getModel());
     }
 
     @Override
-    protected void handleDuplicateKeyException(final DuplicateKeyException dke) {
+    protected void handleDuplicateKeyException(@NotNull final DuplicateKeyException dke) {
         final String errorMsg = dke.getMessage();
         if (errorMsg != null) {
             final Matcher matcher = DUPLICATE_KEY_PATTERN.matcher(errorMsg);

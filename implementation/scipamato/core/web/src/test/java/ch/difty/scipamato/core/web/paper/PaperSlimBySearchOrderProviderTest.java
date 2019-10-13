@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder;
+import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -41,6 +42,7 @@ class PaperSlimBySearchOrderProviderTest
         return new PaperSlimBySearchOrderProvider(getFilter(), PAGE_SIZE) {
             private static final long serialVersionUID = 1L;
 
+            @NotNull
             @Override
             protected String getLanguageCode() {
                 return LC;

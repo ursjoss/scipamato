@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
 import org.apache.wicket.Page;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * This MenuBuilder with the implementing class serves in breaking a dependency
@@ -31,6 +32,6 @@ public interface MenuBuilder extends Serializable {
      *     the base page the navbar resides on. Also contains the property
      *     definitions for the label string resource
      */
-    void addMenuLinksTo(Navbar navbar, Page page);
+    void addMenuLinksTo(@NotNull Navbar navbar, @NotNull Page page);
 
 }

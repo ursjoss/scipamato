@@ -154,5 +154,4 @@ abstract class AbstractPaperSlimProviderTest<F extends PaperSlimFilter, P extend
     void gettingLanguageCode() {
         assertThat(provider.getLanguageCode()).isEqualTo("en");
     }
-
 }

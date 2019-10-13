@@ -12,6 +12,8 @@ import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import ch.difty.scipamato.common.config.ApplicationProperties;
 import ch.difty.scipamato.common.web.AbstractPage;
@@ -32,10 +34,11 @@ public abstract class AbstractLoginPage<R extends AbstractPage<?>> extends Abstr
     private String username;
     private String password;
 
-    public AbstractLoginPage(PageParameters parameters) {
+    public AbstractLoginPage(@Nullable PageParameters parameters) {
         super(parameters);
     }
 
+    @NotNull
     @Override
     protected ApplicationProperties getProperties() {
         return scipamatoProperties;
@@ -52,7 +55,7 @@ public abstract class AbstractLoginPage<R extends AbstractPage<?>> extends Abstr
         queue(newLoginForm("form"));
     }
 
-    private StatelessForm<Void> newLoginForm(String id) {
+    private StatelessForm<Void> newLoginForm(@NotNull String id) {
         StatelessForm<Void> form = new StatelessForm<>(id) {
             private static final long serialVersionUID = 1L;
 
@@ -83,14 +86,18 @@ public abstract class AbstractLoginPage<R extends AbstractPage<?>> extends Abstr
      *
      * @return the response page of type <R>
      */
+    @Nullable
     protected abstract R getResponsePage();
 
-    private Label newHeader(String id) {
+    @NotNull
+    private Label newHeader(@NotNull String id) {
         return new Label(id, new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null));
     }
 
-    private BootstrapButton newButton(String id) {
-        final BootstrapButton button = new BootstrapButton(id, new StringResourceModel(id + ".value", this, null), Buttons.Type.Default);
+    @NotNull
+    private BootstrapButton newButton(@NotNull String id) {
+        final BootstrapButton button = new BootstrapButton(id, new StringResourceModel(id + ".value", this, null),
+            Buttons.Type.Default);
         button.add(new LoadingBehavior(new StringResourceModel(id + ".loading", this, null)));
         return button;
     }

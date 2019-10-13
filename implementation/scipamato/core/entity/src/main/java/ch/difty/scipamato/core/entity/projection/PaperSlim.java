@@ -1,13 +1,11 @@
 package ch.difty.scipamato.core.entity.projection;
 
-import javax.validation.constraints.NotNull;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import ch.difty.scipamato.common.AssertAs;
-import ch.difty.scipamato.common.entity.FieldEnumType;
 import ch.difty.scipamato.core.entity.IdScipamatoEntity;
 
 @Data
@@ -17,36 +15,16 @@ public class PaperSlim extends IdScipamatoEntity<Long> {
 
     private static final long serialVersionUID = 1L;
 
-    @NotNull
+    @javax.validation.constraints.NotNull
     private Long    number;
-    @NotNull
+    @javax.validation.constraints.NotNull
     private String  firstAuthor;
-    @NotNull
+    @javax.validation.constraints.NotNull
     private Integer publicationYear;
-    @NotNull
+    @javax.validation.constraints.NotNull
     private String  title;
 
     private NewsletterAssociation newsletterAssociation;
-
-    public enum PaperSlimFields implements FieldEnumType {
-        NUMBER("number"),
-        FIRST_AUTHOR("firstAuthor"),
-        PUBLICATION_YEAR("publicationYear"),
-        TITLE("title"),
-        NEWSLETTER_ASSOCIATION("newsletterAssociation");
-
-        private final String name;
-
-        PaperSlimFields(final String name) {
-            this.name = name;
-        }
-
-        @NotNull
-        @Override
-        public String getFieldName() {
-            return name;
-        }
-    }
 
     /**
      * Constructs a PaperSlim (leaving the Newsletter null).
@@ -62,7 +40,8 @@ public class PaperSlim extends IdScipamatoEntity<Long> {
      * @param title
      *     paper title
      */
-    public PaperSlim(Long id, Long number, String firstAuthor, Integer publicationYear, String title) {
+    public PaperSlim(@Nullable Long id, @NotNull Long number, @NotNull String firstAuthor,
+        @NotNull Integer publicationYear, @NotNull String title) {
         this(id, number, firstAuthor, publicationYear, title, null);
     }
 
@@ -88,11 +67,11 @@ public class PaperSlim extends IdScipamatoEntity<Long> {
      * @param headline
      *     the headline of the newsletter association
      */
-    public PaperSlim(Long id, Long number, String firstAuthor, Integer publicationYear, String title, int newsletterId,
-        String newsletterTitle, int publicationStatusId, String headline) {
+    public PaperSlim(@Nullable Long id, @NotNull Long number, @NotNull String firstAuthor,
+        @NotNull Integer publicationYear, @NotNull String title, int newsletterId, @NotNull String newsletterTitle,
+        int publicationStatusId, @Nullable String headline) {
         this(id, number, firstAuthor, publicationYear, title,
-            new NewsletterAssociation(newsletterId, AssertAs.INSTANCE.notNull(newsletterTitle, "newsletterTitle"),
-                publicationStatusId, headline));
+            new NewsletterAssociation(newsletterId, newsletterTitle, publicationStatusId, headline));
     }
 
     /**
@@ -111,8 +90,9 @@ public class PaperSlim extends IdScipamatoEntity<Long> {
      * @param newsletterAssociation
      *     the {@link NewsletterAssociation}
      */
-    public PaperSlim(Long id, Long number, String firstAuthor, Integer publicationYear, String title,
-        NewsletterAssociation newsletterAssociation) {
+    public PaperSlim(@Nullable Long id, @NotNull Long number, @NotNull String firstAuthor,
+        @NotNull Integer publicationYear, @NotNull String title,
+        @Nullable NewsletterAssociation newsletterAssociation) {
         setId(id);
         this.number = number;
         this.firstAuthor = firstAuthor;
@@ -121,6 +101,7 @@ public class PaperSlim extends IdScipamatoEntity<Long> {
         this.newsletterAssociation = newsletterAssociation;
     }
 
+    @NotNull
     @Override
     public String getDisplayValue() {
         return firstAuthor + " (" + publicationYear + "): " + title + ".";
@@ -137,5 +118,4 @@ public class PaperSlim extends IdScipamatoEntity<Long> {
                        ", headline=" + newsletterAssociation.getHeadline() :
                        "") + ")";
     }
-
 }

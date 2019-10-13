@@ -161,5 +161,4 @@ class NewsletterProviderTest extends AbstractWicketTest {
         verify(newsletterServiceMock).findPageByFilter(eq(filterMock),
             argThat(new PaginationContextMatcher(3, "title: ASC")));
     }
-
 }

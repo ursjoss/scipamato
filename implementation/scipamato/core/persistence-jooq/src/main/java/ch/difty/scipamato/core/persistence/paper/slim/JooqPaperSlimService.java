@@ -2,6 +2,7 @@ package ch.difty.scipamato.core.persistence.paper.slim;
 
 import java.util.List;
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
@@ -21,22 +22,25 @@ import ch.difty.scipamato.core.persistence.UserRepository;
 public class JooqPaperSlimService extends JooqReadOnlyService<Long, PaperSlim, PaperFilter, PaperSlimRepository>
     implements PaperSlimService {
 
-    protected JooqPaperSlimService(final PaperSlimRepository repo, final UserRepository userRepo) {
+    protected JooqPaperSlimService(@NotNull final PaperSlimRepository repo, @NotNull final UserRepository userRepo) {
         super(repo, userRepo);
     }
 
+    @NotNull
     @Override
-    public List<PaperSlim> findBySearchOrder(SearchOrder searchOrder) {
+    public List<PaperSlim> findBySearchOrder(@NotNull SearchOrder searchOrder) {
         return getRepository().findBySearchOrder(searchOrder);
     }
 
+    @NotNull
     @Override
-    public List<PaperSlim> findPageBySearchOrder(SearchOrder searchOrder, PaginationContext paginationContext) {
+    public List<PaperSlim> findPageBySearchOrder(@NotNull SearchOrder searchOrder,
+        @NotNull PaginationContext paginationContext) {
         return getRepository().findPageBySearchOrder(searchOrder, paginationContext);
     }
 
     @Override
-    public int countBySearchOrder(SearchOrder searchOrder) {
+    public int countBySearchOrder(@NotNull SearchOrder searchOrder) {
         return getRepository().countBySearchOrder(searchOrder);
     }
 }

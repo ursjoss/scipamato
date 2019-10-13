@@ -8,6 +8,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.jooq.DSLContext;
 import org.jooq.DeleteConditionStep;
 import org.jooq.TableField;
@@ -63,28 +65,34 @@ public class NewStudySyncConfig
     private static final TableField<PaperNewsletterRecord, Timestamp> PN_CREATED             = PAPER_NEWSLETTER.CREATED;
     private static final TableField<PaperNewsletterRecord, Timestamp> PN_LAST_MODIFIED       = PAPER_NEWSLETTER.LAST_MODIFIED;
 
-    protected NewStudySyncConfig(@Qualifier("dslContext") DSLContext jooqCore,
-        @Qualifier("publicDslContext") DSLContext jooqPublic, @Qualifier("dataSource") DataSource coreDataSource,
-        JobBuilderFactory jobBuilderFactory, StepBuilderFactory stepBuilderFactory, DateTimeService dateTimeService) {
+    protected NewStudySyncConfig(@Qualifier("dslContext") @NotNull final DSLContext jooqCore,
+        @Qualifier("publicDslContext") @NotNull final DSLContext jooqPublic,
+        @Qualifier("dataSource") @NotNull final DataSource coreDataSource,
+        @NotNull final JobBuilderFactory jobBuilderFactory, @NotNull final StepBuilderFactory stepBuilderFactory,
+        @NotNull final DateTimeService dateTimeService) {
         super(TOPIC, CHUNK_SIZE, jooqCore, jooqPublic, coreDataSource, jobBuilderFactory, stepBuilderFactory,
             dateTimeService);
     }
 
+    @NotNull
     @Bean
     public Job syncNewStudyJob() {
         return createJob();
     }
 
+    @NotNull
     @Override
     protected String getJobName() {
         return "syncNewStudyJob";
     }
 
+    @NotNull
     @Override
     protected ItemWriter<PublicNewStudy> publicWriter() {
         return new NewStudyItemWriter(getJooqPublic());
     }
 
+    @NotNull
     @Override
     protected String selectSql() {
         return getJooqCore()
@@ -99,8 +107,9 @@ public class NewStudySyncConfig
             .getSQL(ParamType.INLINED);
     }
 
+    @NotNull
     @Override
-    protected PublicNewStudy makeEntity(final ResultSet rs) throws SQLException {
+    protected PublicNewStudy makeEntity(@NotNull final ResultSet rs) throws SQLException {
         return PublicNewStudy
             .builder()
             .newsletterId(getInteger(PN_NEWSLETTER_ID, rs))
@@ -128,11 +137,13 @@ public class NewStudySyncConfig
             return firstAuthorString;
     }
 
+    @NotNull
     @Override
     protected TableField<NewStudyRecord, Timestamp> lastSynchedField() {
         return NewStudy.NEW_STUDY.LAST_SYNCHED;
     }
 
+    @Nullable
     @Override
     public DeleteConditionStep<ch.difty.scipamato.publ.db.tables.records.NewStudyRecord> getPseudoFkDcs() {
         return getJooqPublic()
@@ -141,5 +152,4 @@ public class NewStudySyncConfig
                 .selectDistinct(NewsletterTopic.NEWSLETTER_TOPIC.ID)
                 .from(NewsletterTopic.NEWSLETTER_TOPIC)));
     }
-
 }

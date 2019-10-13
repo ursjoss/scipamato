@@ -7,6 +7,7 @@ import org.apache.wicket.markup.head.ResourceAggregator;
 import org.apache.wicket.markup.head.filter.JavaScriptFilteredIntoFooterHeaderResponse;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.cache.annotation.EnableCaching;
@@ -22,7 +23,7 @@ public class ScipamatoPublicApplication extends WicketBootSecuredWebApplication 
 
     private final ScipamatoPublicProperties applicationProperties;
 
-    public ScipamatoPublicApplication(final ScipamatoPublicProperties applicationProperties) {
+    public ScipamatoPublicApplication(@NotNull final ScipamatoPublicProperties applicationProperties) {
         this.applicationProperties = applicationProperties;
     }
 
@@ -56,5 +57,4 @@ public class ScipamatoPublicApplication extends WicketBootSecuredWebApplication 
         if (applicationProperties.isResponsiveIframeSupportEnabled())
             log.info("Responsive iframes using PymJs enabled.");
     }
-
 }

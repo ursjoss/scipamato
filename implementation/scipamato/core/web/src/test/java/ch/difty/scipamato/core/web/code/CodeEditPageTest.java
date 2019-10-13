@@ -1,6 +1,5 @@
 package ch.difty.scipamato.core.web.code;
 
-import static ch.difty.scipamato.common.TestUtilsKt.assertDegenerateSupplierParameter;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -32,7 +31,7 @@ import ch.difty.scipamato.core.web.common.BasePageTest;
 
 class CodeEditPageTest extends BasePageTest<CodeEditPage> {
 
-    private final CodeClass cc2 = new CodeClass(2, "Region", null);
+    private final CodeClass cc2 = new CodeClass(2, "Region", "d2");
 
     private CodeDefinition cd;
 
@@ -121,11 +120,6 @@ class CodeEditPageTest extends BasePageTest<CodeEditPage> {
         getTester().assertModelValue(bb + idx + ":name", name);
         getTester().assertComponent(bb + idx + ":comment", TextField.class);
         getTester().assertModelValue(bb + idx + ":comment", comment);
-    }
-
-    @Test
-    void instantiating_with_nullModel_throws() {
-        assertDegenerateSupplierParameter(() -> new CodeEditPage(null, null), "model");
     }
 
     @Test
@@ -263,21 +257,6 @@ class CodeEditPageTest extends BasePageTest<CodeEditPage> {
     }
 
     @Test
-    void submittingDelete_withNullId_silentlyDoesNothing() {
-        cd.setCode(null);
-        getTester().startPage(new CodeEditPage(Model.of(cd), null));
-
-        FormTester formTester = getTester().newFormTester("form");
-        formTester.submit("headerPanel:delete");
-
-        getTester().assertNoInfoMessage();
-        getTester().assertNoErrorMessage();
-
-        verify(codeServiceMock, never()).delete("2A", 1);
-        verify(codeServiceMock, never()).saveOrUpdate(any());
-    }
-
-    @Test
     void submittingDelete_withServiceReturningNull_informsAboutRepoError() {
         when(codeServiceMock.delete(anyString(), anyInt())).thenReturn(null);
 
@@ -363,18 +342,6 @@ class CodeEditPageTest extends BasePageTest<CodeEditPage> {
         formTester.submit("headerPanel:back");
 
         getTester().assertRenderedPage(LogoutPage.class);
-    }
-
-    @Test
-    void constructing_withNullCodeField_throws() {
-        assertDegenerateSupplierParameter(
-            () -> new CodeEditHeaderPanel.CodeMustMatchCodeClassValidator(null, codeClasses), "field");
-    }
-
-    @Test
-    void constructing_withNullCodeClassesField_throws() {
-        assertDegenerateSupplierParameter(
-            () -> new CodeEditHeaderPanel.CodeMustMatchCodeClassValidator(codeField, null), "codeClasses");
     }
 
     @Test

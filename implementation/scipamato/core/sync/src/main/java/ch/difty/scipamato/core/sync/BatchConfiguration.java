@@ -2,6 +2,7 @@ package ch.difty.scipamato.core.sync;
 
 import javax.sql.DataSource;
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.batch.core.configuration.annotation.DefaultBatchConfigurer;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.batch.BatchDataSourceInitializer;
@@ -20,14 +21,14 @@ public class BatchConfiguration {
 
     private final BatchProperties properties;
 
-    public BatchConfiguration(BatchProperties properties) {
+    public BatchConfiguration(@NotNull BatchProperties properties) {
         this.properties = properties;
     }
 
+    @NotNull
     @Bean
     public BatchDataSourceInitializer batchDataSourceInitializer(
         final @Qualifier("batchDataSource") DataSource dataSource, final ResourceLoader resourceLoader) {
         return new BatchDataSourceInitializer(dataSource, resourceLoader, this.properties);
     }
-
 }

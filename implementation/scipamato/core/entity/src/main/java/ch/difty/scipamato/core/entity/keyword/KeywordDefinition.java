@@ -5,8 +5,9 @@ import java.util.Objects;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import ch.difty.scipamato.common.NullArgumentException;
 import ch.difty.scipamato.common.entity.AbstractDefinitionEntity;
 
 /**
@@ -34,11 +35,9 @@ public class KeywordDefinition extends AbstractDefinitionEntity<KeywordTranslati
      *     audit field version
      * @param translations
      *     translations for all relevant languages
-     * @throws NullArgumentException
-     *     if the mainLanguageCode is null
      */
-    public KeywordDefinition(final Integer id, final String mainLanguageCode, final Integer version,
-        final KeywordTranslation... translations) {
+    public KeywordDefinition(@Nullable final Integer id, @NotNull final String mainLanguageCode,
+        @Nullable final Integer version, @NotNull final KeywordTranslation... translations) {
         this(id, mainLanguageCode, null, version, translations);
     }
 
@@ -55,11 +54,10 @@ public class KeywordDefinition extends AbstractDefinitionEntity<KeywordTranslati
      *     audit field version
      * @param translations
      *     translations for all relevant languages
-     * @throws NullArgumentException
-     *     if the mainLanguageCode is null
      */
-    public KeywordDefinition(final Integer id, final String mainLanguageCode, final String searchOverride,
-        final Integer version, final KeywordTranslation... translations) {
+    public KeywordDefinition(@Nullable final Integer id, @NotNull final String mainLanguageCode,
+        @Nullable final String searchOverride, @Nullable final Integer version,
+        @NotNull final KeywordTranslation... translations) {
         super(mainLanguageCode, Arrays
             .stream(translations)
             .filter(tr -> mainLanguageCode.equals(tr.getLangCode()))
@@ -71,9 +69,9 @@ public class KeywordDefinition extends AbstractDefinitionEntity<KeywordTranslati
         setSearchOverride(searchOverride);
     }
 
+    @NotNull
     @Override
     public Integer getNullSafeId() {
         return id != null ? id : 0;
     }
-
 }

@@ -1,5 +1,7 @@
 package ch.difty.scipamato.core.persistence;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.jooq.InsertSetMoreStep;
 import org.jooq.InsertSetStep;
 import org.jooq.Record;
@@ -26,7 +28,8 @@ public interface InsertSetStepSetter<R extends Record, T extends CoreEntity> {
      *     the entity with the values to set
      * @return {@link InsertSetMoreStep} for execution
      */
-    InsertSetMoreStep<R> setNonKeyFieldsFor(InsertSetStep<R> step, T entity);
+    @NotNull
+    InsertSetMoreStep<R> setNonKeyFieldsFor(@NotNull InsertSetStep<R> step, @NotNull T entity);
 
     /**
      * Sets the key field(s) of the provided entity into the setter - provided it is
@@ -38,7 +41,7 @@ public interface InsertSetStepSetter<R extends Record, T extends CoreEntity> {
      * @param entity
      *     the entity with the values to set
      */
-    void considerSettingKeyOf(InsertSetMoreStep<R> step, T entity);
+    void considerSettingKeyOf(@NotNull InsertSetMoreStep<R> step, @NotNull T entity);
 
     /**
      * Sets the id of the saved record into the entity (unless the saved record is
@@ -49,6 +52,5 @@ public interface InsertSetStepSetter<R extends Record, T extends CoreEntity> {
      * @param saved
      *     the record that has the id assigned from the db
      */
-    void resetIdToEntity(T entity, R saved);
-
+    void resetIdToEntity(@NotNull T entity, @Nullable R saved);
 }

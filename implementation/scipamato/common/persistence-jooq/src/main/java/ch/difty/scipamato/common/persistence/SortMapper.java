@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.jooq.Record;
 import org.jooq.SortField;
 import org.jooq.TableField;
@@ -31,10 +32,12 @@ import ch.difty.scipamato.common.persistence.paging.Sort;
  * @author u.joss
  */
 @Component
-public class SortMapper<R extends Record, T extends ScipamatoEntity, TI extends TableImpl<R>> implements JooqSortMapper<R, T, TI> {
+public class SortMapper<R extends Record, T extends ScipamatoEntity, TI extends TableImpl<R>>
+    implements JooqSortMapper<R, T, TI> {
 
+    @NotNull
     @Override
-    public Collection<SortField<T>> map(final Sort sortSpecification, final TI table) {
+    public Collection<SortField<T>> map(@Nullable final Sort sortSpecification, @NotNull final TI table) {
         final Collection<SortField<T>> querySortFields = new ArrayList<>();
 
         if (sortSpecification == null) {
@@ -66,7 +69,8 @@ public class SortMapper<R extends Record, T extends ScipamatoEntity, TI extends 
      * reflection based field extraction so we can stub it out in tests
      */
     @SuppressWarnings("unchecked")
-    TableField<R, T> getTableFieldFor(final TI table, final String columnName) throws NoSuchFieldException, IllegalAccessException {
+    TableField<R, T> getTableFieldFor(final TI table, final String columnName)
+        throws NoSuchFieldException, IllegalAccessException {
         return (TableField<R, T>) table
             .getClass()
             .getField(columnName)
@@ -80,7 +84,8 @@ public class SortMapper<R extends Record, T extends ScipamatoEntity, TI extends 
             .toUpperCase();
     }
 
-    private SortField<T> convertTableFieldToSortField(final TableField<R, T> tableField, final Sort.Direction sortDirection) {
+    private SortField<T> convertTableFieldToSortField(final TableField<R, T> tableField,
+        final Sort.Direction sortDirection) {
         return sortDirection == Sort.Direction.ASC ? tableField.asc() : tableField.desc();
     }
 
