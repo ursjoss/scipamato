@@ -186,28 +186,28 @@ internal class SearchOrderTest {
     }
 
     @Test
-    fun testingDisplayValue_withNoConditions_returnsIDOnly() {
+    fun testingFullDisplayValue_withNoConditions_returnsIDOnly() {
         assertThat(so.searchConditions).hasSize(0)
-        assertThat(so.displayValue).isEqualTo("soName:  (10)")
+        assertThat(so.fullDisplayValue).isEqualTo("soName:  (10)")
     }
 
     @Test
-    fun testingDisplayValue_forGlobalSearchOrderWithNoConditions_returnsIdPlusGlobalIndicator() {
+    fun testingFullDisplayValue_forGlobalSearchOrderWithNoConditions_returnsIdPlusGlobalIndicator() {
         assertThat(so.searchConditions).hasSize(0)
         so.isGlobal = true
-        assertThat(so.displayValue).isEqualTo("soName:  (10)*")
+        assertThat(so.fullDisplayValue).isEqualTo("soName:  (10)*")
     }
 
     @Test
-    fun testingDisplayValue_withoutName_forGlobalSearchOrderWithNoConditions_returnsIdPlusGlobalIndicator() {
+    fun testingFullDisplayValue_withoutName_forGlobalSearchOrderWithNoConditions_returnsIdPlusGlobalIndicator() {
         so.name = null
         assertThat(so.searchConditions).hasSize(0)
         so.isGlobal = true
-        assertThat(so.displayValue).isEqualTo("-- (10)*")
+        assertThat(so.fullDisplayValue).isEqualTo("-- (10)*")
     }
 
     @Test
-    fun testingDisplayValue_withoutNameButWithSingleCondition_returnsIt() {
+    fun testingFullDisplayValue_withoutNameButWithSingleCondition_returnsIt() {
         val so1 = SearchOrder(10L, null, 1, false, null, excludedIds)
         so1.add(object : SearchCondition() {
             override fun getDisplayValue(): String = "f1DisplayValue"
@@ -217,7 +217,28 @@ internal class SearchOrderTest {
     }
 
     @Test
-    fun testingDisplayValue_withSingleCondition_returnsIt() {
+    fun testingFullDisplayValue_withSingleCondition_returnsIt() {
+        so.add(object : SearchCondition() {
+            override fun getDisplayValue(): String = "f1DisplayValue"
+        })
+
+        assertThat(so.fullDisplayValue).isEqualTo("soName: f1DisplayValue (10)")
+    }
+
+    @Test
+    fun testingFullDisplayValue_withTwoConditions_joinsThemUsingOR() {
+        so.add(object : SearchCondition() {
+            override fun getDisplayValue(): String = "c1DisplayValue"
+        })
+        so.add(object : SearchCondition() {
+            override fun getDisplayValue(): String = "c2DisplayValue"
+        })
+
+        assertThat(so.fullDisplayValue).isEqualTo("soName: c1DisplayValue; OR c2DisplayValue (10)")
+    }
+
+    @Test
+    fun testingDisplayValue_withFullDisplayValueBelowThreshold_returnsFullDisplayValue() {
         so.add(object : SearchCondition() {
             override fun getDisplayValue(): String = "f1DisplayValue"
         })
@@ -226,15 +247,27 @@ internal class SearchOrderTest {
     }
 
     @Test
-    fun testingDisplayValue_withTwoConditions_joinsThemUsingOR() {
+    fun testingDisplayValue_withFullDisplayValueAboveThreshold_returnsTruncatedFullDisplayValue() {
         so.add(object : SearchCondition() {
             override fun getDisplayValue(): String = "c1DisplayValue"
         })
         so.add(object : SearchCondition() {
             override fun getDisplayValue(): String = "c2DisplayValue"
         })
-
-        assertThat(so.displayValue).isEqualTo("soName: c1DisplayValue; OR c2DisplayValue (10)")
+        so.add(object : SearchCondition() {
+            override fun getDisplayValue(): String = "c3DisplayValue"
+        })
+        so.add(object : SearchCondition() {
+            override fun getDisplayValue(): String = "c4DisplayValue"
+        })
+        so.add(object : SearchCondition() {
+            override fun getDisplayValue(): String = "c5DisplayValue"
+        })
+        so.add(object : SearchCondition() {
+            override fun getDisplayValue(): String = "c6DisplayValue"
+        })
+        assertThat(so.displayValue).isEqualTo("soName: c1DisplayValue; OR c2DisplayValue; " +
+            "OR c3DisplayValue; OR c4DisplayValue; OR c5DisplayValu... (10)")
     }
 
     @Test
