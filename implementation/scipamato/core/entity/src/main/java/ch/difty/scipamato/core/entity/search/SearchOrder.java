@@ -27,6 +27,10 @@ public class SearchOrder extends IdScipamatoEntity<Long> implements PaperSlimFil
 
     private static final long serialVersionUID = 1L;
 
+    static final int    DISPL_VALUE_THRESHOLD = 100;
+    static final String DISPL_VALUE_ELLIPSIS  = "...";
+    static final int    DISPL_VALUE_CUTOFF    = DISPL_VALUE_THRESHOLD - DISPL_VALUE_ELLIPSIS.length();
+
     private static final String JOIN_DELIMITER = "; OR ";
 
     private String  name;
@@ -141,9 +145,14 @@ public class SearchOrder extends IdScipamatoEntity<Long> implements PaperSlimFil
         excludedPaperIds.remove(paperId);
     }
 
+    public String getFullDisplayValue() {
+        final StringBuilder sb = part1(false);
+        part2(sb);
+        return sb.toString();
+    }
+
     @NotNull
-    @Override
-    public String getDisplayValue() {
+    private StringBuilder part1(final boolean truncate) {
         final StringBuilder sb = new StringBuilder();
         if (getName() != null) {
             sb
@@ -156,12 +165,27 @@ public class SearchOrder extends IdScipamatoEntity<Long> implements PaperSlimFil
             .collect(Collectors.joining(JOIN_DELIMITER)));
         if (sb.length() == 0)
             sb.append("--");
+
+        if (truncate && sb.length() > DISPL_VALUE_THRESHOLD) {
+            sb.delete(DISPL_VALUE_CUTOFF, sb.length());
+            sb.append(DISPL_VALUE_ELLIPSIS);
+        }
+        return sb;
+    }
+
+    private void part2(final StringBuilder sb) {
         sb
             .append(" (")
             .append(getId())
             .append(")");
         if (isGlobal())
             sb.append("*");
+    }
+
+    @NotNull
+    public String getDisplayValue() {
+        final StringBuilder sb = part1(true);
+        part2(sb);
         return sb.toString();
     }
 }

@@ -63,6 +63,8 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 
 .Changed
+- {url-issues}119[#119] Core - Truncate Display value for SearchOrder to not have the combobox in the 
+  search order panel grow excessively.
 - Dependency updates for spring-boot-starter, spring-cloud, spring-cloud-starter, openfeign, jasperreports,
   font-awesome, equalsverifier, testcontainers, mockito
 - Plugin updates for gradle-lombok-plugin, sonarqube
