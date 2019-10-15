@@ -63,11 +63,6 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 
 .Changed
-- {url-issues}119[#119] Core - Truncate Display value for SearchOrder to not have the combobox in the 
-  search order panel grow excessively.
-- Dependency updates for spring-boot-starter, spring-cloud, spring-cloud-starter, openfeign, jasperreports,
-  font-awesome, equalsverifier, testcontainers, mockito
-- Plugin updates for gradle-lombok-plugin, sonarqube
 
 .Deprecated
 
@@ -76,6 +71,19 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Fixed
 
 .Security
+
+
+[[v1.3.1]]
+== [1.3.1] -- 2019-10-15
+
+.Changed
+- {url-issues}119[#119] Core - Truncate Display value for SearchOrder to not have the combobox in the 
+  search order panel grow excessively.
+- {url-issues}138[#138] Added Nullability annotations in code
+- Dependency updates for spring-boot-starter, spring-cloud, spring-cloud-starter, openfeign, jasperreports,
+  font-awesome, equalsverifier, testcontainers, mockito
+- Plugin updates for gradle-lombok-plugin, sonarqube
+- Various technical improvements ({url-issues}124[#124] - thanks to @jcornaz, {url-issues}138[#138], {url-issues}133[#133])
 
 
 [[v1.3.0]]
