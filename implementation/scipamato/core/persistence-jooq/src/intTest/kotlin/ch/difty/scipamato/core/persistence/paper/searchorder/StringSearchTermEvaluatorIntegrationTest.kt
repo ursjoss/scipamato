@@ -140,8 +140,8 @@ internal class StringSearchTermEvaluatorIntegrationTest : SearchTermEvaluatorInt
                       |)""".trimMargin(), LENGTH),
             Arguments.of("""-""""", """(RAW -"")""", "1 = 1", NONE),
 
-            Arguments.of("""s/foo/""", "(REGEX foo)", "coalesce(\n  fn, \n  ''\n) like_regex 'foo'", REGEX),
-            Arguments.of("""-s/foo/""", "(NOTREGEX foo)", "not(coalesce(\n  fn, \n  ''\n) like_regex 'foo')", REGEX),
+            Arguments.of("""s/foo/""", "(REGEX foo)", "(coalesce(\n  fn, \n  ''\n) like_regex 'foo')", REGEX),
+            Arguments.of("""-s/foo/""", "(NOTREGEX foo)", "not((coalesce(\n  fn, \n  ''\n) like_regex 'foo'))", REGEX),
 
             Arguments.of("""""""", """(RAW "")""", "1 = 1", NONE)
         )

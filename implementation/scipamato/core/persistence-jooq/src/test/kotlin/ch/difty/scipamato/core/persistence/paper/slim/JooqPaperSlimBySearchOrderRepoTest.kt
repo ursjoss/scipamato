@@ -61,7 +61,7 @@ internal class JooqPaperSlimBySearchOrderRepoTest {
                   |  select "public"."paper"."id"
                   |  from "public"."paper"
                   |    join "public"."scipamato_user"
-                  |    on paper.created_by = "public"."scipamato_user"."id"
+                  |      on paper.created_by = "public"."scipamato_user"."id"
                   |  where lower("public"."scipamato_user"."user_name") like '%mkj%'
                   |)""".trimMargin()
         )
@@ -289,7 +289,7 @@ internal class JooqPaperSlimBySearchOrderRepoTest {
                  |  select 1 "one"
                  |  from "public"."paper_newsletter"
                  |    join "public"."newsletter"
-                 |    on "public"."paper_newsletter"."newsletter_id" = "public"."newsletter"."id"
+                 |      on "public"."paper_newsletter"."newsletter_id" = "public"."newsletter"."id"
                  |  where (
                  |    "public"."paper_newsletter"."paper_id" = "public"."paper"."id"
                  |    and "public"."paper_newsletter"."newsletter_topic_id" = 1
@@ -313,7 +313,7 @@ internal class JooqPaperSlimBySearchOrderRepoTest {
                   |  select 1 "one"
                   |  from "public"."paper_newsletter"
                   |    join "public"."newsletter"
-                  |    on "public"."paper_newsletter"."newsletter_id" = "public"."newsletter"."id"
+                  |      on "public"."paper_newsletter"."newsletter_id" = "public"."newsletter"."id"
                   |  where (
                   |    "public"."paper_newsletter"."paper_id" = "public"."paper"."id"
                   |    and "public"."paper_newsletter"."newsletter_topic_id" = 1
@@ -336,7 +336,7 @@ internal class JooqPaperSlimBySearchOrderRepoTest {
                   |  select 1 "one"
                   |  from "public"."paper_newsletter"
                   |    join "public"."newsletter"
-                  |    on "public"."paper_newsletter"."newsletter_id" = "public"."newsletter"."id"
+                  |      on "public"."paper_newsletter"."newsletter_id" = "public"."newsletter"."id"
                   |  where (
                   |    "public"."paper_newsletter"."paper_id" = "public"."paper"."id"
                   |    and lower("public"."paper_newsletter"."headline") like lower('%hl%')
@@ -359,7 +359,7 @@ internal class JooqPaperSlimBySearchOrderRepoTest {
                   |  select 1 "one"
                   |  from "public"."paper_newsletter"
                   |    join "public"."newsletter"
-                  |    on "public"."paper_newsletter"."newsletter_id" = "public"."newsletter"."id"
+                  |      on "public"."paper_newsletter"."newsletter_id" = "public"."newsletter"."id"
                   |  where (
                   |    "public"."paper_newsletter"."paper_id" = "public"."paper"."id"
                   |    and lower("public"."newsletter"."issue") like lower('%i%')
@@ -386,7 +386,7 @@ internal class JooqPaperSlimBySearchOrderRepoTest {
                   |    select 1 "one"
                   |    from "public"."paper_newsletter"
                   |      join "public"."newsletter"
-                  |      on "public"."paper_newsletter"."newsletter_id" = "public"."newsletter"."id"
+                  |        on "public"."paper_newsletter"."newsletter_id" = "public"."newsletter"."id"
                   |    where (
                   |      "public"."paper_newsletter"."paper_id" = "public"."paper"."id"
                   |      and lower("public"."paper_newsletter"."headline") like lower('%hl%')
@@ -396,7 +396,7 @@ internal class JooqPaperSlimBySearchOrderRepoTest {
                   |    select 1 "one"
                   |    from "public"."paper_newsletter"
                   |      join "public"."newsletter"
-                  |      on "public"."paper_newsletter"."newsletter_id" = "public"."newsletter"."id"
+                  |        on "public"."paper_newsletter"."newsletter_id" = "public"."newsletter"."id"
                   |    where (
                   |      "public"."paper_newsletter"."paper_id" = "public"."paper"."id"
                   |      and "public"."paper_newsletter"."newsletter_topic_id" = 1
