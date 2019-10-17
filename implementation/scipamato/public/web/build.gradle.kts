@@ -54,6 +54,7 @@ dependencies {
     implementation(Lib.jaxbCore())
     implementation(Lib.jaxb("impl"))
     implementation(Lib.javaxActivation())
+    implementation(Lib.jacksonKotlin())
 
     implementation(Lib.validationApi())
 

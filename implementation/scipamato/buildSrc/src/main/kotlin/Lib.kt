@@ -137,6 +137,7 @@ object Lib {
     fun jaxbRuntime() = Dep("org.glassfish.jaxb", "jaxb-runtime")
     fun jaxbCore() = Dep("com.sun.xml.bind", "jaxb-core", jaxbCoreVersion)
     fun jaxb(module: String) = Dep("com.sun.xml.bind", "jaxb-$module", jaxbImplVersion)
+    fun jacksonKotlin() = Dep("com.fasterxml.jackson.module", "jackson-module-kotlin")
 
     // Test Libraries
 
