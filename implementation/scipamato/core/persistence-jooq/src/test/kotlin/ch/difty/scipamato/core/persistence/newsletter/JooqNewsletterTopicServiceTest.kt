@@ -62,7 +62,7 @@ internal class JooqNewsletterTopicServiceTest {
         whenever(repo.findPageOfNewsletterTopicDefinitions(filterMock, paginationContextMock))
             .thenReturn(topicDefinitions)
         assertThat(service.findPageOfEntityDefinitions(filterMock, paginationContextMock))
-            .hasSameElementsAs(topicDefinitions)
+            .toIterable().hasSameElementsAs(topicDefinitions)
         verify(repo).findPageOfNewsletterTopicDefinitions(filterMock, paginationContextMock)
     }
 

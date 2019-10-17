@@ -66,7 +66,7 @@ internal class JooqCodeServiceTest {
     @Test
     fun gettingPageOfEntityDefinitions_delegatesToRepo() {
         whenever(repo.findPageOfCodeDefinitions(filterMock, paginationContextMock)).thenReturn(codeDefinitions)
-        assertThat(service.findPageOfEntityDefinitions(filterMock, paginationContextMock))
+        assertThat(service.findPageOfEntityDefinitions(filterMock, paginationContextMock)).toIterable()
             .hasSameElementsAs(codeDefinitions)
         verify(repo).findPageOfCodeDefinitions(filterMock, paginationContextMock)
     }

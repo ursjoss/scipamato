@@ -45,18 +45,23 @@ class PaperAttachmentProviderTest {
 
     @Test
     void iterator_fromStartWithPageSizeLargerThanActualSize_returnsAll() {
-        assertThat(provider.iterator(0, 100)).containsExactly(mockAttachment1, mockAttachment2, mockAttachment3,
-            mockAttachment4);
+        assertThat(provider.iterator(0, 100))
+            .toIterable()
+            .containsExactly(mockAttachment1, mockAttachment2, mockAttachment3, mockAttachment4);
     }
 
     @Test
     void iterator_fromStartWithLimitingPageSize_returnsPageFullFromStart() {
-        assertThat(provider.iterator(0, 2)).containsExactly(mockAttachment1, mockAttachment2);
+        assertThat(provider.iterator(0, 2))
+            .toIterable()
+            .containsExactly(mockAttachment1, mockAttachment2);
     }
 
     @Test
     void iterator_fromIndex1WithLimitingPageSize_returnsPageFullFromIndex() {
-        assertThat(provider.iterator(1, 2)).containsExactly(mockAttachment2, mockAttachment3);
+        assertThat(provider.iterator(1, 2))
+            .toIterable()
+            .containsExactly(mockAttachment2, mockAttachment3);
     }
 
     @Test

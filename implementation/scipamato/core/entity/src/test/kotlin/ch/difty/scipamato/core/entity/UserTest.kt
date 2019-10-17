@@ -8,7 +8,6 @@ import ch.difty.scipamato.core.entity.CoreEntity.CoreEntityFields.MODIFIER_ID
 import nl.jqno.equalsverifier.EqualsVerifier
 import nl.jqno.equalsverifier.Warning
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
@@ -109,7 +108,7 @@ internal class UserTest {
     fun settingRole_withNullList_clearsList() {
         val u = User(ID, USER_NAME, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, ENABLED, roles)
         u.roles = null
-        assertEquals(0, u.roles.size)
+        assertThat(u.roles.size).isEqualTo(0)
     }
 
     @Test
@@ -162,7 +161,7 @@ internal class UserTest {
 
     @Test
     fun assertEnumFields() {
-        assertThat(User.UserFields.values()).extracting("name")
+        assertThat(User.UserFields.values().map { it.fieldName })
             .containsExactly("userName", "firstName", "lastName", "email", "password", "enabled", "roles")
     }
 

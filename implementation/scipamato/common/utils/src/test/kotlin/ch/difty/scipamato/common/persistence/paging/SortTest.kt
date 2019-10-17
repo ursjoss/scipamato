@@ -50,7 +50,7 @@ internal class SortTest {
     private fun assertSortProperty(dir: Direction, propertyNames: Array<String>) {
         val sort = Sort(dir, *propertyNames)
 
-        assertThat(sort.iterator()).hasSize(propertyNames.size)
+        assertThat(sort.iterator()).toIterable().hasSize(propertyNames.size)
 
         for (sp in sort)
             assertThat(sp.direction).isEqualTo(dir)

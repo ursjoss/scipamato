@@ -7,7 +7,6 @@ import ch.difty.scipamato.core.entity.Paper.PaperFields.*
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.extractProperty
-import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
@@ -428,7 +427,7 @@ internal class PaperTest : Jsr303ValidatedEntityTest<Paper>(Paper::class.java) {
         p.attachments = attachments
         assertThat(p.attachments).hasSize(2)
         p.attachments = null
-        assertEquals(0, p.attachments.size)
+        assertThat(p.attachments.size).isEqualTo(0)
     }
 
     @Test
@@ -541,7 +540,9 @@ internal class PaperTest : Jsr303ValidatedEntityTest<Paper>(Paper::class.java) {
         assertThat(newsletterLink.newsletterId).isEqualTo(newsletterId)
         assertThat(newsletterLink.issue).isEqualTo(issue)
         assertThat(newsletterLink.publicationStatusId).isEqualTo(status.id)
-        assertEquals(topicId, newsletterLink.topicId)
+        topicId?.let {
+            assertThat(newsletterLink.topicId).isEqualTo(topicId)
+        } ?: assertNull(newsletterLink.topicId)
         assertThat(newsletterLink.topic).isEqualTo(topic)
         assertThat(newsletterLink.headline).isEqualTo(headline)
     }
