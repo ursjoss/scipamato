@@ -21,7 +21,19 @@ internal class SearchOrderFilterConditionMapperTest :
     fun creatingWhereCondition_withNameMask_searchesForName() {
         filter.nameMask = "fOo"
         assertThat(mapper.map(filter).toString()).isEqualToIgnoringCase(
-            """lower("PUBLIC"."SEARCH_ORDER"."NAME") like ('%' || 'foo' || '%') escape '!'"""
+            """lower("public"."search_order"."name") like ('%' || replace(
+                |  replace(
+                |    replace(
+                |      'foo', 
+                |      '!', 
+                |      '!!'
+                |    ), 
+                |    '%', 
+                |    '!%'
+                |  ), 
+                |  '_', 
+                |  '!_'
+                |) || '%') escape '!'""".trimMargin()
         )
     }
 

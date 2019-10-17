@@ -86,7 +86,7 @@ internal open class AuditSearchTermEvaluatorTest {
                    |  select "public"."paper"."id"
                    |  from "public"."paper"
                    |    join "public"."scipamato_user"
-                   |    on paper.created_by = "public"."scipamato_user"."id"
+                   |      on paper.created_by = "public"."scipamato_user"."id"
                    |  where lower("public"."scipamato_user"."user_name") like '%foo%'
                    |)""".trimMargin()
         )
@@ -100,7 +100,7 @@ internal open class AuditSearchTermEvaluatorTest {
                   |  select "public"."paper"."id"
                   |  from "public"."paper"
                   |    join "public"."scipamato_user"
-                  |    on paper.last_modified_by = "public"."scipamato_user"."id"
+                  |      on paper.last_modified_by = "public"."scipamato_user"."id"
                   |  where lower("public"."scipamato_user"."user_name") like '%foo%'
                   |)""".trimMargin()
         )

@@ -62,7 +62,7 @@ internal class JooqNewsletterTopicServiceTest {
         whenever(repo.findPageOfNewsletterTopicDefinitions(filterMock, paginationContextMock))
             .thenReturn(topicDefinitions)
         assertThat(service.findPageOfEntityDefinitions(filterMock, paginationContextMock))
-            .hasSameElementsAs(topicDefinitions)
+            .toIterable().hasSameElementsAs(topicDefinitions)
         verify(repo).findPageOfNewsletterTopicDefinitions(filterMock, paginationContextMock)
     }
 
@@ -142,9 +142,9 @@ internal class JooqNewsletterTopicServiceTest {
         val topics = service.getSortedNewsletterTopicsForNewsletter(newsletterId)
 
         assertThat(topics).hasSize(2)
-        assertThat(topics).extracting("newsletterTopicId").containsExactly(1, 2)
-        assertThat(topics).extracting("sort").containsExactly(0, 1)
-        assertThat(topics).extracting("title").containsExactly("topic1", "topic2")
+        assertThat(topics.map { it.newsletterTopicId }).containsExactly(1, 2)
+        assertThat(topics.map { it.sort }).containsExactly(0, 1)
+        assertThat(topics.map { it.title }).containsExactly("topic1", "topic2")
 
         verify(repo).removeObsoleteNewsletterTopicsFromSort(newsletterId)
         verify(repo).findPersistedSortedNewsletterTopicsForNewsletterWithId(newsletterId)
@@ -165,9 +165,9 @@ internal class JooqNewsletterTopicServiceTest {
         val topics = service.getSortedNewsletterTopicsForNewsletter(newsletterId)
 
         assertThat(topics).hasSize(2)
-        assertThat(topics).extracting("newsletterTopicId").containsExactly(1, 2)
-        assertThat(topics).extracting("sort").containsExactly(0, 1)
-        assertThat(topics).extracting("title").containsExactly("topic1", "topic2")
+        assertThat(topics.map { it.newsletterTopicId }).containsExactly(1, 2)
+        assertThat(topics.map { it.sort }).containsExactly(0, 1)
+        assertThat(topics.map { it.title }).containsExactly("topic1", "topic2")
 
         verify(repo).removeObsoleteNewsletterTopicsFromSort(newsletterId)
         verify(repo).findPersistedSortedNewsletterTopicsForNewsletterWithId(newsletterId)
@@ -191,9 +191,9 @@ internal class JooqNewsletterTopicServiceTest {
         val topics = service.getSortedNewsletterTopicsForNewsletter(newsletterId)
 
         assertThat(topics).hasSize(3)
-        assertThat(topics).extracting("newsletterTopicId").containsExactly(1, 2, 3)
-        assertThat(topics).extracting("sort").containsExactly(0, 1, 2)
-        assertThat(topics).extracting("title").containsExactly("topic1", "topic2", "topic3")
+        assertThat(topics.map { it.newsletterTopicId }).containsExactly(1, 2, 3)
+        assertThat(topics.map { it.sort }).containsExactly(0, 1, 2)
+        assertThat(topics.map { it.title }).containsExactly("topic1", "topic2", "topic3")
 
         verify(repo).removeObsoleteNewsletterTopicsFromSort(newsletterId)
         verify(repo).findPersistedSortedNewsletterTopicsForNewsletterWithId(newsletterId)

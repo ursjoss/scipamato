@@ -63,6 +63,8 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 
 .Changed
+- {url-issues}136[#136] Upgrade Spring-Boot to 2.2.0, Flyway 6.0, jOOQ 3.12.1
+- Bump dependencies: detekt, testSet-plugin, mockk
 
 .Deprecated
 

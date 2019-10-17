@@ -106,6 +106,7 @@ class PublicPaperProviderTest {
     void gettingIterator_withAscendingSort() {
         provider.setSort("title", SortOrder.ASCENDING);
         assertThat(provider.iterator(0L, 10L))
+            .toIterable()
             .extracting("id")
             .containsExactlyInAnyOrder(1L, 2L);
         verify(serviceMock).findPageByFilter(eq(filterMock), isA(PaginationContext.class));
@@ -115,6 +116,7 @@ class PublicPaperProviderTest {
     void gettingIterator_withDescendingSort() {
         provider.setSort("title", SortOrder.DESCENDING);
         assertThat(provider.iterator(0L, 10L))
+            .toIterable()
             .extracting("id")
             .containsExactlyInAnyOrder(2L, 1L);
         verify(serviceMock).findPageByFilter(eq(filterMock), isA(PaginationContext.class));

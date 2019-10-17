@@ -69,6 +69,7 @@ dependencies {
     implementation(Lib.jaxb("impl"))
     implementation(Lib.javaxActivation())
     implementation(Lib.jaxbRuntime())
+    implementation(Lib.jacksonKotlin())
 
     testCompile(project(Module.scipamatoCommon("test")))
     testCompile(project(Module.scipamatoCommon("persistence-jooq-test")))

@@ -31,10 +31,10 @@ internal class StringSearchTermEvaluatorTest {
     fun buildingConditionForNotRegex_appliesNotRegex() {
         expectToken(TokenType.NOTREGEX, "foo")
         assertThat(evaluator.evaluate(stMock).toString()).isEqualTo(
-            """not(coalesce(
+            """not((coalesce(
                    |  field_x, 
                    |  ''
-                   |) like_regex 'foo')""".trimMargin()
+                   |) like_regex 'foo'))""".trimMargin()
         )
     }
 
@@ -44,10 +44,10 @@ internal class StringSearchTermEvaluatorTest {
         assertThat(evaluator
             .evaluate(stMock)
             .toString()).isEqualTo(
-            """coalesce(
+            """(coalesce(
                    |  field_x, 
                    |  ''
-                   |) like_regex 'foo'""".trimMargin()
+                   |) like_regex 'foo')""".trimMargin()
         )
     }
 
@@ -288,38 +288,38 @@ internal class StringSearchTermEvaluatorTest {
             .evaluate(stMock)
             .toString()).isEqualTo(
             """(
-               |  not(lower(cast(coalesce(
+               |  not((lower(cast(coalesce(
                |    methods, 
                |    ''
-               |  ) as varchar)) like_regex 'foo')
-               |  and not(lower(cast(coalesce(
+               |  ) as varchar)) like_regex 'foo'))
+               |  and not((lower(cast(coalesce(
                |    method_study_design, 
                |    ''
-               |  ) as varchar)) like_regex 'foo')
-               |  and not(lower(cast(coalesce(
+               |  ) as varchar)) like_regex 'foo'))
+               |  and not((lower(cast(coalesce(
                |    population_place, 
                |    ''
-               |  ) as varchar)) like_regex 'foo')
-               |  and not(lower(cast(coalesce(
+               |  ) as varchar)) like_regex 'foo'))
+               |  and not((lower(cast(coalesce(
                |    method_outcome, 
                |    ''
-               |  ) as varchar)) like_regex 'foo')
-               |  and not(lower(cast(coalesce(
+               |  ) as varchar)) like_regex 'foo'))
+               |  and not((lower(cast(coalesce(
                |    exposure_pollutant, 
                |    ''
-               |  ) as varchar)) like_regex 'foo')
-               |  and not(lower(cast(coalesce(
+               |  ) as varchar)) like_regex 'foo'))
+               |  and not((lower(cast(coalesce(
                |    exposure_assessment, 
                |    ''
-               |  ) as varchar)) like_regex 'foo')
-               |  and not(lower(cast(coalesce(
+               |  ) as varchar)) like_regex 'foo'))
+               |  and not((lower(cast(coalesce(
                |    method_statistics, 
                |    ''
-               |  ) as varchar)) like_regex 'foo')
-               |  and not(lower(cast(coalesce(
+               |  ) as varchar)) like_regex 'foo'))
+               |  and not((lower(cast(coalesce(
                |    method_confounders, 
                |    ''
-               |  ) as varchar)) like_regex 'foo')
+               |  ) as varchar)) like_regex 'foo'))
                |)""".trimMargin()
         )
     }
@@ -329,38 +329,38 @@ internal class StringSearchTermEvaluatorTest {
         expectMethodToken(TokenType.REGEX, "foo")
         assertThat(evaluator.evaluate(stMock).toString()).isEqualTo(
             """(
-               |  lower(cast(coalesce(
+               |  (lower(cast(coalesce(
                |    methods, 
                |    ''
-               |  ) as varchar)) like_regex 'foo'
-               |  or lower(cast(coalesce(
+               |  ) as varchar)) like_regex 'foo')
+               |  or (lower(cast(coalesce(
                |    method_study_design, 
                |    ''
-               |  ) as varchar)) like_regex 'foo'
-               |  or lower(cast(coalesce(
+               |  ) as varchar)) like_regex 'foo')
+               |  or (lower(cast(coalesce(
                |    population_place, 
                |    ''
-               |  ) as varchar)) like_regex 'foo'
-               |  or lower(cast(coalesce(
+               |  ) as varchar)) like_regex 'foo')
+               |  or (lower(cast(coalesce(
                |    method_outcome, 
                |    ''
-               |  ) as varchar)) like_regex 'foo'
-               |  or lower(cast(coalesce(
+               |  ) as varchar)) like_regex 'foo')
+               |  or (lower(cast(coalesce(
                |    exposure_pollutant, 
                |    ''
-               |  ) as varchar)) like_regex 'foo'
-               |  or lower(cast(coalesce(
+               |  ) as varchar)) like_regex 'foo')
+               |  or (lower(cast(coalesce(
                |    exposure_assessment, 
                |    ''
-               |  ) as varchar)) like_regex 'foo'
-               |  or lower(cast(coalesce(
+               |  ) as varchar)) like_regex 'foo')
+               |  or (lower(cast(coalesce(
                |    method_statistics, 
                |    ''
-               |  ) as varchar)) like_regex 'foo'
-               |  or lower(cast(coalesce(
+               |  ) as varchar)) like_regex 'foo')
+               |  or (lower(cast(coalesce(
                |    method_confounders, 
                |    ''
-               |  ) as varchar)) like_regex 'foo'
+               |  ) as varchar)) like_regex 'foo')
                |)""".trimMargin()
         )
     }

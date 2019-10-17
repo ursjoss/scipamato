@@ -50,7 +50,7 @@ internal class SortTest {
     private fun assertSortProperty(dir: Direction, propertyNames: Array<String>) {
         val sort = Sort(dir, *propertyNames)
 
-        assertThat(sort.iterator()).hasSize(propertyNames.size)
+        assertThat(sort.iterator()).toIterable().hasSize(propertyNames.size)
 
         for (sp in sort)
             assertThat(sp.direction).isEqualTo(dir)
@@ -85,14 +85,14 @@ internal class SortTest {
     @Test
     fun gettingSortPropertyFor_nonExistingName_returnsNull() {
         val p = "x"
-        assertThat(sortProperties).extracting("name").doesNotContain(p)
+        assertThat(sortProperties.map { it.name }).doesNotContain(p)
         assertThat(sort.getSortPropertyFor(p)).isNull()
     }
 
     @Test
     fun gettingSortPropertyFor_existingName_returnsRespectiveSortProperty() {
         val p = "c"
-        assertThat(sortProperties).extracting("name").contains(p)
+        assertThat(sortProperties.map { it.name }).contains(p)
         assertThat(sort.getSortPropertyFor(p)?.name).isEqualTo(p)
     }
 

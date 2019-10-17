@@ -63,7 +63,7 @@ internal class JooqCodeClassServiceTest {
         whenever(repo.findPageOfCodeClassDefinitions(filterMock, paginationContextMock))
             .thenReturn(codeClassDefinitions)
         assertThat(service.findPageOfEntityDefinitions(filterMock, paginationContextMock))
-            .hasSameElementsAs(codeClassDefinitions)
+            .toIterable().hasSameElementsAs(codeClassDefinitions)
         verify(repo).findPageOfCodeClassDefinitions(filterMock, paginationContextMock)
     }
 

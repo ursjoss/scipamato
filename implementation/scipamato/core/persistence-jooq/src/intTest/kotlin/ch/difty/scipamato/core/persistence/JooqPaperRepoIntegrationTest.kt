@@ -494,9 +494,7 @@ internal open class JooqPaperRepoIntegrationTest {
             .fetchOneInto(Int::class.java)
         assertThat(id).isNotNull()
         val p = repo.deleteAttachment(id) ?: fail("Unable to delete attachments")
-        assertThat(p.attachments)
-            .extracting("id")
-            .doesNotContain(id)
+        assertThat(p.attachments.map { it.id }).doesNotContain(id)
         assertThat(dsl
             .select(PAPER_ATTACHMENT.ID)
             .from(PAPER_ATTACHMENT)

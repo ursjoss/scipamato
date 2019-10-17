@@ -9,7 +9,7 @@ object Lib {
     //region:dependencyVersions
     private const val kotlinVersion = "1.3.50"
 
-    private const val springBootVersion = "2.1.9.RELEASE"
+    private const val springBootVersion = "2.2.0.RELEASE"
     private const val springBootAdminVersion = "2.1.6"
     const val springCloudVersion = "Greenwich.SR3"
     private const val springCloudStarterVersion = "2.1.3.RELEASE"
@@ -20,7 +20,7 @@ object Lib {
     private const val wicketJqueryUiVersion = "8.3.0"
     private const val wicketBootstrapVersion = "2.0.11"
     private const val jasperReportVersion = "6.10.0"
-    const val jooqVersion = "3.11.12"
+    const val jooqVersion = "3.12.1"
 
     private const val kotlinLoggingVersion = "1.7.6"
 
@@ -30,6 +30,7 @@ object Lib {
     private const val jaxbImplVersion = "2.3.2"
     private const val javaxActivationVersion = "1.2.0"
     private const val javaxElApiVersion = "3.0.1-b06"
+    private const val javaxElVersion = "3.0.1-b11"
 
     private const val fontAwesomeVersion = "5.11.2"
 
@@ -50,7 +51,7 @@ object Lib {
     private const val spekVersion = "2.0.8"
     private const val kwikVersion = "0.1.0"
     private const val kluentVersion = "1.56"
-    private const val mockkVersion = "1.9"
+    private const val mockkVersion = "1.9.3"
 
     private const val jsr305Version = "3.0.2"
     //endregion
@@ -60,10 +61,9 @@ object Lib {
     private const val lombokPluginVersion = "4.1.2"
     private const val jooqModelatorPluginVersion = "3.6.0"
     private const val jaxbPluginVersion = "3.0.4"
-    // BEWARE: 2.2.0 is broken (see https://github.com/unbroken-dome/gradle-testsets-plugin/pull/89)
-    private const val testSetsPluginVersion = "2.1.0" // TODO upgrade once > 2.2.0 is released
+    private const val testSetsPluginVersion = "2.2.1"
     private const val sonarqubePluginVersion = "2.8"
-    private const val detektPluginVersion = "1.1.0"
+    private const val detektPluginVersion = "1.1.1"
     //endregion
 
     //region:dependencies
@@ -117,7 +117,7 @@ object Lib {
     fun validationApi() = Dep("javax.validation", "validation-api")
     fun hibernateValidator() = Dep("org.hibernate.validator", "hibernate-validator")
     fun javaxElApi() = Dep("javax.el", "javax.el-api", javaxElApiVersion)
-    fun javaxElImpl() = Dep("org.glassfish", "javax.el")
+    fun javaxElImpl() = Dep("org.glassfish", "javax.el", javaxElVersion)
 
     // Utility libraries
 
@@ -137,6 +137,7 @@ object Lib {
     fun jaxbRuntime() = Dep("org.glassfish.jaxb", "jaxb-runtime")
     fun jaxbCore() = Dep("com.sun.xml.bind", "jaxb-core", jaxbCoreVersion)
     fun jaxb(module: String) = Dep("com.sun.xml.bind", "jaxb-$module", jaxbImplVersion)
+    fun jacksonKotlin() = Dep("com.fasterxml.jackson.module", "jackson-module-kotlin")
 
     // Test Libraries
 
