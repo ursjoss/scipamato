@@ -9,7 +9,7 @@ object Lib {
     //region:dependencyVersions
     private const val kotlinVersion = "1.3.50"
 
-    private const val springBootVersion = "2.1.9.RELEASE"
+    private const val springBootVersion = "2.2.0.RELEASE"
     private const val springBootAdminVersion = "2.1.6"
     const val springCloudVersion = "Greenwich.SR3"
     private const val springCloudStarterVersion = "2.1.3.RELEASE"
@@ -20,7 +20,7 @@ object Lib {
     private const val wicketJqueryUiVersion = "8.3.0"
     private const val wicketBootstrapVersion = "2.0.11"
     private const val jasperReportVersion = "6.10.0"
-    const val jooqVersion = "3.11.12"
+    const val jooqVersion = "3.12.1"
 
     private const val kotlinLoggingVersion = "1.7.6"
 
@@ -30,6 +30,7 @@ object Lib {
     private const val jaxbImplVersion = "2.3.2"
     private const val javaxActivationVersion = "1.2.0"
     private const val javaxElApiVersion = "3.0.1-b06"
+    private const val javaxElVersion = "3.0.1-b11"
 
     private const val fontAwesomeVersion = "5.11.2"
 
@@ -117,7 +118,7 @@ object Lib {
     fun validationApi() = Dep("javax.validation", "validation-api")
     fun hibernateValidator() = Dep("org.hibernate.validator", "hibernate-validator")
     fun javaxElApi() = Dep("javax.el", "javax.el-api", javaxElApiVersion)
-    fun javaxElImpl() = Dep("org.glassfish", "javax.el")
+    fun javaxElImpl() = Dep("org.glassfish", "javax.el", javaxElVersion)
 
     // Utility libraries
 
