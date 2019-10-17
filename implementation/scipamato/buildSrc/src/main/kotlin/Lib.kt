@@ -64,7 +64,7 @@ object Lib {
     // BEWARE: 2.2.0 is broken (see https://github.com/unbroken-dome/gradle-testsets-plugin/pull/89)
     private const val testSetsPluginVersion = "2.1.0" // TODO upgrade once > 2.2.0 is released
     private const val sonarqubePluginVersion = "2.8"
-    private const val detektPluginVersion = "1.1.0"
+    private const val detektPluginVersion = "1.1.1"
     //endregion
 
     //region:dependencies
