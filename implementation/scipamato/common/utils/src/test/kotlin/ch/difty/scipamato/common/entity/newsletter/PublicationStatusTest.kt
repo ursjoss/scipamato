@@ -31,8 +31,7 @@ internal class PublicationStatusTest {
 
     @Test
     fun assertNames() {
-        assertThat(values())
-            .extracting("description")
+        assertThat(values().map { it.description })
             .containsExactly("in progress", "published", "cancelled")
     }
 

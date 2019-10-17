@@ -178,15 +178,9 @@ internal open class JooqKeywordRepoIntegrationTest {
         val translations = ntd
             .translations
             .values()
-        assertThat(translations)
-            .extracting("langCode")
-            .containsOnly("de", "en", "fr")
-        assertThat(translations)
-            .extracting("id")
-            .containsExactly(null, null, null)
-        assertThat(translations)
-            .extracting("name")
-            .containsExactly(null, null, null)
+        assertThat(translations.map { it.langCode }).containsOnly("de", "en", "fr")
+        assertThat(translations.map { it.id }).containsExactly(null, null, null)
+        assertThat(translations.map { it.name }).containsExactly(null, null, null)
     }
 
     @Test

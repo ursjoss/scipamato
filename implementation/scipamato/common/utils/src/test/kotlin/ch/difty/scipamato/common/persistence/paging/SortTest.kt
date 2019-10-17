@@ -85,14 +85,14 @@ internal class SortTest {
     @Test
     fun gettingSortPropertyFor_nonExistingName_returnsNull() {
         val p = "x"
-        assertThat(sortProperties).extracting("name").doesNotContain(p)
+        assertThat(sortProperties.map { it.name }).doesNotContain(p)
         assertThat(sort.getSortPropertyFor(p)).isNull()
     }
 
     @Test
     fun gettingSortPropertyFor_existingName_returnsRespectiveSortProperty() {
         val p = "c"
-        assertThat(sortProperties).extracting("name").contains(p)
+        assertThat(sortProperties.map { it.name }).contains(p)
         assertThat(sort.getSortPropertyFor(p)?.name).isEqualTo(p)
     }
 
