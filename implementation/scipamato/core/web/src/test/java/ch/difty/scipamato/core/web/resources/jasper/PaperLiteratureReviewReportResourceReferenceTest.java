@@ -10,6 +10,7 @@ import net.sf.jasperreports.engine.JRException;
 import org.apache.wicket.util.resource.IResourceStream;
 import org.apache.wicket.util.resource.ResourceStreamNotFoundException;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings({ "ResultOfMethodCallIgnored", "CatchMayIgnoreException" })
@@ -29,6 +30,27 @@ class PaperLiteratureReviewReportResourceReferenceTest
     @Override
     protected String getResourceReferencePath() {
         return "ch.difty.scipamato.core.web.resources.jasper.PaperLiteratureReviewReportResourceReference";
+    }
+
+    @Test
+    void gettingResourceStream_withNullStream() {
+        final JasperReportResourceReference rr = new JasperReportResourceReference(
+            PaperLiteratureReviewReportResourceReference.class, "baz", false) {
+            @Nullable
+            @Override
+            IResourceStream getResourceStreamFromResource() {
+                return null;
+            }
+        };
+
+        try {
+            rr.getReport();
+            fail("should have thrown exception.");
+        } catch (Exception ex) {
+            assertThat(ex)
+                .isInstanceOf(JasperReportException.class)
+                .hasMessage("Unable to locate resource stream for jasper file 'baz.jrxml'");
+        }
     }
 
     @Test

@@ -12,6 +12,7 @@ import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.util.resource.IResourceStream;
 import org.apache.wicket.util.resource.ResourceStreamNotFoundException;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Static resource reference for a jasper report, wrapping the xml report
@@ -77,10 +78,14 @@ public abstract class JasperReportResourceReference extends PackageResourceRefer
 
     private InputStream getInputStream() {
         final IResourceStream rs = getResourceStreamFromResource();
-        try {
-            return getInputStream(rs);
-        } catch (ResourceStreamNotFoundException ex) {
-            throw new JasperReportException(ex);
+        if (rs != null) {
+            try {
+                return getInputStream(rs);
+            } catch (ResourceStreamNotFoundException ex) {
+                throw new JasperReportException(ex);
+            }
+        } else {
+            throw new JasperReportException("Unable to locate resource stream for jasper file '" + getName() + "'");
         }
     }
 
@@ -89,7 +94,7 @@ public abstract class JasperReportResourceReference extends PackageResourceRefer
         return rs.getInputStream();
     }
 
-    @NotNull
+    @Nullable
     IResourceStream getResourceStreamFromResource() {
         return getResource().getResourceStream();
     }
