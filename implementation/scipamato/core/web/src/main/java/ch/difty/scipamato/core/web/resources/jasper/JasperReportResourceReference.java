@@ -46,7 +46,8 @@ public abstract class JasperReportResourceReference extends PackageResourceRefer
      *     if {@code true} the report is only compiled from xml when the
      *     report is requested for the first time.
      */
-    JasperReportResourceReference(@NotNull final Class<?> scope, @NotNull final String name, final boolean cacheReport) {
+    JasperReportResourceReference(@NotNull final Class<?> scope, @NotNull final String name,
+        final boolean cacheReport) {
         super(scope, name + ".jrxml");
         this.cacheReport = cacheReport;
     }
@@ -76,14 +77,10 @@ public abstract class JasperReportResourceReference extends PackageResourceRefer
 
     private InputStream getInputStream() {
         final IResourceStream rs = getResourceStreamFromResource();
-        if (rs != null) {
-            try {
-                return getInputStream(rs);
-            } catch (ResourceStreamNotFoundException ex) {
-                throw new JasperReportException(ex);
-            }
-        } else {
-            throw new JasperReportException("Unable to locate resource stream for jasper file '" + getName() + "'");
+        try {
+            return getInputStream(rs);
+        } catch (ResourceStreamNotFoundException ex) {
+            throw new JasperReportException(ex);
         }
     }
 
