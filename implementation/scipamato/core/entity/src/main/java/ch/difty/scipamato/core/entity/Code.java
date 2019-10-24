@@ -50,17 +50,17 @@ public class Code extends CoreEntity implements CodeLike {
         }
     }
 
-    public Code(@NotNull final String code, @Nullable final String name,
+    public Code(@NotNull final String code, @NotNull final String name,
         @Nullable final String comment, final boolean internal, @NotNull final Integer codeClassId,
-        final @Nullable String codeClassName, @Nullable final String codeClassDescription, final int sort) {
+        final @NotNull String codeClassName, @NotNull final String codeClassDescription, final int sort) {
         this(code, name, comment, internal, codeClassId, codeClassName, codeClassDescription, sort, null, null, null,
             null, null);
     }
 
-    public Code(@NotNull final String code, @Nullable final String name,
+    public Code(@NotNull final String code, @NotNull final String name,
         @Nullable final String comment, final boolean internal,
-        @NotNull final Integer codeClassId, @Nullable final String codeClassName,
-        @Nullable final String codeClassDescription, final int sort, @Nullable final LocalDateTime created,
+        @NotNull final Integer codeClassId, @NotNull final String codeClassName,
+        @NotNull final String codeClassDescription, final int sort, @Nullable final LocalDateTime created,
         @Nullable final Integer createdBy, @Nullable final LocalDateTime lastModified,
         @Nullable final Integer lastModifiedBy, @Nullable final Integer version) {
         this.code = code;

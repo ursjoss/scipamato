@@ -32,27 +32,6 @@ class PaperLiteratureReviewReportResourceReferenceTest
     }
 
     @Test
-    void gettingResourceStream_withNullStream() {
-        final JasperReportResourceReference rr = new JasperReportResourceReference(
-            PaperLiteratureReviewReportResourceReference.class, "baz", false) {
-            @NotNull
-            @Override
-            IResourceStream getResourceStreamFromResource() {
-                return null;
-            }
-        };
-
-        try {
-            rr.getReport();
-            fail("should have thrown exception.");
-        } catch (Exception ex) {
-            assertThat(ex)
-                .isInstanceOf(JasperReportException.class)
-                .hasMessage("Unable to locate resource stream for jasper file 'baz.jrxml'");
-        }
-    }
-
-    @Test
     void gettingResourceStream_withResourceStreamNotFoundException() {
         final JasperReportResourceReference rr = new JasperReportResourceReference(
             PaperLiteratureReviewReportResourceReference.class, "baz", false) {

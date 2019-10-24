@@ -16,6 +16,7 @@ import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.wicketstuff.annotation.mount.MountPath;
 
@@ -61,12 +62,12 @@ public class PublicPaperDetailPage extends BasePage<PublicPaper> {
      * instead, the page will be loaded by number.
      *
      * @param parameters
-     *     page parameters
+     *     page parameters - must not be null
      * @param callingPageRef
      *     PageReference that will be used to forward to if the user clicks
      *     the back button.
      */
-    public PublicPaperDetailPage(@Nullable final PageParameters parameters,
+    public PublicPaperDetailPage(@NotNull final PageParameters parameters,
         @Nullable final PageReference callingPageRef) {
         super(parameters);
         this.callingPageRef = callingPageRef;

@@ -94,7 +94,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
         this(id, model, mode, null, Model.of(0));
     }
 
-    public PaperPanel(@NotNull String id, @NotNull IModel<T> model, @NotNull Mode mode,
+    public PaperPanel(@NotNull String id, @Nullable IModel<T> model, @NotNull Mode mode,
         @Nullable PageReference previousPage, @NotNull IModel<Integer> tabIndexModel) {
         super(id, model, mode);
         this.callingPage = previousPage;

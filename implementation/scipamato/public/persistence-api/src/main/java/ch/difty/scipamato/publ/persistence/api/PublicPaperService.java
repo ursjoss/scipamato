@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.publ.entity.PublicPaper;
@@ -28,36 +27,35 @@ public interface PublicPaperService {
      * pagination context.
      *
      * @param filter
-     *     the filter
+     *     the filter - must not be null
      * @param paginationContext
-     *     context defining paging and sorting
-     * @return a page of papers as list
+     *     context defining paging and sorting - must not be null
+     * @return a page of papers as list - never null
      */
     @NotNull
-    List<PublicPaper> findPageByFilter(@Nullable PublicPaperFilter filter,
-        @NotNull PaginationContext paginationContext);
+    List<PublicPaper> findPageByFilter(@NotNull PublicPaperFilter filter, @NotNull PaginationContext paginationContext);
 
     /**
      * Counts the number of entities matching the specified filter.
      *
      * @param filter
-     *     the filter specification
+     *     the filter specification - must not be null
      * @return entity count
      */
-    int countByFilter(@Nullable PublicPaperFilter filter);
+    int countByFilter(@NotNull PublicPaperFilter filter);
 
     /**
      * Finds the numbers (business key) of the persisted papers matching the
      * provided filter and pagination context.
      *
      * @param filter
-     *     the filter specification
+     *     the filter specification - must not be null
      * @param paginationContext
-     *     {@link PaginationContext}
-     * @return list of the numbers of matching papers
+     *     {@link PaginationContext} - must not be null
+     * @return list of the numbers of matching papers - never null
      */
     @NotNull
-    List<Long> findPageOfNumbersByFilter(@Nullable PublicPaperFilter filter,
+    List<Long> findPageOfNumbersByFilter(@NotNull PublicPaperFilter filter,
         @NotNull PaginationContext paginationContext);
 
 }

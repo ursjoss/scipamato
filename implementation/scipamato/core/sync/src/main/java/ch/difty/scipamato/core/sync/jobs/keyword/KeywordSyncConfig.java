@@ -100,9 +100,9 @@ public class KeywordSyncConfig
     @Override
     protected PublicKeyword makeEntity(@NotNull final ResultSet rs) throws SQLException {
         final Integer value = getInteger(KT_ID, rs);
-        return PublicKeyword
-            .builder()
-            .id(value != null ? value : -1) // TODO think this through
+        return PublicKeyword.builder()
+            // TODO think the next line through
+            .id(value != null ? value : -1)
             .keywordId(rs.getInt(ALIAS_KEYWORD_ID))
             .langCode(getString(KT_LANG_CODE, rs))
             .name(getString(KT_NAME, rs))

@@ -33,7 +33,7 @@ public class ClickablePropertyColumn2<T, S, U> extends AbstractClickableProperty
     private final SerializableBiConsumer<IModel<T>, U> biConsumer;
     private final SerializableSupplier<U>              supplier;
 
-    public ClickablePropertyColumn2(@NotNull final IModel<String> displayModel, @Nullable final String property,
+    public ClickablePropertyColumn2(@NotNull final IModel<String> displayModel, @NotNull final String property,
         @NotNull final SerializableBiConsumer<IModel<T>, U> biConsumer,
         @NotNull final SerializableSupplier<U> supplier) {
         this(displayModel, null, property, biConsumer, supplier, false);

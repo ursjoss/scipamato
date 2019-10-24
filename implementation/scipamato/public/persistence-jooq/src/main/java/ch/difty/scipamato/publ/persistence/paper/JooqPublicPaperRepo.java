@@ -82,7 +82,7 @@ public class JooqPublicPaperRepo implements PublicPaperRepository {
 
     @NotNull
     @Override
-    public List<PublicPaper> findPageByFilter(@Nullable final PublicPaperFilter filter,
+    public List<PublicPaper> findPageByFilter(@NotNull final PublicPaperFilter filter,
         @NotNull final PaginationContext pc) {
         final Condition conditions = getConditions(filter);
         final Collection<SortField<PublicPaper>> sortCriteria = getSortMapper().map(pc.getSort(), getTable());
@@ -133,7 +133,7 @@ public class JooqPublicPaperRepo implements PublicPaperRepository {
     }
 
     @Override
-    public int countByFilter(@Nullable final PublicPaperFilter filter) {
+    public int countByFilter(@NotNull final PublicPaperFilter filter) {
         final Condition conditions = getConditions(filter);
         return getDsl().fetchCount(getDsl()
             .selectOne()
@@ -143,7 +143,7 @@ public class JooqPublicPaperRepo implements PublicPaperRepository {
 
     @NotNull
     @Override
-    public List<Long> findPageOfNumbersByFilter(@Nullable final PublicPaperFilter filter,
+    public List<Long> findPageOfNumbersByFilter(@NotNull final PublicPaperFilter filter,
         @NotNull final PaginationContext pc) {
         final Condition conditions = getConditions(filter);
         final Collection<SortField<PublicPaper>> sortCriteria = getSortMapper().map(pc.getSort(), getTable());

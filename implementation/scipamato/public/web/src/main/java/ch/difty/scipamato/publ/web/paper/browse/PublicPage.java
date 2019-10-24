@@ -66,7 +66,7 @@ public class PublicPage extends BasePage<Void> {
 
     private boolean queryingInitialized = false;
 
-    public PublicPage(@Nullable PageParameters parameters) {
+    public PublicPage(@NotNull PageParameters parameters) {
         super(parameters);
         initFilterAndProvider();
     }
