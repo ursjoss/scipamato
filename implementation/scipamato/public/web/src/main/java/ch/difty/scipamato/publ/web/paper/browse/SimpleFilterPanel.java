@@ -17,7 +17,6 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import ch.difty.scipamato.common.web.AbstractPanel;
 import ch.difty.scipamato.publ.entity.Keyword;
@@ -47,7 +46,7 @@ public class SimpleFilterPanel extends AbstractPanel<PublicPaperFilter> {
 
     private final String languageCode;
 
-    SimpleFilterPanel(@NotNull String id, @Nullable IModel<PublicPaperFilter> model, @NotNull String languageCode) {
+    SimpleFilterPanel(@NotNull String id, @NotNull IModel<PublicPaperFilter> model, @NotNull String languageCode) {
         super(id, model);
         this.languageCode = languageCode;
     }
