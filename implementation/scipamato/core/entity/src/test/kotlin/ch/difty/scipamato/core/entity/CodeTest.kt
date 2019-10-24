@@ -1,7 +1,6 @@
 package ch.difty.scipamato.core.entity
 
 import ch.difty.scipamato.core.entity.Code.CodeFields.CODE
-import ch.difty.scipamato.core.entity.Code.CodeFields.NAME
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
@@ -31,12 +30,6 @@ internal class CodeTest : Jsr303ValidatedEntityTest<Code>(Code::class.java) {
         assertThat(c1
             .codeClass
             .description).isEqualTo(CODECLASS10)
-    }
-
-    @Test
-    fun validatingCode_withNullName_fails() {
-        val c1 = Code("1A", null, null, false, 1, "c1", "", 1)
-        validateAndAssertFailure(c1, NAME, null, JAVAX_VALIDATION_CONSTRAINTS_NOT_NULL_MESSAGE)
     }
 
     @Test
@@ -140,20 +133,6 @@ internal class CodeTest : Jsr303ValidatedEntityTest<Code>(Code::class.java) {
     }
 
     @Test
-    fun differingValues_withNameNullOnOne() {
-        val c1 = Code("1A", null, null, false, 1, "c1", "", 1)
-        val c2 = Code("1A", CODE1, null, false, 1, "c1", "", 1)
-        assertInequality(c1, c2)
-    }
-
-    @Test
-    fun differingValues_withNameNullOnBoth() {
-        val c1 = Code("1A", null, null, false, 1, "c1", "", 1)
-        val c2 = Code("1A", null, null, false, 1, "c1", "", 1)
-        assertEquality(c1, c2)
-    }
-
-    @Test
     fun differingValues_withSameComment() {
         val c1 = Code("1A", CODE1, "foo", false, 1, "c1", "", 1)
         val c2 = Code("1A", CODE1, "foo", false, 1, "c1", "", 1)
@@ -175,9 +154,6 @@ internal class CodeTest : Jsr303ValidatedEntityTest<Code>(Code::class.java) {
     }
 
     companion object {
-        private const val JAVAX_VALIDATION_CONSTRAINTS_NOT_NULL_MESSAGE =
-            "{javax.validation.constraints.NotNull.message}"
-
         private const val CODE1 = "code1"
         private const val CODECLASS10 = "codeclass10"
 
