@@ -25,7 +25,7 @@ import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.string.StringValue;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.wicketstuff.annotation.mount.MountPath;
 
@@ -72,7 +72,7 @@ public class UserEditPage extends BasePage<ChangePasswordUser> {
     @SpringBean
     private UserService userService;
 
-    public UserEditPage(@Nullable final PageParameters pp) {
+    public UserEditPage(@NotNull final PageParameters pp) {
         super(pp);
         this.mode = getModeFrom(pp);
         assertManageOrCreateModeForAdminOnly();
