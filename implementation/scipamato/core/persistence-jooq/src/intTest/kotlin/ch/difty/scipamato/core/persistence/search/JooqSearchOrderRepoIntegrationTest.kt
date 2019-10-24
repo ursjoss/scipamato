@@ -176,7 +176,7 @@ internal open class JooqSearchOrderRepoIntegrationTest {
 
         // Add boolean condition with Code
         savedCondition.isFirstAuthorOverridden = java.lang.Boolean.TRUE
-        savedCondition.addCode(Code("1A", null, null, false, 1, "c1", "", 1))
+        savedCondition.addCode(Code("1A", "Code 1A", null, false, 1, "c1", "", 1))
         val modifiedCondition3 = repo.updateSearchCondition(savedCondition, searchOrderId, LC)
             ?: fail("Unable to update search condition")
         assertSearchTermCount(1, 1, 1, 0, modifiedCondition3)
