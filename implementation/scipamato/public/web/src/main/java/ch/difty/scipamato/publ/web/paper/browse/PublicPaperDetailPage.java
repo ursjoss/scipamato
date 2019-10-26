@@ -52,7 +52,7 @@ public class PublicPaperDetailPage extends BasePage<PublicPaper> {
      * @param parameters
      *     page parameters
      */
-    public PublicPaperDetailPage(@Nullable final PageParameters parameters) {
+    public PublicPaperDetailPage(@NotNull final PageParameters parameters) {
         this(parameters, null);
     }
 
