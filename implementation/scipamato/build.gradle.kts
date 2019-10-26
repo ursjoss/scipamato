@@ -23,7 +23,6 @@ plugins {
     Lib.testSetsPlugin().run { id(id) version version }
     Lib.detektPlugin().run { id(id) version version }
     Lib.sonarqubePlugin().run { id(id) version version }
-    Lib.reckonPlugin().run { id(id) version version }
 }
 
 java {
@@ -47,9 +46,9 @@ val testModuleDirs = setOf("common/test", "common/persistence-jooq-test")
 val testModules = testModuleDirs.map { it.replaceFirst("/", "-") }
 val testPackages = testModuleDirs.map { "$it/**/*" }
 val generatedPackages: Set<String> = setOf(
-    "**/ch/difty/scipamato/core/db/**",
-    "**/ch/difty/scipamato/core/pubmed/api/**",
-    "**/ch/difty/scipamato/publ/db/**"
+        "**/ch/difty/scipamato/core/db/**",
+        "**/ch/difty/scipamato/core/pubmed/api/**",
+        "**/ch/difty/scipamato/publ/db/**"
 )
 
 val jacocoTestReportFile = "$buildDir/reports/jacoco/test/jacocoTestReport.xml"
@@ -68,13 +67,9 @@ sonarqube {
     }
 }
 
-reckon {
-    scopeFromProp()
-    snapshotFromProp()
-}
-
 allprojects {
     group = "ch.difty"
+    version = "1.3.2-SNAPSHOT"
 
     repositories {
         mavenLocal()
@@ -218,12 +213,6 @@ subprojects {
                 })))
             }
             dependsOn(check)
-        }
-
-        register("version") {
-            doLast {
-                println(project.version)
-            }
         }
     }
 }
