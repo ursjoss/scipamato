@@ -1,7 +1,7 @@
 package ch.difty.scipamato.core.web.paper.entry;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Java6Assertions.fail;
+import static org.assertj.core.api.AssertionsForClassTypes.fail;
 import static org.mockito.Mockito.*;
 
 import java.util.Collections;

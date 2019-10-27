@@ -3,7 +3,7 @@ package ch.difty.scipamato.core.persistence
 import ch.difty.scipamato.common.DateTimeService
 import ch.difty.scipamato.core.entity.User
 import com.nhaarman.mockitokotlin2.whenever
-import org.assertj.core.api.Java6Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThat
 import org.jooq.DSLContext
 import org.junit.jupiter.api.Test
 import org.springframework.security.core.Authentication
