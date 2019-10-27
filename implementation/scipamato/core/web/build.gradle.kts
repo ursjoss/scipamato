@@ -1,4 +1,5 @@
 import org.springframework.boot.gradle.tasks.bundling.BootJar
+import plugins.ApplicationPropertiesFilterPlugin
 
 description = "SciPaMaTo-Core :: Web GUI Project"
 
@@ -6,8 +7,6 @@ plugins {
     Lib.springBootPlugin().run { id(id) } apply true
 }
 
-/** Content filtering of application properties */
-apply(from = "$rootDir/gradle/filterApplicationProperties.gradle")
 
 /**
  * Make the static wicket resources that reside next to the java classes in src{main,test} available.
@@ -28,6 +27,7 @@ sourceSets {
 }
 
 tasks {
+    apply<ApplicationPropertiesFilterPlugin>()
     withType<BootJar> {
         enabled = true
         mainClassName = "ch.difty.scipamato.core.ScipamatoCoreApplication"
