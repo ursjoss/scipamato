@@ -3,7 +3,7 @@
   <property name="show-as-module" value="false" />
   <property name="publish-architecture-artifacts" value="true" />
   <property name="force-classpath" value="false" />
-  <property name="root-file" value="../implementation/scipamato/structure101-settings.java.hsw" />
+  <property name="root-file" value="../structure101-settings.java.hsw" />
   <property name="project-type" value="s101_workspace" />
   <property name="hide-externals" value="true" />
   <property name="parse-archive-in-archive" value="false" />
@@ -16,27 +16,27 @@
   <property name="project-excluded" />
   <property name="show-needs-to-compile" value="false" />
   <classpath>
-    <classpathentry kind="lib" path="../implementation/scipamato/common/persistence-jooq-test/build/classes/java/main" module="scipamato___common-persistence-jooq-test___main" />
-    <classpathentry kind="lib" path="../implementation/scipamato/public/entity/build/classes/java/main" module="scipamato___public-entity___main" />
-    <classpathentry kind="lib" path="../implementation/scipamato/core/web/build/classes/java/main" module="scipamato___core-web___main" />
+    <classpathentry kind="lib" path="../common/common-persistence-jooq-test/build/classes/java/main" module="scipamato___common-persistence-jooq-test___main" />
+    <classpathentry kind="lib" path="../public/public-entity/build/classes/java/main" module="scipamato___public-entity___main" />
+    <classpathentry kind="lib" path="../core/core-web/build/classes/java/main" module="scipamato___core-web___main" />
     <classpathentry kind="lib" path="buildSrc/build/classes/java/main" module="scipamato___buildSrc___main" />
-    <classpathentry kind="lib" path="../implementation/scipamato/public/web/build/classes/java/main" module="scipamato___public-web___main" />
-    <classpathentry kind="lib" path="../implementation/scipamato/common/persistence-api/build/classes/java/main" module="scipamato___common-persistence-api___main" />
-    <classpathentry kind="lib" path="../implementation/scipamato/core/logic/build/classes/java/main" module="scipamato___core-logic___main" />
-    <classpathentry kind="lib" path="../implementation/scipamato/common/utils/build/classes/java/main" module="scipamato___common-utils___main" />
-    <classpathentry kind="lib" path="../implementation/scipamato/core/pubmed-api/build/classes/java/integrationTest" module="scipamato___core-pubmed-api___integrationTest" />
-    <classpathentry kind="lib" path="../implementation/scipamato/core/entity/build/classes/java/main" module="scipamato___core-entity___main" />
-    <classpathentry kind="lib" path="../implementation/scipamato/public/persistence-jooq/build/classes/java/main" module="scipamato___public-persistence-jooq___main" />
-    <classpathentry kind="lib" path="../implementation/scipamato/public/persistence-api/build/classes/java/main" module="scipamato___public-persistence-api___main" />
-    <classpathentry kind="lib" path="../implementation/scipamato/common/wicket/build/classes/java/main" module="scipamato___common-wicket___main" />
-    <classpathentry kind="lib" path="../implementation/scipamato/common/persistence-jooq/build/classes/java/main" module="scipamato___common-persistence-jooq___main" />
-    <classpathentry kind="lib" path="../implementation/scipamato/core/persistence-jooq/build/classes/java/main" module="scipamato___core-persistence-jooq___main" />
-    <classpathentry kind="lib" path="../implementation/scipamato/core/sync/build/classes/java/main" module="scipamato___core-sync___main" />
-    <classpathentry kind="lib" path="../implementation/scipamato/common/test/build/classes/java/main" module="scipamato___common-test___main" />
-    <classpathentry kind="lib" path="../implementation/scipamato/core/pubmed-api/build/classes/java/main" module="scipamato___core-pubmed-api___main" />
-    <classpathentry kind="lib" path="../implementation/scipamato/core/persistence-api/build/classes/java/main" module="scipamato___core-persistence-api___main" />
-    <classpathentry kind="lib" path="../implementation/scipamato/common/entity/build/classes/java/main" module="scipamato___common-entity___main" />
-    <classpathentry kind="lib" path="../implementation/scipamato/public/web/build/classes/java/integrationTest" module="scipamato___public-web___integrationTest" />
+    <classpathentry kind="lib" path="../public/public-web/build/classes/java/main" module="scipamato___public-web___main" />
+    <classpathentry kind="lib" path="../common/common-persistence-api/build/classes/java/main" module="scipamato___common-persistence-api___main" />
+    <classpathentry kind="lib" path="../core/core-logic/build/classes/java/main" module="scipamato___core-logic___main" />
+    <classpathentry kind="lib" path="../common/common-utils/build/classes/java/main" module="scipamato___common-utils___main" />
+    <classpathentry kind="lib" path="../core/core-pubmed-api/build/classes/java/integrationTest" module="scipamato___core-pubmed-api___integrationTest" />
+    <classpathentry kind="lib" path="../core/core-entity/build/classes/java/main" module="scipamato___core-entity___main" />
+    <classpathentry kind="lib" path="../public/public-persistence-jooq/build/classes/java/main" module="scipamato___public-persistence-jooq___main" />
+    <classpathentry kind="lib" path="../public/public-persistence-api/build/classes/java/main" module="scipamato___public-persistence-api___main" />
+    <classpathentry kind="lib" path="../common/common-wicket/build/classes/java/main" module="scipamato___common-wicket___main" />
+    <classpathentry kind="lib" path="../common/common-persistence-jooq/build/classes/java/main" module="scipamato___common-persistence-jooq___main" />
+    <classpathentry kind="lib" path="../core/core-persistence-jooq/build/classes/java/main" module="scipamato___core-persistence-jooq___main" />
+    <classpathentry kind="lib" path="../core/core-sync/build/classes/java/main" module="scipamato___core-sync___main" />
+    <classpathentry kind="lib" path="../common/common-test/build/classes/java/main" module="scipamato___common-test___main" />
+    <classpathentry kind="lib" path="../core/core-pubmed-api/build/classes/java/main" module="scipamato___core-pubmed-api___main" />
+    <classpathentry kind="lib" path="../core/core-persistence-api/build/classes/java/main" module="scipamato___core-persistence-api___main" />
+    <classpathentry kind="lib" path="../common/common-entity/build/classes/java/main" module="scipamato___common-entity___main" />
+    <classpathentry kind="lib" path="../public/public-web/build/classes/java/integrationTest" module="scipamato___public-web___integrationTest" />
   </classpath>
   <pom-root-files />
   <modules>

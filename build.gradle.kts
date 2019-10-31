@@ -42,8 +42,8 @@ dependencyManagement {
     }
 }
 
-val testModuleDirs = setOf("common/test", "common/persistence-jooq-test")
-val testModules = testModuleDirs.map { it.replaceFirst("/", "-") }
+val testModuleDirs = setOf("common/common-test", "common/common-persistence-jooq-test")
+val testModules = testModuleDirs.map { it.substringAfter("/") }
 val testPackages = testModuleDirs.map { "$it/**/*" }
 val generatedPackages: Set<String> = setOf(
     "**/ch/difty/scipamato/core/db/**",

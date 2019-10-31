@@ -24,7 +24,7 @@ fun defineProjectPaths() {
             "public" to publicProjects
     ).forEach { (subDir, projects) ->
         projects.forEach { projectName ->
-            project(subDir.getPath(projectName)).projectDir = file("$subDir/$projectName")
+            project(subDir.getPath(projectName)).projectDir = file("$subDir/$subDir-$projectName")
         }
     }
 }

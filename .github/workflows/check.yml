@@ -6,8 +6,6 @@ on:
     - master
     tags:
     - '*'
-    paths:
-    - 'implementation/scipamato/*'
 
   pull_request:
     branches:
@@ -28,5 +26,4 @@ jobs:
         java-version: 1.11
       
     - name: Check with Gradle
-      working-directory: ./implementation/scipamato
       run: ./gradlew check --no-daemon --no-build-cache

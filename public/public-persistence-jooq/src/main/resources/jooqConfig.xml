@@ -23,7 +23,7 @@
         <!-- Important: Keep in sync with jooqOutputPath build.gradle -->
         <target>
             <packageName>ch.difty.scipamato.publ.db</packageName>
-            <directory>public/persistence-jooq/build/generated-src/jooq</directory>
+            <directory>public/public-persistence-jooq/build/generated-src/jooq</directory>
         </target>
     </generator>
 </configuration>

@@ -35,21 +35,21 @@ dependencies {
 
 
 /**
- * Currently this task executes automatically and writes into core/pubmed-api/build/generated-sources/jaxb.
+ * Currently this task executes automatically and writes into core/core-pubmed-api/build/generated-sources/jaxb.
  * TODO configure this task to not run unless triggered explicitly with gradlew :core-pubmed-api:jaxbJavaGenPubmed
- * If this works, we can point the outputdir to "$rootDir/core/pubmed-api/src/main/java", thus overwriting the existing
+ * If this works, we can point the outputdir to "$rootDir/core/core-pubmed-api/src/main/java", thus overwriting the existing
  * generated classes.
  */
 System.setProperty("enableExternalEntityProcessing", "true")
 jaxb {
     javaGen {
         register("pubmed") {
-            setSchema(File("$rootDir/core/pubmed-api/src/main/resources/pubmed_180101.dtd"))
+            setSchema(File("$rootDir/core/core-pubmed-api/src/main/resources/pubmed_180101.dtd"))
             language = "DTD"
             header = false
             packageName = "ch.difty.scipamato.core.pubmed.api"
             sourceSetName = ""
-            setOutputDir(File("$rootDir/core/pubmed-api/build/generated-sources/jaxb/"))
+            setOutputDir(File("$rootDir/core/core-pubmed-api/build/generated-sources/jaxb/"))
         }
     }
 }

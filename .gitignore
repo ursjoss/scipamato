@@ -1,18 +1,32 @@
-.classpath
-.project
-.settings/
-target/
-bin/
-implementation/scipamato/.factorypath
-rebel.xml
-implementation/scipamato/log/scipamato.log
-implementation/scipamato/scipamato.*.db
-CHANGELOG.html
+# build stuff
+.build/
+out/
+.gradle/
+classes/
+build/
+
+# ide stuff
+.factorypath
 .idea/
 **/*.iml
-s101plugin.*
+**/.ipr
+**/.iws
+.springBeans
+
+# log
 log/
-.gradle/
-build/
-out/
-implementation/scipamato/classes/
+
+# generated files
+CHANGELOG.html
+lombok.config
+
+# structure101
+s101plugin.*
+
+# keystore
+public/public-web/keystore.p12
+
+# commercial fonts
+public/public-web/src/main/resources/ch/difty/scipamato/publ/web/resources/fonts/MetaOT/
+public/public-web/src/main/resources/ch/difty/scipamato/publ/web/resources/fonts/IcoMoon/
+public/public-web/src/main/resources/ch/difty/scipamato/publ/web/resources/fonts/Simplon/
