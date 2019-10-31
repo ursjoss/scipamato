@@ -35,10 +35,16 @@ class ApplicationPropertiesFilterPlugin : Plugin<Project> {
     private fun Project.collectProperties(): Map<String, Any> {
         val props: MutableMap<String, Any> = mutableMapOf()
         props["timestamp"] = LocalDateTime.now().toString()
-        properties.filter { it.value is String }.forEach { prop ->
+        properties.forEach { prop ->
             prop.value?.let { value ->
-                props[prop.key] = value
-                props["project.${prop.key}"] = value
+                when (value) {
+                    is Map<*, *> -> null
+                    is Collection<*> -> null
+                    else -> value.toString()
+                }?.let { stringValue ->
+                    props[prop.key] = stringValue
+                    props["project.${prop.key}"] = stringValue
+                }
             }
         }
         return props
