@@ -1,5 +1,3 @@
-rootProject.name = "scipamato"
-
 pluginManagement {
     repositories {
         @Suppress("UnstableApiUsage")
@@ -7,13 +5,25 @@ pluginManagement {
     }
 }
 
+rootProject.name = "scipamato"
+
 val commonProjects = listOf("test", "utils", "entity", "persistence-api", "persistence-jooq-test", "persistence-jooq", "wicket")
 val coreProjects = listOf("entity", "logic", "pubmed-api", "persistence-api", "persistence-jooq", "sync", "web")
 val publicProjects = listOf("entity", "persistence-api", "persistence-jooq", "web")
 
-include(*Module.scipamatoCommonProjects(commonProjects))
-include(*Module.scipamatoCoreProjects(coreProjects))
-include(*Module.scipamatoPublicProjects(publicProjects))
+fun scipamatoCommonProjects(modules: List<String>) = modules.map { "common-$it" }.toTypedArray()
+fun scipamatoCoreProjects(modules: List<String>) = modules.map { "core-$it" }.toTypedArray()
+fun scipamatoPublicProjects(modules: List<String>) = modules.map { "public-$it" }.toTypedArray()
+
+fun scipamatoCommon(module : String) = "common".scipamatoModule(module)
+fun scipamatoCore(module : String) = "core".scipamatoModule(module)
+fun scipamatoPublic(module : String) = "public".scipamatoModule(module)
+
+fun String.scipamatoModule(module : String) = ":$this-$module"
+
+include(*scipamatoCommonProjects(commonProjects))
+include(*scipamatoCoreProjects(coreProjects))
+include(*scipamatoPublicProjects(publicProjects))
 
 defineProjectPaths()
 
@@ -30,9 +40,9 @@ fun defineProjectPaths() {
 }
 
 fun String.getPath(project: String): String = when (this) {
-    "common" -> Module.scipamatoCommon(project)
-    "core" -> Module.scipamatoCore(project)
-    "public" -> Module.scipamatoPublic(project)
+    "common" -> scipamatoCommon(project)
+    "core" -> scipamatoCore(project)
+    "public" -> scipamatoPublic(project)
     else -> throw IllegalArgumentException("project $project is not handled...")
 }
 
