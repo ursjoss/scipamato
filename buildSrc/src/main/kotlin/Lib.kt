@@ -9,7 +9,7 @@ object Lib {
     //region:dependencyVersions
     private const val kotlinVersion = "1.3.50"
 
-    private const val springBootVersion = "2.2.0.RELEASE"
+    private const val springBootVersion = "2.2.1.RELEASE"
     private const val springBootAdminVersion = "2.1.6"
     const val springCloudVersion = "Greenwich.SR3"
     private const val springCloudStarterVersion = "2.1.3.RELEASE"
