@@ -96,7 +96,7 @@ subprojects {
 
     testSets {
         val testLib by libraries.creating {
-            dirName = "testLib"
+            dirName = "test-lib"
         }
 
         named("unitTest") {
@@ -104,12 +104,12 @@ subprojects {
         }
 
         register("integrationTest") {
-            dirName = "intTest"
+            dirName = "integration-test"
             imports(testLib)
         }
 
         register("adhocTest") {
-            dirName = "adhocTest"
+            dirName = "adhoc-test"
             imports(testLib)
         }
     }

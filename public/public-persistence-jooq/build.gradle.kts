@@ -4,7 +4,7 @@ plugins {
 
 description = "SciPaMaTo-Public:: Persistence jOOQ Project"
 
-val props = file("src/intTest/resources/application.properties").asProperties()
+val props = file("src/integration-test/resources/application.properties").asProperties()
 
 jooqModelator {
     jooqVersion = Lib.jooqVersion

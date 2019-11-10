@@ -33,7 +33,7 @@ import ch.difty.scipamato.core.persistence.user.UserRoleRepository;
 import ch.difty.scipamato.core.pubmed.PubmedImportService;
 
 @SpringBootTest
-@Disabled("might have to move it into intTest TODO")
+@Disabled("might have to move it into integration-test TODO")
 class JooqCoreConfigurationTest {
 
     @MockBean
