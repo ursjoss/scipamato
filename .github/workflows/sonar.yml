@@ -4,8 +4,6 @@ on:
   push:
     branches:
     - master
-    paths:
-    - 'implementation/scipamato/*'
 
 jobs:
   build:
@@ -22,7 +20,6 @@ jobs:
         java-version: 1.11
       
     - name: Run sonar task
-      working-directory: ./implementation/scipamato
       run: ./gradlew sonarqube --no-daemon --no-build-cache
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

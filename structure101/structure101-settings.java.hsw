@@ -9,30 +9,30 @@
   <property name="relative-to" value="const(THIS_FILE)" />
   <property name="action-set-mod" value="1" />
   <property name="detail-mode" value="true" />
-  <property name="restructuring-system-file" value="../implementation/scipamato/structure101-actions.xml" />
+  <property name="restructuring-system-file" value="..//structure101-actions.xml" />
   <property name="hide-deprecated" value="false" />
   <property name="resolve-name-clashes" value="true" />
   <property name="project-excluded" />
   <property name="show-needs-to-compile" value="false" />
   <property name="physical-layering-system-file" value="structure101-spec.xml" />
   <classpath>
-    <classpathentry kind="lib" path="../implementation/scipamato/public/entity/out/production/classes" module="scipamato___public-entity___main" />
-    <classpathentry kind="lib" path="../implementation/scipamato/classes/production/scipamato.core-web.main" module="scipamato___core-web___main" />
-    <classpathentry kind="lib" path="../implementation/scipamato/common/persistence-api/out/production/classes" module="scipamato___common-persistence-api___main" />
-    <classpathentry kind="lib" path="../implementation/scipamato/public/web/out/production/classes" module="scipamato___public-web___main" />
-    <classpathentry kind="lib" path="../implementation/scipamato/classes/production/scipamato.core-pubmed-api.main" module="scipamato___core-pubmed-api___main" />
-    <classpathentry kind="lib" path="../implementation/scipamato/public/persistence-api/out/production/classes" module="scipamato___public-persistence-api___main" />
-    <classpathentry kind="lib" path="../implementation/scipamato/core/sync/out/production/classes" module="scipamato___core-sync___main" />
-    <classpathentry kind="lib" path="../implementation/scipamato/core/persistence-api/out/production/classes" module="scipamato___core-persistence-api___main" />
-    <classpathentry kind="lib" path="../implementation/scipamato/common/utils/out/production/classes" module="scipamato___common-utils___main" />
-    <classpathentry kind="lib" path="../implementation/scipamato/common/wicket/out/production/classes" module="scipamato___common-wicket___main" />
-    <classpathentry kind="lib" path="../implementation/scipamato/common/test/out/production/classes" module="scipamato___common-test___main" />
-    <classpathentry kind="lib" path="../implementation/scipamato/core/entity/out/production/classes" module="scipamato___core-entity___main" />
-    <classpathentry kind="lib" path="../implementation/scipamato/common/persistence-jooq-test/out/production/classes" module="scipamato___common-persistence-jooq-test___main" />
-    <classpathentry kind="lib" path="../implementation/scipamato/common/entity/out/production/classes" module="scipamato___common-entity___main" />
-    <classpathentry kind="lib" path="../implementation/scipamato/core/logic/out/production/classes" module="scipamato___core-logic___main" />
-    <classpathentry kind="lib" path="../implementation/scipamato/classes/production/scipamato.core-persistence-jooq.main" module="scipamato___core-persistence-jooq___main" />
-    <classpathentry kind="lib" path="../implementation/scipamato/common/persistence-jooq/out/production/classes" module="scipamato___common-persistence-jooq___main" />
+    <classpathentry kind="lib" path="../public/public-entity/out/production/classes" module="scipamato___public-entity___main" />
+    <classpathentry kind="lib" path="../classes/production/scipamato.core-web.main" module="scipamato___core-web___main" />
+    <classpathentry kind="lib" path="../common/common-persistence-api/out/production/classes" module="scipamato___common-persistence-api___main" />
+    <classpathentry kind="lib" path="../public/public-web/out/production/classes" module="scipamato___public-web___main" />
+    <classpathentry kind="lib" path="../classes/production/scipamato.core-pubmed-api.main" module="scipamato___core-pubmed-api___main" />
+    <classpathentry kind="lib" path="../public/public-persistence-api/out/production/classes" module="scipamato___public-persistence-api___main" />
+    <classpathentry kind="lib" path="../core/core-sync/out/production/classes" module="scipamato___core-sync___main" />
+    <classpathentry kind="lib" path="../core/core-persistence-api/out/production/classes" module="scipamato___core-persistence-api___main" />
+    <classpathentry kind="lib" path="../common/common-utils/out/production/classes" module="scipamato___common-utils___main" />
+    <classpathentry kind="lib" path="../common/common-wicket/out/production/classes" module="scipamato___common-wicket___main" />
+    <classpathentry kind="lib" path="../common/common-test/out/production/classes" module="scipamato___common-test___main" />
+    <classpathentry kind="lib" path="../core/core-entity/out/production/classes" module="scipamato___core-entity___main" />
+    <classpathentry kind="lib" path="../common/common-persistence-jooq-test/out/production/classes" module="scipamato___common-persistence-jooq-test___main" />
+    <classpathentry kind="lib" path="../common/common-entity/out/production/classes" module="scipamato___common-entity___main" />
+    <classpathentry kind="lib" path="../core/core-logic/out/production/classes" module="scipamato___core-logic___main" />
+    <classpathentry kind="lib" path="../classes/production/scipamato.core-persistence-jooq.main" module="scipamato___core-persistence-jooq___main" />
+    <classpathentry kind="lib" path="../common/common-persistence-jooq/out/production/classes" module="scipamato___common-persistence-jooq___main" />
   </classpath>
   <pom-root-files />
   <modules>
