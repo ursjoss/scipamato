@@ -137,13 +137,12 @@ internal open class JooqDslTransactionIntegrationTest {
                 }
 
                 // We should've rolled back to the savepoint
-                assertThat(dsl.fetchCount(PAPER)).isEqualTo(RECORD_COUNT_PREPOPULATED)
+                assertThat(dsl.fetchCount(PAPER)).isEqualTo(RECORD_COUNT_PREPOPULATED + 1)
 
                 throw org.jooq.exception.DataAccessException("Rollback")
             }
         } catch (e: org.jooq.exception.DataAccessException) {
-            // Upon the constraint violation, the transaction must already have been rolled
-            // back
+            // Upon the constraint violation, the transaction must already have been rolled back
             assertThat(e.message).isEqualTo("Rollback")
             rollback2.set(true)
         }
