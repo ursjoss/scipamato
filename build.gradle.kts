@@ -252,5 +252,4 @@ tasks {
 }
 
 fun String.mayHaveTestCoverage(): Boolean = this !in testModules
-
 fun Project.isWebProject() = path.endsWith("web")
