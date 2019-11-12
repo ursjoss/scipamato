@@ -24,6 +24,14 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.11
-      
+
+    - name: Cache global .gradle folder
+      uses: actions/cache@v1
+      with:
+        path: ~/.gradle/caches
+        key: global-gradle-${{ hashFiles('**/*.kt*') }}-${{ hashFiles('**/*.java') }}
+        restore-keys: |
+          global-gradle-
+
     - name: Check with Gradle
-      run: ./gradlew check --no-daemon --no-build-cache
+      run: ./gradlew check --no-daemon --info
