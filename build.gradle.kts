@@ -210,11 +210,11 @@ subprojects {
                 csv.isEnabled = false
             }
             afterEvaluate {
-                classDirectories.setFrom((files(classDirectories.files.map {
+                classDirectories.setFrom(files(classDirectories.files.map {
                     fileTree(it) {
                         exclude(generatedPackages)
                     }
-                })))
+                }))
             }
             dependsOn(check)
         }

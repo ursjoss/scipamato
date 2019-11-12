@@ -22,9 +22,9 @@ jooqModelator {
 
     dockerTag = "postgres:10"
     dockerEnv = listOf(
-            "POSTGRES_DB=scipamato",
-            "POSTGRES_USER=scipamato",
-            "POSTGRES_PASSWORD=scipamato"
+        "POSTGRES_DB=scipamato",
+        "POSTGRES_USER=scipamato",
+        "POSTGRES_PASSWORD=scipamato"
     )
     dockerHostPort = 15432
     dockerContainerPort = 5432

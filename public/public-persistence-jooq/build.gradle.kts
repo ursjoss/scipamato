@@ -23,9 +23,9 @@ jooqModelator {
     dockerTag = "postgres:10"
 
     dockerEnv = listOf(
-            "POSTGRES_DB=${props.getProperty("db.name")}",
-            "POSTGRES_USER=${props.getProperty("spring.datasource.hikari.username")}",
-            "POSTGRES_PASSWORD=${props.getProperty("spring.datasource.hikari.password")}"
+        "POSTGRES_DB=${props.getProperty("db.name")}",
+        "POSTGRES_USER=${props.getProperty("spring.datasource.hikari.username")}",
+        "POSTGRES_PASSWORD=${props.getProperty("spring.datasource.hikari.password")}"
     )
     dockerHostPort = 15432
     dockerContainerPort = 5432
