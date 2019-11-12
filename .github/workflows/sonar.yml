@@ -18,17 +18,9 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.11
-        
-    - name: Cache global .gradle folder
-      uses: actions/cache@v1
-      with:
-        path: ~/.gradle/caches
-        key: global-gradle-${{ hashFiles('**/*.kt*') }}-${{ hashFiles('**/*.java') }}
-        restore-keys: |
-          global-gradle-
 
     - name: Run sonar task
-      run: ./gradlew sonarqube --no-daemon
+      run: ./gradlew sonarqube --no-daemon --no-build-cache
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
