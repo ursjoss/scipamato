@@ -1,3 +1,5 @@
+import ch.ayedo.jooqmodelator.gradle.JooqModelatorTask
+
 plugins {
     Lib.jooqModelatorPlugin().run { id(id) version version }
 }
@@ -66,7 +68,12 @@ sourceSets {
 }
 
 tasks {
-    getByName("compileKotlin").dependsOn += "generateJooqMetamodel"
+    val jooqMetamodelTaskName = "generateJooqMetamodel"
+    withType<JooqModelatorTask> {
+        // prevent parallel run of this task between core and public
+        outputs.dir("${rootProject.buildDir}/$jooqMetamodelTaskName")
+    }
+    getByName("compileKotlin").dependsOn += jooqMetamodelTaskName
 }
 
 idea {
