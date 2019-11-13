@@ -29,9 +29,9 @@ jobs:
       uses: actions/cache@v1
       with:
         path: ~/.gradle/caches
-        key: global-gradle-${{ hashFiles('**/*.kt*') }}-${{ hashFiles('**/*.java') }}
+        key: global-gradle-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}-${{ hashFiles('**/*.kt*') }}-${{ hashFiles('**/*.java') }}
         restore-keys: |
-          global-gradle-
+          gradle-cache-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
 
     - name: Check with Gradle
       run: ./gradlew check --no-daemon --info
