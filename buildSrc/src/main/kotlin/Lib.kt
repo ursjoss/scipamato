@@ -7,12 +7,12 @@ import java.util.*
 object Lib {
 
     //region:dependencyVersions
-    private const val kotlinVersion = "1.3.50"
+    private const val kotlinVersion = "1.3.61"
 
     private const val springBootVersion = "2.2.1.RELEASE"
     private const val springBootAdminVersion = "2.1.6"
-    const val springCloudVersion = "Greenwich.SR3"
-    private const val springCloudStarterVersion = "2.1.3.RELEASE"
+    const val springCloudVersion = "Hoxton.RELEASE"
+    private const val springCloudStarterVersion = "2.2.0.RELEASE"
 
     private const val wicketSpringBootStarterVersion = "2.1.7"
     private const val wicketVersion = "8.6.1"
@@ -22,9 +22,9 @@ object Lib {
     private const val jasperReportVersion = "6.10.0"
     const val jooqVersion = "3.12.3"
 
-    private const val kotlinLoggingVersion = "1.7.6"
+    private const val kotlinLoggingVersion = "1.7.8"
 
-    private const val openfeignVersion = "10.6.0"
+    private const val openfeignVersion = "10.7.0"
 
     private const val jaxbCoreVersion = "2.3.0.1"
     private const val jaxbImplVersion = "2.3.2"
@@ -45,12 +45,12 @@ object Lib {
     private const val testcontainersVersion = "1.12.3"
 
     @Suppress("MemberVisibilityCanBePrivate")
-    const val mockitoVersion = "3.1.0"
+    const val mockitoVersion = "3.2.0"
     private const val mockitoKotlinVersion = "2.2.0"
 
     private const val spekVersion = "2.0.8"
-    private const val kwikVersion = "0.1.0"
-    private const val kluentVersion = "1.56"
+    private const val kwikVersion = "0.2.0"
+    private const val kluentVersion = "1.58"
     private const val mockkVersion = "1.9.3"
 
     private const val jsr305Version = "3.0.2"
@@ -58,13 +58,13 @@ object Lib {
 
     //region:pluginVersions
     private const val springDependencyManagementPluginVersion = "1.0.8.RELEASE"
-    private const val lombokPluginVersion = "4.1.3"
+    private const val lombokPluginVersion = "4.1.5"
     private const val jooqModelatorPluginVersion = "3.6.0"
-    private const val reckonPluginVersion = "0.11.0"
-    private const val jaxbPluginVersion = "3.0.4"
+    private const val reckonPluginVersion = "0.12.0"
+    private const val jaxbPluginVersion = "4.0.0"
     private const val testSetsPluginVersion = "2.2.1"
     private const val sonarqubePluginVersion = "2.8"
-    private const val detektPluginVersion = "1.1.1"
+    private const val detektPluginVersion = "1.2.0"
     //endregion
 
     //region:dependencies
