@@ -49,7 +49,7 @@ object Lib {
     private const val mockitoKotlinVersion = "2.2.0"
 
     private const val spekVersion = "2.0.8"
-    private const val kwikVersion = "0.1.0"
+    private const val kwikVersion = "0.2.0"
     private const val kluentVersion = "1.56"
     private const val mockkVersion = "1.9.3"
 
