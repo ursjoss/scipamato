@@ -65,7 +65,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Changed
 - {url-issues}136[#136] Upgrade Spring-Boot to 2.2.0, Flyway 6.0, jOOQ 3.12.1
 - Bump dependencies: spring-boot-starter-parent, kotlin, jOOQ, detekt, testSet-plugin, mockk, lombok-plugin
-  wicket-jquery-ui, spring-cloud-starter, openfeign, testcontainers
+  wicket-jquery-ui, spring-cloud-starter, openfeign, testcontainers, mockito
 
 .Deprecated
 
