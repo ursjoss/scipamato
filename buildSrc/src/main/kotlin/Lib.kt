@@ -11,7 +11,7 @@ object Lib {
 
     private const val springBootVersion = "2.2.1.RELEASE"
     private const val springBootAdminVersion = "2.1.6"
-    const val springCloudVersion = "Hoxton"
+    const val springCloudVersion = "Hoxton.RELEASE"
     private const val springCloudStarterVersion = "2.2.0.RELEASE"
 
     private const val wicketSpringBootStarterVersion = "2.1.7"
@@ -22,7 +22,7 @@ object Lib {
     private const val jasperReportVersion = "6.10.0"
     const val jooqVersion = "3.12.3"
 
-    private const val kotlinLoggingVersion = "1.7.6"
+    private const val kotlinLoggingVersion = "1.7.8"
 
     private const val openfeignVersion = "10.6.0"
 
