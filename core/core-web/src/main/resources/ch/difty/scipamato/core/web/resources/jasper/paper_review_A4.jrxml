@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<!-- Created with Jaspersoft Studio version 6.11.0.final using JasperReports Library version 6.11.0-0c4056ccaa4d25a5a8c45672d2f764ea3498bebb  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="paper_review_A4" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="822" leftMargin="10" rightMargin="10" topMargin="10" bottomMargin="10" whenResourceMissingType="Empty" uuid="78a3a702-e0d1-460b-9e25-bd791531de4e">
 	<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
@@ -50,7 +50,7 @@
 		<band height="25" splitType="Stretch">
 			<property name="local_mesure_unitheight" value="pixel"/>
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
-			<textField isStretchWithOverflow="true">
+			<textField textAdjust="StretchHeight">
 				<reportElement x="0" y="0" width="50" height="15" isPrintWhenDetailOverflows="true" uuid="96ec2b98-c9e2-4d18-a210-d05bc0fba9d2">
 					<property name="local_mesure_unitheight" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
@@ -60,7 +60,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{numberLabel}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField textAdjust="StretchHeight">
 				<reportElement x="53" y="0" width="67" height="15" isPrintWhenDetailOverflows="true" uuid="a3fc231a-ac6b-4334-ba04-73fcdeea4ca6">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="local_mesure_unitx" value="pixel"/>
@@ -73,7 +73,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{authorYearLabel}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField textAdjust="StretchHeight">
 				<reportElement x="120" y="0" width="60" height="15" isPrintWhenDetailOverflows="true" uuid="39440d76-e068-4980-a1a6-b02dcb1c481d">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="local_mesure_unitwidth" value="pixel"/>
@@ -84,7 +84,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{populationPlaceLabel}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField textAdjust="StretchHeight">
 				<reportElement x="180" y="0" width="81" height="15" isPrintWhenDetailOverflows="true" uuid="e42510f5-9f62-4c82-82e7-eafdcb8abac0">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="local_mesure_unitx" value="pixel"/>
@@ -97,7 +97,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{methodOutcomeLabel}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField textAdjust="StretchHeight">
 				<reportElement x="261" y="0" width="60" height="15" isPrintWhenDetailOverflows="true" uuid="0f627783-deb6-4866-9719-6fb3bfc8ccd3">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="local_mesure_unitx" value="pixel"/>
@@ -110,7 +110,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{exposurePollutantLabel}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField textAdjust="StretchHeight">
 				<reportElement x="321" y="0" width="60" height="15" isPrintWhenDetailOverflows="true" uuid="11489e1d-f85a-41f4-9d9c-5c88b99f9a23">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="local_mesure_unitx" value="pixel"/>
@@ -123,7 +123,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{methodStudyDesignLabel}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField textAdjust="StretchHeight">
 				<reportElement x="381" y="0" width="60" height="15" isPrintWhenDetailOverflows="true" uuid="ca3781fd-6bac-43df-ad07-2338adc40d8d">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="local_mesure_unitx" value="pixel"/>
@@ -136,7 +136,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{populationDurationLabel}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField textAdjust="StretchHeight">
 				<reportElement x="441" y="0" width="60" height="15" isPrintWhenDetailOverflows="true" uuid="b7769323-dfc5-4d81-9a99-86d59a460875">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="local_mesure_unitx" value="pixel"/>
@@ -149,7 +149,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{populationParticipantsLabel}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField textAdjust="StretchHeight">
 				<reportElement x="501" y="0" width="60" height="15" isPrintWhenDetailOverflows="true" uuid="602685d6-9690-4ccd-b055-b6563ef1ebb1">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="local_mesure_unitx" value="pixel"/>
@@ -162,7 +162,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{exposureAssessmentLabel}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField textAdjust="StretchHeight">
 				<reportElement x="561" y="0" width="60" height="15" isPrintWhenDetailOverflows="true" uuid="80a74250-3f38-43b8-97da-d18744674685">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="local_mesure_unitx" value="pixel"/>
@@ -175,7 +175,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{resultExposureRangeLabel}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField textAdjust="StretchHeight">
 				<reportElement x="621" y="0" width="60" height="15" isPrintWhenDetailOverflows="true" uuid="f994e1bb-5242-438d-8343-32722a772395">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="local_mesure_unitx" value="pixel"/>
@@ -188,7 +188,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{methodConfoundersLabel}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField textAdjust="StretchHeight">
 				<reportElement x="681" y="0" width="70" height="15" isPrintWhenDetailOverflows="true" uuid="807dfc2a-e2e1-4110-959c-b6f909c6f89a">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="local_mesure_unitx" value="pixel"/>
@@ -201,7 +201,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{resultEffectEstimateLabel}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField textAdjust="StretchHeight">
 				<reportElement x="751" y="0" width="70" height="15" isPrintWhenDetailOverflows="true" uuid="fdb29cd4-5676-4b88-a4a1-0b9868e3e2d4">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="local_mesure_unitx" value="pixel"/>
@@ -230,7 +230,7 @@
 			<property name="local_mesure_unitheight" value="pixel"/>
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
-			<textField isStretchWithOverflow="true">
+			<textField textAdjust="StretchHeight">
 				<reportElement x="0" y="0" width="50" height="15" isPrintWhenDetailOverflows="true" uuid="e28f7734-468a-4c0d-a90d-22a2547bba31">
 					<property name="local_mesure_unitheight" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
@@ -240,7 +240,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{number}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField textAdjust="StretchHeight">
 				<reportElement x="53" y="0" width="67" height="15" isPrintWhenDetailOverflows="true" uuid="f109c53f-dfed-4291-bb9a-8af1494ba689">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="local_mesure_unitx" value="pixel"/>
@@ -253,7 +253,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{authorYear}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField textAdjust="StretchHeight">
 				<reportElement x="120" y="0" width="60" height="15" isPrintWhenDetailOverflows="true" uuid="2fb6b86a-bb18-46a9-a6ce-c091011d18a3">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="local_mesure_unitwidth" value="pixel"/>
@@ -264,7 +264,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{populationPlace}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField textAdjust="StretchHeight">
 				<reportElement x="180" y="0" width="81" height="15" isPrintWhenDetailOverflows="true" uuid="1d677349-f3f6-4124-987f-327a52dc2e3d">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="local_mesure_unitx" value="pixel"/>
@@ -277,7 +277,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{methodOutcome}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField textAdjust="StretchHeight">
 				<reportElement x="261" y="0" width="60" height="15" isPrintWhenDetailOverflows="true" uuid="2667f9fe-7659-4ad8-b47f-e2fb1a4f0816">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="local_mesure_unitx" value="pixel"/>
@@ -290,7 +290,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{exposurePollutant}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField textAdjust="StretchHeight">
 				<reportElement x="321" y="0" width="60" height="15" isPrintWhenDetailOverflows="true" uuid="cb7c28b8-7666-485a-8f24-5706ee242dbd">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="local_mesure_unitx" value="pixel"/>
@@ -303,7 +303,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{methodStudyDesign}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField textAdjust="StretchHeight">
 				<reportElement x="381" y="0" width="60" height="15" isPrintWhenDetailOverflows="true" uuid="14533bb7-088a-4fd6-bd08-8a4e4a4ae60a">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="local_mesure_unitx" value="pixel"/>
@@ -316,7 +316,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{populationDuration}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField textAdjust="StretchHeight">
 				<reportElement x="441" y="0" width="60" height="15" isPrintWhenDetailOverflows="true" uuid="e26a1bdb-f576-4130-95ec-0cff35976006">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="local_mesure_unitx" value="pixel"/>
@@ -329,7 +329,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{populationParticipants}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField textAdjust="StretchHeight">
 				<reportElement x="501" y="0" width="60" height="15" isPrintWhenDetailOverflows="true" uuid="e984c0a4-edad-42ae-bc42-d5ae493e8706">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="local_mesure_unitx" value="pixel"/>
@@ -342,7 +342,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{exposureAssessment}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField textAdjust="StretchHeight">
 				<reportElement x="561" y="0" width="60" height="15" isPrintWhenDetailOverflows="true" uuid="10eeb179-7032-446f-86af-9c72d417d0c5">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="local_mesure_unitx" value="pixel"/>
@@ -355,7 +355,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{resultExposureRange}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField textAdjust="StretchHeight">
 				<reportElement x="621" y="0" width="60" height="15" isPrintWhenDetailOverflows="true" uuid="04f82aef-83d4-4539-99e6-005be1504bff">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="local_mesure_unitx" value="pixel"/>
@@ -368,7 +368,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{methodConfounders}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField textAdjust="StretchHeight">
 				<reportElement x="681" y="0" width="70" height="15" isPrintWhenDetailOverflows="true" uuid="46e5dd70-0862-479a-91d5-8dfffdf71eab">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="local_mesure_unitx" value="pixel"/>
@@ -381,7 +381,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{resultEffectEstimate}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField textAdjust="StretchHeight">
 				<reportElement x="751" y="0" width="70" height="15" isPrintWhenDetailOverflows="true" uuid="7384afbb-498e-405e-aa6c-7fe39bda8cc4">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="local_mesure_unitx" value="pixel"/>
