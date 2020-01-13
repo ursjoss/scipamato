@@ -44,12 +44,12 @@ System.setProperty("enableExternalEntityProcessing", "true")
 jaxb {
     javaGen {
         register("pubmed") {
-            setSchema(File("$rootDir/core/core-pubmed-api/src/main/resources/pubmed_180101.dtd"))
+            schema = File("$rootDir/core/core-pubmed-api/src/main/resources/pubmed_180101.dtd")
             language = "DTD"
             header = false
             packageName = "ch.difty.scipamato.core.pubmed.api"
             sourceSetName = ""
-            setOutputDir(File("$rootDir/core/core-pubmed-api/build/generated-sources/jaxb/"))
+            outputDir = File("$rootDir/core/core-pubmed-api/build/generated-sources/jaxb/")
         }
     }
 }
