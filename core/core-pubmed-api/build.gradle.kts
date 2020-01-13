@@ -26,6 +26,8 @@ dependencies {
 
     integrationTestAnnotationProcessor(Lib.lombok())
     integrationTestRuntimeOnly(Lib.lombok())
+    integrationTestCompile(Lib.commonsIo())
+    adhocTestCompile(Lib.commonsIo())
 
     jaxb(Lib.jaxbApi())
     jaxb(Lib.jaxbCore())
@@ -44,12 +46,12 @@ System.setProperty("enableExternalEntityProcessing", "true")
 jaxb {
     javaGen {
         register("pubmed") {
-            setSchema(File("$rootDir/core/core-pubmed-api/src/main/resources/pubmed_180101.dtd"))
+            schema = File("$rootDir/core/core-pubmed-api/src/main/resources/pubmed_180101.dtd")
             language = "DTD"
             header = false
             packageName = "ch.difty.scipamato.core.pubmed.api"
             sourceSetName = ""
-            setOutputDir(File("$rootDir/core/core-pubmed-api/build/generated-sources/jaxb/"))
+            outputDir = File("$rootDir/core/core-pubmed-api/build/generated-sources/jaxb/")
         }
     }
 }

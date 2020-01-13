@@ -1,15 +1,10 @@
 <?xml version="1.0"?>
-<!DOCTYPE PubmedArticleSet PUBLIC "-//NLM//DTD PubMedArticle, 1st January 2017//EN" "https://dtd.nlm.nih.gov/ncbi/pubmed/out/pubmed_170101.dtd">
+<!DOCTYPE PubmedArticleSet PUBLIC "-//NLM//DTD PubMedArticle, 1st January 2017//EN" "https://dtd.nlm.nih.gov/ncbi/pubmed/out/pubmed_180101.dtd">
 <PubmedArticleSet>
 
 <PubmedArticle>
     <MedlineCitation Status="MEDLINE" Owner="NLM">
         <PMID Version="1">23454700</PMID>
-        <DateCreated>
-            <Year>2013</Year>
-            <Month>03</Month>
-            <Day>18</Day>
-        </DateCreated>
         <DateCompleted>
             <Year>2013</Year>
             <Month>08</Month>
