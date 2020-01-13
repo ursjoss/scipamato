@@ -11,8 +11,8 @@ object Lib {
 
     private const val springBootVersion = "2.2.2.RELEASE"
     private const val springBootAdminVersion = "2.2.1"
-    const val springCloudVersion = "Hoxton.RELEASE"
-    private const val springCloudStarterVersion = "2.2.0.RELEASE"
+    const val springCloudVersion = "Hoxton.SR1"
+    private const val springCloudStarterVersion = "2.2.1.RELEASE"
 
     private const val wicketSpringBootStarterVersion = "2.1.8"
     private const val wicketVersion = "8.7.0"
@@ -207,6 +207,7 @@ fun DependencyHandler.testImplementation(dependencyNotation: Dep): Dependency? =
 fun DependencyHandler.testRuntimeOnly(dependencyNotation: Dep): Dependency? = add("testRuntimeOnly", dependencyNotation.id)
 fun DependencyHandler.testLibCompile(dependencyNotation: Dep): Dependency? = add("testLibCompile", dependencyNotation.id)
 fun DependencyHandler.testLibAnnotationProcessor(dependencyNotation: Dep): Dependency? = add("testLibAnnotationProcessor", dependencyNotation.id)
+fun DependencyHandler.adhocTestCompile(dependencyNotation: Dep): Dependency? = add("adhocTestCompile", dependencyNotation.id)
 fun DependencyHandler.integrationTestCompile(dependencyNotation: Dep): Dependency? = add("integrationTestCompile", dependencyNotation.id)
 fun DependencyHandler.integrationTestAnnotationProcessor(dependencyNotation: Dep): Dependency? = add("integrationTestAnnotationProcessor", dependencyNotation.id)
 fun DependencyHandler.integrationTestRuntimeOnly(dependencyNotation: Dep): Dependency? = add("integrationTestRuntimeOnly", dependencyNotation.id)
