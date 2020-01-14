@@ -82,6 +82,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 - Bump dependencies: spring-boot-starter-parent, wicket, sicketstuff, wicket-spring-boot, kotlin, jOOQ, detekt, testSet-plugin, mockk, lombok-plugin
   wicket-jquery-ui, spring-cloud-starter, openfeign, testcontainers, mockito, kwik, kluent, spring-dependency-management, reckon, jaxb plugin,
   jasperreports, spring-boot-admin-starter-client, equalsverifier, spek
+- {url-issues}150[#150] Move gradle project from /implementation/scipamato into git root
 
 
 [[v1.3.1]]
