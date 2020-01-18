@@ -63,7 +63,6 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 
 .Changed
-- Bump dependencies: spring-boot-starter-parent, gradle-wrapper, wicket-bootstrap
 
 .Deprecated
 
@@ -72,6 +71,13 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Fixed
 
 .Security
+
+
+[[v1.4.1]]
+== [1.4.1] -- 2020-01-18
+
+.Changed
+- Bump dependencies: spring-boot-starter-parent, gradle-wrapper, wicket-bootstrap
 
 
 [[v1.4.0]]
