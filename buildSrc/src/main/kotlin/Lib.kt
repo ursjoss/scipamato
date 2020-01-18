@@ -9,7 +9,7 @@ object Lib {
     //region:dependencyVersions
     private const val kotlinVersion = "1.3.61"
 
-    private const val springBootVersion = "2.2.2.RELEASE"
+    private const val springBootVersion = "2.2.3.RELEASE"
     private const val springBootAdminVersion = "2.2.1"
     const val springCloudVersion = "Hoxton.SR1"
     private const val springCloudStarterVersion = "2.2.1.RELEASE"
@@ -18,7 +18,7 @@ object Lib {
     private const val wicketVersion = "8.7.0"
     private const val wicketstuffVersion = "8.7.0"
     private const val wicketJqueryUiVersion = "8.6.0"
-    private const val wicketBootstrapVersion = "2.0.11"
+    private const val wicketBootstrapVersion = "2.0.12"
     private const val jasperReportVersion = "6.11.0"
     const val jooqVersion = "3.12.3"
 
