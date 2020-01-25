@@ -63,7 +63,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 
 .Changed
-- Bumped spring-boot-starter, junit
+- Bumped spring-boot-starter, junit, gradle-wrapper
 
 .Deprecated
 
