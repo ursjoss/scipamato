@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
  *
  * @author Urs Joss
  * @see <a href=
- *     "http://blog.apps.npr.org/pym.js/">http://blog.apps.npr.org/pym.js/</a>
+ *     "https://blog.apps.npr.org/pym.js/">https://blog.apps.npr.org/pym.js/</a>
  */
 public class PymJavaScriptResourceReference extends JavaScriptResourceReference {
 

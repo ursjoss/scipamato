@@ -26,7 +26,7 @@ public abstract class CoreEntity extends ScipamatoEntity {
      * e.g. {@literal [\\w\\u00C0-\\u024f]}
      * <p>
      * Thanks to hqx5 for his answer to the following <a href=
-     * "http://stackoverflow.com/questions/4043307/why-this-regex-is-not-working-for-german-words">stackoverflow
+     * "https://stackoverflow.com/questions/4043307/why-this-regex-is-not-working-for-german-words">stackoverflow
      * question </a>
      */
     protected static final String RE_W = "\\w\\u00C0-\\u024f";

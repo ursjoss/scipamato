@@ -1,7 +1,7 @@
 /*! pym.js - v1.3.2 - 2018-02-13 */
 /*
 * Pym.js is library that resizes an iframe based on the width of the parent and the resulting height of the child.
-* Check out the docs at http://blog.apps.npr.org/pym.js/ or the readme at README.md for usage.
+* Check out the docs at https://blog.apps.npr.org/pym.js/ or the readme at README.md for usage.
 */
 
 /** @module pym */
@@ -35,7 +35,7 @@
 
     /**
     * Generic function for parsing URL params.
-    * Via http://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript
+    * Via https://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript
     *
     * @method _getParameterByName
     * @inner

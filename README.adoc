@@ -25,10 +25,10 @@ https://projects.spring.io/spring-security/[Spring Security]
 * https://projectlombok.org/[Lombok]
 * Presentation Layer
 ** https://wicket.apache.org/[Apache Wicket] with
-http://getbootstrap.com/[Bootstrap]
+https://getbootstrap.com/[Bootstrap]
 ** https://github.com/MarcGiffing/wicket-spring-boot[wicket-spring-boot-starter]
 ** https://github.com/l0rdn1kk0n/wicket-bootstrap[wicket-bootstrap]
-** http://community.jaspersoft.com/[JasperReport] for PDF generation
+** https://community.jaspersoft.com/[JasperReport] for PDF generation
 ** https://github.com/OpenFeign/feign[Feign] as HTTP client to PubMed
 ** jaxb for XML parsing
 * Persistence Layer
@@ -40,15 +40,15 @@ http://getbootstrap.com/[Bootstrap]
 ** https://www.testcontainers.org/[Testcontainers] (running integration tests against the dockerized db)
 ** https://projects.spring.io/spring-batch/[Spring Batch] for pushing data from the core to the public database
 * Caching
-** JCache with http://www.ehcache.org/[Ehcache3]
+** JCache with https://www.ehcache.org/[Ehcache3]
 
 [[architecture-documentation]]
 == Architecture Documentation
 
-I started using http://structure101.com/[Structure101] to assess and track the architecture of SciPaMaTo.
+I started using https://structure101.com/[Structure101] to assess and track the architecture of SciPaMaTo.
 Many thanks to the friendly people of Structure101 to provide a free license for SciPaMaTo as an open source project!
 
-image:http://structure101.com/images/s101_170.png[Structure101]
+image:https://structure101.com/images/s101_170.png[Structure101]
 
 [[user-documentation]]
 == User Documentation

@@ -16,10 +16,10 @@ All notable changes to this project will be documented in this file.
 
 == Format and Versioning Scheme
 
-The format is based on http://keepachangelog.com/en/1.0.0/[Keep a Changelog].
+The format is based on https://keepachangelog.com/en/1.0.0/[Keep a Changelog].
 
 SciPaMato is an application. Therefore, the versioning scheme is _not_ adhering
-to http://semver.org/spec/v2.0.0.html[Semantic Versioning], which is mostly
+to https://semver.org/spec/v2.0.0.html[Semantic Versioning], which is mostly
 targeting software components or libraries. Nevertheless, I'm sticking with
 three part version numbers (e.g. 1.0.0), increasing the second number for
 bigger changes and the third number for relatively small changes and bug fixes.
@@ -561,7 +561,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 - dependency bumps: wicket-spring-boot, jOOQ, PostgreSQL JDBC Driver, spring-cloud
 - 08/20 - Public: reduce columns/column sizes in result view (abbreviated
   authors, journal instead of location)
-- 08/12 - Public: Add http://blog.apps.npr.org/pym.js/[pym.js] to support
+- 08/12 - Public: Add https://blog.apps.npr.org/pym.js/[pym.js] to support
   loading SciPaMaTo-Public within a responsive iframe
 - 08/21 - Public: Styling of  NewStudy page
 
@@ -800,7 +800,7 @@ the table in your database instances (`alter table schema_version rename to flyw
 - Introduced Project Lombok for Getters/Setters, Equals/HashCode and Builders
 - Rebased the database creation scripts. Now not adding papers or searches anymore, only reference data
 - switched from markdown to asciidoc for wiki pages
-- Created ChangeLog according to http://keepachangelog.com/en/1.0.0/[Keep a Changelog]
+- Created ChangeLog according to https://keepachangelog.com/en/1.0.0/[Keep a Changelog]
 - use OktHttp with feign
 - various improvements in wiki pages, javadoc, sonar suggested code changes
 - dependency updates: spring-boot-starter, wicket, wicket-spring-boot-starter, jOOQ, postgres-jdbc-driver, spring-boot-admin, assertJ

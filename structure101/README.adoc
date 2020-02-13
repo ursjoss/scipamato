@@ -1,16 +1,16 @@
 = Structure101
 
-image:http://structure101.com/images/s101_170.png[Structure101]
+image:https://structure101.com/images/s101_170.png[Structure101]
 
-http://structure101.com/[Structure 101] is an agile _architecture developement environment_ that let's the software team organize their code base. [from their website]
+https://structure101.com/[Structure 101] is an agile _architecture developement environment_ that let's the software team organize their code base. [from their website]
 
 The friendly people from Structure101 have kindly provided a free license for their excellent product to me in the context of SciPaMaTo as an open-source-project. Many thanks for that!!
 
 I am currently using
 
-* http://structure101.com/help/java/studio/[Structure101 Studio]
-* https://plugins.jetbrains.com/plugin/7292-structure101-for-java[Structure101 Plugin for IntelliJ]
-* http://2018.structure101.com/products/structure101-developer-overview/[Structure101 Workspace] for IntelliJ
+* https://structure101.com/help/java/studio/[Structure101 Studio]
+* https://plugins.jetbrains.com/plugin/10831-structure101-workspace[Structure101 Plugin for IntelliJ]
+* https://structure101.com/2018/12/01/structure101-workspace-intellij-idea-and-gradle/[Structure101 Workspace] for IntelliJ
 
 mainly to
 
