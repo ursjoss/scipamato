@@ -109,7 +109,7 @@ internal class AbstractMenuBuilderTest {
     fun assertExternalLinkWithIcon() {
         menuBuilder.addExternalLink(
             navbar,
-            "http://test.com",
+            "https://test.com",
             "mylabel",
             GlyphIconType.adjust,
             Navbar.ComponentPosition.LEFT
@@ -120,21 +120,21 @@ internal class AbstractMenuBuilderTest {
         assertThat(links).hasSize(1)
         val theLink = links[0]
 
-        assertThat(theLink.defaultModelObjectAsString).isEqualTo("http://test.com")
+        assertThat(theLink.defaultModelObjectAsString).isEqualTo("https://test.com")
         assertThat(theLink.get("label").defaultModelObject).isEqualTo("mylabel")
         assertThat((theLink.get("icon") as Icon).type).isEqualTo(GlyphIconType.adjust)
     }
 
     @Test
     fun assertExternalLinkWithoutIcon() {
-        menuBuilder.addExternalLink(navbar, "http://foo.com", "otherlabel", null, Navbar.ComponentPosition.LEFT)
+        menuBuilder.addExternalLink(navbar, "https://foo.com", "otherlabel", null, Navbar.ComponentPosition.LEFT)
 
         val links = getExternalLinksFrom(navbar)
 
         assertThat(links).hasSize(1)
         val theLink = links[0]
 
-        assertThat(theLink.defaultModelObjectAsString).isEqualTo("http://foo.com")
+        assertThat(theLink.defaultModelObjectAsString).isEqualTo("https://foo.com")
         assertThat(theLink.get("label").defaultModelObject).isEqualTo("otherlabel")
         val icon = theLink.get("icon") as Icon
         assertThat(icon.type).isNull()

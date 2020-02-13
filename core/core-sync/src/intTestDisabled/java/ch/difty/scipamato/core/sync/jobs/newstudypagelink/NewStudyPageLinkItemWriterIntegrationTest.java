@@ -20,7 +20,7 @@ class NewStudyPageLinkItemWriterIntegrationTest
     private static final int    SORT_EXISTING  = 1;
     private static final int    SORT_NEW       = 20;
     private static final String TITLE          = "foo";
-    private static final String URL            = "http://a.b";
+    private static final String URL            = "https://a.b";
     private static final String TITLE_EXISTING = "Web Suche";
 
     private PublicNewStudyPageLink newNewStudyPageLink, existingNewStudyPageLink;
