@@ -105,8 +105,8 @@ public class Paper extends IdScipamatoEntity<Long> implements CodeBoxAware, News
      * referenced below:
      *
      * @see <a href=
-     *     "http://blog.crossref.org/2015/08/doi-regular-expressions.html">
-     *     http://blog.crossref.org/2015/08/doi-regular-expressions.html</a>
+     *     "https://www.crossref.org/blog/dois-and-matching-regular-expressions/">
+     *     https://www.crossref.org/blog/dois-and-matching-regular-expressions/</a>
      */
     private static final String DOI_REGEX = "^10\\.\\d{4,9}/[-._;()/:A-Z0-9]+$";
 
@@ -169,7 +169,7 @@ public class Paper extends IdScipamatoEntity<Long> implements CodeBoxAware, News
     private Long number;
 
     /**
-     * Digital Object Identifier (see http://www.doi.org)
+     * Digital Object Identifier (see https://www.doi.org)
      * <p>
      * /^10.\d{4,9}/[-._;()/:A-Z0-9]+$/i
      */

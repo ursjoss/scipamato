@@ -122,15 +122,15 @@ class ScipamatoPublicPropertiesTest {
 
     @Test
     void checkingCssUrlSearchPage_delegatesToScipamatoProp() {
-        when(scipamatoPropMock.getCmsUrlSearchPage()).thenReturn("http://u.sp");
-        assertThat(prop.getCmsUrlSearchPage()).isEqualTo("http://u.sp");
+        when(scipamatoPropMock.getCmsUrlSearchPage()).thenReturn("https://u.sp");
+        assertThat(prop.getCmsUrlSearchPage()).isEqualTo("https://u.sp");
         verify(scipamatoPropMock).getCmsUrlSearchPage();
     }
 
     @Test
     void checkingCssUrlNewStudyPage_delegatesToScipamatoProp() {
-        when(scipamatoPropMock.getCmsUrlNewStudyPage()).thenReturn("http://u.nsp");
-        assertThat(prop.getCmsUrlNewStudyPage()).isEqualTo("http://u.nsp");
+        when(scipamatoPropMock.getCmsUrlNewStudyPage()).thenReturn("https://u.nsp");
+        assertThat(prop.getCmsUrlNewStudyPage()).isEqualTo("https://u.nsp");
         verify(scipamatoPropMock).getCmsUrlNewStudyPage();
     }
 

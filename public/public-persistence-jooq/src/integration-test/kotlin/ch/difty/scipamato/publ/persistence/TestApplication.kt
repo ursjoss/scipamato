@@ -23,7 +23,7 @@ open class TestApplication {
         override fun getDefaultLocalization() = "de"
         override fun getBrand() = "scipamato"
         override fun getTitleOrBrand() = brand
-        override fun getPubmedBaseUrl() = "http://pubmed/"
+        override fun getPubmedBaseUrl() = "https://pubmed/"
         override fun getRedirectFromPort() = 8081
         override fun getMultiSelectBoxActionBoxWithMoreEntriesThan() = 4
         override fun isCommercialFontPresent() = false

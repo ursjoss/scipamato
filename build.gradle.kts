@@ -80,7 +80,7 @@ allprojects {
         mavenCentral()
         jcenter()
         maven { url = uri("https://dl.bintray.com/mockito/maven/") }
-        maven { url = uri("http://jaspersoft.jfrog.io/jaspersoft/third-party-ce-artifacts") }
+        maven { url = uri("https://jaspersoft.jfrog.io/jaspersoft/third-party-ce-artifacts") }
     }
 }
 

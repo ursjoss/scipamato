@@ -26,7 +26,7 @@ class TestApplicationProperties : ApplicationProperties {
     override fun getDefaultLocalization() = "en"
     override fun getBrand() = "SciPaMaTo"
     override fun getTitleOrBrand() = "SciPaMaTo"
-    override fun getPubmedBaseUrl() = "http://pubmed/"
+    override fun getPubmedBaseUrl() = "https://pubmed/"
     override fun getCmsUrlSearchPage() = "http://localhost:8081/"
     override fun getRedirectFromPort() = 8080
     override fun getMultiSelectBoxActionBoxWithMoreEntriesThan() = 4

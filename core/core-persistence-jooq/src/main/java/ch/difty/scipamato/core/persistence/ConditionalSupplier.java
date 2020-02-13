@@ -28,9 +28,9 @@ import org.jooq.lambda.tuple.Tuple2;
  * @see <a href=
  *     "https://gist.github.com/ggalmazor/93bdcf8b124304a19266#file-gistfile1-java">https://gist.github.com/ggalmazor/93bdcf8b124304a19266#file-gistfile1-java</a>
  * @see <a href=
- *     "http://www.programania.net/diseno-de-software/functional-trick-to-compose-conditions-in-jooq/">http://www.programania.net/diseno-de-software/functional-trick-to-compose-conditions-in-jooq/</a>
+ *     "https://www.programania.net/diseno-de-software/functional-trick-to-compose-conditions-in-jooq/">https://www.programania.net/diseno-de-software/functional-trick-to-compose-conditions-in-jooq/</a>
  * @see <a href=
- *     "http://stackoverflow.com/questions/19803058/java-8-stream-getting-head-and-tail">http://stackoverflow.com/questions/19803058/java-8-stream-getting-head-and-tail</a>
+ *     "https://stackoverflow.com/questions/19803058/java-8-stream-getting-head-and-tail">https://stackoverflow.com/questions/19803058/java-8-stream-getting-head-and-tail</a>
  */
 @SuppressWarnings("SpellCheckingInspection")
 public class ConditionalSupplier {
