@@ -9,22 +9,22 @@ object Lib {
     //region:dependencyVersions
     private const val kotlinVersion = "1.3.61"
 
-    private const val springBootVersion = "2.2.4.RELEASE"
-    private const val springBootAdminVersion = "2.2.1"
-    const val springCloudVersion = "Hoxton.SR1"
+    private const val springBootVersion = "2.2.5.RELEASE"
+    private const val springBootAdminVersion = "2.2.2"
+    const val springCloudVersion = "Hoxton.SR2"
     private const val springCloudStarterVersion = "2.2.1.RELEASE"
 
-    private const val wicketSpringBootStarterVersion = "2.1.8"
+    private const val wicketSpringBootStarterVersion = "2.1.9"
     private const val wicketVersion = "8.7.0"
     private const val wicketstuffVersion = "8.7.0"
     private const val wicketJqueryUiVersion = "8.6.0"
     private const val wicketBootstrapVersion = "2.0.12"
     private const val jasperReportVersion = "6.11.0"
-    const val jooqVersion = "3.12.3"
+    const val jooqVersion = "3.12.4"
 
     private const val kotlinLoggingVersion = "1.7.8"
 
-    private const val openfeignVersion = "10.7.2"
+    private const val openfeignVersion = "10.8"
 
     private const val jaxbCoreVersion = "2.3.0.1"
     private const val jaxbImplVersion = "2.3.2"
@@ -38,14 +38,14 @@ object Lib {
     private const val commonsCollectionVersion = "4.4"
     private const val joolVersion = "0.9.14"
 
-    private const val equalsverifierVersion = "3.1.11"
+    private const val equalsverifierVersion = "3.1.12"
 
     private const val junit5Version = "5.6.0"
 
-    private const val testcontainersVersion = "1.12.4"
+    private const val testcontainersVersion = "1.12.5"
 
     @Suppress("MemberVisibilityCanBePrivate")
-    const val mockitoVersion = "3.2.4"
+    const val mockitoVersion = "3.3.0"
     private const val mockitoKotlinVersion = "2.2.0"
 
     private const val spekVersion = "2.0.9"
@@ -57,14 +57,14 @@ object Lib {
     //endregion
 
     //region:pluginVersions
-    private const val springDependencyManagementPluginVersion = "1.0.8.RELEASE"
-    private const val lombokPluginVersion = "4.1.6"
+    private const val springDependencyManagementPluginVersion = "1.0.9.RELEASE"
+    private const val lombokPluginVersion = "5.0.0-rc4"
     private const val jooqModelatorPluginVersion = "3.6.0"
     private const val reckonPluginVersion = "0.12.0"
-    private const val jaxbPluginVersion = "4.1.0"
+    private const val jaxbPluginVersion = "4.3.0"
     private const val testSetsPluginVersion = "2.2.1"
     private const val sonarqubePluginVersion = "2.8"
-    private const val detektPluginVersion = "1.4.0"
+    private const val detektPluginVersion = "1.6.0"
     //endregion
 
     //region:dependencies
@@ -151,7 +151,7 @@ object Lib {
     fun spek(module: String) = Dep("org.spekframework.spek2", "spek-$module", spekVersion)
     fun kluent() = Dep("org.amshove.kluent", "kluent", kluentVersion)
     fun mockk() = Dep("io.mockk", "mockk", mockkVersion)
-    fun kwik() = Dep("com.github.jcornaz.kwik", "kwik-core-jvm", kwikVersion)
+    fun kwik(module : String) = Dep("com.github.jcornaz.kwik", "kwik-$module-jvm", kwikVersion)
 
     fun servletApi() = Dep("javax.servlet", "javax.servlet-api")
 

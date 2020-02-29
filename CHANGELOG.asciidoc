@@ -63,7 +63,8 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 
 .Changed
-- Bumped spring-boot-starter, junit, gradle-wrapper
+- Bumped spring-boot-starter, jOOQ, wicket-spring-boot-starter, junit, gradle-wrapper, spring-boot-admin, kwik, detekt,
+  equlalsverifier, testcontainers, mockito, spring-dependency-management plugin, lombok plugin, jaxb-plugin
 
 .Deprecated
 

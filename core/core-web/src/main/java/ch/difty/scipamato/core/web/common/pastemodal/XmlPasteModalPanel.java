@@ -18,7 +18,7 @@ import org.apache.wicket.model.StringResourceModel;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-@SuppressWarnings("SameParameterValue")
+@SuppressWarnings({ "SameParameterValue", "SpellCheckingInspection" })
 public class XmlPasteModalPanel extends Panel {
 
     private static final long serialVersionUID = 1L;
@@ -105,6 +105,7 @@ public class XmlPasteModalPanel extends Panel {
                 ModalWindow.closeCurrent(target);
             }
         };
+        //noinspection deprecation
         button.add(new LoadingBehavior(new StringResourceModel(id + ".loading", this, null)));
         return button;
     }

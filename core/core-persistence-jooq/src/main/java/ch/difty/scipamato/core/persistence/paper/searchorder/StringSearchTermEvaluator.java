@@ -22,6 +22,7 @@ import ch.difty.scipamato.core.persistence.ConditionalSupplier;
  *
  * @author u.joss
  */
+@SuppressWarnings("SpellCheckingInspection")
 public class StringSearchTermEvaluator implements SearchTermEvaluator<StringSearchTerm> {
 
     private static final String METHODS = "methods";
@@ -136,8 +137,7 @@ public class StringSearchTermEvaluator implements SearchTermEvaluator<StringSear
         final boolean negate) {
         if (METHODS.equalsIgnoreCase(field.getName())) {
             ConditionalSupplier csSub = new ConditionalSupplier();
-            for (final Field mf : methodFields) {
-                //noinspection unchecked
+            for (final Field<Object> mf : methodFields) {
                 csSub.add(() -> negate ?
                     DSL
                         .coalesce(mf, "")

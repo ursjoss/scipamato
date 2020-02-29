@@ -8,7 +8,7 @@ package ch.difty.scipamato.common.paper
  * pre-pending an English static label to each value. The other one with dynamic labels that can be localized according
  * to the users language preference.
  */
-@Suppress("LongParameterList", "kotlin:S107")
+@Suppress("LongParameterList", "kotlin:S107", "UnnecessaryAbstractClass")
 abstract class AbstractShortFieldConcatenator protected constructor(private val withNewLine: Boolean) {
 
     fun methodsFrom(

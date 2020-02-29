@@ -61,9 +61,8 @@ internal class AbstractPageTest : WicketBaseTest() {
     }
 
     @Test
-    fun gettingNavbarAndFeedbackPanelBeforeInitialize_returnsNull() {
+    fun gettingNavbarBeforeInitialize_returnsNull() {
         assertThat(page.navBar == null).isTrue()
-        assertThat(page.feedbackPanel == null).isTrue()
     }
 
     @Test
