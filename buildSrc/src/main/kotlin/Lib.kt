@@ -42,7 +42,7 @@ object Lib {
 
     private const val junit5Version = "5.6.0"
 
-    private const val testcontainersVersion = "1.12.4"
+    private const val testcontainersVersion = "1.12.5"
 
     @Suppress("MemberVisibilityCanBePrivate")
     const val mockitoVersion = "3.2.4"
