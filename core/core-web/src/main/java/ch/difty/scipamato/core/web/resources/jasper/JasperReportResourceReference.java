@@ -26,8 +26,9 @@ import org.jetbrains.annotations.Nullable;
  *
  * @author u.joss
  */
+@SuppressWarnings("SpellCheckingInspection")
 @Slf4j
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 public abstract class JasperReportResourceReference extends PackageResourceReference implements Serializable {
 
     private static final long serialVersionUID = 1L;
