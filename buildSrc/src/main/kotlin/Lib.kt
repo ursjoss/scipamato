@@ -151,7 +151,7 @@ object Lib {
     fun spek(module: String) = Dep("org.spekframework.spek2", "spek-$module", spekVersion)
     fun kluent() = Dep("org.amshove.kluent", "kluent", kluentVersion)
     fun mockk() = Dep("io.mockk", "mockk", mockkVersion)
-    fun kwik() = Dep("com.github.jcornaz.kwik", "kwik-core-jvm", kwikVersion)
+    fun kwik(module : String) = Dep("com.github.jcornaz.kwik", "kwik-$module-jvm", kwikVersion)
 
     fun servletApi() = Dep("javax.servlet", "javax.servlet-api")
 

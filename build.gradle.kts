@@ -156,7 +156,8 @@ subprojects {
         testImplementation(Lib.spek("dsl-jvm"))
         testImplementation(Lib.kluent())
         testImplementation(Lib.mockk())
-        testImplementation(Lib.kwik())
+        testImplementation(Lib.kwik("evaluator"))
+        testImplementation(Lib.kwik("generator-stdlib"))
 
         testRuntimeOnly(Lib.spek("runner-junit5"))
     }
