@@ -1,52 +1,5 @@
 <?xml version="1.0" ?>
 <SmellBaseline>
   <Blacklist></Blacklist>
-  <Whitelist>
-    <ID>LongParameterList:RisAdapter.kt$JRisAdapter$(p: Paper, startPage: Int?, endPage: Int?, periodical: String, volume: String?, issue: String?)</ID>
-    <ID>MagicNumber:RisAdapter.kt$JRisAdapter$3</ID>
-    <ID>MagicNumber:RisAdapter.kt$JRisAdapter$4</ID>
-    <ID>MagicNumber:RisAdapter.kt$JRisAdapter$5</ID>
-    <ID>MagicNumber:RisAdapter.kt$JRisAdapter$6</ID>
-    <ID>MaxLineLength:AjaxDownload.kt$if (!antiCache) toString() else "$this${if (this.contains("?")) "&amp;" else "?"}antiCache=${System.currentTimeMillis()}"</ID>
-    <ID>MaxLineLength:JRis.kt$JRis$TagAccessor(RisTag.A2, { r, v -&gt; r.secondaryAuthors.add(v as String) }, { r: RisRecord -&gt; r.secondaryAuthors })</ID>
-    <ID>MaxLineLength:JRis.kt$JRis$TagAccessor(RisTag.A3, { r, v -&gt; r.tertiaryAuthors.add(v as String) }, { r: RisRecord -&gt; r.tertiaryAuthors })</ID>
-    <ID>MaxLineLength:JRis.kt$JRis$TagAccessor(RisTag.A4, { r, v -&gt; r.subsidiaryAuthors.add(v as String) }, { r: RisRecord -&gt; r.subsidiaryAuthors })</ID>
-    <ID>MaxLineLength:JRis.kt$JRis$TagAccessor(RisTag.AV, { r, v -&gt; r.archivesLocation = v as String? }, { r: RisRecord -&gt; r.archivesLocation })</ID>
-    <ID>MaxLineLength:JRis.kt$JRis$TagAccessor(RisTag.CT, { r, v -&gt; r.unpublishedReferenceTitle = v as String? }, { r: RisRecord -&gt; r.unpublishedReferenceTitle })</ID>
-    <ID>MaxLineLength:JRis.kt$JRis$TagAccessor(RisTag.DP, { r, v -&gt; r.databaseProvider = v as String? }, { r: RisRecord -&gt; r.databaseProvider })</ID>
-    <ID>MaxLineLength:JRis.kt$JRis$TagAccessor(RisTag.J1, { r, v -&gt; r.periodicalNameUserAbbrevation = v as String? }, { r: RisRecord -&gt; r.periodicalNameUserAbbrevation })</ID>
-    <ID>MaxLineLength:JRis.kt$JRis$TagAccessor(RisTag.J2, { r, v -&gt; r.alternativeTitle = v as String? }, { r: RisRecord -&gt; r.alternativeTitle })</ID>
-    <ID>MaxLineLength:JRis.kt$JRis$TagAccessor(RisTag.JA, { r, v -&gt; r.periodicalNameStandardAbbrevation = v as String? }, { r: RisRecord -&gt; r.periodicalNameStandardAbbrevation })</ID>
-    <ID>MaxLineLength:JRis.kt$JRis$TagAccessor(RisTag.JF, { r, v -&gt; r.periodicalNameFullFormatJF = v as String? }, { r: RisRecord -&gt; r.periodicalNameFullFormatJF })</ID>
-    <ID>MaxLineLength:JRis.kt$JRis$TagAccessor(RisTag.JO, { r, v -&gt; r.periodicalNameFullFormatJO = v as String? }, { r: RisRecord -&gt; r.periodicalNameFullFormatJO })</ID>
-    <ID>MaxLineLength:JRis.kt$JRis$TagAccessor(RisTag.OP, { r, v -&gt; r.originalPublication = v as String? }, { r: RisRecord -&gt; r.originalPublication })</ID>
-    <ID>MaxLineLength:JRis.kt$JRis$TagAccessor(RisTag.TA, { r, v -&gt; r.translatedAuthor = v as String? }, { r: RisRecord -&gt; r.translatedAuthor })</ID>
-    <ID>MaxLineLength:JRis.kt$JRis$TagAccessor(RisTag.VO, { r, v -&gt; r.publisherStandardNumber = v as String? }, { r: RisRecord -&gt; r.publisherStandardNumber })</ID>
-    <ID>MaxLineLength:RisAdapter.kt$DefaultRisAdapter : JRisAdapter</ID>
-    <ID>MaxLineLength:RisAdapter.kt$DefaultRisAdapter$override</ID>
-    <ID>MaxLineLength:RisAdapter.kt$DistillerSrRisAdapter : JRisAdapter</ID>
-    <ID>MaxLineLength:RisAdapter.kt$DistillerSrRisAdapter$override</ID>
-    <ID>MaxLineLength:RisAdapter.kt$JRisAdapter$check(groups.size == 6) { throw IllegalStateException("Unable to parse '$location' - should have been 5 parts") }</ID>
-    <ID>MaxLineLength:RisAdapter.kt$JRisAdapter$protected abstract fun newRisRecord(p: Paper, startPage: Int?, endPage: Int?, periodical: String, volume: String?, issue: String?): RisRecord</ID>
-    <ID>MaxLineLength:RisAdapter.kt$JRisAdapter$sealed</ID>
-    <ID>MaxLineLength:RisAdapter.kt$JRisAdapter.Companion$private val locationRegex = """^([^.]+)\. \d+; (\d+(?:-\d+)?)(?: \(((?:[\d-])+)\))?: (\d+)?(?:-(\d+))?(?:\.? ?e\d+)?\.$""".toRegex()</ID>
-    <ID>MaxLineLength:RisAdapter.kt$private val defaultDistillerSort: List&lt;String&gt; = listOf("AU", "PY", "TI", "JO", "SP", "EP", "M2", "VL", "IS", "ID", "DO", "M1", "C1", "AB", "DB", "L1", "L2")</ID>
-    <ID>MaxLineLength:RisAdapter.kt$private val defaultSort: List&lt;String&gt; = listOf("AU", "PY", "TI", "JO", "SP", "EP", "VL", "IS", "ID", "DO", "M1", "M2", "AB", "DB", "L1", "L2")</ID>
-    <ID>MaxLineLength:RisRecord.kt$RisRecord$/** * JA. This is the periodical in which the article was (or is to be, in the case of in-press references) published. * This is an alphanumeric field of up to 255 characters. */ var periodicalNameStandardAbbrevation: String? = null</ID>
-    <ID>MaxLineLength:RisRecord.kt$RisRecord$/** * U. User definable 2. This is an alphanumeric field and there is no practical limit to the length of this field. */ var userDefinable2: String? = null</ID>
-    <ID>MaxLineLength:RisRecord.kt$RisRecord$/** * U1. User definable 1. This is an alphanumeric field and there is no practical limit to the length of this field. */ var userDefinable1: String? = null</ID>
-    <ID>MaxLineLength:RisRecord.kt$RisRecord$/** * U3. User definable 3. This is an alphanumeric field and there is no practical limit to the length of this field. */ var userDefinable3: String? = null</ID>
-    <ID>MaxLineLength:RisRecord.kt$RisRecord$/** * U4. User definable 4. This is an alphanumeric field and there is no practical limit to the length of this field. */ var userDefinable4: String? = null</ID>
-    <ID>MaxLineLength:RisRecord.kt$RisRecord$/** * U5. User definable 5. This is an alphanumeric field and there is no practical limit to the length of this field. */ var userDefinable5: String? = null</ID>
-    <ID>MaxLineLength:RisTag.kt$RisTag$BT : RisTag</ID>
-    <ID>MaxLineLength:RisTag.kt$RisTag$J2 : RisTag</ID>
-    <ID>MaxLineLength:RisTag.kt$RisTag$JA : RisTag</ID>
-    <ID>MaxLineLength:RisTag.kt$RisTag$L1 : RisTag</ID>
-    <ID>MaxLineLength:RisTag.kt$RisTag$L2 : RisTag</ID>
-    <ID>MaxLineLength:RisTag.kt$RisTag$N2 : RisTag</ID>
-    <ID>NewLineAtEndOfFile:AjaxDownload.kt$ch.difty.scipamato.core.web.behavior.AjaxDownload.kt</ID>
-    <ID>UseIfInsteadOfWhen:JRis.kt$JRis$when (lastParsed) { RisTag.AB.name -&gt; RisTag.AB else -&gt; throw JRisException("Unable to parse tag '$tagName'") }</ID>
-    <ID>UseIfInsteadOfWhen:JRis.kt$JRis$when { maxLength != null -&gt; substring(0, min(maxLength, length)) else -&gt; this }</ID>
-    <ID>WildcardImport:JRis.kt$import java.io.*</ID>
-  </Whitelist>
+  <Whitelist></Whitelist>
 </SmellBaseline>
