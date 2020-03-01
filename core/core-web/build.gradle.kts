@@ -59,6 +59,8 @@ dependencies {
     }
     implementation(Lib.jasperreports("fonts"))
 
+    implementation(Lib.kris("core"))
+
     /** Caching: JCache with ehcache as cache provider */
     implementation(Lib.springBootStarter("cache"))
     implementation(Lib.cacheApi())

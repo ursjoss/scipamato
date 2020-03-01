@@ -1,7 +1,7 @@
 import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.dsl.DependencyHandler
 import java.io.File
-import java.util.*
+import java.util.Properties
 
 @Suppress("TooManyFunctions", "MaximumLineLength", "MemberVisibilityCanBePrivate", "SpellCheckingInspection")
 object Lib {
@@ -20,6 +20,7 @@ object Lib {
     private const val wicketJqueryUiVersion = "8.6.0"
     private const val wicketBootstrapVersion = "2.0.12"
     private const val jasperReportVersion = "6.11.0"
+    private const val krisVersion = "0.1.0"
     const val jooqVersion = "3.12.4"
 
     private const val kotlinLoggingVersion = "1.7.8"
@@ -112,6 +113,7 @@ object Lib {
     fun wicketJqueryUi(module: String = "") = Dep("com.googlecode.wicket-jquery-ui", "wicket-jquery-ui${if (module.isNotBlank()) "-$module" else ""}", wicketJqueryUiVersion)
     fun fontAwesome() = Dep("org.webjars", "font-awesome", fontAwesomeVersion)
     fun jasperreports(module: String = "") = Dep("net.sf.jasperreports", "jasperreports${if (module.isNotBlank()) "-$module" else ""}", jasperReportVersion)
+    fun kris(module : String) = Dep("ch.difty.kris", "kris-$module", krisVersion)
 
     // JSR 303 bean validation provider implementation
 
@@ -151,7 +153,7 @@ object Lib {
     fun spek(module: String) = Dep("org.spekframework.spek2", "spek-$module", spekVersion)
     fun kluent() = Dep("org.amshove.kluent", "kluent", kluentVersion)
     fun mockk() = Dep("io.mockk", "mockk", mockkVersion)
-    fun kwik(module : String) = Dep("com.github.jcornaz.kwik", "kwik-$module-jvm", kwikVersion)
+    fun kwik(module: String) = Dep("com.github.jcornaz.kwik", "kwik-$module-jvm", kwikVersion)
 
     fun servletApi() = Dep("javax.servlet", "javax.servlet-api")
 
@@ -183,7 +185,7 @@ object Lib {
     //endregion
 }
 
-class Dep(val group: String, val name: String, val version: String? = null) {
+class Dep(private val group: String, private val name: String, private val version: String? = null) {
     val id: String
         get() {
             val versionPart = if (version != null) ":$version" else ""

@@ -2,10 +2,10 @@
 
 package ch.difty.scipamato.core.logic.exporting
 
+import ch.difty.kris.KRis
+import ch.difty.kris.domain.RisRecord
+import ch.difty.kris.domain.RisType
 import ch.difty.scipamato.core.entity.Paper
-import com.gmail.gcolaianni5.jris.JRis
-import com.gmail.gcolaianni5.jris.RisRecord
-import com.gmail.gcolaianni5.jris.RisType
 import java.io.Serializable
 
 private val defaultSort: List<String> = listOf(
@@ -53,11 +53,12 @@ sealed class JRisAdapter(
     protected val publicUrl: String?
 ) : RisAdapter {
 
+    @Suppress("EXPERIMENTAL_API_USAGE")
     override fun build(papers: List<Paper>, sort: List<String>): String =
-        JRis.build(
-            records = papers.map(::toRisRecords).toList(),
+        KRis.buildFromList(
+            risRecords = papers.map(::toRisRecords).toList(),
             sort = sort
-        )
+        ).joinToString(separator = "")
 
     private fun toRisRecords(p: Paper): RisRecord {
         val (periodical, volume, issue, startPage, endPage) = p.locationComponents()
@@ -158,7 +159,7 @@ class DefaultRisAdapter(
             authors = p.formattedAuthors().toMutableList(),
             publicationYear = p.publicationYear?.toString(),
             startPage = startPage?.toString(),
-            endPage = endPage,
+            endPage = endPage?.toString(),
             periodicalNameFullFormatJO = periodical,
             volumeNumber = volume,
             issue = issue,
@@ -203,7 +204,7 @@ class DistillerSrRisAdapter(
             publicationYear = p.publicationYear?.toString(),
             miscellaneous2 = startPage?.toString(),
             startPage = getPages(startPage, endPage),
-            endPage = endPage,
+            endPage = endPage?.toString(),
             periodicalNameFullFormatJO = periodical,
             volumeNumber = volume,
             issue = issue,

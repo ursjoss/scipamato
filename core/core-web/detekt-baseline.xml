@@ -45,9 +45,6 @@
     <ID>MaxLineLength:RisTag.kt$RisTag$L2 : RisTag</ID>
     <ID>MaxLineLength:RisTag.kt$RisTag$N2 : RisTag</ID>
     <ID>NewLineAtEndOfFile:AjaxDownload.kt$ch.difty.scipamato.core.web.behavior.AjaxDownload.kt</ID>
-    <ID>NewLineAtEndOfFile:RisRecord.kt$com.gmail.gcolaianni5.jris.RisRecord.kt</ID>
-    <ID>NewLineAtEndOfFile:RisTag.kt$com.gmail.gcolaianni5.jris.RisTag.kt</ID>
-    <ID>NewLineAtEndOfFile:RisType.kt$com.gmail.gcolaianni5.jris.RisType.kt</ID>
     <ID>UseIfInsteadOfWhen:JRis.kt$JRis$when (lastParsed) { RisTag.AB.name -&gt; RisTag.AB else -&gt; throw JRisException("Unable to parse tag '$tagName'") }</ID>
     <ID>UseIfInsteadOfWhen:JRis.kt$JRis$when { maxLength != null -&gt; substring(0, min(maxLength, length)) else -&gt; this }</ID>
     <ID>WildcardImport:JRis.kt$import java.io.*</ID>
