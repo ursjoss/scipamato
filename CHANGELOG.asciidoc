@@ -63,10 +63,6 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 
 .Changed
-- Bumped spring-boot-starter, jOOQ, wicket-spring-boot-starter, junit, gradle-wrapper, spring-boot-admin, kwik, detekt,
-  equlalsverifier, testcontainers, mockito, spring-dependency-management plugin, lombok plugin, jaxb-plugin
-- {url-issues}129[#129] Replace copied JRis classes with ch.difty.kris:kris-core
-
 
 .Deprecated
 
@@ -75,6 +71,15 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Fixed
 
 .Security
+
+
+[[v1.4.2]]
+== [1.4.2] -- 2020-03-02
+
+.Changed
+- Bumped spring-boot-starter, jOOQ, wicket-spring-boot-starter, junit, gradle-wrapper, spring-boot-admin, kwik, detekt,
+  equlalsverifier, testcontainers, mockito, spring-dependency-management plugin, lombok plugin, jaxb-plugin
+- {url-issues}129[#129] Replace copied JRis classes with ch.difty.kris:kris-core
 
 
 [[v1.4.1]]
