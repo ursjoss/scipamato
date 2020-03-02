@@ -466,7 +466,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
 
             @Override
             public void onSubmit() {
-                if (forceRequerySupplier.get())
+                if (Boolean.TRUE.equals(forceRequerySupplier.get()))
                     restartSearchInPaperSearchPage();
                 else if (callingPage != null)
                     setResponsePage(callingPage.getPage());

@@ -165,7 +165,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
 
             @Override
             protected void onUpdate(@NotNull AjaxRequestTarget target) {
-                if (!overridden.getModelObject()) {
+                if (Boolean.FALSE.equals(overridden.getModelObject())) {
                     AuthorParser p = authorParserFactory.createParser(authors.getValue());
                     firstAuthor.setModelObject(p.getFirstAuthor());
                 }
@@ -728,7 +728,8 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
             private static final long serialVersionUID = 1L;
 
             @Override
-            protected Item<PaperAttachment> newRowItem(@NotNull String id, int index, @NotNull IModel<PaperAttachment> model) {
+            protected Item<PaperAttachment> newRowItem(@NotNull String id, int index,
+                @NotNull IModel<PaperAttachment> model) {
                 final PaperAttachment pa = model.getObject();
                 final Item<PaperAttachment> item = super.newRowItem(id, index, model);
                 item.add(AttributeModifier.replace(TITLE_ATTR, pa.getSizeKiloBytes() + " kB - " + pa.getContentType()));
@@ -777,7 +778,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
             private static final long serialVersionUID = 1L;
 
             @Override
-            protected IModel<String> createIconModel(@NotNull  IModel<PaperAttachment> rowModel) {
+            protected IModel<String> createIconModel(@NotNull IModel<PaperAttachment> rowModel) {
                 return Model.of(trash.cssClassName() + " text-danger");
             }
 
@@ -790,8 +791,8 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
             }
 
             @Override
-            protected void onClickPerformed(@NotNull AjaxRequestTarget target, @NotNull IModel<PaperAttachment> rowModel,
-                @NotNull AjaxLink<Void> link) {
+            protected void onClickPerformed(@NotNull AjaxRequestTarget target,
+                @NotNull IModel<PaperAttachment> rowModel, @NotNull AjaxLink<Void> link) {
                 final Integer id = rowModel
                     .getObject()
                     .getId();

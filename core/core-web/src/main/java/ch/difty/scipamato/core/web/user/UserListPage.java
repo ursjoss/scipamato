@@ -135,7 +135,7 @@ public class UserListPage extends BasePage<Void> {
 
             @Override
             public IModel<?> getDataModel(final IModel<User> rowModel) {
-                return Model.of(predicate.apply(rowModel.getObject()) ? trueLabel : falseLabel);
+                return Model.of(Boolean.TRUE.equals(predicate.apply(rowModel.getObject())) ? trueLabel : falseLabel);
             }
         };
     }

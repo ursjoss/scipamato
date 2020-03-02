@@ -76,7 +76,7 @@ public abstract class DefinitionListResultPanel<T extends DefinitionEntity, F ex
 
             @Override
             public IModel<?> getDataModel(final IModel<T> rowModel) {
-                return (Model.of(predicate.apply(rowModel.getObject()) ? trueLabel : falseLabel));
+                return (Model.of(Boolean.TRUE.equals(predicate.apply(rowModel.getObject())) ? trueLabel : falseLabel));
             }
         };
     }
