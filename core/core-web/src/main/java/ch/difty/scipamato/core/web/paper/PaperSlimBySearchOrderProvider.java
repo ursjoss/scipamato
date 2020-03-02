@@ -11,6 +11,7 @@ import org.jetbrains.annotations.Nullable;
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.common.persistence.paging.PaginationRequest;
 import ch.difty.scipamato.common.persistence.paging.Sort.Direction;
+import ch.difty.scipamato.core.entity.IdScipamatoEntity;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.projection.PaperSlim;
 import ch.difty.scipamato.core.entity.search.SearchOrder;
@@ -39,7 +40,7 @@ public class PaperSlimBySearchOrderProvider extends AbstractPaperSlimProvider<Se
         Injector
             .get()
             .inject(this);
-        setSort(Paper.IdScipamatoEntityFields.ID.getFieldName(), SortOrder.DESCENDING);
+        setSort(IdScipamatoEntity.IdScipamatoEntityFields.ID.getFieldName(), SortOrder.DESCENDING);
     }
 
     @NotNull
