@@ -11,6 +11,8 @@ import org.apache.wicket.model.StringResourceModel;
 import org.jetbrains.annotations.NotNull;
 
 import ch.difty.scipamato.core.entity.CodeClass;
+import ch.difty.scipamato.core.entity.CoreEntity;
+import ch.difty.scipamato.core.entity.IdScipamatoEntity;
 import ch.difty.scipamato.core.entity.code.CodeDefinition;
 import ch.difty.scipamato.core.entity.code.CodeFilter;
 import ch.difty.scipamato.core.entity.code.CodeTranslation;
@@ -53,8 +55,8 @@ abstract class CodeEditHeaderPanel extends DeletableDefinitionEditHeaderPanel<Co
             CodeFilter.CodeFilterFields.CODE_CLASS.getFieldName());
         final CodeClassModel choices = new CodeClassModel(getLocale().getLanguage());
         final IChoiceRenderer<CodeClass> choiceRenderer = new ChoiceRenderer<>(
-            CodeClass.CoreEntityFields.DISPLAY_VALUE.getFieldName(),
-            CodeClass.IdScipamatoEntityFields.ID.getFieldName());
+            CoreEntity.CoreEntityFields.DISPLAY_VALUE.getFieldName(),
+            IdScipamatoEntity.IdScipamatoEntityFields.ID.getFieldName());
         codeClasses = new BootstrapSelect<>(id, model, choices, choiceRenderer);
         queue(codeClasses);
     }

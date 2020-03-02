@@ -30,6 +30,7 @@ import ch.difty.scipamato.common.web.Mode;
 import ch.difty.scipamato.common.web.component.SerializableConsumer;
 import ch.difty.scipamato.common.web.component.table.column.ClickablePropertyColumn;
 import ch.difty.scipamato.common.web.component.table.column.LinkIconColumn;
+import ch.difty.scipamato.core.entity.IdScipamatoEntity;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.PaperSlimFilter;
 import ch.difty.scipamato.core.entity.projection.PaperSlim;
@@ -145,7 +146,7 @@ public abstract class ResultPanel extends BasePanel<Void> {
 
     private List<IColumn<PaperSlim, String>> makeTableColumns() {
         final List<IColumn<PaperSlim, String>> columns = new ArrayList<>();
-        columns.add(makePropertyColumn(Paper.IdScipamatoEntityFields.ID.getFieldName()));
+        columns.add(makePropertyColumn(IdScipamatoEntity.IdScipamatoEntityFields.ID.getFieldName()));
         columns.add(makePropertyColumn(NUMBER.getFieldName()));
         columns.add(makePropertyColumn(FIRST_AUTHOR.getFieldName()));
         columns.add(makePropertyColumn(PUBL_YEAR.getFieldName()));

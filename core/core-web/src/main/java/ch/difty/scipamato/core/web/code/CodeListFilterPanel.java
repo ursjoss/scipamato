@@ -13,6 +13,8 @@ import org.apache.wicket.model.StringResourceModel;
 import org.jetbrains.annotations.NotNull;
 
 import ch.difty.scipamato.core.entity.CodeClass;
+import ch.difty.scipamato.core.entity.CoreEntity;
+import ch.difty.scipamato.core.entity.IdScipamatoEntity;
 import ch.difty.scipamato.core.entity.code.CodeDefinition;
 import ch.difty.scipamato.core.entity.code.CodeFilter;
 import ch.difty.scipamato.core.entity.code.CodeTranslation;
@@ -47,8 +49,8 @@ abstract class CodeListFilterPanel
             CodeFilter.CodeFilterFields.CODE_CLASS.getFieldName());
         final CodeClassModel choices = new CodeClassModel(getLocale().getLanguage());
         final IChoiceRenderer<CodeClass> choiceRenderer = new ChoiceRenderer<>(
-            CodeClass.CoreEntityFields.DISPLAY_VALUE.getFieldName(),
-            CodeClass.IdScipamatoEntityFields.ID.getFieldName());
+            CoreEntity.CoreEntityFields.DISPLAY_VALUE.getFieldName(),
+            IdScipamatoEntity.IdScipamatoEntityFields.ID.getFieldName());
 
         final BootstrapSelect<CodeClass> codeClasses = new BootstrapSelect<>(id, model, choices, choiceRenderer);
         codeClasses.add(new AjaxFormComponentUpdatingBehavior("change") {

@@ -28,6 +28,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import ch.difty.scipamato.common.web.Mode;
+import ch.difty.scipamato.core.entity.CoreEntity;
+import ch.difty.scipamato.core.entity.IdScipamatoEntity;
 import ch.difty.scipamato.core.entity.search.SearchOrder;
 import ch.difty.scipamato.core.persistence.SearchOrderService;
 import ch.difty.scipamato.core.web.common.BasePanel;
@@ -94,8 +96,8 @@ public class SearchOrderSelectorPanel extends BasePanel<SearchOrder> {
     private void makeAndQueueSearchOrderSelectBox(final String id) {
         final SearchOrderModel choices = new SearchOrderModel(getActiveUser().getId(), SEARCH_ORDER_MAX);
         final IChoiceRenderer<SearchOrder> choiceRenderer = new ChoiceRenderer<>(
-            SearchOrder.CoreEntityFields.DISPLAY_VALUE.getFieldName(),
-            SearchOrder.IdScipamatoEntityFields.ID.getFieldName());
+            CoreEntity.CoreEntityFields.DISPLAY_VALUE.getFieldName(),
+            IdScipamatoEntity.IdScipamatoEntityFields.ID.getFieldName());
         final StringResourceModel noneSelectedModel = new StringResourceModel(id + ".noneSelected", this, null);
         final BootstrapSelectConfig config = new BootstrapSelectConfig()
             .withNoneSelectedText(noneSelectedModel.getObject())

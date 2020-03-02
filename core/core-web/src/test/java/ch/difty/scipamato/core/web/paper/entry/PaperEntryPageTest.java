@@ -13,6 +13,7 @@ import org.apache.wicket.util.tester.FormTester;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
+import ch.difty.scipamato.core.entity.IdScipamatoEntity;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.persistence.OptimisticLockingException;
 import ch.difty.scipamato.core.persistence.OptimisticLockingException.Type;
@@ -48,7 +49,7 @@ class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
         assertLabeledTextArea(b, TITLE.getFieldName());
         assertLabeledTextField(b, LOCATION.getFieldName());
 
-        assertLabeledTextField(b, Paper.IdScipamatoEntityFields.ID.getFieldName());
+        assertLabeledTextField(b, IdScipamatoEntity.IdScipamatoEntityFields.ID.getFieldName());
         assertLabeledTextField(b, PUBL_YEAR.getFieldName());
         assertLabeledTextField(b, PMID.getFieldName());
         assertLabeledTextField(b, DOI.getFieldName());
