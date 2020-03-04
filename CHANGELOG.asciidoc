@@ -61,7 +61,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 == [unreleased]
 
 .Added
-- Bumped kotlin
+- Bumped kotlin, gradle-wrapper
 
 .Changed
 
