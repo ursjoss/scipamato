@@ -96,7 +96,7 @@ public class JooqKeywordRepo extends AbstractRepo implements KeywordRepository {
                 return findNameMaskInSearchOverrideOrTranslatedNames(selectStep, nameMask);
             }
         } else {
-            return selectStep.where(DSL.trueCondition());
+            return selectStep.where(DSL.noCondition());
         }
     }
 

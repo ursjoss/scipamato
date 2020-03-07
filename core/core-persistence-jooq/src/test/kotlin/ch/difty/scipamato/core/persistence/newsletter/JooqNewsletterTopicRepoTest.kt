@@ -12,6 +12,7 @@ import org.jooq.DSLContext
 import org.jooq.SelectJoinStep
 import org.jooq.impl.DSL
 import org.junit.jupiter.api.Test
+import org.mockito.Mockito.`when`
 import org.mockito.Mockito.verify
 
 internal class JooqNewsletterTopicRepoTest {
@@ -37,19 +38,24 @@ internal class JooqNewsletterTopicRepoTest {
     @Test
     fun applyingWhereCondition_withNullFilter_returnsTrueCondition() {
         val selectStep: SelectJoinStep<NewsletterTopicRecord> = mock()
-        repo.applyWhereCondition<NewsletterTopicRecord>(null, selectStep)
-        verify<SelectJoinStep<NewsletterTopicRecord>>(selectStep).where(DSL.trueCondition())
+        `when`(selectStep.where(DSL.noCondition())).thenReturn(mock())
+
+        repo.applyWhereCondition(null, selectStep)
+
+        verify(selectStep).where(DSL.noCondition())
     }
 
     @Test
     fun applyingWhereCondition_withFilterWithNoTitleMask_returnsTrueCondition() {
         val selectStep: SelectJoinStep<NewsletterTopicRecord> = mock()
+        `when`(selectStep.where(DSL.noCondition())).thenReturn(mock())
+
         val filter = NewsletterTopicFilter()
         assertThat(filter.titleMask).isNull()
 
-        repo.applyWhereCondition<NewsletterTopicRecord>(filter, selectStep)
+        repo.applyWhereCondition(filter, selectStep)
 
-        verify<SelectJoinStep<NewsletterTopicRecord>>(selectStep).where(DSL.trueCondition())
+        verify(selectStep).where(DSL.noCondition())
     }
 
     @Test

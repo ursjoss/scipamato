@@ -31,6 +31,7 @@ internal class UserUpdateSetStepSetterTest : UpdateSetStepSetterTest<ScipamatoUs
         doReturn(moreStep).whenever(moreStep).set(SCIPAMATO_USER.FIRST_NAME, UserRecordMapperTest.FIRST_NAME)
         doReturn(moreStep).whenever(moreStep).set(SCIPAMATO_USER.LAST_NAME, UserRecordMapperTest.LAST_NAME)
         doReturn(moreStep).whenever(moreStep).set(SCIPAMATO_USER.EMAIL, UserRecordMapperTest.EMAIL)
+        doReturn(moreStep).whenever(moreStep).set(SCIPAMATO_USER.PASSWORD, UserRecordMapperTest.PASSWORD)
         doReturn(moreStep).whenever(moreStep).set(SCIPAMATO_USER.ENABLED, UserRecordMapperTest.ENABLED)
     }
 
@@ -39,16 +40,16 @@ internal class UserUpdateSetStepSetterTest : UpdateSetStepSetterTest<ScipamatoUs
         doReturn(moreStep).whenever(moreStep).set(SCIPAMATO_USER.CREATED_BY, RecordMapperTest.CREATED_BY)
         doReturn(moreStep).whenever(moreStep).set(SCIPAMATO_USER.LAST_MODIFIED, RecordMapperTest.LAST_MOD)
         doReturn(moreStep).whenever(moreStep).set(SCIPAMATO_USER.LAST_MODIFIED_BY, RecordMapperTest.LAST_MOD_BY)
-        doReturn(moreStep).whenever(moreStep).set(SCIPAMATO_USER.PASSWORD, UserRecordMapperTest.PASSWORD)
+        doReturn(moreStep).whenever(moreStep).set(SCIPAMATO_USER.VERSION, RecordMapperTest.VERSION + 1)
     }
 
     override fun verifyCallToAllFieldsExceptAudit() {
-        verify<User>(entity).userName
-        verify<User>(entity).firstName
-        verify<User>(entity).lastName
-        verify<User>(entity).email
-        verify<User>(entity).password
-        verify<User>(entity).isEnabled
+        verify(entity).userName
+        verify(entity).firstName
+        verify(entity).lastName
+        verify(entity).email
+        verify(entity).password
+        verify(entity).isEnabled
     }
 
     override fun verifyStepSettingExceptAudit() {

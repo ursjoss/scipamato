@@ -110,7 +110,7 @@ public class JooqNewsletterTopicRepo extends AbstractRepo implements NewsletterT
                     .from(NEWSLETTER_TOPIC_TR)
                     .where(NEWSLETTER_TOPIC_TR.TITLE.likeIgnoreCase('%' + titleMask + '%'))));
         } else {
-            return selectStep.where(DSL.trueCondition());
+            return selectStep.where(DSL.noCondition());
         }
     }
 

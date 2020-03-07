@@ -72,11 +72,11 @@ internal class JooqPaperSlimRepoTest :
     }
 
     override fun verifyUnpersistedEntityId() {
-        verify<PaperSlim>(unpersistedEntity).id
+        verify(unpersistedEntity).id
     }
 
     override fun verifyPersistedRecordId() {
-        verify<PaperRecord>(persistedRecord).id
+        verify(persistedRecord).id
     }
 
     @Test

@@ -12,6 +12,7 @@ import org.mockito.ArgumentMatchers.anyInt
 import org.mockito.ArgumentMatchers.anyString
 import org.springframework.security.crypto.password.PasswordEncoder
 
+@Suppress("UsePropertyAccessSyntax")
 internal class JooqUserServiceTest {
 
     private val repoMock = mock<UserRepository>()
