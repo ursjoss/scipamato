@@ -7,6 +7,7 @@ import com.nhaarman.mockitokotlin2.whenever
 import org.assertj.core.api.Assertions.assertThat
 import org.jooq.RecordMapper
 
+@Suppress("UsePropertyAccessSyntax")
 internal class SearchOrderRecordMapperTest : RecordMapperTest<SearchOrderRecord, SearchOrder>() {
 
     override val mapper: RecordMapper<SearchOrderRecord, SearchOrder> = SearchOrderRecordMapper()

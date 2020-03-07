@@ -39,7 +39,7 @@ internal class JooqCodeClassRepoTest {
 
         repo.removeObsoletePersistedRecordsFor(resultMock, listOf(cct))
 
-        verify<Result<CodeClassTrRecord>>(resultMock).iterator()
+        verify(resultMock).iterator()
         verify(itMock, times(3)).hasNext()
         verify(itMock, times(2)).next()
         verify(cctr1).get(CODE_CLASS_TR.ID)

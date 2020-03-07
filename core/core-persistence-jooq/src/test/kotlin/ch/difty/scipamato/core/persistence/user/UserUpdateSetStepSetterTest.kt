@@ -44,12 +44,12 @@ internal class UserUpdateSetStepSetterTest : UpdateSetStepSetterTest<ScipamatoUs
     }
 
     override fun verifyCallToAllFieldsExceptAudit() {
-        verify<User>(entity).userName
-        verify<User>(entity).firstName
-        verify<User>(entity).lastName
-        verify<User>(entity).email
-        verify<User>(entity).password
-        verify<User>(entity).isEnabled
+        verify(entity).userName
+        verify(entity).firstName
+        verify(entity).lastName
+        verify(entity).email
+        verify(entity).password
+        verify(entity).isEnabled
     }
 
     override fun verifyStepSettingExceptAudit() {

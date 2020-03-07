@@ -41,9 +41,9 @@ internal class SearchOrderUpdateSetStepSetterTest : UpdateSetStepSetterTest<Sear
     }
 
     override fun verifyCallToAllFieldsExceptAudit() {
-        verify<SearchOrder>(entity).name
-        verify<SearchOrder>(entity).owner
-        verify<SearchOrder>(entity).isGlobal
+        verify(entity).name
+        verify(entity).owner
+        verify(entity).isGlobal
     }
 
     override fun verifyStepSettingExceptAudit() {

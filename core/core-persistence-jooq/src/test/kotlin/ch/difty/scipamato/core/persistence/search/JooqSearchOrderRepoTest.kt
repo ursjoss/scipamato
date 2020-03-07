@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.verify
 
+@Suppress("UsePropertyAccessSyntax")
 internal class JooqSearchOrderRepoTest :
     JooqEntityRepoTest<SearchOrderRecord, SearchOrder, Long, ch.difty.scipamato.core.db.tables.SearchOrder,
         SearchOrderRecordMapper, SearchOrderFilter>() {
@@ -86,11 +87,11 @@ internal class JooqSearchOrderRepoTest :
     }
 
     override fun verifyUnpersistedEntityId() {
-        verify<SearchOrder>(unpersistedEntity).id
+        verify(unpersistedEntity).id
     }
 
     override fun verifyPersistedRecordId() {
-        verify<SearchOrderRecord>(persistedRecord).id
+        verify(persistedRecord).id
     }
 
     @Test

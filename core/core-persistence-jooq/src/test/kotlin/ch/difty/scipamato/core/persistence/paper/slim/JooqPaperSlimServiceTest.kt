@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test
 import org.mockito.Mockito.verify
 import org.mockito.Mockito.verifyNoMoreInteractions
 
+@Suppress("UsePropertyAccessSyntax")
 internal class JooqPaperSlimServiceTest : AbstractServiceTest<Long, PaperSlim, PaperSlimRepository>() {
 
     override val repo = mock<PaperSlimRepository>()

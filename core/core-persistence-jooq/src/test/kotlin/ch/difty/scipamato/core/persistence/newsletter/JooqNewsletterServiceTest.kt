@@ -6,12 +6,18 @@ import ch.difty.scipamato.core.entity.Paper
 import ch.difty.scipamato.core.entity.newsletter.Newsletter
 import ch.difty.scipamato.core.entity.newsletter.NewsletterFilter
 import ch.difty.scipamato.core.persistence.AbstractServiceTest
-import com.nhaarman.mockitokotlin2.*
+import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.never
+import com.nhaarman.mockitokotlin2.times
+import com.nhaarman.mockitokotlin2.verify
+import com.nhaarman.mockitokotlin2.verifyNoMoreInteractions
+import com.nhaarman.mockitokotlin2.whenever
 import org.assertj.core.api.AssertionsForClassTypes.assertThat
 import org.assertj.core.api.AssertionsForClassTypes.fail
 import org.junit.jupiter.api.Test
 import org.mockito.ArgumentMatchers.anyInt
 
+@Suppress("UsePropertyAccessSyntax")
 internal class JooqNewsletterServiceTest : AbstractServiceTest<Int, Newsletter, NewsletterRepository>() {
 
     private val repoMock = mock<NewsletterRepository>()

@@ -208,7 +208,7 @@ internal class JooqNewsletterTopicServiceTest {
             NewsletterNewsletterTopic(newsletterId, 2, 1, "topic2"))
         service.saveSortedNewsletterTopics(newsletterId, sortedTopics)
 
-        verify<NewsletterTopicRepository>(repo).saveSortedNewsletterTopics(newsletterId, sortedTopics)
+        verify(repo).saveSortedNewsletterTopics(newsletterId, sortedTopics)
     }
 
     @Test

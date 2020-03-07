@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test
 import org.mockito.ArgumentMatchers.anyInt
 import org.mockito.ArgumentMatchers.anyLong
 
+@Suppress("UsePropertyAccessSyntax")
 internal class JooqSearchOrderServiceTest : AbstractServiceTest<Long, SearchOrder, SearchOrderRepository>() {
 
     override val repo = mock<SearchOrderRepository>()
