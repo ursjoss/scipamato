@@ -176,7 +176,7 @@ public class JooqCodeRepo extends AbstractRepo implements CodeRepository {
         if (filter != null) {
             return selectStep.where(filterToCondition(filter));
         } else {
-            return selectStep.where(DSL.trueCondition());
+            return selectStep.where(DSL.noCondition());
         }
     }
 
