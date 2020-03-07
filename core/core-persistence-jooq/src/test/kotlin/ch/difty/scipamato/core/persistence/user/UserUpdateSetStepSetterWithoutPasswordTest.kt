@@ -39,6 +39,7 @@ internal class UserUpdateSetStepSetterWithoutPasswordTest : UpdateSetStepSetterT
         doReturn(moreStep).whenever(moreStep).set(SCIPAMATO_USER.CREATED_BY, RecordMapperTest.CREATED_BY)
         doReturn(moreStep).whenever(moreStep).set(SCIPAMATO_USER.LAST_MODIFIED, RecordMapperTest.LAST_MOD)
         doReturn(moreStep).whenever(moreStep).set(SCIPAMATO_USER.LAST_MODIFIED_BY, RecordMapperTest.LAST_MOD_BY)
+        doReturn(moreStep).whenever(moreStep).set(SCIPAMATO_USER.VERSION, RecordMapperTest.VERSION + 1)
     }
 
     override fun verifyCallToAllFieldsExceptAudit() {

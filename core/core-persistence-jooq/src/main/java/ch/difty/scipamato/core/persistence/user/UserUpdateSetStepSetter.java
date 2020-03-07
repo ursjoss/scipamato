@@ -32,15 +32,13 @@ public class UserUpdateSetStepSetter implements UpdateSetStepSetter<ScipamatoUse
         @NotNull User e) {
         final Timestamp created = e.getCreated() == null ? null : UtilsKt.toTimestamp(e.getCreated());
         final Timestamp lastMod = e.getLastModified() == null ? null : UtilsKt.toTimestamp(e.getLastModified());
+        final String password = e.getPassword();
         final UpdateSetMoreStep<ScipamatoUserRecord> step1 = step
             .set(SCIPAMATO_USER.USER_NAME, e.getUserName())
             .set(SCIPAMATO_USER.FIRST_NAME, e.getFirstName())
             .set(SCIPAMATO_USER.LAST_NAME, e.getLastName())
             .set(SCIPAMATO_USER.EMAIL, e.getEmail());
-        final String password = e.getPassword();
-        final UpdateSetMoreStep<ScipamatoUserRecord> step2 =
-            password != null ? step1.set(SCIPAMATO_USER.PASSWORD, password) : step1;
-        return step2
+        return (password != null ? step1.set(SCIPAMATO_USER.PASSWORD, password) : step1)
             .set(SCIPAMATO_USER.ENABLED, e.isEnabled())
 
             .set(SCIPAMATO_USER.CREATED, created)
