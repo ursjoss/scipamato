@@ -61,7 +61,6 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 == [unreleased]
 
 .Added
-- Bumped kotlin, gradle-wrapper, jasperreports, spek, kluent, kris
 
 .Changed
 
@@ -72,6 +71,13 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Fixed
 
 .Security
+
+
+[[v1.4.3]]
+== [1.4.3] -- 2020-03-13
+
+.Added
+- Bumped kotlin, gradle-wrapper, jasperreports, spek, kluent, kris
 
 
 [[v1.4.2]]
