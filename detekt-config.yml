@@ -5,7 +5,7 @@ style:
 complexity:
   LongParameterList:
     active: true
-    threshold: 7
+    functionThreshold: 7
     ignoreDefaultParameters: true
 
 formatting:
