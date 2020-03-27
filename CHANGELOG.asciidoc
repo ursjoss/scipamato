@@ -63,7 +63,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 
 .Changed
-- Bumped spring-boot, kotlin, gradle, detekt, jasperreports, junit
+- Bumped spring-boot, kotlin, gradle, detekt, jasperreports, junit, spring-cloud and starter
 
 .Deprecated
 
