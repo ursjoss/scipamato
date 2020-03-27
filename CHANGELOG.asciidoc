@@ -63,8 +63,6 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 
 .Changed
-- Bumped spring-boot, kotlin, gradle, detekt, jasperreports, junit, spring-cloud and starter,
-  kotlin-logging, openfeign, equalsverifier, testcontainers, mockito, lombok-plugin, jaxb-plugin
 
 .Deprecated
 
@@ -73,6 +71,15 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Fixed
 
 .Security
+
+
+[[v1.4.4]]
+== [1.4.4] -- 2020-03-27
+
+
+.Changed
+- Bumped spring-boot, kotlin, gradle, detekt, jasperreports, junit, spring-cloud and starter,
+  kotlin-logging, openfeign, equalsverifier, testcontainers, mockito, lombok-plugin, jaxb-plugin
 
 
 [[v1.4.3]]
