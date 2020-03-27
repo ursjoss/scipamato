@@ -46,7 +46,7 @@ object Lib {
     private const val testcontainersVersion = "1.13.0"
 
     @Suppress("MemberVisibilityCanBePrivate")
-    const val mockitoVersion = "3.3.0"
+    const val mockitoVersion = "3.3.3"
     private const val mockitoKotlinVersion = "2.2.0"
 
     private const val spekVersion = "2.0.10"
