@@ -64,7 +64,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Changed
 - Bumped spring-boot, kotlin, gradle, detekt, jasperreports, junit, spring-cloud and starter,
-  kotlin-logging, openfeign, equalsverifier, testcontainers, mockito, lombok-plugin
+  kotlin-logging, openfeign, equalsverifier, testcontainers, mockito, lombok-plugin, jaxb-plugin
 
 .Deprecated
 
