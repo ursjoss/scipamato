@@ -63,7 +63,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 
 .Changed
-- Bumped detekt, KRis
+- Bumped detekt, KRis, kwik
 
 .Deprecated
 
