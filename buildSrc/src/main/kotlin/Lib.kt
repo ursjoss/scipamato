@@ -18,7 +18,7 @@ object Lib {
     private const val wicketVersion = "8.7.0"
     private const val wicketstuffVersion = "8.7.0"
     private const val wicketJqueryUiVersion = "8.6.0"
-    private const val wicketBootstrapVersion = "2.0.12"
+    private const val wicketBootstrapVersion = "2.0.13"
     private const val jasperReportVersion = "6.12.2"
     private const val krisVersion = "0.2.1"
     const val jooqVersion = "3.12.4"
@@ -33,7 +33,7 @@ object Lib {
     private const val javaxElApiVersion = "3.0.1-b06"
     private const val javaxElVersion = "3.0.1-b11"
 
-    private const val fontAwesomeVersion = "5.11.2"
+    private const val fontAwesomeVersion = "5.12.0"
 
     private const val commonsIoVersion = "2.6"
     private const val commonsCollectionVersion = "4.4"
