@@ -31,7 +31,7 @@ public class PublicPaper extends Paper {
         @Nullable final String authors, @Nullable final String title, @Nullable final String location,
         @Nullable final Integer publicationYear, @Nullable final String goals, @Nullable final String methods,
         @Nullable final String population, @Nullable final String result, @Nullable final String comment,
-        @NotNull final Short[] codesPopulation, @NotNull final Short[] codesStudyDesign, @NotNull final String[] codes,
+        @Nullable final Short[] codesPopulation, @Nullable final Short[] codesStudyDesign, @NotNull final String[] codes,
         @Nullable final Integer version, @Nullable final Timestamp created, @Nullable final Timestamp lastModified,
         @NotNull final Timestamp lastSynched) {
         delegate = new Paper();
