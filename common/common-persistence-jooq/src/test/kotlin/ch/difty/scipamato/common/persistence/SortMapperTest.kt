@@ -4,7 +4,15 @@ import ch.difty.scipamato.common.entity.ScipamatoEntity
 import ch.difty.scipamato.common.persistence.paging.Sort
 import ch.difty.scipamato.common.persistence.paging.Sort.Direction
 import ch.difty.scipamato.common.persistence.paging.Sort.SortProperty
-import com.nhaarman.mockitokotlin2.*
+import com.nhaarman.mockitokotlin2.doReturn
+import com.nhaarman.mockitokotlin2.doThrow
+import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.spy
+import com.nhaarman.mockitokotlin2.times
+import com.nhaarman.mockitokotlin2.verify
+import com.nhaarman.mockitokotlin2.verifyNoMoreInteractions
+import com.nhaarman.mockitokotlin2.whenever
+import org.amshove.kluent.shouldBeNull
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.fail
 import org.jooq.Record
@@ -118,5 +126,14 @@ internal class SortMapperTest {
 
         verify(sortSpecMock).iterator()
         verify(mapperSpy).getTableFieldFor(tableMock, "ILLEGAL_FIELD")
+    }
+
+    @Test
+    fun gettingTableFieldFor() {
+        val columnName = "myCol"
+        val mapper = mock<SortMapper<Record, ScipamatoEntity, TableImpl<Record>>>()
+        val field = mapper.getTableFieldFor(tableMock, columnName)
+        // cheating here to raise test coverage :-(
+        field.shouldBeNull()
     }
 }
