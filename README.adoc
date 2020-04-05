@@ -1,4 +1,5 @@
 image:https://img.shields.io/github/license/ursjoss/scipamato.svg[LICENSE, link=https://github.com/ursjoss/scipamato/blob/master/LICENSE.adoc] image:https://github.com/ursjoss/scipamato/workflows/Check/badge.svg?branch=master[Build Status, link=https://github.com/ursjoss/scipamato/actions] image:https://sonarcloud.io/api/project_badges/measure?project=ursjoss_scipamato&metric=alert_status[Quality Gate, link=https://sonarcloud.io/dashboard?id=ursjoss_scipamato]
+image:https://sonarcloud.io/api/project_badges/measure?project=ursjoss_scipamato&metric=coverage[Coverage, link=https://sonarcloud.io/dashboard?id=ursjoss_scipamato]
 
 [[scipamato]]
 == SciPaMaTo
