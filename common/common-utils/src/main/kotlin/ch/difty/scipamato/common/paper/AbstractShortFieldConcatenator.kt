@@ -41,13 +41,13 @@ abstract class AbstractShortFieldConcatenator protected constructor(private val 
         methodConfounders: Tuple?
     ) = determineAppropriate(
         Tuple(null, method),
-        methodStudyDesign,
-        methodOutcome,
-        populationPlace,
-        exposurePollutant,
-        exposureAssessment,
-        methodStatistics,
-        methodConfounders
+        listOf(methodStudyDesign,
+            methodOutcome,
+            populationPlace,
+            exposurePollutant,
+            exposureAssessment,
+            methodStatistics,
+            methodConfounders)
     )
 
     fun populationFrom(
@@ -69,9 +69,9 @@ abstract class AbstractShortFieldConcatenator protected constructor(private val 
         populationDuration: Tuple?
     ) = determineAppropriate(
         Tuple(null, population),
-        populationPlace,
-        populationParticipants,
-        populationDuration
+        listOf(populationPlace,
+            populationParticipants,
+            populationDuration)
     )
 
     fun resultFrom(
@@ -96,21 +96,20 @@ abstract class AbstractShortFieldConcatenator protected constructor(private val 
         conclusion: Tuple?
     ) = determineAppropriate(
         Tuple(null, result),
-        resultMeasuredOutcome,
-        resultExposureRange,
-        resultEffectEstimate,
-        conclusion
+        listOf(resultMeasuredOutcome,
+            resultExposureRange,
+            resultEffectEstimate,
+            conclusion)
     )
 
     /**
      * Use the [mainField] (with precedence) if not blank. Concatenate all other fields passed in via [shortFields]
      * (separated by ' - ') otherwise. Working with tuples of a label (English only) and the value.
      */
-    @Suppress("SpreadOperator")
-    private fun determineAppropriate(mainField: Tuple, vararg shortFields: Tuple?): String =
-        mainField.content ?: if (shortFields.isNotEmpty()) concat(*shortFields) else ""
+    private fun determineAppropriate(mainField: Tuple, shortFields: List<Tuple?>): String =
+        mainField.content ?: if (shortFields.isNotEmpty()) concat(shortFields) else ""
 
-    private fun concat(vararg tuples: Tuple?): String {
+    private fun concat(tuples: List<Tuple?>): String {
         val sb = StringBuilder()
         tuples.forEach { t ->
             if (t?.content?.isNotBlank() == true) {

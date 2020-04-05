@@ -137,5 +137,7 @@ internal class SortTest {
         assertThat(sf1 == SortProperty("foo", Direction.DESC)).isTrue()
         assertThat(sf1 == SortProperty("foo", Direction.ASC)).isFalse()
         assertThat(sf1 == SortProperty("bar", Direction.DESC)).isFalse()
+        assertThat(SortProperty("foo", Direction.DESC).equals(null)).isFalse()
+        assertThat(SortProperty("foo", Direction.DESC).equals("foo")).isFalse()
     }
 }

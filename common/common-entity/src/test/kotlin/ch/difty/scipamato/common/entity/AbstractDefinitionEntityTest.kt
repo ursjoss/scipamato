@@ -2,6 +2,7 @@ package ch.difty.scipamato.common.entity
 
 import nl.jqno.equalsverifier.EqualsVerifier
 import nl.jqno.equalsverifier.Warning
+import org.amshove.kluent.shouldBeEqualTo
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -26,12 +27,26 @@ class AbstractDefinitionEntityTest {
         override val nullSafeId: String? get() = "foo"
     }
 
+    private inner class TestDefinitionEntity2 internal constructor(
+        mainLanguageCode: String,
+        mainName: String,
+        translations: Array<AbstractDefinitionTranslation>
+    ) : AbstractDefinitionEntity<DefinitionTranslation, String>(mainLanguageCode, mainName, translationArray = translations) {
+        override val nullSafeId: String? get() = "foo"
+    }
+
     private inner class TestDefinitionTranslation(
         id: Int?,
         langCode: String,
         name: String?,
         version: Int = 0
     ) : AbstractDefinitionTranslation(id, langCode, name, version)
+
+    private inner class TestDefinitionTranslation2(
+        id: Int?,
+        langCode: String,
+        name: String?
+    ) : AbstractDefinitionTranslation(id, langCode, name)
 
     @Test
     fun entity_canGetMainLanguageCode() {
@@ -202,4 +217,23 @@ class AbstractDefinitionEntityTest {
             .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
             .verify()
     }
+
+    @Test
+    fun testDefinitionEntity_withoutVersion_hasVersionZero() {
+        TestDefinitionEntity2(
+            mainLanguageCode = "de",
+            mainName = "mainName",
+            translations = arrayOf(dt_de, dt_en, dt_fr, dt_de2)
+        ).version shouldBeEqualTo 0
+    }
+
+    @Test
+    fun testDefinitionTranslation_withoutVersion_hasVersionZero() {
+        TestDefinitionTranslation2(
+            id = 4,
+            langCode = "de",
+            name = "deutsch3"
+        ).version shouldBeEqualTo 0
+    }
+
 }
