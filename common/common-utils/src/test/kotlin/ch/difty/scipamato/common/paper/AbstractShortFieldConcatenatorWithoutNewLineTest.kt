@@ -25,6 +25,14 @@ internal class AbstractShortFieldConcatenatorWithoutNewLineTest {
     }
 
     @Test
+    fun method_withMethodNull_returnsConcatenatedShortFieldsWhereNotBlank() {
+        assertThat(concatenator.methodsFrom(null, "", " ", "pp", "ep", "ea", "ms", "mc"))
+            .isEqualTo(
+                "Place: pp / Pollutant: ep / Exposure Assessment: ea / Statistical Method: ms / Confounders: mc"
+            )
+    }
+
+    @Test
     fun method_withMethodNullAndSomeShortFieldsNull_returnsConcatenatedShortFields() {
         assertThat(concatenator.methodsFrom(null, "msd", null, "pp", "ep", "ea", "ms", "mc"))
             .isEqualTo(

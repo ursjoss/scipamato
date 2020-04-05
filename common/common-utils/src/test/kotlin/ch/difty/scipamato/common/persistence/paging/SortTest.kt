@@ -116,6 +116,7 @@ internal class SortTest {
         assertThat(sort == null).isFalse()
         assertThat(sort == sort).isTrue()
         assertThat(sort == Sort(sortProperties)).isTrue()
+        assertThat(sort.equals(null)).isFalse()
         assertThat(sort.equals("")).isFalse()
 
         val sortProperties2 = ArrayList<SortProperty>()

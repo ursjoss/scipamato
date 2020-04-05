@@ -21,7 +21,7 @@ class AbstractDefinitionEntityTest {
     private inner class TestDefinitionEntity internal constructor(
         mainLanguageCode: String,
         mainName: String,
-        version: Int = 0,
+        version: Int? = 0,
         translations: Array<AbstractDefinitionTranslation>
     ) : AbstractDefinitionEntity<DefinitionTranslation, String>(mainLanguageCode, mainName, version, translations) {
         override val nullSafeId: String? get() = "foo"
@@ -39,7 +39,7 @@ class AbstractDefinitionEntityTest {
         id: Int?,
         langCode: String,
         name: String?,
-        version: Int = 0
+        version: Int? = 0
     ) : AbstractDefinitionTranslation(id, langCode, name, version)
 
     private inner class TestDefinitionTranslation2(
@@ -219,11 +219,32 @@ class AbstractDefinitionEntityTest {
     }
 
     @Test
+    fun testDefinitionEntity_withNullVersion_hasVersionZero() {
+        TestDefinitionEntity(
+            mainLanguageCode = "de",
+            mainName = "mainName",
+            version = null,
+            translations = arrayOf(dt_de, dt_en, dt_fr, dt_de2)
+        ).version shouldBeEqualTo 0
+    }
+
+    @Test
     fun testDefinitionEntity_withoutVersion_hasVersionZero() {
         TestDefinitionEntity2(
             mainLanguageCode = "de",
             mainName = "mainName",
             translations = arrayOf(dt_de, dt_en, dt_fr, dt_de2)
+        ).version shouldBeEqualTo 0
+    }
+
+
+    @Test
+    fun testDefinitionTranslation_withNullVersion_hasVersionZero() {
+        TestDefinitionTranslation(
+            id = 4,
+            langCode = "de",
+            name = "deutsch3",
+            version = null
         ).version shouldBeEqualTo 0
     }
 

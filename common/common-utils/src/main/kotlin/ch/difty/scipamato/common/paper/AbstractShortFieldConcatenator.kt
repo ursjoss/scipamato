@@ -107,7 +107,7 @@ abstract class AbstractShortFieldConcatenator protected constructor(private val 
      * (separated by ' - ') otherwise. Working with tuples of a label (English only) and the value.
      */
     private fun determineAppropriate(mainField: Tuple, shortFields: List<Tuple?>): String =
-        mainField.content ?: if (shortFields.isNotEmpty()) concat(shortFields) else ""
+        mainField.content ?: concat(shortFields)
 
     private fun concat(tuples: List<Tuple?>): String {
         val sb = StringBuilder()
