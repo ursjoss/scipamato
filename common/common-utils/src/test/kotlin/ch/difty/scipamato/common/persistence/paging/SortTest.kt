@@ -113,8 +113,10 @@ internal class SortTest {
 
     @Test
     fun sortEqualityTests() {
+        assertThat(sort == null).isFalse()
         assertThat(sort == sort).isTrue()
         assertThat(sort == Sort(sortProperties)).isTrue()
+        assertThat(sort.equals("")).isFalse()
 
         val sortProperties2 = ArrayList<SortProperty>()
         sortProperties2.add(SortProperty("a", Direction.ASC))
@@ -137,7 +139,5 @@ internal class SortTest {
         assertThat(sf1 == SortProperty("foo", Direction.DESC)).isTrue()
         assertThat(sf1 == SortProperty("foo", Direction.ASC)).isFalse()
         assertThat(sf1 == SortProperty("bar", Direction.DESC)).isFalse()
-        assertThat(SortProperty("foo", Direction.DESC).equals(null)).isFalse()
-        assertThat(SortProperty("foo", Direction.DESC).equals("foo")).isFalse()
     }
 }

@@ -26,6 +26,7 @@ import org.mockito.Mockito.verify
 import org.mockito.Mockito.verifyNoMoreInteractions
 import org.springframework.boot.test.mock.mockito.MockBean
 
+@Suppress("SpellCheckingInspection")
 internal class AbstractPageTest : WicketBaseTest() {
 
     @MockBean
@@ -62,7 +63,7 @@ internal class AbstractPageTest : WicketBaseTest() {
 
     @Test
     fun gettingNavbarBeforeInitialize_returnsNull() {
-        assertThat(page.navBar == null).isTrue()
+        assertThat(page.navBar).isNull()
     }
 
     @Test
@@ -72,7 +73,7 @@ internal class AbstractPageTest : WicketBaseTest() {
             override fun isNavbarVisible(): Boolean = true
         }
 
-        tester.startPage<AbstractPage<TestRecord>>(page)
+        tester.startPage(page)
         tester.assertRenderedPage(AbstractPage::class.java)
     }
 
@@ -179,5 +180,7 @@ internal class AbstractPageTest : WicketBaseTest() {
         tester.assertRenderedPage(AbstractPage::class.java)
 
         verify(debugSettings).isDevelopmentUtilitiesEnabled
+
+        assertThat(page.feedbackPanel).isInstanceOf(NotificationPanel::class.java)
     }
 }
