@@ -73,11 +73,11 @@ dependencies {
     implementation(Lib.jaxbRuntime())
     implementation(Lib.jacksonKotlin())
 
-    testCompile(project(Module.scipamatoCommon("test")))
-    testCompile(project(Module.scipamatoCommon("persistence-jooq-test")))
-    testCompile(Lib.servletApi())
-    testCompile(Lib.validationApi())
-    testCompile(Lib.lombok())
+    testImplementation(project(Module.scipamatoCommon("test")))
+    testImplementation(project(Module.scipamatoCommon("persistence-jooq-test")))
+    testImplementation(Lib.servletApi())
+    testImplementation(Lib.validationApi())
+    testImplementation(Lib.lombok())
     testAnnotationProcessor(Lib.lombok())
 }
 

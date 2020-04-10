@@ -6,7 +6,7 @@ dependencies {
     implementation(Lib.commonsLang3())
     implementation(Lib.commonsCollection())
 
-    testCompile(project(Module.scipamatoCommon("test")))
+    testImplementation(project(Module.scipamatoCommon("test")))
 
-    testCompile(Lib.spring("context"))
+    testImplementation(Lib.spring("context"))
 }

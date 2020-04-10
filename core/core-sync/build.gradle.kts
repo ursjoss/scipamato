@@ -35,9 +35,9 @@ dependencies {
 
     testLibCompile(project(Module.scipamatoCommon("persistence-jooq-test")))
     testLibCompile(project(Module.scipamatoCommon("test")))
-    testLibCompile(Lib.jOOQ("jooq"))
+    testLibImplementation(Lib.jOOQ("jooq"))
 
-    testCompile(Lib.lombok())
+    testImplementation(Lib.lombok())
     testAnnotationProcessor(Lib.lombok())
 
     integrationTestRuntimeOnly(Lib.postgres())
