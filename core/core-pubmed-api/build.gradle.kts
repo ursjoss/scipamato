@@ -26,8 +26,6 @@ dependencies {
 
     integrationTestAnnotationProcessor(Lib.lombok())
     integrationTestRuntimeOnly(Lib.lombok())
-    integrationTestImplementation(Lib.commonsIo())
-    adhocTestImplementation(Lib.commonsIo())
 
     jaxb(Lib.jaxbApi())
     jaxb(Lib.jaxbCore())

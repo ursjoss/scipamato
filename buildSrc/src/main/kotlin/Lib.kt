@@ -35,7 +35,6 @@ object Lib {
 
     private const val fontAwesomeVersion = "5.12.0"
 
-    private const val commonsIoVersion = "2.6"
     private const val commonsCollectionVersion = "4.4"
     private const val joolVersion = "0.9.14"
 
@@ -125,7 +124,6 @@ object Lib {
     // Utility libraries
 
     fun commonsLang3() = Dep("org.apache.commons", "commons-lang3")
-    fun commonsIo() = Dep("commons-io", "commons-io", commonsIoVersion)
     fun commonsCollection() = Dep("org.apache.commons", "commons-collections4", commonsCollectionVersion)
     fun jool() = Dep("org.jooq", "jool-java-8", joolVersion)
     fun javaxActivation() = Dep("com.sun.activation", "javax.activation", javaxActivationVersion)
