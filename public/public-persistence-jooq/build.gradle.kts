@@ -44,15 +44,15 @@ dependencies {
     implementation(Lib.commonsLang3())
     implementation(Lib.commonsCollection())
 
-    testCompile(project(Module.scipamatoCommon("persistence-jooq-test")))
-    testCompile(project(Module.scipamatoCommon("test")))
+    testImplementation(project(Module.scipamatoCommon("persistence-jooq-test")))
+    testImplementation(project(Module.scipamatoCommon("test")))
 
-    testCompile(Lib.lombok())
+    testImplementation(Lib.lombok())
     testAnnotationProcessor(Lib.lombok())
 
-    integrationTestCompile(Lib.testcontainers("testcontainers"))
-    integrationTestCompile(Lib.testcontainers("junit-jupiter"))
-    integrationTestCompile(Lib.testcontainers("postgresql"))
+    integrationTestImplementation(Lib.testcontainers("testcontainers"))
+    integrationTestImplementation(Lib.testcontainers("junit-jupiter"))
+    integrationTestImplementation(Lib.testcontainers("postgresql"))
     integrationTestRuntimeOnly(Lib.postgres())
     integrationTestAnnotationProcessor(Lib.lombok())
 }

@@ -5,5 +5,5 @@ dependencies {
     implementation(project(Module.scipamatoPublic("entity")))
     implementation(project(Module.scipamatoCommon("utils")))
 
-    testCompile(project(Module.scipamatoCommon("test")))
+    testImplementation(project(Module.scipamatoCommon("test")))
 }

@@ -57,7 +57,7 @@ dependencies {
 
     implementation(Lib.validationApi())
 
-    testCompile(project(Module.scipamatoCommon("test")))
-    testCompile(Lib.lombok())
+    testImplementation(project(Module.scipamatoCommon("test")))
+    testImplementation(Lib.lombok())
     testAnnotationProcessor(Lib.lombok())
 }

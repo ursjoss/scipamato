@@ -63,7 +63,7 @@ object Lib {
     private const val jooqModelatorPluginVersion = "3.6.0"
     private const val reckonPluginVersion = "0.12.0"
     private const val jaxbPluginVersion = "4.3.1"
-    private const val testSetsPluginVersion = "2.2.1"
+    private const val testSetsPluginVersion = "3.0.1"
     private const val sonarqubePluginVersion = "2.8"
     private const val detektPluginVersion = "1.7.4"
     //endregion
@@ -204,13 +204,12 @@ fun DependencyHandler.implementation(dependencyNotation: Dep): Dependency? = add
 fun DependencyHandler.runtimeOnly(dependencyNotation: Dep): Dependency? = add("runtimeOnly", dependencyNotation.id)
 
 fun DependencyHandler.testAnnotationProcessor(dependencyNotation: Dep): Dependency? = add("testAnnotationProcessor", dependencyNotation.id)
-fun DependencyHandler.testCompile(dependencyNotation: Dep): Dependency? = add("testCompile", dependencyNotation.id)
 fun DependencyHandler.testImplementation(dependencyNotation: Dep): Dependency? = add("testImplementation", dependencyNotation.id)
 fun DependencyHandler.testRuntimeOnly(dependencyNotation: Dep): Dependency? = add("testRuntimeOnly", dependencyNotation.id)
-fun DependencyHandler.testLibCompile(dependencyNotation: Dep): Dependency? = add("testLibCompile", dependencyNotation.id)
+fun DependencyHandler.testLibImplementation(dependencyNotation: Dep): Dependency? = add("testLibImplementation", dependencyNotation.id)
 fun DependencyHandler.testLibAnnotationProcessor(dependencyNotation: Dep): Dependency? = add("testLibAnnotationProcessor", dependencyNotation.id)
-fun DependencyHandler.adhocTestCompile(dependencyNotation: Dep): Dependency? = add("adhocTestCompile", dependencyNotation.id)
-fun DependencyHandler.integrationTestCompile(dependencyNotation: Dep): Dependency? = add("integrationTestCompile", dependencyNotation.id)
+fun DependencyHandler.adhocTestImplementation(dependencyNotation: Dep): Dependency? = add("adhocTestImplementation", dependencyNotation.id)
+fun DependencyHandler.integrationTestImplementation(dependencyNotation: Dep): Dependency? = add("integrationTestImplementation", dependencyNotation.id)
 fun DependencyHandler.integrationTestAnnotationProcessor(dependencyNotation: Dep): Dependency? = add("integrationTestAnnotationProcessor", dependencyNotation.id)
 fun DependencyHandler.integrationTestRuntimeOnly(dependencyNotation: Dep): Dependency? = add("integrationTestRuntimeOnly", dependencyNotation.id)
 fun DependencyHandler.jaxb(dependencyNotation: Dep): Dependency? = add("jaxb", dependencyNotation.id)

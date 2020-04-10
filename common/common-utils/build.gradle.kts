@@ -4,5 +4,5 @@ dependencies {
     implementation(Lib.commonsLang3())
     implementation(Lib.commonsIo())
 
-    testCompile(project(Module.scipamatoCommon("test")))
+    testImplementation(project(Module.scipamatoCommon("test")))
 }

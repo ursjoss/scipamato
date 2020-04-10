@@ -61,16 +61,16 @@ dependencies {
     api(Lib.wicketBootstrap("themes"))
     api(Lib.fontAwesome())
 
-    testCompile(Lib.lombok())
+    testImplementation(Lib.lombok())
     testAnnotationProcessor(Lib.lombok())
 
     testLibCompile(project(Module.scipamatoCommon("test")))
 
-    testLibCompile(Lib.lombok())
+    testLibImplementation(Lib.lombok())
     testLibAnnotationProcessor(Lib.lombok())
 
-    testLibCompile(Lib.servletApi())
-    testLibCompile(Lib.validationApi())
+    testLibImplementation(Lib.servletApi())
+    testLibImplementation(Lib.validationApi())
 
     developmentOnly(Lib.springBoot("devtools"))
 }
