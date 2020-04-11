@@ -4,7 +4,6 @@ dependencies {
     api(Lib.springBootStarter("jooq"))
     api(project(Module.scipamatoCommon("persistence-api")))
     api(Lib.flyway())
-    api(Lib.jool())
 
     runtimeOnly(Lib.postgres())
 
