@@ -1,7 +1,15 @@
 package ch.difty.scipamato.core.pubmed
 
-import ch.difty.scipamato.core.pubmed.api.*
+import ch.difty.scipamato.core.pubmed.api.Day
+import ch.difty.scipamato.core.pubmed.api.ELocationID
+import ch.difty.scipamato.core.pubmed.api.LastName
+import ch.difty.scipamato.core.pubmed.api.MedlinePgn
+import ch.difty.scipamato.core.pubmed.api.Month
+import ch.difty.scipamato.core.pubmed.api.Pagination
+import ch.difty.scipamato.core.pubmed.api.PubmedArticle
+import ch.difty.scipamato.core.pubmed.api.Year
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.fail
 import org.junit.jupiter.api.Test
 
 @Suppress("TooManyFunctions", "SpellCheckingInspection", "FunctionName", "MagicNumber")
@@ -173,87 +181,91 @@ internal class ScipamatoPubmedArticleIntegrationTest : PubmedIntegrationTest() {
     @Test
     fun manualExplorationOfFile_25395026() {
         val articleSet = getPubmedArticleSet(XML_2539026)
-        assertThat(articleSet.pubmedArticleOrPubmedBookArticle).hasSize(1)
+        if (articleSet != null) {
+            assertThat(articleSet.pubmedArticleOrPubmedBookArticle).hasSize(1)
 
-        val pubmedArticleObject = articleSet.pubmedArticleOrPubmedBookArticle.first()
-        assertThat(pubmedArticleObject).isInstanceOf(PubmedArticle::class.java)
+            val pubmedArticleObject = articleSet.pubmedArticleOrPubmedBookArticle.first()
+            assertThat(pubmedArticleObject).isInstanceOf(PubmedArticle::class.java)
 
-        val pubmedArticle = articleSet.pubmedArticleOrPubmedBookArticle.first() as PubmedArticle
+            val pubmedArticle = articleSet.pubmedArticleOrPubmedBookArticle.first() as PubmedArticle
 
-        val medlineCitation = pubmedArticle.medlineCitation
-        assertThat(medlineCitation.pmid.getvalue()).isEqualTo("25395026")
+            val medlineCitation = pubmedArticle.medlineCitation
+            assertThat(medlineCitation.pmid.getvalue()).isEqualTo("25395026")
 
-        val article = medlineCitation.article
-        val journal = article.journal
-        val journalIssue = journal.journalIssue
-        assertThat(journalIssue.volume).isEqualTo("180")
-        assertThat(journalIssue.issue).isEqualTo("12")
+            val article = medlineCitation.article
+            val journal = article.journal
+            val journalIssue = journal.journalIssue
+            assertThat(journalIssue.volume).isEqualTo("180")
+            assertThat(journalIssue.issue).isEqualTo("12")
 
-        assertThat(journalIssue.pubDate.yearOrMonthOrDayOrSeasonOrMedlineDate).hasSize(3)
-        assertThat(journalIssue.pubDate.yearOrMonthOrDayOrSeasonOrMedlineDate[0]).isInstanceOf(Year::class.java)
-        assertThat(journalIssue.pubDate.yearOrMonthOrDayOrSeasonOrMedlineDate[1]).isInstanceOf(Month::class.java)
-        assertThat(journalIssue.pubDate.yearOrMonthOrDayOrSeasonOrMedlineDate[2]).isInstanceOf(Day::class.java)
-        val year = journalIssue.pubDate.yearOrMonthOrDayOrSeasonOrMedlineDate[0] as Year
-        assertThat(year.getvalue()).isEqualTo("2014")
+            assertThat(journalIssue.pubDate.yearOrMonthOrDayOrSeasonOrMedlineDate).hasSize(3)
+            assertThat(journalIssue.pubDate.yearOrMonthOrDayOrSeasonOrMedlineDate[0]).isInstanceOf(Year::class.java)
+            assertThat(journalIssue.pubDate.yearOrMonthOrDayOrSeasonOrMedlineDate[1]).isInstanceOf(Month::class.java)
+            assertThat(journalIssue.pubDate.yearOrMonthOrDayOrSeasonOrMedlineDate[2]).isInstanceOf(Day::class.java)
+            val year = journalIssue.pubDate.yearOrMonthOrDayOrSeasonOrMedlineDate[0] as Year
+            assertThat(year.getvalue()).isEqualTo("2014")
 
-        assertThat(journal.title).isEqualTo("American journal of epidemiology")
-        assertThat(journal.isoAbbreviation).isEqualTo("Am. J. Epidemiol.")
-        assertThat(article.articleTitle.getvalue()).isEqualTo(
-            "Interactions between cigarette smoking and fine particulate matter in the Risk " +
-                "of Lung Cancer Mortality in Cancer Prevention Study II."
-        )
+            assertThat(journal.title).isEqualTo("American journal of epidemiology")
+            assertThat(journal.isoAbbreviation).isEqualTo("Am. J. Epidemiol.")
+            assertThat(article.articleTitle.getvalue()).isEqualTo(
+                "Interactions between cigarette smoking and fine particulate matter in the Risk " +
+                    "of Lung Cancer Mortality in Cancer Prevention Study II."
+            )
 
-        assertThat(article.paginationOrELocationID).hasSize(2)
-        assertThat(article.paginationOrELocationID[0]).isInstanceOf(Pagination::class.java)
-        assertThat(article.paginationOrELocationID[1]).isInstanceOf(ELocationID::class.java)
+            assertThat(article.paginationOrELocationID).hasSize(2)
+            assertThat(article.paginationOrELocationID[0]).isInstanceOf(Pagination::class.java)
+            assertThat(article.paginationOrELocationID[1]).isInstanceOf(ELocationID::class.java)
 
-        val pagination = article.paginationOrELocationID[0] as Pagination
-        assertThat(pagination.startPageOrEndPageOrMedlinePgn).hasSize(1)
-        assertThat(pagination.startPageOrEndPageOrMedlinePgn[0]).isInstanceOf(MedlinePgn::class.java)
-        val pgn = pagination.startPageOrEndPageOrMedlinePgn[0] as MedlinePgn
-        assertThat(pgn.getvalue()).isEqualTo("1145-9")
+            val pagination = article.paginationOrELocationID[0] as Pagination
+            assertThat(pagination.startPageOrEndPageOrMedlinePgn).hasSize(1)
+            assertThat(pagination.startPageOrEndPageOrMedlinePgn[0]).isInstanceOf(MedlinePgn::class.java)
+            val pgn = pagination.startPageOrEndPageOrMedlinePgn[0] as MedlinePgn
+            assertThat(pgn.getvalue()).isEqualTo("1145-9")
 
-        val elocationId = article.paginationOrELocationID[1] as ELocationID
-        assertThat(elocationId.validYN).isEqualTo("Y")
-        assertThat(elocationId.getvalue()).isEqualTo("10.1093/aje/kwu275")
-        assertThat(elocationId.eIdType).isEqualTo("doi")
+            val elocationId = article.paginationOrELocationID[1] as ELocationID
+            assertThat(elocationId.validYN).isEqualTo("Y")
+            assertThat(elocationId.getvalue()).isEqualTo("10.1093/aje/kwu275")
+            assertThat(elocationId.eIdType).isEqualTo("doi")
 
-        assertThat(article.abstract.abstractText).hasSize(1)
-        assertThat(article.abstract.abstractText[0].mixedContent[0].toString()).startsWith(
-            "The International Agency for Research on Cancer recently classified outdoor air pollution"
-        )
+            assertThat(article.abstract.abstractText).hasSize(1)
+            assertThat(article.abstract.abstractText[0].mixedContent[0].toString()).startsWith(
+                "The International Agency for Research on Cancer recently classified outdoor air pollution"
+            )
 
-        val authorList = article.authorList
-        assertThat(authorList.completeYN).isEqualTo("Y")
-        assertThat(authorList.type).isNull()
-        assertThat(authorList.author).hasSize(9)
-        assertThat(authorList.author.map { it.validYN }).containsOnly("Y")
+            val authorList = article.authorList
+            assertThat(authorList.completeYN).isEqualTo("Y")
+            assertThat(authorList.type).isNull()
+            assertThat(authorList.author).hasSize(9)
+            assertThat(authorList.author.map { it.validYN }).containsOnly("Y")
 
-        val authorNames = authorList.author
-            .flatMap { it.lastNameOrForeNameOrInitialsOrSuffixOrCollectiveName }
-            .filterIsInstance<LastName>().map { it.getvalue() }
-        assertThat(authorNames).contains("Turner", "Cohen", "Jerrett", "Gapstur", "Diver", "Pope", "Krewski",
-            "Beckerman", "Samet")
+            val authorNames = authorList.author
+                .flatMap { it.lastNameOrForeNameOrInitialsOrSuffixOrCollectiveName }
+                .filterIsInstance<LastName>().map { it.getvalue() }
+            assertThat(authorNames).contains("Turner", "Cohen", "Jerrett", "Gapstur", "Diver", "Pope", "Krewski",
+                "Beckerman", "Samet")
 
-        assertThat(article.articleDate).hasSize(1)
-        val articleDate = article.articleDate[0]
-        assertThat(articleDate.dateType).isEqualTo("Electronic")
-        assertThat(articleDate.year.getvalue()).isEqualTo("2014")
+            assertThat(article.articleDate).hasSize(1)
+            val articleDate = article.articleDate[0]
+            assertThat(articleDate.dateType).isEqualTo("Electronic")
+            assertThat(articleDate.year.getvalue()).isEqualTo("2014")
 
-        val medlineJournalInfo = medlineCitation.medlineJournalInfo
-        assertThat(medlineJournalInfo.country).isEqualTo("United States")
-        assertThat(medlineJournalInfo.medlineTA).isEqualTo("Am J Epidemiol")
-        assertThat(medlineJournalInfo.nlmUniqueID).isEqualTo("7910653")
-        assertThat(medlineJournalInfo.issnLinking).isEqualTo("0002-9262")
+            val medlineJournalInfo = medlineCitation.medlineJournalInfo
+            assertThat(medlineJournalInfo.country).isEqualTo("United States")
+            assertThat(medlineJournalInfo.medlineTA).isEqualTo("Am J Epidemiol")
+            assertThat(medlineJournalInfo.nlmUniqueID).isEqualTo("7910653")
+            assertThat(medlineJournalInfo.issnLinking).isEqualTo("0002-9262")
 
-        val chemicalList = medlineCitation.chemicalList
-        assertThat(chemicalList.chemical).hasSize(3)
+            val chemicalList = medlineCitation.chemicalList
+            assertThat(chemicalList.chemical).hasSize(3)
 
-        val meshHeadingList = medlineCitation.meshHeadingList
-        assertThat(meshHeadingList.meshHeading).hasSize(20)
+            val meshHeadingList = medlineCitation.meshHeadingList
+            assertThat(meshHeadingList.meshHeading).hasSize(20)
 
-        val keywordList = medlineCitation.keywordList
-        assertThat(keywordList).hasSize(1)
+            val keywordList = medlineCitation.keywordList
+            assertThat(keywordList).hasSize(1)
+        } else {
+            fail("articleSet was null but was expected to be not")
+        }
     }
 
     @Test

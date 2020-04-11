@@ -94,7 +94,7 @@ public class PubmedXmlService implements PubmedArticleService {
      *     the raw xml string to unmarshal
      * @return {@link PubmedArticleSet}
      */
-    @NotNull
+    @Nullable
     public PubmedArticleSet unmarshal(@NotNull final String xmlString) throws IOException {
         final StringReader reader = new StringReader(xmlString);
         return (PubmedArticleSet) unmarshaller.unmarshal(new StreamSource(reader));

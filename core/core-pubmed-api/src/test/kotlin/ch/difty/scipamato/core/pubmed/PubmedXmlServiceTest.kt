@@ -16,6 +16,7 @@ import org.springframework.oxm.jaxb.Jaxb2Marshaller
 import java.io.IOException
 import javax.xml.transform.stream.StreamSource
 
+@Suppress("SpellCheckingInspection")
 internal class PubmedXmlServiceTest {
 
     private val unmarshallerMock = mock<Jaxb2Marshaller>()
@@ -57,7 +58,7 @@ internal class PubmedXmlServiceTest {
         whenever(articleMock.articleTitle).thenReturn(articleTitleMock)
 
         val pr = service.getPubmedArticleWithPmid(pmId)
-        assertThat(pr.errorMessage).isNull()
+        assertThat(pr.errorMessage).isBlank()
 
         verify(pubMedMock).articleWithId(pmId.toString())
         verify(pubmedArticleSetMock).pubmedArticleOrPubmedBookArticle
@@ -86,7 +87,7 @@ internal class PubmedXmlServiceTest {
 
         val pr = service.getPubmedArticleWithPmid(pmId)
         assertThat(pr.pubmedArticleFacade).isNull()
-        assertThat(pr.errorMessage).isNull()
+        assertThat(pr.errorMessage).isBlank()
 
         verify(pubMedMock).articleWithId(pmId.toString())
         verify(pubmedArticleSetMock).pubmedArticleOrPubmedBookArticle
@@ -111,7 +112,7 @@ internal class PubmedXmlServiceTest {
 
         val pr = service.getPubmedArticleWithPmidAndApiKey(pmId, "key")
         assertThat(pr.pubmedArticleFacade).isNotNull
-        assertThat(pr.errorMessage).isNull()
+        assertThat(pr.errorMessage).isBlank()
 
         verify(pubMedMock).articleWithId(pmId.toString(), "key")
         verify(pubmedArticleSetMock).pubmedArticleOrPubmedBookArticle

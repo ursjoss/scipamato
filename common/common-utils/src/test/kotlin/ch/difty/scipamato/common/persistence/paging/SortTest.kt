@@ -113,7 +113,6 @@ internal class SortTest {
 
     @Test
     fun sortEqualityTests() {
-        assertThat(sort == null).isFalse()
         assertThat(sort == sort).isTrue()
         assertThat(sort == Sort(sortProperties)).isTrue()
         assertThat(sort.equals(null)).isFalse()

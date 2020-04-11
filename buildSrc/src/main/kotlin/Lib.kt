@@ -35,9 +35,7 @@ object Lib {
 
     private const val fontAwesomeVersion = "5.12.0"
 
-    private const val commonsIoVersion = "2.6"
     private const val commonsCollectionVersion = "4.4"
-    private const val joolVersion = "0.9.14"
 
     private const val equalsverifierVersion = "3.1.13"
 
@@ -113,7 +111,7 @@ object Lib {
     fun wicketJqueryUi(module: String = "") = Dep("com.googlecode.wicket-jquery-ui", "wicket-jquery-ui${if (module.isNotBlank()) "-$module" else ""}", wicketJqueryUiVersion)
     fun fontAwesome() = Dep("org.webjars", "font-awesome", fontAwesomeVersion)
     fun jasperreports(module: String = "") = Dep("net.sf.jasperreports", "jasperreports${if (module.isNotBlank()) "-$module" else ""}", jasperReportVersion)
-    fun kris(module : String) = Dep("ch.difty.kris", "kris-$module", krisVersion)
+    fun kris(module: String) = Dep("ch.difty.kris", "kris-$module", krisVersion)
 
     // JSR 303 bean validation provider implementation
 
@@ -124,10 +122,7 @@ object Lib {
 
     // Utility libraries
 
-    fun commonsLang3() = Dep("org.apache.commons", "commons-lang3")
-    fun commonsIo() = Dep("commons-io", "commons-io", commonsIoVersion)
     fun commonsCollection() = Dep("org.apache.commons", "commons-collections4", commonsCollectionVersion)
-    fun jool() = Dep("org.jooq", "jool-java-8", joolVersion)
     fun javaxActivation() = Dep("com.sun.activation", "javax.activation", javaxActivationVersion)
     fun javaxActivationApi() = Dep("javax.activation", "javax.activation-api", javaxActivationVersion)
 

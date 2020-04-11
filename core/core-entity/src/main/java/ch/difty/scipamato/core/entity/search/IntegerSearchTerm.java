@@ -2,7 +2,6 @@ package ch.difty.scipamato.core.entity.search;
 
 import java.util.Arrays;
 
-import org.apache.commons.lang3.math.NumberUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -129,7 +128,7 @@ public class IntegerSearchTerm extends AbstractSearchTerm {
             this.value2 = Integer.parseInt(rst
                 .substring(indexOfSymbol + 1)
                 .trim());
-        } else if (NumberUtils.isCreatable(rst.trim())) {
+        } else if (isNumeric(rst.trim())) {
             this.value = Integer.parseInt(rst.trim());
             this.value2 = this.value;
             this.type = MatchType.EXACT;
@@ -137,6 +136,15 @@ public class IntegerSearchTerm extends AbstractSearchTerm {
             this.type = MatchType.INCOMPLETE;
             this.value = 1; // arbitrary value to make it different from the first block and mute the intellij warning)
             this.value2 = 1;
+        }
+    }
+
+    private boolean isNumeric(String rst) {
+        try {
+            Integer.parseInt(rst.trim());
+            return true;
+        } catch (Exception ex) {
+            return false;
         }
     }
 
