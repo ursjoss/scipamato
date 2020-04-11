@@ -45,28 +45,4 @@ public abstract class AbstractSearchTerm extends IdScipamatoEntity<Long> impleme
     public String getDisplayValue() {
         return rawSearchTerm;
     }
-
-    @NotNull
-    @Override
-    public String getRawSearchTerm() {
-        return rawSearchTerm;
-    }
-
-    @Nullable
-    @Override
-    public Long getSearchConditionId() {
-        return searchConditionId;
-    }
-
-    @NotNull
-    @Override
-    public SearchTermType getSearchTermType() {
-        return searchTermType;
-    }
-
-    @NotNull
-    @Override
-    public String getFieldName() {
-        return fieldName;
-    }
 }
