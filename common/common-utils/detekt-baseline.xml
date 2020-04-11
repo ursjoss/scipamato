@@ -1,8 +1,5 @@
 <?xml version="1.0" ?>
 <SmellBaseline>
   <Blacklist></Blacklist>
-  <Whitelist>
-    <ID>LongParameterList:AbstractShortFieldConcatenator.kt$AbstractShortFieldConcatenator$(method: String?, methodStudyDesign: String?, methodOutcome: String?, populationPlace: String?, exposurePollutant: String?, exposureAssessment: String?, methodStatistics: String?, methodConfounders: String?)</ID>
-    <ID>LongParameterList:AbstractShortFieldConcatenator.kt$AbstractShortFieldConcatenator$(method: String?, methodStudyDesign: Tuple?, methodOutcome: Tuple?, populationPlace: Tuple?, exposurePollutant: Tuple?, exposureAssessment: Tuple?, methodStatistics: Tuple?, methodConfounders: Tuple?)</ID>
-  </Whitelist>
+  <Whitelist></Whitelist>
 </SmellBaseline>
