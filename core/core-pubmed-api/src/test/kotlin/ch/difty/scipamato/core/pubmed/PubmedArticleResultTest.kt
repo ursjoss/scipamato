@@ -1,7 +1,7 @@
 package ch.difty.scipamato.core.pubmed
 
 import com.nhaarman.mockitokotlin2.mock
-import org.assertj.core.api.Assertions.assertThat
+import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.Test
 import org.springframework.http.HttpStatus
 
@@ -10,9 +10,9 @@ internal class PubmedArticleResultTest {
 
     private val paf = mock<PubmedArticleFacade>()
 
-    private fun assertPar(par: PubmedArticleResult, paf: PubmedArticleFacade?, msg: String?) {
-        assertThat(par.pubmedArticleFacade).isEqualTo(paf)
-        assertThat(par.errorMessage).isEqualTo(msg)
+    private fun assertPar(par: PubmedArticleResult, paf: PubmedArticleFacade?, msg: String) {
+        par.pubmedArticleFacade shouldBeEqualTo paf
+        par.errorMessage shouldBeEqualTo msg
     }
 
     @Test
