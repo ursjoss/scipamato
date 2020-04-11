@@ -20,8 +20,6 @@ dependencies {
     implementation(Lib.jaxbApi())
     runtimeOnly(Lib.jaxbRuntime())
 
-    implementation(Lib.commonsLang3())
-
     testLibCompile(project(Module.scipamatoCommon("test")))
 
     integrationTestAnnotationProcessor(Lib.lombok())

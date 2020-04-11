@@ -6,7 +6,6 @@ dependencies {
 
     api(Lib.validationApi())
 
-    implementation(Lib.commonsLang3())
     implementation(Lib.commonsCollection())
 
     testImplementation(project(Module.scipamatoCommon("test")))

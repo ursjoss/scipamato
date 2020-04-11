@@ -16,25 +16,25 @@ internal class PubmedArticleResultTest {
     }
 
     @Test
-    fun withPubmedArticleFacade_messageIsAlwaysNull() {
-        assertPar(PubmedArticleResult(paf, null, null), paf, null)
-        assertPar(PubmedArticleResult(paf, HttpStatus.OK, "foo"), paf, null)
-        assertPar(PubmedArticleResult(paf, null, "foo"), paf, null)
-        assertPar(PubmedArticleResult(paf, HttpStatus.BAD_GATEWAY, "foo"), paf, null)
+    fun withPubmedArticleFacade_messageIsAlwaysEmpty() {
+        assertPar(PubmedArticleResult(paf, null, null), paf, "")
+        assertPar(PubmedArticleResult(paf, HttpStatus.OK, "foo"), paf, "")
+        assertPar(PubmedArticleResult(paf, null, "foo"), paf, "")
+        assertPar(PubmedArticleResult(paf, HttpStatus.BAD_GATEWAY, "foo"), paf, "")
     }
 
     @Test
     fun withNoPubmedArticleFacade_withNullStatus_messageIsRawMessage() {
         val status: HttpStatus? = null
         assertPar(PubmedArticleResult(null, status, "foo"), null, "foo")
-        assertPar(PubmedArticleResult(null, status, null), null, null)
+        assertPar(PubmedArticleResult(null, status, null), null, "")
     }
 
     @Test
     fun withNoFacade_withStatus200_messageIsRawMessage() {
         val status = HttpStatus.OK
         assertPar(PubmedArticleResult(null, status, "foo"), null, "foo")
-        assertPar(PubmedArticleResult(null, status, null), null, null)
+        assertPar(PubmedArticleResult(null, status, null), null, "")
     }
 
     @Test
@@ -56,7 +56,7 @@ internal class PubmedArticleResultTest {
     @Test
     fun withNoFacade_withStatus400_witValidMessage_messageIsHttpStatusPlusRawMessage() {
         val status = HttpStatus.BAD_REQUEST
-        val msg = "status 400 reading PubMed#articleWithId(String,String); content:\n" + "bar"
+        val msg = "status 400 reading PubMed#articleWithId(String,String); content:\nbar"
         assertPar(PubmedArticleResult(null, status, msg), null,
             "Status 400 BAD_REQUEST: status 400 reading PubMed#articleWithId(String,String); content:\nbar")
     }

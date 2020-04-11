@@ -68,7 +68,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Deprecated
 
 .Removed
-- apache-io
+- apache-io, commons-lang3
 
 .Fixed
 

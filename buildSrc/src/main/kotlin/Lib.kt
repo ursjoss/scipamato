@@ -123,7 +123,6 @@ object Lib {
 
     // Utility libraries
 
-    fun commonsLang3() = Dep("org.apache.commons", "commons-lang3")
     fun commonsCollection() = Dep("org.apache.commons", "commons-collections4", commonsCollectionVersion)
     fun jool() = Dep("org.jooq", "jool-java-8", joolVersion)
     fun javaxActivation() = Dep("com.sun.activation", "javax.activation", javaxActivationVersion)

@@ -8,7 +8,6 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.button.dropdown.MenuBook
 import de.agilecoders.wicket.core.markup.html.bootstrap.image.GlyphIconType;
 import de.agilecoders.wicket.core.markup.html.bootstrap.image.IconType;
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.*;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.wicket.Component;
 import org.apache.wicket.Page;
 import org.apache.wicket.markup.html.link.AbstractLink;
@@ -99,7 +98,7 @@ public abstract class AbstractMenuBuilder implements MenuBuilder {
     @NotNull
     protected String getVersionAnker() {
         final String buildVersion = getApplicationProperties().getBuildVersion();
-        if (StringUtils.isEmpty(buildVersion))
+        if (buildVersion == null || buildVersion.isEmpty())
             return "";
         else
             return "#" + (buildVersion.endsWith("SNAPSHOT") ? "unreleased" : "v" + buildVersion);
