@@ -7,7 +7,7 @@ import java.util.Properties
 object Lib {
 
     //region:dependencyVersions
-    private const val kotlinVersion = "1.3.71"
+    private const val kotlinVersion = "1.3.72"
 
     private const val springBootVersion = "2.2.6.RELEASE"
     private const val springBootAdminVersion = "2.2.2"
