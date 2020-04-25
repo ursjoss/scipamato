@@ -64,7 +64,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Changed
 - Bumped kotlin, detekt, KRis, kwik, wicket-boostrap, font-awesome, junit-jupter, kluent, mockk
-  spring-cloud
+  spring-cloud, wicket
 
 .Deprecated
 
