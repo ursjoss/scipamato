@@ -24,6 +24,8 @@ interface DefinitionEntity<ID, T> : Serializable {
     val translationsAsString: String?
 
     fun getTranslations(langCode: String? = null): List<T>
+    fun addTranslation(langCode: String, translation: T)
+    fun removeTranslation(translation: T)
 }
 
 /**
@@ -49,13 +51,30 @@ abstract class AbstractDefinitionEntity<T : DefinitionTranslation, ID>(
     translationArray: Array<out T>
 ) : ScipamatoEntity(version = version ?: 0), DefinitionEntity<ID, T> {
 
-    private val translations: Map<String, List<T>> = translationArray.groupBy { it.langCode }
+    private val translations: MutableMap<String, List<T>> = translationArray.groupBy { it.langCode }.toMutableMap()
 
     var name = mainName
 
+    /**
+     * Returns the translations in the following scenarios:
+     * - for a given language if [langCode] is provided as a parameter and the language is defined.
+     * - emptyList if [langCode] is provided but not defined.
+     * - all translations if [langCode] is `null`
+     */
     override fun getTranslations(langCode: String?): List<T> =
         if (langCode == null) translations.flatMap { it.value }
         else translations[langCode] ?: emptyList()
+
+    override fun addTranslation(langCode: String, translation: T) {
+        translations[langCode] = translations.getOrDefault(langCode, emptyList()) + listOf(translation)
+    }
+
+    override fun removeTranslation(translation: T) {
+        translations[translation.langCode] =
+            translations.getOrDefault(translation.langCode, emptyList())
+                .filterNot { it.name == translation.name }
+    }
+
 
     override val displayValue: String
         get() = name
@@ -79,8 +98,7 @@ abstract class AbstractDefinitionEntity<T : DefinitionTranslation, ID>(
         }
 
     fun setNameInLanguage(langCode: String, translatedName: String) {
-        val trs = getTranslations(langCode)
-        trs.firstOrNull()?.let { tr ->
+        getTranslations(langCode).firstOrNull()?.let { tr ->
             tr.name = translatedName
             tr.lastModified = LocalDateTime.now()
             if (mainLanguageCode == langCode) name = translatedName

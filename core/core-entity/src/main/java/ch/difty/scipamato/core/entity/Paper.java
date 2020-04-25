@@ -283,8 +283,11 @@ public class Paper extends IdScipamatoEntity<Long> implements CodeBoxAware, News
         private Integer newsletterId;
         private String  issue;
         private Integer publicationStatusId;
+        @Nullable
         private Integer topicId;
+        @Nullable
         private String  topic;
+        @Nullable
         private String  headline;
     }
 

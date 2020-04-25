@@ -14,6 +14,7 @@ import ch.difty.scipamato.common.web.ScipamatoWebSessionFacade;
 import ch.difty.scipamato.core.config.ApplicationCoreProperties;
 import ch.difty.scipamato.core.entity.User;
 
+@SuppressWarnings("unused")
 public abstract class BasePanel<T> extends AbstractPanel<T> {
 
     private static final long serialVersionUID = 1L;

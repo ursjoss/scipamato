@@ -40,7 +40,7 @@ internal open class JooqUserRepoIntegrationTest {
     @Test
     fun addingRecord_savesRecordAndRefreshesId() {
         val p = makeMinimalUser()
-        assertThat(p.id == null).isTrue()
+        assertThat(p.id).isNull()
 
         val saved = repo.add(p) ?: fail("Unable to add user")
         assertThat(saved.id).isGreaterThan(MAX_ID_PREPOPULATED)
@@ -61,12 +61,12 @@ internal open class JooqUserRepoIntegrationTest {
     fun updatingRecord() {
         val user = repo.add(makeMinimalUser()) ?: fail("Unable to add user")
         assertThat(user.id).isGreaterThan(MAX_ID_PREPOPULATED)
-        val id = user.id
+        val id = user.id ?: error("id must no be null now")
         assertThat(user.userName).isEqualTo("a")
 
         user.userName = "b"
         repo.update(user)
-        assertThat(user.id).isEqualTo(id)
+        assertThat(user.id as Int).isEqualTo(id)
 
         val newCopy = repo.findById(id) ?: fail("Unable to find user")
         assertThat(newCopy).isNotEqualTo(user)
@@ -78,7 +78,7 @@ internal open class JooqUserRepoIntegrationTest {
     fun deletingRecord() {
         val user = repo.add(makeMinimalUser()) ?: fail("Unable to add user")
         assertThat(user.id).isGreaterThan(MAX_ID_PREPOPULATED)
-        val id = user.id
+        val id = user.id ?: error("id must no be null now")
         assertThat(user.userName).isEqualTo("a")
 
         val deleted = repo.delete(id, user.version)
@@ -89,7 +89,7 @@ internal open class JooqUserRepoIntegrationTest {
 
     @Test
     fun findingUserByName_withNonExistingUserName_returnsNull() {
-        assertThat(repo.findByUserName("lkajdsklj") == null).isTrue()
+        assertThat(repo.findByUserName("lkajdsklj")).isNull()
     }
 
     @Test
@@ -118,17 +118,17 @@ internal open class JooqUserRepoIntegrationTest {
             email = "u@foo.bar"
             password = "xyz"
         }
-        assertThat(u.id == null).isTrue()
+        assertThat(u.id).isNull()
 
         val savedUser = repo.add(u) ?: fail("Unable to add user")
 
         assertThat(savedUser).isNotNull
-        assertThat(savedUser.id == null).isFalse()
+        assertThat(savedUser.id).isNotNull()
         assertThat(savedUser.userName).isEqualTo("test")
         assertThat(savedUser.roles).isEmpty()
         assertThat(savedUser.version).isEqualTo(1)
 
-        return savedUser.id
+        return savedUser.id ?: error("id must no be null now")
     }
 
     private fun addRoleViewerAndUserToUserWith(id: Int) {
@@ -169,7 +169,7 @@ internal open class JooqUserRepoIntegrationTest {
             assertThat(ex).isInstanceOf(OptimisticLockingException::class.java)
         }
 
-        val reloaded = repo.findById(user.id) ?: fail("Unable to find user")
+        val reloaded = repo.findById(user.id!!) ?: fail("Unable to find user")
         assertThat(reloaded.version).isEqualTo(2)
         assertThat(reloaded.firstName).isEqualTo(secondReloaded.firstName)
         assertThat(reloaded.lastName).isEqualTo(secondReloaded.lastName)
@@ -185,7 +185,7 @@ internal open class JooqUserRepoIntegrationTest {
     }
 
     private fun loadSameUserIndependentlyAndModifyAndUpdate(user: User): User {
-        val secondInstance = repo.findById(user.id) ?: fail("Unable to find user")
+        val secondInstance = repo.findById(user.id!!) ?: fail("Unable to find user")
         assertThat(user.version).isEqualTo(secondInstance.version)
         secondInstance.firstName = "changed"
         val secondReloaded = repo.update(secondInstance) ?: fail("Unable to update user")
@@ -199,13 +199,13 @@ internal open class JooqUserRepoIntegrationTest {
         val secondReloaded = loadSameUserIndependentlyAndModifyAndUpdate(user)
         @Suppress("TooGenericExceptionCaught")
         try {
-            repo.delete(user.id, user.version)
+            repo.delete(user.id!!, user.version)
             fail<Any>("Should have thrown exception")
         } catch (ex: Exception) {
             assertThat(ex).isInstanceOf(OptimisticLockingException::class.java)
         }
 
-        val deletedEntity = repo.delete(user.id, secondReloaded.version)
+        val deletedEntity = repo.delete(user.id!!, secondReloaded.version)
         assertThat(deletedEntity.version).isEqualTo(secondReloaded.version)
     }
 

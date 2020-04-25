@@ -273,7 +273,7 @@ internal open class JooqNewsletterTopicRepoIntegrationTest {
         // insert new record to the database and verify it's there
         val ntd = NewsletterTopicDefinition(null, "de", null)
         val persisted = repo.insert(ntd) ?: Assertions.fail("Unable to insert newsletter topic definition")
-        val id = persisted.id
+        val id = persisted.id?: Assertions.fail("id should not be null")
         val version = persisted.version
         assertThat(repo.findNewsletterTopicDefinitionById(id)).isNotNull()
 

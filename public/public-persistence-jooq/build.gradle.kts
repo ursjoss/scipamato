@@ -41,8 +41,6 @@ dependencies {
     runtimeOnly(Lib.postgres())
     api(Lib.jOOQ("jooq"))
 
-    implementation(Lib.commonsCollection())
-
     testImplementation(project(Module.scipamatoCommon("persistence-jooq-test")))
     testImplementation(project(Module.scipamatoCommon("test")))
 

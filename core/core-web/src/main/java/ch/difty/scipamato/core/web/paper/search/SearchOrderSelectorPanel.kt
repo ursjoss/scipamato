@@ -83,7 +83,7 @@ class SearchOrderSelectorPanel internal constructor(id: String, model: IModel<Se
     }
 
     private fun makeAndQueueSearchOrderSelectBox(id: String) {
-        val choices = SearchOrderModel(activeUser.id, SEARCH_ORDER_MAX)
+        val choices = SearchOrderModel(activeUser.id!!, SEARCH_ORDER_MAX)
         val choiceRenderer: IChoiceRenderer<SearchOrder?> = ChoiceRenderer(
             CoreEntity.CoreEntityFields.DISPLAY_VALUE.fieldName,
             IdScipamatoEntity.IdScipamatoEntityFields.ID.fieldName)

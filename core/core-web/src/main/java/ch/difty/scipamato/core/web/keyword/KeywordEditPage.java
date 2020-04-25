@@ -15,9 +15,7 @@ import org.wicketstuff.annotation.mount.MountPath;
 import ch.difty.scipamato.core.auth.Roles;
 import ch.difty.scipamato.core.entity.keyword.KeywordDefinition;
 import ch.difty.scipamato.core.persistence.KeywordService;
-import ch.difty.scipamato.core.web.common.DefinitionEditHeaderPanel;
 import ch.difty.scipamato.core.web.common.DefinitionEditPage;
-import ch.difty.scipamato.core.web.common.DefinitionEditTranslationPanel;
 
 @MountPath("keyword/entry")
 @Slf4j
@@ -27,6 +25,7 @@ public class KeywordEditPage extends DefinitionEditPage<KeywordDefinition> {
 
     private static final long serialVersionUID = 1L;
 
+    @SuppressWarnings("unused")
     @SpringBean
     private KeywordService service;
 
@@ -43,7 +42,7 @@ public class KeywordEditPage extends DefinitionEditPage<KeywordDefinition> {
 
     @NotNull
     @Override
-    protected DefinitionEditHeaderPanel newDefinitionHeaderPanel(@NotNull final String id) {
+    protected KeywordEditHeaderPanel newDefinitionHeaderPanel(@NotNull final String id) {
         return new KeywordEditHeaderPanel(id, getModel()) {
             @Nullable
             @Override
@@ -67,11 +66,11 @@ public class KeywordEditPage extends DefinitionEditPage<KeywordDefinition> {
 
     @NotNull
     @Override
-    protected DefinitionEditTranslationPanel newDefinitionTranslationPanel(@NotNull final String id) {
+    protected KeywordEditTranslationPanel newDefinitionTranslationPanel(@NotNull final String id) {
         return new KeywordEditTranslationPanel(id, getModel()) {
             @NotNull
             @Override
-            protected Form getForm() {
+            protected Form<KeywordDefinition> getForm() {
                 return KeywordEditPage.this.getForm();
             }
         };

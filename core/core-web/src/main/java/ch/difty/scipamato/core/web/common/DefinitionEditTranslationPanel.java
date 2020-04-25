@@ -16,7 +16,7 @@ import ch.difty.scipamato.common.entity.DefinitionEntity;
 import ch.difty.scipamato.common.entity.DefinitionTranslation;
 
 @SuppressWarnings("SameParameterValue")
-public abstract class DefinitionEditTranslationPanel<E extends DefinitionEntity, T extends DefinitionTranslation>
+public abstract class DefinitionEditTranslationPanel<E extends DefinitionEntity<?, T>, T extends DefinitionTranslation>
     extends BasePanel<E> {
 
     private static final long serialVersionUID = 1L;
@@ -35,9 +35,7 @@ public abstract class DefinitionEditTranslationPanel<E extends DefinitionEntity,
         final RefreshingView<T> translations = new RefreshingView<>(id) {
             @Override
             protected Iterator<IModel<T>> getItemModels() {
-                @SuppressWarnings("unchecked") final Collection<T> translations = getModelObject()
-                    .getTranslations()
-                    .values();
+                final Collection<T> translations = getModelObject().getTranslations(null);
                 return new ModelIteratorAdapter<>(translations) {
                     @Override
                     protected IModel<T> model(final T codeTopicTranslation) {

@@ -6,8 +6,6 @@ dependencies {
 
     api(Lib.validationApi())
 
-    implementation(Lib.commonsCollection())
-
     testImplementation(project(Module.scipamatoCommon("test")))
     testImplementation(Lib.hibernateValidator())
     testImplementation(Lib.javaxElApi())

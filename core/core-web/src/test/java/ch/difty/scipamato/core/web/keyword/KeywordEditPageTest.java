@@ -34,7 +34,7 @@ class KeywordEditPageTest extends BasePageTest<KeywordEditPage> {
     @Override
     public void setUpHook() {
         final KeywordTranslation kt_de = new KeywordTranslation(1, "de", "Name1", 1);
-        final KeywordTranslation kt_de2 = new KeywordTranslation(1, "de", "Name1a", 1);
+        final KeywordTranslation kt_de2 = new KeywordTranslation(10, "de", "Name1a", 1);
         final KeywordTranslation kt_en = new KeywordTranslation(2, "en", "name1", 1);
         final KeywordTranslation kt_fr = new KeywordTranslation(3, "fr", "nom1", 1);
         kd = new KeywordDefinition(1, "de", "thename", 1, kt_de, kt_en, kt_fr, kt_de2);

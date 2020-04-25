@@ -56,7 +56,7 @@ internal open class JooqCodeRepoIntegrationTest {
 
         var cd = cds[0]
         assertThat(cd.code).isEqualTo("4Y")
-        assertThat(cd.codeClass.id).isEqualTo(4)
+        assertThat(cd.codeClass?.id).isEqualTo(4)
         assertThat(cd.name).isEqualTo("Absenzen, eingeschränkte Aktivität")
         assertThat(cd.sort).isEqualTo(17)
         assertThat(cd.isInternal).isTrue()
@@ -66,7 +66,7 @@ internal open class JooqCodeRepoIntegrationTest {
 
         cd = cds[1]
         assertThat(cd.code).isEqualTo("7Z")
-        assertThat(cd.codeClass.id).isEqualTo(7)
+        assertThat(cd.codeClass?.id).isEqualTo(7)
         assertThat(cd.name).isEqualTo("Alle")
         assertThat(cd.sort).isEqualTo(4)
         assertThat(cd.isInternal).isTrue()
@@ -103,15 +103,13 @@ internal open class JooqCodeRepoIntegrationTest {
         val cd = kds[0]
 
         assertThat(cd.version).isEqualTo(1)
-        assertThat(cd.created == null).isTrue()
-        assertThat(cd.lastModified == null).isTrue()
+        assertThat(cd.created).isNull()
+        assertThat(cd.lastModified).isNull()
 
-        val translations = cd.translations.values()
-        assertThat(translations).isNotEmpty
-        val tr = translations.first()
+        val tr = cd.getTranslations().first()
         assertThat(tr.version).isEqualTo(1)
-        assertThat(tr.created == null).isTrue()
-        assertThat(tr.lastModified == null).isTrue()
+        assertThat(tr.created).isNull()
+        assertThat(tr.lastModified).isNull()
     }
 
     @Test
@@ -147,16 +145,15 @@ internal open class JooqCodeRepoIntegrationTest {
     fun findingMainLanguage() {
         val cd = repo.newUnpersistedCodeDefinition()
 
-        assertThat(cd.code == null).isTrue()
+        assertThat(cd.code).isNull()
         assertThat(cd.mainLanguageCode).isEqualTo("de")
-        assertThat(cd.codeClass == null).isTrue()
+        assertThat(cd.codeClass).isNull()
         assertThat(cd.sort).isEqualTo(1)
         assertThat(cd.isInternal).isFalse()
         assertThat(cd.name).isEqualTo("n.a.")
-        assertThat(cd.getNameInLanguage("de") == null).isTrue()
-        assertThat(cd.translations.asMap()).hasSize(3)
+        assertThat(cd.getNameInLanguage("de")).isNull()
 
-        val translations = cd.translations.values()
+        val translations = cd.getTranslations()
         assertThat(translations.map { it.langCode }).containsOnly("de", "en", "fr")
         assertThat(translations.map { it.id }).containsExactly(null, null, null)
         assertThat(translations.map { it.name }).containsExactly(null, null, null)
@@ -164,7 +161,7 @@ internal open class JooqCodeRepoIntegrationTest {
 
     @Test
     fun findingCodeDefinition_withNonExistingId_returnsNull() {
-        assertThat(repo.findCodeDefinition("foo") == null).isTrue()
+        assertThat(repo.findCodeDefinition("foo")).isNull()
     }
 
     @Test
@@ -173,7 +170,7 @@ internal open class JooqCodeRepoIntegrationTest {
 
         assertThat(existing.code).isEqualTo("4Y")
         assertThat(existing.name).startsWith("Absenzen")
-        assertThat(existing.translations.asMap()).hasSize(3)
+        assertThat(existing.getTranslations()).hasSize(3)
         assertThat(existing.getNameInLanguage("de")).startsWith("Absenzen,")
         assertThat(existing.getNameInLanguage("en")).startsWith("Absenteeism")
         assertThat(existing.getNameInLanguage("fr")).startsWith("Absentéisme")
@@ -188,14 +185,13 @@ internal open class JooqCodeRepoIntegrationTest {
         val cc = CodeClass(2, "cc2", "d2")
         val cd = CodeDefinition("2Z", "de", cc, 0, false, 1, ct_de, ct_en, ct_fr)
 
-        assertThat(cd.translations.values().map { it.id }).containsExactly(null, null, null)
+        assertThat(cd.getTranslations().map { it.id }).containsExactly(null, null, null)
 
         val saved = repo.saveOrUpdate(cd) ?: fail("Unable to save code")
 
         assertThat(saved.code).isEqualTo("2Z")
         assertThat(saved.name).isEqualTo("foo_de")
-        assertThat(saved.translations.size()).isEqualTo(3)
-        assertThat(saved.translations.values().map { it.version }).containsExactly(1, 1, 1)
+        assertThat(saved.getTranslations().map { it.version }).containsExactly(1, 1, 1)
     }
 
     @Test
@@ -204,12 +200,12 @@ internal open class JooqCodeRepoIntegrationTest {
 
         assertThat(cd.code).isEqualTo("2R")
         assertThat(cd.name).isEqualTo("Europa")
-        assertThat(cd.translations.asMap()).hasSize(3)
+        assertThat(cd.getTranslations()).hasSize(3)
         assertThat(cd.getNameInLanguage("de")).isEqualTo("Europa")
         assertThat(cd.getNameInLanguage("en")).isEqualTo("Europe")
         assertThat(cd.getNameInLanguage("fr")).isEqualTo("Europe")
-        assertThat(cd.translations.get("de").first().version).isEqualTo(1)
-        assertThat(cd.translations.get("en").first().version).isEqualTo(1)
+        assertThat(cd.getTranslations("de").first().version).isEqualTo(1)
+        assertThat(cd.getTranslations("en").first().version).isEqualTo(1)
 
         cd.setNameInLanguage("de", "eu")
         cd.setNameInLanguage("fr", "foo")
@@ -217,20 +213,20 @@ internal open class JooqCodeRepoIntegrationTest {
         val updated = repo.saveOrUpdate(cd) ?: fail("Unable to save or update code")
 
         assertThat(updated.code).isEqualTo("2R")
-        assertThat(updated.translations.asMap()).hasSize(3)
+        assertThat(updated.getTranslations()).hasSize(3)
         assertThat(updated.getNameInLanguage("de")).isEqualTo("eu")
         assertThat(updated.getNameInLanguage("en")).isEqualTo("Europe")
         assertThat(updated.getNameInLanguage("fr")).isEqualTo("foo")
 
         assertThat(updated.version).isEqualTo(2)
-        assertThat(updated.translations.get("de").first().version).isEqualTo(2)
-        assertThat(updated.translations.get("en").first().version).isEqualTo(2)
-        assertThat(updated.translations.get("fr").first().version).isEqualTo(2)
+        assertThat(updated.getTranslations("de").first().version).isEqualTo(2)
+        assertThat(updated.getTranslations("en").first().version).isEqualTo(2)
+        assertThat(updated.getTranslations("fr").first().version).isEqualTo(2)
     }
 
     @Test
     fun deleting_withNonExistingId_returnsNull() {
-        assertThat(repo.delete("ZZ", 1) == null).isTrue()
+        assertThat(repo.delete("ZZ", 1)).isNull()
     }
 
     @Suppress("TooGenericExceptionCaught")
@@ -251,16 +247,16 @@ internal open class JooqCodeRepoIntegrationTest {
         // insert new record to the database and verify it's there
         val cd = CodeDefinition("2Z", "de", CodeClass(2, "cc2", "d2"), 3, true, null)
         val persisted = repo.saveOrUpdate(cd) ?: fail("Unable to save or update code")
-        val code = persisted.code
+        val code = persisted.code ?: fail("code should not be null")
         val version = persisted.version
-        assertThat(repo.findCodeDefinition(code) == null).isFalse()
+        assertThat(repo.findCodeDefinition(code)).isNotNull()
 
         // delete the record
         val deleted = repo.delete(code, version) ?: fail("Unable to delete code")
         assertThat(deleted.code).isEqualTo(code)
 
         // verify the record is not there anymore
-        assertThat(repo.findCodeDefinition(code) == null).isTrue()
+        assertThat(repo.findCodeDefinition(code)).isNull()
     }
 
     @Test

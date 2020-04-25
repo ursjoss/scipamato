@@ -230,9 +230,7 @@ public class JooqNewsletterTopicRepo extends AbstractRepo implements NewsletterT
     private List<NewsletterTopicTranslation> persistTranslations(final NewsletterTopicDefinition entity,
         final int userId, final int ntId) {
         final List<NewsletterTopicTranslation> nttPersisted = new ArrayList<>();
-        for (final NewsletterTopicTranslation ntt : entity
-            .getTranslations()
-            .values()) {
+        for (final NewsletterTopicTranslation ntt : entity.getTranslations(null)) {
             final NewsletterTopicTrRecord nttRecord = insertAndGetNewsletterTopicTr(ntId, userId, ntt);
             nttPersisted.add(toTopicTranslation(nttRecord));
         }
@@ -291,9 +289,7 @@ public class JooqNewsletterTopicRepo extends AbstractRepo implements NewsletterT
     private List<NewsletterTopicTranslation> updateOrInsertAndLoadNewsletterTopicTranslations(
         final NewsletterTopicDefinition entity, final int userId) {
         final List<NewsletterTopicTranslation> nttPersisted = new ArrayList<>();
-        for (final NewsletterTopicTranslation ntt : entity
-            .getTranslations()
-            .values()) {
+        for (final NewsletterTopicTranslation ntt : entity.getTranslations(null)) {
             if (ntt.getId() != null) {
                 final NewsletterTopicTrRecord nttRecord = updateNewsletterTopicTr(entity, ntt, userId,
                     ntt.getVersion());
@@ -337,8 +333,8 @@ public class JooqNewsletterTopicRepo extends AbstractRepo implements NewsletterT
     }
 
     // package-private for test purposes
-    void addOrThrow(@Nullable final NewsletterTopicTrRecord nttRecord, @NotNull final List<NewsletterTopicTranslation> nttPersisted,
-        final String nttAsString) {
+    void addOrThrow(@Nullable final NewsletterTopicTrRecord nttRecord,
+        @NotNull final List<NewsletterTopicTranslation> nttPersisted, final String nttAsString) {
         if (nttRecord != null) {
             nttPersisted.add(toTopicTranslation(nttRecord));
         } else {

@@ -2,6 +2,8 @@ package ch.difty.scipamato.core.entity.keyword;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import ch.difty.scipamato.common.entity.AbstractDefinitionTranslation;
 
@@ -13,7 +15,8 @@ import ch.difty.scipamato.common.entity.AbstractDefinitionTranslation;
 public class KeywordTranslation extends AbstractDefinitionTranslation {
     private static final long serialVersionUID = 1L;
 
-    public KeywordTranslation(final Integer id, final String langCode, final String name, final Integer version) {
+    public KeywordTranslation(@Nullable final Integer id, @NotNull final String langCode, @Nullable final String name,
+        @Nullable final Integer version) {
         super(id, langCode, name, version);
     }
 }

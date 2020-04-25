@@ -11,7 +11,7 @@ import ch.difty.scipamato.common.persistence.DefinitionProviderService;
 import ch.difty.scipamato.core.web.DefinitionProvider;
 
 @SuppressWarnings("SameParameterValue")
-public abstract class DefinitionListPage<T extends DefinitionEntity, F extends ScipamatoFilter, S extends DefinitionProviderService<T, F>, P extends DefinitionProvider<T, F, S>>
+public abstract class DefinitionListPage<T extends DefinitionEntity<?, ?>, F extends ScipamatoFilter, S extends DefinitionProviderService<T, F>, P extends DefinitionProvider<T, F, S>>
     extends BasePage<T> {
 
     private F     filter;

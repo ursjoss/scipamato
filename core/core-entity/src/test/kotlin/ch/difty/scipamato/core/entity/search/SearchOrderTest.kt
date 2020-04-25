@@ -45,7 +45,7 @@ internal class SearchOrderTest {
         so.isGlobal = true
         so.isShowExcluded = true
 
-        assertThat(so.id).isEqualTo(11)
+        assertThat(so.id as Long).isEqualTo(11)
         assertThat(so.name).isEqualTo(SO_NAME)
         assertThat(so.owner).isEqualTo(2)
         assertThat(so.isGlobal).isEqualTo(true)
