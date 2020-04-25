@@ -1,8 +1,5 @@
 package ch.difty.scipamato.common.entity
 
-import org.apache.commons.collections4.CollectionUtils
-import org.apache.commons.collections4.ListValuedMap
-import org.apache.commons.collections4.multimap.ArrayListValuedHashMap
 import java.io.Serializable
 import java.time.LocalDateTime
 
@@ -25,7 +22,8 @@ interface DefinitionEntity<ID, T> : Serializable {
     val nullSafeId: ID?
     val displayValue: String
     val translationsAsString: String?
-    val translations: ListValuedMap<String, T>
+
+    fun getTranslations(langCode: String? = null): List<T>
 }
 
 /**
@@ -51,26 +49,27 @@ abstract class AbstractDefinitionEntity<T : DefinitionTranslation, ID>(
     translationArray: Array<out T>
 ) : ScipamatoEntity(version = version ?: 0), DefinitionEntity<ID, T> {
 
-    override val translations: ListValuedMap<String, T> = ArrayListValuedHashMap()
+    private val translations: Map<String, List<T>> = translationArray.groupBy { it.langCode }
+
     var name = mainName
 
-    init {
-        translationArray.forEach { translations.put(it.langCode, it) }
-    }
+    override fun getTranslations(langCode: String?): List<T> =
+        if (langCode == null) translations.flatMap { it.value }
+        else translations[langCode] ?: emptyList()
 
     override val displayValue: String
         get() = name
 
     override val translationsAsString: String?
         get() {
-            val trs = translations.get(mainLanguageCode)
-            if (CollectionUtils.isEmpty(trs)) return null
+            val trs = getTranslations(mainLanguageCode)
+            if (trs.isEmpty()) return null
 
             val mainNames = trs.mapNotNull { it.name }.joinToString("','")
             val sb = StringBuilder()
             sb.append("${mainLanguageCode.toUpperCase()}: ")
             sb.append(if (mainNames.isEmpty()) "n.a." else "'$mainNames'")
-            translations.asMap().filterNot { it.key == mainLanguageCode }.forEach { (kw, value) ->
+            translations.filterNot { it.key == mainLanguageCode }.forEach { (kw, value) ->
                 sb.append("; ")
                 sb.append(kw.toUpperCase()).append(": ")
                 val nameString = value.mapNotNull { it.name }.joinToString("','")
@@ -80,8 +79,8 @@ abstract class AbstractDefinitionEntity<T : DefinitionTranslation, ID>(
         }
 
     fun setNameInLanguage(langCode: String, translatedName: String) {
-        val trs = translations.get(langCode)
-        trs?.firstOrNull()?.let { tr ->
+        val trs = getTranslations(langCode)
+        trs.firstOrNull()?.let { tr ->
             tr.name = translatedName
             tr.lastModified = LocalDateTime.now()
             if (mainLanguageCode == langCode) name = translatedName
@@ -92,8 +91,8 @@ abstract class AbstractDefinitionEntity<T : DefinitionTranslation, ID>(
      * Get the **first** code name in the specified language.
      */
     fun getNameInLanguage(langCode: String): String? {
-        val trs = translations.get(langCode)
-        return if (trs.isEmpty()) null else trs[0].name
+        val trs = translations[langCode]
+        return if (trs?.isEmpty() != false) null else trs[0].name
     }
 
     override fun equals(other: Any?): Boolean {

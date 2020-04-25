@@ -16,7 +16,7 @@ internal class NewsletterTopicDefinitionTest {
         assertThat(ntd.id).isEqualTo(1)
         assertThat(ntd.name).isEqualTo("n.a.")
         assertThat(ntd.displayValue).isEqualTo("n.a.")
-        assertThat(ntd.translations.asMap()).isEmpty()
+        assertThat(ntd.getTranslations()).isEmpty()
     }
 
     @Test
@@ -25,9 +25,7 @@ internal class NewsletterTopicDefinitionTest {
         assertThat(ntd.id).isEqualTo(2)
         assertThat(ntd.name).isEqualTo("thema2")
         assertThat(ntd.displayValue).isEqualTo("thema2")
-        assertThat(ntd.translations.asMap()).hasSize(3)
-        assertThat(ntd.translations.keySet()).containsExactly("de", "en", "fr")
-        val trs = ntd.translations.values()
+        val trs = ntd.getTranslations()
         assertThat(trs.map { it.name }).containsOnly("thema2", "topic2", "sujet2")
         for (tr in trs)
             assertThat(tr.lastModified).isNull()
@@ -51,10 +49,10 @@ internal class NewsletterTopicDefinitionTest {
         val ntd = NewsletterTopicDefinition(2, "de", 1, ntt_de, ntt_en, ntt_fr)
         ntd.setNameInLanguage("de", "thema 2")
         assertThat(ntd.name).isEqualTo("thema 2")
-        assertThat(ntd.translations.get("de")[0].name).isEqualTo("thema 2")
-        assertThat(ntd.translations.get("de")[0].lastModified).isNotNull()
-        assertThat(ntd.translations.get("en")[0].lastModified).isNull()
-        assertThat(ntd.translations.get("fr")[0].lastModified).isNull()
+        assertThat(ntd.getTranslations("de")[0]?.name).isEqualTo("thema 2")
+        assertThat(ntd.getTranslations("de")[0]?.lastModified).isNotNull()
+        assertThat(ntd.getTranslations("en")[0]?.lastModified).isNull()
+        assertThat(ntd.getTranslations("fr")[0]?.lastModified).isNull()
     }
 
     @Test
@@ -62,10 +60,10 @@ internal class NewsletterTopicDefinitionTest {
         val ntd = NewsletterTopicDefinition(2, "de", 1, ntt_de, ntt_en, ntt_fr)
         ntd.setNameInLanguage("fr", "bar")
         assertThat(ntd.name).isEqualTo("thema2")
-        assertThat(ntd.translations.get("fr")[0].name).isEqualTo("bar")
-        assertThat(ntd.translations.get("de")[0].lastModified).isNull()
-        assertThat(ntd.translations.get("en")[0].lastModified).isNull()
-        assertThat(ntd.translations.get("fr")[0].lastModified).isNotNull()
+        assertThat(ntd.getTranslations("fr")[0]?.name).isEqualTo("bar")
+        assertThat(ntd.getTranslations("de")[0]?.lastModified).isNull()
+        assertThat(ntd.getTranslations("en")[0]?.lastModified).isNull()
+        assertThat(ntd.getTranslations("fr")[0]?.lastModified).isNotNull()
     }
 
     @Test

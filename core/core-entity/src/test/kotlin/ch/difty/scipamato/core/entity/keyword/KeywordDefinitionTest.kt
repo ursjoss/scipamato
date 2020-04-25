@@ -19,7 +19,7 @@ internal class KeywordDefinitionTest {
         assertThat(kd.name).isEqualTo("n.a.")
         assertThat(kd.searchOverride).isNull()
         assertThat(kd.displayValue).isEqualTo("n.a.")
-        assertThat(kd.translations.asMap()).isEmpty()
+        assertThat(kd.getTranslations()).isEmpty()
     }
 
     @Test
@@ -29,7 +29,7 @@ internal class KeywordDefinitionTest {
         assertThat(kd.name).isEqualTo("n.a.")
         assertThat(kd.searchOverride).isEqualTo("so")
         assertThat(kd.displayValue).isEqualTo("n.a.")
-        assertThat(kd.translations.asMap()).isEmpty()
+        assertThat(kd.getTranslations()).isEmpty()
     }
 
     @Test
@@ -39,9 +39,7 @@ internal class KeywordDefinitionTest {
         assertThat(kd.name).isEqualTo("stichwort2")
         assertThat(kd.searchOverride).isEqualTo("sooo")
         assertThat(kd.displayValue).isEqualTo("stichwort2")
-        assertThat(kd.translations.asMap()).hasSize(3)
-        assertThat(kd.translations.keySet()).containsExactly("de", "en", "fr")
-        val trs = kd.translations.values()
+        val trs = kd.getTranslations()
         assertThat(trs.map { it.name }).containsOnly("stichwort2", "keyword2", "motdeclef2")
         for (tr in trs)
             assertThat(tr.lastModified).isNull()
@@ -78,16 +76,16 @@ internal class KeywordDefinitionTest {
     }
 
     private fun assertTranslatedName(kd: KeywordDefinition, lc: String, index: Int, value: String) {
-        assertThat(kd.translations.get(lc)[index].name).isEqualTo(value)
+        assertThat(kd.getTranslations(lc)[index]?.name).isEqualTo(value)
     }
 
     @Suppress("SameParameterValue")
     private fun assertLastModifiedIsNotNull(kd: KeywordDefinition, lc: String, index: Int) {
-        assertThat(kd.translations.get(lc)[index].lastModified).isNotNull()
+        assertThat(kd.getTranslations(lc)[index]?.lastModified).isNotNull()
     }
 
     private fun assertLastModifiedIsNull(kd: KeywordDefinition, lc: String, index: Int) {
-        assertThat(kd.translations.get(lc)[index].lastModified).isNull()
+        assertThat(kd.getTranslations(lc)[index]?.lastModified).isNull()
     }
 
     @Test
@@ -96,8 +94,8 @@ internal class KeywordDefinitionTest {
         kd.setNameInLanguage("fr", "bar")
         assertThat(kd.name).isEqualTo("stichwort2")
         assertTranslatedName(kd, "fr", 0, "bar")
-        assertThat(kd.translations.get("de")[0].lastModified).isNull()
-        assertThat(kd.translations.get("en")[0].lastModified).isNull()
+        assertThat(kd.getTranslations("de")[0]?.lastModified).isNull()
+        assertThat(kd.getTranslations("en")[0]?.lastModified).isNull()
         assertLastModifiedIsNotNull(kd, "fr", 0)
     }
 
@@ -120,9 +118,7 @@ internal class KeywordDefinitionTest {
         assertThat(kd.id).isEqualTo(2)
         assertThat(kd.name).isEqualTo("stichwort2")
         assertThat(kd.displayValue).isEqualTo("stichwort2")
-        assertThat(kd.translations.asMap()).hasSize(3)
-        assertThat(kd.translations.keySet()).containsExactly("de", "en", "fr")
-        val trs = kd.translations.values()
+        val trs = kd.getTranslations()
         assertThat(trs.map { it.name }).containsOnly("stichwort2", "stichwort2foo", "keyword2", "motdeclef2")
         for (tr in trs)
             assertThat(tr.lastModified).isNull()

@@ -66,14 +66,14 @@ class AbstractDefinitionEntityTest {
 
     @Test
     fun entity_canGetTranslationsInLanguage_evenMultiple() {
-        assertThat(tde.translations.get("de")).containsExactly(dt_de, dt_de2)
-        assertThat(tde.translations.get("en")).containsExactly(dt_en)
-        assertThat(tde.translations.get("fr")).containsExactly(dt_fr)
+        assertThat(tde.getTranslations("de")).containsExactly(dt_de, dt_de2)
+        assertThat(tde.getTranslations("en")).containsExactly(dt_en)
+        assertThat(tde.getTranslations("fr")).containsExactly(dt_fr)
     }
 
     @Test
-    fun entity_gettingTranslationsInUndefinedLanguage_returnsEmpty() {
-        assertThat(tde.translations.get("es")).isEmpty()
+    fun entity_gettingTranslationsInUndefinedLanguage_returnsNull() {
+        assertThat(tde.getTranslations("es")).isNull()
     }
 
     @Test
