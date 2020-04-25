@@ -2,7 +2,6 @@ package ch.difty.scipamato.core.entity
 
 import ch.difty.scipamato.common.entity.CodeClassId
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
@@ -46,8 +45,11 @@ internal class PaperCodeBoxTest {
     }
 
     @Test
-    fun gettingCodes_andThenAlteringList_throws() {
-        Assertions.assertThrows(UnsupportedOperationException::class.java) { codeBox.codes.add(CODE_5H) }
+    fun gettingCodes_andThenAlteringList_doesNotModifyOriginal() {
+        val codes = codeBox.codes
+        assertThat(codes.contains(CODE_5H)).isFalse()
+        codeBox.codes.add(CODE_5H)
+        assertThat(codeBox.codes).isEqualTo(codes)
     }
 
     @Test

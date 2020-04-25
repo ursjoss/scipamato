@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Set;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.CollectionUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jooq.DSLContext;
@@ -100,7 +99,7 @@ public class JooqUserRepo extends
     protected void enrichAssociatedEntitiesOf(@Nullable final User entity, @Nullable final String languageCode) {
         if (entity != null) {
             final Set<Role> roles = userRoleRepo.findRolesForUser(entity.getId());
-            if (CollectionUtils.isNotEmpty(roles))
+            if (!roles.isEmpty())
                 entity.setRoles(roles);
         }
     }

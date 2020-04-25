@@ -18,7 +18,6 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.CollectionUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jooq.*;
@@ -447,7 +446,7 @@ public class JooqSearchOrderRepo extends
 
     private void fillCodesInto(final SearchCondition searchCondition, final String languageCode) {
         final List<Code> codes = fetchCodesForSearchConditionWithId(searchCondition, languageCode);
-        if (CollectionUtils.isNotEmpty(codes)) {
+        if (!codes.isEmpty()) {
             searchCondition.addCodes(codes);
         }
     }
@@ -554,7 +553,9 @@ public class JooqSearchOrderRepo extends
     }
 
     private void saveOrUpdateCodes(SearchCondition searchCondition, Long searchConditionId) {
-        if (!CollectionUtils.isEmpty(searchCondition.getCodes())) {
+        if (!searchCondition
+            .getCodes()
+            .isEmpty()) {
             InsertValuesStep4<SearchConditionCodeRecord, Long, String, Integer, Integer> step = getDsl().insertInto(
                 SEARCH_CONDITION_CODE, SEARCH_CONDITION_CODE.SEARCH_CONDITION_ID, SEARCH_CONDITION_CODE.CODE,
                 SEARCH_CONDITION_CODE.CREATED_BY, SEARCH_CONDITION_CODE.LAST_MODIFIED_BY);
@@ -607,11 +608,14 @@ public class JooqSearchOrderRepo extends
             .execute();
         persistSearchTerms(searchCondition, searchCondition.getSearchConditionId());
         persistCodes(searchCondition, searchCondition.getSearchConditionId());
-        SearchCondition persistedSearchCondition = fetchSearchConditionWithId(searchCondition.getSearchConditionId());
-        if (persistedSearchCondition != null) {
-            fillSearchTermsInto(persistedSearchCondition, mapSearchTermsToSearchConditions(persistedSearchCondition));
-            fillCodesInto(persistedSearchCondition, languageCode);
-        }
+        Long id = searchCondition.getSearchConditionId();
+        if (id == null)
+            return null;
+        final SearchCondition persistedSearchCondition = fetchSearchConditionWithId(id);
+        if (persistedSearchCondition == null)
+            return null;
+        fillSearchTermsInto(persistedSearchCondition, mapSearchTermsToSearchConditions(persistedSearchCondition));
+        fillCodesInto(persistedSearchCondition, languageCode);
         return persistedSearchCondition;
     }
 

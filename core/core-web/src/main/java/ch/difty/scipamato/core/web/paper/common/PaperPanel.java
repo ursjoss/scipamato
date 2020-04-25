@@ -19,7 +19,6 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.Bootst
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelect;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelectConfig;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome5IconType;
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.PageReference;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -874,7 +873,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
                     ((IModel<CodeBoxAware>) getTarget())
                         .getObject()
                         .clearCodesOf(codeClassId);
-                    if (CollectionUtils.isNotEmpty(codes)) {
+                    if (codes != null && !codes.isEmpty()) {
                         ((IModel<CodeBoxAware>) getTarget())
                             .getObject()
                             .addCodes(codes);
