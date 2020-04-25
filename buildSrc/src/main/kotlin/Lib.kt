@@ -50,7 +50,7 @@ object Lib {
     private const val spekVersion = "2.0.10"
     private const val kwikVersion = "0.6.0"
     private const val kluentVersion = "1.61"
-    private const val mockkVersion = "1.9.3"
+    private const val mockkVersion = "1.10.0"
 
     private const val jsr305Version = "3.0.2"
     //endregion
