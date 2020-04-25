@@ -11,16 +11,16 @@ object Lib {
 
     private const val springBootVersion = "2.2.6.RELEASE"
     private const val springBootAdminVersion = "2.2.2"
-    const val springCloudVersion = "Hoxton.SR3"
+    const val springCloudVersion = "Hoxton.SR4"
     private const val springCloudStarterVersion = "2.2.2.RELEASE"
 
     private const val wicketSpringBootStarterVersion = "2.1.9"
-    private const val wicketVersion = "8.7.0"
+    private const val wicketVersion = "8.8.0"
     private const val wicketstuffVersion = "8.7.0"
     private const val wicketJqueryUiVersion = "8.6.0"
     private const val wicketBootstrapVersion = "2.0.13"
     private const val jasperReportVersion = "6.12.2"
-    private const val krisVersion = "0.2.1"
+    private const val krisVersion = "0.2.4"
     const val jooqVersion = "3.12.4"
 
     private const val kotlinLoggingVersion = "1.7.9"
@@ -41,7 +41,7 @@ object Lib {
 
     private const val junit5Version = "5.6.2"
 
-    private const val testcontainersVersion = "1.13.0"
+    private const val testcontainersVersion = "1.14.1"
 
     @Suppress("MemberVisibilityCanBePrivate")
     const val mockitoVersion = "3.3.3"
@@ -49,15 +49,15 @@ object Lib {
 
     private const val spekVersion = "2.0.10"
     private const val kwikVersion = "0.6.0"
-    private const val kluentVersion = "1.60"
-    private const val mockkVersion = "1.9.3"
+    private const val kluentVersion = "1.61"
+    private const val mockkVersion = "1.10.0"
 
     private const val jsr305Version = "3.0.2"
     //endregion
 
     //region:pluginVersions
     private const val springDependencyManagementPluginVersion = "1.0.9.RELEASE"
-    private const val lombokPluginVersion = "5.0.0-rc6"
+    private const val lombokPluginVersion = "5.0.0"
     private const val jooqModelatorPluginVersion = "3.6.0"
     private const val reckonPluginVersion = "0.12.0"
     private const val jaxbPluginVersion = "4.3.1"
