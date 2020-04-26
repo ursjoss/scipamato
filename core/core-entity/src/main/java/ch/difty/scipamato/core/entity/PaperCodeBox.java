@@ -10,7 +10,6 @@ import java.util.Map.Entry;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import org.apache.commons.collections4.list.UnmodifiableList;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -66,13 +65,13 @@ public class PaperCodeBox implements CodeBox {
     @NotNull
     @Override
     public List<Code> getCodes() {
-        return new UnmodifiableList<>(codes);
+        return new ArrayList<>(codes);
     }
 
     @NotNull
     @Override
     public List<Code> getCodesBy(@NotNull final CodeClassId codeClassId) {
-        return new UnmodifiableList<>(collectBy(codeClassId));
+        return new ArrayList<>(collectBy(codeClassId));
     }
 
     @Override

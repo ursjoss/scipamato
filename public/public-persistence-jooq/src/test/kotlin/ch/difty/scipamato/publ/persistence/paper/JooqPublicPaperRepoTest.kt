@@ -23,12 +23,16 @@ internal class JooqPublicPaperRepoTest {
 
     @Mock
     private lateinit var dslMock: DSLContext
+
     @Mock
     private lateinit var sortMapperMock: JooqSortMapper<PaperRecord, PublicPaper, Paper>
+
     @Mock
     private lateinit var filterConditionMapperMock: PublicPaperFilterConditionMapper
+
     @Mock
     private lateinit var authorsAbbreviator: AuthorsAbbreviator
+
     @Mock
     private lateinit var journalExtractor: JournalExtractor
 
@@ -43,7 +47,7 @@ internal class JooqPublicPaperRepoTest {
             authorsAbbreviator,
             journalExtractor
         ) {
-            override fun getMainLanguage() = "de"
+            override val mainLanguage get() = "de"
         }
     }
 

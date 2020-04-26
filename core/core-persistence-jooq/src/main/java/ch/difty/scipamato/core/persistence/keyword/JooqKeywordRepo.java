@@ -240,11 +240,10 @@ public class JooqKeywordRepo extends AbstractRepo implements KeywordRepository {
     private List<KeywordTranslation> persistTranslations(final KeywordDefinition entity, final int userId,
         final int ntId) {
         final List<KeywordTranslation> kts = new ArrayList<>();
-        for (final KeywordTranslation kt : entity
-            .getTranslations()
-            .values()) {
+        for (final KeywordTranslation kt : entity.getTranslations(null)) {
             final KeywordTrRecord ktRecord = insertAndGetKeywordTr(ntId, userId, kt);
-            kts.add(toKeywordTranslation(ktRecord));
+            if (ktRecord != null)
+                kts.add(toKeywordTranslation(ktRecord));
         }
         return kts;
     }
@@ -262,9 +261,7 @@ public class JooqKeywordRepo extends AbstractRepo implements KeywordRepository {
 
     private List<KeywordTranslation> updateOrInsertAndLoadKeywordTranslations(final KeywordDefinition entity,
         final int userId) {
-        final Collection<KeywordTranslation> entityTranslations = entity
-            .getTranslations()
-            .values();
+        final Collection<KeywordTranslation> entityTranslations = entity.getTranslations(null);
         removeObsoletePersistedRecords(entity.getId(), entityTranslations);
         return addOrUpdate(entity, entityTranslations, userId);
     }
@@ -343,7 +340,8 @@ public class JooqKeywordRepo extends AbstractRepo implements KeywordRepository {
             addOrThrow(ktRecord, kt.toString(), ktPersisted);
         } else {
             final KeywordTrRecord ktRecord = insertAndGetKeywordTr(entity.getId(), userId, kt);
-            ktPersisted.add(toKeywordTranslation(ktRecord));
+            if (ktRecord != null)
+                ktPersisted.add(toKeywordTranslation(ktRecord));
         }
     }
 

@@ -22,7 +22,9 @@ import ch.difty.scipamato.core.entity.CodeClass;
 public class CodeDefinition extends AbstractDefinitionEntity<CodeTranslation, String> {
     private static final long serialVersionUID = 1L;
 
+    @Nullable
     private String    code;
+    @Nullable
     private CodeClass codeClass;
     private int       sort;
     private boolean   internal;

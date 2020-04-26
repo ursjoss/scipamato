@@ -24,6 +24,7 @@ import ch.difty.scipamato.core.config.ApplicationCoreProperties;
  *     the type of the entity the implementing pages use as the model.
  * @author u.joss
  */
+@SuppressWarnings("unused")
 public abstract class SelfUpdatingPage<T> extends BasePage<T> {
     private static final long serialVersionUID = 1L;
 

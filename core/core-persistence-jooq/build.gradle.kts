@@ -41,7 +41,6 @@ dependencies {
     api(Lib.jOOQ("jooq"))
 
     implementation(Lib.springSecurity("core"))
-    implementation(Lib.commonsCollection())
 
     testImplementation(project(Module.scipamatoCommon("persistence-jooq-test")))
     testImplementation(project(Module.scipamatoCommon("test")))

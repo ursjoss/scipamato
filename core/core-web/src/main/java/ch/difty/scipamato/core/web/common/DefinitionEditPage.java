@@ -15,8 +15,8 @@ import ch.difty.scipamato.common.entity.DefinitionEntity;
 import ch.difty.scipamato.core.persistence.OptimisticLockingException;
 
 @Slf4j
-@SuppressWarnings({ "SameParameterValue", "WicketForgeJavaIdInspection" })
-public abstract class DefinitionEditPage<E extends DefinitionEntity> extends BasePage<E> {
+@SuppressWarnings({ "SameParameterValue", "WicketForgeJavaIdInspection", "SpellCheckingInspection" })
+public abstract class DefinitionEditPage<E extends DefinitionEntity<?, ?>> extends BasePage<E> {
 
     private final PageReference callingPageRef;
 
@@ -105,10 +105,10 @@ public abstract class DefinitionEditPage<E extends DefinitionEntity> extends Bas
     protected abstract E persistModel();
 
     @NotNull
-    protected abstract DefinitionEditHeaderPanel newDefinitionHeaderPanel(@NotNull final String id);
+    protected abstract DefinitionEditHeaderPanel<E, ?, ?> newDefinitionHeaderPanel(@NotNull final String id);
 
     @NotNull
-    protected abstract DefinitionEditTranslationPanel newDefinitionTranslationPanel(@NotNull final String id);
+    protected abstract DefinitionEditTranslationPanel<E, ?> newDefinitionTranslationPanel(@NotNull final String id);
 
     protected abstract void handleDuplicateKeyException(@NotNull final DuplicateKeyException dke);
 }

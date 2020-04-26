@@ -2,6 +2,7 @@ package ch.difty.scipamato.core.entity;
 
 import lombok.*;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import ch.difty.scipamato.common.entity.FieldEnumType;
 
@@ -22,6 +23,7 @@ public abstract class IdScipamatoEntity<ID extends Number> extends CoreEntity {
 
     private static final long serialVersionUID = 1L;
 
+    @Nullable
     private ID id;
 
     public enum IdScipamatoEntityFields implements FieldEnumType {

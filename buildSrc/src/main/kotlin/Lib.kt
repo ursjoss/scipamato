@@ -35,8 +35,6 @@ object Lib {
 
     private const val fontAwesomeVersion = "5.12.0"
 
-    private const val commonsCollectionVersion = "4.4"
-
     private const val equalsverifierVersion = "3.1.13"
 
     private const val junit5Version = "5.6.2"
@@ -122,7 +120,6 @@ object Lib {
 
     // Utility libraries
 
-    fun commonsCollection() = Dep("org.apache.commons", "commons-collections4", commonsCollectionVersion)
     fun javaxActivation() = Dep("com.sun.activation", "javax.activation", javaxActivationVersion)
     fun javaxActivationApi() = Dep("javax.activation", "javax.activation-api", javaxActivationVersion)
 

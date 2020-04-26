@@ -21,7 +21,7 @@ import ch.difty.scipamato.common.web.component.table.column.ClickablePropertyCol
 import ch.difty.scipamato.core.web.DefinitionProvider;
 
 @SuppressWarnings("SameParameterValue")
-public abstract class DefinitionListResultPanel<T extends DefinitionEntity, F extends ScipamatoFilter, S extends DefinitionProviderService<T, F>, P extends DefinitionProvider<T, F, S>>
+public abstract class DefinitionListResultPanel<T extends DefinitionEntity<?, ?>, F extends ScipamatoFilter, S extends DefinitionProviderService<T, F>, P extends DefinitionProvider<T, F, S>>
     extends BasePanel<T> {
 
     private static final int    ROWS_PER_PAGE = 10;

@@ -16,6 +16,4 @@ dependencies {
     api(Lib.mockitoKotlin())
     api(Lib.mockito3("junit-jupiter"))
     api(Lib.equalsverifier())
-
-    implementation(Lib.commonsCollection())
 }

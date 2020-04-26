@@ -253,9 +253,7 @@ public class JooqCodeClassRepo extends AbstractRepo implements CodeClassReposito
     private List<CodeClassTranslation> updateOrInsertAndLoadCodeClassTranslations(final CodeClassDefinition entity,
         final int userId) {
         final Result<CodeClassTrRecord> persistedTranslations = loadCodeClassTranslationsFromDbFor(entity.getId());
-        final Collection<CodeClassTranslation> entityTranslations = entity
-            .getTranslations()
-            .values();
+        final Collection<CodeClassTranslation> entityTranslations = entity.getTranslations(null);
         removeObsoletePersistedRecordsFor(persistedTranslations, entityTranslations);
         return addOrUpdate(entity, entityTranslations, userId);
     }

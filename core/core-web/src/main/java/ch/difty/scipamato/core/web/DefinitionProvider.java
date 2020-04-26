@@ -17,11 +17,11 @@ import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.common.persistence.paging.PaginationRequest;
 import ch.difty.scipamato.common.persistence.paging.Sort;
 
-public abstract class DefinitionProvider<T extends DefinitionEntity, F extends ScipamatoFilter, S extends DefinitionProviderService<T, F>>
+public abstract class DefinitionProvider<T extends DefinitionEntity<?, ?>, F extends ScipamatoFilter, S extends DefinitionProviderService<T, F>>
     extends SortableDataProvider<T, String> implements IFilterStateLocator<F> {
 
     private final S service;
-    
+
     private F filter;
 
     protected DefinitionProvider(@Nullable final F filter) {

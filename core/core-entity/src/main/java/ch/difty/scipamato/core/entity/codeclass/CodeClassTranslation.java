@@ -3,6 +3,7 @@ package ch.difty.scipamato.core.entity.codeclass;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import ch.difty.scipamato.common.entity.AbstractDefinitionTranslation;
 import ch.difty.scipamato.common.entity.FieldEnumType;
@@ -17,8 +18,8 @@ public class CodeClassTranslation extends AbstractDefinitionTranslation {
 
     private String description;
 
-    public CodeClassTranslation(final Integer id, final String langCode, final String name, final String description,
-        final Integer version) {
+    public CodeClassTranslation(@Nullable final Integer id, @NotNull final String langCode, @Nullable final String name,
+        final String description, @Nullable final Integer version) {
         super(id, langCode, name, version);
         setDescription(description);
     }

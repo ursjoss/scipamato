@@ -23,7 +23,6 @@ internal class CodeDefinitionTest {
         assertThat(code.sort).isEqualTo(2)
         assertThat(code.isInternal).isFalse()
         assertThat(code.displayValue).isEqualTo("n.a.")
-        assertThat(code.translations.asMap()).isEmpty()
     }
 
     @Test
@@ -34,9 +33,8 @@ internal class CodeDefinitionTest {
         assertThat(code.isInternal).isTrue()
         assertThat(code.mainLanguageCode).isEqualTo("de")
         assertThat(code.displayValue).isEqualTo("codede2")
-        assertThat(code.translations.asMap()).hasSize(3)
-        assertThat(code.translations.keySet()).containsExactly("de", "en", "fr")
-        val trs = code.translations.values()
+        assertThat(code.getTranslations()).hasSize(3)
+        val trs = code.getTranslations()
         assertThat(trs.map { it.name }).containsOnly("codede2", "codeen2", "codefr2")
         for (tr in trs)
             assertThat(tr.lastModified).isNull()
@@ -69,15 +67,15 @@ internal class CodeDefinitionTest {
     }
 
     private fun assertTranslatedName(code: CodeDefinition, lc: String, index: Int, value: String) {
-        assertThat(code.translations.get(lc)[index].name).isEqualTo(value)
+        assertThat(code.getTranslations(lc)[index]?.name).isEqualTo(value)
     }
 
     private fun assertLastModifiedIsNotNull(code: CodeDefinition, lc: String, index: Int) {
-        assertThat(code.translations.get(lc)[index].lastModified).isNotNull()
+        assertThat(code.getTranslations(lc)[index]?.lastModified).isNotNull()
     }
 
     private fun assertLastModifiedIsNull(code: CodeDefinition, lc: String, index: Int) {
-        assertThat(code.translations.get(lc)[index].lastModified).isNull()
+        assertThat(code.getTranslations(lc)[index]?.lastModified).isNull()
     }
 
     @Test
@@ -88,8 +86,8 @@ internal class CodeDefinitionTest {
         code.setNameInLanguage("fr", "bar")
         assertThat(code.name).isEqualTo("codede2")
         assertTranslatedName(code, "fr", 0, "bar")
-        assertThat(code.translations.get("de")[0].lastModified).isNull()
-        assertThat(code.translations.get("en")[0].lastModified).isNull()
+        assertThat(code.getTranslations("de")[0]?.lastModified).isNull()
+        assertThat(code.getTranslations("en")[0].lastModified).isNull()
         assertLastModifiedIsNotNull(code, "fr", 0)
     }
 
@@ -115,9 +113,7 @@ internal class CodeDefinitionTest {
         assertThat(code.code).isEqualTo("1B")
         assertThat(code.name).isEqualTo("codede2")
         assertThat(code.displayValue).isEqualTo("codede2")
-        assertThat(code.translations.asMap()).hasSize(3)
-        assertThat(code.translations.keySet()).containsExactly("de", "en", "fr")
-        val trs = code.translations.values()
+        val trs = code.getTranslations()
         assertThat(trs.map { it.name }).containsOnly("codede2", "codede2foo", "codeen2", "codefr2")
         for (tr in trs)
             assertThat(tr.lastModified).isNull()

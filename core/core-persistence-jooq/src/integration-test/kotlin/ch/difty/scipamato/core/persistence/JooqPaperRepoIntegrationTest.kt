@@ -59,18 +59,16 @@ internal open class JooqPaperRepoIntegrationTest {
 
     @Test
     fun findingById_withNonExistingId_returnsNull() {
-        assertThat(repo.findById(-1L) == null).isTrue()
+        assertThat(repo.findById(-1L)).isNull()
     }
 
     @Test
     fun addingRecord_savesRecordAndRefreshesId() {
         val p = makeMinimalPaper()
-        assertThat(p.id == null).isTrue()
+        assertThat(p.id).isNull()
 
         val saved = repo.add(p) ?: fail("Unable to add paper")
-        assertThat(saved.id)
-            .isNotNull()
-            .isGreaterThan(MAX_ID_PREPOPULATED)
+        assertThat(saved.id).isGreaterThan(MAX_ID_PREPOPULATED)
         assertThat(saved.authors).isEqualTo("a")
     }
 
@@ -89,15 +87,13 @@ internal open class JooqPaperRepoIntegrationTest {
     @Test
     fun updatingRecord() {
         val paper = repo.add(makeMinimalPaper()) ?: fail("Unable to add paper")
-        assertThat(paper.id)
-            .isNotNull()
-            .isGreaterThan(MAX_ID_PREPOPULATED)
-        val id = paper.id
+        assertThat(paper.id).isGreaterThan(MAX_ID_PREPOPULATED)
+        val id = paper.id ?: error("id must no be null now")
         assertThat(paper.authors).isEqualTo("a")
 
         paper.authors = "b"
         repo.update(paper)
-        assertThat(paper.id).isEqualTo(id)
+        assertThat(paper.id as Long).isEqualTo(id)
 
         val newCopy = repo.findById(id) ?: fail("Unable to find paper")
         assertThat(newCopy).isNotEqualTo(paper)
@@ -108,10 +104,8 @@ internal open class JooqPaperRepoIntegrationTest {
     @Test
     fun savingAssociatedEntitiesOf_withCodes() {
         val paper = repo.add(makeMinimalPaper()) ?: fail("Unable to add paper")
-        assertThat(paper.id)
-            .isNotNull()
-            .isGreaterThan(MAX_ID_PREPOPULATED)
-        val id = paper.id
+        assertThat(paper.id).isGreaterThan(MAX_ID_PREPOPULATED)
+        val id = paper.id ?: error("id must no be null now")
         assertThat(paper.authors).isEqualTo("a")
 
         val cr = dsl.selectFrom(Code.CODE).limit(1).fetchOne()
@@ -121,11 +115,11 @@ internal open class JooqPaperRepoIntegrationTest {
             .fetchOne()
         val codeClass = ch.difty.scipamato.core.entity.CodeClass(ccr.id, "", "")
         val code = ch.difty.scipamato.core.entity.Code(cr.code, "", "", true,
-            codeClass.id, codeClass.name, codeClass.description, cr.sort, null, null, null, null, null)
+            codeClass.id!!, codeClass.name, codeClass.description, cr.sort, null, null, null, null, null)
         paper.addCode(code)
 
         repo.update(paper) ?: fail("Unable to add paper")
-        assertThat(paper.id).isEqualTo(id)
+        assertThat(paper.id as Long).isEqualTo(id)
 
         val newCopy = repo.findById(id) ?: fail("Unable to find paper")
         assertThat(newCopy).isNotEqualTo(paper)
@@ -136,13 +130,13 @@ internal open class JooqPaperRepoIntegrationTest {
     @Test
     fun savingAssociatedEntitiesOf_withNewsletterLink() {
         val paper = repo.add(makeMinimalPaper()) ?: fail("Unable to add paper")
-        val id = paper.id
+        val id = paper.id ?: error("id must no be null now")
         val newsletterLink = Paper.NewsletterLink(2, "whatever", 1, 1, "topic1", "hl")
 
         paper.newsletterLink = newsletterLink
 
         repo.update(paper)
-        assertThat(paper.id).isEqualTo(id)
+        assertThat(paper.id as Long).isEqualTo(id)
 
         val newCopy = repo.findById(id) ?: fail("Unable to find paper")
         assertThat(newCopy).isNotEqualTo(paper)
@@ -153,10 +147,8 @@ internal open class JooqPaperRepoIntegrationTest {
     @Test
     fun deletingRecord() {
         val paper = repo.add(makeMinimalPaper()) ?: fail("Unable to add paper")
-        assertThat(paper.id)
-            .isNotNull()
-            .isGreaterThan(MAX_ID_PREPOPULATED)
-        val id = paper.id
+        assertThat(paper.id).isGreaterThan(MAX_ID_PREPOPULATED)
+        val id = paper.id ?: error("id must no be null now")
         assertThat(paper.authors).isEqualTo("a")
 
         val deleted = repo.delete(id, paper.version)
@@ -491,15 +483,13 @@ internal open class JooqPaperRepoIntegrationTest {
             .select(PAPER_ATTACHMENT.ID)
             .from(PAPER_ATTACHMENT)
             .where(PAPER_ATTACHMENT.PAPER_ID.eq(TEST_PAPER_ID))
-            .fetchOneInto(Int::class.java)
-        assertThat(id).isNotNull()
+            .fetchOneInto(Int::class.java) ?: fail("id must not be null")
         val p = repo.deleteAttachment(id) ?: fail("Unable to delete attachments")
         assertThat(p.attachments.map { it.id }).doesNotContain(id)
         assertThat(dsl
             .select(PAPER_ATTACHMENT.ID)
             .from(PAPER_ATTACHMENT)
-            .where(PAPER_ATTACHMENT.PAPER_ID.eq(TEST_PAPER_ID))
-            .fetchOneInto(Int::class.java) == null).isTrue()
+            .where(PAPER_ATTACHMENT.PAPER_ID.eq(TEST_PAPER_ID)).fetch()).isEmpty()
     }
 
     /**
@@ -537,21 +527,21 @@ internal open class JooqPaperRepoIntegrationTest {
     @Test
     fun findingById_populatesNewsLetterWithAllFields() {
         val paper = repo.findById(31L, "en") ?: fail("Unable to find paper")
-        assertThat(paper.newsletterLink == null).isFalse()
+        assertThat(paper.newsletterLink).isNotNull()
         assertNewsletterLink(paper, "1802", 1, 1, "Ultrafine Particles", "some headline")
     }
 
     @Test
     fun findingById_populatesNewsLetterWithMostFields() {
         val paper = repo.findById(20L, "en") ?: fail("Unable to find paper")
-        assertThat(paper.newsletterLink == null).isFalse()
+        assertThat(paper.newsletterLink).isNotNull()
         assertNewsletterLink(paper, "1802", 1, 2, "Mortality", null)
     }
 
     @Test
     fun findingById_populatesNewsLetterWithSomeFields() {
         val paper = repo.findById(39L, "en") ?: fail("Unable to find paper")
-        assertThat(paper.newsletterLink == null).isFalse()
+        assertThat(paper.newsletterLink).isNotNull()
         assertNewsletterLink(paper, "1804", 0, null, null, null)
     }
 
@@ -568,17 +558,17 @@ internal open class JooqPaperRepoIntegrationTest {
         if (topicId != null)
             assertThat(paper.newsletterLink.topicId).isEqualTo(topicId)
         else
-            assertThat(paper.newsletterLink.topicId == null).isTrue()
+            assertThat(paper.newsletterLink.topicId).isNull()
 
         if (topic != null)
             assertThat(paper.newsletterLink.topic).isEqualTo(topic)
         else
-            assertThat(paper.newsletterLink.topic == null).isTrue()
+            assertThat(paper.newsletterLink.topic).isNull()
 
         if (headline != null)
             assertThat(paper.newsletterLink.headline).isEqualTo(headline)
         else
-            assertThat(paper.newsletterLink.headline == null).isTrue()
+            assertThat(paper.newsletterLink.headline).isNull()
     }
 
     @Test

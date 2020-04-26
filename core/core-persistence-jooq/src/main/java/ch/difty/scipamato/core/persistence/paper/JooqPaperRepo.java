@@ -20,7 +20,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.CollectionUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jooq.*;
@@ -152,7 +151,7 @@ public class JooqPaperRepo extends
                 .and(CODE_CLASS_TR.LANG_CODE.equal(languageCode)))
             .where(PAPER_CODE.PAPER_ID.equal(entity.getId()))
             .fetchInto(Code.class);
-        if (CollectionUtils.isNotEmpty(codes))
+        if (codes != null && !codes.isEmpty())
             entity.addCodes(codes);
     }
 

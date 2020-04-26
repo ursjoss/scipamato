@@ -66,19 +66,38 @@ class AbstractDefinitionEntityTest {
 
     @Test
     fun entity_canGetTranslationsInLanguage_evenMultiple() {
-        assertThat(tde.translations.get("de")).containsExactly(dt_de, dt_de2)
-        assertThat(tde.translations.get("en")).containsExactly(dt_en)
-        assertThat(tde.translations.get("fr")).containsExactly(dt_fr)
+        assertThat(tde.getTranslations("de")).containsExactly(dt_de, dt_de2)
+        assertThat(tde.getTranslations("en")).containsExactly(dt_en)
+        assertThat(tde.getTranslations("fr")).containsExactly(dt_fr)
     }
 
     @Test
-    fun entity_gettingTranslationsInUndefinedLanguage_returnsEmpty() {
-        assertThat(tde.translations.get("es")).isEmpty()
+    fun entity_gettingTranslationsInUndefinedLanguage_returnsEmptyList() {
+        assertThat(tde.getTranslations("es")).isEmpty()
     }
 
     @Test
     fun entity_canGetTranslationsAsString() {
         assertThat(tde.translationsAsString).isEqualTo("DE: 'deutsch','deutsch2'; EN: 'english'; FR: 'francais'")
+    }
+
+    @Test
+    fun entity_canAddTranslationInLanguage() {
+        tde.addTranslation("EN", TestDefinitionTranslation(20, "en", "english2", 20))
+        assertThat(tde.translationsAsString).isEqualTo(
+            "DE: 'deutsch','deutsch2'; EN: 'english'; FR: 'francais'; EN: 'english2'"
+        )
+    }
+
+    @Test
+    fun entity_canRemoveTranslationInLanguage() {
+        assertThat(tde.translationsAsString).isEqualTo(
+            "DE: 'deutsch','deutsch2'; EN: 'english'; FR: 'francais'"
+        )
+        tde.removeTranslation(dt_de2)
+        assertThat(tde.translationsAsString).isEqualTo(
+            "DE: 'deutsch'; EN: 'english'; FR: 'francais'"
+        )
     }
 
     @Test

@@ -22,6 +22,7 @@ import ch.difty.scipamato.common.entity.FieldEnumType;
 public class CodeClassDefinition extends AbstractDefinitionEntity<CodeClassTranslation, Integer> {
     private static final long serialVersionUID = 1L;
 
+    @Nullable
     private Integer id;
 
     public CodeClassDefinition(@Nullable final Integer id, @NotNull final String mainLanguageCode,

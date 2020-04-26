@@ -9,7 +9,7 @@ import ch.difty.scipamato.common.entity.DefinitionEntity;
 import ch.difty.scipamato.common.entity.filter.ScipamatoFilter;
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 
-public interface DefinitionProviderService<T extends DefinitionEntity, F extends ScipamatoFilter> {
+public interface DefinitionProviderService<T extends DefinitionEntity<?, ?>, F extends ScipamatoFilter> {
 
     /**
      * Find a page of entities of type {@code F}

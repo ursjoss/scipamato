@@ -20,6 +20,7 @@ import ch.difty.scipamato.common.entity.AbstractDefinitionEntity;
 public class NewsletterTopicDefinition extends AbstractDefinitionEntity<NewsletterTopicTranslation, Integer> {
     private static final long serialVersionUID = 1L;
 
+    @Nullable
     private Integer id;
 
     /**

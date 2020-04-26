@@ -21,7 +21,9 @@ import ch.difty.scipamato.common.entity.AbstractDefinitionEntity;
 public class KeywordDefinition extends AbstractDefinitionEntity<KeywordTranslation, Integer> {
     private static final long serialVersionUID = 1L;
 
+    @Nullable
     private Integer id;
+    @Nullable
     private String  searchOverride;
 
     /**

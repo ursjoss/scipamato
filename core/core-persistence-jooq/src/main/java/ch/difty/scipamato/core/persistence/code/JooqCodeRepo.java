@@ -311,9 +311,7 @@ public class JooqCodeRepo extends AbstractRepo implements CodeRepository {
 
     private List<CodeTranslation> updateOrInsertAndLoadCodeTranslations(final CodeDefinition entity, final int userId) {
         final Result<CodeTrRecord> persistedTranslations = loadCodeTranslationsFromDbFor(entity.getCode());
-        final Collection<CodeTranslation> entityTranslations = entity
-            .getTranslations()
-            .values();
+        final Collection<CodeTranslation> entityTranslations = entity.getTranslations(null);
         removeObsoletePersistedRecordsFor(persistedTranslations, entityTranslations);
         return addOrUpdate(entity, entityTranslations, userId);
     }

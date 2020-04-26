@@ -31,7 +31,7 @@ internal open class JooqNewsletterRepoIntegrationTest {
 
     @Test
     fun findingById_withNonExistingId_returnsNull() {
-        assertThat(repo.findById(-1) == null).isTrue()
+        assertThat(repo.findById(-1)).isNull()
     }
 
     @Test
@@ -52,7 +52,7 @@ internal open class JooqNewsletterRepoIntegrationTest {
     @Test
     fun addingRecord_savesRecordAndRefreshesId() {
         val nl = makeMinimalNewsletter()
-        assertThat(nl.id == null).isTrue()
+        assertThat(nl.id).isNull()
 
         val saved = repo.add(nl) ?: Assertions.fail("Unable to add newsletter")
         assertThat(saved.id).isGreaterThan(0)
@@ -71,12 +71,12 @@ internal open class JooqNewsletterRepoIntegrationTest {
     fun updatingRecord() {
         val nl = repo.add(makeMinimalNewsletter()) ?: Assertions.fail("Unable to add newsletter")
         assertThat(nl.id).isGreaterThan(0)
-        val id = nl.id
+        val id: Int = nl.id ?: error("id must no be null now")
         assertThat(nl.issue).isEqualTo("test-issue")
 
         nl.issue = "test-issue-modified"
         repo.update(nl)
-        assertThat(nl.id).isEqualTo(id)
+        assertThat(nl.id as Int).isEqualTo(id)
 
         val newCopy = repo.findById(id) ?: Assertions.fail("Unable to find newsletter")
         assertThat(newCopy).isNotEqualTo(nl)
@@ -88,13 +88,13 @@ internal open class JooqNewsletterRepoIntegrationTest {
     fun deletingRecord() {
         val nl = repo.add(makeMinimalNewsletter()) ?: Assertions.fail("Unable to add newsletter")
         assertThat(nl.id).isGreaterThan(0)
-        val id = nl.id
+        val id = nl.id ?: error("id must no be null now")
         assertThat(nl.issue).isEqualTo("test-issue")
 
         val deleted = repo.delete(id, nl.version)
         assertThat(deleted.id).isEqualTo(id)
 
-        assertThat(repo.findById(id) == null).isTrue()
+        assertThat(repo.findById(id)).isNull()
     }
 
     @Test
