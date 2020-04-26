@@ -17,17 +17,16 @@ import org.wicketstuff.annotation.mount.MountPath;
 
 import ch.difty.scipamato.core.auth.Roles;
 import ch.difty.scipamato.core.entity.codeclass.CodeClassDefinition;
+import ch.difty.scipamato.core.entity.codeclass.CodeClassTranslation;
 import ch.difty.scipamato.core.persistence.CodeClassService;
 import ch.difty.scipamato.core.web.code.CodeListPage;
-import ch.difty.scipamato.core.web.common.DefinitionEditHeaderPanel;
 import ch.difty.scipamato.core.web.common.DefinitionEditPage;
-import ch.difty.scipamato.core.web.common.DefinitionEditTranslationPanel;
 
 @MountPath("codeclasses/entry")
 @Slf4j
 @AuthorizeInstantiation({ Roles.USER, Roles.ADMIN })
-@SuppressWarnings("SameParameterValue")
-public class CodeClassEditPage extends DefinitionEditPage<CodeClassDefinition> {
+@SuppressWarnings({ "SameParameterValue", "SpellCheckingInspection" })
+public class CodeClassEditPage extends DefinitionEditPage<CodeClassDefinition, CodeClassTranslation, Integer> {
 
     private static final long serialVersionUID = 1L;
 
@@ -35,6 +34,7 @@ public class CodeClassEditPage extends DefinitionEditPage<CodeClassDefinition> {
         "Key \\(code_class_id, lang_code\\)=\\((\\d+), \\w+\\) already exists.*PSQLException: "
         + "ERROR: duplicate key value violates unique constraint");
 
+    @SuppressWarnings("unused")
     @SpringBean
     private CodeClassService service;
 
@@ -50,7 +50,7 @@ public class CodeClassEditPage extends DefinitionEditPage<CodeClassDefinition> {
 
     @NotNull
     @Override
-    protected DefinitionEditHeaderPanel newDefinitionHeaderPanel(@NotNull final String id) {
+    protected CodeClassEditHeaderPanel newDefinitionHeaderPanel(@NotNull final String id) {
         return new CodeClassEditHeaderPanel(id, getModel()) {
 
             @Nullable
@@ -69,7 +69,7 @@ public class CodeClassEditPage extends DefinitionEditPage<CodeClassDefinition> {
 
     @NotNull
     @Override
-    protected DefinitionEditTranslationPanel newDefinitionTranslationPanel(@NotNull final String id) {
+    protected CodeClassEditTranslationPanel newDefinitionTranslationPanel(@NotNull final String id) {
         return new CodeClassEditTranslationPanel(id, getModel());
     }
 

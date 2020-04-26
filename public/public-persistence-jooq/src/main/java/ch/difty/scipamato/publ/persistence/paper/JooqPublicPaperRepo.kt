@@ -19,6 +19,7 @@ import java.util.ArrayList
  *
  * @author u.joss
  */
+@Suppress("SpellCheckingInspection")
 @Repository
 open class JooqPublicPaperRepo(
     private val dsl: DSLContext,
@@ -41,7 +42,7 @@ open class JooqPublicPaperRepo(
 
     override fun findPageByFilter(filter: PublicPaperFilter, pc: PaginationContext): List<PublicPaper> =
         dsl.selectFrom(table)
-            .where(getConditions(filter))
+            .where(filter.asCondition())
             .orderBy(sortMapper.map(pc.sort, table))
             .limit(pc.pageSize)
             .offset(pc.offset)
@@ -74,7 +75,7 @@ open class JooqPublicPaperRepo(
         dsl.fetchCount(
             dsl.selectOne()
                 .from(Paper.PAPER)
-                .where(getConditions(filter))
+                .where(filter.asCondition())
         )
 
     override fun findPageOfNumbersByFilter(
@@ -82,22 +83,21 @@ open class JooqPublicPaperRepo(
     ): List<Long> = dsl
         .select()
         .from(table)
-        .where(getConditions(filter))
+        .where(filter.asCondition())
         .orderBy(sortMapper.map(pc.sort, table))
         .limit(pc.pageSize)
         .offset(pc.offset)
         .fetch(Paper.PAPER.NUMBER)
 
-    private fun getConditions(filter: PublicPaperFilter): Condition {
-        val conditions = filterConditionMapper.map(filter)
-        return if (filter.keywords?.isEmpty() != false) conditions
-        else DSL.and(conditions, evaluateKeywords(filter.keywords))
+    private fun PublicPaperFilter.asCondition(): Condition {
+        val conditions = filterConditionMapper.map(this)
+        return if (keywords?.isEmpty() != false) conditions
+        else DSL.and(conditions, keywords.asCondition())
     }
 
-    private fun evaluateKeywords(keywords: List<Keyword>): Condition {
-        val keywordConditions: List<Condition> =
-            keywords
-                .map { obj: Keyword -> obj.keywordId }.asSequence()
+    private fun List<Keyword>.asCondition(): Condition {
+        val conditions: List<Condition> =
+            map { obj: Keyword -> obj.keywordId }.asSequence()
                 .map {
                     dsl.select(
                         DSL.coalesce(
@@ -107,14 +107,16 @@ open class JooqPublicPaperRepo(
                     ).from(ch.difty.scipamato.publ.db.tables.Keyword.KEYWORD)
                         .where(
                             ch.difty.scipamato.publ.db.tables.Keyword.KEYWORD.KEYWORD_ID.eq(it).and(
-                                ch.difty.scipamato.publ.db.tables.Keyword.KEYWORD.LANG_CODE.eq(this.mainLanguage))
+                                ch.difty.scipamato.publ.db.tables.Keyword.KEYWORD.LANG_CODE.eq(
+                                    this@JooqPublicPaperRepo.mainLanguage)
+                            )
                         )
                         .orderBy(ch.difty.scipamato.publ.db.tables.Keyword.KEYWORD.NAME)
                         .limit(1)
                         .fetchOne()
                         .value1()
                 }.mapTo(ArrayList()) { Paper.PAPER.METHODS.containsIgnoreCase(it) }
-        return if (keywordConditions.size == 1) keywordConditions[0] else DSL.and(keywordConditions)
+        return if (conditions.size == 1) conditions.first() else DSL.and(conditions)
     }
 
     protected open val mainLanguage: String

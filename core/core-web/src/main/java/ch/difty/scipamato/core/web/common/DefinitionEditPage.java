@@ -12,11 +12,13 @@ import org.jetbrains.annotations.Nullable;
 import org.springframework.dao.DuplicateKeyException;
 
 import ch.difty.scipamato.common.entity.DefinitionEntity;
+import ch.difty.scipamato.common.entity.DefinitionTranslation;
 import ch.difty.scipamato.core.persistence.OptimisticLockingException;
 
 @Slf4j
-@SuppressWarnings({ "SameParameterValue", "WicketForgeJavaIdInspection", "SpellCheckingInspection" })
-public abstract class DefinitionEditPage<E extends DefinitionEntity<?, ?>> extends BasePage<E> {
+@SuppressWarnings({ "SameParameterValue", "WicketForgeJavaIdInspection" })
+public abstract class DefinitionEditPage<E extends DefinitionEntity<ID, T>, T extends DefinitionTranslation, ID>
+    extends BasePage<E> {
 
     private final PageReference callingPageRef;
 
@@ -105,10 +107,10 @@ public abstract class DefinitionEditPage<E extends DefinitionEntity<?, ?>> exten
     protected abstract E persistModel();
 
     @NotNull
-    protected abstract DefinitionEditHeaderPanel<E, ?, ?> newDefinitionHeaderPanel(@NotNull final String id);
+    protected abstract DefinitionEditHeaderPanel<E, T, ID> newDefinitionHeaderPanel(@NotNull final String id);
 
     @NotNull
-    protected abstract DefinitionEditTranslationPanel<E, ?> newDefinitionTranslationPanel(@NotNull final String id);
+    protected abstract DefinitionEditTranslationPanel<E, T> newDefinitionTranslationPanel(@NotNull final String id);
 
     protected abstract void handleDuplicateKeyException(@NotNull final DuplicateKeyException dke);
 }

@@ -13,22 +13,25 @@ import org.wicketstuff.annotation.mount.MountPath;
 
 import ch.difty.scipamato.core.auth.Roles;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicDefinition;
+import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicTranslation;
 import ch.difty.scipamato.core.persistence.NewsletterTopicService;
 import ch.difty.scipamato.core.web.common.DefinitionEditPage;
-import ch.difty.scipamato.core.web.common.DefinitionEditTranslationPanel;
 
 @MountPath("newsletter-topic/entry")
 @Slf4j
 @AuthorizeInstantiation({ Roles.USER, Roles.ADMIN })
 @SuppressWarnings("SameParameterValue")
-public class NewsletterTopicEditPage extends DefinitionEditPage<NewsletterTopicDefinition> {
+public class NewsletterTopicEditPage
+    extends DefinitionEditPage<NewsletterTopicDefinition, NewsletterTopicTranslation, Integer> {
 
     private static final long serialVersionUID = 1L;
 
+    @SuppressWarnings("unused")
     @SpringBean
     private NewsletterTopicService service;
 
-    NewsletterTopicEditPage(@Nullable final IModel<NewsletterTopicDefinition> model, @Nullable final PageReference callingPageRef) {
+    NewsletterTopicEditPage(@Nullable final IModel<NewsletterTopicDefinition> model,
+        @Nullable final PageReference callingPageRef) {
         super(model, callingPageRef);
     }
 
@@ -45,7 +48,8 @@ public class NewsletterTopicEditPage extends DefinitionEditPage<NewsletterTopicD
 
             @Nullable
             @Override
-            protected NewsletterTopicDefinition doDelete(@NotNull final NewsletterTopicDefinition ntd, @NotNull final Integer recordId) {
+            protected NewsletterTopicDefinition doDelete(@NotNull final NewsletterTopicDefinition ntd,
+                @NotNull final Integer recordId) {
                 return service.delete(recordId, ntd.getVersion());
             }
 
@@ -65,7 +69,7 @@ public class NewsletterTopicEditPage extends DefinitionEditPage<NewsletterTopicD
 
     @NotNull
     @Override
-    protected DefinitionEditTranslationPanel newDefinitionTranslationPanel(@NotNull final String id) {
+    protected NewsletterTopicEditTranslationPanel newDefinitionTranslationPanel(@NotNull final String id) {
         return new NewsletterTopicEditTranslationPanel(id, getModel());
     }
 

@@ -163,6 +163,20 @@ internal class AbstractMenuBuilderTest {
     }
 
     @Test
+    fun gettingVersionStuff_withNullVersionInApplicationProperties() {
+        whenever(applicationProperties.buildVersion).thenReturn(null)
+        assertThat(menuBuilder.versionAnker).isEqualTo("")
+        assertThat(menuBuilder.versionLink).isEqualTo("version null")
+    }
+
+    @Test
+    fun gettingVersionStuff_withBlankVersionInApplicationProperties() {
+        whenever(applicationProperties.buildVersion).thenReturn("")
+        assertThat(menuBuilder.versionAnker).isEqualTo("")
+        assertThat(menuBuilder.versionLink).isEqualTo("version ")
+    }
+
+    @Test
     fun gettingVersionStuff_withSnapshotVersionInApplicationProperties() {
         whenever(applicationProperties.buildVersion).thenReturn("1.2.3-SNAPSHOT")
         assertThat(menuBuilder.versionAnker).isEqualTo("#unreleased")

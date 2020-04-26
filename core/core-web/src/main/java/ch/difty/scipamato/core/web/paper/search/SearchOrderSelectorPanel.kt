@@ -183,10 +183,11 @@ class SearchOrderSelectorPanel internal constructor(id: String, model: IModel<Se
         get() = modelObject?.id != null
 
     private val isUserEntitled: Boolean
-        get() = if (modelObject != null)
-            if (isViewMode) !modelObject!!.isGlobal && modelObject!!.owner == activeUser.id
-            else modelObject!!.owner == activeUser.id
-        else false
+        get() = modelObject != null &&
+            if (isViewMode)
+                !modelObject!!.isGlobal && modelObject!!.owner == activeUser.id
+            else
+                modelObject!!.owner == activeUser.id
 
     private fun hasExclusions(): Boolean =
         isModelSelected && modelObject!!.excludedPaperIds.isNotEmpty()

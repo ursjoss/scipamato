@@ -90,7 +90,7 @@ public class SimpleFilterPanel extends AbstractPanel<PublicPaperFilter> {
         queue(field);
     }
 
-    private void sendChangeEvent(final AjaxRequestTarget target, final FormComponent component) {
+    private void sendChangeEvent(final AjaxRequestTarget target, final FormComponent<?> component) {
         final String id = component.getId();
         final String markupId = component.getMarkupId();
         send(getPage(), Broadcast.BREADTH, new SimpleFilterPanelChangeEvent(target)
@@ -99,7 +99,7 @@ public class SimpleFilterPanel extends AbstractPanel<PublicPaperFilter> {
     }
 
     // package private access for testing
-    void handleChangeEvent(@NotNull final IEvent<?> event, @NotNull final FormComponent component) {
+    void handleChangeEvent(@NotNull final IEvent<?> event, @NotNull final FormComponent<?> component) {
         if (event
                 .getPayload()
                 .getClass() == SimpleFilterPanelChangeEvent.class) {

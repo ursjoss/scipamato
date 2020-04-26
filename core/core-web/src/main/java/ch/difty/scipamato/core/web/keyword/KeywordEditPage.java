@@ -14,6 +14,7 @@ import org.wicketstuff.annotation.mount.MountPath;
 
 import ch.difty.scipamato.core.auth.Roles;
 import ch.difty.scipamato.core.entity.keyword.KeywordDefinition;
+import ch.difty.scipamato.core.entity.keyword.KeywordTranslation;
 import ch.difty.scipamato.core.persistence.KeywordService;
 import ch.difty.scipamato.core.web.common.DefinitionEditPage;
 
@@ -21,7 +22,7 @@ import ch.difty.scipamato.core.web.common.DefinitionEditPage;
 @Slf4j
 @AuthorizeInstantiation({ Roles.USER, Roles.ADMIN })
 @SuppressWarnings("SameParameterValue")
-public class KeywordEditPage extends DefinitionEditPage<KeywordDefinition> {
+public class KeywordEditPage extends DefinitionEditPage<KeywordDefinition, KeywordTranslation, Integer> {
 
     private static final long serialVersionUID = 1L;
 
