@@ -6,6 +6,8 @@ dependencies {
     api(project(Module.scipamatoCommon("entity")))
 
     api(Lib.assertj())
+
+    api(Lib.kluent())
     api(Lib.springBootStarter("test").id) {
         exclude("junit", "junit")
         exclude("org.skyscreamer", "jsonassert")
