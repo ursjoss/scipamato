@@ -49,6 +49,7 @@ object Lib {
     private const val kwikVersion = "0.6.0"
     private const val kluentVersion = "1.61"
     private const val mockkVersion = "1.10.0"
+    private const val springMockkVersion = "2.0.1"
 
     private const val jsr305Version = "3.0.2"
     //endregion
@@ -137,14 +138,22 @@ object Lib {
     // Test Libraries
 
     fun junit5(module: String = "") = Dep("org.junit.jupiter", "junit-jupiter${if (module.isNotBlank()) "-$module" else ""}", junit5Version)
+
+    @Deprecated("Replace with mockk")
     fun mockito3(module: String) = Dep("org.mockito", "mockito-$module", mockitoVersion)
+
+    @Deprecated("Replace with mockk")
     fun mockitoKotlin() = Dep("com.nhaarman.mockitokotlin2", "mockito-kotlin", mockitoKotlinVersion)
+
+    @Deprecated("Replace with kluent")
     fun assertj() = Dep("org.assertj", "assertj-core")
+
     fun testcontainers(module: String) = Dep("org.testcontainers", module, testcontainersVersion)
     fun equalsverifier() = Dep("nl.jqno.equalsverifier", "equalsverifier", equalsverifierVersion)
     fun spek(module: String) = Dep("org.spekframework.spek2", "spek-$module", spekVersion)
     fun kluent() = Dep("org.amshove.kluent", "kluent", kluentVersion)
     fun mockk() = Dep("io.mockk", "mockk", mockkVersion)
+    fun springMockk() = Dep("com.ninja-squad", "springmockk", springMockkVersion)
     fun kwik(module: String) = Dep("com.github.jcornaz.kwik", "kwik-$module-jvm", kwikVersion)
 
     fun servletApi() = Dep("javax.servlet", "javax.servlet-api")

@@ -157,6 +157,7 @@ subprojects {
         testImplementation(Lib.spek("dsl-jvm"))
         testImplementation(Lib.kluent())
         testImplementation(Lib.mockk())
+        testImplementation(Lib.springMockk())
         testImplementation(Lib.kwik("evaluator"))
         testImplementation(Lib.kwik("generator-stdlib"))
 
