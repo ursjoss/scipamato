@@ -5,8 +5,6 @@ dependencies {
     api(project(Module.scipamatoCommon("utils")))
     api(project(Module.scipamatoCommon("entity")))
 
-    api(Lib.assertj())
-
     api(Lib.kluent())
     api(Lib.springBootStarter("test").id) {
         exclude("junit", "junit")
@@ -14,8 +12,5 @@ dependencies {
     }
     api(Lib.junit5())
     api(Lib.junit5("params"))
-    api(Lib.mockito3("core"))
-    api(Lib.mockitoKotlin())
-    api(Lib.mockito3("junit-jupiter"))
     api(Lib.equalsverifier())
 }

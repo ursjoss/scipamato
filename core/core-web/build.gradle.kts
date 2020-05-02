@@ -79,6 +79,11 @@ dependencies {
     testImplementation(Lib.validationApi())
     testImplementation(Lib.lombok())
     testAnnotationProcessor(Lib.lombok())
+
+    testImplementation(Lib.assertj())
+    testImplementation(Lib.mockito3("core"))
+    testImplementation(Lib.mockitoKotlin())
+    testImplementation(Lib.mockito3("junit-jupiter"))
 }
 
 idea {
