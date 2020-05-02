@@ -30,10 +30,9 @@ enum class CodeClassId(val id: Int) {
     CC8(8);
 
     companion object {
-        private val ID2ENUM: Map<Int, CodeClassId> = values().map { it.id to it }.toMap()
+        private val ID2ENUM: Map<Int, CodeClassId> = values().associateBy { it.id }
 
-        fun fromId(id: Int): java.util.Optional<CodeClassId> {
-            return java.util.Optional.ofNullable(ID2ENUM[id])
-        }
+        fun fromId(id: Int): java.util.Optional<CodeClassId> =
+            java.util.Optional.ofNullable(ID2ENUM[id])
     }
 }

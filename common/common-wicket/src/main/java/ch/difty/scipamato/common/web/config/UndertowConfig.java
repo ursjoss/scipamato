@@ -46,7 +46,8 @@ public class UndertowConfig {
         log.info("Adding http listener on port {} redirecting to confidential port {} for https.", redirectFromPort,
             confidentialPort);
         final UndertowServletWebServerFactory factory = new UndertowServletWebServerFactory();
-        factory.addBuilderCustomizers(builder -> builder.addHttpListener(redirectFromPort, "0.0.0.0"));
+        if (redirectFromPort != null)
+            factory.addBuilderCustomizers(builder -> builder.addHttpListener(redirectFromPort, "0.0.0.0"));
         factory.addDeploymentInfoCustomizers(deploymentInfo -> deploymentInfo
             .addSecurityConstraint(new SecurityConstraint()
                 .addWebResourceCollection(new WebResourceCollection().addUrlPattern("/*"))

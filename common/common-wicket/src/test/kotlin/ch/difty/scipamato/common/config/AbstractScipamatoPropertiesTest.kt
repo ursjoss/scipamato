@@ -1,89 +1,88 @@
 package ch.difty.scipamato.common.config
 
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.whenever
-import org.assertj.core.api.Assertions.assertThat
+import io.mockk.confirmVerified
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.verify
+import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito.never
-import org.mockito.Mockito.verify
-import org.mockito.Mockito.verifyNoMoreInteractions
 
 internal class AbstractScipamatoPropertiesTest {
 
-    private val scipamatoPropMock = mock<ScipamatoBaseProperties>()
-    private val mavenPropMock = mock<MavenProperties>()
+    private val scipamatoPropMock = mockk<ScipamatoBaseProperties>()
+    private val mavenPropMock = mockk<MavenProperties>()
     private val prop =
         object : AbstractScipamatoProperties<ScipamatoBaseProperties>(scipamatoPropMock, mavenPropMock) {}
 
     @AfterEach
     fun tearDown() {
-        verifyNoMoreInteractions(scipamatoPropMock, mavenPropMock)
+        confirmVerified(scipamatoPropMock, mavenPropMock)
     }
 
     @Test
     fun gettingBrand_delegatesToScipamatoProps() {
-        whenever(scipamatoPropMock.brand).thenReturn("brand")
-        assertThat(prop.brand).isEqualTo("brand")
-        verify(scipamatoPropMock).brand
+        every { scipamatoPropMock.brand } returns "brand"
+        prop.brand shouldBeEqualTo "brand"
+        verify { scipamatoPropMock.brand }
     }
 
     @Test
     fun gettingTitleOrBrand_withPageTitleDefined_delegatesToScipamatoProps_andReturnsPageTitle() {
-        whenever(scipamatoPropMock.pageTitle).thenReturn("pt")
-        assertThat(prop.titleOrBrand).isEqualTo("pt")
-        verify(scipamatoPropMock).pageTitle
-        verify(scipamatoPropMock, never()).brand
+        every { scipamatoPropMock.pageTitle } returns "pt"
+        prop.titleOrBrand shouldBeEqualTo "pt"
+        verify { scipamatoPropMock.pageTitle }
+        verify(exactly = 0) { scipamatoPropMock.brand }
     }
 
     @Test
     fun gettingTitleOrBrand_withPageTitleNotDefined_delegatesToScipamatoProps_andReturnsBrand() {
-        whenever(scipamatoPropMock.brand).thenReturn("brand")
-        whenever(scipamatoPropMock.pageTitle).thenReturn(null)
-        assertThat(prop.titleOrBrand).isEqualTo("brand")
-        verify(scipamatoPropMock).pageTitle
-        verify(scipamatoPropMock).brand
+        every { scipamatoPropMock.brand } returns "brand"
+        every { scipamatoPropMock.pageTitle } returns null
+        prop.titleOrBrand shouldBeEqualTo "brand"
+        verify { scipamatoPropMock.pageTitle }
+        verify { scipamatoPropMock.brand }
     }
 
     @Test
     fun gettingDefaultLocalization_delegatesToScipamatoProps() {
-        whenever(scipamatoPropMock.defaultLocalization).thenReturn("dl")
-        assertThat(prop.defaultLocalization).isEqualTo("dl")
-        verify(scipamatoPropMock).defaultLocalization
+        every { scipamatoPropMock.defaultLocalization } returns "dl"
+        prop.defaultLocalization shouldBeEqualTo "dl"
+        verify { scipamatoPropMock.defaultLocalization }
     }
 
     @Test
     fun gettingPubmedBaseUrl_delegatesToScipamatoProps() {
-        whenever(scipamatoPropMock.pubmedBaseUrl).thenReturn("pbUrl")
-        assertThat(prop.pubmedBaseUrl).isEqualTo("pbUrl")
-        verify(scipamatoPropMock).pubmedBaseUrl
+        every { scipamatoPropMock.pubmedBaseUrl } returns "pbUrl"
+        prop.pubmedBaseUrl shouldBeEqualTo "pbUrl"
+        verify { scipamatoPropMock.pubmedBaseUrl }
     }
 
     @Test
     fun gettingCmsBaseUrl_delegatesToScipamatoProps() {
-        whenever(scipamatoPropMock.cmsUrlSearchPage).thenReturn("cmsUrl")
-        assertThat(prop.cmsUrlSearchPage).isEqualTo("cmsUrl")
-        verify(scipamatoPropMock).cmsUrlSearchPage
+        every { scipamatoPropMock.cmsUrlSearchPage } returns "cmsUrl"
+        prop.cmsUrlSearchPage shouldBeEqualTo "cmsUrl"
+        verify { scipamatoPropMock.cmsUrlSearchPage }
     }
 
     @Test
     fun gettingBuildVersion_delegatesToMavenProp() {
-        whenever(mavenPropMock.version).thenReturn("0.0.1-SNAPSHOT")
-        assertThat(prop.buildVersion).isEqualTo("0.0.1-SNAPSHOT")
-        verify(mavenPropMock).version
+        every { mavenPropMock.version } returns "0.0.1-SNAPSHOT"
+        prop.buildVersion shouldBeEqualTo "0.0.1-SNAPSHOT"
+        verify { mavenPropMock.version }
     }
 
     @Test
     fun gettingRedirectFromPort_delegatesToScipamatoProps() {
-        whenever(scipamatoPropMock.redirectFromPort).thenReturn(5678)
-        assertThat(prop.redirectFromPort).isEqualTo(5678)
-        verify(scipamatoPropMock).redirectFromPort
+        every { scipamatoPropMock.redirectFromPort } returns 5678
+        prop.redirectFromPort shouldBeEqualTo 5678
+        verify { scipamatoPropMock.redirectFromPort }
     }
 
     @Test
     fun gettingMultiSelectBoxActionBoxWithMoreEntriesThan_delegatesToScipamatoProps() {
-        whenever(scipamatoPropMock.multiSelectBoxActionBoxWithMoreEntriesThan).thenReturn(4)
-        assertThat(prop.multiSelectBoxActionBoxWithMoreEntriesThan).isEqualTo(4)
-        verify(scipamatoPropMock).multiSelectBoxActionBoxWithMoreEntriesThan
+        every { scipamatoPropMock.multiSelectBoxActionBoxWithMoreEntriesThan } returns 4
+        prop.multiSelectBoxActionBoxWithMoreEntriesThan shouldBeEqualTo 4
+        verify { scipamatoPropMock.multiSelectBoxActionBoxWithMoreEntriesThan }
     }
 }

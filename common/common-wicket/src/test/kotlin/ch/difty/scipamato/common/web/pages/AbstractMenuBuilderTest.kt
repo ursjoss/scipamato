@@ -5,25 +5,30 @@ import ch.difty.scipamato.common.config.ApplicationProperties
 import ch.difty.scipamato.common.web.ScipamatoWebSessionFacade
 import ch.difty.scipamato.common.web.TestHomePage
 import ch.difty.scipamato.common.web.pages.login.TestLoginPage
-import com.nhaarman.mockitokotlin2.whenever
+import com.ninjasquad.springmockk.MockkBean
 import de.agilecoders.wicket.core.markup.html.bootstrap.image.GlyphIconType
 import de.agilecoders.wicket.core.markup.html.bootstrap.image.Icon
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarButton
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarExternalLink
+import io.mockk.every
+import io.mockk.verify
+import org.amshove.kluent.shouldBeEmpty
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeNull
+import org.amshove.kluent.shouldBeTrue
+import org.amshove.kluent.shouldHaveSize
 import org.apache.wicket.Page
 import org.apache.wicket.markup.html.link.AbstractLink
 import org.apache.wicket.protocol.http.WebApplication
 import org.apache.wicket.request.mapper.parameter.PageParameters
 import org.apache.wicket.util.tester.WicketTester
-import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito.times
-import org.mockito.Mockito.verify
+
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.boot.test.mock.mockito.MockBean
+
 
 @Suppress("SpellCheckingInspection")
 @SpringBootTest
@@ -35,13 +40,13 @@ internal class AbstractMenuBuilderTest {
     private lateinit var application: WebApplication
 
     @Suppress("unused")
-    @MockBean
+    @MockkBean
     private lateinit var dateTimeService: DateTimeService
 
-    @MockBean
+    @MockkBean(relaxed = true)
     private lateinit var applicationProperties: ApplicationProperties
 
-    @MockBean
+    @MockkBean
     private lateinit var webSessionFacade: ScipamatoWebSessionFacade
 
     private lateinit var navbar: Navbar
@@ -59,7 +64,7 @@ internal class AbstractMenuBuilderTest {
 
     @Test
     fun canGetApplicationProperties() {
-        assertThat(menuBuilder.applicationProperties).isEqualTo(applicationProperties)
+        menuBuilder.applicationProperties shouldBeEqualTo applicationProperties
     }
 
     private fun getPageLinksFrom(navbar: Navbar): List<NavbarButton<Void>> {
@@ -70,7 +75,7 @@ internal class AbstractMenuBuilderTest {
 
     @Test
     fun pageLinks_withNoneAdded_isEmpty() {
-        assertThat(getPageLinksFrom(navbar)).isEmpty()
+        getPageLinksFrom(navbar).shouldBeEmpty()
     }
 
     @Test
@@ -86,12 +91,12 @@ internal class AbstractMenuBuilderTest {
 
         val links = getPageLinksFrom(navbar)
 
-        assertThat(links).hasSize(1)
+        links shouldHaveSize 1
         val theLink = links[0]
 
-        assertThat(theLink.defaultModelObjectAsString).isEqualTo("")
-        assertThat(theLink.get("label").defaultModelObject).isEqualTo("foobar")
-        assertThat((theLink.get("icon") as Icon).type).isEqualTo(GlyphIconType.volumedown)
+        theLink.defaultModelObjectAsString shouldBeEqualTo ""
+        theLink.get("label").defaultModelObject shouldBeEqualTo "foobar"
+        (theLink.get("icon") as Icon).type shouldBeEqualTo GlyphIconType.volumedown
     }
 
     private fun getExternalLinksFrom(navbar: Navbar): List<NavbarExternalLink> {
@@ -102,7 +107,7 @@ internal class AbstractMenuBuilderTest {
 
     @Test
     fun externalLinks_withNoneAdded_isEmpty() {
-        assertThat(getExternalLinksFrom(navbar)).isEmpty()
+        getExternalLinksFrom(navbar).shouldBeEmpty()
     }
 
     @Test
@@ -117,12 +122,12 @@ internal class AbstractMenuBuilderTest {
 
         val links = getExternalLinksFrom(navbar)
 
-        assertThat(links).hasSize(1)
+        links shouldHaveSize 1
         val theLink = links[0]
 
-        assertThat(theLink.defaultModelObjectAsString).isEqualTo("https://test.com")
-        assertThat(theLink.get("label").defaultModelObject).isEqualTo("mylabel")
-        assertThat((theLink.get("icon") as Icon).type).isEqualTo(GlyphIconType.adjust)
+        theLink.defaultModelObjectAsString shouldBeEqualTo "https://test.com"
+        theLink.get("label").defaultModelObject shouldBeEqualTo "mylabel"
+        (theLink.get("icon") as Icon).type shouldBeEqualTo GlyphIconType.adjust
     }
 
     @Test
@@ -131,13 +136,13 @@ internal class AbstractMenuBuilderTest {
 
         val links = getExternalLinksFrom(navbar)
 
-        assertThat(links).hasSize(1)
+        links shouldHaveSize 1
         val theLink = links[0]
 
-        assertThat(theLink.defaultModelObjectAsString).isEqualTo("https://foo.com")
-        assertThat(theLink.get("label").defaultModelObject).isEqualTo("otherlabel")
+        theLink.defaultModelObjectAsString shouldBeEqualTo "https://foo.com"
+        theLink.get("label").defaultModelObject shouldBeEqualTo "otherlabel"
         val icon = theLink.get("icon") as Icon
-        assertThat(icon.type).isNull()
+        icon.type.shouldBeNull()
     }
 
     private class TestMenuBuilder internal constructor(
@@ -153,75 +158,75 @@ internal class AbstractMenuBuilderTest {
     fun addingMenu() {
         val consumer = { _: List<AbstractLink> -> called = true }
         menuBuilder.newMenu(navbar, TestLoginPage(PageParameters()), "foo", GlyphIconType.adjust, consumer)
-        assertThat(called).isTrue()
+        called.shouldBeTrue()
     }
 
     @Test
     fun gettingVersionStuff_withNoVersionInApplicationProperties() {
-        assertThat(menuBuilder.versionAnker).isEqualTo("")
-        assertThat(menuBuilder.versionLink).isEqualTo("version null")
+        menuBuilder.versionAnker shouldBeEqualTo ""
+        menuBuilder.versionLink shouldBeEqualTo "version "
     }
 
     @Test
     fun gettingVersionStuff_withNullVersionInApplicationProperties() {
-        whenever(applicationProperties.buildVersion).thenReturn(null)
-        assertThat(menuBuilder.versionAnker).isEqualTo("")
-        assertThat(menuBuilder.versionLink).isEqualTo("version null")
+        every { applicationProperties.buildVersion } returns null
+        menuBuilder.versionAnker shouldBeEqualTo ""
+        menuBuilder.versionLink shouldBeEqualTo "version null"
     }
 
     @Test
     fun gettingVersionStuff_withBlankVersionInApplicationProperties() {
-        whenever(applicationProperties.buildVersion).thenReturn("")
-        assertThat(menuBuilder.versionAnker).isEqualTo("")
-        assertThat(menuBuilder.versionLink).isEqualTo("version ")
+        every { applicationProperties.buildVersion } returns ""
+        menuBuilder.versionAnker shouldBeEqualTo ""
+        menuBuilder.versionLink shouldBeEqualTo "version "
     }
 
     @Test
     fun gettingVersionStuff_withSnapshotVersionInApplicationProperties() {
-        whenever(applicationProperties.buildVersion).thenReturn("1.2.3-SNAPSHOT")
-        assertThat(menuBuilder.versionAnker).isEqualTo("#unreleased")
-        assertThat(menuBuilder.versionLink).isEqualTo("version 1.2.3-SNAPSHOT")
-        verify(applicationProperties, times(2)).buildVersion
+        every { applicationProperties.buildVersion } returns "1.2.3-SNAPSHOT"
+        menuBuilder.versionAnker shouldBeEqualTo "#unreleased"
+        menuBuilder.versionLink shouldBeEqualTo "version 1.2.3-SNAPSHOT"
+        verify(exactly = 2) { applicationProperties.buildVersion }
     }
 
     @Test
     fun gettingVersionStuff_withReleasedVersionInApplicationProperties() {
-        whenever(applicationProperties.buildVersion).thenReturn("1.2.3")
-        assertThat(menuBuilder.versionAnker).isEqualTo("#v1.2.3")
-        assertThat(menuBuilder.versionLink).isEqualTo("version 1.2.3")
-        verify(applicationProperties, times(2)).buildVersion
+        every { applicationProperties.buildVersion } returns "1.2.3"
+        menuBuilder.versionAnker shouldBeEqualTo "#v1.2.3"
+        menuBuilder.versionLink shouldBeEqualTo "version 1.2.3"
+        verify(exactly = 2) { applicationProperties.buildVersion }
     }
 
     @Test
     fun addingEntryToMenu_withIcon() {
         val links = ArrayList<AbstractLink>()
-        assertThat(links).isEmpty()
+        links.shouldBeEmpty()
 
         menuBuilder.addEntryToMenu("label.link", TestHomePage(), TestHomePage::class.java, GlyphIconType.adjust, links)
 
-        assertThat(links).hasSize(1)
+        links shouldHaveSize 1
         val link = links[0]
-        assertThat(link.get("label").defaultModelObject).isEqualTo("somelink")
-        assertThat((link.get("icon") as Icon).type).isEqualTo(GlyphIconType.adjust)
+        link.get("label").defaultModelObject shouldBeEqualTo "somelink"
+        (link.get("icon") as Icon).type shouldBeEqualTo GlyphIconType.adjust
     }
 
     @Test
     fun addingEntryToMenu_withoutIcon() {
         val links = ArrayList<AbstractLink>()
-        assertThat(links).isEmpty()
+        links.shouldBeEmpty()
 
         menuBuilder.addEntryToMenu("label.link", TestHomePage(), TestHomePage::class.java, null, links)
 
-        assertThat(links).hasSize(1)
+        links shouldHaveSize 1
         val link = links[0]
-        assertThat(link.get("label").defaultModelObject).isEqualTo("somelink")
-        assertThat((link.get("icon") as Icon).type).isNull()
+        link.get("label").defaultModelObject shouldBeEqualTo "somelink"
+        (link.get("icon") as Icon).type.shouldBeNull()
     }
 
     @Test
     fun hasOneOfRoles() {
-        whenever(webSessionFacade.hasAtLeastOneRoleOutOf("foo", "bar")).thenReturn(true)
-        assertThat(menuBuilder.hasOneOfRoles("foo", "bar")).isTrue()
-        verify(webSessionFacade).hasAtLeastOneRoleOutOf("foo", "bar")
+        every { webSessionFacade.hasAtLeastOneRoleOutOf("foo", "bar") } returns true
+        menuBuilder.hasOneOfRoles("foo", "bar").shouldBeTrue()
+        verify { webSessionFacade.hasAtLeastOneRoleOutOf("foo", "bar") }
     }
 }

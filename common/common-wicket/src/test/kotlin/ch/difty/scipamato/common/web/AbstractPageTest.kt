@@ -2,10 +2,17 @@ package ch.difty.scipamato.common.web
 
 import ch.difty.scipamato.common.DateTimeService
 import ch.difty.scipamato.common.config.ApplicationProperties
-import com.nhaarman.mockitokotlin2.any
-import com.nhaarman.mockitokotlin2.whenever
+import com.ninjasquad.springmockk.MockkBean
 import de.agilecoders.wicket.core.markup.html.bootstrap.common.NotificationPanel
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar
+import io.mockk.confirmVerified
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.verify
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeInstanceOf
+import org.amshove.kluent.shouldBeNull
+import org.amshove.kluent.shouldBeTrue
 import org.apache.wicket.bean.validation.PropertyValidator
 import org.apache.wicket.markup.head.filter.HeaderResponseContainer
 import org.apache.wicket.markup.html.form.Form
@@ -16,20 +23,13 @@ import org.apache.wicket.model.IModel
 import org.apache.wicket.model.Model
 import org.apache.wicket.request.mapper.parameter.PageParameters
 import org.apache.wicket.settings.DebugSettings
-import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito
-import org.mockito.Mockito.`when`
-import org.mockito.Mockito.times
-import org.mockito.Mockito.verify
-import org.mockito.Mockito.verifyNoMoreInteractions
-import org.springframework.boot.test.mock.mockito.MockBean
 
 @Suppress("SpellCheckingInspection")
 internal class AbstractPageTest : WicketBaseTest() {
 
-    @MockBean
+    @MockkBean
     private lateinit var dateTimeServiceMock: DateTimeService
 
     private lateinit var page: AbstractPage<TestRecord>
@@ -42,7 +42,7 @@ internal class AbstractPageTest : WicketBaseTest() {
 
     @AfterEach
     fun tearDown() {
-        verifyNoMoreInteractions(dateTimeServiceMock)
+        confirmVerified(dateTimeServiceMock)
     }
 
     @Test
@@ -53,17 +53,17 @@ internal class AbstractPageTest : WicketBaseTest() {
 
     @Test
     fun canGetDateTimeService() {
-        assertThat(page.dateTimeService).isInstanceOf(DateTimeService::class.java)
+        page.dateTimeService shouldBeInstanceOf DateTimeService::class
     }
 
     @Test
     fun hasNavbarVisibleByDefault() {
-        assertThat(page.isNavbarVisible).isTrue()
+        page.isNavbarVisible.shouldBeTrue()
     }
 
     @Test
     fun gettingNavbarBeforeInitialize_returnsNull() {
-        assertThat(page.navBar).isNull()
+        page.navBar.shouldBeNull()
     }
 
     @Test
@@ -107,50 +107,52 @@ internal class AbstractPageTest : WicketBaseTest() {
 
     @Test
     fun gettingBrandName_withNullBrand_retrievesBrandFromProperties() {
-        assertThat(page.getBrandName(null)).isEqualTo("SciPaMaTo")
+        page.getBrandName(null) shouldBeEqualTo "SciPaMaTo"
     }
 
     @Test
     fun gettingBrandName_withEmptyBrand_retrievesBrandFromProperties() {
-        assertThat(page.getBrandName("")).isEqualTo("SciPaMaTo")
+        page.getBrandName("") shouldBeEqualTo "SciPaMaTo"
     }
 
     @Test
     fun gettingBrandName_withNaBrand_retrievesBrandFromProperties() {
-        assertThat(page.getBrandName("n.a.")).isEqualTo("SciPaMaTo")
+        page.getBrandName("n.a.") shouldBeEqualTo "SciPaMaTo"
     }
 
     @Test
     fun gettingBrandName_withExplicitBrand_usesThat() {
-        assertThat(page.getBrandName("foo")).isEqualTo("foo")
+        page.getBrandName("foo") shouldBeEqualTo "foo"
     }
 
     @Test
     fun queueingFieldAndLabel_withPropertyValidator_addsItToField() {
-        val field = Mockito.mock(TextField::class.java)
-        `when`(field.id).thenReturn("testField")
-        val pv = Mockito.mock(PropertyValidator::class.java)
+        val field = mockk<TextField<String>>(relaxed = true) {
+            every { id } returns "testField"
+        }
+        val pv = mockk<PropertyValidator<TextField<String>>>()
 
         page.queueFieldAndLabel(field, pv)
 
-        verify(field, times(8)).id
-        verify(field).label = any<IModel<String>>()
-        verify(field).add(pv)
-        verify(field).isVisible
-        verifyNoMoreInteractions(field)
+        verify(exactly = 8) { field.id }
+        verify { field.label = any<IModel<String>>() }
+        verify { field.add(pv) }
+        verify { field.isVisible }
+        confirmVerified(field)
     }
 
     @Test
     fun queueingFieldAndLabel_withNoPropertyValidator_dowNotAddToField() {
-        val field = Mockito.mock(TextField::class.java)
-        whenever(field.id).thenReturn("testField")
+        val field = mockk<TextField<String>>(relaxed = true) {
+            every { id } returns "testField"
+        }
 
         page.queueFieldAndLabel(field, null)
 
-        verify(field, times(8)).id
-        verify(field).label = any<IModel<String>>()
-        verify(field).isVisible
-        verifyNoMoreInteractions(field)
+        verify(exactly = 8) { field.id }
+        verify { field.label = any<IModel<String>>() }
+        verify { field.isVisible }
+        confirmVerified(field)
     }
 
     @Test
@@ -168,8 +170,9 @@ internal class AbstractPageTest : WicketBaseTest() {
 
     @Test
     fun withDebugEnabled() {
-        val debugSettings = Mockito.mock(DebugSettings::class.java)
-        whenever(debugSettings.isDevelopmentUtilitiesEnabled).thenReturn(true)
+        val debugSettings = mockk<DebugSettings> {
+            every { isDevelopmentUtilitiesEnabled } returns true
+        }
 
         page = object : AbstractPage<TestRecord>(Model.of(TestRecord(1, "foo"))) {
             override fun getProperties(): ApplicationProperties = TestApplicationProperties()
@@ -179,8 +182,8 @@ internal class AbstractPageTest : WicketBaseTest() {
         tester.startPage(page)
         tester.assertRenderedPage(AbstractPage::class.java)
 
-        verify(debugSettings).isDevelopmentUtilitiesEnabled
+        verify { debugSettings.isDevelopmentUtilitiesEnabled }
 
-        assertThat(page.feedbackPanel).isInstanceOf(NotificationPanel::class.java)
+        page.feedbackPanel shouldBeInstanceOf NotificationPanel::class
     }
 }

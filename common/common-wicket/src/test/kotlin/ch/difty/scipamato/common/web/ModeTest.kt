@@ -1,13 +1,12 @@
 package ch.difty.scipamato.common.web
 
-import org.assertj.core.api.Assertions.assertThat
-
+import org.amshove.kluent.shouldContainAll
 import org.junit.jupiter.api.Test
 
 internal class ModeTest {
 
     @Test
     fun testValues() {
-        assertThat(Mode.values()).containsExactly(Mode.EDIT, Mode.VIEW, Mode.SEARCH)
+        Mode.values() shouldContainAll listOf(Mode.EDIT, Mode.VIEW, Mode.SEARCH)
     }
 }

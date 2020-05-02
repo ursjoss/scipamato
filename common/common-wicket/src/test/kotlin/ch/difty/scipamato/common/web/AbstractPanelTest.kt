@@ -1,14 +1,18 @@
 package ch.difty.scipamato.common.web
 
-import com.nhaarman.mockitokotlin2.*
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.checkboxx.CheckBoxX
+import io.mockk.confirmVerified
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.verify
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeFalse
+import org.amshove.kluent.shouldBeTrue
 import org.apache.wicket.bean.validation.PropertyValidator
 import org.apache.wicket.markup.html.form.FormComponent
 import org.apache.wicket.markup.html.form.TextField
 import org.apache.wicket.model.Model
-import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito
 
 internal class AbstractPanelTest : WicketBaseTest() {
 
@@ -28,11 +32,11 @@ internal class AbstractPanelTest : WicketBaseTest() {
     }
 
     private fun assertViewMode(p: AbstractPanel<TestRecord>) {
-        assertThat(p.mode).isEqualTo(Mode.VIEW)
-        assertThat(p.submitLinkResourceLabel).isEqualTo("button.disabled.label")
-        assertThat(p.isViewMode).isTrue()
-        assertThat(p.isEditMode).isFalse()
-        assertThat(p.isSearchMode).isFalse()
+        p.mode shouldBeEqualTo Mode.VIEW
+        p.submitLinkResourceLabel shouldBeEqualTo "button.disabled.label"
+        p.isViewMode.shouldBeTrue()
+        p.isEditMode.shouldBeFalse()
+        p.isSearchMode.shouldBeFalse()
     }
 
     @Test
@@ -41,11 +45,11 @@ internal class AbstractPanelTest : WicketBaseTest() {
     }
 
     private fun assertEditMode(p: AbstractPanel<TestRecord>) {
-        assertThat(p.mode).isEqualTo(Mode.EDIT)
-        assertThat(p.submitLinkResourceLabel).isEqualTo("button.save.label")
-        assertThat(p.isViewMode).isFalse()
-        assertThat(p.isEditMode).isTrue()
-        assertThat(p.isSearchMode).isFalse()
+        p.mode shouldBeEqualTo Mode.EDIT
+        p.submitLinkResourceLabel shouldBeEqualTo "button.save.label"
+        p.isViewMode.shouldBeFalse()
+        p.isEditMode.shouldBeTrue()
+        p.isSearchMode.shouldBeFalse()
     }
 
     @Test
@@ -54,11 +58,11 @@ internal class AbstractPanelTest : WicketBaseTest() {
     }
 
     private fun assertSearchMode(p: AbstractPanel<TestRecord>) {
-        assertThat(p.mode).isEqualTo(Mode.SEARCH)
-        assertThat(p.submitLinkResourceLabel).isEqualTo("button.search.label")
-        assertThat(p.isViewMode).isFalse()
-        assertThat(p.isEditMode).isFalse()
-        assertThat(p.isSearchMode).isTrue()
+        p.mode shouldBeEqualTo Mode.SEARCH
+        p.submitLinkResourceLabel shouldBeEqualTo "button.search.label"
+        p.isViewMode.shouldBeFalse()
+        p.isEditMode.shouldBeFalse()
+        p.isSearchMode.shouldBeTrue()
     }
 
     @Test
@@ -78,44 +82,50 @@ internal class AbstractPanelTest : WicketBaseTest() {
 
     @Test
     fun queuingFieldAndLabel_withPropertyValidatorInEditMode_addsLatterToComponent() {
-        val fc = Mockito.mock(FormComponent::class.java)
-        whenever(fc.id).thenReturn("fcId")
-        val pv = Mockito.mock(PropertyValidator::class.java)
+        val fc = mockk<FormComponent<String>>(relaxed = true) {
+            every { id } returns "fcId"
+        }
+        val pv = mockk<PropertyValidator<FormComponent<String>>>()
 
         val p = TestAbstractPanel("panel", Mode.EDIT)
         p.queueFieldAndLabel(fc, pv)
 
-        verify(fc, times(3)).id
-        verify(fc).label = any()
-        verify(fc).add(pv)
-        verifyNoMoreInteractions(fc, pv)
+        verify(exactly = 3) { fc.id }
+        verify { fc.label = any() }
+        verify { fc.setOutputMarkupId(true) }
+        verify { fc.add(pv) }
+        confirmVerified(fc, pv)
     }
 
     @Test
     fun queuingFieldAndLabel_withPropertyValidatorInViewMode_addsNothingToComponent() {
-        val fc = Mockito.mock(FormComponent::class.java)
-        whenever(fc.id).thenReturn("fcId")
-        val pv = Mockito.mock(PropertyValidator::class.java)
+        val fc = mockk<FormComponent<String>>(relaxed = true) {
+            every { id } returns "fcId"
+        }
+        val pv = mockk<PropertyValidator<FormComponent<String>>>()
 
         val p = TestAbstractPanel("panel", Mode.VIEW)
         p.queueFieldAndLabel(fc, pv)
 
-        verify(fc, times(3)).id
-        verify(fc).label = any()
-        verify(fc, never()).add(pv)
-        verifyNoMoreInteractions(fc, pv)
+        verify(exactly = 3) { fc.id }
+        verify { fc.label = any() }
+        verify { fc.setOutputMarkupId(true) }
+        verify(exactly = 0) { fc.add(pv) }
+        confirmVerified(fc, pv)
     }
 
     @Test
     fun queuingFieldAndLabel_withNullPropertyValidator_addsNothingToComponent() {
-        val fc = Mockito.mock(FormComponent::class.java)
-        whenever(fc.id).thenReturn("fcId")
+        val fc = mockk<FormComponent<String>>(relaxed = true) {
+            every { id } returns "fcId"
+        }
 
         val p = TestAbstractPanel("panel", Mode.EDIT)
         p.queueFieldAndLabel(fc, null)
 
-        verify(fc, times(3)).id
-        verify(fc).label = any()
-        verifyNoMoreInteractions(fc)
+        verify(exactly = 3) { fc.id }
+        verify { fc.setOutputMarkupId(true) }
+        verify { fc.label = any() }
+        confirmVerified(fc)
     }
 }

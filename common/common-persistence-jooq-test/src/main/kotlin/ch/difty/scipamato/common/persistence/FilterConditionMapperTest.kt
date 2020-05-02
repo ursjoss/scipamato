@@ -1,7 +1,7 @@
 package ch.difty.scipamato.common.persistence
 
 import ch.difty.scipamato.common.entity.filter.ScipamatoFilter
-import org.assertj.core.api.Assertions.assertThat
+import org.amshove.kluent.shouldBeEqualTo
 import org.jooq.Record
 import org.jooq.impl.TableImpl
 import org.junit.jupiter.api.Test
@@ -27,16 +27,16 @@ abstract class FilterConditionMapperTest<R : Record, TI : TableImpl<R>, F : Scip
             if (fields-- > 1) sb.append("  or ")
         }
         if (withMultipleFields) sb.append(")")
-        return sb.toString()
+        return sb.toString().toLowerCase()
     }
 
     @Test
     internal fun mappingFilter_withNullFilter_returnsNoOpCondition() {
-        assertThat(mapper.map(null).toString()).isEqualTo("1 = 1")
+        mapper.map(null).toString() shouldBeEqualTo "1 = 1"
     }
 
     @Test
     internal fun creatingWhereCondition_withNoFilterConditions_returnsNoOpCondition() {
-        assertThat(mapper.map(filter).toString()).isEqualTo("1 = 1")
+        mapper.map(filter).toString() shouldBeEqualTo "1 = 1"
     }
 }

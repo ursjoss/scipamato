@@ -1,7 +1,12 @@
 package ch.difty.scipamato.common.navigator
 
-import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Assertions
+import org.amshove.kluent.invoking
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeFalse
+import org.amshove.kluent.shouldBeTrue
+import org.amshove.kluent.shouldContainAll
+import org.amshove.kluent.shouldNotContain
+import org.amshove.kluent.shouldThrow
 import org.junit.jupiter.api.Test
 
 internal class NavigatedListTest {
@@ -11,35 +16,35 @@ internal class NavigatedListTest {
 
     @Test
     fun passingEmptyList_throws() {
-        Assertions.assertThrows(IllegalArgumentException::class.java) { NavigatedList(ArrayList<Long>()) }
+        invoking { NavigatedList(ArrayList<Long>()) } shouldThrow IllegalArgumentException::class
     }
 
     @Test
     fun passingSingleItemList_accepts() {
         val rs = NavigatedList(listOf(true))
-        assertThat(rs.size()).isEqualTo(1)
+        rs.size() shouldBeEqualTo 1
     }
 
     @Test
     fun size_ofNonEmptyResultSet_isEqualToSizeOfPassedInList() {
-        assertThat(navigatedList.size()).isEqualTo(ids.size)
+        navigatedList.size() shouldBeEqualTo ids.size
     }
 
     @Test
     fun doesNotAcceptDuplicateValues() {
         val nav = NavigatedList(listOf(13L, 2L, 2L, 5L))
-        assertThat(nav.items).containsExactly(13L, 2L, 5L)
+        nav.items shouldContainAll listOf(13L, 2L, 5L)
     }
 
     @Test
     fun nonEmptyLongResultSet_returnsAllUniqueNonNullItemsPassedIn() {
-        assertThat(navigatedList.items).containsExactlyElementsOf(ids)
+        navigatedList.items shouldContainAll ids
     }
 
     @Test
     fun nonEmptyStringResultSet_returnsAllItemsPassedIn() {
         val stringNav = NavigatedList(listOf("baz", "foo", "bar"))
-        assertThat(stringNav.items).containsExactly("baz", "foo", "bar")
+        stringNav.items shouldContainAll listOf("baz", "foo", "bar")
     }
 
     @Test
@@ -47,60 +52,60 @@ internal class NavigatedListTest {
         navigatedList
             .items
             .add(100L)
-        assertThat(navigatedList.items).containsExactlyElementsOf(ids)
+        navigatedList.items shouldContainAll ids
     }
 
     @Test
     fun indexOfNewResultSet_isOnFirstItem() {
-        assertThat(navigatedList.itemWithFocus).isEqualTo(ids[0])
+        navigatedList.itemWithFocus shouldBeEqualTo ids[0]
     }
 
     @Test
     fun settingCurrentItem_withItemNotContained_throws() {
-        Assertions.assertThrows(IllegalArgumentException::class.java) {
+        invoking {
             val idNotContained = 300L
-            assertThat(ids).doesNotContain(idNotContained)
+            ids shouldNotContain idNotContained
             navigatedList.setFocusToItem(idNotContained)
-        }
+        } shouldThrow IllegalArgumentException::class
     }
 
     @Test
     fun canSetIndexWithinRangeOfList() {
         navigatedList.setFocusToItem(27L)
-        assertThat(navigatedList.itemWithFocus).isEqualTo(27L)
+        navigatedList.itemWithFocus shouldBeEqualTo 27L
     }
 
     @Test
     fun canGoToNext() {
         var idx = 0
         while (idx < ids.size - 1) {
-            assertThat(navigatedList.itemWithFocus).isEqualTo(ids[idx++])
+            navigatedList.itemWithFocus shouldBeEqualTo ids[idx++]
             navigatedList.next()
             if (idx < ids.size - 2)
-                assertThat(navigatedList.hasNext()).isTrue()
+                navigatedList.hasNext().shouldBeTrue()
         }
-        assertThat(navigatedList.hasNext()).isFalse()
-        assertThat(navigatedList.itemWithFocus).isEqualTo(ids[ids.size - 1])
-        assertThat(navigatedList.hasNext()).isFalse()
+        navigatedList.hasNext().shouldBeFalse()
+        navigatedList.itemWithFocus shouldBeEqualTo ids[ids.size - 1]
+        navigatedList.hasNext().shouldBeFalse()
     }
 
     @Test
     fun cannotAdvanceBeyondLastItem() {
         navigatedList.setFocusToItem(ids[ids.size - 1])
         for (i in 0..9) {
-            assertThat(navigatedList.itemWithFocus).isEqualTo(ids[ids.size - 1])
+            navigatedList.itemWithFocus shouldBeEqualTo ids[ids.size - 1]
             navigatedList.next()
         }
-        assertThat(navigatedList.hasNext()).isFalse()
+        navigatedList.hasNext().shouldBeFalse()
     }
 
     @Test
     fun cannotRetreatBeyondFirstItem() {
         for (i in 0..9) {
-            assertThat(navigatedList.itemWithFocus).isEqualTo(ids[0])
+            navigatedList.itemWithFocus shouldBeEqualTo ids[0]
             navigatedList.previous()
         }
-        assertThat(navigatedList.hasPrevious()).isFalse()
+        navigatedList.hasPrevious().shouldBeFalse()
     }
 
     @Test
@@ -108,33 +113,33 @@ internal class NavigatedListTest {
         var idx = ids.size - 1
         navigatedList.setFocusToItem(ids[idx])
         while (idx > 0) {
-            assertThat(navigatedList.itemWithFocus).isEqualTo(ids[idx--])
+            navigatedList.itemWithFocus shouldBeEqualTo ids[idx--]
             navigatedList.previous()
             if (idx > 1)
-                assertThat(navigatedList.hasPrevious()).isTrue()
+                navigatedList.hasPrevious().shouldBeTrue()
         }
-        assertThat(navigatedList.hasPrevious()).isFalse()
-        assertThat(navigatedList.itemWithFocus).isEqualTo(ids[0])
-        assertThat(navigatedList.hasPrevious()).isFalse()
+        navigatedList.hasPrevious().shouldBeFalse()
+        navigatedList.itemWithFocus shouldBeEqualTo ids[0]
+        navigatedList.hasPrevious().shouldBeFalse()
     }
 
     @Test
     fun contains_withIdInList_returnsTrue() {
-        assertThat(navigatedList.containsId(2L)).isTrue()
+        navigatedList.containsId(2L).shouldBeTrue()
     }
 
     @Test
     fun contains_withIdNotInList_returnsFalse() {
-        assertThat(navigatedList.containsId(-1L)).isFalse()
+        navigatedList.containsId(-1L).shouldBeFalse()
     }
 
     @Test
     fun without_withIdInOriginalList() {
-        assertThat(navigatedList.without(5L)).containsExactly(13L, 2L, 27L, 7L, 3L, 30L)
+        navigatedList.without(5L) shouldContainAll listOf(13L, 2L, 27L, 7L, 3L, 30L)
     }
 
     @Test
     fun without_withIdNotInOriginalList_returnsFullList() {
-        assertThat(navigatedList.without(50L)).containsExactly(13L, 2L, 5L, 27L, 7L, 3L, 30L)
+        navigatedList.without(50L) shouldContainAll listOf(13L, 2L, 5L, 27L, 7L, 3L, 30L)
     }
 }

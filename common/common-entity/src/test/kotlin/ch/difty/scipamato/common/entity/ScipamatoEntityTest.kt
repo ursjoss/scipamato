@@ -4,7 +4,7 @@ import ch.difty.scipamato.common.entity.ScipamatoEntity.ScipamatoEntityFields.CR
 import ch.difty.scipamato.common.entity.ScipamatoEntity.ScipamatoEntityFields.MODIFIED
 import nl.jqno.equalsverifier.EqualsVerifier
 import nl.jqno.equalsverifier.Warning
-import org.assertj.core.api.Assertions.assertThat
+import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
@@ -22,14 +22,14 @@ class ScipamatoEntityTest {
 
     @Test
     fun get() {
-        assertThat(e.created).isEqualTo(CD)
-        assertThat(e.lastModified).isEqualTo(LM)
-        assertThat(e.version).isEqualTo(VERSION)
+        e.created shouldBeEqualTo CD
+        e.lastModified shouldBeEqualTo LM
+        e.version shouldBeEqualTo VERSION
     }
 
     @Test
     fun testingToString() {
-        assertThat(e.toString()).isEqualTo("ScipamatoEntity[created=$CD,lastModified=$LM,version=$VERSION]")
+        e.toString() shouldBeEqualTo "ScipamatoEntity[created=$CD,lastModified=$LM,version=$VERSION]"
     }
 
     @Test
