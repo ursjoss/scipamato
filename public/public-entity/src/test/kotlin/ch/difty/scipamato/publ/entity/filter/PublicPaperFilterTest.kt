@@ -6,7 +6,10 @@ import ch.difty.scipamato.publ.entity.PopulationCode
 import ch.difty.scipamato.publ.entity.StudyDesignCode
 import nl.jqno.equalsverifier.EqualsVerifier
 import nl.jqno.equalsverifier.Warning
-import org.assertj.core.api.Assertions.assertThat
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldContainAll
+import org.amshove.kluent.shouldContainSame
+import org.amshove.kluent.shouldHaveSize
 import org.junit.jupiter.api.Test
 
 internal class PublicPaperFilterTest {
@@ -33,38 +36,38 @@ internal class PublicPaperFilterTest {
         filter.codesOfClass8 = listOf(newCode("8A"), newCode("8B"))
         filter.keywords = listOf(Keyword(1, 1, "de", "k1", null))
 
-        assertThat(filter.number).isEqualTo(1L)
-        assertThat(filter.authorMask).isEqualTo("am")
-        assertThat(filter.titleMask).isEqualTo("tm")
-        assertThat(filter.methodsMask).isEqualTo("mm")
-        assertThat(filter.publicationYearFrom).isEqualTo(2000)
-        assertThat(filter.publicationYearUntil).isEqualTo(3000)
+        filter.number shouldBeEqualTo 1L
+        filter.authorMask shouldBeEqualTo "am"
+        filter.titleMask shouldBeEqualTo "tm"
+        filter.methodsMask shouldBeEqualTo "mm"
+        filter.publicationYearFrom shouldBeEqualTo 2000
+        filter.publicationYearUntil shouldBeEqualTo 3000
 
-        assertThat(filter.populationCodes).contains(PopulationCode.CHILDREN, PopulationCode.ADULTS)
-        assertThat(filter.studyDesignCodes).contains(StudyDesignCode.EXPERIMENTAL)
+        filter.populationCodes shouldContainSame listOf(PopulationCode.CHILDREN, PopulationCode.ADULTS)
+        filter.studyDesignCodes shouldContainSame listOf(StudyDesignCode.EXPERIMENTAL)
 
-        assertThat(filter.codesOfClass1).hasSize(2)
-        assertThat(filter.codesOfClass2).hasSize(2)
-        assertThat(filter.codesOfClass3).hasSize(2)
-        assertThat(filter.codesOfClass4).hasSize(2)
-        assertThat(filter.codesOfClass5).hasSize(2)
-        assertThat(filter.codesOfClass6).hasSize(2)
-        assertThat(filter.codesOfClass7).hasSize(2)
-        assertThat(filter.codesOfClass8).hasSize(2)
+        filter.codesOfClass1 shouldHaveSize 2
+        filter.codesOfClass2 shouldHaveSize 2
+        filter.codesOfClass3 shouldHaveSize 2
+        filter.codesOfClass4 shouldHaveSize 2
+        filter.codesOfClass5 shouldHaveSize 2
+        filter.codesOfClass6 shouldHaveSize 2
+        filter.codesOfClass7 shouldHaveSize 2
+        filter.codesOfClass8 shouldHaveSize 2
 
-        assertThat(filter.keywords.map { it.keywordId }).containsExactly(1)
+        filter.keywords.map { it.keywordId } shouldContainAll listOf(1)
 
-        assertThat(filter.toString()).isEqualTo(
+        filter.toString() shouldBeEqualTo
             "PublicPaperFilter(number=1, authorMask=am, titleMask=tm, methodsMask=mm, publicationYearFrom=2000, publicationYearUntil=3000, populationCodes=[CHILDREN, ADULTS], studyDesignCodes=[EXPERIMENTAL], " +
-                "codesOfClass1=[Code(codeClassId=1, code=1A, langCode=en, name=null, comment=null, sort=0), Code(codeClassId=1, code=1B, langCode=en, name=null, comment=null, sort=0)], " +
-                "codesOfClass2=[Code(codeClassId=2, code=2A, langCode=en, name=null, comment=null, sort=0), Code(codeClassId=2, code=2B, langCode=en, name=null, comment=null, sort=0)], " +
-                "codesOfClass3=[Code(codeClassId=3, code=3A, langCode=en, name=null, comment=null, sort=0), Code(codeClassId=3, code=3B, langCode=en, name=null, comment=null, sort=0)], " +
-                "codesOfClass4=[Code(codeClassId=4, code=4A, langCode=en, name=null, comment=null, sort=0), Code(codeClassId=4, code=4B, langCode=en, name=null, comment=null, sort=0)], " +
-                "codesOfClass5=[Code(codeClassId=5, code=5A, langCode=en, name=null, comment=null, sort=0), Code(codeClassId=5, code=5B, langCode=en, name=null, comment=null, sort=0)], " +
-                "codesOfClass6=[Code(codeClassId=6, code=6A, langCode=en, name=null, comment=null, sort=0), Code(codeClassId=6, code=6B, langCode=en, name=null, comment=null, sort=0)], " +
-                "codesOfClass7=[Code(codeClassId=7, code=7A, langCode=en, name=null, comment=null, sort=0), Code(codeClassId=7, code=7B, langCode=en, name=null, comment=null, sort=0)], " +
-                "codesOfClass8=[Code(codeClassId=8, code=8A, langCode=en, name=null, comment=null, sort=0), Code(codeClassId=8, code=8B, langCode=en, name=null, comment=null, sort=0)], " +
-                "keywords=[Keyword(id=1, keywordId=1, langCode=de, name=k1, searchOverride=null)])")
+            "codesOfClass1=[Code(codeClassId=1, code=1A, langCode=en, name=null, comment=null, sort=0), Code(codeClassId=1, code=1B, langCode=en, name=null, comment=null, sort=0)], " +
+            "codesOfClass2=[Code(codeClassId=2, code=2A, langCode=en, name=null, comment=null, sort=0), Code(codeClassId=2, code=2B, langCode=en, name=null, comment=null, sort=0)], " +
+            "codesOfClass3=[Code(codeClassId=3, code=3A, langCode=en, name=null, comment=null, sort=0), Code(codeClassId=3, code=3B, langCode=en, name=null, comment=null, sort=0)], " +
+            "codesOfClass4=[Code(codeClassId=4, code=4A, langCode=en, name=null, comment=null, sort=0), Code(codeClassId=4, code=4B, langCode=en, name=null, comment=null, sort=0)], " +
+            "codesOfClass5=[Code(codeClassId=5, code=5A, langCode=en, name=null, comment=null, sort=0), Code(codeClassId=5, code=5B, langCode=en, name=null, comment=null, sort=0)], " +
+            "codesOfClass6=[Code(codeClassId=6, code=6A, langCode=en, name=null, comment=null, sort=0), Code(codeClassId=6, code=6B, langCode=en, name=null, comment=null, sort=0)], " +
+            "codesOfClass7=[Code(codeClassId=7, code=7A, langCode=en, name=null, comment=null, sort=0), Code(codeClassId=7, code=7B, langCode=en, name=null, comment=null, sort=0)], " +
+            "codesOfClass8=[Code(codeClassId=8, code=8A, langCode=en, name=null, comment=null, sort=0), Code(codeClassId=8, code=8B, langCode=en, name=null, comment=null, sort=0)], " +
+            "keywords=[Keyword(id=1, keywordId=1, langCode=de, name=k1, searchOverride=null)])"
     }
 
     private fun newCode(code: String): Code {
@@ -86,8 +89,8 @@ internal class PublicPaperFilterTest {
 
     @Test
     fun assertEnumFields() {
-        assertThat(PublicPaperFilter.PublicPaperFilterFields.values().map { it.fieldName })
-            .containsExactly("number", "authorMask", "titleMask", "methodsMask", "publicationYearFrom",
+        PublicPaperFilter.PublicPaperFilterFields.values().map { it.fieldName } shouldContainAll
+            listOf("number", "authorMask", "titleMask", "methodsMask", "publicationYearFrom",
                 "publicationYearUntil", "populationCodes", "studyDesignCodes", "codesOfClass1", "codesOfClass2",
                 "codesOfClass3", "codesOfClass4", "codesOfClass5", "codesOfClass6", "codesOfClass7", "codesOfClass8",
                 "keywords")

@@ -4,7 +4,8 @@ import ch.difty.scipamato.common.entity.ScipamatoEntity.ScipamatoEntityFields.CR
 import ch.difty.scipamato.common.entity.ScipamatoEntity.ScipamatoEntityFields.MODIFIED
 import nl.jqno.equalsverifier.EqualsVerifier
 import nl.jqno.equalsverifier.Warning
-import org.assertj.core.api.Assertions.assertThat
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldContainAll
 import org.junit.jupiter.api.Test
 
 @Suppress("SpellCheckingInspection")
@@ -33,20 +34,20 @@ internal class PublicPaperTest : PublicEntityTest<PublicPaper>() {
         .build()
 
     override fun assertSpecificGetters() {
-        assertThat(entity.id).isEqualTo(1L)
-        assertThat(entity.number).isEqualTo(2L)
-        assertThat(entity.pmId).isEqualTo(1000)
-        assertThat(entity.authors).isEqualTo("authors")
-        assertThat(entity.authorsAbbreviated).isEqualTo("auths")
-        assertThat(entity.title).isEqualTo("title")
-        assertThat(entity.location).isEqualTo("location")
-        assertThat(entity.journal).isEqualTo("journal")
-        assertThat(entity.publicationYear).isEqualTo(2016)
-        assertThat(entity.goals).isEqualTo("goals")
-        assertThat(entity.methods).isEqualTo("methods")
-        assertThat(entity.population).isEqualTo("population")
-        assertThat(entity.result).isEqualTo("result")
-        assertThat(entity.comment).isEqualTo("comment")
+        entity.id shouldBeEqualTo 1L
+        entity.number shouldBeEqualTo 2L
+        entity.pmId shouldBeEqualTo 1000
+        entity.authors shouldBeEqualTo "authors"
+        entity.authorsAbbreviated shouldBeEqualTo "auths"
+        entity.title shouldBeEqualTo "title"
+        entity.location shouldBeEqualTo "location"
+        entity.journal shouldBeEqualTo "journal"
+        entity.publicationYear shouldBeEqualTo 2016
+        entity.goals shouldBeEqualTo "goals"
+        entity.methods shouldBeEqualTo "methods"
+        entity.population shouldBeEqualTo "population"
+        entity.result shouldBeEqualTo "result"
+        entity.comment shouldBeEqualTo "comment"
     }
 
     public override fun verifyEquals() {
@@ -59,8 +60,8 @@ internal class PublicPaperTest : PublicEntityTest<PublicPaper>() {
 
     @Test
     fun assertEnumFields() {
-        assertThat(PublicPaper.PublicPaperFields.values().map { it.fieldName })
-            .containsExactly("id", "number", "pmId", "authors", "authorsAbbreviated", "title", "location", "journal",
+        PublicPaper.PublicPaperFields.values().map { it.fieldName } shouldContainAll
+            listOf("id", "number", "pmId", "authors", "authorsAbbreviated", "title", "location", "journal",
                 "publicationYear", "goals", "methods", "population", "result", "comment")
     }
 }

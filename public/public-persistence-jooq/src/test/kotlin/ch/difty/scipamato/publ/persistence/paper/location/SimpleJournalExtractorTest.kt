@@ -1,6 +1,7 @@
 package ch.difty.scipamato.publ.persistence.paper.location
 
-import org.assertj.core.api.Assertions.assertThat
+import org.amshove.kluent.shouldBeBlank
+import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.Test
 
 @Suppress("SpellCheckingInspection")
@@ -10,27 +11,27 @@ internal class SimpleJournalExtractorTest {
 
     @Test
     fun extractingJournal_fromNullLocation_returnsBlank() {
-        assertThat(extractor.extractJournal(null)).isBlank()
+        extractor.extractJournal(null).shouldBeBlank()
     }
 
     @Test
     fun extractingJournal_fromBlankLocation_returnsBlank() {
-        assertThat(extractor.extractJournal("")).isBlank()
+        extractor.extractJournal("").shouldBeBlank()
     }
 
     @Test
     fun extractingJournal_fromLocationWithoutPeriod_returnsBlank() {
-        assertThat(extractor.extractJournal("foo")).isEqualTo("foo")
+        extractor.extractJournal("foo") shouldBeEqualTo "foo"
     }
 
     @Test
     fun extractingJournal_fromLocationWithDot_returnsJournal() {
-        assertThat(extractor.extractJournal("Nature. 2017; 543 (7647): 705-709.")).isEqualTo("Nature")
+        extractor.extractJournal("Nature. 2017; 543 (7647): 705-709.") shouldBeEqualTo "Nature"
     }
 
     @Test
     fun extractingJournal_fromLocationWithDotOnlyLast_returnsJournal() {
-        assertThat(extractor.extractJournal("Air Qual Atmos Health (2017) 10: 129-137.")).isEqualTo(
-            "Air Qual Atmos Health")
+        extractor.extractJournal("Air Qual Atmos Health (2017) 10: 129-137.") shouldBeEqualTo
+            "Air Qual Atmos Health"
     }
 }

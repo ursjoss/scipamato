@@ -2,16 +2,16 @@ package ch.difty.scipamato.publ.persistence.code
 
 import ch.difty.scipamato.common.entity.CodeClassId
 import ch.difty.scipamato.publ.entity.Code
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.whenever
-import org.assertj.core.api.Assertions.assertThat
+import io.mockk.confirmVerified
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.verify
+import org.amshove.kluent.shouldContainSame
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito.verify
-import org.mockito.Mockito.verifyNoMoreInteractions
 
 internal class JooqCodeServiceTest {
 
-    private val repoMock = mock<CodeRepository>()
+    private val repoMock = mockk<CodeRepository>()
     private val service = JooqCodeService(repoMock)
 
     private val ccId = CodeClassId.CC1
@@ -24,9 +24,9 @@ internal class JooqCodeServiceTest {
 
     @Test
     fun findingCodes_delegatesToRepo() {
-        whenever(repoMock.findCodesOfClass(ccId, languageCode)).thenReturn(codes)
-        assertThat(service.findCodesOfClass(ccId, languageCode).map { it.code }).containsOnly("c1", "c2")
-        verify(repoMock).findCodesOfClass(ccId, languageCode)
-        verifyNoMoreInteractions(repoMock)
+        every { repoMock.findCodesOfClass(ccId, languageCode) } returns codes
+        service.findCodesOfClass(ccId, languageCode).map { it.code } shouldContainSame listOf("c1", "c2")
+        verify{ repoMock.findCodesOfClass(ccId, languageCode) }
+        confirmVerified(repoMock)
     }
 }

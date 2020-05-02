@@ -1,7 +1,7 @@
 package ch.difty.scipamato.publ.persistence
 
 import ch.difty.scipamato.publ.persistence.codeclass.JooqCodeClassRepo
-import org.assertj.core.api.Assertions.assertThat
+import org.amshove.kluent.shouldContainAll
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.jooq.JooqTest
@@ -17,7 +17,7 @@ internal open class JooqCodeClassRepoIntegrationTest {
 
     @Test
     fun finding_inEnglish_returnsLocalizedCodeClasses() {
-        assertThat(repo.find("en").map { it.name }).containsExactly(
+        repo.find("en").map { it.name } shouldContainAll listOf(
             "Exposure Agent", "Region", "Study Population", "Health Outcome",
             "Study Design", "Species", "Duration of Exposure", "Setting"
         )
@@ -26,7 +26,7 @@ internal open class JooqCodeClassRepoIntegrationTest {
     @Test
     @Suppress("SpellCheckingInspection")
     fun finding_inFrench_returnsLocalizedCodeClasses() {
-        assertThat(repo.find("fr").map { it.name }).containsExactly(
+        repo.find("fr").map { it.name } shouldContainAll listOf(
             "Polluant nocif", "Région", "Population", "Effets physiologique ou nocifs",
             "Type d'étude", "Espèces investigées", "Durée de l'exposition", "Site d'exposition"
         )
@@ -35,7 +35,7 @@ internal open class JooqCodeClassRepoIntegrationTest {
     @Test
     @Suppress("SpellCheckingInspection")
     fun finding_inGerman_returnsLocalizedCodeClasses() {
-        assertThat(repo.find("de").map { it.name }).containsExactly(
+        repo.find("de").map { it.name } shouldContainAll listOf(
             "Schadstoffe", "Region", "Kollektiv", "Zielgrössen", "Studientyp", "Spezies", "Zeitdauer", "Umgebung"
         )
     }

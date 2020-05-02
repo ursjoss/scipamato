@@ -4,7 +4,8 @@ import ch.difty.scipamato.common.entity.ScipamatoEntity.ScipamatoEntityFields.CR
 import ch.difty.scipamato.common.entity.ScipamatoEntity.ScipamatoEntityFields.MODIFIED
 import nl.jqno.equalsverifier.EqualsVerifier
 import nl.jqno.equalsverifier.Warning
-import org.assertj.core.api.Assertions.assertThat
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldContainAll
 import org.junit.jupiter.api.Test
 import java.time.LocalDate
 
@@ -16,13 +17,13 @@ internal class NewsletterTest : PublicEntityTest<Newsletter>() {
     override fun newEntity(): Newsletter = Newsletter(1, "2018/04", LocalDate.of(2018, 4, 10))
 
     override fun assertSpecificGetters() {
-        assertThat(entity.id).isEqualTo(1)
-        assertThat(entity.issue).isEqualTo("2018/04")
-        assertThat(entity.issueDate.toString()).isEqualTo("2018-04-10")
+        entity.id shouldBeEqualTo 1
+        entity.issue shouldBeEqualTo "2018/04"
+        entity.issueDate.toString() shouldBeEqualTo "2018-04-10"
 
-        assertThat(entity.getMonthName("de")).isEqualTo("April 2018")
-        assertThat(entity.getMonthName("en")).isEqualTo("April 2018")
-        assertThat(entity.getMonthName("fr")).isEqualTo("avril 2018")
+        entity.getMonthName("de") shouldBeEqualTo "April 2018"
+        entity.getMonthName("en") shouldBeEqualTo "April 2018"
+        entity.getMonthName("fr") shouldBeEqualTo "avril 2018"
     }
 
     override fun verifyEquals() {
@@ -35,7 +36,7 @@ internal class NewsletterTest : PublicEntityTest<Newsletter>() {
 
     @Test
     fun assertEnumFields() {
-        assertThat(Newsletter.NewsletterFields.values().map { it.fieldName })
-            .containsExactly("id", "issue", "issueDate", "monthName")
+        Newsletter.NewsletterFields.values().map { it.fieldName } shouldContainAll
+            listOf("id", "issue", "issueDate", "monthName")
     }
 }
