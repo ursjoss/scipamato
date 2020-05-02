@@ -70,30 +70,30 @@ public abstract class SyncConfigTest<R extends UpdatableRecord<R>> {
 
     @Test
     protected void assertingJobName() {
-        assertThat(getJob().getName()).isEqualTo(expectedJobName());
+        getJob().getName() shouldBeEqualTo expectedJobName();
     }
 
     @Test
     protected void jobIsRestartable() {
-        assertThat(getJob().isRestartable()).isTrue();
+        getJob().isRestartable().shouldBeTrue();
     }
 
     @Test
     protected void assertingSql() {
-        assertThat(selectSql()).isEqualTo(expectedSelectSql());
+        selectSql() shouldBeEqualTo expectedSelectSql();
     }
 
     @Test
     protected void assertingPurgeLastSynchField() {
-        assertThat(lastSynchedField()).isEqualTo(expectedLastSyncField());
+        lastSynchedField() shouldBeEqualTo expectedLastSyncField();
     }
 
     @Test
     protected void assertingPseudoRefDataEnforcementDdl() {
         final DeleteConditionStep<R> dcs = getPseudoFkDcs();
         if (dcs != null)
-            assertThat(dcs.getSQL()).isEqualTo(expectedPseudoFkSql());
+            dcs.getSQL() shouldBeEqualTo expectedPseudoFkSql();
         else
-            assertThat(expectedPseudoFkSql()).isNull();
+            expectedPseudoFkSql().shouldBeNull();
     }
 }

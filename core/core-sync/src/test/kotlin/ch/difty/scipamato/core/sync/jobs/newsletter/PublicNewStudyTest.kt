@@ -3,7 +3,7 @@ package ch.difty.scipamato.core.sync.jobs.newsletter
 import ch.difty.scipamato.core.sync.jobs.CREATED
 import ch.difty.scipamato.core.sync.jobs.MODIFIED
 import ch.difty.scipamato.core.sync.jobs.SYNCHED
-import org.assertj.core.api.Assertions.assertThat
+import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.Test
 
 internal class PublicNewStudyTest {
@@ -26,17 +26,17 @@ internal class PublicNewStudyTest {
             .lastSynched(SYNCHED)
             .build()
 
-        assertThat(pns.newsletterId).isEqualTo(1)
-        assertThat(pns.newsletterTopicId).isEqualTo(2)
-        assertThat(pns.sort).isEqualTo(3)
-        assertThat(pns.paperNumber).isEqualTo(4)
-        assertThat(pns.year).isEqualTo(2018)
-        assertThat(pns.authors).isEqualTo("a")
-        assertThat(pns.headline).isEqualTo("hl")
-        assertThat(pns.description).isEqualTo("d")
-        assertThat(pns.version).isEqualTo(5)
-        assertThat(pns.created).isEqualTo(CREATED)
-        assertThat(pns.lastModified).isEqualTo(MODIFIED)
-        assertThat(pns.lastSynched).isEqualTo(SYNCHED)
+        pns.newsletterId shouldBeEqualTo 1
+        pns.newsletterTopicId shouldBeEqualTo 2
+        pns.sort shouldBeEqualTo 3
+        pns.paperNumber shouldBeEqualTo 4
+        pns.year shouldBeEqualTo 2018
+        pns.authors shouldBeEqualTo "a"
+        pns.headline shouldBeEqualTo "hl"
+        pns.description shouldBeEqualTo "d"
+        pns.version shouldBeEqualTo 5
+        pns.created shouldBeEqualTo CREATED
+        pns.lastModified shouldBeEqualTo MODIFIED
+        pns.lastSynched shouldBeEqualTo SYNCHED
     }
 }

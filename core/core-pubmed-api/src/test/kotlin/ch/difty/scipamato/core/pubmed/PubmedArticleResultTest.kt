@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.pubmed
 
-import com.nhaarman.mockitokotlin2.mock
+import io.mockk.mockk
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.Test
 import org.springframework.http.HttpStatus
@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus
 @Suppress("SpellCheckingInspection")
 internal class PubmedArticleResultTest {
 
-    private val paf = mock<PubmedArticleFacade>()
+    private val paf = mockk<PubmedArticleFacade>()
 
     private fun assertPar(par: PubmedArticleResult, paf: PubmedArticleFacade?, msg: String) {
         par.pubmedArticleFacade shouldBeEqualTo paf

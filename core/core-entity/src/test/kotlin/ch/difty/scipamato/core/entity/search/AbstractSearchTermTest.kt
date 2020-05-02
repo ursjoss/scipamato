@@ -1,7 +1,10 @@
 package ch.difty.scipamato.core.entity.search
 
-import org.assertj.core.api.Assertions.assertThat
-
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeFalse
+import org.amshove.kluent.shouldBeInstanceOf
+import org.amshove.kluent.shouldBeTrue
+import org.amshove.kluent.shouldNotBeEqualTo
 import org.junit.jupiter.api.Test
 
 internal class AbstractSearchTermTest {
@@ -42,9 +45,9 @@ internal class AbstractSearchTermTest {
     }
 
     private fun assertEqualityBetween(st1: SearchTerm, st2: SearchTerm) {
-        assertThat(st1 == st2).isTrue()
-        assertThat(st2 == st1).isTrue()
-        assertThat(st1.hashCode()).isEqualTo(st2.hashCode())
+        (st1 == st2).shouldBeTrue()
+        (st2 == st1).shouldBeTrue()
+        st1.hashCode() shouldBeEqualTo st2.hashCode()
     }
 
     @Test
@@ -56,21 +59,21 @@ internal class AbstractSearchTermTest {
     }
 
     private fun assertInequalityBetween(st1: SearchTerm, st2: SearchTerm) {
-        assertThat(st1 == st2).isFalse()
-        assertThat(st2 == st1).isFalse()
-        assertThat(st1.hashCode()).isNotEqualTo(st2.hashCode())
+        (st1 == st2).shouldBeFalse()
+        (st2 == st1).shouldBeFalse()
+        st1.hashCode() shouldNotBeEqualTo st2.hashCode()
     }
 
     @Test
     fun equality_withSpecialCases() {
         val st1 = SearchTerm.newSearchTerm(12, 2, 3L, "fn3", "foo*")
-        assertThat(st1 == st1).isTrue()
+        (st1 == st1).shouldBeTrue()
     }
 
     @Test
     fun displayValueEqualsSearchTerm() {
         val st = SearchTerm.newSearchTerm(11, 1, 2L, "fn2", "5-7")
-        assertThat(st).isInstanceOf(IntegerSearchTerm::class.java)
-        assertThat(st.displayValue).isEqualTo(st.rawSearchTerm)
+        st shouldBeInstanceOf IntegerSearchTerm::class
+        st.displayValue shouldBeEqualTo st.rawSearchTerm
     }
 }

@@ -1,7 +1,11 @@
 package ch.difty.scipamato.core.entity
 
 import ch.difty.scipamato.core.entity.Code.CodeFields.CODE
-import org.assertj.core.api.Assertions.assertThat
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeFalse
+import org.amshove.kluent.shouldBeTrue
+import org.amshove.kluent.shouldNotBeEqualTo
+import org.amshove.kluent.shouldNotBeNull
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
 
@@ -20,16 +24,10 @@ internal class CodeTest : Jsr303ValidatedEntityTest<Code>(Code::class.java) {
     @Test
     fun constructing_withAllValues_populatesCodeClass() {
         val c1 = Code("C1", "c1", null, false, 10, "cc10", CODECLASS10, 2)
-        assertThat(c1.codeClass).isNotNull
-        assertThat(c1
-            .codeClass
-            .id).isEqualTo(10)
-        assertThat(c1
-            .codeClass
-            .name).isEqualTo("cc10")
-        assertThat(c1
-            .codeClass
-            .description).isEqualTo(CODECLASS10)
+        c1.codeClass.shouldNotBeNull()
+        c1.codeClass.id shouldBeEqualTo 10
+        c1.codeClass.name shouldBeEqualTo "cc10"
+        c1.codeClass.description shouldBeEqualTo CODECLASS10
     }
 
     @Test
@@ -42,21 +40,21 @@ internal class CodeTest : Jsr303ValidatedEntityTest<Code>(Code::class.java) {
     fun cloning_copiesValues() {
         val c1 = Code("1A", CODE1, "foo", true, 1, "c1", "", 2)
         val c2 = Code(c1)
-        assertThat(c2.code).isEqualTo("1A")
-        assertThat(c2.name).isEqualTo(CODE1)
-        assertThat(c2.comment).isEqualTo("foo")
-        assertThat(c2.isInternal).isTrue()
-        assertThat(c2.codeClass).isEqualToComparingFieldByField(c1.codeClass)
-        assertThat(c2.sort).isEqualTo(2)
+        c2.code shouldBeEqualTo "1A"
+        c2.name shouldBeEqualTo CODE1
+        c2.comment shouldBeEqualTo "foo"
+        c2.isInternal.shouldBeTrue()
+        c2.codeClass shouldBeEqualTo c1.codeClass
+        c2.sort shouldBeEqualTo 2
     }
 
     @Test
     fun sameValues_makeEquality() {
         val c = newValidEntity()
         val c2 = Code(c)
-        assertThat(c == c2).isTrue()
-        assertThat(c2 == c).isTrue()
-        assertThat(c.hashCode()).isEqualTo(c2.hashCode())
+        (c == c2).shouldBeTrue()
+        (c2 == c).shouldBeTrue()
+        c.hashCode() shouldBeEqualTo c2.hashCode()
     }
 
     @Test
@@ -69,67 +67,67 @@ internal class CodeTest : Jsr303ValidatedEntityTest<Code>(Code::class.java) {
         val c6 = Code("1A", CODE1, "foo", false, 1, "c1", "", 1)
         val c7 = Code("1A", CODE1, null, true, 1, "c1", "", 1)
 
-        assertThat(c1 == c2).isFalse()
-        assertThat(c1 == c3).isFalse()
-        assertThat(c1 == c4).isFalse()
-        assertThat(c1 == c5).isFalse()
-        assertThat(c1 == c6).isFalse()
-        assertThat(c1 == c7).isFalse()
-        assertThat(c2 == c3).isFalse()
-        assertThat(c2 == c4).isFalse()
-        assertThat(c2 == c5).isFalse()
-        assertThat(c2 == c6).isFalse()
-        assertThat(c2 == c7).isFalse()
-        assertThat(c3 == c4).isFalse()
-        assertThat(c3 == c5).isFalse()
-        assertThat(c3 == c6).isFalse()
-        assertThat(c3 == c7).isFalse()
-        assertThat(c4 == c5).isFalse()
-        assertThat(c4 == c6).isFalse()
-        assertThat(c4 == c7).isFalse()
-        assertThat(c5 == c6).isFalse()
-        assertThat(c5 == c7).isFalse()
-        assertThat(c6 == c7).isFalse()
+        (c1 == c2).shouldBeFalse()
+        (c1 == c3).shouldBeFalse()
+        (c1 == c4).shouldBeFalse()
+        (c1 == c5).shouldBeFalse()
+        (c1 == c6).shouldBeFalse()
+        (c1 == c7).shouldBeFalse()
+        (c2 == c3).shouldBeFalse()
+        (c2 == c4).shouldBeFalse()
+        (c2 == c5).shouldBeFalse()
+        (c2 == c6).shouldBeFalse()
+        (c2 == c7).shouldBeFalse()
+        (c3 == c4).shouldBeFalse()
+        (c3 == c5).shouldBeFalse()
+        (c3 == c6).shouldBeFalse()
+        (c3 == c7).shouldBeFalse()
+        (c4 == c5).shouldBeFalse()
+        (c4 == c6).shouldBeFalse()
+        (c4 == c7).shouldBeFalse()
+        (c5 == c6).shouldBeFalse()
+        (c5 == c7).shouldBeFalse()
+        (c6 == c7).shouldBeFalse()
 
-        assertThat(c1.hashCode()).isNotEqualTo(c2.hashCode())
-        assertThat(c1.hashCode()).isNotEqualTo(c3.hashCode())
-        assertThat(c1.hashCode()).isNotEqualTo(c4.hashCode())
-        assertThat(c1.hashCode()).isNotEqualTo(c5.hashCode())
-        assertThat(c1.hashCode()).isNotEqualTo(c6.hashCode())
-        assertThat(c1.hashCode()).isNotEqualTo(c7.hashCode())
-        assertThat(c2.hashCode()).isNotEqualTo(c3.hashCode())
-        assertThat(c2.hashCode()).isNotEqualTo(c4.hashCode())
-        assertThat(c2.hashCode()).isNotEqualTo(c5.hashCode())
-        assertThat(c2.hashCode()).isNotEqualTo(c6.hashCode())
-        assertThat(c2.hashCode()).isNotEqualTo(c7.hashCode())
-        assertThat(c3.hashCode()).isNotEqualTo(c4.hashCode())
-        assertThat(c3.hashCode()).isNotEqualTo(c5.hashCode())
-        assertThat(c3.hashCode()).isNotEqualTo(c6.hashCode())
-        assertThat(c3.hashCode()).isNotEqualTo(c7.hashCode())
-        assertThat(c4.hashCode()).isNotEqualTo(c5.hashCode())
-        assertThat(c4.hashCode()).isNotEqualTo(c6.hashCode())
-        assertThat(c4.hashCode()).isNotEqualTo(c7.hashCode())
-        assertThat(c5.hashCode()).isNotEqualTo(c6.hashCode())
-        assertThat(c5.hashCode()).isNotEqualTo(c7.hashCode())
-        assertThat(c6.hashCode()).isNotEqualTo(c7.hashCode())
+        c1.hashCode() shouldNotBeEqualTo c2.hashCode()
+        c1.hashCode() shouldNotBeEqualTo c3.hashCode()
+        c1.hashCode() shouldNotBeEqualTo c4.hashCode()
+        c1.hashCode() shouldNotBeEqualTo c5.hashCode()
+        c1.hashCode() shouldNotBeEqualTo c6.hashCode()
+        c1.hashCode() shouldNotBeEqualTo c7.hashCode()
+        c2.hashCode() shouldNotBeEqualTo c3.hashCode()
+        c2.hashCode() shouldNotBeEqualTo c4.hashCode()
+        c2.hashCode() shouldNotBeEqualTo c5.hashCode()
+        c2.hashCode() shouldNotBeEqualTo c6.hashCode()
+        c2.hashCode() shouldNotBeEqualTo c7.hashCode()
+        c3.hashCode() shouldNotBeEqualTo c4.hashCode()
+        c3.hashCode() shouldNotBeEqualTo c5.hashCode()
+        c3.hashCode() shouldNotBeEqualTo c6.hashCode()
+        c3.hashCode() shouldNotBeEqualTo c7.hashCode()
+        c4.hashCode() shouldNotBeEqualTo c5.hashCode()
+        c4.hashCode() shouldNotBeEqualTo c6.hashCode()
+        c4.hashCode() shouldNotBeEqualTo c7.hashCode()
+        c5.hashCode() shouldNotBeEqualTo c6.hashCode()
+        c5.hashCode() shouldNotBeEqualTo c7.hashCode()
+        c6.hashCode() shouldNotBeEqualTo c7.hashCode()
     }
 
     @Test
     fun equalingToSpecialCases() {
         val c = newValidEntity()
-        assertThat(c == c).isTrue()
+        (c == c).shouldBeTrue()
     }
 
     private fun assertInequality(c1: Code, c2: Code) {
-        assertThat(c1 == c2).isFalse()
-        assertThat(c2 == c1).isFalse()
-        assertThat(c1.hashCode()).isNotEqualTo(c2.hashCode())
+        (c1 == c2).shouldBeFalse()
+        (c2 == c1).shouldBeFalse()
+        c1.hashCode() shouldNotBeEqualTo c2.hashCode()
     }
 
     private fun assertEquality(c1: Code, c2: Code) {
-        assertThat(c1 == c2).isTrue()
-        assertThat(c2 == c1).isTrue()
-        assertThat(c1.hashCode()).isEqualTo(c2.hashCode())
+        (c1 == c2).shouldBeTrue()
+        (c2 == c1).shouldBeTrue()
+        c1.hashCode() shouldBeEqualTo c2.hashCode()
     }
 
     @Test

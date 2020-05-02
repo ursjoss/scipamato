@@ -1,6 +1,9 @@
 package ch.difty.scipamato.core.entity
 
-import org.assertj.core.api.Assertions.assertThat
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeFalse
+import org.amshove.kluent.shouldBeTrue
+import org.amshove.kluent.shouldNotBeEqualTo
 import org.junit.jupiter.api.Test
 
 internal class CodeClassTest : Jsr303ValidatedEntityTest<CodeClass>(CodeClass::class.java) {
@@ -21,7 +24,7 @@ internal class CodeClassTest : Jsr303ValidatedEntityTest<CodeClass>(CodeClass::c
     fun cloning_copiesValues() {
         val orig = CodeClass(1, "cc1", DESC)
         val copy = CodeClass(orig)
-        assertThat(copy).isEqualToComparingFieldByField(orig)
+        copy shouldBeEqualTo orig
     }
 
     @Test
@@ -32,9 +35,9 @@ internal class CodeClassTest : Jsr303ValidatedEntityTest<CodeClass>(CodeClass::c
     }
 
     private fun assertEquality(cc1: CodeClass, cc2: CodeClass) {
-        assertThat(cc1 == cc2).isTrue()
-        assertThat(cc2 == cc1).isTrue()
-        assertThat(cc1.hashCode()).isEqualTo(cc2.hashCode())
+        (cc1 == cc2).shouldBeTrue()
+        (cc2 == cc1).shouldBeTrue()
+        cc1.hashCode() shouldBeEqualTo cc2.hashCode()
     }
 
     @Test
@@ -44,26 +47,26 @@ internal class CodeClassTest : Jsr303ValidatedEntityTest<CodeClass>(CodeClass::c
         val cc3 = CodeClass(1, "cc2", DESC)
         val cc4 = CodeClass(1, "cc1", "this is cc2")
 
-        assertThat(cc1 == cc2).isFalse()
-        assertThat(cc1 == cc3).isFalse()
-        assertThat(cc1 == cc4).isFalse()
-        assertThat(cc2 == cc3).isFalse()
-        assertThat(cc2 == cc4).isFalse()
-        assertThat(cc3 == cc4).isFalse()
+        (cc1 == cc2).shouldBeFalse()
+        (cc1 == cc3).shouldBeFalse()
+        (cc1 == cc4).shouldBeFalse()
+        (cc2 == cc3).shouldBeFalse()
+        (cc2 == cc4).shouldBeFalse()
+        (cc3 == cc4).shouldBeFalse()
 
-        assertThat(cc1.hashCode()).isNotEqualTo(cc2.hashCode())
-        assertThat(cc1.hashCode()).isNotEqualTo(cc3.hashCode())
-        assertThat(cc1.hashCode()).isNotEqualTo(cc4.hashCode())
-        assertThat(cc2.hashCode()).isNotEqualTo(cc3.hashCode())
-        assertThat(cc2.hashCode()).isNotEqualTo(cc4.hashCode())
-        assertThat(cc3.hashCode()).isNotEqualTo(cc4.hashCode())
+        cc1.hashCode() shouldNotBeEqualTo cc2.hashCode()
+        cc1.hashCode() shouldNotBeEqualTo cc3.hashCode()
+        cc1.hashCode() shouldNotBeEqualTo cc4.hashCode()
+        cc2.hashCode() shouldNotBeEqualTo cc3.hashCode()
+        cc2.hashCode() shouldNotBeEqualTo cc4.hashCode()
+        cc3.hashCode() shouldNotBeEqualTo cc4.hashCode()
     }
 
     @Test
     fun equalingToSpecialCases() {
         val cc1 = CodeClass(1, "cc1", DESC)
 
-        assertThat(cc1 == cc1).isTrue()
+        (cc1 == cc1).shouldBeTrue()
     }
 
     @Test
@@ -74,9 +77,9 @@ internal class CodeClassTest : Jsr303ValidatedEntityTest<CodeClass>(CodeClass::c
     }
 
     private fun assertInequality(cc1: CodeClass, cc2: CodeClass) {
-        assertThat(cc1 == cc2).isFalse()
-        assertThat(cc2 == cc1).isFalse()
-        assertThat(cc1.hashCode()).isNotEqualTo(cc2.hashCode())
+        (cc1 == cc2).shouldBeFalse()
+        (cc2 == cc1).shouldBeFalse()
+        cc1.hashCode() shouldNotBeEqualTo cc2.hashCode()
     }
 
     @Test

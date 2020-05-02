@@ -80,26 +80,26 @@ class KeywordSyncConfigTest extends SyncConfigTest<KeywordRecord> {
 
         PublicKeyword pc = config.makeEntity(rs);
 
-        assertThat(pc.getId()).isEqualTo(1);
-        assertThat(pc.getKeywordId()).isEqualTo(2);
-        assertThat(pc.getLangCode()).isEqualTo("lc");
-        assertThat(pc.getName()).isEqualTo("n");
-        assertThat(pc.getVersion()).isEqualTo(3);
-        assertThat(pc.getCreated()).isEqualTo(CREATED);
-        assertThat(pc.getLastModified()).isEqualTo(MODIFIED);
+        pc.getId() shouldBeEqualTo 1;
+        pc.getKeywordId() shouldBeEqualTo 2;
+        pc.getLangCode() shouldBeEqualTo "lc";
+        pc.getName() shouldBeEqualTo "n";
+        pc.getVersion() shouldBeEqualTo 3;
+        pc.getCreated() shouldBeEqualTo CREATED;
+        pc.getLastModified() shouldBeEqualTo MODIFIED;
         assertThat(pc.getLastSynched()).isCloseTo("2016-12-09T06:02:13.000", 1000);
-        assertThat(pc.getSearchOverride()).isEqualTo("so");
+        pc.getSearchOverride() shouldBeEqualTo "so";
 
-        verify(rs).getInt(KeywordTr.KEYWORD_TR.ID.getName());
-        verify(rs).getInt("KeywordId");
-        verify(rs).getString(KeywordTr.KEYWORD_TR.LANG_CODE.getName());
-        verify(rs).getString(KeywordTr.KEYWORD_TR.NAME.getName());
-        verify(rs).getInt(KeywordTr.KEYWORD_TR.VERSION.getName());
-        verify(rs).getTimestamp(KeywordTr.KEYWORD_TR.CREATED.getName());
-        verify(rs).getTimestamp(KeywordTr.KEYWORD_TR.LAST_MODIFIED.getName());
-        verify(rs).getString(Keyword.KEYWORD.SEARCH_OVERRIDE.getName());
-        verify(rs, times(2)).wasNull();
+        verify{ rs.getInt(KeywordTr.KEYWORD_TR.ID.getName()); }
+        verify{ rs.getInt("KeywordId"); }
+        verify{ rs.getString(KeywordTr.KEYWORD_TR.LANG_CODE.getName()); }
+        verify{ rs.getString(KeywordTr.KEYWORD_TR.NAME.getName()); }
+        verify{ rs.getInt(KeywordTr.KEYWORD_TR.VERSION.getName()); }
+        verify{ rs.getTimestamp(KeywordTr.KEYWORD_TR.CREATED.getName()); }
+        verify{ rs.getTimestamp(KeywordTr.KEYWORD_TR.LAST_MODIFIED.getName()); }
+        verify{ rs.getString(Keyword.KEYWORD.SEARCH_OVERRIDE.getName()); }
+        verify(exactly=2) { rs.wasNull(); }
 
-        verifyNoMoreInteractions(rs);
+        confirmVerified(rs);
     }
 }

@@ -7,18 +7,21 @@ import ch.difty.scipamato.core.persistence.RecordMapperTest
 import ch.difty.scipamato.core.persistence.UpdateSetStepSetterTest
 import ch.difty.scipamato.core.persistence.newsletter.NewsletterRecordMapperTest.Companion.ISSUE
 import ch.difty.scipamato.core.persistence.newsletter.NewsletterRecordMapperTest.Companion.ISSUE_DATE
-import com.nhaarman.mockitokotlin2.*
+import io.mockk.confirmVerified
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.verify
 import java.sql.Date
 
 internal class NewsletterUpdateSetStepSetterTest : UpdateSetStepSetterTest<NewsletterRecord, Newsletter>() {
 
-    private val entityMock = mock<Newsletter>()
+    private val entityMock = mockk<Newsletter>()
     override val entity = entityMock
 
     override val setter = NewsletterUpdateSetStepSetter()
 
     override fun specificTearDown() {
-        verifyNoMoreInteractions(entityMock)
+        confirmVerified(entityMock)
     }
 
     override fun entityFixture() {
@@ -26,37 +29,36 @@ internal class NewsletterUpdateSetStepSetterTest : UpdateSetStepSetterTest<Newsl
     }
 
     override fun stepSetFixtureExceptAudit() {
-        doReturn(moreStep).whenever(step).set(NEWSLETTER.ISSUE, ISSUE)
-        doReturn(moreStep).whenever(moreStep).set(NEWSLETTER.ISSUE_DATE, Date.valueOf(ISSUE_DATE))
-        doReturn(moreStep)
-            .whenever(moreStep).set(NEWSLETTER.PUBLICATION_STATUS, NewsletterRecordMapperTest.PUBLICATION_STATUS.id)
+        every { step.set(NEWSLETTER.ISSUE, ISSUE) } returns moreStep
+        every { moreStep.set(NEWSLETTER.ISSUE_DATE, Date.valueOf(ISSUE_DATE)) } returns moreStep
+        every { moreStep.set(NEWSLETTER.PUBLICATION_STATUS, NewsletterRecordMapperTest.PUBLICATION_STATUS.id) } returns moreStep
     }
 
     override fun stepSetFixtureAudit() {
-        doReturn(moreStep).whenever(moreStep).set(NEWSLETTER.CREATED, RecordMapperTest.CREATED)
-        doReturn(moreStep).whenever(moreStep).set(NEWSLETTER.CREATED_BY, RecordMapperTest.CREATED_BY)
-        doReturn(moreStep).whenever(moreStep).set(NEWSLETTER.LAST_MODIFIED, RecordMapperTest.LAST_MOD)
-        doReturn(moreStep).whenever(moreStep).set(NEWSLETTER.LAST_MODIFIED_BY, RecordMapperTest.LAST_MOD_BY)
-        doReturn(moreStep).whenever(moreStep).set(NEWSLETTER.VERSION, RecordMapperTest.VERSION + 1)
+        every { moreStep.set(NEWSLETTER.CREATED, RecordMapperTest.CREATED) } returns moreStep
+        every { moreStep.set(NEWSLETTER.CREATED_BY, RecordMapperTest.CREATED_BY) } returns moreStep
+        every { moreStep.set(NEWSLETTER.LAST_MODIFIED, RecordMapperTest.LAST_MOD) } returns moreStep
+        every { moreStep.set(NEWSLETTER.LAST_MODIFIED_BY, RecordMapperTest.LAST_MOD_BY) } returns moreStep
+        every { moreStep.set(NEWSLETTER.VERSION, RecordMapperTest.VERSION + 1) } returns moreStep
     }
 
     override fun verifyCallToAllFieldsExceptAudit() {
-        verify(entityMock).issue
-        verify(entityMock).issueDate
-        verify(entityMock).publicationStatus
+        verify { entityMock.issue }
+        verify { entityMock.issueDate }
+        verify { entityMock.publicationStatus }
     }
 
     override fun verifyStepSettingExceptAudit() {
-        verify(step).set(NEWSLETTER.ISSUE, ISSUE)
-        verify(moreStep).set(NEWSLETTER.ISSUE_DATE, Date.valueOf(ISSUE_DATE))
-        verify(moreStep).set(NEWSLETTER.PUBLICATION_STATUS, NewsletterRecordMapperTest.PUBLICATION_STATUS.id)
+        verify { step.set(NEWSLETTER.ISSUE, ISSUE) }
+        verify { moreStep.set(NEWSLETTER.ISSUE_DATE, Date.valueOf(ISSUE_DATE)) }
+        verify { moreStep.set(NEWSLETTER.PUBLICATION_STATUS, NewsletterRecordMapperTest.PUBLICATION_STATUS.id) }
     }
 
     override fun verifyStepSettingAudit() {
-        verify(moreStep).set(NEWSLETTER.CREATED, RecordMapperTest.CREATED)
-        verify(moreStep).set(NEWSLETTER.CREATED_BY, RecordMapperTest.CREATED_BY)
-        verify(moreStep).set(NEWSLETTER.LAST_MODIFIED, RecordMapperTest.LAST_MOD)
-        verify(moreStep).set(NEWSLETTER.LAST_MODIFIED_BY, RecordMapperTest.LAST_MOD_BY)
-        verify(moreStep).set(NEWSLETTER.VERSION, RecordMapperTest.VERSION + 1)
+        verify { moreStep.set(NEWSLETTER.CREATED, RecordMapperTest.CREATED) }
+        verify { moreStep.set(NEWSLETTER.CREATED_BY, RecordMapperTest.CREATED_BY) }
+        verify { moreStep.set(NEWSLETTER.LAST_MODIFIED, RecordMapperTest.LAST_MOD) }
+        verify { moreStep.set(NEWSLETTER.LAST_MODIFIED_BY, RecordMapperTest.LAST_MOD_BY) }
+        verify { moreStep.set(NEWSLETTER.VERSION, RecordMapperTest.VERSION + 1) }
     }
 }

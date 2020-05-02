@@ -1,7 +1,7 @@
 package ch.difty.scipamato.core.sync.jobs.newstudypagelink
 
 import ch.difty.scipamato.core.sync.jobs.SYNCHED
-import org.assertj.core.api.Assertions.assertThat
+import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.Test
 
 internal class PublicNewStudyPageLinkTest {
@@ -17,10 +17,10 @@ internal class PublicNewStudyPageLinkTest {
             .lastSynched(SYNCHED)
             .build()
 
-        assertThat(pp.langCode).isEqualTo("en")
-        assertThat(pp.sort).isEqualTo(1)
-        assertThat(pp.title).isEqualTo("title")
-        assertThat(pp.url).isEqualTo("url")
-        assertThat(pp.lastSynched).isEqualTo(SYNCHED)
+        pp.langCode shouldBeEqualTo "en"
+        pp.sort shouldBeEqualTo 1
+        pp.title shouldBeEqualTo "title"
+        pp.url shouldBeEqualTo "url"
+        pp.lastSynched shouldBeEqualTo SYNCHED
     }
 }

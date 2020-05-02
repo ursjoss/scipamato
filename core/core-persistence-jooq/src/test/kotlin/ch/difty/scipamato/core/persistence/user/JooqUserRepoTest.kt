@@ -7,24 +7,24 @@ import ch.difty.scipamato.core.entity.User
 import ch.difty.scipamato.core.entity.search.UserFilter
 import ch.difty.scipamato.core.persistence.EntityRepository
 import ch.difty.scipamato.core.persistence.JooqEntityRepoTest
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.whenever
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.verify
 import org.jooq.TableField
-import org.mockito.Mockito.verify
 
 internal class JooqUserRepoTest :
     JooqEntityRepoTest<ScipamatoUserRecord, User, Int, ScipamatoUser, UserRecordMapper, UserFilter>() {
 
-    private val userRoleRepoMock = mock<UserRoleRepository>()
+    private val userRoleRepoMock = mockk<UserRoleRepository>()
 
     override val sampleId: Int = SAMPLE_ID
 
-    override val unpersistedEntity = mock<User>()
-    override val persistedEntity = mock<User>()
-    override val persistedRecord = mock<ScipamatoUserRecord>()
-    override val unpersistedRecord = mock<ScipamatoUserRecord>()
-    override val mapper = mock<UserRecordMapper>()
-    override val filter = mock<UserFilter>()
+    override val unpersistedEntity = mockk<User>()
+    override val persistedEntity = mockk<User>()
+    override val persistedRecord = mockk<ScipamatoUserRecord>()
+    override val unpersistedRecord = mockk<ScipamatoUserRecord>()
+    override val mapper = mockk<UserRecordMapper>()
+    override val filter = mockk<UserFilter>()
 
     override val table: ScipamatoUser = SCIPAMATO_USER
 
@@ -75,20 +75,21 @@ internal class JooqUserRepoTest :
         }
 
     override fun expectEntityIdsWithValues() {
-        whenever(unpersistedEntity.id).thenReturn(SAMPLE_ID)
-        whenever(persistedRecord.id).thenReturn(SAMPLE_ID)
+        every { unpersistedEntity.id } returns SAMPLE_ID
+        every { persistedRecord.id } returns SAMPLE_ID
     }
 
     override fun expectUnpersistedEntityIdNull() {
-        whenever(unpersistedEntity.id).thenReturn(null)
+        every { unpersistedEntity.id } returns null
     }
 
     override fun verifyUnpersistedEntityId() {
-        verify(unpersistedEntity).id
+        verify { unpersistedEntity.id }
+        verify { unpersistedEntity.toString() }
     }
 
     override fun verifyPersistedRecordId() {
-        verify(persistedRecord).id
+        verify { persistedRecord.id }
     }
 
     companion object {

@@ -6,7 +6,8 @@ import ch.difty.scipamato.core.entity.CoreEntity.CoreEntityFields.CREATOR_ID
 import ch.difty.scipamato.core.entity.CoreEntity.CoreEntityFields.MODIFIER_ID
 import nl.jqno.equalsverifier.EqualsVerifier
 import nl.jqno.equalsverifier.Warning
-import org.assertj.core.api.Assertions.assertThat
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeNull
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
@@ -30,50 +31,47 @@ internal class PaperSlimTest {
     }
 
     private fun getting(nlId: Int? = null, nlIssue: String? = null, nlStatus: Int? = null, nlHeadline: String? = null) {
-        assertThat(ps.id).isEqualTo(1L)
-        assertThat(ps.number).isEqualTo(10L)
-        assertThat(ps.publicationYear).isEqualTo(2016)
-        assertThat(ps.title).isEqualTo("title")
-        assertThat(ps.firstAuthor).isEqualTo("firstAuthor")
+        ps.id shouldBeEqualTo 1L
+        ps.number shouldBeEqualTo 10L
+        ps.publicationYear shouldBeEqualTo 2016
+        ps.title shouldBeEqualTo "title"
+        ps.firstAuthor shouldBeEqualTo "firstAuthor"
         if (nlId != null) {
             with(ps.newsletterAssociation) {
-                assertThat(id).isEqualTo(nlId)
-                assertThat(issue).isEqualTo(nlIssue)
-                assertThat(headline).isEqualTo(nlHeadline)
-                assertThat(publicationStatusId).isEqualTo(nlStatus)
+                id shouldBeEqualTo nlId
+                issue shouldBeEqualTo nlIssue
+                headline shouldBeEqualTo nlHeadline
+                publicationStatusId shouldBeEqualTo nlStatus
             }
         } else {
-            assertThat(ps.newsletterAssociation).isNull()
+            ps.newsletterAssociation.shouldBeNull()
         }
     }
 
     @Test
     fun displayValue() {
-        assertThat(ps.displayValue).isEqualTo("firstAuthor (2016): title.")
+        ps.displayValue shouldBeEqualTo "firstAuthor (2016): title."
     }
 
     @Test
     fun testingToString() {
-        assertThat(ps.toString()).isEqualTo(
+        ps.toString() shouldBeEqualTo
             "PaperSlim(number=10, firstAuthor=firstAuthor, publicationYear=2016, " +
-                "title=title, newsletter=nl, headline=hl)"
-        )
+            "title=title, newsletter=nl, headline=hl)"
     }
 
     @Test
     fun testingToString_withNoNewsletter() {
         ps.newsletterAssociation = null
-        assertThat(ps.toString()).isEqualTo(
+        ps.toString() shouldBeEqualTo
             "PaperSlim(number=10, firstAuthor=firstAuthor, publicationYear=2016, title=title)"
-        )
     }
 
     @Test
     fun testingToString_withNoHeadline() {
         ps.newsletterAssociation.headline = null
-        assertThat(ps.toString()).isEqualTo(
+        ps.toString() shouldBeEqualTo
             "PaperSlim(number=10, firstAuthor=firstAuthor, publicationYear=2016, title=title, newsletter=nl)"
-        )
     }
 
     @Test

@@ -33,7 +33,7 @@ class CodeClassItemWriterIntegrationTest
         newCodeClass = newCodeClass(ID_NEW);
 
         existingCodeClass = getExistingCodeFromDb(ID_EXISTING, LANG_CODE);
-        assertThat(existingCodeClass.getDescription()).isEmpty();
+        existingCodeClass.getDescription().shouldBeEmpty();
         existingCodeClass.setDescription("foo");
     }
 
@@ -85,7 +85,7 @@ class CodeClassItemWriterIntegrationTest
     void insertingNewCodeClass_succeeds() {
         int id = newCodeClass.getCodeClassId();
         assertCodeClassDoesNotExistWith(id, LANG_CODE);
-        assertThat(getWriter().executeUpdate(newCodeClass)).isEqualTo(1);
+        getWriter().executeUpdate(newCodeClass) shouldBeEqualTo 1;
         assertCodeClassExistsWith(id, LANG_CODE);
     }
 
@@ -108,7 +108,7 @@ class CodeClassItemWriterIntegrationTest
 
     @Test
     void updatingExistingCodeClass_succeeds() {
-        assertThat(getWriter().executeUpdate(existingCodeClass)).isEqualTo(1);
+        getWriter().executeUpdate(existingCodeClass) shouldBeEqualTo 1;
     }
 
 }

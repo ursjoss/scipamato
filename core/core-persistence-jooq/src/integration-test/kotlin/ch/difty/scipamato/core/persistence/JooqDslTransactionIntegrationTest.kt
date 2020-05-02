@@ -1,11 +1,12 @@
 package ch.difty.scipamato.core.persistence
 
 import ch.difty.scipamato.core.db.Tables.PAPER
-import org.assertj.core.api.AssertionsForClassTypes.assertThat
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeTrue
 import org.jooq.DSLContext
-import org.junit.jupiter.api.Assertions.fail
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.fail
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.jooq.JooqTest
 import org.springframework.dao.DataAccessException
@@ -45,15 +46,15 @@ internal open class JooqDslTransactionIntegrationTest {
                     .set(PAPER.GOALS, "goals")
                     .execute()
             }
-            fail<Any>()
+            fail { "should have thrown DataAccessException" }
         } catch (e: DataAccessException) {
             // Upon the constraint violation, we explicitly roll back the transaction.
             txMgr.rollback(tx)
             rollback = true
         }
 
-        assertThat(dsl.fetchCount(PAPER)).isEqualTo(RECORD_COUNT_PREPOPULATED)
-        assertThat(rollback).isTrue()
+        dsl.fetchCount(PAPER) shouldBeEqualTo RECORD_COUNT_PREPOPULATED
+        rollback.shouldBeTrue()
     }
 
     @Suppress("RedundantLambdaArrow")
@@ -77,15 +78,15 @@ internal open class JooqDslTransactionIntegrationTest {
                         .set(PAPER.GOALS, "goals")
                         .execute()
                 }
-                fail<Any>()
+                fail { "Should have thrown DataAccessException" }
             }
         } catch (e: DataAccessException) {
             // Upon the constraint violation, the transaction must already have been rolled back
             rollback = true
         }
 
-        assertThat(dsl.fetchCount(PAPER)).isEqualTo(RECORD_COUNT_PREPOPULATED)
-        assertThat(rollback).isTrue()
+        dsl.fetchCount(PAPER) shouldBeEqualTo RECORD_COUNT_PREPOPULATED
+        rollback.shouldBeTrue()
     }
 
     @Suppress("RedundantLambdaArrow")
@@ -110,7 +111,7 @@ internal open class JooqDslTransactionIntegrationTest {
                     .set(PAPER.GOALS, "goals")
                     .execute()
 
-                assertThat(dsl.fetchCount(PAPER)).isEqualTo(RECORD_COUNT_PREPOPULATED + 1)
+                dsl.fetchCount(PAPER) shouldBeEqualTo RECORD_COUNT_PREPOPULATED + 1
 
                 try {
                     // Nest transactions using Spring. This should create a savepoint, right here
@@ -130,25 +131,25 @@ internal open class JooqDslTransactionIntegrationTest {
                                 .set(PAPER.GOALS, "goals")
                                 .execute()
                         }
-                        fail<Any>()
+                        fail { "Should have thrown DataAccessException" }
                     }
                 } catch (e: DataAccessException) {
                     rollback1.set(true)
                 }
 
                 // We should've rolled back to the savepoint
-                assertThat(dsl.fetchCount(PAPER)).isEqualTo(RECORD_COUNT_PREPOPULATED + 1)
+                dsl.fetchCount(PAPER) shouldBeEqualTo RECORD_COUNT_PREPOPULATED + 1
 
                 throw org.jooq.exception.DataAccessException("Rollback")
             }
         } catch (e: org.jooq.exception.DataAccessException) {
             // Upon the constraint violation, the transaction must already have been rolled back
-            assertThat(e.message).isEqualTo("Rollback")
+            e.message shouldBeEqualTo "Rollback"
             rollback2.set(true)
         }
 
-        assertThat(dsl.fetchCount(PAPER)).isEqualTo(RECORD_COUNT_PREPOPULATED)
-        assertThat(rollback2.get()).isTrue()
-        assertThat(rollback2.get()).isTrue()
+        dsl.fetchCount(PAPER) shouldBeEqualTo RECORD_COUNT_PREPOPULATED
+        rollback2.get().shouldBeTrue()
+        rollback2.get().shouldBeTrue()
     }
 }

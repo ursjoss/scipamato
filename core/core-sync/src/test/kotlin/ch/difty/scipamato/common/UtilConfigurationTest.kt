@@ -1,6 +1,6 @@
 package ch.difty.scipamato.common
 
-import org.assertj.core.api.AssertionsForClassTypes.assertThat
+import org.amshove.kluent.shouldBeInstanceOf
 
 import org.junit.jupiter.api.Test
 
@@ -8,6 +8,6 @@ internal class UtilConfigurationTest {
 
     @Test
     fun dateTimeService() {
-        assertThat(UtilConfiguration().dateTimeService()).isInstanceOf(CurrentDateTimeService::class.java)
+        UtilConfiguration().dateTimeService() shouldBeInstanceOf CurrentDateTimeService::class
     }
 }

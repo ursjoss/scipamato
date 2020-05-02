@@ -3,7 +3,7 @@
 package ch.difty.scipamato.core.persistence
 
 import ch.difty.scipamato.core.db.Tables.PAPER
-import org.assertj.core.api.Assertions.assertThat
+import org.amshove.kluent.shouldHaveSize
 import org.jooq.DSLContext
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -25,6 +25,6 @@ internal open class JooqEntityDslIntegrationTest {
     @Test
     fun testPaperRecords() {
         val result = create.selectFrom(PAPER).orderBy(PAPER.ID).fetch()
-        assertThat(result).hasSize(RECORD_COUNT_PREPOPULATED)
+        result shouldHaveSize RECORD_COUNT_PREPOPULATED
     }
 }

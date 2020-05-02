@@ -7,8 +7,8 @@ import ch.difty.scipamato.core.entity.CoreEntity.CoreEntityFields.MODIFIER_ID
 import ch.difty.scipamato.core.entity.PaperAttachment.PaperAttachmentFields.CONTENT
 import nl.jqno.equalsverifier.EqualsVerifier
 import nl.jqno.equalsverifier.Warning
-import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Assertions.assertNull
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeNull
 import org.junit.jupiter.api.Test
 
 internal class PaperAttachmentTest {
@@ -17,36 +17,36 @@ internal class PaperAttachmentTest {
 
     @Test
     fun test() {
-        assertThat(pa.id).isEqualTo(1)
-        assertThat(pa.paperId).isEqualTo(2L)
-        assertThat(pa.name).isEqualTo("pdf1")
-        assertThat(pa.content).isEqualTo("content".toByteArray())
-        assertThat(pa.contentType).isEqualTo("ct")
-        assertThat(pa.size).isEqualTo(2048L)
-        assertThat(pa.sizeKiloBytes).isEqualTo(2L)
+        pa.id shouldBeEqualTo 1
+        pa.paperId shouldBeEqualTo 2L
+        pa.name shouldBeEqualTo "pdf1"
+        pa.content shouldBeEqualTo "content".toByteArray()
+        pa.contentType shouldBeEqualTo "ct"
+        pa.size shouldBeEqualTo 2048L
+        pa.sizeKiloBytes shouldBeEqualTo 2L
     }
 
     @Test
     fun sizeInKiloBytes_withNullSize_isNull() {
-        assertNull(PaperAttachment().sizeKiloBytes)
+        PaperAttachment().sizeKiloBytes.shouldBeNull()
     }
 
     @Test
     fun sizeInKiloBytes_isRoundedUp() {
         pa.size = 2047L
-        assertThat(pa.sizeKiloBytes).isEqualTo(2L)
+        pa.sizeKiloBytes shouldBeEqualTo 2L
         pa.size = 2050L
-        assertThat(pa.sizeKiloBytes).isEqualTo(3L)
+        pa.sizeKiloBytes shouldBeEqualTo 3L
     }
 
     @Test
     fun displayValue_isName() {
-        assertThat(pa.displayValue).isEqualTo(pa.name)
+        pa.displayValue shouldBeEqualTo pa.name
     }
 
     @Test
     fun toString_isMinimal() {
-        assertThat(pa.toString()).isEqualTo("PaperAttachment[paperId=2,name=pdf1,id=1]")
+        pa.toString() shouldBeEqualTo "PaperAttachment[paperId=2,name=pdf1,id=1]"
     }
 
     @Test

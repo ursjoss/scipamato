@@ -96,28 +96,28 @@ class CodeSyncConfigTest extends SyncConfigTest<CodeRecord> {
 
         PublicCode pc = config.makeEntity(rs);
 
-        assertThat(pc.getCode()).isEqualTo("c");
-        assertThat(pc.getLangCode()).isEqualTo("lc");
-        assertThat(pc.getCodeClassId()).isEqualTo(1);
-        assertThat(pc.getName()).isEqualTo("n");
-        assertThat(pc.getComment()).isEqualTo("comm");
-        assertThat(pc.getSort()).isEqualTo(2);
-        assertThat(pc.getVersion()).isEqualTo(3);
-        assertThat(pc.getCreated()).isEqualTo(CREATED);
-        assertThat(pc.getLastModified()).isEqualTo(MODIFIED);
+        pc.getCode() shouldBeEqualTo "c";
+        pc.getLangCode() shouldBeEqualTo "lc";
+        pc.getCodeClassId() shouldBeEqualTo 1;
+        pc.getName() shouldBeEqualTo "n";
+        pc.getComment() shouldBeEqualTo "comm";
+        pc.getSort() shouldBeEqualTo 2;
+        pc.getVersion() shouldBeEqualTo 3;
+        pc.getCreated() shouldBeEqualTo CREATED;
+        pc.getLastModified() shouldBeEqualTo MODIFIED;
         assertThat(pc.getLastSynched()).isCloseTo("2016-12-09T06:02:13.000", 1000);
 
-        verify(rs).getString(Code.CODE.CODE_.getName());
-        verify(rs).getString(CodeTr.CODE_TR.LANG_CODE.getName());
-        verify(rs).getInt(Code.CODE.CODE_CLASS_ID.getName());
-        verify(rs).getString(CodeTr.CODE_TR.NAME.getName());
-        verify(rs).getString(CodeTr.CODE_TR.COMMENT.getName());
-        verify(rs).getInt(Code.CODE.SORT.getName());
-        verify(rs).getInt(CodeTr.CODE_TR.VERSION.getName());
-        verify(rs).getTimestamp(CodeTr.CODE_TR.CREATED.getName());
-        verify(rs).getTimestamp(CodeTr.CODE_TR.LAST_MODIFIED.getName());
-        verify(rs, times(3)).wasNull();
+        verify{ rs.getString(Code.CODE.CODE_.getName()); }
+        verify{ rs.getString(CodeTr.CODE_TR.LANG_CODE.getName()); }
+        verify{ rs.getInt(Code.CODE.CODE_CLASS_ID.getName()); }
+        verify{ rs.getString(CodeTr.CODE_TR.NAME.getName()); }
+        verify{ rs.getString(CodeTr.CODE_TR.COMMENT.getName()); }
+        verify{ rs.getInt(Code.CODE.SORT.getName()); }
+        verify{ rs.getInt(CodeTr.CODE_TR.VERSION.getName()); }
+        verify{ rs.getTimestamp(CodeTr.CODE_TR.CREATED.getName()); }
+        verify{ rs.getTimestamp(CodeTr.CODE_TR.LAST_MODIFIED.getName()); }
+        verify(exactly=3) { rs.wasNull(); }
 
-        verifyNoMoreInteractions(rs);
+        confirmVerified(rs);
     }
 }

@@ -77,7 +77,7 @@ class LanguageItemWriterIntegrationTest extends AbstractItemWriterIntegrationTes
     void insertingNewLanguage_succeeds() {
         String newCode = newLanguage.getCode();
         assertCodeDoesNotExistWith(newCode);
-        assertThat(getWriter().executeUpdate(newLanguage)).isEqualTo(1);
+        getWriter().executeUpdate(newLanguage) shouldBeEqualTo 1;
         assertCodeExistsWith(newCode);
     }
 
@@ -99,7 +99,7 @@ class LanguageItemWriterIntegrationTest extends AbstractItemWriterIntegrationTes
 
     @Test
     void updatingExistingCode_succeeds() {
-        assertThat(getWriter().executeUpdate(existingLanguage)).isEqualTo(1);
+        getWriter().executeUpdate(existingLanguage) shouldBeEqualTo 1;
     }
 
 }

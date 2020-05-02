@@ -3,7 +3,7 @@ package ch.difty.scipamato.core.persistence.paper.searchorder
 import ch.difty.scipamato.core.entity.search.BooleanSearchTerm
 import ch.difty.scipamato.core.entity.search.SearchTerm
 import ch.difty.scipamato.core.entity.search.SearchTermType
-import org.assertj.core.api.Assertions.assertThat
+import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
@@ -28,12 +28,12 @@ open class BooleanSearchTermEvaluatorIntegrationTest : SearchTermEvaluatorIntegr
     @MethodSource("booleanParameters")
     fun booleanTest(rawSearchTerm: String, value: Boolean?, condition: String) {
         val st = makeSearchTerm(rawSearchTerm)
-        assertThat(st.value).isEqualTo(value)
+        st.value shouldBeEqualTo value
 
         val ste = evaluator
         val s = ste.evaluate(st)
 
-        assertThat(s.toString()).isEqualTo(condition)
+        s.toString() shouldBeEqualTo condition
     }
 
     companion object {

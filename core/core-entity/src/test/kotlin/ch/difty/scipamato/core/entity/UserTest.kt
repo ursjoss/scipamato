@@ -7,7 +7,12 @@ import ch.difty.scipamato.core.entity.CoreEntity.CoreEntityFields.CREATOR_ID
 import ch.difty.scipamato.core.entity.CoreEntity.CoreEntityFields.MODIFIER_ID
 import nl.jqno.equalsverifier.EqualsVerifier
 import nl.jqno.equalsverifier.Warning
-import org.assertj.core.api.Assertions.assertThat
+import org.amshove.kluent.shouldBeEmpty
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeFalse
+import org.amshove.kluent.shouldContainAll
+import org.amshove.kluent.shouldContainSame
+import org.amshove.kluent.shouldNotBeNull
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
@@ -44,15 +49,15 @@ internal class UserTest {
     }
 
     private fun assertUser(u: User) {
-        assertThat(u.id).isEqualTo(1)
-        assertThat(u.userName).isEqualTo(USER_NAME)
-        assertThat(u.firstName).isEqualTo(FIRST_NAME)
-        assertThat(u.lastName).isEqualTo(LAST_NAME)
-        assertThat(u.email).isEqualTo(EMAIL)
-        assertThat(u.password).isEqualTo(PASSWORD)
-        assertThat(u.isEnabled).isEqualTo(ENABLED)
-        assertThat(u.roles).containsExactlyInAnyOrder(role1, role2)
-        assertThat(u.fullName).isEqualTo("$FIRST_NAME $LAST_NAME")
+        u.id shouldBeEqualTo 1
+        u.userName shouldBeEqualTo USER_NAME
+        u.firstName shouldBeEqualTo FIRST_NAME
+        u.lastName shouldBeEqualTo LAST_NAME
+        u.email shouldBeEqualTo EMAIL
+        u.password shouldBeEqualTo PASSWORD
+        u.isEnabled shouldBeEqualTo ENABLED
+        u.roles shouldContainSame listOf(role1, role2)
+        u.fullName shouldBeEqualTo "$FIRST_NAME $LAST_NAME"
     }
 
     @Test
@@ -65,10 +70,8 @@ internal class UserTest {
     @Test
     fun constructingByUser2() {
         val u = User(ID, USER_NAME, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD)
-        assertThat(u.isEnabled).isFalse()
-        assertThat(u.roles)
-            .isNotNull
-            .isEmpty()
+        u.isEnabled.shouldBeFalse()
+        u.roles.shouldNotBeNull().shouldBeEmpty()
 
         u.isEnabled = true
         u.roles = roles
@@ -78,64 +81,64 @@ internal class UserTest {
     @Test
     fun displayValue_isEqualToName() {
         val u = User(ID, USER_NAME, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, ENABLED, roles)
-        assertThat(u.displayValue).isEqualTo(USER_NAME)
+        u.displayValue shouldBeEqualTo USER_NAME
     }
 
     @Test
     fun reducedConstructor_leavesSomeFieldsDefault() {
-        assertThat(user.id).isEqualTo(1)
-        assertThat(user.userName).isEqualTo(USER_NAME)
-        assertThat(user.firstName).isEqualTo(FIRST_NAME)
-        assertThat(user.lastName).isEqualTo(LAST_NAME)
-        assertThat(user.email).isEqualTo(EMAIL)
-        assertThat(user.password).isEqualTo(PASSWORD)
+        user.id shouldBeEqualTo 1
+        user.userName shouldBeEqualTo USER_NAME
+        user.firstName shouldBeEqualTo FIRST_NAME
+        user.lastName shouldBeEqualTo LAST_NAME
+        user.email shouldBeEqualTo EMAIL
+        user.password shouldBeEqualTo PASSWORD
 
-        assertThat(user.isEnabled).isFalse()
-        assertThat(user.roles).isEmpty()
+        user.isEnabled.shouldBeFalse()
+        user.roles.shouldBeEmpty()
     }
 
     @Test
     fun settingRoles_reSetsRoles() {
         val u = User(ID, USER_NAME, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, ENABLED, roles)
-        assertThat(u.roles).containsExactlyInAnyOrder(role1, role2)
+        u.roles shouldContainSame listOf(role1, role2)
 
         u.roles = setOf(role3, role1)
 
-        assertThat(u.roles).containsExactlyInAnyOrder(role3, role1)
+        u.roles shouldContainSame listOf(role3, role1)
     }
 
     @Test
     fun settingRole_withNullList_clearsList() {
         val u = User(ID, USER_NAME, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, ENABLED, roles)
         u.roles = null
-        assertThat(u.roles.size).isEqualTo(0)
+        u.roles.size shouldBeEqualTo 0
     }
 
     @Test
     fun settingRole_withBlankList_clearsList() {
         val u = User(ID, USER_NAME, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, ENABLED, roles)
         u.roles = emptySet()
-        assertThat(u.roles).isEmpty()
+        u.roles.shouldBeEmpty()
     }
 
     @Test
     fun removingAssignedRole_removesIt() {
         val u = User(ID, USER_NAME, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, ENABLED, roles)
         u.removeRole(role1)
-        assertThat(u.roles).containsExactly(role2)
+        u.roles shouldContainAll listOf(role2)
     }
 
     @Test
     fun removingUnassignedRole_doesNothing() {
         val u = User(ID, USER_NAME, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, ENABLED, roles)
         u.removeRole(role3)
-        assertThat(u.roles).containsExactlyInAnyOrder(role1, role2)
+        u.roles shouldContainSame listOf(role1, role2)
     }
 
     @Test
     fun addingNullRole_addsNothing() {
         user.addRole(role1)
-        assertThat(user.roles).containsExactly(role1)
+        user.roles shouldContainSame listOf(role1)
     }
 
     @Test
@@ -152,17 +155,16 @@ internal class UserTest {
     @Test
     @Disabled("TODO")
     fun testingToString() {
-        assertThat(user.toString()).isEqualTo(
+        user.toString() shouldBeEqualTo
             """User[userName=username,firstName=firstname,lastName=lastname,email=email,password=password
                     |,enabled=false,roles=[],id=1,createdBy=<null>,lastModifiedBy=<null>,created=<null>
                     |,lastModified=<null>,version=0]""".trimMargin()
-        )
     }
 
     @Test
     fun assertEnumFields() {
-        assertThat(User.UserFields.values().map { it.fieldName })
-            .containsExactly("userName", "firstName", "lastName", "email", "password", "enabled", "roles")
+        User.UserFields.values().map { it.fieldName } shouldContainSame
+            listOf("userName", "firstName", "lastName", "email", "password", "enabled", "roles")
     }
 
     companion object {

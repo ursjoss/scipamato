@@ -3,7 +3,7 @@ package ch.difty.scipamato.core.sync.jobs.codeclass
 import ch.difty.scipamato.core.sync.jobs.CREATED
 import ch.difty.scipamato.core.sync.jobs.MODIFIED
 import ch.difty.scipamato.core.sync.jobs.SYNCHED
-import org.assertj.core.api.Assertions.assertThat
+import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.Test
 
 internal class PublicCodeClassTest {
@@ -22,13 +22,13 @@ internal class PublicCodeClassTest {
             .lastSynched(SYNCHED)
             .build()
 
-        assertThat(pcc.codeClassId).isEqualTo(1)
-        assertThat(pcc.langCode).isEqualTo("lc")
-        assertThat(pcc.name).isEqualTo("name")
-        assertThat(pcc.description).isEqualTo("description")
-        assertThat(pcc.version).isEqualTo(2)
-        assertThat(pcc.created).isEqualTo(CREATED)
-        assertThat(pcc.lastModified).isEqualTo(MODIFIED)
-        assertThat(pcc.lastSynched).isEqualTo(SYNCHED)
+        pcc.codeClassId shouldBeEqualTo 1
+        pcc.langCode shouldBeEqualTo "lc"
+        pcc.name shouldBeEqualTo "name"
+        pcc.description shouldBeEqualTo "description"
+        pcc.version shouldBeEqualTo 2
+        pcc.created shouldBeEqualTo CREATED
+        pcc.lastModified shouldBeEqualTo MODIFIED
+        pcc.lastSynched shouldBeEqualTo SYNCHED
     }
 }

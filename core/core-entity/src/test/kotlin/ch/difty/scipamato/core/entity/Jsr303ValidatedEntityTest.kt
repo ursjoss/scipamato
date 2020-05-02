@@ -7,7 +7,9 @@ import ch.difty.scipamato.core.entity.CoreEntity.CoreEntityFields.CREATOR_ID
 import ch.difty.scipamato.core.entity.CoreEntity.CoreEntityFields.MODIFIER_ID
 import nl.jqno.equalsverifier.EqualsVerifier
 import nl.jqno.equalsverifier.Warning
-import org.assertj.core.api.Assertions.assertThat
+import org.amshove.kluent.shouldBeEmpty
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldNotBeEmpty
 import org.hibernate.validator.HibernateValidator
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Disabled
@@ -58,7 +60,7 @@ abstract class Jsr303ValidatedEntityTest<T : CoreEntity> protected constructor(p
      */
     protected fun verifySuccessfulValidation(validateable: T) {
         validate(validateable)
-        assertThat(violations).isEmpty()
+        violations?.shouldBeEmpty()
     }
 
     /**
@@ -67,24 +69,24 @@ abstract class Jsr303ValidatedEntityTest<T : CoreEntity> protected constructor(p
     protected fun validateAndAssertFailure(validateable: T, fieldType: FieldEnumType, invalidValue: Any?, msg: String) {
         validate(validateable)
 
-        assertThat(violations).isNotEmpty
+        violations?.shouldNotBeEmpty()
         val violation = violations!!.first()
-        assertThat(violation.messageTemplate).isEqualTo(msg)
-        assertThat(violation.invalidValue).isEqualTo(invalidValue)
-        assertThat(violation.propertyPath.toString()).isEqualTo(fieldType.fieldName)
+        violation.messageTemplate shouldBeEqualTo msg
+        violation.invalidValue shouldBeEqualTo invalidValue
+        violation.propertyPath.toString() shouldBeEqualTo fieldType.fieldName
     }
 
     @Test
     @Disabled("TODO")
     internal fun toString_isMinimal() {
         val entity = newValidEntity()
-        assertThat(entity.toString()).isEqualTo(toString)
+        entity.toString() shouldBeEqualTo toString
     }
 
     @Test
     internal fun displayValue_isEqualTo() {
         val entity = newValidEntity()
-        assertThat(entity.displayValue).isEqualTo(displayValue)
+        entity.displayValue shouldBeEqualTo displayValue
     }
 
     @Test

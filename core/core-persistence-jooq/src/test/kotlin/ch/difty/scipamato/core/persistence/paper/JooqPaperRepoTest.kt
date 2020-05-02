@@ -12,31 +12,36 @@ import ch.difty.scipamato.core.entity.search.SearchOrder
 import ch.difty.scipamato.core.persistence.EntityRepository
 import ch.difty.scipamato.core.persistence.JooqEntityRepoTest
 import ch.difty.scipamato.core.persistence.paper.searchorder.PaperBackedSearchOrderRepository
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.whenever
-import org.assertj.core.api.Assertions.assertThat
-import org.jooq.*
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.verify
+import org.amshove.kluent.shouldBeEmpty
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeFalse
+import org.amshove.kluent.shouldContainAll
+import org.amshove.kluent.shouldContainSame
+import org.jooq.DeleteConditionStep
+import org.jooq.Record1
+import org.jooq.SortField
+import org.jooq.TableField
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito
-import org.mockito.Mockito.never
-import org.mockito.Mockito.verify
 
 internal class JooqPaperRepoTest :
     JooqEntityRepoTest<PaperRecord, Paper, Long, ch.difty.scipamato.core.db.tables.Paper,
         PaperRecordMapper, PaperFilter>() {
 
-    override val unpersistedEntity = mock<Paper>()
-    override val persistedEntity = mock<Paper>()
-    override val persistedRecord = mock<PaperRecord>()
-    override val unpersistedRecord = mock<PaperRecord>()
-    override val mapper = mock<PaperRecordMapper>()
-    override val filter = mock<PaperFilter>()
-    private val searchOrderRepositoryMock = mock<PaperBackedSearchOrderRepository>()
-    private val searchOrderMock = mock<SearchOrder>()
-    private val paperMock = mock<Paper>()
-    private val paginationContextMock = mock<PaginationContext>()
-    private val deleteConditionStepMock = mock<DeleteConditionStep<PaperRecord>>()
-    private val paperAttachmentMock = mock<PaperAttachment>()
+    override val unpersistedEntity = mockk<Paper>()
+    override val persistedEntity = mockk<Paper>()
+    override val persistedRecord = mockk<PaperRecord>()
+    override val unpersistedRecord = mockk<PaperRecord>()
+    override val mapper = mockk<PaperRecordMapper>()
+    override val filter = mockk<PaperFilter>()
+    private val searchOrderRepositoryMock = mockk<PaperBackedSearchOrderRepository>()
+    private val searchOrderMock = mockk<SearchOrder>()
+    private val paperMock = mockk<Paper>(relaxed = true)
+    private val paginationContextMock = mockk<PaginationContext>()
+    private val deleteConditionStepMock = mockk<DeleteConditionStep<PaperRecord>>(relaxed = true)
+    private val paperAttachmentMock = mockk<PaperAttachment>()
 
     private val papers = listOf(paperMock, paperMock)
 
@@ -102,191 +107,182 @@ internal class JooqPaperRepoTest :
         }
 
     override fun expectEntityIdsWithValues() {
-        whenever(unpersistedEntity.id).thenReturn(SAMPLE_ID)
-        whenever(unpersistedEntity.version).thenReturn(0)
-        whenever(persistedRecord.id).thenReturn(SAMPLE_ID)
-        whenever(persistedRecord.version).thenReturn(1)
+        every { unpersistedEntity.id } returns SAMPLE_ID
+        every { unpersistedEntity.version } returns 0
+        every { persistedRecord.id } returns SAMPLE_ID
+        every { persistedRecord.version } returns 1
     }
 
     override fun expectUnpersistedEntityIdNull() {
-        whenever(unpersistedEntity.id).thenReturn(null)
+        every { unpersistedEntity.id } returns null
     }
 
     override fun verifyUnpersistedEntityId() {
-        verify<Paper>(unpersistedEntity).id
+        verify { unpersistedEntity.id }
     }
 
     override fun verifyPersistedRecordId() {
-        verify<PaperRecord>(persistedRecord).id
+        verify { persistedRecord.id }
     }
 
     @Test
     fun gettingTableId() {
-        assertThat(repo.tableId).isEqualTo(tableId)
+        repo.tableId shouldBeEqualTo tableId
     }
 
     @Test
     fun gettingRecordVersion() {
-        assertThat(repo.recordVersion).isEqualTo(PAPER.VERSION)
+        repo.recordVersion shouldBeEqualTo PAPER.VERSION
     }
 
     @Test
     fun gettingIdFromPaper() {
-        whenever(paperMock.id).thenReturn(17L)
-        assertThat(repo.getIdFrom(paperMock)).isEqualTo(17L)
-        verify(paperMock).id
+        every { paperMock.id } returns 17L
+        repo.getIdFrom(paperMock) shouldBeEqualTo 17L
+        verify { paperMock.id }
     }
 
     @Test
     fun gettingIdFromPaperRecord() {
-        whenever(persistedRecord.id).thenReturn(17L)
-        assertThat(repo.getIdFrom(persistedRecord)).isEqualTo(17L)
-        verify(persistedRecord).id
+        every { persistedRecord.id } returns 17L
+        repo.getIdFrom(persistedRecord) shouldBeEqualTo 17L
+        verify { persistedRecord.id }
     }
 
     @Test
     fun findingBySearchOrder_delegatesToSearchOrderFinder() {
-        whenever(searchOrderRepositoryMock.findBySearchOrder(searchOrderMock)).thenReturn(papers)
-        assertThat(makeRepoStubbingEnriching().findBySearchOrder(searchOrderMock, LC)).containsExactly(paperMock,
+        every { searchOrderRepositoryMock.findBySearchOrder(searchOrderMock) } returns papers
+        makeRepoStubbingEnriching().findBySearchOrder(searchOrderMock, LC) shouldContainSame listOf(paperMock,
             paperMock)
-        assertThat(enrichedEntities).containsExactly(paperMock, paperMock)
-        verify(searchOrderRepositoryMock).findBySearchOrder(searchOrderMock)
+        enrichedEntities shouldContainAll listOf(paperMock, paperMock)
+        verify { searchOrderRepositoryMock.findBySearchOrder(searchOrderMock) }
     }
 
     @Test
     fun countingBySearchOrder_delegatesToSearchOrderFinder() {
-        whenever(searchOrderRepositoryMock.countBySearchOrder(searchOrderMock)).thenReturn(2)
-        assertThat(repo.countBySearchOrder(searchOrderMock)).isEqualTo(2)
-        verify(searchOrderRepositoryMock).countBySearchOrder(searchOrderMock)
+        every { searchOrderRepositoryMock.countBySearchOrder(searchOrderMock) } returns 2
+        repo.countBySearchOrder(searchOrderMock) shouldBeEqualTo 2
+        verify { searchOrderRepositoryMock.countBySearchOrder(searchOrderMock) }
     }
 
     @Test
     fun findingPageBySearchOrder_delegatesToSearchOrderFinder() {
-        whenever(searchOrderRepositoryMock.findPageBySearchOrder(searchOrderMock, paginationContextMock)).thenReturn(
-            papers)
-        assertThat(makeRepoStubbingEnriching().findPageBySearchOrder(searchOrderMock, paginationContextMock,
-            LC)).containsExactly(paperMock, paperMock)
-        assertThat(enrichedEntities).containsExactly(paperMock, paperMock)
-        verify(searchOrderRepositoryMock).findPageBySearchOrder(searchOrderMock, paginationContextMock)
+        every { searchOrderRepositoryMock.findPageBySearchOrder(searchOrderMock, paginationContextMock) } returns papers
+        makeRepoStubbingEnriching().findPageBySearchOrder(searchOrderMock, paginationContextMock,
+            LC) shouldContainSame listOf(paperMock, paperMock)
+        enrichedEntities shouldContainAll listOf(paperMock, paperMock)
+        verify { searchOrderRepositoryMock.findPageBySearchOrder(searchOrderMock, paginationContextMock) }
     }
 
     @Test
     fun gettingPapersByPmIds_withNoPmIds_returnsEmptyList() {
-        assertThat(repo.findByPmIds(ArrayList(), LC)).isEmpty()
+        repo.findByPmIds(ArrayList(), LC).shouldBeEmpty()
     }
 
     @Test
     fun findingByNumbers_withNoNumbers_returnsEmptyList() {
-        assertThat(repo.findByNumbers(ArrayList(), LC)).isEmpty()
+        repo.findByNumbers(ArrayList(), LC).shouldBeEmpty()
     }
 
     @Test
     fun findingExistingPmIdsOutOf_withNoPmIds_returnsEmptyList() {
-        assertThat(repo.findExistingPmIdsOutOf(ArrayList())).isEmpty()
+        repo.findExistingPmIdsOutOf(ArrayList()).shouldBeEmpty()
     }
 
     @Test
     fun findingPageByFilter() {
         val sortFields = ArrayList<SortField<Paper>>()
         val sort = Sort(Direction.DESC, "id")
-        whenever(paginationContextMock.sort).thenReturn(sort)
-        whenever(paginationContextMock.pageSize).thenReturn(20)
-        whenever(paginationContextMock.offset).thenReturn(0)
-        whenever(filterConditionMapper.map(filter)).thenReturn(conditionMock)
-        whenever(sortMapper.map(sort, table)).thenReturn(sortFields)
+        every { paginationContextMock.sort } returns sort
+        every { paginationContextMock.pageSize } returns 20
+        every { paginationContextMock.offset } returns 0
+        every { filterConditionMapper.map(filter) } returns conditionMock
+        every { sortMapper.map(sort, table) } returns sortFields
 
-        val selectWhereStepMock: SelectWhereStep<PaperRecord> = mock()
-        whenever(dsl.selectFrom(table)).thenReturn(selectWhereStepMock)
-        val selectConditionStepMock: SelectConditionStep<PaperRecord> = mock()
-        whenever(selectWhereStepMock.where(conditionMock)).thenReturn(selectConditionStepMock)
-        val selectSeekStepNMock: SelectSeekStepN<PaperRecord> = mock()
-        whenever(selectConditionStepMock.orderBy(sortFields)).thenReturn(selectSeekStepNMock)
-        val selectLimitPercentStepMock: SelectLimitPercentStep<PaperRecord> = mock()
-        whenever(selectSeekStepNMock.limit(20)).thenReturn(selectLimitPercentStepMock)
-        val selectForUpdateStepMock: SelectForUpdateStep<PaperRecord> = mock()
-        whenever(selectLimitPercentStepMock.offset(0)).thenReturn(selectForUpdateStepMock)
-        // don't want to go into the enrichment test fixture, thus returning empty list
-        whenever(selectForUpdateStepMock.fetch<Paper>(mapper)).thenReturn(emptyList())
+        every { dsl.selectFrom(table) } returns mockk() {
+            every { where(conditionMock) } returns mockk() {
+                every { orderBy(sortFields) } returns mockk() {
+                    every { limit(20) } returns mockk() {
+                        every { offset(0) } returns mockk() {
+                            // don't want to go into the enrichment test fixture, thus returning empty list
+                            every { fetch(mapper) } returns emptyList()
+                        }
+                    }
+                }
+            }
+        }
 
         val papers = repo.findPageByFilter(filter, paginationContextMock, LC)
-        assertThat(papers).isEmpty()
+        papers.shouldBeEmpty()
 
-        verify(filterConditionMapper).map(filter)
-        verify(paginationContextMock).sort
-        verify(paginationContextMock).pageSize
-        verify(paginationContextMock).offset
-        verify(sortMapper).map(sort, table)
+        verify { filterConditionMapper.map(filter) }
+        verify { paginationContextMock.sort }
+        verify { paginationContextMock.pageSize }
+        verify { paginationContextMock.offset }
+        verify { sortMapper.map(sort, table) }
 
-        verify(dsl).selectFrom(table)
-        verify(selectWhereStepMock).where(conditionMock)
-        verify(selectConditionStepMock).orderBy(sortFields)
-        verify(selectSeekStepNMock).limit(20)
-        verify(selectLimitPercentStepMock).offset(0)
-        verify(selectForUpdateStepMock).fetch(mapper)
+        verify { dsl.selectFrom(table) }
     }
 
     @Test
     fun findingPageByFilter_withNoExplicitLanguageCode() {
-        whenever(applicationProperties.defaultLocalization).thenReturn(LC)
+        every { applicationProperties.defaultLocalization } returns LC
 
         val sortFields = ArrayList<SortField<Paper>>()
         val sort = Sort(Direction.DESC, "id")
-        whenever(paginationContextMock.sort).thenReturn(sort)
-        whenever(paginationContextMock.pageSize).thenReturn(20)
-        whenever(paginationContextMock.offset).thenReturn(0)
-        whenever(filterConditionMapper.map(filter)).thenReturn(conditionMock)
-        whenever(sortMapper.map(sort, table)).thenReturn(sortFields)
+        every { paginationContextMock.sort } returns sort
+        every { paginationContextMock.pageSize } returns 20
+        every { paginationContextMock.offset } returns 0
+        every { filterConditionMapper.map(filter) } returns conditionMock
+        every { sortMapper.map(sort, table) } returns sortFields
 
-        val selectWhereStepMock: SelectWhereStep<PaperRecord> = mock()
-        whenever(dsl.selectFrom(table)).thenReturn(selectWhereStepMock)
-        val selectConditionStepMock: SelectConditionStep<PaperRecord> = mock()
-        whenever(selectWhereStepMock.where(conditionMock)).thenReturn(selectConditionStepMock)
-        val selectSeekStepNMock: SelectSeekStepN<PaperRecord> = mock()
-        whenever(selectConditionStepMock.orderBy(sortFields)).thenReturn(selectSeekStepNMock)
-        val selectLimitPercentStepMock: SelectLimitPercentStep<PaperRecord> = mock()
-        whenever(selectSeekStepNMock.limit(20)).thenReturn(selectLimitPercentStepMock)
-        val selectForUpdateStepMock: SelectForUpdateStep<PaperRecord> = mock()
-        whenever(selectLimitPercentStepMock.offset(0)).thenReturn(selectForUpdateStepMock)
-        // don't want to go into the enrichment test fixture, thus returning empty list
-        whenever(selectForUpdateStepMock.fetch<Paper>(mapper)).thenReturn(emptyList())
+        every { dsl.selectFrom(table) } returns mockk() {
+            every { where(conditionMock) } returns mockk() {
+                every { orderBy(sortFields) } returns mockk() {
+                    every { limit(20) } returns mockk() {
+                        every { offset(0) } returns mockk() {
+                            // don't want to go into the enrichment test fixture, thus returning empty list
+                            every { fetch(mapper) } returns emptyList()
+                        }
+                    }
+                }
+            }
+        }
+
 
         val papers = repo.findPageByFilter(filter, paginationContextMock)
-        assertThat(papers).isEmpty()
+        papers.shouldBeEmpty()
 
-        verify(applicationProperties).defaultLocalization
-        verify(filterConditionMapper).map(filter)
-        verify(paginationContextMock).sort
-        verify(paginationContextMock).pageSize
-        verify(paginationContextMock).offset
-        verify(sortMapper).map(sort, table)
+        verify { applicationProperties.defaultLocalization }
+        verify { filterConditionMapper.map(filter) }
+        verify { paginationContextMock.sort }
+        verify { paginationContextMock.pageSize }
+        verify { paginationContextMock.offset }
+        verify { sortMapper.map(sort, table) }
 
-        verify(dsl).selectFrom(table)
-        verify<SelectWhereStep<PaperRecord>>(selectWhereStepMock).where(conditionMock)
-        verify<SelectConditionStep<PaperRecord>>(selectConditionStepMock).orderBy(sortFields)
-        verify<SelectSeekStepN<PaperRecord>>(selectSeekStepNMock).limit(20)
-        verify<SelectLimitPercentStep<PaperRecord>>(selectLimitPercentStepMock).offset(0)
-        verify<SelectForUpdateStep<PaperRecord>>(selectForUpdateStepMock).fetch(mapper)
+        verify { dsl.selectFrom(table) }
     }
 
     @Test
     fun findingPageOfIdsBySearchOrder() {
-        whenever(searchOrderRepositoryMock
-            .findPageOfIdsBySearchOrder(searchOrderMock, paginationContextMock)).thenReturn(listOf(17L, 3L, 5L))
-        assertThat(repo.findPageOfIdsBySearchOrder(searchOrderMock, paginationContextMock)).containsExactly(17L, 3L, 5L)
-        verify(searchOrderRepositoryMock).findPageOfIdsBySearchOrder(searchOrderMock, paginationContextMock)
+        every {
+            searchOrderRepositoryMock.findPageOfIdsBySearchOrder(searchOrderMock, paginationContextMock)
+        } returns listOf(17L, 3L, 5L)
+        repo.findPageOfIdsBySearchOrder(searchOrderMock, paginationContextMock) shouldContainAll listOf(17L, 3L, 5L)
+        verify { searchOrderRepositoryMock.findPageOfIdsBySearchOrder(searchOrderMock, paginationContextMock) }
     }
 
     @Test
     fun deletingIds() {
         val ids = listOf(3L, 5L, 7L)
-        whenever(dsl.deleteFrom(table)).thenReturn(deleteWhereStepMock)
-        whenever(deleteWhereStepMock.where(PAPER.ID.`in`(ids))).thenReturn(deleteConditionStepMock)
+        every { dsl.deleteFrom(table) } returns deleteWhereStepMock
+        every { deleteWhereStepMock.where(PAPER.ID.`in`(ids)) } returns deleteConditionStepMock
 
         repo.delete(ids)
 
-        verify(dsl).deleteFrom(table)
-        verify(deleteWhereStepMock).where(PAPER.ID.`in`(ids))
-        verify<DeleteConditionStep<PaperRecord>>(deleteConditionStepMock).execute()
+        verify { dsl.deleteFrom(table) }
+        verify { deleteWhereStepMock.where(PAPER.ID.`in`(ids)) }
+        verify { deleteConditionStepMock.execute() }
     }
 
     @Test
@@ -296,20 +292,20 @@ internal class JooqPaperRepoTest :
 
     @Test
     fun enrichingAssociatedEntitiesOf_withNullLanguageCode_withNullPaperId_doesNotCallRepo() {
-        whenever(paperMock.id).thenReturn(null)
+        every { paperMock.id } returns null
         val repo = makeRepoStubbingAttachmentEnriching()
         repo.enrichAssociatedEntitiesOf(paperMock, null)
-        verify(paperMock).id
-        verify(paperMock, never()).attachments = Mockito.anyList()
+        verify { paperMock.id }
+        verify(exactly = 0) { paperMock.attachments = any() }
     }
 
     @Test
     fun enrichingAssociatedEntitiesOf_withNullLanguageCode_withPaperWithId_enrichesAttachments() {
-        whenever(paperMock.id).thenReturn(17L)
+        every { paperMock.id } returns 17L
         val repo = makeRepoStubbingAttachmentEnriching()
         repo.enrichAssociatedEntitiesOf(paperMock, null)
-        verify(paperMock).id
-        verify(paperMock).attachments = listOf(paperAttachmentMock)
+        verify { paperMock.id }
+        verify { paperMock.attachments = listOf(paperAttachmentMock) }
     }
 
     private fun makeRepoStubbingAttachmentEnriching(): JooqPaperRepo =
@@ -329,21 +325,23 @@ internal class JooqPaperRepoTest :
 
     @Test
     fun evaluatingNumbers_withNullRecord_returnsEmpty() {
-        assertThat(repo.evaluateNumbers(null)).isEmpty
+        repo.evaluateNumbers(null).isPresent.shouldBeFalse()
     }
 
     @Test
     fun evaluatingNumbers_withRecordWithNullValue1_returnsEmpty() {
-        val numbers: Record1<Array<Long>> = mock()
-        whenever(numbers.value1()).thenReturn(null)
-        assertThat(repo.evaluateNumbers(numbers)).isEmpty
+        val numbers: Record1<Array<Long>> = mockk {
+            every { value1() } returns null
+        }
+        repo.evaluateNumbers(numbers).isPresent.shouldBeFalse()
     }
 
     @Test
     fun evaluatingNumbers_withRecordWithEmptyValue1_returnsEmpty() {
-        val numbers: Record1<Array<Long>> = mock()
-        whenever(numbers.value1()).thenReturn(arrayOf())
-        assertThat(repo.evaluateNumbers(numbers)).isEmpty
+        val numbers: Record1<Array<Long>> = mockk {
+            every { value1() } returns arrayOf()
+        }
+        repo.evaluateNumbers(numbers).isPresent.shouldBeFalse()
     }
 
     companion object {

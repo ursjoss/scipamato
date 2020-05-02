@@ -1,30 +1,31 @@
 package ch.difty.scipamato.core.sync.launcher
 
-import com.nhaarman.mockitokotlin2.whenever
-import org.assertj.core.api.Assertions.assertThat
+import io.mockk.every
+import io.mockk.spyk
+import io.mockk.verify
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeTrue
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito.doReturn
-import org.mockito.Mockito.spy
-import org.mockito.Mockito.verify
 
 internal class UnsynchronizedEntitiesWarnerTest {
 
     @Test
     fun findingUnsynchronizedPapers_withNoRecords_returnsEmptyOptional() {
-        val warnerSpy = spy(UnsynchronizedEntitiesWarner::class.java)
-        doReturn(emptyList<Any>()).whenever(warnerSpy).retrieveRecords()
-        assertThat(warnerSpy.findUnsynchronizedPapers()).isEmpty
-        verify(warnerSpy).retrieveRecords()
+        val warnerSpy = spyk<UnsynchronizedEntitiesWarner> {
+            every { retrieveRecords() } returns emptyList()
+        }
+        warnerSpy.findUnsynchronizedPapers().isEmpty.shouldBeTrue()
+        verify { warnerSpy.retrieveRecords() }
     }
 
     @Test
     fun findingUnsynchronizedPapers_withRecords_returnsResultingMessage() {
         val numbers = listOf(5L, 18L, 3L)
-        val warnerSpy = spy(UnsynchronizedEntitiesWarner::class.java)
-        doReturn(numbers).whenever(warnerSpy).retrieveRecords()
-        assertThat(warnerSpy.findUnsynchronizedPapers().get()).isEqualTo(
+        val warnerSpy = spyk<UnsynchronizedEntitiesWarner> {
+            every { retrieveRecords() } returns numbers
+        }
+        warnerSpy.findUnsynchronizedPapers().get() shouldBeEqualTo
             "Papers not synchronized due to missing codes: Number 5, 18, 3."
-        )
-        verify(warnerSpy).retrieveRecords()
+        verify { warnerSpy.retrieveRecords() }
     }
 }

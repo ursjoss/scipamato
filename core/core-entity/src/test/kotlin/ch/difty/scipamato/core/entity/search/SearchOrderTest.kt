@@ -5,25 +5,31 @@ import ch.difty.scipamato.common.entity.ScipamatoEntity.ScipamatoEntityFields.MO
 import ch.difty.scipamato.core.entity.CoreEntity.CoreEntityFields.CREATOR_ID
 import ch.difty.scipamato.core.entity.CoreEntity.CoreEntityFields.MODIFIER_ID
 import ch.difty.scipamato.core.entity.search.SearchOrder.SearchOrderFields.SHOW_EXCLUDED
+import io.mockk.impl.annotations.MockK
+import io.mockk.junit5.MockKExtension
 import nl.jqno.equalsverifier.EqualsVerifier
 import nl.jqno.equalsverifier.Warning
-import org.assertj.core.api.Assertions.assertThat
+import org.amshove.kluent.shouldBeEmpty
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeNull
+import org.amshove.kluent.shouldContainAll
+import org.amshove.kluent.shouldHaveSize
+import org.amshove.kluent.shouldNotBeNull
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
-import org.mockito.Mock
-import org.mockito.junit.jupiter.MockitoExtension
 import java.time.LocalDateTime
 
 private const val SO_NAME = "soName"
 
-@ExtendWith(MockitoExtension::class)
+@ExtendWith(MockKExtension::class)
 internal class SearchOrderTest {
 
     private val so = SearchOrder(10L, SO_NAME, 1, false, null, null)
 
-    @Mock
+    @MockK
     private lateinit var mockCondition1: SearchCondition
-    @Mock
+
+    @MockK
     private lateinit var mockCondition2: SearchCondition
 
     private val searchConditions = ArrayList<SearchCondition>()
@@ -31,10 +37,10 @@ internal class SearchOrderTest {
 
     @Test
     fun testGetters() {
-        assertThat(so.id).isEqualTo(10)
-        assertThat(so.owner).isEqualTo(1)
-        assertThat(so.isGlobal).isEqualTo(false)
-        assertThat(so.isShowExcluded).isEqualTo(false)
+        so.id shouldBeEqualTo 10
+        so.owner shouldBeEqualTo 1
+        so.isGlobal shouldBeEqualTo false
+        so.isShowExcluded shouldBeEqualTo false
     }
 
     @Test
@@ -45,128 +51,128 @@ internal class SearchOrderTest {
         so.isGlobal = true
         so.isShowExcluded = true
 
-        assertThat(so.id as Long).isEqualTo(11)
-        assertThat(so.name).isEqualTo(SO_NAME)
-        assertThat(so.owner).isEqualTo(2)
-        assertThat(so.isGlobal).isEqualTo(true)
-        assertThat(so.isShowExcluded).isEqualTo(true)
+        so.id as Long shouldBeEqualTo 11
+        so.name shouldBeEqualTo SO_NAME
+        so.owner shouldBeEqualTo 2
+        so.isGlobal shouldBeEqualTo true
+        so.isShowExcluded shouldBeEqualTo true
     }
 
     @Test
     fun whenInstantiating_withNullLists_containsNoItems() {
-        assertThat(so.searchConditions).isEmpty()
-        assertThat(so.excludedPaperIds).isEmpty()
+        so.searchConditions.shouldBeEmpty()
+        so.excludedPaperIds.shouldBeEmpty()
     }
 
     @Test
     fun whenInstantiating_withEmptyConditionList_hasNoConditions() {
-        assertThat(SearchOrder(searchConditions).searchConditions).isEmpty()
+        SearchOrder(searchConditions).searchConditions.shouldBeEmpty()
     }
 
     @Test
     fun whenInstantiating_withEmptyExclusionList_hasNoExclusions() {
-        assertThat(excludedIds).isEmpty()
-        assertThat(SearchOrder(10L, SO_NAME, 1, false, null, excludedIds).excludedPaperIds).isEmpty()
+        excludedIds.shouldBeEmpty()
+        SearchOrder(10L, SO_NAME, 1, false, null, excludedIds).excludedPaperIds.shouldBeEmpty()
     }
 
     @Test
     fun whenInstantiating_withNonEmptyConditionList_hasHandedOverConditions() {
         searchConditions.addAll(listOf(mockCondition1, mockCondition2))
-        assertThat(SearchOrder(searchConditions).searchConditions).containsExactly(mockCondition1, mockCondition2)
+        SearchOrder(searchConditions).searchConditions shouldContainAll listOf(mockCondition1, mockCondition2)
     }
 
     @Test
     fun whenInstantiating_withNonEmptyExclusionList_hasHandedOverExclusions() {
         excludedIds.add(3L)
         excludedIds.add(5L)
-        assertThat(SearchOrder(10L, SO_NAME, 1, false, null, excludedIds).excludedPaperIds).containsExactly(3L, 5L)
+        SearchOrder(10L, SO_NAME, 1, false, null, excludedIds).excludedPaperIds shouldContainAll listOf(3L, 5L)
     }
 
     @Test
     fun whenAddingNullCondition_itIsNotAdded() {
         so.add(null)
-        assertThat(so.searchConditions).isEmpty()
+        so.searchConditions.shouldBeEmpty()
     }
 
     @Test
     fun whenAddingCondition_itIsGettingAdded() {
         so.add(mockCondition1)
-        assertThat(so.searchConditions).containsExactly(mockCondition1)
+        so.searchConditions shouldContainAll listOf(mockCondition1)
     }
 
     @Test
     fun whenRemovingSearchCondition_withNullParameter_doesNothing() {
         so.add(mockCondition1)
         so.add(mockCondition2)
-        assertThat(so.searchConditions).containsExactly(mockCondition1, mockCondition2)
+        so.searchConditions shouldContainAll listOf(mockCondition1, mockCondition2)
 
         so.remove(null)
 
-        assertThat(so.searchConditions).containsExactly(mockCondition1, mockCondition2)
+        so.searchConditions shouldContainAll listOf(mockCondition1, mockCondition2)
     }
 
     @Test
     fun whenRemovingSearchCondition_withConditionWhichIsPresent_doesRemoveIt() {
         so.add(mockCondition1)
         so.add(mockCondition2)
-        assertThat(so.searchConditions).containsExactly(mockCondition1, mockCondition2)
+        so.searchConditions shouldContainAll listOf(mockCondition1, mockCondition2)
 
         so.remove(mockCondition2)
 
-        assertThat(so.searchConditions).containsExactly(mockCondition1)
+        so.searchConditions shouldContainAll listOf(mockCondition1)
     }
 
     @Test
     fun whenRemovingCondition_withConditionWhichIsNotPresent_doesNothing() {
         so.add(mockCondition2)
-        assertThat(so.searchConditions).containsExactly(mockCondition2)
+        so.searchConditions shouldContainAll listOf(mockCondition2)
 
         so.remove(mockCondition1)
 
-        assertThat(so.searchConditions).containsExactly(mockCondition2)
+        so.searchConditions shouldContainAll listOf(mockCondition2)
     }
 
     @Test
     fun whenAddingExclusion_itIsGettingAdded() {
         so.addExclusionOfPaperWithId(5L)
-        assertThat(so.excludedPaperIds).containsExactly(5L)
+        so.excludedPaperIds shouldContainAll listOf(5L)
     }
 
     @Test
     fun whenAddingExclusion_withExclusionAlreadyPresent_doesNotAddItAnymore() {
         so.addExclusionOfPaperWithId(5L)
-        assertThat(so.excludedPaperIds).containsExactly(5L)
+        so.excludedPaperIds shouldContainAll listOf(5L)
         so.addExclusionOfPaperWithId(5L)
-        assertThat(so.excludedPaperIds).containsExactly(5L)
+        so.excludedPaperIds shouldContainAll listOf(5L)
     }
 
     @Test
     fun whenRemovingExclusion_whichWasExcluded_doesRemoveIt() {
         so.addExclusionOfPaperWithId(5L)
         so.addExclusionOfPaperWithId(8L)
-        assertThat(so.excludedPaperIds).containsExactly(5L, 8L)
+        so.excludedPaperIds shouldContainAll listOf(5L, 8L)
 
         so.removeExclusionOfPaperWithId(5L)
 
-        assertThat(so.excludedPaperIds).containsExactly(8L)
+        so.excludedPaperIds shouldContainAll listOf(8L)
     }
 
     @Test
     fun whenRemovingExclusion_whichWasNotExcluded_doesNothing() {
         so.addExclusionOfPaperWithId(5L)
-        assertThat(so.excludedPaperIds).containsExactly(5L)
+        so.excludedPaperIds shouldContainAll listOf(5L)
 
         so.removeExclusionOfPaperWithId(8L)
 
-        assertThat(so.excludedPaperIds).containsExactly(5L)
+        so.excludedPaperIds shouldContainAll listOf(5L)
     }
 
     @Test
     fun testingToString_withNoConditionsOrExclusions() {
-        assertThat(so.searchConditions).hasSize(0)
-        assertThat(so.excludedPaperIds).hasSize(0)
+        so.searchConditions shouldHaveSize 0
+        so.excludedPaperIds shouldHaveSize 0
         // TODO
-        //        assertThat(so.toString()).isEqualTo(
+        //        so.toString() shouldBeEqualTo
         //            "SearchOrder[name=soName,owner=1,global=false,searchConditions=[],excludedPaperIds=[],
         //            showExcluded=false,id=10,createdBy=<null>,lastModifiedBy=<null>,created=<null>,
         //            lastModified=<null>,version=0]");
@@ -179,7 +185,7 @@ internal class SearchOrderTest {
         so.addExclusionOfPaperWithId(3L)
         so.addExclusionOfPaperWithId(5L)
         // TODO fix
-        // assertThat(so.toString()).isEqualTo(
+        // so.toString() shouldBeEqualTo
         // "SearchOrder[name=soName,owner=1,global=false,searchConditions=[mockCondition1, mockCondition2],
         // excludedPaperIds=[3, 5],showExcluded=false,id=10,createdBy=<null>,lastModifiedBy=<null>,created=<null>,
         // lastModified=<null>,version=0]");
@@ -187,23 +193,23 @@ internal class SearchOrderTest {
 
     @Test
     fun testingFullDisplayValue_withNoConditions_returnsIDOnly() {
-        assertThat(so.searchConditions).hasSize(0)
-        assertThat(so.fullDisplayValue).isEqualTo("soName:  (10)")
+        so.searchConditions shouldHaveSize 0
+        so.fullDisplayValue shouldBeEqualTo "soName:  (10)"
     }
 
     @Test
     fun testingFullDisplayValue_forGlobalSearchOrderWithNoConditions_returnsIdPlusGlobalIndicator() {
-        assertThat(so.searchConditions).hasSize(0)
+        so.searchConditions shouldHaveSize 0
         so.isGlobal = true
-        assertThat(so.fullDisplayValue).isEqualTo("soName:  (10)*")
+        so.fullDisplayValue shouldBeEqualTo "soName:  (10)*"
     }
 
     @Test
     fun testingFullDisplayValue_withoutName_forGlobalSearchOrderWithNoConditions_returnsIdPlusGlobalIndicator() {
         so.name = null
-        assertThat(so.searchConditions).hasSize(0)
+        so.searchConditions shouldHaveSize 0
         so.isGlobal = true
-        assertThat(so.fullDisplayValue).isEqualTo("-- (10)*")
+        so.fullDisplayValue shouldBeEqualTo "-- (10)*"
     }
 
     @Test
@@ -213,7 +219,7 @@ internal class SearchOrderTest {
             override fun getDisplayValue(): String = "f1DisplayValue"
         })
 
-        assertThat(so1.displayValue).isEqualTo("f1DisplayValue (10)")
+        so1.displayValue shouldBeEqualTo "f1DisplayValue (10)"
     }
 
     @Test
@@ -222,7 +228,7 @@ internal class SearchOrderTest {
             override fun getDisplayValue(): String = "f1DisplayValue"
         })
 
-        assertThat(so.fullDisplayValue).isEqualTo("soName: f1DisplayValue (10)")
+        so.fullDisplayValue shouldBeEqualTo "soName: f1DisplayValue (10)"
     }
 
     @Test
@@ -234,7 +240,7 @@ internal class SearchOrderTest {
             override fun getDisplayValue(): String = "c2DisplayValue"
         })
 
-        assertThat(so.fullDisplayValue).isEqualTo("soName: c1DisplayValue; OR c2DisplayValue (10)")
+        so.fullDisplayValue shouldBeEqualTo "soName: c1DisplayValue; OR c2DisplayValue (10)"
     }
 
     @Test
@@ -243,7 +249,7 @@ internal class SearchOrderTest {
             override fun getDisplayValue(): String = "f1DisplayValue"
         })
 
-        assertThat(so.displayValue).isEqualTo("soName: f1DisplayValue (10)")
+        so.displayValue shouldBeEqualTo "soName: f1DisplayValue (10)"
     }
 
     @Test
@@ -266,8 +272,8 @@ internal class SearchOrderTest {
         so.add(object : SearchCondition() {
             override fun getDisplayValue(): String = "c6DisplayValue"
         })
-        assertThat(so.displayValue).isEqualTo("soName: c1DisplayValue; OR c2DisplayValue; " +
-            "OR c3DisplayValue; OR c4DisplayValue; OR c5DisplayValu... (10)")
+        so.displayValue shouldBeEqualTo "soName: c1DisplayValue; OR c2DisplayValue; " +
+            "OR c3DisplayValue; OR c4DisplayValue; OR c5DisplayValu... (10)"
     }
 
     @Test
@@ -283,42 +289,42 @@ internal class SearchOrderTest {
         c2.publicationYear = "2016"
         c2.isFirstAuthorOverridden = true
 
-        assertThat(so.searchConditions).hasSize(0)
+        so.searchConditions shouldHaveSize 0
         so.add(c1)
-        assertThat(so.searchConditions).hasSize(1)
+        so.searchConditions shouldHaveSize 1
         so.add(c2)
-        assertThat(so.searchConditions).hasSize(1)
+        so.searchConditions shouldHaveSize 1
     }
 
     @Test
     fun createdDisplayValue_withNullValues_isEmpty() {
-        assertThat(so.createdDisplayValue).isEqualTo("")
+        so.createdDisplayValue shouldBeEqualTo ""
     }
 
     @Test
     fun createdDisplayValue_withNameOnly_hasName() {
         so.createdByName = "foo"
-        assertThat(so.created).isNull()
-        assertThat(so.createdDisplayValue).isEqualTo("foo")
+        so.created.shouldBeNull()
+        so.createdDisplayValue shouldBeEqualTo "foo"
     }
 
     @Test
     fun createdDisplayValue_withDateOnly_hasDate() {
-        assertThat(so.createdByName).isNull()
+        so.createdByName.shouldBeNull()
         so.created = LocalDateTime.parse("2017-01-01T10:11:12.345")
-        assertThat(so.createdDisplayValue).isEqualTo("2017-01-01 10:11:12")
+        so.createdDisplayValue shouldBeEqualTo "2017-01-01 10:11:12"
     }
 
     @Test
     fun createdDisplayValue() {
         so.createdByName = "foo"
         so.created = LocalDateTime.parse("2017-01-01T10:11:12.345")
-        assertThat(so.createdDisplayValue).isEqualTo("foo (2017-01-01 10:11:12)")
+        so.createdDisplayValue shouldBeEqualTo "foo (2017-01-01 10:11:12)"
     }
 
     @Test
     fun defaultConstructor() {
-        assertThat(SearchOrder()).isNotNull
+        SearchOrder().shouldNotBeNull()
     }
 
     @Test

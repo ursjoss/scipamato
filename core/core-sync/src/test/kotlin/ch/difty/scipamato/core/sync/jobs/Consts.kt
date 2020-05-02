@@ -1,3 +1,5 @@
+@file:Suppress("SpellCheckingInspection")
+
 package ch.difty.scipamato.core.sync.jobs
 
 import java.sql.Timestamp

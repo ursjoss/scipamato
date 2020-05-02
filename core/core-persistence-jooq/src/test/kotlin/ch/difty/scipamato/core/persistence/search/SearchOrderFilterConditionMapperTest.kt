@@ -5,7 +5,7 @@ import ch.difty.scipamato.core.db.tables.SearchOrder
 import ch.difty.scipamato.core.db.tables.SearchOrder.SEARCH_ORDER
 import ch.difty.scipamato.core.db.tables.records.SearchOrderRecord
 import ch.difty.scipamato.core.entity.search.SearchOrderFilter
-import org.assertj.core.api.Assertions.assertThat
+import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.Test
 
 internal class SearchOrderFilterConditionMapperTest :
@@ -20,7 +20,7 @@ internal class SearchOrderFilterConditionMapperTest :
     @Test
     fun creatingWhereCondition_withNameMask_searchesForName() {
         filter.nameMask = "fOo"
-        assertThat(mapper.map(filter).toString()).isEqualToIgnoringCase(
+        mapper.map(filter).toString().toLowerCase() shouldBeEqualTo
             """lower("public"."search_order"."name") like ('%' || replace(
                 |  replace(
                 |    replace(
@@ -34,32 +34,30 @@ internal class SearchOrderFilterConditionMapperTest :
                 |  '_', 
                 |  '!_'
                 |) || '%') escape '!'""".trimMargin()
-        )
     }
 
     @Test
     fun creatingWhereCondition_withOwnerIncludingGlobal_searchesForOwnerIdOrGlobal() {
         filter.ownerIncludingGlobal = 10
-        assertThat(mapper.map(filter).toString()).isEqualToIgnoringCase(
-            "(\n  \"PUBLIC\".\"SEARCH_ORDER\".\"OWNER\" = 10\n  or \"PUBLIC\".\"SEARCH_ORDER\".\"GLOBAL\" = true\n)"
-        )
+        mapper.map(filter).toString().toLowerCase() shouldBeEqualTo
+            "(\n  \"PUBLIC\".\"SEARCH_ORDER\".\"OWNER\" = 10\n  or \"PUBLIC\".\"SEARCH_ORDER\".\"GLOBAL\" = true\n)".toLowerCase()
     }
 
     @Test
     fun creatingWhereCondition_withOwner_searchesForOwnerId() {
         filter.owner = 20
-        assertThat(mapper.map(filter).toString()).isEqualToIgnoringCase(""""PUBLIC"."SEARCH_ORDER"."OWNER" = 20""")
+        mapper.map(filter).toString() shouldBeEqualTo """"public"."search_order"."owner" = 20"""
     }
 
     @Test
     fun creatingWhereCondition_forGlobal_searchesForGlobal() {
         filter.global = true
-        assertThat(mapper.map(filter).toString()).isEqualToIgnoringCase(""""PUBLIC"."SEARCH_ORDER"."GLOBAL" = true""")
+        mapper.map(filter).toString() shouldBeEqualTo """"public"."search_order"."global" = true"""
     }
 
     @Test
     fun creatingWhereCondition_forGlobal_searchesForNotGlobal() {
         filter.global = false
-        assertThat(mapper.map(filter).toString()).isEqualToIgnoringCase(""""PUBLIC"."SEARCH_ORDER"."GLOBAL" = false""")
+        mapper.map(filter).toString() shouldBeEqualTo """"public"."search_order"."global" = false"""
     }
 }

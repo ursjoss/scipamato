@@ -2,15 +2,18 @@ package ch.difty.scipamato.core.persistence
 
 import ch.difty.scipamato.core.entity.IdScipamatoEntity
 import ch.difty.scipamato.core.entity.User
-import com.nhaarman.mockitokotlin2.*
+import io.mockk.confirmVerified
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.verify
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 
 abstract class AbstractServiceTest<ID : Number, T : IdScipamatoEntity<ID>, R : ReadOnlyRepository<T, ID, *>> {
 
-    protected var userRepoMock = mock<UserRepository>()
-    private var creatorMock = mock<User>()
-    private var modifierMock = mock<User>()
+    protected var userRepoMock = mockk<UserRepository>()
+    private var creatorMock = mockk<User>()
+    private var modifierMock = mockk<User>()
 
     /**
      * @return the service specific repo mock
@@ -33,20 +36,20 @@ abstract class AbstractServiceTest<ID : Number, T : IdScipamatoEntity<ID>, R : R
     protected open fun specificSetUp() {}
 
     protected fun auditFixture() {
-        doReturn(CREATOR_ID).whenever(entity).createdBy
-        doReturn(MODIFIER_ID).whenever(entity).lastModifiedBy
+        every { entity.createdBy } returns CREATOR_ID
+        every { entity.lastModifiedBy } returns MODIFIER_ID
 
-        doReturn("creatingUser").whenever(creatorMock).displayValue
-        doReturn("creatingUserFullName").whenever(creatorMock).fullName
-        doReturn("modifyingUser").whenever(modifierMock).displayValue
+        every { creatorMock.displayValue } returns "creatingUser"
+        every { creatorMock.fullName } returns "creatingUserFullName"
+        every { modifierMock.displayValue } returns "modifyingUser"
 
-        doReturn(creatorMock).whenever(userRepoMock).findById(CREATOR_ID)
-        doReturn(modifierMock).whenever(userRepoMock).findById(MODIFIER_ID)
+        every { userRepoMock.findById(CREATOR_ID) } returns creatorMock
+        every { userRepoMock.findById(MODIFIER_ID) } returns modifierMock
     }
 
     @AfterEach
     internal fun tearDown() {
-        verifyNoMoreInteractions(userRepoMock)
+        confirmVerified(userRepoMock)
         specificTearDown()
     }
 
@@ -62,13 +65,13 @@ abstract class AbstractServiceTest<ID : Number, T : IdScipamatoEntity<ID>, R : R
      * number of times the methods have been called.
      */
     protected fun verifyAudit(times: Int) {
-        verify(entity, times(times)).createdBy
-        verify(userRepoMock, times(times)).findById(CREATOR_ID)
-        verify(entity, times(times)).createdByName = "creatingUser"
-        verify(entity, times(times)).createdByFullName = "creatingUserFullName"
-        verify(entity, times(times)).lastModifiedBy
-        verify(userRepoMock, times(times)).findById(MODIFIER_ID)
-        verify(entity, times(times)).lastModifiedByName = "modifyingUser"
+        verify(exactly = times) { entity.createdBy }
+        verify(exactly = times) { userRepoMock.findById(CREATOR_ID) }
+        verify(exactly = times) { entity.createdByName = "creatingUser" }
+        verify(exactly = times) { entity.createdByFullName = "creatingUserFullName" }
+        verify(exactly = times) { entity.lastModifiedBy }
+        verify(exactly = times) { userRepoMock.findById(MODIFIER_ID) }
+        verify(exactly = times) { entity.lastModifiedByName = "modifyingUser" }
     }
 
     companion object {

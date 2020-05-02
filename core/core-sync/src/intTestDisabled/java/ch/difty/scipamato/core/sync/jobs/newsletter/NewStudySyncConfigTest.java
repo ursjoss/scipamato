@@ -108,34 +108,34 @@ class NewStudySyncConfigTest extends SyncConfigTest<NewStudyRecord> {
 
         PublicNewStudy pns = config.makeEntity(rs);
 
-        assertThat(pns.getNewsletterId()).isEqualTo(1);
-        assertThat(pns.getNewsletterTopicId()).isEqualTo(2);
-        assertThat(pns.getSort()).isEqualTo(1); // TODO make dynamic
-        assertThat(pns.getPaperNumber()).isEqualTo(4L);
-        assertThat(pns.getYear()).isEqualTo(5);
-        assertThat(pns.getAuthors()).isEqualTo(expectedAuthors);
-        assertThat(pns.getHeadline()).isEqualTo("hl");
-        assertThat(pns.getDescription()).isEqualTo("goals");
-        assertThat(pns.getVersion()).isEqualTo(6);
-        assertThat(pns.getCreated()).isEqualTo(CREATED);
-        assertThat(pns.getLastModified()).isEqualTo(MODIFIED);
+        pns.getNewsletterId() shouldBeEqualTo 1;
+        pns.getNewsletterTopicId() shouldBeEqualTo 2;
+        pns.getSort() shouldBeEqualTo 1; // TODO make dynamic
+        pns.getPaperNumber() shouldBeEqualTo 4L;
+        pns.getYear() shouldBeEqualTo 5;
+        pns.getAuthors() shouldBeEqualTo expectedAuthors;
+        pns.getHeadline() shouldBeEqualTo "hl";
+        pns.getDescription() shouldBeEqualTo "goals";
+        pns.getVersion() shouldBeEqualTo 6;
+        pns.getCreated() shouldBeEqualTo CREATED;
+        pns.getLastModified() shouldBeEqualTo MODIFIED;
         assertThat(pns.getLastSynched()).isCloseTo("2016-12-09T06:02:13.000", 1000);
 
-        verify(rs).getInt(PaperNewsletter.PAPER_NEWSLETTER.NEWSLETTER_ID.getName());
-        verify(rs).getInt(PaperNewsletter.PAPER_NEWSLETTER.NEWSLETTER_TOPIC_ID.getName());
-        //verify(rs).getInt(PaperNewsletter.PAPER_NEWSLETTER.SORT.getName());
-        verify(rs).getLong(Paper.PAPER.NUMBER.getName());
-        verify(rs).getInt(Paper.PAPER.PUBLICATION_YEAR.getName());
-        verify(rs).getString(Paper.PAPER.AUTHORS.getName());
-        verify(rs).getString(Paper.PAPER.FIRST_AUTHOR.getName());
-        verify(rs).getString(PaperNewsletter.PAPER_NEWSLETTER.HEADLINE.getName());
-        verify(rs).getString(Paper.PAPER.GOALS.getName());
-        verify(rs).getInt(PaperNewsletter.PAPER_NEWSLETTER.VERSION.getName());
-        verify(rs).getTimestamp(PaperNewsletter.PAPER_NEWSLETTER.CREATED.getName());
-        verify(rs).getTimestamp(PaperNewsletter.PAPER_NEWSLETTER.LAST_MODIFIED.getName());
-        verify(rs, times(5)).wasNull();
+        verify{ rs.getInt(PaperNewsletter.PAPER_NEWSLETTER.NEWSLETTER_ID.getName()); }
+        verify{ rs.getInt(PaperNewsletter.PAPER_NEWSLETTER.NEWSLETTER_TOPIC_ID.getName()); }
+        //verify{ rs.getInt(PaperNewsletter.PAPER_NEWSLETTER.SORT.getName()); }
+        verify{ rs.getLong(Paper.PAPER.NUMBER.getName()); }
+        verify{ rs.getInt(Paper.PAPER.PUBLICATION_YEAR.getName()); }
+        verify{ rs.getString(Paper.PAPER.AUTHORS.getName()); }
+        verify{ rs.getString(Paper.PAPER.FIRST_AUTHOR.getName()); }
+        verify{ rs.getString(PaperNewsletter.PAPER_NEWSLETTER.HEADLINE.getName()); }
+        verify{ rs.getString(Paper.PAPER.GOALS.getName()); }
+        verify{ rs.getInt(PaperNewsletter.PAPER_NEWSLETTER.VERSION.getName()); }
+        verify{ rs.getTimestamp(PaperNewsletter.PAPER_NEWSLETTER.CREATED.getName()); }
+        verify{ rs.getTimestamp(PaperNewsletter.PAPER_NEWSLETTER.LAST_MODIFIED.getName()); }
+        verify(exactly=5) { rs.wasNull(); }
 
-        verifyNoMoreInteractions(rs);
+        confirmVerified(rs);
     }
 
 }

@@ -4,8 +4,10 @@ import ch.difty.scipamato.common.entity.newsletter.PublicationStatus
 import ch.difty.scipamato.core.db.tables.records.NewsletterRecord
 import ch.difty.scipamato.core.entity.newsletter.Newsletter
 import ch.difty.scipamato.core.persistence.RecordMapperTest
-import com.nhaarman.mockitokotlin2.whenever
-import org.assertj.core.api.Assertions.assertThat
+import io.mockk.every
+import org.amshove.kluent.shouldBeEmpty
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeNull
 import org.jooq.RecordMapper
 import org.junit.jupiter.api.Test
 import java.sql.Date
@@ -32,11 +34,11 @@ internal class NewsletterRecordMapperTest : RecordMapperTest<NewsletterRecord, N
     }
 
     override fun assertEntity(entity: Newsletter) {
-        assertThat(entity.id).isEqualTo(ID)
-        assertThat(entity.issue).isEqualTo(ISSUE)
-        assertThat(entity.issueDate).isEqualTo(LocalDate.parse(ISSUE_DATE))
-        assertThat(entity.publicationStatus).isEqualTo(PUBLICATION_STATUS)
-        assertThat(entity.topics).isEmpty()
+        entity.id shouldBeEqualTo ID
+        entity.issue shouldBeEqualTo ISSUE
+        entity.issueDate shouldBeEqualTo LocalDate.parse(ISSUE_DATE)
+        entity.publicationStatus shouldBeEqualTo PUBLICATION_STATUS
+        entity.topics.shouldBeEmpty()
     }
 
     @Test
@@ -45,7 +47,7 @@ internal class NewsletterRecordMapperTest : RecordMapperTest<NewsletterRecord, N
         setAuditFieldsIn(record)
         record.issueDate = null
         val entity = mapper.map(record)
-        assertThat(entity.issueDate).isNull()
+        entity.issueDate.shouldBeNull()
     }
 
     companion object {
@@ -55,9 +57,9 @@ internal class NewsletterRecordMapperTest : RecordMapperTest<NewsletterRecord, N
         val PUBLICATION_STATUS = PublicationStatus.WIP
 
         fun entityFixtureWithoutIdFields(entityMock: Newsletter) {
-            whenever(entityMock.issue).thenReturn(ISSUE)
-            whenever(entityMock.issueDate).thenReturn(LocalDate.parse(ISSUE_DATE))
-            whenever(entityMock.publicationStatus).thenReturn(PUBLICATION_STATUS)
+            every { entityMock.issue } returns ISSUE
+            every { entityMock.issueDate } returns LocalDate.parse(ISSUE_DATE)
+            every { entityMock.publicationStatus } returns PUBLICATION_STATUS
         }
     }
 }

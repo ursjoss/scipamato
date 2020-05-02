@@ -1,7 +1,11 @@
 package ch.difty.scipamato.core.sync.launcher
 
-import org.assertj.core.api.Assertions.assertThat
-
+import org.amshove.kluent.shouldBeEmpty
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeFalse
+import org.amshove.kluent.shouldBeTrue
+import org.amshove.kluent.shouldContainAll
+import org.amshove.kluent.shouldHaveSize
 import org.junit.jupiter.api.Test
 
 internal class SyncJobResultTest {
@@ -10,82 +14,82 @@ internal class SyncJobResultTest {
 
     @Test
     fun newSyncJobResult_hasNotSuccessful() {
-        assertThat(result.isSuccessful).isFalse()
+        result.isSuccessful.shouldBeFalse()
     }
 
     @Test
     fun newSyncJobResult_hasNotFailed() {
-        assertThat(result.isFailed).isFalse()
+        result.isFailed.shouldBeFalse()
     }
 
     @Test
     fun newSyncJobResult_hasNoMessages() {
-        assertThat(result.messages).isEmpty()
+        result.messages.shouldBeEmpty()
     }
 
     @Test
     fun settingSuccess_hasMessageWithLevelInfo() {
         result.setSuccess("foo")
         val lm = result.messages.first()
-        assertThat(lm.message).isEqualTo("foo")
-        assertThat(lm.messageLevel).isEqualTo(SyncJobResult.MessageLevel.INFO)
+        lm.message shouldBeEqualTo "foo"
+        lm.messageLevel shouldBeEqualTo SyncJobResult.MessageLevel.INFO
     }
 
     @Test
     fun settingFailure_hasMessageWithLevelError() {
         result.setFailure("bar")
         val lm = result.messages.first()
-        assertThat(lm.message).isEqualTo("bar")
-        assertThat(lm.messageLevel).isEqualTo(SyncJobResult.MessageLevel.ERROR)
+        lm.message shouldBeEqualTo "bar"
+        lm.messageLevel shouldBeEqualTo SyncJobResult.MessageLevel.ERROR
     }
 
     @Test
     fun settingWarning_hasMessageWithLevelWarning() {
         result.setWarning("baz")
         val lm = result.messages.first()
-        assertThat(lm.message).isEqualTo("baz")
-        assertThat(lm.messageLevel).isEqualTo(SyncJobResult.MessageLevel.WARNING)
+        lm.message shouldBeEqualTo "baz"
+        lm.messageLevel shouldBeEqualTo SyncJobResult.MessageLevel.WARNING
     }
 
     @Test
     fun settingWarning_doesNotAlterSuccess() {
         result.setWarning("baz")
-        assertThat(result.isSuccessful).isFalse()
-        assertThat(result.isFailed).isFalse()
+        result.isSuccessful.shouldBeFalse()
+        result.isFailed.shouldBeFalse()
     }
 
     @Test
     fun addingSuccessMessage_resultsInSuccessfulJobWithMessage() {
         result.setSuccess("foo")
-        assertThat(result.isSuccessful).isTrue()
-        assertThat(result.isFailed).isFalse()
-        assertThat(result.messages).hasSize(1)
-        assertThat(result.messages.first().message).isEqualTo("foo")
+        result.isSuccessful.shouldBeTrue()
+        result.isFailed.shouldBeFalse()
+        result.messages shouldHaveSize 1
+        result.messages.first().message shouldBeEqualTo "foo"
     }
 
     @Test
     fun addingFailureMessage_resultsInFailedJobWithMessage() {
         result.setFailure("bar")
-        assertThat(result.isSuccessful).isFalse()
-        assertThat(result.isFailed).isTrue()
-        assertThat(result.messages).hasSize(1)
-        assertThat(result.messages.first().message).isEqualTo("bar")
+        result.isSuccessful.shouldBeFalse()
+        result.isFailed.shouldBeTrue()
+        result.messages shouldHaveSize 1
+        result.messages.first().message shouldBeEqualTo "bar"
     }
 
     @Test
     fun withMultipleSteps_ifAllSucceed_success() {
         result.setSuccess("success1")
         result.setSuccess("success2")
-        assertThat(result.isSuccessful).isTrue()
-        assertThat(result.messages.map { it.message }).containsExactly("success1", "success2")
+        result.isSuccessful.shouldBeTrue()
+        result.messages.map { it.message } shouldContainAll listOf("success1", "success2")
     }
 
     @Test
     fun withMultipleSteps_ifOneFails_failure() {
         result.setSuccess("success1")
         result.setFailure("some issue2")
-        assertThat(result.isFailed).isTrue()
-        assertThat(result.messages.map { it.message }).containsExactly("success1", "some issue2")
+        result.isFailed.shouldBeTrue()
+        result.messages.map { it.message } shouldContainAll listOf("success1", "some issue2")
     }
 
     @Test
@@ -93,7 +97,7 @@ internal class SyncJobResultTest {
         result.setSuccess("success1")
         result.setFailure("some issue2")
         result.setSuccess("success3")
-        assertThat(result.isFailed).isTrue()
-        assertThat(result.messages.map { it.message }).containsExactly("success1", "some issue2", "success3")
+        result.isFailed.shouldBeTrue()
+        result.messages.map { it.message } shouldContainAll listOf("success1", "some issue2", "success3")
     }
 }

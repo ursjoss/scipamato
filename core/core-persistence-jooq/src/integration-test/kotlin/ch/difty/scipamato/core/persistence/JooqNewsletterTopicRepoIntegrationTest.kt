@@ -7,10 +7,19 @@ import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicDefinition
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicFilter
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicTranslation
 import ch.difty.scipamato.core.persistence.newsletter.JooqNewsletterTopicRepo
-import org.assertj.core.api.Assertions
-import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Fail.fail
+import org.amshove.kluent.invoking
+import org.amshove.kluent.shouldBeEmpty
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeGreaterThan
+import org.amshove.kluent.shouldBeNull
+import org.amshove.kluent.shouldContainAll
+import org.amshove.kluent.shouldContainSame
+import org.amshove.kluent.shouldHaveSize
+import org.amshove.kluent.shouldNotBeNull
+import org.amshove.kluent.shouldThrow
+import org.amshove.kluent.withMessage
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.fail
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.jooq.JooqTest
 import org.testcontainers.junit.jupiter.Testcontainers
@@ -25,7 +34,7 @@ internal open class JooqNewsletterTopicRepoIntegrationTest {
 
     @Test
     fun findingAll() {
-        assertThat(repo.findAll("en")).hasSize(3)
+        repo.findAll("en") shouldHaveSize 3
     }
 
     @Test
@@ -33,28 +42,28 @@ internal open class JooqNewsletterTopicRepoIntegrationTest {
         val ntds = repo.findPageOfNewsletterTopicDefinitions(
             NewsletterTopicFilter(), PaginationRequest(Sort.Direction.ASC, "title"))
 
-        assertThat(ntds).hasSize(3)
+        ntds shouldHaveSize 3
 
         var ntd = ntds[0]
-        assertThat(ntd.id).isEqualTo(3)
-        assertThat(ntd.title).isEqualTo("Gesundheitsfolgenabschätzung")
-        assertThat(ntd.getTitleInLanguage("de")).isEqualTo("Gesundheitsfolgenabschätzung")
-        assertThat(ntd.getTitleInLanguage("en")).isEqualTo("Health Impact Assessment")
-        assertThat(ntd.getTitleInLanguage("fr")).isNull()
+        ntd.id shouldBeEqualTo 3
+        ntd.title shouldBeEqualTo "Gesundheitsfolgenabschätzung"
+        ntd.getTitleInLanguage("de") shouldBeEqualTo "Gesundheitsfolgenabschätzung"
+        ntd.getTitleInLanguage("en") shouldBeEqualTo "Health Impact Assessment"
+        ntd.getTitleInLanguage("fr").shouldBeNull()
 
         ntd = ntds[1]
-        assertThat(ntd.id).isEqualTo(2)
-        assertThat(ntd.title).isEqualTo("Sterblichkeit")
-        assertThat(ntd.getTitleInLanguage("de")).isEqualTo("Sterblichkeit")
-        assertThat(ntd.getTitleInLanguage("en")).isEqualTo("Mortality")
-        assertThat(ntd.getTitleInLanguage("fr")).isNull()
+        ntd.id shouldBeEqualTo 2
+        ntd.title shouldBeEqualTo "Sterblichkeit"
+        ntd.getTitleInLanguage("de") shouldBeEqualTo "Sterblichkeit"
+        ntd.getTitleInLanguage("en") shouldBeEqualTo "Mortality"
+        ntd.getTitleInLanguage("fr").shouldBeNull()
 
         ntd = ntds[2]
-        assertThat(ntd.id).isEqualTo(1)
-        assertThat(ntd.title).isEqualTo("Ultrafeine Partikel")
-        assertThat(ntd.getTitleInLanguage("de")).isEqualTo("Ultrafeine Partikel")
-        assertThat(ntd.getTitleInLanguage("en")).isEqualTo("Ultrafine Particles")
-        assertThat(ntd.getTitleInLanguage("fr")).isNull()
+        ntd.id shouldBeEqualTo 1
+        ntd.title shouldBeEqualTo "Ultrafeine Partikel"
+        ntd.getTitleInLanguage("de") shouldBeEqualTo "Ultrafeine Partikel"
+        ntd.getTitleInLanguage("en") shouldBeEqualTo "Ultrafine Particles"
+        ntd.getTitleInLanguage("fr").shouldBeNull()
     }
 
     @Test
@@ -62,10 +71,10 @@ internal open class JooqNewsletterTopicRepoIntegrationTest {
         val ntds = repo.findPageOfNewsletterTopicDefinitions(
             NewsletterTopicFilter(), PaginationRequest(Sort.Direction.DESC, "title"))
 
-        assertThat(ntds).hasSize(3)
+        ntds shouldHaveSize 3
 
         val ntd = ntds[0]
-        assertThat(ntd.id).isEqualTo(1)
+        ntd.id shouldBeEqualTo 1
     }
 
     @Test
@@ -74,14 +83,14 @@ internal open class JooqNewsletterTopicRepoIntegrationTest {
         val ntds = repo.findPageOfNewsletterTopicDefinitions(filter,
             PaginationRequest(Sort.Direction.ASC, "title"))
 
-        assertThat(ntds).hasSize(1)
+        ntds shouldHaveSize 1
 
         val ntd = ntds[0]
-        assertThat(ntd.id).isEqualTo(1)
-        assertThat(ntd.title).isEqualTo("Ultrafeine Partikel")
-        assertThat(ntd.getTitleInLanguage("de")).isEqualTo("Ultrafeine Partikel")
-        assertThat(ntd.getTitleInLanguage("en")).isEqualTo("Ultrafine Particles")
-        assertThat(ntd.getTitleInLanguage("fr")).isNull()
+        ntd.id shouldBeEqualTo 1
+        ntd.title shouldBeEqualTo "Ultrafeine Partikel"
+        ntd.getTitleInLanguage("de") shouldBeEqualTo "Ultrafeine Partikel"
+        ntd.getTitleInLanguage("en") shouldBeEqualTo "Ultrafine Particles"
+        ntd.getTitleInLanguage("fr").shouldBeNull()
     }
 
     @Test
@@ -90,13 +99,13 @@ internal open class JooqNewsletterTopicRepoIntegrationTest {
         val ntds = repo.findPageOfNewsletterTopicDefinitions(filter,
             PaginationRequest(Sort.Direction.ASC, "title"))
 
-        assertThat(ntds).hasSize(3)
+        ntds shouldHaveSize 3
 
         val ntd = ntds[0]
-        assertThat(ntd.id).isEqualTo(3)
-        assertThat(ntd.title).isEqualTo("Gesundheitsfolgenabschätzung")
-        assertThat(ntd.getTitleInLanguage("de")).isEqualTo("Gesundheitsfolgenabschätzung")
-        assertThat(ntd.getTitleInLanguage("fr")).isNull()
+        ntd.id shouldBeEqualTo 3
+        ntd.title shouldBeEqualTo "Gesundheitsfolgenabschätzung"
+        ntd.getTitleInLanguage("de") shouldBeEqualTo "Gesundheitsfolgenabschätzung"
+        ntd.getTitleInLanguage("fr").shouldBeNull()
     }
 
     @Test
@@ -105,20 +114,20 @@ internal open class JooqNewsletterTopicRepoIntegrationTest {
         val ntds = repo.findPageOfNewsletterTopicDefinitions(filter,
             PaginationRequest(Sort.Direction.ASC, "title"))
 
-        assertThat(ntds).hasSize(1)
+        ntds shouldHaveSize 1
 
         val ntd = ntds[0]
 
-        assertThat(ntd.version).isEqualTo(1)
-        assertThat(ntd.created).isNull()
-        assertThat(ntd.lastModified).isNull()
+        ntd.version shouldBeEqualTo 1
+        ntd.created.shouldBeNull()
+        ntd.lastModified.shouldBeNull()
 
         val translations = ntd.getTranslations()
-        assertThat(translations).isNotEmpty
+        translations.isNotEmpty()
         val tr = translations.first()
-        assertThat(tr.version).isEqualTo(1)
-        assertThat(tr.created).isNull()
-        assertThat(tr.lastModified).isNull()
+        tr.version shouldBeEqualTo 1
+        tr.created.shouldBeNull()
+        tr.lastModified.shouldBeNull()
     }
 
     @Test
@@ -126,77 +135,77 @@ internal open class JooqNewsletterTopicRepoIntegrationTest {
         val filter = NewsletterTopicFilter().apply { titleMask = "es" }
         val ntds = repo.findPageOfNewsletterTopicDefinitions(filter, PaginationRequest(Sort.Direction.ASC, "title"))
 
-        assertThat(ntds).hasSize(2)
+        ntds shouldHaveSize 2
 
         var ntd = ntds[0]
-        assertThat(ntd.id).isEqualTo(3)
-        assertThat(ntd.title).isEqualTo("Gesundheitsfolgenabschätzung")
-        assertThat(ntd.getTitleInLanguage("de")).isEqualTo("Gesundheitsfolgenabschätzung")
-        assertThat(ntd.getTitleInLanguage("en")).isEqualTo("Health Impact Assessment")
-        assertThat(ntd.getTitleInLanguage("fr")).isNull()
+        ntd.id shouldBeEqualTo 3
+        ntd.title shouldBeEqualTo "Gesundheitsfolgenabschätzung"
+        ntd.getTitleInLanguage("de") shouldBeEqualTo "Gesundheitsfolgenabschätzung"
+        ntd.getTitleInLanguage("en") shouldBeEqualTo "Health Impact Assessment"
+        ntd.getTitleInLanguage("fr").shouldBeNull()
 
         ntd = ntds[1]
-        assertThat(ntd.id).isEqualTo(1)
-        assertThat(ntd.title).isEqualTo("Ultrafeine Partikel")
-        assertThat(ntd.getTitleInLanguage("de")).isEqualTo("Ultrafeine Partikel")
-        assertThat(ntd.getTitleInLanguage("en")).isEqualTo("Ultrafine Particles")
-        assertThat(ntd.getTitleInLanguage("fr")).isNull()
+        ntd.id shouldBeEqualTo 1
+        ntd.title shouldBeEqualTo "Ultrafeine Partikel"
+        ntd.getTitleInLanguage("de") shouldBeEqualTo "Ultrafeine Partikel"
+        ntd.getTitleInLanguage("en") shouldBeEqualTo "Ultrafine Particles"
+        ntd.getTitleInLanguage("fr").shouldBeNull()
     }
 
     @Test
     fun countingNewsletterTopics_withUnspecifiedFilter_findsAllDefinitions() {
-        assertThat(repo.countByFilter(NewsletterTopicFilter())).isEqualTo(3)
+        repo.countByFilter(NewsletterTopicFilter()) shouldBeEqualTo 3
     }
 
     @Test
     fun countingNewsletterTopics_withFilter_findsAllMatchingDefinitions() {
         val filter = NewsletterTopicFilter().apply { titleMask = "es" }
-        assertThat(repo.countByFilter(filter)).isEqualTo(2)
+        repo.countByFilter(filter) shouldBeEqualTo 2
     }
 
     @Test
     fun countingNewsletterTopics_withNonMatchingFilter_findsNone() {
         val filter = NewsletterTopicFilter().apply { titleMask = "foobar" }
-        assertThat(repo.countByFilter(filter)).isEqualTo(0)
+        repo.countByFilter(filter) shouldBeEqualTo 0
     }
 
     @Test
     fun gettingMainLanguage() {
-        assertThat(repo.mainLanguage).isEqualTo("de")
+        repo.mainLanguage shouldBeEqualTo "de"
     }
 
     @Test
     fun findingMainLanguage() {
         val ntd = repo.newUnpersistedNewsletterTopicDefinition()
 
-        assertThat(ntd.id).isNull()
-        assertThat(ntd.mainLanguageCode).isEqualTo("de")
-        assertThat(ntd.title).isEqualTo("n.a.")
-        assertThat(ntd.getTitleInLanguage("de")).isNull()
-        assertThat(ntd.getTranslations()).hasSize(3)
+        ntd.id.shouldBeNull()
+        ntd.mainLanguageCode shouldBeEqualTo "de"
+        ntd.title shouldBeEqualTo "n.a."
+        ntd.getTitleInLanguage("de").shouldBeNull()
+        ntd.getTranslations() shouldHaveSize 3
 
         val translations = ntd.getTranslations()
-        assertThat(translations.map { it.langCode }).containsOnly("de", "en", "fr")
-        assertThat(translations.map { it.id }).containsExactly(null, null, null)
-        assertThat(translations.map { it.title }).containsExactly(null, null, null)
+        translations.map { it.langCode } shouldContainSame listOf("de", "en", "fr")
+        translations.map { it.id } shouldContainAll listOf(null, null, null)
+        translations.map { it.title } shouldContainAll listOf(null, null, null)
     }
 
     @Test
     fun findingNewsletterTopicDefinition_withNonExistingId_returnsNull() {
-        assertThat(repo.findNewsletterTopicDefinitionById(-1)).isNull()
+        repo.findNewsletterTopicDefinitionById(-1).shouldBeNull()
     }
 
     @Test
     fun findingNewsletterTopicDefinition_withExistingId_loadsWithAllLanguages() {
         val existing = repo.findNewsletterTopicDefinitionById(1)
-            ?: Assertions.fail("Unable to find newsletter topic definition")
+            ?: fail { "Unable to find newsletter topic definition" }
 
-        assertThat(existing.id).isEqualTo(1)
-        assertThat(existing.title).isEqualTo("Ultrafeine Partikel")
-        assertThat(existing.getTranslations()).hasSize(3)
-        assertThat(existing.getTitleInLanguage("de")).isEqualTo("Ultrafeine Partikel")
-        assertThat(existing.getTitleInLanguage("en")).isEqualTo("Ultrafine Particles")
-        assertThat(existing.getTitleInLanguage("fr")).isNull()
+        existing.id shouldBeEqualTo 1
+        existing.title shouldBeEqualTo "Ultrafeine Partikel"
+        existing.getTranslations() shouldHaveSize 3
+        existing.getTitleInLanguage("de") shouldBeEqualTo "Ultrafeine Partikel"
+        existing.getTitleInLanguage("en") shouldBeEqualTo "Ultrafine Particles"
+        existing.getTitleInLanguage("fr").shouldBeNull()
     }
 
     @Suppress("LocalVariableName", "VariableNaming")
@@ -207,92 +216,84 @@ internal open class JooqNewsletterTopicRepoIntegrationTest {
         val ntt_fr = NewsletterTopicTranslation(null, "fr", "foo1_fr", 0)
         val ntd = NewsletterTopicDefinition(null, "de", 0, ntt_de, ntt_en, ntt_fr)
 
-        assertThat(ntd.id).isNull()
-        assertThat(ntd.getTranslations().map { it.id }).containsExactly(null, null, null)
+        ntd.id.shouldBeNull()
+        ntd.getTranslations().map { it.id } shouldContainAll listOf(null, null, null)
 
-        val saved = repo.insert(ntd) ?: Assertions.fail("Unable to insert newsletter topic definition")
+        val saved = repo.insert(ntd) ?: fail { "Unable to insert newsletter topic definition" }
 
-        assertThat(saved.id).isGreaterThan(0)
-        assertThat(saved.title).isEqualTo("foo_de")
-        assertThat(saved.getTranslations()).hasSize(3)
-        assertThat(saved.getTranslations().map { it.version }).containsExactly(1, 1, 1)
+        saved.id?.shouldBeGreaterThan(0)
+        saved.title shouldBeEqualTo "foo_de"
+        saved.getTranslations() shouldHaveSize 3
+        saved.getTranslations().map { it.version } shouldContainAll listOf(1, 1, 1)
     }
 
     @Test
     fun updatingRecord() {
         val ntd = repo.findNewsletterTopicDefinitionById(1)
-            ?: Assertions.fail("Unable to find newsletter topic definition")
+            ?: fail { "Unable to find newsletter topic definition" }
 
-        assertThat(ntd.id).isEqualTo(1)
-        assertThat(ntd.getTranslations()).hasSize(3)
-        assertThat(ntd.getTitleInLanguage("de")).isEqualTo("Ultrafeine Partikel")
-        assertThat(ntd.getTitleInLanguage("en")).isEqualTo("Ultrafine Particles")
-        assertThat(ntd.getTitleInLanguage("fr")).isNull()
-        assertThat(ntd.getTranslations("de").first().version).isEqualTo(1)
-        assertThat(ntd.getTranslations("en").first().version).isEqualTo(1)
+        ntd.id shouldBeEqualTo 1
+        ntd.getTranslations() shouldHaveSize 3
+        ntd.getTitleInLanguage("de") shouldBeEqualTo "Ultrafeine Partikel"
+        ntd.getTitleInLanguage("en") shouldBeEqualTo "Ultrafine Particles"
+        ntd.getTitleInLanguage("fr").shouldBeNull()
+        ntd.getTranslations("de").first().version shouldBeEqualTo 1
+        ntd.getTranslations("en").first().version shouldBeEqualTo 1
 
         ntd.setTitleInLanguage("de", "ufp")
         ntd.setTitleInLanguage("fr", "foo")
 
-        val updated = repo.update(ntd) ?: Assertions.fail("Unable to update newsletter topic definition")
+        val updated = repo.update(ntd) ?: fail { "Unable to update newsletter topic definition" }
 
-        assertThat(updated.id).isEqualTo(1)
-        assertThat(updated.getTranslations()).hasSize(3)
-        assertThat(updated.getTitleInLanguage("de")).isEqualTo("ufp")
-        assertThat(updated.getTitleInLanguage("en")).isEqualTo("Ultrafine Particles")
-        assertThat(updated.getTitleInLanguage("fr")).isEqualTo("foo")
+        updated.id shouldBeEqualTo 1
+        updated.getTranslations() shouldHaveSize 3
+        updated.getTitleInLanguage("de") shouldBeEqualTo "ufp"
+        updated.getTitleInLanguage("en") shouldBeEqualTo "Ultrafine Particles"
+        updated.getTitleInLanguage("fr") shouldBeEqualTo "foo"
 
-        assertThat(updated.version).isEqualTo(2)
-        assertThat(updated.getTranslations("de").first().version).isEqualTo(2)
-        assertThat(updated.getTranslations("en").first().version).isEqualTo(2)
-        assertThat(updated.getTranslations("fr").first().version).isEqualTo(1)
+        updated.version shouldBeEqualTo 2
+        updated.getTranslations("de").first().version shouldBeEqualTo 2
+        updated.getTranslations("en").first().version shouldBeEqualTo 2
+        updated.getTranslations("fr").first().version shouldBeEqualTo 1
     }
 
     @Test
     fun deleting_withNonExistingId_returnsNull() {
-        assertThat(repo.delete(-1, 1)).isNull()
+        repo.delete(-1, 1).shouldBeNull()
     }
 
     @Suppress("TooGenericExceptionCaught")
     @Test
     fun deleting_withExistingId_butWrongVersion_throwsOptimisticLockingException() {
-        try {
-            repo.delete(1, -1)
-            fail<Any>("should have thrown exception")
-        } catch (ex: Exception) {
-            assertThat(ex)
-                .isInstanceOf(OptimisticLockingException::class.java)
-                .hasMessage(
-                    "Record in table 'newsletter_topic' has been modified prior to the delete attempt. Aborting...."
-                )
-        }
+        invoking { repo.delete(1, -1) } shouldThrow OptimisticLockingException::class withMessage
+            "Record in table 'newsletter_topic' has been modified prior to the delete attempt. Aborting...."
     }
 
     @Test
     fun deleting_withExistingIdAndVersion_deletes() {
         // insert new record to the database and verify it's there
         val ntd = NewsletterTopicDefinition(null, "de", null)
-        val persisted = repo.insert(ntd) ?: Assertions.fail("Unable to insert newsletter topic definition")
-        val id = persisted.id?: Assertions.fail("id should not be null")
+        val persisted = repo.insert(ntd) ?: fail { "Unable to insert newsletter topic definition" }
+        val id = persisted.id ?: fail { "id should not be null" }
         val version = persisted.version
-        assertThat(repo.findNewsletterTopicDefinitionById(id)).isNotNull()
+        repo.findNewsletterTopicDefinitionById(id).shouldNotBeNull()
 
         // delete the record
-        val deleted = repo.delete(id, version) ?: Assertions.fail("Unable to delete newsletter topic definition")
-        assertThat(deleted.id).isEqualTo(id)
+        val deleted = repo.delete(id, version) ?: fail { "Unable to delete newsletter topic definition" }
+        deleted.id shouldBeEqualTo id
 
         // verify the record is not there anymore
-        assertThat(repo.findNewsletterTopicDefinitionById(id)).isNull()
+        repo.findNewsletterTopicDefinitionById(id).shouldBeNull()
     }
 
     @Test
     fun findingPersistedSortedNewsletterTopicsForNewsletterWithId() {
-        assertThat(repo.findPersistedSortedNewsletterTopicsForNewsletterWithId(1)).isEmpty()
+        repo.findPersistedSortedNewsletterTopicsForNewsletterWithId(1).shouldBeEmpty()
     }
 
     @Test
     fun findingAllSortedNewsletterTopicsForNewsletterWithId() {
-        assertThat(repo.findAllSortedNewsletterTopicsForNewsletterWithId(1)).hasSize(3)
+        repo.findAllSortedNewsletterTopicsForNewsletterWithId(1) shouldHaveSize 3
     }
 
     @Test
@@ -306,7 +307,7 @@ internal open class JooqNewsletterTopicRepoIntegrationTest {
         val newsletterId = 1
 
         val initialRecords = repo.findPersistedSortedNewsletterTopicsForNewsletterWithId(newsletterId)
-        assertThat(initialRecords).isEmpty()
+        initialRecords.shouldBeEmpty()
 
         val topics = ArrayList<NewsletterNewsletterTopic>()
         topics.add(NewsletterNewsletterTopic(newsletterId, 1, 1, "foo"))
@@ -316,11 +317,11 @@ internal open class JooqNewsletterTopicRepoIntegrationTest {
         repo.saveSortedNewsletterTopics(newsletterId, topics)
 
         val newRecords = repo.findPersistedSortedNewsletterTopicsForNewsletterWithId(newsletterId)
-        assertThat(newRecords.map { it.sort }).containsExactly(1, 2)
+        newRecords.map { it.sort } shouldContainAll listOf(1, 2)
 
         repo.removeObsoleteNewsletterTopicsFromSort(newsletterId)
 
-        assertThat(repo.findPersistedSortedNewsletterTopicsForNewsletterWithId(newsletterId)).isEmpty()
+        repo.findPersistedSortedNewsletterTopicsForNewsletterWithId(newsletterId).shouldBeEmpty()
     }
 
     @Test
@@ -338,9 +339,9 @@ internal open class JooqNewsletterTopicRepoIntegrationTest {
         val cds = repo.findPageOfNewsletterTopicDefinitions(
             NewsletterTopicFilter(), PaginationRequest(0, 10, Sort.Direction.DESC, sortProperty))
 
-        assertThat(cds).hasSize(3)
+        cds shouldHaveSize 3
 
         val ntd = cds[0]
-        assertThat(ntd.id).isEqualTo(id)
+        ntd.id shouldBeEqualTo id
     }
 }

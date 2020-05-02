@@ -3,7 +3,9 @@ package ch.difty.scipamato.core.entity.code
 import ch.difty.scipamato.core.entity.CodeClass
 import nl.jqno.equalsverifier.EqualsVerifier
 import nl.jqno.equalsverifier.Warning
-import org.assertj.core.api.Assertions.assertThat
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeTrue
+import org.amshove.kluent.shouldContainSame
 import org.junit.jupiter.api.Test
 
 internal class CodeFilterTest {
@@ -18,14 +20,13 @@ internal class CodeFilterTest {
         f.commentMask = "commentMask"
         f.internal = true
 
-        assertThat(f.codeClass).isEqualTo(cc)
-        assertThat(f.nameMask).isEqualTo("nameMask")
-        assertThat(f.commentMask).isEqualTo("commentMask")
-        assertThat(f.internal).isTrue()
+        f.codeClass shouldBeEqualTo cc
+        f.nameMask shouldBeEqualTo "nameMask"
+        f.commentMask shouldBeEqualTo "commentMask"
+        f.internal.shouldBeTrue()
 
-        assertThat(f.toString()).isEqualTo(
+        f.toString() shouldBeEqualTo
             "CodeFilter(codeClass=CodeClass[id=1], nameMask=nameMask, commentMask=commentMask, internal=true)"
-        )
     }
 
     @Test
@@ -39,7 +40,7 @@ internal class CodeFilterTest {
 
     @Test
     fun assertEnumFields() {
-        assertThat(CodeFilter.CodeFilterFields.values().map { it.fieldName })
-            .containsExactly("codeClass", "nameMask", "commentMask", "internal")
+        CodeFilter.CodeFilterFields.values().map { it.fieldName } shouldContainSame
+            listOf("codeClass", "nameMask", "commentMask", "internal")
     }
 }

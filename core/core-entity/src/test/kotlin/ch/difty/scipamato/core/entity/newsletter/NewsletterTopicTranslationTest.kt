@@ -1,7 +1,6 @@
 package ch.difty.scipamato.core.entity.newsletter
 
-import org.assertj.core.api.Assertions.assertThat
-
+import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.Test
 
 internal class NewsletterTopicTranslationTest {
@@ -9,14 +8,14 @@ internal class NewsletterTopicTranslationTest {
     @Test
     fun titleIsAliasForName() {
         val ntt = NewsletterTopicTranslation(1, "de", "topic1", 1)
-        assertThat(ntt.title).isEqualTo(ntt.name)
+        ntt.title shouldBeEqualTo ntt.name
         ntt.title = "foo"
-        assertThat(ntt.name).isEqualTo("foo")
+        ntt.name shouldBeEqualTo "foo"
     }
 
     @Test
     fun displayValue() {
         val ntt = NewsletterTopicTranslation(1, "de", "topic1", 1)
-        assertThat(ntt.displayValue).isEqualTo("de: topic1")
+        ntt.displayValue shouldBeEqualTo "de: topic1"
     }
 }

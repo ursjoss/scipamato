@@ -1,7 +1,10 @@
 package ch.difty.scipamato.core.entity.keyword
 
-import org.assertj.core.api.Assertions.assertThat
-
+import org.amshove.kluent.shouldBeEmpty
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeNull
+import org.amshove.kluent.shouldContainSame
+import org.amshove.kluent.shouldNotBeNull
 import org.junit.jupiter.api.Test
 
 @Suppress("PrivatePropertyName", "PrivatePropertyName", "SpellCheckingInspection")
@@ -15,60 +18,60 @@ internal class KeywordDefinitionTest {
     @Test
     fun withNoTranslations_unableToEstablishMainName() {
         val kd = KeywordDefinition(1, "de", 1)
-        assertThat(kd.id).isEqualTo(1)
-        assertThat(kd.name).isEqualTo("n.a.")
-        assertThat(kd.searchOverride).isNull()
-        assertThat(kd.displayValue).isEqualTo("n.a.")
-        assertThat(kd.getTranslations()).isEmpty()
+        kd.id shouldBeEqualTo 1
+        kd.name shouldBeEqualTo "n.a."
+        kd.searchOverride.shouldBeNull()
+        kd.displayValue shouldBeEqualTo "n.a."
+        kd.getTranslations().shouldBeEmpty()
     }
 
     @Test
     fun withSearchOverride() {
         val kd = KeywordDefinition(1, "de", "so", 1)
-        assertThat(kd.id).isEqualTo(1)
-        assertThat(kd.name).isEqualTo("n.a.")
-        assertThat(kd.searchOverride).isEqualTo("so")
-        assertThat(kd.displayValue).isEqualTo("n.a.")
-        assertThat(kd.getTranslations()).isEmpty()
+        kd.id shouldBeEqualTo 1
+        kd.name shouldBeEqualTo "n.a."
+        kd.searchOverride shouldBeEqualTo "so"
+        kd.displayValue shouldBeEqualTo "n.a."
+        kd.getTranslations().shouldBeEmpty()
     }
 
     @Test
     fun withTranslations_onePerLanguage() {
         val kd = KeywordDefinition(2, "de", "sooo", 1, kw_de, kw_en, kw_fr)
-        assertThat(kd.id).isEqualTo(2)
-        assertThat(kd.name).isEqualTo("stichwort2")
-        assertThat(kd.searchOverride).isEqualTo("sooo")
-        assertThat(kd.displayValue).isEqualTo("stichwort2")
+        kd.id shouldBeEqualTo 2
+        kd.name shouldBeEqualTo "stichwort2"
+        kd.searchOverride shouldBeEqualTo "sooo"
+        kd.displayValue shouldBeEqualTo "stichwort2"
         val trs = kd.getTranslations()
-        assertThat(trs.map { it.name }).containsOnly("stichwort2", "keyword2", "motdeclef2")
+        trs.map { it.name } shouldContainSame listOf("stichwort2", "keyword2", "motdeclef2")
         for (tr in trs)
-            assertThat(tr.lastModified).isNull()
+            tr.lastModified.shouldBeNull()
     }
 
     @Test
     fun canGetTranslationsAsString_withTranslationsIncludingMainTranslation() {
         val kd = KeywordDefinition(2, "de", 1, kw_de, kw_en, kw_fr)
-        assertThat(kd.translationsAsString).isEqualTo("DE: 'stichwort2'; EN: 'keyword2'; FR: 'motdeclef2'")
+        kd.translationsAsString shouldBeEqualTo "DE: 'stichwort2'; EN: 'keyword2'; FR: 'motdeclef2'"
     }
 
     @Test
     fun canGetTranslationsAsString_withTranslationsIncludingMainTranslation_withPartialTranslation() {
         val kd = KeywordDefinition(2, "de", 1, kw_de, kw_en,
             KeywordTranslation(12, "fr", null, 1))
-        assertThat(kd.translationsAsString).isEqualTo("DE: 'stichwort2'; EN: 'keyword2'; FR: n.a.")
+        kd.translationsAsString shouldBeEqualTo "DE: 'stichwort2'; EN: 'keyword2'; FR: n.a."
     }
 
     @Test
     fun canGetTranslationsAsString_withNoTranslations() {
         val kd = KeywordDefinition(2, "de", 1)
-        assertThat(kd.translationsAsString).isNull()
+        kd.translationsAsString.shouldBeNull()
     }
 
     @Test
     fun modifyTransl_withMainLangTranslModified_changesMainName_translName_andSetsModifiedTimestamp() {
         val kd = KeywordDefinition(2, "de", 1, kw_de, kw_en, kw_fr)
         kd.setNameInLanguage("de", "KEYWORD 2")
-        assertThat(kd.name).isEqualTo("KEYWORD 2")
+        kd.name shouldBeEqualTo "KEYWORD 2"
         assertTranslatedName(kd, "de", 0, "KEYWORD 2")
         assertLastModifiedIsNotNull(kd, "de", 0)
         assertLastModifiedIsNull(kd, "en", 0)
@@ -76,66 +79,65 @@ internal class KeywordDefinitionTest {
     }
 
     private fun assertTranslatedName(kd: KeywordDefinition, lc: String, index: Int, value: String) {
-        assertThat(kd.getTranslations(lc)[index]?.name).isEqualTo(value)
+        kd.getTranslations(lc)[index]?.name shouldBeEqualTo value
     }
 
     @Suppress("SameParameterValue")
     private fun assertLastModifiedIsNotNull(kd: KeywordDefinition, lc: String, index: Int) {
-        assertThat(kd.getTranslations(lc)[index]?.lastModified).isNotNull()
+        kd.getTranslations(lc)[index]?.lastModified.shouldNotBeNull()
     }
 
     private fun assertLastModifiedIsNull(kd: KeywordDefinition, lc: String, index: Int) {
-        assertThat(kd.getTranslations(lc)[index]?.lastModified).isNull()
+        kd.getTranslations(lc)[index]?.lastModified.shouldBeNull()
     }
 
     @Test
     fun modifyTransl_withNonMainLangTranslModified_keepsMainName_changesTranslationName_andSetsModifiedTimestamp() {
         val kd = KeywordDefinition(2, "de", 1, kw_de, kw_en, kw_fr)
         kd.setNameInLanguage("fr", "bar")
-        assertThat(kd.name).isEqualTo("stichwort2")
+        kd.name shouldBeEqualTo "stichwort2"
         assertTranslatedName(kd, "fr", 0, "bar")
-        assertThat(kd.getTranslations("de")[0]?.lastModified).isNull()
-        assertThat(kd.getTranslations("en")[0]?.lastModified).isNull()
+        kd.getTranslations("de")[0]?.lastModified.shouldBeNull()
+        kd.getTranslations("en")[0]?.lastModified.shouldBeNull()
         assertLastModifiedIsNotNull(kd, "fr", 0)
     }
 
     @Test
     fun gettingNameInLanguage_withValidLanguages_returnsNames() {
         val kd = KeywordDefinition(2, "de", 1, kw_de, kw_en, kw_fr)
-        assertThat(kd.getNameInLanguage("de")).isEqualTo("stichwort2")
-        assertThat(kd.getNameInLanguage("en")).isEqualTo("keyword2")
-        assertThat(kd.getNameInLanguage("fr")).isEqualTo("motdeclef2")
+        kd.getNameInLanguage("de") shouldBeEqualTo "stichwort2"
+        kd.getNameInLanguage("en") shouldBeEqualTo "keyword2"
+        kd.getNameInLanguage("fr") shouldBeEqualTo "motdeclef2"
     }
 
     @Test
     fun gettingNameInLanguage_withInvalidLanguage_returnsNames() {
-        assertThat(KeywordDefinition(2, "de", 1).getNameInLanguage("de")).isNull()
+        KeywordDefinition(2, "de", 1).getNameInLanguage("de").shouldBeNull()
     }
 
     @Test
     fun withTranslations_moreThanOnePerLanguage() {
         val kd = KeywordDefinition(2, "de", 1, kw_de, kw_de2, kw_en, kw_fr)
-        assertThat(kd.id).isEqualTo(2)
-        assertThat(kd.name).isEqualTo("stichwort2")
-        assertThat(kd.displayValue).isEqualTo("stichwort2")
+        kd.id shouldBeEqualTo 2
+        kd.name shouldBeEqualTo "stichwort2"
+        kd.displayValue shouldBeEqualTo "stichwort2"
         val trs = kd.getTranslations()
-        assertThat(trs.map { it.name }).containsOnly("stichwort2", "stichwort2foo", "keyword2", "motdeclef2")
+        trs.map { it.name } shouldContainSame listOf("stichwort2", "stichwort2foo", "keyword2", "motdeclef2")
         for (tr in trs)
-            assertThat(tr.lastModified).isNull()
+            tr.lastModified.shouldBeNull()
     }
 
     @Test
     fun canGetTranslationsAsString_withTranslationsIncludingMainTranslation_withMultipleTranslations() {
         val kd = KeywordDefinition(2, "de", 1, kw_de, kw_de2, kw_en, kw_fr)
-        assertThat(kd.translationsAsString).isEqualTo(
-            "DE: 'stichwort2','stichwort2foo'; EN: 'keyword2'; FR: 'motdeclef2'")
+        kd.translationsAsString shouldBeEqualTo "DE: 'stichwort2','stichwort2foo'; EN: 'keyword2'; FR: 'motdeclef2'"
     }
 
     @Test
     fun modifyTransl_withMainLangTranslModified_changesMainName_translName_andSetsModTimestamp_multipleTranslPerLang() {
         val kd = KeywordDefinition(2, "de", 1, kw_de, kw_en, kw_fr, kw_de2)
         kd.setNameInLanguage("de", "Stichwort 2")
-        assertThat(kd.name).isEqualTo("Stichwort 2")
+        kd.name shouldBeEqualTo "Stichwort 2"
         assertTranslatedName(kd, "de", 0, "Stichwort 2")
         assertTranslatedName(kd, "de", 1, "stichwort2foo")
         assertLastModifiedIsNotNull(kd, "de", 0)
@@ -147,12 +149,12 @@ internal class KeywordDefinitionTest {
     @Test
     fun gettingNullSafeId_withIdPresent() {
         val kd = KeywordDefinition(2, "de", 1, kw_de, kw_en, kw_fr, kw_de2)
-        assertThat(kd.nullSafeId).isEqualTo(2)
+        kd.nullSafeId shouldBeEqualTo 2
     }
 
     @Test
     fun gettingNullSafeId_withNoIdPresent() {
         val kd = KeywordDefinition(null, "de", 1, kw_de, kw_en, kw_fr, kw_de2)
-        assertThat(kd.nullSafeId).isEqualTo(0)
+        kd.nullSafeId shouldBeEqualTo 0
     }
 }

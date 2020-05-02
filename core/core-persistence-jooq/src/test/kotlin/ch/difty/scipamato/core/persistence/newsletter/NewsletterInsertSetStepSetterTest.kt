@@ -5,22 +5,24 @@ import ch.difty.scipamato.core.db.tables.records.NewsletterRecord
 import ch.difty.scipamato.core.entity.newsletter.Newsletter
 import ch.difty.scipamato.core.persistence.InsertSetStepSetterTest
 import ch.difty.scipamato.core.persistence.RecordMapperTest
-import com.nhaarman.mockitokotlin2.*
+import io.mockk.confirmVerified
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.verify
 import org.junit.jupiter.api.Test
-import org.mockito.ArgumentMatchers.anyInt
 import java.sql.Date
 
 internal class NewsletterInsertSetStepSetterTest : InsertSetStepSetterTest<NewsletterRecord, Newsletter>() {
 
     override val setter = NewsletterInsertSetStepSetter()
 
-    private val entityMock = mock<Newsletter>()
-    private val recordMock = mock<NewsletterRecord>()
+    private val entityMock = mockk<Newsletter>(relaxed = true)
+    private val recordMock = mockk<NewsletterRecord>()
 
     override val entity = entityMock
 
     override fun specificTearDown() {
-        verifyNoMoreInteractions(entityMock, recordMock)
+        confirmVerified(entityMock, recordMock)
     }
 
     override fun entityFixture() {
@@ -28,63 +30,63 @@ internal class NewsletterInsertSetStepSetterTest : InsertSetStepSetterTest<Newsl
     }
 
     override fun stepSetFixtureExceptAudit() {
-        doReturn(moreStep).whenever(step).set(NEWSLETTER.ISSUE, NewsletterRecordMapperTest.ISSUE)
-        doReturn(moreStep)
-            .whenever(moreStep).set(NEWSLETTER.ISSUE_DATE, Date.valueOf(NewsletterRecordMapperTest.ISSUE_DATE))
-        doReturn(moreStep)
-            .whenever(moreStep).set(NEWSLETTER.PUBLICATION_STATUS, NewsletterRecordMapperTest.PUBLICATION_STATUS.id)
+        every { step.set(NEWSLETTER.ISSUE, NewsletterRecordMapperTest.ISSUE) } returns moreStep
+        every { moreStep.set(NEWSLETTER.ISSUE_DATE, Date.valueOf(NewsletterRecordMapperTest.ISSUE_DATE)) } returns moreStep
+        every { moreStep.set(NEWSLETTER.PUBLICATION_STATUS, NewsletterRecordMapperTest.PUBLICATION_STATUS.id) } returns moreStep
     }
 
     override fun setStepFixtureAudit() {
-        doReturn(moreStep).whenever(moreStep).set(NEWSLETTER.CREATED_BY, RecordMapperTest.CREATED_BY)
-        doReturn(moreStep).whenever(moreStep).set(NEWSLETTER.LAST_MODIFIED_BY, RecordMapperTest.LAST_MOD_BY)
+        every { moreStep.set(NEWSLETTER.CREATED_BY, RecordMapperTest.CREATED_BY) } returns moreStep
+        every { moreStep.set(NEWSLETTER.LAST_MODIFIED_BY, RecordMapperTest.LAST_MOD_BY) } returns moreStep
     }
 
     override fun verifyCallToFieldsExceptKeyAndAudit() {
-        verify(entityMock).issue
-        verify(entityMock).issueDate
-        verify(entityMock).publicationStatus
+        verify { entityMock.issue }
+        verify { entityMock.issueDate }
+        verify { entityMock.publicationStatus }
     }
 
     override fun verifySettingFieldsExceptKeyAndAudit() {
-        verify(step).set(NEWSLETTER.ISSUE, NewsletterRecordMapperTest.ISSUE)
-        verify(moreStep).set(NEWSLETTER.ISSUE_DATE, Date.valueOf(NewsletterRecordMapperTest.ISSUE_DATE))
-        verify(moreStep).set(NEWSLETTER.PUBLICATION_STATUS, NewsletterRecordMapperTest.PUBLICATION_STATUS.id)
+        verify { step.set(NEWSLETTER.ISSUE, NewsletterRecordMapperTest.ISSUE) }
+        verify { moreStep.set(NEWSLETTER.ISSUE_DATE, Date.valueOf(NewsletterRecordMapperTest.ISSUE_DATE)) }
+        verify { moreStep.set(NEWSLETTER.PUBLICATION_STATUS, NewsletterRecordMapperTest.PUBLICATION_STATUS.id) }
     }
 
     override fun verifySettingAuditFields() {
-        verify(moreStep).set(NEWSLETTER.CREATED_BY, RecordMapperTest.CREATED_BY)
-        verify(moreStep).set(NEWSLETTER.LAST_MODIFIED_BY, RecordMapperTest.LAST_MOD_BY)
+        verify { moreStep.set(NEWSLETTER.CREATED_BY, RecordMapperTest.CREATED_BY) }
+        verify { moreStep.set(NEWSLETTER.LAST_MODIFIED_BY, RecordMapperTest.LAST_MOD_BY) }
     }
 
     @Test
     fun consideringSettingKeyOf_withNullId_doesNotSetId() {
-        whenever(entity.id).thenReturn(null)
+        every { entity.id } returns null
         setter.considerSettingKeyOf(moreStep, entity)
-        verify(entity).id
+        verify { entity.id }
     }
 
     @Test
     fun consideringSettingKeyOf_withNonNullId_doesSetId() {
-        whenever(entity.id).thenReturn(NewsletterRecordMapperTest.ID)
+        every { entity.id } returns NewsletterRecordMapperTest.ID
+        every { moreStep.set(NEWSLETTER.ID, NewsletterRecordMapperTest.ID) } returns moreStep
 
         setter.considerSettingKeyOf(moreStep, entity)
 
-        verify(entity).id
-        verify(moreStep).set(NEWSLETTER.ID, NewsletterRecordMapperTest.ID)
+        verify { entity.id }
+        verify { moreStep.set(NEWSLETTER.ID, NewsletterRecordMapperTest.ID) }
     }
 
     @Test
     fun resettingIdToEntity_withNullRecord_doesNothing() {
         setter.resetIdToEntity(entityMock, null)
-        verify(entityMock, never()).id = anyInt()
+        verify(exactly = 0) { entityMock.id = any() }
     }
 
     @Test
     fun resettingIdToEntity_withNonNullRecord_setsId() {
-        whenever(recordMock.id).thenReturn(3)
+        every { recordMock.id } returns 3
+        every { moreStep.set(NEWSLETTER.ID, NewsletterRecordMapperTest.ID) } returns moreStep
         setter.resetIdToEntity(entityMock, recordMock)
-        verify(recordMock).id
-        verify(entityMock).id = anyInt()
+        verify { recordMock.id }
+        verify { entityMock.id = any() }
     }
 }

@@ -6,13 +6,20 @@ import ch.difty.scipamato.core.entity.Code
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic
 import ch.difty.scipamato.core.entity.search.SearchCondition
 import ch.difty.scipamato.core.entity.search.SearchOrder
-import com.nhaarman.mockitokotlin2.whenever
-import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.fail
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.verify
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeGreaterOrEqualTo
+import org.amshove.kluent.shouldBeGreaterThan
+import org.amshove.kluent.shouldBeNull
+import org.amshove.kluent.shouldContainAll
+import org.amshove.kluent.shouldContainSame
+import org.amshove.kluent.shouldHaveSize
+import org.amshove.kluent.shouldNotBeEqualTo
+import org.amshove.kluent.shouldNotBeNull
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito
-import org.mockito.Mockito.never
-import org.mockito.Mockito.verify
+import org.junit.jupiter.api.fail
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.jooq.JooqTest
 import org.testcontainers.junit.jupiter.Testcontainers
@@ -28,23 +35,23 @@ internal open class JooqSearchOrderRepoIntegrationTest {
     @Test
     fun findingAll() {
         val searchOrders = repo.findAll()
-        assertThat(searchOrders).hasSize(RECORD_COUNT_PREPOPULATED)
+        searchOrders shouldHaveSize 4
     }
 
     @Test
     @Suppress("ConstantConditionIf")
     fun findingById_withExistingId_returnsEntity() {
         val searchOrder = repo.findById(RECORD_COUNT_PREPOPULATED.toLong())
-            ?: fail("Unable to load search order")
+            ?: fail { "Unable to load search order" }
         if (MAX_ID_PREPOPULATED > 0)
-            assertThat(searchOrder.id).isEqualTo(MAX_ID_PREPOPULATED)
+            searchOrder.id shouldBeEqualTo MAX_ID_PREPOPULATED
         else
-            assertThat(searchOrder).isNull()
+            searchOrder.shouldBeNull()
     }
 
     @Test
     fun findingById_withNonExistingId_returnsNull() {
-        assertThat(repo.findById(-1L)).isNull()
+        repo.findById(-1L).shouldBeNull()
     }
 
     @Test
@@ -54,18 +61,18 @@ internal open class JooqSearchOrderRepoIntegrationTest {
         searchCondition.authors = "foo"
         so.add(searchCondition)
         so.addExclusionOfPaperWithId(4L)
-        assertThat(so.id).isNull()
-        assertThat(so.searchConditions.first().id).isNull()
-        assertThat(so.searchConditions.first().stringSearchTerms.first().id).isNull()
+        so.id.shouldBeNull()
+        so.searchConditions.first().id.shouldBeNull()
+        so.searchConditions.first().stringSearchTerms.first().id.shouldBeNull()
 
-        val saved = repo.add(so) ?: fail("Unable to save search order")
+        val saved = repo.add(so) ?: fail { "Unable to save search order" }
 
-        assertThat(saved.id).isGreaterThan(MAX_ID_PREPOPULATED)
-        assertThat(saved.owner).isEqualTo(10)
-        assertThat(saved.searchConditions.first().searchConditionId).isGreaterThan(5L)
-        assertThat(saved.searchConditions.first().stringSearchTerms.first().id).isNotNull()
+        saved.id?.shouldBeGreaterThan(MAX_ID_PREPOPULATED)
+        saved.owner shouldBeEqualTo 10
+        saved.searchConditions.first().searchConditionId?.shouldBeGreaterThan(5L)
+        saved.searchConditions.first().stringSearchTerms.first().id.shouldNotBeNull()
 
-        assertThat(saved.excludedPaperIds).containsOnly(4L)
+        saved.excludedPaperIds shouldContainSame listOf(4L)
     }
 
     private fun makeMinimalSearchOrder(): SearchOrder {
@@ -78,38 +85,38 @@ internal open class JooqSearchOrderRepoIntegrationTest {
 
     @Test
     fun updatingRecord() {
-        val searchOrder = repo.add(makeMinimalSearchOrder()) ?: fail("Unable to load search order")
-        assertThat(searchOrder).isNotNull()
-        assertThat(searchOrder.id).isGreaterThan(MAX_ID_PREPOPULATED)
+        val searchOrder = repo.add(makeMinimalSearchOrder()) ?: fail { "Unable to load search order" }
+        searchOrder.shouldNotBeNull()
+        searchOrder.id?.shouldBeGreaterThan(MAX_ID_PREPOPULATED)
         val id = searchOrder.id ?: error("id must no be null now")
-        assertThat(searchOrder.owner).isEqualTo(10)
-        assertThat(searchOrder.name).isNull()
+        searchOrder.owner shouldBeEqualTo 10
+        searchOrder.name.shouldBeNull()
 
         searchOrder.owner = 20
         searchOrder.name = "soName"
         repo.update(searchOrder)
-        assertThat(searchOrder.id as Long).isEqualTo(id)
-        assertThat(searchOrder.name).isEqualTo("soName")
+        searchOrder.id as Long shouldBeEqualTo id
+        searchOrder.name shouldBeEqualTo "soName"
 
-        val newCopy = repo.findById(id) ?: fail("Unable to load search order")
-        assertThat(newCopy).isNotEqualTo(searchOrder)
-        assertThat(newCopy.id).isEqualTo(id)
-        assertThat(newCopy.owner).isEqualTo(20)
-        assertThat(newCopy.name).isEqualTo("soName")
+        val newCopy = repo.findById(id) ?: fail { "Unable to load search order" }
+        newCopy shouldNotBeEqualTo searchOrder
+        newCopy.id shouldBeEqualTo id
+        newCopy.owner shouldBeEqualTo 20
+        newCopy.name shouldBeEqualTo "soName"
     }
 
     @Test
     fun deletingRecord() {
-        val searchOrder = repo.add(makeMinimalSearchOrder()) ?: fail("Unable to add search order")
-        assertThat(searchOrder).isNotNull()
-        assertThat(searchOrder.id).isGreaterThan(MAX_ID_PREPOPULATED)
+        val searchOrder = repo.add(makeMinimalSearchOrder()) ?: fail { "Unable to add search order" }
+        searchOrder.shouldNotBeNull()
+        searchOrder.id?.shouldBeGreaterThan(MAX_ID_PREPOPULATED)
         val id = searchOrder.id ?: error("id must no be null now")
-        assertThat(searchOrder.owner).isEqualTo(10)
+        searchOrder.owner shouldBeEqualTo 10
 
         val deleted = repo.delete(id, searchOrder.version)
-        assertThat(deleted.id).isEqualTo(id)
+        deleted.id shouldBeEqualTo id
 
-        assertThat(repo.findById(id)).isNull()
+        repo.findById(id).shouldBeNull()
     }
 
     @Test
@@ -118,16 +125,16 @@ internal open class JooqSearchOrderRepoIntegrationTest {
         so.id = 1L
         repo.enrichAssociatedEntitiesOf(so, LC)
 
-        assertThat(so.searchConditions.size).isGreaterThanOrEqualTo(2)
+        so.searchConditions.size shouldBeGreaterOrEqualTo 2
 
         val sc1 = so.searchConditions[0]
-        assertThat(sc1.authors).isEqualTo("kutlar")
-        assertThat(sc1.displayValue).isEqualTo("kutlar")
+        sc1.authors shouldBeEqualTo "kutlar"
+        sc1.displayValue shouldBeEqualTo "kutlar"
 
         val sc2 = so.searchConditions[1]
-        assertThat(sc2.authors).isEqualTo("turner")
-        assertThat(sc2.publicationYear).isEqualTo("2014-2015")
-        assertThat(sc2.displayValue).isEqualTo("turner AND 2014-2015")
+        sc2.authors shouldBeEqualTo "turner"
+        sc2.publicationYear shouldBeEqualTo "2014-2015"
+        sc2.displayValue shouldBeEqualTo "turner AND 2014-2015"
     }
 
     @Test
@@ -136,7 +143,7 @@ internal open class JooqSearchOrderRepoIntegrationTest {
         so.id = 4L
         repo.enrichAssociatedEntitiesOf(so, LC)
 
-        assertThat(so.excludedPaperIds).containsExactly(1L)
+        so.excludedPaperIds shouldContainAll listOf(1L)
     }
 
     @Suppress("LongMethod")
@@ -145,88 +152,88 @@ internal open class JooqSearchOrderRepoIntegrationTest {
         // make search order with single condition (string search term)
         val initialSearchOrder = makeMinimalSearchOrder()
         initialSearchOrder.add(newConditionWithAuthors("foo"))
-        assertThat(initialSearchOrder.id).isNull()
+        initialSearchOrder.id.shouldBeNull()
 
-        val savedSearchOrder = repo.add(initialSearchOrder) ?: fail("Unable to add search order")
+        val savedSearchOrder = repo.add(initialSearchOrder) ?: fail { "Unable to add search order" }
         // saved search order now has a db-generated id, still has single condition.
         val searchOrderId = savedSearchOrder.id ?: error("id must no be null now")
-        assertThat(repo.findConditionIdsWithSearchTerms(searchOrderId)).hasSize(1)
+        repo.findConditionIdsWithSearchTerms(searchOrderId) shouldHaveSize 1
 
         // add additional title condition to existing search order
         val titleCondition = newConditionWithTitle("PM2.5")
         val savedCondition = repo.addSearchCondition(titleCondition, searchOrderId, LC)
-            ?: fail("should have returned saved condtion")
+            ?: fail { "should have returned saved condtion" }
         assertSearchTermCount(1, 0, 0, 0, savedCondition)
-        assertThat(repo.findConditionIdsWithSearchTerms(searchOrderId)).hasSize(2)
+        repo.findConditionIdsWithSearchTerms(searchOrderId) shouldHaveSize 2
 
         // modify the currently savedCondition to also have a publicationYear integer
         // search term
         savedCondition.publicationYear = "2000"
         val modifiedCondition = repo.updateSearchCondition(savedCondition, searchOrderId, LC)
-            ?: fail("Unable to update search order")
+            ?: fail { "Unable to update search order" }
         assertSearchTermCount(1, 1, 0, 0, modifiedCondition)
-        assertThat(repo.findConditionIdsWithSearchTerms(searchOrderId)).hasSize(3)
+        repo.findConditionIdsWithSearchTerms(searchOrderId) shouldHaveSize 3
 
         // modify the integer condition
         savedCondition.publicationYear = "2001"
         val modifiedCondition2 = repo.updateSearchCondition(savedCondition, searchOrderId, LC)
-            ?: fail("Unable to update search condition")
+            ?: fail { "Unable to update search condition" }
         assertSearchTermCount(1, 1, 0, 0, modifiedCondition2)
-        assertThat(repo.findConditionIdsWithSearchTerms(searchOrderId)).hasSize(3)
+        repo.findConditionIdsWithSearchTerms(searchOrderId) shouldHaveSize 3
 
         // Add boolean condition with Code
         savedCondition.isFirstAuthorOverridden = java.lang.Boolean.TRUE
         savedCondition.addCode(Code("1A", "Code 1A", null, false, 1, "c1", "", 1))
         val modifiedCondition3 = repo.updateSearchCondition(savedCondition, searchOrderId, LC)
-            ?: fail("Unable to update search condition")
+            ?: fail { "Unable to update search condition" }
         assertSearchTermCount(1, 1, 1, 0, modifiedCondition3)
-        assertThat(modifiedCondition3.codes).hasSize(1)
-        assertThat(modifiedCondition3.codes.map { it.code }).containsExactly("1A")
-        assertThat(repo.findConditionIdsWithSearchTerms(searchOrderId)).hasSize(4)
+        modifiedCondition3.codes shouldHaveSize 1
+        modifiedCondition3.codes.map { it.code } shouldContainAll listOf("1A")
+        repo.findConditionIdsWithSearchTerms(searchOrderId) shouldHaveSize 4
 
         // Change the boolean condition
         savedCondition.isFirstAuthorOverridden = java.lang.Boolean.FALSE
         val modifiedCondition4 = repo.updateSearchCondition(savedCondition, searchOrderId, LC)
-            ?: fail("Unable to update search condition")
+            ?: fail { "Unable to update search condition" }
         assertSearchTermCount(1, 1, 1, 0, modifiedCondition4)
-        assertThat(repo.findConditionIdsWithSearchTerms(searchOrderId)).hasSize(4)
+        repo.findConditionIdsWithSearchTerms(searchOrderId) shouldHaveSize 4
 
         savedCondition.modifiedDisplayValue = "foo"
         val modifiedCondition5 = repo.updateSearchCondition(savedCondition, searchOrderId, LC)
-            ?: fail("Unable to update search condition")
+            ?: fail { "Unable to update search condition" }
         assertSearchTermCount(1, 1, 1, 2, modifiedCondition5)
-        assertThat(repo.findConditionIdsWithSearchTerms(searchOrderId)).hasSize(6)
+        repo.findConditionIdsWithSearchTerms(searchOrderId) shouldHaveSize 6
 
         savedCondition.modifiedDisplayValue = "bar"
         val modifiedCondition6 = repo.updateSearchCondition(savedCondition, searchOrderId, LC)
-            ?: fail("Unable to update search condition")
+            ?: fail { "Unable to update search condition" }
         assertSearchTermCount(1, 1, 1, 2, modifiedCondition6)
-        assertThat(repo.findConditionIdsWithSearchTerms(searchOrderId)).hasSize(6)
+        repo.findConditionIdsWithSearchTerms(searchOrderId) shouldHaveSize 6
 
         // modify and verify newsletter fields (newsletterTopicId and newsletterHeadline)
-        assertThat(savedCondition.newsletterTopicId).isNull()
+        savedCondition.newsletterTopicId.shouldBeNull()
         savedCondition.setNewsletterTopic(NewsletterTopic(1, "foo"))
         val modifiedCondition7 = repo.updateSearchCondition(savedCondition, searchOrderId, LC)
-            ?: fail("Unable to update search condition")
-        assertThat(modifiedCondition7.newsletterTopicId).isEqualTo(1)
+            ?: fail { "Unable to update search condition" }
+        modifiedCondition7.newsletterTopicId shouldBeEqualTo 1
 
-        assertThat(savedCondition.newsletterHeadline).isNull()
+        savedCondition.newsletterHeadline.shouldBeNull()
         savedCondition.newsletterHeadline = "some"
         val modifiedCondition8 = repo.updateSearchCondition(savedCondition, searchOrderId, LC)
-            ?: fail("Unable to update search condition")
-        assertThat(modifiedCondition8.newsletterHeadline).isEqualTo("some")
+            ?: fail { "Unable to update search condition" }
+        modifiedCondition8.newsletterHeadline shouldBeEqualTo "some"
 
-        assertThat(savedCondition.newsletterIssue).isNull()
+        savedCondition.newsletterIssue.shouldBeNull()
         savedCondition.newsletterIssue = "some"
         val modifiedCondition9 = repo.updateSearchCondition(savedCondition, searchOrderId, LC)
-            ?: fail("Unable to update search condition")
-        assertThat(modifiedCondition9.newsletterIssue).isEqualTo("some")
+            ?: fail { "Unable to update search condition" }
+        modifiedCondition9.newsletterIssue shouldBeEqualTo "some"
 
         // remove the new search condition
         savedCondition.searchConditionId?.let {
             repo.deleteSearchConditionWithId(it)
-            assertThat(repo.findConditionIdsWithSearchTerms(searchOrderId)).hasSize(1)
-        } ?: fail("Unexpected condition with savedCondition.searchConditionId being null")
+            repo.findConditionIdsWithSearchTerms(searchOrderId) shouldHaveSize 1
+        } ?: fail { "Unexpected condition with savedCondition.searchConditionId being null" }
     }
 
     private fun newConditionWithAuthors(authors: String): SearchCondition = SearchCondition().apply {
@@ -235,10 +242,10 @@ internal open class JooqSearchOrderRepoIntegrationTest {
     }
 
     private fun assertSearchTermCount(sst: Int, ist: Int, bst: Int, ast: Int, sc: SearchCondition) {
-        assertThat(sc.stringSearchTerms).hasSize(sst)
-        assertThat(sc.integerSearchTerms).hasSize(ist)
-        assertThat(sc.booleanSearchTerms).hasSize(bst)
-        assertThat(sc.auditSearchTerms).hasSize(ast)
+        sc.stringSearchTerms shouldHaveSize sst
+        sc.integerSearchTerms shouldHaveSize ist
+        sc.booleanSearchTerms shouldHaveSize bst
+        sc.auditSearchTerms shouldHaveSize ast
     }
 
     private fun newConditionWithTitle(title: String): SearchCondition = SearchCondition().apply {
@@ -251,19 +258,19 @@ internal open class JooqSearchOrderRepoIntegrationTest {
         // make search order with single condition (string search term)
         val initialSearchOrder = makeMinimalSearchOrder()
         initialSearchOrder.add(newConditionWithAuthors("foo"))
-        assertThat(initialSearchOrder.id).isNull()
+        initialSearchOrder.id.shouldBeNull()
 
-        val savedSearchOrder = repo.add(initialSearchOrder) ?: fail("Unable to add search order")
+        val savedSearchOrder = repo.add(initialSearchOrder) ?: fail { "Unable to add search order" }
         // saved search order now has a db-generated id, still has single condition.
         val searchOrderId = savedSearchOrder.id ?: error("id must no be null now")
-        assertThat(repo.findConditionIdsWithSearchTerms(searchOrderId)).hasSize(1)
+        repo.findConditionIdsWithSearchTerms(searchOrderId) shouldHaveSize 1
 
         // add additional title condition to existing search order
         val titleCondition = newConditionWithTitle("PM2.5")
         val savedCondition = repo.addSearchCondition(titleCondition, searchOrderId, LC)
-            ?: fail("should have returned added condition")
+            ?: fail { "should have returned added condition" }
         assertSearchTermCount(1, 0, 0, 0, savedCondition)
-        assertThat(repo.findConditionIdsWithSearchTerms(searchOrderId)).hasSize(2)
+        repo.findConditionIdsWithSearchTerms(searchOrderId) shouldHaveSize 2
 
         val newButEquivalentCondition = newConditionWithTitle("PM2.5")
         newButEquivalentCondition.newsletterIssue = "2018/02"
@@ -271,32 +278,35 @@ internal open class JooqSearchOrderRepoIntegrationTest {
         newButEquivalentCondition.setNewsletterTopic(NewsletterTopic(1, "foo"))
 
         val savedNewCondition = repo.addSearchCondition(newButEquivalentCondition, searchOrderId, LC)
-            ?: fail("should have added search condition")
-        assertThat(savedNewCondition.newsletterIssue).isEqualTo("2018/02")
-        assertThat(savedNewCondition.newsletterHeadline).isEqualTo("someHeadLine")
-        assertThat(savedNewCondition.newsletterTopicId).isEqualTo(1)
+            ?: fail { "should have added search condition" }
+        savedNewCondition.newsletterIssue shouldBeEqualTo "2018/02"
+        savedNewCondition.newsletterHeadline shouldBeEqualTo "someHeadLine"
+        savedNewCondition.newsletterTopicId shouldBeEqualTo 1
 
         // remove the new search condition
         savedCondition.searchConditionId?.let {
             repo.deleteSearchConditionWithId(it)
-            assertThat(repo.findConditionIdsWithSearchTerms(searchOrderId)).hasSize(1)
-        } ?: fail("Unexpected condition with savedCondition.searchConditionId being null")
+            repo.findConditionIdsWithSearchTerms(searchOrderId) shouldHaveSize 1
+        } ?: fail { "Unexpected condition with savedCondition.searchConditionId being null" }
     }
 
     @Test
     fun removingObsoleteSearchTerms_withNoRemovedKeys_doesNothing() {
-        val sc = Mockito.mock(SearchCondition::class.java)
-        whenever(sc.removedKeys).thenReturn(emptySet())
+        val sc = mockk<SearchCondition> {
+            every { removedKeys } returns emptySet()
+        }
         repo.removeObsoleteSearchTerms(sc, -1L)
-        verify(sc, never()).clearRemovedKeys()
+        verify(exactly = 0) { sc.clearRemovedKeys() }
     }
 
     @Test
     fun removingObsoleteSearchTerms_withRemovedKeys_deletesAndClearsKeys() {
-        val sc = Mockito.mock(SearchCondition::class.java)
-        whenever(sc.removedKeys).thenReturn(setOf("foo", "bar"))
+        val sc = mockk<SearchCondition> {
+            every { removedKeys } returns setOf("foo", "bar")
+            every { clearRemovedKeys() } returns Unit
+        }
         repo.removeObsoleteSearchTerms(sc, -1L)
-        verify(sc).clearRemovedKeys()
+        verify { sc.clearRemovedKeys() }
     }
 
     companion object {

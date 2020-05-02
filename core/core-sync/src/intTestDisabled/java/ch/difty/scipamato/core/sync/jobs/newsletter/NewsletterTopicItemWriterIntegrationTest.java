@@ -33,7 +33,7 @@ class NewsletterTopicItemWriterIntegrationTest
         newNewsletterTopic = newNewsletterTopic(ID_NEW);
 
         existingNewsletterTopic = getExistingNewsletterTopicFromDb(ID_EXISTING, LANG_CODE);
-        assertThat(existingNewsletterTopic.getTitle()).isEqualTo("Tiefe Belastungen");
+        existingNewsletterTopic.getTitle() shouldBeEqualTo "Tiefe Belastungen";
         existingNewsletterTopic.setTitle("foo");
     }
 
@@ -83,7 +83,7 @@ class NewsletterTopicItemWriterIntegrationTest
     void insertingNewNewsletterTopic_succeeds() {
         int id = newNewsletterTopic.getId();
         assertNewsletterTopicDoesNotExistWith(id, LANG_CODE);
-        assertThat(getWriter().executeUpdate(newNewsletterTopic)).isEqualTo(1);
+        getWriter().executeUpdate(newNewsletterTopic) shouldBeEqualTo 1;
         asserNewsletterTopicExistsWith(id, LANG_CODE);
     }
 
@@ -106,7 +106,7 @@ class NewsletterTopicItemWriterIntegrationTest
 
     @Test
     void updatingExistingNewsletterTopic_succeeds() {
-        assertThat(getWriter().executeUpdate(existingNewsletterTopic)).isEqualTo(1);
+        getWriter().executeUpdate(existingNewsletterTopic) shouldBeEqualTo 1;
     }
 
 }

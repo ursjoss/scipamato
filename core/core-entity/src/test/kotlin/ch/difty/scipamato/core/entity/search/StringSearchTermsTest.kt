@@ -1,7 +1,9 @@
 package ch.difty.scipamato.core.entity.search
 
-import org.assertj.core.api.Assertions.assertThat
-
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeFalse
+import org.amshove.kluent.shouldBeTrue
+import org.amshove.kluent.shouldNotBeEqualTo
 import org.junit.jupiter.api.Test
 
 internal class StringSearchTermsTest {
@@ -34,10 +36,10 @@ internal class StringSearchTermsTest {
     }
 
     private fun assertEqualityBetween(st1: StringSearchTerms, st2: StringSearchTerms, hashValue: Int) {
-        assertThat(st1 == st2).isTrue()
-        assertThat(st2 == st1).isTrue()
-        assertThat(st1.hashCode()).isEqualTo(st2.hashCode())
-        assertThat(st1.hashCode()).isEqualTo(hashValue)
+        (st1 == st2).shouldBeTrue()
+        (st2 == st1).shouldBeTrue()
+        st1.hashCode() shouldBeEqualTo st2.hashCode()
+        st1.hashCode() shouldBeEqualTo hashValue
     }
 
     @Test
@@ -53,11 +55,11 @@ internal class StringSearchTermsTest {
         hashValue1: Int,
         hashValue2: Int
     ) {
-        assertThat(st1 == st2).isFalse()
-        assertThat(st2 == st1).isFalse()
-        assertThat(st1.hashCode()).isNotEqualTo(st2.hashCode())
-        assertThat(st1.hashCode()).isEqualTo(hashValue1)
-        assertThat(st2.hashCode()).isEqualTo(hashValue2)
+        (st1 == st2).shouldBeFalse()
+        (st2 == st1).shouldBeFalse()
+        st1.hashCode() shouldNotBeEqualTo st2.hashCode()
+        st1.hashCode() shouldBeEqualTo hashValue1
+        st2.hashCode() shouldBeEqualTo hashValue2
     }
 
     @Test
@@ -69,7 +71,7 @@ internal class StringSearchTermsTest {
 
     @Test
     fun compareWithNullSelfOrDifferentClass() {
-        assertThat(st1 == st1).isTrue()
+        (st1 == st1).shouldBeTrue()
     }
 
     companion object {

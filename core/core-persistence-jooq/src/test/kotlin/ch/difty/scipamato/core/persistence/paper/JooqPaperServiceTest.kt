@@ -1,3 +1,5 @@
+@file:Suppress("SpellCheckingInspection")
+
 package ch.difty.scipamato.core.persistence.paper
 
 import ch.difty.scipamato.common.persistence.paging.PaginationContext
@@ -10,27 +12,44 @@ import ch.difty.scipamato.core.persistence.AbstractServiceTest
 import ch.difty.scipamato.core.persistence.newsletter.NewsletterRepository
 import ch.difty.scipamato.core.pubmed.AbstractPubmedArticleFacade
 import ch.difty.scipamato.core.pubmed.PubmedArticleFacade
-import ch.difty.scipamato.core.pubmed.api.*
-import com.nhaarman.mockitokotlin2.*
-import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.fail
+import ch.difty.scipamato.core.pubmed.api.Article
+import ch.difty.scipamato.core.pubmed.api.ArticleTitle
+import ch.difty.scipamato.core.pubmed.api.Journal
+import ch.difty.scipamato.core.pubmed.api.JournalIssue
+import ch.difty.scipamato.core.pubmed.api.MedlineCitation
+import ch.difty.scipamato.core.pubmed.api.MedlineJournalInfo
+import ch.difty.scipamato.core.pubmed.api.PMID
+import ch.difty.scipamato.core.pubmed.api.PubDate
+import ch.difty.scipamato.core.pubmed.api.PubmedArticle
+import io.mockk.confirmVerified
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.verify
+import org.amshove.kluent.invoking
+import org.amshove.kluent.shouldBeEmpty
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeFalse
+import org.amshove.kluent.shouldBeTrue
+import org.amshove.kluent.shouldContain
+import org.amshove.kluent.shouldContainSame
+import org.amshove.kluent.shouldNotBeNull
+import org.amshove.kluent.shouldThrow
+import org.amshove.kluent.withMessage
 import org.junit.jupiter.api.Test
-import org.mockito.ArgumentMatchers.anyInt
-import org.mockito.ArgumentMatchers.anyLong
-import org.mockito.ArgumentMatchers.anyString
-import org.mockito.Mockito
 
 internal class JooqPaperServiceTest : AbstractServiceTest<Long, Paper, PaperRepository>() {
 
-    override val repo = mock<PaperRepository>()
-    private val newsletterRepoMock = mock<NewsletterRepository>()
-    private val filterMock = mock<PaperFilter>()
-    private val searchOrderMock = mock<SearchOrder>()
-    private val paginationContextMock = mock<PaginationContext>()
-    override val entity = mock<Paper>()
-    private val paperMock2 = mock<Paper>()
-    private val paperMock3 = mock<Paper>()
-    private val attachmentMock = mock<PaperAttachment>()
+    override val repo = mockk<PaperRepository>(relaxed = true) {
+        every { delete(any(), any()) } returns entity
+    }
+    private val newsletterRepoMock = mockk<NewsletterRepository>()
+    private val filterMock = mockk<PaperFilter>()
+    private val searchOrderMock = mockk<SearchOrder>()
+    private val paginationContextMock = mockk<PaginationContext>()
+    override val entity = mockk<Paper>(relaxed = true)
+    private val paperMock2 = mockk<Paper>(relaxed = true)
+    private val paperMock3 = mockk<Paper>(relaxed = true)
+    private val attachmentMock = mockk<PaperAttachment>()
 
     private val service: JooqPaperService = JooqPaperService(repo, newsletterRepoMock, userRepoMock)
 
@@ -38,20 +57,21 @@ internal class JooqPaperServiceTest : AbstractServiceTest<Long, Paper, PaperRepo
     private val articles = mutableListOf<PubmedArticleFacade>()
 
     public override fun specificTearDown() {
-        verifyNoMoreInteractions(repo, filterMock, searchOrderMock, paginationContextMock, entity, paperMock2)
+        confirmVerified(repo, filterMock, searchOrderMock, paginationContextMock, entity, paperMock2)
     }
 
     @Test
     fun findingById_withFoundEntity_returnsOptionalOfIt() {
         val id = 7L
-        whenever(repo.findById(id)).thenReturn(entity)
+        every { repo.findById(id) } returns entity
         auditFixture()
 
         val optPaper = service.findById(id)
-        assertThat(optPaper.isPresent).isTrue()
-        assertThat(optPaper.get()).isEqualTo(entity)
+        optPaper.isPresent.shouldBeTrue()
+        optPaper.get() shouldBeEqualTo entity
 
-        verify(repo).findById(id)
+        verify { repo.findById(id) }
+        verify { entity == entity }
 
         verifyAudit(1)
     }
@@ -59,104 +79,107 @@ internal class JooqPaperServiceTest : AbstractServiceTest<Long, Paper, PaperRepo
     @Test
     fun findingById_withNotFoundEntity_returnsOptionalEmpty() {
         val id = 7L
-        whenever(repo.findById(id)).thenReturn(null)
-        assertThat(service.findById(id).isPresent).isFalse()
-        verify(repo).findById(id)
+        every { repo.findById(id) } returns null
+        service.findById(id).isPresent.shouldBeFalse()
+        verify { repo.findById(id) }
     }
 
     @Test
     fun findingByFilter_delegatesToRepo() {
-        whenever(repo.findPageByFilter(filterMock, paginationContextMock)).thenReturn(papers)
+        every { repo.findPageByFilter(filterMock, paginationContextMock) } returns papers
         auditFixture()
-        assertThat(service.findPageByFilter(filterMock, paginationContextMock)).isEqualTo(papers)
-        verify(repo).findPageByFilter(filterMock, paginationContextMock)
+        service.findPageByFilter(filterMock, paginationContextMock) shouldBeEqualTo papers
+        verify { repo.findPageByFilter(filterMock, paginationContextMock) }
         verifyAudit(2)
     }
 
     @Test
     fun countingByFilter_delegatesToRepo() {
-        whenever(repo.countByFilter(filterMock)).thenReturn(3)
-        assertThat(service.countByFilter(filterMock)).isEqualTo(3)
-        verify(repo).countByFilter(filterMock)
+        every { repo.countByFilter(filterMock) } returns 3
+        service.countByFilter(filterMock) shouldBeEqualTo 3
+        verify { repo.countByFilter(filterMock) }
     }
 
     @Test
     fun savingOrUpdating_withPaperWithNullId_hasRepoAddThePaper() {
-        whenever(entity.id).thenReturn(null)
-        whenever(repo.add(entity)).thenReturn(entity)
+        every { entity.id } returns null
+        every { repo.add(entity) } returns entity
         auditFixture()
-        assertThat(service.saveOrUpdate(entity)).isEqualTo(entity)
-        verify(repo).add(entity)
-        verify(entity).id
+        service.saveOrUpdate(entity) shouldBeEqualTo entity
+        verify { repo.add(entity) }
+        verify { entity.id }
+        verify { entity == entity }
         verifyAudit(1)
     }
 
     @Test
     fun savingOrUpdating_withPaperWithNonNullId_hasRepoUpdateThePaper() {
-        whenever(entity.id).thenReturn(17L)
-        whenever(repo.update(entity)).thenReturn(entity)
+        every { entity.id } returns 17L
+        every { repo.update(entity) } returns entity
         auditFixture()
-        assertThat(service.saveOrUpdate(entity)).isEqualTo(entity)
-        verify(repo).update(entity)
-        verify(entity).id
+        service.saveOrUpdate(entity) shouldBeEqualTo entity
+        verify { repo.update(entity) }
+        verify { entity.id }
+        verify { entity == entity }
         verifyAudit(1)
     }
 
     @Test
     fun deleting_withNullEntity_doesNothing() {
         service.remove(null)
-        verify(repo, never()).delete(anyLong(), anyInt())
+        verify(exactly = 0) { repo.delete(any(), any()) }
     }
 
     @Test
     fun deleting_withEntityWithNullId_doesNothing() {
-        whenever(entity.id).thenReturn(null)
+        every { entity.id } returns null
 
         service.remove(entity)
 
-        verify(entity).id
-        verify(repo, never()).delete(anyLong(), anyInt())
+        verify { entity.id }
+        verify(exactly = 0) { repo.delete(any(), any()) }
     }
 
     @Test
     fun deleting_withEntityWithNormalId_delegatesToRepo() {
-        whenever(entity.id).thenReturn(3L)
-        whenever(entity.version).thenReturn(17)
+        every { entity.id } returns 3L
+        every { entity.version } returns 17
 
         service.remove(entity)
 
-        verify(entity, times(2)).id
-        verify(entity, times(1)).version
-        verify(repo, times(1)).delete(3L, 17)
+        verify(exactly = 2) { entity.id }
+        verify(exactly = 1) { entity.version }
+        verify(exactly = 1) { repo.delete(3L, 17) }
     }
 
     @Test
     fun findingBySearchOrder_delegatesToRepo() {
-        whenever(repo.findBySearchOrder(searchOrderMock, LC)).thenReturn(papers)
-        assertThat(service.findBySearchOrder(searchOrderMock, LC)).containsAll(papers)
-        verify(repo).findBySearchOrder(searchOrderMock, LC)
+        every { repo.findBySearchOrder(searchOrderMock, LC) } returns papers
+        service.findBySearchOrder(searchOrderMock, LC) shouldContainSame papers
+        verify { repo.findBySearchOrder(searchOrderMock, LC) }
+        verify { entity == entity }
     }
 
     @Test
     fun findingPagedBySearchOrder_delegatesToRepo() {
-        whenever(repo.findPageBySearchOrder(searchOrderMock, paginationContextMock, LC)).thenReturn(papers)
-        assertThat(service.findPageBySearchOrder(searchOrderMock, paginationContextMock, LC)).isEqualTo(papers)
-        verify(repo).findPageBySearchOrder(searchOrderMock, paginationContextMock, LC)
+        every { repo.findPageBySearchOrder(searchOrderMock, paginationContextMock, LC) } returns papers
+        service.findPageBySearchOrder(searchOrderMock, paginationContextMock, LC) shouldBeEqualTo papers
+        verify { repo.findPageBySearchOrder(searchOrderMock, paginationContextMock, LC) }
     }
 
     @Test
     fun countingBySearchOrder_delegatesToRepo() {
-        whenever(repo.countBySearchOrder(searchOrderMock)).thenReturn(2)
-        assertThat(service.countBySearchOrder(searchOrderMock)).isEqualTo(2)
-        verify(repo).countBySearchOrder(searchOrderMock)
+        every { repo.countBySearchOrder(searchOrderMock) } returns 2
+        service.countBySearchOrder(searchOrderMock) shouldBeEqualTo 2
+        verify { repo.countBySearchOrder(searchOrderMock) }
     }
 
     @Test
     fun dumpingEmptyListOfArticles_logsWarnMessage() {
         val sr = service.dumpPubmedArticlesToDb(articles, MINIMUM_NUMBER)
-        assertThat(sr.infoMessages).isEmpty()
-        assertThat(sr.warnMessages).isEmpty()
-        assertThat(sr.errorMessages).isEmpty()
+        sr.infoMessages.shouldBeEmpty()
+        sr.warnMessages.shouldBeEmpty()
+        sr.errorMessages.shouldBeEmpty()
     }
 
     @Test
@@ -166,14 +189,14 @@ internal class JooqPaperServiceTest : AbstractServiceTest<Long, Paper, PaperRepo
         articles.add(PubmedArticleFacade.newPubmedArticleFrom(pa))
 
         // existing papers
-        whenever(repo.findExistingPmIdsOutOf(listOf(pmIdValue))).thenReturn(listOf(pmIdValue))
+        every { repo.findExistingPmIdsOutOf(listOf(pmIdValue)) } returns listOf(pmIdValue)
 
         val sr = service.dumpPubmedArticlesToDb(articles, MINIMUM_NUMBER)
-        assertThat(sr.infoMessages).isEmpty()
-        assertThat(sr.warnMessages).contains("PMID $pmIdValue")
-        assertThat(sr.errorMessages).isEmpty()
+        sr.infoMessages.shouldBeEmpty()
+        sr.warnMessages shouldContain "PMID $pmIdValue"
+        sr.errorMessages.shouldBeEmpty()
 
-        verify(repo).findExistingPmIdsOutOf(listOf(pmIdValue))
+        verify { repo.findExistingPmIdsOutOf(listOf(pmIdValue)) }
     }
 
     @Test
@@ -181,25 +204,25 @@ internal class JooqPaperServiceTest : AbstractServiceTest<Long, Paper, PaperRepo
         val pmIdValue = 23193287
         val pa = newPubmedArticle(pmIdValue)
         articles.add(PubmedArticleFacade.newPubmedArticleFrom(pa))
-        assertThat(articles[0].pmId).isNotNull()
+        articles[0].pmId.shouldNotBeNull()
 
-        whenever(repo.findExistingPmIdsOutOf(listOf(pmIdValue))).thenReturn(emptyList())
-        whenever(repo.findLowestFreeNumberStartingFrom(MINIMUM_NUMBER)).thenReturn(17L)
+        every { repo.findExistingPmIdsOutOf(listOf(pmIdValue)) } returns emptyList()
+        every { repo.findLowestFreeNumberStartingFrom(MINIMUM_NUMBER) } returns 17L
 
-        whenever(repo.add(any())).thenReturn(paperMock2)
-        whenever(paperMock2.id).thenReturn(27L)
-        whenever(paperMock2.pmId).thenReturn(pmIdValue)
+        every { repo.add(any()) } returns paperMock2
+        every { paperMock2.id } returns 27L
+        every { paperMock2.pmId } returns pmIdValue
 
         val sr = service.dumpPubmedArticlesToDb(articles, MINIMUM_NUMBER)
-        assertThat(sr.infoMessages).contains("PMID $pmIdValue (id 27)")
-        assertThat(sr.warnMessages).isEmpty()
-        assertThat(sr.errorMessages).isEmpty()
+        sr.infoMessages shouldContain "PMID $pmIdValue (id 27)"
+        sr.warnMessages.shouldBeEmpty()
+        sr.errorMessages.shouldBeEmpty()
 
-        verify(repo).findExistingPmIdsOutOf(listOf(pmIdValue))
-        verify(repo).findLowestFreeNumberStartingFrom(MINIMUM_NUMBER)
-        verify(repo).add(any())
-        verify(paperMock2).id
-        verify(paperMock2).pmId
+        verify { repo.findExistingPmIdsOutOf(listOf(pmIdValue)) }
+        verify { repo.findLowestFreeNumberStartingFrom(MINIMUM_NUMBER) }
+        verify { repo.add(any()) }
+        verify { paperMock2.id }
+        verify { paperMock2.pmId }
     }
 
     @Test
@@ -210,11 +233,11 @@ internal class JooqPaperServiceTest : AbstractServiceTest<Long, Paper, PaperRepo
         (articles[0] as AbstractPubmedArticleFacade).pmId = null
 
         val sr = service.dumpPubmedArticlesToDb(articles, MINIMUM_NUMBER)
-        assertThat(sr.infoMessages).isEmpty()
-        assertThat(sr.warnMessages).isEmpty()
-        assertThat(sr.errorMessages).isEmpty()
+        sr.infoMessages.shouldBeEmpty()
+        sr.warnMessages.shouldBeEmpty()
+        sr.errorMessages.shouldBeEmpty()
 
-        verify(repo, never()).findExistingPmIdsOutOf(listOf(pmIdValue))
+        verify(exactly = 0) { repo.findExistingPmIdsOutOf(listOf(pmIdValue)) }
     }
 
     @Test
@@ -223,26 +246,26 @@ internal class JooqPaperServiceTest : AbstractServiceTest<Long, Paper, PaperRepo
         val pa1 = newPubmedArticle(pmIdValue)
         articles.add(PubmedArticleFacade.newPubmedArticleFrom(pa1))
         articles.add(PubmedArticleFacade.newPubmedArticleFrom(newPubmedArticle(0)))
-        assertThat(articles[1].pmId).isEqualTo("0")
+        articles[1].pmId shouldBeEqualTo "0"
         (articles[1] as AbstractPubmedArticleFacade).pmId = null
 
-        whenever(repo.findExistingPmIdsOutOf(listOf(pmIdValue))).thenReturn(emptyList())
-        whenever(repo.findLowestFreeNumberStartingFrom(MINIMUM_NUMBER)).thenReturn(17L)
+        every { repo.findExistingPmIdsOutOf(listOf(pmIdValue)) } returns emptyList()
+        every { repo.findLowestFreeNumberStartingFrom(MINIMUM_NUMBER) } returns 17L
 
-        whenever(repo.add(any())).thenReturn(paperMock2)
-        whenever(paperMock2.id).thenReturn(27L)
-        whenever(paperMock2.pmId).thenReturn(pmIdValue)
+        every { repo.add(any()) } returns paperMock2
+        every { paperMock2.id } returns 27L
+        every { paperMock2.pmId } returns pmIdValue
 
         val sr = service.dumpPubmedArticlesToDb(articles, MINIMUM_NUMBER)
-        assertThat(sr.infoMessages).hasSize(1).contains("PMID $pmIdValue (id 27)")
-        assertThat(sr.warnMessages).isEmpty()
-        assertThat(sr.errorMessages).isEmpty()
+        sr.infoMessages shouldContainSame listOf("PMID $pmIdValue (id 27)")
+        sr.warnMessages.shouldBeEmpty()
+        sr.errorMessages.shouldBeEmpty()
 
-        verify(repo).findExistingPmIdsOutOf(listOf(pmIdValue))
-        verify(repo).findLowestFreeNumberStartingFrom(MINIMUM_NUMBER)
-        verify(repo).add(any())
-        verify(paperMock2).id
-        verify(paperMock2).pmId
+        verify { repo.findExistingPmIdsOutOf(listOf(pmIdValue)) }
+        verify { repo.findLowestFreeNumberStartingFrom(MINIMUM_NUMBER) }
+        verify { repo.add(any()) }
+        verify { paperMock2.id }
+        verify { paperMock2.pmId }
     }
 
     private fun newPubmedArticle(pmIdValue: Int?): PubmedArticle {
@@ -269,37 +292,38 @@ internal class JooqPaperServiceTest : AbstractServiceTest<Long, Paper, PaperRepo
 
     @Test
     fun findingByNumber_withNoResult_returnsOptionalEmpty() {
-        whenever(repo.findByNumbers(listOf(1L), LC)).thenReturn(ArrayList())
+        every { repo.findByNumbers(listOf(1L), LC) } returns ArrayList()
         val opt = service.findByNumber(1L, LC)
-        assertThat(opt.isPresent).isFalse()
-        verify(repo).findByNumbers(listOf(1L), LC)
+        opt.isPresent.shouldBeFalse()
+        verify { repo.findByNumbers(listOf(1L), LC) }
     }
 
     @Test
     fun findingByNumber_withSingleResultFromRepo_returnsThatAsOptional() {
-        whenever(repo.findByNumbers(listOf(1L), LC)).thenReturn(listOf(entity))
+        every { repo.findByNumbers(listOf(1L), LC) } returns listOf(entity)
         auditFixture()
         testFindingByNumbers()
     }
 
     private fun testFindingByNumbers() {
         val opt = service.findByNumber(1L, LC)
-        assertThat(opt.isPresent).isTrue()
-        assertThat(opt.get()).isEqualTo(entity)
+        opt.isPresent.shouldBeTrue()
+        opt.get() shouldBeEqualTo entity
 
-        verify(repo).findByNumbers(listOf(1L), LC)
-        verify(userRepoMock).findById(CREATOR_ID)
-        verify(userRepoMock).findById(MODIFIER_ID)
-        verify(entity).createdBy
-        verify(entity).lastModifiedBy
-        verify(entity).createdByName = "creatingUser"
-        verify(entity).createdByFullName = "creatingUserFullName"
-        verify(entity).lastModifiedByName = "modifyingUser"
+        verify { repo.findByNumbers(listOf(1L), LC) }
+        verify { userRepoMock.findById(CREATOR_ID) }
+        verify { userRepoMock.findById(MODIFIER_ID) }
+        verify { entity.createdBy }
+        verify { entity.lastModifiedBy }
+        verify { entity.createdByName = "creatingUser" }
+        verify { entity.createdByFullName = "creatingUserFullName" }
+        verify { entity.lastModifiedByName = "modifyingUser" }
+        verify { entity == entity }
     }
 
     @Test
     fun findingByNumber_withMultipleRecordsFromRepo_returnsFirstAsOptional() {
-        whenever(repo.findByNumbers(listOf(1L), LC)).thenReturn(listOf(entity, paperMock2))
+        every { repo.findByNumbers(listOf(1L), LC) } returns listOf(entity, paperMock2)
         auditFixture()
         testFindingByNumbers()
     }
@@ -307,25 +331,25 @@ internal class JooqPaperServiceTest : AbstractServiceTest<Long, Paper, PaperRepo
     @Test
     fun findingLowestFreeNumberStartingFrom_delegatesToRepo() {
         val minimum = 4L
-        whenever(repo.findLowestFreeNumberStartingFrom(minimum)).thenReturn(17L)
-        assertThat(service.findLowestFreeNumberStartingFrom(minimum)).isEqualTo(17L)
-        verify(repo).findLowestFreeNumberStartingFrom(minimum)
+        every { repo.findLowestFreeNumberStartingFrom(minimum) } returns 17L
+        service.findLowestFreeNumberStartingFrom(minimum) shouldBeEqualTo 17L
+        verify { repo.findLowestFreeNumberStartingFrom(minimum) }
     }
 
     @Test
     fun findingPageOfIdsByFilter() {
         val ids = listOf(3L, 17L, 5L)
-        whenever(repo.findPageOfIdsByFilter(filterMock, paginationContextMock)).thenReturn(ids)
-        assertThat(service.findPageOfIdsByFilter(filterMock, paginationContextMock)).isEqualTo(ids)
-        verify(repo).findPageOfIdsByFilter(filterMock, paginationContextMock)
+        every { repo.findPageOfIdsByFilter(filterMock, paginationContextMock) } returns ids
+        service.findPageOfIdsByFilter(filterMock, paginationContextMock) shouldBeEqualTo ids
+        verify { repo.findPageOfIdsByFilter(filterMock, paginationContextMock) }
     }
 
     @Test
     fun findingPageOfIdsBySearchOrder() {
         val ids = listOf(3L, 17L, 5L)
-        whenever(repo.findPageOfIdsBySearchOrder(searchOrderMock, paginationContextMock)).thenReturn(ids)
-        assertThat(service.findPageOfIdsBySearchOrder(searchOrderMock, paginationContextMock)).isEqualTo(ids)
-        verify(repo).findPageOfIdsBySearchOrder(searchOrderMock, paginationContextMock)
+        every { repo.findPageOfIdsBySearchOrder(searchOrderMock, paginationContextMock) } returns ids
+        service.findPageOfIdsBySearchOrder(searchOrderMock, paginationContextMock) shouldBeEqualTo ids
+        verify { repo.findPageOfIdsBySearchOrder(searchOrderMock, paginationContextMock) }
     }
 
     @Test
@@ -333,7 +357,7 @@ internal class JooqPaperServiceTest : AbstractServiceTest<Long, Paper, PaperRepo
         val searchOrderId = 4L
         val paperId = 5L
         service.excludeFromSearchOrder(searchOrderId, paperId)
-        verify(repo).excludePaperFromSearchOrderResults(searchOrderId, paperId)
+        verify { repo.excludePaperFromSearchOrderResults(searchOrderId, paperId) }
     }
 
     @Test
@@ -341,52 +365,53 @@ internal class JooqPaperServiceTest : AbstractServiceTest<Long, Paper, PaperRepo
         val searchOrderId = 4L
         val paperId = 5L
         service.reincludeIntoSearchOrder(searchOrderId, paperId)
-        verify(repo).reincludePaperIntoSearchOrderResults(searchOrderId, paperId)
+        verify { repo.reincludePaperIntoSearchOrderResults(searchOrderId, paperId) }
     }
 
     @Test
     fun savingAttachment_delegatesToRepo() {
-        val paMock = Mockito.mock(PaperAttachment::class.java)
+        val paMock = mockk<PaperAttachment>()
         service.saveAttachment(paMock)
-        verify(repo).saveAttachment(paMock)
+        verify { repo.saveAttachment(paMock) }
     }
 
     @Test
     fun loadingAttachmentWithContentById_delegatesToRepo() {
         val id = 7
-        whenever(repo.loadAttachmentWithContentBy(id)).thenReturn(attachmentMock)
-        assertThat(service.loadAttachmentWithContentBy(id)).isEqualTo(attachmentMock)
-        verify(repo).loadAttachmentWithContentBy(id)
+        every { repo.loadAttachmentWithContentBy(id) } returns attachmentMock
+        service.loadAttachmentWithContentBy(id) shouldBeEqualTo attachmentMock
+        verify { repo.loadAttachmentWithContentBy(id) }
     }
 
     @Test
     fun deletingAttachment_delegatesToRepo() {
         val id = 5
-        whenever(repo.deleteAttachment(id)).thenReturn(entity)
-        assertThat(service.deleteAttachment(id)).isEqualTo(entity)
-        verify(repo).deleteAttachment(id)
+        every { repo.deleteAttachment(id) } returns entity
+        service.deleteAttachment(id) shouldBeEqualTo entity
+        verify { repo.deleteAttachment(id) }
+        verify { entity == entity }
     }
 
     @Test
     fun deletingByIds_delegatesToRepo() {
         val ids = listOf(5L, 7L, 9L)
         service.deletePapersWithIds(ids)
-        verify(repo).delete(ids)
+        verify { repo.delete(ids) }
     }
 
     @Test
     fun findingByFilter_withPaperWithNullCreator() {
-        whenever(paperMock3.createdBy).thenReturn(null)
-        whenever(paperMock3.lastModifiedBy).thenReturn(null)
+        every { paperMock3.createdBy } returns null
+        every { paperMock3.lastModifiedBy } returns null
         papers.clear()
         papers.add(paperMock3)
-        whenever(repo.findPageByFilter(filterMock, paginationContextMock)).thenReturn(papers)
-        assertThat(service.findPageByFilter(filterMock, paginationContextMock)).isEqualTo(papers)
-        verify(repo).findPageByFilter(filterMock, paginationContextMock)
-        verify(paperMock3).createdBy
-        verify(paperMock3).createdByName = null
-        verify(paperMock3).createdByFullName = null
-        verify(paperMock3).lastModifiedByName = null
+        every { repo.findPageByFilter(filterMock, paginationContextMock) } returns papers
+        service.findPageByFilter(filterMock, paginationContextMock) shouldBeEqualTo papers
+        verify { repo.findPageByFilter(filterMock, paginationContextMock) }
+        verify { paperMock3.createdBy }
+        verify { paperMock3.createdByName = null }
+        verify { paperMock3.createdByFullName = null }
+        verify { paperMock3.lastModifiedByName = null }
     }
 
     @Test
@@ -400,15 +425,14 @@ internal class JooqPaperServiceTest : AbstractServiceTest<Long, Paper, PaperRepo
         wipNewsletter.id = newsletterId
 
         val nl = Paper.NewsletterLink(1, "link", 2, 3, "topic", "headline")
-        whenever(newsletterRepoMock.newsletterInStatusWorkInProgress).thenReturn(java.util.Optional.of(wipNewsletter))
-        whenever(newsletterRepoMock.mergePaperIntoNewsletter(newsletterId, paperId, topicId, langCode))
-            .thenReturn(java.util.Optional.of(nl))
+        every { newsletterRepoMock.newsletterInStatusWorkInProgress } returns java.util.Optional.of(wipNewsletter)
+        every { newsletterRepoMock.mergePaperIntoNewsletter(newsletterId, paperId, topicId, langCode) } returns java.util.Optional.of(nl)
         val result = service.mergePaperIntoWipNewsletter(paperId, topicId, langCode)
-        assertThat(result).isPresent
-        assertThat(result.get()).isEqualTo(nl)
+        result.isPresent.shouldBeTrue()
+        result.get() shouldBeEqualTo nl
 
-        verify(newsletterRepoMock).newsletterInStatusWorkInProgress
-        verify(newsletterRepoMock).mergePaperIntoNewsletter(newsletterId, paperId, topicId, langCode)
+        verify { newsletterRepoMock.newsletterInStatusWorkInProgress }
+        verify { newsletterRepoMock.mergePaperIntoNewsletter(newsletterId, paperId, topicId, langCode) }
     }
 
     @Test
@@ -417,31 +441,25 @@ internal class JooqPaperServiceTest : AbstractServiceTest<Long, Paper, PaperRepo
         val topicId = 3
         val languageCode = "en"
 
-        whenever(newsletterRepoMock.newsletterInStatusWorkInProgress).thenReturn(java.util.Optional.empty())
-        assertThat(service.mergePaperIntoWipNewsletter(paperId, topicId, languageCode))
-            .isEqualTo(java.util.Optional.empty<Any>())
-        verify(newsletterRepoMock).newsletterInStatusWorkInProgress
+        every { newsletterRepoMock.newsletterInStatusWorkInProgress } returns java.util.Optional.empty()
+        service.mergePaperIntoWipNewsletter(paperId, topicId, languageCode) shouldBeEqualTo java.util.Optional.empty<Any>()
+        verify { newsletterRepoMock.newsletterInStatusWorkInProgress }
     }
 
     @Test
     fun removingPaperFromNewsletter_delegatesToNewsletterRepo() {
         val newsletterId = 13
         val paperId: Long = 14
-        whenever(newsletterRepoMock.removePaperFromNewsletter(newsletterId, paperId)).thenReturn(1)
-        assertThat(service.removePaperFromNewsletter(newsletterId, paperId)).isEqualTo(1)
-        verify(newsletterRepoMock).removePaperFromNewsletter(newsletterId, paperId)
+        every { newsletterRepoMock.removePaperFromNewsletter(newsletterId, paperId) } returns 1
+        service.removePaperFromNewsletter(newsletterId, paperId) shouldBeEqualTo 1
+        verify { newsletterRepoMock.removePaperFromNewsletter(newsletterId, paperId) }
     }
 
     @Test
     fun hasDuplicateFieldNextToCurrent_withInvalidFieldNameFails() {
-        try {
+        invoking {
             service.hasDuplicateFieldNextToCurrent("foo", "fw", 1L)
-            fail<Any>("should have thrown exception")
-        } catch (ex: Exception) {
-            assertThat(ex)
-                .isInstanceOf(IllegalArgumentException::class.java)
-                .hasMessage("Field 'foo' is not supported by this validator.")
-        }
+        } shouldThrow IllegalArgumentException::class withMessage "Field 'foo' is not supported by this validator."
     }
 
     @Test
@@ -449,11 +467,11 @@ internal class JooqPaperServiceTest : AbstractServiceTest<Long, Paper, PaperRepo
         val fieldName = "pmId"
         val fieldValue = 11
         val id = 1L
-        whenever(repo.isPmIdAlreadyAssigned(fieldValue, id)).thenReturn(java.util.Optional.empty())
+        every { repo.isPmIdAlreadyAssigned(fieldValue, id) } returns java.util.Optional.empty()
 
-        assertThat(service.hasDuplicateFieldNextToCurrent(fieldName, fieldValue, id)).isNotPresent
+        service.hasDuplicateFieldNextToCurrent(fieldName, fieldValue, id).isPresent.shouldBeFalse()
 
-        verify(repo).isPmIdAlreadyAssigned(fieldValue, id)
+        verify { repo.isPmIdAlreadyAssigned(fieldValue, id) }
     }
 
     @Test
@@ -461,9 +479,9 @@ internal class JooqPaperServiceTest : AbstractServiceTest<Long, Paper, PaperRepo
         val fieldName = "pmId"
         val fieldValue = 10
         val id = 1L
-        whenever(repo.isPmIdAlreadyAssigned(fieldValue, id)).thenReturn(java.util.Optional.of("2"))
-        assertThat(service.hasDuplicateFieldNextToCurrent(fieldName, fieldValue, id)).hasValue("2")
-        verify(repo).isPmIdAlreadyAssigned(fieldValue, id)
+        every { repo.isPmIdAlreadyAssigned(fieldValue, id) } returns java.util.Optional.of("2")
+        service.hasDuplicateFieldNextToCurrent(fieldName, fieldValue, id).get() shouldBeEqualTo "2"
+        verify { repo.isPmIdAlreadyAssigned(fieldValue, id) }
     }
 
     @Test
@@ -471,9 +489,9 @@ internal class JooqPaperServiceTest : AbstractServiceTest<Long, Paper, PaperRepo
         val fieldName = "doi"
         val fieldValue = "fw"
         val id = 1L
-        whenever(repo.isDoiAlreadyAssigned(fieldValue, id)).thenReturn(java.util.Optional.empty())
-        assertThat(service.hasDuplicateFieldNextToCurrent(fieldName, fieldValue, id)).isNotPresent
-        verify(repo).isDoiAlreadyAssigned(fieldValue, id)
+        every { repo.isDoiAlreadyAssigned(fieldValue, id) } returns java.util.Optional.empty()
+        service.hasDuplicateFieldNextToCurrent(fieldName, fieldValue, id).isPresent.shouldBeFalse()
+        verify { repo.isDoiAlreadyAssigned(fieldValue, id) }
     }
 
     @Test
@@ -481,10 +499,10 @@ internal class JooqPaperServiceTest : AbstractServiceTest<Long, Paper, PaperRepo
         val fieldName = "doi"
         val id = 1L
 
-        assertThat(service.hasDuplicateFieldNextToCurrent(fieldName, null, id)).isNotPresent
+        service.hasDuplicateFieldNextToCurrent(fieldName, null, id).isPresent.shouldBeFalse()
 
-        verify(repo, never()).isPmIdAlreadyAssigned(anyInt(), eq(id))
-        verify(repo, never()).isDoiAlreadyAssigned(anyString(), eq(id))
+        verify(exactly = 0) { repo.isPmIdAlreadyAssigned(any(), eq(id)) }
+        verify(exactly = 0) { repo.isDoiAlreadyAssigned(any(), eq(id)) }
     }
 
     companion object {

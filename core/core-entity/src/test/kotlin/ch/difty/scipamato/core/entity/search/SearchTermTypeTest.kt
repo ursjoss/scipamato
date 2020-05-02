@@ -1,56 +1,47 @@
 package ch.difty.scipamato.core.entity.search
 
-import ch.difty.scipamato.core.entity.search.SearchTermType.*
-import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.fail
-
+import ch.difty.scipamato.core.entity.search.SearchTermType.AUDIT
+import ch.difty.scipamato.core.entity.search.SearchTermType.BOOLEAN
+import ch.difty.scipamato.core.entity.search.SearchTermType.INTEGER
+import ch.difty.scipamato.core.entity.search.SearchTermType.STRING
+import ch.difty.scipamato.core.entity.search.SearchTermType.UNSUPPORTED
+import ch.difty.scipamato.core.entity.search.SearchTermType.byId
+import ch.difty.scipamato.core.entity.search.SearchTermType.values
+import org.amshove.kluent.invoking
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldContainAll
+import org.amshove.kluent.shouldThrow
+import org.amshove.kluent.withMessage
 import org.junit.jupiter.api.Test
 
 internal class SearchTermTypeTest {
 
     @Test
     fun testValues() {
-        assertThat(values()).containsExactly(BOOLEAN, INTEGER, STRING, AUDIT, UNSUPPORTED)
+        values() shouldContainAll listOf(BOOLEAN, INTEGER, STRING, AUDIT, UNSUPPORTED)
     }
 
     @Test
     fun testId() {
-        assertThat(BOOLEAN.id).isEqualTo(0)
-        assertThat(INTEGER.id).isEqualTo(1)
-        assertThat(STRING.id).isEqualTo(2)
-        assertThat(AUDIT.id).isEqualTo(3)
-        assertThat(UNSUPPORTED.id).isEqualTo(-1)
+        BOOLEAN.id shouldBeEqualTo 0
+        INTEGER.id shouldBeEqualTo 1
+        STRING.id shouldBeEqualTo 2
+        AUDIT.id shouldBeEqualTo 3
+        UNSUPPORTED.id shouldBeEqualTo -1
     }
 
     @Test
     fun testById_withValidIds() {
-        assertThat(byId(0)).isEqualTo(BOOLEAN)
-        assertThat(byId(1)).isEqualTo(INTEGER)
-        assertThat(byId(2)).isEqualTo(STRING)
-        assertThat(byId(3)).isEqualTo(AUDIT)
+        byId(0) shouldBeEqualTo BOOLEAN
+        byId(1) shouldBeEqualTo INTEGER
+        byId(2) shouldBeEqualTo STRING
+        byId(3) shouldBeEqualTo AUDIT
     }
 
     @Test
     fun testById_withInvalidIds() {
-        try {
-            byId(-2)
-            fail<Any>("should have thrown")
-        } catch (ex: Exception) {
-            assertThat(ex).isInstanceOf(IllegalArgumentException::class.java).hasMessage("id -2 is not supported")
-        }
-
-        try {
-            byId(-1)
-            fail<Any>("should have thrown")
-        } catch (ex: Exception) {
-            assertThat(ex).isInstanceOf(IllegalArgumentException::class.java).hasMessage("id -1 is not supported")
-        }
-
-        try {
-            byId(4)
-            fail<Any>("should have thrown")
-        } catch (ex: Exception) {
-            assertThat(ex).isInstanceOf(IllegalArgumentException::class.java).hasMessage("id 4 is not supported")
-        }
+        invoking { byId(-2) } shouldThrow IllegalArgumentException::class withMessage "id -2 is not supported"
+        invoking { byId(-1) } shouldThrow IllegalArgumentException::class withMessage "id -1 is not supported"
+        invoking { byId(4) } shouldThrow IllegalArgumentException::class withMessage "id 4 is not supported"
     }
 }

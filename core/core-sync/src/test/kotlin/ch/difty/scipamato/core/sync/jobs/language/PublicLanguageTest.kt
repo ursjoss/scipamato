@@ -1,7 +1,7 @@
 package ch.difty.scipamato.core.sync.jobs.language
 
 import ch.difty.scipamato.core.sync.jobs.SYNCHED
-import org.assertj.core.api.Assertions.assertThat
+import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.Test
 
 internal class PublicLanguageTest {
@@ -15,8 +15,8 @@ internal class PublicLanguageTest {
             .lastSynched(SYNCHED)
             .build()
 
-        assertThat(pp.code).isEqualTo("en")
-        assertThat(pp.mainLanguage).isEqualTo(true)
-        assertThat(pp.lastSynched).isEqualTo(SYNCHED)
+        pp.code shouldBeEqualTo "en"
+        pp.mainLanguage shouldBeEqualTo true
+        pp.lastSynched shouldBeEqualTo SYNCHED
     }
 }

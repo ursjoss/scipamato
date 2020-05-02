@@ -4,8 +4,13 @@ import ch.difty.scipamato.core.entity.search.SearchTerm
 import ch.difty.scipamato.core.entity.search.SearchTermType
 import ch.difty.scipamato.core.entity.search.StringSearchTerm
 import ch.difty.scipamato.core.entity.search.StringSearchTerm.MatchType
-import ch.difty.scipamato.core.entity.search.StringSearchTerm.MatchType.*
-import org.assertj.core.api.Assertions.assertThat
+import ch.difty.scipamato.core.entity.search.StringSearchTerm.MatchType.CONTAINS
+import ch.difty.scipamato.core.entity.search.StringSearchTerm.MatchType.EQUALS
+import ch.difty.scipamato.core.entity.search.StringSearchTerm.MatchType.LENGTH
+import ch.difty.scipamato.core.entity.search.StringSearchTerm.MatchType.LIKE
+import ch.difty.scipamato.core.entity.search.StringSearchTerm.MatchType.NONE
+import ch.difty.scipamato.core.entity.search.StringSearchTerm.MatchType.REGEX
+import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
@@ -27,9 +32,9 @@ internal class StringSearchTermEvaluatorIntegrationTest : SearchTermEvaluatorInt
     @MethodSource("stringParameters")
     fun stringTest(rawSearchTerm: String, tokenString: String, condition: String, type: MatchType) {
         val st = makeSearchTerm(rawSearchTerm)
-        assertThat(st.tokens.joinToString("")).isEqualTo(tokenString)
-        assertThat(st.tokens.first().type.matchType).isEqualTo(type)
-        assertThat(evaluator.evaluate(st).toString()).isEqualTo(condition)
+        st.tokens.joinToString("") shouldBeEqualTo tokenString
+        st.tokens.first().type.matchType shouldBeEqualTo type
+        evaluator.evaluate(st).toString() shouldBeEqualTo condition
     }
 
     companion object {

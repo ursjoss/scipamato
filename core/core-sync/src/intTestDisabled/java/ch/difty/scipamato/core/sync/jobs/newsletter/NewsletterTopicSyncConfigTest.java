@@ -76,23 +76,23 @@ class NewsletterTopicSyncConfigTest extends SyncConfigTest<NewsletterTopicRecord
 
         PublicNewsletterTopic pnt = config.makeEntity(rs);
 
-        assertThat(pnt.getId()).isEqualTo(1);
-        assertThat(pnt.getLangCode()).isEqualTo("lc");
-        assertThat(pnt.getTitle()).isEqualTo("t");
-        assertThat(pnt.getVersion()).isEqualTo(2);
-        assertThat(pnt.getCreated()).isEqualTo(CREATED);
-        assertThat(pnt.getLastModified()).isEqualTo(MODIFIED);
+        pnt.getId() shouldBeEqualTo 1;
+        pnt.getLangCode() shouldBeEqualTo "lc";
+        pnt.getTitle() shouldBeEqualTo "t";
+        pnt.getVersion() shouldBeEqualTo 2;
+        pnt.getCreated() shouldBeEqualTo CREATED;
+        pnt.getLastModified() shouldBeEqualTo MODIFIED;
         assertThat(pnt.getLastSynched()).isCloseTo("2016-12-09T06:02:13.000", 1000);
 
-        verify(rs).getInt(NewsletterTopic.NEWSLETTER_TOPIC.ID.getName());
-        verify(rs).getString(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.LANG_CODE.getName());
-        verify(rs).getString(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.TITLE.getName());
-        verify(rs).getInt(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.VERSION.getName());
-        verify(rs).getTimestamp(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.CREATED.getName());
-        verify(rs).getTimestamp(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.LAST_MODIFIED.getName());
-        verify(rs, times(2)).wasNull();
+        verify{ rs.getInt(NewsletterTopic.NEWSLETTER_TOPIC.ID.getName()); }
+        verify{ rs.getString(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.LANG_CODE.getName()); }
+        verify{ rs.getString(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.TITLE.getName()); }
+        verify{ rs.getInt(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.VERSION.getName()); }
+        verify{ rs.getTimestamp(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.CREATED.getName()); }
+        verify{ rs.getTimestamp(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.LAST_MODIFIED.getName()); }
+        verify(exactly=2) { rs.wasNull(); }
 
-        verifyNoMoreInteractions(rs);
+        confirmVerified(rs);
     }
 
 }

@@ -5,77 +5,65 @@ import ch.difty.scipamato.core.db.tables.CodeClassTr.CODE_CLASS_TR
 import ch.difty.scipamato.core.db.tables.records.CodeClassTrRecord
 import ch.difty.scipamato.core.entity.codeclass.CodeClassTranslation
 import ch.difty.scipamato.core.persistence.OptimisticLockingException
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.whenever
-import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.fail
+import io.mockk.confirmVerified
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.verify
+import org.amshove.kluent.invoking
+import org.amshove.kluent.shouldThrow
+import org.amshove.kluent.withMessage
 import org.jooq.DSLContext
 import org.jooq.Result
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito.mock
-import org.mockito.Mockito.times
-import org.mockito.Mockito.verify
-import org.mockito.Mockito.verifyNoMoreInteractions
 
 internal class JooqCodeClassRepoTest {
 
-    private val dslContextMock = mock<DSLContext>()
-    private val dtsMock = mock<DateTimeService>()
+    private val dslContextMock = mockk<DSLContext>()
+    private val dtsMock = mockk<DateTimeService>()
     private var repo = JooqCodeClassRepo(dslContextMock, dtsMock)
 
     @Suppress("SpellCheckingInspection")
     @Test
     fun removingObsoletePersistedRecords() {
         val cct = CodeClassTranslation(1, "de", "cc1", "", 1)
-        val resultMock: Result<CodeClassTrRecord> = mock()
-        val itMock: MutableIterator<CodeClassTrRecord> = mock()
-        whenever(resultMock.iterator()).thenReturn(itMock)
-        val cctr1 = mock(CodeClassTrRecord::class.java)
-        whenever(cctr1.get(CODE_CLASS_TR.ID)).thenReturn(1)
-        val cctr2 = mock(CodeClassTrRecord::class.java)
-        whenever(cctr2.get(CODE_CLASS_TR.ID)).thenReturn(2)
-        whenever(itMock.hasNext()).thenReturn(true, true, false)
-        whenever<Any>(itMock.next()).thenReturn(cctr1, cctr2)
+        val cctr1 = mockk<CodeClassTrRecord>(relaxed = true) {
+            every { get(CODE_CLASS_TR.ID) } returns 1
+        }
+        val cctr2 = mockk<CodeClassTrRecord>(relaxed = true) {
+            every { get(CODE_CLASS_TR.ID) } returns 2
+        }
+        val resultMock: Result<CodeClassTrRecord> = mockk {
+            every { iterator() } returns mockk {
+                every { hasNext() } returnsMany listOf(true, true, false)
+                every { next() } returnsMany listOf(cctr1, cctr2)
+            }
+        }
 
         repo.removeObsoletePersistedRecordsFor(resultMock, listOf(cct))
 
-        verify(resultMock).iterator()
-        verify(itMock, times(3)).hasNext()
-        verify(itMock, times(2)).next()
-        verify(cctr1).get(CODE_CLASS_TR.ID)
-        verify(cctr2).get(CODE_CLASS_TR.ID)
-        verify(cctr2).delete()
+        verify { resultMock.iterator() }
+        verify { cctr1.get(CODE_CLASS_TR.ID) }
+        verify { cctr2.get(CODE_CLASS_TR.ID) }
+        verify { cctr2.delete() }
 
-        verifyNoMoreInteractions(resultMock, itMock, cctr1, cctr2)
+        confirmVerified(resultMock, cctr1, cctr2)
     }
 
     @Test
     fun consideringAdding_withNullRecord_throwsOptimisticLockingException() {
-        try {
+        invoking {
             repo.considerAdding(null, ArrayList(), CodeClassTranslation(1, "de", "c1", "comm", 10))
-            fail<Any>("should have thrown exception")
-        } catch (ex: Exception) {
-            assertThat(ex)
-                .isInstanceOf(OptimisticLockingException::class.java)
-                .hasMessage(
-                    "Record in table 'code_class_tr' has been modified prior to the update attempt. " +
-                        "Aborting.... [CodeClassTranslation(description=comm)]"
-                )
-        }
+        } shouldThrow OptimisticLockingException::class withMessage
+            "Record in table 'code_class_tr' has been modified prior to the update attempt. " +
+            "Aborting.... [CodeClassTranslation(description=comm)]"
     }
 
     @Test
     fun logOrThrow_withDeleteCount0_throws() {
-        try {
+        invoking {
             repo.logOrThrow(0, 1, "deletedObject")
-            fail<Any>("should have thrown exception")
-        } catch (ex: Exception) {
-            assertThat(ex)
-                .isInstanceOf(OptimisticLockingException::class.java)
-                .hasMessage(
-                    "Record in table 'code_class' has been modified prior to the delete attempt. " +
-                        "Aborting.... [deletedObject]"
-                )
-        }
+        } shouldThrow OptimisticLockingException::class withMessage
+            "Record in table 'code_class' has been modified prior to the delete attempt. " +
+            "Aborting.... [deletedObject]"
     }
 }

@@ -1,7 +1,6 @@
 package ch.difty.scipamato.core.entity.search
 
-import org.assertj.core.api.Assertions.assertThat
-
+import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.Test
 
 private const val CONDITION_ID: Long = 3
@@ -10,12 +9,12 @@ private const val FIELD_NAME = "fn"
 internal class BooleanSearchTermTest {
 
     private fun assertTerm(st: BooleanSearchTerm, value: Boolean, raw: String) {
-        assertThat(st.searchTermType).isEqualTo(SearchTermType.BOOLEAN)
-        assertThat(st.searchConditionId).isEqualTo(CONDITION_ID)
-        assertThat(st.fieldName).isEqualTo(FIELD_NAME)
-        assertThat(st.value).isEqualTo(value)
-        assertThat(st.rawSearchTerm).isEqualTo(raw)
-        assertThat(st.displayValue).isEqualTo((if (!value) "-" else "") + FIELD_NAME)
+        st.searchTermType shouldBeEqualTo SearchTermType.BOOLEAN
+        st.searchConditionId shouldBeEqualTo CONDITION_ID
+        st.fieldName shouldBeEqualTo FIELD_NAME
+        st.value shouldBeEqualTo value
+        st.rawSearchTerm shouldBeEqualTo raw
+        st.displayValue shouldBeEqualTo (if (!value) "-" else "") + FIELD_NAME
     }
 
     @Test

@@ -2,7 +2,7 @@ package ch.difty.scipamato.core.entity.search
 
 import nl.jqno.equalsverifier.EqualsVerifier
 import nl.jqno.equalsverifier.Warning
-import org.assertj.core.api.Assertions.assertThat
+import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.Test
 
 internal class SearchOrderFilterTest {
@@ -15,14 +15,13 @@ internal class SearchOrderFilterTest {
         f.ownerIncludingGlobal = 4
         f.global = true
 
-        assertThat(f.nameMask).isEqualTo("foo")
-        assertThat(f.owner).isEqualTo(3)
-        assertThat(f.ownerIncludingGlobal).isEqualTo(4)
-        assertThat(f.global).isEqualTo(true)
+        f.nameMask shouldBeEqualTo "foo"
+        f.owner shouldBeEqualTo 3
+        f.ownerIncludingGlobal shouldBeEqualTo 4
+        f.global shouldBeEqualTo true
 
-        assertThat(f.toString()).isEqualTo(
+        f.toString() shouldBeEqualTo
             "SearchOrderFilter(nameMask=foo, owner=3, global=true, ownerIncludingGlobal=4)"
-        )
     }
 
     @Test

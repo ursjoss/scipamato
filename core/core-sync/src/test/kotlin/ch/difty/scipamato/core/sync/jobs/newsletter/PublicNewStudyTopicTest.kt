@@ -3,7 +3,7 @@ package ch.difty.scipamato.core.sync.jobs.newsletter
 import ch.difty.scipamato.core.sync.jobs.CREATED
 import ch.difty.scipamato.core.sync.jobs.MODIFIED
 import ch.difty.scipamato.core.sync.jobs.SYNCHED
-import org.assertj.core.api.Assertions.assertThat
+import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.Test
 
 internal class PublicNewStudyTopicTest {
@@ -21,12 +21,12 @@ internal class PublicNewStudyTopicTest {
             .lastSynched(SYNCHED)
             .build()
 
-        assertThat(topic.newsletterId).isEqualTo(2)
-        assertThat(topic.newsletterTopicId).isEqualTo(3)
-        assertThat(topic.sort).isEqualTo(4)
-        assertThat(topic.version).isEqualTo(5)
-        assertThat(topic.created).isEqualTo(CREATED)
-        assertThat(topic.lastModified).isEqualTo(MODIFIED)
-        assertThat(topic.lastSynched).isEqualTo(SYNCHED)
+        topic.newsletterId shouldBeEqualTo 2
+        topic.newsletterTopicId shouldBeEqualTo 3
+        topic.sort shouldBeEqualTo 4
+        topic.version shouldBeEqualTo 5
+        topic.created shouldBeEqualTo CREATED
+        topic.lastModified shouldBeEqualTo MODIFIED
+        topic.lastSynched shouldBeEqualTo SYNCHED
     }
 }

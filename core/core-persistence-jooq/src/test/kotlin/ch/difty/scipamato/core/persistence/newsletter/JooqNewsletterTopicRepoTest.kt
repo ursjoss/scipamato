@@ -5,103 +5,79 @@ import ch.difty.scipamato.core.db.tables.records.NewsletterTopicRecord
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicDefinition
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicFilter
 import ch.difty.scipamato.core.persistence.OptimisticLockingException
-import com.nhaarman.mockitokotlin2.mock
-import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.fail
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.verify
+import org.amshove.kluent.invoking
+import org.amshove.kluent.shouldBeNull
+import org.amshove.kluent.shouldThrow
+import org.amshove.kluent.withMessage
 import org.jooq.DSLContext
 import org.jooq.SelectJoinStep
 import org.jooq.impl.DSL
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito.`when`
-import org.mockito.Mockito.verify
 
 internal class JooqNewsletterTopicRepoTest {
 
-    private val dslContextMock = mock<DSLContext>()
-    private val dateTimeServiceMock = mock<DateTimeService>()
+    private val dslContextMock = mockk<DSLContext>()
+    private val dateTimeServiceMock = mockk<DateTimeService>()
 
     private var repo = JooqNewsletterTopicRepo(dslContextMock, dateTimeServiceMock)
 
     @Test
     fun insertingNewsletterTopicDefinition_withEntityWithNonNullId_throws() {
         val ntd = NewsletterTopicDefinition(1, "de", 1)
-        try {
-            repo.insert(ntd)
-            fail<Any>("Should have thrown exception")
-        } catch (ex: Exception) {
-            assertThat(ex)
-                .isInstanceOf(IllegalArgumentException::class.java)
-                .hasMessage("id must be null.")
-        }
+        invoking { repo.insert(ntd) } shouldThrow IllegalArgumentException::class withMessage "id must be null."
     }
 
     @Test
     fun applyingWhereCondition_withNullFilter_returnsTrueCondition() {
-        val selectStep: SelectJoinStep<NewsletterTopicRecord> = mock()
-        `when`(selectStep.where(DSL.noCondition())).thenReturn(mock())
+        val selectStep: SelectJoinStep<NewsletterTopicRecord> = mockk {
+            every { where(DSL.noCondition()) } returns mockk()
+        }
 
         repo.applyWhereCondition(null, selectStep)
 
-        verify(selectStep).where(DSL.noCondition())
+        verify { selectStep.where(DSL.noCondition()) }
     }
 
     @Test
     fun applyingWhereCondition_withFilterWithNoTitleMask_returnsTrueCondition() {
-        val selectStep: SelectJoinStep<NewsletterTopicRecord> = mock()
-        `when`(selectStep.where(DSL.noCondition())).thenReturn(mock())
+        val selectStep: SelectJoinStep<NewsletterTopicRecord> = mockk {
+            every { where(DSL.noCondition()) } returns mockk()
+        }
 
         val filter = NewsletterTopicFilter()
-        assertThat(filter.titleMask).isNull()
+        filter.titleMask.shouldBeNull()
 
         repo.applyWhereCondition(filter, selectStep)
 
-        verify(selectStep).where(DSL.noCondition())
+        verify { selectStep.where(DSL.noCondition()) }
     }
 
     @Test
     fun handlingUpdatedRecord_withNullRecord_throwsOptimisticLockingException() {
         val entity = NewsletterTopicDefinition(10, "de", 100)
         val userId = 5
-        try {
-            repo.handleUpdatedRecord(null, entity, userId)
-            fail<Any>("should have thrown exception")
-        } catch (ex: Exception) {
-            assertThat(ex)
-                .isInstanceOf(OptimisticLockingException::class.java)
-                .hasMessage(
-                    "Record in table 'newsletter_topic' has been modified prior to the update attempt. " +
-                        "Aborting.... [NewsletterTopicDefinition(id=10)]"
-                )
-        }
+        invoking { repo.handleUpdatedRecord(null, entity, userId) } shouldThrow
+            OptimisticLockingException::class withMessage
+            "Record in table 'newsletter_topic' has been modified prior to the update attempt. " +
+            "Aborting.... [NewsletterTopicDefinition(id=10)]"
     }
 
     @Test
     fun addingOrThrowing_withNullRecord_throwsOptimisticLockingException() {
-        try {
-            repo.addOrThrow(null, emptyList(), "nttObject")
-            fail<Any>("should have thrown exception")
-        } catch (ex: Exception) {
-            assertThat(ex)
-                .isInstanceOf(OptimisticLockingException::class.java)
-                .hasMessage(
-                    "Record in table 'newsletter_topic_tr' has been modified prior to the update attempt. " +
-                        "Aborting.... [nttObject]"
-                )
-        }
+        invoking { repo.addOrThrow(null, emptyList(), "nttObject") } shouldThrow
+            OptimisticLockingException::class withMessage
+            "Record in table 'newsletter_topic_tr' has been modified prior to the update attempt. " +
+            "Aborting.... [nttObject]"
     }
 
     @Test
     fun loggingOrThrowing_withDeleteCount0_throws() {
-        try {
-            repo.logOrThrow(0, 10, "delObj")
-            fail<Any>("should have thrown exception")
-        } catch (ex: Exception) {
-            assertThat(ex)
-                .isInstanceOf(OptimisticLockingException::class.java)
-                .hasMessage(
-                    "Record in table 'newsletter_topic' has been modified prior to the delete attempt. " +
-                        "Aborting.... [delObj]"
-                )
-        }
+        invoking { repo.logOrThrow(0, 10, "delObj") } shouldThrow
+            OptimisticLockingException::class withMessage
+            "Record in table 'newsletter_topic' has been modified prior to the delete attempt. " +
+            "Aborting.... [delObj]"
     }
 }

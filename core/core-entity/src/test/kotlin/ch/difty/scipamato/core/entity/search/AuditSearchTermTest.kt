@@ -2,7 +2,12 @@ package ch.difty.scipamato.core.entity.search
 
 import ch.difty.scipamato.core.entity.search.AuditSearchTerm.MatchType
 import ch.difty.scipamato.core.entity.search.AuditSearchTerm.TokenType
-import org.assertj.core.api.Assertions.assertThat
+import org.amshove.kluent.shouldBeEmpty
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeNull
+import org.amshove.kluent.shouldContainAll
+import org.amshove.kluent.shouldContainSame
+import org.amshove.kluent.shouldHaveSize
 import org.junit.jupiter.api.Test
 
 private const val CREATED = "CREATED"
@@ -20,8 +25,8 @@ internal class AuditSearchTermTest {
         dateRawData: String?,
         dateData: String?
     ) {
-        assertThat(st.fieldName).isEqualTo(fieldName)
-        assertThat(st.tokens).hasSize(1)
+        st.fieldName shouldBeEqualTo fieldName
+        st.tokens shouldHaveSize 1
         assertToken(st, 0, tt, userRawData, userData, dateRawData, dateData)
     }
 
@@ -37,20 +42,20 @@ internal class AuditSearchTermTest {
     ) {
         with(st.tokens[idx]) {
             if (userRawData != null) {
-                assertThat(userRawData).isEqualTo(userRawData)
-                assertThat(userSqlData).isEqualTo(userData)
+                userRawData shouldBeEqualTo userRawData
+                userSqlData shouldBeEqualTo userData
             } else {
-                assertThat(this.userRawData).isNull()
-                assertThat(userSqlData).isNull()
+                this.userRawData.shouldBeNull()
+                userSqlData.shouldBeNull()
             }
             if (dateRawData != null) {
-                assertThat(dateRawData).isEqualTo(dateRawData)
-                assertThat(dateSqlData).isEqualTo(dateData)
+                dateRawData shouldBeEqualTo dateRawData
+                dateSqlData shouldBeEqualTo dateData
             } else {
-                assertThat(this.dateRawData).isNull()
-                assertThat(dateSqlData).isNull()
+                this.dateRawData.shouldBeNull()
+                dateSqlData.shouldBeNull()
             }
-            assertThat(type).isEqualTo(tt)
+            type shouldBeEqualTo tt
         }
     }
 
@@ -65,8 +70,8 @@ internal class AuditSearchTermTest {
     fun lexingUserSpecsForNonUserField_findsNothing() {
         val fieldName = CREATED
         val st = AuditSearchTerm(fieldName, "mkj")
-        assertThat(st.fieldName).isEqualTo(fieldName)
-        assertThat(st.tokens).isEmpty()
+        st.fieldName shouldBeEqualTo fieldName
+        st.tokens.shouldBeEmpty()
     }
 
     @Test
@@ -331,8 +336,8 @@ internal class AuditSearchTermTest {
     fun lexingImproperDate_findsNothing() {
         val fieldName = CREATED
         val st = AuditSearchTerm(fieldName, "\"2017-12- 01 23:15:13\"")
-        assertThat(st.fieldName).isEqualTo(fieldName)
-        assertThat(st.tokens).isEmpty()
+        st.fieldName shouldBeEqualTo fieldName
+        st.tokens.shouldBeEmpty()
     }
 
     @Test
@@ -356,58 +361,58 @@ internal class AuditSearchTermTest {
     @Test
     fun tokenToString_forDateField() {
         val st = AuditSearchTerm(CREATED, "user =\"2017-12-01 23:15:13\"")
-        assertThat(st.tokens).hasSize(1)
-        assertThat(st.tokens[0].toString()).isEqualTo("(DATE EXACTQUOTED 2017-12-01 23:15:13)")
+        st.tokens shouldHaveSize 1
+        st.tokens[0].toString() shouldBeEqualTo "(DATE EXACTQUOTED 2017-12-01 23:15:13)"
     }
 
     @Test
     fun tokenToString_forUserField() {
         val st = AuditSearchTerm(CREATED_BY, "foo =\"2017-12-01 23:15:13\"")
-        assertThat(st.tokens).hasSize(1)
-        assertThat(st.tokens[0].toString()).isEqualTo("(USER WORD foo)")
+        st.tokens shouldHaveSize 1
+        st.tokens[0].toString() shouldBeEqualTo "(USER WORD foo)"
     }
 
     @Test
     fun byMatchType_withValidMatchTypeNONE() {
-        assertThat(TokenType.byMatchType(MatchType.NONE)).containsExactly(TokenType.WHITESPACE, TokenType.RAW)
+        TokenType.byMatchType(MatchType.NONE) shouldContainAll listOf(TokenType.WHITESPACE, TokenType.RAW)
     }
 
     @Test
     fun byMatchType_withValidMatchTypeRANGE() {
-        assertThat(TokenType.byMatchType(MatchType.RANGE)).containsExactly(TokenType.RANGEQUOTED, TokenType.RANGE)
+        TokenType.byMatchType(MatchType.RANGE) shouldContainAll listOf(TokenType.RANGEQUOTED, TokenType.RANGE)
     }
 
     @Test
     fun byMatchType_withValidMatchTypeGREATER_OR_EQUAL() {
-        assertThat(TokenType.byMatchType(MatchType.GREATER_OR_EQUAL))
-            .containsExactly(TokenType.GREATEROREQUALQUOTED, TokenType.GREATEROREQUAL)
+        TokenType.byMatchType(MatchType.GREATER_OR_EQUAL) shouldContainSame
+            listOf(TokenType.GREATEROREQUALQUOTED, TokenType.GREATEROREQUAL)
     }
 
     @Test
     fun byMatchType_withValidMatchTypeGREATER_THAN() {
-        assertThat(TokenType.byMatchType(MatchType.GREATER_THAN))
-            .containsExactly(TokenType.GREATERTHANQUOTED, TokenType.GREATERTHAN)
+        TokenType.byMatchType(MatchType.GREATER_THAN) shouldContainSame
+            listOf(TokenType.GREATERTHANQUOTED, TokenType.GREATERTHAN)
     }
 
     @Test
     fun byMatchType_withValidMatchTypeLESS_OR_EQUAL() {
-        assertThat(TokenType.byMatchType(MatchType.LESS_OR_EQUAL))
-            .containsExactly(TokenType.LESSOREQUALQUOTED, TokenType.LESSOREQUAL)
+        TokenType.byMatchType(MatchType.LESS_OR_EQUAL) shouldContainSame
+            listOf(TokenType.LESSOREQUALQUOTED, TokenType.LESSOREQUAL)
     }
 
     @Test
     fun byMatchType_withValidMatchTypeLESS_THAN() {
-        assertThat(TokenType.byMatchType(MatchType.LESS_THAN))
-            .containsExactly(TokenType.LESSTHANQUOTED, TokenType.LESSTHAN)
+        TokenType.byMatchType(MatchType.LESS_THAN) shouldContainSame
+            listOf(TokenType.LESSTHANQUOTED, TokenType.LESSTHAN)
     }
 
     @Test
     fun byMatchType_withValidMatchTypeEQUALS() {
-        assertThat(TokenType.byMatchType(MatchType.EQUALS)).containsExactly(TokenType.EXACTQUOTED, TokenType.EXACT)
+        TokenType.byMatchType(MatchType.EQUALS) shouldContainAll listOf(TokenType.EXACTQUOTED, TokenType.EXACT)
     }
 
     @Test
     fun byMatchType_withValidMatchTypeCONTAINS() {
-        assertThat(TokenType.byMatchType(MatchType.CONTAINS)).containsExactly(TokenType.WORD)
+        TokenType.byMatchType(MatchType.CONTAINS) shouldContainAll listOf(TokenType.WORD)
     }
 }

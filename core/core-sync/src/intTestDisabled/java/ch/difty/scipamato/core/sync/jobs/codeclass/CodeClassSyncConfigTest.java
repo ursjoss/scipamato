@@ -77,24 +77,24 @@ class CodeClassSyncConfigTest extends SyncConfigTest<CodeClassRecord> {
 
         PublicCodeClass pcc = config.makeEntity(rs);
 
-        assertThat(pcc.getCodeClassId()).isEqualTo(1);
-        assertThat(pcc.getLangCode()).isEqualTo("lc");
-        assertThat(pcc.getName()).isEqualTo("n");
-        assertThat(pcc.getDescription()).isEqualTo("d");
-        assertThat(pcc.getVersion()).isEqualTo(2);
-        assertThat(pcc.getCreated()).isEqualTo(CREATED);
-        assertThat(pcc.getLastModified()).isEqualTo(MODIFIED);
+        pcc.getCodeClassId() shouldBeEqualTo 1;
+        pcc.getLangCode() shouldBeEqualTo "lc";
+        pcc.getName() shouldBeEqualTo "n";
+        pcc.getDescription() shouldBeEqualTo "d";
+        pcc.getVersion() shouldBeEqualTo 2;
+        pcc.getCreated() shouldBeEqualTo CREATED;
+        pcc.getLastModified() shouldBeEqualTo MODIFIED;
         assertThat(pcc.getLastSynched()).isCloseTo("2016-12-09T06:02:13.000", 1000);
 
-        verify(rs).getInt(CodeClass.CODE_CLASS.ID.getName());
-        verify(rs).getString(CodeClassTr.CODE_CLASS_TR.LANG_CODE.getName());
-        verify(rs).getString(CodeClassTr.CODE_CLASS_TR.NAME.getName());
-        verify(rs).getString(CodeClassTr.CODE_CLASS_TR.DESCRIPTION.getName());
-        verify(rs).getInt(CodeClassTr.CODE_CLASS_TR.VERSION.getName());
-        verify(rs).getTimestamp(CodeClassTr.CODE_CLASS_TR.CREATED.getName());
-        verify(rs).getTimestamp(CodeClassTr.CODE_CLASS_TR.LAST_MODIFIED.getName());
-        verify(rs, times(2)).wasNull();
+        verify{ rs.getInt(CodeClass.CODE_CLASS.ID.getName()); }
+        verify{ rs.getString(CodeClassTr.CODE_CLASS_TR.LANG_CODE.getName()); }
+        verify{ rs.getString(CodeClassTr.CODE_CLASS_TR.NAME.getName()); }
+        verify{ rs.getString(CodeClassTr.CODE_CLASS_TR.DESCRIPTION.getName()); }
+        verify{ rs.getInt(CodeClassTr.CODE_CLASS_TR.VERSION.getName()); }
+        verify{ rs.getTimestamp(CodeClassTr.CODE_CLASS_TR.CREATED.getName()); }
+        verify{ rs.getTimestamp(CodeClassTr.CODE_CLASS_TR.LAST_MODIFIED.getName()); }
+        verify(exactly=2) { rs.wasNull(); }
 
-        verifyNoMoreInteractions(rs);
+        confirmVerified(rs);
     }
 }

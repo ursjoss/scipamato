@@ -1,3 +1,5 @@
+@file:Suppress("SpellCheckingInspection")
+
 package ch.difty.scipamato.core.persistence.keyword
 
 import ch.difty.scipamato.common.DateTimeService
@@ -6,104 +8,97 @@ import ch.difty.scipamato.core.db.tables.records.KeywordTrRecord
 import ch.difty.scipamato.core.entity.keyword.KeywordDefinition
 import ch.difty.scipamato.core.entity.keyword.KeywordTranslation
 import ch.difty.scipamato.core.persistence.OptimisticLockingException
-import ch.difty.scipamato.core.persistence.mock
-import com.nhaarman.mockitokotlin2.*
-import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.fail
+import io.mockk.confirmVerified
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.verify
+import org.amshove.kluent.invoking
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeNull
+import org.amshove.kluent.shouldHaveSize
+import org.amshove.kluent.shouldThrow
+import org.amshove.kluent.withMessage
 import org.jooq.DSLContext
 import org.jooq.Result
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito
 
 internal class JooqKeywordRepoTest {
 
-    private val dslContextMock = Mockito.mock(DSLContext::class.java)
-    private val dateTimeServiceMock = Mockito.mock(DateTimeService::class.java)
+    private val dslContextMock = mockk<DSLContext>()
+    private val dateTimeServiceMock = mockk<DateTimeService>()
 
     private var repo = JooqKeywordRepo(dslContextMock, dateTimeServiceMock)
 
     @Test
     fun insertingKeywordDefinition_withEntityWithNonNullId_throws() {
         val ntd = KeywordDefinition(1, "de", 1)
-        try {
-            repo.insert(ntd)
-            fail<Any>("Should have thrown exception")
-        } catch (ex: Exception) {
-            assertThat(ex)
-                .isInstanceOf(IllegalArgumentException::class.java)
-                .hasMessage("id must be null.")
-        }
+        invoking { repo.insert(ntd) } shouldThrow IllegalArgumentException::class withMessage "id must be null."
     }
 
     @Test
     fun removingObsoletePersistedRecords() {
         val kt = KeywordTranslation(1, "de", "kw1", 1)
-        val resultMock: Result<KeywordTrRecord> = mock()
-        val itMock: MutableIterator<KeywordTrRecord> = mock()
-        whenever(resultMock.iterator()).thenReturn(itMock)
-        val ktr1 = Mockito.mock(KeywordTrRecord::class.java)
-        whenever(ktr1.get(KEYWORD_TR.ID)).thenReturn(1)
-        val ktr2 = Mockito.mock(KeywordTrRecord::class.java)
-        whenever(ktr2.get(KEYWORD_TR.ID)).thenReturn(2)
-        whenever(itMock.hasNext()).thenReturn(true, true, false)
-        whenever<Any>(itMock.next()).thenReturn(ktr1, ktr2)
+
+        val ktr1 = mockk<KeywordTrRecord>(relaxed = true) {
+            every { get(KEYWORD_TR.ID) } returns 1
+        }
+        val ktr2 = mockk<KeywordTrRecord>(relaxed = true) {
+            every { get(KEYWORD_TR.ID) } returns 2
+        }
+        val resultMock: Result<KeywordTrRecord> = mockk {
+            every { iterator() } returns mockk {
+                every { hasNext() } returnsMany listOf(true, true, false)
+                every { next() } returnsMany listOf(ktr1, ktr2)
+            }
+        }
 
         repo.removeObsoletePersistedRecordsFor(resultMock, listOf(kt))
 
-        verify(resultMock).iterator()
-        verify(itMock, times(3)).hasNext()
-        verify(itMock, times(2)).next()
-        verify(ktr1).get(KEYWORD_TR.ID)
-        verify(ktr2).get(KEYWORD_TR.ID)
-        verify(ktr2).delete()
+        verify { resultMock.iterator() }
+        verify { ktr1.get(KEYWORD_TR.ID) }
+        verify { ktr2.get(KEYWORD_TR.ID) }
+        verify { ktr2.delete() }
 
-        verifyNoMoreInteractions(resultMock, itMock, ktr1, ktr2)
+        confirmVerified(resultMock, ktr1, ktr2)
     }
 
     @Test
     fun removingObsoletePersistedRecords_whenCheckingIfTranslationIsPresentInEntity_doesntConsiderIdLessEntityTransl() {
         val ct = KeywordTranslation(null, "de", "1ade", 1)
-        val resultMock: Result<KeywordTrRecord> = mock()
-        val itMock: MutableIterator<KeywordTrRecord> = mock()
-        whenever(resultMock.iterator()).thenReturn(itMock)
-        val ctr1 = Mockito.mock(KeywordTrRecord::class.java)
-        val ctr2 = Mockito.mock(KeywordTrRecord::class.java)
-        whenever(itMock.hasNext()).thenReturn(true, true, false)
-        whenever(itMock.next()).thenReturn(ctr1, ctr2)
+        val ctr1 = mockk<KeywordTrRecord>(relaxed = true)
+        val ctr2 = mockk<KeywordTrRecord>(relaxed = true)
+        val resultMock: Result<KeywordTrRecord> = mockk {
+            every { iterator() } returns mockk {
+                every { hasNext() } returnsMany listOf(true, true, false)
+                every { next() } returnsMany listOf(ctr1, ctr2)
+            }
+        }
 
         repo.removeObsoletePersistedRecordsFor(resultMock, listOf(ct))
 
-        verify(resultMock).iterator()
-        verify(itMock, times(3)).hasNext()
-        verify(itMock, times(2)).next()
-        verify(ctr1).delete()
-        verify(ctr2).delete()
+        verify { resultMock.iterator() }
+        verify { ctr1.delete() }
+        verify { ctr2.delete() }
 
-        verifyNoMoreInteractions(resultMock, itMock, ctr1, ctr2)
+        confirmVerified(resultMock, ctr1, ctr2)
     }
 
     @Test
     fun managingTranslations() {
         val entity = KeywordDefinition(1, "de", 10)
-
-        try {
-            repo.manageTranslations(null, entity, emptyList())
-            fail<Any>("should have thrown exception")
-        } catch (ex: Exception) {
-            assertThat(ex)
-                .isInstanceOf(OptimisticLockingException::class.java).hasMessage(
-                    "Record in table 'keyword' has been modified prior to the update attempt. Aborting...." +
-                        " [KeywordDefinition(id=1, searchOverride=null)]")
-        }
+        invoking { repo.manageTranslations(null, entity, emptyList()) } shouldThrow OptimisticLockingException::class withMessage
+            "Record in table 'keyword' has been modified prior to the update attempt. Aborting...." +
+            " [KeywordDefinition(id=1, searchOverride=null)]"
     }
 
     @Test
     fun addingOrUpdatingTranslation() {
-        val ktrMock = Mockito.mock(KeywordTrRecord::class.java)
-        doReturn(1000).whenever(ktrMock).get(KEYWORD_TR.ID)
-        doReturn("de").whenever(ktrMock).get(KEYWORD_TR.LANG_CODE)
-        doReturn("someName").whenever(ktrMock).get(KEYWORD_TR.NAME)
-        doReturn(500).whenever(ktrMock).get(KEYWORD_TR.VERSION)
+        val ktrMock = mockk<KeywordTrRecord> {
+            every { get(KEYWORD_TR.ID) } returns 1000
+            every { get(KEYWORD_TR.LANG_CODE) } returns "de"
+            every { get(KEYWORD_TR.NAME) } returns "someName"
+            every { get(KEYWORD_TR.VERSION) } returns 500
+        }
 
         repo = object : JooqKeywordRepo(dslContextMock, dateTimeServiceMock) {
             override fun insertAndGetKeywordTr(keywordId: Int, userId: Int, kt: KeywordTranslation) = ktrMock
@@ -114,44 +109,34 @@ internal class JooqKeywordRepoTest {
         val translations = ArrayList<KeywordTranslation>()
         val kt = KeywordTranslation(null, "de", "trs1", 1)
 
-        assertThat(kt.id).isNull()
+        kt.id.shouldBeNull()
 
         repo.addOrUpdateTranslation(kt, entity, userId, translations)
 
-        assertThat(translations).hasSize(1)
+        translations shouldHaveSize 1
         val translation = translations[0]
 
-        assertThat(translation.id).isEqualTo(1000)
-        assertThat(translation.langCode).isEqualTo("de")
-        assertThat(translation.name).isEqualTo("someName")
-        assertThat(translation.version).isEqualTo(500)
+        translation.id shouldBeEqualTo 1000
+        translation.langCode shouldBeEqualTo "de"
+        translation.name shouldBeEqualTo "someName"
+        translation.version shouldBeEqualTo 500
     }
 
     @Test
     fun addOrThrow_withNullRecord_throwsOptimisticLockingException() {
-        try {
+        invoking {
             repo.addOrThrow(null, "trslString", ArrayList())
-            fail<Any>("should have thrown exception")
-        } catch (ex: Exception) {
-            assertThat(ex)
-                .isInstanceOf(OptimisticLockingException::class.java).hasMessage(
-                    "Record in table 'keyword_tr' has been modified prior to the update attempt." +
-                        " Aborting.... [trslString]"
-                )
-        }
+        } shouldThrow OptimisticLockingException::class withMessage
+            "Record in table 'keyword_tr' has been modified prior to the update attempt." +
+            " Aborting.... [trslString]"
     }
 
     @Test
     fun loggingOrThrowing_withDeleteCountZero_throws() {
-        try {
+        invoking {
             repo.logOrThrow(0, 1, KeywordDefinition(10, "de", 100))
-            fail<Any>("should have thrown exception")
-        } catch (ex: Exception) {
-            assertThat(ex)
-                .isInstanceOf(OptimisticLockingException::class.java).hasMessage(
-                    "Record in table 'keyword' has been modified prior to the delete attempt." +
-                        " Aborting.... [KeywordDefinition(id=10, searchOverride=null)]"
-                )
-        }
+        } shouldThrow OptimisticLockingException::class withMessage
+            "Record in table 'keyword' has been modified prior to the delete attempt." +
+            " Aborting.... [KeywordDefinition(id=10, searchOverride=null)]"
     }
 }

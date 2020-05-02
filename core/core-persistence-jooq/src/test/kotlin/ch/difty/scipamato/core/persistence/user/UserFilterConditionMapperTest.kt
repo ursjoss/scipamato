@@ -4,7 +4,7 @@ import ch.difty.scipamato.common.persistence.FilterConditionMapperTest
 import ch.difty.scipamato.core.db.tables.ScipamatoUser.SCIPAMATO_USER
 import ch.difty.scipamato.core.db.tables.records.ScipamatoUserRecord
 import ch.difty.scipamato.core.entity.search.UserFilter
-import org.assertj.core.api.Assertions.assertThat
+import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.Test
 
 internal class UserFilterConditionMapperTest :
@@ -18,25 +18,22 @@ internal class UserFilterConditionMapperTest :
     fun creatingWhereCondition_withNameMask_searchesUserNameAndFirstNameAndLastName() {
         val pattern = "am"
         filter.nameMask = pattern
-        assertThat(mapper.map(filter).toString()).isEqualToIgnoringCase(
+        mapper.map(filter).toString().toLowerCase() shouldBeEqualTo
             makeWhereClause(pattern, "user_name", "first_name", "last_name")
-        )
     }
 
     @Test
     fun creatingWhereCondition_withEmailMask_searchesEmail() {
         val pattern = "m"
         filter.emailMask = pattern
-        assertThat(mapper.map(filter).toString()).isEqualToIgnoringCase(
+        mapper.map(filter).toString() shouldBeEqualTo
             """lower("public"."scipamato_user"."email") like lower('%m%')"""
-        )
     }
 
     @Test
     fun creatingWhereCondition_withEnabledMask_searchesEnabled() {
         filter.enabled = true
-        assertThat(mapper.map(filter).toString()).isEqualToIgnoringCase(
+        mapper.map(filter).toString() shouldBeEqualTo
             """"public"."scipamato_user"."enabled" = true"""
-        )
     }
 }
