@@ -42,7 +42,7 @@ public class CodeClassEditPage extends DefinitionEditPage<CodeClassDefinition, C
         super(model, callingPageRef);
     }
 
-    @Nullable
+    @NotNull
     @Override
     protected CodeClassDefinition persistModel() {
         return service.saveOrUpdate(getModelObject());

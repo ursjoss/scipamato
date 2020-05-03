@@ -139,15 +139,6 @@ object Lib {
 
     fun junit5(module: String = "") = Dep("org.junit.jupiter", "junit-jupiter${if (module.isNotBlank()) "-$module" else ""}", junit5Version)
 
-    @Deprecated("Replace with mockk")
-    fun mockito3(module: String) = Dep("org.mockito", "mockito-$module", mockitoVersion)
-
-    @Deprecated("Replace with mockk")
-    fun mockitoKotlin() = Dep("com.nhaarman.mockitokotlin2", "mockito-kotlin", mockitoKotlinVersion)
-
-    @Deprecated("Replace with kluent")
-    fun assertj() = Dep("org.assertj", "assertj-core")
-
     fun testcontainers(module: String) = Dep("org.testcontainers", module, testcontainersVersion)
     fun equalsverifier() = Dep("nl.jqno.equalsverifier", "equalsverifier", equalsverifierVersion)
     fun spek(module: String) = Dep("org.spekframework.spek2", "spek-$module", spekVersion)

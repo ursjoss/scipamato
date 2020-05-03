@@ -87,14 +87,15 @@ abstract class WicketTest {
     }
 }
 
-inline fun <reified T : PaginationContext> MockKMatcherScope.matchPaginationContext(offset: Int, pageSize: Int, sort: String): T =
-    match(PaginationContextMatcher(offset, pageSize, sort))
+inline fun <reified T : PaginationContext> MockKMatcherScope.matchPaginationContext(
+    offset: Int, pageSize: Int, sort: String
+): T = match(PaginationContextMatcher(offset, pageSize, sort))
 
 data class PaginationContextMatcher(
     val offset: Int,
     val pageSize: Int,
     val sort: String
 ) : Matcher<PaginationContext> {
-    override fun match(p: PaginationContext?): Boolean =
-        p != null && p.offset == offset && p.pageSize == pageSize && sort == p.sort.toString()
+    override fun match(arg: PaginationContext?): Boolean =
+        arg != null && arg.offset == offset && arg.pageSize == pageSize && sort == arg.sort.toString()
 }

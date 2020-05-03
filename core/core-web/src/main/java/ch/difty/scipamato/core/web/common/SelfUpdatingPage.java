@@ -1,5 +1,6 @@
 package ch.difty.scipamato.core.web.common;
 
+import de.agilecoders.wicket.core.markup.html.bootstrap.common.NotificationPanel;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
@@ -83,7 +84,9 @@ public abstract class SelfUpdatingPage<T> extends BasePage<T> {
      * too much information.
      */
     protected void tuneDownFeedbackMessages() {
-        getFeedbackPanel().setMaxMessages(1);
+        final NotificationPanel panel = getFeedbackPanel();
+        if (panel != null)
+            panel.setMaxMessages(1);
     }
 
     /**
@@ -92,6 +95,8 @@ public abstract class SelfUpdatingPage<T> extends BasePage<T> {
      * indicated to the user in full detail.
      */
     protected void resetFeedbackMessages() {
-        getFeedbackPanel().setMaxMessages(Integer.MAX_VALUE);
+        final NotificationPanel panel = getFeedbackPanel();
+        if (panel != null)
+            panel.setMaxMessages(Integer.MAX_VALUE);
     }
 }

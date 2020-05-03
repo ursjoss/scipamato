@@ -71,6 +71,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Removed
 - apache-io, commons-lang3, commons-collections4, jool
+- {url-issues}177[#177] Removed mockito, mockito-kotlin, assertj. Converted all tests to kotlin.
 
 .Fixed
 

@@ -64,7 +64,7 @@ public abstract class AbstractPage<T> extends GenericWebPage<T> {
         return navbar;
     }
 
-    @NotNull
+    @Nullable
     public NotificationPanel getFeedbackPanel() {
         return feedbackPanel;
     }

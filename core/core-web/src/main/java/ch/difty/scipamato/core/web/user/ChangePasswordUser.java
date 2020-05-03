@@ -63,7 +63,7 @@ public class ChangePasswordUser implements Serializable {
         return user;
     }
 
-    @NotNull
+    @Nullable
     public Integer getId() {
         return user.getId();
     }
@@ -72,7 +72,7 @@ public class ChangePasswordUser implements Serializable {
         user.setId(id);
     }
 
-    @NotNull
+    @Nullable
     public String getUserName() {
         return user.getUserName();
     }
@@ -81,7 +81,7 @@ public class ChangePasswordUser implements Serializable {
         user.setUserName(value);
     }
 
-    @NotNull
+    @Nullable
     public String getFirstName() {
         return user.getFirstName();
     }
@@ -90,7 +90,7 @@ public class ChangePasswordUser implements Serializable {
         user.setFirstName(value);
     }
 
-    @NotNull
+    @Nullable
     public String getLastName() {
         return user.getLastName();
     }
@@ -99,7 +99,7 @@ public class ChangePasswordUser implements Serializable {
         user.setLastName(value);
     }
 
-    @NotNull
+    @Nullable
     public String getEmail() {
         return user.getEmail();
     }
@@ -142,12 +142,12 @@ public class ChangePasswordUser implements Serializable {
         user.removeRole(role);
     }
 
-    @NotNull
+    @Nullable
     public String getFullName() {
         return user.getFullName();
     }
 
-    @NotNull
+    @Nullable
     public String getDisplayValue() {
         return user.getDisplayValue();
     }
