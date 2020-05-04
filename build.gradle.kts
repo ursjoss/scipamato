@@ -154,8 +154,19 @@ subprojects {
 
         compileOnly(Lib.jsr305())
 
+        testImplementation(Lib.springBootStarter("test").id) {
+            exclude("junit", "junit")
+            exclude("org.skyscreamer", "jsonassert")
+            exclude("org.mockito", "mockito-core")
+            exclude("org.mockito", "mockito-junit-jupiter")
+            exclude("org.hamcrest", "hamcrest")
+            exclude("org.assertj", "assertj-core")
+        }
         testImplementation(Lib.spek("dsl-jvm"))
-        testImplementation(Lib.kluent())
+        testImplementation(Lib.kluent().id) {
+            exclude("org.mockito", "mockito-core")
+            exclude("com.nhaarman.mockitokotlin2", "mockito-kotlin")
+        }
         testImplementation(Lib.mockk())
         testImplementation(Lib.springMockk())
         testImplementation(Lib.kwik("evaluator"))

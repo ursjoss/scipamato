@@ -1,7 +1,6 @@
 package ch.difty.scipamato.common.paper
 
 import org.amshove.kluent.shouldBeEqualTo
-import org.assertj.core.api.AssertionsForInterfaceTypes.assertThat
 import org.junit.jupiter.api.Test
 
 @Suppress("SpellCheckingInspection")
@@ -26,10 +25,8 @@ internal class AbstractShortFieldConcatenatorWithoutNewLineTest {
 
     @Test
     fun method_withMethodNull_returnsConcatenatedShortFieldsWhereNotBlank() {
-        assertThat(concatenator.methodsFrom(null, "", " ", "pp", "ep", "ea", "ms", "mc"))
-            .isEqualTo(
-                "Place: pp / Pollutant: ep / Exposure Assessment: ea / Statistical Method: ms / Confounders: mc"
-            )
+        concatenator.methodsFrom(null, "", " ", "pp", "ep", "ea", "ms", "mc") shouldBeEqualTo
+            "Place: pp / Pollutant: ep / Exposure Assessment: ea / Statistical Method: ms / Confounders: mc"
     }
 
     @Test
