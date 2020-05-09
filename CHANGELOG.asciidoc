@@ -63,8 +63,8 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 
 .Changed
-- Bumped kotlin, detekt, KRis, kwik, wicket-boostrap, wicketstuff, font-awesome,
-  junit-jupter, kluent, mockk, spring-cloud, wicket, KRis, testcontainers,
+- Bumped spring-boot, kotlin, detekt, KRis, kwik, wicket-boostrap, wicketstuff, font-awesome,
+  junit-jupter, kluent, mockk, spring-cloud, wicket, KRis, testcontainers, openfeign
   lombok-gradle-plugin
 
 .Deprecated
