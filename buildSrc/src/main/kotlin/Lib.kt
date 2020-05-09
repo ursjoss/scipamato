@@ -9,7 +9,7 @@ object Lib {
     //region:dependencyVersions
     private const val kotlinVersion = "1.3.72"
 
-    private const val springBootVersion = "2.2.6.RELEASE"
+    private const val springBootVersion = "2.2.7.RELEASE"
     private const val springBootAdminVersion = "2.2.2"
     const val springCloudVersion = "Hoxton.SR4"
     private const val springCloudStarterVersion = "2.2.2.RELEASE"
@@ -25,7 +25,7 @@ object Lib {
 
     private const val kotlinLoggingVersion = "1.7.9"
 
-    private const val openfeignVersion = "10.9"
+    private const val openfeignVersion = "10.10.1"
 
     private const val jaxbCoreVersion = "2.3.0.1"
     private const val jaxbImplVersion = "2.3.2"
@@ -55,7 +55,7 @@ object Lib {
 
     //region:pluginVersions
     private const val springDependencyManagementPluginVersion = "1.0.9.RELEASE"
-    private const val lombokPluginVersion = "5.0.0"
+    private const val lombokPluginVersion = "5.0.1"
     private const val jooqModelatorPluginVersion = "3.6.0"
     private const val reckonPluginVersion = "0.12.0"
     private const val jaxbPluginVersion = "4.3.1"
