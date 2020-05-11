@@ -68,19 +68,29 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 
 .Changed
+
+.Deprecated
+
+.Removed
+
+.Fixed
+
+.Security
+
+
+[[v1.4.5]]
+== {url-tree}1.4.5[1.4.5] -- 2020-05-11
+
+{url-cl}1.4.4$$...$$1.4.5[Full Changelog]
+
+.Changed
 - Bumped spring-boot, kotlin, detekt, KRis, kwik, wicket-boostrap, wicketstuff, font-awesome,
   gradle, junit-jupter, kluent, mockk, spring-cloud, wicket, KRis, testcontainers, openfeign
   lombok-gradle-plugin
 - {url-issues}179[#179] Enrich Changelog with Full Changelog and link to tree
 
-.Deprecated
-
 .Removed
 - apache-io, commons-lang3, commons-collections4, jool
-
-.Fixed
-
-.Security
 
 
 [[v1.4.4]]
