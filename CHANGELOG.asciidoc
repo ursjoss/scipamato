@@ -71,6 +71,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 - Bumped spring-boot, kotlin, detekt, KRis, kwik, wicket-boostrap, wicketstuff, font-awesome,
   gradle, junit-jupter, kluent, mockk, spring-cloud, wicket, KRis, testcontainers, openfeign
   lombok-gradle-plugin
+- {url-issues}179[#179] Enrich Changelog with Full Changelog and link to tree
 
 .Deprecated
 
