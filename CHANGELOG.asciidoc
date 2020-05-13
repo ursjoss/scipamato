@@ -62,20 +62,21 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 ////
 
-//[[unreleased]]
-//== [unreleased]
-//
-//.Added
-//
-//.Changed
-//
-//.Deprecated
-//
-//.Removed
-//
-//.Fixed
-//
-//.Security
+[[unreleased]]
+== [unreleased]
+
+.Added
+
+.Changed
+- Bumped detekt
+
+.Deprecated
+
+.Removed
+
+.Fixed
+
+.Security
 
 
 [[v1.4.5]]
