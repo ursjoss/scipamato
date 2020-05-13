@@ -46,7 +46,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v0.0.0]]
 == [0.0.0] -- 2018-00-00
 
-{url-cl}<prev>$$...$$<curr>[Full Changelog]
+{url-cl}<prev>$$...$$master[Full Changelog]
 
 .Added
 
@@ -64,6 +64,8 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 [[unreleased]]
 == [unreleased]
+
+{url-cl}1.4.5$$...$$master[Full Changelog]
 
 .Added
 
