@@ -72,14 +72,13 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Changed
 - Bumped detekt
 
-.Deprecated
-
-.Removed
-
-.Fixed
-
-.Security
-
+//.Deprecated
+//
+//.Removed
+//
+//.Fixed
+//
+//.Security
 
 [[v1.4.5]]
 == {url-tree}1.4.5[1.4.5] -- 2020-05-11
