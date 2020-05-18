@@ -5,7 +5,8 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 
 /**
- * Implementation of [DateTimeService] constantly returning a frozen moment. This is the implementation to be used in test context.
+ * Implementation of [DateTimeService] constantly returning a frozen moment.
+ * This is the implementation to be used in test context.
  */
 class FrozenDateTimeService : DateTimeService {
 

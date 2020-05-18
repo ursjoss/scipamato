@@ -4,8 +4,9 @@ import ch.difty.scipamato.common.persistence.paging.Sort.SortProperty
 import java.io.Serializable
 
 /**
- * Sort specification offering a list of [SortProperty] items, each providing a name of the to be sorted property and the sort direction.
- * This Sort implementation initially was a simplified version of the spring data Sort class.
+ * Sort specification offering a list of [SortProperty] items, each providing a name
+ * of the to be sorted property and the sort direction. This Sort implementation initially
+ * was a simplified version of the spring data Sort class.
  */
 class Sort : Iterable<SortProperty>, Serializable {
 

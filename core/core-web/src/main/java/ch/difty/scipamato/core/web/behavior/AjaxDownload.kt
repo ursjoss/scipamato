@@ -27,7 +27,9 @@ sealed class AjaxDownload(private val addAntiCache: Boolean) : AbstractAjaxBehav
      * The timeout is needed to let Wicket release the channel
      */
     fun initiate(target: AjaxRequestTarget) {
-        target.appendJavaScript("""setTimeout("window.location.href='${callbackUrl.toUrl(addAntiCache)}'", 100);""")
+        target.appendJavaScript(
+            """setTimeout("window.location.href='${callbackUrl.toUrl(addAntiCache)}'", 100);"""
+        )
     }
 
     override fun onRequest() {
@@ -46,4 +48,5 @@ open class AjaxTextDownload @JvmOverloads constructor(addAntiCache: Boolean = tr
 }
 
 private fun CharSequence.toUrl(antiCache: Boolean): String =
-        if (!antiCache) toString() else "$this${if (this.contains("?")) "&" else "?"}antiCache=${System.currentTimeMillis()}"
+    if (!antiCache) toString()
+    else "$this${if (this.contains("?")) "&" else "?"}antiCache=${System.currentTimeMillis()}"

@@ -18,11 +18,6 @@ sourceSets {
     }
 }
 
-configurations {
-    val developmentOnly: Configuration = create("developmentOnly")
-    runtimeClasspath.get().extendsFrom(developmentOnly)
-}
-
 dependencies {
     implementation(project(Module.scipamatoCommon("utils")))
     implementation(project(Module.scipamatoCommon("entity")))
@@ -71,6 +66,4 @@ dependencies {
 
     testLibImplementation(Lib.servletApi())
     testLibImplementation(Lib.validationApi())
-
-    developmentOnly(Lib.springBoot("devtools"))
 }

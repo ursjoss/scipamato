@@ -9,7 +9,7 @@ object Lib {
     //region:dependencyVersions
     private const val kotlinVersion = "1.3.72"
 
-    private const val springBootVersion = "2.2.7.RELEASE"
+    private const val springBootVersion = "2.3.0.RELEASE"
     private const val springBootAdminVersion = "2.2.2"
     const val springCloudVersion = "Hoxton.SR4"
     private const val springCloudStarterVersion = "2.2.2.RELEASE"
@@ -62,7 +62,7 @@ object Lib {
     private const val jaxbPluginVersion = "4.3.1"
     private const val testSetsPluginVersion = "3.0.1"
     private const val sonarqubePluginVersion = "2.8"
-    private const val detektPluginVersion = "1.9.0"
+    private const val detektPluginVersion = "1.9.1"
     //endregion
 
     //region:dependencies
@@ -206,7 +206,6 @@ fun DependencyHandler.integrationTestAnnotationProcessor(dependencyNotation: Dep
 fun DependencyHandler.integrationTestRuntimeOnly(dependencyNotation: Dep): Dependency? = add("integrationTestRuntimeOnly", dependencyNotation.id)
 fun DependencyHandler.jaxb(dependencyNotation: Dep): Dependency? = add("jaxb", dependencyNotation.id)
 fun DependencyHandler.jooqModelatorRuntime(dependencyNotation: Dep): Dependency? = add("jooqModelatorRuntime", dependencyNotation.id)
-fun DependencyHandler.developmentOnly(dependencyNotation: Dep): Dependency? = add("developmentOnly", dependencyNotation.id)
 
 fun File.asProperties() = Properties().apply {
     inputStream().use { fis ->
