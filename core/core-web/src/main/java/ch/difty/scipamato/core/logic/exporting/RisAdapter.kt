@@ -65,6 +65,7 @@ sealed class JRisAdapter(
         return newRisRecord(p, startPage, endPage, periodical, volume, issue)
     }
 
+    @Suppress("LongParameterList")
     protected abstract fun newRisRecord(
         p: Paper,
         startPage: Int?,
