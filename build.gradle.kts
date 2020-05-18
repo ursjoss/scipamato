@@ -161,8 +161,6 @@ subprojects {
         testImplementation(Lib.kwik("generator-stdlib"))
 
         testRuntimeOnly(Lib.spek("runner-junit5"))
-
-        runtime("org.springframework.boot:spring-boot-properties-migrator")
     }
 
     tasks {
