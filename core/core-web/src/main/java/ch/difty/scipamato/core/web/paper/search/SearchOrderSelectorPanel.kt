@@ -54,7 +54,11 @@ private const val SEARCH_ORDER_MAX = 200
  * @author u.joss
  */
 @Suppress("SameParameterValue")
-class SearchOrderSelectorPanel internal constructor(id: String, model: IModel<SearchOrder?>?, mode: Mode) : BasePanel<SearchOrder?>(id, model, mode) {
+class SearchOrderSelectorPanel internal constructor(
+    id: String,
+    model: IModel<SearchOrder?>?,
+    mode: Mode
+) : BasePanel<SearchOrder?>(id, model, mode) {
 
     @SpringBean
     private lateinit var searchOrderService: SearchOrderService

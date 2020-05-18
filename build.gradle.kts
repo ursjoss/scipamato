@@ -72,6 +72,18 @@ reckon {
     snapshotFromProp()
 }
 
+detekt {
+    failFast = false
+    buildUponDefaultConfig = true
+    config = files("$rootDir/detekt-config.yml")
+    baseline = file("detekt-baseline.xml")
+
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
+}
+
 allprojects {
     group = "ch.difty"
 
@@ -129,18 +141,6 @@ subprojects {
         apply(plugin = "java-library")
     }
 
-    detekt {
-        failFast = false
-        buildUponDefaultConfig = true
-        config = files("$rootDir/detekt-config.yml")
-        baseline = file("detekt-baseline.xml")
-
-        reports {
-            xml.enabled = true
-            html.enabled = true
-        }
-    }
-
     dependencies {
         implementation(Lib.kotlin("stdlib-jdk8"))
         implementation(Lib.kotlin("reflect"))
@@ -161,6 +161,8 @@ subprojects {
         testImplementation(Lib.kwik("generator-stdlib"))
 
         testRuntimeOnly(Lib.spek("runner-junit5"))
+
+        runtime("org.springframework.boot:spring-boot-properties-migrator")
     }
 
     tasks {
