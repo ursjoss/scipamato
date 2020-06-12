@@ -4,7 +4,6 @@ import ch.difty.scipamato.core.entity.search.SearchCondition
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton
 import io.mockk.confirmVerified
 import io.mockk.mockk
-import io.mockk.verify
 import org.amshove.kluent.shouldBeFalse
 import org.amshove.kluent.shouldBeNull
 import org.apache.wicket.ajax.AjaxRequestTarget
@@ -70,11 +69,6 @@ internal class SearchablePaperPanelTest : PaperPanelTest<SearchCondition?, Searc
                 // no-op
             }
         }
-    }
-
-    override fun tearDownLocalHook() {
-        verify(exactly = 2) { paperServiceMock.findPageOfIdsByFilter(any(), any()) }
-        confirmVerified(paperServiceMock)
     }
 
     override fun assertSpecificComponents() {

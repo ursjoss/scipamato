@@ -43,9 +43,6 @@ internal abstract class ResultPanelTest : PanelTest<ResultPanel>() {
 
     @AfterEach
     fun tearDown() {
-        // after the login
-        verify { paperSlimServiceMock.countByFilter(any()) }
-        verify(exactly = 2) { paperServiceMock.findPageOfIdsByFilter(any(), any()) }
         confirmVerified(paperSlimServiceMock, paperServiceMock, codeClassServiceMock, codeServiceMock, searchOrderMock)
     }
 
