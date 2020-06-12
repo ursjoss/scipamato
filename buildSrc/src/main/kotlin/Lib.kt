@@ -23,7 +23,7 @@ object Lib {
     private const val krisVersion = "0.2.5"
     const val jooqVersion = "3.12.4"
 
-    private const val kotlinLoggingVersion = "1.7.9"
+    private const val kotlinLoggingVersion = "1.7.10"
 
     private const val openfeignVersion = "10.10.1"
 
