@@ -70,7 +70,8 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 
 .Changed
-- Bumped spring-boot-starter, spring-boot-admin, spring-cloud-starter, KRis, kotlin-logging, jaxb-impl, detekt, gradle-wrapper, spek, gadle, wicket-jquery-ui, equalsverifier
+- Bumped spring-boot-starter, spring-boot-admin, spring-cloud-starter, KRis, kotlin-logging, jaxb-impl,
+  detekt, gradle-wrapper, spek, gadle, wicket-jquery-ui, equalsverifier, testcontainers
 
 //.Deprecated
 //
