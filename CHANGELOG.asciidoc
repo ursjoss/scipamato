@@ -70,7 +70,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 
 .Changed
-- Bumped spring-boot-starter, detekt, gradle-wrapper, spek, gadle, wicket-jquery-ui
+- Bumped spring-boot-starter, spring-boot-admin, detekt, gradle-wrapper, spek, gadle, wicket-jquery-ui
 
 //.Deprecated
 //
