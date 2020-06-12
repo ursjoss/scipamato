@@ -12,7 +12,7 @@ object Lib {
     private const val springBootVersion = "2.3.1.RELEASE"
     private const val springBootAdminVersion = "2.2.3"
     const val springCloudVersion = "Hoxton.SR4"
-    private const val springCloudStarterVersion = "2.2.2.RELEASE"
+    private const val springCloudStarterVersion = "2.2.3.RELEASE"
 
     private const val wicketSpringBootStarterVersion = "2.1.9"
     private const val wicketVersion = "8.8.0"
