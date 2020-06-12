@@ -1,5 +1,6 @@
 package ch.difty.scipamato.publ.web.font
 
+import ch.difty.scipamato.common.ClearAllMocksExtension
 import ch.difty.scipamato.publ.config.ApplicationPublicProperties
 import ch.difty.scipamato.publ.web.resources.SimplonCssResourceReference
 import io.mockk.every
@@ -13,7 +14,7 @@ import org.amshove.kluent.shouldBeTrue
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
-@ExtendWith(MockKExtension::class)
+@ExtendWith(MockKExtension::class, ClearAllMocksExtension::class)
 internal class SimplonFontResourceProviderTest {
 
     private lateinit var provider: SimplonFontResourceProvider

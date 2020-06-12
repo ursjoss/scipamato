@@ -1,5 +1,6 @@
 package ch.difty.scipamato.publ.web.paper.browse
 
+import ch.difty.scipamato.common.ClearAllMocksExtension
 import io.mockk.confirmVerified
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
@@ -19,7 +20,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 private const val ID = "id"
 private const val MARKUP_ID = "mId"
 
-@ExtendWith(MockKExtension::class)
+@ExtendWith(MockKExtension::class, ClearAllMocksExtension::class)
 internal class SimpleFilterPanelChangeEventTest {
 
     private lateinit var e: SimpleFilterPanelChangeEvent

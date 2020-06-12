@@ -15,6 +15,7 @@ dependencies {
     }
     api(Lib.junit5())
     api(Lib.junit5("params"))
+    api(Lib.mockk())
     api(Lib.kluent().id) {
         exclude("org.mockito", "mockito-core")
         exclude("com.nhaarman.mockitokotlin2", "mockito-kotlin")

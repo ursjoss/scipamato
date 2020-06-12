@@ -1,5 +1,6 @@
 package ch.difty.scipamato.core.web.paper.common
 
+import ch.difty.scipamato.common.ClearAllMocksExtension
 import io.mockk.confirmVerified
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
@@ -15,7 +16,7 @@ import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
-@ExtendWith(MockKExtension::class)
+@ExtendWith(MockKExtension::class, ClearAllMocksExtension::class)
 internal class NewFieldChangeEventTest {
 
     private lateinit var e: NewFieldChangeEvent

@@ -1,5 +1,6 @@
 package ch.difty.scipamato.core.pubmed
 
+import ch.difty.scipamato.common.ClearAllMocksExtension
 import ch.difty.scipamato.core.config.ApplicationCoreProperties
 import ch.difty.scipamato.core.persistence.PaperService
 import ch.difty.scipamato.core.persistence.ServiceResult
@@ -17,7 +18,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import java.util.ArrayList
 
-@ExtendWith(MockKExtension::class)
+@ExtendWith(MockKExtension::class, ClearAllMocksExtension::class)
 internal class PubmedImportServiceTest {
 
     private lateinit var pubmedImporter: PubmedImporter

@@ -1,5 +1,6 @@
 package ch.difty.scipamato.core.web.paper
 
+import ch.difty.scipamato.common.ClearAllMocksExtension
 import ch.difty.scipamato.core.entity.PaperAttachment
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
@@ -13,7 +14,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import java.util.ArrayList
 
-@ExtendWith(MockKExtension::class)
+@ExtendWith(MockKExtension::class, ClearAllMocksExtension::class)
 internal class PaperAttachmentProviderTest {
 
     private lateinit var provider: PaperAttachmentProvider

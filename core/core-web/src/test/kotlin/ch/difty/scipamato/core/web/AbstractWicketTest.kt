@@ -1,5 +1,6 @@
 package ch.difty.scipamato.core.web
 
+import ch.difty.scipamato.common.ClearAllMocksExtension
 import ch.difty.scipamato.TestApplication
 import ch.difty.scipamato.common.DateTimeService
 import ch.difty.scipamato.common.navigator.ItemNavigator
@@ -32,7 +33,7 @@ import org.springframework.test.context.ActiveProfiles
 
 @SpringBootTest
 @ActiveProfiles("wickettest")
-@ExtendWith(MockKExtension::class)
+@ExtendWith(MockKExtension::class, ClearAllMocksExtension::class)
 abstract class AbstractWicketTest {
 
     @Bean

@@ -1,5 +1,6 @@
 package ch.difty.scipamato.core.entity.search
 
+import ch.difty.scipamato.common.ClearAllMocksExtension
 import ch.difty.scipamato.common.entity.ScipamatoEntity.ScipamatoEntityFields.CREATED
 import ch.difty.scipamato.common.entity.ScipamatoEntity.ScipamatoEntityFields.MODIFIED
 import ch.difty.scipamato.core.entity.CoreEntity.CoreEntityFields.CREATOR_ID
@@ -21,7 +22,7 @@ import java.time.LocalDateTime
 
 private const val SO_NAME = "soName"
 
-@ExtendWith(MockKExtension::class)
+@ExtendWith(MockKExtension::class, ClearAllMocksExtension::class)
 internal class SearchOrderTest {
 
     private val so = SearchOrder(10L, SO_NAME, 1, false, null, null)

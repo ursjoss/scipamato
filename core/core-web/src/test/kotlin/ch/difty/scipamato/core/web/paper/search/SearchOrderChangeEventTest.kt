@@ -1,5 +1,6 @@
 package ch.difty.scipamato.core.web.paper.search
 
+import ch.difty.scipamato.common.ClearAllMocksExtension
 import ch.difty.scipamato.core.web.paper.SearchOrderChangeEvent
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
@@ -13,7 +14,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
-@ExtendWith(MockKExtension::class)
+@ExtendWith(MockKExtension::class, ClearAllMocksExtension::class)
 internal class SearchOrderChangeEventTest {
 
     private lateinit var e: SearchOrderChangeEvent

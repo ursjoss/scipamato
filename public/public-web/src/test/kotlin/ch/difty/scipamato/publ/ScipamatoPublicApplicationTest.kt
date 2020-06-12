@@ -1,5 +1,6 @@
 package ch.difty.scipamato.publ
 
+import ch.difty.scipamato.common.ClearAllMocksExtension
 import ch.difty.scipamato.common.logger
 import ch.difty.scipamato.publ.config.ScipamatoPublicProperties
 import io.mockk.every
@@ -10,7 +11,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 
 private val log = logger()
 
-@ExtendWith(MockKExtension::class)
+@ExtendWith(MockKExtension::class, ClearAllMocksExtension::class)
 internal class ScipamatoPublicApplicationTest {
 
     @MockK

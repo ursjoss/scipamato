@@ -1,5 +1,6 @@
 package ch.difty.scipamato.core.web.paper
 
+import ch.difty.scipamato.common.ClearAllMocksExtension
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
 import nl.jqno.equalsverifier.EqualsVerifier
@@ -9,7 +10,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
-@ExtendWith(MockKExtension::class)
+@ExtendWith(MockKExtension::class, ClearAllMocksExtension::class)
 internal class NewsletterChangeEventTest {
 
     private lateinit var e: NewsletterChangeEvent

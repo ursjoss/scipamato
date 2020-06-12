@@ -1,5 +1,6 @@
 package ch.difty.scipamato.publ.misc
 
+import ch.difty.scipamato.common.ClearAllMocksExtension
 import ch.difty.scipamato.publ.config.ScipamatoPublicProperties
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
@@ -10,7 +11,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import java.util.Locale
 
-@ExtendWith(MockKExtension::class)
+@ExtendWith(MockKExtension::class, ClearAllMocksExtension::class)
 internal class ParentUrlLocaleExtractorTest {
 
     private lateinit var localeExtractor: LocaleExtractor

@@ -1,5 +1,6 @@
 package ch.difty.scipamato.publ.persistence.paper
 
+import ch.difty.scipamato.common.ClearAllMocksExtension
 import ch.difty.scipamato.common.persistence.JooqSortMapper
 import ch.difty.scipamato.publ.db.tables.Paper
 import ch.difty.scipamato.publ.db.tables.records.PaperRecord
@@ -19,7 +20,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
 @Suppress("SpellCheckingInspection")
-@ExtendWith(MockKExtension::class)
+@ExtendWith(MockKExtension::class, ClearAllMocksExtension::class)
 internal class JooqPublicPaperRepoTest {
 
     @MockK

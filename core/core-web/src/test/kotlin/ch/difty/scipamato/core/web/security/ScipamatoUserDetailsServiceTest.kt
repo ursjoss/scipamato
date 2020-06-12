@@ -1,5 +1,6 @@
 package ch.difty.scipamato.core.web.security
 
+import ch.difty.scipamato.common.ClearAllMocksExtension
 import ch.difty.scipamato.core.entity.User
 import ch.difty.scipamato.core.persistence.UserService
 import ch.difty.scipamato.core.web.authentication.ScipamatoUserDetails
@@ -21,7 +22,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import java.util.Optional
 
-@ExtendWith(MockKExtension::class)
+@ExtendWith(MockKExtension::class, ClearAllMocksExtension::class)
 internal class ScipamatoUserDetailsServiceTest {
 
     private lateinit var service: ScipamatoUserDetailsService

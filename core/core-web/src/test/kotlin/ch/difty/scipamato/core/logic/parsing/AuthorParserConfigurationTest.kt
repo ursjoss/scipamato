@@ -1,5 +1,6 @@
 package ch.difty.scipamato.core.logic.parsing
 
+import ch.difty.scipamato.common.ClearAllMocksExtension
 import ch.difty.scipamato.core.config.ApplicationCoreProperties
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
@@ -10,7 +11,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
-@ExtendWith(MockKExtension::class)
+@ExtendWith(MockKExtension::class, ClearAllMocksExtension::class)
 internal class AuthorParserConfigurationTest {
 
     private lateinit var conf: AuthorParserConfiguration

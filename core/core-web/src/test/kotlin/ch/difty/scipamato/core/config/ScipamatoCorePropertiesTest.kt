@@ -1,5 +1,6 @@
 package ch.difty.scipamato.core.config
 
+import ch.difty.scipamato.common.ClearAllMocksExtension
 import ch.difty.scipamato.common.config.MavenProperties
 import ch.difty.scipamato.core.logic.exporting.RisExporterStrategy
 import ch.difty.scipamato.core.logic.parsing.AuthorParserStrategy
@@ -14,7 +15,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
-@ExtendWith(MockKExtension::class)
+@ExtendWith(MockKExtension::class, ClearAllMocksExtension::class)
 internal class ScipamatoCorePropertiesTest {
 
     private lateinit var prop: ScipamatoCoreProperties

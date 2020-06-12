@@ -1,5 +1,6 @@
 package ch.difty.scipamato.core.logic.export
 
+import ch.difty.scipamato.common.ClearAllMocksExtension
 import ch.difty.scipamato.core.config.ApplicationCoreProperties
 import ch.difty.scipamato.core.logic.exporting.RisAdapterFactory
 import ch.difty.scipamato.core.logic.exporting.RisExporterConfiguration
@@ -13,7 +14,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
-@ExtendWith(MockKExtension::class)
+@ExtendWith(MockKExtension::class, ClearAllMocksExtension::class)
 internal class RisExporterConfigurationTest {
 
     private lateinit var conf: RisExporterConfiguration

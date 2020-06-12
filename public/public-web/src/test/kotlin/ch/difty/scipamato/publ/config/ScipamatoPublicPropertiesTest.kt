@@ -2,6 +2,7 @@
 
 package ch.difty.scipamato.publ.config
 
+import ch.difty.scipamato.common.ClearAllMocksExtension
 import ch.difty.scipamato.common.config.MavenProperties
 import io.mockk.confirmVerified
 import io.mockk.every
@@ -14,7 +15,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
-@ExtendWith(MockKExtension::class)
+@ExtendWith(MockKExtension::class, ClearAllMocksExtension::class)
 internal class ScipamatoPublicPropertiesTest {
 
     private lateinit var prop: ScipamatoPublicProperties
