@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<!-- TODO consider writing this file dynamically from gradle config - https://www.jooq.org/doc/3.11/manual/code-generation/codegen-gradle/ -->
 <configuration>
     <jdbc>
         <driver>org.postgresql.Driver</driver>
