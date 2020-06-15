@@ -89,6 +89,7 @@ tasks {
                             <instanceFields>true</instanceFields>
                             <pojos>true</pojos><!-- pojos required for sync only -->
                             <springAnnotations>true</springAnnotations>
+                            <javaTimeTypes>false</javaTimeTypes>
                         </generate>
                         <!-- Important: Keep in sync with jooqOutputPath build.gradle -->
                         <target>

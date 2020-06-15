@@ -90,6 +90,7 @@ tasks {
                             <deprecated>false</deprecated>
                             <instanceFields>true</instanceFields>
                             <pojos>false</pojos>
+                            <javaTimeTypes>false</javaTimeTypes>
                             <springAnnotations>true</springAnnotations>
                         </generate>
                         <!-- Important: Keep in sync with jooqOutputPath build.gradle -->
