@@ -6,13 +6,14 @@ plugins {
 
 description = "SciPaMaTo-Public:: Persistence jOOQ Project"
 
+val jooqConfigFile = "$buildDir/jooqConfig.xml"
 val props = file("src/integration-test/resources/application.properties").asProperties()
 
 jooqModelator {
     jooqVersion = Lib.jooqVersion
     jooqEdition = "OSS"
 
-    jooqConfigPath = "$rootDir/public/public-persistence-jooq/src/main/resources/jooqConfig.xml"
+    jooqConfigPath = jooqConfigFile
     // Important: this needs to be kept in sync with the path configured in the jooqConfig.xml
     // the reason it needs to be configured here again is for incremental build support to work
     jooqOutputPath = "build/generated-src/jooq/ch/difty/scipamato/publ/db"
@@ -64,10 +65,49 @@ sourceSets {
 }
 
 tasks {
+    val processResources by existing {
+        val resourcesDir = sourceSets.main.get().output.resourcesDir
+        resourcesDir?.mkdirs()
+        val fileContent = """
+                <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+                <configuration>
+                    <jdbc>
+                        <driver>org.postgresql.Driver</driver>
+                        <url>jdbc:postgresql://localhost:15432/scipamato_public?loggerLevel=OFF</url>
+                        <user>scipamatopub</user>
+                        <password>scipamatopub</password>
+                    </jdbc>
+                    <generator>
+                        <name>org.jooq.codegen.DefaultGenerator</name>
+                        <database>
+                            <name>org.jooq.meta.postgres.PostgresDatabase</name>
+                            <inputSchema>public</inputSchema>
+                            <recordVersionFields>version</recordVersionFields>
+                        </database>
+                        <generate>
+                            <deprecated>false</deprecated>
+                            <instanceFields>true</instanceFields>
+                            <pojos>true</pojos><!-- pojos required for sync only -->
+                            <springAnnotations>true</springAnnotations>
+                            <javaTimeTypes>false</javaTimeTypes>
+                        </generate>
+                        <!-- Important: Keep in sync with jooqOutputPath build.gradle -->
+                        <target>
+                            <packageName>ch.difty.scipamato.publ.db</packageName>
+                            <directory>public/public-persistence-jooq/build/generated-src/jooq</directory>
+                        </target>
+                    </generator>
+                    <basedir>$rootDir</basedir>
+                </configuration>
+            """.trimIndent()
+        file(jooqConfigFile).writeText(fileContent)
+    }
+
     val jooqMetamodelTaskName = "generateJooqMetamodel"
     withType<JooqModelatorTask> {
         // prevent parallel run of this task between core and public
         outputs.dir("${rootProject.buildDir}/$jooqMetamodelTaskName")
+        dependsOn(processResources)
     }
     getByName("compileKotlin").dependsOn += jooqMetamodelTaskName
 }

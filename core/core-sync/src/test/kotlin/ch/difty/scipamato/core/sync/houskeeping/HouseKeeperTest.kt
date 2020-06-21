@@ -5,7 +5,11 @@ import ch.difty.scipamato.publ.db.tables.records.CodeClassRecord
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
 import org.assertj.core.api.Assertions.assertThat
-import org.jooq.*
+import org.jooq.DSLContext
+import org.jooq.DeleteConditionStep
+import org.jooq.DeleteUsingStep
+import org.jooq.Table
+import org.jooq.TableField
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito.verify
 import org.mockito.Mockito.verifyNoMoreInteractions
@@ -20,7 +24,7 @@ internal class HouseKeeperTest {
     private val dateTimeServiceMock = mock<DateTimeService>()
     private val dslContextMock = mock<DSLContext>()
     private val tableMock = mock<Table<CodeClassRecord>>()
-    private val deleteWhereStepMock = mock<DeleteWhereStep<CodeClassRecord>>()
+    private val deleteUsingStep = mock<DeleteUsingStep<CodeClassRecord>>()
     private val deleteCondStepMock = mock<DeleteConditionStep<CodeClassRecord>>()
     private val lastSynchedField = mock<TableField<CodeClassRecord, Timestamp>>()
     private val contributionMock = mock<StepContribution>()
@@ -37,9 +41,9 @@ internal class HouseKeeperTest {
 
     private fun commonTestFixture() {
         whenever(lastSynchedField.table).thenReturn(tableMock)
-        whenever(dslContextMock.deleteFrom(tableMock)).thenReturn(deleteWhereStepMock)
+        whenever(dslContextMock.deleteFrom(tableMock)).thenReturn(deleteUsingStep)
         whenever(dateTimeServiceMock.currentDateTime).thenReturn(TS)
-        whenever(deleteWhereStepMock.where(lastSynchedField.lessThan(Timestamp.valueOf(TS))))
+        whenever(deleteUsingStep.where(lastSynchedField.lessThan(Timestamp.valueOf(TS))))
             .thenReturn(deleteCondStepMock)
     }
 

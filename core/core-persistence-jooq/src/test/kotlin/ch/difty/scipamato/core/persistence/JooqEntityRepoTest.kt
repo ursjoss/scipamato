@@ -10,7 +10,18 @@ import com.nhaarman.mockitokotlin2.verifyNoMoreInteractions
 import com.nhaarman.mockitokotlin2.whenever
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.fail
-import org.jooq.*
+import org.jooq.DeleteConditionStep
+import org.jooq.DeleteUsingStep
+import org.jooq.InsertResultStep
+import org.jooq.InsertSetMoreStep
+import org.jooq.InsertSetStep
+import org.jooq.Record
+import org.jooq.RecordMapper
+import org.jooq.TableField
+import org.jooq.UpdateConditionStep
+import org.jooq.UpdateResultStep
+import org.jooq.UpdateSetFirstStep
+import org.jooq.UpdateSetMoreStep
 import org.jooq.impl.TableImpl
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -39,7 +50,7 @@ abstract class JooqEntityRepoTest<R : Record, T : IdScipamatoEntity<ID>, ID : Nu
     private val insertSetStepMock = mock<InsertSetStep<R>>()
     private val insertSetMoreStepMock = mock<InsertSetMoreStep<R>>()
     private val insertResultStepMock = mock<InsertResultStep<R>>()
-    protected var deleteWhereStepMock = mock<DeleteWhereStep<R>>()
+    protected var deleteUsingStep = mock<DeleteUsingStep<R>>()
     private val deleteConditionStep1Mock = mock<DeleteConditionStep<R>>()
     private val deleteConditionStep2Mock = mock<DeleteConditionStep<R>>()
     private val updateSetFirstStepMock = mock<UpdateSetFirstStep<R>>()
@@ -74,7 +85,7 @@ abstract class JooqEntityRepoTest<R : Record, T : IdScipamatoEntity<ID>, ID : Nu
     public override fun specificTearDown() {
         verifyNoMoreInteractions(insertSetStepMock, insertSetMoreStepMock, insertResultStepMock,
             insertSetStepSetter)
-        verifyNoMoreInteractions(deleteWhereStepMock, deleteConditionStep1Mock, deleteConditionStep2Mock)
+        verifyNoMoreInteractions(deleteUsingStep, deleteConditionStep1Mock, deleteConditionStep2Mock)
         verifyNoMoreInteractions(updateSetFirstStepMock, updateConditionStepMock, updateSetMoreStepMock,
             updateResultStepMock, updateSetStepSetter)
     }
@@ -92,15 +103,15 @@ abstract class JooqEntityRepoTest<R : Record, T : IdScipamatoEntity<ID>, ID : Nu
     internal fun deleting_validPersistentEntity_returnsDeletedEntity() {
         val repo = makeRepoFindingEntityById(persistedEntity)
 
-        whenever(dsl.delete(table)).thenReturn(deleteWhereStepMock)
-        whenever(deleteWhereStepMock.where(tableId.equal(id))).thenReturn(deleteConditionStep1Mock)
+        whenever(dsl.delete(table)).thenReturn(deleteUsingStep)
+        whenever(deleteUsingStep.where(tableId.equal(id))).thenReturn(deleteConditionStep1Mock)
         whenever(deleteConditionStep1Mock.and(recordVersion.eq(0))).thenReturn(deleteConditionStep2Mock)
         whenever(deleteConditionStep2Mock.execute()).thenReturn(1)
 
         assertThat(repo.delete(id, 0)).isEqualTo(persistedEntity)
 
         verify(dsl).delete(table)
-        verify(deleteWhereStepMock).where(tableId.equal(id))
+        verify(deleteUsingStep).where(tableId.equal(id))
         verify(deleteConditionStep1Mock).and(recordVersion.eq(0))
         verify(deleteConditionStep2Mock).execute()
     }
@@ -110,8 +121,8 @@ abstract class JooqEntityRepoTest<R : Record, T : IdScipamatoEntity<ID>, ID : Nu
     @Test
     internal fun deleting_validPersistentEntity_withFailingDelete_returnsDeletedEntity() {
         val repo = makeRepoFindingEntityById(persistedEntity)
-        whenever(dsl.delete(table)).thenReturn(deleteWhereStepMock)
-        whenever(deleteWhereStepMock.where(tableId.equal(id))).thenReturn(deleteConditionStep1Mock)
+        whenever(dsl.delete(table)).thenReturn(deleteUsingStep)
+        whenever(deleteUsingStep.where(tableId.equal(id))).thenReturn(deleteConditionStep1Mock)
         whenever(deleteConditionStep1Mock.and(recordVersion.eq(0))).thenReturn(deleteConditionStep2Mock)
         whenever(deleteConditionStep2Mock.execute()).thenReturn(0)
 
@@ -124,7 +135,7 @@ abstract class JooqEntityRepoTest<R : Record, T : IdScipamatoEntity<ID>, ID : Nu
 
         verify(dsl).delete(table)
         verify(deleteConditionStep1Mock).and(recordVersion.eq(0))
-        verify(deleteWhereStepMock).where(tableId.equal(id))
+        verify(deleteUsingStep).where(tableId.equal(id))
         verify(deleteConditionStep2Mock).execute()
     }
 }

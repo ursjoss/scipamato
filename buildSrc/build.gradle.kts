@@ -3,6 +3,5 @@ plugins {
 }
 
 repositories {
-    mavenLocal()
     mavenCentral()
 }
