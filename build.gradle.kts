@@ -88,7 +88,6 @@ allprojects {
     group = "ch.difty"
 
     repositories {
-        mavenLocal()
         mavenCentral()
         jcenter()
         maven { url = uri("https://dl.bintray.com/mockito/maven/") }

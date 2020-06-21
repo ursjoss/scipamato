@@ -12,7 +12,7 @@ import org.amshove.kluent.shouldBeEqualTo
 import org.jooq.Condition
 import org.jooq.DSLContext
 import org.jooq.DeleteConditionStep
-import org.jooq.DeleteWhereStep
+import org.jooq.DeleteUsingStep
 import org.jooq.Table
 import org.jooq.TableField
 import org.junit.jupiter.api.Test
@@ -27,7 +27,7 @@ internal class HouseKeeperTest {
     private val dateTimeServiceMock = mockk<DateTimeService>()
     private val dslContextMock = mockk<DSLContext>()
     private val tableMock = mockk<Table<CodeClassRecord>>()
-    private val deleteWhereStepMock = mockk<DeleteWhereStep<CodeClassRecord>>()
+    private val deleteUsingStep = mockk<DeleteUsingStep<CodeClassRecord>>()
     private val deleteCondStepMock = mockk<DeleteConditionStep<CodeClassRecord>>()
     private val lastSynchedField = mockk<TableField<CodeClassRecord, Timestamp>>()
     private val contributionMock = mockk<StepContribution>()
@@ -46,9 +46,9 @@ internal class HouseKeeperTest {
         every { lastSynchedField.table } returns tableMock
         val conditionMock = mockk<Condition>()
         every { lastSynchedField.lessThan(any<Timestamp>()) } returns conditionMock
-        every { dslContextMock.deleteFrom(tableMock) } returns deleteWhereStepMock
+        every { dslContextMock.deleteFrom(tableMock) } returns deleteUsingStep
         every { dateTimeServiceMock.currentDateTime } returns TS
-        every { deleteWhereStepMock.where(conditionMock) } returns deleteCondStepMock
+        every { deleteUsingStep.where(conditionMock) } returns deleteCondStepMock
         every { deleteCondStepMock.execute() } returns 1
     }
 

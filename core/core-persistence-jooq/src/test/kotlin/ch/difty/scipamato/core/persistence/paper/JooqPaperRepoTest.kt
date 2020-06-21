@@ -275,13 +275,13 @@ internal class JooqPaperRepoTest :
     @Test
     fun deletingIds() {
         val ids = listOf(3L, 5L, 7L)
-        every { dsl.deleteFrom(table) } returns deleteWhereStepMock
-        every { deleteWhereStepMock.where(PAPER.ID.`in`(ids)) } returns deleteConditionStepMock
+        every { dsl.deleteFrom(table) } returns deleteUsingStep
+        every { deleteUsingStep.where(PAPER.ID.`in`(ids)) } returns deleteConditionStepMock
 
         repo.delete(ids)
 
         verify { dsl.deleteFrom(table) }
-        verify { deleteWhereStepMock.where(PAPER.ID.`in`(ids)) }
+        verify { deleteUsingStep.where(PAPER.ID.`in`(ids)) }
         verify { deleteConditionStepMock.execute() }
     }
 

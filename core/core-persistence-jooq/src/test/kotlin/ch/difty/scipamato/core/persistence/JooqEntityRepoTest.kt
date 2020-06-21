@@ -15,7 +15,7 @@ import org.amshove.kluent.invoking
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldThrow
 import org.jooq.DeleteConditionStep
-import org.jooq.DeleteWhereStep
+import org.jooq.DeleteUsingStep
 import org.jooq.InsertResultStep
 import org.jooq.InsertSetMoreStep
 import org.jooq.InsertSetStep
@@ -54,7 +54,7 @@ abstract class JooqEntityRepoTest<R : Record, T : IdScipamatoEntity<ID>, ID : Nu
     private val insertSetStepMock = mockk<InsertSetStep<R>>()
     private val insertSetMoreStepMock = mockk<InsertSetMoreStep<R>>()
     private val insertResultStepMock = mockk<InsertResultStep<R>>()
-    protected var deleteWhereStepMock = mockk<DeleteWhereStep<R>>()
+    protected var deleteUsingStep = mockk<DeleteUsingStep<R>>()
     private val deleteConditionStep1Mock = mockk<DeleteConditionStep<R>>()
     private val deleteConditionStep2Mock = mockk<DeleteConditionStep<R>>()
     private val updateSetFirstStepMock = mockk<UpdateSetFirstStep<R>>()
@@ -89,7 +89,7 @@ abstract class JooqEntityRepoTest<R : Record, T : IdScipamatoEntity<ID>, ID : Nu
     public override fun specificTearDown() {
         confirmVerified(insertSetStepMock, insertSetMoreStepMock, insertResultStepMock,
             insertSetStepSetter)
-        confirmVerified(deleteWhereStepMock, deleteConditionStep1Mock, deleteConditionStep2Mock)
+        confirmVerified(deleteUsingStep, deleteConditionStep1Mock, deleteConditionStep2Mock)
         confirmVerified(updateSetFirstStepMock, updateConditionStepMock, updateSetMoreStepMock,
             updateResultStepMock, updateSetStepSetter)
     }
@@ -107,15 +107,15 @@ abstract class JooqEntityRepoTest<R : Record, T : IdScipamatoEntity<ID>, ID : Nu
     internal fun deleting_validPersistentEntity_returnsDeletedEntity() {
         val repo = makeRepoFindingEntityById(persistedEntity)
 
-        every { dsl.delete(table) } returns deleteWhereStepMock
-        every { deleteWhereStepMock.where(tableId.equal(id)) } returns deleteConditionStep1Mock
+        every { dsl.delete(table) } returns deleteUsingStep
+        every { deleteUsingStep.where(tableId.equal(id)) } returns deleteConditionStep1Mock
         every { deleteConditionStep1Mock.and(recordVersion.eq(0)) } returns deleteConditionStep2Mock
         every { deleteConditionStep2Mock.execute() } returns 1
 
         repo.delete(id, 0) shouldBeEqualTo persistedEntity
 
         verify { dsl.delete(table) }
-        verify { deleteWhereStepMock.where(tableId.equal(id)) }
+        verify { deleteUsingStep.where(tableId.equal(id)) }
         verify { deleteConditionStep1Mock.and(recordVersion.eq(0)) }
         verify { deleteConditionStep2Mock.execute() }
         verify { persistedEntity == persistedEntity }
@@ -126,8 +126,8 @@ abstract class JooqEntityRepoTest<R : Record, T : IdScipamatoEntity<ID>, ID : Nu
     @Test
     internal fun deleting_validPersistentEntity_withFailingDelete_returnsDeletedEntity() {
         val repo = makeRepoFindingEntityById(persistedEntity)
-        every { dsl.delete(table) } returns deleteWhereStepMock
-        every { deleteWhereStepMock.where(tableId.equal(id)) } returns deleteConditionStep1Mock
+        every { dsl.delete(table) } returns deleteUsingStep
+        every { deleteUsingStep.where(tableId.equal(id)) } returns deleteConditionStep1Mock
         every { deleteConditionStep1Mock.and(recordVersion.eq(0)) } returns deleteConditionStep2Mock
         every { deleteConditionStep2Mock.execute() } returns 0
 
@@ -135,7 +135,7 @@ abstract class JooqEntityRepoTest<R : Record, T : IdScipamatoEntity<ID>, ID : Nu
 
         verify { dsl.delete(table) }
         verify { deleteConditionStep1Mock.and(recordVersion.eq(0)) }
-        verify { deleteWhereStepMock.where(tableId.equal(id)) }
+        verify { deleteUsingStep.where(tableId.equal(id)) }
         verify { deleteConditionStep2Mock.execute() }
         verify { persistedEntity.toString() }
     }
