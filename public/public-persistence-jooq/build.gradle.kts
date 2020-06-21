@@ -6,7 +6,7 @@ plugins {
 
 description = "SciPaMaTo-Public:: Persistence jOOQ Project"
 
-val jooqConfigFile = "$rootDir/public/public-persistence-jooq/src/main/resources/jooqConfig.xml"
+val jooqConfigFile = "$buildDir/jooqConfig.xml"
 val props = file("src/integration-test/resources/application.properties").asProperties()
 
 jooqModelator {
@@ -100,7 +100,7 @@ tasks {
                     <basedir>$rootDir</basedir>
                 </configuration>
             """.trimIndent()
-        File(jooqConfigFile).writeText(fileContent)
+        file(jooqConfigFile).writeText(fileContent)
     }
 
     val jooqMetamodelTaskName = "generateJooqMetamodel"
