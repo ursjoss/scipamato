@@ -108,7 +108,7 @@ public class NewsletterListPage extends BasePage<Void> {
         queue(new FilterForm<>(id, dataProvider));
 
         queueFieldAndLabel(
-            new TextField<String>(ISSUE.getFieldName(), PropertyModel.of(filter, ISSUE_MASK.getFieldName())));
+            new TextField<>(ISSUE.getFieldName(), PropertyModel.of(filter, ISSUE_MASK.getFieldName())));
         queueStatusSelectAndLabel(Newsletter.NewsletterFields.PUBLICATION_STATUS.getFieldName());
         queueTopicsSelectAndLabel(TOPICS.getFieldName());
         queueNewButton("newNewsletter");

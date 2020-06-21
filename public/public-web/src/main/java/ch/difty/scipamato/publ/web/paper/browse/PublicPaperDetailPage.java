@@ -235,6 +235,6 @@ public class PublicPaperDetailPage extends BasePage<PublicPaper> {
     }
 
     private Label newField(final String id, final String property) {
-        return new Label(id, new PropertyModel<PublicPaper>(getModel(), property));
+        return new Label(id, new PropertyModel<>(getModel(), property));
     }
 }

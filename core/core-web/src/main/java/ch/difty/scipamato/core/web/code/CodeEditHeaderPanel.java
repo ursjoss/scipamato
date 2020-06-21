@@ -33,7 +33,7 @@ abstract class CodeEditHeaderPanel extends DeletableDefinitionEditHeaderPanel<Co
         final TextField<String> code = new TextField<>(CodeDefinition.CodeDefinitionFields.CODE.getFieldName());
         queueFieldAndLabel(code);
         queueBootstrapSelectAndLabel("codeClass");
-        queueFieldAndLabel(new TextField<Integer>(CodeDefinition.CodeDefinitionFields.SORT.getFieldName()));
+        queueFieldAndLabel(new TextField<>(CodeDefinition.CodeDefinitionFields.SORT.getFieldName()));
         queue(new Label("internalLabel",
             new StringResourceModel(CodeDefinition.CodeDefinitionFields.INTERNAL.getFieldName() + LABEL_RESOURCE_TAG,
                 this, null)));
