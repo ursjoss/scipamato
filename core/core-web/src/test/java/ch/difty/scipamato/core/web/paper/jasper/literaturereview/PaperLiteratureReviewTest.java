@@ -11,6 +11,7 @@ import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.web.paper.jasper.JasperEntityTest;
 import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields;
 
+@SuppressWarnings("SpellCheckingInspection")
 class PaperLiteratureReviewTest extends JasperEntityTest {
 
     private static final String PUBMED_BASE_URL = "baseUrl/";

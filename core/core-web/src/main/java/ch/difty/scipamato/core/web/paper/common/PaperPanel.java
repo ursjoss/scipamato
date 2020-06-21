@@ -58,7 +58,7 @@ import ch.difty.scipamato.core.web.paper.jasper.JasperPaperDataSource;
 import ch.difty.scipamato.core.web.paper.jasper.summary.PaperSummaryDataSource;
 import ch.difty.scipamato.core.web.paper.jasper.summaryshort.PaperSummaryShortDataSource;
 
-@SuppressWarnings({ "SameParameterValue", "WicketForgeJavaIdInspection" })
+@SuppressWarnings({ "SameParameterValue", "WicketForgeJavaIdInspection", "SpellCheckingInspection" })
 public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> extends BasePanel<T> {
 
     private static final long serialVersionUID = 1L;
