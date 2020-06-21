@@ -2,7 +2,6 @@ package ch.difty.scipamato.core.web.newsletter.edit;
 
 import static ch.difty.scipamato.core.entity.newsletter.Newsletter.NewsletterFields.*;
 
-import java.time.LocalDate;
 import java.util.Arrays;
 
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
