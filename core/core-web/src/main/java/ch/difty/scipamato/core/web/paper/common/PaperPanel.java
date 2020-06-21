@@ -404,9 +404,9 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
         addDisableBehavior(authors, firstAuthor);
     }
 
-    private void addDisableBehavior(final FormComponent... components) {
+    private void addDisableBehavior(final FormComponent<?>... components) {
         if (isEditMode() || isSearchMode())
-            for (final FormComponent fc : components) {
+            for (final FormComponent<?> fc : components) {
                 fc.add(new AjaxFormComponentUpdatingBehavior("input") {
                     @Override
                     protected void onUpdate(@NotNull final AjaxRequestTarget target) {

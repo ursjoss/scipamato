@@ -47,7 +47,7 @@ abstract class CodeEditHeaderPanel extends DeletableDefinitionEditHeaderPanel<Co
         getForm().add(new CodeMustMatchCodeClassValidator(code, codeClasses));
     }
 
-    protected abstract Form getForm();
+    protected abstract Form<CodeDefinition> getForm();
 
     private void queueBootstrapSelectAndLabel(final String id) {
         queue(new Label(id + LABEL_TAG, new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null)));

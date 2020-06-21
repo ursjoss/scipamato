@@ -206,7 +206,7 @@ public class NewsletterListPage extends BasePage<Void> {
             propExpression) {
             @Override
             public IModel<String> getDataModel(@NotNull final IModel<Newsletter> rowModel) {
-                IModel dataModel = super.getDataModel(rowModel);
+                IModel<?> dataModel = super.getDataModel(rowModel);
                 PublicationStatus ps = (PublicationStatus) dataModel.getObject();
                 return new StringResourceModel("PublicationStatus." + ps.name(), NewsletterListPage.this, null);
             }
