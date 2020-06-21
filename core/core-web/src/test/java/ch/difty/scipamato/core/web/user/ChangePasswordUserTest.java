@@ -86,17 +86,23 @@ class ChangePasswordUserTest {
     }
 
     @Test
+    void defaultRoles_isUserAndAdmin()  {
+        cpu = new ChangePasswordUser(user);
+        assertThat(cpu.getRoles()).containsOnly(Role.USER, Role.ADMIN);
+    }
+
+    @Test
     void canAddRole() {
         cpu = new ChangePasswordUser(user);
         cpu.addRole(Role.VIEWER);
-        cpu.setRoles(List.of(Role.ADMIN, Role.USER, Role.VIEWER));
+        assertThat(cpu.getRoles()).containsOnly(Role.USER, Role.ADMIN, Role.VIEWER);
     }
 
     @Test
     void canRemoveRole() {
         cpu = new ChangePasswordUser(user);
         cpu.removeRole(Role.USER);
-        cpu.setRoles(List.of(Role.ADMIN));
+        assertThat(cpu.getRoles()).containsOnly(Role.ADMIN);
     }
 
     @Test

@@ -8,7 +8,6 @@ import java.util.List;
 
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -31,11 +30,6 @@ class PaperAttachmentProviderTest {
     void setUp() {
         attachments.addAll(Arrays.asList(mockAttachment1, mockAttachment2, mockAttachment3, mockAttachment4));
         provider = new PaperAttachmentProvider(Model.ofList(attachments));
-    }
-
-    @Test
-    void degenerateConstruction_withNullSearchOrderModel1() {
-        Assertions.assertThrows(NullPointerException.class, () -> new PaperAttachmentProvider(Model.ofList(null)));
     }
 
     @Test
