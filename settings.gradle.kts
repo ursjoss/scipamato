@@ -7,8 +7,6 @@ pluginManagement {
 
 rootProject.name = "scipamato"
 
-includeBuild("../../forked/jooq-modelator/")
-
 val commonProjects = listOf("test", "utils", "entity", "persistence-api", "persistence-jooq-test", "persistence-jooq", "wicket")
 val coreProjects = listOf("entity", "logic", "pubmed-api", "persistence-api", "persistence-jooq", "sync", "web")
 val publicProjects = listOf("entity", "persistence-api", "persistence-jooq", "web")
