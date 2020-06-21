@@ -40,7 +40,7 @@ public abstract class SelfUpdatingPageTest<T extends BasePage<?>> extends BasePa
 
     @Test
     void test() {
-        SelfUpdatingPage p = new SelfUpdatingPage<>(Model.of(new CodeClass(1, "CC1", ""))) {
+        SelfUpdatingPage<CodeClass> p = new SelfUpdatingPage<>(Model.of(new CodeClass(1, "CC1", ""))) {
             @Nullable
             @Override
             protected Form<CodeClass> getForm() {

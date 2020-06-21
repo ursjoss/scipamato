@@ -154,15 +154,15 @@ public class UserEditPage extends BasePage<ChangePasswordUser> {
 
         final TextField<String> userNameField = new TextField<>(USER_NAME.getFieldName());
         userNameField.setEnabled(isInAdminMode());
-        queueFieldAndLabel(userNameField, new PropertyValidator<String>());
+        queueFieldAndLabel(userNameField, new PropertyValidator<>());
 
         final TextField<String> firstNameField = new TextField<>(FIRST_NAME.getFieldName());
         firstNameField.setEnabled(!isInPasswordResetMode());
-        queueFieldAndLabel(firstNameField, new PropertyValidator<String>());
+        queueFieldAndLabel(firstNameField, new PropertyValidator<>());
 
         final TextField<String> lastNameField = new TextField<>(LAST_NAME.getFieldName());
         lastNameField.setEnabled(!isInPasswordResetMode());
-        queueFieldAndLabel(lastNameField, new PropertyValidator<String>());
+        queueFieldAndLabel(lastNameField, new PropertyValidator<>());
 
         final EmailTextField emailField = new EmailTextField(EMAIL.getFieldName());
         emailField.setEnabled(!isInPasswordResetMode());

@@ -33,7 +33,7 @@ abstract class CodeEditHeaderPanel extends DeletableDefinitionEditHeaderPanel<Co
         final TextField<String> code = new TextField<>(CodeDefinition.CodeDefinitionFields.CODE.getFieldName());
         queueFieldAndLabel(code);
         queueBootstrapSelectAndLabel("codeClass");
-        queueFieldAndLabel(new TextField<Integer>(CodeDefinition.CodeDefinitionFields.SORT.getFieldName()));
+        queueFieldAndLabel(new TextField<>(CodeDefinition.CodeDefinitionFields.SORT.getFieldName()));
         queue(new Label("internalLabel",
             new StringResourceModel(CodeDefinition.CodeDefinitionFields.INTERNAL.getFieldName() + LABEL_RESOURCE_TAG,
                 this, null)));
@@ -47,7 +47,7 @@ abstract class CodeEditHeaderPanel extends DeletableDefinitionEditHeaderPanel<Co
         getForm().add(new CodeMustMatchCodeClassValidator(code, codeClasses));
     }
 
-    protected abstract Form getForm();
+    protected abstract Form<CodeDefinition> getForm();
 
     private void queueBootstrapSelectAndLabel(final String id) {
         queue(new Label(id + LABEL_TAG, new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null)));
@@ -88,7 +88,7 @@ abstract class CodeEditHeaderPanel extends DeletableDefinitionEditHeaderPanel<Co
             final BootstrapSelect<CodeClass> codeClassField = (BootstrapSelect<CodeClass>) components[1];
             final String codeValue = codeField.getConvertedInput();
             final CodeClass codeClass = codeClassField.getConvertedInput();
-            if (codeClass == null || codeValue == null || codeValue.isEmpty() || !codeValue
+            if (codeClass == null || codeClass.getId() == null || codeValue == null || codeValue.isEmpty() || !codeValue
                 .substring(0, 1)
                 .equalsIgnoreCase(codeClass
                     .getId()

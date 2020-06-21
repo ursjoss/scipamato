@@ -19,7 +19,7 @@ abstract class KeywordListFilterPanel
     }
 
     protected void queueFilterFormFields() {
-        queueFieldAndLabel(new TextField<String>("name",
+        queueFieldAndLabel(new TextField<>("name",
             PropertyModel.of(getFilter(), KeywordFilter.KeywordFilterFields.NAME_MASK.getFieldName())));
 
         queueNewKeywordButton("newKeyword");

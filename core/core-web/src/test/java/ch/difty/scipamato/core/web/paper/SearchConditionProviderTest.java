@@ -35,11 +35,6 @@ class SearchConditionProviderTest {
     }
 
     @Test
-    void degenerateConstruction_withNullSearchOrderModel1() {
-        Assertions.assertThrows(NullPointerException.class, () -> new SearchConditionProvider(Model.ofList(null)));
-    }
-
-    @Test
     void providerSize_equals_conditionSize() {
         assertThat(provider.size()).isEqualTo(conditions.size());
     }

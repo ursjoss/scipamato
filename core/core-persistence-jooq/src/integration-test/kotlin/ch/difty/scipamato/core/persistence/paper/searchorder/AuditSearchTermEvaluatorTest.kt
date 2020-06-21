@@ -13,7 +13,7 @@ import org.testcontainers.junit.jupiter.Testcontainers
 
 @JooqTest
 @Testcontainers
-@Suppress("TooManyFunctions", "FunctionName")
+@Suppress("TooManyFunctions", "FunctionName", "SpellCheckingInspection")
 internal open class AuditSearchTermEvaluatorTest {
 
     private val e = AuditSearchTermEvaluator()

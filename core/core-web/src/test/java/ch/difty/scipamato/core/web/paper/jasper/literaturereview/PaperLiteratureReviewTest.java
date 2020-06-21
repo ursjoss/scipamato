@@ -7,10 +7,10 @@ import nl.jqno.equalsverifier.Warning;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.web.paper.jasper.JasperEntityTest;
 import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields;
 
+@SuppressWarnings("SpellCheckingInspection")
 class PaperLiteratureReviewTest extends JasperEntityTest {
 
     private static final String PUBMED_BASE_URL = "baseUrl/";
@@ -36,7 +36,7 @@ class PaperLiteratureReviewTest extends JasperEntityTest {
             .captionLabel(CAPTION)
             .build();
         assertThat(rhf2.getPubmedBaseUrl()).isNull();
-        Assertions.assertThrows(NullPointerException.class, () -> new PaperLiteratureReview(new Paper(), rhf2));
+        Assertions.assertThrows(NullPointerException.class, () -> new PaperLiteratureReview(p, rhf2));
     }
 
     @Test

@@ -21,7 +21,7 @@ abstract class NewsletterTopicListFilterPanel extends
     }
 
     protected void queueFilterFormFields() {
-        queueFieldAndLabel(new TextField<String>("title", PropertyModel.of(getFilter(),
+        queueFieldAndLabel(new TextField<>("title", PropertyModel.of(getFilter(),
             NewsletterTopicFilter.NewsletterTopicFilterFields.TITLE_MASK.getFieldName())));
         queueNewNewsletterTopicButton("newNewsletterTopic");
     }

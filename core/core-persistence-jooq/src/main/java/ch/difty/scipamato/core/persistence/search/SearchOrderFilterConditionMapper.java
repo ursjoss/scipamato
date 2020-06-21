@@ -28,8 +28,8 @@ public class SearchOrderFilterConditionMapper extends AbstractFilterConditionMap
                 DSL.or(SEARCH_ORDER.OWNER.equal(filter.getOwnerIncludingGlobal()), SEARCH_ORDER.GLOBAL.equal(true)));
         } else {
             if (filter.getNameMask() != null) {
-                conditions.add(SEARCH_ORDER.NAME
-                    .lower()
+                conditions.add(DSL
+                    .lower(SEARCH_ORDER.NAME)
                     .contains(filter
                         .getNameMask()
                         .toLowerCase()));
