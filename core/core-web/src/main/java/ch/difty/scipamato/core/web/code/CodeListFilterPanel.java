@@ -33,10 +33,10 @@ abstract class CodeListFilterPanel
     protected void queueFilterFormFields() {
         queueBootstrapSelectAndLabel("codeClass");
 
-        queueFieldAndLabel(new TextField<String>(CodeDefinition.CodeDefinitionFields.NAME.getFieldName(),
+        queueFieldAndLabel(new TextField<>(CodeDefinition.CodeDefinitionFields.NAME.getFieldName(),
             PropertyModel.of(getFilter(), CodeFilter.CodeFilterFields.NAME_MASK.getFieldName())));
 
-        queueFieldAndLabel(new TextField<String>(CodeTranslation.CodeTranslationFields.COMMENT.getFieldName(),
+        queueFieldAndLabel(new TextField<>(CodeTranslation.CodeTranslationFields.COMMENT.getFieldName(),
             PropertyModel.of(getFilter(), CodeFilter.CodeFilterFields.COMMENT_MASK.getFieldName())));
 
         queueNewCodeButton("newCode");

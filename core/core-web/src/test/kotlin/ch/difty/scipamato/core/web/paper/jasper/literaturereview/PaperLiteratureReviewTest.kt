@@ -1,6 +1,5 @@
 package ch.difty.scipamato.core.web.paper.jasper.literaturereview
 
-import ch.difty.scipamato.core.entity.Paper
 import ch.difty.scipamato.core.web.paper.jasper.JasperEntityTest
 import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields
 import ch.difty.scipamato.core.web.paper.jasper.literaturereview.PaperLiteratureReview
@@ -12,6 +11,7 @@ import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldThrow
 import org.junit.jupiter.api.Test
 
+@Suppress("SpellCheckingInspection")
 internal class PaperLiteratureReviewTest : JasperEntityTest() {
 
     private val rhf = newReportHeaderFields()
@@ -33,7 +33,7 @@ internal class PaperLiteratureReviewTest : JasperEntityTest() {
             .captionLabel(CAPTION)
             .build()
         rhf2.pubmedBaseUrl.shouldBeNull()
-        invoking { PaperLiteratureReview(Paper(), rhf2) } shouldThrow NullPointerException::class
+        invoking { PaperLiteratureReview(p, rhf2) } shouldThrow NullPointerException::class
     }
 
     @Test

@@ -4,10 +4,8 @@ import ch.difty.scipamato.common.ClearAllMocksExtension
 import ch.difty.scipamato.core.entity.PaperAttachment
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
-import org.amshove.kluent.invoking
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldContainSame
-import org.amshove.kluent.shouldThrow
 import org.apache.wicket.model.Model
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -37,11 +35,6 @@ internal class PaperAttachmentProviderTest {
     fun setUp() {
         attachments.addAll(listOf(mockAttachment1, mockAttachment2, mockAttachment3, mockAttachment4))
         provider = PaperAttachmentProvider(Model.ofList(attachments))
-    }
-
-    @Test
-    fun degenerateConstruction_withNullSearchOrderModel1() {
-        invoking { PaperAttachmentProvider(Model.ofList(null)) } shouldThrow NullPointerException::class
     }
 
     @Test

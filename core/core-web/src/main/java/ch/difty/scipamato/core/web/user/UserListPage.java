@@ -71,7 +71,7 @@ public class UserListPage extends BasePage<Void> {
     private void makeAndQueueFilterForm(final String id) {
         queue(new FilterForm<>(id, dataProvider));
 
-        queueFieldAndLabel(new TextField<String>(USER_NAME.getFieldName(),
+        queueFieldAndLabel(new TextField<>(USER_NAME.getFieldName(),
             PropertyModel.of(filter, UserFilter.UserFilterFields.NAME_MASK.getFieldName())));
         queueNewButton("newUser");
     }

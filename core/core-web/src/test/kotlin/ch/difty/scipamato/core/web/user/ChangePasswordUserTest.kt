@@ -24,7 +24,7 @@ internal class ChangePasswordUserTest {
         user.email = "em"
         user.password = "pw"
         user.isEnabled = true
-        user.setRoles(setOf(Role.ADMIN, Role.USER))
+        user.roles = setOf(Role.ADMIN, Role.USER)
     }
 
     @Test
@@ -70,24 +70,30 @@ internal class ChangePasswordUserTest {
             cpu.password2 = "pw2"
             cpu.currentPassword = "cpw"
             cpu.isEnabled = true
-            cpu.setRoles(listOf(Role.ADMIN, Role.USER))
+            cpu.roles = listOf(Role.ADMIN, Role.USER)
             assertUserBackedFields(cpu)
             cpu.currentPassword shouldBeEqualTo "cpw"
             cpu.password2 shouldBeEqualTo "pw2"
         }
 
     @Test
+    fun defaultRoles_isUserAndAdmin() {
+        cpu = ChangePasswordUser(user)
+        cpu.roles shouldContainSame listOf(Role.ADMIN, Role.USER)
+    }
+
+    @Test
     fun canAddRole() {
         cpu = ChangePasswordUser(user)
         cpu.addRole(Role.VIEWER)
-        cpu.setRoles(listOf(Role.ADMIN, Role.USER, Role.VIEWER))
+        cpu.roles shouldContainSame listOf(Role.ADMIN, Role.USER, Role.VIEWER)
     }
 
     @Test
     fun canRemoveRole() {
         cpu = ChangePasswordUser(user)
         cpu.removeRole(Role.USER)
-        cpu.setRoles(listOf(Role.ADMIN))
+        cpu.roles shouldContainSame listOf(Role.ADMIN)
     }
 
     @Test
@@ -124,7 +130,7 @@ internal class ChangePasswordUserTest {
     fun canGetRoles() {
         cpu = ChangePasswordUser(user)
         cpu.roles shouldContainSame listOf(Role.ADMIN, Role.USER)
-        cpu.setRoles(listOf(Role.VIEWER, Role.USER))
+        cpu.roles = listOf(Role.VIEWER, Role.USER)
         cpu.roles shouldContainSame listOf(Role.VIEWER, Role.USER)
     }
 }

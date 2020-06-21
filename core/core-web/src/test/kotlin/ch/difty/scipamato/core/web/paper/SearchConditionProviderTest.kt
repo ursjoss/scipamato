@@ -4,10 +4,8 @@ import ch.difty.scipamato.common.ClearAllMocksExtension
 import ch.difty.scipamato.core.entity.search.SearchCondition
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
-import org.amshove.kluent.invoking
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldContainSame
-import org.amshove.kluent.shouldThrow
 import org.apache.wicket.model.Model
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -37,11 +35,6 @@ internal class SearchConditionProviderTest {
     fun setUp() {
         conditions.addAll(listOf(mockCondition1, mockCondition2, mockCondition3, mockCondition4))
         provider = SearchConditionProvider(Model.ofList(conditions))
-    }
-
-    @Test
-    fun degenerateConstruction_withNullSearchOrderModel1() {
-        invoking { SearchConditionProvider(Model.ofList(null)) } shouldThrow NullPointerException::class
     }
 
     @Test

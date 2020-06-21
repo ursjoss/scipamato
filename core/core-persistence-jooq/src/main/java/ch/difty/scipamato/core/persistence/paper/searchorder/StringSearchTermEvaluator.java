@@ -140,12 +140,14 @@ public class StringSearchTermEvaluator implements SearchTermEvaluator<StringSear
             for (final Field<Object> mf : methodFields) {
                 csSub.add(() -> negate ?
                     DSL
-                        .coalesce(mf, "")
-                        .lower()
+                        .lower(DSL
+                            .coalesce(mf, "")
+                            .cast(String.class))
                         .notLikeRegex(value) :
                     DSL
-                        .coalesce(mf, "")
-                        .lower()
+                        .lower(DSL
+                            .coalesce(mf, "")
+                            .cast(String.class))
                         .likeRegex(value));
             }
             cs.add(() -> negate ? csSub.combineWithAnd() : csSub.combineWithOr());
@@ -173,7 +175,7 @@ public class StringSearchTermEvaluator implements SearchTermEvaluator<StringSear
     }
 
     private void lengthCond(final ConditionalSupplier cs, final Field<Object> field, final boolean negate) {
-        final Field<Integer> length = field.length();
+        final Field<Integer> length = DSL.length(field.cast(String.class));
         cs.add(() -> negate ?
             field
                 .isNull()

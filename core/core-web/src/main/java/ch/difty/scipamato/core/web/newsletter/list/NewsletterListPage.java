@@ -108,7 +108,7 @@ public class NewsletterListPage extends BasePage<Void> {
         queue(new FilterForm<>(id, dataProvider));
 
         queueFieldAndLabel(
-            new TextField<String>(ISSUE.getFieldName(), PropertyModel.of(filter, ISSUE_MASK.getFieldName())));
+            new TextField<>(ISSUE.getFieldName(), PropertyModel.of(filter, ISSUE_MASK.getFieldName())));
         queueStatusSelectAndLabel(Newsletter.NewsletterFields.PUBLICATION_STATUS.getFieldName());
         queueTopicsSelectAndLabel(TOPICS.getFieldName());
         queueNewButton("newNewsletter");
@@ -206,7 +206,7 @@ public class NewsletterListPage extends BasePage<Void> {
             propExpression) {
             @Override
             public IModel<String> getDataModel(@NotNull final IModel<Newsletter> rowModel) {
-                IModel dataModel = super.getDataModel(rowModel);
+                IModel<?> dataModel = super.getDataModel(rowModel);
                 PublicationStatus ps = (PublicationStatus) dataModel.getObject();
                 return new StringResourceModel("PublicationStatus." + ps.name(), NewsletterListPage.this, null);
             }

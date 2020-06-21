@@ -74,7 +74,7 @@ public abstract class AbstractLoginPage<R extends AbstractPage<?>> extends Abstr
         form.setDefaultModel(new CompoundPropertyModel<>(this));
 
         queue(newHeader("header"));
-        queueFieldAndLabel(new RequiredTextField<String>("username"));
+        queueFieldAndLabel(new RequiredTextField<>("username"));
         queueFieldAndLabel(new PasswordTextField("password"));
         queue(newButton("signin"));
 

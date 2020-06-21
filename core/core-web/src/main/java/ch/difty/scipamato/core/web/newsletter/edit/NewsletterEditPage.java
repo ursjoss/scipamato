@@ -127,8 +127,8 @@ public class NewsletterEditPage extends BasePage<Newsletter> {
     protected void onInitialize() {
         super.onInitialize();
         queueForm("form");
-        queueFieldAndLabel(newIssueField(ISSUE.getFieldName()), new PropertyValidator<String>());
-        queueFieldAndLabel(newIssueDateField(ISSUE_DATE.getFieldName()), new PropertyValidator<LocalDate>());
+        queueFieldAndLabel(newIssueField(ISSUE.getFieldName()), new PropertyValidator<>());
+        queueFieldAndLabel(newIssueDateField(ISSUE_DATE.getFieldName()), new PropertyValidator<>());
         makeAndQueuePublicationStatusSelectBox(PUBLICATION_STATUS.getFieldName());
         queueSubmitButton("submit");
 

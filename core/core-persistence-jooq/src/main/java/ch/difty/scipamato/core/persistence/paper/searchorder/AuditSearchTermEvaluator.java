@@ -64,8 +64,7 @@ public class AuditSearchTermEvaluator implements SearchTermEvaluator<AuditSearch
             .from(PAPER)
             .innerJoin(SCIPAMATO_USER)
             .on(field.eq(SCIPAMATO_USER.ID))
-            .where(SCIPAMATO_USER.USER_NAME
-                .lower()
+            .where(DSL.lower(SCIPAMATO_USER.USER_NAME)
                 .like(userName));
         conditions.add(() -> PAPER.ID.in(step));
     }

@@ -58,7 +58,7 @@ import ch.difty.scipamato.core.web.paper.jasper.JasperPaperDataSource;
 import ch.difty.scipamato.core.web.paper.jasper.summary.PaperSummaryDataSource;
 import ch.difty.scipamato.core.web.paper.jasper.summaryshort.PaperSummaryShortDataSource;
 
-@SuppressWarnings({ "SameParameterValue", "WicketForgeJavaIdInspection" })
+@SuppressWarnings({ "SameParameterValue", "WicketForgeJavaIdInspection", "SpellCheckingInspection" })
 public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> extends BasePanel<T> {
 
     private static final long serialVersionUID = 1L;
@@ -157,17 +157,17 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
             return pm.getItemWithFocus();
         }));
 
-        queueFieldAndLabel(title, new PropertyValidator<String>());
+        queueFieldAndLabel(title, new PropertyValidator<>());
         location = new TextField<>(LOCATION.getFieldName());
-        queueFieldAndLabel(location, new PropertyValidator<String>());
+        queueFieldAndLabel(location, new PropertyValidator<>());
 
         publicationYear = new TextField<>(PUBL_YEAR.getFieldName());
-        queueFieldAndLabel(publicationYear, new PropertyValidator<Integer>());
+        queueFieldAndLabel(publicationYear, new PropertyValidator<>());
         pmId = new TextField<>(PMID.getFieldName());
         pmId.add(newPmIdChangeBehavior());
         queueFieldAndLabel(pmId);
         doi = new TextField<>(DOI.getFieldName());
-        queueFieldAndLabel(doi, new PropertyValidator<String>());
+        queueFieldAndLabel(doi, new PropertyValidator<>());
 
         addDisableBehavior(title, location, publicationYear, pmId, doi);
 
@@ -386,7 +386,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
     private void queueAuthorComplex(String authorsId, String firstAuthorId, String firstAuthorOverriddenId) {
         authors = new TextArea<>(authorsId);
         authors.setEscapeModelStrings(false);
-        queueFieldAndLabel(authors, new PropertyValidator<String>());
+        queueFieldAndLabel(authors, new PropertyValidator<>());
 
         PropertyModel<Boolean> firstAuthorOverriddenModel = new PropertyModel<>(getModel(), firstAuthorOverriddenId);
         CheckBoxX firstAuthorOverridden = new CheckBoxX(firstAuthorOverriddenId, firstAuthorOverriddenModel);
@@ -404,9 +404,9 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
         addDisableBehavior(authors, firstAuthor);
     }
 
-    private void addDisableBehavior(final FormComponent... components) {
+    private void addDisableBehavior(final FormComponent<?>... components) {
         if (isEditMode() || isSearchMode())
-            for (final FormComponent fc : components) {
+            for (final FormComponent<?> fc : components) {
                 fc.add(new AjaxFormComponentUpdatingBehavior("input") {
                     @Override
                     protected void onUpdate(@NotNull final AjaxRequestTarget target) {
@@ -721,7 +721,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
             tab1Form.add(new SelfUpdateBroadcastingBehavior(getPage()));
             queue(tab1Form);
 
-            queueTo(GOALS, new PropertyValidator<String>());
+            queueTo(GOALS, new PropertyValidator<>());
             queueTo(POPULATION);
             queueTo(METHODS);
 
@@ -850,7 +850,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
             final int id = codeClassId.getId();
             final String className = codeClasses
                 .stream()
-                .filter(cc -> cc.getId() == id)
+                .filter(cc -> cc != null && cc.getId() != null && cc.getId().intValue() == id)
                 .map(CodeClass::getName)
                 .findFirst()
                 .orElse(codeClassId.name());
