@@ -88,7 +88,7 @@ abstract class CodeEditHeaderPanel extends DeletableDefinitionEditHeaderPanel<Co
             final BootstrapSelect<CodeClass> codeClassField = (BootstrapSelect<CodeClass>) components[1];
             final String codeValue = codeField.getConvertedInput();
             final CodeClass codeClass = codeClassField.getConvertedInput();
-            if (codeClass == null || codeValue == null || codeValue.isEmpty() || !codeValue
+            if (codeClass == null || codeClass.getId() == null || codeValue == null || codeValue.isEmpty() || !codeValue
                 .substring(0, 1)
                 .equalsIgnoreCase(codeClass
                     .getId()

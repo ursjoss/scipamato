@@ -850,7 +850,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
             final int id = codeClassId.getId();
             final String className = codeClasses
                 .stream()
-                .filter(cc -> cc.getId() == id)
+                .filter(cc -> cc != null && cc.getId() != null && cc.getId().intValue() == id)
                 .map(CodeClass::getName)
                 .findFirst()
                 .orElse(codeClassId.name());
