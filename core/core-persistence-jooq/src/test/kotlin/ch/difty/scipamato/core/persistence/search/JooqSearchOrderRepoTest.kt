@@ -51,31 +51,31 @@ internal class JooqSearchOrderRepoTest :
 
     override fun makeRepoFindingEntityById(entity: SearchOrder):
         EntityRepository<SearchOrder, Long, SearchOrderFilter> = object : JooqSearchOrderRepo(
-        dsl,
-        mapper,
-        sortMapper,
-        filterConditionMapper,
-        dateTimeService,
-        insertSetStepSetter,
-        updateSetStepSetter,
-        applicationProperties
-    ) {
-        override fun findById(id: Long, version: Int): SearchOrder = entity
-    }
+            dsl,
+            mapper,
+            sortMapper,
+            filterConditionMapper,
+            dateTimeService,
+            insertSetStepSetter,
+            updateSetStepSetter,
+            applicationProperties
+        ) {
+            override fun findById(id: Long, version: Int): SearchOrder = entity
+        }
 
     override fun makeRepoSavingReturning(returning: SearchOrderRecord):
         EntityRepository<SearchOrder, Long, SearchOrderFilter> = object : JooqSearchOrderRepo(
-        dsl,
-        mapper,
-        sortMapper,
-        filterConditionMapper,
-        dateTimeService,
-        insertSetStepSetter,
-        updateSetStepSetter,
-        applicationProperties
-    ) {
-        override fun doSave(entity: SearchOrder, languageCode: String): SearchOrderRecord = returning
-    }
+            dsl,
+            mapper,
+            sortMapper,
+            filterConditionMapper,
+            dateTimeService,
+            insertSetStepSetter,
+            updateSetStepSetter,
+            applicationProperties
+        ) {
+            override fun doSave(entity: SearchOrder, languageCode: String): SearchOrderRecord = returning
+        }
 
     override fun expectEntityIdsWithValues() {
         whenever(unpersistedEntity.id).thenReturn(SAMPLE_ID)

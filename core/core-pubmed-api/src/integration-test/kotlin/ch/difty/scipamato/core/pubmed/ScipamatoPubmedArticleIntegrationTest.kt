@@ -145,7 +145,8 @@ internal class ScipamatoPubmedArticleIntegrationTest : PubmedIntegrationTest() {
                     "inconsistent and few multicenter studies have been conducted so far especially in Europe."
             )
             assertThat(originalAbstract).endsWith(
-                "harmonized UFP measurements to draw definite conclusions on health effects of UFP.")
+                "harmonized UFP measurements to draw definite conclusions on health effects of UFP."
+            )
         }
     }
 
@@ -173,7 +174,8 @@ internal class ScipamatoPubmedArticleIntegrationTest : PubmedIntegrationTest() {
                     "matter (PM)"
             )
             assertThat(originalAbstract).endsWith(
-                "SAPALDIA study. Environ Health Perspect 124:1700-1706; http://dx.doi.org/10.1289/EHP161.")
+                "SAPALDIA study. Environ Health Perspect 124:1700-1706; http://dx.doi.org/10.1289/EHP161."
+            )
         }
     }
 
@@ -241,8 +243,10 @@ internal class ScipamatoPubmedArticleIntegrationTest : PubmedIntegrationTest() {
             val authorNames = authorList.author
                 .flatMap { it.lastNameOrForeNameOrInitialsOrSuffixOrCollectiveName }
                 .filterIsInstance<LastName>().map { it.getvalue() }
-            assertThat(authorNames).contains("Turner", "Cohen", "Jerrett", "Gapstur", "Diver", "Pope", "Krewski",
-                "Beckerman", "Samet")
+            assertThat(authorNames).contains(
+                "Turner", "Cohen", "Jerrett", "Gapstur", "Diver", "Pope", "Krewski",
+                "Beckerman", "Samet"
+            )
 
             assertThat(article.articleDate).hasSize(1)
             val articleDate = article.articleDate[0]
@@ -275,13 +279,16 @@ internal class ScipamatoPubmedArticleIntegrationTest : PubmedIntegrationTest() {
         with(articles.first()) {
             assertThat(pmId).isEqualTo("30124840")
             assertThat(authors).isEqualTo(
-                "Münzel T, Gori T, Al-Kindi S, Deanfield J, Lelieveld J, Daiber A, Rajagopalan S.")
+                "Münzel T, Gori T, Al-Kindi S, Deanfield J, Lelieveld J, Daiber A, Rajagopalan S."
+            )
             assertThat(firstAuthor).isEqualTo("Münzel")
             assertThat(publicationYear).isEqualTo("2018")
             assertThat(location).isEqualTo(
-                "Eur Heart J. 2018 Aug 14. doi: 10.1093/eurheartj/ehy481. [Epub ahead of print]")
+                "Eur Heart J. 2018 Aug 14. doi: 10.1093/eurheartj/ehy481. [Epub ahead of print]"
+            )
             assertThat(title).isEqualTo(
-                "Effects of gaseous and solid constituents of air pollution on endothelial function.")
+                "Effects of gaseous and solid constituents of air pollution on endothelial function."
+            )
             assertThat(doi).isEqualTo("10.1093/eurheartj/ehy481")
         }
     }
@@ -329,7 +336,8 @@ internal class ScipamatoPubmedArticleIntegrationTest : PubmedIntegrationTest() {
             )
             assertThat(doi).isEqualTo("10.1016/j.envres.2018.06.021")
             assertThat(originalAbstract).startsWith(
-                "BACKGROUND: Long-term exposure to ambient fine particulate matter (≤ 2.5 μg/m3 in")
+                "BACKGROUND: Long-term exposure to ambient fine particulate matter (≤ 2.5 μg/m3 in"
+            )
             assertThat(originalAbstract).endsWith(
                 "The concentration -response function produced here can be further applied in the global " +
                     "health risk assessment of air particulate matter."

@@ -93,7 +93,8 @@ internal class JooqKeywordRepoTest {
             assertThat(ex)
                 .isInstanceOf(OptimisticLockingException::class.java).hasMessage(
                     "Record in table 'keyword' has been modified prior to the update attempt. Aborting...." +
-                        " [KeywordDefinition(id=1, searchOverride=null)]")
+                        " [KeywordDefinition(id=1, searchOverride=null)]"
+                )
         }
     }
 

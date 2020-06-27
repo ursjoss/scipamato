@@ -3,7 +3,6 @@ package ch.difty.scipamato.core.entity.search
 import ch.difty.scipamato.core.entity.search.SearchTermType.*
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.fail
-
 import org.junit.jupiter.api.Test
 
 internal class SearchTermTypeTest {

@@ -18,7 +18,6 @@ import java.sql.ResultSet
 import java.sql.Timestamp
 import javax.sql.DataSource
 
-
 internal class NewsletterTopicSyncConfigTest {
 
     private val provider = mockk<MockDataProvider>()
@@ -36,7 +35,6 @@ internal class NewsletterTopicSyncConfigTest {
     fun jobName() {
         config.jobName shouldBeEqualTo "syncNewsletterTopicJob"
     }
-
 
     @Test
     fun publicWriter() {

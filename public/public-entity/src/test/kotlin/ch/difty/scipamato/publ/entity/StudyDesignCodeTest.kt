@@ -16,7 +16,8 @@ internal class StudyDesignCodeTest {
 
     @Test
     fun assertIds() {
-        assertThat(StudyDesignCode.values().map { it.id }).containsExactly(1.toShort(), 2.toShort(), 3.toShort()
+        assertThat(StudyDesignCode.values().map { it.id }).containsExactly(
+            1.toShort(), 2.toShort(), 3.toShort()
         )
     }
 

@@ -114,8 +114,10 @@ internal open class JooqPaperRepoIntegrationTest {
             .where(CodeClass.CODE_CLASS.ID.eq(cr.codeClassId))
             .fetchOne()
         val codeClass = ch.difty.scipamato.core.entity.CodeClass(ccr.id, "", "")
-        val code = ch.difty.scipamato.core.entity.Code(cr.code, "", "", true,
-            codeClass.id!!, codeClass.name, codeClass.description, cr.sort, null, null, null, null, null)
+        val code = ch.difty.scipamato.core.entity.Code(
+            cr.code, "", "", true,
+            codeClass.id!!, codeClass.name, codeClass.description, cr.sort, null, null, null, null, null
+        )
         paper.addCode(code)
 
         repo.update(paper) ?: fail("Unable to add paper")
@@ -362,12 +364,14 @@ internal open class JooqPaperRepoIntegrationTest {
     }
 
     private fun assertExclusionCount(searchOrderId: Long, paperId: Long, count: Int) {
-        assertThat(dsl
-            .selectCount()
-            .from(SearchExclusion.SEARCH_EXCLUSION)
-            .where(SearchExclusion.SEARCH_EXCLUSION.SEARCH_ORDER_ID.eq(searchOrderId))
-            .and(SearchExclusion.SEARCH_EXCLUSION.PAPER_ID.eq(paperId))
-            .fetchOne(0, Int::class.javaPrimitiveType)).isEqualTo(count)
+        assertThat(
+            dsl
+                .selectCount()
+                .from(SearchExclusion.SEARCH_EXCLUSION)
+                .where(SearchExclusion.SEARCH_EXCLUSION.SEARCH_ORDER_ID.eq(searchOrderId))
+                .and(SearchExclusion.SEARCH_EXCLUSION.PAPER_ID.eq(paperId))
+                .fetchOne(0, Int::class.javaPrimitiveType)
+        ).isEqualTo(count)
     }
 
     @Test
@@ -486,10 +490,12 @@ internal open class JooqPaperRepoIntegrationTest {
             .fetchOneInto(Int::class.java) ?: fail("id must not be null")
         val p = repo.deleteAttachment(id) ?: fail("Unable to delete attachments")
         assertThat(p.attachments.map { it.id }).doesNotContain(id)
-        assertThat(dsl
-            .select(PAPER_ATTACHMENT.ID)
-            .from(PAPER_ATTACHMENT)
-            .where(PAPER_ATTACHMENT.PAPER_ID.eq(TEST_PAPER_ID)).fetch()).isEmpty()
+        assertThat(
+            dsl
+                .select(PAPER_ATTACHMENT.ID)
+                .from(PAPER_ATTACHMENT)
+                .where(PAPER_ATTACHMENT.PAPER_ID.eq(TEST_PAPER_ID)).fetch()
+        ).isEmpty()
     }
 
     /**
@@ -667,6 +673,7 @@ internal open class JooqPaperRepoIntegrationTest {
                 ",resultExposureRange=,resultEffectEstimate=,resultMeasuredOutcome=,conclusion=<null>," +
                 "comment=Kommentar von Panagiotou AO, Wacholder S: How Big Is That Interaction (in My " +
                 "Community)-and I. Which Direction? Am. J. Epidemiol. 2014 180: 1150-1158." +
-                ",intern=,originalAbstract=<null>,mainCodeOfCodeclass1=1F,newsletterLink=<null>,attachments=[]")
+                ",intern=,originalAbstract=<null>,mainCodeOfCodeclass1=1F,newsletterLink=<null>,attachments=[]"
+            )
     }
 }

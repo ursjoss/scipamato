@@ -36,7 +36,8 @@ internal class StringSearchTermEvaluatorIntegrationTest : SearchTermEvaluatorInt
         @Suppress("unused", "LongMethod")
         @JvmStatic
         fun stringParameters() = listOf(
-            Arguments.of("foo", "(WORD foo)",
+            Arguments.of(
+                "foo", "(WORD foo)",
                 """lower(cast(fn as varchar)) like lower(('%' || replace(
                        |  replace(
                        |    replace(
@@ -49,8 +50,11 @@ internal class StringSearchTermEvaluatorIntegrationTest : SearchTermEvaluatorInt
                        |  ), 
                        |  '_', 
                        |  '!_'
-                       |) || '%')) escape '!'""".trimMargin(), CONTAINS),
-            Arguments.of("-foo", "(NOTWORD foo)",
+                       |) || '%')) escape '!'""".trimMargin(),
+                CONTAINS
+            ),
+            Arguments.of(
+                "-foo", "(NOTWORD foo)",
                 """not(lower(cast(coalesce(
                       |  fn, 
                       |  ''
@@ -66,20 +70,25 @@ internal class StringSearchTermEvaluatorIntegrationTest : SearchTermEvaluatorInt
                       |  ), 
                       |  '_', 
                       |  '!_'
-                      |) || '%')) escape '!')""".trimMargin(), CONTAINS),
+                      |) || '%')) escape '!')""".trimMargin(),
+                CONTAINS
+            ),
             Arguments.of(""""foo"""", "(QUOTED foo)", "lower(cast(fn as varchar)) = lower('foo')", EQUALS),
             Arguments.of("""-"foo"""", "(NOTQUOTED foo)", "lower(cast(fn as varchar)) <> lower('foo')", EQUALS),
             Arguments.of("""="foo"""", "(QUOTED foo)", "lower(cast(fn as varchar)) = lower('foo')", EQUALS),
 
             Arguments.of("""*foo""", "(OPENLEFT %foo)", "lower(cast(fn as varchar)) like lower('%foo')", LIKE),
-            Arguments.of("""-*foo""", "(NOTOPENLEFT %foo)",
+            Arguments.of(
+                """-*foo""", "(NOTOPENLEFT %foo)",
                 """lower(cast(coalesce(
                 |  fn, 
                 |  ''
                 |) as varchar)) not like lower('%foo')""".trimMargin(),
-                LIKE),
+                LIKE
+            ),
             Arguments.of(""""*foo""""", "(OPENLEFTQUOTED %foo)", "lower(cast(fn as varchar)) like lower('%foo')", LIKE),
-            Arguments.of("""-"*foo"""",
+            Arguments.of(
+                """-"*foo"""",
                 "(NOTOPENLEFTQUOTED %foo)",
                 """lower(cast(coalesce(
                     |  fn, 
@@ -88,22 +97,26 @@ internal class StringSearchTermEvaluatorIntegrationTest : SearchTermEvaluatorInt
                 LIKE
             ),
 
-            Arguments.of("""*foo*""", "(OPENLEFTRIGHT %foo%)",
+            Arguments.of(
+                """*foo*""", "(OPENLEFTRIGHT %foo%)",
                 "lower(cast(fn as varchar)) like lower('%foo%')",
                 LIKE
             ),
-            Arguments.of("""-*foo*""", "(NOTOPENLEFTRIGHT %foo%)",
+            Arguments.of(
+                """-*foo*""", "(NOTOPENLEFTRIGHT %foo%)",
                 """lower(cast(coalesce(
                     |  fn, 
                     |  ''
                     |) as varchar)) not like lower('%foo%')""".trimMargin(),
                 LIKE
             ),
-            Arguments.of(""""*foo*"""", "(OPENLEFTRIGHTQUOTED %foo%)",
+            Arguments.of(
+                """"*foo*"""", "(OPENLEFTRIGHTQUOTED %foo%)",
                 "lower(cast(fn as varchar)) like lower('%foo%')",
                 LIKE
             ),
-            Arguments.of("""-"*foo*"""", "(NOTOPENLEFTRIGHTQUOTED %foo%)",
+            Arguments.of(
+                """-"*foo*"""", "(NOTOPENLEFTRIGHTQUOTED %foo%)",
                 """lower(cast(coalesce(
                     |  fn, 
                     |  ''
@@ -112,7 +125,8 @@ internal class StringSearchTermEvaluatorIntegrationTest : SearchTermEvaluatorInt
             ),
 
             Arguments.of("""foo*""", "(OPENRIGHT foo%)", "lower(cast(fn as varchar)) like lower('foo%')", LIKE),
-            Arguments.of("""-foo*"""", "(NOTOPENRIGHT foo%)",
+            Arguments.of(
+                """-foo*"""", "(NOTOPENRIGHT foo%)",
                 """lower(cast(coalesce(
                     |  fn, 
                     |  ''
@@ -120,7 +134,8 @@ internal class StringSearchTermEvaluatorIntegrationTest : SearchTermEvaluatorInt
                 LIKE
             ),
             Arguments.of(""""foo*"""", "(OPENRIGHTQUOTED foo%)", "lower(cast(fn as varchar)) like lower('foo%')", LIKE),
-            Arguments.of("""-"foo*"""", "(NOTOPENRIGHTQUOTED foo%)",
+            Arguments.of(
+                """-"foo*"""", "(NOTOPENRIGHTQUOTED foo%)",
                 """lower(cast(coalesce(
                     |  fn, 
                     |  ''
@@ -128,16 +143,22 @@ internal class StringSearchTermEvaluatorIntegrationTest : SearchTermEvaluatorInt
                 LIKE
             ),
 
-            Arguments.of(""">""""", """(SOME >"")""",
+            Arguments.of(
+                """>""""", """(SOME >"")""",
                 """(
                       |  fn is not null
                       |  and char_length(cast(fn as varchar)) > 0
-                      |)""".trimMargin(), LENGTH),
-            Arguments.of("""=""""", """(EMPTY ="")""",
+                      |)""".trimMargin(),
+                LENGTH
+            ),
+            Arguments.of(
+                """=""""", """(EMPTY ="")""",
                 """(
                       |  fn is null
                       |  or char_length(cast(fn as varchar)) = 0
-                      |)""".trimMargin(), LENGTH),
+                      |)""".trimMargin(),
+                LENGTH
+            ),
             Arguments.of("""-""""", """(RAW -"")""", "1 = 1", NONE),
 
             Arguments.of("""s/foo/""", "(REGEX foo)", "(coalesce(\n  fn, \n  ''\n) like_regex 'foo')", REGEX),

@@ -17,7 +17,6 @@ import java.sql.ResultSet
 import java.sql.Timestamp
 import javax.sql.DataSource
 
-
 internal class CodeSyncConfigTest {
 
     private val provider = mockk<MockDataProvider>()
@@ -35,7 +34,6 @@ internal class CodeSyncConfigTest {
     fun jobName() {
         config.jobName shouldBeEqualTo "syncCodeJob"
     }
-
 
     @Test
     fun publicWriter() {

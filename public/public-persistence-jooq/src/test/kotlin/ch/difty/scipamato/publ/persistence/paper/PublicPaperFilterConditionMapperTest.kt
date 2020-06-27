@@ -59,9 +59,11 @@ class PublicPaperFilterConditionMapperTest : FilterConditionMapperTest<PaperReco
     fun creatingWhereCondition_withMethodsMask_searchesMethodFields() {
         val pattern = "m"
         filter.methodsMask = pattern
-        assertThat(mapper
-            .map(filter)
-            .toString()).isEqualToIgnoringCase(makeWhereClause(pattern, "METHODS"))
+        assertThat(
+            mapper
+                .map(filter)
+                .toString()
+        ).isEqualToIgnoringCase(makeWhereClause(pattern, "METHODS"))
     }
 
     @Test
@@ -133,7 +135,8 @@ class PublicPaperFilterConditionMapperTest : FilterConditionMapperTest<PaperReco
     fun creatingWhereCondition_withCodesOfCodeClass1_searchesCodeClasses() {
         filter.codesOfClass1 = listOf(
             Code.builder().code("c1").build(),
-            Code.builder().code("c2").build())
+            Code.builder().code("c2").build()
+        )
         assertBasicCodeMappingC1C2()
     }
 
@@ -153,7 +156,8 @@ class PublicPaperFilterConditionMapperTest : FilterConditionMapperTest<PaperReco
     fun creatingWhereCondition_withCodesOfCodeClass2_searchesCodeClasses() {
         filter.codesOfClass2 = listOf(
             Code.builder().code("c1").build(),
-            Code.builder().code("c2").build())
+            Code.builder().code("c2").build()
+        )
         assertBasicCodeMappingC1C2()
     }
 
@@ -161,7 +165,8 @@ class PublicPaperFilterConditionMapperTest : FilterConditionMapperTest<PaperReco
     fun creatingWhereCondition_withCodesOfCodeClass3_searchesCodeClasses() {
         filter.codesOfClass3 = listOf(
             Code.builder().code("c1").build(),
-            Code.builder().code("c2").build())
+            Code.builder().code("c2").build()
+        )
         assertBasicCodeMappingC1C2()
     }
 
@@ -178,7 +183,8 @@ class PublicPaperFilterConditionMapperTest : FilterConditionMapperTest<PaperReco
     fun creatingWhereCondition_withCodesOfCodeClass5_searchesCodeClasses() {
         filter.codesOfClass5 = listOf(
             Code.builder().code("c1").build(),
-            Code.builder().code("c2").build())
+            Code.builder().code("c2").build()
+        )
         assertBasicCodeMappingC1C2()
     }
 
@@ -186,7 +192,8 @@ class PublicPaperFilterConditionMapperTest : FilterConditionMapperTest<PaperReco
     fun creatingWhereCondition_withCodesOfCodeClass6_searchesCodeClasses() {
         filter.codesOfClass6 = listOf(
             Code.builder().code("c1").build(),
-            Code.builder().code("c2").build())
+            Code.builder().code("c2").build()
+        )
         assertBasicCodeMappingC1C2()
     }
 
@@ -194,7 +201,8 @@ class PublicPaperFilterConditionMapperTest : FilterConditionMapperTest<PaperReco
     fun creatingWhereCondition_withCodesOfCodeClass7_searchesCodeClasses() {
         filter.codesOfClass7 = listOf(
             Code.builder().code("c1").build(),
-            Code.builder().code("c2").build())
+            Code.builder().code("c2").build()
+        )
         assertBasicCodeMappingC1C2()
     }
 
@@ -202,7 +210,8 @@ class PublicPaperFilterConditionMapperTest : FilterConditionMapperTest<PaperReco
     fun creatingWhereCondition_withCodesOfCodeClass8_searchesCodeClasses() {
         filter.codesOfClass8 = listOf(
             Code.builder().code("c1").build(),
-            Code.builder().code("c2").build())
+            Code.builder().code("c2").build()
+        )
         assertBasicCodeMappingC1C2()
     }
 
@@ -242,7 +251,8 @@ class PublicPaperFilterConditionMapperTest : FilterConditionMapperTest<PaperReco
 
     @Test
     fun creatingWhereCondition_withAuthorMaskHoldingMultipleQuotedAuthors_searchesForPapersWithBothAuthorsInAnyOrder() {
-        val pattern = """"Last F" "Other S""""
+        val pattern =
+            """"Last F" "Other S""""
         filter.authorMask = pattern
         assertThat(mapper.map(filter).toString()).isEqualToIgnoringCase(
             """(

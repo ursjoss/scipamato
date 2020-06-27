@@ -1,6 +1,5 @@
 description = "SciPaMaTo-Common :: Test Project"
 
-
 dependencies {
     api(project(Module.scipamatoCommon("utils")))
     api(project(Module.scipamatoCommon("entity")))

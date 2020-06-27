@@ -1,7 +1,6 @@
 package ch.difty.scipamato.common
 
 import org.assertj.core.api.AssertionsForClassTypes.assertThat
-
 import org.junit.jupiter.api.Test
 
 internal class UtilConfigurationTest {

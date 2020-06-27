@@ -35,8 +35,9 @@ internal class HidingInternalsCodeAggregatorTest {
         assertThat(ca.codesStudyDesign).isEqualTo(codesStudyDesign)
     }
 
-    @ParameterizedTest(name =
-    "{index}: code array {0} results aggregated codes {1}, codesPopulation {2} and codesStudyDesign {3}"
+    @ParameterizedTest(
+        name =
+            "{index}: code array {0} results aggregated codes {1}, codesPopulation {2} and codesStudyDesign {3}"
     )
     @MethodSource("paramsAll")
     fun gettingAllCodeTypes(
@@ -161,9 +162,11 @@ internal class HidingInternalsCodeAggregatorTest {
 
             // aggregation: 5A/B/C -> 5abc
             Arguments.of(arrayOf("5A"), arrayOf("5abc"), arrayOf<Short>(), arrayOf(S1)),
-            Arguments.of(arrayOf("3A", "3B", "3C", "3Z", "5A", "5B", "5H", "5M"),
+            Arguments.of(
+                arrayOf("3A", "3B", "3C", "3Z", "5A", "5B", "5H", "5M"),
                 arrayOf("3A", "3B", "3C", "5H", "5M", "5abc"), arrayOf(P1, P2),
-                arrayOf(S1, S2, S3))
+                arrayOf(S1, S2, S3)
+            )
         )
     }
 }

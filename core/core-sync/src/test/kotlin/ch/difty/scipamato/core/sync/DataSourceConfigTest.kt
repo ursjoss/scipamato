@@ -28,7 +28,6 @@ internal class DataSourceConfigTest {
         translator shouldBeInstanceOf JooqExceptionTranslator::class
     }
 
-
     @Test
     fun coreConfiguration() {
         val config = config.coreConfiguration()
@@ -36,14 +35,12 @@ internal class DataSourceConfigTest {
         connectionProvider shouldBeInstanceOf DataSourceConnectionProvider::class
     }
 
-
     @Test
     fun publicConfiguration() {
         val config = config.publicConfiguration()
         val connectionProvider = config.connectionProvider()
         connectionProvider shouldBeInstanceOf DataSourceConnectionProvider::class
     }
-
 
     @Test
     fun batchConfiguration() {

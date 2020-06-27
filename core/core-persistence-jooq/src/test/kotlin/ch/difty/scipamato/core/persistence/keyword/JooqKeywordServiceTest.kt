@@ -50,7 +50,8 @@ internal class JooqKeywordServiceTest {
     fun findingPageOfKeywordDefinitions_delegatesToRepo() {
         whenever(repo.findPageOfKeywordDefinitions(filterMock, paginationContextMock)).thenReturn(keywordDefinitions)
         assertThat(service.findPageOfKeywordDefinitions(filterMock, paginationContextMock)).isEqualTo(
-            keywordDefinitions)
+            keywordDefinitions
+        )
         verify(repo).findPageOfKeywordDefinitions(filterMock, paginationContextMock)
     }
 

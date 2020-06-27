@@ -24,17 +24,21 @@ internal class RefDataSyncJobLauncherTest {
     private val syncNewStudyTopicJob = mock<Job>()
     private val syncKeywordJob = mock<Job>()
 
-    private var launcher = RefDataSyncJobLauncher(jobLauncher, syncLanguageJob, syncNewStudyPageLinkJob,
+    private var launcher = RefDataSyncJobLauncher(
+        jobLauncher, syncLanguageJob, syncNewStudyPageLinkJob,
         syncCodeClassJob, syncCodeJob, syncPaperJob, syncNewsletterJob, syncNewsletterTopicJob, syncNewStudyJob,
-        syncNewStudyTopicJob, syncKeywordJob, warner)
+        syncNewStudyTopicJob, syncKeywordJob, warner
+    )
 
     private var jobMap = jobsPerTopic()
 
     @AfterEach
     fun tearDown() {
-        verifyNoMoreInteractions(jobLauncher, syncLanguageJob, syncNewStudyPageLinkJob, syncCodeClassJob, syncCodeJob,
+        verifyNoMoreInteractions(
+            jobLauncher, syncLanguageJob, syncNewStudyPageLinkJob, syncCodeClassJob, syncCodeJob,
             syncPaperJob, syncNewsletterJob, syncNewsletterTopicJob, syncNewStudyJob, syncNewStudyTopicJob,
-            syncKeywordJob, warner)
+            syncKeywordJob, warner
+        )
     }
 
     private fun jobsPerTopic(): Map<String, Job> {
@@ -48,7 +52,8 @@ internal class RefDataSyncJobLauncherTest {
             "newsletterTopics" to syncNewsletterTopicJob,
             "newStudyTopics" to syncNewStudyTopicJob,
             "newStudies" to syncNewStudyJob,
-            "keywords" to syncKeywordJob)
+            "keywords" to syncKeywordJob
+        )
     }
 
     @Test
@@ -208,7 +213,8 @@ internal class RefDataSyncJobLauncherTest {
             SyncJobResult.MessageLevel.INFO, SyncJobResult.MessageLevel.INFO,
             SyncJobResult.MessageLevel.ERROR, SyncJobResult.MessageLevel.INFO, SyncJobResult.MessageLevel.INFO,
             SyncJobResult.MessageLevel.INFO, SyncJobResult.MessageLevel.INFO, SyncJobResult.MessageLevel.INFO,
-            SyncJobResult.MessageLevel.INFO, SyncJobResult.MessageLevel.INFO)
+            SyncJobResult.MessageLevel.INFO, SyncJobResult.MessageLevel.INFO
+        )
         assertThat(result.messages.map { it.message }).containsExactlyElementsOf(expectedMessages)
     }
 

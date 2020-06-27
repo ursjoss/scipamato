@@ -21,15 +21,21 @@ internal class CodeTest : Jsr303ValidatedEntityTest<Code>(Code::class.java) {
     fun constructing_withAllValues_populatesCodeClass() {
         val c1 = Code("C1", "c1", null, false, 10, "cc10", CODECLASS10, 2)
         assertThat(c1.codeClass).isNotNull
-        assertThat(c1
-            .codeClass
-            .id).isEqualTo(10)
-        assertThat(c1
-            .codeClass
-            .name).isEqualTo("cc10")
-        assertThat(c1
-            .codeClass
-            .description).isEqualTo(CODECLASS10)
+        assertThat(
+            c1
+                .codeClass
+                .id
+        ).isEqualTo(10)
+        assertThat(
+            c1
+                .codeClass
+                .name
+        ).isEqualTo("cc10")
+        assertThat(
+            c1
+                .codeClass
+                .description
+        ).isEqualTo(CODECLASS10)
     }
 
     @Test

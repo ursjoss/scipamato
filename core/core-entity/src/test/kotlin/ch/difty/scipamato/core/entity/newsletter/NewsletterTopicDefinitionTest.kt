@@ -39,8 +39,10 @@ internal class NewsletterTopicDefinitionTest {
 
     @Test
     fun canGetTranslationsAsString_withTranslationsIncludingMainTranslation_withPartialTranslation() {
-        val ntd = NewsletterTopicDefinition(2, "de", 1, ntt_de, ntt_en,
-            NewsletterTopicTranslation(12, "fr", null, 1))
+        val ntd = NewsletterTopicDefinition(
+            2, "de", 1, ntt_de, ntt_en,
+            NewsletterTopicTranslation(12, "fr", null, 1)
+        )
         assertThat(ntd.translationsAsString).isEqualTo("DE: 'thema2'; EN: 'topic2'; FR: n.a.")
     }
 

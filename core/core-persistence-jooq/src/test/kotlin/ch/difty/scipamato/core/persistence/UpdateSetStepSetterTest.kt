@@ -40,7 +40,7 @@ abstract class UpdateSetStepSetterTest<R : Record, E : CoreEntity> {
      * when(getMoreStep().set(PAPER.DOI, DOI)).thenReturn(getMoreStep());
      * when(getMoreStep().set(PAPER.AUTHORS, AUTHORS)).thenReturn(getMoreStep());
      * ...
-    </pre>` *
+     </pre>` *
      */
     protected abstract fun stepSetFixtureExceptAudit()
 
@@ -53,7 +53,7 @@ abstract class UpdateSetStepSetterTest<R : Record, E : CoreEntity> {
      * when(getMoreStep().set(PAPER.LAST_MODIFIED, LAST_MOD)).thenReturn(getMoreStep());
      * when(getMoreStep().set(PAPER.LAST_MODIFIED_BY, LAST_MOD_BY)).thenReturn(getMoreStep());
      * when(getMoreStep().set(PAPER.VERSION, VERSION + 1)).thenReturn(getMoreStep());
-    </pre>` *
+     </pre>` *
      */
     protected abstract fun stepSetFixtureAudit()
 

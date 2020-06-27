@@ -64,7 +64,8 @@ internal class PublicPaperFilterTest {
                 "codesOfClass6=[Code(codeClassId=6, code=6A, langCode=en, name=null, comment=null, sort=0), Code(codeClassId=6, code=6B, langCode=en, name=null, comment=null, sort=0)], " +
                 "codesOfClass7=[Code(codeClassId=7, code=7A, langCode=en, name=null, comment=null, sort=0), Code(codeClassId=7, code=7B, langCode=en, name=null, comment=null, sort=0)], " +
                 "codesOfClass8=[Code(codeClassId=8, code=8A, langCode=en, name=null, comment=null, sort=0), Code(codeClassId=8, code=8B, langCode=en, name=null, comment=null, sort=0)], " +
-                "keywords=[Keyword(id=1, keywordId=1, langCode=de, name=k1, searchOverride=null)])")
+                "keywords=[Keyword(id=1, keywordId=1, langCode=de, name=k1, searchOverride=null)])"
+        )
     }
 
     private fun newCode(code: String): Code {
@@ -87,9 +88,11 @@ internal class PublicPaperFilterTest {
     @Test
     fun assertEnumFields() {
         assertThat(PublicPaperFilter.PublicPaperFilterFields.values().map { it.fieldName })
-            .containsExactly("number", "authorMask", "titleMask", "methodsMask", "publicationYearFrom",
+            .containsExactly(
+                "number", "authorMask", "titleMask", "methodsMask", "publicationYearFrom",
                 "publicationYearUntil", "populationCodes", "studyDesignCodes", "codesOfClass1", "codesOfClass2",
                 "codesOfClass3", "codesOfClass4", "codesOfClass5", "codesOfClass6", "codesOfClass7", "codesOfClass8",
-                "keywords")
+                "keywords"
+            )
     }
 }

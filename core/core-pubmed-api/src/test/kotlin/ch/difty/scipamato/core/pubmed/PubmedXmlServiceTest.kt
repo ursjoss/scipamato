@@ -168,7 +168,8 @@ internal class PubmedXmlServiceTest {
         val pr = service.getPubmedArticleWithPmid(pmId)
         assertThat(pr.pubmedArticleFacade).isNull()
         assertThat(pr.errorMessage).isEqualTo(
-            "Status 502 BAD_GATEWAY: status 502 reading PubMed#articleWithId(String,String); content: \nfoo")
+            "Status 502 BAD_GATEWAY: status 502 reading PubMed#articleWithId(String,String); content: \nfoo"
+        )
 
         verify(pubMedMock).articleWithId(pmId.toString())
     }
@@ -176,7 +177,8 @@ internal class PubmedXmlServiceTest {
     @Test
     fun gettingPubmedArticleWithPmid_withParsableHtmlError400_hasHttpStatusPopulated() {
         val pmId = 25395026
-        feignExceptionFixture(400,
+        feignExceptionFixture(
+            400,
             """status 400 reading PubMed#articleWithId(String,String); content:
             |{"error":"API key invalid","api-key":"xxx","type":"invalid","status":"unknown"}""".trimMargin()
         )
@@ -218,7 +220,8 @@ internal class PubmedXmlServiceTest {
     fun gettingPubmedArticleWithPmid_withNoParsableHtmlError_onlyHasMessage() {
         val pmId = 25395026
         whenever(pubMedMock.articleWithId(pmId.toString())).thenThrow(
-            RuntimeException("The network is not reachable"))
+            RuntimeException("The network is not reachable")
+        )
 
         val pr = service.getPubmedArticleWithPmid(pmId)
         assertThat(pr.pubmedArticleFacade).isNull()

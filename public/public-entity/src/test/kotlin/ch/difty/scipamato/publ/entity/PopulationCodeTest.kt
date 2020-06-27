@@ -2,7 +2,6 @@ package ch.difty.scipamato.publ.entity
 
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.extractProperty
-
 import org.junit.jupiter.api.Test
 
 internal class PopulationCodeTest {

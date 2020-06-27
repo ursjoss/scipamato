@@ -206,10 +206,12 @@ internal class StringSearchTermTest {
 
     @Test
     fun assertTokenTypes() {
-        assertThat(values()).containsExactly(NOTREGEX, REGEX, WHITESPACE, SOME, EMPTY,
+        assertThat(values()).containsExactly(
+            NOTREGEX, REGEX, WHITESPACE, SOME, EMPTY,
             NOTOPENLEFTRIGHTQUOTED, OPENLEFTRIGHTQUOTED, NOTOPENLEFTRIGHT, OPENLEFTRIGHT, NOTOPENRIGHTQUOTED,
             OPENRIGHTQUOTED, NOTOPENRIGHT, OPENRIGHT, NOTOPENLEFTQUOTED, OPENLEFTQUOTED, NOTOPENLEFT, OPENLEFT,
-            NOTQUOTED, QUOTED, NOTWORD, WORD, RAW, UNSUPPORTED)
+            NOTQUOTED, QUOTED, NOTWORD, WORD, RAW, UNSUPPORTED
+        )
     }
 
     @Test
@@ -224,9 +226,11 @@ internal class StringSearchTermTest {
 
     @Test
     fun assertTokenTypes_like() {
-        assertThat(byMatchType(MatchType.LIKE)).containsExactly(NOTOPENLEFTRIGHTQUOTED, OPENLEFTRIGHTQUOTED,
+        assertThat(byMatchType(MatchType.LIKE)).containsExactly(
+            NOTOPENLEFTRIGHTQUOTED, OPENLEFTRIGHTQUOTED,
             NOTOPENLEFTRIGHT, OPENLEFTRIGHT, NOTOPENRIGHTQUOTED, OPENRIGHTQUOTED, NOTOPENRIGHT, OPENRIGHT,
-            NOTOPENLEFTQUOTED, OPENLEFTQUOTED, NOTOPENLEFT, OPENLEFT)
+            NOTOPENLEFTQUOTED, OPENLEFTQUOTED, NOTOPENLEFT, OPENLEFT
+        )
     }
 
     @Test

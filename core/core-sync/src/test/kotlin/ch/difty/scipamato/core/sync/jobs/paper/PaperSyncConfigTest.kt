@@ -21,7 +21,6 @@ import java.sql.ResultSet
 import java.sql.Timestamp
 import javax.sql.DataSource
 
-
 internal class PaperSyncConfigTest {
 
     private val codeAggregator = mockk<CodeAggregator>(relaxed = true) {
@@ -51,7 +50,6 @@ internal class PaperSyncConfigTest {
     fun jobName() {
         config.jobName shouldBeEqualTo "syncPaperJob"
     }
-
 
     @Test
     fun publicWriter() {

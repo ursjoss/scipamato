@@ -17,7 +17,6 @@ import org.springframework.batch.core.configuration.annotation.StepBuilderFactor
 import java.sql.ResultSet
 import javax.sql.DataSource
 
-
 internal class NewStudyPageLinkSyncConfigTest {
 
     private val provider = mockk<MockDataProvider>()
@@ -35,7 +34,6 @@ internal class NewStudyPageLinkSyncConfigTest {
     fun jobName() {
         config.jobName shouldBeEqualTo "syncNewStudyPageLinkJob"
     }
-
 
     @Test
     fun publicWriter() {

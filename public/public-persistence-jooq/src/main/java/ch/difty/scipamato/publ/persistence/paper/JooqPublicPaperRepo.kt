@@ -79,7 +79,8 @@ open class JooqPublicPaperRepo(
         )
 
     override fun findPageOfNumbersByFilter(
-        filter: PublicPaperFilter, pc: PaginationContext
+        filter: PublicPaperFilter,
+        pc: PaginationContext
     ): List<Long> = dsl
         .select()
         .from(table)
@@ -108,7 +109,8 @@ open class JooqPublicPaperRepo(
                         .where(
                             ch.difty.scipamato.publ.db.tables.Keyword.KEYWORD.KEYWORD_ID.eq(it).and(
                                 ch.difty.scipamato.publ.db.tables.Keyword.KEYWORD.LANG_CODE.eq(
-                                    this@JooqPublicPaperRepo.mainLanguage)
+                                    this@JooqPublicPaperRepo.mainLanguage
+                                )
                             )
                         )
                         .orderBy(ch.difty.scipamato.publ.db.tables.Keyword.KEYWORD.NAME)

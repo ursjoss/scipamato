@@ -219,7 +219,8 @@ class AbstractDefinitionEntityTest {
         assertThat(AbstractDefinitionTranslation.DefinitionTranslationFields.values()).containsExactly(
             AbstractDefinitionTranslation.DefinitionTranslationFields.ID,
             AbstractDefinitionTranslation.DefinitionTranslationFields.LANG_CODE,
-            AbstractDefinitionTranslation.DefinitionTranslationFields.NAME)
+            AbstractDefinitionTranslation.DefinitionTranslationFields.NAME
+        )
         assertThat(AbstractDefinitionTranslation.DefinitionTranslationFields.ID.fieldName).isEqualTo("id")
         assertThat(AbstractDefinitionTranslation.DefinitionTranslationFields.LANG_CODE.fieldName).isEqualTo("langCode")
         assertThat(AbstractDefinitionTranslation.DefinitionTranslationFields.NAME.fieldName).isEqualTo("name")
@@ -231,8 +232,10 @@ class AbstractDefinitionEntityTest {
             .forClass(AbstractDefinitionEntity::class.java)
             .withRedefinedSuperclass()
             .usingGetClass()
-            .withIgnoredFields(ScipamatoEntity.ScipamatoEntityFields.CREATED.fieldName,
-                ScipamatoEntity.ScipamatoEntityFields.MODIFIED.fieldName)
+            .withIgnoredFields(
+                ScipamatoEntity.ScipamatoEntityFields.CREATED.fieldName,
+                ScipamatoEntity.ScipamatoEntityFields.MODIFIED.fieldName
+            )
             .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
             .verify()
     }
@@ -256,7 +259,6 @@ class AbstractDefinitionEntityTest {
         ).version shouldBeEqualTo 0
     }
 
-
     @Test
     fun testDefinitionTranslation_withNullVersion_hasVersionZero() {
         TestDefinitionTranslation(
@@ -275,5 +277,4 @@ class AbstractDefinitionEntityTest {
             name = "deutsch3"
         ).version shouldBeEqualTo 0
     }
-
 }

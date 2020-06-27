@@ -60,7 +60,9 @@ internal class PublicPaperTest : PublicEntityTest<PublicPaper>() {
     @Test
     fun assertEnumFields() {
         assertThat(PublicPaper.PublicPaperFields.values().map { it.fieldName })
-            .containsExactly("id", "number", "pmId", "authors", "authorsAbbreviated", "title", "location", "journal",
-                "publicationYear", "goals", "methods", "population", "result", "comment")
+            .containsExactly(
+                "id", "number", "pmId", "authors", "authorsAbbreviated", "title", "location", "journal",
+                "publicationYear", "goals", "methods", "population", "result", "comment"
+            )
     }
 }

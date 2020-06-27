@@ -2,7 +2,6 @@ package ch.difty.scipamato.common.entity
 
 import ch.difty.scipamato.common.entity.CodeClassId.*
 import org.assertj.core.api.Assertions.assertThat
-
 import org.junit.jupiter.api.Test
 
 class CodeClassIdTest {

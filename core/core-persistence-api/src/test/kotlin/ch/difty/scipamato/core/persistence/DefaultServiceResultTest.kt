@@ -1,7 +1,6 @@
 package ch.difty.scipamato.core.persistence
 
 import org.assertj.core.api.Assertions.assertThat
-
 import org.junit.jupiter.api.Test
 
 internal class DefaultServiceResultTest {

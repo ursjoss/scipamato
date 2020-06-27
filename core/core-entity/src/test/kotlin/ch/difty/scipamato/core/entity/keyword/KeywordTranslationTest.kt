@@ -1,7 +1,6 @@
 package ch.difty.scipamato.core.entity.keyword
 
 import org.assertj.core.api.Assertions.assertThat
-
 import org.junit.jupiter.api.Test
 
 internal class KeywordTranslationTest {

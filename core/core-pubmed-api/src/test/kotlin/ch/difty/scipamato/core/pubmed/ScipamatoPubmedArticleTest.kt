@@ -13,13 +13,15 @@ internal class ScipamatoPubmedArticleTest {
 
     @Test
     fun extractingYearFromNeitherYearObjectNorMedlineDate_returnsYear0() {
-        assertThat(pubmedArticle
-            .medlineCitation
-            .article
-            .journal
-            .journalIssue
-            .pubDate
-            .yearOrMonthOrDayOrSeasonOrMedlineDate).isEmpty()
+        assertThat(
+            pubmedArticle
+                .medlineCitation
+                .article
+                .journal
+                .journalIssue
+                .pubDate
+                .yearOrMonthOrDayOrSeasonOrMedlineDate
+        ).isEmpty()
         val month = Month()
         month.setvalue("2016")
         pubmedArticle
