@@ -2,7 +2,31 @@ package ch.difty.scipamato.core.entity.search
 
 import ch.difty.scipamato.core.entity.search.StringSearchTerm.MatchType
 import ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType
-import ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType.*
+import ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType.EMPTY
+import ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType.NOTOPENLEFT
+import ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType.NOTOPENLEFTQUOTED
+import ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType.NOTOPENLEFTRIGHT
+import ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType.NOTOPENLEFTRIGHTQUOTED
+import ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType.NOTOPENRIGHT
+import ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType.NOTOPENRIGHTQUOTED
+import ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType.NOTQUOTED
+import ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType.NOTREGEX
+import ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType.NOTWORD
+import ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType.OPENLEFT
+import ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType.OPENLEFTQUOTED
+import ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType.OPENLEFTRIGHT
+import ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType.OPENLEFTRIGHTQUOTED
+import ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType.OPENRIGHT
+import ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType.OPENRIGHTQUOTED
+import ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType.QUOTED
+import ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType.RAW
+import ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType.REGEX
+import ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType.SOME
+import ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType.UNSUPPORTED
+import ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType.WHITESPACE
+import ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType.WORD
+import ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType.byMatchType
+import ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType.values
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -206,10 +230,12 @@ internal class StringSearchTermTest {
 
     @Test
     fun assertTokenTypes() {
-        assertThat(values()).containsExactly(NOTREGEX, REGEX, WHITESPACE, SOME, EMPTY,
+        assertThat(values()).containsExactly(
+            NOTREGEX, REGEX, WHITESPACE, SOME, EMPTY,
             NOTOPENLEFTRIGHTQUOTED, OPENLEFTRIGHTQUOTED, NOTOPENLEFTRIGHT, OPENLEFTRIGHT, NOTOPENRIGHTQUOTED,
             OPENRIGHTQUOTED, NOTOPENRIGHT, OPENRIGHT, NOTOPENLEFTQUOTED, OPENLEFTQUOTED, NOTOPENLEFT, OPENLEFT,
-            NOTQUOTED, QUOTED, NOTWORD, WORD, RAW, UNSUPPORTED)
+            NOTQUOTED, QUOTED, NOTWORD, WORD, RAW, UNSUPPORTED
+        )
     }
 
     @Test
@@ -224,9 +250,11 @@ internal class StringSearchTermTest {
 
     @Test
     fun assertTokenTypes_like() {
-        assertThat(byMatchType(MatchType.LIKE)).containsExactly(NOTOPENLEFTRIGHTQUOTED, OPENLEFTRIGHTQUOTED,
+        assertThat(byMatchType(MatchType.LIKE)).containsExactly(
+            NOTOPENLEFTRIGHTQUOTED, OPENLEFTRIGHTQUOTED,
             NOTOPENLEFTRIGHT, OPENLEFTRIGHT, NOTOPENRIGHTQUOTED, OPENRIGHTQUOTED, NOTOPENRIGHT, OPENRIGHT,
-            NOTOPENLEFTQUOTED, OPENLEFTQUOTED, NOTOPENLEFT, OPENLEFT)
+            NOTOPENLEFTQUOTED, OPENLEFTQUOTED, NOTOPENLEFT, OPENLEFT
+        )
     }
 
     @Test

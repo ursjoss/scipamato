@@ -5,7 +5,13 @@ import ch.difty.scipamato.core.entity.search.SearchCondition
 import ch.difty.scipamato.core.entity.search.SearchOrder
 import ch.difty.scipamato.core.entity.search.SearchOrderFilter
 import ch.difty.scipamato.core.persistence.AbstractServiceTest
-import com.nhaarman.mockitokotlin2.*
+import com.nhaarman.mockitokotlin2.doReturn
+import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.never
+import com.nhaarman.mockitokotlin2.times
+import com.nhaarman.mockitokotlin2.verify
+import com.nhaarman.mockitokotlin2.verifyNoMoreInteractions
+import com.nhaarman.mockitokotlin2.whenever
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.mockito.ArgumentMatchers.anyInt

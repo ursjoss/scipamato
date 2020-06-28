@@ -15,7 +15,15 @@ import ch.difty.scipamato.core.persistence.paper.searchorder.PaperBackedSearchOr
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
 import org.assertj.core.api.Assertions.assertThat
-import org.jooq.*
+import org.jooq.DeleteConditionStep
+import org.jooq.Record1
+import org.jooq.SelectConditionStep
+import org.jooq.SelectForUpdateStep
+import org.jooq.SelectLimitPercentStep
+import org.jooq.SelectSeekStepN
+import org.jooq.SelectWhereStep
+import org.jooq.SortField
+import org.jooq.TableField
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
 import org.mockito.Mockito.never
@@ -50,9 +58,11 @@ internal class JooqPaperRepoTest :
 
     override val recordVersion: TableField<PaperRecord, Int> = PAPER.VERSION
 
-    override val repo = JooqPaperRepo(dsl, mapper, sortMapper, filterConditionMapper,
+    override val repo = JooqPaperRepo(
+        dsl, mapper, sortMapper, filterConditionMapper,
         dateTimeService, insertSetStepSetter, updateSetStepSetter, searchOrderRepositoryMock,
-        applicationProperties)
+        applicationProperties
+    )
 
     override fun makeRepoSavingReturning(returning: PaperRecord): EntityRepository<Paper, Long, PaperFilter> =
         object : JooqPaperRepo(
@@ -147,8 +157,10 @@ internal class JooqPaperRepoTest :
     @Test
     fun findingBySearchOrder_delegatesToSearchOrderFinder() {
         whenever(searchOrderRepositoryMock.findBySearchOrder(searchOrderMock)).thenReturn(papers)
-        assertThat(makeRepoStubbingEnriching().findBySearchOrder(searchOrderMock, LC)).containsExactly(paperMock,
-            paperMock)
+        assertThat(makeRepoStubbingEnriching().findBySearchOrder(searchOrderMock, LC)).containsExactly(
+            paperMock,
+            paperMock
+        )
         assertThat(enrichedEntities).containsExactly(paperMock, paperMock)
         verify(searchOrderRepositoryMock).findBySearchOrder(searchOrderMock)
     }
@@ -163,9 +175,14 @@ internal class JooqPaperRepoTest :
     @Test
     fun findingPageBySearchOrder_delegatesToSearchOrderFinder() {
         whenever(searchOrderRepositoryMock.findPageBySearchOrder(searchOrderMock, paginationContextMock)).thenReturn(
-            papers)
-        assertThat(makeRepoStubbingEnriching().findPageBySearchOrder(searchOrderMock, paginationContextMock,
-            LC)).containsExactly(paperMock, paperMock)
+            papers
+        )
+        assertThat(
+            makeRepoStubbingEnriching().findPageBySearchOrder(
+                searchOrderMock, paginationContextMock,
+                LC
+            )
+        ).containsExactly(paperMock, paperMock)
         assertThat(enrichedEntities).containsExactly(paperMock, paperMock)
         verify(searchOrderRepositoryMock).findPageBySearchOrder(searchOrderMock, paginationContextMock)
     }
@@ -270,8 +287,10 @@ internal class JooqPaperRepoTest :
 
     @Test
     fun findingPageOfIdsBySearchOrder() {
-        whenever(searchOrderRepositoryMock
-            .findPageOfIdsBySearchOrder(searchOrderMock, paginationContextMock)).thenReturn(listOf(17L, 3L, 5L))
+        whenever(
+            searchOrderRepositoryMock
+                .findPageOfIdsBySearchOrder(searchOrderMock, paginationContextMock)
+        ).thenReturn(listOf(17L, 3L, 5L))
         assertThat(repo.findPageOfIdsBySearchOrder(searchOrderMock, paginationContextMock)).containsExactly(17L, 3L, 5L)
         verify(searchOrderRepositoryMock).findPageOfIdsBySearchOrder(searchOrderMock, paginationContextMock)
     }

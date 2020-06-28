@@ -4,7 +4,12 @@ import ch.difty.scipamato.common.persistence.paging.PaginationContext
 import ch.difty.scipamato.core.entity.User
 import ch.difty.scipamato.core.entity.search.UserFilter
 import ch.difty.scipamato.core.persistence.UserRepository
-import com.nhaarman.mockitokotlin2.*
+import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.never
+import com.nhaarman.mockitokotlin2.times
+import com.nhaarman.mockitokotlin2.verify
+import com.nhaarman.mockitokotlin2.verifyNoMoreInteractions
+import com.nhaarman.mockitokotlin2.whenever
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test

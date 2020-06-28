@@ -35,41 +35,45 @@ internal class PaperFilterConditionMapperTest : FilterConditionMapperTest<PaperR
     fun creatingWhereCondition_withMethodsMask_searchesExposureAndMethodFields() {
         val pattern = "m"
         filter.methodsMask = pattern
-        assertThat(mapper.map(filter).toString()).isEqualToIgnoringCase(makeWhereClause(
-            pattern,
-            "EXPOSURE_POLLUTANT",
-            "EXPOSURE_ASSESSMENT",
-            "METHODS",
-            "METHOD_STUDY_DESIGN",
-            "METHOD_OUTCOME",
-            "METHOD_STATISTICS",
-            "METHOD_CONFOUNDERS",
-            "POPULATION_PLACE"
-        ))
+        assertThat(mapper.map(filter).toString()).isEqualToIgnoringCase(
+            makeWhereClause(
+                pattern,
+                "EXPOSURE_POLLUTANT",
+                "EXPOSURE_ASSESSMENT",
+                "METHODS",
+                "METHOD_STUDY_DESIGN",
+                "METHOD_OUTCOME",
+                "METHOD_STATISTICS",
+                "METHOD_CONFOUNDERS",
+                "POPULATION_PLACE"
+            )
+        )
     }
 
     @Test
     fun creatingWhereCondition_withSearchMask_searchesRemainingTextFields() {
         val pattern = "foo"
         filter.searchMask = pattern
-        assertThat(mapper.map(filter).toString()).isEqualToIgnoringCase(makeWhereClause(
-            pattern,
-            "DOI",
-            "LOCATION",
-            "TITLE",
-            "GOALS",
-            "POPULATION",
-            "POPULATION_PARTICIPANTS",
-            "POPULATION_DURATION",
-            "RESULT",
-            "RESULT_EXPOSURE_RANGE",
-            "RESULT_EFFECT_ESTIMATE",
-            "RESULT_MEASURED_OUTCOME",
-            "CONCLUSION",
-            "COMMENT",
-            "INTERN",
-            "ORIGINAL_ABSTRACT"
-        ))
+        assertThat(mapper.map(filter).toString()).isEqualToIgnoringCase(
+            makeWhereClause(
+                pattern,
+                "DOI",
+                "LOCATION",
+                "TITLE",
+                "GOALS",
+                "POPULATION",
+                "POPULATION_PARTICIPANTS",
+                "POPULATION_DURATION",
+                "RESULT",
+                "RESULT_EXPOSURE_RANGE",
+                "RESULT_EFFECT_ESTIMATE",
+                "RESULT_MEASURED_OUTCOME",
+                "CONCLUSION",
+                "COMMENT",
+                "INTERN",
+                "ORIGINAL_ABSTRACT"
+            )
+        )
     }
 
     @Test

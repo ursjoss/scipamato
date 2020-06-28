@@ -266,8 +266,10 @@ internal class SearchOrderTest {
         so.add(object : SearchCondition() {
             override fun getDisplayValue(): String = "c6DisplayValue"
         })
-        assertThat(so.displayValue).isEqualTo("soName: c1DisplayValue; OR c2DisplayValue; " +
-            "OR c3DisplayValue; OR c4DisplayValue; OR c5DisplayValu... (10)")
+        assertThat(so.displayValue).isEqualTo(
+            "soName: c1DisplayValue; OR c2DisplayValue; " +
+                "OR c3DisplayValue; OR c4DisplayValue; OR c5DisplayValu... (10)"
+        )
     }
 
     @Test
@@ -329,7 +331,8 @@ internal class SearchOrderTest {
             .usingGetClass()
             .withIgnoredFields(
                 SHOW_EXCLUDED.fieldName, CREATED.fieldName, CREATOR_ID.fieldName,
-                MODIFIED.fieldName, MODIFIER_ID.fieldName)
+                MODIFIED.fieldName, MODIFIER_ID.fieldName
+            )
             .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
             .withPrefabValues(SearchCondition::class.java, SearchCondition(1L), SearchCondition(2L))
             .verify()

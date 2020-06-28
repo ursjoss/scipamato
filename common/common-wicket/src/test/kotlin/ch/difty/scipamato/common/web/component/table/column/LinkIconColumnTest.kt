@@ -10,7 +10,6 @@ import org.apache.wicket.model.IModel
 import org.apache.wicket.model.Model
 import org.apache.wicket.util.tester.TagTester
 import org.assertj.core.api.Assertions.assertThat
-import org.jetbrains.annotations.NotNull
 import org.junit.jupiter.api.Test
 
 internal class LinkIconColumnTest : WicketBaseTest() {

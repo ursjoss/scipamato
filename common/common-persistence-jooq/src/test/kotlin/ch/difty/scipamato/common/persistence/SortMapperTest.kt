@@ -120,7 +120,8 @@ internal class SortMapperTest {
             assertThat(ex)
                 .isInstanceOf(InvalidDataAccessApiUsageException::class.java)
                 .hasMessage(
-                    "Could not find table field: illegalField; nested exception is java.lang.IllegalAccessException")
+                    "Could not find table field: illegalField; nested exception is java.lang.IllegalAccessException"
+                )
         }
 
         verify(sortSpecMock).iterator()

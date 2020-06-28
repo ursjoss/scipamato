@@ -1,7 +1,6 @@
 package ch.difty.scipamato.core.entity.keyword
 
 import org.assertj.core.api.Assertions.assertThat
-
 import org.junit.jupiter.api.Test
 
 @Suppress("PrivatePropertyName", "PrivatePropertyName", "SpellCheckingInspection")
@@ -53,8 +52,10 @@ internal class KeywordDefinitionTest {
 
     @Test
     fun canGetTranslationsAsString_withTranslationsIncludingMainTranslation_withPartialTranslation() {
-        val kd = KeywordDefinition(2, "de", 1, kw_de, kw_en,
-            KeywordTranslation(12, "fr", null, 1))
+        val kd = KeywordDefinition(
+            2, "de", 1, kw_de, kw_en,
+            KeywordTranslation(12, "fr", null, 1)
+        )
         assertThat(kd.translationsAsString).isEqualTo("DE: 'stichwort2'; EN: 'keyword2'; FR: n.a.")
     }
 
@@ -128,7 +129,8 @@ internal class KeywordDefinitionTest {
     fun canGetTranslationsAsString_withTranslationsIncludingMainTranslation_withMultipleTranslations() {
         val kd = KeywordDefinition(2, "de", 1, kw_de, kw_de2, kw_en, kw_fr)
         assertThat(kd.translationsAsString).isEqualTo(
-            "DE: 'stichwort2','stichwort2foo'; EN: 'keyword2'; FR: 'motdeclef2'")
+            "DE: 'stichwort2','stichwort2foo'; EN: 'keyword2'; FR: 'motdeclef2'"
+        )
     }
 
     @Test

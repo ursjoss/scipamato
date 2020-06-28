@@ -5,7 +5,12 @@ import ch.difty.scipamato.core.db.tables.records.PaperRecord
 import ch.difty.scipamato.core.entity.Paper
 import ch.difty.scipamato.core.persistence.InsertSetStepSetter
 import ch.difty.scipamato.core.persistence.InsertSetStepSetterTest
-import com.nhaarman.mockitokotlin2.*
+import com.nhaarman.mockitokotlin2.doReturn
+import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.never
+import com.nhaarman.mockitokotlin2.verify
+import com.nhaarman.mockitokotlin2.verifyNoMoreInteractions
+import com.nhaarman.mockitokotlin2.whenever
 import org.junit.jupiter.api.Test
 import org.mockito.ArgumentMatchers.anyLong
 

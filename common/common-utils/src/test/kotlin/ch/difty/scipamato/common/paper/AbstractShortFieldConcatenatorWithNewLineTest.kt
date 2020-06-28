@@ -42,21 +42,32 @@ internal class AbstractShortFieldConcatenatorWithNewLineTest {
     @Test
     fun method_withMethodNull_withExplicitLabels_returnsConcatenatedShortFields() {
         assertThat(
-            concatenator.methodsFrom(null, newT("msd"), newT("mo"), newT("pp"), newT("ep"), newT("ea"), newT("ms"),
-                newT("mc"))).isEqualTo("msdl: msd\nmol: mo\nppl: pp\nepl: ep\neal: ea\nmsl: ms\nmcl: mc")
+            concatenator.methodsFrom(
+                null, newT("msd"), newT("mo"), newT("pp"), newT("ep"), newT("ea"), newT("ms"),
+                newT("mc")
+            )
+        ).isEqualTo("msdl: msd\nmol: mo\nppl: pp\nepl: ep\neal: ea\nmsl: ms\nmcl: mc")
     }
 
     @Test
     fun method_withMethodNullAndTupleLabelNull_withExplicitLabels_returnsConcatenatedShortFields() {
-        assertThat(concatenator.methodsFrom(null, newT("msd"), newT("mo"),
-            AbstractShortFieldConcatenator.Tuple(null, "pp"), newT("ep"), newT("ea"), newT("ms"),
-            newT("mc"))).isEqualTo("msdl: msd\nmol: mo\npp\nepl: ep\neal: ea\nmsl: ms\nmcl: mc")
+        assertThat(
+            concatenator.methodsFrom(
+                null, newT("msd"), newT("mo"),
+                AbstractShortFieldConcatenator.Tuple(null, "pp"), newT("ep"), newT("ea"), newT("ms"),
+                newT("mc")
+            )
+        ).isEqualTo("msdl: msd\nmol: mo\npp\nepl: ep\neal: ea\nmsl: ms\nmcl: mc")
     }
 
     @Test
     fun method_withMethodNullAndEntireTupleNull_withExplicitLabels_returnsConcatenatedShortFields() {
-        assertThat(concatenator.methodsFrom(null, newT("msd"), newT("mo"), null, newT("ep"), newT("ea"), newT("ms"),
-            newT("mc"))).isEqualTo("msdl: msd\nmol: mo\nepl: ep\neal: ea\nmsl: ms\nmcl: mc")
+        assertThat(
+            concatenator.methodsFrom(
+                null, newT("msd"), newT("mo"), null, newT("ep"), newT("ea"), newT("ms"),
+                newT("mc")
+            )
+        ).isEqualTo("msdl: msd\nmol: mo\nepl: ep\neal: ea\nmsl: ms\nmcl: mc")
     }
 
     private fun newT(f: String): AbstractShortFieldConcatenator.Tuple {
@@ -71,13 +82,15 @@ internal class AbstractShortFieldConcatenatorWithNewLineTest {
     @Test
     fun population_withPopulationNull_returnsConcatenatedShortFields() {
         assertThat(concatenator.populationFrom(null, "ppl", "ppa", "pd")).isEqualTo(
-            "Place: ppl\nParticipants: ppa\nStudy Duration: pd")
+            "Place: ppl\nParticipants: ppa\nStudy Duration: pd"
+        )
     }
 
     @Test
     fun population_withPopulationNull_withExplicitLabels_returnsConcatenatedShortFields() {
         assertThat(concatenator.populationFrom(null, newT("ppl"), newT("ppa"), newT("pd"))).isEqualTo(
-            "ppll: ppl\nppal: ppa\npdl: pd")
+            "ppll: ppl\nppal: ppa\npdl: pd"
+        )
     }
 
     @Test
@@ -88,12 +101,14 @@ internal class AbstractShortFieldConcatenatorWithNewLineTest {
     @Test
     fun result_withResultNull_returnsConcatenatedShortFields() {
         assertThat(concatenator.resultFrom(null, "rmo", "rer", "ree", "cc")).isEqualTo(
-            "Measured Outcome: rmo\nExposure (Range): rer\nEffect Estimate: ree\nConclusion: cc")
+            "Measured Outcome: rmo\nExposure (Range): rer\nEffect Estimate: ree\nConclusion: cc"
+        )
     }
 
     @Test
     fun result_withResultNull_withExplicitLabels_returnsConcatenatedShortFields() {
         assertThat(concatenator.resultFrom(null, newT("rmo"), newT("rer"), newT("ree"), newT("cc"))).isEqualTo(
-            "rmol: rmo\nrerl: rer\nreel: ree\nccl: cc")
+            "rmol: rmo\nrerl: rer\nreel: ree\nccl: cc"
+        )
     }
 }

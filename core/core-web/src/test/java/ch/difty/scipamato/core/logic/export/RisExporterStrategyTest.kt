@@ -20,8 +20,10 @@ internal class RisExporterStrategyTest {
 
     @Test
     fun canParseDistillerSr() {
-        assertThat(RisExporterStrategy
-            .fromProperty("DISTILLERSR", "whatever-key-for-logging-only")).isEqualTo(DISTILLERSR)
+        assertThat(
+            RisExporterStrategy
+                .fromProperty("DISTILLERSR", "whatever-key-for-logging-only")
+        ).isEqualTo(DISTILLERSR)
     }
 
     @Test

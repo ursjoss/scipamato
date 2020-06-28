@@ -49,8 +49,10 @@ internal open class JooqCodeRepoIntegrationTest {
 
     @Test
     fun findingCodeDefinitions_withUnspecifiedFilter_findsAllDefinitions() {
-        val cds = repo.findPageOfCodeDefinitions(CodeFilter(),
-            PaginationRequest(0, 10, Sort.Direction.ASC, "name"))
+        val cds = repo.findPageOfCodeDefinitions(
+            CodeFilter(),
+            PaginationRequest(0, 10, Sort.Direction.ASC, "name")
+        )
 
         assertThat(cds).hasSize(10)
 
@@ -79,8 +81,10 @@ internal open class JooqCodeRepoIntegrationTest {
     fun findingCodeDefinitions_withFilterMatchingSingleGermanName_findsOne() {
         val filter = CodeFilter()
         filter.nameMask = "Experimentelle Studie unter Belastung / Arbeit"
-        val kds = repo.findPageOfCodeDefinitions(filter,
-            PaginationRequest(Sort.Direction.ASC, "name"))
+        val kds = repo.findPageOfCodeDefinitions(
+            filter,
+            PaginationRequest(Sort.Direction.ASC, "name")
+        )
 
         assertThat(kds).hasSize(1)
 
@@ -279,8 +283,10 @@ internal open class JooqCodeRepoIntegrationTest {
     }
 
     private fun assertSortedList(sortProperty: String, code: String) {
-        val cds = repo.findPageOfCodeDefinitions(CodeFilter(),
-            PaginationRequest(0, 10, Sort.Direction.DESC, sortProperty))
+        val cds = repo.findPageOfCodeDefinitions(
+            CodeFilter(),
+            PaginationRequest(0, 10, Sort.Direction.DESC, sortProperty)
+        )
 
         assertThat(cds).hasSize(10)
 
@@ -295,8 +301,10 @@ internal open class JooqCodeRepoIntegrationTest {
 
     @Test
     fun findingCodeDefinitions_sortedByInternal() {
-        val cds = repo.findPageOfCodeDefinitions(CodeFilter(),
-            PaginationRequest(0, 10, Sort.Direction.DESC, "internal"))
+        val cds = repo.findPageOfCodeDefinitions(
+            CodeFilter(),
+            PaginationRequest(0, 10, Sort.Direction.DESC, "internal")
+        )
 
         assertThat(cds).hasSize(10)
 
@@ -314,8 +322,10 @@ internal open class JooqCodeRepoIntegrationTest {
     }
 
     private fun assertFiltering(filter: CodeFilter, count: Int, code: String) {
-        val cds = repo.findPageOfCodeDefinitions(filter,
-            PaginationRequest(0, 100, Sort.Direction.DESC, "sort"))
+        val cds = repo.findPageOfCodeDefinitions(
+            filter,
+            PaginationRequest(0, 100, Sort.Direction.DESC, "sort")
+        )
 
         assertThat(cds).hasSize(count)
 

@@ -7,7 +7,11 @@ import ch.difty.scipamato.core.persistence.RecordMapperTest
 import ch.difty.scipamato.core.persistence.UpdateSetStepSetterTest
 import ch.difty.scipamato.core.persistence.newsletter.NewsletterRecordMapperTest.Companion.ISSUE
 import ch.difty.scipamato.core.persistence.newsletter.NewsletterRecordMapperTest.Companion.ISSUE_DATE
-import com.nhaarman.mockitokotlin2.*
+import com.nhaarman.mockitokotlin2.doReturn
+import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.verify
+import com.nhaarman.mockitokotlin2.verifyNoMoreInteractions
+import com.nhaarman.mockitokotlin2.whenever
 import java.sql.Date
 
 internal class NewsletterUpdateSetStepSetterTest : UpdateSetStepSetterTest<NewsletterRecord, Newsletter>() {

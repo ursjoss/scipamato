@@ -75,7 +75,6 @@ abstract class AbstractDefinitionEntity<T : DefinitionTranslation, ID>(
                 .filterNot { it.name == translation.name }
     }
 
-
     override val displayValue: String
         get() = name
 

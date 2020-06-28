@@ -36,7 +36,8 @@ internal open class JooqPublicPaperRepoIntegrationTest {
         assertThat(paper.id).isEqualTo(number)
         assertThat(paper.pmId).isEqualTo(25395026)
         assertThat(paper.authors).isEqualTo(
-            "Turner MC, Cohen A, Jerrett M, Gapstur SM, Diver WR, Pope CA 3rd, Krewski D, Beckerman BS, Samet JM.")
+            "Turner MC, Cohen A, Jerrett M, Gapstur SM, Diver WR, Pope CA 3rd, Krewski D, Beckerman BS, Samet JM."
+        )
         assertThat(paper.location).isEqualTo("Am J Epidemiol. 2014; 180 (12): 1145-1149.")
         assertThat(paper.journal).isEqualTo("Am J Epidemiol")
     }

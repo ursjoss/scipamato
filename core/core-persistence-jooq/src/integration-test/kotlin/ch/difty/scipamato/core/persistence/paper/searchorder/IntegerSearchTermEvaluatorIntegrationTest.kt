@@ -2,7 +2,12 @@ package ch.difty.scipamato.core.persistence.paper.searchorder
 
 import ch.difty.scipamato.core.entity.search.IntegerSearchTerm
 import ch.difty.scipamato.core.entity.search.IntegerSearchTerm.MatchType
-import ch.difty.scipamato.core.entity.search.IntegerSearchTerm.MatchType.*
+import ch.difty.scipamato.core.entity.search.IntegerSearchTerm.MatchType.EXACT
+import ch.difty.scipamato.core.entity.search.IntegerSearchTerm.MatchType.GREATER_OR_EQUAL
+import ch.difty.scipamato.core.entity.search.IntegerSearchTerm.MatchType.GREATER_THAN
+import ch.difty.scipamato.core.entity.search.IntegerSearchTerm.MatchType.LESS_OR_EQUAL
+import ch.difty.scipamato.core.entity.search.IntegerSearchTerm.MatchType.LESS_THAN
+import ch.difty.scipamato.core.entity.search.IntegerSearchTerm.MatchType.RANGE
 import ch.difty.scipamato.core.entity.search.SearchTerm
 import ch.difty.scipamato.core.entity.search.SearchTermType
 import org.assertj.core.api.Assertions.assertThat

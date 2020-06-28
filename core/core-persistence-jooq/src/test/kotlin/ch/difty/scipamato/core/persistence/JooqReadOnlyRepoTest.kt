@@ -12,14 +12,30 @@ import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.verifyNoMoreInteractions
 import com.nhaarman.mockitokotlin2.whenever
 import org.assertj.core.api.Assertions.assertThat
-import org.jooq.*
+import org.jooq.Condition
+import org.jooq.DSLContext
+import org.jooq.Record
+import org.jooq.Record1
+import org.jooq.RecordMapper
+import org.jooq.SelectConditionStep
+import org.jooq.SelectJoinStep
+import org.jooq.SelectSeekStepN
+import org.jooq.SelectSelectStep
+import org.jooq.SelectWhereStep
+import org.jooq.SortField
+import org.jooq.TableField
 import org.jooq.impl.TableImpl
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
-abstract class JooqReadOnlyRepoTest<R : Record, T : IdScipamatoEntity<ID>, ID :
-Number, TI : TableImpl<R>, M : RecordMapper<R, T>, F : ScipamatoFilter> {
+abstract class JooqReadOnlyRepoTest<
+    R : Record,
+    T : IdScipamatoEntity<ID>,
+    ID : Number,
+    TI : TableImpl<R>,
+    M : RecordMapper<R, T>,
+    F : ScipamatoFilter> {
 
     protected val dsl = mock<DSLContext>()
     protected var filterConditionMapper = mock<GenericFilterConditionMapper<F>>()

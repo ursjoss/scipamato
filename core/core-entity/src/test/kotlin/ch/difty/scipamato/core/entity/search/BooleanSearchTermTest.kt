@@ -1,7 +1,6 @@
 package ch.difty.scipamato.core.entity.search
 
 import org.assertj.core.api.Assertions.assertThat
-
 import org.junit.jupiter.api.Test
 
 private const val CONDITION_ID: Long = 3

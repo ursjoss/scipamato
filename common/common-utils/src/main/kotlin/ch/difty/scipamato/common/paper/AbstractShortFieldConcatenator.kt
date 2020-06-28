@@ -28,7 +28,8 @@ abstract class AbstractShortFieldConcatenator protected constructor(private val 
         Tuple("Pollutant", exposurePollutant),
         Tuple("Exposure Assessment", exposureAssessment),
         Tuple("Statistical Method", methodStatistics),
-        Tuple("Confounders", methodConfounders))
+        Tuple("Confounders", methodConfounders)
+    )
 
     fun methodsFrom(
         method: String?,
@@ -41,13 +42,15 @@ abstract class AbstractShortFieldConcatenator protected constructor(private val 
         methodConfounders: Tuple?
     ) = determineAppropriate(
         Tuple(null, method),
-        listOf(methodStudyDesign,
+        listOf(
+            methodStudyDesign,
             methodOutcome,
             populationPlace,
             exposurePollutant,
             exposureAssessment,
             methodStatistics,
-            methodConfounders)
+            methodConfounders
+        )
     )
 
     fun populationFrom(
@@ -69,9 +72,11 @@ abstract class AbstractShortFieldConcatenator protected constructor(private val 
         populationDuration: Tuple?
     ) = determineAppropriate(
         Tuple(null, population),
-        listOf(populationPlace,
+        listOf(
+            populationPlace,
             populationParticipants,
-            populationDuration)
+            populationDuration
+        )
     )
 
     fun resultFrom(
@@ -96,10 +101,12 @@ abstract class AbstractShortFieldConcatenator protected constructor(private val 
         conclusion: Tuple?
     ) = determineAppropriate(
         Tuple(null, result),
-        listOf(resultMeasuredOutcome,
+        listOf(
+            resultMeasuredOutcome,
             resultExposureRange,
             resultEffectEstimate,
-            conclusion)
+            conclusion
+        )
     )
 
     /**

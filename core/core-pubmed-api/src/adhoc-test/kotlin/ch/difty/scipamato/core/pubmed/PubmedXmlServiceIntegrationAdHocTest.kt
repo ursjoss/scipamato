@@ -1,7 +1,6 @@
 package ch.difty.scipamato.core.pubmed
 
 import org.assertj.core.api.Assertions.assertThat
-
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -39,7 +38,8 @@ internal class PubmedXmlServiceIntegrationAdHocTest {
         with(sa) {
             assertThat(pmId).isEqualTo("25395026")
             assertThat(authors).isEqualTo(
-                "Turner MC, Cohen A, Jerrett M, Gapstur SM, Diver WR, Pope CA 3rd, Krewski D, Beckerman BS, Samet JM.")
+                "Turner MC, Cohen A, Jerrett M, Gapstur SM, Diver WR, Pope CA 3rd, Krewski D, Beckerman BS, Samet JM."
+            )
             assertThat(firstAuthor).isEqualTo("Turner")
             assertThat(publicationYear).isEqualTo("2014")
             assertThat(location).isEqualTo("Am J Epidemiol. 2014; 180 (12): 1145-1149.")
@@ -49,7 +49,8 @@ internal class PubmedXmlServiceIntegrationAdHocTest {
             )
             assertThat(doi).isEqualTo("10.1093/aje/kwu275")
             assertThat(originalAbstract).startsWith(
-                "The International Agency for Research on Cancer recently classified outdoor air pollution")
+                "The International Agency for Research on Cancer recently classified outdoor air pollution"
+            )
             assertThat(sa.originalAbstract.trim { it <= ' ' })
                 .endsWith("based on reducing exposure to either risk factor alone.")
         }
@@ -72,6 +73,7 @@ internal class PubmedXmlServiceIntegrationAdHocTest {
         val result = service!!.getPubmedArticleWithPmidAndApiKey(pmId, apiKey)
         assertThat(result.pubmedArticleFacade == null).isTrue()
         assertThat(result.errorMessage).isEqualTo(
-            "Status 400 BAD_REQUEST: status 400 reading PubMed#articleWithId(String,String)")
+            "Status 400 BAD_REQUEST: status 400 reading PubMed#articleWithId(String,String)"
+        )
     }
 }

@@ -34,8 +34,10 @@ internal class ClickablePropertyColumnTest : WicketBaseTest() {
     @Test
     fun testOnClick_withSort() {
         val property = "prop"
-        val c = ClickablePropertyColumn(displayModel, property, property,
-            consumerMock)
+        val c = ClickablePropertyColumn(
+            displayModel, property, property,
+            consumerMock
+        )
         val clickModel = Model.of("bar")
         c.onClick(clickModel)
         verify<SerializableConsumer<IModel<String>>>(consumerMock).accept(clickModel)
@@ -44,8 +46,10 @@ internal class ClickablePropertyColumnTest : WicketBaseTest() {
     @Test
     fun testOnClick_inNewTab() {
         val property = "prop"
-        val c = ClickablePropertyColumn(displayModel, property, property,
-            consumerMock, true)
+        val c = ClickablePropertyColumn(
+            displayModel, property, property,
+            consumerMock, true
+        )
         val clickModel = Model.of("bar")
         c.onClick(clickModel)
         verify<SerializableConsumer<IModel<String>>>(consumerMock).accept(clickModel)
@@ -94,5 +98,4 @@ internal class ClickablePropertyColumnTest : WicketBaseTest() {
         tester.assertModelValue("panel:table:body:rows:1:cells:2:cell:link", TestRecord(1, "foo"))
         tester.assertModelValue("panel:table:body:rows:1:cells:2:cell:link:label", "foo")
     }
-
 }

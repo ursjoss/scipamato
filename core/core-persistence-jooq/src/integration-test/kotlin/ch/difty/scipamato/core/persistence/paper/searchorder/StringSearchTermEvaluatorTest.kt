@@ -41,9 +41,11 @@ internal class StringSearchTermEvaluatorTest {
     @Test
     fun buildingConditionForRegex_appliesRegex() {
         expectToken(TokenType.REGEX, "foo")
-        assertThat(evaluator
-            .evaluate(stMock)
-            .toString()).isEqualTo(
+        assertThat(
+            evaluator
+                .evaluate(stMock)
+                .toString()
+        ).isEqualTo(
             """(coalesce(
                    |  field_x, 
                    |  ''
@@ -120,9 +122,11 @@ internal class StringSearchTermEvaluatorTest {
     @Test
     fun buildingConditionForNotOpenRightQuoted_appliesLike() {
         expectToken(TokenType.NOTOPENRIGHTQUOTED, "foo")
-        assertThat(evaluator
-            .evaluate(stMock)
-            .toString()).isEqualTo(
+        assertThat(
+            evaluator
+                .evaluate(stMock)
+                .toString()
+        ).isEqualTo(
             """lower(cast(coalesce(
                    |  field_x, 
                    |  ''
@@ -284,9 +288,11 @@ internal class StringSearchTermEvaluatorTest {
     @Test
     fun buildingConditionForNotRegex_withMethodsField_appliesNotRegexToAllMethodsFields() {
         expectMethodToken(TokenType.NOTREGEX, "foo")
-        assertThat(evaluator
-            .evaluate(stMock)
-            .toString()).isEqualTo(
+        assertThat(
+            evaluator
+                .evaluate(stMock)
+                .toString()
+        ).isEqualTo(
             """(
                |  not((lower(cast(coalesce(
                |    methods, 
@@ -1107,8 +1113,10 @@ internal class StringSearchTermEvaluatorTest {
 
     @Test
     fun buildingConditionForCombinedSearchTerm_withMethodsField_() {
-        val sst = SearchTerm.newSearchTerm(1L, SearchTermType.STRING.id, 1L,
-            "methods", "foo -bar") as StringSearchTerm
+        val sst = SearchTerm.newSearchTerm(
+            1L, SearchTermType.STRING.id, 1L,
+            "methods", "foo -bar"
+        ) as StringSearchTerm
         assertThat(evaluator.evaluate(sst).toString()).isEqualTo(
             """(
                |  (

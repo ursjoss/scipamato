@@ -4,7 +4,6 @@ import ch.difty.scipamato.core.sync.jobs.CREATED
 import ch.difty.scipamato.core.sync.jobs.MODIFIED
 import ch.difty.scipamato.core.sync.jobs.SYNCHED
 import org.assertj.core.api.Assertions.assertThat
-
 import org.junit.jupiter.api.Test
 
 internal class PublicCodeTest {

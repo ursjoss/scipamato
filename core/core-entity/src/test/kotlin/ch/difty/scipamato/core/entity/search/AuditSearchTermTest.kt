@@ -153,7 +153,8 @@ internal class AuditSearchTermTest {
     fun lexingMaximumDateQuoted_findsDate() {
         val fieldName = CREATED
         val st = AuditSearchTerm(fieldName, "<=\"2017-12-01 23:15:13\"")
-        assertSingleToken(st, fieldName, TokenType.LESSOREQUALQUOTED,
+        assertSingleToken(
+            st, fieldName, TokenType.LESSOREQUALQUOTED,
             null, null, "2017-12-01 23:15:13", "2017-12-01 23:15:13"
         )
     }
@@ -162,7 +163,8 @@ internal class AuditSearchTermTest {
     fun lexingMaximumDateExcludedQuoted_findsDate() {
         val fieldName = CREATED
         val st = AuditSearchTerm(fieldName, "<\"2017-12-01 23:15:13\"")
-        assertSingleToken(st, fieldName, TokenType.LESSTHANQUOTED,
+        assertSingleToken(
+            st, fieldName, TokenType.LESSTHANQUOTED,
             null, null, "2017-12-01 23:15:13", "2017-12-01 23:15:13"
         )
     }
@@ -171,7 +173,8 @@ internal class AuditSearchTermTest {
     fun lexingMaximumDateExcludedQuotedWithoutTime_usesTimestampAtStartOfDay() {
         val fieldName = CREATED
         val st = AuditSearchTerm(fieldName, "<\"2017-12-01\"")
-        assertSingleToken(st, fieldName, TokenType.LESSTHANQUOTED,
+        assertSingleToken(
+            st, fieldName, TokenType.LESSTHANQUOTED,
             null, null, "2017-12-01", "2017-12-01 00:00:00"
         )
     }
@@ -282,8 +285,10 @@ internal class AuditSearchTermTest {
     fun lexingDateRange_withMixedDateParts2_findsBothDatesExtended() {
         val fieldName = CREATED
         val st = AuditSearchTerm(fieldName, "\"2017-12-01\"-\"2017-12-02 14:15:16\"")
-        assertSingleToken(st, fieldName, TokenType.RANGEQUOTED, null, null, "2017-12-01 00:00:00-2017-12-02 14:15:16",
-            "2017-12-01 00:00:00-2017-12-02 14:15:16")
+        assertSingleToken(
+            st, fieldName, TokenType.RANGEQUOTED, null, null, "2017-12-01 00:00:00-2017-12-02 14:15:16",
+            "2017-12-01 00:00:00-2017-12-02 14:15:16"
+        )
     }
 
     /**

@@ -83,11 +83,15 @@ abstract class JooqEntityRepoTest<R : Record, T : IdScipamatoEntity<ID>, ID : Nu
     protected open fun testSpecificSetUp() {}
 
     public override fun specificTearDown() {
-        verifyNoMoreInteractions(insertSetStepMock, insertSetMoreStepMock, insertResultStepMock,
-            insertSetStepSetter)
+        verifyNoMoreInteractions(
+            insertSetStepMock, insertSetMoreStepMock, insertResultStepMock,
+            insertSetStepSetter
+        )
         verifyNoMoreInteractions(deleteUsingStep, deleteConditionStep1Mock, deleteConditionStep2Mock)
-        verifyNoMoreInteractions(updateSetFirstStepMock, updateConditionStepMock, updateSetMoreStepMock,
-            updateResultStepMock, updateSetStepSetter)
+        verifyNoMoreInteractions(
+            updateSetFirstStepMock, updateConditionStepMock, updateSetMoreStepMock,
+            updateResultStepMock, updateSetStepSetter
+        )
     }
 
     /**

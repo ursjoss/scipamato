@@ -1,7 +1,6 @@
 package ch.difty.scipamato.core.entity.newsletter
 
 import org.assertj.core.api.AssertionsForInterfaceTypes.assertThat
-
 import org.junit.jupiter.api.Test
 
 internal class NewsletterNewsletterTopicTest {
