@@ -217,7 +217,8 @@ internal class EditablePaperPanelInEditModeTest : EditablePaperPanelTest() {
             PubmedArticleResult(null, null, "some message")
         tester.executeAjaxEvent("$PANEL_ID:form:pubmedRetrieval", "click")
         tester.assertErrorMessages(
-            "Could not retrieve an article with PMID $PMID from PubMed: some message")
+            "Could not retrieve an article with PMID $PMID from PubMed: some message"
+        )
         verify { pubmedArticleServiceMock.getPubmedArticleWithPmid(PMID) }
         verify { newsletterServiceMock.canCreateNewsletterInProgress() }
         verify(exactly = 2) { paperServiceMock.findPageOfIdsByFilter(any(), any()) }
@@ -230,7 +231,8 @@ internal class EditablePaperPanelInEditModeTest : EditablePaperPanelTest() {
             PubmedArticleResult(null, HttpStatus.BAD_GATEWAY, "boom")
         tester.executeAjaxEvent("$PANEL_ID:form:pubmedRetrieval", "click")
         tester.assertErrorMessages(
-            "Could not retrieve an article with PMID $PMID from PubMed: Status 502 BAD_GATEWAY: boom")
+            "Could not retrieve an article with PMID $PMID from PubMed: Status 502 BAD_GATEWAY: boom"
+        )
         verify { pubmedArticleServiceMock.getPubmedArticleWithPmid(PMID) }
         verify { newsletterServiceMock.canCreateNewsletterInProgress() }
         verify(exactly = 2) { paperServiceMock.findPageOfIdsByFilter(any(), any()) }
@@ -366,9 +368,11 @@ internal class EditablePaperPanelInEditModeTest : EditablePaperPanelTest() {
         tester.startComponentInPage(makePanel())
         fixPubmedRetrievalButtonClicked("_a", "_fa", "_t", "_l", "2016", "_doi", "_oa")
         tester.executeAjaxEvent("$PANEL_ID:form:pubmedRetrieval", "click")
-        tester.assertFeedbackMessages(ExactLevelFeedbackMessageFilter(FeedbackMessage.WARNING),
+        tester.assertFeedbackMessages(
+            ExactLevelFeedbackMessageFilter(FeedbackMessage.WARNING),
             "PubMed Authors: _a", "PubMed First Author: _fa", "PubMed Title: _t", "PubMed Pub. Year: 2016",
-            "PubMed Location: _l", "PubMed DOI: _doi", "PubMed Original Abstract: _oa")
+            "PubMed Location: _l", "PubMed DOI: _doi", "PubMed Original Abstract: _oa"
+        )
         tester.assertNoInfoMessage()
         tester.assertNoErrorMessage()
         verifyPubmedRetrievalButtonClicked(1)
@@ -539,7 +543,8 @@ internal class EditablePaperPanelInEditModeTest : EditablePaperPanelTest() {
 
     @Test
     fun startingPageShowingExclusions_adjustsIconAndTitleOfToggleInclusionsButton() {
-        assertExcluded(true,
+        assertExcluded(
+            true,
             "Re-include paper into current search", "glyphicon-ok-circle"
         )
     }

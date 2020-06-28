@@ -46,7 +46,7 @@ internal class JooqKeywordServiceTest {
     fun newUnpersistedKeywordDefinition_delegatesToRepo() {
         every { repo.newUnpersistedKeywordDefinition() } returns keywordDefinitionMock
         service.newUnpersistedKeywordDefinition() shouldBeEqualTo keywordDefinitionMock
-        verify { keywordDefinitionMock == keywordDefinitionMock}
+        verify { keywordDefinitionMock == keywordDefinitionMock }
         verify { repo.newUnpersistedKeywordDefinition() }
     }
 
@@ -62,7 +62,7 @@ internal class JooqKeywordServiceTest {
         every { repo.findPageOfKeywordDefinitions(filterMock, paginationContextMock) } returns keywordDefinitions
         service.findPageOfEntityDefinitions(filterMock, paginationContextMock).asSequence() shouldContainSame
             keywordDefinitions.asSequence()
-        verify { keywordDefinitionMock == keywordDefinitionMock}
+        verify { keywordDefinitionMock == keywordDefinitionMock }
         verify { repo.findPageOfKeywordDefinitions(filterMock, paginationContextMock) }
     }
 

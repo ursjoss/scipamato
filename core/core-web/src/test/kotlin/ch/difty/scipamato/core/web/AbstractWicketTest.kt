@@ -1,7 +1,7 @@
 package ch.difty.scipamato.core.web
 
-import ch.difty.scipamato.common.ClearAllMocksExtension
 import ch.difty.scipamato.TestApplication
+import ch.difty.scipamato.common.ClearAllMocksExtension
 import ch.difty.scipamato.common.DateTimeService
 import ch.difty.scipamato.common.navigator.ItemNavigator
 import ch.difty.scipamato.common.web.ScipamatoWebSessionFacade

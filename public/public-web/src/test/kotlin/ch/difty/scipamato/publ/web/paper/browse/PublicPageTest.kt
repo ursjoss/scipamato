@@ -34,11 +34,17 @@ internal class PublicPageTest : BasePageTest<PublicPage>() {
     override fun setUpHook() {
         super.setUpHook()
         papers.add(
-            PublicPaper(1L, 10L, 1000, "authors1", "auths1", "title1", "location1", "journal1", 2016, "goals1",
-                "methods1", "population1", "result1", "comment1"))
+            PublicPaper(
+                1L, 10L, 1000, "authors1", "auths1", "title1", "location1", "journal1", 2016, "goals1",
+                "methods1", "population1", "result1", "comment1"
+            )
+        )
         papers.add(
-            PublicPaper(2L, 20L, 1002, "authors2", "auths2", "title2", "location2", "journal2", 2017, "goals2",
-                "methods2", "population2", "result2", "comment2"))
+            PublicPaper(
+                2L, 20L, 1002, "authors2", "auths2", "title2", "location2", "journal2", 2017, "goals2",
+                "methods2", "population2", "result2", "comment2"
+            )
+        )
 
         every { paperService.countByFilter(any()) } returns papers.size
         every { paperService.findPageByFilter(any(), any()) } returns papers

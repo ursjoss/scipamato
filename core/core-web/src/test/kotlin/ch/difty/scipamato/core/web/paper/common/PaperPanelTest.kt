@@ -103,7 +103,12 @@ abstract class PaperPanelTest<T, P : PaperPanel<T>> : PanelTest<P>() where T : C
         tester.assertLabel(path + "Label", labelText)
     }
 
-    private fun assertComponentWithLabel(path: String, componentClass: Class<out Component?>, modelValue: Any, labelText: String) {
+    private fun assertComponentWithLabel(
+        path: String,
+        componentClass: Class<out Component?>,
+        modelValue: Any,
+        labelText: String
+    ) {
         tester.assertComponent(path, componentClass)
         tester.assertModelValue(path, modelValue)
         tester.assertLabel(path + "Label", labelText)

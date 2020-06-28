@@ -137,8 +137,10 @@ internal class CodeEditPageTest : BasePageTest<CodeEditPage>() {
             OptimisticLockingException("tblName", "rcd", OptimisticLockingException.Type.UPDATE)
         runSubmitTest()
         tester.assertNoInfoMessage()
-        tester.assertErrorMessages("The tblName with id 2A has been modified concurrently "
-            + "by another user. Please reload it and apply your changes once more.")
+        tester.assertErrorMessages(
+            "The tblName with id 2A has been modified concurrently " +
+                "by another user. Please reload it and apply your changes once more."
+        )
     }
 
     @Test
@@ -151,8 +153,10 @@ internal class CodeEditPageTest : BasePageTest<CodeEditPage>() {
 
     @Test
     fun submitting_withDuplicateKeyConstraintViolationException_addsErrorMsg() {
-        val msg = ("...Detail: Key (code_class_id, sort)=(2, 1) already exists.; "
-            + "nested exception is org.postgresql.util.PSQLException: ERROR: duplicate key value violates unique constraint...")
+        val msg = (
+            "...Detail: Key (code_class_id, sort)=(2, 1) already exists.; " +
+                "nested exception is org.postgresql.util.PSQLException: ERROR: duplicate key value violates unique constraint..."
+            )
         every { codeServiceMock.saveOrUpdate(any()) } throws DuplicateKeyException(msg)
         runSubmitTest()
         tester.assertNoInfoMessage()
@@ -239,7 +243,8 @@ internal class CodeEditPageTest : BasePageTest<CodeEditPage>() {
         formTester.submit("headerPanel:delete")
         tester.assertNoInfoMessage()
         tester.assertErrorMessages(
-            "The code_class with id 2A has been modified concurrently by another user. Please reload it and apply your changes once more.")
+            "The code_class with id 2A has been modified concurrently by another user. Please reload it and apply your changes once more."
+        )
         verify { codeServiceMock.delete(any(), any()) }
     }
 

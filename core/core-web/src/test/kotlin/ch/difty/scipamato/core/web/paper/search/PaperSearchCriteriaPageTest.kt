@@ -75,8 +75,10 @@ internal class PaperSearchCriteriaPageTest : BasePageTest<PaperSearchCriteriaPag
         tester.assertRenderedPage(pageClass)
         val formTester = tester.newFormTester("contentPanel:form")
         formTester.submit()
-        tester.assertErrorMessages("An unexpected error occurred when trying to save Search Order [id ]: foo",
-            "An unexpected error occurred when trying to save Search Order [id ]: foo")
+        tester.assertErrorMessages(
+            "An unexpected error occurred when trying to save Search Order [id ]: foo",
+            "An unexpected error occurred when trying to save Search Order [id ]: foo"
+        )
         tester.assertRenderedPage(pageClass)
         verify(exactly = 2) { searchOrderServiceMock.saveOrUpdateSearchCondition(searchConditionMock, SEARCH_ORDER_ID, "en_us") }
         verify(exactly = 0) { searchOrderServiceMock.findPageByFilter(any(), any()) }

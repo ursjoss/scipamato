@@ -225,7 +225,8 @@ internal class RefDataSyncJobLauncherTest {
             SyncJobResult.MessageLevel.INFO, SyncJobResult.MessageLevel.INFO,
             SyncJobResult.MessageLevel.ERROR, SyncJobResult.MessageLevel.INFO, SyncJobResult.MessageLevel.INFO,
             SyncJobResult.MessageLevel.INFO, SyncJobResult.MessageLevel.INFO, SyncJobResult.MessageLevel.INFO,
-            SyncJobResult.MessageLevel.INFO, SyncJobResult.MessageLevel.INFO)
+            SyncJobResult.MessageLevel.INFO, SyncJobResult.MessageLevel.INFO
+        )
         result.messages.map { it.message } shouldContainSame expectedMessages
     }
 

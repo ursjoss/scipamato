@@ -56,8 +56,10 @@ internal class KeywordDefinitionTest {
 
     @Test
     fun canGetTranslationsAsString_withTranslationsIncludingMainTranslation_withPartialTranslation() {
-        val kd = KeywordDefinition(2, "de", 1, kw_de, kw_en,
-            KeywordTranslation(12, "fr", null, 1))
+        val kd = KeywordDefinition(
+            2, "de", 1, kw_de, kw_en,
+            KeywordTranslation(12, "fr", null, 1)
+        )
         kd.translationsAsString shouldBeEqualTo "DE: 'stichwort2'; EN: 'keyword2'; FR: n.a."
     }
 

@@ -1051,8 +1051,10 @@ internal class StringSearchTermEvaluatorTest {
 
     @Test
     fun buildingConditionForCombinedSearchTerm_withMethodsField_() {
-        val sst = SearchTerm.newSearchTerm(1L, SearchTermType.STRING.id, 1L,
-            "methods", "foo -bar") as StringSearchTerm
+        val sst = SearchTerm.newSearchTerm(
+            1L, SearchTermType.STRING.id, 1L,
+            "methods", "foo -bar"
+        ) as StringSearchTerm
         evaluator.evaluate(sst).toString() shouldBeEqualTo
             """(
                |  (

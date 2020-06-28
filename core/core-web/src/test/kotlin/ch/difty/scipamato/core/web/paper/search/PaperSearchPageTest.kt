@@ -179,8 +179,10 @@ internal class PaperSearchPageTest : BasePageTest<PaperSearchPage>() {
         val linkPath = "searchOrderSelectorPanel:form:new"
         tester.assertComponent(linkPath, AjaxSubmitLink::class.java)
         tester.clickLink(linkPath)
-        tester.assertErrorMessages("The searchOrder with id 6 has been modified concurrently by another user. " +
-            "Please reload it and apply your changes once more.")
+        tester.assertErrorMessages(
+            "The searchOrder with id 6 has been modified concurrently by another user. " +
+                "Please reload it and apply your changes once more."
+        )
         tester.assertRenderedPage(PaperSearchPage::class.java)
 
         verify(exactly = 2) { searchOrderServiceMock.findPageByFilter(any(), any()) }

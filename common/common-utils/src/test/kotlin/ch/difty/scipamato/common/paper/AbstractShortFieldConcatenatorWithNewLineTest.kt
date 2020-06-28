@@ -39,21 +39,24 @@ internal class AbstractShortFieldConcatenatorWithNewLineTest {
 
     @Test
     fun method_withMethodNull_withExplicitLabels_returnsConcatenatedShortFields() {
-        concatenator.methodsFrom(null, newT("msd"), newT("mo"), newT("pp"), newT("ep"), newT("ea"), newT("ms"),
-            newT("mc")) shouldBeEqualTo "msdl: msd\nmol: mo\nppl: pp\nepl: ep\neal: ea\nmsl: ms\nmcl: mc"
+        concatenator.methodsFrom(
+            null, newT("msd"), newT("mo"), newT("pp"), newT("ep"), newT("ea"), newT("ms"), newT("mc")
+        ) shouldBeEqualTo "msdl: msd\nmol: mo\nppl: pp\nepl: ep\neal: ea\nmsl: ms\nmcl: mc"
     }
 
     @Test
     fun method_withMethodNullAndTupleLabelNull_withExplicitLabels_returnsConcatenatedShortFields() {
-        concatenator.methodsFrom(null, newT("msd"), newT("mo"),
-            AbstractShortFieldConcatenator.Tuple(null, "pp"), newT("ep"), newT("ea"), newT("ms"),
-            newT("mc")) shouldBeEqualTo "msdl: msd\nmol: mo\npp\nepl: ep\neal: ea\nmsl: ms\nmcl: mc"
+        concatenator.methodsFrom(
+            null, newT("msd"), newT("mo"), AbstractShortFieldConcatenator.Tuple(null, "pp"),
+            newT("ep"), newT("ea"), newT("ms"), newT("mc")
+        ) shouldBeEqualTo "msdl: msd\nmol: mo\npp\nepl: ep\neal: ea\nmsl: ms\nmcl: mc"
     }
 
     @Test
     fun method_withMethodNullAndEntireTupleNull_withExplicitLabels_returnsConcatenatedShortFields() {
-        concatenator.methodsFrom(null, newT("msd"), newT("mo"), null, newT("ep"), newT("ea"), newT("ms"),
-            newT("mc")) shouldBeEqualTo "msdl: msd\nmol: mo\nepl: ep\neal: ea\nmsl: ms\nmcl: mc"
+        concatenator.methodsFrom(
+            null, newT("msd"), newT("mo"), null, newT("ep"), newT("ea"), newT("ms"), newT("mc")
+        ) shouldBeEqualTo "msdl: msd\nmol: mo\nepl: ep\neal: ea\nmsl: ms\nmcl: mc"
     }
 
     private fun newT(f: String): AbstractShortFieldConcatenator.Tuple = AbstractShortFieldConcatenator.Tuple(f + "l", f)

@@ -67,10 +67,14 @@ internal class PaperListPageInEditModeAsUserTest : PaperListPageTest() {
         assertTopLevelMenu(++menuIndex, position, "Preferences")
         assertNestedMenu(menuIndex, subMenuIndex++, position, "Profile")
         assertNestedMenu(menuIndex, subMenuIndex, position, "Change Password")
-        assertExternalLink("navbar:container:collapse:navRightListEnclosure:navRightList:0:component",
-            "https://github.com/ursjoss/scipamato/wiki/")
-        assertExternalLink("navbar:container:collapse:navRightListEnclosure:navRightList:1:component",
-            "https://github.com/ursjoss/scipamato/blob/master/CHANGELOG.asciidoc")
+        assertExternalLink(
+            "navbar:container:collapse:navRightListEnclosure:navRightList:0:component",
+            "https://github.com/ursjoss/scipamato/wiki/"
+        )
+        assertExternalLink(
+            "navbar:container:collapse:navRightListEnclosure:navRightList:1:component",
+            "https://github.com/ursjoss/scipamato/blob/master/CHANGELOG.asciidoc"
+        )
         assertPageLinkButton(2, "Right", "Logout")
     }
 }

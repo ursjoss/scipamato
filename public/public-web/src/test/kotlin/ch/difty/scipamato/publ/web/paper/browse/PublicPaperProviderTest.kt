@@ -43,10 +43,18 @@ internal class PublicPaperProviderTest {
         WicketTester(application)
         provider = PublicPaperProvider(filterMock, 20)
         provider.setService(serviceMock)
-        papers.add(PublicPaper(1L, 1L, 1000, "authors1", "auths", "title1", "location1", "journal1", 2016, "goals1",
-            "methods1", "population1", "result1", "comment1"))
-        papers.add(PublicPaper(2L, 2L, 1002, "authors2", "auths", "title2", "location2", "journal2", 2017, "goals2",
-            "methods2", "population2", "result2", "comment2"))
+        papers.add(
+            PublicPaper(
+                1L, 1L, 1000, "authors1", "auths", "title1", "location1", "journal1", 2016, "goals1",
+                "methods1", "population1", "result1", "comment1"
+            )
+        )
+        papers.add(
+            PublicPaper(
+                2L, 2L, 1002, "authors2", "auths", "title2", "location2", "journal2", 2017, "goals2",
+                "methods2", "population2", "result2", "comment2"
+            )
+        )
         every { serviceMock.countByFilter(filterMock) } returns 2
         every { serviceMock.findPageByFilter(filterMock, any()) } returns papers
     }

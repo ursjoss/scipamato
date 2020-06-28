@@ -2,7 +2,6 @@ package ch.difty.scipamato.core.web.paper.jasper.literaturereview
 
 import ch.difty.scipamato.core.web.paper.jasper.JasperEntityTest
 import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields
-import ch.difty.scipamato.core.web.paper.jasper.literaturereview.PaperLiteratureReview
 import nl.jqno.equalsverifier.EqualsVerifier
 import nl.jqno.equalsverifier.Warning
 import org.amshove.kluent.invoking

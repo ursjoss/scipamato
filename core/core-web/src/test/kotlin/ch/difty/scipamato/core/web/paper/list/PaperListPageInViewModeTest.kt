@@ -24,10 +24,14 @@ internal class PaperListPageInViewModeTest : PaperListPageTest() {
         // Note: Only one menu is open - we're unable to see the other submenu items without clicking.
         assertTopLevelMenu(0, "Left", "Papers")
         assertNestedMenu(0, 0, "Left", "Papers")
-        assertExternalLink("navbar:container:collapse:navRightListEnclosure:navRightList:0:component",
-            "https://github.com/ursjoss/scipamato/wiki/")
-        assertExternalLink("navbar:container:collapse:navRightListEnclosure:navRightList:1:component",
-            "https://github.com/ursjoss/scipamato/blob/master/CHANGELOG.asciidoc")
+        assertExternalLink(
+            "navbar:container:collapse:navRightListEnclosure:navRightList:0:component",
+            "https://github.com/ursjoss/scipamato/wiki/"
+        )
+        assertExternalLink(
+            "navbar:container:collapse:navRightListEnclosure:navRightList:1:component",
+            "https://github.com/ursjoss/scipamato/blob/master/CHANGELOG.asciidoc"
+        )
         assertPageLinkButton(2, "Right", "Logout")
     }
 

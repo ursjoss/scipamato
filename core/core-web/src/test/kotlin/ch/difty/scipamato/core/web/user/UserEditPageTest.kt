@@ -31,10 +31,12 @@ import java.util.Optional
 @Suppress("PrivatePropertyName", "SpellCheckingInspection", "SameParameterValue")
 internal class UserEditPageTest : BasePageTest<UserEditPage>() {
 
-    private val user = User(1, "user", "first", "last", "foo@bar.baz", PW1__HASH, true,
+    private val user = User(
+        1, "user", "first", "last", "foo@bar.baz", PW1__HASH, true,
         setOf(Role.ADMIN, Role.USER)
     )
-    private val user_saved = User(1, "user", "first", "last", "foo@bar.baz", PW2__HASH, true,
+    private val user_saved = User(
+        1, "user", "first", "last", "foo@bar.baz", PW2__HASH, true,
         setOf(Role.ADMIN, Role.USER)
     )
 
@@ -169,7 +171,13 @@ internal class UserEditPageTest : BasePageTest<UserEditPage>() {
         assertVisibleFieldAndLabel(bb, modelValue, labelText, enabled, TextField::class.java)
     }
 
-    private fun assertVisibleFieldAndLabel(bb: String, modelValue: Any?, labelText: String, enabled: Boolean, clazz: Class<out FormComponent<*>?>) {
+    private fun assertVisibleFieldAndLabel(
+        bb: String,
+        modelValue: Any?,
+        labelText: String,
+        enabled: Boolean,
+        clazz: Class<out FormComponent<*>?>
+    ) {
         tester.assertLabel(bb + "Label", labelText)
         tester.assertComponent(bb, clazz)
         tester.assertModelValue(bb, modelValue)
@@ -395,8 +403,10 @@ internal class UserEditPageTest : BasePageTest<UserEditPage>() {
         formTester.setValue("password2", PASSWORD2)
         formTester.submit("submit")
         tester.assertNoInfoMessage()
-        tester.assertErrorMessages("The tblName with id 1 has been modified concurrently by another user. " +
-            "Please reload it and apply your changes once more.")
+        tester.assertErrorMessages(
+            "The tblName with id 1 has been modified concurrently by another user. " +
+                "Please reload it and apply your changes once more."
+        )
 
         verify { userServiceMock.saveOrUpdate(matchUser(null)) }
         verify { userServiceMock.findById(1) }

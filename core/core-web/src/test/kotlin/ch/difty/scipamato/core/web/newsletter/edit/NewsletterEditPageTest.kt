@@ -94,7 +94,8 @@ internal class NewsletterEditPageTest : BasePageTest<NewsletterEditPage>() {
         formTester.submit("submit")
         tester.assertNoInfoMessage()
         tester.assertErrorMessages(
-            "The newsletter with id 0 has been modified concurrently by another user. Please reload it and apply your changes once more.")
+            "The newsletter with id 0 has been modified concurrently by another user. Please reload it and apply your changes once more."
+        )
         verify { newsletterServiceMock.saveOrUpdate(any()) }
     }
 
@@ -109,7 +110,8 @@ internal class NewsletterEditPageTest : BasePageTest<NewsletterEditPage>() {
         formTester.submit("submit")
         tester.assertNoInfoMessage()
         tester.assertErrorMessages(
-            "Another newsletter is already in status WIP. You cannot save the current newsletter in the same status.")
+            "Another newsletter is already in status WIP. You cannot save the current newsletter in the same status."
+        )
         verify { newsletterServiceMock.saveOrUpdate(any()) }
     }
 

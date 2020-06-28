@@ -26,7 +26,7 @@ internal class JooqCodeServiceTest {
     fun findingCodes_delegatesToRepo() {
         every { repoMock.findCodesOfClass(ccId, languageCode) } returns codes
         service.findCodesOfClass(ccId, languageCode).map { it.code } shouldContainSame listOf("c1", "c2")
-        verify{ repoMock.findCodesOfClass(ccId, languageCode) }
+        verify { repoMock.findCodesOfClass(ccId, languageCode) }
         confirmVerified(repoMock)
     }
 }

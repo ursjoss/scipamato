@@ -253,7 +253,6 @@ internal class JooqPaperRepoTest :
             }
         }
 
-
         val papers = repo.findPageByFilter(filter, paginationContextMock)
         papers.shouldBeEmpty()
 

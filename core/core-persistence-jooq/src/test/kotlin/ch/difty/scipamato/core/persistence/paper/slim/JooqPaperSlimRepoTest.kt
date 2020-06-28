@@ -103,8 +103,10 @@ internal class JooqPaperSlimRepoTest :
     @Test
     fun findingPageBySearchOrder_delegatesToSearchOrderFinder() {
         every { searchOrderRepositoryMock.findPageBySearchOrder(searchOrderMock, pageableMock) } returns paperSlims
-        repo.findPageBySearchOrder(searchOrderMock, pageableMock) shouldContainSame listOf(paperSlimMock,
-            paperSlimMock)
+        repo.findPageBySearchOrder(searchOrderMock, pageableMock) shouldContainSame listOf(
+            paperSlimMock,
+            paperSlimMock
+        )
         verify { searchOrderRepositoryMock.findPageBySearchOrder(searchOrderMock, pageableMock) }
     }
 

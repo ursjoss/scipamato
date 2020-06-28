@@ -99,8 +99,10 @@ internal class ResultPanelInEditModeTest : ResultPanelTest() {
         every { newsletterServiceMock.canCreateNewsletterInProgress() } returns true
         paperSlim.newsletterAssociation.shouldBeNull()
         clickNewsletterLink()
-        tester.assertFeedbackMessages(ExactLevelFeedbackMessageFilter(300),
-            "There is no newsletter in status 'In Progress'.")
+        tester.assertFeedbackMessages(
+            ExactLevelFeedbackMessageFilter(300),
+            "There is no newsletter in status 'In Progress'."
+        )
     }
 
     @Test
@@ -108,7 +110,9 @@ internal class ResultPanelInEditModeTest : ResultPanelTest() {
         val ns = NewsletterAssociation(1, "1802", PublicationStatus.PUBLISHED.id, null)
         paperSlim.newsletterAssociation = ns
         clickNewsletterLink()
-        tester.assertFeedbackMessages(ExactLevelFeedbackMessageFilter(300),
-            "Newsletter 1802 has been closed and cannot be modified.")
+        tester.assertFeedbackMessages(
+            ExactLevelFeedbackMessageFilter(300),
+            "Newsletter 1802 has been closed and cannot be modified."
+        )
     }
 }

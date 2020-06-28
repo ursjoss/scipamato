@@ -6,7 +6,6 @@ import ch.difty.scipamato.core.entity.search.SearchOrder
 import org.amshove.kluent.shouldBeEmpty
 import org.amshove.kluent.shouldBeGreaterOrEqualTo
 import org.amshove.kluent.shouldBeTrue
-import org.amshove.kluent.shouldContainAll
 import org.amshove.kluent.shouldContainSame
 import org.amshove.kluent.shouldHaveSize
 import org.junit.jupiter.api.Test

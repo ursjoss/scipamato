@@ -4,5 +4,4 @@ internal class UserListPageAsUserTest : UserListPageAsViewerTest() {
 
     override val userName: String
         get() = "testuser"
-
 }

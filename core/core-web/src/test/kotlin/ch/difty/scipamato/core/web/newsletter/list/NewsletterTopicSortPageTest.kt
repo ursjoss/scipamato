@@ -78,7 +78,8 @@ internal class NewsletterTopicSortPageTest : BasePageTest<NewsletterTopicSortPag
     @Test
     fun clickSubmit_withPreviousPage_callsSave_andNavigatesToPreviousPage() {
         tester.startPage(
-            NewsletterTopicSortPage(Model.of(newsletter), LoginPage(PageParameters()).pageReference))
+            NewsletterTopicSortPage(Model.of(newsletter), LoginPage(PageParameters()).pageReference)
+        )
         tester.assertRenderedPage(pageClass)
         tester.executeAjaxEvent("form:submit", "click")
         tester.assertRenderedPage(LoginPage::class.java)
@@ -114,7 +115,8 @@ internal class NewsletterTopicSortPageTest : BasePageTest<NewsletterTopicSortPag
     @Test
     fun clickCancel_withPreviousPage_doesNotCallSave_butNavigatesToPreviousPage() {
         tester.startPage(
-            NewsletterTopicSortPage(Model.of(newsletter), LoginPage(PageParameters()).pageReference))
+            NewsletterTopicSortPage(Model.of(newsletter), LoginPage(PageParameters()).pageReference)
+        )
         tester.assertRenderedPage(pageClass)
         tester.executeAjaxEvent("form:cancel", "click")
         tester.assertRenderedPage(LoginPage::class.java)

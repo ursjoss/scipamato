@@ -21,11 +21,15 @@ import java.util.Optional
 internal class UserListPageAsAdminTest : BasePageTest<UserListPage>() {
 
     private val enabledUser =
-        User(1, "enabledUser", "first", "last", "foo@bar.baz", "pw", true,
-            setOf(Role.ADMIN, Role.USER))
+        User(
+            1, "enabledUser", "first", "last", "foo@bar.baz", "pw", true,
+            setOf(Role.ADMIN, Role.USER)
+        )
     private val disabledUser =
-        User(2, "disabledUser", "f", "l", "boo@bar.baz", "pw2", false,
-            setOf(Role.VIEWER))
+        User(
+            2, "disabledUser", "f", "l", "boo@bar.baz", "pw2", false,
+            setOf(Role.VIEWER)
+        )
 
     private val results: MutableList<User> = ArrayList()
 
@@ -74,15 +78,18 @@ internal class UserListPageAsAdminTest : BasePageTest<UserListPage>() {
     private fun assertHeaderColumns(b: String, labels: Array<String>) {
         var idx = 0
         for (label in labels) tester.assertLabel(
-            b + ":topToolbars:toolbars:2:headers:" + ++idx + ":header:orderByLink:header_body:label", label)
+            b + ":topToolbars:toolbars:2:headers:" + ++idx + ":header:orderByLink:header_body:label", label
+        )
     }
 
     private fun assertTableValuesOfRow(b: String, rowIdx: Int, colIdxAsLink: Int?, vararg rows: Array<String>) {
         var rIdx = rowIdx
         for (values in rows) {
             var colIdx = 1
-            if (colIdxAsLink != null) tester.assertComponent("$b:body:rows:$rIdx:cells:$colIdxAsLink:cell:link",
-                Link::class.java)
+            if (colIdxAsLink != null) tester.assertComponent(
+                "$b:body:rows:$rIdx:cells:$colIdxAsLink:cell:link",
+                Link::class.java
+            )
             for (value in values) tester.assertLabel(b + ":body:rows:" + rIdx + ":cells:" + colIdx + ":cell" + if (colIdxAsLink != null && colIdx++ == colIdxAsLink) ":link:label" else "", value)
             rIdx++
         }

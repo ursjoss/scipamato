@@ -1,6 +1,5 @@
 package ch.difty.scipamato.core.web.resources.jasper
 
-import ch.difty.scipamato.core.web.resources.jasper.JasperReportException
 import io.mockk.mockk
 import net.sf.jasperreports.engine.JRException
 import org.amshove.kluent.invoking

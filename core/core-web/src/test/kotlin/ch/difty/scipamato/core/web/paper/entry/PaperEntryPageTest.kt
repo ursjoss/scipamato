@@ -43,10 +43,12 @@ internal class PaperEntryPageTest : SelfUpdatingPageTest<PaperEntryPage>() {
         b += ":tabs"
         tester.assertComponent(b, BootstrapTabbedPanel::class.java)
         b += ":panel"
-        assertTabPanelFields(1, b, "goals", "population", "methods",
+        assertTabPanelFields(
+            1, b, "goals", "population", "methods",
             "populationPlace", "populationParticipants", "populationDuration",
             "exposurePollutant", "exposureAssessment", "methodStudyDesign",
-            "methodOutcome", "methodStatistics", "methodConfounders")
+            "methodOutcome", "methodStatistics", "methodConfounders"
+        )
     }
 
     @Suppress("SameParameterValue")
@@ -96,8 +98,10 @@ internal class PaperEntryPageTest : SelfUpdatingPageTest<PaperEntryPage>() {
         applyTestHackWithNestedMultiPartForms()
 
         tester.submitForm("contentPanel:form")
-        tester.assertErrorMessages("'Authors' is required.", "'Title' is required.", "'Location' is required.",
-            "'Pub. Year' is required.", "'SciPaMaTo-No.' is required.", "'Goals' is required.")
+        tester.assertErrorMessages(
+            "'Authors' is required.", "'Title' is required.", "'Location' is required.",
+            "'Pub. Year' is required.", "'SciPaMaTo-No.' is required.", "'Goals' is required."
+        )
     }
 
     // See https://issues.apache.org/jira/browse/WICKET-2790
@@ -111,8 +115,10 @@ internal class PaperEntryPageTest : SelfUpdatingPageTest<PaperEntryPage>() {
         val formTester = makeSavablePaperTester()
         formTester.submit()
 
-        tester.assertErrorMessages("An unexpected error occurred when trying to save Paper [id 0]: foo",
-            "An unexpected error occurred when trying to save Paper [id 0]: foo")
+        tester.assertErrorMessages(
+            "An unexpected error occurred when trying to save Paper [id 0]: foo",
+            "An unexpected error occurred when trying to save Paper [id 0]: foo"
+        )
 
         verify(exactly = 2) { paperServiceMock.saveOrUpdate(any()) }
     }

@@ -11,5 +11,4 @@ open class TestAuthorParserConfiguration {
     @Bean
     @Primary
     open fun authorParserFactory(): AuthorParserFactory = create(AuthorParserStrategy.PUBMED)
-
 }

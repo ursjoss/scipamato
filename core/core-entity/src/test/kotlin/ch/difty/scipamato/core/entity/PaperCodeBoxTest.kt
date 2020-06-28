@@ -122,21 +122,21 @@ internal class PaperCodeBoxTest {
         codeBox.toString() shouldBeEqualTo
             // @formatter:off
             "[" +
-                "codesOfClass1=[" +
-                "Code[code=1F,name=Code 1F,comment=<null>,internal=false,codeClass=CodeClass[id=1],sort=1," +
-                "createdBy=1,lastModifiedBy=2,created=2017-01-01T08:00:00.123," +
-                "lastModified=2017-01-02T09:00:00.456,version=3]" +
-                "]" +
-                ",codesOfClass5=[" +
-                "Code[code=5H,name=Code 5H,comment=<null>,internal=false,codeClass=CodeClass[id=5],sort=7," +
-                "createdBy=1,lastModifiedBy=2,created=2017-01-01T08:00:00.123," +
-                "lastModified=2017-01-02T09:00:00.456,version=3]" +
-                ", Code[code=5F,name=Code 5F,comment=<null>,internal=false,codeClass=CodeClass[id=5],sort=5," +
-                "createdBy=1,lastModifiedBy=2,created=2017-01-01T08:00:00.123," +
-                "lastModified=2017-01-02T09:00:00.456,version=3]" +
-                "]" +
-                "]"
-            // @formatter:on
+            "codesOfClass1=[" +
+            "Code[code=1F,name=Code 1F,comment=<null>,internal=false,codeClass=CodeClass[id=1],sort=1," +
+            "createdBy=1,lastModifiedBy=2,created=2017-01-01T08:00:00.123," +
+            "lastModified=2017-01-02T09:00:00.456,version=3]" +
+            "]" +
+            ",codesOfClass5=[" +
+            "Code[code=5H,name=Code 5H,comment=<null>,internal=false,codeClass=CodeClass[id=5],sort=7," +
+            "createdBy=1,lastModifiedBy=2,created=2017-01-01T08:00:00.123," +
+            "lastModified=2017-01-02T09:00:00.456,version=3]" +
+            ", Code[code=5F,name=Code 5F,comment=<null>,internal=false,codeClass=CodeClass[id=5],sort=5," +
+            "createdBy=1,lastModifiedBy=2,created=2017-01-01T08:00:00.123," +
+            "lastModified=2017-01-02T09:00:00.456,version=3]" +
+            "]" +
+            "]"
+        // @formatter:on
     }
 
     @Test

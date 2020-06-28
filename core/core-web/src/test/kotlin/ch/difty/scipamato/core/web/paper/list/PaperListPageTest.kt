@@ -1,7 +1,6 @@
 package ch.difty.scipamato.core.web.paper.list
 
 import ch.difty.scipamato.core.config.ApplicationCoreProperties
-import ch.difty.scipamato.core.db.tables.Paper
 import ch.difty.scipamato.core.entity.projection.PaperSlim
 import ch.difty.scipamato.core.logic.parsing.AuthorParserStrategy
 import ch.difty.scipamato.core.web.common.BasePageTest
@@ -14,7 +13,6 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarExternalLin
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable
 import io.mockk.confirmVerified
 import io.mockk.every
-import io.mockk.mockk
 import io.mockk.verify
 import org.apache.wicket.markup.html.WebMarkupContainer
 import org.apache.wicket.markup.html.form.Form
@@ -78,7 +76,7 @@ internal abstract class PaperListPageTest : BasePageTest<PaperListPage>() {
     }
 
     fun assertNestedMenu(topLevelIndex: Int, menuIndex: Int, position: String, expectedLabelText: String?) {
-        val path = "navbar:container:collapse:nav${position}ListEnclosure:nav${position}" +
+        val path = "navbar:container:collapse:nav${position}ListEnclosure:nav$position" +
             "List:$topLevelIndex:component:dropdown-menu:buttons:$menuIndex:button"
         tester.assertComponent(path, MenuBookmarkablePageLink::class.java)
         tester.assertLabel("$path:label", expectedLabelText)

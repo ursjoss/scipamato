@@ -119,8 +119,10 @@ internal class KeywordEditPageTest : BasePageTest<KeywordEditPage>() {
         runSubmitTest()
 
         tester.assertNoInfoMessage()
-        tester.assertErrorMessages("The tblName with id 1 has been modified concurrently "
-            + "by another user. Please reload it and apply your changes once more.")
+        tester.assertErrorMessages(
+            "The tblName with id 1 has been modified concurrently " +
+                "by another user. Please reload it and apply your changes once more."
+        )
     }
 
     @Test
@@ -158,7 +160,8 @@ internal class KeywordEditPageTest : BasePageTest<KeywordEditPage>() {
 
     @Test
     fun submittingDelete_withForeignKeyConstraintViolationException_addsErrorMsg() {
-        val msg = """... is still referenced from table "paper_code".; nested exception is org.postgresql.util.PSQLException..."""
+        val msg =
+            """... is still referenced from table "paper_code".; nested exception is org.postgresql.util.PSQLException..."""
         every { keywordServiceMock.delete(any(), any()) } throws DataIntegrityViolationException(msg)
         tester.startPage(KeywordEditPage(Model.of(kd), null))
 
@@ -183,8 +186,10 @@ internal class KeywordEditPageTest : BasePageTest<KeywordEditPage>() {
         verify { keywordServiceMock.delete(1, 1) }
 
         tester.assertNoInfoMessage()
-        tester.assertErrorMessages("The keyword with id 1 has been modified concurrently by another user. " +
-            "Please reload it and apply your changes once more.")
+        tester.assertErrorMessages(
+            "The keyword with id 1 has been modified concurrently by another user. " +
+                "Please reload it and apply your changes once more."
+        )
     }
 
     @Test

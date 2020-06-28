@@ -88,7 +88,9 @@ abstract class WicketTest {
 }
 
 inline fun <reified T : PaginationContext> MockKMatcherScope.matchPaginationContext(
-    offset: Int, pageSize: Int, sort: String
+    offset: Int,
+    pageSize: Int,
+    sort: String
 ): T = match(PaginationContextMatcher(offset, pageSize, sort))
 
 data class PaginationContextMatcher(

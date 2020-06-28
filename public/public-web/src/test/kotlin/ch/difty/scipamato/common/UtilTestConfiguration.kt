@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Primary
 
 @Configuration
 open class UtilTestConfiguration {
-    
+
     @Bean
     @Primary
     open fun dateTimeService(): DateTimeService {

@@ -19,8 +19,10 @@ internal open class PublicPaperDetailPageTest : BasePageTest<PublicPaperDetailPa
 
     override fun setUpHook() {
         super.setUpHook()
-        val paper = PublicPaper(1L, NUMBER, 10000, "authors", "auths", "title", "location", "journal", 2017,
-            "goals", "methods", "population", "result", "comment")
+        val paper = PublicPaper(
+            1L, NUMBER, 10000, "authors", "auths", "title", "location", "journal", 2017,
+            "goals", "methods", "population", "result", "comment"
+        )
         every { paperService.findByNumber(NUMBER) } returns Optional.of(paper)
     }
 
@@ -91,8 +93,10 @@ internal open class PublicPaperDetailPageTest : BasePageTest<PublicPaperDetailPa
 
     @Test
     fun withGoalsMissing_hideGoalsTopic() {
-        val p = PublicPaper(1L, NUMBER, 10000, "authors", "auths", "title", "location", "journal", 2017,
-            null, "methods", "population", "result", "comment")
+        val p = PublicPaper(
+            1L, NUMBER, 10000, "authors", "auths", "title", "location", "journal", 2017,
+            null, "methods", "population", "result", "comment"
+        )
         tester.startPage(PublicPaperDetailPage(Model.of(p), null))
         val b = "form"
         assertHeader(b, true)
@@ -106,8 +110,10 @@ internal open class PublicPaperDetailPageTest : BasePageTest<PublicPaperDetailPa
 
     @Test
     fun withPopulationMissing_hidePopulationTopic() {
-        val p = PublicPaper(1L, NUMBER, 10000, "authors", "auths", "title", "location", "journal", 2017,
-            "goals", "methods", null, "result", "comment")
+        val p = PublicPaper(
+            1L, NUMBER, 10000, "authors", "auths", "title", "location", "journal", 2017,
+            "goals", "methods", null, "result", "comment"
+        )
         tester.startPage(PublicPaperDetailPage(Model.of(p), null))
         val b = "form"
         assertHeader(b, true)
@@ -121,8 +127,10 @@ internal open class PublicPaperDetailPageTest : BasePageTest<PublicPaperDetailPa
 
     @Test
     fun withMethodsMissing_hideMethodsTopic() {
-        val p = PublicPaper(1L, NUMBER, 10000, "authors", "auths", "title", "location", "journal", 2017,
-            "goals", null, "population", "result", "comment")
+        val p = PublicPaper(
+            1L, NUMBER, 10000, "authors", "auths", "title", "location", "journal", 2017,
+            "goals", null, "population", "result", "comment"
+        )
         tester.startPage(PublicPaperDetailPage(Model.of(p), null))
         val b = "form"
         assertHeader(b, true)
@@ -136,8 +144,10 @@ internal open class PublicPaperDetailPageTest : BasePageTest<PublicPaperDetailPa
 
     @Test
     fun withResultMissing_hideResultTopic() {
-        val p = PublicPaper(1L, NUMBER, 10000, "authors", "auths", "title", "location", "journal", 2017,
-            "goals", "methods", "population", null, "comment")
+        val p = PublicPaper(
+            1L, NUMBER, 10000, "authors", "auths", "title", "location", "journal", 2017,
+            "goals", "methods", "population", null, "comment"
+        )
         tester.startPage(PublicPaperDetailPage(Model.of(p), null))
         val b = "form"
         assertHeader(b, true)
@@ -151,8 +161,10 @@ internal open class PublicPaperDetailPageTest : BasePageTest<PublicPaperDetailPa
 
     @Test
     fun withCommentMissing_hideCommentTopic() {
-        val p = PublicPaper(1L, NUMBER, 10000, "authors", "auths", "title", "location", "journal", 2017,
-            "goals", "methods", "population", "result", null)
+        val p = PublicPaper(
+            1L, NUMBER, 10000, "authors", "auths", "title", "location", "journal", 2017,
+            "goals", "methods", "population", "result", null
+        )
         tester.startPage(PublicPaperDetailPage(Model.of(p), null))
         val b = "form"
         assertHeader(b, true)
@@ -166,8 +178,10 @@ internal open class PublicPaperDetailPageTest : BasePageTest<PublicPaperDetailPa
 
     @Test
     fun withNullPmId_pubMedLinkIsInvisible() {
-        val p = PublicPaper(1L, NUMBER, null, "authors", "auths", "title", "location", "journal", 2017,
-            "goals", "methods", "population", "result", "comment")
+        val p = PublicPaper(
+            1L, NUMBER, null, "authors", "auths", "title", "location", "journal", 2017,
+            "goals", "methods", "population", "result", "comment"
+        )
         tester.startPage(PublicPaperDetailPage(Model.of(p), null))
         val b = "form"
         assertHeader(b, false)
@@ -185,8 +199,10 @@ internal open class PublicPaperDetailPageTest : BasePageTest<PublicPaperDetailPa
         every { itemNavigator.hasPrevious() } returns true
         every { itemNavigator.itemWithFocus } returns previousId
 
-        val p = PublicPaper(2L, NUMBER, 2, "authors", "auths", "title", "location", "journal", 2017,
-            "goals", "methods", "population", "result", "comment")
+        val p = PublicPaper(
+            2L, NUMBER, 2, "authors", "auths", "title", "location", "journal", 2017,
+            "goals", "methods", "population", "result", "comment"
+        )
         tester.startPage(PublicPaperDetailPage(Model.of(p), null))
         val formTester = tester.newFormTester("form")
         formTester.submit("previous")
@@ -204,8 +220,10 @@ internal open class PublicPaperDetailPageTest : BasePageTest<PublicPaperDetailPa
         every { itemNavigator.hasNext() } returns true
         every { itemNavigator.itemWithFocus } returns nextId
 
-        val p = PublicPaper(1L, NUMBER, 2, "authors", "auths", "title", "location", "journal", 2017,
-            "goals", "methods", "population", "result", "comment")
+        val p = PublicPaper(
+            1L, NUMBER, 2, "authors", "auths", "title", "location", "journal", 2017,
+            "goals", "methods", "population", "result", "comment"
+        )
         tester.startPage(PublicPaperDetailPage(Model.of(p), null))
         val formTester = tester.newFormTester("form")
         formTester.submit("next")
@@ -222,8 +240,10 @@ internal open class PublicPaperDetailPageTest : BasePageTest<PublicPaperDetailPa
         every { itemNavigator.hasNext() } returns true
         every { itemNavigator.itemWithFocus } returns null
 
-        val p = PublicPaper(1L, NUMBER, 2, "authors", "auths", "title", "location", "journal", 2017,
-            "goals", "methods", "population", "result", "comment")
+        val p = PublicPaper(
+            1L, NUMBER, 2, "authors", "auths", "title", "location", "journal", 2017,
+            "goals", "methods", "population", "result", "comment"
+        )
         tester.startPage(PublicPaperDetailPage(Model.of(p), null))
         val formTester = tester.newFormTester("form")
         formTester.submit("next")
@@ -237,8 +257,10 @@ internal open class PublicPaperDetailPageTest : BasePageTest<PublicPaperDetailPa
 
     @Test
     fun clickingBack_withoutCallingRef_jumpsToPublicPage() {
-        val p = PublicPaper(2L, NUMBER, 2, "authors", "auths", "title", "location", "journal", 2017,
-            "goals", "methods", "population", "result", "comment")
+        val p = PublicPaper(
+            2L, NUMBER, 2, "authors", "auths", "title", "location", "journal", 2017,
+            "goals", "methods", "population", "result", "comment"
+        )
         tester.startPage(PublicPaperDetailPage(Model.of(p), null))
         val formTester = tester.newFormTester("form")
         formTester.submit("back")

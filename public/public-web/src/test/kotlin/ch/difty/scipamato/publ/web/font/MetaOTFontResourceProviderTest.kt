@@ -43,5 +43,4 @@ internal class MetaOTFontResourceProviderTest {
         }
         verify { applicationProperties.isCommercialFontPresent }
     }
-
 }

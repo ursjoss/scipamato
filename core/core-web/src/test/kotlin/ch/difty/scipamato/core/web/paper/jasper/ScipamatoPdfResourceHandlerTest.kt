@@ -1,7 +1,6 @@
 package ch.difty.scipamato.core.web.paper.jasper
 
 import org.amshove.kluent.shouldBeEqualTo
-import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldNotBeNull
 import org.junit.jupiter.api.Test
 

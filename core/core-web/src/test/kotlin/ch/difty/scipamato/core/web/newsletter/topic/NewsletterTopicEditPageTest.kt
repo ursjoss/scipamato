@@ -78,7 +78,8 @@ internal class NewsletterTopicEditPageTest : BasePageTest<NewsletterTopicEditPag
         every { newsletterTopicServiceMock.saveOrUpdate(any()) } returns ntd
         runSubmitTest()
         tester.assertInfoMessages(
-            "Successfully saved NewsletterTopic [id 1]: DE: '1806'; EN: 'topic1'; FR: 'sujet1'.")
+            "Successfully saved NewsletterTopic [id 1]: DE: '1806'; EN: 'topic1'; FR: 'sujet1'."
+        )
         tester.assertNoErrorMessage()
     }
 
@@ -106,8 +107,10 @@ internal class NewsletterTopicEditPageTest : BasePageTest<NewsletterTopicEditPag
             OptimisticLockingException("tblName", "rcd", OptimisticLockingException.Type.UPDATE)
         runSubmitTest()
         tester.assertNoInfoMessage()
-        tester.assertErrorMessages("The tblName with id 1 has been modified concurrently "
-            + "by another user. Please reload it and apply your changes once more.")
+        tester.assertErrorMessages(
+            "The tblName with id 1 has been modified concurrently " +
+                "by another user. Please reload it and apply your changes once more."
+        )
     }
 
     @Test
@@ -125,7 +128,8 @@ internal class NewsletterTopicEditPageTest : BasePageTest<NewsletterTopicEditPag
         runSubmitTest()
         tester.assertNoInfoMessage()
         tester.assertErrorMessages(
-            "An unexpected error occurred when trying to save NewsletterTopic [id 1]: fooMsg")
+            "An unexpected error occurred when trying to save NewsletterTopic [id 1]: fooMsg"
+        )
     }
 
     @Test

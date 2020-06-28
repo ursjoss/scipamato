@@ -39,9 +39,11 @@ internal class PubmedXmlServiceTest {
                     every { abstractText } returns emptyList()
                 }
                 every { authorList } returns mockk {
-                    every { author } returns listOf(mockk {
-                        every { lastNameOrForeNameOrInitialsOrSuffixOrCollectiveName } returns emptyList()
-                    })
+                    every { author } returns listOf(
+                        mockk {
+                            every { lastNameOrForeNameOrInitialsOrSuffixOrCollectiveName } returns emptyList()
+                        }
+                    )
                 }
                 every { paginationOrELocationID } returns emptyList()
                 every { journal } returns mockk {
