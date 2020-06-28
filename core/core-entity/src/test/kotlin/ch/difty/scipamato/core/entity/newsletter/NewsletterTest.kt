@@ -39,7 +39,8 @@ internal class NewsletterTest : Jsr303ValidatedEntityTest<Newsletter>(Newsletter
         return nl
     }
 
-    override val toString = """Newsletter(issue=2018-03, issueDate=2018-03-26, publicationStatus=WIP,
+    override val toString =
+        """Newsletter(issue=2018-03, issueDate=2018-03-26, publicationStatus=WIP,
         | papersByTopic={null=[PaperSlim(number=null, firstAuthor=null, publicationYear=null, title=otherpaper)],
         |  NewsletterTopic(title=sometopic)=[PaperSlim(number=null, firstAuthor=null, publicationYear=null,
         |   title=somepaper)]})""".trimMargin()

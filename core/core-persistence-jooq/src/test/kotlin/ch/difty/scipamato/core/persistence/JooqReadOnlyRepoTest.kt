@@ -31,8 +31,13 @@ import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
-abstract class JooqReadOnlyRepoTest<R : Record, T : IdScipamatoEntity<ID>, ID :
-Number, TI : TableImpl<R>, M : RecordMapper<R, T>, F : ScipamatoFilter> {
+abstract class JooqReadOnlyRepoTest<
+    R : Record,
+    T : IdScipamatoEntity<ID>,
+    ID : Number,
+    TI : TableImpl<R>,
+    M : RecordMapper<R, T>,
+    F : ScipamatoFilter> {
 
     protected val dsl = mockk<DSLContext>()
     protected var filterConditionMapper = mockk<GenericFilterConditionMapper<F>>()

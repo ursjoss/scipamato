@@ -40,7 +40,8 @@ internal open class JooqNewsletterTopicRepoIntegrationTest {
     @Test
     fun findingNewsletterTopicDefinitions_withUnspecifiedFilter_findsAllDefinitions() {
         val ntds = repo.findPageOfNewsletterTopicDefinitions(
-            NewsletterTopicFilter(), PaginationRequest(Sort.Direction.ASC, "title"))
+            NewsletterTopicFilter(), PaginationRequest(Sort.Direction.ASC, "title")
+        )
 
         ntds shouldHaveSize 3
 
@@ -69,7 +70,8 @@ internal open class JooqNewsletterTopicRepoIntegrationTest {
     @Test
     fun findingNewsletterTopicDefinitions_withUnspecifiedFilter_sortingDescendingly_findsAllDefinitions() {
         val ntds = repo.findPageOfNewsletterTopicDefinitions(
-            NewsletterTopicFilter(), PaginationRequest(Sort.Direction.DESC, "title"))
+            NewsletterTopicFilter(), PaginationRequest(Sort.Direction.DESC, "title")
+        )
 
         ntds shouldHaveSize 3
 
@@ -80,8 +82,10 @@ internal open class JooqNewsletterTopicRepoIntegrationTest {
     @Test
     fun findingNewsletterTopicDefinitions_withFilterMatchingSingleGermanTitle_findsOne() {
         val filter = NewsletterTopicFilter().apply { titleMask = "Partikel" }
-        val ntds = repo.findPageOfNewsletterTopicDefinitions(filter,
-            PaginationRequest(Sort.Direction.ASC, "title"))
+        val ntds = repo.findPageOfNewsletterTopicDefinitions(
+            filter,
+            PaginationRequest(Sort.Direction.ASC, "title")
+        )
 
         ntds shouldHaveSize 1
 
@@ -96,8 +100,10 @@ internal open class JooqNewsletterTopicRepoIntegrationTest {
     @Test
     fun findingNewsletterTopicDefinitions_withFilterMatchingNa_findsSomeWithMissingTranslations() {
         val filter = NewsletterTopicFilter().apply { titleMask = "n.a." }
-        val ntds = repo.findPageOfNewsletterTopicDefinitions(filter,
-            PaginationRequest(Sort.Direction.ASC, "title"))
+        val ntds = repo.findPageOfNewsletterTopicDefinitions(
+            filter,
+            PaginationRequest(Sort.Direction.ASC, "title")
+        )
 
         ntds shouldHaveSize 3
 
@@ -111,8 +117,10 @@ internal open class JooqNewsletterTopicRepoIntegrationTest {
     @Test
     fun findingNewsletterTopicDefinitions_haveVersionFieldsPopulated() {
         val filter = NewsletterTopicFilter().apply { titleMask = "Partikel" }
-        val ntds = repo.findPageOfNewsletterTopicDefinitions(filter,
-            PaginationRequest(Sort.Direction.ASC, "title"))
+        val ntds = repo.findPageOfNewsletterTopicDefinitions(
+            filter,
+            PaginationRequest(Sort.Direction.ASC, "title")
+        )
 
         ntds shouldHaveSize 1
 
@@ -337,7 +345,8 @@ internal open class JooqNewsletterTopicRepoIntegrationTest {
     @Suppress("SameParameterValue")
     private fun assertSortedList(sortProperty: String, id: Int?) {
         val cds = repo.findPageOfNewsletterTopicDefinitions(
-            NewsletterTopicFilter(), PaginationRequest(0, 10, Sort.Direction.DESC, sortProperty))
+            NewsletterTopicFilter(), PaginationRequest(0, 10, Sort.Direction.DESC, sortProperty)
+        )
 
         cds shouldHaveSize 3
 

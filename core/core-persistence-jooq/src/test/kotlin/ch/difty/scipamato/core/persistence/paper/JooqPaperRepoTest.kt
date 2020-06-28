@@ -55,9 +55,11 @@ internal class JooqPaperRepoTest :
 
     override val recordVersion: TableField<PaperRecord, Int> = PAPER.VERSION
 
-    override val repo = JooqPaperRepo(dsl, mapper, sortMapper, filterConditionMapper,
+    override val repo = JooqPaperRepo(
+        dsl, mapper, sortMapper, filterConditionMapper,
         dateTimeService, insertSetStepSetter, updateSetStepSetter, searchOrderRepositoryMock,
-        applicationProperties)
+        applicationProperties
+    )
 
     override fun makeRepoSavingReturning(returning: PaperRecord): EntityRepository<Paper, Long, PaperFilter> =
         object : JooqPaperRepo(
@@ -152,8 +154,9 @@ internal class JooqPaperRepoTest :
     @Test
     fun findingBySearchOrder_delegatesToSearchOrderFinder() {
         every { searchOrderRepositoryMock.findBySearchOrder(searchOrderMock) } returns papers
-        makeRepoStubbingEnriching().findBySearchOrder(searchOrderMock, LC) shouldContainSame listOf(paperMock,
-            paperMock)
+        makeRepoStubbingEnriching().findBySearchOrder(searchOrderMock, LC) shouldContainSame listOf(
+            paperMock, paperMock
+        )
         enrichedEntities shouldContainAll listOf(paperMock, paperMock)
         verify { searchOrderRepositoryMock.findBySearchOrder(searchOrderMock) }
     }
@@ -168,8 +171,9 @@ internal class JooqPaperRepoTest :
     @Test
     fun findingPageBySearchOrder_delegatesToSearchOrderFinder() {
         every { searchOrderRepositoryMock.findPageBySearchOrder(searchOrderMock, paginationContextMock) } returns papers
-        makeRepoStubbingEnriching().findPageBySearchOrder(searchOrderMock, paginationContextMock,
-            LC) shouldContainSame listOf(paperMock, paperMock)
+        makeRepoStubbingEnriching().findPageBySearchOrder(
+            searchOrderMock, paginationContextMock, LC
+        ) shouldContainSame listOf(paperMock, paperMock)
         enrichedEntities shouldContainAll listOf(paperMock, paperMock)
         verify { searchOrderRepositoryMock.findPageBySearchOrder(searchOrderMock, paginationContextMock) }
     }

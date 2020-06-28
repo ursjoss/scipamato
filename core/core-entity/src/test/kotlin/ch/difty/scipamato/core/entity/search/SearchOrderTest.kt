@@ -336,7 +336,8 @@ internal class SearchOrderTest {
             .usingGetClass()
             .withIgnoredFields(
                 SHOW_EXCLUDED.fieldName, CREATED.fieldName, CREATOR_ID.fieldName,
-                MODIFIED.fieldName, MODIFIER_ID.fieldName)
+                MODIFIED.fieldName, MODIFIER_ID.fieldName
+            )
             .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
             .withPrefabValues(SearchCondition::class.java, SearchCondition(1L), SearchCondition(2L))
             .verify()

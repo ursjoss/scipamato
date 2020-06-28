@@ -21,7 +21,6 @@ import java.sql.ResultSet
 import java.sql.Timestamp
 import javax.sql.DataSource
 
-
 internal class PaperSyncConfigTest {
 
     private val codeAggregator = mockk<CodeAggregator>(relaxed = true) {
@@ -45,13 +44,21 @@ internal class PaperSyncConfigTest {
         every { resultFrom(any()) } returns ("myresultconcat")
     }
 
-    private val config = PaperSyncConfig(codeAggregator, jooqCore, jooqPublic, coreDataSource, jobBuilderFactory, stepBuilderFactory, dateTimeService, concatenator)
+    private val config = PaperSyncConfig(
+        codeAggregator,
+        jooqCore,
+        jooqPublic,
+        coreDataSource,
+        jobBuilderFactory,
+        stepBuilderFactory,
+        dateTimeService,
+        concatenator
+    )
 
     @Test
     fun jobName() {
         config.jobName shouldBeEqualTo "syncPaperJob"
     }
-
 
     @Test
     fun publicWriter() {
@@ -108,8 +115,10 @@ internal class PaperSyncConfigTest {
 
     @Test
     fun selectSql() {
+        /* ktlint-disable max-line-length */
         config.selectSql() shouldBeEqualTo
             """select "public"."paper"."id", "public"."paper"."number", "public"."paper"."pm_id", "public"."paper"."authors", "public"."paper"."title", "public"."paper"."location", "public"."paper"."publication_year", "public"."paper"."goals", "public"."paper"."methods", "public"."paper"."population", "public"."paper"."result", "public"."paper"."comment", "public"."paper"."version", "public"."paper"."created", "public"."paper"."last_modified", array_agg("public"."paper_code"."code") as "codes", "public"."paper"."method_study_design", "public"."paper"."method_outcome", "public"."paper"."exposure_pollutant", "public"."paper"."exposure_assessment", "public"."paper"."method_statistics", "public"."paper"."method_confounders", "public"."paper"."population_place", "public"."paper"."population_participants", "public"."paper"."population_duration", "public"."paper"."result_exposure_range", "public"."paper"."result_effect_estimate", "public"."paper"."result_measured_outcome", "public"."paper"."conclusion" from "public"."paper" join "public"."paper_code" on "public"."paper"."id" = "public"."paper_code"."paper_id" join "public"."code" on "public"."paper_code"."code" = "public"."code"."code" group by "public"."paper"."id", "public"."paper"."number", "public"."paper"."pm_id", "public"."paper"."authors", "public"."paper"."title", "public"."paper"."location", "public"."paper"."publication_year", "public"."paper"."goals", "public"."paper"."methods", "public"."paper"."population", "public"."paper"."result", "public"."paper"."comment", "public"."paper"."version", "public"."paper"."created", "public"."paper"."last_modified", "public"."paper"."method_study_design", "public"."paper"."method_outcome", "public"."paper"."exposure_pollutant", "public"."paper"."exposure_assessment", "public"."paper"."method_statistics", "public"."paper"."method_confounders", "public"."paper"."population_place", "public"."paper"."population_participants", "public"."paper"."population_duration", "public"."paper"."result_exposure_range", "public"."paper"."result_effect_estimate", "public"."paper"."result_measured_outcome", "public"."paper"."conclusion""""
+        /* ktlint-enable max-line-length */
     }
 
     @Test

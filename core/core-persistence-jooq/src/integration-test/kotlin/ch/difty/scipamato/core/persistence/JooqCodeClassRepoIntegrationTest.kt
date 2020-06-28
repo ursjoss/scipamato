@@ -58,8 +58,10 @@ internal open class JooqCodeClassRepoIntegrationTest {
 
     @Test
     fun findingCodeClassDefinitions_withUnspecifiedFilter_findsAllDefinitions() {
-        val ccds = repo.findPageOfCodeClassDefinitions(CodeClassFilter(),
-            PaginationRequest(0, 8, Sort.Direction.ASC, "name"))
+        val ccds = repo.findPageOfCodeClassDefinitions(
+            CodeClassFilter(),
+            PaginationRequest(0, 8, Sort.Direction.ASC, "name")
+        )
 
         ccds shouldHaveSize CODE_CLASS_COUNT
 
@@ -78,8 +80,10 @@ internal open class JooqCodeClassRepoIntegrationTest {
 
     @Test
     fun findingCodeClassDefinitions_sortingByUndefinedField_doesNotSort() {
-        val ccds = repo.findPageOfCodeClassDefinitions(CodeClassFilter(),
-            PaginationRequest(0, 8, Sort.Direction.ASC, "foobar"))
+        val ccds = repo.findPageOfCodeClassDefinitions(
+            CodeClassFilter(),
+            PaginationRequest(0, 8, Sort.Direction.ASC, "foobar")
+        )
 
         ccds shouldHaveSize CODE_CLASS_COUNT
         ccds[0].name shouldBeEqualTo "Schadstoffe"
@@ -90,8 +94,10 @@ internal open class JooqCodeClassRepoIntegrationTest {
     fun findingCodeClassDefinitions_withUnspecifiedFilter_withReverseSortByTranslations() {
         val filter = CodeClassFilter()
         filter.descriptionMask = "en"
-        val ccds = repo.findPageOfCodeClassDefinitions(filter,
-            PaginationRequest(0, 8, Sort.Direction.DESC, "translationsAsString"))
+        val ccds = repo.findPageOfCodeClassDefinitions(
+            filter,
+            PaginationRequest(0, 8, Sort.Direction.DESC, "translationsAsString")
+        )
 
         ccds shouldHaveSize 3
 
@@ -102,8 +108,10 @@ internal open class JooqCodeClassRepoIntegrationTest {
     fun findingCodeClassDefinitions_withFilterMatchingSingleGermanName_findsOne() {
         val filter = CodeClassFilter()
         filter.nameMask = "Zeitdauer"
-        val ccds = repo.findPageOfCodeClassDefinitions(filter,
-            PaginationRequest(Sort.Direction.ASC, "name"))
+        val ccds = repo.findPageOfCodeClassDefinitions(
+            filter,
+            PaginationRequest(Sort.Direction.ASC, "name")
+        )
 
         ccds shouldHaveSize 1
 
@@ -118,8 +126,10 @@ internal open class JooqCodeClassRepoIntegrationTest {
     fun findingCodeClassDefinitions_haveVersionFieldsPopulated() {
         val filter = CodeClassFilter()
         filter.nameMask = "Zeitdauer"
-        val ccds = repo.findPageOfCodeClassDefinitions(filter,
-            PaginationRequest(Sort.Direction.DESC, "name"))
+        val ccds = repo.findPageOfCodeClassDefinitions(
+            filter,
+            PaginationRequest(Sort.Direction.DESC, "name")
+        )
 
         ccds shouldHaveSize 1
 

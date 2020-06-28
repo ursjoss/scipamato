@@ -187,7 +187,8 @@ internal class PubmedXmlServiceTest {
     @Test
     fun gettingPubmedArticleWithPmid_withParsableHtmlError400_hasHttpStatusPopulated() {
         val pmId = 25395026
-        feignExceptionFixture(400,
+        feignExceptionFixture(
+            400,
             """status 400 reading PubMed#articleWithId(String,String); content:
             |{"error":"API key invalid","api-key":"xxx","type":"invalid","status":"unknown"}""".trimMargin()
         )

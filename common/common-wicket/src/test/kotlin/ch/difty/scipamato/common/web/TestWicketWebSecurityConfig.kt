@@ -47,7 +47,8 @@ open class TestWicketWebSecurityConfig : WebSecurityConfigurerAdapter() {
     class TestUserDetailsService : UserDetailsService {
 
         private val users = mapOf(
-            ADMIN to User(username = ADMIN, password = PASSWORD,
+            ADMIN to User(
+                username = ADMIN, password = PASSWORD,
                 roles = listOf(Role("ROLE_ADMIN"), Role("ROLE_USER"))
             ),
             USER to User(username = USER, password = PASSWORD, roles = listOf(Role("ROLE_USER"))),

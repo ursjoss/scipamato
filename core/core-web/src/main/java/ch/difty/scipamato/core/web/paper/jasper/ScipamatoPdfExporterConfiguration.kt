@@ -10,8 +10,8 @@ import net.sf.jasperreports.export.SimplePdfExporterConfiguration
  *
  * @author u.joss
  */
-class ScipamatoPdfExporterConfiguration private constructor(builder: Builder)
-    : SimplePdfExporterConfiguration(), ClusterablePdfExporterConfiguration {
+class ScipamatoPdfExporterConfiguration private constructor(builder: Builder) :
+    SimplePdfExporterConfiguration(), ClusterablePdfExporterConfiguration {
 
     private fun makeTitle(builder: Builder): String {
         val sb = StringBuilder()

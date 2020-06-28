@@ -10,8 +10,8 @@ import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.Test
 
-internal class NewsletterFilterConditionMapperTest
-    : FilterConditionMapperTest<NewsletterRecord, Newsletter, NewsletterFilter>() {
+internal class NewsletterFilterConditionMapperTest :
+    FilterConditionMapperTest<NewsletterRecord, Newsletter, NewsletterFilter>() {
 
     override val mapper = NewsletterFilterConditionMapper()
     override val filter = NewsletterFilter()

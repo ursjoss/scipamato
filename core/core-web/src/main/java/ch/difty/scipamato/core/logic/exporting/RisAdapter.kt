@@ -128,10 +128,13 @@ sealed class JRisAdapter(
         private const val AUTHOR_DELIM = ","
         private const val AUTHOR_SUFFIX = "."
 
-        private const val RE_W = """\w\u00C0-\u024f"""
-        private const val RW_WW = """[$RE_W-']+"""
+        private const val RE_W =
+            """\w\u00C0-\u024f"""
+        private const val RW_WW =
+            """[$RE_W-']+"""
 
-        private val authorRegex = """^((?:$RW_WW ?)+) ([A-Z]+)(?: (Sr))?$""".toRegex()
+        private val authorRegex =
+            """^((?:$RW_WW ?)+) ([A-Z]+)(?: (Sr))?$""".toRegex()
         private val locationRegex =
             """^([^.]+)\. \d+; (\d+(?:-\d+)?)(?: \(((?:[\d-])+)\))?: (\d+)?(?:-(\d+))?(?:\.? ?e\d+)?\.$""".toRegex()
     }

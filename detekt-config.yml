@@ -1,6 +1,6 @@
 style:
   MaxLineLength:
-    maxLineLength: 150
+    maxLineLength: 120
 
 complexity:
   LongParameterList:

@@ -30,7 +30,8 @@ import java.time.LocalDateTime
 internal class PaperTest : Jsr303ValidatedEntityTest<Paper>(Paper::class.java) {
 
     override val toString: String
-        get() = """Paper[number=2,doi=10.1093/aje/kwu275,pmId=1000
+        get() =
+            """Paper[number=2,doi=10.1093/aje/kwu275,pmId=1000
                 |,authors=Turner MC, Cohen A, Jerret M, Gapstur SM, Driver WR, Pope CA 3rd, Krewsky D, Beckermann BS, Samet JM.
                 |,firstAuthor=Turner MC,firstAuthorOverridden=false
                 |,title=Title,location=foo,publicationYear=2016,goals=foo,population=<null>,populationPlace=<null>

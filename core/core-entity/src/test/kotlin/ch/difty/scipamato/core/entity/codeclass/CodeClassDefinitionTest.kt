@@ -45,8 +45,10 @@ internal class CodeClassDefinitionTest {
 
     @Test
     fun canGetTranslationsAsString_withTranslationsIncludingMainTranslation_withPartialTranslation() {
-        val code = CodeClassDefinition(1, "de", 1, cc_de, cc_en,
-            CodeClassTranslation(12, "fr", null, "remarc", 1))
+        val code = CodeClassDefinition(
+            1, "de", 1, cc_de, cc_en,
+            CodeClassTranslation(12, "fr", null, "remarc", 1)
+        )
         code.translationsAsString shouldBeEqualTo "DE: 'codede2'; EN: 'codeen2'; FR: n.a."
     }
 

@@ -38,9 +38,11 @@ internal class RefDataSyncJobLauncherTest {
     private val syncNewStudyTopicJob = mockk<Job>()
     private val syncKeywordJob = mockk<Job>()
 
-    private var launcher = RefDataSyncJobLauncher(jobLauncher, syncLanguageJob, syncNewStudyPageLinkJob,
+    private var launcher = RefDataSyncJobLauncher(
+        jobLauncher, syncLanguageJob, syncNewStudyPageLinkJob,
         syncCodeClassJob, syncCodeJob, syncPaperJob, syncNewsletterJob, syncNewsletterTopicJob, syncNewStudyJob,
-        syncNewStudyTopicJob, syncKeywordJob, warner)
+        syncNewStudyTopicJob, syncKeywordJob, warner
+    )
 
     private var jobMap = jobsPerTopic()
 
@@ -63,7 +65,8 @@ internal class RefDataSyncJobLauncherTest {
             "newsletterTopics" to syncNewsletterTopicJob,
             "newStudyTopics" to syncNewStudyTopicJob,
             "newStudies" to syncNewStudyJob,
-            "keywords" to syncKeywordJob)
+            "keywords" to syncKeywordJob
+        )
     }
 
     @Test

@@ -130,8 +130,10 @@ internal open class JooqPaperRepoIntegrationTest {
             .where(CodeClass.CODE_CLASS.ID.eq(cr.codeClassId))
             .fetchOne()
         val codeClass = ch.difty.scipamato.core.entity.CodeClass(ccr.id, "", "")
-        val code = ch.difty.scipamato.core.entity.Code(cr.code, "", "", true,
-            codeClass.id!!, codeClass.name, codeClass.description, cr.sort, null, null, null, null, null)
+        val code = ch.difty.scipamato.core.entity.Code(
+            cr.code, "", "", true,
+            codeClass.id!!, codeClass.name, codeClass.description, cr.sort, null, null, null, null, null
+        )
         paper.addCode(code)
 
         repo.update(paper) ?: fail { "Unable to add paper" }
@@ -511,7 +513,7 @@ internal open class JooqPaperRepoIntegrationTest {
      */
     @Test
     fun testDeclarativeTransaction() {
-        var rollback = false
+        var rollback: Boolean
         val paper = repo.findById(1L) ?: fail { "Unable to find paper" }
         try {
             paper.number = null
@@ -680,6 +682,7 @@ internal open class JooqPaperRepoIntegrationTest {
                 ",resultExposureRange=,resultEffectEstimate=,resultMeasuredOutcome=,conclusion=<null>," +
                 "comment=Kommentar von Panagiotou AO, Wacholder S: How Big Is That Interaction (in My " +
                 "Community)-and I. Which Direction? Am. J. Epidemiol. 2014 180: 1150-1158." +
-                ",intern=,originalAbstract=<null>,mainCodeOfCodeclass1=1F,newsletterLink=<null>,attachments=[]")
+                ",intern=,originalAbstract=<null>,mainCodeOfCodeclass1=1F,newsletterLink=<null>,attachments=[]"
+            )
     }
 }

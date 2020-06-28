@@ -99,7 +99,12 @@ internal class JooqNewsletterRepoTest : JooqEntityRepoTest<NewsletterRecord, New
             updateSetStepSetter,
             applicationProperties
         ) {
-            override fun tryInserting(newsletterId: Int, paperId: Long, newsletterTopicId: Int?, ts: Timestamp?): Int = 0
+            override fun tryInserting(
+                newsletterId: Int,
+                paperId: Long,
+                newsletterTopicId: Int?,
+                ts: Timestamp?
+            ): Int = 0
         }
         repo.mergePaperIntoNewsletter(1, 2L, 3, "en").isPresent.shouldBeFalse()
     }

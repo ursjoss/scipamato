@@ -18,8 +18,7 @@ internal class StudyDesignCodeTest {
 
     @Test
     fun assertIds() {
-        StudyDesignCode.values().map { it.id } shouldContainAll listOf(1.toShort(), 2.toShort(), 3.toShort()
-        )
+        StudyDesignCode.values().map { it.id } shouldContainAll listOf(1.toShort(), 2.toShort(), 3.toShort())
     }
 
     @Test

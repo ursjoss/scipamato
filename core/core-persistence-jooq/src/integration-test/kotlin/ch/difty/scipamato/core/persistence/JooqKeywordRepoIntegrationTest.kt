@@ -37,8 +37,10 @@ internal open class JooqKeywordRepoIntegrationTest {
 
     @Test
     fun findingKeywordDefinitions_withUnspecifiedFilter_findsAllDefinitions() {
-        val kds = repo.findPageOfKeywordDefinitions(KeywordFilter(),
-            PaginationRequest(Sort.Direction.ASC, "name"))
+        val kds = repo.findPageOfKeywordDefinitions(
+            KeywordFilter(),
+            PaginationRequest(Sort.Direction.ASC, "name")
+        )
 
         kds shouldHaveSize 3
 
@@ -71,8 +73,10 @@ internal open class JooqKeywordRepoIntegrationTest {
     fun findingKeywordDefinitions_withFilterMatchingSingleGermanTitle_findsOne() {
         val filter = KeywordFilter()
         filter.nameMask = "Allergie (not Atopie)"
-        val kds = repo.findPageOfKeywordDefinitions(filter,
-            PaginationRequest(Sort.Direction.ASC, "name"))
+        val kds = repo.findPageOfKeywordDefinitions(
+            filter,
+            PaginationRequest(Sort.Direction.ASC, "name")
+        )
 
         kds shouldHaveSize 1
 
@@ -89,8 +93,10 @@ internal open class JooqKeywordRepoIntegrationTest {
     fun findingKeywordDefinitions_haveVersionFieldsPopulated() {
         val filter = KeywordFilter()
         filter.nameMask = "Allergie"
-        val kds = repo.findPageOfKeywordDefinitions(filter,
-            PaginationRequest(Sort.Direction.ASC, "name"))
+        val kds = repo.findPageOfKeywordDefinitions(
+            filter,
+            PaginationRequest(Sort.Direction.ASC, "name")
+        )
 
         kds shouldHaveSize 1
 
@@ -110,8 +116,10 @@ internal open class JooqKeywordRepoIntegrationTest {
     fun findingKeywordDefinitions_withFilterMatchingSeveral() {
         val filter = KeywordFilter()
         filter.nameMask = "er"
-        val kds = repo.findPageOfKeywordDefinitions(filter,
-            PaginationRequest(Sort.Direction.ASC, "name"))
+        val kds = repo.findPageOfKeywordDefinitions(
+            filter,
+            PaginationRequest(Sort.Direction.ASC, "name")
+        )
 
         kds shouldHaveSize 2
 
@@ -298,8 +306,10 @@ internal open class JooqKeywordRepoIntegrationTest {
     }
 
     private fun assertSortedList(sortProperty: String, id: Int?) {
-        val cds = repo.findPageOfKeywordDefinitions(KeywordFilter(),
-            PaginationRequest(0, 10, Sort.Direction.DESC, sortProperty))
+        val cds = repo.findPageOfKeywordDefinitions(
+            KeywordFilter(),
+            PaginationRequest(0, 10, Sort.Direction.DESC, sortProperty)
+        )
 
         cds shouldHaveSize 3
 

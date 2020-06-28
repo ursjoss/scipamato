@@ -45,8 +45,10 @@ internal class JooqNewStudyTopicServiceTest {
     @Test
     fun findingArchivedNewsletters_delegatesToRepo() {
         every { repoMock.findArchivedNewsletters(14, "de") } returns
-            listOf(Newsletter(2, "2018/06", LocalDate.of(2018, 6, 10)),
-                Newsletter(1, "2018/04", LocalDate.of(2018, 4, 10)))
+            listOf(
+                Newsletter(2, "2018/06", LocalDate.of(2018, 6, 10)),
+                Newsletter(1, "2018/04", LocalDate.of(2018, 4, 10))
+            )
 
         service.findArchivedNewsletters(14, "de") shouldHaveSize 2
 

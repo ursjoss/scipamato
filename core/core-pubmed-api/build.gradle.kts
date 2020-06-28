@@ -31,7 +31,6 @@ dependencies {
     jaxb(Lib.jaxb("xjc"))
 }
 
-
 /**
  * Currently this task executes automatically and writes into core/core-pubmed-api/build/generated-sources/jaxb.
  * TODO configure this task to not run unless triggered explicitly with gradlew :core-pubmed-api:jaxbJavaGenPubmed

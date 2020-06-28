@@ -26,7 +26,8 @@ fun <T : Enum<T>> String.asProperty(values: Array<T>, defaultValue: T, propertyK
             }
         }
     }
-    val msg = """{} is not properly defined. Current value: '{}' - now using {}
+    val msg =
+        """{} is not properly defined. Current value: '{}' - now using {}
         | - specify one of {} in your property configuration (e.g. application.properties).""".trimMargin()
     log.warn(msg, propertyKey, this, defaultValue, values)
     return defaultValue

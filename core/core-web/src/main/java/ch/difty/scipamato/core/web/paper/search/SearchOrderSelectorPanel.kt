@@ -90,7 +90,8 @@ class SearchOrderSelectorPanel internal constructor(
         val choices = SearchOrderModel(activeUser.id!!, SEARCH_ORDER_MAX)
         val choiceRenderer: IChoiceRenderer<SearchOrder?> = ChoiceRenderer(
             CoreEntity.CoreEntityFields.DISPLAY_VALUE.fieldName,
-            IdScipamatoEntity.IdScipamatoEntityFields.ID.fieldName)
+            IdScipamatoEntity.IdScipamatoEntityFields.ID.fieldName
+        )
         val noneSelectedModel = StringResourceModel("$id.noneSelected", this, null)
         val config = BootstrapSelectConfig()
             .withNoneSelectedText(noneSelectedModel.getObject())
@@ -159,22 +160,24 @@ class SearchOrderSelectorPanel internal constructor(
     }
 
     private fun makeAndQueueNewButton(id: String) {
-        queue(object : AjaxSubmitLink(id, form) {
-            override fun onSubmit(target: AjaxRequestTarget) {
-                super.onSubmit(target)
-                target.apply {
-                    add(name)
-                    add(global)
-                    add(showExcluded)
-                    add(showExcludedLabel)
+        queue(
+            object : AjaxSubmitLink(id, form) {
+                override fun onSubmit(target: AjaxRequestTarget) {
+                    super.onSubmit(target)
+                    target.apply {
+                        add(name)
+                        add(global)
+                        add(showExcluded)
+                        add(showExcludedLabel)
+                    }
+                    send(page, Broadcast.BREADTH, SearchOrderChangeEvent(target).requestingNewSearchOrder())
                 }
-                send(page, Broadcast.BREADTH, SearchOrderChangeEvent(target).requestingNewSearchOrder())
+            }.apply {
+                add(ButtonBehavior())
+                body = StringResourceModel("button.new.label")
+                defaultFormProcessing = false
             }
-        }.apply {
-            add(ButtonBehavior())
-            body = StringResourceModel("button.new.label")
-            defaultFormProcessing = false
-        })
+        )
     }
 
     private fun saveOrUpdate() {
@@ -200,26 +203,28 @@ class SearchOrderSelectorPanel internal constructor(
         isModelSelected && modelObject!!.excludedPaperIds.isNotEmpty()
 
     private fun makeAndQueueDeleteButton(id: String) {
-        queue(object : AjaxSubmitLink(id, form) {
-            override fun onConfigure() {
-                super.onConfigure()
-                isEnabled = isModelSelected && isUserEntitled
-            }
-
-            override fun onSubmit(target: AjaxRequestTarget) {
-                super.onSubmit(target)
-                modelObject?.let {
-                    searchOrderService.remove(it)
-                    setResponsePage(PaperSearchPage(PageParameters()))
+        queue(
+            object : AjaxSubmitLink(id, form) {
+                override fun onConfigure() {
+                    super.onConfigure()
+                    isEnabled = isModelSelected && isUserEntitled
                 }
+
+                override fun onSubmit(target: AjaxRequestTarget) {
+                    super.onSubmit(target)
+                    modelObject?.let {
+                        searchOrderService.remove(it)
+                        setResponsePage(PaperSearchPage(PageParameters()))
+                    }
+                }
+            }.apply {
+                add(ButtonBehavior())
+                body = StringResourceModel("button.delete.label")
+                defaultFormProcessing = false
+                add(ConfirmationBehavior())
+                outputMarkupId = true
             }
-        }.apply {
-            add(ButtonBehavior())
-            body = StringResourceModel("button.delete.label")
-            defaultFormProcessing = false
-            add(ConfirmationBehavior())
-            outputMarkupId = true
-        })
+        )
     }
 
     private fun makeAndQueueShowExcludedCheckBox(id: String) {

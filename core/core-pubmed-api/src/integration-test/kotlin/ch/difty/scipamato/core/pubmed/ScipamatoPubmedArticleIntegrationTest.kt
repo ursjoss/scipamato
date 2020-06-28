@@ -229,8 +229,9 @@ internal class ScipamatoPubmedArticleIntegrationTest : PubmedIntegrationTest() {
             val authorNames = authorList.author
                 .flatMap { it.lastNameOrForeNameOrInitialsOrSuffixOrCollectiveName }
                 .filterIsInstance<LastName>().map { it.getvalue() }
-            authorNames shouldContainSame listOf("Turner", "Cohen", "Jerrett", "Gapstur", "Diver", "Pope", "Krewski",
-                "Beckerman", "Samet")
+            authorNames shouldContainSame listOf(
+                "Turner", "Cohen", "Jerrett", "Gapstur", "Diver", "Pope", "Krewski", "Beckerman", "Samet"
+            )
 
             article.articleDate shouldHaveSize 1
             val articleDate = article.articleDate[0]

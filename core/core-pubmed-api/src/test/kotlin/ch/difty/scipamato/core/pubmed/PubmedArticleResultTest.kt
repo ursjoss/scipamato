@@ -57,8 +57,10 @@ internal class PubmedArticleResultTest {
     fun withNoFacade_withStatus400_witValidMessage_messageIsHttpStatusPlusRawMessage() {
         val status = HttpStatus.BAD_REQUEST
         val msg = "status 400 reading PubMed#articleWithId(String,String); content:\nbar"
-        assertPar(PubmedArticleResult(null, status, msg), null,
-            "Status 400 BAD_REQUEST: status 400 reading PubMed#articleWithId(String,String); content:\nbar")
+        assertPar(
+            PubmedArticleResult(null, status, msg), null,
+            "Status 400 BAD_REQUEST: status 400 reading PubMed#articleWithId(String,String); content:\nbar"
+        )
     }
 
     @Test
@@ -169,8 +171,10 @@ internal class PubmedArticleResultTest {
                     |</body>
                     |</html>""".trimMargin()
             )
-        assertPar(PubmedArticleResult(null, status, msg), null,
-            "Status 502 BAD_GATEWAY: Error reading from remote server")
+        assertPar(
+            PubmedArticleResult(null, status, msg), null,
+            "Status 502 BAD_GATEWAY: Error reading from remote server"
+        )
     }
 
     @Test
@@ -197,7 +201,8 @@ internal class PubmedArticleResultTest {
                 |</body>
                 |</html>""".trimMargin()
             )
-        assertPar(PubmedArticleResult(null, status, msg), null,
+        assertPar(
+            PubmedArticleResult(null, status, msg), null,
             """Status 502 BAD_GATEWAY: status 502 reading PubMed#articleWithId(String,String); content:
             |<?xml version="1.0" encoding="UTF-8"?>
             |<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"

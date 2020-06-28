@@ -1,7 +1,6 @@
 package ch.difty.scipamato.common.web
 
 import org.amshove.kluent.shouldBeEqualTo
-
 import org.junit.jupiter.api.Test
 
 internal class WicketUtilsTest {

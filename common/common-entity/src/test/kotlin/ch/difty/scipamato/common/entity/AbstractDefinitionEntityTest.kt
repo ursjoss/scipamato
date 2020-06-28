@@ -16,9 +16,23 @@ class AbstractDefinitionEntityTest {
     private var dt_en = TestDefinitionTranslation(2, "en", "english", 20)
     private var dt_fr = TestDefinitionTranslation(3, "fr", "francais", 30)
 
-    private val tde = TestDefinitionEntity("de", "mainName", 11, arrayOf(dt_de, dt_en, dt_fr, dt_de2))
-    private val tde_wo_transl = TestDefinitionEntity("de", "some", 0, arrayOf())
-    private val tde_wo_transl_versionNull = TestDefinitionEntity("de", "some", translations = arrayOf())
+    private val tde = TestDefinitionEntity(
+        mainLanguageCode = "de",
+        mainName = "mainName",
+        version = 11,
+        translations = arrayOf(dt_de, dt_en, dt_fr, dt_de2)
+    )
+    private val tde_wo_transl = TestDefinitionEntity(
+        mainLanguageCode = "de",
+        mainName = "some",
+        version = 0,
+        translations = arrayOf()
+    )
+    private val tde_wo_transl_versionNull = TestDefinitionEntity(
+        mainLanguageCode = "de",
+        mainName = "some",
+        translations = arrayOf()
+    )
 
     private inner class TestDefinitionEntity internal constructor(
         mainLanguageCode: String,
@@ -33,7 +47,11 @@ class AbstractDefinitionEntityTest {
         mainLanguageCode: String,
         mainName: String,
         translations: Array<AbstractDefinitionTranslation>
-    ) : AbstractDefinitionEntity<DefinitionTranslation, String>(mainLanguageCode, mainName, translationArray = translations) {
+    ) : AbstractDefinitionEntity<DefinitionTranslation, String>(
+        mainLanguageCode,
+        mainName,
+        translationArray = translations
+    ) {
         override val nullSafeId: String? get() = "foo"
     }
 
@@ -214,7 +232,8 @@ class AbstractDefinitionEntityTest {
         AbstractDefinitionTranslation.DefinitionTranslationFields.values() shouldContainSame listOf(
             AbstractDefinitionTranslation.DefinitionTranslationFields.ID,
             AbstractDefinitionTranslation.DefinitionTranslationFields.LANG_CODE,
-            AbstractDefinitionTranslation.DefinitionTranslationFields.NAME)
+            AbstractDefinitionTranslation.DefinitionTranslationFields.NAME
+        )
         AbstractDefinitionTranslation.DefinitionTranslationFields.ID.fieldName shouldBeEqualTo "id"
         AbstractDefinitionTranslation.DefinitionTranslationFields.LANG_CODE.fieldName shouldBeEqualTo "langCode"
         AbstractDefinitionTranslation.DefinitionTranslationFields.NAME.fieldName shouldBeEqualTo "name"
@@ -226,8 +245,10 @@ class AbstractDefinitionEntityTest {
             .forClass(AbstractDefinitionEntity::class.java)
             .withRedefinedSuperclass()
             .usingGetClass()
-            .withIgnoredFields(ScipamatoEntity.ScipamatoEntityFields.CREATED.fieldName,
-                ScipamatoEntity.ScipamatoEntityFields.MODIFIED.fieldName)
+            .withIgnoredFields(
+                ScipamatoEntity.ScipamatoEntityFields.CREATED.fieldName,
+                ScipamatoEntity.ScipamatoEntityFields.MODIFIED.fieldName
+            )
             .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
             .verify()
     }
@@ -251,7 +272,6 @@ class AbstractDefinitionEntityTest {
         ).version shouldBeEqualTo 0
     }
 
-
     @Test
     fun testDefinitionTranslation_withNullVersion_hasVersionZero() {
         TestDefinitionTranslation(
@@ -270,5 +290,4 @@ class AbstractDefinitionEntityTest {
             name = "deutsch3"
         ).version shouldBeEqualTo 0
     }
-
 }

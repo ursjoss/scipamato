@@ -58,33 +58,37 @@ internal class JooqSearchOrderRepoTest :
         applicationProperties
     )
 
-    override fun makeRepoFindingEntityById(entity: SearchOrder):
-        EntityRepository<SearchOrder, Long, SearchOrderFilter> = object : JooqSearchOrderRepo(
-        dsl,
-        mapper,
-        sortMapper,
-        filterConditionMapper,
-        dateTimeService,
-        insertSetStepSetter,
-        updateSetStepSetter,
-        applicationProperties
-    ) {
-        override fun findById(id: Long, version: Int): SearchOrder = entity
-    }
+    override fun makeRepoFindingEntityById(
+        entity: SearchOrder
+    ): EntityRepository<SearchOrder, Long, SearchOrderFilter> =
+        object : JooqSearchOrderRepo(
+            dsl,
+            mapper,
+            sortMapper,
+            filterConditionMapper,
+            dateTimeService,
+            insertSetStepSetter,
+            updateSetStepSetter,
+            applicationProperties
+        ) {
+            override fun findById(id: Long, version: Int): SearchOrder = entity
+        }
 
-    override fun makeRepoSavingReturning(returning: SearchOrderRecord):
-        EntityRepository<SearchOrder, Long, SearchOrderFilter> = object : JooqSearchOrderRepo(
-        dsl,
-        mapper,
-        sortMapper,
-        filterConditionMapper,
-        dateTimeService,
-        insertSetStepSetter,
-        updateSetStepSetter,
-        applicationProperties
-    ) {
-        override fun doSave(entity: SearchOrder, languageCode: String): SearchOrderRecord = returning
-    }
+    override fun makeRepoSavingReturning(
+        returning: SearchOrderRecord
+    ): EntityRepository<SearchOrder, Long, SearchOrderFilter> =
+        object : JooqSearchOrderRepo(
+            dsl,
+            mapper,
+            sortMapper,
+            filterConditionMapper,
+            dateTimeService,
+            insertSetStepSetter,
+            updateSetStepSetter,
+            applicationProperties
+        ) {
+            override fun doSave(entity: SearchOrder, languageCode: String): SearchOrderRecord = returning
+        }
 
     override fun expectEntityIdsWithValues() {
         every { unpersistedEntity.id } returns SAMPLE_ID

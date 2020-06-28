@@ -60,8 +60,9 @@ internal class PublicPaperTest : PublicEntityTest<PublicPaper>() {
 
     @Test
     fun assertEnumFields() {
-        PublicPaper.PublicPaperFields.values().map { it.fieldName } shouldContainAll
-            listOf("id", "number", "pmId", "authors", "authorsAbbreviated", "title", "location", "journal",
-                "publicationYear", "goals", "methods", "population", "result", "comment")
+        PublicPaper.PublicPaperFields.values().map { it.fieldName } shouldContainAll listOf(
+            "id", "number", "pmId", "authors", "authorsAbbreviated", "title", "location", "journal",
+            "publicationYear", "goals", "methods", "population", "result", "comment"
+        )
     }
 }

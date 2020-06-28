@@ -68,7 +68,8 @@ tasks {
     val processResources by existing {
         val resourcesDir = sourceSets.main.get().output.resourcesDir
         resourcesDir?.mkdirs()
-        val fileContent = """
+        val fileContent =
+            """
                 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
                 <configuration>
                     <jdbc>

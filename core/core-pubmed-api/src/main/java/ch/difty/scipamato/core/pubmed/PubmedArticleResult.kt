@@ -2,8 +2,10 @@ package ch.difty.scipamato.core.pubmed
 
 import org.springframework.http.HttpStatus
 
-private val errorRegex = """.+\{"error":"([^"]*)",.+}""".toRegex(RegexOption.DOT_MATCHES_ALL)
-private val reasonRegex = """.+Reason: <strong>([^<]+)</strong>+.+""".toRegex(RegexOption.DOT_MATCHES_ALL)
+private val errorRegex =
+    """.+\{"error":"([^"]*)",.+}""".toRegex(RegexOption.DOT_MATCHES_ALL)
+private val reasonRegex =
+    """.+Reason: <strong>([^<]+)</strong>+.+""".toRegex(RegexOption.DOT_MATCHES_ALL)
 
 /**
  * Data Class providing the [PubmedArticleFacade] or an error specific message
