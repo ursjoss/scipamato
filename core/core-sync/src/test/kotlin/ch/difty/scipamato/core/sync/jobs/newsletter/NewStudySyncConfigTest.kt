@@ -28,7 +28,14 @@ internal class NewStudySyncConfigTest {
     private val stepBuilderFactory = mockk<StepBuilderFactory>()
     private val dateTimeService = FrozenDateTimeService()
 
-    private val config = NewStudySyncConfig(jooqCore, jooqPublic, coreDataSource, jobBuilderFactory, stepBuilderFactory, dateTimeService)
+    private val config = NewStudySyncConfig(
+        jooqCore,
+        jooqPublic,
+        coreDataSource,
+        jobBuilderFactory,
+        stepBuilderFactory,
+        dateTimeService
+    )
 
     @Test
     fun jobName() {
@@ -80,8 +87,10 @@ internal class NewStudySyncConfigTest {
 
     @Test
     fun selectSql() {
+        /* ktlint-disable max-line-length */
         config.selectSql() shouldBeEqualTo
             """select "public"."paper_newsletter"."newsletter_id", "public"."paper_newsletter"."paper_id", "public"."paper_newsletter"."newsletter_topic_id", "public"."paper"."publication_year", "public"."paper"."number", "public"."paper"."first_author", "public"."paper"."authors", "public"."paper_newsletter"."headline", "public"."paper"."goals", "public"."paper_newsletter"."version", "public"."paper_newsletter"."created", "public"."paper_newsletter"."last_modified" from "public"."paper_newsletter" join "public"."paper" on "public"."paper_newsletter"."paper_id" = "public"."paper"."id" join "public"."newsletter" on "public"."paper_newsletter"."newsletter_id" = "public"."newsletter"."id" where "public"."newsletter"."publication_status" = 1"""
+        /* ktlint-enable max-line-length */
     }
 
     @Test

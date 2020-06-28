@@ -1,6 +1,15 @@
 package ch.difty.scipamato.core.pubmed
 
-import ch.difty.scipamato.core.pubmed.api.*
+import ch.difty.scipamato.core.pubmed.api.Article
+import ch.difty.scipamato.core.pubmed.api.ArticleTitle
+import ch.difty.scipamato.core.pubmed.api.Journal
+import ch.difty.scipamato.core.pubmed.api.JournalIssue
+import ch.difty.scipamato.core.pubmed.api.MedlineCitation
+import ch.difty.scipamato.core.pubmed.api.MedlineJournalInfo
+import ch.difty.scipamato.core.pubmed.api.PMID
+import ch.difty.scipamato.core.pubmed.api.PubDate
+import ch.difty.scipamato.core.pubmed.api.PubmedArticle
+import ch.difty.scipamato.core.pubmed.api.PubmedArticleSet
 import com.nhaarman.mockitokotlin2.isA
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever

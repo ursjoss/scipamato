@@ -28,7 +28,14 @@ internal class NewStudyPageLinkSyncConfigTest {
     private val stepBuilderFactory = mockk<StepBuilderFactory>()
     private val dateTimeService = FrozenDateTimeService()
 
-    private val config = NewStudyPageLinkSyncConfig(jooqCore, jooqPublic, coreDataSource, jobBuilderFactory, stepBuilderFactory, dateTimeService)
+    private val config = NewStudyPageLinkSyncConfig(
+        jooqCore,
+        jooqPublic,
+        coreDataSource,
+        jobBuilderFactory,
+        stepBuilderFactory,
+        dateTimeService
+    )
 
     @Test
     fun jobName() {
@@ -66,8 +73,10 @@ internal class NewStudyPageLinkSyncConfigTest {
 
     @Test
     fun selectSql() {
+        /* ktlint-disable max-line-length */
         config.selectSql() shouldBeEqualTo
             """select "public"."new_study_page_link"."lang_code", "public"."new_study_page_link"."sort", "public"."new_study_page_link"."title", "public"."new_study_page_link"."url" from "public"."new_study_page_link""""
+        /* ktlint-enable max-line-length */
     }
 
     @Test

@@ -3,7 +3,14 @@ package ch.difty.scipamato.core.entity
 import ch.difty.scipamato.common.entity.CodeClassId
 import ch.difty.scipamato.common.entity.newsletter.PublicationStatus
 import ch.difty.scipamato.core.entity.Code.CodeFields.CODE
-import ch.difty.scipamato.core.entity.Paper.PaperFields.*
+import ch.difty.scipamato.core.entity.Paper.PaperFields.AUTHORS
+import ch.difty.scipamato.core.entity.Paper.PaperFields.DOI
+import ch.difty.scipamato.core.entity.Paper.PaperFields.FIRST_AUTHOR
+import ch.difty.scipamato.core.entity.Paper.PaperFields.GOALS
+import ch.difty.scipamato.core.entity.Paper.PaperFields.LOCATION
+import ch.difty.scipamato.core.entity.Paper.PaperFields.NUMBER
+import ch.difty.scipamato.core.entity.Paper.PaperFields.PUBL_YEAR
+import ch.difty.scipamato.core.entity.Paper.PaperFields.TITLE
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.extractProperty

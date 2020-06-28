@@ -29,7 +29,14 @@ internal class NewsletterTopicSyncConfigTest {
     private val stepBuilderFactory = mockk<StepBuilderFactory>()
     private val dateTimeService = FrozenDateTimeService()
 
-    private val config = NewsletterTopicSyncConfig(jooqCore, jooqPublic, coreDataSource, jobBuilderFactory, stepBuilderFactory, dateTimeService)
+    private val config = NewsletterTopicSyncConfig(
+        jooqCore,
+        jooqPublic,
+        coreDataSource,
+        jobBuilderFactory,
+        stepBuilderFactory,
+        dateTimeService
+    )
 
     @Test
     fun jobName() {
@@ -71,8 +78,10 @@ internal class NewsletterTopicSyncConfigTest {
 
     @Test
     fun selectSql() {
+        /* ktlint-disable max-line-length */
         config.selectSql() shouldBeEqualTo
             """select "public"."newsletter_topic"."id", "public"."newsletter_topic_tr"."lang_code", "public"."newsletter_topic_tr"."title", "public"."newsletter_topic_tr"."version", "public"."newsletter_topic_tr"."created", "public"."newsletter_topic_tr"."last_modified" from "public"."newsletter_topic" join "public"."newsletter_topic_tr" on "public"."newsletter_topic"."id" = "public"."newsletter_topic_tr"."newsletter_topic_id""""
+        /* ktlint-enable max-line-length */
     }
 
     @Test

@@ -6,7 +6,11 @@ import ch.difty.scipamato.core.entity.Paper
 import ch.difty.scipamato.core.persistence.RecordMapperTest
 import ch.difty.scipamato.core.persistence.UpdateSetStepSetter
 import ch.difty.scipamato.core.persistence.UpdateSetStepSetterTest
-import com.nhaarman.mockitokotlin2.*
+import com.nhaarman.mockitokotlin2.doReturn
+import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.verify
+import com.nhaarman.mockitokotlin2.verifyNoMoreInteractions
+import com.nhaarman.mockitokotlin2.whenever
 
 internal class PaperUpdateSetStepSetterTest : UpdateSetStepSetterTest<PaperRecord, Paper>() {
 

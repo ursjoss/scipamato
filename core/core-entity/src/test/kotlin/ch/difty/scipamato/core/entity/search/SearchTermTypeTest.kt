@@ -1,6 +1,12 @@
 package ch.difty.scipamato.core.entity.search
 
-import ch.difty.scipamato.core.entity.search.SearchTermType.*
+import ch.difty.scipamato.core.entity.search.SearchTermType.AUDIT
+import ch.difty.scipamato.core.entity.search.SearchTermType.BOOLEAN
+import ch.difty.scipamato.core.entity.search.SearchTermType.INTEGER
+import ch.difty.scipamato.core.entity.search.SearchTermType.STRING
+import ch.difty.scipamato.core.entity.search.SearchTermType.UNSUPPORTED
+import ch.difty.scipamato.core.entity.search.SearchTermType.byId
+import ch.difty.scipamato.core.entity.search.SearchTermType.values
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.fail
 import org.junit.jupiter.api.Test

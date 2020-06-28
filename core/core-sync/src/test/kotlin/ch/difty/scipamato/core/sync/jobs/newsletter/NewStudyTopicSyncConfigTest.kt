@@ -28,7 +28,14 @@ internal class NewStudyTopicSyncConfigTest {
     private val stepBuilderFactory = mockk<StepBuilderFactory>()
     private val dateTimeService = FrozenDateTimeService()
 
-    private val config = NewStudyTopicSyncConfig(jooqCore, jooqPublic, coreDataSource, jobBuilderFactory, stepBuilderFactory, dateTimeService)
+    private val config = NewStudyTopicSyncConfig(
+        jooqCore,
+        jooqPublic,
+        coreDataSource,
+        jobBuilderFactory,
+        stepBuilderFactory,
+        dateTimeService
+    )
 
     @Test
     fun jobName() {
@@ -71,8 +78,10 @@ internal class NewStudyTopicSyncConfigTest {
 
     @Test
     fun selectSql() {
+        /* ktlint-disable max-line-length */
         config.selectSql() shouldBeEqualTo
             """select "public"."paper_newsletter"."newsletter_id", "public"."newsletter_topic_tr"."newsletter_topic_id", "public"."newsletter_topic_tr"."version", "public"."newsletter_topic_tr"."created", "public"."newsletter_topic_tr"."last_modified" as "NTTLM", "public"."newsletter_newsletter_topic"."sort", "public"."newsletter_newsletter_topic"."last_modified" as "NNTLM" from "public"."paper_newsletter" join "public"."newsletter_topic" on "public"."paper_newsletter"."newsletter_topic_id" = "public"."newsletter_topic"."id" join "public"."newsletter_topic_tr" on "public"."newsletter_topic"."id" = "public"."newsletter_topic_tr"."newsletter_topic_id" left outer join "public"."newsletter_newsletter_topic" on ("public"."paper_newsletter"."newsletter_id" = "public"."newsletter_newsletter_topic"."newsletter_id" and "public"."newsletter_topic"."id" = "public"."newsletter_newsletter_topic"."newsletter_topic_id") join "public"."newsletter" on "public"."paper_newsletter"."newsletter_id" = "public"."newsletter"."id" where "public"."newsletter"."publication_status" = 1"""
+        /* ktlint-enable max-line-length */
     }
 
     @Test

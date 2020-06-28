@@ -1,11 +1,22 @@
 package ch.difty.scipamato.core.sync.launcher
 
-import com.nhaarman.mockitokotlin2.*
+import com.nhaarman.mockitokotlin2.any
+import com.nhaarman.mockitokotlin2.doReturn
+import com.nhaarman.mockitokotlin2.doThrow
+import com.nhaarman.mockitokotlin2.eq
+import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.verify
+import com.nhaarman.mockitokotlin2.verifyNoMoreInteractions
+import com.nhaarman.mockitokotlin2.whenever
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
-import org.springframework.batch.core.*
+import org.springframework.batch.core.BatchStatus
+import org.springframework.batch.core.ExitStatus
+import org.springframework.batch.core.Job
+import org.springframework.batch.core.JobExecution
+import org.springframework.batch.core.StepExecution
 import org.springframework.batch.core.launch.JobLauncher
 
 internal class RefDataSyncJobLauncherTest {

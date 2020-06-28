@@ -15,7 +15,15 @@ import ch.difty.scipamato.core.persistence.paper.searchorder.PaperBackedSearchOr
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
 import org.assertj.core.api.Assertions.assertThat
-import org.jooq.*
+import org.jooq.DeleteConditionStep
+import org.jooq.Record1
+import org.jooq.SelectConditionStep
+import org.jooq.SelectForUpdateStep
+import org.jooq.SelectLimitPercentStep
+import org.jooq.SelectSeekStepN
+import org.jooq.SelectWhereStep
+import org.jooq.SortField
+import org.jooq.TableField
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
 import org.mockito.Mockito.never

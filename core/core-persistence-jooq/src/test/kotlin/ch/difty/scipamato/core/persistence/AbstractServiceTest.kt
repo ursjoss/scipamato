@@ -2,7 +2,11 @@ package ch.difty.scipamato.core.persistence
 
 import ch.difty.scipamato.core.entity.IdScipamatoEntity
 import ch.difty.scipamato.core.entity.User
-import com.nhaarman.mockitokotlin2.*
+import com.nhaarman.mockitokotlin2.doReturn
+import com.nhaarman.mockitokotlin2.times
+import com.nhaarman.mockitokotlin2.verify
+import com.nhaarman.mockitokotlin2.verifyNoMoreInteractions
+import com.nhaarman.mockitokotlin2.whenever
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 

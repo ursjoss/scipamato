@@ -4,7 +4,12 @@ import ch.difty.scipamato.core.entity.search.SearchTerm
 import ch.difty.scipamato.core.entity.search.SearchTermType
 import ch.difty.scipamato.core.entity.search.StringSearchTerm
 import ch.difty.scipamato.core.entity.search.StringSearchTerm.MatchType
-import ch.difty.scipamato.core.entity.search.StringSearchTerm.MatchType.*
+import ch.difty.scipamato.core.entity.search.StringSearchTerm.MatchType.CONTAINS
+import ch.difty.scipamato.core.entity.search.StringSearchTerm.MatchType.EQUALS
+import ch.difty.scipamato.core.entity.search.StringSearchTerm.MatchType.LENGTH
+import ch.difty.scipamato.core.entity.search.StringSearchTerm.MatchType.LIKE
+import ch.difty.scipamato.core.entity.search.StringSearchTerm.MatchType.NONE
+import ch.difty.scipamato.core.entity.search.StringSearchTerm.MatchType.REGEX
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments

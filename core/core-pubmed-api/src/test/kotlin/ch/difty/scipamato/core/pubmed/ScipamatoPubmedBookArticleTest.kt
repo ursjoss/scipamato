@@ -1,6 +1,20 @@
 package ch.difty.scipamato.core.pubmed
 
-import ch.difty.scipamato.core.pubmed.api.*
+import ch.difty.scipamato.core.pubmed.api.Abstract
+import ch.difty.scipamato.core.pubmed.api.AbstractText
+import ch.difty.scipamato.core.pubmed.api.ArticleId
+import ch.difty.scipamato.core.pubmed.api.ArticleIdList
+import ch.difty.scipamato.core.pubmed.api.ArticleTitle
+import ch.difty.scipamato.core.pubmed.api.Author
+import ch.difty.scipamato.core.pubmed.api.AuthorList
+import ch.difty.scipamato.core.pubmed.api.BookDocument
+import ch.difty.scipamato.core.pubmed.api.ContributionDate
+import ch.difty.scipamato.core.pubmed.api.Initials
+import ch.difty.scipamato.core.pubmed.api.LastName
+import ch.difty.scipamato.core.pubmed.api.LocationLabel
+import ch.difty.scipamato.core.pubmed.api.PMID
+import ch.difty.scipamato.core.pubmed.api.PubmedBookArticle
+import ch.difty.scipamato.core.pubmed.api.Year
 import nl.jqno.equalsverifier.EqualsVerifier
 import nl.jqno.equalsverifier.Warning
 import org.assertj.core.api.Assertions.assertThat

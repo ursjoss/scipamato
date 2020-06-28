@@ -29,7 +29,14 @@ internal class CodeClassSyncConfigTest {
     private val stepBuilderFactory = mockk<StepBuilderFactory>()
     private val dateTimeService = FrozenDateTimeService()
 
-    private val config = CodeClassSyncConfig(jooqCore, jooqPublic, coreDataSource, jobBuilderFactory, stepBuilderFactory, dateTimeService)
+    private val config = CodeClassSyncConfig(
+        jooqCore,
+        jooqPublic,
+        coreDataSource,
+        jobBuilderFactory,
+        stepBuilderFactory,
+        dateTimeService
+    )
 
     @Test
     fun jobName() {
@@ -73,8 +80,10 @@ internal class CodeClassSyncConfigTest {
 
     @Test
     fun selectSql() {
+        /* ktlint-disable max-line-length */
         config.selectSql() shouldBeEqualTo
             """select "public"."code_class"."id", "public"."code_class_tr"."lang_code", "public"."code_class_tr"."name", "public"."code_class_tr"."description", "public"."code_class_tr"."version", "public"."code_class_tr"."created", "public"."code_class_tr"."last_modified" from "public"."code_class" join "public"."code_class_tr" on "public"."code_class"."id" = "public"."code_class_tr"."code_class_id""""
+        /* ktlint-enable max-line-length */
     }
 
     @Test

@@ -92,7 +92,8 @@ internal class ScipamatoPubmedArticleIntegrationTest : PubmedIntegrationTest() {
                     "about the populations most susceptible to these adverse effects."
             )
             assertThat(originalAbstract).endsWith(
-                "women with diabetes were identified as the subpopulation most sensitive to the adverse cardiovascular health effects of PM."
+                "women with diabetes were identified as the subpopulation most sensitive to the " +
+                    "adverse cardiovascular health effects of PM."
             )
         }
     }

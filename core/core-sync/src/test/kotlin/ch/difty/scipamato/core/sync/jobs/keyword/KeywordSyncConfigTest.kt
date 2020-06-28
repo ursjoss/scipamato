@@ -29,7 +29,14 @@ internal class KeywordSyncConfigTest {
     private val stepBuilderFactory = mockk<StepBuilderFactory>()
     private val dateTimeService = FrozenDateTimeService()
 
-    private val config = KeywordSyncConfig(jooqCore, jooqPublic, coreDataSource, jobBuilderFactory, stepBuilderFactory, dateTimeService)
+    private val config = KeywordSyncConfig(
+        jooqCore,
+        jooqPublic,
+        coreDataSource,
+        jobBuilderFactory,
+        stepBuilderFactory,
+        dateTimeService
+    )
 
     @Test
     fun jobName() {
@@ -75,8 +82,10 @@ internal class KeywordSyncConfigTest {
 
     @Test
     fun selectSql() {
+        /* ktlint-disable max-line-length */
         config.selectSql() shouldBeEqualTo
             """select "public"."keyword_tr"."id", "public"."keyword"."id" as "KeywordId", "public"."keyword_tr"."lang_code", "public"."keyword_tr"."name", "public"."keyword_tr"."version", "public"."keyword_tr"."created", "public"."keyword_tr"."last_modified", "public"."keyword"."search_override" from "public"."keyword" join "public"."keyword_tr" on "public"."keyword"."id" = "public"."keyword_tr"."keyword_id""""
+        /* ktlint-enable max-line-length */
     }
 
     @Test

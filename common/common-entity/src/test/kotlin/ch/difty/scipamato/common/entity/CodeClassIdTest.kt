@@ -1,6 +1,13 @@
 package ch.difty.scipamato.common.entity
 
-import ch.difty.scipamato.common.entity.CodeClassId.*
+import ch.difty.scipamato.common.entity.CodeClassId.CC1
+import ch.difty.scipamato.common.entity.CodeClassId.CC2
+import ch.difty.scipamato.common.entity.CodeClassId.CC3
+import ch.difty.scipamato.common.entity.CodeClassId.CC4
+import ch.difty.scipamato.common.entity.CodeClassId.CC5
+import ch.difty.scipamato.common.entity.CodeClassId.CC6
+import ch.difty.scipamato.common.entity.CodeClassId.CC7
+import ch.difty.scipamato.common.entity.CodeClassId.CC8
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

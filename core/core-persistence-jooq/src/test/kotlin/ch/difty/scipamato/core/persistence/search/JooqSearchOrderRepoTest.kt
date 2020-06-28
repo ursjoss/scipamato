@@ -5,7 +5,11 @@ import ch.difty.scipamato.core.db.tables.records.SearchOrderRecord
 import ch.difty.scipamato.core.entity.Code
 import ch.difty.scipamato.core.entity.Paper
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic
-import ch.difty.scipamato.core.entity.search.*
+import ch.difty.scipamato.core.entity.search.SearchCondition
+import ch.difty.scipamato.core.entity.search.SearchOrder
+import ch.difty.scipamato.core.entity.search.SearchOrderFilter
+import ch.difty.scipamato.core.entity.search.SearchTerm
+import ch.difty.scipamato.core.entity.search.SearchTermType
 import ch.difty.scipamato.core.persistence.EntityRepository
 import ch.difty.scipamato.core.persistence.JooqEntityRepoTest
 import com.nhaarman.mockitokotlin2.mock
@@ -49,8 +53,10 @@ internal class JooqSearchOrderRepoTest :
         applicationProperties
     )
 
-    override fun makeRepoFindingEntityById(entity: SearchOrder):
-        EntityRepository<SearchOrder, Long, SearchOrderFilter> = object : JooqSearchOrderRepo(
+    override fun makeRepoFindingEntityById(
+        entity: SearchOrder
+    ): EntityRepository<SearchOrder, Long, SearchOrderFilter> =
+        object : JooqSearchOrderRepo(
             dsl,
             mapper,
             sortMapper,
@@ -63,8 +69,10 @@ internal class JooqSearchOrderRepoTest :
             override fun findById(id: Long, version: Int): SearchOrder = entity
         }
 
-    override fun makeRepoSavingReturning(returning: SearchOrderRecord):
-        EntityRepository<SearchOrder, Long, SearchOrderFilter> = object : JooqSearchOrderRepo(
+    override fun makeRepoSavingReturning(
+        returning: SearchOrderRecord
+    ): EntityRepository<SearchOrder, Long, SearchOrderFilter> =
+        object : JooqSearchOrderRepo(
             dsl,
             mapper,
             sortMapper,
