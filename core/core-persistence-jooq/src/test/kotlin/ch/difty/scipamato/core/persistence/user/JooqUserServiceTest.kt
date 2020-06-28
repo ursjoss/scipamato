@@ -43,6 +43,7 @@ internal class JooqUserServiceTest {
         optUser.isPresent.shouldBeTrue()
         optUser.get() shouldBeEqualTo userMock
 
+        verify { userMock == userMock }
         verify { repoMock.findById(id) }
     }
 
@@ -81,6 +82,7 @@ internal class JooqUserServiceTest {
         verify { userMock.password }
         verify { userMock.password = "bar" }
         verify { passwordEncoderMock.encode("boo") }
+        verify { userMock == userMock }
     }
 
     @Test
@@ -96,6 +98,7 @@ internal class JooqUserServiceTest {
         verify { userMock.password }
         verify { passwordEncoderMock.encode("boo") }
         verify { userMock.password = "bar" }
+        verify { userMock == userMock }
     }
 
     @Test
@@ -113,6 +116,7 @@ internal class JooqUserServiceTest {
         verify { userMock.id }
         verify { userMock.password }
         verify { userMock.password = "bar" }
+        verify { userMock == userMock }
     }
 
     @Test
@@ -130,6 +134,7 @@ internal class JooqUserServiceTest {
         verify { userMock.id }
         verify { userMock.password }
         verify { userMock.password = "bar" }
+        verify { userMock == userMock }
     }
 
     @Test
