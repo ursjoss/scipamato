@@ -55,7 +55,9 @@ abstract class WicketTest {
 
     @BeforeEach
     fun setUp() {
-        application.setHeaderResponseDecorator { r: IHeaderResponse? -> ResourceAggregator(JavaScriptFilteredIntoFooterHeaderResponse(r, "footer-container")) }
+        application.setHeaderResponseDecorator { r: IHeaderResponse? ->
+            ResourceAggregator(JavaScriptFilteredIntoFooterHeaderResponse(r, "footer-container"))
+        }
         ReflectionTestUtils.setField(application, "applicationContext", applicationContextMock)
         tester = WicketTester(application)
         every { sessionFacadeMock.paperIdManager } returns itemNavigator

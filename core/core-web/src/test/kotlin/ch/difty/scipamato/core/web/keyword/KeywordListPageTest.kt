@@ -77,7 +77,11 @@ internal class KeywordListPageTest : BasePageTest<KeywordListPage>() {
         if (colIdxAsLink != null)
             tester.assertComponent("$b:body:rows:$rowIdx:cells:$colIdxAsLink:cell:link", Link::class.java)
         var colIdx = 1
-        for (value in values) tester.assertLabel(b + ":body:rows:" + rowIdx + ":cells:" + colIdx + ":cell" + if (colIdxAsLink != null && colIdx++ == colIdxAsLink) ":link:label" else "", value)
+        for (value in values)
+            tester.assertLabel(
+                "$b:body:rows:$rowIdx:cells:$colIdx:cell${if (colIdxAsLink != null && colIdx++ == colIdxAsLink) ":link:label" else ""}",
+                value
+            )
     }
 
     @Test

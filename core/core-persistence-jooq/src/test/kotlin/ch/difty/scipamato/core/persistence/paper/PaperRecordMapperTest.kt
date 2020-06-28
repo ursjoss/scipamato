@@ -5,8 +5,9 @@ package ch.difty.scipamato.core.persistence.paper
 import ch.difty.scipamato.core.db.tables.records.PaperRecord
 import ch.difty.scipamato.core.entity.Paper
 import ch.difty.scipamato.core.persistence.RecordMapperTest
-import io.mockk.*
-import org.amshove.kluent.*
+import io.mockk.every
+import org.amshove.kluent.shouldBeEmpty
+import org.amshove.kluent.shouldBeEqualTo
 import org.jooq.RecordMapper
 
 class PaperRecordMapperTest : RecordMapperTest<PaperRecord, Paper>() {

@@ -90,7 +90,11 @@ internal class UserListPageAsAdminTest : BasePageTest<UserListPage>() {
                 "$b:body:rows:$rIdx:cells:$colIdxAsLink:cell:link",
                 Link::class.java
             )
-            for (value in values) tester.assertLabel(b + ":body:rows:" + rIdx + ":cells:" + colIdx + ":cell" + if (colIdxAsLink != null && colIdx++ == colIdxAsLink) ":link:label" else "", value)
+            for (value in values)
+                tester.assertLabel(
+                    "$b:body:rows:$rIdx:cells:$colIdx:cell${if (colIdxAsLink != null && colIdx++ == colIdxAsLink) ":link:label" else ""}",
+                    value
+                )
             rIdx++
         }
     }

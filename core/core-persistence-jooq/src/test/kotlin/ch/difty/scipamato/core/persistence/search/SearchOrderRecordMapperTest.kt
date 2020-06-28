@@ -3,8 +3,10 @@ package ch.difty.scipamato.core.persistence.search
 import ch.difty.scipamato.core.db.tables.records.SearchOrderRecord
 import ch.difty.scipamato.core.entity.search.SearchOrder
 import ch.difty.scipamato.core.persistence.RecordMapperTest
-import io.mockk.*
-import org.amshove.kluent.*
+import io.mockk.every
+import org.amshove.kluent.shouldBeEmpty
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeFalse
 import org.jooq.RecordMapper
 
 @Suppress("UsePropertyAccessSyntax")
