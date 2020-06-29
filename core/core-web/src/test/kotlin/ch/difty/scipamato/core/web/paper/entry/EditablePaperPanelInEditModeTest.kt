@@ -1,3 +1,5 @@
+@file:Suppress("SpellCheckingInspection")
+
 package ch.difty.scipamato.core.web.paper.entry
 
 import ch.difty.scipamato.common.web.Mode

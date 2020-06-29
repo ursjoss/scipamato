@@ -31,6 +31,7 @@ import org.springframework.context.ApplicationContext
 import org.springframework.context.annotation.Bean
 import org.springframework.test.context.ActiveProfiles
 
+@Suppress("SpellCheckingInspection")
 @SpringBootTest
 @ActiveProfiles("wickettest")
 @ExtendWith(MockKExtension::class, ClearAllMocksExtension::class)
@@ -51,10 +52,10 @@ abstract class AbstractWicketTest {
     @Autowired
     protected lateinit var dateTimeService: DateTimeService
 
-    @MockkBean(relaxed = true)
+    @MockkBean
     protected lateinit var sessionFacadeMock: ScipamatoWebSessionFacade
 
-    @MockkBean(relaxed = true)
+    @MockkBean
     protected lateinit var itemNavigatorMock: ItemNavigator<Long>
 
     @MockkBean
@@ -63,30 +64,30 @@ abstract class AbstractWicketTest {
     @MockkBean
     protected lateinit var pubmedArticleServiceMock: PubmedArticleService
 
-    @MockkBean(relaxed = true)
+    @MockkBean
     protected lateinit var codeServiceMock: CodeService
 
     @MockkBean
     protected lateinit var codeClassServiceMock: CodeClassService
 
-    @MockkBean(relaxed = true)
+    @MockkBean
     protected lateinit var keywordServiceMock: KeywordService
 
-    @MockkBean(relaxed = true)
+    @MockkBean
     protected lateinit var newsletterServiceMock: NewsletterService
 
-    @MockkBean(relaxed = true)
+    @MockkBean
     protected lateinit var newsletterTopicServiceMock: NewsletterTopicService
 
-    @MockkBean(relaxed = true)
+    @MockkBean
     protected lateinit var paperServiceMock: PaperService
 
-    @MockkBean(relaxed = true)
+    @MockkBean
     protected lateinit var paperSlimServiceMock: PaperSlimService
 
-    @MockkBean(relaxed = true)
+    @MockkBean
     protected lateinit var searchOrderServiceMock: SearchOrderService
 
-    @MockkBean(relaxed = true)
+    @MockkBean
     protected lateinit var userServiceMock: UserService
 }

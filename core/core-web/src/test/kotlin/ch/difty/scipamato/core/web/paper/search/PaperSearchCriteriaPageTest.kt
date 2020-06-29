@@ -5,7 +5,6 @@ import ch.difty.scipamato.core.entity.search.SearchOrder
 import ch.difty.scipamato.core.web.common.BasePageTest
 import ch.difty.scipamato.core.web.paper.common.SearchablePaperPanel
 import io.mockk.every
-import io.mockk.impl.annotations.MockK
 import io.mockk.verify
 import org.apache.wicket.markup.html.form.CheckBox
 import org.apache.wicket.markup.html.form.Form
@@ -15,8 +14,7 @@ import java.util.Optional
 
 internal class PaperSearchCriteriaPageTest : BasePageTest<PaperSearchCriteriaPage>() {
 
-    @MockK(relaxed = true)
-    private lateinit var searchConditionMock: SearchCondition
+    private val searchCondition = SearchCondition()
 
     private val searchOrder = SearchOrder(SEARCH_ORDER_ID, "soName", 1, false, null, null)
 
@@ -26,7 +24,7 @@ internal class PaperSearchCriteriaPageTest : BasePageTest<PaperSearchCriteriaPag
     }
 
     override fun makePage(): PaperSearchCriteriaPage =
-        PaperSearchCriteriaPage(Model.of(searchConditionMock), SEARCH_ORDER_ID)
+        PaperSearchCriteriaPage(Model.of(searchCondition), SEARCH_ORDER_ID)
 
     override val pageClass: Class<PaperSearchCriteriaPage>
         get() = PaperSearchCriteriaPage::class.java
@@ -50,7 +48,7 @@ internal class PaperSearchCriteriaPageTest : BasePageTest<PaperSearchCriteriaPag
         formTester.submit()
         tester.assertRenderedPage(pageClass)
         tester.assertNoErrorMessage()
-        verify { searchOrderServiceMock.saveOrUpdateSearchCondition(searchConditionMock, SEARCH_ORDER_ID, "en_us") }
+        verify { searchOrderServiceMock.saveOrUpdateSearchCondition(searchCondition, SEARCH_ORDER_ID, "en_us") }
         verify(exactly = 0) { searchOrderServiceMock.findPageByFilter(any(), any()) }
     }
 
@@ -62,14 +60,14 @@ internal class PaperSearchCriteriaPageTest : BasePageTest<PaperSearchCriteriaPag
         formTester.submit("submit")
         tester.assertRenderedPage(PaperSearchPage::class.java)
         tester.assertNoErrorMessage()
-        verify { searchOrderServiceMock.saveOrUpdateSearchCondition(searchConditionMock, SEARCH_ORDER_ID, "en_us") }
+        verify { searchOrderServiceMock.saveOrUpdateSearchCondition(searchCondition, SEARCH_ORDER_ID, "en_us") }
         verify { searchOrderServiceMock.findPageByFilter(any(), any()) }
     }
 
     @Test
     fun submittingForm_withErrorInService_addsErrorMessage() {
         every {
-            searchOrderServiceMock.saveOrUpdateSearchCondition(searchConditionMock, SEARCH_ORDER_ID, "en_us")
+            searchOrderServiceMock.saveOrUpdateSearchCondition(searchCondition, SEARCH_ORDER_ID, "en_us")
         } throws RuntimeException("foo")
         tester.startPage(makePage())
         tester.assertRenderedPage(pageClass)
@@ -80,7 +78,7 @@ internal class PaperSearchCriteriaPageTest : BasePageTest<PaperSearchCriteriaPag
             "An unexpected error occurred when trying to save Search Order [id ]: foo"
         )
         tester.assertRenderedPage(pageClass)
-        verify(exactly = 2) { searchOrderServiceMock.saveOrUpdateSearchCondition(searchConditionMock, SEARCH_ORDER_ID, "en_us") }
+        verify(exactly = 2) { searchOrderServiceMock.saveOrUpdateSearchCondition(searchCondition, SEARCH_ORDER_ID, "en_us") }
         verify(exactly = 0) { searchOrderServiceMock.findPageByFilter(any(), any()) }
     }
 

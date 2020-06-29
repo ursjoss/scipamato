@@ -7,7 +7,6 @@ import ch.difty.scipamato.core.web.common.PanelTest
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.checkboxx.CheckBoxX
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelect
 import io.mockk.every
-import io.mockk.impl.annotations.MockK
 import io.mockk.verify
 import org.apache.wicket.ajax.markup.html.form.AjaxCheckBox
 import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink
@@ -20,25 +19,27 @@ import java.util.ArrayList
 
 internal abstract class SearchOrderSelectorPanelTest : PanelTest<SearchOrderSelectorPanel>() {
 
-    @MockK(relaxed = true)
-    lateinit var searchOrderMock: SearchOrder
+    val searchOrder = SearchOrder().apply {
+        id = ID
+        name = VALID_NAME
+        owner = OWNER_ID
+    }
 
     private val searchConditions: List<SearchCondition> = ArrayList()
 
     override fun makePanel(): SearchOrderSelectorPanel =
-        SearchOrderSelectorPanel(PANEL_ID, Model.of(searchOrderMock), mode)
+        SearchOrderSelectorPanel(PANEL_ID, Model.of(searchOrder), mode)
 
     abstract val mode: Mode
 
     override fun setUpHook() {
         super.setUpHook()
         val searchOrders: List<SearchOrder> = listOf(
-            searchOrderMock,
+            searchOrder,
             SearchOrder(20L, "soName", OWNER_ID, true, searchConditions, null)
         )
         every { searchOrderServiceMock.findPageByFilter(any(), any()) } returns searchOrders
-        every { searchOrderServiceMock.saveOrUpdate(any()) } returns searchOrderMock
-        every { searchOrderMock.id } returns ID
+        every { searchOrderServiceMock.saveOrUpdate(any()) } returns searchOrder
     }
 
     override fun assertSpecificComponents() {
@@ -60,7 +61,6 @@ internal abstract class SearchOrderSelectorPanelTest : PanelTest<SearchOrderSele
 
     @Test
     fun loadingPage_withSearchOrderWithoutOverrides_hidesShowExclusionStuff() {
-        every { searchOrderMock.excludedPaperIds } returns emptyList()
         tester.startComponentInPage(makePanel())
         val b = "panel:form:showExcluded"
         tester.assertInvisible(b)
@@ -69,13 +69,14 @@ internal abstract class SearchOrderSelectorPanelTest : PanelTest<SearchOrderSele
 
     @Test
     fun loadingPage_withSearchOrderWithOverrides_showsShowExcludedStuff() {
-        every { searchOrderMock.excludedPaperIds } returns listOf(3L)
-        every { searchOrderMock.isShowExcluded } returns false
+        searchOrder.apply {
+            setExcludedPaperIds(listOf(3L))
+            isShowExcluded = false
+        }
         tester.startComponentInPage(makePanel())
         val b = "panel:form:showExcluded"
         tester.assertComponent(b, AjaxCheckBox::class.java)
         tester.assertLabel(b + "Label", "Show Exclusions")
-        verify(exactly = 3) { searchOrderMock.excludedPaperIds }
     }
 
     @Test
@@ -93,15 +94,13 @@ internal abstract class SearchOrderSelectorPanelTest : PanelTest<SearchOrderSele
 
     @Test
     fun loadingPage_withSearchOrderWithDifferentOwner_rendersGlobalCheckBoxDisabled() {
-        every { searchOrderMock.owner } returns OWNER_ID + 1
+        searchOrder.apply { owner = OWNER_ID + 1 }
         tester.startComponentInPage(makePanel())
         tester.assertDisabled("$PANEL_ID:form:global")
     }
 
     @Test
     fun testSubmittingWithNewButton_createsNewSearchOrder() {
-        every { searchOrderMock.name } returns VALID_NAME
-        every { searchOrderMock.owner } returns OWNER_ID
         tester.startComponentInPage(makePanel())
         val formTester = tester.newFormTester("$PANEL_ID:form")
         formTester.submit("new")
@@ -110,23 +109,19 @@ internal abstract class SearchOrderSelectorPanelTest : PanelTest<SearchOrderSele
         tester.assertComponentOnAjaxResponse("${b}name")
         tester.assertComponentOnAjaxResponse("${b}showExcluded")
         tester.assertComponentOnAjaxResponse("${b}showExcludedLabel")
-        verify(exactly = 11) { searchOrderMock.id }
         verify(exactly = 2) { searchOrderServiceMock.findPageByFilter(any(), any()) }
-        verify(exactly = 0) { searchOrderServiceMock.saveOrUpdate(searchOrderMock) }
+        verify(exactly = 0) { searchOrderServiceMock.saveOrUpdate(searchOrder) }
     }
 
     @Test
     fun testSubmittingWithDeleteButton_deletesSearchOrder() {
-        every { searchOrderMock.name } returns VALID_NAME
-        every { searchOrderMock.owner } returns OWNER_ID
         tester.startComponentInPage(makePanel())
         val b = "$PANEL_ID:form"
         val formTester = tester.newFormTester(b)
         formTester.submit("delete")
         tester.assertRenderedPage(PaperSearchPage::class.java)
-        verify(exactly = 10) { searchOrderMock.id }
         verify(exactly = 3) { searchOrderServiceMock.findPageByFilter(any(), any()) }
-        verify { searchOrderServiceMock.remove(searchOrderMock) }
+        verify { searchOrderServiceMock.remove(searchOrder) }
     }
 
     companion object {

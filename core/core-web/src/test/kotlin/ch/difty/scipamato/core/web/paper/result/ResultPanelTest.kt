@@ -25,8 +25,9 @@ import java.util.Optional
 
 internal abstract class ResultPanelTest : PanelTest<ResultPanel>() {
 
-    @MockK(relaxed = true)
-    lateinit var searchOrderMock: SearchOrder
+    val searchOrder = SearchOrder().apply {
+        id = 10L
+    }
 
     @MockK(relaxed = true)
     lateinit var paperMock: Paper
@@ -35,19 +36,18 @@ internal abstract class ResultPanelTest : PanelTest<ResultPanel>() {
 
     override fun setUpHook() {
         every { paperMock.getCodesOf(any()) } returns emptyList()
-        every { searchOrderMock.id } returns 10L
-        every { paperSlimServiceMock.countBySearchOrder(searchOrderMock) } returns 1
-        every { paperSlimServiceMock.findPageBySearchOrder(searchOrderMock, any()) } returns listOf(paperSlim)
-        every { paperServiceMock.findPageBySearchOrder(searchOrderMock, any(), LC) } returns listOf(paperMock)
+        every { paperSlimServiceMock.countBySearchOrder(searchOrder) } returns 1
+        every { paperSlimServiceMock.findPageBySearchOrder(searchOrder, any()) } returns listOf(paperSlim)
+        every { paperServiceMock.findPageBySearchOrder(searchOrder, any(), LC) } returns listOf(paperMock)
     }
 
     @AfterEach
     fun tearDown() {
-        confirmVerified(paperSlimServiceMock, paperServiceMock, codeClassServiceMock, codeServiceMock, searchOrderMock)
+        confirmVerified(paperSlimServiceMock, paperServiceMock, codeClassServiceMock, codeServiceMock)
     }
 
     override fun makePanel(): ResultPanel =
-        object : ResultPanel(PANEL_ID, PaperSlimBySearchOrderProvider(searchOrderMock, ROWS_PER_PAGE), mode) {
+        object : ResultPanel(PANEL_ID, PaperSlimBySearchOrderProvider(searchOrder, ROWS_PER_PAGE), mode) {
             override fun isOfferingSearchComposition(): Boolean = true
         }
 
@@ -85,10 +85,8 @@ internal abstract class ResultPanelTest : PanelTest<ResultPanel>() {
         bb = "$b:exportRisLink"
         tester.assertComponent(bb, AjaxLink::class.java)
 
-        verify(exactly = 1) { paperSlimServiceMock.countBySearchOrder(searchOrderMock) }
-        verify { paperSlimServiceMock.findPageBySearchOrder(searchOrderMock, any()) }
-        if (mode != Mode.VIEW)
-            verify(exactly = 2) { searchOrderMock.isShowExcluded }
+        verify(exactly = 1) { paperSlimServiceMock.countBySearchOrder(searchOrder) }
+        verify { paperSlimServiceMock.findPageBySearchOrder(searchOrder, any()) }
         verify { paperServiceMock.findPageOfIdsBySearchOrder(any(), any()) }
     }
 
@@ -100,9 +98,8 @@ internal abstract class ResultPanelTest : PanelTest<ResultPanel>() {
         tester.clickLink("$PANEL_ID:table:body:rows:1:cells:6:cell:link")
         tester.assertComponentOnAjaxResponse("$PANEL_ID:table")
 
-        verify(exactly = 2) { paperSlimServiceMock.countBySearchOrder(searchOrderMock) }
-        verify(exactly = 2) { paperSlimServiceMock.findPageBySearchOrder(searchOrderMock, any()) }
-        verify(exactly = 4) { searchOrderMock.isShowExcluded }
+        verify(exactly = 2) { paperSlimServiceMock.countBySearchOrder(searchOrder) }
+        verify(exactly = 2) { paperSlimServiceMock.findPageBySearchOrder(searchOrder, any()) }
         verify(exactly = 2) { paperServiceMock.findPageOfIdsBySearchOrder(any(), any()) }
     }
 
@@ -117,9 +114,8 @@ internal abstract class ResultPanelTest : PanelTest<ResultPanel>() {
         titleTagTester.shouldNotBeNull()
         titleTagTester.name shouldBeEqualTo "i"
 
-        verify(exactly = 1) { paperSlimServiceMock.countBySearchOrder(searchOrderMock) }
-        verify { paperSlimServiceMock.findPageBySearchOrder(searchOrderMock, any()) }
-        verify(exactly = 2) { searchOrderMock.isShowExcluded }
+        verify(exactly = 1) { paperSlimServiceMock.countBySearchOrder(searchOrder) }
+        verify { paperSlimServiceMock.findPageBySearchOrder(searchOrder, any()) }
         verify { paperServiceMock.findPageOfIdsBySearchOrder(any(), any()) }
     }
 
@@ -134,8 +130,8 @@ internal abstract class ResultPanelTest : PanelTest<ResultPanel>() {
         titleTagTester.shouldNotBeNull()
         titleTagTester.name shouldBeEqualTo "i"
 
-        verify(exactly = 1) { paperSlimServiceMock.countBySearchOrder(searchOrderMock) }
-        verify { paperSlimServiceMock.findPageBySearchOrder(searchOrderMock, any()) }
+        verify(exactly = 1) { paperSlimServiceMock.countBySearchOrder(searchOrder) }
+        verify { paperSlimServiceMock.findPageBySearchOrder(searchOrder, any()) }
         verify { paperServiceMock.findPageOfIdsBySearchOrder(any(), any()) }
     }
 
@@ -150,11 +146,9 @@ internal abstract class ResultPanelTest : PanelTest<ResultPanel>() {
         tester.clickLink("$PANEL_ID:table:body:rows:1:cells:5:cell:link")
         tester.assertRenderedPage(PaperEntryPage::class.java)
 
-        verify { paperSlimServiceMock.countBySearchOrder(searchOrderMock) }
-        verify { paperSlimServiceMock.findPageBySearchOrder(searchOrderMock, any()) }
+        verify { paperSlimServiceMock.countBySearchOrder(searchOrder) }
+        verify { paperSlimServiceMock.findPageBySearchOrder(searchOrder, any()) }
         verify { paperServiceMock.findByNumber(NUMBER, LC) }
-        verify { searchOrderMock.id }
-        verify(exactly = if (mode == Mode.VIEW) 1 else 3) { searchOrderMock.isShowExcluded }
         verify { paperServiceMock.findPageOfIdsBySearchOrder(any(), any()) }
     }
 
@@ -168,11 +162,9 @@ internal abstract class ResultPanelTest : PanelTest<ResultPanel>() {
      * been called. Bit of a workaround
      */
     private fun verifyPdfExport() {
-        verify(exactly = 2) { paperSlimServiceMock.countBySearchOrder(searchOrderMock) }
-        verify(exactly = 1) { paperSlimServiceMock.findPageBySearchOrder(searchOrderMock, any()) }
-        verify { paperServiceMock.findPageBySearchOrder(searchOrderMock, any(), LC) }
-        if (mode != Mode.VIEW)
-            verify(exactly = 2) { searchOrderMock.isShowExcluded }
+        verify(exactly = 2) { paperSlimServiceMock.countBySearchOrder(searchOrder) }
+        verify(exactly = 1) { paperSlimServiceMock.findPageBySearchOrder(searchOrder, any()) }
+        verify { paperServiceMock.findPageBySearchOrder(searchOrder, any(), LC) }
         verify { paperServiceMock.findPageOfIdsBySearchOrder(any(), any()) }
     }
 
@@ -226,10 +218,8 @@ internal abstract class ResultPanelTest : PanelTest<ResultPanel>() {
     }
 
     private fun verifyRisExport() {
-        verify(exactly = 1) { paperSlimServiceMock.countBySearchOrder(searchOrderMock) }
-        verify(exactly = 1) { paperSlimServiceMock.findPageBySearchOrder(searchOrderMock, any()) }
-        if (mode != Mode.VIEW)
-            verify(exactly = 2) { searchOrderMock.isShowExcluded }
+        verify(exactly = 1) { paperSlimServiceMock.countBySearchOrder(searchOrder) }
+        verify(exactly = 1) { paperSlimServiceMock.findPageBySearchOrder(searchOrder, any()) }
         verify { paperServiceMock.findPageOfIdsBySearchOrder(any(), any()) }
     }
 
@@ -240,14 +230,14 @@ internal abstract class ResultPanelTest : PanelTest<ResultPanel>() {
         val responseTxt = tester.lastResponse.document
         val iconExcludeTagTester = TagTester.createTagByAttribute(responseTxt, "class", "fa fa-fw fa-ban")
         iconExcludeTagTester.shouldBeNull()
-        verify(exactly = 1) { paperSlimServiceMock.countBySearchOrder(searchOrderMock) }
-        verify { paperSlimServiceMock.findPageBySearchOrder(searchOrderMock, any()) }
+        verify(exactly = 1) { paperSlimServiceMock.countBySearchOrder(searchOrder) }
+        verify { paperSlimServiceMock.findPageBySearchOrder(searchOrder, any()) }
         verify { paperServiceMock.findPageOfIdsBySearchOrder(any(), any()) }
     }
 
     // with isOfferingSearchComposition = false
     fun newNonSearchRelevantResultPanel(): ResultPanel =
-        object : ResultPanel(PANEL_ID, PaperSlimBySearchOrderProvider(searchOrderMock, ROWS_PER_PAGE), mode) {
+        object : ResultPanel(PANEL_ID, PaperSlimBySearchOrderProvider(searchOrder, ROWS_PER_PAGE), mode) {
             override fun isOfferingSearchComposition(): Boolean = false
         }
 

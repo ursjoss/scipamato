@@ -15,21 +15,24 @@ import org.apache.wicket.model.Model
 import org.apache.wicket.request.mapper.parameter.PageParameters
 import org.junit.jupiter.api.Test
 import java.time.LocalDate
-import java.util.ArrayList
 
 internal class NewsletterTopicSortPageTest : BasePageTest<NewsletterTopicSortPage>() {
 
     private lateinit var newsletter: Newsletter
 
-    private val topics: MutableList<NewsletterNewsletterTopic> = ArrayList()
+    private lateinit var topics: List<NewsletterNewsletterTopic>
 
     override fun setUpHook() {
         super.setUpHook()
-        newsletter = Newsletter("18/06", LocalDate.now(), PublicationStatus.WIP)
-        newsletter.id = 1
-        topics.add(NewsletterNewsletterTopic(newsletter.id!!, 1, 0, "topic1"))
-        topics.add(NewsletterNewsletterTopic(newsletter.id!!, 2, 1, "topic2"))
-        every { newsletterTopicServiceMock.getSortedNewsletterTopicsForNewsletter(newsletter.id!!) } returns topics
+        val newsletterId = 1
+        newsletter = Newsletter("18/06", LocalDate.now(), PublicationStatus.WIP).apply {
+            id = newsletterId
+        }
+        topics = listOf(
+            NewsletterNewsletterTopic(newsletterId, 1, 0, "topic1"),
+            NewsletterNewsletterTopic(newsletterId, 2, 1, "topic2")
+        )
+        every { newsletterTopicServiceMock.getSortedNewsletterTopicsForNewsletter(newsletterId) } returns topics
     }
 
     override fun makePage(): NewsletterTopicSortPage = NewsletterTopicSortPage(Model.of(newsletter), null)

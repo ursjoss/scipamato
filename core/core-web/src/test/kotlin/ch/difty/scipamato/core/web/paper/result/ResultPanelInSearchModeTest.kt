@@ -23,13 +23,13 @@ internal class ResultPanelInSearchModeTest : ResultPanelTest() {
 
     @Test
     fun startingPage_showingResults() {
-        every { searchOrderMock.isShowExcluded } returns false
+        searchOrder.apply { isShowExcluded = false }
         assertExcludeIcon("fas fa-ban fa-fw", "Exclude the paper from the search")
     }
 
     @Test
     fun startingPage_showingExclusions() {
-        every { searchOrderMock.isShowExcluded } returns true
+        searchOrder.apply { isShowExcluded = true }
         assertExcludeIcon("far fa-check-circle fa-fw", "Re-include the paper into the search")
     }
 

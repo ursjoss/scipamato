@@ -26,13 +26,13 @@ internal class ResultPanelInEditModeTest : ResultPanelTest() {
 
     @Test
     fun startingPage_showingResults() {
-        every { searchOrderMock.isShowExcluded } returns false
+        searchOrder.apply { isShowExcluded = false }
         assertExcludeIcon("fas fa-ban fa-fw", "Exclude the paper from the search")
     }
 
     @Test
     fun startingPage_showingExclusions() {
-        every { searchOrderMock.isShowExcluded } returns true
+        searchOrder.apply { isShowExcluded = true }
         assertExcludeIcon("far fa-check-circle fa-fw", "Re-include the paper into the search")
     }
 
@@ -51,8 +51,8 @@ internal class ResultPanelInEditModeTest : ResultPanelTest() {
         TagTester.createTagByAttribute(responseTxt, "class", "fas fa-plus-square fa-fw").shouldBeNull()
         TagTester.createTagByAttribute(responseTxt, "class", "far fa-envelope fa-fw").shouldBeNull()
         TagTester.createTagByAttribute(responseTxt, "class", "far fa-envelope-open fa-fw").shouldBeNull()
-        verify(exactly = 1) { paperSlimServiceMock.countBySearchOrder(searchOrderMock) }
-        verify { paperSlimServiceMock.findPageBySearchOrder(searchOrderMock, any()) }
+        verify(exactly = 1) { paperSlimServiceMock.countBySearchOrder(searchOrder) }
+        verify { paperSlimServiceMock.findPageBySearchOrder(searchOrder, any()) }
         verify { paperServiceMock.findPageOfIdsBySearchOrder(any(), any()) }
     }
 
@@ -80,8 +80,8 @@ internal class ResultPanelInEditModeTest : ResultPanelTest() {
     private fun clickNewsletterLink() {
         tester.startComponentInPage(newNonSearchRelevantResultPanel())
         tester.clickLink("$PANEL_ID:table:body:rows:1:cells:6:cell:link")
-        verify(exactly = 2) { paperSlimServiceMock.countBySearchOrder(searchOrderMock) }
-        verify(exactly = 2) { paperSlimServiceMock.findPageBySearchOrder(searchOrderMock, any()) }
+        verify(exactly = 2) { paperSlimServiceMock.countBySearchOrder(searchOrder) }
+        verify(exactly = 2) { paperSlimServiceMock.findPageBySearchOrder(searchOrder, any()) }
         verify(exactly = 2) { paperServiceMock.findPageOfIdsBySearchOrder(any(), any()) }
         tester.assertComponentOnAjaxResponse("$PANEL_ID:table")
     }

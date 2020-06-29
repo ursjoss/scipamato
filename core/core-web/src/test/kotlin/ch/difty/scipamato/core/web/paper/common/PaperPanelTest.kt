@@ -51,14 +51,17 @@ abstract class PaperPanelTest<T, P : PaperPanel<T>> : PanelTest<P>() where T : C
         codesOfClass6.addAll(listOf(newC(++ccId, "A"), newC(ccId, "B")))
         codesOfClass7.addAll(listOf(newC(++ccId, "A"), newC(ccId, "B")))
         codesOfClass8.addAll(listOf(newC(++ccId, "A"), newC(ccId, "B")))
-        every { codeServiceMock.findCodesOfClass(CodeClassId.CC1, LOCALE) } returns codesOfClass1
-        every { codeServiceMock.findCodesOfClass(CodeClassId.CC2, LOCALE) } returns codesOfClass2
-        every { codeServiceMock.findCodesOfClass(CodeClassId.CC3, LOCALE) } returns codesOfClass3
-        every { codeServiceMock.findCodesOfClass(CodeClassId.CC4, LOCALE) } returns codesOfClass4
-        every { codeServiceMock.findCodesOfClass(CodeClassId.CC5, LOCALE) } returns codesOfClass5
-        every { codeServiceMock.findCodesOfClass(CodeClassId.CC6, LOCALE) } returns codesOfClass6
-        every { codeServiceMock.findCodesOfClass(CodeClassId.CC7, LOCALE) } returns codesOfClass7
-        every { codeServiceMock.findCodesOfClass(CodeClassId.CC8, LOCALE) } returns codesOfClass8
+
+        with(codeServiceMock) {
+            every { findCodesOfClass(CodeClassId.CC1, LOCALE) } returns codesOfClass1
+            every { findCodesOfClass(CodeClassId.CC2, LOCALE) } returns codesOfClass2
+            every { findCodesOfClass(CodeClassId.CC3, LOCALE) } returns codesOfClass3
+            every { findCodesOfClass(CodeClassId.CC4, LOCALE) } returns codesOfClass4
+            every { findCodesOfClass(CodeClassId.CC5, LOCALE) } returns codesOfClass5
+            every { findCodesOfClass(CodeClassId.CC6, LOCALE) } returns codesOfClass6
+            every { findCodesOfClass(CodeClassId.CC7, LOCALE) } returns codesOfClass7
+            every { findCodesOfClass(CodeClassId.CC8, LOCALE) } returns codesOfClass8
+        }
         setUpLocalHook()
     }
 

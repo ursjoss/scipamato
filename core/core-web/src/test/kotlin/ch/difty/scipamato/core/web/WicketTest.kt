@@ -51,13 +51,54 @@ abstract class WicketTest : AbstractWicketTest() {
             every { hasAtLeastOneRoleOutOf(Roles.ADMIN) } returns currentUserIsAnyOf(Roles.ADMIN)
             every { hasAtLeastOneRoleOutOf(Roles.USER) } returns currentUserIsAnyOf(Roles.USER)
             every { hasAtLeastOneRoleOutOf(Roles.VIEWER) } returns currentUserIsAnyOf(Roles.VIEWER)
+            every { hasAtLeastOneRoleOutOf(Roles.USER, Roles.ADMIN) } returns currentUserIsAnyOf(Roles.ADMIN, Roles.USER)
             every { hasAtLeastOneRoleOutOf(Roles.ADMIN, Roles.USER) } returns currentUserIsAnyOf(Roles.ADMIN, Roles.USER)
             every { hasAtLeastOneRoleOutOf(Roles.USER, Roles.VIEWER) } returns currentUserIsAnyOf(Roles.USER, Roles.VIEWER)
             every { hasAtLeastOneRoleOutOf(Roles.ADMIN, Roles.VIEWER) } returns currentUserIsAnyOf(Roles.ADMIN, Roles.VIEWER)
             every { hasAtLeastOneRoleOutOf(Roles.ADMIN, Roles.USER, Roles.VIEWER) } returns
                 currentUserIsAnyOf(Roles.ADMIN, Roles.USER, Roles.VIEWER)
         }
+
         tester.session.locale = locale
+
+        with(itemNavigatorMock) {
+            every { initialize(any()) } returns Unit
+            every { setFocusToItem(any()) } returns Unit
+            every { setIdToHeadIfNotPresent(any()) } returns Unit
+            every { remove(any()) } returns Unit
+            every { hasPrevious() } returns false
+            every { hasNext() } returns true
+            every { isModified } returns false
+        }
+        with(paperServiceMock) {
+            every { findPageOfIdsByFilter(any(), any()) } returns emptyList()
+            every { findPageOfIdsBySearchOrder(any(), any()) } returns emptyList()
+            every { hasDuplicateFieldNextToCurrent(any(), any(), any()) } returns java.util.Optional.empty()
+            every { excludeFromSearchOrder(any(), any()) } returns Unit
+            every { reincludeIntoSearchOrder(any(), any()) } returns Unit
+            every { findLowestFreeNumberStartingFrom(any()) } returns 100L
+        }
+        with(paperSlimServiceMock) {
+            every { countByFilter(any()) } returns 0
+            every { countBySearchOrder(any()) } returns 0
+        }
+        with(newsletterServiceMock) {
+            every { mergePaperIntoWipNewsletter(any()) } returns Unit
+            every { remove(any()) } returns Unit
+            every { canCreateNewsletterInProgress() } returns false
+            every { removePaperFromWipNewsletter(any()) } returns true
+        }
+        with(newsletterTopicServiceMock) {
+            every { findAll(any()) } returns emptyList()
+            every { countByFilter(any()) } returns 0
+            every { getSortedNewsletterTopicsForNewsletter(any()) } returns emptyList()
+            every { saveSortedNewsletterTopics(any(), any()) } returns Unit
+        }
+        with(searchOrderServiceMock) {
+            every { remove(any()) } returns Unit
+            every { saveOrUpdateSearchCondition(any(), any(), any()) } returns null
+            every { findPageByFilter(any(), any()) } returns emptyList()
+        }
 
         setUpHook()
 

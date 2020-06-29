@@ -10,7 +10,6 @@ import ch.difty.scipamato.core.web.common.BasePageTest
 import ch.difty.scipamato.core.web.paper.result.ResultPanel
 import io.mockk.confirmVerified
 import io.mockk.every
-import io.mockk.impl.annotations.MockK
 import io.mockk.verify
 import org.apache.wicket.ajax.markup.html.AjaxLink
 import org.apache.wicket.ajax.markup.html.form.AjaxCheckBox
@@ -19,28 +18,17 @@ import org.apache.wicket.model.Model
 import org.apache.wicket.request.mapper.parameter.PageParameters
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
-import java.util.ArrayList
 import java.util.Optional
 
 @Suppress("SameParameterValue")
 internal class PaperSearchPageTest : BasePageTest<PaperSearchPage>() {
 
-    @MockK(relaxed = true)
-    private lateinit var paperSlimMock: PaperSlim
-
-    @MockK(relaxed = true)
-    private lateinit var searchOrderMock: SearchOrder
-
-    @MockK(relaxed = true)
-    private lateinit var searchOrderMock2: SearchOrder
-
+    private val paperSlim = PaperSlim(41L, 41L, "fa", 2020, "title")
     private val searchOrder = SearchOrder(SO_ID, "soName", 1, false, null, null)
 
     override fun setUpHook() {
         every { searchOrderServiceMock.findById(SO_ID) } returns Optional.of(searchOrder)
         every { searchOrderServiceMock.findPageByFilter(any(), any()) } returns listOf(searchOrder)
-        every { paperSlimMock.id } returns 41L
-        every { paperSlimMock.displayValue } returns "ps"
     }
 
     @AfterEach
@@ -134,9 +122,10 @@ internal class PaperSearchPageTest : BasePageTest<PaperSearchPage>() {
 
     @Test
     fun clickingNewSearchCondition_reloadsPage() {
-        every { searchOrderServiceMock.saveOrUpdate(any()) } returns searchOrderMock
-        every { searchOrderMock.id } returns 27L
-        every { searchOrderServiceMock.findById(27L) } returns Optional.of(searchOrderMock2)
+        every { searchOrderServiceMock.saveOrUpdate(any()) } returns SearchOrder().apply {
+            id = 27L
+        }
+        every { searchOrderServiceMock.findById(27L) } returns Optional.of(SearchOrder())
         val labelDisplayValue = "searchConditionDisplayValue"
         val sc: SearchCondition = object : SearchCondition() {
             override fun getDisplayValue(): String = labelDisplayValue
@@ -155,13 +144,11 @@ internal class PaperSearchPageTest : BasePageTest<PaperSearchPage>() {
         tester.assertRenderedPage(PaperSearchPage::class.java)
 
         verify { searchOrderServiceMock.saveOrUpdate(any()) }
-        verify(exactly = 6) { searchOrderMock.id }
         verify(exactly = 2) { searchOrderServiceMock.findPageByFilter(any(), any()) }
     }
 
     @Test
     fun clickingNewSearchCondition_withOptimisticLockingException_failsSaveAndWarns() {
-        every { searchOrderMock.id } returns 27L
         every { searchOrderServiceMock.saveOrUpdate(any()) } throws
             OptimisticLockingException("searchOrder", "record", OptimisticLockingException.Type.UPDATE)
         val labelDisplayValue = "searchConditionDisplayValue"
@@ -191,13 +178,17 @@ internal class PaperSearchPageTest : BasePageTest<PaperSearchPage>() {
 
     @Test
     fun clickingRemoveButtonOnResults_removesResultAndSavesSearchOrder() {
-        every { searchOrderMock.id } returns SO_ID
-        every { searchOrderMock2.id } returns SO_ID
-        every { paperSlimServiceMock.countBySearchOrder(searchOrderMock) } returnsMany listOf(1, 0)
-        every { paperSlimServiceMock.findPageBySearchOrder(searchOrderMock, any()) } returns listOf(paperSlimMock)
-        every { searchOrderServiceMock.saveOrUpdate(any()) } returns searchOrderMock2
+        val searchOrder1 = SearchOrder().apply {
+            id = SO_ID
+        }
+        val searchOrder2 = SearchOrder().apply {
+            id = SO_ID
+        }
+        every { paperSlimServiceMock.countBySearchOrder(searchOrder1) } returnsMany listOf(1, 0)
+        every { paperSlimServiceMock.findPageBySearchOrder(searchOrder1, any()) } returns listOf(paperSlim)
+        every { searchOrderServiceMock.saveOrUpdate(any()) } returns searchOrder2
 
-        val page = PaperSearchPage(Model.of(searchOrderMock), Mode.EDIT)
+        val page = PaperSearchPage(Model.of(searchOrder1), Mode.EDIT)
         tester.startPage(page)
 
         tester.assertRenderedPage(pageClass)
@@ -209,15 +200,12 @@ internal class PaperSearchPageTest : BasePageTest<PaperSearchPage>() {
         tester.assertContainsNot(someTextInRow)
 
         verify(exactly = 2) { searchOrderServiceMock.findPageByFilter(any(), any()) }
-        verify(exactly = 1) { paperSlimServiceMock.countBySearchOrder(searchOrderMock) }
-        verify(exactly = 1) { paperSlimServiceMock.findPageBySearchOrder(searchOrderMock, any()) }
-        verify(exactly = 2) { paperSlimMock.id }
-        verify(exactly = 2) { paperSlimMock.id }
-        verify(exactly = 3) { searchOrderMock.excludedPaperIds }
-        verify(exactly = 1) { searchOrderServiceMock.saveOrUpdate(searchOrderMock) }
-        verify(exactly = 1) { paperSlimServiceMock.countBySearchOrder(searchOrderMock2) }
-        verify(exactly = 2) { paperServiceMock.findPageOfIdsBySearchOrder(searchOrderMock, any()) }
-        verify(exactly = 2) { paperServiceMock.findPageOfIdsBySearchOrder(searchOrderMock2, any()) }
+        verify(exactly = 1) { paperSlimServiceMock.countBySearchOrder(searchOrder1) }
+        verify(exactly = 1) { paperSlimServiceMock.findPageBySearchOrder(searchOrder1, any()) }
+        verify(exactly = 1) { searchOrderServiceMock.saveOrUpdate(searchOrder1) }
+        verify(exactly = 1) { paperSlimServiceMock.countBySearchOrder(searchOrder2) }
+        verify(exactly = 2) { paperServiceMock.findPageOfIdsBySearchOrder(searchOrder1, any()) }
+        verify(exactly = 3) { paperServiceMock.findPageOfIdsBySearchOrder(searchOrder2, any()) }
         verify(exactly = 2) { paperServiceMock.findPageOfIdsByFilter(any(), any()) }
     }
 
@@ -250,14 +238,14 @@ internal class PaperSearchPageTest : BasePageTest<PaperSearchPage>() {
 
     @Test
     fun searchOrderMock_withNoExclusions_hidesShowExcludedButton() {
-        every { searchOrderMock.id } returns SO_ID
-        every { searchOrderMock.excludedPaperIds } returns ArrayList()
-        every { paperSlimServiceMock.countBySearchOrder(searchOrderMock) } returnsMany listOf(1, 0)
-        every { paperSlimServiceMock.findPageBySearchOrder(searchOrderMock, any()) } returns
-            listOf(paperSlimMock)
-        every { searchOrderServiceMock.saveOrUpdate(any()) } returns searchOrderMock2
+        val searchOrder1 = SearchOrder().apply {
+            id = SO_ID
+        }
+        every { paperSlimServiceMock.countBySearchOrder(searchOrder1) } returnsMany listOf(1, 0)
+        every { paperSlimServiceMock.findPageBySearchOrder(searchOrder1, any()) } returns listOf(paperSlim)
+        every { searchOrderServiceMock.saveOrUpdate(any()) } returns SearchOrder()
 
-        val page = PaperSearchPage(Model.of(searchOrderMock), Mode.EDIT)
+        val page = PaperSearchPage(Model.of(searchOrder1), Mode.EDIT)
         tester.startPage(page)
 
         tester.assertRenderedPage(pageClass)
@@ -265,21 +253,21 @@ internal class PaperSearchPageTest : BasePageTest<PaperSearchPage>() {
         tester.assertInvisible(linkPath)
 
         verify(exactly = 1) { searchOrderServiceMock.findPageByFilter(any(), any()) }
-        verify(exactly = 1) { paperSlimServiceMock.countBySearchOrder(searchOrderMock) }
-        verify(exactly = 1) { paperSlimServiceMock.findPageBySearchOrder(searchOrderMock, any()) }
-        verify { paperSlimMock.id }
-        verify(exactly = 3) { searchOrderMock.excludedPaperIds }
+        verify(exactly = 1) { paperSlimServiceMock.countBySearchOrder(searchOrder1) }
+        verify(exactly = 1) { paperSlimServiceMock.findPageBySearchOrder(searchOrder1, any()) }
     }
 
     @Test
     fun searchOrderMock_withExclusions_whenClicking_sendsEvent() {
-        every { searchOrderMock.id } returns SO_ID
-        every { searchOrderMock.excludedPaperIds } returns listOf(5L, 3L)
-        every { paperSlimServiceMock.countBySearchOrder(searchOrderMock) } returnsMany listOf(1, 0)
-        every { paperSlimServiceMock.findPageBySearchOrder(searchOrderMock, any()) } returns listOf(paperSlimMock)
-        every { searchOrderServiceMock.saveOrUpdate(any()) } returns searchOrderMock2
+        val searchOrder1 = SearchOrder().apply {
+            id = SO_ID
+            setExcludedPaperIds(listOf(5L, 3L))
+        }
+        every { paperSlimServiceMock.countBySearchOrder(searchOrder1) } returnsMany listOf(1, 0)
+        every { paperSlimServiceMock.findPageBySearchOrder(searchOrder1, any()) } returns listOf(paperSlim)
+        every { searchOrderServiceMock.saveOrUpdate(any()) } returns SearchOrder()
 
-        val page = PaperSearchPage(Model.of(searchOrderMock), Mode.EDIT)
+        val page = PaperSearchPage(Model.of(searchOrder1), Mode.EDIT)
         tester.startPage(page)
 
         tester.assertRenderedPage(pageClass)
@@ -290,10 +278,8 @@ internal class PaperSearchPageTest : BasePageTest<PaperSearchPage>() {
         tester.assertComponentOnAjaxResponse("resultPanel")
 
         verify(exactly = 1) { searchOrderServiceMock.findPageByFilter(any(), any()) }
-        verify(atLeast = 1) { paperSlimServiceMock.countBySearchOrder(searchOrderMock) }
-        verify(exactly = 1) { paperSlimServiceMock.findPageBySearchOrder(searchOrderMock, any()) }
-        verify(atLeast = 1) { paperSlimMock.id }
-        verify(exactly = 6) { searchOrderMock.excludedPaperIds }
+        verify(atLeast = 1) { paperSlimServiceMock.countBySearchOrder(searchOrder1) }
+        verify(exactly = 1) { paperSlimServiceMock.findPageBySearchOrder(searchOrder1, any()) }
     }
 
     companion object {
