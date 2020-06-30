@@ -190,10 +190,16 @@ subprojects {
             dependsOn(deleteOutFolderTask)
         }
         withType<Test> {
-            maxHeapSize = "4g"
+            maxHeapSize = "2g"
             @Suppress("UnstableApiUsage")
             useJUnitPlatform {
                 includeEngines("junit-jupiter", "spek2")
+            }
+            failFast = true
+            testLogging {
+                events = setOf(STARTED, FAILED, PASSED, SKIPPED)
+                showStackTraces = true
+                exceptionFormat = TestExceptionFormat.FULL
             }
         }
         withType<Jar> {
@@ -257,14 +263,6 @@ tasks {
         group = "Verification"
         dependsOn(projectsWithCoverage.map { it.tasks.getByName("jacocoTestReport") })
         dependsOn(subprojects.map { it.tasks.getByName("detekt") })
-    }
-    withType<Test> {
-        failFast = true
-        testLogging {
-            events = setOf(STARTED, FAILED, PASSED, SKIPPED)
-            showStackTraces = true
-            exceptionFormat = TestExceptionFormat.FULL
-        }
     }
 }
 
