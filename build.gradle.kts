@@ -190,7 +190,7 @@ subprojects {
             dependsOn(deleteOutFolderTask)
         }
         withType<Test> {
-            maxHeapSize = "2g"
+            maxHeapSize = "4g"
             @Suppress("UnstableApiUsage")
             useJUnitPlatform {
                 includeEngines("junit-jupiter", "spek2")
