@@ -41,6 +41,7 @@ internal class CodeEditPageTest : BasePageTest<CodeEditPage>() {
     private lateinit var codeField: TextField<String>
     private lateinit var codeClasses: BootstrapSelect<CodeClass>
 
+    private val cc1 = CodeClass(1, "CC1", "c1")
     private val cc2 = CodeClass(2, "Region", "d2")
 
     @Suppress("LocalVariableName")
@@ -199,6 +200,8 @@ internal class CodeEditPageTest : BasePageTest<CodeEditPage>() {
     @Test
     fun submittingDelete_delegatesDeleteToService() {
         every { codeServiceMock.delete(any(), any()) } returns codeDefinitionDummy
+        every { codeServiceMock.getCodeClass1("en_us") } returns cc1
+        every { codeServiceMock.countByFilter(any()) } returns 0
         tester.startPage(CodeEditPage(Model.of(cd), null))
         val formTester = tester.newFormTester("form")
         formTester.submit("headerPanel:delete")
@@ -261,6 +264,9 @@ internal class CodeEditPageTest : BasePageTest<CodeEditPage>() {
 
     @Test
     fun clickingBackButton_withPageWithoutCallingPageRef_forwardsToCodeListPage() {
+        every { codeServiceMock.getCodeClass1("en_us") } returns cc1
+        every { codeServiceMock.countByFilter(any()) } returns 0
+
         tester.startPage(CodeEditPage(Model.of(cd), null))
         val formTester = tester.newFormTester("form")
         formTester.submit("headerPanel:back")

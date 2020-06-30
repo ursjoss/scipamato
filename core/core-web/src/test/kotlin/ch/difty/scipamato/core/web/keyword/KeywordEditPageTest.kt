@@ -144,6 +144,7 @@ internal class KeywordEditPageTest : BasePageTest<KeywordEditPage>() {
     @Test
     fun submittingDelete_delegatesDeleteToService() {
         every { keywordServiceMock.delete(any(), any()) } returns keywordDefinitionDummy
+        every { keywordServiceMock.countByFilter(any()) } returns 0
 
         tester.startPage(KeywordEditPage(Model.of(kd), null))
 
@@ -209,6 +210,8 @@ internal class KeywordEditPageTest : BasePageTest<KeywordEditPage>() {
 
     @Test
     fun clickingBackButton_withPageWithoutCallingPageRef_forwardsToKeywordListPage() {
+        every { keywordServiceMock.countByFilter(any()) } returns 0
+
         tester.startPage(KeywordEditPage(Model.of(kd), null))
 
         val formTester = tester.newFormTester("form")

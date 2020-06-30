@@ -433,6 +433,9 @@ internal class UserEditPageTest : BasePageTest<UserEditPage>() {
 
     @Test
     fun deleting_delegatesToService() {
+        every { userServiceMock.remove(any()) } returns Unit
+        every { userServiceMock.countByFilter(any()) } returns 0
+
         tester.startPage(newUserEditPageInMode(UserEditPage.Mode.MANAGE))
         tester.assertRenderedPage(pageClass)
 

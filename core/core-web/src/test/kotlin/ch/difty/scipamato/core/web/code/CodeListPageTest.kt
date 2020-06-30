@@ -35,6 +35,7 @@ internal class CodeListPageTest : BasePageTest<CodeListPage>() {
         val cd2 = CodeDefinition("2A", "de", cc2, 2, true, 1, ct2_de, ct2_en, ct2_fr)
         results.addAll(listOf(cd1, cd2))
         every { codeServiceMock.countByFilter(any()) } returns results.size
+        every { codeServiceMock.getCodeClass1("en_us") } returns cc1
         every { codeServiceMock.findPageOfEntityDefinitions(any(), any()) } returns results.iterator()
         every { codeClassServiceMock.find(any()) } returns listOf(cc1, cc2)
     }

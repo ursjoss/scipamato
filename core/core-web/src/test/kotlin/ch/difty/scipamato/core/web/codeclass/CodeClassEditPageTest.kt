@@ -145,9 +145,11 @@ internal class CodeClassEditPageTest : BasePageTest<CodeClassEditPage>() {
 
     @Test
     fun clickingBackButton_withPageWithoutCallingPageRef_forwardsToCodeListPage() {
+        val cc1 = CodeClass(1, "cc1", "d1")
+        every { codeServiceMock.getCodeClass1("en_us") } returns cc1
         every { codeServiceMock.countByFilter(any()) } returns 1
         every { codeServiceMock.findPageOfEntityDefinitions(any(), any()) } returns listOf(
-            CodeDefinition("c1", "en", CodeClass(1, "cc1", "d1"), 1, false, 1)
+            CodeDefinition("c1", "en", cc1, 1, false, 1)
         ).iterator()
         tester.startPage(CodeClassEditPage(Model.of(ccd), null))
         val formTester = tester.newFormTester("form")
