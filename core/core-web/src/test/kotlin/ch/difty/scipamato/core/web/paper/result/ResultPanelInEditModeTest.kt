@@ -8,8 +8,10 @@ import io.mockk.verify
 import org.amshove.kluent.shouldBeNull
 import org.apache.wicket.feedback.ExactLevelFeedbackMessageFilter
 import org.apache.wicket.util.tester.TagTester
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 
+@Disabled // TODO reactivate
 internal class ResultPanelInEditModeTest : ResultPanelTest() {
 
     override val mode: Mode

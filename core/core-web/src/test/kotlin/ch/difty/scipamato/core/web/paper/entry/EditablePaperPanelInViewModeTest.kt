@@ -8,11 +8,9 @@ import io.mockk.every
 import io.mockk.verify
 import org.amshove.kluent.shouldBeTrue
 import org.apache.wicket.markup.html.form.Form
-import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import java.util.Optional
 
-@Disabled // TODO reactivate
 internal class EditablePaperPanelInViewModeTest : EditablePaperPanelTest() {
 
     override val mode: Mode

@@ -13,10 +13,8 @@ import org.apache.wicket.markup.html.form.Form
 import org.apache.wicket.model.Model
 import org.apache.wicket.request.mapper.parameter.PageParameters
 import org.apache.wicket.util.tester.FormTester
-import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 
-@Disabled // TODO reactivate
 @Suppress("SpellCheckingInspection")
 internal class PaperEntryPageTest : SelfUpdatingPageTest<PaperEntryPage>() {
 
