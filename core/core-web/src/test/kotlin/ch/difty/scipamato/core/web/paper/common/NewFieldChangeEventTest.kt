@@ -1,10 +1,9 @@
 package ch.difty.scipamato.core.web.paper.common
 
-import ch.difty.scipamato.common.ClearAllMocksExtension
 import io.mockk.confirmVerified
 import io.mockk.every
-import io.mockk.impl.annotations.MockK
-import io.mockk.junit5.MockKExtension
+import io.mockk.mockk
+import io.mockk.unmockkAll
 import io.mockk.verify
 import nl.jqno.equalsverifier.EqualsVerifier
 import nl.jqno.equalsverifier.Warning
@@ -13,26 +12,31 @@ import org.amshove.kluent.shouldBeNull
 import org.apache.wicket.ajax.AjaxRequestTarget
 import org.apache.wicket.markup.html.form.TextArea
 import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.extension.ExtendWith
 
-@ExtendWith(MockKExtension::class, ClearAllMocksExtension::class)
+@Suppress("SpellCheckingInspection", "UnusedEquals")
 internal class NewFieldChangeEventTest {
 
     private lateinit var e: NewFieldChangeEvent
-
-    @MockK(relaxed = true)
     private lateinit var targetMock: AjaxRequestTarget
-
-    @MockK(relaxed = true)
-    private lateinit var targetMock2: AjaxRequestTarget
-
-    @MockK(relaxed = true)
     private lateinit var mockComponent: TextArea<*>
+
+    @BeforeEach
+    fun setUp() {
+        mockComponent = mockk {
+            every { id } returns "id"
+            every { markupId } returns "mid"
+        }
+        targetMock = mockk {
+            every { add(mockComponent) } returns Unit
+        }
+    }
 
     @AfterEach
     fun tearDown() {
-        confirmVerified(targetMock, targetMock2)
+        confirmVerified(targetMock)
+        unmockkAll()
     }
 
     @Test
@@ -52,15 +56,15 @@ internal class NewFieldChangeEventTest {
     @Test
     fun usingWithId_doesAddId() {
         e = NewFieldChangeEvent(targetMock).withId("foo")
-        e.getId() shouldBeEqualTo "foo"
-        e.getMarkupId().shouldBeNull()
+        e.id shouldBeEqualTo "foo"
+        e.markupId.shouldBeNull()
     }
 
     @Test
     fun usingWithMarkupId_doesAddMarkupId() {
         e = NewFieldChangeEvent(targetMock).withMarkupId("bar")
-        e.getId().shouldBeNull()
-        e.getMarkupId() shouldBeEqualTo "bar"
+        e.id.shouldBeNull()
+        e.markupId shouldBeEqualTo "bar"
     }
 
     @Test
@@ -68,14 +72,16 @@ internal class NewFieldChangeEventTest {
         e = NewFieldChangeEvent(targetMock)
             .withId("hups")
             .withMarkupId("goo")
-        e.getId() shouldBeEqualTo "hups"
-        e.getMarkupId() shouldBeEqualTo "goo"
+        e.id shouldBeEqualTo "hups"
+        e.markupId shouldBeEqualTo "goo"
     }
 
     @Test
     fun canOverrideTarget() {
         e = NewFieldChangeEvent(targetMock)
         e.target shouldBeEqualTo targetMock
+
+        val targetMock2 = mockk<AjaxRequestTarget>()
         e.target = targetMock2
         e.target shouldBeEqualTo targetMock2
         verify { targetMock == targetMock }
@@ -104,7 +110,7 @@ internal class NewFieldChangeEventTest {
         every { mockComponent.id } returns "id"
         every { mockComponent.markupId } returns "mId"
         e = NewFieldChangeEvent(targetMock).withId("id")
-        e.getMarkupId().shouldBeNull()
+        e.markupId.shouldBeNull()
         e.considerAddingToTarget(mockComponent)
         verify { targetMock.add(mockComponent) }
     }

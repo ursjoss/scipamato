@@ -1,19 +1,32 @@
 package ch.difty.scipamato.core.web.behavior
 
 import ch.difty.scipamato.core.web.WicketTest
+import io.mockk.every
 import io.mockk.mockk
+import io.mockk.unmockkAll
 import io.mockk.verify
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeNull
 import org.apache.wicket.ajax.AjaxRequestTarget
 import org.apache.wicket.ajax.markup.html.AjaxLink
+import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 
 internal class AjaxTextDownloadTest : WicketTest() {
 
     private val ad = AjaxTextDownload(false)
 
-    private val targetMock = mockk<AjaxRequestTarget>(relaxed = true)
+    private lateinit var targetMock: AjaxRequestTarget
+
+    override fun setUpHook() {
+        targetMock = mockk()
+        every { targetMock.appendJavaScript(any())} returns Unit
+    }
+
+    @AfterEach
+    fun tearDown() {
+        unmockkAll()
+    }
 
     @Test
     fun `can instantiate AjaxTextDownload`() {

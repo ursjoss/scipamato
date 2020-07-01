@@ -1,10 +1,9 @@
 package ch.difty.scipamato.publ.web.paper.browse
 
-import ch.difty.scipamato.common.ClearAllMocksExtension
 import io.mockk.confirmVerified
 import io.mockk.every
-import io.mockk.impl.annotations.MockK
-import io.mockk.junit5.MockKExtension
+import io.mockk.mockk
+import io.mockk.unmockkAll
 import io.mockk.verify
 import nl.jqno.equalsverifier.EqualsVerifier
 import nl.jqno.equalsverifier.Warning
@@ -15,34 +14,32 @@ import org.apache.wicket.markup.html.form.TextArea
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.extension.ExtendWith
 
 private const val ID = "id"
 private const val MARKUP_ID = "mId"
 
-@ExtendWith(MockKExtension::class, ClearAllMocksExtension::class)
+@Suppress("UnusedEquals", "SpellCheckingInspection")
 internal class SimpleFilterPanelChangeEventTest {
 
     private lateinit var e: SimpleFilterPanelChangeEvent
-
-    @MockK(relaxUnitFun = true)
     private lateinit var targetMock: AjaxRequestTarget
-
-    @MockK(relaxUnitFun = true)
-    private lateinit var targetMock2: AjaxRequestTarget
-
-    @MockK
     private lateinit var mockComponent: TextArea<String>
 
     @BeforeEach
     fun setUp() {
-        every { mockComponent.id } returns ID
-        every { mockComponent.markupId } returns MARKUP_ID
+        mockComponent = mockk {
+            every { id } returns ID
+            every { markupId } returns MARKUP_ID
+        }
+        targetMock = mockk {
+            every { add(mockComponent) } returns Unit
+        }
     }
 
     @AfterEach
     fun tearDown() {
-        confirmVerified(targetMock, targetMock2)
+        confirmVerified(targetMock)
+        unmockkAll()
     }
 
     @Test
@@ -86,6 +83,8 @@ internal class SimpleFilterPanelChangeEventTest {
     fun canOverrideTarget() {
         e = SimpleFilterPanelChangeEvent(targetMock)
         e.target shouldBeEqualTo targetMock
+
+        val targetMock2 = mockk<AjaxRequestTarget>()
         e.target = targetMock2
         e.target shouldBeEqualTo targetMock2
         verify { targetMock == targetMock }

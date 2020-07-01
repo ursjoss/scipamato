@@ -1,9 +1,8 @@
 package ch.difty.scipamato.core.web.paper.search
 
-import ch.difty.scipamato.common.ClearAllMocksExtension
 import ch.difty.scipamato.core.web.paper.SearchOrderChangeEvent
-import io.mockk.impl.annotations.MockK
-import io.mockk.junit5.MockKExtension
+import io.mockk.mockk
+import io.mockk.unmockkAll
 import nl.jqno.equalsverifier.EqualsVerifier
 import nl.jqno.equalsverifier.Warning
 import org.amshove.kluent.shouldBeEqualTo
@@ -11,19 +10,25 @@ import org.amshove.kluent.shouldBeFalse
 import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldBeTrue
 import org.apache.wicket.ajax.AjaxRequestTarget
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.extension.ExtendWith
 
-@ExtendWith(MockKExtension::class, ClearAllMocksExtension::class)
 internal class SearchOrderChangeEventTest {
 
     private lateinit var e: SearchOrderChangeEvent
 
-    @MockK
     private lateinit var targetMock: AjaxRequestTarget
 
-    @MockK
-    private lateinit var targetMock2: AjaxRequestTarget
+    @BeforeEach
+    fun setUp() {
+        targetMock = mockk()
+    }
+
+    @AfterEach
+    fun tearDown() {
+        unmockkAll()
+    }
 
     @Test
     fun canRetrieveTarget() {
@@ -75,6 +80,8 @@ internal class SearchOrderChangeEventTest {
     fun canOverrideTarget() {
         e = SearchOrderChangeEvent(targetMock)
         e.target shouldBeEqualTo targetMock
+
+        val targetMock2 = mockk<AjaxRequestTarget>()
         e.target = targetMock2
         e.target shouldBeEqualTo targetMock2
     }
