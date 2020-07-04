@@ -54,11 +54,9 @@ import java.util.HashSet
  * with some minor refactorings but with one major change that has a significant effect
  * on the duration required to test core-web:
  *
- * Instead of using a `LinkedList` to store the listeners, we use a [HashSet]. This
+ * Instead of using a `LinkedList` to store the listeners, we use a [LinkedHashSet]. This
  * improves the time complexity of the [contains] method on the collection in the
- * method [addListener] from O(n) to constant time O(1). It does not maintain
- * insertion order though. If insertion order would be important, we could use
- * LinkedHashSet, which is slower than HashSet however.
+ * method [addListener] from O(n) to constant time O(1) while still keeping the order.
  *
  * When running the tests with mockk, this decreased the total time used for `gradlew check`
  * from several hours to 20 minutes.
@@ -100,7 +98,7 @@ class TestAjaxRequestHandler(page: Page) : AjaxRequestTarget {
         Args.notNull(listener, "listener")
         assertListenersNotFrozen()
         if (listeners == null)
-            listeners = HashSet()
+            listeners = LinkedHashSet()
         if (listener !in listeners!!)
             listeners!!.add(listener)
     }
