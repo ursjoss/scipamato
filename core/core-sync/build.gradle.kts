@@ -26,7 +26,7 @@ dependencies {
     implementation(project(Module.scipamatoCommon("utils")))
     implementation(Lib.springBootStarter("batch"))
     implementation(Lib.springBootStarter("jooq"))
-    api(Lib.springBoot("configuration-processor").id) {
+    annotationProcessor(Lib.springBoot("configuration-processor").id) {
         exclude("com.vaadin.external.google", "android-json")
     }
 

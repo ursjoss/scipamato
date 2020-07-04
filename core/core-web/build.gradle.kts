@@ -43,6 +43,9 @@ dependencies {
     implementation(project(Module.scipamatoCore("sync")))
     implementation(project(Module.scipamatoCommon("wicket")))
 
+    annotationProcessor(Lib.springBoot("configuration-processor").id) {
+        exclude("om.vaadin.external.google", "android-json")
+    }
     implementation(Lib.springBootStarter("security"))
 
     implementation(Lib.wicketJqueryUi())
