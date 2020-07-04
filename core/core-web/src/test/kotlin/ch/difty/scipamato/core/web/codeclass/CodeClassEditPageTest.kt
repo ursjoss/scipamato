@@ -11,6 +11,7 @@ import ch.difty.scipamato.core.web.common.BasePageTest
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton
 import io.mockk.confirmVerified
 import io.mockk.every
+import io.mockk.unmockkAll
 import io.mockk.verify
 import org.apache.wicket.markup.html.form.Form
 import org.apache.wicket.markup.html.form.TextField
@@ -21,17 +22,18 @@ import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 import org.springframework.dao.DuplicateKeyException
 
+@Suppress("PrivatePropertyName")
 internal class CodeClassEditPageTest : BasePageTest<CodeClassEditPage>() {
 
-    private lateinit var ccd: CodeClassDefinition
+    private val cct_de = CodeClassTranslation(1, "de", "Name1", "some description", 1)
+    private val cct_de2 = CodeClassTranslation(1, "de", "Name1a", null, 1)
+    private val cct_en = CodeClassTranslation(2, "en", "name1", null, 1)
+    private val cct_fr = CodeClassTranslation(3, "fr", "nom1", null, 1)
+
+    private val ccd: CodeClassDefinition = CodeClassDefinition(1, "de", 1, cct_de, cct_en, cct_fr, cct_de2)
 
     @Suppress("LocalVariableName")
     public override fun setUpHook() {
-        val cct_de = CodeClassTranslation(1, "de", "Name1", "some description", 1)
-        val cct_de2 = CodeClassTranslation(1, "de", "Name1a", null, 1)
-        val cct_en = CodeClassTranslation(2, "en", "name1", null, 1)
-        val cct_fr = CodeClassTranslation(3, "fr", "nom1", null, 1)
-        ccd = CodeClassDefinition(1, "de", 1, cct_de, cct_en, cct_fr, cct_de2)
         every { codeClassServiceMock.find(any()) } returns listOf(
             CodeClass(1, "cc1", "d1"),
             CodeClass(2, "cc2", "d2"),
@@ -42,6 +44,8 @@ internal class CodeClassEditPageTest : BasePageTest<CodeClassEditPage>() {
     @AfterEach
     fun tearDown() {
         confirmVerified(codeClassServiceMock)
+        tester.destroy()
+        unmockkAll()
     }
 
     override fun makePage(): CodeClassEditPage = CodeClassEditPage(Model.of(ccd), null)

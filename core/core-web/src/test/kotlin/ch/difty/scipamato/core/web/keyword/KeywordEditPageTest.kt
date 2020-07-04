@@ -8,7 +8,7 @@ import ch.difty.scipamato.core.web.common.BasePageTest
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton
 import io.mockk.confirmVerified
 import io.mockk.every
-import io.mockk.impl.annotations.MockK
+import io.mockk.unmockkAll
 import io.mockk.verify
 import org.apache.wicket.ajax.markup.html.AjaxLink
 import org.apache.wicket.markup.html.form.Form
@@ -17,32 +17,27 @@ import org.apache.wicket.markup.repeater.RefreshingView
 import org.apache.wicket.model.Model
 import org.apache.wicket.request.mapper.parameter.PageParameters
 import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.dao.DuplicateKeyException
 
-@Disabled // TODO reactivate
-@Suppress("SpellCheckingInspection")
+@Suppress("SpellCheckingInspection", "PrivatePropertyName")
 internal class KeywordEditPageTest : BasePageTest<KeywordEditPage>() {
 
-    @MockK
-    private lateinit var keywordDefinitionDummy: KeywordDefinition
+    private val kt_de = KeywordTranslation(1, "de", "Name1", 1)
+    private val kt_de2 = KeywordTranslation(10, "de", "Name1a", 1)
+    private val kt_en = KeywordTranslation(2, "en", "name1", 1)
+    private val kt_fr = KeywordTranslation(3, "fr", "nom1", 1)
 
-    private lateinit var kd: KeywordDefinition
+    private val keywordDefinitionDummy = KeywordDefinition(null, "en", null)
 
-    @Suppress("LocalVariableName")
-    public override fun setUpHook() {
-        val kt_de = KeywordTranslation(1, "de", "Name1", 1)
-        val kt_de2 = KeywordTranslation(10, "de", "Name1a", 1)
-        val kt_en = KeywordTranslation(2, "en", "name1", 1)
-        val kt_fr = KeywordTranslation(3, "fr", "nom1", 1)
-        kd = KeywordDefinition(1, "de", "thename", 1, kt_de, kt_en, kt_fr, kt_de2)
-    }
+    private val kd = KeywordDefinition(1, "de", "thename", 1, kt_de, kt_en, kt_fr, kt_de2)
 
     @AfterEach
     fun tearDown() {
         confirmVerified(keywordServiceMock)
+        tester.destroy()
+        unmockkAll()
     }
 
     override fun makePage(): KeywordEditPage = KeywordEditPage(Model.of(kd), null)

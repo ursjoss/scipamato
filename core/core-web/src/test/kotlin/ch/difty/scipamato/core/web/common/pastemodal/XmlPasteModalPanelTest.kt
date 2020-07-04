@@ -1,42 +1,45 @@
 package ch.difty.scipamato.core.web.common.pastemodal
 
+import ch.difty.scipamato.common.AjaxRequestTargetSpy
 import ch.difty.scipamato.core.web.common.PanelTest
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.fileUpload.DropZoneFileUpload
 import io.mockk.confirmVerified
 import io.mockk.every
-import io.mockk.impl.annotations.MockK
+import io.mockk.mockk
+import io.mockk.unmockkAll
 import io.mockk.verify
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldContain
+import org.amshove.kluent.shouldNotBeEmpty
 import org.apache.commons.fileupload.FileItem
-import org.apache.wicket.ajax.AjaxRequestTarget
 import org.apache.wicket.markup.html.form.Form
 import org.apache.wicket.markup.html.form.TextArea
 import org.apache.wicket.markup.html.panel.Panel
 import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import java.util.ArrayList
-import java.util.HashMap
 
-@Disabled // TODO reactivate
 @Suppress("SpellCheckingInspection")
 internal class XmlPasteModalPanelTest : PanelTest<XmlPasteModalPanel>() {
 
-    @MockK(relaxed = true)
-    private lateinit var requestTargetMock: AjaxRequestTarget
-
-    @MockK
+    private val targetSpy = AjaxRequestTargetSpy()
     private lateinit var fileItem: FileItem
 
-    private val map: MutableMap<String, List<FileItem?>> = HashMap()
+    private val map = mutableMapOf<String, List<FileItem?>>()
     private val files: MutableList<FileItem?> = ArrayList()
+
+    override fun setUpHook() {
+        fileItem = mockk()
+    }
 
     @AfterEach
     fun tearDown() {
-        confirmVerified(requestTargetMock, fileItem)
+        confirmVerified(fileItem)
+        targetSpy.reset()
+        tester.destroy()
+        unmockkAll()
     }
 
     override fun makePanel(): XmlPasteModalPanel = XmlPasteModalPanel(PANEL_ID)
@@ -80,13 +83,13 @@ internal class XmlPasteModalPanelTest : PanelTest<XmlPasteModalPanel>() {
     @Test
     fun updating_withNullMap_doesNothing() {
         val panel = makePanel()
-        panel.doOnUpdate(requestTargetMock, null)
+        panel.doOnUpdate(targetSpy, null)
     }
 
     @Test
     fun updating_withEmptyMap_doesNothing() {
         val panel = makePanel()
-        panel.doOnUpdate(requestTargetMock, map)
+        panel.doOnUpdate(targetSpy, map)
     }
 
     @Test
@@ -94,7 +97,7 @@ internal class XmlPasteModalPanelTest : PanelTest<XmlPasteModalPanel>() {
         files.add(fileItem)
         map["foo"] = files
         val panel = makePanel()
-        panel.doOnUpdate(requestTargetMock, map)
+        panel.doOnUpdate(targetSpy, map)
     }
 
     @Test
@@ -102,8 +105,9 @@ internal class XmlPasteModalPanelTest : PanelTest<XmlPasteModalPanel>() {
         map["file"] = files
         val panel = makePanel()
         tester.startComponentInPage(panel)
-        panel.doOnUpdate(requestTargetMock, map)
-        verify { requestTargetMock.add(any()) }
+        panel.doOnUpdate(targetSpy, map)
+        targetSpy.components.shouldNotBeEmpty()
+        targetSpy.reset()
     }
 
     @Test
@@ -113,8 +117,8 @@ internal class XmlPasteModalPanelTest : PanelTest<XmlPasteModalPanel>() {
         map["file"] = files
         val panel = makePanel()
         tester.startComponentInPage(panel)
-        panel.doOnUpdate(requestTargetMock, map)
-        verify { requestTargetMock.add(any()) }
+        panel.doOnUpdate(targetSpy, map)
+        targetSpy.components.shouldNotBeEmpty()
         verify { fileItem.contentType }
     }
 
@@ -127,9 +131,9 @@ internal class XmlPasteModalPanelTest : PanelTest<XmlPasteModalPanel>() {
         map["file"] = files
         val panel = makePanel()
         tester.startComponentInPage(panel)
-        panel.doOnUpdate(requestTargetMock, map)
+        panel.doOnUpdate(targetSpy, map)
         tester.assertInfoMessages("File 'fileName' [text/xml] was uploaded successfully.")
-        verify { requestTargetMock.add(any()) }
+        targetSpy.components.shouldNotBeEmpty()
         verify(exactly = 2) { fileItem.contentType }
         verify { fileItem.string }
         verify { fileItem.name }

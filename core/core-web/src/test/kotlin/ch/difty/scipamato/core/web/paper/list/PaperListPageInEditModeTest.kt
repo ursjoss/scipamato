@@ -1,5 +1,6 @@
 package ch.difty.scipamato.core.web.paper.list
 
+import ch.difty.scipamato.common.AjaxRequestTargetSpy
 import ch.difty.scipamato.core.auth.Roles
 import ch.difty.scipamato.core.persistence.DefaultServiceResult
 import ch.difty.scipamato.core.persistence.ServiceResult
@@ -9,10 +10,10 @@ import ch.difty.scipamato.core.web.security.TestUserDetailsService
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxLink
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar
+import io.mockk.clearMocks
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import org.apache.wicket.ajax.AjaxRequestTarget
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow
 import org.apache.wicket.markup.html.form.Form
 import org.apache.wicket.markup.html.form.TextArea
@@ -89,6 +90,7 @@ internal class PaperListPageInEditModeTest : PaperListPageTest() {
 
     @Test
     fun clickingNewPaper_forwardsToPaperEntryPage() {
+        clearMocks(applicationPropertiesMock)
         val minimumNumber: Long = 7
         val freeNumber: Long = 21
         every { applicationPropertiesMock.minimumPaperNumberToBeRecycled } returns minimumNumber
@@ -144,9 +146,9 @@ internal class PaperListPageInEditModeTest : PaperListPageTest() {
     fun onXmlPasteModalPanelClose_withContent_persistsArticlesAndUpdatesNavigateable() {
         val content = "content"
         every { pubmedImporterMock.persistPubmedArticlesFromXml(content) } returns makeServiceResult()
-        val target = mockk<AjaxRequestTarget>(relaxed = true)
+        val targetDummy = AjaxRequestTargetSpy()
         makePage().apply {
-            onXmlPasteModalPanelClose("content", target)
+            onXmlPasteModalPanelClose("content", targetDummy)
         }
         verify { pubmedImporterMock.persistPubmedArticlesFromXml(content) }
         verify { paperSlimServiceMock.countByFilter(any()) }

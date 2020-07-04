@@ -7,6 +7,7 @@ import ch.difty.scipamato.core.web.WicketTest
 import ch.difty.scipamato.core.web.paper.AbstractPaperSlimProvider
 import io.mockk.confirmVerified
 import io.mockk.impl.annotations.MockK
+import io.mockk.unmockkAll
 import net.sf.jasperreports.engine.JRDataSource
 import net.sf.jasperreports.engine.JRException
 import net.sf.jasperreports.engine.design.JRDesignField
@@ -36,6 +37,8 @@ abstract class PaperDataSourceTest : WicketTest() {
     @AfterEach
     fun tearDown() {
         confirmVerified(dataProviderMock, paperFilterMock, searchOrderMock, paperMock, shortFieldConcatenatorMock)
+        tester.destroy()
+        unmockkAll()
     }
 
     @Throws(JRException::class)

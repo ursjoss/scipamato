@@ -6,20 +6,22 @@ import ch.difty.scipamato.core.web.common.SelfUpdatingPageTest
 import ch.difty.scipamato.core.web.paper.common.PaperPanel
 import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.BootstrapTabbedPanel
 import io.mockk.every
-import io.mockk.impl.annotations.MockK
+import io.mockk.unmockkAll
 import io.mockk.verify
 import org.amshove.kluent.shouldNotBeNull
 import org.apache.wicket.markup.html.form.Form
 import org.apache.wicket.model.Model
 import org.apache.wicket.request.mapper.parameter.PageParameters
 import org.apache.wicket.util.tester.FormTester
+import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
+
+private const val ID = 1L
 
 @Suppress("SpellCheckingInspection")
 internal class PaperEntryPageTest : SelfUpdatingPageTest<PaperEntryPage>() {
 
-    @MockK(relaxed = true)
-    private lateinit var persistedPaperMock: Paper
+    private val persistedPaper = Paper().apply { id = ID }
 
     override fun makePage(): PaperEntryPage = PaperEntryPage(Model.of(Paper()), null)
 
@@ -58,11 +60,15 @@ internal class PaperEntryPageTest : SelfUpdatingPageTest<PaperEntryPage>() {
         fields.forEach { f -> assertLabeledTextArea(bb, f) }
     }
 
+    @AfterEach
+    fun tearDown() {
+        tester.destroy()
+        unmockkAll()
+    }
+
     @Test
     fun submitting_withNewPaper_addsIdToPaperManager() {
-        val id = 0L
-        every { persistedPaperMock.id } returns id
-        every { paperServiceMock.saveOrUpdate(any()) } returns persistedPaperMock
+        every { paperServiceMock.saveOrUpdate(any()) } returns persistedPaper
 
         tester.startPage(makePage())
         val formTester = makeSavablePaperTester()
@@ -72,14 +78,12 @@ internal class PaperEntryPageTest : SelfUpdatingPageTest<PaperEntryPage>() {
         tester.assertNoErrorMessage()
 
         verify(exactly = 2) { paperServiceMock.saveOrUpdate(any()) }
-        verify(exactly = 2) { itemNavigatorMock.setIdToHeadIfNotPresent(id) }
+        verify(exactly = 1) { itemNavigatorMock.setIdToHeadIfNotPresent(ID) }
     }
 
     @Test
     fun submitting_withPersistedPaper_doesNotAddsIdToPaperManagerAfterSaving() {
-        val id = 1L
-        every { persistedPaperMock.id } returns id
-        every { paperServiceMock.saveOrUpdate(any()) } returns persistedPaperMock
+        every { paperServiceMock.saveOrUpdate(any()) } returns persistedPaper
 
         tester.startPage(makePage())
         val formTester = makeSavablePaperTester()
@@ -89,7 +93,7 @@ internal class PaperEntryPageTest : SelfUpdatingPageTest<PaperEntryPage>() {
         tester.assertNoErrorMessage()
 
         verify(exactly = 2) { paperServiceMock.saveOrUpdate(any()) }
-        verify(exactly = 1) { itemNavigatorMock.setIdToHeadIfNotPresent(id) }
+        verify(exactly = 1) { itemNavigatorMock.setIdToHeadIfNotPresent(ID) }
     }
 
     @Test
@@ -100,7 +104,7 @@ internal class PaperEntryPageTest : SelfUpdatingPageTest<PaperEntryPage>() {
         tester.submitForm("contentPanel:form")
         tester.assertErrorMessages(
             "'Authors' is required.", "'Title' is required.", "'Location' is required.",
-            "'Pub. Year' is required.", "'SciPaMaTo-No.' is required.", "'Goals' is required."
+            "'Pub. Year' is required.", "'SciPaMaTo-Core-No.' is required.", "'Goals' is required."
         )
     }
 
@@ -163,8 +167,7 @@ internal class PaperEntryPageTest : SelfUpdatingPageTest<PaperEntryPage>() {
 
     @Test
     fun defaultModel_containsNaValuesAndCanSubmitWithoutErrors() {
-        every { persistedPaperMock.id } returns 10L
-        every { paperServiceMock.saveOrUpdate(any()) } returns persistedPaperMock
+        every { paperServiceMock.saveOrUpdate(any()) } returns persistedPaper
         every { paperServiceMock.findLowestFreeNumberStartingFrom(7L) } returns 19L
 
         tester.startPage(PaperEntryPage(PageParameters(), null))
@@ -184,13 +187,11 @@ internal class PaperEntryPageTest : SelfUpdatingPageTest<PaperEntryPage>() {
         tester.assertNoErrorMessage()
 
         verify(exactly = 2) { paperServiceMock.saveOrUpdate(any()) }
-        verify { paperServiceMock.findLowestFreeNumberStartingFrom(7L) }
+        verify { paperServiceMock.findLowestFreeNumberStartingFrom(any()) }
     }
 
     @Test
     fun eventTest() {
-        every { persistedPaperMock.id } returns 3L
-
         tester.startPage(makePage())
 
         tester.executeAjaxEvent("contentPanel:form:modAssociation", "click")

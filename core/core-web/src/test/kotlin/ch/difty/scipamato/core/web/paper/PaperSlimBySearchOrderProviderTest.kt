@@ -3,8 +3,6 @@ package ch.difty.scipamato.core.web.paper
 import ch.difty.scipamato.common.persistence.paging.matchPaginationContext
 import ch.difty.scipamato.core.entity.search.SearchOrder
 import io.mockk.every
-import io.mockk.impl.annotations.MockK
-import io.mockk.mockk
 import io.mockk.verify
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldContain
@@ -12,22 +10,26 @@ import org.amshove.kluent.shouldHaveSize
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder
 import org.junit.jupiter.api.Test
 
+private const val ID = 55L
+
 internal class PaperSlimBySearchOrderProviderTest : AbstractPaperSlimProviderTest<SearchOrder, PaperSlimBySearchOrderProvider>() {
 
-    @MockK
-    override lateinit var filter: SearchOrder
+    override val filterDummy = SearchOrder().apply {
+        name = "foo"
+        id = ID
+    }
 
     override fun localFixture() {
-        every { paperSlimServiceMock.findPageBySearchOrder(filter, any()) } returns pageOfSlimPapers
+        every { paperSlimServiceMock.findPageBySearchOrder(filterDummy, any()) } returns pageOfSlimPapers
     }
 
     override fun newProvider(): PaperSlimBySearchOrderProvider =
-        object : PaperSlimBySearchOrderProvider(filter, PAGE_SIZE) {
+        object : PaperSlimBySearchOrderProvider(filterDummy, PAGE_SIZE) {
             override fun getLanguageCode(): String = LC
         }
 
-    override fun verifyFilterMock(offset: Int, pageSize: Int, sort: String) {
-        verify { paperSlimServiceMock.findPageBySearchOrder(filter, matchPaginationContext(offset, pageSize, sort)) }
+    override fun localVerify(offset: Int, pageSize: Int, sort: String) {
+        verify { paperSlimServiceMock.findPageBySearchOrder(filterDummy, matchPaginationContext(offset, pageSize, sort)) }
     }
 
     @Test
@@ -39,33 +41,31 @@ internal class PaperSlimBySearchOrderProviderTest : AbstractPaperSlimProviderTes
     @Test
     fun size() {
         val size = 5
-        every { paperSlimServiceMock.countBySearchOrder(filter) } returns size
+        every { paperSlimServiceMock.countBySearchOrder(filterDummy) } returns size
         provider.size() shouldBeEqualTo size.toLong()
-        verify { paperSlimServiceMock.countBySearchOrder(filter) }
+        verify { paperSlimServiceMock.countBySearchOrder(filterDummy) }
     }
 
     @Test
     fun settingFilterState() {
-        val searchOrder2 = mockk<SearchOrder>()
-        provider.filterState shouldBeEqualTo filter
+        provider.filterState shouldBeEqualTo filterDummy
+        val searchOrder2 = SearchOrder().apply { isGlobal = true }
         provider.filterState = searchOrder2
         provider.filterState shouldBeEqualTo searchOrder2
-        verify { filter == filter }
     }
 
     @Test
     fun gettingAllPapersByFilter() {
         provider.setSort("authors", SortOrder.ASCENDING)
         every {
-            paperServiceMock.findPageBySearchOrder(filter, matchPaginationContext(0, Int.MAX_VALUE, "authors: ASC"), LC)
+            paperServiceMock.findPageBySearchOrder(filterDummy, matchPaginationContext(0, Int.MAX_VALUE, "authors: ASC"), LC)
         } returns pageOfPapers
         val papers = provider.findAllPapersByFilter()
         papers shouldHaveSize 5
-        papers shouldContain paperMock
+        papers shouldContain paperDummy
         verify {
-            paperServiceMock.findPageBySearchOrder(filter, matchPaginationContext(0, Int.MAX_VALUE, "authors: ASC"), LC)
+            paperServiceMock.findPageBySearchOrder(filterDummy, matchPaginationContext(0, Int.MAX_VALUE, "authors: ASC"), LC)
         }
-        verify { paperMock == paperMock }
     }
 
     @Test
@@ -73,20 +73,18 @@ internal class PaperSlimBySearchOrderProviderTest : AbstractPaperSlimProviderTes
         val ids = listOf(3L, 18L, 6L)
         provider.setSort("authors", SortOrder.ASCENDING)
         every {
-            paperServiceMock.findPageOfIdsBySearchOrder(filter, matchPaginationContext(0, Int.MAX_VALUE, "authors: ASC"))
+            paperServiceMock.findPageOfIdsBySearchOrder(filterDummy, matchPaginationContext(0, Int.MAX_VALUE, "authors: ASC"))
         } returns ids
         val papers = provider.findAllPaperIdsByFilter()
         papers shouldBeEqualTo ids
         verify {
-            paperServiceMock.findPageOfIdsBySearchOrder(filter, matchPaginationContext(0, Int.MAX_VALUE, "authors: ASC"))
+            paperServiceMock.findPageOfIdsBySearchOrder(filterDummy, matchPaginationContext(0, Int.MAX_VALUE, "authors: ASC"))
         }
     }
 
     @Test
     fun gettingSearchOrderId_passesModelId() {
-        every { filter.id } returns 55L
-        provider.searchOrderId shouldBeEqualTo 55L
-        verify { filter.id }
+        provider.searchOrderId shouldBeEqualTo ID
     }
 
     @Test
@@ -100,9 +98,13 @@ internal class PaperSlimBySearchOrderProviderTest : AbstractPaperSlimProviderTes
     }
 
     private fun assertShowExcluded(result: Boolean) {
-        every { filter.isShowExcluded } returns result
-        provider.isShowExcluded shouldBeEqualTo result
-        verify { filter.isShowExcluded }
+        val filter2Dummy = SearchOrder().apply {
+            isShowExcluded = result
+        }
+        val provider2 = object : PaperSlimBySearchOrderProvider(filter2Dummy, PAGE_SIZE) {
+            override fun getLanguageCode(): String = LC
+        }
+        provider2.isShowExcluded shouldBeEqualTo result
     }
 
     companion object {

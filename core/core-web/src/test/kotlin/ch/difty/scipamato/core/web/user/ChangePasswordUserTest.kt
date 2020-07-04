@@ -7,25 +7,22 @@ import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldContainAll
 import org.amshove.kluent.shouldContainSame
 import org.amshove.kluent.shouldNotBeNull
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 internal class ChangePasswordUserTest {
 
-    private val user = User()
-    private lateinit var cpu: ChangePasswordUser
-
-    @BeforeEach
-    fun setUp() {
-        user.id = 1
-        user.userName = "un"
-        user.firstName = "fn"
-        user.lastName = "ln"
-        user.email = "em"
-        user.password = "pw"
-        user.isEnabled = true
-        user.roles = setOf(Role.ADMIN, Role.USER)
+    private val user = User().apply {
+        id = 1
+        userName = "un"
+        firstName = "fn"
+        lastName = "ln"
+        email = "em"
+        password = "pw"
+        isEnabled = true
+        roles = setOf(Role.ADMIN, Role.USER)
     }
+
+    private lateinit var cpu: ChangePasswordUser
 
     @Test
     fun fromUser_withoutResettingPassword_hasThePasswordButNoCurrentPasswordNorPassword2() {

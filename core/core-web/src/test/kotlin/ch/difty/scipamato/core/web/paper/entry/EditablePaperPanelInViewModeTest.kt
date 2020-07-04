@@ -4,22 +4,16 @@ import ch.difty.scipamato.common.web.Mode
 import ch.difty.scipamato.core.entity.Paper.NewsletterLink
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable
-import io.mockk.every
 import io.mockk.verify
 import org.amshove.kluent.shouldBeTrue
 import org.apache.wicket.markup.html.form.Form
 import org.junit.jupiter.api.Test
-import java.util.Optional
 
+@Suppress("SpellCheckingInspection")
 internal class EditablePaperPanelInViewModeTest : EditablePaperPanelTest() {
 
     override val mode: Mode
         get() = Mode.VIEW
-
-    override fun setUpLocalHook() {
-        // when referring to PaperSearchPage
-        every { searchOrderServiceMock.findById(SEARCH_ORDER_ID) } returns Optional.empty()
-    }
 
     override fun assertSpecificComponents() {
         var b = PANEL_ID

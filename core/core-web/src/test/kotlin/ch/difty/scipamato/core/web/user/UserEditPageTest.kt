@@ -12,6 +12,7 @@ import io.mockk.MockKMatcherScope
 import io.mockk.clearMocks
 import io.mockk.confirmVerified
 import io.mockk.every
+import io.mockk.unmockkAll
 import io.mockk.verify
 import org.amshove.kluent.invoking
 import org.amshove.kluent.shouldThrow
@@ -51,6 +52,8 @@ internal class UserEditPageTest : BasePageTest<UserEditPage>() {
     @AfterEach
     fun tearDown() {
         confirmVerified(userServiceMock)
+        tester.destroy()
+        unmockkAll()
     }
 
     override fun makePage(): UserEditPage = newUserEditPageInMode(UserEditPage.Mode.MANAGE)

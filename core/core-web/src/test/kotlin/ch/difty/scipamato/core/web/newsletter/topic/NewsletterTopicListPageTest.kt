@@ -9,28 +9,27 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButt
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable
 import io.mockk.confirmVerified
 import io.mockk.every
+import io.mockk.unmockkAll
 import io.mockk.verify
 import org.apache.wicket.markup.html.form.Form
 import org.apache.wicket.markup.html.link.Link
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
-import java.util.ArrayList
 
 internal class NewsletterTopicListPageTest : BasePageTest<NewsletterTopicListPage>() {
 
-    private val results: MutableList<NewsletterTopicDefinition> = ArrayList()
+    private val ntt1_de = NewsletterTopicTranslation(1, "de", "thema1", 1)
+    private val ntt1_en = NewsletterTopicTranslation(2, "en", "topic1", 1)
+    private val ntt1_fr = NewsletterTopicTranslation(3, "fr", "theme1", 1)
+    private val ntd1 = NewsletterTopicDefinition(1, "de", 1, ntt1_de, ntt1_en, ntt1_fr)
+    private val ntt2_de = NewsletterTopicTranslation(4, "de", "thema2", 1)
+    private val ntt2_en = NewsletterTopicTranslation(5, "en", "topic2", 1)
+    private val ntt2_fr = NewsletterTopicTranslation(6, "fr", "theme2", 1)
+    private val ntd2 = NewsletterTopicDefinition(2, "de", 1, ntt2_de, ntt2_en, ntt2_fr)
 
-    @Suppress("LocalVariableName")
+    private val results = listOf(ntd1, ntd2)
+
     override fun setUpHook() {
-        val ntt1_de = NewsletterTopicTranslation(1, "de", "thema1", 1)
-        val ntt1_en = NewsletterTopicTranslation(2, "en", "topic1", 1)
-        val ntt1_fr = NewsletterTopicTranslation(3, "fr", "theme1", 1)
-        val ntd1 = NewsletterTopicDefinition(1, "de", 1, ntt1_de, ntt1_en, ntt1_fr)
-        val ntt2_de = NewsletterTopicTranslation(4, "de", "thema2", 1)
-        val ntt2_en = NewsletterTopicTranslation(5, "en", "topic2", 1)
-        val ntt2_fr = NewsletterTopicTranslation(6, "fr", "theme2", 1)
-        val ntd2 = NewsletterTopicDefinition(2, "de", 1, ntt2_de, ntt2_en, ntt2_fr)
-        results.addAll(listOf(ntd1, ntd2))
         every { newsletterTopicServiceMock.countByFilter(any()) } returns results.size
         every { newsletterTopicServiceMock.findPageOfEntityDefinitions(any(), any()) } returns results.iterator()
     }
@@ -38,6 +37,8 @@ internal class NewsletterTopicListPageTest : BasePageTest<NewsletterTopicListPag
     @AfterEach
     fun tearDown() {
         confirmVerified(newsletterTopicServiceMock)
+        tester.destroy()
+        unmockkAll()
     }
 
     override fun makePage(): NewsletterTopicListPage = NewsletterTopicListPage(null)

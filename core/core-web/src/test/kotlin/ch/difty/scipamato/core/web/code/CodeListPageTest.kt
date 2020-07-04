@@ -9,33 +9,32 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.Bootst
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable
 import io.mockk.confirmVerified
 import io.mockk.every
+import io.mockk.unmockkAll
 import io.mockk.verify
 import org.apache.wicket.markup.html.form.Form
 import org.apache.wicket.markup.html.link.Link
 import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
-import java.util.ArrayList
 
-@Disabled // TODO reactivate
+@Suppress("PrivatePropertyName")
 internal class CodeListPageTest : BasePageTest<CodeListPage>() {
 
     private val cc1 = CodeClass(1, "cc1", "d1")
     private val cc2 = CodeClass(2, "cc2", "d2")
 
-    private val results: MutableList<CodeDefinition> = ArrayList()
+    private val ct1_de = CodeTranslation(1, "de", "Name1", "a comment", 1)
+    private val ct1_en = CodeTranslation(2, "en", "name1", null, 1)
+    private val ct1_fr = CodeTranslation(3, "fr", "nom1", null, 1)
+    private val cd1 = CodeDefinition("1A", "de", cc1, 1, false, 1, ct1_de, ct1_en, ct1_fr)
+    private val ct2_en = CodeTranslation(5, "en", "name2", null, 1)
+    private val ct2_fr = CodeTranslation(6, "fr", "nom2", null, 1)
+    private val ct2_de = CodeTranslation(4, "de", "Name2", null, 1)
+    private val cd2 = CodeDefinition("2A", "de", cc2, 2, true, 1, ct2_de, ct2_en, ct2_fr)
+
+    private val results: List<CodeDefinition> = listOf(cd1, cd2)
 
     @Suppress("LocalVariableName")
     override fun setUpHook() {
-        val ct1_de = CodeTranslation(1, "de", "Name1", "a comment", 1)
-        val ct1_en = CodeTranslation(2, "en", "name1", null, 1)
-        val ct1_fr = CodeTranslation(3, "fr", "nom1", null, 1)
-        val cd1 = CodeDefinition("1A", "de", cc1, 1, false, 1, ct1_de, ct1_en, ct1_fr)
-        val ct2_en = CodeTranslation(5, "en", "name2", null, 1)
-        val ct2_fr = CodeTranslation(6, "fr", "nom2", null, 1)
-        val ct2_de = CodeTranslation(4, "de", "Name2", null, 1)
-        val cd2 = CodeDefinition("2A", "de", cc2, 2, true, 1, ct2_de, ct2_en, ct2_fr)
-        results.addAll(listOf(cd1, cd2))
         every { codeServiceMock.countByFilter(any()) } returns results.size
         every { codeServiceMock.getCodeClass1("en_us") } returns cc1
         every { codeServiceMock.findPageOfEntityDefinitions(any(), any()) } returns results.iterator()
@@ -45,6 +44,8 @@ internal class CodeListPageTest : BasePageTest<CodeListPage>() {
     @AfterEach
     fun tearDown() {
         confirmVerified(codeServiceMock)
+        tester.destroy()
+        unmockkAll()
     }
 
     override fun makePage(): CodeListPage = CodeListPage(null)

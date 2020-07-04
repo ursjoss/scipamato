@@ -20,4 +20,5 @@ dependencies {
         exclude("com.nhaarman.mockitokotlin2", "mockito-kotlin")
     }
     api(Lib.equalsverifier())
+    api(Lib.wicket("core"))
 }

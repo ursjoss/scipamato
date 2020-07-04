@@ -10,6 +10,7 @@ import ch.difty.scipamato.core.web.common.BasePageTest
 import ch.difty.scipamato.core.web.paper.result.ResultPanel
 import io.mockk.confirmVerified
 import io.mockk.every
+import io.mockk.unmockkAll
 import io.mockk.verify
 import org.apache.wicket.ajax.markup.html.AjaxLink
 import org.apache.wicket.ajax.markup.html.form.AjaxCheckBox
@@ -34,6 +35,8 @@ internal class PaperSearchPageTest : BasePageTest<PaperSearchPage>() {
     @AfterEach
     fun tearDown() {
         confirmVerified(searchOrderServiceMock)
+        tester.destroy()
+        unmockkAll()
     }
 
     override fun makePage(): PaperSearchPage {

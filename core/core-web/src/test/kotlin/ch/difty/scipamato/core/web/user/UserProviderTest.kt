@@ -6,7 +6,7 @@ import ch.difty.scipamato.core.entity.search.UserFilter
 import ch.difty.scipamato.core.web.AbstractWicketTest
 import io.mockk.confirmVerified
 import io.mockk.every
-import io.mockk.impl.annotations.MockK
+import io.mockk.unmockkAll
 import io.mockk.verify
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeFalse
@@ -20,26 +20,24 @@ import org.junit.jupiter.api.Test
 
 internal class UserProviderTest : AbstractWicketTest() {
 
-    @MockK(relaxed = true)
-    private lateinit var filterMock: UserFilter
+    private val filter = UserFilter().apply { nameMask = "foo" }
+    private val entity = User()
 
-    @MockK
-    private lateinit var entityMock: User
+    private val entities = listOf(entity, entity, entity)
 
     private lateinit var provider: UserProvider
-    private lateinit var papers: List<User>
 
     @BeforeEach
     fun setUp() {
         WicketTester(application)
-        provider = UserProvider(filterMock)
+        provider = UserProvider(filter)
         provider.setService(userServiceMock)
-        papers = listOf(entityMock, entityMock, entityMock)
     }
 
     @AfterEach
     fun tearDown() {
-        confirmVerified(userServiceMock, entityMock)
+        confirmVerified(userServiceMock)
+        unmockkAll()
     }
 
     @Test
@@ -57,35 +55,33 @@ internal class UserProviderTest : AbstractWicketTest() {
     @Test
     fun size() {
         val size = 5
-        every { userServiceMock.countByFilter(filterMock) } returns size
+        every { userServiceMock.countByFilter(filter) } returns size
         provider.size() shouldBeEqualTo size.toLong()
-        verify { userServiceMock.countByFilter(filterMock) }
+        verify { userServiceMock.countByFilter(filter) }
     }
 
     @Test
     fun gettingModel_wrapsEntity() {
-        val model = provider.model(entityMock)
-        model.getObject() shouldBeEqualTo entityMock
-        verify { entityMock == entityMock }
+        val model = provider.model(entity)
+        model.getObject() shouldBeEqualTo entity
     }
 
     @Test
     fun gettingFilterState_returnsFilter() {
-        provider.filterState shouldBeEqualTo filterMock
+        provider.filterState shouldBeEqualTo filter
     }
 
     @Test
     fun settingFilterState() {
         provider = UserProvider()
-        provider.filterState shouldNotBeEqualTo filterMock
-        provider.filterState = filterMock
-        provider.filterState shouldBeEqualTo filterMock
+        provider.filterState shouldNotBeEqualTo filter
+        provider.filterState = filter
+        provider.filterState shouldBeEqualTo filter
     }
 
     @Test
     fun iterating_withNoRecords_returnsNoRecords() {
-        papers = emptyList()
-        every { userServiceMock.findPageByFilter(any(), any()) } returns papers
+        every { userServiceMock.findPageByFilter(any(), any()) } returns emptyList()
         val it = provider.iterator(0, 3)
         it.hasNext().shouldBeFalse()
         verify { userServiceMock.findPageByFilter(any(), matchPaginationContext(0, 3, "userName: ASC")) }
@@ -93,7 +89,7 @@ internal class UserProviderTest : AbstractWicketTest() {
 
     @Test
     fun iterating_throughFirst() {
-        every { userServiceMock.findPageByFilter(any(), any()) } returns papers
+        every { userServiceMock.findPageByFilter(any(), any()) } returns entities
         val it = provider.iterator(0, 3)
         assertRecordsIn(it)
         verify { userServiceMock.findPageByFilter(any(), matchPaginationContext(0, 3, "userName: ASC")) }
@@ -109,7 +105,7 @@ internal class UserProviderTest : AbstractWicketTest() {
 
     @Test
     fun iterating_throughSecondPage() {
-        every { userServiceMock.findPageByFilter(any(), any()) } returns papers
+        every { userServiceMock.findPageByFilter(any(), any()) } returns entities
         val it = provider.iterator(3, 3)
         assertRecordsIn(it)
         verify { userServiceMock.findPageByFilter(any(), matchPaginationContext(3, 3, "userName: ASC")) }
@@ -118,7 +114,7 @@ internal class UserProviderTest : AbstractWicketTest() {
     @Test
     fun iterating_throughThirdPage() {
         provider.setSort("title", SortOrder.DESCENDING)
-        every { userServiceMock.findPageByFilter(any(), any()) } returns papers
+        every { userServiceMock.findPageByFilter(any(), any()) } returns entities
         val it = provider.iterator(6, 3)
         assertRecordsIn(it)
         verify { userServiceMock.findPageByFilter(any(), matchPaginationContext(6, 3, "title: DESC")) }

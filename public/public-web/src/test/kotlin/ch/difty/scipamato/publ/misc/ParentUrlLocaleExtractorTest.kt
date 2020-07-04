@@ -1,28 +1,21 @@
 package ch.difty.scipamato.publ.misc
 
-import ch.difty.scipamato.common.ClearAllMocksExtension
-import ch.difty.scipamato.publ.config.ScipamatoPublicProperties
 import io.mockk.every
-import io.mockk.impl.annotations.MockK
-import io.mockk.junit5.MockKExtension
+import io.mockk.mockk
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.extension.ExtendWith
 import java.util.Locale
 
-@ExtendWith(MockKExtension::class, ClearAllMocksExtension::class)
 internal class ParentUrlLocaleExtractorTest {
 
     private lateinit var localeExtractor: LocaleExtractor
 
-    @MockK
-    private lateinit var propertiesMock: ScipamatoPublicProperties
-
     @BeforeEach
     fun setUp() {
-        every { propertiesMock.defaultLocalization } returns "en"
-        localeExtractor = ParentUrlLocaleExtractor(propertiesMock)
+        localeExtractor = ParentUrlLocaleExtractor(mockk {
+            every { defaultLocalization } returns "en"
+        })
     }
 
     @Test

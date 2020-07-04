@@ -7,6 +7,7 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButt
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable
 import io.mockk.confirmVerified
 import io.mockk.every
+import io.mockk.unmockkAll
 import io.mockk.verify
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeNull
@@ -14,7 +15,6 @@ import org.apache.wicket.markup.html.form.Form
 import org.apache.wicket.markup.html.link.Link
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
-import java.util.ArrayList
 import java.util.Optional
 
 @Suppress("SameParameterValue")
@@ -31,14 +31,12 @@ internal class UserListPageAsAdminTest : BasePageTest<UserListPage>() {
             setOf(Role.VIEWER)
         )
 
-    private val results: MutableList<User> = ArrayList()
+    private val results: List<User> = listOf(disabledUser, enabledUser)
 
     override val userName: String
         get() = "testadmin"
 
     override fun setUpHook() {
-        results.add(disabledUser)
-        results.add(enabledUser)
         every { userServiceMock.countByFilter(any()) } returns results.size
         every { userServiceMock.findPageByFilter(any(), any()) } returns results
     }
@@ -46,6 +44,8 @@ internal class UserListPageAsAdminTest : BasePageTest<UserListPage>() {
     @AfterEach
     fun tearDown() {
         confirmVerified(userServiceMock)
+        tester.destroy()
+        unmockkAll()
     }
 
     override fun makePage(): UserListPage = UserListPage(null)

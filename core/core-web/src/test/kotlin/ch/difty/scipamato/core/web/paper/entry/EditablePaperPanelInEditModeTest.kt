@@ -1,9 +1,6 @@
-@file:Suppress("SpellCheckingInspection")
-
 package ch.difty.scipamato.core.web.paper.entry
 
 import ch.difty.scipamato.common.web.Mode
-import ch.difty.scipamato.core.entity.Paper
 import ch.difty.scipamato.core.pubmed.PubmedArticleResult
 import ch.difty.scipamato.core.web.paper.search.PaperSearchPage
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxLink
@@ -17,24 +14,23 @@ import org.amshove.kluent.shouldContain
 import org.amshove.kluent.shouldNotBeNull
 import org.amshove.kluent.shouldThrow
 import org.amshove.kluent.withMessage
+import org.apache.wicket.PageReference
 import org.apache.wicket.feedback.ExactLevelFeedbackMessageFilter
 import org.apache.wicket.feedback.FeedbackMessage
 import org.apache.wicket.util.tester.TagTester
-import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.springframework.http.HttpStatus
 import java.util.Optional
 
-@Disabled // TODO reactivate
+@Suppress("SpellCheckingInspection")
 internal class EditablePaperPanelInEditModeTest : EditablePaperPanelTest() {
 
     override val mode: Mode
         get() = Mode.EDIT
 
     override fun setUpLocalHook() {
+        super.setUpLocalHook()
         every { newsletterServiceMock.canCreateNewsletterInProgress() } returns false
-        // when referring to PaperSearchPage
-        every { searchOrderServiceMock.findById(SEARCH_ORDER_ID) } returns Optional.empty()
     }
 
     override fun assertSpecificComponents() {
@@ -67,7 +63,7 @@ internal class EditablePaperPanelInEditModeTest : EditablePaperPanelTest() {
 
     @Test
     fun withNoSearchOrderId_hasInvisibleExcludeButton() {
-        tester.startComponentInPage(makePanelWith(PMID, callingPageMock, null, SHOW_EXCLUDED))
+        tester.startComponentInPage(makePanelWith(PMID, callingPageDummy, null, SHOW_EXCLUDED))
         tester.assertInvisible("$PANEL_ID:form:exclude")
         verify { newsletterServiceMock.canCreateNewsletterInProgress() }
         verify(exactly = 2) { paperServiceMock.findPageOfIdsByFilter(any(), any()) }
@@ -491,7 +487,7 @@ internal class EditablePaperPanelInEditModeTest : EditablePaperPanelTest() {
     @Test
     fun clickingExclude_withBothSearchOrderIdAndPaperId_excludesPaperFromSearchOrder_andForwardsToPaperSearchPage() {
         every { itemNavigatorMock.itemWithFocus } returns null
-        tester.startComponentInPage(makePanelWith(PMID, callingPageMock, SEARCH_ORDER_ID, false))
+        tester.startComponentInPage(makePanelWith(PMID, callingPageDummy, SEARCH_ORDER_ID, false))
         val formTester = tester.newFormTester("$PANEL_ID:form")
         formTester.submit("exclude")
         tester.assertRenderedPage(PaperSearchPage::class.java)
@@ -503,8 +499,8 @@ internal class EditablePaperPanelInEditModeTest : EditablePaperPanelTest() {
     fun clickingExclude_showingExcluded_reIncludesPaperIntoSearchOrder_andSkipsToNextPaper() {
         val idOfNextPaper = 10L
         every { itemNavigatorMock.itemWithFocus } returns idOfNextPaper
-        every { paperServiceMock.findById(idOfNextPaper) } returns Optional.of(mockk<Paper>())
-        tester.startComponentInPage(makePanelWith(PMID, callingPageMock, SEARCH_ORDER_ID, true))
+        every { paperServiceMock.findById(idOfNextPaper) } returns Optional.of(mockk())
+        tester.startComponentInPage(makePanelWith(PMID, callingPageDummy, SEARCH_ORDER_ID, true))
         val formTester = tester.newFormTester("$PANEL_ID:form")
         invoking {
             formTester.submit("exclude")
@@ -518,7 +514,7 @@ internal class EditablePaperPanelInEditModeTest : EditablePaperPanelTest() {
     @Test
     fun clickingExclude_showingExcluded_reIncludesPaperIntoSearchOrder_andForwardsToPaperSearchPage() {
         every { itemNavigatorMock.itemWithFocus } returns null
-        tester.startComponentInPage(makePanelWith(PMID, callingPageMock, SEARCH_ORDER_ID, true))
+        tester.startComponentInPage(makePanelWith(PMID, callingPageDummy, SEARCH_ORDER_ID, true))
         val formTester = tester.newFormTester("$PANEL_ID:form")
         formTester.submit("exclude")
         tester.assertRenderedPage(PaperSearchPage::class.java)
@@ -536,7 +532,7 @@ internal class EditablePaperPanelInEditModeTest : EditablePaperPanelTest() {
     }
 
     private fun assertExcluded(showingExclusion: Boolean, titleValue: String, iconValue: String) {
-        tester.startComponentInPage(makePanelWith(PMID, callingPageMock, SEARCH_ORDER_ID, showingExclusion))
+        tester.startComponentInPage(makePanelWith(PMID, callingPageDummy, SEARCH_ORDER_ID, showingExclusion))
         val responseTxt = tester.lastResponse.document
         val tagTester = TagTester.createTagByAttribute(responseTxt, "title", titleValue)
         tagTester.shouldNotBeNull()
@@ -555,13 +551,15 @@ internal class EditablePaperPanelInEditModeTest : EditablePaperPanelTest() {
 
     @Test
     fun clickingBack_withoutHavingModifiedExclusionList_forwardsToPaperSearchPageViaCallingPage() {
-        every { callingPageMock.page } throws RuntimeException("forward to calling page triggered")
-        tester.startComponentInPage(makePanelWith(PMID, callingPageMock, SEARCH_ORDER_ID, true))
+        val callingPageRefMock = mockk<PageReference> {
+            every { page } throws RuntimeException("forward to calling page triggered")
+        }
+        tester.startComponentInPage(makePanelWith(PMID, callingPageRefMock, SEARCH_ORDER_ID, true))
         val formTester = tester.newFormTester("$PANEL_ID:form")
         invoking {
             formTester.submit("back")
         } shouldThrow Exception::class withMessage "forward to calling page triggered"
-        verify { callingPageMock.page }
+        verify { callingPageRefMock.page }
         verify { newsletterServiceMock.canCreateNewsletterInProgress() }
     }
 }

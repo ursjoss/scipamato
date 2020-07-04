@@ -1,39 +1,21 @@
 package ch.difty.scipamato.common.web.event
 
-import io.mockk.confirmVerified
-import io.mockk.mockk
-import io.mockk.unmockkAll
-import io.mockk.verify
+import ch.difty.scipamato.common.AjaxRequestTargetSpy
 import nl.jqno.equalsverifier.EqualsVerifier
 import nl.jqno.equalsverifier.Warning
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldStartWith
 import org.apache.wicket.ajax.AjaxRequestTarget
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 internal class WicketEventTest {
 
-    private lateinit var targetMock: AjaxRequestTarget
-    private lateinit var e: WicketEvent
-
-    @BeforeEach
-    fun setUp() {
-        targetMock = mockk()
-        e = object : WicketEvent(targetMock) {}
-    }
-
-    @AfterEach
-    fun tearDown() {
-        confirmVerified(targetMock)
-        unmockkAll()
-    }
+    private val targetSpy: AjaxRequestTarget = AjaxRequestTargetSpy()
+    private val e: WicketEvent = object : WicketEvent(targetSpy) {}
 
     @Test
     fun test() {
-        e.target shouldBeEqualTo targetMock
-        verify { targetMock == any() }
+        e.target shouldBeEqualTo targetSpy
     }
 
     @Test
@@ -46,6 +28,5 @@ internal class WicketEventTest {
     @Test
     fun testingToString() {
         e.toString().shouldStartWith("WicketEvent(target=AjaxRequestTarget")
-        verify { targetMock.toString() }
     }
 }

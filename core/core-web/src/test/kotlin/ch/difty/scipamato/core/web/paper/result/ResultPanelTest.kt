@@ -10,7 +10,7 @@ import ch.difty.scipamato.core.web.paper.entry.PaperEntryPage
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable
 import io.mockk.confirmVerified
 import io.mockk.every
-import io.mockk.impl.annotations.MockK
+import io.mockk.unmockkAll
 import io.mockk.verify
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeNull
@@ -25,25 +25,23 @@ import java.util.Optional
 
 internal abstract class ResultPanelTest : PanelTest<ResultPanel>() {
 
-    val searchOrder = SearchOrder().apply {
-        id = 10L
-    }
+    val searchOrder = SearchOrder().apply { id = 10L }
 
-    @MockK(relaxed = true)
-    lateinit var paperMock: Paper
+    val paper: Paper = Paper().apply { id = ID }
 
-    val paperSlim = PaperSlim(1L, NUMBER, "firstAuthor", 2016, "title")
+    val paperSlim = PaperSlim(ID, NUMBER, "firstAuthor", 2016, "title")
 
     override fun setUpHook() {
-        every { paperMock.getCodesOf(any()) } returns emptyList()
         every { paperSlimServiceMock.countBySearchOrder(searchOrder) } returns 1
         every { paperSlimServiceMock.findPageBySearchOrder(searchOrder, any()) } returns listOf(paperSlim)
-        every { paperServiceMock.findPageBySearchOrder(searchOrder, any(), LC) } returns listOf(paperMock)
+        every { paperServiceMock.findPageBySearchOrder(searchOrder, any(), LC) } returns listOf(paper)
     }
 
     @AfterEach
     fun tearDown() {
-        confirmVerified(paperSlimServiceMock, paperServiceMock, codeClassServiceMock, codeServiceMock)
+        confirmVerified(codeClassServiceMock, codeServiceMock)
+        tester.destroy()
+        unmockkAll()
     }
 
     override fun makePanel(): ResultPanel =
@@ -242,6 +240,7 @@ internal abstract class ResultPanelTest : PanelTest<ResultPanel>() {
         }
 
     companion object {
+        const val ID = 1L
         const val NUMBER = 2L
         private const val ROWS_PER_PAGE = 12
         private const val LC = "en_us"

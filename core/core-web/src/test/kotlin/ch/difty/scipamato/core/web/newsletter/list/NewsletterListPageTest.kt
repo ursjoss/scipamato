@@ -9,6 +9,7 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButt
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable
 import io.mockk.confirmVerified
 import io.mockk.every
+import io.mockk.unmockkAll
 import io.mockk.verify
 import org.amshove.kluent.shouldBeBlank
 import org.amshove.kluent.shouldBeEqualTo
@@ -17,7 +18,6 @@ import org.apache.wicket.markup.html.link.Link
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 import java.time.LocalDate
-import java.util.ArrayList
 
 @Suppress("SameParameterValue")
 internal class NewsletterListPageTest : BasePageTest<NewsletterListPage>() {
@@ -27,20 +27,16 @@ internal class NewsletterListPageTest : BasePageTest<NewsletterListPage>() {
         .issue("1801")
         .issueDate(LocalDate.parse("2018-01-01"))
         .publicationStatus(PublicationStatus.WIP)
-        .build()
+        .build().apply { id = 2 }
     private val newsletterPublished = Newsletter
         .builder()
         .issue("1801")
         .issueDate(LocalDate.parse("2018-01-01"))
         .publicationStatus(PublicationStatus.PUBLISHED)
-        .build()
-    private val results: MutableList<Newsletter> = ArrayList()
+        .build().apply { id = 1 }
+    private val results = listOf(newsletterInProgress, newsletterPublished)
 
     override fun setUpHook() {
-        newsletterPublished.id = 1
-        newsletterInProgress.id = 2
-        results.add(newsletterInProgress)
-        results.add(newsletterPublished)
         every { newsletterServiceMock.countByFilter(any()) } returns results.size
         every { newsletterServiceMock.findPageByFilter(any(), any()) } returns results
     }
@@ -48,6 +44,8 @@ internal class NewsletterListPageTest : BasePageTest<NewsletterListPage>() {
     @AfterEach
     fun tearDown() {
         confirmVerified(newsletterServiceMock)
+        tester.destroy()
+        unmockkAll()
     }
 
     override fun makePage(): NewsletterListPage = NewsletterListPage(null)

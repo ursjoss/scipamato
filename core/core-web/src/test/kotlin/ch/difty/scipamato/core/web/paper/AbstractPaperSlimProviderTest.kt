@@ -6,8 +6,7 @@ import ch.difty.scipamato.core.entity.projection.PaperSlim
 import ch.difty.scipamato.core.web.AbstractWicketTest
 import io.mockk.confirmVerified
 import io.mockk.every
-import io.mockk.impl.annotations.MockK
-import io.mockk.verify
+import io.mockk.unmockkAll
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeFalse
 import org.amshove.kluent.shouldBeLessThan
@@ -25,28 +24,25 @@ import java.util.Locale
 @ActiveProfiles("wickettest")
 internal abstract class AbstractPaperSlimProviderTest<F : PaperSlimFilter, P : AbstractPaperSlimProvider<F>> : AbstractWicketTest() {
 
-    @MockK
-    protected lateinit var entityMock: PaperSlim
-
-    @MockK
-    protected lateinit var paperMock: Paper
+    private val entityDummy: PaperSlim = PaperSlim(1L, 1L, "fa", 2020, "t")
+    protected val paperDummy = Paper().apply { title = "foo" }
 
     lateinit var provider: P
 
-    lateinit var pageOfSlimPapers: List<PaperSlim>
-    lateinit var pageOfPapers: List<Paper>
+    var pageOfSlimPapers = listOf(entityDummy, entityDummy, entityDummy)
+    val pageOfPapers = listOf(paperDummy, paperDummy, paperDummy, paperDummy, paperDummy)
 
-    abstract val filter: F
+    abstract val filterDummy: F
 
     @BeforeEach
     fun setUp() {
         val tester = WicketTester(application)
+
         tester.session.locale = Locale("en")
-        provider = newProvider()
-        provider.service = paperSlimServiceMock
-        provider.paperService = paperServiceMock
-        pageOfSlimPapers = listOf(entityMock, entityMock, entityMock)
-        pageOfPapers = listOf(paperMock, paperMock, paperMock, paperMock, paperMock)
+        provider = newProvider().apply {
+            service = paperSlimServiceMock
+            paperService = paperServiceMock
+        }
         every { sessionFacadeMock.languageCode } returns "en"
         localFixture()
     }
@@ -55,22 +51,21 @@ internal abstract class AbstractPaperSlimProviderTest<F : PaperSlimFilter, P : A
 
     @AfterEach
     fun tearDown() {
-        confirmVerified(paperSlimServiceMock, filter, entityMock, paperServiceMock, paperMock)
+        confirmVerified(paperSlimServiceMock, paperServiceMock)
+        unmockkAll()
     }
 
     protected abstract fun newProvider(): P
 
     @Test
     fun gettingModel_wrapsEntity() {
-        val model = provider.model(entityMock)
-        model.getObject() shouldBeEqualTo entityMock
-        verify { entityMock == entityMock }
+        val model = provider.model(entityDummy)
+        model.getObject() shouldBeEqualTo entityDummy
     }
 
     @Test
     fun gettingFilterState_returnsFilter() {
-        provider.filterState shouldBeEqualTo filter
-        verify { filter == filter }
+        provider.filterState shouldBeEqualTo filterDummy
     }
 
     @Test
@@ -80,16 +75,16 @@ internal abstract class AbstractPaperSlimProviderTest<F : PaperSlimFilter, P : A
         localFixture()
         val it = provider.iterator(0, 3)
         it.hasNext().shouldBeFalse()
-        verifyFilterMock(0, 3, "id: DESC")
+        localVerify(0, 3, "id: DESC")
     }
 
-    protected abstract fun verifyFilterMock(offset: Int, pageSize: Int, sort: String)
+    protected abstract fun localVerify(offset: Int, pageSize: Int, sort: String)
 
     @Test
     fun iterating_throughFirstFullPage() {
         val it = provider.iterator(0, 3)
         assertRecordsIn(it)
-        verifyFilterMock(0, 3, "id: DESC")
+        localVerify(0, 3, "id: DESC")
     }
 
     private fun assertRecordsIn(it: Iterator<PaperSlim>) {
@@ -104,7 +99,7 @@ internal abstract class AbstractPaperSlimProviderTest<F : PaperSlimFilter, P : A
     fun iterating_throughSecondFullPage() {
         val it = provider.iterator(3, 3)
         assertRecordsIn(it)
-        verifyFilterMock(3, 3, "id: DESC")
+        localVerify(3, 3, "id: DESC")
     }
 
     @Test
@@ -112,7 +107,7 @@ internal abstract class AbstractPaperSlimProviderTest<F : PaperSlimFilter, P : A
         provider.setSort("title", SortOrder.ASCENDING)
         val it = provider.iterator(6, 3)
         assertRecordsIn(it)
-        verifyFilterMock(6, 3, "title: ASC")
+        localVerify(6, 3, "title: ASC")
     }
 
     @Test
@@ -126,7 +121,7 @@ internal abstract class AbstractPaperSlimProviderTest<F : PaperSlimFilter, P : A
         actualSize shouldBeEqualTo PAGE_SIZE
         val it = provider.iterator(0, actualSize.toLong())
         assertRecordsIn(it)
-        verifyFilterMock(0, actualSize, "id: DESC")
+        localVerify(0, actualSize, "id: DESC")
     }
 
     @Test
@@ -136,7 +131,7 @@ internal abstract class AbstractPaperSlimProviderTest<F : PaperSlimFilter, P : A
         provider.setSort("title", SortOrder.DESCENDING)
         val it = provider.iterator(6, actualSize.toLong())
         assertRecordsIn(it)
-        verifyFilterMock(6, actualSize, "title: DESC")
+        localVerify(6, actualSize, "title: DESC")
     }
 
     @Test

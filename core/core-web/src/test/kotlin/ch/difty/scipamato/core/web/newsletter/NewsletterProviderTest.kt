@@ -6,7 +6,7 @@ import ch.difty.scipamato.core.entity.newsletter.NewsletterFilter
 import ch.difty.scipamato.core.web.AbstractWicketTest
 import io.mockk.confirmVerified
 import io.mockk.every
-import io.mockk.impl.annotations.MockK
+import io.mockk.unmockkAll
 import io.mockk.verify
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeFalse
@@ -23,24 +23,21 @@ internal class NewsletterProviderTest : AbstractWicketTest() {
 
     private lateinit var provider: NewsletterProvider
 
-    @MockK(relaxed = true)
-    private lateinit var filterMock: NewsletterFilter
-
-    @MockK
-    private lateinit var entityMock: Newsletter
-    private lateinit var papers: List<Newsletter>
+    private val filterDummy = NewsletterFilter().apply { issueMask = "foo" }
+    private val entityDummy = Newsletter()
+    private val entities = listOf(entityDummy, entityDummy, entityDummy)
 
     @BeforeEach
     fun setUp() {
         WicketTester(application)
-        provider = NewsletterProvider(filterMock)
+        provider = NewsletterProvider(filterDummy)
         provider.setService(newsletterServiceMock)
-        papers = listOf(entityMock, entityMock, entityMock)
     }
 
     @AfterEach
     fun tearDown() {
-        confirmVerified(newsletterServiceMock, entityMock)
+        confirmVerified(newsletterServiceMock)
+        unmockkAll()
     }
 
     @Test
@@ -58,46 +55,44 @@ internal class NewsletterProviderTest : AbstractWicketTest() {
     @Test
     fun size() {
         val size = 5
-        every { newsletterServiceMock.countByFilter(filterMock) } returns size
+        every { newsletterServiceMock.countByFilter(filterDummy) } returns size
         provider.size() shouldBeEqualTo size.toLong()
-        verify { newsletterServiceMock.countByFilter(filterMock) }
+        verify { newsletterServiceMock.countByFilter(filterDummy) }
     }
 
     @Test
     fun gettingModel_wrapsEntity() {
-        val model = provider.model(entityMock)
-        model.getObject() shouldBeEqualTo entityMock
-        verify { entityMock == entityMock }
+        val model = provider.model(entityDummy)
+        model.getObject() shouldBeEqualTo entityDummy
     }
 
     @Test
     fun gettingFilterState_returnsFilter() {
-        provider.filterState shouldBeEqualTo filterMock
+        provider.filterState shouldBeEqualTo filterDummy
     }
 
     @Test
     fun settingFilterState() {
         provider = NewsletterProvider()
-        provider.filterState shouldNotBeEqualTo filterMock
-        provider.filterState = filterMock
-        provider.filterState shouldBeEqualTo filterMock
+        provider.filterState shouldNotBeEqualTo filterDummy
+        provider.filterState = filterDummy
+        provider.filterState shouldBeEqualTo filterDummy
     }
 
     @Test
     fun iterating_withNoRecords_returnsNoRecords() {
-        papers = emptyList()
-        every { newsletterServiceMock.findPageByFilter(filterMock, any()) } returns papers
+        every { newsletterServiceMock.findPageByFilter(filterDummy, any()) } returns emptyList()
         val it = provider.iterator(0, 3)
         it.hasNext().shouldBeFalse()
-        verify { newsletterServiceMock.findPageByFilter(filterMock, matchPaginationContext(0, 3, "issue: DESC")) }
+        verify { newsletterServiceMock.findPageByFilter(filterDummy, matchPaginationContext(0, 3, "issue: DESC")) }
     }
 
     @Test
     fun iterating_throughFirst() {
-        every { newsletterServiceMock.findPageByFilter(filterMock, any()) } returns papers
+        every { newsletterServiceMock.findPageByFilter(filterDummy, any()) } returns entities
         val it = provider.iterator(0, 3)
         assertRecordsIn(it)
-        verify { newsletterServiceMock.findPageByFilter(filterMock, matchPaginationContext(0, 3, "issue: DESC")) }
+        verify { newsletterServiceMock.findPageByFilter(filterDummy, matchPaginationContext(0, 3, "issue: DESC")) }
     }
 
     private fun assertRecordsIn(it: Iterator<Newsletter>) {
@@ -110,27 +105,27 @@ internal class NewsletterProviderTest : AbstractWicketTest() {
 
     @Test
     fun iterating_throughSecondPage() {
-        every { newsletterServiceMock.findPageByFilter(filterMock, any()) } returns papers
+        every { newsletterServiceMock.findPageByFilter(filterDummy, any()) } returns entities
         val it = provider.iterator(3, 3)
         assertRecordsIn(it)
-        verify { newsletterServiceMock.findPageByFilter(filterMock, matchPaginationContext(3, 3, "issue: DESC")) }
+        verify { newsletterServiceMock.findPageByFilter(filterDummy, matchPaginationContext(3, 3, "issue: DESC")) }
     }
 
     @Test
     fun iterating_throughThirdPage() {
         provider.setSort("title", SortOrder.DESCENDING)
-        every { newsletterServiceMock.findPageByFilter(filterMock, any()) } returns papers
+        every { newsletterServiceMock.findPageByFilter(filterDummy, any()) } returns entities
         val it = provider.iterator(6, 3)
         assertRecordsIn(it)
-        verify { newsletterServiceMock.findPageByFilter(filterMock, matchPaginationContext(6, 3, "title: DESC")) }
+        verify { newsletterServiceMock.findPageByFilter(filterDummy, matchPaginationContext(6, 3, "title: DESC")) }
     }
 
     @Test
     fun iterating_throughThirdPage_ascendingly() {
         provider.setSort("title", SortOrder.ASCENDING)
-        every { newsletterServiceMock.findPageByFilter(filterMock, any()) } returns papers
+        every { newsletterServiceMock.findPageByFilter(filterDummy, any()) } returns entities
         val it = provider.iterator(6, 3)
         assertRecordsIn(it)
-        verify { newsletterServiceMock.findPageByFilter(filterMock, matchPaginationContext(6, 3, "title: ASC")) }
+        verify { newsletterServiceMock.findPageByFilter(filterDummy, matchPaginationContext(6, 3, "title: ASC")) }
     }
 }

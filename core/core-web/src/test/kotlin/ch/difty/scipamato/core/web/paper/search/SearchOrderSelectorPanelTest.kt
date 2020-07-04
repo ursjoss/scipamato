@@ -7,6 +7,7 @@ import ch.difty.scipamato.core.web.common.PanelTest
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.checkboxx.CheckBoxX
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelect
 import io.mockk.every
+import io.mockk.unmockkAll
 import io.mockk.verify
 import org.apache.wicket.ajax.markup.html.form.AjaxCheckBox
 import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink
@@ -14,6 +15,7 @@ import org.apache.wicket.markup.html.form.Form
 import org.apache.wicket.markup.html.form.TextField
 import org.apache.wicket.markup.html.panel.Panel
 import org.apache.wicket.model.Model
+import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 import java.util.ArrayList
 
@@ -26,6 +28,12 @@ internal abstract class SearchOrderSelectorPanelTest : PanelTest<SearchOrderSele
     }
 
     private val searchConditions: List<SearchCondition> = ArrayList()
+
+    @AfterEach
+    fun tearDown() {
+        tester.destroy()
+        unmockkAll()
+    }
 
     override fun makePanel(): SearchOrderSelectorPanel =
         SearchOrderSelectorPanel(PANEL_ID, Model.of(searchOrder), mode)

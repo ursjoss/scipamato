@@ -6,7 +6,7 @@ import ch.difty.scipamato.core.entity.codeclass.CodeClassFilter
 import ch.difty.scipamato.core.web.AbstractWicketTest
 import io.mockk.confirmVerified
 import io.mockk.every
-import io.mockk.impl.annotations.MockK
+import io.mockk.unmockkAll
 import io.mockk.verify
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeFalse
@@ -20,26 +20,23 @@ import org.junit.jupiter.api.Test
 
 internal class CodeClassDefinitionProviderTest : AbstractWicketTest() {
 
-    @MockK(relaxed = true)
-    private lateinit var filterMock: CodeClassFilter
+    private val filterDummy = CodeClassFilter().apply { nameMask = "foo" }
+    private val entityDummy = CodeClassDefinition(null, "en", null)
 
-    @MockK
-    private lateinit var entityMock: CodeClassDefinition
+    private val entities = listOf(entityDummy, entityDummy, entityDummy)
 
     private lateinit var provider: CodeClassDefinitionProvider
-
-    private lateinit var codeClasses: List<CodeClassDefinition>
 
     @BeforeEach
     fun setUp() {
         WicketTester(application)
-        provider = CodeClassDefinitionProvider(filterMock)
-        codeClasses = listOf(entityMock, entityMock, entityMock)
+        provider = CodeClassDefinitionProvider(filterDummy)
     }
 
     @AfterEach
     fun tearDown() {
-        confirmVerified(codeClassServiceMock, entityMock)
+        confirmVerified(codeClassServiceMock)
+        unmockkAll()
     }
 
     @Test
@@ -57,46 +54,44 @@ internal class CodeClassDefinitionProviderTest : AbstractWicketTest() {
     @Test
     fun size() {
         val size = 5
-        every { codeClassServiceMock.countByFilter(filterMock) } returns size
+        every { codeClassServiceMock.countByFilter(filterDummy) } returns size
         provider.size() shouldBeEqualTo size.toLong()
-        verify { codeClassServiceMock.countByFilter(filterMock) }
+        verify { codeClassServiceMock.countByFilter(filterDummy) }
     }
 
     @Test
     fun gettingModel_wrapsEntity() {
-        val model = provider.model(entityMock)
-        model.getObject() shouldBeEqualTo entityMock
-        verify { entityMock == entityMock }
+        val model = provider.model(entityDummy)
+        model.getObject() shouldBeEqualTo entityDummy
     }
 
     @Test
     fun gettingFilterState_returnsFilter() {
-        provider.filterState shouldBeEqualTo filterMock
+        provider.filterState shouldBeEqualTo filterDummy
     }
 
     @Test
     fun settingFilterState() {
         provider = CodeClassDefinitionProvider()
-        provider.filterState shouldNotBeEqualTo filterMock
-        provider.filterState = filterMock
-        provider.filterState shouldBeEqualTo filterMock
+        provider.filterState shouldNotBeEqualTo filterDummy
+        provider.filterState = filterDummy
+        provider.filterState shouldBeEqualTo filterDummy
     }
 
     @Test
     fun iterating_withNoRecords_returnsNoRecords() {
-        codeClasses = emptyList()
-        every { codeClassServiceMock.findPageOfEntityDefinitions(filterMock, any()) } returns codeClasses.iterator()
+        every { codeClassServiceMock.findPageOfEntityDefinitions(filterDummy, any()) } returns emptyList<CodeClassDefinition>().iterator()
         val it = provider.iterator(0, 3)
         it.hasNext().shouldBeFalse()
-        verify { codeClassServiceMock.findPageOfEntityDefinitions(filterMock, matchPaginationContext(0, 3, "id: ASC")) }
+        verify { codeClassServiceMock.findPageOfEntityDefinitions(filterDummy, matchPaginationContext(0, 3, "id: ASC")) }
     }
 
     @Test
     fun iterating_throughFirst() {
-        every { codeClassServiceMock.findPageOfEntityDefinitions(filterMock, any()) } returns codeClasses.iterator()
+        every { codeClassServiceMock.findPageOfEntityDefinitions(filterDummy, any()) } returns entities.iterator()
         val it = provider.iterator(0, 3)
         assertRecordsIn(it)
-        verify { codeClassServiceMock.findPageOfEntityDefinitions(filterMock, matchPaginationContext(0, 3, "id: ASC")) }
+        verify { codeClassServiceMock.findPageOfEntityDefinitions(filterDummy, matchPaginationContext(0, 3, "id: ASC")) }
     }
 
     private fun assertRecordsIn(it: Iterator<CodeClassDefinition>) {
@@ -109,18 +104,18 @@ internal class CodeClassDefinitionProviderTest : AbstractWicketTest() {
 
     @Test
     fun iterating_throughSecondPage() {
-        every { codeClassServiceMock.findPageOfEntityDefinitions(filterMock, any()) } returns codeClasses.iterator()
+        every { codeClassServiceMock.findPageOfEntityDefinitions(filterDummy, any()) } returns entities.iterator()
         val it = provider.iterator(3, 3)
         assertRecordsIn(it)
-        verify { codeClassServiceMock.findPageOfEntityDefinitions(filterMock, matchPaginationContext(3, 3, "id: ASC")) }
+        verify { codeClassServiceMock.findPageOfEntityDefinitions(filterDummy, matchPaginationContext(3, 3, "id: ASC")) }
     }
 
     @Test
     fun iterating_throughThirdPage() {
         provider.setSort("id", SortOrder.DESCENDING)
-        every { codeClassServiceMock.findPageOfEntityDefinitions(filterMock, any()) } returns codeClasses.iterator()
+        every { codeClassServiceMock.findPageOfEntityDefinitions(filterDummy, any()) } returns entities.iterator()
         val it = provider.iterator(6, 3)
         assertRecordsIn(it)
-        verify { codeClassServiceMock.findPageOfEntityDefinitions(filterMock, matchPaginationContext(6, 3, "id: DESC")) }
+        verify { codeClassServiceMock.findPageOfEntityDefinitions(filterDummy, matchPaginationContext(6, 3, "id: DESC")) }
     }
 }

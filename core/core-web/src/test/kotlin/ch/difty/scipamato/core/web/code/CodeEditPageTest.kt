@@ -1,5 +1,3 @@
-@file:Suppress("SpellCheckingInspection")
-
 package ch.difty.scipamato.core.web.code
 
 import ch.difty.scipamato.core.entity.CodeClass
@@ -14,7 +12,8 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.checkboxx.Che
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelect
 import io.mockk.confirmVerified
 import io.mockk.every
-import io.mockk.impl.annotations.MockK
+import io.mockk.mockk
+import io.mockk.unmockkAll
 import io.mockk.verify
 import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldBeTrue
@@ -29,36 +28,40 @@ import org.junit.jupiter.api.Test
 import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.dao.DuplicateKeyException
 
+@Suppress("SpellCheckingInspection", "PrivatePropertyName")
 internal class CodeEditPageTest : BasePageTest<CodeEditPage>() {
 
-    @MockK
     private lateinit var codeDefinitionDummy: CodeDefinition
-
-    @MockK
     private lateinit var formDummy: Form<*>
 
-    private lateinit var cd: CodeDefinition
     private lateinit var codeField: TextField<String>
     private lateinit var codeClasses: BootstrapSelect<CodeClass>
 
     private val cc1 = CodeClass(1, "CC1", "c1")
     private val cc2 = CodeClass(2, "Region", "d2")
 
+    private val kt_de = CodeTranslation(1, "de", "Name1", "some comment", 1)
+    private val kt_de2 = CodeTranslation(1, "de", "Name1a", null, 1)
+    private val kt_en = CodeTranslation(2, "en", "name1", null, 1)
+    private val kt_fr = CodeTranslation(3, "fr", "nom1", null, 1)
+    private val cd = CodeDefinition("2A", "de", cc2, 1, false, 1, kt_de, kt_en, kt_fr, kt_de2)
+
     @Suppress("LocalVariableName")
     public override fun setUpHook() {
-        val kt_de = CodeTranslation(1, "de", "Name1", "some comment", 1)
-        val kt_de2 = CodeTranslation(1, "de", "Name1a", null, 1)
-        val kt_en = CodeTranslation(2, "en", "name1", null, 1)
-        val kt_fr = CodeTranslation(3, "fr", "nom1", null, 1)
-        cd = CodeDefinition("2A", "de", cc2, 1, false, 1, kt_de, kt_en, kt_fr, kt_de2)
+        codeDefinitionDummy = mockk()
+        formDummy = mockk()
+
         codeField = TextField("code")
         codeClasses = BootstrapSelect("codeClasses")
+
         every { codeClassServiceMock.find(any()) } returns listOf(cc2)
     }
 
     @AfterEach
     fun tearDown() {
         confirmVerified(codeServiceMock)
+        tester.destroy()
+        unmockkAll()
     }
 
     override fun makePage(): CodeEditPage = CodeEditPage(Model.of(cd), null)

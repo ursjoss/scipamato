@@ -1,10 +1,12 @@
 package ch.difty.scipamato.core.web.resources.jasper
 
 import ch.difty.scipamato.core.web.WicketTest
+import io.mockk.unmockkAll
 import org.amshove.kluent.shouldBeEmpty
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldBeTrue
+import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 
 @Suppress("SpellCheckingInspection")
@@ -25,6 +27,12 @@ internal abstract class JasperReportResourceReferenceTest<E : JasperReportResour
      * @return the full package path and class name of the resource reference
      */
     protected abstract val resourceReferencePath: String?
+
+    @AfterEach
+    fun tearDown() {
+        tester.destroy()
+        unmockkAll()
+    }
 
     @Test
     fun testDefaultAttributes() {

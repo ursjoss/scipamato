@@ -1,33 +1,27 @@
-@file:Suppress("SpellCheckingInspection")
-
 package ch.difty.scipamato.publ.config
 
-import ch.difty.scipamato.common.ClearAllMocksExtension
 import ch.difty.scipamato.common.config.MavenProperties
 import io.mockk.confirmVerified
 import io.mockk.every
-import io.mockk.impl.annotations.MockK
-import io.mockk.junit5.MockKExtension
+import io.mockk.mockk
 import io.mockk.verify
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.extension.ExtendWith
 
-@ExtendWith(MockKExtension::class, ClearAllMocksExtension::class)
+@Suppress("SpellCheckingInspection")
 internal class ScipamatoPublicPropertiesTest {
 
     private lateinit var prop: ScipamatoPublicProperties
 
-    @MockK
     private lateinit var scipamatoPropMock: ScipamatoProperties
-
-    @MockK
     private lateinit var mavenPropMock: MavenProperties
 
     @BeforeEach
     fun setUp() {
+        scipamatoPropMock = mockk()
+        mavenPropMock = mockk()
         prop = ScipamatoPublicProperties(scipamatoPropMock, mavenPropMock)
     }
 

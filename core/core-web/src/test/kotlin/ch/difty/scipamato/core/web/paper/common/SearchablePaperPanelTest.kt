@@ -1,13 +1,10 @@
 package ch.difty.scipamato.core.web.paper.common
 
+import ch.difty.scipamato.common.AjaxRequestTargetSpy
 import ch.difty.scipamato.core.entity.search.SearchCondition
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton
-import io.mockk.confirmVerified
-import io.mockk.mockk
-import io.mockk.unmockkAll
 import org.amshove.kluent.shouldBeFalse
 import org.amshove.kluent.shouldBeNull
-import org.apache.wicket.ajax.AjaxRequestTarget
 import org.apache.wicket.model.Model
 import org.junit.jupiter.api.Test
 
@@ -150,9 +147,9 @@ internal class SearchablePaperPanelTest : PaperPanelTest<SearchCondition?, Searc
 
     @Test
     fun modifyNewsletterAssociation_isNoOp() {
-        val targetMock = mockk<AjaxRequestTarget>()
-        makePanel().modifyNewsletterAssociation(targetMock)
-        confirmVerified(targetMock)
-        unmockkAll()
+        val targetDummy = AjaxRequestTargetSpy()
+        makePanel().modifyNewsletterAssociation(targetDummy)
+        targetDummy.components.isEmpty()
+        targetDummy.javaScripts.isEmpty()
     }
 }

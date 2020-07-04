@@ -1,10 +1,8 @@
 package ch.difty.scipamato.core.web.behavior
 
+import ch.difty.scipamato.common.AjaxRequestTargetSpy
 import ch.difty.scipamato.core.web.WicketTest
-import io.mockk.every
-import io.mockk.mockk
 import io.mockk.unmockkAll
-import io.mockk.verify
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeNull
 import org.apache.wicket.ajax.AjaxRequestTarget
@@ -16,15 +14,12 @@ internal class AjaxTextDownloadTest : WicketTest() {
 
     private val ad = AjaxTextDownload(false)
 
-    private lateinit var targetMock: AjaxRequestTarget
-
-    override fun setUpHook() {
-        targetMock = mockk()
-        every { targetMock.appendJavaScript(any())} returns Unit
-    }
+    private val targetDummy = AjaxRequestTargetSpy()
 
     @AfterEach
     fun tearDown() {
+        targetDummy.reset()
+        tester.destroy()
         unmockkAll()
     }
 
@@ -47,12 +42,13 @@ internal class AjaxTextDownloadTest : WicketTest() {
     @Test
     fun `clicking the link adds javascript to target2`() {
         val l = object : AjaxLink<Void>("l") {
-            override fun onClick(target: AjaxRequestTarget?) = ad.initiate(targetMock)
+            override fun onClick(target: AjaxRequestTarget?) = ad.initiate(targetDummy)
         }
         l.add(ad)
         tester.startComponentInPage(l)
         tester.clickLink(l)
-        verify { targetMock.appendJavaScript("""setTimeout("window.location.href='./page?2-1.0-l'", 100);""") }
+        targetDummy.javaScripts.size shouldBeEqualTo 1
+        targetDummy.javaScripts.contains("""setTimeout("window.location.href='./page?2-1.0-l'", 100);""")
     }
 
     @Test
@@ -60,13 +56,13 @@ internal class AjaxTextDownloadTest : WicketTest() {
         val ad2 = AjaxTextDownload(true)
         val l = object : AjaxLink<Void>("l") {
             override fun onClick(target: AjaxRequestTarget?) {
-                ad2.initiate(targetMock)
+                ad2.initiate(targetDummy)
             }
         }
         l.add(ad2)
         tester.startComponentInPage(l)
         tester.clickLink(l)
         // containing timestamp -> difficult to test
-        verify { targetMock.appendJavaScript(any()) }
+        targetDummy.javaScripts.size shouldBeEqualTo 1
     }
 }

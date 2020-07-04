@@ -1,39 +1,25 @@
 package ch.difty.scipamato.core.web.paper
 
-import ch.difty.scipamato.common.ClearAllMocksExtension
 import ch.difty.scipamato.core.entity.PaperAttachment
-import io.mockk.impl.annotations.MockK
-import io.mockk.junit5.MockKExtension
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldContainSame
 import org.apache.wicket.model.Model
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.extension.ExtendWith
-import java.util.ArrayList
 
-@ExtendWith(MockKExtension::class, ClearAllMocksExtension::class)
 internal class PaperAttachmentProviderTest {
 
     private lateinit var provider: PaperAttachmentProvider
 
-    @MockK
-    private lateinit var mockAttachment1: PaperAttachment
+    private val att1Dummy = PaperAttachment().apply { id = 1 }
+    private val att2Dummy = PaperAttachment().apply { id = 2 }
+    private val att3Dummy = PaperAttachment().apply { id = 3 }
+    private val att4Dummy = PaperAttachment().apply { id = 4 }
 
-    @MockK
-    private lateinit var mockAttachment2: PaperAttachment
-
-    @MockK
-    private lateinit var mockAttachment3: PaperAttachment
-
-    @MockK
-    private lateinit var mockAttachment4: PaperAttachment
-
-    private val attachments: MutableList<PaperAttachment> = ArrayList()
+    private val attachments = listOf(att1Dummy, att2Dummy, att3Dummy, att4Dummy)
 
     @BeforeEach
     fun setUp() {
-        attachments.addAll(listOf(mockAttachment1, mockAttachment2, mockAttachment3, mockAttachment4))
         provider = PaperAttachmentProvider(Model.ofList(attachments))
     }
 
@@ -45,22 +31,22 @@ internal class PaperAttachmentProviderTest {
     @Test
     fun iterator_fromStartWithPageSizeLargerThanActualSize_returnsAll() {
         provider.iterator(0, 100).asSequence() shouldContainSame
-            sequenceOf(mockAttachment1, mockAttachment2, mockAttachment3, mockAttachment4)
+            sequenceOf(att1Dummy, att2Dummy, att3Dummy, att4Dummy)
     }
 
     @Test
     fun iterator_fromStartWithLimitingPageSize_returnsPageFullFromStart() {
-        provider.iterator(0, 2).asSequence() shouldContainSame sequenceOf(mockAttachment1, mockAttachment2)
+        provider.iterator(0, 2).asSequence() shouldContainSame sequenceOf(att1Dummy, att2Dummy)
     }
 
     @Test
     fun iterator_fromIndex1WithLimitingPageSize_returnsPageFullFromIndex() {
-        provider.iterator(1, 2).asSequence() shouldContainSame sequenceOf(mockAttachment2, mockAttachment3)
+        provider.iterator(1, 2).asSequence() shouldContainSame sequenceOf(att2Dummy, att3Dummy)
     }
 
     @Test
     fun gettingModel() {
-        val model = provider.model(mockAttachment1)
-        model.getObject() shouldBeEqualTo mockAttachment1
+        val model = provider.model(att1Dummy)
+        model.getObject() shouldBeEqualTo att1Dummy
     }
 }

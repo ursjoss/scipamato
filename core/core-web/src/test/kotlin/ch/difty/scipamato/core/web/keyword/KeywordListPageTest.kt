@@ -7,30 +7,28 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButt
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable
 import io.mockk.confirmVerified
 import io.mockk.every
+import io.mockk.unmockkAll
 import io.mockk.verify
 import org.apache.wicket.markup.html.form.Form
 import org.apache.wicket.markup.html.link.Link
 import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
-import java.util.ArrayList
 
-@Disabled // TODO reactivate
-@Suppress("SameParameterValue")
+@Suppress("SameParameterValue", "PrivatePropertyName")
 internal class KeywordListPageTest : BasePageTest<KeywordListPage>() {
 
-    private val results: MutableList<KeywordDefinition> = ArrayList()
+    private val kt1_de = KeywordTranslation(1, "de", "Name1", 1)
+    private val kt1_en = KeywordTranslation(2, "en", "name1", 1)
+    private val kt1_fr = KeywordTranslation(3, "fr", "nom1", 1)
+    private val kd1 = KeywordDefinition(1, "de", "nameOverride", 1, kt1_de, kt1_en, kt1_fr)
+    private val kt2_en = KeywordTranslation(5, "en", "name2", 1)
+    private val kt2_fr = KeywordTranslation(6, "fr", "nom2", 1)
+    private val kt2_de = KeywordTranslation(4, "de", "Name2", 1)
+    private val kd2 = KeywordDefinition(2, "de", 1, kt2_de, kt2_en, kt2_fr)
+
+    private val results: List<KeywordDefinition> = listOf(kd1, kd2)
 
     override fun setUpHook() {
-        val kt1_de = KeywordTranslation(1, "de", "Name1", 1)
-        val kt1_en = KeywordTranslation(2, "en", "name1", 1)
-        val kt1_fr = KeywordTranslation(3, "fr", "nom1", 1)
-        val kd1 = KeywordDefinition(1, "de", "nameOverride", 1, kt1_de, kt1_en, kt1_fr)
-        val kt2_en = KeywordTranslation(5, "en", "name2", 1)
-        val kt2_fr = KeywordTranslation(6, "fr", "nom2", 1)
-        val kt2_de = KeywordTranslation(4, "de", "Name2", 1)
-        val kd2 = KeywordDefinition(2, "de", 1, kt2_de, kt2_en, kt2_fr)
-        results.addAll(listOf(kd1, kd2))
         every { keywordServiceMock.countByFilter(any()) } returns results.size
         every { keywordServiceMock.findPageOfEntityDefinitions(any(), any()) } returns results.iterator()
     }
@@ -38,6 +36,8 @@ internal class KeywordListPageTest : BasePageTest<KeywordListPage>() {
     @AfterEach
     fun tearDown() {
         confirmVerified(keywordServiceMock)
+        tester.destroy()
+        unmockkAll()
     }
 
     override fun makePage(): KeywordListPage = KeywordListPage(null)

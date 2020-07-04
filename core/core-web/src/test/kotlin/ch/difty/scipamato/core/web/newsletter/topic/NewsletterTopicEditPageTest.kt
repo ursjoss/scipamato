@@ -10,7 +10,8 @@ import ch.difty.scipamato.core.web.common.BasePageTest
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton
 import io.mockk.confirmVerified
 import io.mockk.every
-import io.mockk.impl.annotations.MockK
+import io.mockk.mockk
+import io.mockk.unmockkAll
 import io.mockk.verify
 import org.apache.wicket.markup.html.form.Form
 import org.apache.wicket.markup.html.form.TextField
@@ -22,24 +23,25 @@ import org.junit.jupiter.api.Test
 import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.dao.DuplicateKeyException
 
+@Suppress("PrivatePropertyName")
 internal class NewsletterTopicEditPageTest : BasePageTest<NewsletterTopicEditPage>() {
 
-    @MockK
+    private val ntt_de = NewsletterTopicTranslation(1, "de", "thema1", 1)
+    private val ntt_en = NewsletterTopicTranslation(2, "en", "topic1", 1)
+    private val ntt_fr = NewsletterTopicTranslation(3, "fr", "sujet1", 1)
+    private val ntd = NewsletterTopicDefinition(1, "de", 1, ntt_de, ntt_en, ntt_fr)
+
     private lateinit var newsletterTopicDefinitionDummy: NewsletterTopicDefinition
 
-    private lateinit var ntd: NewsletterTopicDefinition
-
-    @Suppress("LocalVariableName")
     public override fun setUpHook() {
-        val ntt_de = NewsletterTopicTranslation(1, "de", "thema1", 1)
-        val ntt_en = NewsletterTopicTranslation(2, "en", "topic1", 1)
-        val ntt_fr = NewsletterTopicTranslation(3, "fr", "sujet1", 1)
-        ntd = NewsletterTopicDefinition(1, "de", 1, ntt_de, ntt_en, ntt_fr)
+        newsletterTopicDefinitionDummy = mockk()
     }
 
     @AfterEach
     fun tearDown() {
         confirmVerified(newsletterTopicServiceMock)
+        tester.destroy()
+        unmockkAll()
     }
 
     override fun makePage(): NewsletterTopicEditPage = NewsletterTopicEditPage(Model.of(ntd), null)

@@ -6,7 +6,7 @@ import ch.difty.scipamato.core.entity.keyword.KeywordFilter
 import ch.difty.scipamato.core.web.AbstractWicketTest
 import io.mockk.confirmVerified
 import io.mockk.every
-import io.mockk.impl.annotations.MockK
+import io.mockk.unmockkAll
 import io.mockk.verify
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeFalse
@@ -20,26 +20,23 @@ import org.junit.jupiter.api.Test
 
 internal class KeywordDefinitionProviderTest : AbstractWicketTest() {
 
+    private val filterDummy = KeywordFilter().apply { nameMask = "foo" }
+    private val entityDummy = KeywordDefinition(null, "en", null)
+
+    private val entities = listOf(entityDummy, entityDummy, entityDummy)
+
     private lateinit var provider: KeywordDefinitionProvider
-
-    @MockK(relaxed = true)
-    private lateinit var filterMock: KeywordFilter
-
-    @MockK
-    private lateinit var entityMock: KeywordDefinition
-
-    private lateinit var papers: List<KeywordDefinition>
 
     @BeforeEach
     fun setUp() {
         WicketTester(application)
-        provider = KeywordDefinitionProvider(filterMock)
-        papers = listOf(entityMock, entityMock, entityMock)
+        provider = KeywordDefinitionProvider(filterDummy)
     }
 
     @AfterEach
     fun tearDown() {
-        confirmVerified(keywordServiceMock, entityMock)
+        confirmVerified(keywordServiceMock)
+        unmockkAll()
     }
 
     @Test
@@ -57,46 +54,44 @@ internal class KeywordDefinitionProviderTest : AbstractWicketTest() {
     @Test
     fun size() {
         val size = 5
-        every { keywordServiceMock.countByFilter(filterMock) } returns size
+        every { keywordServiceMock.countByFilter(filterDummy) } returns size
         provider.size() shouldBeEqualTo size.toLong()
-        verify { keywordServiceMock.countByFilter(filterMock) }
+        verify { keywordServiceMock.countByFilter(filterDummy) }
     }
 
     @Test
     fun gettingModel_wrapsEntity() {
-        val model = provider.model(entityMock)
-        model.getObject() shouldBeEqualTo entityMock
-        verify { entityMock == entityMock }
+        val model = provider.model(entityDummy)
+        model.getObject() shouldBeEqualTo entityDummy
     }
 
     @Test
     fun gettingFilterState_returnsFilter() {
-        provider.filterState shouldBeEqualTo filterMock
+        provider.filterState shouldBeEqualTo filterDummy
     }
 
     @Test
     fun settingFilterState() {
         provider = KeywordDefinitionProvider()
-        provider.filterState shouldNotBeEqualTo filterMock
-        provider.filterState = filterMock
-        provider.filterState shouldBeEqualTo filterMock
+        provider.filterState shouldNotBeEqualTo filterDummy
+        provider.filterState = filterDummy
+        provider.filterState shouldBeEqualTo filterDummy
     }
 
     @Test
     fun iterating_withNoRecords_returnsNoRecords() {
-        papers = emptyList()
-        every { keywordServiceMock.findPageOfEntityDefinitions(filterMock, any()) } returns papers.iterator()
+        every { keywordServiceMock.findPageOfEntityDefinitions(filterDummy, any()) } returns emptyList<KeywordDefinition>().iterator()
         val it = provider.iterator(0, 3)
         it.hasNext().shouldBeFalse()
-        verify { keywordServiceMock.findPageOfEntityDefinitions(filterMock, matchPaginationContext(0, 3, "name: ASC")) }
+        verify { keywordServiceMock.findPageOfEntityDefinitions(filterDummy, matchPaginationContext(0, 3, "name: ASC")) }
     }
 
     @Test
     fun iterating_throughFirst() {
-        every { keywordServiceMock.findPageOfEntityDefinitions(filterMock, any()) } returns papers.iterator()
+        every { keywordServiceMock.findPageOfEntityDefinitions(filterDummy, any()) } returns entities.iterator()
         val it = provider.iterator(0, 3)
         assertRecordsIn(it)
-        verify { keywordServiceMock.findPageOfEntityDefinitions(filterMock, matchPaginationContext(0, 3, "name: ASC")) }
+        verify { keywordServiceMock.findPageOfEntityDefinitions(filterDummy, matchPaginationContext(0, 3, "name: ASC")) }
     }
 
     private fun assertRecordsIn(it: Iterator<KeywordDefinition>) {
@@ -109,18 +104,18 @@ internal class KeywordDefinitionProviderTest : AbstractWicketTest() {
 
     @Test
     fun iterating_throughSecondPage() {
-        every { keywordServiceMock.findPageOfEntityDefinitions(filterMock, any()) } returns papers.iterator()
+        every { keywordServiceMock.findPageOfEntityDefinitions(filterDummy, any()) } returns entities.iterator()
         val it = provider.iterator(3, 3)
         assertRecordsIn(it)
-        verify { keywordServiceMock.findPageOfEntityDefinitions(filterMock, matchPaginationContext(3, 3, "name: ASC")) }
+        verify { keywordServiceMock.findPageOfEntityDefinitions(filterDummy, matchPaginationContext(3, 3, "name: ASC")) }
     }
 
     @Test
     fun iterating_throughThirdPage() {
         provider.setSort("name", SortOrder.DESCENDING)
-        every { keywordServiceMock.findPageOfEntityDefinitions(filterMock, any()) } returns papers.iterator()
+        every { keywordServiceMock.findPageOfEntityDefinitions(filterDummy, any()) } returns entities.iterator()
         val it = provider.iterator(6, 3)
         assertRecordsIn(it)
-        verify { keywordServiceMock.findPageOfEntityDefinitions(filterMock, matchPaginationContext(6, 3, "name: DESC")) }
+        verify { keywordServiceMock.findPageOfEntityDefinitions(filterDummy, matchPaginationContext(6, 3, "name: DESC")) }
     }
 }

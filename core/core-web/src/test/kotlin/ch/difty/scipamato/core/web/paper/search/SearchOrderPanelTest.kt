@@ -9,6 +9,8 @@ import ch.difty.scipamato.core.entity.search.SearchTermType
 import ch.difty.scipamato.core.web.common.PanelTest
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable
+import io.mockk.confirmVerified
+import io.mockk.unmockkAll
 import org.amshove.kluent.shouldBeFalse
 import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldBeTrue
@@ -18,9 +20,16 @@ import org.apache.wicket.markup.html.WebMarkupContainer
 import org.apache.wicket.markup.html.form.Form
 import org.apache.wicket.markup.html.panel.Panel
 import org.apache.wicket.model.Model
+import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 
 internal abstract class SearchOrderPanelTest : PanelTest<SearchOrderPanel>() {
+
+    @AfterEach
+    fun tearDown() {
+        tester.destroy()
+        unmockkAll()
+    }
 
     override fun makePanel(): SearchOrderPanel {
         val sc = SearchCondition()

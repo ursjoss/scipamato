@@ -1,39 +1,25 @@
 package ch.difty.scipamato.core.web.paper
 
-import ch.difty.scipamato.common.ClearAllMocksExtension
 import ch.difty.scipamato.core.entity.search.SearchCondition
-import io.mockk.impl.annotations.MockK
-import io.mockk.junit5.MockKExtension
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldContainSame
 import org.apache.wicket.model.Model
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.extension.ExtendWith
-import java.util.ArrayList
 
-@ExtendWith(MockKExtension::class, ClearAllMocksExtension::class)
 internal class SearchConditionProviderTest {
 
     private lateinit var provider: SearchConditionProvider
 
-    @MockK
-    private lateinit var mockCondition1: SearchCondition
+    private val cond1Dummy = SearchCondition(1L)
+    private val cond2Dummy = SearchCondition(2L)
+    private val cond3Dummy = SearchCondition(3L)
+    private val cond4Dummy = SearchCondition(4L)
 
-    @MockK
-    private lateinit var mockCondition2: SearchCondition
-
-    @MockK
-    private lateinit var mockCondition3: SearchCondition
-
-    @MockK
-    private lateinit var mockCondition4: SearchCondition
-
-    private val conditions: MutableList<SearchCondition> = ArrayList()
+    private val conditions = listOf(cond1Dummy, cond2Dummy, cond3Dummy, cond4Dummy)
 
     @BeforeEach
     fun setUp() {
-        conditions.addAll(listOf(mockCondition1, mockCondition2, mockCondition3, mockCondition4))
         provider = SearchConditionProvider(Model.ofList(conditions))
     }
 
@@ -45,24 +31,24 @@ internal class SearchConditionProviderTest {
     @Test
     fun iterator_fromStartWithPageSizeLargerThanActualSize_returnsAll() {
         provider.iterator(0, 100).asSequence() shouldContainSame
-            sequenceOf(mockCondition1, mockCondition2, mockCondition3, mockCondition4)
+            sequenceOf(cond1Dummy, cond2Dummy, cond3Dummy, cond4Dummy)
     }
 
     @Test
     fun iterator_fromStartWithLimitingPageSize_returnsPageFullFromStart() {
         provider.iterator(0, 2).asSequence() shouldContainSame
-            sequenceOf(mockCondition1, mockCondition2)
+            sequenceOf(cond1Dummy, cond2Dummy)
     }
 
     @Test
     fun iterator_fromIndex1WithLimitingPageSize_returnsPageFullFromIndex() {
         provider.iterator(1, 2).asSequence() shouldContainSame
-            sequenceOf(mockCondition2, mockCondition3)
+            sequenceOf(cond2Dummy, cond3Dummy)
     }
 
     @Test
     fun gettingModel() {
-        val model = provider.model(mockCondition1)
-        model.getObject() shouldBeEqualTo mockCondition1
+        val model = provider.model(cond1Dummy)
+        model.getObject() shouldBeEqualTo cond1Dummy
     }
 }

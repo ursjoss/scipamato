@@ -1,15 +1,13 @@
 package ch.difty.scipamato.publ.web.paper.browse
 
-import io.mockk.confirmVerified
+import ch.difty.scipamato.common.AjaxRequestTargetSpy
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.unmockkAll
-import io.mockk.verify
 import nl.jqno.equalsverifier.EqualsVerifier
 import nl.jqno.equalsverifier.Warning
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeNull
-import org.apache.wicket.ajax.AjaxRequestTarget
 import org.apache.wicket.markup.html.form.TextArea
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
@@ -18,11 +16,12 @@ import org.junit.jupiter.api.Test
 private const val ID = "id"
 private const val MARKUP_ID = "mId"
 
-@Suppress("UnusedEquals", "SpellCheckingInspection")
+@Suppress("SpellCheckingInspection")
 internal class SimpleFilterPanelChangeEventTest {
 
-    private lateinit var e: SimpleFilterPanelChangeEvent
-    private lateinit var targetMock: AjaxRequestTarget
+    private val targetSpy = AjaxRequestTargetSpy()
+    private val e = SimpleFilterPanelChangeEvent(targetSpy)
+
     private lateinit var mockComponent: TextArea<String>
 
     @BeforeEach
@@ -31,111 +30,101 @@ internal class SimpleFilterPanelChangeEventTest {
             every { id } returns ID
             every { markupId } returns MARKUP_ID
         }
-        targetMock = mockk {
-            every { add(mockComponent) } returns Unit
-        }
     }
 
     @AfterEach
     fun tearDown() {
-        confirmVerified(targetMock)
+        targetSpy.reset()
         unmockkAll()
     }
 
     @Test
     fun canRetrieveTarget() {
-        e = SimpleFilterPanelChangeEvent(targetMock)
-        e.target shouldBeEqualTo targetMock
-        verify { targetMock == targetMock }
+        e.target shouldBeEqualTo targetSpy
     }
 
     @Test
     fun usingMinimalConstructor_doesNotSetAnySpecialStuff() {
-        e = SimpleFilterPanelChangeEvent(targetMock)
         e.id.shouldBeNull()
         e.markupId.shouldBeNull()
     }
 
     @Test
     fun usingWithId_doesAddId() {
-        e = SimpleFilterPanelChangeEvent(targetMock).withId("foo")
-        e.id shouldBeEqualTo "foo"
-        e.markupId.shouldBeNull()
+        val f = SimpleFilterPanelChangeEvent(targetSpy).withId("foo")
+        f.id shouldBeEqualTo "foo"
+        f.markupId.shouldBeNull()
     }
 
     @Test
     fun usingWithMarkupId_doesAddMarkupId() {
-        e = SimpleFilterPanelChangeEvent(targetMock).withMarkupId("bar")
-        e.id.shouldBeNull()
-        e.markupId shouldBeEqualTo "bar"
+        val f = SimpleFilterPanelChangeEvent(targetSpy).withMarkupId("bar")
+        f.id.shouldBeNull()
+        f.markupId shouldBeEqualTo "bar"
     }
 
     @Test
     fun usingWithIdAndMarkupId_doesAddBoth() {
-        e = SimpleFilterPanelChangeEvent(targetMock)
+        val f = SimpleFilterPanelChangeEvent(targetSpy)
             .withId("hups")
             .withMarkupId("goo")
-        e.id shouldBeEqualTo "hups"
-        e.markupId shouldBeEqualTo "goo"
+        f.id shouldBeEqualTo "hups"
+        f.markupId shouldBeEqualTo "goo"
     }
 
     @Test
     fun canOverrideTarget() {
-        e = SimpleFilterPanelChangeEvent(targetMock)
-        e.target shouldBeEqualTo targetMock
+        e.target shouldBeEqualTo targetSpy
 
-        val targetMock2 = mockk<AjaxRequestTarget>()
-        e.target = targetMock2
-        e.target shouldBeEqualTo targetMock2
-        verify { targetMock == targetMock }
-        verify { targetMock2 == targetMock2 }
+        val targetDummy2 = AjaxRequestTargetSpy()
+        e.target = targetDummy2
+        e.target shouldBeEqualTo targetDummy2
     }
 
     @Test
     fun consideringAddingToTarget_withIdLessEvent_addsTarget() {
-        e = SimpleFilterPanelChangeEvent(targetMock)
         e.id.shouldBeNull()
         e.considerAddingToTarget(mockComponent)
-        verify { targetMock.add(mockComponent) }
+        targetSpy.components.size shouldBeEqualTo 1
     }
 
     @Test
     fun consideringAddingToTarget_withDifferingId_doesNotAddTarget() {
-        e = SimpleFilterPanelChangeEvent(targetMock)
+        val f = SimpleFilterPanelChangeEvent(targetSpy)
             .withId("otherId")
             .withMarkupId(MARKUP_ID)
-        e.considerAddingToTarget(mockComponent)
-        verify(exactly = 0) { targetMock.add(mockComponent) }
+        f.considerAddingToTarget(mockComponent)
+        targetSpy.components.size shouldBeEqualTo 0
     }
 
     @Test
     fun consideringAddingToTarget_withSameIdButNullMarkupId_addsTarget() {
         every { mockComponent.id } returns ID
         every { mockComponent.markupId } returns MARKUP_ID
-        e = SimpleFilterPanelChangeEvent(targetMock).withId(ID)
-        e.markupId.shouldBeNull()
-        e.considerAddingToTarget(mockComponent)
-        verify { targetMock.add(mockComponent) }
+        val f = SimpleFilterPanelChangeEvent(targetSpy).withId(ID)
+        f.markupId.shouldBeNull()
+        f.considerAddingToTarget(mockComponent)
+        targetSpy.components.size shouldBeEqualTo 1
     }
 
     @Test
     fun consideringAddingToTarget_withSameIdAndDifferingMarkupId_addsTarget() {
         every { mockComponent.id } returns ID
         every { mockComponent.markupId } returns MARKUP_ID
-        e = SimpleFilterPanelChangeEvent(targetMock)
+        val f = SimpleFilterPanelChangeEvent(targetSpy)
             .withId(ID)
             .withMarkupId("otherMarkupId")
-        e.considerAddingToTarget(mockComponent)
-        verify { targetMock.add(mockComponent) }
+        f.considerAddingToTarget(mockComponent)
+        targetSpy.components.size shouldBeEqualTo 1
     }
 
     @Test
     fun consideringAddingToTarget_withSameIdButSameMarkupId_doesNotAddTarget() {
-        e = SimpleFilterPanelChangeEvent(targetMock)
+        val f = SimpleFilterPanelChangeEvent(targetSpy)
             .withId(ID)
             .withMarkupId(MARKUP_ID)
-        e.considerAddingToTarget(mockComponent)
-        verify(exactly = 0) { targetMock.add(mockComponent) }
+        f.considerAddingToTarget(mockComponent)
+        targetSpy.components.size shouldBeEqualTo 0
     }
 
     @Test

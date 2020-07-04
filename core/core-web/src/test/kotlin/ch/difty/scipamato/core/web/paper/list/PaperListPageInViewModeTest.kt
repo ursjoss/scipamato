@@ -17,7 +17,7 @@ internal class PaperListPageInViewModeTest : PaperListPageTest() {
         verify(exactly = 4) { paperServiceMock.findPageOfIdsByFilter(any(), any()) }
     }
 
-    fun assertMenuEntries() {
+    private fun assertMenuEntries() {
         tester.assertComponent("_header_", HtmlHeaderContainer::class.java)
         tester.assertComponent("navbar", Navbar::class.java)
 

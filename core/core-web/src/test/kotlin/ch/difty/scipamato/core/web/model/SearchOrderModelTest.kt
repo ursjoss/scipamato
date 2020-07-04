@@ -8,7 +8,8 @@ import io.mockk.Matcher
 import io.mockk.MockKMatcherScope
 import io.mockk.confirmVerified
 import io.mockk.every
-import io.mockk.impl.annotations.MockK
+import io.mockk.mockk
+import io.mockk.unmockkAll
 import io.mockk.verify
 import org.amshove.kluent.shouldContainSame
 import org.junit.jupiter.api.AfterEach
@@ -16,12 +17,16 @@ import org.junit.jupiter.api.Test
 
 internal class SearchOrderModelTest : ModelTest() {
 
-    @MockK
     private lateinit var searchOrderMock: SearchOrder
+
+    override fun setUpLocal() {
+        searchOrderMock = mockk()
+    }
 
     @AfterEach
     fun tearDown() {
         confirmVerified(searchOrderServiceMock, searchOrderMock)
+        unmockkAll()
     }
 
     @Test

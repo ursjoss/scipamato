@@ -6,7 +6,7 @@ import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicFilter
 import ch.difty.scipamato.core.web.AbstractWicketTest
 import io.mockk.confirmVerified
 import io.mockk.every
-import io.mockk.impl.annotations.MockK
+import io.mockk.unmockkAll
 import io.mockk.verify
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeFalse
@@ -22,24 +22,21 @@ internal class NewsletterTopicDefinitionProviderTest : AbstractWicketTest() {
 
     private lateinit var provider: NewsletterTopicDefinitionProvider
 
-    @MockK(relaxed = true)
-    private lateinit var filterMock: NewsletterTopicFilter
+    private val filterDummy = NewsletterTopicFilter().apply { titleMask = "foo" }
+    private val entityDummy = NewsletterTopicDefinition(null, "en", null)
 
-    @MockK
-    private lateinit var entityMock: NewsletterTopicDefinition
-
-    private lateinit var papers: List<NewsletterTopicDefinition>
+    private val entities = listOf(entityDummy, entityDummy, entityDummy)
 
     @BeforeEach
     fun setUp() {
         WicketTester(application)
-        provider = NewsletterTopicDefinitionProvider(filterMock)
-        papers = listOf(entityMock, entityMock, entityMock)
+        provider = NewsletterTopicDefinitionProvider(filterDummy)
     }
 
     @AfterEach
     fun tearDown() {
-        confirmVerified(newsletterTopicServiceMock, entityMock)
+        confirmVerified(newsletterTopicServiceMock)
+        unmockkAll()
     }
 
     @Test
@@ -57,49 +54,47 @@ internal class NewsletterTopicDefinitionProviderTest : AbstractWicketTest() {
     @Test
     fun size() {
         val size = 5
-        every { newsletterTopicServiceMock.countByFilter(filterMock) } returns size
+        every { newsletterTopicServiceMock.countByFilter(filterDummy) } returns size
         provider.size() shouldBeEqualTo size.toLong()
-        verify { newsletterTopicServiceMock.countByFilter(filterMock) }
+        verify { newsletterTopicServiceMock.countByFilter(filterDummy) }
     }
 
     @Test
     fun gettingModel_wrapsEntity() {
-        val model = provider.model(entityMock)
-        model.getObject() shouldBeEqualTo entityMock
-        verify { entityMock == entityMock }
+        val model = provider.model(entityDummy)
+        model.getObject() shouldBeEqualTo entityDummy
     }
 
     @Test
     fun gettingFilterState_returnsFilter() {
-        provider.filterState shouldBeEqualTo filterMock
+        provider.filterState shouldBeEqualTo filterDummy
     }
 
     @Test
     fun settingFilterState() {
         provider = NewsletterTopicDefinitionProvider()
-        provider.filterState shouldNotBeEqualTo filterMock
-        provider.filterState = filterMock
-        provider.filterState shouldBeEqualTo filterMock
+        provider.filterState shouldNotBeEqualTo filterDummy
+        provider.filterState = filterDummy
+        provider.filterState shouldBeEqualTo filterDummy
     }
 
     @Test
     fun iterating_withNoRecords_returnsNoRecords() {
-        papers = emptyList()
-        every { newsletterTopicServiceMock.findPageOfEntityDefinitions(filterMock, any()) } returns papers.iterator()
+        every { newsletterTopicServiceMock.findPageOfEntityDefinitions(filterDummy, any()) } returns emptyList<NewsletterTopicDefinition>().iterator()
         val it = provider.iterator(0, 3)
         it.hasNext().shouldBeFalse()
         verify {
-            newsletterTopicServiceMock.findPageOfEntityDefinitions(filterMock, matchPaginationContext(0, 3, "title: ASC"))
+            newsletterTopicServiceMock.findPageOfEntityDefinitions(filterDummy, matchPaginationContext(0, 3, "title: ASC"))
         }
     }
 
     @Test
     fun iterating_throughFirst() {
-        every { newsletterTopicServiceMock.findPageOfEntityDefinitions(filterMock, any()) } returns papers.iterator()
+        every { newsletterTopicServiceMock.findPageOfEntityDefinitions(filterDummy, any()) } returns entities.iterator()
         val it = provider.iterator(0, 3)
         assertRecordsIn(it)
         verify {
-            newsletterTopicServiceMock.findPageOfEntityDefinitions(filterMock, matchPaginationContext(0, 3, "title: ASC"))
+            newsletterTopicServiceMock.findPageOfEntityDefinitions(filterDummy, matchPaginationContext(0, 3, "title: ASC"))
         }
     }
 
@@ -113,22 +108,22 @@ internal class NewsletterTopicDefinitionProviderTest : AbstractWicketTest() {
 
     @Test
     fun iterating_throughSecondPage() {
-        every { newsletterTopicServiceMock.findPageOfEntityDefinitions(filterMock, any()) } returns papers.iterator()
+        every { newsletterTopicServiceMock.findPageOfEntityDefinitions(filterDummy, any()) } returns entities.iterator()
         val it = provider.iterator(3, 3)
         assertRecordsIn(it)
         verify {
-            newsletterTopicServiceMock.findPageOfEntityDefinitions(filterMock, matchPaginationContext(3, 3, "title: ASC"))
+            newsletterTopicServiceMock.findPageOfEntityDefinitions(filterDummy, matchPaginationContext(3, 3, "title: ASC"))
         }
     }
 
     @Test
     fun iterating_throughThirdPage() {
         provider.setSort("title", SortOrder.DESCENDING)
-        every { newsletterTopicServiceMock.findPageOfEntityDefinitions(filterMock, any()) } returns papers.iterator()
+        every { newsletterTopicServiceMock.findPageOfEntityDefinitions(filterDummy, any()) } returns entities.iterator()
         val it = provider.iterator(6, 3)
         assertRecordsIn(it)
         verify {
-            newsletterTopicServiceMock.findPageOfEntityDefinitions(filterMock, matchPaginationContext(6, 3, "title: DESC"))
+            newsletterTopicServiceMock.findPageOfEntityDefinitions(filterDummy, matchPaginationContext(6, 3, "title: DESC"))
         }
     }
 }

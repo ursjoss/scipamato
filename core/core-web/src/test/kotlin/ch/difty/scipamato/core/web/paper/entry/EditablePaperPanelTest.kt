@@ -7,7 +7,8 @@ import ch.difty.scipamato.core.entity.Paper.NewsletterLink
 import ch.difty.scipamato.core.pubmed.PubmedArticleFacade
 import ch.difty.scipamato.core.web.paper.common.PaperPanelTest
 import io.mockk.confirmVerified
-import io.mockk.impl.annotations.MockK
+import io.mockk.every
+import io.mockk.mockk
 import io.mockk.verify
 import org.amshove.kluent.invoking
 import org.amshove.kluent.shouldBeFalse
@@ -19,21 +20,26 @@ import org.apache.wicket.markup.html.link.ResourceLink
 import org.apache.wicket.model.Model
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
+import java.util.Optional
 
 @Suppress("SpellCheckingInspection")
 internal abstract class EditablePaperPanelTest : PaperPanelTest<Paper?, EditablePaperPanel>() {
 
-    @MockK
     lateinit var pubmedArticleMock: PubmedArticleFacade
 
-    @MockK
-    lateinit var callingPageMock: PageReference
+    val callingPageDummy = PageReference(1)
+
+    override fun setUpLocalHook() {
+        pubmedArticleMock = mockk()
+        // when referring to PaperSearchPage
+        every { searchOrderServiceMock.findById(SEARCH_ORDER_ID) } returns Optional.empty()
+    }
 
     override fun tearDownLocalHook() {
         confirmVerified(pubmedArticleServiceMock, pubmedArticleMock, newsletterServiceMock)
     }
 
-    override fun makePanel(): EditablePaperPanel = newPanel(paperFixture(), callingPageMock, SEARCH_ORDER_ID, mode)
+    override fun makePanel(): EditablePaperPanel = newPanel(paperFixture(), callingPageDummy, SEARCH_ORDER_ID, mode)
 
     private fun newPanel(p: Paper, pageRef: PageReference?, searchOrderId: Long?, mode: Mode): EditablePaperPanel =
         object : EditablePaperPanel(PANEL_ID, Model.of(p), pageRef, searchOrderId, SHOW_EXCLUDED, mode, Model.of(0)) {
@@ -199,7 +205,7 @@ internal abstract class EditablePaperPanelTest : PaperPanelTest<Paper?, Editable
 
     @Test
     fun cannotInstantiateInSearchMode() {
-        invoking { newPanel(paperFixture(), callingPageMock, SEARCH_ORDER_ID, Mode.SEARCH) } shouldThrow
+        invoking { newPanel(paperFixture(), callingPageDummy, SEARCH_ORDER_ID, Mode.SEARCH) } shouldThrow
             IllegalArgumentException::class withMessage
             "Mode SEARCH is not enabled in class ch.difty.scipamato.core.web.paper.entry.EditablePaperPanelTest\$newPanel$1"
     }

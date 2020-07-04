@@ -20,7 +20,7 @@ abstract class ModelTest : AbstractWicketTest() {
     /**
      * Override if the actual test class needs a setUp
      */
-    fun setUpLocal() {
+    open fun setUpLocal() {
         // override if necessary
     }
 }

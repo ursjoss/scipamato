@@ -6,28 +6,29 @@ import ch.difty.scipamato.core.web.common.BasePageTest
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable
 import io.mockk.confirmVerified
 import io.mockk.every
+import io.mockk.unmockkAll
 import io.mockk.verify
 import org.apache.wicket.markup.html.form.Form
 import org.apache.wicket.markup.html.link.Link
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
-import java.util.ArrayList
 
+@Suppress("PrivatePropertyName")
 internal class CodeClassListPageTest : BasePageTest<CodeClassListPage>() {
 
-    private val results: MutableList<CodeClassDefinition> = ArrayList()
+    private val cct1_de = CodeClassTranslation(1, "de", "Name1", "a description", 1)
+    private val cct1_en = CodeClassTranslation(2, "en", "name1", null, 1)
+    private val cct1_fr = CodeClassTranslation(3, "fr", "nom1", null, 1)
+    private val ccd1 = CodeClassDefinition(1, "de", 1, cct1_de, cct1_en, cct1_fr)
+    private val cct2_en = CodeClassTranslation(5, "en", "name2", null, 1)
+    private val cct2_fr = CodeClassTranslation(6, "fr", "nom2", null, 1)
+    private val cct2_de = CodeClassTranslation(4, "de", "Name2", null, 1)
+    private val ccd2 = CodeClassDefinition(2, "de", 1, cct2_de, cct2_en, cct2_fr)
+
+    private val results = listOf(ccd1, ccd2)
 
     @Suppress("LocalVariableName")
     override fun setUpHook() {
-        val cct1_de = CodeClassTranslation(1, "de", "Name1", "a description", 1)
-        val cct1_en = CodeClassTranslation(2, "en", "name1", null, 1)
-        val cct1_fr = CodeClassTranslation(3, "fr", "nom1", null, 1)
-        val ccd1 = CodeClassDefinition(1, "de", 1, cct1_de, cct1_en, cct1_fr)
-        val cct2_en = CodeClassTranslation(5, "en", "name2", null, 1)
-        val cct2_fr = CodeClassTranslation(6, "fr", "nom2", null, 1)
-        val cct2_de = CodeClassTranslation(4, "de", "Name2", null, 1)
-        val ccd2 = CodeClassDefinition(2, "de", 1, cct2_de, cct2_en, cct2_fr)
-        results.addAll(listOf(ccd1, ccd2))
         every { codeClassServiceMock.countByFilter(any()) } returns results.size
         every { codeClassServiceMock.findPageOfEntityDefinitions(any(), any()) } returns results.iterator()
     }
@@ -35,6 +36,8 @@ internal class CodeClassListPageTest : BasePageTest<CodeClassListPage>() {
     @AfterEach
     fun tearDown() {
         confirmVerified(codeClassServiceMock)
+        tester.destroy()
+        unmockkAll()
     }
 
     override fun makePage(): CodeClassListPage = CodeClassListPage(null)

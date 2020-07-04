@@ -3,10 +3,12 @@ package ch.difty.scipamato.core.web.paper.search
 import ch.difty.scipamato.core.entity.search.SearchCondition
 import ch.difty.scipamato.core.web.WicketTest
 import io.mockk.impl.annotations.MockK
+import io.mockk.unmockkAll
 import org.amshove.kluent.shouldBeInstanceOf
 import org.apache.wicket.MarkupContainer
 import org.apache.wicket.model.Model
 import org.apache.wicket.request.mapper.parameter.PageParameters
+import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 
 private const val SEARCH_COND_ID = 5L
@@ -18,6 +20,12 @@ internal class PaperPageFactoryTest : WicketTest() {
 
     private val factory = PaperPageFactory()
     private val sc = SearchCondition()
+
+    @AfterEach
+    fun tearDown() {
+        tester.destroy()
+        unmockkAll()
+    }
 
     @Test
     fun assertingNewPaperSearchCriteriaPage() {

@@ -1,13 +1,10 @@
 package ch.difty.scipamato.core.entity.search
 
-import ch.difty.scipamato.common.ClearAllMocksExtension
 import ch.difty.scipamato.common.entity.ScipamatoEntity.ScipamatoEntityFields.CREATED
 import ch.difty.scipamato.common.entity.ScipamatoEntity.ScipamatoEntityFields.MODIFIED
 import ch.difty.scipamato.core.entity.CoreEntity.CoreEntityFields.CREATOR_ID
 import ch.difty.scipamato.core.entity.CoreEntity.CoreEntityFields.MODIFIER_ID
 import ch.difty.scipamato.core.entity.search.SearchOrder.SearchOrderFields.SHOW_EXCLUDED
-import io.mockk.impl.annotations.MockK
-import io.mockk.junit5.MockKExtension
 import nl.jqno.equalsverifier.EqualsVerifier
 import nl.jqno.equalsverifier.Warning
 import org.amshove.kluent.shouldBeEmpty
@@ -17,21 +14,17 @@ import org.amshove.kluent.shouldContainAll
 import org.amshove.kluent.shouldHaveSize
 import org.amshove.kluent.shouldNotBeNull
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.extension.ExtendWith
 import java.time.LocalDateTime
 
 private const val SO_NAME = "soName"
 
-@ExtendWith(MockKExtension::class, ClearAllMocksExtension::class)
 internal class SearchOrderTest {
 
     private val so = SearchOrder(10L, SO_NAME, 1, false, null, null)
 
-    @MockK
-    private lateinit var mockCondition1: SearchCondition
+    private val mockCondition1 = SearchCondition().apply { id = "sc1" }
 
-    @MockK
-    private lateinit var mockCondition2: SearchCondition
+    private val mockCondition2 = SearchCondition().apply { id = "sc2" }
 
     private val searchConditions = ArrayList<SearchCondition>()
     private val excludedIds = ArrayList<Long>()

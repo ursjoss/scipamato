@@ -3,8 +3,6 @@ package ch.difty.scipamato.core.web.paper
 import ch.difty.scipamato.common.persistence.paging.matchPaginationContext
 import ch.difty.scipamato.core.entity.search.PaperFilter
 import io.mockk.every
-import io.mockk.impl.annotations.MockK
-import io.mockk.mockk
 import io.mockk.verify
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeFalse
@@ -18,17 +16,16 @@ import org.junit.jupiter.api.Test
 internal class PaperSlimByPaperFilterProviderTest :
     AbstractPaperSlimProviderTest<PaperFilter, PaperSlimByPaperFilterProvider>() {
 
-    @MockK
-    override lateinit var filter: PaperFilter
+    override val filterDummy = PaperFilter().apply { authorMask = "foo" }
 
     override fun localFixture() {
-        every { paperSlimServiceMock.findPageByFilter(filter, any()) } returns pageOfSlimPapers
+        every { paperSlimServiceMock.findPageByFilter(filterDummy, any()) } returns pageOfSlimPapers
     }
 
-    override fun newProvider(): PaperSlimByPaperFilterProvider = PaperSlimByPaperFilterProvider(filter, PAGE_SIZE)
+    override fun newProvider(): PaperSlimByPaperFilterProvider = PaperSlimByPaperFilterProvider(filterDummy, PAGE_SIZE)
 
-    override fun verifyFilterMock(offset: Int, pageSize: Int, sort: String) {
-        verify { paperSlimServiceMock.findPageByFilter(filter, matchPaginationContext(offset, pageSize, sort)) }
+    override fun localVerify(offset: Int, pageSize: Int, sort: String) {
+        verify { paperSlimServiceMock.findPageByFilter(filterDummy, matchPaginationContext(offset, pageSize, sort)) }
     }
 
     @Test
@@ -40,45 +37,43 @@ internal class PaperSlimByPaperFilterProviderTest :
     @Test
     fun size() {
         val size = 5
-        every { paperSlimServiceMock.countByFilter(filter) } returns size
+        every { paperSlimServiceMock.countByFilter(filterDummy) } returns size
         provider.size() shouldBeEqualTo size.toLong()
-        verify { paperSlimServiceMock.countByFilter(filter) }
+        verify { paperSlimServiceMock.countByFilter(filterDummy) }
     }
 
     @Test
     fun settingFilterState() {
-        val filterMock2 = mockk<PaperFilter>()
-        provider.filterState shouldBeEqualTo filter
-        provider.filterState = filterMock2
-        provider.filterState shouldBeEqualTo filterMock2
-        verify { filter == filter }
+        provider.filterState shouldBeEqualTo filterDummy
+        val filter2Dummy = PaperFilter().apply { newsletterId = 10 }
+        provider.filterState = filter2Dummy
+        provider.filterState shouldBeEqualTo filter2Dummy
     }
 
     @Test
     fun findingAllPapersByFilter() {
         provider.setSort("title", SortOrder.DESCENDING)
         every {
-            paperServiceMock.findPageByFilter(filter, matchPaginationContext(0, Int.MAX_VALUE, "title: DESC"))
+            paperServiceMock.findPageByFilter(filterDummy, matchPaginationContext(0, Int.MAX_VALUE, "title: DESC"))
         } returns pageOfPapers
         val papers = provider.findAllPapersByFilter()
         papers shouldHaveSize 5
-        papers shouldContain paperMock
+        papers shouldContain paperDummy
         verify {
-            paperServiceMock.findPageByFilter(filter, matchPaginationContext(0, Int.MAX_VALUE, "title: DESC"))
+            paperServiceMock.findPageByFilter(filterDummy, matchPaginationContext(0, Int.MAX_VALUE, "title: DESC"))
         }
-        verify { paperMock == paperMock }
     }
 
     @Test
     fun findingAllIdsByFilter() {
         provider.setSort("title", SortOrder.DESCENDING)
         every {
-            paperServiceMock.findPageOfIdsByFilter(filter, matchPaginationContext(0, Int.MAX_VALUE, "title: DESC"))
+            paperServiceMock.findPageOfIdsByFilter(filterDummy, matchPaginationContext(0, Int.MAX_VALUE, "title: DESC"))
         } returns listOf(5L, 3L, 17L)
         val ids = provider.findAllPaperIdsByFilter()
         ids shouldContainSame listOf(5L, 3L, 17L)
         verify {
-            paperServiceMock.findPageOfIdsByFilter(filter, matchPaginationContext(0, Int.MAX_VALUE, "title: DESC"))
+            paperServiceMock.findPageOfIdsByFilter(filterDummy, matchPaginationContext(0, Int.MAX_VALUE, "title: DESC"))
         }
     }
 
