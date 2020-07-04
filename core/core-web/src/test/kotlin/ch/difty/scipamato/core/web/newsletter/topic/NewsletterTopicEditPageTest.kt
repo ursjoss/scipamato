@@ -11,7 +11,6 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton
 import io.mockk.confirmVerified
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.unmockkAll
 import io.mockk.verify
 import org.apache.wicket.markup.html.form.Form
 import org.apache.wicket.markup.html.form.TextField
@@ -40,8 +39,6 @@ internal class NewsletterTopicEditPageTest : BasePageTest<NewsletterTopicEditPag
     @AfterEach
     fun tearDown() {
         confirmVerified(newsletterTopicServiceMock)
-        tester.destroy()
-        unmockkAll()
     }
 
     override fun makePage(): NewsletterTopicEditPage = NewsletterTopicEditPage(Model.of(ntd), null)

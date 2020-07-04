@@ -2,14 +2,12 @@ package ch.difty.scipamato.core.web.paper.search
 
 import ch.difty.scipamato.common.AjaxRequestTargetSpy
 import ch.difty.scipamato.core.web.paper.SearchOrderChangeEvent
-import io.mockk.unmockkAll
 import nl.jqno.equalsverifier.EqualsVerifier
 import nl.jqno.equalsverifier.Warning
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeFalse
 import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldBeTrue
-import org.amshove.kluent.shouldNotBeEqualTo
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 
@@ -22,7 +20,6 @@ internal class SearchOrderChangeEventTest {
     @AfterEach
     fun tearDown() {
         targetDummy.reset()
-        unmockkAll()
     }
 
     @Test

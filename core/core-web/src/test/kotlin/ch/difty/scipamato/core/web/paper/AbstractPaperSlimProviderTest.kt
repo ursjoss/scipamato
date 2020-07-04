@@ -6,7 +6,6 @@ import ch.difty.scipamato.core.entity.projection.PaperSlim
 import ch.difty.scipamato.core.web.AbstractWicketTest
 import io.mockk.confirmVerified
 import io.mockk.every
-import io.mockk.unmockkAll
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeFalse
 import org.amshove.kluent.shouldBeLessThan
@@ -52,7 +51,6 @@ internal abstract class AbstractPaperSlimProviderTest<F : PaperSlimFilter, P : A
     @AfterEach
     fun tearDown() {
         confirmVerified(paperSlimServiceMock, paperServiceMock)
-        unmockkAll()
     }
 
     protected abstract fun newProvider(): P

@@ -13,7 +13,6 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.LocalDateText
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelect
 import io.mockk.confirmVerified
 import io.mockk.every
-import io.mockk.unmockkAll
 import io.mockk.verify
 import org.apache.wicket.markup.html.form.Form
 import org.apache.wicket.markup.html.form.TextField
@@ -36,8 +35,6 @@ internal class NewsletterEditPageTest : BasePageTest<NewsletterEditPage>() {
     @AfterEach
     fun tearDown() {
         confirmVerified(newsletterServiceMock)
-        tester.destroy()
-        unmockkAll()
     }
 
     override fun makePage(): NewsletterEditPage = NewsletterEditPage(Model.of(nl))

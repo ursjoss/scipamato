@@ -6,7 +6,6 @@ import ch.difty.scipamato.core.entity.search.UserFilter
 import ch.difty.scipamato.core.web.AbstractWicketTest
 import io.mockk.confirmVerified
 import io.mockk.every
-import io.mockk.unmockkAll
 import io.mockk.verify
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeFalse
@@ -37,7 +36,6 @@ internal class UserProviderTest : AbstractWicketTest() {
     @AfterEach
     fun tearDown() {
         confirmVerified(userServiceMock)
-        unmockkAll()
     }
 
     @Test

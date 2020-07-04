@@ -13,8 +13,6 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarExternalLin
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable
 import io.mockk.confirmVerified
 import io.mockk.every
-import io.mockk.mockk
-import io.mockk.unmockkAll
 import io.mockk.verify
 import org.apache.wicket.markup.html.WebMarkupContainer
 import org.apache.wicket.markup.html.form.Form
@@ -45,8 +43,6 @@ internal abstract class PaperListPageTest : BasePageTest<PaperListPage>() {
             paperSlimServiceMock, paperServiceMock, codeServiceMock,
             codeClassServiceMock, paperServiceMock, pubmedImporterMock
         )
-        tester.destroy()
-        unmockkAll()
     }
 
     fun assertSearchForm(b: String?) {

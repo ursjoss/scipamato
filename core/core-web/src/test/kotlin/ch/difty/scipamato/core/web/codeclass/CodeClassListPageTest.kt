@@ -6,7 +6,6 @@ import ch.difty.scipamato.core.web.common.BasePageTest
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable
 import io.mockk.confirmVerified
 import io.mockk.every
-import io.mockk.unmockkAll
 import io.mockk.verify
 import org.apache.wicket.markup.html.form.Form
 import org.apache.wicket.markup.html.link.Link
@@ -36,8 +35,6 @@ internal class CodeClassListPageTest : BasePageTest<CodeClassListPage>() {
     @AfterEach
     fun tearDown() {
         confirmVerified(codeClassServiceMock)
-        tester.destroy()
-        unmockkAll()
     }
 
     override fun makePage(): CodeClassListPage = CodeClassListPage(null)

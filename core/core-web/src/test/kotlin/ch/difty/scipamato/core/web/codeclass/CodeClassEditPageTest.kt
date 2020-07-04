@@ -11,7 +11,6 @@ import ch.difty.scipamato.core.web.common.BasePageTest
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton
 import io.mockk.confirmVerified
 import io.mockk.every
-import io.mockk.unmockkAll
 import io.mockk.verify
 import org.apache.wicket.markup.html.form.Form
 import org.apache.wicket.markup.html.form.TextField
@@ -44,8 +43,6 @@ internal class CodeClassEditPageTest : BasePageTest<CodeClassEditPage>() {
     @AfterEach
     fun tearDown() {
         confirmVerified(codeClassServiceMock)
-        tester.destroy()
-        unmockkAll()
     }
 
     override fun makePage(): CodeClassEditPage = CodeClassEditPage(Model.of(ccd), null)

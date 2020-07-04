@@ -7,7 +7,6 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.fileUpload.DropZon
 import io.mockk.confirmVerified
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.unmockkAll
 import io.mockk.verify
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeNull
@@ -38,8 +37,6 @@ internal class XmlPasteModalPanelTest : PanelTest<XmlPasteModalPanel>() {
     fun tearDown() {
         confirmVerified(fileItem)
         targetSpy.reset()
-        tester.destroy()
-        unmockkAll()
     }
 
     override fun makePanel(): XmlPasteModalPanel = XmlPasteModalPanel(PANEL_ID)

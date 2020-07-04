@@ -7,7 +7,6 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButt
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable
 import io.mockk.confirmVerified
 import io.mockk.every
-import io.mockk.unmockkAll
 import io.mockk.verify
 import org.apache.wicket.markup.html.form.Form
 import org.apache.wicket.markup.html.link.Link
@@ -36,8 +35,6 @@ internal class KeywordListPageTest : BasePageTest<KeywordListPage>() {
     @AfterEach
     fun tearDown() {
         confirmVerified(keywordServiceMock)
-        tester.destroy()
-        unmockkAll()
     }
 
     override fun makePage(): KeywordListPage = KeywordListPage(null)

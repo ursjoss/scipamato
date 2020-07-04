@@ -7,7 +7,6 @@ import ch.difty.scipamato.core.web.authentication.ScipamatoUserDetailsService
 import io.mockk.confirmVerified
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.unmockkAll
 import io.mockk.verify
 import org.amshove.kluent.invoking
 import org.amshove.kluent.shouldBeEqualTo
@@ -36,7 +35,6 @@ internal class ScipamatoUserDetailsServiceTest {
     @AfterEach
     fun tearDown() {
         confirmVerified(userServiceMock)
-        unmockkAll()
     }
 
     @Test

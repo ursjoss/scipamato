@@ -8,7 +8,6 @@ import ch.difty.scipamato.core.web.common.BasePageTest
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton
 import io.mockk.confirmVerified
 import io.mockk.every
-import io.mockk.unmockkAll
 import io.mockk.verify
 import org.apache.wicket.ajax.markup.html.AjaxLink
 import org.apache.wicket.markup.html.form.Form
@@ -36,8 +35,6 @@ internal class KeywordEditPageTest : BasePageTest<KeywordEditPage>() {
     @AfterEach
     fun tearDown() {
         confirmVerified(keywordServiceMock)
-        tester.destroy()
-        unmockkAll()
     }
 
     override fun makePage(): KeywordEditPage = KeywordEditPage(Model.of(kd), null)

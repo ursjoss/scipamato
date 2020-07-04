@@ -6,14 +6,12 @@ import ch.difty.scipamato.core.web.common.SelfUpdatingPageTest
 import ch.difty.scipamato.core.web.paper.common.PaperPanel
 import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.BootstrapTabbedPanel
 import io.mockk.every
-import io.mockk.unmockkAll
 import io.mockk.verify
 import org.amshove.kluent.shouldNotBeNull
 import org.apache.wicket.markup.html.form.Form
 import org.apache.wicket.model.Model
 import org.apache.wicket.request.mapper.parameter.PageParameters
 import org.apache.wicket.util.tester.FormTester
-import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 
 private const val ID = 1L
@@ -58,12 +56,6 @@ internal class PaperEntryPageTest : SelfUpdatingPageTest<PaperEntryPage>() {
         val bb = b + ":tab" + tabId + "Form"
         tester.assertComponent(bb, Form::class.java)
         fields.forEach { f -> assertLabeledTextArea(bb, f) }
-    }
-
-    @AfterEach
-    fun tearDown() {
-        tester.destroy()
-        unmockkAll()
     }
 
     @Test

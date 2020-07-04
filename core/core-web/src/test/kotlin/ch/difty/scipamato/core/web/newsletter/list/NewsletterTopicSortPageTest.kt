@@ -9,12 +9,10 @@ import ch.difty.scipamato.core.web.paper.list.PaperListPage
 import com.googlecode.wicket.jquery.ui.interaction.sortable.Sortable
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton
 import io.mockk.every
-import io.mockk.unmockkAll
 import io.mockk.verify
 import org.apache.wicket.markup.html.form.Form
 import org.apache.wicket.model.Model
 import org.apache.wicket.request.mapper.parameter.PageParameters
-import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 import java.time.LocalDate
 
@@ -34,12 +32,6 @@ internal class NewsletterTopicSortPageTest : BasePageTest<NewsletterTopicSortPag
             NewsletterNewsletterTopic(newsletter.id!!, 2, 1, "topic2")
         )
         every { newsletterTopicServiceMock.getSortedNewsletterTopicsForNewsletter(newsletter.id!!) } returns topics
-    }
-
-    @AfterEach
-    fun tearDown() {
-        tester.destroy()
-        unmockkAll()
     }
 
     override fun makePage(): NewsletterTopicSortPage = NewsletterTopicSortPage(Model.of(newsletter), null)

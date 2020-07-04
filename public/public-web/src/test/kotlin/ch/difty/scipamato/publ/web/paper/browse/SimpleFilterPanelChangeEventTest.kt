@@ -3,7 +3,6 @@ package ch.difty.scipamato.publ.web.paper.browse
 import ch.difty.scipamato.common.AjaxRequestTargetSpy
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.unmockkAll
 import nl.jqno.equalsverifier.EqualsVerifier
 import nl.jqno.equalsverifier.Warning
 import org.amshove.kluent.shouldBeEqualTo
@@ -35,7 +34,6 @@ internal class SimpleFilterPanelChangeEventTest {
     @AfterEach
     fun tearDown() {
         targetSpy.reset()
-        unmockkAll()
     }
 
     @Test

@@ -9,7 +9,6 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButt
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable
 import io.mockk.confirmVerified
 import io.mockk.every
-import io.mockk.unmockkAll
 import io.mockk.verify
 import org.amshove.kluent.shouldBeBlank
 import org.amshove.kluent.shouldBeEqualTo
@@ -44,8 +43,6 @@ internal class NewsletterListPageTest : BasePageTest<NewsletterListPage>() {
     @AfterEach
     fun tearDown() {
         confirmVerified(newsletterServiceMock)
-        tester.destroy()
-        unmockkAll()
     }
 
     override fun makePage(): NewsletterListPage = NewsletterListPage(null)

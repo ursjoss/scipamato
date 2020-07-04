@@ -13,7 +13,6 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.Bootst
 import io.mockk.confirmVerified
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.unmockkAll
 import io.mockk.verify
 import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldBeTrue
@@ -60,8 +59,6 @@ internal class CodeEditPageTest : BasePageTest<CodeEditPage>() {
     @AfterEach
     fun tearDown() {
         confirmVerified(codeServiceMock)
-        tester.destroy()
-        unmockkAll()
     }
 
     override fun makePage(): CodeEditPage = CodeEditPage(Model.of(cd), null)

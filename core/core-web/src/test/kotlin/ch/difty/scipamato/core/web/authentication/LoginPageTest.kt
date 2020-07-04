@@ -3,20 +3,12 @@ package ch.difty.scipamato.core.web.authentication
 import ch.difty.scipamato.core.web.WicketTest
 import com.giffing.wicket.spring.boot.starter.configuration.extensions.external.spring.security.SecureWebSession
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton
-import io.mockk.unmockkAll
 import org.apache.wicket.markup.html.form.Form
 import org.apache.wicket.markup.html.internal.HtmlHeaderContainer
 import org.apache.wicket.request.mapper.parameter.PageParameters
-import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 
 internal class LoginPageTest : WicketTest() {
-
-    @AfterEach
-    fun tearDown() {
-        tester.destroy()
-        unmockkAll()
-    }
 
     @Test
     fun assertPage() {

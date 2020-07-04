@@ -9,7 +9,6 @@ import io.mockk.MockKMatcherScope
 import io.mockk.confirmVerified
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.unmockkAll
 import io.mockk.verify
 import org.amshove.kluent.shouldContainSame
 import org.junit.jupiter.api.AfterEach
@@ -26,7 +25,6 @@ internal class SearchOrderModelTest : ModelTest() {
     @AfterEach
     fun tearDown() {
         confirmVerified(searchOrderServiceMock, searchOrderMock)
-        unmockkAll()
     }
 
     @Test

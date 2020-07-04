@@ -7,7 +7,6 @@ import com.ninjasquad.springmockk.MockkBean
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.ladda.LaddaAjaxButton
 import io.mockk.confirmVerified
 import io.mockk.every
-import io.mockk.unmockkAll
 import io.mockk.verify
 import org.apache.wicket.markup.html.form.Form
 import org.apache.wicket.request.mapper.parameter.PageParameters
@@ -24,8 +23,6 @@ internal class RefDataSyncPageTest : BasePageTest<RefDataSyncPage>() {
     @AfterEach
     fun tearDown() {
         confirmVerified(jobLauncherMock)
-        tester.destroy()
-        unmockkAll()
     }
 
     override fun makePage(): RefDataSyncPage = RefDataSyncPage(PageParameters())

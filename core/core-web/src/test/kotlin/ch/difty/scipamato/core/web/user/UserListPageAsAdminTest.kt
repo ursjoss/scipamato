@@ -7,7 +7,6 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButt
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable
 import io.mockk.confirmVerified
 import io.mockk.every
-import io.mockk.unmockkAll
 import io.mockk.verify
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeNull
@@ -44,8 +43,6 @@ internal class UserListPageAsAdminTest : BasePageTest<UserListPage>() {
     @AfterEach
     fun tearDown() {
         confirmVerified(userServiceMock)
-        tester.destroy()
-        unmockkAll()
     }
 
     override fun makePage(): UserListPage = UserListPage(null)

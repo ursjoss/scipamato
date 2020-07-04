@@ -11,7 +11,6 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.checkboxx.Che
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect
 import io.mockk.confirmVerified
 import io.mockk.every
-import io.mockk.unmockkAll
 import io.mockk.verify
 import org.apache.wicket.Component
 import org.apache.wicket.markup.html.form.Form
@@ -72,8 +71,6 @@ abstract class PaperPanelTest<T, P : PaperPanel<T>> : PanelTest<P>() where T : C
     fun tearDown() {
         confirmVerified(codeClassServiceMock, codeServiceMock)
         tearDownLocalHook()
-        tester.destroy()
-        unmockkAll()
     }
 
     protected open fun tearDownLocalHook() {}

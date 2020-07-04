@@ -5,12 +5,10 @@ import ch.difty.scipamato.core.entity.search.SearchOrder
 import ch.difty.scipamato.core.web.common.BasePageTest
 import ch.difty.scipamato.core.web.paper.common.SearchablePaperPanel
 import io.mockk.every
-import io.mockk.unmockkAll
 import io.mockk.verify
 import org.apache.wicket.markup.html.form.CheckBox
 import org.apache.wicket.markup.html.form.Form
 import org.apache.wicket.model.Model
-import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 import java.util.Optional
 
@@ -23,12 +21,6 @@ internal class PaperSearchCriteriaPageTest : BasePageTest<PaperSearchCriteriaPag
     override fun setUpHook() {
         every { searchOrderServiceMock.findById(SEARCH_ORDER_ID) } returns Optional.of(searchOrder)
         every { searchOrderServiceMock.findPageByFilter(any(), any()) } returns listOf(searchOrder)
-    }
-
-    @AfterEach
-    fun tearDown() {
-        tester.destroy()
-        unmockkAll()
     }
 
     override fun makePage(): PaperSearchCriteriaPage =

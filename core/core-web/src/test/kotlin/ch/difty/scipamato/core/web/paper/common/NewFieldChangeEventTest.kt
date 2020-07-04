@@ -3,7 +3,6 @@ package ch.difty.scipamato.core.web.paper.common
 import ch.difty.scipamato.common.AjaxRequestTargetSpy
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.unmockkAll
 import nl.jqno.equalsverifier.EqualsVerifier
 import nl.jqno.equalsverifier.Warning
 import org.amshove.kluent.shouldBeEmpty
@@ -34,7 +33,6 @@ internal class NewFieldChangeEventTest {
     @AfterEach
     fun tearDown() {
         targetSpy.reset()
-        unmockkAll()
     }
 
     @Test

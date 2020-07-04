@@ -1,7 +1,6 @@
 package ch.difty.scipamato.core.web.paper
 
 import ch.difty.scipamato.common.AjaxRequestTargetSpy
-import io.mockk.unmockkAll
 import nl.jqno.equalsverifier.EqualsVerifier
 import nl.jqno.equalsverifier.Warning
 import org.amshove.kluent.shouldBeEqualTo
@@ -16,7 +15,6 @@ internal class NewsletterChangeEventTest {
     @AfterEach
     fun tearDown() {
         targetMock.reset()
-        unmockkAll()
     }
 
     @Test

@@ -2,7 +2,6 @@ package ch.difty.scipamato.core.web.behavior
 
 import ch.difty.scipamato.common.AjaxRequestTargetSpy
 import ch.difty.scipamato.core.web.WicketTest
-import io.mockk.unmockkAll
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeNull
 import org.apache.wicket.ajax.AjaxRequestTarget
@@ -19,8 +18,6 @@ internal class AjaxTextDownloadTest : WicketTest() {
     @AfterEach
     fun tearDown() {
         targetDummy.reset()
-        tester.destroy()
-        unmockkAll()
     }
 
     @Test
