@@ -13,9 +13,11 @@ internal class ParentUrlLocaleExtractorTest {
 
     @BeforeEach
     fun setUp() {
-        localeExtractor = ParentUrlLocaleExtractor(mockk {
-            every { defaultLocalization } returns "en"
-        })
+        localeExtractor = ParentUrlLocaleExtractor(
+            mockk {
+                every { defaultLocalization } returns "en"
+            }
+        )
     }
 
     @Test

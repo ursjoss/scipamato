@@ -33,7 +33,6 @@ open class TestApplication : WicketBootSecuredWebApplication() {
             ResourceAggregator(JavaScriptFilteredIntoFooterHeaderResponse(r, "footer-container"))
         }
         registerJasperJrxmlFilesWithPackageResourceGuard()
-
     }
 
     // Allow access to jrxml jasper report definition files
@@ -45,5 +44,4 @@ open class TestApplication : WicketBootSecuredWebApplication() {
     }
 
     override fun newSession(request: Request, response: Response): Session = ScipamatoSession(request)
-
 }

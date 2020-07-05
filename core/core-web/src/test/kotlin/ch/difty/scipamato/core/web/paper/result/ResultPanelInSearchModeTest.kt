@@ -3,7 +3,6 @@ package ch.difty.scipamato.core.web.paper.result
 import ch.difty.scipamato.common.entity.newsletter.PublicationStatus
 import ch.difty.scipamato.common.web.Mode
 import ch.difty.scipamato.core.entity.projection.NewsletterAssociation
-import io.mockk.every
 import org.amshove.kluent.shouldBeNull
 import org.junit.jupiter.api.Test
 
