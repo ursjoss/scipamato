@@ -70,7 +70,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 //.Added
 //
 .Changed
-- Bumped detekt, jooq-modelator
+- Bumped detekt, jooq-modelator, gradle-wrapper
 
 .Deprecated
 
