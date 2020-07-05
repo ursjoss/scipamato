@@ -144,25 +144,25 @@ class NewStudyTopicSyncConfigTest extends SyncConfigTest<NewStudyTopicRecord> {
 
         PublicNewStudyTopic pns = config.makeEntity(rs);
 
-        assertThat(pns.getNewsletterId()).isEqualTo(1);
-        assertThat(pns.getNewsletterTopicId()).isEqualTo(2);
-        assertThat(pns.getSort()).isEqualTo(expectedSort);
-        assertThat(pns.getVersion()).isEqualTo(4);
-        assertThat(pns.getCreated()).isEqualTo(CREATED);
-        assertThat(pns.getLastModified()).isEqualTo(expectedLastMod);
+        pns.getNewsletterId() shouldBeEqualTo 1;
+        pns.getNewsletterTopicId() shouldBeEqualTo 2;
+        pns.getSort() shouldBeEqualTo expectedSort;
+        pns.getVersion() shouldBeEqualTo 4;
+        pns.getCreated() shouldBeEqualTo CREATED;
+        pns.getLastModified() shouldBeEqualTo expectedLastMod;
         assertThat(pns.getLastSynched()).isCloseTo("2016-12-09T06:02:13.000", 1000);
 
-        verify(rs).getInt(PaperNewsletter.PAPER_NEWSLETTER.NEWSLETTER_ID.getName());
-        verify(rs).getInt(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.NEWSLETTER_TOPIC_ID.getName());
-        //verify(rs).getInt(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.SORT.getName());
-        verify(rs).getInt(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.VERSION.getName());
-        verify(rs).getInt(NewsletterNewsletterTopic.NEWSLETTER_NEWSLETTER_TOPIC.SORT.getName());
-        verify(rs).getTimestamp(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.CREATED.getName());
-        verify(rs).getTimestamp("NTTLM");
-        verify(rs).getTimestamp("NNTLM");
-        verify(rs, times(4)).wasNull();
+        verify{ rs.getInt(PaperNewsletter.PAPER_NEWSLETTER.NEWSLETTER_ID.getName()); }
+        verify{ rs.getInt(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.NEWSLETTER_TOPIC_ID.getName()); }
+        //verify{ rs.getInt(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.SORT.getName()); }
+        verify{ rs.getInt(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.VERSION.getName()); }
+        verify{ rs.getInt(NewsletterNewsletterTopic.NEWSLETTER_NEWSLETTER_TOPIC.SORT.getName()); }
+        verify{ rs.getTimestamp(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.CREATED.getName()); }
+        verify{ rs.getTimestamp("NTTLM"); }
+        verify{ rs.getTimestamp("NNTLM"); }
+        verify(exactly=4) { rs.wasNull(); }
 
-        verifyNoMoreInteractions(rs);
+        confirmVerified(rs);
     }
 
 }

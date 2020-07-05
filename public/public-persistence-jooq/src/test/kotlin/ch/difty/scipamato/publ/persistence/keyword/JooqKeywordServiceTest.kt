@@ -1,16 +1,16 @@
 package ch.difty.scipamato.publ.persistence.keyword
 
 import ch.difty.scipamato.publ.entity.Keyword
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.whenever
-import org.assertj.core.api.Assertions.assertThat
+import io.mockk.confirmVerified
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.verify
+import org.amshove.kluent.shouldContainSame
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito.verify
-import org.mockito.Mockito.verifyNoMoreInteractions
 
 internal class JooqKeywordServiceTest {
 
-    private val repoMock = mock<KeywordRepository>()
+    private val repoMock = mockk<KeywordRepository>()
     private val service = JooqKeywordService(repoMock)
 
     private val languageCode = "de"
@@ -22,9 +22,9 @@ internal class JooqKeywordServiceTest {
 
     @Test
     fun findingKeywords_delegatesToRepo() {
-        whenever(repoMock.findKeywords(languageCode)).thenReturn(keywords)
-        assertThat(service.findKeywords(languageCode).map { it.langCode }).containsOnly("en", "fr")
-        verify(repoMock).findKeywords(languageCode)
-        verifyNoMoreInteractions(repoMock)
+        every { repoMock.findKeywords(languageCode) } returns keywords
+        service.findKeywords(languageCode).map { it.langCode } shouldContainSame listOf("en", "fr")
+        verify { repoMock.findKeywords(languageCode) }
+        confirmVerified(repoMock)
     }
 }

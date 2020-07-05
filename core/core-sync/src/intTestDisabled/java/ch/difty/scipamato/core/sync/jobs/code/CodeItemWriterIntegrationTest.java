@@ -32,7 +32,7 @@ class CodeItemWriterIntegrationTest extends AbstractItemWriterIntegrationTest<Pu
         newCode = newCode(CODE_NEW);
 
         existingCode = getExistingCodeFromDb(CODE_EXISTING, LANG_CODE);
-        assertThat(existingCode.getCodeClassId()).isEqualTo(CODE_CLASS_EXISTING);
+        existingCode.getCodeClassId() shouldBeEqualTo CODE_CLASS_EXISTING;
         existingCode.setCodeClassId(2);
     }
 
@@ -87,7 +87,7 @@ class CodeItemWriterIntegrationTest extends AbstractItemWriterIntegrationTest<Pu
     void insertingNewCode_succeeds() {
         String code = newCode.getCode();
         assertCodeDoesNotExistWith(code, LANG_CODE);
-        assertThat(getWriter().executeUpdate(newCode)).isEqualTo(1);
+        getWriter().executeUpdate(newCode) shouldBeEqualTo 1;
         assertCodeExistsWith(code, LANG_CODE);
     }
 
@@ -110,7 +110,7 @@ class CodeItemWriterIntegrationTest extends AbstractItemWriterIntegrationTest<Pu
 
     @Test
     void updatingExistingCode_succeeds() {
-        assertThat(getWriter().executeUpdate(existingCode)).isEqualTo(1);
+        getWriter().executeUpdate(existingCode) shouldBeEqualTo 1;
     }
 
 }

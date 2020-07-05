@@ -35,7 +35,7 @@ class NewStudyPageLinkItemWriterIntegrationTest
         newNewStudyPageLink = newNewStudyPageLink(LANG_CODE, SORT_NEW, TITLE, URL);
 
         existingNewStudyPageLink = getExistingNewStudyPageLinkFromDb(LANG_CODE, SORT_EXISTING);
-        assertThat(existingNewStudyPageLink.getTitle()).isEqualTo(TITLE_EXISTING);
+        existingNewStudyPageLink.getTitle() shouldBeEqualTo TITLE_EXISTING;
         existingNewStudyPageLink.setTitle(TITLE_EXISTING + "XX");
     }
 
@@ -89,7 +89,7 @@ class NewStudyPageLinkItemWriterIntegrationTest
         String langCode = newNewStudyPageLink.getLangCode();
         int sort = newNewStudyPageLink.getSort();
         assertNewStudyPageLinkDoesNotExistWith(langCode, sort);
-        assertThat(getWriter().executeUpdate(newNewStudyPageLink)).isEqualTo(1);
+        getWriter().executeUpdate(newNewStudyPageLink) shouldBeEqualTo 1;
         assertNewStudyPageLinkExistsWith(langCode, sort);
     }
 
@@ -112,7 +112,7 @@ class NewStudyPageLinkItemWriterIntegrationTest
 
     @Test
     void updatingExistingNewStudyPageLink_succeeds() {
-        assertThat(getWriter().executeUpdate(existingNewStudyPageLink)).isEqualTo(1);
+        getWriter().executeUpdate(existingNewStudyPageLink) shouldBeEqualTo 1;
     }
 
 }

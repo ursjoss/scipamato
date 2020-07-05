@@ -32,7 +32,7 @@ class NewsletterItemWriterIntegrationTest
         newNewsletter = newNewsletter(ID_NEW);
 
         existingNewsletter = getExistingNewsletterFromDb(ID_EXISTING);
-        assertThat(existingNewsletter.getIssue()).isEqualTo("2018/04");
+        existingNewsletter.getIssue() shouldBeEqualTo "2018/04";
         existingNewsletter.setIssue("foo");
     }
 
@@ -80,7 +80,7 @@ class NewsletterItemWriterIntegrationTest
     void insertingNewNewsletter_succeeds() {
         int id = newNewsletter.getId();
         assertNewsletterDoesNotExistWith(id);
-        assertThat(getWriter().executeUpdate(newNewsletter)).isEqualTo(1);
+        getWriter().executeUpdate(newNewsletter) shouldBeEqualTo 1;
         assertNewsletterExistsWith(id);
     }
 
@@ -102,7 +102,7 @@ class NewsletterItemWriterIntegrationTest
 
     @Test
     void updatingExistingNewsletter_succeeds() {
-        assertThat(getWriter().executeUpdate(existingNewsletter)).isEqualTo(1);
+        getWriter().executeUpdate(existingNewsletter) shouldBeEqualTo 1;
     }
 
 }

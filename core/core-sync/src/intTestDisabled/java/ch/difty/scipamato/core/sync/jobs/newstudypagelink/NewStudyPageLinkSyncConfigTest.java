@@ -70,18 +70,18 @@ class NewStudyPageLinkSyncConfigTest extends SyncConfigTest<NewStudyPageLinkReco
 
         PublicNewStudyPageLink pl = config.makeEntity(rs);
 
-        assertThat(pl.getLangCode()).isEqualTo("de");
-        assertThat(pl.getSort()).isEqualTo(1);
-        assertThat(pl.getTitle()).isEqualTo("title");
-        assertThat(pl.getUrl()).isEqualTo("url");
+        pl.getLangCode() shouldBeEqualTo "de";
+        pl.getSort() shouldBeEqualTo 1;
+        pl.getTitle() shouldBeEqualTo "title";
+        pl.getUrl() shouldBeEqualTo "url";
         assertThat(pl.getLastSynched()).isCloseTo("2016-12-09T06:02:13.000", 1000);
 
-        verify(rs).getString(NewStudyPageLink.NEW_STUDY_PAGE_LINK.LANG_CODE.getName());
-        verify(rs).getInt(NewStudyPageLink.NEW_STUDY_PAGE_LINK.SORT.getName());
-        verify(rs).wasNull();
-        verify(rs).getString(NewStudyPageLink.NEW_STUDY_PAGE_LINK.TITLE.getName());
-        verify(rs).getString(NewStudyPageLink.NEW_STUDY_PAGE_LINK.URL.getName());
+        verify{ rs.getString(NewStudyPageLink.NEW_STUDY_PAGE_LINK.LANG_CODE.getName()); }
+        verify{ rs.getInt(NewStudyPageLink.NEW_STUDY_PAGE_LINK.SORT.getName()); }
+        verify{ rs.wasNull(); }
+        verify{ rs.getString(NewStudyPageLink.NEW_STUDY_PAGE_LINK.TITLE.getName()); }
+        verify{ rs.getString(NewStudyPageLink.NEW_STUDY_PAGE_LINK.URL.getName()); }
 
-        verifyNoMoreInteractions(rs);
+        confirmVerified(rs);
     }
 }

@@ -2,7 +2,6 @@ package ch.difty.scipamato.core.entity
 
 import ch.difty.scipamato.common.entity.CodeClassId
 import ch.difty.scipamato.common.entity.newsletter.PublicationStatus
-import ch.difty.scipamato.core.entity.Code.CodeFields.CODE
 import ch.difty.scipamato.core.entity.Paper.PaperFields.AUTHORS
 import ch.difty.scipamato.core.entity.Paper.PaperFields.DOI
 import ch.difty.scipamato.core.entity.Paper.PaperFields.FIRST_AUTHOR
@@ -12,9 +11,17 @@ import ch.difty.scipamato.core.entity.Paper.PaperFields.NUMBER
 import ch.difty.scipamato.core.entity.Paper.PaperFields.PUBL_YEAR
 import ch.difty.scipamato.core.entity.Paper.PaperFields.TITLE
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic
-import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.extractProperty
-import org.junit.jupiter.api.Assertions.assertNull
+import org.amshove.kluent.shouldBeEmpty
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeFalse
+import org.amshove.kluent.shouldBeLessThan
+import org.amshove.kluent.shouldBeNull
+import org.amshove.kluent.shouldBeTrue
+import org.amshove.kluent.shouldContainAll
+import org.amshove.kluent.shouldHaveSize
+import org.amshove.kluent.shouldNotBeEmpty
+import org.amshove.kluent.shouldNotBeEqualTo
+import org.amshove.kluent.shouldNotBeNull
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
@@ -252,7 +259,7 @@ internal class PaperTest : Jsr303ValidatedEntityTest<Paper>(Paper::class.java) {
             addCode(makeCode(5, "A"))
             mainCodeOfCodeclass1 = "1D"
         }
-        assertThat(p.toString()).isEqualTo(
+        p.toString() shouldBeEqualTo
             """Paper[number=2,doi=10.1093/aje/kwu275,pmId=1000
                 |,authors=Turner MC, Cohen A, Jerret M, Gapstur SM, Driver WR, Pope CA 3rd, Krewsky D, Beckermann BS, Samet JM.
                 |,firstAuthor=Turner MC,firstAuthorOverridden=false,title=Title,location=foo,publicationYear=2016
@@ -268,7 +275,6 @@ internal class PaperTest : Jsr303ValidatedEntityTest<Paper>(Paper::class.java) {
                 |,codeClass=CodeClass[id=5],sort=1,createdBy=<null>,lastModifiedBy=<null>,created=<null>,lastModified=<null>
                 |,version=0]]],id=1,createdBy=10,lastModifiedBy=20,created=2017-01-01T22:15:13.111,lastModified=2017-01-10T22:15:13.111
                 |,version=10]""".trimMargin()
-        )
     }
 
     private fun makeCode(codeClassId: Int, codePart: String): Code {
@@ -285,7 +291,7 @@ internal class PaperTest : Jsr303ValidatedEntityTest<Paper>(Paper::class.java) {
                 add(newAttachment(2, 1, "p2"))
             }
         }
-        assertThat(p.toString()).isEqualTo(
+        p.toString() shouldBeEqualTo
             """Paper[number=2,doi=10.1093/aje/kwu275,pmId=1000
                 |,authors=Turner MC, Cohen A, Jerret M, Gapstur SM, Driver WR, Pope CA 3rd, Krewsky D, Beckermann BS, Samet JM.
                 |,firstAuthor=Turner MC,firstAuthorOverridden=false,title=Title,location=foo,publicationYear=2016,goals=foo
@@ -296,7 +302,6 @@ internal class PaperTest : Jsr303ValidatedEntityTest<Paper>(Paper::class.java) {
                 |,mainCodeOfCodeclass1=<null>,newsletterLink=<null>,attachments=[PaperAttachment[paperId=1,name=p1,id=1]
                 |, PaperAttachment[paperId=1,name=p2,id=2]],codes=[],id=1,createdBy=10,lastModifiedBy=20
                 |,created=2017-01-01T22:15:13.111,lastModified=2017-01-10T22:15:13.111,version=10]""".trimMargin()
-        )
     }
 
     private fun newAttachment(id: Int, paperId: Long, name: String): PaperAttachment = PaperAttachment().apply {
@@ -311,14 +316,12 @@ internal class PaperTest : Jsr303ValidatedEntityTest<Paper>(Paper::class.java) {
     @Test
     fun addingCode_addsItAndAllowsToRetrieveIt() {
         val p = newValidEntity()
-        assertThat(p.codes)
-            .isNotNull
-            .isEmpty()
+        p.codes.shouldNotBeNull().shouldBeEmpty()
         p.addCode(makeCode(1, "C"))
 
-        assertThat(extractProperty(CODE.fieldName).from(p.codes)).containsExactly("1C")
-        assertThat(extractProperty(CODE.fieldName).from(p.getCodesOf(CodeClassId.CC1))).containsExactly("1C")
-        assertThat(extractProperty(CODE.fieldName).from(p.getCodesOf(CodeClassId.CC2))).isEmpty()
+        p.codes.map { it.code } shouldContainAll listOf("1C")
+        p.getCodesOf(CodeClassId.CC1).map { it.code } shouldContainAll listOf("1C")
+        p.getCodesOf(CodeClassId.CC2).map { it.code }.shouldBeEmpty()
     }
 
     @Test
@@ -329,10 +332,10 @@ internal class PaperTest : Jsr303ValidatedEntityTest<Paper>(Paper::class.java) {
         val c2A = makeCode(2, "A")
         p.addCodes(listOf(c1D, c2A))
 
-        assertThat(extractProperty(CODE.fieldName).from(p.codes)).containsExactly("1C", "1D", "2A")
+        p.codes.map { it.code } shouldContainAll listOf("1C", "1D", "2A")
 
         p.clearCodes()
-        assertThat(p.codes).isEmpty()
+        p.codes.shouldBeEmpty()
     }
 
     @Test
@@ -344,19 +347,19 @@ internal class PaperTest : Jsr303ValidatedEntityTest<Paper>(Paper::class.java) {
         val p = newValidEntity()
         p.addCodes(listOf(c1D, c2F, c2A))
 
-        assertThat(p.getCodesOf(CodeClassId.CC1)).containsExactly(c1D)
-        assertThat(p.getCodesOf(CodeClassId.CC2)).containsExactly(c2F, c2A)
-        assertThat(p.getCodesOf(CodeClassId.CC3)).isEmpty()
+        p.getCodesOf(CodeClassId.CC1) shouldContainAll listOf(c1D)
+        p.getCodesOf(CodeClassId.CC2) shouldContainAll listOf(c2F, c2A)
+        p.getCodesOf(CodeClassId.CC3).shouldBeEmpty()
     }
 
     @Test
     fun clearingCode_delegatesClearingToCode() {
         val p = newValidEntity()
-        assertThat(p.codes).isEmpty()
+        p.codes.shouldBeEmpty()
         p.addCode(makeCode(CodeClassId.CC1.id, "C"))
-        assertThat(p.codes).isNotEmpty
+        p.codes.shouldNotBeEmpty()
         p.clearCodesOf(CodeClassId.CC1)
-        assertThat(p.codes).isEmpty()
+        p.codes.shouldBeEmpty()
     }
 
     @Test
@@ -368,57 +371,57 @@ internal class PaperTest : Jsr303ValidatedEntityTest<Paper>(Paper::class.java) {
         p.addCodes(listOf(c1E, c1D, c5A))
         p.mainCodeOfCodeclass1 = c1E.code
 
-        assertThat(p.getCodesOf(CodeClassId.CC1)).containsExactly(c1E, c1D)
-        assertThat(p.getCodesOf(CodeClassId.CC2)).isEmpty()
-        assertThat(p.getCodesOf(CodeClassId.CC5)).containsExactly(c5A)
-        assertThat(p.mainCodeOfCodeclass1).isEqualTo("1E")
+        p.getCodesOf(CodeClassId.CC1) shouldContainAll listOf(c1E, c1D)
+        p.getCodesOf(CodeClassId.CC2).shouldBeEmpty()
+        p.getCodesOf(CodeClassId.CC5) shouldContainAll listOf(c5A)
+        p.mainCodeOfCodeclass1 shouldBeEqualTo "1E"
     }
 
     @Test
     fun createdDisplayValue() {
         val p = newValidEntity()
-        assertThat(p.createdDisplayValue).isEqualTo("creator (2017-01-01 22:15:13)")
+        p.createdDisplayValue shouldBeEqualTo "creator (2017-01-01 22:15:13)"
     }
 
     @Test
     fun modifiedDisplayValue() {
         val p = newValidEntity()
-        assertThat(p.modifiedDisplayValue).isEqualTo("modifier (2017-01-10 22:15:13)")
+        p.modifiedDisplayValue shouldBeEqualTo "modifier (2017-01-10 22:15:13)"
     }
 
     @Test
     fun assertNotAvailableValueForAuthors() {
-        assertThat(Paper.NA_AUTHORS).isEqualTo("N A.")
+        Paper.NA_AUTHORS shouldBeEqualTo "N A."
     }
 
     @Test
     fun assertNotAvailableValueForOtherStringFields() {
-        assertThat(Paper.NA_STRING).isEqualTo("n.a.")
+        Paper.NA_STRING shouldBeEqualTo "n.a."
     }
 
     @Test
     fun assertNotAvailableValueForPublicationYear() {
-        assertThat(Paper.NA_PUBL_YEAR).isEqualTo(1500)
+        Paper.NA_PUBL_YEAR shouldBeEqualTo 1500
     }
 
     @Test
     fun newPaper_hasNonNullButEmptyAttachments() {
         val p = newValidEntity()
-        assertThat(p.attachments).isEmpty()
+        p.attachments.shouldBeEmpty()
     }
 
     @Test
     fun cannotAddAttachment_viaGetter() {
         val p = newValidEntity()
         p.attachments.add(PaperAttachment())
-        assertThat(p.attachments).isEmpty()
+        p.attachments.shouldBeEmpty()
     }
 
     @Test
     fun canSetAttachments() {
         val p = newValidEntity()
         p.attachments = listOf(PaperAttachment(), PaperAttachment())
-        assertThat(p.attachments).hasSize(2)
+        p.attachments shouldHaveSize 2
     }
 
     @Test
@@ -427,7 +430,7 @@ internal class PaperTest : Jsr303ValidatedEntityTest<Paper>(Paper::class.java) {
         val p = newValidEntity()
         p.attachments = attachments
         attachments.add(PaperAttachment())
-        assertThat(p.attachments.size).isLessThan(attachments.size)
+        p.attachments.size shouldBeLessThan attachments.size
     }
 
     @Test
@@ -435,9 +438,9 @@ internal class PaperTest : Jsr303ValidatedEntityTest<Paper>(Paper::class.java) {
         val attachments = listOf(PaperAttachment(), PaperAttachment())
         val p = newValidEntity()
         p.attachments = attachments
-        assertThat(p.attachments).hasSize(2)
+        p.attachments shouldHaveSize 2
         p.attachments = null
-        assertThat(p.attachments.size).isEqualTo(0)
+        p.attachments.size shouldBeEqualTo 0
     }
 
     @Test
@@ -445,9 +448,9 @@ internal class PaperTest : Jsr303ValidatedEntityTest<Paper>(Paper::class.java) {
         val attachments = ArrayList(listOf(PaperAttachment(), PaperAttachment()))
         val p = newValidEntity()
         p.attachments = attachments
-        assertThat(p.attachments).hasSize(2)
+        p.attachments shouldHaveSize 2
         p.attachments = ArrayList()
-        assertThat(p.attachments).isEmpty()
+        p.attachments.shouldBeEmpty()
     }
 
     @Test
@@ -455,19 +458,19 @@ internal class PaperTest : Jsr303ValidatedEntityTest<Paper>(Paper::class.java) {
         val p1 = newValidEntity()
         p1.id = 1L
 
-        assertThat(p1 == p1).isTrue()
+        (p1 == p1).shouldBeTrue()
 
         val p2 = newValidEntity()
         p2.id = 1L
-        assertThat(p1 == p2).isTrue()
-        assertThat(p1.hashCode()).isEqualTo(p2.hashCode())
+        (p1 == p2).shouldBeTrue()
+        p1.hashCode() shouldBeEqualTo p2.hashCode()
         p2.id = 2L
-        assertThat(p1 == p2).isFalse()
-        assertThat(p1.hashCode()).isNotEqualTo(p2.hashCode())
+        (p1 == p2).shouldBeFalse()
+        p1.hashCode() shouldNotBeEqualTo p2.hashCode()
         p2.id = 1L
         p2.publicationYear = 2017
-        assertThat(p1 == p2).isFalse()
-        assertThat(p1.hashCode()).isNotEqualTo(p2.hashCode())
+        (p1 == p2).shouldBeFalse()
+        p1.hashCode() shouldNotBeEqualTo p2.hashCode()
     }
     // Note: Did not get this to run with equalsverifier due to 'Abstract
     // delegation: Paper's hashCode method delegates to an abstract method' on codes
@@ -479,36 +482,36 @@ internal class PaperTest : Jsr303ValidatedEntityTest<Paper>(Paper::class.java) {
     @Test
     fun canSetAndGetNewsletterLinkAsObject() {
         val p = newValidEntity()
-        assertThat(p.newsletterLink).isNull()
+        p.newsletterLink.shouldBeNull()
 
         val nl = Paper.NewsletterLink(1, "issue", 0, null, null, null)
 
         p.newsletterLink = nl
 
-        assertThat(p.newsletterLink).isEqualTo(nl)
+        p.newsletterLink shouldBeEqualTo nl
     }
 
     @Test
     fun canSetAndGetNewsletterLinkAsFields() {
         val p = newValidEntity()
-        assertThat(p.newsletterLink).isNull()
+        p.newsletterLink.shouldBeNull()
 
         p.setNewsletterLink(1, "issue", 0, null, null, null)
 
-        assertThat(p.newsletterLink).isEqualTo(Paper.NewsletterLink(1, "issue", 0, null, null, null))
+        p.newsletterLink shouldBeEqualTo Paper.NewsletterLink(1, "issue", 0, null, null, null)
     }
 
     @Test
     fun settingNewsletterAssociation() {
         val p = newValidEntity()
-        assertThat(p.newsletterLink).isNull()
+        p.newsletterLink.shouldBeNull()
 
         p.newsletterLink = Paper.NewsletterLink(1, "1806", PublicationStatus.WIP.id, 1, "mytopic", "headline")
 
-        assertThat(p.newsletterLink).isNotNull
+        p.newsletterLink.shouldNotBeNull()
         validateNewsletterLink(p.newsletterLink, 1, "1806", PublicationStatus.WIP, 1, "mytopic", "headline")
-        assertThat(p.newsletterHeadline).isEqualTo("headline")
-        assertThat(p.newsletterTopicId).isEqualTo(1)
+        p.newsletterHeadline shouldBeEqualTo "headline"
+        p.newsletterTopicId shouldBeEqualTo 1
 
         p.newsletterHeadline = "otherHeadline"
         validateNewsletterLink(
@@ -532,9 +535,9 @@ internal class PaperTest : Jsr303ValidatedEntityTest<Paper>(Paper::class.java) {
             p.newsletterLink, 1, "1806", PublicationStatus.WIP, null, null, null
         )
 
-        assertThat(p.newsletterIssue).isEqualTo("1806")
-        assertThat(p.newsletterLink).isNotNull
-        assertThat(p.newsletterLink.issue).isEqualTo("1806")
+        p.newsletterIssue shouldBeEqualTo "1806"
+        p.newsletterLink.shouldNotBeNull()
+        p.newsletterLink.issue shouldBeEqualTo "1806"
     }
 
     @Suppress("LongParameterList")
@@ -547,35 +550,35 @@ internal class PaperTest : Jsr303ValidatedEntityTest<Paper>(Paper::class.java) {
         topic: String?,
         headline: String?
     ) {
-        assertThat(newsletterLink.newsletterId).isEqualTo(newsletterId)
-        assertThat(newsletterLink.issue).isEqualTo(issue)
-        assertThat(newsletterLink.publicationStatusId).isEqualTo(status.id)
+        newsletterLink.newsletterId shouldBeEqualTo newsletterId
+        newsletterLink.issue shouldBeEqualTo issue
+        newsletterLink.publicationStatusId shouldBeEqualTo status.id
         topicId?.let {
-            assertThat(newsletterLink.topicId).isEqualTo(topicId)
-        } ?: assertNull(newsletterLink.topicId)
-        assertThat(newsletterLink.topic).isEqualTo(topic)
-        assertThat(newsletterLink.headline).isEqualTo(headline)
+            newsletterLink.topicId shouldBeEqualTo topicId
+        } ?: newsletterLink.topicId.shouldBeNull()
+        newsletterLink.topic shouldBeEqualTo topic
+        newsletterLink.headline shouldBeEqualTo headline
     }
 
     @Test
     fun settingNewsletterLinkFields_whileNewsletterLinkIsNull_doesNothing() {
         val p = newValidEntity()
-        assertThat(p.newsletterLink).isNull()
+        p.newsletterLink.shouldBeNull()
 
         p.setNewsletterTopic(NewsletterTopic(10, "someothertopic"))
         p.newsletterHeadline = "foo"
 
-        assertNull(p.newsletterLink)
-        assertNull(p.newsletterTopicId)
-        assertNull(p.newsletterHeadline)
+        p.newsletterLink.shouldBeNull()
+        p.newsletterTopicId.shouldBeNull()
+        p.newsletterHeadline.shouldBeNull()
     }
 
     @Test
     fun settingNewsletterIssue_isNoOp() {
         val p = newValidEntity()
-        assertThat(p.newsletterIssue).isNull()
+        p.newsletterIssue.shouldBeNull()
         p.newsletterIssue = "whatever"
-        assertThat(p.newsletterIssue).isNull()
+        p.newsletterIssue.shouldBeNull()
     }
 
     companion object {

@@ -5,22 +5,22 @@ import ch.difty.scipamato.common.config.ApplicationProperties
 import ch.difty.scipamato.common.web.PASSWORD
 import ch.difty.scipamato.common.web.USERNAME
 import ch.difty.scipamato.common.web.WicketBaseTest
+import com.ninjasquad.springmockk.MockkBean
 import de.agilecoders.wicket.core.markup.html.bootstrap.common.NotificationPanel
 import org.apache.wicket.markup.html.form.PasswordTextField
 import org.apache.wicket.markup.html.form.RequiredTextField
 import org.apache.wicket.markup.html.form.StatelessForm
 import org.apache.wicket.request.mapper.parameter.PageParameters
 import org.junit.jupiter.api.Test
-import org.springframework.boot.test.mock.mockito.MockBean
 
 internal class AbstractLoginPageTest : WicketBaseTest() {
 
     private lateinit var page: AbstractLoginPage<*>
 
-    @MockBean
+    @MockkBean(relaxed = true)
     private lateinit var applicationProperties: ApplicationProperties
 
-    @MockBean
+    @MockkBean
     private lateinit var dateTimeService: DateTimeService
 
     override fun setUpHook() {

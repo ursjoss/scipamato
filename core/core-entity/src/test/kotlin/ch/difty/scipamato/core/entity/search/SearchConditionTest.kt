@@ -7,12 +7,21 @@ import ch.difty.scipamato.core.entity.Paper.PaperFields.DOI
 import ch.difty.scipamato.core.entity.Paper.PaperFields.FIRST_AUTHOR_OVERRIDDEN
 import ch.difty.scipamato.core.entity.Paper.PaperFields.NUMBER
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic
-import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.fail
-import org.junit.jupiter.api.Assertions.assertNull
+import io.mockk.every
+import io.mockk.mockk
+import org.amshove.kluent.invoking
+import org.amshove.kluent.shouldBeEmpty
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeFalse
+import org.amshove.kluent.shouldBeNull
+import org.amshove.kluent.shouldBeTrue
+import org.amshove.kluent.shouldContainAll
+import org.amshove.kluent.shouldContainSame
+import org.amshove.kluent.shouldHaveSize
+import org.amshove.kluent.shouldNotBeEqualTo
+import org.amshove.kluent.shouldThrow
+import org.amshove.kluent.withMessage
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito.`when`
-import org.mockito.Mockito.mock
 
 private const val SEARCH_CONDITION_ID: Long = 1
 private const val X = "x"
@@ -52,14 +61,14 @@ internal class SearchConditionTest {
         sc1.intern = X
         sc1.originalAbstract = X
         sc1.mainCodeOfCodeclass1 = X
-        assertThat(sc1.stringSearchTerms).hasSize(27)
-        assertThat(sc1.integerSearchTerms).isEmpty()
-        assertThat(sc1.booleanSearchTerms).isEmpty()
-        assertThat(sc1.auditSearchTerms).isEmpty()
-        assertNull(sc1.createdDisplayValue)
-        assertNull(sc1.modifiedDisplayValue)
+        sc1.stringSearchTerms shouldHaveSize 27
+        sc1.integerSearchTerms.shouldBeEmpty()
+        sc1.booleanSearchTerms.shouldBeEmpty()
+        sc1.auditSearchTerms.shouldBeEmpty()
+        sc1.createdDisplayValue.shouldBeNull()
+        sc1.modifiedDisplayValue.shouldBeNull()
 
-        assertThat(sc1.searchConditionId).isEqualTo(SEARCH_CONDITION_ID)
+        sc1.searchConditionId shouldBeEqualTo SEARCH_CONDITION_ID
     }
 
     @Test
@@ -67,629 +76,629 @@ internal class SearchConditionTest {
         sc1.id = "3"
         sc1.number = "30"
         sc1.publicationYear = "2017"
-        assertThat(sc1.stringSearchTerms).isEmpty()
-        assertThat(sc1.integerSearchTerms).hasSize(3)
-        assertThat(sc1.booleanSearchTerms).isEmpty()
-        assertThat(sc1.auditSearchTerms).isEmpty()
-        assertNull(sc1.createdDisplayValue)
-        assertNull(sc1.modifiedDisplayValue)
+        sc1.stringSearchTerms.shouldBeEmpty()
+        sc1.integerSearchTerms shouldHaveSize 3
+        sc1.booleanSearchTerms.shouldBeEmpty()
+        sc1.auditSearchTerms.shouldBeEmpty()
+        sc1.createdDisplayValue.shouldBeNull()
+        sc1.modifiedDisplayValue.shouldBeNull()
 
-        assertThat(sc1.searchConditionId).isEqualTo(SEARCH_CONDITION_ID)
-        assertThat(sc1.number).isEqualTo("30")
+        sc1.searchConditionId shouldBeEqualTo SEARCH_CONDITION_ID
+        sc1.number shouldBeEqualTo "30"
     }
 
     @Test
     fun allBooleanSearchTerms() {
         sc1.isFirstAuthorOverridden = true
-        assertThat(sc1.stringSearchTerms).isEmpty()
-        assertThat(sc1.integerSearchTerms).isEmpty()
-        assertThat(sc1.booleanSearchTerms).hasSize(1)
-        assertThat(sc1.auditSearchTerms).isEmpty()
-        assertNull(sc1.createdDisplayValue)
-        assertNull(sc1.modifiedDisplayValue)
+        sc1.stringSearchTerms.shouldBeEmpty()
+        sc1.integerSearchTerms.shouldBeEmpty()
+        sc1.booleanSearchTerms shouldHaveSize 1
+        sc1.auditSearchTerms.shouldBeEmpty()
+        sc1.createdDisplayValue.shouldBeNull()
+        sc1.modifiedDisplayValue.shouldBeNull()
 
-        assertThat(sc1.searchConditionId).isEqualTo(SEARCH_CONDITION_ID)
+        sc1.searchConditionId shouldBeEqualTo SEARCH_CONDITION_ID
     }
 
     @Test
     fun allAuditSearchTerms() {
         sc1.createdDisplayValue = X
         sc1.modifiedDisplayValue = X + X
-        assertThat(sc1.stringSearchTerms).isEmpty()
-        assertThat(sc1.integerSearchTerms).isEmpty()
-        assertThat(sc1.booleanSearchTerms).isEmpty()
-        assertThat(sc1.auditSearchTerms).hasSize(4)
+        sc1.stringSearchTerms.shouldBeEmpty()
+        sc1.integerSearchTerms.shouldBeEmpty()
+        sc1.booleanSearchTerms.shouldBeEmpty()
+        sc1.auditSearchTerms shouldHaveSize 4
 
-        assertThat(sc1.searchConditionId).isEqualTo(SEARCH_CONDITION_ID)
+        sc1.searchConditionId shouldBeEqualTo SEARCH_CONDITION_ID
     }
 
     @Test
     fun id_extensiveTest() {
-        assertNull(sc1.id)
-        assertThat(sc1.stringSearchTerms).isEmpty()
-        assertThat(sc1.integerSearchTerms).isEmpty()
-        assertThat(sc1.booleanSearchTerms).isEmpty()
+        sc1.id.shouldBeNull()
+        sc1.stringSearchTerms.shouldBeEmpty()
+        sc1.integerSearchTerms.shouldBeEmpty()
+        sc1.booleanSearchTerms.shouldBeEmpty()
 
         sc1.id = "5"
-        assertThat(sc1.id).isEqualTo("5")
-        assertThat(sc1.stringSearchTerms).isEmpty()
-        assertThat(sc1.integerSearchTerms).hasSize(1)
-        assertThat(sc1.booleanSearchTerms).isEmpty()
+        sc1.id shouldBeEqualTo "5"
+        sc1.stringSearchTerms.shouldBeEmpty()
+        sc1.integerSearchTerms shouldHaveSize 1
+        sc1.booleanSearchTerms.shouldBeEmpty()
         var st = sc1.integerSearchTerms.first()
-        assertThat(st.fieldName).isEqualTo(ID.fieldName)
-        assertThat(st.rawSearchTerm).isEqualTo("5")
+        st.fieldName shouldBeEqualTo ID.fieldName
+        st.rawSearchTerm shouldBeEqualTo "5"
 
         sc1.id = "10"
-        assertThat(sc1.id).isEqualTo("10")
-        assertThat(sc1.stringSearchTerms).isEmpty()
-        assertThat(sc1.integerSearchTerms).hasSize(1)
-        assertThat(sc1.booleanSearchTerms).isEmpty()
+        sc1.id shouldBeEqualTo "10"
+        sc1.stringSearchTerms.shouldBeEmpty()
+        sc1.integerSearchTerms shouldHaveSize 1
+        sc1.booleanSearchTerms.shouldBeEmpty()
         st = sc1.integerSearchTerms.first()
-        assertThat(st.fieldName).isEqualTo(ID.fieldName)
-        assertThat(st.rawSearchTerm).isEqualTo("10")
+        st.fieldName shouldBeEqualTo ID.fieldName
+        st.rawSearchTerm shouldBeEqualTo "10"
 
         sc1.id = null
-        assertNull(sc1.id)
-        assertThat(sc1.stringSearchTerms).isEmpty()
-        assertThat(sc1.integerSearchTerms).isEmpty()
-        assertThat(sc1.booleanSearchTerms).isEmpty()
+        sc1.id.shouldBeNull()
+        sc1.stringSearchTerms.shouldBeEmpty()
+        sc1.integerSearchTerms.shouldBeEmpty()
+        sc1.booleanSearchTerms.shouldBeEmpty()
     }
 
     @Test
     fun number_extensiveTest() {
-        assertNull(sc1.number)
-        assertThat(sc1.stringSearchTerms).isEmpty()
-        assertThat(sc1.integerSearchTerms).isEmpty()
-        assertThat(sc1.booleanSearchTerms).isEmpty()
+        sc1.number.shouldBeNull()
+        sc1.stringSearchTerms.shouldBeEmpty()
+        sc1.integerSearchTerms.shouldBeEmpty()
+        sc1.booleanSearchTerms.shouldBeEmpty()
 
         sc1.number = "50"
-        assertThat(sc1.number).isEqualTo("50")
-        assertThat(sc1.stringSearchTerms).isEmpty()
-        assertThat(sc1.integerSearchTerms).hasSize(1)
-        assertThat(sc1.booleanSearchTerms).isEmpty()
+        sc1.number shouldBeEqualTo "50"
+        sc1.stringSearchTerms.shouldBeEmpty()
+        sc1.integerSearchTerms shouldHaveSize 1
+        sc1.booleanSearchTerms.shouldBeEmpty()
         var st = sc1.integerSearchTerms.first()
-        assertThat(st.fieldName).isEqualTo(NUMBER.fieldName)
-        assertThat(st.rawSearchTerm).isEqualTo("50")
+        st.fieldName shouldBeEqualTo NUMBER.fieldName
+        st.rawSearchTerm shouldBeEqualTo "50"
 
         sc1.number = "100"
-        assertThat(sc1.number).isEqualTo("100")
-        assertThat(sc1.stringSearchTerms).isEmpty()
-        assertThat(sc1.integerSearchTerms).hasSize(1)
-        assertThat(sc1.booleanSearchTerms).isEmpty()
+        sc1.number shouldBeEqualTo "100"
+        sc1.stringSearchTerms.shouldBeEmpty()
+        sc1.integerSearchTerms shouldHaveSize 1
+        sc1.booleanSearchTerms.shouldBeEmpty()
         st = sc1.integerSearchTerms.first()
-        assertThat(st.fieldName).isEqualTo(NUMBER.fieldName)
-        assertThat(st.rawSearchTerm).isEqualTo("100")
+        st.fieldName shouldBeEqualTo NUMBER.fieldName
+        st.rawSearchTerm shouldBeEqualTo "100"
 
         sc1.number = null
-        assertNull(sc1.number)
-        assertThat(sc1.stringSearchTerms).isEmpty()
-        assertThat(sc1.integerSearchTerms).isEmpty()
-        assertThat(sc1.booleanSearchTerms).isEmpty()
+        sc1.number.shouldBeNull()
+        sc1.stringSearchTerms.shouldBeEmpty()
+        sc1.integerSearchTerms.shouldBeEmpty()
+        sc1.booleanSearchTerms.shouldBeEmpty()
     }
 
     @Test
     fun doi_extensiveTest() {
-        assertNull(sc1.doi)
-        assertThat(sc1.stringSearchTerms).isEmpty()
-        assertThat(sc1.integerSearchTerms).isEmpty()
-        assertThat(sc1.booleanSearchTerms).isEmpty()
+        sc1.doi.shouldBeNull()
+        sc1.stringSearchTerms.shouldBeEmpty()
+        sc1.integerSearchTerms.shouldBeEmpty()
+        sc1.booleanSearchTerms.shouldBeEmpty()
 
         sc1.doi = "101111"
-        assertThat(sc1.doi).isEqualTo("101111")
-        assertThat(sc1.stringSearchTerms).hasSize(1)
-        assertThat(sc1.integerSearchTerms).isEmpty()
-        assertThat(sc1.booleanSearchTerms).isEmpty()
+        sc1.doi shouldBeEqualTo "101111"
+        sc1.stringSearchTerms shouldHaveSize 1
+        sc1.integerSearchTerms.shouldBeEmpty()
+        sc1.booleanSearchTerms.shouldBeEmpty()
         var st = sc1.stringSearchTerms.first()
-        assertThat(st.fieldName).isEqualTo(DOI.fieldName)
-        assertThat(st.rawSearchTerm).isEqualTo("101111")
+        st.fieldName shouldBeEqualTo DOI.fieldName
+        st.rawSearchTerm shouldBeEqualTo "101111"
 
         sc1.doi = "102222"
-        assertThat(sc1.doi).isEqualTo("102222")
-        assertThat(sc1.stringSearchTerms).hasSize(1)
-        assertThat(sc1.integerSearchTerms).isEmpty()
-        assertThat(sc1.booleanSearchTerms).isEmpty()
+        sc1.doi shouldBeEqualTo "102222"
+        sc1.stringSearchTerms shouldHaveSize 1
+        sc1.integerSearchTerms.shouldBeEmpty()
+        sc1.booleanSearchTerms.shouldBeEmpty()
         st = sc1.stringSearchTerms.first()
-        assertThat(st.fieldName).isEqualTo(DOI.fieldName)
-        assertThat(st.rawSearchTerm).isEqualTo("102222")
+        st.fieldName shouldBeEqualTo DOI.fieldName
+        st.rawSearchTerm shouldBeEqualTo "102222"
 
         sc1.doi = null
-        assertNull(sc1.doi)
-        assertThat(sc1.stringSearchTerms).isEmpty()
-        assertThat(sc1.integerSearchTerms).isEmpty()
-        assertThat(sc1.booleanSearchTerms).isEmpty()
+        sc1.doi.shouldBeNull()
+        sc1.stringSearchTerms.shouldBeEmpty()
+        sc1.integerSearchTerms.shouldBeEmpty()
+        sc1.booleanSearchTerms.shouldBeEmpty()
 
-        assertThat(sc1.searchConditionId).isEqualTo(SEARCH_CONDITION_ID)
+        sc1.searchConditionId shouldBeEqualTo SEARCH_CONDITION_ID
     }
 
     @Test
     fun pmId() {
-        assertNull(sc1.pmId)
-        assertThat(sc1.stringSearchTerms).isEmpty()
+        sc1.pmId.shouldBeNull()
+        sc1.stringSearchTerms.shouldBeEmpty()
 
         sc1.pmId = X
-        assertThat(sc1.pmId).isEqualTo(X)
-        assertThat(sc1.stringSearchTerms).hasSize(1)
+        sc1.pmId shouldBeEqualTo X
+        sc1.stringSearchTerms shouldHaveSize 1
 
         sc1.pmId = null
-        assertNull(sc1.pmId)
-        assertThat(sc1.stringSearchTerms).isEmpty()
+        sc1.pmId.shouldBeNull()
+        sc1.stringSearchTerms.shouldBeEmpty()
     }
 
     @Test
     fun authors() {
-        assertNull(sc1.authors)
-        assertThat(sc1.stringSearchTerms).isEmpty()
+        sc1.authors.shouldBeNull()
+        sc1.stringSearchTerms.shouldBeEmpty()
 
         sc1.authors = X
-        assertThat(sc1.authors).isEqualTo(X)
-        assertThat(sc1.stringSearchTerms).hasSize(1)
+        sc1.authors shouldBeEqualTo X
+        sc1.stringSearchTerms shouldHaveSize 1
 
         sc1.authors = null
-        assertNull(sc1.authors)
-        assertThat(sc1.stringSearchTerms).isEmpty()
+        sc1.authors.shouldBeNull()
+        sc1.stringSearchTerms.shouldBeEmpty()
     }
 
     @Test
     fun firstAuthor() {
-        assertNull(sc1.firstAuthor)
-        assertThat(sc1.stringSearchTerms).isEmpty()
+        sc1.firstAuthor.shouldBeNull()
+        sc1.stringSearchTerms.shouldBeEmpty()
 
         sc1.firstAuthor = X
-        assertThat(sc1.firstAuthor).isEqualTo(X)
-        assertThat(sc1.stringSearchTerms).hasSize(1)
+        sc1.firstAuthor shouldBeEqualTo X
+        sc1.stringSearchTerms shouldHaveSize 1
 
         sc1.firstAuthor = null
-        assertNull(sc1.firstAuthor)
-        assertThat(sc1.stringSearchTerms).isEmpty()
+        sc1.firstAuthor.shouldBeNull()
+        sc1.stringSearchTerms.shouldBeEmpty()
     }
 
     @Test
     fun firstAuthorOverridden_extensiveTest() {
-        assertNull(sc1.isFirstAuthorOverridden)
-        assertThat(sc1.stringSearchTerms).isEmpty()
-        assertThat(sc1.integerSearchTerms).isEmpty()
-        assertThat(sc1.booleanSearchTerms).isEmpty()
+        sc1.isFirstAuthorOverridden.shouldBeNull()
+        sc1.stringSearchTerms.shouldBeEmpty()
+        sc1.integerSearchTerms.shouldBeEmpty()
+        sc1.booleanSearchTerms.shouldBeEmpty()
 
         sc1.isFirstAuthorOverridden = true
-        assertThat(sc1.isFirstAuthorOverridden == true).isTrue()
-        assertThat(sc1.stringSearchTerms).isEmpty()
-        assertThat(sc1.integerSearchTerms).isEmpty()
-        assertThat(sc1.booleanSearchTerms).hasSize(1)
+        (sc1.isFirstAuthorOverridden == true).shouldBeTrue()
+        sc1.stringSearchTerms.shouldBeEmpty()
+        sc1.integerSearchTerms.shouldBeEmpty()
+        sc1.booleanSearchTerms shouldHaveSize 1
         var st = sc1.booleanSearchTerms.first()
-        assertThat(st.fieldName).isEqualTo(FIRST_AUTHOR_OVERRIDDEN.fieldName)
-        assertThat(st.rawSearchTerm).isEqualTo("true")
-        assertThat(st.value).isTrue()
+        st.fieldName shouldBeEqualTo FIRST_AUTHOR_OVERRIDDEN.fieldName
+        st.rawSearchTerm shouldBeEqualTo "true"
+        st.value.shouldBeTrue()
 
         sc1.isFirstAuthorOverridden = false
-        assertThat(sc1.isFirstAuthorOverridden == true).isFalse()
-        assertThat(sc1.stringSearchTerms).isEmpty()
-        assertThat(sc1.integerSearchTerms).isEmpty()
-        assertThat(sc1.booleanSearchTerms).hasSize(1)
+        (sc1.isFirstAuthorOverridden == true).shouldBeFalse()
+        sc1.stringSearchTerms.shouldBeEmpty()
+        sc1.integerSearchTerms.shouldBeEmpty()
+        sc1.booleanSearchTerms shouldHaveSize 1
         st = sc1.booleanSearchTerms.first()
-        assertThat(st.fieldName).isEqualTo(FIRST_AUTHOR_OVERRIDDEN.fieldName)
-        assertThat(st.rawSearchTerm).isEqualTo("false")
-        assertThat(st.value).isFalse()
+        st.fieldName shouldBeEqualTo FIRST_AUTHOR_OVERRIDDEN.fieldName
+        st.rawSearchTerm shouldBeEqualTo "false"
+        st.value.shouldBeFalse()
 
         sc1.isFirstAuthorOverridden = null
-        assertNull(sc1.isFirstAuthorOverridden)
-        assertThat(sc1.stringSearchTerms).isEmpty()
-        assertThat(sc1.integerSearchTerms).isEmpty()
-        assertThat(sc1.booleanSearchTerms).isEmpty()
+        sc1.isFirstAuthorOverridden.shouldBeNull()
+        sc1.stringSearchTerms.shouldBeEmpty()
+        sc1.integerSearchTerms.shouldBeEmpty()
+        sc1.booleanSearchTerms.shouldBeEmpty()
     }
 
     @Test
     fun title() {
-        assertNull(sc1.title)
-        assertThat(sc1.stringSearchTerms).isEmpty()
+        sc1.title.shouldBeNull()
+        sc1.stringSearchTerms.shouldBeEmpty()
 
         sc1.title = X
-        assertThat(sc1.title).isEqualTo(X)
-        assertThat(sc1.stringSearchTerms).hasSize(1)
+        sc1.title shouldBeEqualTo X
+        sc1.stringSearchTerms shouldHaveSize 1
 
         sc1.title = null
-        assertNull(sc1.title)
-        assertThat(sc1.stringSearchTerms).isEmpty()
+        sc1.title.shouldBeNull()
+        sc1.stringSearchTerms.shouldBeEmpty()
     }
 
     @Test
     fun location() {
-        assertNull(sc1.location)
-        assertThat(sc1.stringSearchTerms).isEmpty()
+        sc1.location.shouldBeNull()
+        sc1.stringSearchTerms.shouldBeEmpty()
 
         sc1.location = X
-        assertThat(sc1.location).isEqualTo(X)
-        assertThat(sc1.stringSearchTerms).hasSize(1)
+        sc1.location shouldBeEqualTo X
+        sc1.stringSearchTerms shouldHaveSize 1
 
         sc1.location = null
-        assertNull(sc1.location)
-        assertThat(sc1.stringSearchTerms).isEmpty()
+        sc1.location.shouldBeNull()
+        sc1.stringSearchTerms.shouldBeEmpty()
     }
 
     @Test
     fun publicationYear() {
-        assertNull(sc1.publicationYear)
-        assertThat(sc1.integerSearchTerms).isEmpty()
+        sc1.publicationYear.shouldBeNull()
+        sc1.integerSearchTerms.shouldBeEmpty()
 
         sc1.publicationYear = "2016"
-        assertThat(sc1.publicationYear).isEqualTo("2016")
-        assertThat(sc1.integerSearchTerms).hasSize(1)
+        sc1.publicationYear shouldBeEqualTo "2016"
+        sc1.integerSearchTerms shouldHaveSize 1
 
         sc1.publicationYear = null
-        assertNull(sc1.publicationYear)
-        assertThat(sc1.integerSearchTerms).isEmpty()
+        sc1.publicationYear.shouldBeNull()
+        sc1.integerSearchTerms.shouldBeEmpty()
     }
 
     @Test
     fun goals() {
-        assertNull(sc1.goals)
-        assertThat(sc1.stringSearchTerms).isEmpty()
+        sc1.goals.shouldBeNull()
+        sc1.stringSearchTerms.shouldBeEmpty()
 
         sc1.goals = X
-        assertThat(sc1.goals).isEqualTo(X)
-        assertThat(sc1.stringSearchTerms).hasSize(1)
+        sc1.goals shouldBeEqualTo X
+        sc1.stringSearchTerms shouldHaveSize 1
 
         sc1.goals = null
-        assertNull(sc1.goals)
-        assertThat(sc1.stringSearchTerms).isEmpty()
+        sc1.goals.shouldBeNull()
+        sc1.stringSearchTerms.shouldBeEmpty()
     }
 
     @Test
     fun population() {
-        assertNull(sc1.population)
-        assertThat(sc1.stringSearchTerms).isEmpty()
+        sc1.population.shouldBeNull()
+        sc1.stringSearchTerms.shouldBeEmpty()
 
         sc1.population = X
-        assertThat(sc1.population).isEqualTo(X)
-        assertThat(sc1.stringSearchTerms).hasSize(1)
+        sc1.population shouldBeEqualTo X
+        sc1.stringSearchTerms shouldHaveSize 1
 
         sc1.population = null
-        assertNull(sc1.population)
-        assertThat(sc1.stringSearchTerms).isEmpty()
+        sc1.population.shouldBeNull()
+        sc1.stringSearchTerms.shouldBeEmpty()
     }
 
     @Test
     fun populationPlace() {
-        assertNull(sc1.populationPlace)
-        assertThat(sc1.stringSearchTerms).isEmpty()
+        sc1.populationPlace.shouldBeNull()
+        sc1.stringSearchTerms.shouldBeEmpty()
 
         sc1.populationPlace = X
-        assertThat(sc1.populationPlace).isEqualTo(X)
-        assertThat(sc1.stringSearchTerms).hasSize(1)
+        sc1.populationPlace shouldBeEqualTo X
+        sc1.stringSearchTerms shouldHaveSize 1
 
         sc1.populationPlace = null
-        assertNull(sc1.populationPlace)
-        assertThat(sc1.stringSearchTerms).isEmpty()
+        sc1.populationPlace.shouldBeNull()
+        sc1.stringSearchTerms.shouldBeEmpty()
     }
 
     @Test
     fun populationParticipants() {
-        assertNull(sc1.populationParticipants)
-        assertThat(sc1.stringSearchTerms).isEmpty()
+        sc1.populationParticipants.shouldBeNull()
+        sc1.stringSearchTerms.shouldBeEmpty()
 
         sc1.populationParticipants = X
-        assertThat(sc1.populationParticipants).isEqualTo(X)
-        assertThat(sc1.stringSearchTerms).hasSize(1)
+        sc1.populationParticipants shouldBeEqualTo X
+        sc1.stringSearchTerms shouldHaveSize 1
 
         sc1.populationParticipants = null
-        assertNull(sc1.populationParticipants)
-        assertThat(sc1.stringSearchTerms).isEmpty()
+        sc1.populationParticipants.shouldBeNull()
+        sc1.stringSearchTerms.shouldBeEmpty()
     }
 
     @Test
     fun populationDuration() {
-        assertNull(sc1.populationDuration)
-        assertThat(sc1.stringSearchTerms).isEmpty()
+        sc1.populationDuration.shouldBeNull()
+        sc1.stringSearchTerms.shouldBeEmpty()
 
         sc1.populationDuration = X
-        assertThat(sc1.populationDuration).isEqualTo(X)
-        assertThat(sc1.stringSearchTerms).hasSize(1)
+        sc1.populationDuration shouldBeEqualTo X
+        sc1.stringSearchTerms shouldHaveSize 1
 
         sc1.populationDuration = null
-        assertNull(sc1.populationDuration)
-        assertThat(sc1.stringSearchTerms).isEmpty()
+        sc1.populationDuration.shouldBeNull()
+        sc1.stringSearchTerms.shouldBeEmpty()
     }
 
     @Test
     fun exposurePollutant() {
-        assertNull(sc1.exposurePollutant)
-        assertThat(sc1.stringSearchTerms).isEmpty()
+        sc1.exposurePollutant.shouldBeNull()
+        sc1.stringSearchTerms.shouldBeEmpty()
 
         sc1.exposurePollutant = X
-        assertThat(sc1.exposurePollutant).isEqualTo(X)
-        assertThat(sc1.stringSearchTerms).hasSize(1)
+        sc1.exposurePollutant shouldBeEqualTo X
+        sc1.stringSearchTerms shouldHaveSize 1
 
         sc1.exposurePollutant = null
-        assertNull(sc1.exposurePollutant)
-        assertThat(sc1.stringSearchTerms).isEmpty()
+        sc1.exposurePollutant.shouldBeNull()
+        sc1.stringSearchTerms.shouldBeEmpty()
     }
 
     @Test
     fun exposureAssessment() {
-        assertNull(sc1.exposureAssessment)
-        assertThat(sc1.stringSearchTerms).isEmpty()
+        sc1.exposureAssessment.shouldBeNull()
+        sc1.stringSearchTerms.shouldBeEmpty()
 
         sc1.exposureAssessment = X
-        assertThat(sc1.exposureAssessment).isEqualTo(X)
-        assertThat(sc1.stringSearchTerms).hasSize(1)
+        sc1.exposureAssessment shouldBeEqualTo X
+        sc1.stringSearchTerms shouldHaveSize 1
 
         sc1.exposureAssessment = null
-        assertNull(sc1.exposureAssessment)
-        assertThat(sc1.stringSearchTerms).isEmpty()
+        sc1.exposureAssessment.shouldBeNull()
+        sc1.stringSearchTerms.shouldBeEmpty()
     }
 
     @Test
     fun methods() {
-        assertNull(sc1.methods)
-        assertThat(sc1.stringSearchTerms).isEmpty()
+        sc1.methods.shouldBeNull()
+        sc1.stringSearchTerms.shouldBeEmpty()
 
         sc1.methods = X
-        assertThat(sc1.methods).isEqualTo(X)
-        assertThat(sc1.stringSearchTerms).hasSize(1)
+        sc1.methods shouldBeEqualTo X
+        sc1.stringSearchTerms shouldHaveSize 1
 
         sc1.methods = null
-        assertNull(sc1.methods)
-        assertThat(sc1.stringSearchTerms).isEmpty()
+        sc1.methods.shouldBeNull()
+        sc1.stringSearchTerms.shouldBeEmpty()
     }
 
     @Test
     fun methodStudyDesign() {
-        assertNull(sc1.methodStudyDesign)
-        assertThat(sc1.stringSearchTerms).isEmpty()
+        sc1.methodStudyDesign.shouldBeNull()
+        sc1.stringSearchTerms.shouldBeEmpty()
 
         sc1.methodStudyDesign = X
-        assertThat(sc1.methodStudyDesign).isEqualTo(X)
-        assertThat(sc1.stringSearchTerms).hasSize(1)
+        sc1.methodStudyDesign shouldBeEqualTo X
+        sc1.stringSearchTerms shouldHaveSize 1
 
         sc1.methodStudyDesign = null
-        assertNull(sc1.methodStudyDesign)
-        assertThat(sc1.stringSearchTerms).isEmpty()
+        sc1.methodStudyDesign.shouldBeNull()
+        sc1.stringSearchTerms.shouldBeEmpty()
     }
 
     @Test
     fun methodOutcome() {
-        assertNull(sc1.methodOutcome)
-        assertThat(sc1.stringSearchTerms).isEmpty()
+        sc1.methodOutcome.shouldBeNull()
+        sc1.stringSearchTerms.shouldBeEmpty()
 
         sc1.methodOutcome = X
-        assertThat(sc1.methodOutcome).isEqualTo(X)
-        assertThat(sc1.stringSearchTerms).hasSize(1)
+        sc1.methodOutcome shouldBeEqualTo X
+        sc1.stringSearchTerms shouldHaveSize 1
 
         sc1.methodOutcome = null
-        assertNull(sc1.methodOutcome)
-        assertThat(sc1.stringSearchTerms).isEmpty()
+        sc1.methodOutcome.shouldBeNull()
+        sc1.stringSearchTerms.shouldBeEmpty()
     }
 
     @Test
     fun methodStatistics() {
-        assertNull(sc1.methodStatistics)
-        assertThat(sc1.stringSearchTerms).isEmpty()
+        sc1.methodStatistics.shouldBeNull()
+        sc1.stringSearchTerms.shouldBeEmpty()
 
         sc1.methodStatistics = X
-        assertThat(sc1.methodStatistics).isEqualTo(X)
-        assertThat(sc1.stringSearchTerms).hasSize(1)
+        sc1.methodStatistics shouldBeEqualTo X
+        sc1.stringSearchTerms shouldHaveSize 1
 
         sc1.methodStatistics = null
-        assertNull(sc1.methodStatistics)
-        assertThat(sc1.stringSearchTerms).isEmpty()
+        sc1.methodStatistics.shouldBeNull()
+        sc1.stringSearchTerms.shouldBeEmpty()
     }
 
     @Test
     fun methodConfounders() {
-        assertNull(sc1.methodConfounders)
-        assertThat(sc1.stringSearchTerms).isEmpty()
+        sc1.methodConfounders.shouldBeNull()
+        sc1.stringSearchTerms.shouldBeEmpty()
 
         sc1.methodConfounders = X
-        assertThat(sc1.methodConfounders).isEqualTo(X)
-        assertThat(sc1.stringSearchTerms).hasSize(1)
+        sc1.methodConfounders shouldBeEqualTo X
+        sc1.stringSearchTerms shouldHaveSize 1
 
         sc1.methodConfounders = null
-        assertNull(sc1.methodConfounders)
-        assertThat(sc1.stringSearchTerms).isEmpty()
+        sc1.methodConfounders.shouldBeNull()
+        sc1.stringSearchTerms.shouldBeEmpty()
     }
 
     @Test
     fun result() {
-        assertNull(sc1.result)
-        assertThat(sc1.stringSearchTerms).isEmpty()
+        sc1.result.shouldBeNull()
+        sc1.stringSearchTerms.shouldBeEmpty()
 
         sc1.result = X
-        assertThat(sc1.result).isEqualTo(X)
-        assertThat(sc1.stringSearchTerms).hasSize(1)
+        sc1.result shouldBeEqualTo X
+        sc1.stringSearchTerms shouldHaveSize 1
 
         sc1.result = null
-        assertNull(sc1.result)
-        assertThat(sc1.stringSearchTerms).isEmpty()
+        sc1.result.shouldBeNull()
+        sc1.stringSearchTerms.shouldBeEmpty()
     }
 
     @Test
     fun resultExposureRange() {
-        assertNull(sc1.resultExposureRange)
-        assertThat(sc1.stringSearchTerms).isEmpty()
+        sc1.resultExposureRange.shouldBeNull()
+        sc1.stringSearchTerms.shouldBeEmpty()
 
         sc1.resultExposureRange = X
-        assertThat(sc1.resultExposureRange).isEqualTo(X)
-        assertThat(sc1.stringSearchTerms).hasSize(1)
+        sc1.resultExposureRange shouldBeEqualTo X
+        sc1.stringSearchTerms shouldHaveSize 1
 
         sc1.resultExposureRange = null
-        assertNull(sc1.resultExposureRange)
-        assertThat(sc1.stringSearchTerms).isEmpty()
+        sc1.resultExposureRange.shouldBeNull()
+        sc1.stringSearchTerms.shouldBeEmpty()
     }
 
     @Test
     fun resultEffectEstimate() {
-        assertNull(sc1.resultEffectEstimate)
-        assertThat(sc1.stringSearchTerms).isEmpty()
+        sc1.resultEffectEstimate.shouldBeNull()
+        sc1.stringSearchTerms.shouldBeEmpty()
 
         sc1.resultEffectEstimate = X
-        assertThat(sc1.resultEffectEstimate).isEqualTo(X)
-        assertThat(sc1.stringSearchTerms).hasSize(1)
+        sc1.resultEffectEstimate shouldBeEqualTo X
+        sc1.stringSearchTerms shouldHaveSize 1
 
         sc1.resultEffectEstimate = null
-        assertNull(sc1.resultEffectEstimate)
-        assertThat(sc1.stringSearchTerms).isEmpty()
+        sc1.resultEffectEstimate.shouldBeNull()
+        sc1.stringSearchTerms.shouldBeEmpty()
     }
 
     @Test
     fun resultMeasuredOutcome() {
-        assertNull(sc1.resultMeasuredOutcome)
-        assertThat(sc1.stringSearchTerms).isEmpty()
+        sc1.resultMeasuredOutcome.shouldBeNull()
+        sc1.stringSearchTerms.shouldBeEmpty()
 
         sc1.resultMeasuredOutcome = X
-        assertThat(sc1.resultMeasuredOutcome).isEqualTo(X)
-        assertThat(sc1.stringSearchTerms).hasSize(1)
+        sc1.resultMeasuredOutcome shouldBeEqualTo X
+        sc1.stringSearchTerms shouldHaveSize 1
 
         sc1.resultMeasuredOutcome = null
-        assertNull(sc1.resultMeasuredOutcome)
-        assertThat(sc1.stringSearchTerms).isEmpty()
+        sc1.resultMeasuredOutcome.shouldBeNull()
+        sc1.stringSearchTerms.shouldBeEmpty()
     }
 
     @Test
     fun conclusion() {
-        assertNull(sc1.conclusion)
-        assertThat(sc1.stringSearchTerms).isEmpty()
+        sc1.conclusion.shouldBeNull()
+        sc1.stringSearchTerms.shouldBeEmpty()
 
         sc1.conclusion = X
-        assertThat(sc1.conclusion).isEqualTo(X)
-        assertThat(sc1.stringSearchTerms).hasSize(1)
+        sc1.conclusion shouldBeEqualTo X
+        sc1.stringSearchTerms shouldHaveSize 1
 
         sc1.conclusion = null
-        assertNull(sc1.conclusion)
-        assertThat(sc1.stringSearchTerms).isEmpty()
+        sc1.conclusion.shouldBeNull()
+        sc1.stringSearchTerms.shouldBeEmpty()
     }
 
     @Test
     fun comment() {
-        assertNull(sc1.comment)
-        assertThat(sc1.stringSearchTerms).isEmpty()
+        sc1.comment.shouldBeNull()
+        sc1.stringSearchTerms.shouldBeEmpty()
 
         sc1.comment = X
-        assertThat(sc1.comment).isEqualTo(X)
-        assertThat(sc1.stringSearchTerms).hasSize(1)
+        sc1.comment shouldBeEqualTo X
+        sc1.stringSearchTerms shouldHaveSize 1
 
         sc1.comment = null
-        assertNull(sc1.comment)
-        assertThat(sc1.stringSearchTerms).isEmpty()
+        sc1.comment.shouldBeNull()
+        sc1.stringSearchTerms.shouldBeEmpty()
     }
 
     @Test
     fun intern() {
-        assertNull(sc1.intern)
-        assertThat(sc1.stringSearchTerms).isEmpty()
+        sc1.intern.shouldBeNull()
+        sc1.stringSearchTerms.shouldBeEmpty()
 
         sc1.intern = X
-        assertThat(sc1.intern).isEqualTo(X)
-        assertThat(sc1.stringSearchTerms).hasSize(1)
+        sc1.intern shouldBeEqualTo X
+        sc1.stringSearchTerms shouldHaveSize 1
 
         sc1.intern = null
-        assertNull(sc1.intern)
-        assertThat(sc1.stringSearchTerms).isEmpty()
+        sc1.intern.shouldBeNull()
+        sc1.stringSearchTerms.shouldBeEmpty()
     }
 
     @Test
     fun originalAbstract() {
-        assertNull(sc1.originalAbstract)
-        assertThat(sc1.stringSearchTerms).isEmpty()
+        sc1.originalAbstract.shouldBeNull()
+        sc1.stringSearchTerms.shouldBeEmpty()
 
         sc1.originalAbstract = X
-        assertThat(sc1.originalAbstract).isEqualTo(X)
-        assertThat(sc1.stringSearchTerms).hasSize(1)
+        sc1.originalAbstract shouldBeEqualTo X
+        sc1.stringSearchTerms shouldHaveSize 1
 
         sc1.originalAbstract = null
-        assertNull(sc1.originalAbstract)
-        assertThat(sc1.stringSearchTerms).isEmpty()
+        sc1.originalAbstract.shouldBeNull()
+        sc1.stringSearchTerms.shouldBeEmpty()
     }
 
     @Test
     fun mainCodeOfClass1() {
-        assertNull(sc1.mainCodeOfCodeclass1)
-        assertThat(sc1.stringSearchTerms).isEmpty()
+        sc1.mainCodeOfCodeclass1.shouldBeNull()
+        sc1.stringSearchTerms.shouldBeEmpty()
 
         sc1.mainCodeOfCodeclass1 = X
-        assertThat(sc1.mainCodeOfCodeclass1).isEqualTo(X)
-        assertThat(sc1.stringSearchTerms).hasSize(1)
+        sc1.mainCodeOfCodeclass1 shouldBeEqualTo X
+        sc1.stringSearchTerms shouldHaveSize 1
 
         sc1.mainCodeOfCodeclass1 = null
-        assertNull(sc1.mainCodeOfCodeclass1)
-        assertThat(sc1.stringSearchTerms).isEmpty()
+        sc1.mainCodeOfCodeclass1.shouldBeNull()
+        sc1.stringSearchTerms.shouldBeEmpty()
     }
 
     @Test
     fun createdDisplayValue() {
-        assertNull(sc1.createdDisplayValue)
-        assertThat(sc1.stringSearchTerms).isEmpty()
+        sc1.createdDisplayValue.shouldBeNull()
+        sc1.stringSearchTerms.shouldBeEmpty()
 
         sc1.createdDisplayValue = X
-        assertThat(sc1.createdDisplayValue).isEqualTo(X)
-        assertThat(sc1.created).isEqualTo(X)
-        assertThat(sc1.createdBy).isEqualTo(X)
-        assertNull(sc1.lastModified)
-        assertNull(sc1.lastModifiedBy)
-        assertThat(sc1.stringSearchTerms).hasSize(0)
+        sc1.createdDisplayValue shouldBeEqualTo X
+        sc1.created shouldBeEqualTo X
+        sc1.createdBy shouldBeEqualTo X
+        sc1.lastModified.shouldBeNull()
+        sc1.lastModifiedBy.shouldBeNull()
+        sc1.stringSearchTerms shouldHaveSize 0
 
         sc1.createdDisplayValue = null
-        assertNull(sc1.createdDisplayValue)
-        assertThat(sc1.stringSearchTerms).isEmpty()
+        sc1.createdDisplayValue.shouldBeNull()
+        sc1.stringSearchTerms.shouldBeEmpty()
     }
 
     @Test
     fun modifiedDisplayValue() {
-        assertNull(sc1.modifiedDisplayValue)
-        assertThat(sc1.stringSearchTerms).isEmpty()
+        sc1.modifiedDisplayValue.shouldBeNull()
+        sc1.stringSearchTerms.shouldBeEmpty()
 
         sc1.modifiedDisplayValue = X
-        assertThat(sc1.modifiedDisplayValue).isEqualTo(X)
-        assertThat(sc1.lastModified).isEqualTo(X)
-        assertThat(sc1.lastModifiedBy).isEqualTo(X)
-        assertNull(sc1.created)
-        assertNull(sc1.createdBy)
-        assertThat(sc1.stringSearchTerms).hasSize(0)
+        sc1.modifiedDisplayValue shouldBeEqualTo X
+        sc1.lastModified shouldBeEqualTo X
+        sc1.lastModifiedBy shouldBeEqualTo X
+        sc1.created.shouldBeNull()
+        sc1.createdBy.shouldBeNull()
+        sc1.stringSearchTerms shouldHaveSize 0
 
         sc1.modifiedDisplayValue = null
-        assertNull(sc1.modifiedDisplayValue)
-        assertThat(sc1.stringSearchTerms).isEmpty()
+        sc1.modifiedDisplayValue.shouldBeNull()
+        sc1.stringSearchTerms.shouldBeEmpty()
     }
 
     @Test
     fun testDisplayValue_withSingleStringSearchTerms_returnsIt() {
         sc1.authors = "hoops"
-        assertThat(sc1.displayValue).isEqualTo("hoops")
+        sc1.displayValue shouldBeEqualTo "hoops"
     }
 
     @Test
     fun testDisplayValue_withTwoStringSearchTerms_joinsThemUsingAnd() {
         sc1.authors = "rag"
         sc1.methodConfounders = "bones"
-        assertThat(sc1.displayValue).isEqualTo("rag AND bones")
+        sc1.displayValue shouldBeEqualTo "rag AND bones"
     }
 
     @Test
     fun testDisplayValue_forBooleanSearchTermsBeginFalse() {
         sc1.isFirstAuthorOverridden = false
-        assertThat(sc1.displayValue).isEqualTo("-firstAuthorOverridden")
+        sc1.displayValue shouldBeEqualTo "-firstAuthorOverridden"
     }
 
     @Test
     fun testDisplayValue_forIntegerSearchTerms() {
         sc1.publicationYear = "2017"
-        assertThat(sc1.displayValue).isEqualTo("2017")
+        sc1.displayValue shouldBeEqualTo "2017"
     }
 
     @Test
     fun testDisplayValue_forAuditSearchTermsForAuthorSearch() {
         sc1.createdDisplayValue = "mkj"
-        assertThat(sc1.displayValue).isEqualTo("mkj")
+        sc1.displayValue shouldBeEqualTo "mkj"
     }
 
     @Test
     fun testDisplayValue_forAuditSearchTermsForDateSearch() {
         sc1.createdDisplayValue = ">2017-01-23"
-        assertThat(sc1.displayValue).isEqualTo(">2017-01-23")
+        sc1.displayValue shouldBeEqualTo ">2017-01-23"
     }
 
     @Test
     fun testDisplayValue_forAuditSearchTermsForCombinedSearch() {
         sc1.modifiedDisplayValue = "rk >=2017-01-23"
-        assertThat(sc1.displayValue).isEqualTo("rk >=2017-01-23")
+        sc1.displayValue shouldBeEqualTo "rk >=2017-01-23"
     }
 
     @Test
@@ -699,14 +708,14 @@ internal class SearchConditionTest {
         sc1.doi = "baz"
         sc1.publicationYear = "2016"
         sc1.isFirstAuthorOverridden = true
-        assertThat(sc1.displayValue).isEqualTo("fooAuth AND bar AND baz AND 2016 AND firstAuthorOverridden")
+        sc1.displayValue shouldBeEqualTo "fooAuth AND bar AND baz AND 2016 AND firstAuthorOverridden"
     }
 
     @Test
     fun testDisplayValue_withCodesOnly() {
         sc1.addCode(Code("1F", "C1F", "", false, 1, "CC1", "", 0))
         sc1.addCode(Code("5H", "C5H", "", false, 5, "CC5", "", 0))
-        assertThat(sc1.displayValue).isEqualTo("1F&5H")
+        sc1.displayValue shouldBeEqualTo "1F&5H"
     }
 
     @Test
@@ -714,46 +723,46 @@ internal class SearchConditionTest {
         sc1.authors = "foobar"
         sc1.addCode(Code("1F", "C1F", "", false, 1, "CC1", "", 0))
         sc1.addCode(Code("5H", "C5H", "", false, 5, "CC5", "", 0))
-        assertThat(sc1.displayValue).isEqualTo("foobar AND 1F&5H")
+        sc1.displayValue shouldBeEqualTo "foobar AND 1F&5H"
     }
 
     @Test
     fun testDisplayValue_withNewsletterHeadlineOnly() {
         sc1.newsletterHeadline = "foo"
-        assertThat(sc1.displayValue).isEqualTo("headline=foo")
+        sc1.displayValue shouldBeEqualTo "headline=foo"
     }
 
     @Test
     fun testDisplayValue_withNewsletterTopicOnly() {
         sc1.setNewsletterTopic(NewsletterTopic(1, "t1"))
-        assertThat(sc1.displayValue).isEqualTo("topic=t1")
+        sc1.displayValue shouldBeEqualTo "topic=t1"
     }
 
     @Test
     fun testDisplayValue_withNewsletterIssueOnly() {
         sc1.newsletterIssue = "2018/06"
-        assertThat(sc1.displayValue).isEqualTo("issue=2018/06")
+        sc1.displayValue shouldBeEqualTo "issue=2018/06"
     }
 
     @Test
     fun testDisplayValue_withNewsletterHeadlinePlusSomethingElse() {
         sc1.authors = "foobar"
         sc1.newsletterHeadline = "foo"
-        assertThat(sc1.displayValue).isEqualTo("foobar AND headline=foo")
+        sc1.displayValue shouldBeEqualTo "foobar AND headline=foo"
     }
 
     @Test
     fun testDisplayValue_withNewsletterTopicPlusSomethingElse() {
         sc1.authors = "foobar"
         sc1.setNewsletterTopic(NewsletterTopic(1, "t1"))
-        assertThat(sc1.displayValue).isEqualTo("foobar AND topic=t1")
+        sc1.displayValue shouldBeEqualTo "foobar AND topic=t1"
     }
 
     @Test
     fun testDisplayValue_withNewsletterIssuePlusSomethingElse() {
         sc1.authors = "foobar"
         sc1.newsletterIssue = "2018/04"
-        assertThat(sc1.displayValue).isEqualTo("foobar AND issue=2018/04")
+        sc1.displayValue shouldBeEqualTo "foobar AND issue=2018/04"
     }
 
     @Test
@@ -761,7 +770,7 @@ internal class SearchConditionTest {
         sc1.newsletterHeadline = "foobar"
         sc1.newsletterIssue = "2018/02"
         sc1.setNewsletterTopic(NewsletterTopic(10, "t2"))
-        assertThat(sc1.displayValue).isEqualTo("issue=2018/02 AND headline=foobar AND topic=t2")
+        sc1.displayValue shouldBeEqualTo "issue=2018/02 AND headline=foobar AND topic=t2"
     }
 
     @Test
@@ -769,12 +778,12 @@ internal class SearchConditionTest {
         sc1.newsletterHeadline = "foobar"
         sc1.newsletterIssue = "2018/02"
         sc1.setNewsletterTopic(null)
-        assertThat(sc1.displayValue).isEqualTo("issue=2018/02 AND headline=foobar")
+        sc1.displayValue shouldBeEqualTo "issue=2018/02 AND headline=foobar"
     }
 
     @Test
     fun equalsAndHash1_ofFieldSc() {
-        assertThat(sc1 == sc1).isTrue()
+        (sc1 == sc1).shouldBeTrue()
     }
 
     @Test
@@ -785,9 +794,9 @@ internal class SearchConditionTest {
     }
 
     private fun assertEquality(f1: SearchCondition, f2: SearchCondition) {
-        assertThat(f1.hashCode()).isEqualTo(f2.hashCode())
-        assertThat(f1 == f2).isTrue()
-        assertThat(f2 == f1).isTrue()
+        f1.hashCode() shouldBeEqualTo f2.hashCode()
+        ((f1 == f2)).shouldBeTrue()
+        ((f2 == f1)).shouldBeTrue()
     }
 
     @Test
@@ -818,13 +827,13 @@ internal class SearchConditionTest {
         assertEquality(f1, f2)
 
         f2.methodOutcome = "blup2"
-        assertThat(f1 == f2).isFalse()
-        assertThat(f1.hashCode()).isNotEqualTo(f2.hashCode())
+        ((f1 == f2)).shouldBeFalse()
+        f1.hashCode() shouldNotBeEqualTo f2.hashCode()
 
         f2.methodOutcome = "blup"
         f2.methodStatistics = "bloop"
-        assertThat(f1 == f2).isFalse()
-        assertThat(f1.hashCode()).isNotEqualTo(f2.hashCode())
+        ((f1 == f2)).shouldBeFalse()
+        f1.hashCode() shouldNotBeEqualTo f2.hashCode()
     }
 
     @Test
@@ -836,14 +845,14 @@ internal class SearchConditionTest {
         assertEquality(f1, f2)
 
         f1.searchConditionId = 3L
-        assertThat(f1.hashCode()).isNotEqualTo(f2.hashCode())
-        assertThat(f1 == f2).isFalse()
-        assertThat(f2 == f1).isFalse()
+        f1.hashCode() shouldNotBeEqualTo f2.hashCode()
+        (f1 == f2).shouldBeFalse()
+        (f2 == f1).shouldBeFalse()
 
         f2.searchConditionId = 4L
-        assertThat(f1.hashCode()).isNotEqualTo(f2.hashCode())
-        assertThat(f1 == f2).isFalse()
-        assertThat(f2 == f1).isFalse()
+        f1.hashCode() shouldNotBeEqualTo f2.hashCode()
+        (f1 == f2).shouldBeFalse()
+        (f2 == f1).shouldBeFalse()
 
         f2.searchConditionId = 3L
         assertEquality(f1, f2)
@@ -854,16 +863,16 @@ internal class SearchConditionTest {
         val f1 = SearchCondition()
         f1.createdDisplayValue = "foo"
         val f2 = SearchCondition()
-        assertThat(f1 == f2).isFalse()
+        (f1 == f2).shouldBeFalse()
 
         f2.createdDisplayValue = "foo"
         assertEquality(f1, f2)
 
         f2.createdDisplayValue = "bar"
-        assertThat(f1 == f2).isFalse()
+        (f1 == f2).shouldBeFalse()
 
         f1.createdDisplayValue = null
-        assertThat(f2 == f1).isFalse()
+        (f2 == f1).shouldBeFalse()
     }
 
     @Test
@@ -871,16 +880,16 @@ internal class SearchConditionTest {
         val f1 = SearchCondition()
         f1.modifiedDisplayValue = "foo"
         val f2 = SearchCondition()
-        assertThat(f1 == f2).isFalse()
+        (f1 == f2).shouldBeFalse()
 
         f2.modifiedDisplayValue = "foo"
         assertEquality(f1, f2)
 
         f2.modifiedDisplayValue = "bar"
-        assertThat(f1 == f2).isFalse()
+        (f1 == f2).shouldBeFalse()
 
         f1.createdDisplayValue = null
-        assertThat(f2 == f1).isFalse()
+        (f2 == f1).shouldBeFalse()
     }
 
     @Test
@@ -893,9 +902,9 @@ internal class SearchConditionTest {
     }
 
     private fun assertInequality(f1: SearchCondition, f2: SearchCondition) {
-        assertThat(f1 == f2).isFalse()
-        assertThat(f2 == f1).isFalse()
-        assertThat(f1.hashCode()).isNotEqualTo(f2.hashCode())
+        (f1 == f2).shouldBeFalse()
+        (f2 == f1).shouldBeFalse()
+        f1.hashCode() shouldNotBeEqualTo f2.hashCode()
     }
 
     @Test
@@ -990,7 +999,7 @@ internal class SearchConditionTest {
 
     @Test
     fun newSearchCondition_hasEmptyRemovedKeys() {
-        assertThat(SearchCondition().removedKeys).isEmpty()
+        SearchCondition().removedKeys.shouldBeEmpty()
     }
 
     @Test
@@ -998,7 +1007,7 @@ internal class SearchConditionTest {
         sc2.authors = "foo"
         sc2.publicationYear = "2014"
         sc2.isFirstAuthorOverridden = true
-        assertThat(sc2.removedKeys).isEmpty()
+        sc2.removedKeys.shouldBeEmpty()
     }
 
     @Test
@@ -1008,9 +1017,7 @@ internal class SearchConditionTest {
         sc2.goals = "bar"
 
         sc2.publicationYear = null
-        assertThat(sc2.removedKeys)
-            .hasSize(1)
-            .containsOnly("publicationYear")
+        sc2.removedKeys shouldContainSame listOf("publicationYear")
     }
 
     @Test
@@ -1018,7 +1025,7 @@ internal class SearchConditionTest {
         sc2.publicationYear = "2014"
         sc2.publicationYear = null
         sc2.publicationYear = "2015"
-        assertThat(sc2.removedKeys).isEmpty()
+        sc2.removedKeys.shouldBeEmpty()
     }
 
     @Test
@@ -1027,60 +1034,54 @@ internal class SearchConditionTest {
         sc1.authors = null
         sc1.publicationYear = "2014"
         sc1.publicationYear = null
-        assertThat(sc1.removedKeys).hasSize(2)
+        sc1.removedKeys shouldHaveSize 2
 
         sc1.clearRemovedKeys()
-        assertThat(sc1.removedKeys).isEmpty()
+        sc1.removedKeys.shouldBeEmpty()
     }
 
     @Test
     fun addingBooleanSearchTerm() {
         sc2.addSearchTerm(SearchTerm.newBooleanSearchTerm("fn", "rst"))
-        assertThat(sc2.booleanSearchTerms).hasSize(1)
-        assertThat(sc2.integerSearchTerms).isEmpty()
-        assertThat(sc2.stringSearchTerms).isEmpty()
-        assertThat(sc2.auditSearchTerms).isEmpty()
+        sc2.booleanSearchTerms shouldHaveSize 1
+        sc2.integerSearchTerms.shouldBeEmpty()
+        sc2.stringSearchTerms.shouldBeEmpty()
+        sc2.auditSearchTerms.shouldBeEmpty()
     }
 
     @Test
     fun addingIntegerTerm() {
         sc2.addSearchTerm(SearchTerm.newIntegerSearchTerm("fn", "1"))
-        assertThat(sc2.booleanSearchTerms).isEmpty()
-        assertThat(sc2.integerSearchTerms).hasSize(1)
-        assertThat(sc2.stringSearchTerms).isEmpty()
-        assertThat(sc2.auditSearchTerms).isEmpty()
+        sc2.booleanSearchTerms.shouldBeEmpty()
+        sc2.integerSearchTerms shouldHaveSize 1
+        sc2.stringSearchTerms.shouldBeEmpty()
+        sc2.auditSearchTerms.shouldBeEmpty()
     }
 
     @Test
     fun addingStringSearchTerm() {
         sc1.addSearchTerm(SearchTerm.newStringSearchTerm("fn", "rst"))
-        assertThat(sc1.booleanSearchTerms).isEmpty()
-        assertThat(sc1.integerSearchTerms).isEmpty()
-        assertThat(sc1.stringSearchTerms).hasSize(1)
-        assertThat(sc1.auditSearchTerms).isEmpty()
+        sc1.booleanSearchTerms.shouldBeEmpty()
+        sc1.integerSearchTerms.shouldBeEmpty()
+        sc1.stringSearchTerms shouldHaveSize 1
+        sc1.auditSearchTerms.shouldBeEmpty()
     }
 
     @Test
     fun addingAuditSearchTerm() {
         sc2.addSearchTerm(SearchTerm.newAuditSearchTerm("fn", "rst"))
-        assertThat(sc2.booleanSearchTerms).isEmpty()
-        assertThat(sc2.integerSearchTerms).isEmpty()
-        assertThat(sc2.stringSearchTerms).isEmpty()
-        assertThat(sc2.auditSearchTerms).hasSize(1)
+        sc2.booleanSearchTerms.shouldBeEmpty()
+        sc2.integerSearchTerms.shouldBeEmpty()
+        sc2.stringSearchTerms.shouldBeEmpty()
+        sc2.auditSearchTerms shouldHaveSize 1
     }
 
     @Test
     fun addingUnsupportedSearchTerm() {
-        val stMock = mock(SearchTerm::class.java)
-        `when`(stMock.searchTermType).thenReturn(SearchTermType.UNSUPPORTED)
-        try {
-            sc2.addSearchTerm(stMock)
-            fail<Any>("should have thrown exception")
-        } catch (ex: Error) {
-            assertThat(ex)
-                .isInstanceOf(AssertionError::class.java)
-                .hasMessage("SearchTermType.UNSUPPORTED is not supported")
+        val stMock = mockk<SearchTerm> {
+            every { searchTermType } returns SearchTermType.UNSUPPORTED
         }
+        invoking { sc2.addSearchTerm(stMock) } shouldThrow AssertionError::class withMessage "SearchTermType.UNSUPPORTED is not supported"
     }
 
     @Test
@@ -1090,45 +1091,45 @@ internal class SearchConditionTest {
         val c3 = Code("c3", "c3", "", false, 3, "cc3", "", 0)
         val c4 = Code("c4", "c4", "", false, 3, "cc3", "", 0)
         sc2.addCodes(listOf(c1, c2, c3, c4))
-        assertThat(sc2.codes).hasSize(4)
-        assertThat(sc2.getCodesOf(CodeClassId.CC3)).containsExactly(c3, c4)
+        sc2.codes shouldHaveSize 4
+        sc2.getCodesOf(CodeClassId.CC3) shouldContainAll listOf(c3, c4)
 
         sc2.clearCodesOf(CodeClassId.CC3)
-        assertThat(sc2.codes).hasSize(2)
+        sc2.codes shouldHaveSize 2
         sc2.clearCodes()
-        assertThat(sc2.codes).isEmpty()
+        sc2.codes.shouldBeEmpty()
     }
 
     @Test
     fun settingAndResettingNewsletterHeadline() {
-        assertNull(sc1.newsletterHeadline)
+        sc1.newsletterHeadline.shouldBeNull()
 
         sc1.newsletterHeadline = "foo"
-        assertThat(sc1.newsletterHeadline).isEqualTo("foo")
+        sc1.newsletterHeadline shouldBeEqualTo "foo"
 
         sc1.newsletterHeadline = null
-        assertNull(sc1.newsletterHeadline)
+        sc1.newsletterHeadline.shouldBeNull()
     }
 
     @Test
     fun settingAndResettingNewsletterTopic() {
-        assertNull(sc1.newsletterTopicId)
+        sc1.newsletterTopicId.shouldBeNull()
 
         sc1.setNewsletterTopic(NewsletterTopic(1, "tp1"))
-        assertThat(sc1.newsletterTopicId).isEqualTo(1)
+        sc1.newsletterTopicId shouldBeEqualTo 1
 
         sc1.setNewsletterTopic(null)
-        assertNull(sc1.newsletterTopicId)
+        sc1.newsletterTopicId.shouldBeNull()
     }
 
     @Test
     fun settingAndResettingNewsletterIssue() {
-        assertNull(sc1.newsletterIssue)
+        sc1.newsletterIssue.shouldBeNull()
 
         sc1.newsletterIssue = "foo"
-        assertThat(sc1.newsletterIssue).isEqualTo("foo")
+        sc1.newsletterIssue shouldBeEqualTo "foo"
 
         sc1.newsletterIssue = null
-        assertNull(sc1.newsletterIssue)
+        sc1.newsletterIssue.shouldBeNull()
     }
 }

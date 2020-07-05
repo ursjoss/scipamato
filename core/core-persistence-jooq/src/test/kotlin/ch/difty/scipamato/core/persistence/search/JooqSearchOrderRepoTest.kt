@@ -12,24 +12,29 @@ import ch.difty.scipamato.core.entity.search.SearchTerm
 import ch.difty.scipamato.core.entity.search.SearchTermType
 import ch.difty.scipamato.core.persistence.EntityRepository
 import ch.difty.scipamato.core.persistence.JooqEntityRepoTest
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.whenever
-import org.assertj.core.api.Assertions.assertThat
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.verify
+import org.amshove.kluent.shouldBeEmpty
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeFalse
+import org.amshove.kluent.shouldBeNull
+import org.amshove.kluent.shouldBeTrue
+import org.amshove.kluent.shouldContainAll
+import org.amshove.kluent.shouldHaveSize
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito.mock
-import org.mockito.Mockito.verify
 
 @Suppress("UsePropertyAccessSyntax")
 internal class JooqSearchOrderRepoTest :
     JooqEntityRepoTest<SearchOrderRecord, SearchOrder, Long, ch.difty.scipamato.core.db.tables.SearchOrder,
         SearchOrderRecordMapper, SearchOrderFilter>() {
 
-    override val unpersistedEntity = mock<SearchOrder>()
-    override val persistedEntity = mock<SearchOrder>()
-    override val persistedRecord = mock<SearchOrderRecord>()
-    override val unpersistedRecord = mock<SearchOrderRecord>()
-    override val mapper = mock<SearchOrderRecordMapper>()
-    override val filter = mock<SearchOrderFilter>()
+    override val unpersistedEntity = mockk<SearchOrder>()
+    override val persistedEntity = mockk<SearchOrder>()
+    override val persistedRecord = mockk<SearchOrderRecord>()
+    override val unpersistedRecord = mockk<SearchOrderRecord>()
+    override val mapper = mockk<SearchOrderRecordMapper>()
+    override val filter = mockk<SearchOrderFilter>()
 
     private val sc1 = SearchCondition()
     private val sc2 = SearchCondition()
@@ -86,20 +91,20 @@ internal class JooqSearchOrderRepoTest :
         }
 
     override fun expectEntityIdsWithValues() {
-        whenever(unpersistedEntity.id).thenReturn(SAMPLE_ID)
-        whenever(persistedRecord.id).thenReturn(SAMPLE_ID)
+        every { unpersistedEntity.id } returns SAMPLE_ID
+        every { persistedRecord.id } returns SAMPLE_ID
     }
 
     override fun expectUnpersistedEntityIdNull() {
-        whenever(unpersistedEntity.id).thenReturn(null)
+        every { unpersistedEntity.id } returns null
     }
 
     override fun verifyUnpersistedEntityId() {
-        verify(unpersistedEntity).id
+        verify { unpersistedEntity.id }
     }
 
     override fun verifyPersistedRecordId() {
-        verify(persistedRecord).id
+        verify { persistedRecord.id }
     }
 
     @Test
@@ -110,9 +115,9 @@ internal class JooqSearchOrderRepoTest :
     @Test
     fun enrichingAssociatedEntities_withEntityWithNullId_doesNothing() {
         val so = SearchOrder()
-        assertThat(so.id == null).isTrue()
+        so.id.shouldBeNull()
         repo.enrichAssociatedEntitiesOf(so, LC)
-        assertThat(so.searchConditions).isEmpty()
+        so.searchConditions.shouldBeEmpty()
     }
 
     private fun makeRepoFindingNestedEntities(): JooqSearchOrderRepo =
@@ -188,25 +193,25 @@ internal class JooqSearchOrderRepoTest :
         val repoSpy = makeRepoFindingNestedEntities()
         val so = SearchOrder()
         so.id = SAMPLE_ID
-        assertThat(so.searchConditions).isEmpty()
+        so.searchConditions.shouldBeEmpty()
 
         repoSpy.enrichAssociatedEntitiesOf(so, LC)
 
-        assertThat(so.searchConditions).hasSize(3)
+        so.searchConditions shouldHaveSize 3
 
         val so1 = so
             .searchConditions[0]
-        assertThat(so1.authors).isEqualTo("joss")
-        assertThat(so1.publicationYear).isEqualTo("2014")
-        assertThat(so1.displayValue).isEqualTo("joss AND 2014 AND 1F")
+        so1.authors shouldBeEqualTo "joss"
+        so1.publicationYear shouldBeEqualTo "2014"
+        so1.displayValue shouldBeEqualTo "joss AND 2014 AND 1F"
 
         val so2 = so.searchConditions[1]
-        assertThat(so2.publicationYear).isEqualTo("2014-2016")
-        assertThat(so2.displayValue).isEqualTo("2014-2016 AND 1F")
+        so2.publicationYear shouldBeEqualTo "2014-2016"
+        so2.displayValue shouldBeEqualTo "2014-2016 AND 1F"
 
         val so3 = so.searchConditions[2]
-        assertThat(so3.createdBy).isEqualTo("mkj")
-        assertThat(so3.displayValue).isEqualTo("mkj AND 1F")
+        so3.createdBy shouldBeEqualTo "mkj"
+        so3.displayValue shouldBeEqualTo "mkj AND 1F"
     }
 
     @Test
@@ -214,86 +219,86 @@ internal class JooqSearchOrderRepoTest :
         val repoSpy = makeRepoFindingNestedEntities()
         val so = SearchOrder()
         so.id = SAMPLE_ID
-        assertThat(so.excludedPaperIds).isEmpty()
+        so.excludedPaperIds.shouldBeEmpty()
         repoSpy.enrichAssociatedEntitiesOf(so, LC)
-        assertThat(so.excludedPaperIds).hasSize(3).containsExactly(17L, 33L, 42L)
+        so.excludedPaperIds shouldHaveSize 3
     }
 
     @Test
     fun hasDirtyNewsletterFields_withTwoEmptySearchConditions_isNotDirty() {
-        assertThat(sc1.newsletterTopicId == null).isTrue()
-        assertThat(sc2.newsletterTopicId == null).isTrue()
-        assertThat(sc1.newsletterHeadline == null).isTrue()
-        assertThat(sc2.newsletterHeadline == null).isTrue()
-        assertThat(sc1.newsletterIssue == null).isTrue()
-        assertThat(sc2.newsletterIssue == null).isTrue()
+        sc1.newsletterTopicId.shouldBeNull()
+        sc2.newsletterTopicId.shouldBeNull()
+        sc1.newsletterHeadline.shouldBeNull()
+        sc2.newsletterHeadline.shouldBeNull()
+        sc1.newsletterIssue.shouldBeNull()
+        sc2.newsletterIssue.shouldBeNull()
 
-        assertThat(repo.hasDirtyNewsletterFields(sc1, sc2)).isFalse()
+        repo.hasDirtyNewsletterFields(sc1, sc2).shouldBeFalse()
     }
 
     @Test
     fun hasDirtyNewsletterFields_withSingleNewsletterTopic_isDirty() {
         sc1.setNewsletterTopic(NewsletterTopic(1, "1"))
-        assertThat(repo.hasDirtyNewsletterFields(sc1, sc2)).isTrue()
+        repo.hasDirtyNewsletterFields(sc1, sc2).shouldBeTrue()
     }
 
     @Test
     fun hasDirtyNewsletterFields_withDifferentNewsletterTopic_isDirty() {
         sc1.setNewsletterTopic(NewsletterTopic(1, "1"))
         sc2.setNewsletterTopic(NewsletterTopic(2, "2"))
-        assertThat(repo.hasDirtyNewsletterFields(sc1, sc2)).isTrue()
+        repo.hasDirtyNewsletterFields(sc1, sc2).shouldBeTrue()
     }
 
     @Test
     fun hasDirtyNewsletterFields_withIdenticalNewsletterTopicIds_isNotDirty() {
         sc1.setNewsletterTopic(NewsletterTopic(1, "foo"))
         sc2.setNewsletterTopic(NewsletterTopic(1, "bar"))
-        assertThat(repo.hasDirtyNewsletterFields(sc1, sc2)).isFalse()
+        repo.hasDirtyNewsletterFields(sc1, sc2).shouldBeFalse()
     }
 
     @Test
     fun hasDirtyNewsletterFields_withSingleNewsletterHeadline_isDirty() {
         sc1.newsletterHeadline = "foo"
-        assertThat(repo.hasDirtyNewsletterFields(sc1, sc2)).isTrue()
+        repo.hasDirtyNewsletterFields(sc1, sc2).shouldBeTrue()
     }
 
     @Test
     fun hasDirtyNewsletterFields_withDifferentNewsletterHeadlines_isDirty() {
         sc1.newsletterHeadline = "foo"
         sc2.newsletterHeadline = "bar"
-        assertThat(repo.hasDirtyNewsletterFields(sc1, sc2)).isTrue()
+        repo.hasDirtyNewsletterFields(sc1, sc2).shouldBeTrue()
     }
 
     @Test
     fun hasDirtyNewsletterFields_withIdenticalNewsletterHeadlines_isNotDirty() {
         sc1.newsletterHeadline = "foo"
         sc2.newsletterHeadline = "foo"
-        assertThat(repo.hasDirtyNewsletterFields(sc1, sc2)).isFalse()
+        repo.hasDirtyNewsletterFields(sc1, sc2).shouldBeFalse()
     }
 
     @Test
     fun hasDirtyNewsletterFields_withSingleNewsletterIssue_isDirty() {
         sc1.newsletterIssue = "foo"
-        assertThat(repo.hasDirtyNewsletterFields(sc1, sc2)).isTrue()
+        repo.hasDirtyNewsletterFields(sc1, sc2).shouldBeTrue()
     }
 
     @Test
     fun hasDirtyNewsletterFields_withDifferentNewsletterIssue_isDirty() {
         sc2.newsletterIssue = "bar"
         sc1.newsletterIssue = "foo"
-        assertThat(repo.hasDirtyNewsletterFields(sc1, sc2)).isTrue()
+        repo.hasDirtyNewsletterFields(sc1, sc2).shouldBeTrue()
     }
 
     @Test
     fun hasDirtyNewsletterFields_withIdenticalNewsletterIssue_isNotDirty() {
         sc1.newsletterIssue = "foo"
         sc2.newsletterIssue = "foo"
-        assertThat(repo.hasDirtyNewsletterFields(sc1, sc2)).isFalse()
+        repo.hasDirtyNewsletterFields(sc1, sc2).shouldBeFalse()
     }
 
     @Test
     fun addingSearchCondition_nonDirty_returnsPersistedEquivalentSearchCondition() {
-        val equivalentPersistedSearchCondition = mock(SearchCondition::class.java)
+        val equivalentPersistedSearchCondition = mockk<SearchCondition>()
         val repo = object : JooqSearchOrderRepo(
             dsl,
             mapper,
@@ -315,7 +320,7 @@ internal class JooqSearchOrderRepoTest :
                 psc: SearchCondition
             ): Boolean = false
         }
-        assertThat(repo.addSearchCondition(SearchCondition(), 1, "en")).isEqualTo(equivalentPersistedSearchCondition)
+        repo.addSearchCondition(SearchCondition(), 1, "en") shouldBeEqualTo equivalentPersistedSearchCondition
     }
 
     @Test
@@ -324,7 +329,7 @@ internal class JooqSearchOrderRepoTest :
 
         // sc without id - should be filtered out
         val sc1 = SearchCondition()
-        assertThat(sc1.searchConditionId == null).isTrue()
+        sc1.searchConditionId.shouldBeNull()
         idToSc[1L] = sc1
 
         // sc with id - which is also contained in the conditionId list - should be filtered out
@@ -339,7 +344,7 @@ internal class JooqSearchOrderRepoTest :
 
         val conditionIdsWithSearchTerms = listOf(sc2.searchConditionId)
 
-        assertThat(repo.findTermLessConditions(idToSc, conditionIdsWithSearchTerms)).containsExactly(sc3)
+        repo.findTermLessConditions(idToSc, conditionIdsWithSearchTerms) shouldContainAll listOf(sc3)
     }
 
     @Test
@@ -374,7 +379,7 @@ internal class JooqSearchOrderRepoTest :
         }
         repo.storeExistingConditionsOf(so, "de")
 
-        assertThat(updateCalled[0]).isEqualTo(30L)
+        updateCalled[0] shouldBeEqualTo 30L
     }
 
     companion object {

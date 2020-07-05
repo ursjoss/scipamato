@@ -2,7 +2,8 @@ package ch.difty.scipamato.core.entity.newsletter
 
 import nl.jqno.equalsverifier.EqualsVerifier
 import nl.jqno.equalsverifier.Warning
-import org.assertj.core.api.Assertions.assertThat
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldContainSame
 import org.junit.jupiter.api.Test
 
 internal class NewsletterTopicFilterTest {
@@ -12,8 +13,8 @@ internal class NewsletterTopicFilterTest {
     @Test
     fun getAndSet() {
         f.titleMask = "titleMask"
-        assertThat(f.titleMask).isEqualTo("titleMask")
-        assertThat(f.toString()).isEqualTo("NewsletterTopicFilter(titleMask=titleMask)")
+        f.titleMask shouldBeEqualTo "titleMask"
+        f.toString() shouldBeEqualTo "NewsletterTopicFilter(titleMask=titleMask)"
     }
 
     @Test
@@ -27,7 +28,7 @@ internal class NewsletterTopicFilterTest {
 
     @Test
     fun assertEnumFields() {
-        assertThat(NewsletterTopicFilter.NewsletterTopicFilterFields.values().map { it.fieldName })
-            .containsExactly("titleMask")
+        NewsletterTopicFilter.NewsletterTopicFilterFields.values().map { it.fieldName } shouldContainSame
+            listOf("titleMask")
     }
 }

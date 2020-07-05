@@ -3,7 +3,7 @@ package ch.difty.scipamato.core.sync.jobs.newsletter
 import ch.difty.scipamato.core.sync.jobs.CREATED
 import ch.difty.scipamato.core.sync.jobs.MODIFIED
 import ch.difty.scipamato.core.sync.jobs.SYNCHED
-import org.assertj.core.api.Assertions.assertThat
+import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.Test
 import java.sql.Date
 
@@ -22,13 +22,13 @@ internal class PublicNewsletterTest {
             .lastSynched(SYNCHED)
             .build()
 
-        assertThat(pn.id).isEqualTo(1)
-        assertThat(pn.issue).isEqualTo("i")
-        assertThat(pn.issueDate).isEqualTo(ISSUE_DATE)
-        assertThat(pn.version).isEqualTo(3)
-        assertThat(pn.created).isEqualTo(CREATED)
-        assertThat(pn.lastModified).isEqualTo(MODIFIED)
-        assertThat(pn.lastSynched).isEqualTo(SYNCHED)
+        pn.id shouldBeEqualTo 1
+        pn.issue shouldBeEqualTo "i"
+        pn.issueDate shouldBeEqualTo ISSUE_DATE
+        pn.version shouldBeEqualTo 3
+        pn.created shouldBeEqualTo CREATED
+        pn.lastModified shouldBeEqualTo MODIFIED
+        pn.lastSynched shouldBeEqualTo SYNCHED
     }
 
     companion object {

@@ -1,17 +1,20 @@
+@file:Suppress("SpellCheckingInspection")
+
 package ch.difty.scipamato.core.sync.launcher
 
-import com.nhaarman.mockitokotlin2.any
-import com.nhaarman.mockitokotlin2.doReturn
-import com.nhaarman.mockitokotlin2.doThrow
-import com.nhaarman.mockitokotlin2.eq
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.verify
-import com.nhaarman.mockitokotlin2.verifyNoMoreInteractions
-import com.nhaarman.mockitokotlin2.whenever
-import org.assertj.core.api.Assertions.assertThat
+import io.mockk.confirmVerified
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.verify
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeFalse
+import org.amshove.kluent.shouldBeTrue
+import org.amshove.kluent.shouldContain
+import org.amshove.kluent.shouldContainAll
+import org.amshove.kluent.shouldContainSame
+import org.amshove.kluent.shouldHaveSize
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito
 import org.springframework.batch.core.BatchStatus
 import org.springframework.batch.core.ExitStatus
 import org.springframework.batch.core.Job
@@ -21,19 +24,19 @@ import org.springframework.batch.core.launch.JobLauncher
 
 internal class RefDataSyncJobLauncherTest {
 
-    private val jobLauncher = mock<JobLauncher>()
-    private val warner = mock<Warner>()
+    private val jobLauncher = mockk<JobLauncher>()
+    private val warner = mockk<Warner>()
 
-    private val syncLanguageJob = mock<Job>()
-    private val syncNewStudyPageLinkJob = mock<Job>()
-    private val syncCodeClassJob = mock<Job>()
-    private val syncCodeJob = mock<Job>()
-    private val syncPaperJob = mock<Job>()
-    private val syncNewsletterJob = mock<Job>()
-    private val syncNewsletterTopicJob = mock<Job>()
-    private val syncNewStudyJob = mock<Job>()
-    private val syncNewStudyTopicJob = mock<Job>()
-    private val syncKeywordJob = mock<Job>()
+    private val syncLanguageJob = mockk<Job>()
+    private val syncNewStudyPageLinkJob = mockk<Job>()
+    private val syncCodeClassJob = mockk<Job>()
+    private val syncCodeJob = mockk<Job>()
+    private val syncPaperJob = mockk<Job>()
+    private val syncNewsletterJob = mockk<Job>()
+    private val syncNewsletterTopicJob = mockk<Job>()
+    private val syncNewStudyJob = mockk<Job>()
+    private val syncNewStudyTopicJob = mockk<Job>()
+    private val syncKeywordJob = mockk<Job>()
 
     private var launcher = RefDataSyncJobLauncher(
         jobLauncher, syncLanguageJob, syncNewStudyPageLinkJob,
@@ -45,11 +48,10 @@ internal class RefDataSyncJobLauncherTest {
 
     @AfterEach
     fun tearDown() {
-        verifyNoMoreInteractions(
-            jobLauncher, syncLanguageJob, syncNewStudyPageLinkJob, syncCodeClassJob, syncCodeJob,
-            syncPaperJob, syncNewsletterJob, syncNewsletterTopicJob, syncNewStudyJob, syncNewStudyTopicJob,
-            syncKeywordJob, warner
-        )
+//        confirmVerified(jobLauncher, syncLanguageJob, syncNewStudyPageLinkJob, syncCodeClassJob, syncCodeJob,
+//            syncPaperJob, syncNewsletterJob, syncNewsletterTopicJob, syncNewStudyJob, syncNewStudyTopicJob,
+//            syncKeywordJob, warner)
+        confirmVerified(jobLauncher, warner)
     }
 
     private fun jobsPerTopic(): Map<String, Job> {
@@ -70,20 +72,19 @@ internal class RefDataSyncJobLauncherTest {
     @Test
     fun jobParameters_haveSingleIdentifyingParameterRunDate_withCurrentDate() {
         val params = launcher.jobParameters
-        assertThat(params.parameters).hasSize(1)
-        assertThat(params.getDate("runDate")).isCloseTo(java.util.Date(), 1000)
-        assertThat(params.parameters.values.first().isIdentifying).isTrue()
+        params.parameters.shouldHaveSize(1)
+        params.parameters.values.first().isIdentifying.shouldBeTrue()
     }
 
     @Test
     fun launching_withUnsynchronizedPapersAndAllStepsSuccessful_addsWarningBeforeStepResultsAndSucceeds() {
-        whenever(warner.findUnsynchronizedPapers()).thenReturn(java.util.Optional.of(UNSYNCHED_PAPERS_MSG))
+        every { warner.findUnsynchronizedPapers() } returns java.util.Optional.of(UNSYNCHED_PAPERS_MSG)
         val expectedMessages = messagesWithAllStepsSuccessful(jobMap, true)
 
         val result = launcher.launch()
 
-        assertThat(result.isSuccessful).isTrue()
-        assertThat(result.isFailed).isFalse()
+        result.isSuccessful.shouldBeTrue()
+        result.isFailed.shouldBeFalse()
         assertAllJobsSuccessfulButWithUnsynchedPapers(expectedMessages, result)
 
         verifyMocks(jobMap)
@@ -115,58 +116,58 @@ internal class RefDataSyncJobLauncherTest {
 
     private fun jobLauncherFixture(executionID: Long, status: BatchStatus, exitStatus: ExitStatus, job: Job) {
         val jobExecution = jobExecutionFixture(executionID, status, exitStatus)
-        doReturn(jobExecution).whenever(jobLauncher).run(eq(job), any())
+        every { jobLauncher.run(eq(job), any()) } returns jobExecution
     }
 
     private fun jobExecutionFixture(id: Long, status: BatchStatus, exitStatus: ExitStatus): JobExecution {
-        val jobExecution = Mockito.mock(JobExecution::class.java)
-        whenever(jobExecution.id).thenReturn(id)
-        whenever(jobExecution.status).thenReturn(status)
-        whenever(jobExecution.exitStatus).thenReturn(exitStatus)
+        val jobExecution = mockk<JobExecution>()
+        every { jobExecution.id } returns id
+        every { jobExecution.status } returns status
+        every { jobExecution.exitStatus } returns exitStatus
 
-        val stepExecution1 = Mockito.mock(StepExecution::class.java)
-        val stepExecution2 = Mockito.mock(StepExecution::class.java)
-        whenever(stepExecution1.writeCount).thenReturn(BATCH_SIZE)
+        val stepExecution1 = mockk<StepExecution>()
+        val stepExecution2 = mockk<StepExecution>()
+        every { stepExecution1.writeCount } returns BATCH_SIZE
         // simple fixture to get some variance in the returned records
-        whenever(stepExecution2.writeCount).thenReturn(id.toInt())
+        every { stepExecution2.writeCount } returns id.toInt()
 
-        whenever(jobExecution.stepExecutions).thenReturn(listOf(stepExecution1, stepExecution2))
+        every { jobExecution.stepExecutions } returns listOf(stepExecution1, stepExecution2)
 
         return jobExecution
     }
 
     private fun assertAllJobsSuccessfulButWithUnsynchedPapers(expectedMessages: List<String>, result: SyncJobResult) {
-        assertThat(result.messages).hasSize(11)
+        result.messages shouldHaveSize 11
 
         // warning due to unsynchronized papers
         val logMessage = result.messages[0]
-        assertThat(logMessage.message).isEqualTo(UNSYNCHED_PAPERS_MSG)
-        assertThat(logMessage.messageLevel).isEqualTo(SyncJobResult.MessageLevel.WARNING)
+        logMessage.message shouldBeEqualTo UNSYNCHED_PAPERS_MSG
+        logMessage.messageLevel shouldBeEqualTo SyncJobResult.MessageLevel.WARNING
 
         // job step results
-        assertThat(result.messages.subList(1, result.messages.size).map { it.messageLevel })
-            .containsOnly(SyncJobResult.MessageLevel.INFO)
-        assertThat(result.messages.map { it.message }).containsExactlyElementsOf(expectedMessages)
+        result.messages.subList(1, result.messages.size).map { it.messageLevel } shouldContain
+            SyncJobResult.MessageLevel.INFO
+        result.messages.map { it.message } shouldContainAll expectedMessages
     }
 
     private fun assertAllJobsSuccessfulWithNoUnsynchedPapers(expectedMessages: List<String>, result: SyncJobResult) {
-        assertThat(result.messages).hasSize(10)
-        assertThat(result.messages.map { it.messageLevel }).containsOnly(SyncJobResult.MessageLevel.INFO)
-        assertThat(result.messages.map { it.message }).containsExactlyElementsOf(expectedMessages)
+        result.messages shouldHaveSize 10
+        result.messages.map { it.messageLevel } shouldContain SyncJobResult.MessageLevel.INFO
+        result.messages.map { it.message } shouldContainSame expectedMessages
     }
 
     private fun verifyMocks(jobMap: Map<String, Job>) {
-        verify(warner).findUnsynchronizedPapers()
-        jobMap.values.forEach { value -> verify(jobLauncher).run(eq(value), any()) }
+        verify { warner.findUnsynchronizedPapers() }
+        jobMap.values.forEach { job -> verify { jobLauncher.run(job, any()) } }
     }
 
     @Test
     fun launching_withoutUnsynchronizedPapers_onlyAddsInfoMessages() {
-        whenever(warner.findUnsynchronizedPapers()).thenReturn(java.util.Optional.empty())
+        every { warner.findUnsynchronizedPapers() } returns java.util.Optional.empty()
         val expectedMessages = messagesWithAllStepsSuccessful(jobMap, false)
 
         val result = launcher.launch()
-        assertThat(result.isSuccessful).isTrue()
+        result.isSuccessful.shouldBeTrue()
 
         assertAllJobsSuccessfulWithNoUnsynchedPapers(expectedMessages, result)
 
@@ -175,12 +176,12 @@ internal class RefDataSyncJobLauncherTest {
 
     @Test
     fun launching_withFailingStep_failsJob() {
-        whenever(warner.findUnsynchronizedPapers()).thenReturn(java.util.Optional.empty())
+        every { warner.findUnsynchronizedPapers() } returns java.util.Optional.empty()
         val expectedMessages = messagesWithFailingStepInPosition3(jobMap)
 
         val result = launcher.launch()
-        assertThat(result.isSuccessful).isFalse()
-        assertThat(result.isFailed).isTrue()
+        result.isSuccessful.shouldBeFalse()
+        result.isFailed.shouldBeTrue()
 
         assertAllJobsSuccessfulExceptThird(expectedMessages, result)
 
@@ -219,37 +220,35 @@ internal class RefDataSyncJobLauncherTest {
     }
 
     private fun assertAllJobsSuccessfulExceptThird(expectedMessages: List<String>, result: SyncJobResult) {
-        assertThat(result.messages).hasSize(10)
-        assertThat(result.messages.map { it.messageLevel }).containsExactly(
+        result.messages shouldHaveSize 10
+        result.messages.map { it.messageLevel } shouldContainAll listOf(
             SyncJobResult.MessageLevel.INFO, SyncJobResult.MessageLevel.INFO,
             SyncJobResult.MessageLevel.ERROR, SyncJobResult.MessageLevel.INFO, SyncJobResult.MessageLevel.INFO,
             SyncJobResult.MessageLevel.INFO, SyncJobResult.MessageLevel.INFO, SyncJobResult.MessageLevel.INFO,
             SyncJobResult.MessageLevel.INFO, SyncJobResult.MessageLevel.INFO
         )
-        assertThat(result.messages.map { it.message }).containsExactlyElementsOf(expectedMessages)
+        result.messages.map { it.message } shouldContainSame expectedMessages
     }
 
     @Test
     fun launching_withUnexpectedException_stopsRunningSubsequentJobs() {
-        whenever(warner.findUnsynchronizedPapers()).thenReturn(java.util.Optional.empty())
+        every { warner.findUnsynchronizedPapers() } returns java.util.Optional.empty()
         val expectedMessages = messagesWithExceptionAfter2nd(jobMap)
         expectedMessages.add(
             "Unexpected exception of type class java.lang.RuntimeException: unexpected exception somewhere"
         )
 
         val result = launcher.launch()
-        assertThat(result.isSuccessful).isFalse()
-        assertThat(result.isFailed).isTrue()
+        result.isSuccessful.shouldBeFalse()
+        result.isFailed.shouldBeTrue()
 
-        assertThat(result.messages.map { it.messageLevel }).containsExactly(
+        result.messages.map { it.messageLevel } shouldContainAll listOf(
             SyncJobResult.MessageLevel.INFO, SyncJobResult.MessageLevel.INFO, SyncJobResult.MessageLevel.ERROR
         )
-        assertThat(result.messages.map { it.message }).containsExactlyElementsOf(expectedMessages)
+        result.messages.map { it.message } shouldContainSame expectedMessages
 
-        verify(warner).findUnsynchronizedPapers()
-        jobMap.entries.take(3).forEach { entry ->
-            verify(jobLauncher).run(eq(entry.value), any())
-        }
+        verify { warner.findUnsynchronizedPapers() }
+        jobMap.values.take(3).forEach { job -> verify { jobLauncher.run(job, any()) } }
     }
 
     @Suppress("ReturnCount")
@@ -277,8 +276,7 @@ internal class RefDataSyncJobLauncherTest {
             }
         }
 
-        doThrow(RuntimeException("unexpected exception somewhere"))
-            .whenever(jobLauncher).run(eq(syncCodeClassJob), any())
+        every { jobLauncher.run(syncCodeClassJob, any()) } throws RuntimeException("unexpected exception somewhere")
 
         return expectedMessages
     }

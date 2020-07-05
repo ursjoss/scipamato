@@ -1,3 +1,5 @@
+@file:Suppress("SpellCheckingInspection")
+
 package ch.difty.scipamato.core.persistence.newsletter
 
 import ch.difty.scipamato.common.persistence.paging.PaginationContext
@@ -5,23 +7,26 @@ import ch.difty.scipamato.core.entity.newsletter.NewsletterNewsletterTopic
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicDefinition
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicFilter
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.whenever
-import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.util.Lists
+import io.mockk.confirmVerified
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.verify
+import org.amshove.kluent.shouldBeEmpty
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldContainAll
+import org.amshove.kluent.shouldContainSame
+import org.amshove.kluent.shouldHaveSize
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito.verify
-import org.mockito.Mockito.verifyNoMoreInteractions
 
 internal class JooqNewsletterTopicServiceTest {
 
-    private val repo = mock<NewsletterTopicRepository>()
-    private val filterMock = mock<NewsletterTopicFilter>()
-    private val paginationContextMock = mock<PaginationContext>()
-    private val entity = mock<NewsletterTopic>()
-    private val topicDefinitionMock = mock<NewsletterTopicDefinition>()
-    private val persistedTopicDefinitionMock = mock<NewsletterTopicDefinition>()
+    private val repo = mockk<NewsletterTopicRepository>(relaxed = true)
+    private val filterMock = mockk<NewsletterTopicFilter>()
+    private val paginationContextMock = mockk<PaginationContext>()
+    private val entity = mockk<NewsletterTopic>()
+    private val topicDefinitionMock = mockk<NewsletterTopicDefinition>()
+    private val persistedTopicDefinitionMock = mockk<NewsletterTopicDefinition>()
 
     private val service = JooqNewsletterTopicService(repo)
 
@@ -30,126 +35,124 @@ internal class JooqNewsletterTopicServiceTest {
 
     @AfterEach
     fun specificTearDown() {
-        verifyNoMoreInteractions(repo, filterMock, paginationContextMock, entity, topicDefinitionMock)
+        confirmVerified(repo, filterMock, paginationContextMock, entity, topicDefinitionMock)
     }
 
     @Test
     fun findingAll_delegatesToRepo() {
         val langCode = "en"
-        whenever(repo.findAll(langCode)).thenReturn(topics)
-        assertThat(service.findAll(langCode)).isEqualTo(topics)
-        verify(repo).findAll(langCode)
+        every { repo.findAll(langCode) } returns topics
+        service.findAll(langCode) shouldBeEqualTo topics
+        verify { repo.findAll(langCode) }
     }
 
     @Test
     fun newUnpersistedNewsletterTopicDefinition_delegatesToRepo() {
-        whenever(repo.newUnpersistedNewsletterTopicDefinition()).thenReturn(topicDefinitionMock)
-        assertThat(service.newUnpersistedNewsletterTopicDefinition()).isEqualTo(topicDefinitionMock)
-        verify(repo).newUnpersistedNewsletterTopicDefinition()
+        every { repo.newUnpersistedNewsletterTopicDefinition() } returns topicDefinitionMock
+        service.newUnpersistedNewsletterTopicDefinition() shouldBeEqualTo topicDefinitionMock
+        verify { topicDefinitionMock == topicDefinitionMock }
+        verify { repo.newUnpersistedNewsletterTopicDefinition() }
     }
 
     @Test
     fun findingPageOfNewsletterTopicDefinitions_delegatesToRepo() {
-        whenever(repo.findPageOfNewsletterTopicDefinitions(filterMock, paginationContextMock))
-            .thenReturn(topicDefinitions)
-        assertThat(service.findPageOfNewsletterTopicDefinitions(filterMock, paginationContextMock))
-            .isEqualTo(topicDefinitions)
-        verify(repo).findPageOfNewsletterTopicDefinitions(filterMock, paginationContextMock)
+        every { repo.findPageOfNewsletterTopicDefinitions(filterMock, paginationContextMock) } returns topicDefinitions
+        service.findPageOfNewsletterTopicDefinitions(filterMock, paginationContextMock) shouldBeEqualTo topicDefinitions
+        verify { repo.findPageOfNewsletterTopicDefinitions(filterMock, paginationContextMock) }
     }
 
     @Test
     fun findingPageOfEntityDefinitions_delegatesToRepo() {
-        whenever(repo.findPageOfNewsletterTopicDefinitions(filterMock, paginationContextMock))
-            .thenReturn(topicDefinitions)
-        assertThat(service.findPageOfEntityDefinitions(filterMock, paginationContextMock))
-            .toIterable().hasSameElementsAs(topicDefinitions)
-        verify(repo).findPageOfNewsletterTopicDefinitions(filterMock, paginationContextMock)
+        every { repo.findPageOfNewsletterTopicDefinitions(filterMock, paginationContextMock) } returns topicDefinitions
+        service.findPageOfEntityDefinitions(filterMock, paginationContextMock).asSequence() shouldContainSame topicDefinitions.asSequence()
+        verify { topicDefinitionMock == topicDefinitionMock }
+        verify { repo.findPageOfNewsletterTopicDefinitions(filterMock, paginationContextMock) }
     }
 
     @Test
     fun countingNewsletterTopics_delegatesToRepo() {
-        whenever(repo.countByFilter(filterMock)).thenReturn(3)
-        assertThat(service.countByFilter(filterMock)).isEqualTo(3)
-        verify(repo).countByFilter(filterMock)
+        every { repo.countByFilter(filterMock) } returns 3
+        service.countByFilter(filterMock) shouldBeEqualTo 3
+        verify { repo.countByFilter(filterMock) }
     }
 
     @Test
     fun insertingNewsletterTopicDefinition_delegatesToRepo() {
-        whenever(repo.insert(topicDefinitionMock)).thenReturn(persistedTopicDefinitionMock)
-        assertThat(service.insert(topicDefinitionMock)).isEqualTo(persistedTopicDefinitionMock)
-        verify(repo).insert(topicDefinitionMock)
+        every { repo.insert(topicDefinitionMock) } returns persistedTopicDefinitionMock
+        service.insert(topicDefinitionMock) shouldBeEqualTo persistedTopicDefinitionMock
+        verify { repo.insert(topicDefinitionMock) }
     }
 
     @Test
     fun updatingNewsletterTopicDefinition_delegatesToRepo() {
-        whenever(repo.update(topicDefinitionMock)).thenReturn(persistedTopicDefinitionMock)
-        assertThat(service.update(topicDefinitionMock)).isEqualTo(persistedTopicDefinitionMock)
-        verify(repo).update(topicDefinitionMock)
+        every { repo.update(topicDefinitionMock) } returns persistedTopicDefinitionMock
+        service.update(topicDefinitionMock) shouldBeEqualTo persistedTopicDefinitionMock
+        verify { repo.update(topicDefinitionMock) }
     }
 
     @Test
     fun savingOrUpdatingNewsletterTopicDefinition_withNullId_callsInsert() {
-        whenever(topicDefinitionMock.id).thenReturn(null)
-        whenever(repo.insert(topicDefinitionMock)).thenReturn(persistedTopicDefinitionMock)
-        assertThat(service.saveOrUpdate(topicDefinitionMock)).isEqualTo(persistedTopicDefinitionMock)
-        verify(topicDefinitionMock).id
-        verify(repo).insert(topicDefinitionMock)
+        every { topicDefinitionMock.id } returns null
+        every { repo.insert(topicDefinitionMock) } returns persistedTopicDefinitionMock
+        service.saveOrUpdate(topicDefinitionMock) shouldBeEqualTo persistedTopicDefinitionMock
+        verify { topicDefinitionMock.id }
+        verify { repo.insert(topicDefinitionMock) }
     }
 
     @Test
     fun savingOrUpdatingNewsletterTopicDefinition_withNonNullId_callsUpdate() {
-        whenever(topicDefinitionMock.id).thenReturn(1)
-        whenever(repo.update(topicDefinitionMock)).thenReturn(persistedTopicDefinitionMock)
-        assertThat(service.saveOrUpdate(topicDefinitionMock)).isEqualTo(persistedTopicDefinitionMock)
-        verify(topicDefinitionMock).id
-        verify(repo).update(topicDefinitionMock)
+        every { topicDefinitionMock.id } returns 1
+        every { repo.update(topicDefinitionMock) } returns persistedTopicDefinitionMock
+        service.saveOrUpdate(topicDefinitionMock) shouldBeEqualTo persistedTopicDefinitionMock
+        verify { topicDefinitionMock.id }
+        verify { repo.update(topicDefinitionMock) }
     }
 
     @Test
     fun deletingNewsletterTopicDefinition_delegatesToRepo() {
         val id = 11
         val version = 12
-        whenever(repo.delete(id, version)).thenReturn(persistedTopicDefinitionMock)
-        assertThat(service.delete(id, version)).isEqualTo(persistedTopicDefinitionMock)
-        verify(repo).delete(id, version)
+        every { repo.delete(id, version) } returns persistedTopicDefinitionMock
+        service.delete(id, version) shouldBeEqualTo persistedTopicDefinitionMock
+        verify { repo.delete(id, version) }
     }
 
     @Test
     fun gettingSortedNewsletterTopicsForNewsletter_withNoAssignedTopics_isEmpty() {
         val newsletterId = 12
 
-        whenever(repo.findPersistedSortedNewsletterTopicsForNewsletterWithId(newsletterId)).thenReturn(emptyList())
-        whenever(repo.findAllSortedNewsletterTopicsForNewsletterWithId(newsletterId)).thenReturn(emptyList())
+        every { repo.findPersistedSortedNewsletterTopicsForNewsletterWithId(newsletterId) } returns emptyList()
+        every { repo.findAllSortedNewsletterTopicsForNewsletterWithId(newsletterId) } returns emptyList()
 
-        assertThat(service.getSortedNewsletterTopicsForNewsletter(newsletterId)).isEmpty()
+        service.getSortedNewsletterTopicsForNewsletter(newsletterId).shouldBeEmpty()
 
-        verify(repo).removeObsoleteNewsletterTopicsFromSort(newsletterId)
-        verify(repo).findPersistedSortedNewsletterTopicsForNewsletterWithId(newsletterId)
-        verify(repo).findAllSortedNewsletterTopicsForNewsletterWithId(newsletterId)
+        verify { repo.removeObsoleteNewsletterTopicsFromSort(newsletterId) }
+        verify { repo.findPersistedSortedNewsletterTopicsForNewsletterWithId(newsletterId) }
+        verify { repo.findAllSortedNewsletterTopicsForNewsletterWithId(newsletterId) }
     }
 
     @Test
     fun gettingSortedNewsletterTopicsForNewsletter_withNoPersistedTopics_resortsAllUnpersisted() {
         val newsletterId = 12
-        val persisted = Lists.emptyList<NewsletterNewsletterTopic>()
+        val persisted = listOf<NewsletterNewsletterTopic>()
         val all = listOf(
             NewsletterNewsletterTopic(newsletterId, 1, Integer.MAX_VALUE, "topic1"),
             NewsletterNewsletterTopic(newsletterId, 2, Integer.MAX_VALUE, "topic2")
         )
 
-        whenever(repo.findPersistedSortedNewsletterTopicsForNewsletterWithId(newsletterId)).thenReturn(persisted)
-        whenever(repo.findAllSortedNewsletterTopicsForNewsletterWithId(newsletterId)).thenReturn(all)
+        every { repo.findPersistedSortedNewsletterTopicsForNewsletterWithId(newsletterId) } returns persisted
+        every { repo.findAllSortedNewsletterTopicsForNewsletterWithId(newsletterId) } returns all
 
         val topics = service.getSortedNewsletterTopicsForNewsletter(newsletterId)
 
-        assertThat(topics).hasSize(2)
-        assertThat(topics.map { it.newsletterTopicId }).containsExactly(1, 2)
-        assertThat(topics.map { it.sort }).containsExactly(0, 1)
-        assertThat(topics.map { it.title }).containsExactly("topic1", "topic2")
+        topics shouldHaveSize 2
+        topics.map { it.newsletterTopicId } shouldContainAll listOf(1, 2)
+        topics.map { it.sort } shouldContainAll listOf(0, 1)
+        topics.map { it.title } shouldContainAll listOf("topic1", "topic2")
 
-        verify(repo).removeObsoleteNewsletterTopicsFromSort(newsletterId)
-        verify(repo).findPersistedSortedNewsletterTopicsForNewsletterWithId(newsletterId)
-        verify(repo).findAllSortedNewsletterTopicsForNewsletterWithId(newsletterId)
+        verify { repo.removeObsoleteNewsletterTopicsFromSort(newsletterId) }
+        verify { repo.findPersistedSortedNewsletterTopicsForNewsletterWithId(newsletterId) }
+        verify { repo.findAllSortedNewsletterTopicsForNewsletterWithId(newsletterId) }
     }
 
     @Test
@@ -161,19 +164,19 @@ internal class JooqNewsletterTopicServiceTest {
         )
         val all = ArrayList<NewsletterNewsletterTopic>(persisted)
 
-        whenever(repo.findPersistedSortedNewsletterTopicsForNewsletterWithId(newsletterId)).thenReturn(persisted)
-        whenever(repo.findAllSortedNewsletterTopicsForNewsletterWithId(newsletterId)).thenReturn(all)
+        every { repo.findPersistedSortedNewsletterTopicsForNewsletterWithId(newsletterId) } returns persisted
+        every { repo.findAllSortedNewsletterTopicsForNewsletterWithId(newsletterId) } returns all
 
         val topics = service.getSortedNewsletterTopicsForNewsletter(newsletterId)
 
-        assertThat(topics).hasSize(2)
-        assertThat(topics.map { it.newsletterTopicId }).containsExactly(1, 2)
-        assertThat(topics.map { it.sort }).containsExactly(0, 1)
-        assertThat(topics.map { it.title }).containsExactly("topic1", "topic2")
+        topics shouldHaveSize 2
+        topics.map { it.newsletterTopicId } shouldContainAll listOf(1, 2)
+        topics.map { it.sort } shouldContainAll listOf(0, 1)
+        topics.map { it.title } shouldContainAll listOf("topic1", "topic2")
 
-        verify(repo).removeObsoleteNewsletterTopicsFromSort(newsletterId)
-        verify(repo).findPersistedSortedNewsletterTopicsForNewsletterWithId(newsletterId)
-        verify(repo).findAllSortedNewsletterTopicsForNewsletterWithId(newsletterId)
+        verify { repo.removeObsoleteNewsletterTopicsFromSort(newsletterId) }
+        verify { repo.findPersistedSortedNewsletterTopicsForNewsletterWithId(newsletterId) }
+        verify { repo.findAllSortedNewsletterTopicsForNewsletterWithId(newsletterId) }
     }
 
     @Test
@@ -189,19 +192,19 @@ internal class JooqNewsletterTopicServiceTest {
             NewsletterNewsletterTopic(newsletterId, 3, Integer.MAX_VALUE, "topic3")
         )
 
-        whenever(repo.findPersistedSortedNewsletterTopicsForNewsletterWithId(newsletterId)).thenReturn(persisted)
-        whenever(repo.findAllSortedNewsletterTopicsForNewsletterWithId(newsletterId)).thenReturn(all)
+        every { repo.findPersistedSortedNewsletterTopicsForNewsletterWithId(newsletterId) } returns persisted
+        every { repo.findAllSortedNewsletterTopicsForNewsletterWithId(newsletterId) } returns all
 
         val topics = service.getSortedNewsletterTopicsForNewsletter(newsletterId)
 
-        assertThat(topics).hasSize(3)
-        assertThat(topics.map { it.newsletterTopicId }).containsExactly(1, 2, 3)
-        assertThat(topics.map { it.sort }).containsExactly(0, 1, 2)
-        assertThat(topics.map { it.title }).containsExactly("topic1", "topic2", "topic3")
+        topics shouldHaveSize 3
+        topics.map { it.newsletterTopicId } shouldContainAll listOf(1, 2, 3)
+        topics.map { it.sort } shouldContainAll listOf(0, 1, 2)
+        topics.map { it.title } shouldContainAll listOf("topic1", "topic2", "topic3")
 
-        verify(repo).removeObsoleteNewsletterTopicsFromSort(newsletterId)
-        verify(repo).findPersistedSortedNewsletterTopicsForNewsletterWithId(newsletterId)
-        verify(repo).findAllSortedNewsletterTopicsForNewsletterWithId(newsletterId)
+        verify { repo.removeObsoleteNewsletterTopicsFromSort(newsletterId) }
+        verify { repo.findPersistedSortedNewsletterTopicsForNewsletterWithId(newsletterId) }
+        verify { repo.findAllSortedNewsletterTopicsForNewsletterWithId(newsletterId) }
     }
 
     @Test
@@ -213,11 +216,11 @@ internal class JooqNewsletterTopicServiceTest {
         )
         service.saveSortedNewsletterTopics(newsletterId, sortedTopics)
 
-        verify(repo).saveSortedNewsletterTopics(newsletterId, sortedTopics)
+        verify { repo.saveSortedNewsletterTopics(newsletterId, sortedTopics) }
     }
 
     @Test
     fun savingSortedNewsletterTopics_withNoTopics_skipsSaving() {
-        service.saveSortedNewsletterTopics(1, Lists.emptyList())
+        service.saveSortedNewsletterTopics(1, emptyList())
     }
 }

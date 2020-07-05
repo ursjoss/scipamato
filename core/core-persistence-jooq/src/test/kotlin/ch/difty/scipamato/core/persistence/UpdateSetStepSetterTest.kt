@@ -1,19 +1,19 @@
 package ch.difty.scipamato.core.persistence
 
 import ch.difty.scipamato.core.entity.CoreEntity
+import io.mockk.confirmVerified
+import io.mockk.mockk
+import io.mockk.verify
 import org.jooq.Record
 import org.jooq.UpdateSetFirstStep
 import org.jooq.UpdateSetMoreStep
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito.times
-import org.mockito.Mockito.verify
-import org.mockito.Mockito.verifyNoMoreInteractions
 
 abstract class UpdateSetStepSetterTest<R : Record, E : CoreEntity> {
 
-    protected val step = mock<UpdateSetFirstStep<R>>()
-    protected val moreStep = mock<UpdateSetMoreStep<R>>()
+    protected val step = mockk<UpdateSetFirstStep<R>>()
+    protected val moreStep = mockk<UpdateSetMoreStep<R>>()
 
     protected abstract val setter: UpdateSetStepSetter<R, E>
 
@@ -60,7 +60,7 @@ abstract class UpdateSetStepSetterTest<R : Record, E : CoreEntity> {
     @AfterEach
     internal fun tearDown() {
         specificTearDown()
-        verifyNoMoreInteractions(step, moreStep)
+        confirmVerified(step, moreStep)
     }
 
     protected abstract fun specificTearDown()
@@ -86,11 +86,11 @@ abstract class UpdateSetStepSetterTest<R : Record, E : CoreEntity> {
 
     private fun verifyCallToAuditFields() {
         val entityMock = entity
-        verify(entityMock, times(2)).created
-        verify(entityMock).createdBy
-        verify(entityMock, times(2)).lastModified
-        verify(entityMock).lastModifiedBy
-        verify(entityMock).version
+        verify(exactly = 2) { entityMock.created }
+        verify { entityMock.createdBy }
+        verify(exactly = 2) { entityMock.lastModified }
+        verify { entityMock.lastModifiedBy }
+        verify { entityMock.version }
     }
 
     /**

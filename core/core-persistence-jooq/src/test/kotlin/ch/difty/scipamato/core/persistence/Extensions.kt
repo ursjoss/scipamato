@@ -1,5 +1,5 @@
 package ch.difty.scipamato.core.persistence
 
-import org.mockito.Mockito
+import io.mockk.mockk
 
-inline fun <reified T : Any> mock(): T = Mockito.mock(T::class.java)!!
+inline fun <reified T : Any> mock(): T = mockk<T>()

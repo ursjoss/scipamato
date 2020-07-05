@@ -4,7 +4,9 @@ import ch.difty.scipamato.common.entity.ScipamatoEntity.ScipamatoEntityFields.CR
 import ch.difty.scipamato.common.entity.ScipamatoEntity.ScipamatoEntityFields.MODIFIED
 import nl.jqno.equalsverifier.EqualsVerifier
 import nl.jqno.equalsverifier.Warning
-import org.assertj.core.api.Assertions.assertThat
+import org.amshove.kluent.shouldBeEmpty
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldContainAll
 import org.junit.jupiter.api.Test
 
 internal class NewStudyTopicTest : PublicEntityTest<NewStudyTopic>() {
@@ -15,9 +17,9 @@ internal class NewStudyTopicTest : PublicEntityTest<NewStudyTopic>() {
     override fun newEntity(): NewStudyTopic = NewStudyTopic(1, "title", ArrayList())
 
     override fun assertSpecificGetters() {
-        assertThat(entity.sort).isEqualTo(1)
-        assertThat(entity.title).isEqualTo("title")
-        assertThat(entity.studies).isEmpty()
+        entity.sort shouldBeEqualTo 1
+        entity.title shouldBeEqualTo "title"
+        entity.studies.shouldBeEmpty()
     }
 
     override fun verifyEquals() {
@@ -30,15 +32,15 @@ internal class NewStudyTopicTest : PublicEntityTest<NewStudyTopic>() {
 
     @Test
     fun assertEnumFields() {
-        assertThat(NewStudyTopic.NewStudyTopicFields.values().map { it.fieldName })
-            .containsExactly("sort", "title", "studies")
+        NewStudyTopic.NewStudyTopicFields.values().map { it.fieldName } shouldContainAll
+            listOf("sort", "title", "studies")
     }
 
     @Test
     fun secondaryConstructor_hasNoStudies() {
         val t = NewStudyTopic(2, "title2")
-        assertThat(t.sort).isEqualTo(2)
-        assertThat(t.title).isEqualTo("title2")
-        assertThat(t.studies).isEmpty()
+        t.sort shouldBeEqualTo 2
+        t.title shouldBeEqualTo "title2"
+        t.studies.shouldBeEmpty()
     }
 }

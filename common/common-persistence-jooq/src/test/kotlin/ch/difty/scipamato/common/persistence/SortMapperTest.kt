@@ -4,16 +4,16 @@ import ch.difty.scipamato.common.entity.ScipamatoEntity
 import ch.difty.scipamato.common.persistence.paging.Sort
 import ch.difty.scipamato.common.persistence.paging.Sort.Direction
 import ch.difty.scipamato.common.persistence.paging.Sort.SortProperty
-import com.nhaarman.mockitokotlin2.doReturn
-import com.nhaarman.mockitokotlin2.doThrow
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.spy
-import com.nhaarman.mockitokotlin2.times
-import com.nhaarman.mockitokotlin2.verify
-import com.nhaarman.mockitokotlin2.verifyNoMoreInteractions
-import com.nhaarman.mockitokotlin2.whenever
-import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.fail
+import io.mockk.confirmVerified
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.spyk
+import io.mockk.verify
+import org.amshove.kluent.invoking
+import org.amshove.kluent.shouldBeEmpty
+import org.amshove.kluent.shouldContainSame
+import org.amshove.kluent.shouldThrow
+import org.amshove.kluent.withMessage
 import org.jooq.Record
 import org.jooq.SortField
 import org.jooq.TableField
@@ -24,107 +24,89 @@ import org.springframework.dao.InvalidDataAccessApiUsageException
 
 internal class SortMapperTest {
 
-    private val mapperSpy = spy<SortMapper<Record, ScipamatoEntity, TableImpl<Record>>>()
+    private val mapperSpy = spyk<SortMapper<Record, ScipamatoEntity, TableImpl<Record>>>()
 
-    private val sortSpecMock = mock<Sort>()
-    private val tableMock = mock<TableImpl<Record>>()
-    private val tableFieldMock = mock<TableField<Record, ScipamatoEntity>>()
-    private val sortFieldMock = mock<SortField<ScipamatoEntity>>()
+    private val sortSpecMock = mockk<Sort>()
+    private val tableMock = mockk<TableImpl<Record>>()
+    private val tableFieldMock = mockk<TableField<Record, ScipamatoEntity>>()
+    private val sortFieldMock = mockk<SortField<ScipamatoEntity>>()
 
     private val sortProps = ArrayList<SortProperty>()
 
     @AfterEach
     fun tearDown() {
-        verifyNoMoreInteractions(tableMock, sortSpecMock, tableFieldMock, sortFieldMock)
+        confirmVerified(tableMock, sortSpecMock, tableFieldMock)
     }
 
     @Test
     fun mapping_withNullSortSpecification_returnsEmptyList() {
-        assertThat(mapperSpy.map(null, tableMock))
-            .isNotNull
-            .isEmpty()
+        mapperSpy.map(null, tableMock).shouldBeEmpty()
     }
 
     @Test
     fun mapping_withEmptySortProperties_returnsEmptyList() {
-        whenever(sortSpecMock.iterator()).thenReturn(sortProps.iterator())
-        assertThat(mapperSpy.map(sortSpecMock, tableMock))
-            .isNotNull
-            .isEmpty()
-        verify(sortSpecMock).iterator()
+        every { sortSpecMock.iterator() } returns sortProps.iterator()
+        mapperSpy.map(sortSpecMock, tableMock).shouldBeEmpty()
+        verify { sortSpecMock.iterator() }
     }
 
     @Test
     fun mapping_withSingleAscendingSortProperty_returnsOneAscendingSortField() {
         sortProps.add(SortProperty("field", Direction.ASC))
-        whenever(sortSpecMock.iterator()).thenReturn(sortProps.iterator())
-        whenever(tableFieldMock.asc()).thenReturn(sortFieldMock)
-        doReturn(tableFieldMock).whenever(mapperSpy).getTableFieldFor(tableMock, "FIELD")
+        every { sortSpecMock.iterator() } returns sortProps.iterator()
+        every { tableFieldMock.asc() } returns sortFieldMock
+        every { mapperSpy.getTableFieldFor(tableMock, "FIELD") } returns tableFieldMock
 
-        assertThat(mapperSpy.map(sortSpecMock, tableMock)).containsExactly(sortFieldMock)
+        mapperSpy.map(sortSpecMock, tableMock) shouldContainSame listOf(sortFieldMock)
 
-        verify(sortSpecMock).iterator()
-        verify(tableFieldMock).asc()
-        verify(mapperSpy).getTableFieldFor(tableMock, "FIELD")
+        verify { sortSpecMock.iterator() }
+        verify { tableFieldMock.asc() }
+        verify { mapperSpy.getTableFieldFor(tableMock, "FIELD") }
     }
 
     @Test
     fun mapping_withTwoDescendingSortProperties_returnsTwoDescendingSortFields() {
         sortProps.add(SortProperty("field", Direction.DESC))
         sortProps.add(SortProperty("field2", Direction.DESC))
-        whenever(sortSpecMock.iterator()).thenReturn(sortProps.iterator())
-        whenever(tableFieldMock.desc()).thenReturn(sortFieldMock)
-        doReturn(tableFieldMock).whenever(mapperSpy).getTableFieldFor(tableMock, "FIELD")
-        doReturn(tableFieldMock).whenever(mapperSpy).getTableFieldFor(tableMock, "FIELD2")
+        every { sortSpecMock.iterator() } returns sortProps.iterator()
+        every { tableFieldMock.desc() } returns sortFieldMock
+        every { mapperSpy.getTableFieldFor(tableMock, "FIELD") } returns tableFieldMock
+        every { mapperSpy.getTableFieldFor(tableMock, "FIELD2") } returns tableFieldMock
 
-        assertThat(mapperSpy.map(sortSpecMock, tableMock)).containsExactly(sortFieldMock, sortFieldMock)
+        mapperSpy.map(sortSpecMock, tableMock) shouldContainSame listOf(sortFieldMock, sortFieldMock)
 
-        verify(sortSpecMock).iterator()
-        verify(tableFieldMock, times(2)).desc()
-        verify(mapperSpy).getTableFieldFor(tableMock, "FIELD")
-        verify(mapperSpy).getTableFieldFor(tableMock, "FIELD2")
+        verify { sortSpecMock.iterator() }
+        verify(exactly = 2) { tableFieldMock.desc() }
+        verify { mapperSpy.getTableFieldFor(tableMock, "FIELD") }
+        verify { mapperSpy.getTableFieldFor(tableMock, "FIELD2") }
     }
 
     @Suppress("SpellCheckingInspection")
     @Test
     fun mapping_withWrongFieldName_throwsInvalidDataAccessApiUsageException() {
         sortProps.add(SortProperty("inexistentField", Direction.ASC))
-        whenever(sortSpecMock.iterator()).thenReturn(sortProps.iterator())
-        doThrow(NoSuchFieldException()).whenever(mapperSpy).getTableFieldFor(tableMock, "INEXISTENT_FIELD")
+        every { sortSpecMock.iterator() } returns sortProps.iterator()
+        every { mapperSpy.getTableFieldFor(tableMock, "INEXISTENT_FIELD") } throws NoSuchFieldException()
 
-        try {
-            mapperSpy.map(sortSpecMock, tableMock)
-            fail<Any>("should have thrown")
-        } catch (ex: Exception) {
-            assertThat(ex)
-                .isInstanceOf(InvalidDataAccessApiUsageException::class.java)
-                .hasMessage(
-                    "Could not find table field: inexistentField; nested exception is java.lang.NoSuchFieldException"
-                )
-        }
+        invoking { mapperSpy.map(sortSpecMock, tableMock) } shouldThrow
+            InvalidDataAccessApiUsageException::class withMessage
+            "Could not find table field: inexistentField; nested exception is java.lang.NoSuchFieldException"
 
-        verify(sortSpecMock).iterator()
-        verify(mapperSpy).getTableFieldFor(tableMock, "INEXISTENT_FIELD")
+        verify { sortSpecMock.iterator() }
+        verify { mapperSpy.getTableFieldFor(tableMock, "INEXISTENT_FIELD") }
     }
 
     @Test
     fun mapping_withIllegalAccess_throwsInvalidDataAccessApiUsageException() {
         sortProps.add(SortProperty("illegalField", Direction.ASC))
-        whenever(sortSpecMock.iterator()).thenReturn(sortProps.iterator())
-        doThrow(IllegalAccessException()).whenever(mapperSpy).getTableFieldFor(tableMock, "ILLEGAL_FIELD")
+        every { sortSpecMock.iterator() } returns sortProps.iterator()
+        every { mapperSpy.getTableFieldFor(tableMock, "ILLEGAL_FIELD") } throws IllegalAccessException()
 
-        try {
-            mapperSpy.map(sortSpecMock, tableMock)
-            fail<Any>("should have thrown")
-        } catch (ex: Exception) {
-            assertThat(ex)
-                .isInstanceOf(InvalidDataAccessApiUsageException::class.java)
-                .hasMessage(
-                    "Could not find table field: illegalField; nested exception is java.lang.IllegalAccessException"
-                )
-        }
+        invoking { mapperSpy.map(sortSpecMock, tableMock) } shouldThrow
+            InvalidDataAccessApiUsageException::class withMessage
+            "Could not find table field: illegalField; nested exception is java.lang.IllegalAccessException"
 
-        verify(sortSpecMock).iterator()
-        verify(mapperSpy).getTableFieldFor(tableMock, "ILLEGAL_FIELD")
+        verify { sortSpecMock.iterator() }
+        verify { mapperSpy.getTableFieldFor(tableMock, "ILLEGAL_FIELD") }
     }
 }

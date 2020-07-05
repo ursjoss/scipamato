@@ -2,7 +2,11 @@
 
 package ch.difty.scipamato.core.logic.parsing
 
-import org.assertj.core.api.Assertions.assertThat
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeInstanceOf
+import org.amshove.kluent.shouldBeNull
+import org.amshove.kluent.shouldContain
+import org.amshove.kluent.shouldContainAll
 import org.junit.jupiter.api.Test
 
 internal class PubmedAuthorParserTest {
@@ -12,19 +16,19 @@ internal class PubmedAuthorParserTest {
     @Test
     fun withNoAuthor_firstAuthorIsNull() {
         p = PubmedAuthorParser("")
-        assertThat(p.firstAuthor).isNull()
+        p.firstAuthor.shouldBeNull()
     }
 
     @Test
     fun canReturnOriginalAuthorsString() {
         val authorsString = "Bond J."
         p = PubmedAuthorParser(authorsString)
-        assertThat(p.authorsString).isEqualTo(authorsString)
+        p.authorsString shouldBeEqualTo authorsString
     }
 
     private fun assertFirstAuthorOf(input: String, expected: String) {
         p = PubmedAuthorParser(input)
-        assertThat(p.firstAuthor).isNotNull().isEqualTo(expected)
+        p.firstAuthor shouldBeEqualTo expected
     }
 
     @Test
@@ -59,9 +63,9 @@ internal class PubmedAuthorParserTest {
     @Test
     fun canParseNameWithCardinality() {
         p = PubmedAuthorParser("Ln FN 1st, Ln FN 2nd, Ln FN 3rd, Ln FN 4th, Ln FN 5th, Ln FN 100th, Ln FN.")
-        assertThat(p.firstAuthor).isEqualTo("Ln")
-        assertThat(p.authors.map { it.lastName }).containsOnly("Ln")
-        assertThat(p.authors.map { it.firstName }).containsExactly(
+        p.firstAuthor shouldBeEqualTo "Ln"
+        p.authors.map { it.lastName } shouldContain "Ln"
+        p.authors.map { it.firstName } shouldContainAll listOf(
             "FN 1st", "FN 2nd", "FN 3rd", "FN 4th", "FN 5th", "FN 100th", "FN"
         )
     }
@@ -92,17 +96,17 @@ internal class PubmedAuthorParserTest {
         p = PubmedAuthorParser(
             "Turner MC, Cohen A, Jerret M, Gapstur SM, Driver WR, Krewsky D, Beckermann BS, Samet JM."
         )
-        assertThat(p.authors.map { it.lastName }).containsExactly(
+        p.authors.map { it.lastName } shouldContainAll listOf(
             "Turner", "Cohen", "Jerret", "Gapstur", "Driver", "Krewsky", "Beckermann", "Samet"
         )
-        assertThat(p.authors.map { it.firstName }).containsExactly("MC", "A", "M", "SM", "WR", "D", "BS", "JM")
+        p.authors.map { it.firstName } shouldContainAll listOf("MC", "A", "M", "SM", "WR", "D", "BS", "JM")
     }
 
     @Test
     fun canDoUmlaute() {
         p = PubmedAuthorParser("Flückiger P, Bäni HU.")
-        assertThat(p.authors.map { it.lastName }).containsExactly("Flückiger", "Bäni")
-        assertThat(p.authors.map { it.firstName }).containsExactly("P", "HU")
+        p.authors.map { it.lastName } shouldContainAll listOf("Flückiger", "Bäni")
+        p.authors.map { it.firstName } shouldContainAll listOf("P", "HU")
     }
 }
 
@@ -111,6 +115,6 @@ internal class AuthorParserFactoryTest {
     @Test
     fun cratingParser_withNoSetting_usesDefaultAuthorParser() {
         val parser = AuthorParserFactory.create(AuthorParserStrategy.PUBMED).createParser("Turner MC.")
-        assertThat(parser).isInstanceOf(PubmedAuthorParser::class.java)
+        parser shouldBeInstanceOf PubmedAuthorParser::class
     }
 }

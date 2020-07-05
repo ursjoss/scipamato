@@ -6,23 +6,23 @@ import ch.difty.scipamato.core.entity.newsletter.Newsletter
 import ch.difty.scipamato.core.entity.newsletter.NewsletterFilter
 import ch.difty.scipamato.core.persistence.EntityRepository
 import ch.difty.scipamato.core.persistence.JooqEntityRepoTest
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.whenever
-import org.assertj.core.api.Assertions.assertThat
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.verify
+import org.amshove.kluent.shouldBeFalse
 import org.jooq.TableField
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito.verify
 import java.sql.Timestamp
 
 internal class JooqNewsletterRepoTest : JooqEntityRepoTest<NewsletterRecord, Newsletter, Int,
     ch.difty.scipamato.core.db.tables.Newsletter, NewsletterRecordMapper, NewsletterFilter>() {
 
-    override val unpersistedEntity = mock<Newsletter>()
-    override val persistedEntity = mock<Newsletter>()
-    override val persistedRecord = mock<NewsletterRecord>()
-    override val unpersistedRecord = mock<NewsletterRecord>()
-    override val mapper = mock<NewsletterRecordMapper>()
-    override val filter = mock<NewsletterFilter>()
+    override val unpersistedEntity = mockk<Newsletter>()
+    override val persistedEntity = mockk<Newsletter>()
+    override val persistedRecord = mockk<NewsletterRecord>()
+    override val unpersistedRecord = mockk<NewsletterRecord>()
+    override val mapper = mockk<NewsletterRecordMapper>()
+    override val filter = mockk<NewsletterFilter>()
     override val repo: JooqNewsletterRepo = JooqNewsletterRepo(
         dsl,
         mapper,
@@ -67,22 +67,22 @@ internal class JooqNewsletterRepoTest : JooqEntityRepoTest<NewsletterRecord, New
         }
 
     override fun expectEntityIdsWithValues() {
-        whenever(unpersistedEntity.id).thenReturn(SAMPLE_ID)
-        whenever(unpersistedEntity.version).thenReturn(0)
-        whenever(persistedRecord.id).thenReturn(SAMPLE_ID)
-        whenever(persistedRecord.version).thenReturn(1)
+        every { unpersistedEntity.id } returns SAMPLE_ID
+        every { unpersistedEntity.version } returns 0
+        every { persistedRecord.id } returns SAMPLE_ID
+        every { persistedRecord.version } returns 1
     }
 
     override fun expectUnpersistedEntityIdNull() {
-        whenever(unpersistedEntity.id).thenReturn(null)
+        every { unpersistedEntity.id } returns null
     }
 
     override fun verifyUnpersistedEntityId() {
-        verify<Newsletter>(unpersistedEntity).id
+        verify { unpersistedEntity.id }
     }
 
     override fun verifyPersistedRecordId() {
-        verify<NewsletterRecord>(persistedRecord).id
+        verify { persistedRecord.id }
     }
 
     override val recordVersion: TableField<NewsletterRecord, Int> = NEWSLETTER.VERSION
@@ -106,12 +106,12 @@ internal class JooqNewsletterRepoTest : JooqEntityRepoTest<NewsletterRecord, New
                 ts: Timestamp?
             ): Int = 0
         }
-        assertThat(repo.mergePaperIntoNewsletter(1, 2L, 3, "en")).isNotPresent
+        repo.mergePaperIntoNewsletter(1, 2L, 3, "en").isPresent.shouldBeFalse()
     }
 
     @Test
     fun handlingInsertedNewsletter_withZeroCount_returnsEmptyOptional() {
-        assertThat(repo.handleInsertedNewsletter(0, 1, 2, "de")).isEmpty
+        repo.handleInsertedNewsletter(0, 1, 2, "de").isPresent.shouldBeFalse()
     }
 
     @Test
@@ -128,7 +128,7 @@ internal class JooqNewsletterRepoTest : JooqEntityRepoTest<NewsletterRecord, New
         ) {
             override fun fetchMergedNewsletter(newsletterId: Int, paperId: Long, languageCode: String) = null
         }
-        assertThat(repo.handleInsertedNewsletter(1, 1, 2, "de")).isEmpty
+        repo.handleInsertedNewsletter(1, 1, 2, "de").isPresent.shouldBeFalse()
     }
 
     companion object {

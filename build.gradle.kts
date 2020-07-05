@@ -153,9 +153,21 @@ subprojects {
 
         compileOnly(Lib.jsr305())
 
+        testImplementation(Lib.springBootStarter("test").id) {
+            exclude("junit", "junit")
+            exclude("org.skyscreamer", "jsonassert")
+            exclude("org.mockito", "mockito-core")
+            exclude("org.mockito", "mockito-junit-jupiter")
+            exclude("org.hamcrest", "hamcrest")
+            exclude("org.assertj", "assertj-core")
+        }
         testImplementation(Lib.spek("dsl-jvm"))
-        testImplementation(Lib.kluent())
+        testImplementation(Lib.kluent().id) {
+            exclude("org.mockito", "mockito-core")
+            exclude("com.nhaarman.mockitokotlin2", "mockito-kotlin")
+        }
         testImplementation(Lib.mockk())
+        testImplementation(Lib.springMockk())
         testImplementation(Lib.kwik("evaluator"))
         testImplementation(Lib.kwik("generator-stdlib"))
 
@@ -182,6 +194,12 @@ subprojects {
             @Suppress("UnstableApiUsage")
             useJUnitPlatform {
                 includeEngines("junit-jupiter", "spek2")
+            }
+            failFast = true
+            testLogging {
+                events = setOf(STARTED, FAILED, PASSED, SKIPPED)
+                showStackTraces = true
+                exceptionFormat = TestExceptionFormat.FULL
             }
         }
         withType<Jar> {
@@ -245,14 +263,6 @@ tasks {
         group = "Verification"
         dependsOn(projectsWithCoverage.map { it.tasks.getByName("jacocoTestReport") })
         dependsOn(subprojects.map { it.tasks.getByName("detekt") })
-    }
-    withType<Test> {
-        failFast = true
-        testLogging {
-            events = setOf(STARTED, FAILED, PASSED, SKIPPED)
-            showStackTraces = true
-            exceptionFormat = TestExceptionFormat.FULL
-        }
     }
 }
 

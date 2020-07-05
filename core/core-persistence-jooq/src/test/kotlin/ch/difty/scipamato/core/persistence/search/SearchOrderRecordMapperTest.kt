@@ -3,8 +3,10 @@ package ch.difty.scipamato.core.persistence.search
 import ch.difty.scipamato.core.db.tables.records.SearchOrderRecord
 import ch.difty.scipamato.core.entity.search.SearchOrder
 import ch.difty.scipamato.core.persistence.RecordMapperTest
-import com.nhaarman.mockitokotlin2.whenever
-import org.assertj.core.api.Assertions.assertThat
+import io.mockk.every
+import org.amshove.kluent.shouldBeEmpty
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeFalse
 import org.jooq.RecordMapper
 
 @Suppress("UsePropertyAccessSyntax")
@@ -30,15 +32,15 @@ internal class SearchOrderRecordMapperTest : RecordMapperTest<SearchOrderRecord,
     }
 
     override fun assertEntity(entity: SearchOrder) {
-        assertThat(entity.id).isEqualTo(ID)
-        assertThat(entity.name).isEqualTo(NAME)
-        assertThat(entity.owner).isEqualTo(OWNER)
-        assertThat(entity.isGlobal).isEqualTo(GLOBAL)
+        entity.id shouldBeEqualTo ID
+        entity.name shouldBeEqualTo NAME
+        entity.owner shouldBeEqualTo OWNER
+        entity.isGlobal shouldBeEqualTo GLOBAL
 
-        assertThat(entity.searchConditions).isEmpty()
+        entity.searchConditions.shouldBeEmpty()
 
         // not persisted and therefore always false
-        assertThat(entity.isShowExcluded).isFalse()
+        entity.isShowExcluded.shouldBeFalse()
     }
 
     companion object {
@@ -48,9 +50,9 @@ internal class SearchOrderRecordMapperTest : RecordMapperTest<SearchOrderRecord,
         const val GLOBAL = true
 
         fun entityFixtureWithoutIdFields(entityMock: SearchOrder) {
-            whenever(entityMock.name).thenReturn(NAME)
-            whenever(entityMock.owner).thenReturn(OWNER)
-            whenever(entityMock.isGlobal).thenReturn(GLOBAL)
+            every { entityMock.name } returns NAME
+            every { entityMock.owner } returns OWNER
+            every { entityMock.isGlobal } returns GLOBAL
 
             auditFixtureFor(entityMock)
         }

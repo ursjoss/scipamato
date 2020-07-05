@@ -4,62 +4,51 @@ import ch.difty.scipamato.common.entity.newsletter.PublicationStatus.CANCELLED
 import ch.difty.scipamato.common.entity.newsletter.PublicationStatus.PUBLISHED
 import ch.difty.scipamato.common.entity.newsletter.PublicationStatus.WIP
 import ch.difty.scipamato.common.entity.newsletter.PublicationStatus.values
-import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.fail
+import org.amshove.kluent.invoking
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeFalse
+import org.amshove.kluent.shouldBeTrue
+import org.amshove.kluent.shouldContainAll
+import org.amshove.kluent.shouldThrow
+import org.amshove.kluent.withMessage
 import org.junit.jupiter.api.Test
 
 internal class PublicationStatusTest {
 
     @Test
     fun testValues() {
-        assertThat(values()).containsExactly(WIP, PUBLISHED, CANCELLED)
+        values() shouldContainAll listOf(WIP, PUBLISHED, CANCELLED)
     }
 
     @Test
     fun testId() {
-        assertThat(WIP.id).isEqualTo(0)
-        assertThat(PUBLISHED.id).isEqualTo(1)
-        assertThat(CANCELLED.id).isEqualTo(-1)
+        WIP.id shouldBeEqualTo 0
+        PUBLISHED.id shouldBeEqualTo 1
+        CANCELLED.id shouldBeEqualTo -1
     }
 
     @Test
     fun testById_withValidIds() {
-        assertThat(PublicationStatus.byId(0)).isEqualTo(WIP)
-        assertThat(PublicationStatus.byId(1)).isEqualTo(PUBLISHED)
-        assertThat(PublicationStatus.byId(-1)).isEqualTo(CANCELLED)
+        PublicationStatus.byId(0) shouldBeEqualTo WIP
+        PublicationStatus.byId(1) shouldBeEqualTo PUBLISHED
+        PublicationStatus.byId(-1) shouldBeEqualTo CANCELLED
     }
 
     @Test
     fun assertNames() {
-        assertThat(values().map { it.description })
-            .containsExactly("in progress", "published", "cancelled")
+        values().map { it.description } shouldContainAll listOf("in progress", "published", "cancelled")
     }
 
     @Test
     fun testById_withInvalidIds() {
-        try {
-            PublicationStatus.byId(-2)
-            fail<Any>("should have thrown")
-        } catch (ex: Exception) {
-            assertThat(ex)
-                .isInstanceOf(IllegalArgumentException::class.java)
-                .hasMessage("id -2 is not supported")
-        }
-
-        try {
-            PublicationStatus.byId(2)
-            fail<Any>("should have thrown")
-        } catch (ex: Exception) {
-            assertThat(ex)
-                .isInstanceOf(IllegalArgumentException::class.java)
-                .hasMessage("id 2 is not supported")
-        }
+        invoking { PublicationStatus.byId(-2) } shouldThrow IllegalArgumentException::class withMessage "id -2 is not supported"
+        invoking { PublicationStatus.byId(2) } shouldThrow IllegalArgumentException::class withMessage "id 2 is not supported"
     }
 
     @Test
     fun assertIfIsInProgress() {
-        assertThat(WIP.isInProgress).isTrue()
-        assertThat(PUBLISHED.isInProgress).isFalse()
-        assertThat(CANCELLED.isInProgress).isFalse()
+        WIP.isInProgress.shouldBeTrue()
+        PUBLISHED.isInProgress.shouldBeFalse()
+        CANCELLED.isInProgress.shouldBeFalse()
     }
 }

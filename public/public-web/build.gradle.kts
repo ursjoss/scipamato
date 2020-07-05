@@ -40,7 +40,7 @@ dependencies {
     implementation(project(Module.scipamatoPublic("persistence-jooq")))
     implementation(project(Module.scipamatoCommon("wicket")))
 
-    implementation(Lib.springBoot("configuration-processor").id) {
+    annotationProcessor(Lib.springBoot("configuration-processor").id) {
         exclude("om.vaadin.external.google", "android-json")
     }
     implementation(Lib.springBootStarter("security"))

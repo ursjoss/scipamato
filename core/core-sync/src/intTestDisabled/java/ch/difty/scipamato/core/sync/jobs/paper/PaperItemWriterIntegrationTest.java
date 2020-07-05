@@ -30,9 +30,9 @@ class PaperItemWriterIntegrationTest extends AbstractItemWriterIntegrationTest<P
         newPaper = newPaperWithNumber(NUMBER_NEW);
 
         existingPaper = getExistingPaperFromDb(NUMBER_EXISTING);
-        assertThat(existingPaper.getNumber()).isEqualTo(existingPaper.getId());
+        existingPaper.getNumber() shouldBeEqualTo existingPaper.getId();
         existingPaper.setId(-2L);
-        assertThat(existingPaper.getNumber()).isNotEqualTo(existingPaper.getId());
+        existingPaper.getNumber() shouldNotBeEqualTo existingPaper.getId();
     }
 
     private PublicPaper newPaperWithNumber(long number) {
@@ -93,7 +93,7 @@ class PaperItemWriterIntegrationTest extends AbstractItemWriterIntegrationTest<P
     void insertingNewPaper_succeeds() {
         long number = newPaper.getNumber();
         assertPaperDoesNotExistWith(number);
-        assertThat(getWriter().executeUpdate(newPaper)).isEqualTo(1);
+        getWriter().executeUpdate(newPaper) shouldBeEqualTo 1;
         assertPaperExistsWith(number);
     }
 
@@ -115,7 +115,7 @@ class PaperItemWriterIntegrationTest extends AbstractItemWriterIntegrationTest<P
 
     @Test
     void updatingExistingPaper_succeeds() {
-        assertThat(getWriter().executeUpdate(existingPaper)).isEqualTo(1);
+        getWriter().executeUpdate(existingPaper) shouldBeEqualTo 1;
     }
 
 }

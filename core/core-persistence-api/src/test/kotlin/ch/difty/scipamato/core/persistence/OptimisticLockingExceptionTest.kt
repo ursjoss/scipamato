@@ -1,7 +1,7 @@
 package ch.difty.scipamato.core.persistence
 
 import ch.difty.scipamato.core.persistence.OptimisticLockingException.Type
-import org.assertj.core.api.Assertions.assertThat
+import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.Test
 
 @Suppress("SpellCheckingInspection")
@@ -11,34 +11,31 @@ internal class OptimisticLockingExceptionTest {
 
     @Test
     fun validateTableName() {
-        assertThat(ole.tableName).isEqualTo("tablefoo")
+        ole.tableName shouldBeEqualTo "tablefoo"
     }
 
     @Test
     fun validateRecord() {
-        assertThat(ole.record).isEqualTo("foo 1")
+        ole.record shouldBeEqualTo "foo 1"
     }
 
     @Test
     fun validateMessage() {
-        assertThat(ole.message).isEqualTo(
+        ole.message shouldBeEqualTo
             "Record in table 'tablefoo' has been modified prior to the delete attempt. Aborting.... [foo 1]"
-        )
     }
 
     @Test
     fun validateMessage_withUpdateException() {
         val ole2 = OptimisticLockingException("tablebar", "bar 2", Type.UPDATE)
-        assertThat(ole2.message).isEqualTo(
+        ole2.message shouldBeEqualTo
             "Record in table 'tablebar' has been modified prior to the update attempt. Aborting.... [bar 2]"
-        )
     }
 
     @Test
     fun validateMessage_withoutRecordParameter() {
         val ole3 = OptimisticLockingException("tablebar", Type.UPDATE)
-        assertThat(ole3.message).isEqualTo(
+        ole3.message shouldBeEqualTo
             "Record in table 'tablebar' has been modified prior to the update attempt. Aborting...."
-        )
     }
 }

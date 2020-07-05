@@ -1,3 +1,5 @@
+@file:Suppress("SpellCheckingInspection")
+
 package ch.difty.scipamato.core.persistence
 
 import ch.difty.scipamato.common.config.ApplicationProperties
@@ -7,11 +9,11 @@ import ch.difty.scipamato.common.persistence.JooqSortMapper
 import ch.difty.scipamato.common.persistence.paging.PaginationContext
 import ch.difty.scipamato.common.persistence.paging.Sort
 import ch.difty.scipamato.core.entity.IdScipamatoEntity
-import com.nhaarman.mockitokotlin2.isA
-import com.nhaarman.mockitokotlin2.verify
-import com.nhaarman.mockitokotlin2.verifyNoMoreInteractions
-import com.nhaarman.mockitokotlin2.whenever
-import org.assertj.core.api.Assertions.assertThat
+import io.mockk.confirmVerified
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.verify
+import org.amshove.kluent.shouldBeEqualTo
 import org.jooq.Condition
 import org.jooq.DSLContext
 import org.jooq.Record
@@ -37,21 +39,21 @@ abstract class JooqReadOnlyRepoTest<
     M : RecordMapper<R, T>,
     F : ScipamatoFilter> {
 
-    protected val dsl = mock<DSLContext>()
-    protected var filterConditionMapper = mock<GenericFilterConditionMapper<F>>()
-    protected val sortMapper = mock<JooqSortMapper<R, T, TI>>()
-    private val selectWhereStepMock = mock<SelectWhereStep<R>>()
-    private val selectConditionStepMock = mock<SelectConditionStep<R>>()
-    private val selectSelectStepMock = mock<SelectSelectStep<Record1<Int>>>()
-    private val selectJoinStepMock = mock<SelectJoinStep<Record1<Int>>>()
-    private val selectConditionStepMock2 = mock<SelectConditionStep<Record1<Int>>>()
-    private val paginationContextMock = mock<PaginationContext>()
-    private val sortMock = mock<Sort>()
-    private val sortFieldsMock = mock<Collection<SortField<T>>>()
-    private val selectSeekStepNMock = mock<SelectSeekStepN<R>>()
+    protected val dsl = mockk<DSLContext>()
+    protected var filterConditionMapper = mockk<GenericFilterConditionMapper<F>>()
+    protected val sortMapper = mockk<JooqSortMapper<R, T, TI>>()
+    private val selectWhereStepMock = mockk<SelectWhereStep<R>>()
+    private val selectConditionStepMock = mockk<SelectConditionStep<R>>()
+    private val selectSelectStepMock = mockk<SelectSelectStep<Record1<Int>>>()
+    private val selectJoinStepMock = mockk<SelectJoinStep<Record1<Int>>>()
+    private val selectConditionStepMock2 = mockk<SelectConditionStep<Record1<Int>>>()
+    private val paginationContextMock = mockk<PaginationContext>()
+    private val sortMock = mockk<Sort>()
+    private val sortFieldsMock = mockk<Collection<SortField<T>>>()
+    private val selectSeekStepNMock = mockk<SelectSeekStepN<R>>()
 
-    protected val conditionMock = mock<Condition>()
-    protected val applicationProperties = mock<ApplicationProperties>()
+    protected val conditionMock = mockk<Condition>()
+    protected val applicationProperties = mockk<ApplicationProperties>()
 
     protected abstract val persistedEntity: T
 
@@ -103,13 +105,13 @@ abstract class JooqReadOnlyRepoTest<
     @AfterEach
     internal fun tearDown() {
         specificTearDown()
-        verifyNoMoreInteractions(dsl, mapper, sortMapper)
-        verifyNoMoreInteractions(unpersistedEntity, persistedEntity, unpersistedRecord, persistedRecord)
-        verifyNoMoreInteractions(selectWhereStepMock, selectConditionStepMock)
-        verifyNoMoreInteractions(selectSelectStepMock, selectJoinStepMock)
-        verifyNoMoreInteractions(paginationContextMock, sortMock, sortFieldsMock, selectSeekStepNMock)
-        verifyNoMoreInteractions(filter, conditionMock)
-        verifyNoMoreInteractions(applicationProperties)
+        confirmVerified(dsl, mapper, sortMapper)
+        confirmVerified(unpersistedEntity, persistedEntity, unpersistedRecord, persistedRecord)
+        confirmVerified(selectWhereStepMock, selectConditionStepMock)
+        confirmVerified(selectSelectStepMock, selectJoinStepMock)
+        confirmVerified(paginationContextMock, sortMock, sortFieldsMock, selectSeekStepNMock)
+        confirmVerified(filter, conditionMock)
+        confirmVerified(applicationProperties)
     }
 
     protected open fun specificTearDown() {}
@@ -118,17 +120,17 @@ abstract class JooqReadOnlyRepoTest<
 
     @Test
     internal fun countingByFilter() {
-        whenever(filterConditionMapper.map(filter)).thenReturn(conditionMock)
-        whenever(dsl.selectOne()).thenReturn(selectSelectStepMock)
-        whenever(selectSelectStepMock.from(table)).thenReturn(selectJoinStepMock)
-        whenever(selectJoinStepMock.where(isA<Condition>())).thenReturn(selectConditionStepMock2)
-        whenever(dsl.fetchCount(selectConditionStepMock2)).thenReturn(2)
+        every { filterConditionMapper.map(filter) } returns conditionMock
+        every { dsl.selectOne() } returns selectSelectStepMock
+        every { selectSelectStepMock.from(table) } returns selectJoinStepMock
+        every { selectJoinStepMock.where(any<Condition>()) } returns selectConditionStepMock2
+        every { dsl.fetchCount(selectConditionStepMock2) } returns 2
 
-        assertThat(repo.countByFilter(filter)).isEqualTo(2)
+        repo.countByFilter(filter) shouldBeEqualTo 2
 
-        verify(dsl).selectOne()
-        verify(selectSelectStepMock).from(table)
-        verify(selectJoinStepMock).where(isA<Condition>())
-        verify(dsl).fetchCount(selectConditionStepMock2)
+        verify { dsl.selectOne() }
+        verify { selectSelectStepMock.from(table) }
+        verify { selectJoinStepMock.where(any<Condition>()) }
+        verify { dsl.fetchCount(selectConditionStepMock2) }
     }
 }

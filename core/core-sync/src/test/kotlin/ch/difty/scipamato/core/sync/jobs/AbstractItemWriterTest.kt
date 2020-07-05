@@ -1,15 +1,15 @@
 package ch.difty.scipamato.core.sync.jobs
 
-import com.nhaarman.mockitokotlin2.mock
+import io.mockk.confirmVerified
+import io.mockk.mockk
 import org.jooq.DSLContext
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito.verifyNoMoreInteractions
 import org.springframework.batch.item.ItemWriter
 
 abstract class AbstractItemWriterTest<T, W : ItemWriter<T>> {
 
-    private val dslContextMock = mock<DSLContext>()
+    private val dslContextMock = mockk<DSLContext>()
 
     private lateinit var writer: W
 
@@ -23,6 +23,6 @@ abstract class AbstractItemWriterTest<T, W : ItemWriter<T>> {
     @Test
     internal fun writingEmptyList_doesNotInteractWithJooq() {
         writer.write(ArrayList())
-        verifyNoMoreInteractions(dslContextMock)
+        confirmVerified(dslContextMock)
     }
 }

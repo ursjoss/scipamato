@@ -12,11 +12,27 @@ import ch.difty.scipamato.core.entity.search.PaperFilter
 import ch.difty.scipamato.core.entity.search.SearchCondition
 import ch.difty.scipamato.core.entity.search.SearchOrder
 import ch.difty.scipamato.core.persistence.paper.JooqPaperRepo
-import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.fail
+import org.amshove.kluent.shouldBeEmpty
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeFalse
+import org.amshove.kluent.shouldBeGreaterOrEqualTo
+import org.amshove.kluent.shouldBeGreaterThan
+import org.amshove.kluent.shouldBeInstanceOf
+import org.amshove.kluent.shouldBeNull
+import org.amshove.kluent.shouldBeTrue
+import org.amshove.kluent.shouldContain
+import org.amshove.kluent.shouldContainAll
+import org.amshove.kluent.shouldContainSame
+import org.amshove.kluent.shouldHaveSize
+import org.amshove.kluent.shouldNotBeEmpty
+import org.amshove.kluent.shouldNotBeEqualTo
+import org.amshove.kluent.shouldNotBeNull
+import org.amshove.kluent.shouldNotContain
+import org.amshove.kluent.shouldStartWith
 import org.jooq.DSLContext
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.fail
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.jooq.JooqTest
 import org.springframework.dao.DataAccessException
@@ -39,37 +55,37 @@ internal open class JooqPaperRepoIntegrationTest {
         val papers = repo.findAll()
         papers.sortBy { it.id }
 
-        assertThat(papers).hasSize(RECORD_COUNT_PREPOPULATED)
-        assertThat(papers[0].id).isEqualTo(1)
-        assertThat(papers[1].id).isEqualTo(2)
-        assertThat(papers[2].id).isEqualTo(3)
-        assertThat(papers[3].id).isEqualTo(4)
-        assertThat(papers[4].id).isEqualTo(10)
-        assertThat(papers[13].id).isEqualTo(19)
-        assertThat(papers[22].id).isEqualTo(28)
+        papers shouldHaveSize 36
+        papers[0].id shouldBeEqualTo 1
+        papers[1].id shouldBeEqualTo 2
+        papers[2].id shouldBeEqualTo 3
+        papers[3].id shouldBeEqualTo 4
+        papers[4].id shouldBeEqualTo 10
+        papers[13].id shouldBeEqualTo 19
+        papers[22].id shouldBeEqualTo 28
     }
 
     @Test
     fun findingById_withExistingId_returnsEntity() {
         val id: Long = 4
-        val paper = repo.findById(id) ?: fail("Unable to find paper")
-        assertThat(paper.id).isEqualTo(id)
-        assertThat(paper.authors).isEqualTo("Kutlar Joss M, Joss U.")
+        val paper = repo.findById(id) ?: fail { "Unable to find paper" }
+        paper.id shouldBeEqualTo id
+        paper.authors shouldBeEqualTo "Kutlar Joss M, Joss U."
     }
 
     @Test
     fun findingById_withNonExistingId_returnsNull() {
-        assertThat(repo.findById(-1L)).isNull()
+        repo.findById(-1L).shouldBeNull()
     }
 
     @Test
     fun addingRecord_savesRecordAndRefreshesId() {
         val p = makeMinimalPaper()
-        assertThat(p.id).isNull()
+        p.id.shouldBeNull()
 
-        val saved = repo.add(p) ?: fail("Unable to add paper")
-        assertThat(saved.id).isGreaterThan(MAX_ID_PREPOPULATED)
-        assertThat(saved.authors).isEqualTo("a")
+        val saved = repo.add(p) ?: fail { "Unable to add paper" }
+        saved.id?.shouldBeGreaterThan(MAX_ID_PREPOPULATED)
+        saved.authors shouldBeEqualTo "a"
     }
 
     private fun makeMinimalPaper(): Paper {
@@ -86,27 +102,27 @@ internal open class JooqPaperRepoIntegrationTest {
 
     @Test
     fun updatingRecord() {
-        val paper = repo.add(makeMinimalPaper()) ?: fail("Unable to add paper")
-        assertThat(paper.id).isGreaterThan(MAX_ID_PREPOPULATED)
+        val paper = repo.add(makeMinimalPaper()) ?: fail { "Unable to add paper" }
+        paper.id?.shouldBeGreaterThan(MAX_ID_PREPOPULATED)
         val id = paper.id ?: error("id must no be null now")
-        assertThat(paper.authors).isEqualTo("a")
+        paper.authors shouldBeEqualTo "a"
 
         paper.authors = "b"
         repo.update(paper)
-        assertThat(paper.id as Long).isEqualTo(id)
+        paper.id as Long shouldBeEqualTo id
 
-        val newCopy = repo.findById(id) ?: fail("Unable to find paper")
-        assertThat(newCopy).isNotEqualTo(paper)
-        assertThat(newCopy.id).isEqualTo(id)
-        assertThat(newCopy.authors).isEqualTo("b")
+        val newCopy = repo.findById(id) ?: fail { "Unable to find paper" }
+        newCopy shouldNotBeEqualTo paper
+        newCopy.id shouldBeEqualTo id
+        newCopy.authors shouldBeEqualTo "b"
     }
 
     @Test
     fun savingAssociatedEntitiesOf_withCodes() {
-        val paper = repo.add(makeMinimalPaper()) ?: fail("Unable to add paper")
-        assertThat(paper.id).isGreaterThan(MAX_ID_PREPOPULATED)
+        val paper = repo.add(makeMinimalPaper()) ?: fail { "Unable to add paper" }
+        paper.id?.shouldBeGreaterThan(MAX_ID_PREPOPULATED)
         val id = paper.id ?: error("id must no be null now")
-        assertThat(paper.authors).isEqualTo("a")
+        paper.authors shouldBeEqualTo "a"
 
         val cr = dsl.selectFrom(Code.CODE).limit(1).fetchOne()
         val ccr = dsl
@@ -120,169 +136,168 @@ internal open class JooqPaperRepoIntegrationTest {
         )
         paper.addCode(code)
 
-        repo.update(paper) ?: fail("Unable to add paper")
-        assertThat(paper.id as Long).isEqualTo(id)
+        repo.update(paper) ?: fail { "Unable to add paper" }
+        paper.id as Long shouldBeEqualTo id
 
-        val newCopy = repo.findById(id) ?: fail("Unable to find paper")
-        assertThat(newCopy).isNotEqualTo(paper)
-        assertThat(newCopy.id).isEqualTo(id)
-        assertThat(newCopy.codes.map { it.code }).containsExactly(code.code)
+        val newCopy = repo.findById(id) ?: fail { "Unable to find paper" }
+        newCopy shouldNotBeEqualTo paper
+        newCopy.id shouldBeEqualTo id
+        newCopy.codes.map { it.code } shouldContainAll listOf(code.code)
     }
 
     @Test
     fun savingAssociatedEntitiesOf_withNewsletterLink() {
-        val paper = repo.add(makeMinimalPaper()) ?: fail("Unable to add paper")
+        val paper = repo.add(makeMinimalPaper()) ?: fail { "Unable to add paper" }
         val id = paper.id ?: error("id must no be null now")
         val newsletterLink = Paper.NewsletterLink(2, "whatever", 1, 1, "topic1", "hl")
 
         paper.newsletterLink = newsletterLink
 
         repo.update(paper)
-        assertThat(paper.id as Long).isEqualTo(id)
+        paper.id as Long shouldBeEqualTo id
 
-        val newCopy = repo.findById(id) ?: fail("Unable to find paper")
-        assertThat(newCopy).isNotEqualTo(paper)
-        assertThat(newCopy.id).isEqualTo(id)
-        assertThat(newCopy.newsletterLink.issue).isEqualTo("1804")
+        val newCopy = repo.findById(id) ?: fail { "Unable to find paper" }
+        newCopy shouldNotBeEqualTo paper
+        newCopy.id shouldBeEqualTo id
+        newCopy.newsletterLink.issue shouldBeEqualTo "1804"
     }
 
     @Test
     fun deletingRecord() {
-        val paper = repo.add(makeMinimalPaper()) ?: fail("Unable to add paper")
-        assertThat(paper.id).isGreaterThan(MAX_ID_PREPOPULATED)
+        val paper = repo.add(makeMinimalPaper()) ?: fail { "Unable to add paper" }
+        paper.id?.shouldBeGreaterThan(MAX_ID_PREPOPULATED)
         val id = paper.id ?: error("id must no be null now")
-        assertThat(paper.authors).isEqualTo("a")
+        paper.authors shouldBeEqualTo "a"
 
         val deleted = repo.delete(id, paper.version)
-        assertThat(deleted.id).isEqualTo(id)
+        deleted.id shouldBeEqualTo id
 
-        assertThat(repo.findById(id)).isNull()
+        repo.findById(id).shouldBeNull()
     }
 
     @Test
     @Disabled("TODO Need to fix Paper.toString first")
     fun findingById_forPaper1InGerman() {
         val paper = repo.findById(1L)
-        assertThat(paper.toString()).isEqualTo(
+        paper.toString() shouldBeEqualTo
             PAPER1_WO_CODE_CLASSES +
-                ",codes=[" +
-                "codesOfClass1=[" +
-                "Code[code=1F,name=Feinstaub, Partikel,comment=<null>,internal=false,codeClass=CodeClass[id=1],sort=1" +
-                ",createdBy=1,lastModifiedBy=1,created=2017-01-01T08:01:33.821,lastModified=2017-01-01T08:01:33.821" +
-                ",version=1]" +
-                "]," +
-                "codesOfClass2=[" +
-                "Code[code=2N,name=Übrige Länder,comment=<null>,internal=false,codeClass=CodeClass[id=2],sort=2" +
-                ",createdBy=1,lastModifiedBy=1,created=2017-01-01T08:01:33.821,lastModified=2017-01-01T08:01:33.821" +
-                ",version=1]" +
-                "]," +
-                "codesOfClass3=[" +
-                "Code[code=3C,name=Erwachsene (alle),comment=<null>,internal=false,codeClass=CodeClass[id=3],sort=3" +
-                ",createdBy=1,lastModifiedBy=1,created=2017-01-01T08:01:33.821," +
-                "lastModified=2017-01-01T08:01:33.821,version=1]" +
-                "]," +
-                "codesOfClass4=[" +
-                "Code[code=4G,name=Krebs,comment=<null>,internal=false,codeClass=CodeClass[id=4],sort=7,createdBy=1" +
-                ",lastModifiedBy=1,created=2017-01-01T08:01:33.821,lastModified=2017-01-01T08:01:33.821,version=1]" +
-                "]," +
-                "codesOfClass5=[" +
-                "Code[code=5H,name=Kohortenstudie,comment=<null>,internal=false,codeClass=CodeClass[id=5],sort=7" +
-                ",createdBy=1,lastModifiedBy=1,created=2017-01-01T08:01:33.821," +
-                "lastModified=2017-01-01T08:01:33.821,version=1], " +
-                "Code[code=5S,name=Statistik,comment=<null>,internal=false,codeClass=CodeClass[id=5],sort=10," +
-                "createdBy=1,lastModifiedBy=1,created=2017-01-01T08:01:33.821,lastModified=2017-01-01T08:01:33.821," +
-                "version=1]" +
-                "]," +
-                "codesOfClass6=[" +
-                "Code[code=6M,name=Mensch,comment=<null>,internal=false,codeClass=CodeClass[id=6],sort=1,createdBy=1" +
-                ",lastModifiedBy=1,created=2017-01-01T08:01:33.821,lastModified=2017-01-01T08:01:33.821,version=1]" +
-                "]," +
-                "codesOfClass7=" +
-                "[Code[code=7L,name=Langfristig,comment=<null>,internal=false,codeClass=CodeClass[id=7],sort=2" +
-                ",createdBy=1,lastModifiedBy=1,created=2017-01-01T08:01:33.821,lastModified=2017-01-01T08:01:33.821" +
-                ",version=1]" +
-                "]," +
-                "codesOfClass8=[" +
-                "Code[code=8O,name=Aussenluft,comment=<null>,internal=false,codeClass=CodeClass[id=8],sort=2," +
-                "createdBy=1,lastModifiedBy=1,created=2017-01-01T08:01:33.821,lastModified=2017-01-01T08:01:33.821" +
-                ",version=1]" +
-                "]" +
-                "]" +
-                ID_PART +
-                "]"
-        )
+            ",codes=[" +
+            "codesOfClass1=[" +
+            "Code[code=1F,name=Feinstaub, Partikel,comment=<null>,internal=false,codeClass=CodeClass[id=1],sort=1" +
+            ",createdBy=1,lastModifiedBy=1,created=2017-01-01T08:01:33.821,lastModified=2017-01-01T08:01:33.821" +
+            ",version=1]" +
+            "]," +
+            "codesOfClass2=[" +
+            "Code[code=2N,name=Übrige Länder,comment=<null>,internal=false,codeClass=CodeClass[id=2],sort=2" +
+            ",createdBy=1,lastModifiedBy=1,created=2017-01-01T08:01:33.821,lastModified=2017-01-01T08:01:33.821" +
+            ",version=1]" +
+            "]," +
+            "codesOfClass3=[" +
+            "Code[code=3C,name=Erwachsene (alle),comment=<null>,internal=false,codeClass=CodeClass[id=3],sort=3" +
+            ",createdBy=1,lastModifiedBy=1,created=2017-01-01T08:01:33.821," +
+            "lastModified=2017-01-01T08:01:33.821,version=1]" +
+            "]," +
+            "codesOfClass4=[" +
+            "Code[code=4G,name=Krebs,comment=<null>,internal=false,codeClass=CodeClass[id=4],sort=7,createdBy=1" +
+            ",lastModifiedBy=1,created=2017-01-01T08:01:33.821,lastModified=2017-01-01T08:01:33.821,version=1]" +
+            "]," +
+            "codesOfClass5=[" +
+            "Code[code=5H,name=Kohortenstudie,comment=<null>,internal=false,codeClass=CodeClass[id=5],sort=7" +
+            ",createdBy=1,lastModifiedBy=1,created=2017-01-01T08:01:33.821," +
+            "lastModified=2017-01-01T08:01:33.821,version=1], " +
+            "Code[code=5S,name=Statistik,comment=<null>,internal=false,codeClass=CodeClass[id=5],sort=10," +
+            "createdBy=1,lastModifiedBy=1,created=2017-01-01T08:01:33.821,lastModified=2017-01-01T08:01:33.821," +
+            "version=1]" +
+            "]," +
+            "codesOfClass6=[" +
+            "Code[code=6M,name=Mensch,comment=<null>,internal=false,codeClass=CodeClass[id=6],sort=1,createdBy=1" +
+            ",lastModifiedBy=1,created=2017-01-01T08:01:33.821,lastModified=2017-01-01T08:01:33.821,version=1]" +
+            "]," +
+            "codesOfClass7=" +
+            "[Code[code=7L,name=Langfristig,comment=<null>,internal=false,codeClass=CodeClass[id=7],sort=2" +
+            ",createdBy=1,lastModifiedBy=1,created=2017-01-01T08:01:33.821,lastModified=2017-01-01T08:01:33.821" +
+            ",version=1]" +
+            "]," +
+            "codesOfClass8=[" +
+            "Code[code=8O,name=Aussenluft,comment=<null>,internal=false,codeClass=CodeClass[id=8],sort=2," +
+            "createdBy=1,lastModifiedBy=1,created=2017-01-01T08:01:33.821,lastModified=2017-01-01T08:01:33.821" +
+            ",version=1]" +
+            "]" +
+            "]" +
+            ID_PART +
+            "]"
         // @formatter:on
     }
 
     @Test
     fun findingByIds_returnsRecordForEveryIdExisting() {
         val papers = repo.findByIds(listOf(1L, 2L, 3L, 10L, -17L))
-        assertThat(papers.map { it.id }).containsExactly(1L, 2L, 3L, 10L)
+        papers.map { it.id } shouldContainAll listOf(1L, 2L, 3L, 10L)
 
         // codes not enriched
-        assertThat(papers[0].codes).isEmpty()
+        papers[0].codes.shouldBeEmpty()
     }
 
     @Test
     fun findingByIds_returnsEmptyListForEmptyIdList() {
-        assertThat(repo.findByIds(emptyList())).isEmpty()
+        repo.findByIds(emptyList()).shouldBeEmpty()
     }
 
     @Test
     fun findingWithCodesByIds_returnsRecordForEveryIdExisting() {
         val papers = repo.findWithCodesByIds(listOf(1L, 2L, 3L, 10L, -17L), LC)
-        assertThat(papers.map { it.id }).containsExactly(1L, 2L, 3L, 10L)
+        papers.map { it.id } shouldContainAll listOf(1L, 2L, 3L, 10L)
 
         // codes are present
-        assertThat(papers[0].codes).isNotEmpty
+        papers[0].codes.shouldNotBeEmpty()
     }
 
     @Test
     fun findingPapersByPmIds_withThreeValidPmIds_returnsThreePapers() {
         val papers = repo.findByPmIds(listOf(20335815, 27128166, 25104428), LC)
-        assertThat(papers).hasSize(3)
-        assertThat(papers.map { it.pmId }).containsOnly(20335815, 27128166, 25104428)
+        papers shouldHaveSize 3
+        papers.map { it.pmId } shouldContainSame listOf(20335815, 27128166, 25104428)
     }
 
     @Test
     fun findingPapersByPmIds_withInvalidPmIds_returnsEmptyList() {
-        assertThat(repo.findByPmIds(listOf(-20335815), LC)).isEmpty()
+        repo.findByPmIds(listOf(-20335815), LC).shouldBeEmpty()
     }
 
     @Test
     fun findingPapersByPmIds_hasCodesEnriched() {
         val papers = repo.findByPmIds(listOf(20335815), LC)
-        assertThat(papers[0].codes).isNotEmpty
+        papers[0].codes.shouldNotBeEmpty()
     }
 
     @Test
     fun findingExistingPmIdsOutOf_withThreeValidPmIds_returnsThreePMIDs() {
         val pmids = repo.findExistingPmIdsOutOf(listOf(20335815, 27128166, 25104428))
-        assertThat(pmids).hasSize(3)
-        assertThat(pmids).containsOnly(20335815, 27128166, 25104428)
+        pmids shouldHaveSize 3
+        pmids shouldContainSame listOf(20335815, 27128166, 25104428)
     }
 
     @Test
     fun findingExistingPmIdsOutOf_withInvalidPmIds_returnsEmptyList() {
-        assertThat(repo.findExistingPmIdsOutOf(listOf(-20335815))).isEmpty()
+        repo.findExistingPmIdsOutOf(listOf(-20335815)).shouldBeEmpty()
     }
 
     @Test
     fun findingPapersByNumbers_withThreeValidNumbers_returnsThreePapers() {
         val papers = repo.findByNumbers(listOf(1L, 2L, 3L), LC)
-        assertThat(papers).hasSize(3)
-        assertThat(papers.map { it.number }).containsOnly(1L, 2L, 3L)
+        papers shouldHaveSize 3
+        papers.map { it.number } shouldContainSame listOf(1L, 2L, 3L)
     }
 
     @Test
     fun findingPapersByNumbers_withInvalidNumbers_returnsEmptyList() {
-        assertThat(repo.findByNumbers(listOf(-1L), LC)).isEmpty()
+        repo.findByNumbers(listOf(-1L), LC).shouldBeEmpty()
     }
 
     @Test
     fun findingPapersByNumber_hasCodesEnriched() {
         val papers = repo.findByNumbers(listOf(1L), LC)
-        assertThat(papers[0].codes).isNotEmpty
+        papers[0].codes.shouldNotBeEmpty()
     }
 
     @Test
@@ -292,7 +307,7 @@ internal open class JooqPaperRepoIntegrationTest {
         sc.authors = "kutlar"
         searchOrder.add(sc)
         val papers = repo.findBySearchOrder(searchOrder, LC)
-        assertThat(papers).isNotEmpty
+        papers.shouldNotBeEmpty()
     }
 
     @Test
@@ -301,38 +316,38 @@ internal open class JooqPaperRepoIntegrationTest {
         val sc = SearchCondition()
         sc.authors = "kutlar"
         searchOrder.add(sc)
-        assertThat(repo.findPageBySearchOrder(searchOrder, PaginationRequest(Direction.ASC, "authors"), LC)).isNotEmpty
+        repo.findPageBySearchOrder(searchOrder, PaginationRequest(Direction.ASC, "authors"), LC).shouldNotBeEmpty()
     }
 
     @Test
     fun findingLowestFreeNumberStartingFrom_findsFirstGapStartingAboveMinimumValue() {
         val number = repo.findLowestFreeNumberStartingFrom(0L)
-        assertThat(number).isEqualTo(5L)
+        number shouldBeEqualTo 5L
     }
 
     @Test
     fun findingLowestFreeNumberStartingFrom_withMinimumInMultiNumberGap_ignoresRemainingNumbersOfSameGap() {
         val number = repo.findLowestFreeNumberStartingFrom(5L)
-        assertThat(number).isGreaterThanOrEqualTo(42L)
+        number shouldBeGreaterOrEqualTo 42L
     }
 
     @Test
     fun findingLowestFreeNumberStartingFrom_withMinimumBeyondLastGap_findsNextFreeNumber() {
         val number = repo.findLowestFreeNumberStartingFrom(30)
-        assertThat(number).isGreaterThanOrEqualTo(42L)
+        number shouldBeGreaterOrEqualTo 42L
     }
 
     @Test
     fun findingLowestFreeNumberStartingFrom_withMinimumBeyondNextFreeNumber_findsMinimumLeavingGap() {
         val number = repo.findLowestFreeNumberStartingFrom(100L)
-        assertThat(number).isGreaterThanOrEqualTo(100L)
+        number shouldBeGreaterOrEqualTo 100L
     }
 
     @Test
     fun findingPageOfIdsByFilter() {
         val filter = PaperFilter()
         filter.authorMask = "Kutlar"
-        assertThat(repo.findPageOfIdsByFilter(filter, PaginationRequest(Direction.ASC, "authors"))).containsExactly(4L)
+        repo.findPageOfIdsByFilter(filter, PaginationRequest(Direction.ASC, "authors")) shouldContainAll listOf(4L)
     }
 
     @Test
@@ -341,8 +356,8 @@ internal open class JooqPaperRepoIntegrationTest {
         val sc = SearchCondition()
         sc.authors = "kutlar"
         searchOrder.add(sc)
-        assertThat(repo.findPageOfIdsBySearchOrder(searchOrder, PaginationRequest(Direction.ASC, "authors")))
-            .containsExactly(4L)
+        repo.findPageOfIdsBySearchOrder(searchOrder, PaginationRequest(Direction.ASC, "authors")) shouldContainSame
+            listOf(4L)
     }
 
     @Test
@@ -364,14 +379,11 @@ internal open class JooqPaperRepoIntegrationTest {
     }
 
     private fun assertExclusionCount(searchOrderId: Long, paperId: Long, count: Int) {
-        assertThat(
-            dsl
-                .selectCount()
-                .from(SearchExclusion.SEARCH_EXCLUSION)
-                .where(SearchExclusion.SEARCH_EXCLUSION.SEARCH_ORDER_ID.eq(searchOrderId))
-                .and(SearchExclusion.SEARCH_EXCLUSION.PAPER_ID.eq(paperId))
-                .fetchOne(0, Int::class.javaPrimitiveType)
-        ).isEqualTo(count)
+        dsl.selectCount()
+            .from(SearchExclusion.SEARCH_EXCLUSION)
+            .where(SearchExclusion.SEARCH_EXCLUSION.SEARCH_ORDER_ID.eq(searchOrderId))
+            .and(SearchExclusion.SEARCH_EXCLUSION.PAPER_ID.eq(paperId))
+            .fetchOne(0, Int::class.javaPrimitiveType) shouldBeEqualTo count
     }
 
     @Test
@@ -398,15 +410,15 @@ internal open class JooqPaperRepoIntegrationTest {
 
         val results = repo.loadSlimAttachment(TEST_PAPER_ID)
 
-        assertThat(results).hasSize(2)
+        results shouldHaveSize 2
         val saved = results[0]
 
-        assertThat(saved.name).isEqualTo(pa1.name)
-        assertThat(saved.content).isNull()
-        assertThat(saved.size).isEqualTo(content1.length.toLong())
-        assertThat(saved.contentType).isEqualTo("application/pdf")
-        assertThat(saved.created.toString()).isEqualTo("2016-12-09T06:02:13")
-        assertThat(saved.lastModified.toString()).isEqualTo("2016-12-09T06:02:13")
+        saved.name shouldBeEqualTo pa1.name
+        saved.content.shouldBeNull()
+        saved.size shouldBeEqualTo content1.length.toLong()
+        saved.contentType shouldBeEqualTo "application/pdf"
+        saved.created.toString() shouldBeEqualTo "2016-12-09T06:02:13"
+        saved.lastModified.toString() shouldBeEqualTo "2016-12-09T06:02:13"
     }
 
     private fun newPaperAttachment(name: String, content: String): PaperAttachment {
@@ -425,21 +437,21 @@ internal open class JooqPaperRepoIntegrationTest {
         val content = "foo"
         val pa = newPaperAttachment(TEST_FILE_1, content)
 
-        val p = repo.saveAttachment(pa) ?: fail("Unable to save attachments")
+        val p = repo.saveAttachment(pa) ?: fail { "Unable to save attachments" }
         val saved = dsl
             .select()
             .from(PAPER_ATTACHMENT)
             .where(PAPER_ATTACHMENT.PAPER_ID.eq(TEST_PAPER_ID))
             .fetchOneInto(PaperAttachment::class.java)
 
-        assertThat(p.attachments.map { it.id }).contains(saved.id)
+        p.attachments.map { it.id } shouldContainAll listOf(saved.id)
 
-        assertThat(saved.name).isEqualTo(pa.name)
-        assertThat(String(saved.content)).isEqualTo(content)
-        assertThat(saved.size).isEqualTo(content.length.toLong())
-        assertThat(saved.contentType).isEqualTo("application/pdf")
-        assertThat(saved.created.toString()).isEqualTo("2016-12-09T06:02:13")
-        assertThat(saved.lastModified.toString()).isEqualTo("2016-12-09T06:02:13")
+        saved.name shouldBeEqualTo pa.name
+        String(saved.content) shouldBeEqualTo content
+        saved.size shouldBeEqualTo content.length.toLong()
+        saved.contentType shouldBeEqualTo "application/pdf"
+        saved.created.toString() shouldBeEqualTo "2016-12-09T06:02:13"
+        saved.lastModified.toString() shouldBeEqualTo "2016-12-09T06:02:13"
     }
 
     @Test
@@ -447,8 +459,8 @@ internal open class JooqPaperRepoIntegrationTest {
         val content2 = "bar"
         val pa1 = newPaperAttachment(TEST_FILE_1, "foo")
         val pa2 = newPaperAttachment(TEST_FILE_1, content2)
-        assertThat(pa1.paperId).isEqualTo(pa2.paperId)
-        assertThat(pa1.name).isEqualTo(pa2.name)
+        pa1.paperId shouldBeEqualTo pa2.paperId
+        pa1.name shouldBeEqualTo pa2.name
 
         repo.saveAttachment(pa1)
         repo.saveAttachment(pa2)
@@ -459,9 +471,9 @@ internal open class JooqPaperRepoIntegrationTest {
             .where(PAPER_ATTACHMENT.PAPER_ID.eq(TEST_PAPER_ID))
             .fetchOneInto(PaperAttachment::class.java)
 
-        assertThat(saved2.name).isEqualTo(pa1.name)
-        assertThat(saved2.version).isEqualTo(2)
-        assertThat(String(saved2.content)).isEqualTo(content2)
+        saved2.name shouldBeEqualTo pa1.name
+        saved2.version shouldBeEqualTo 2
+        String(saved2.content) shouldBeEqualTo content2
     }
 
     @Test
@@ -475,9 +487,9 @@ internal open class JooqPaperRepoIntegrationTest {
             .from(PAPER_ATTACHMENT)
             .where(PAPER_ATTACHMENT.PAPER_ID.eq(TEST_PAPER_ID))
             .fetchOneInto(Int::class.java)
-        val attachment = repo.loadAttachmentWithContentBy(id) ?: fail("Unable to load attachments")
-        assertThat(attachment.content).isNotNull()
-        assertThat(String(attachment.content)).isEqualTo(content1)
+        val attachment = repo.loadAttachmentWithContentBy(id) ?: fail { "Unable to load attachments" }
+        attachment.content.shouldNotBeNull()
+        String(attachment.content) shouldBeEqualTo content1
     }
 
     @Test
@@ -487,15 +499,12 @@ internal open class JooqPaperRepoIntegrationTest {
             .select(PAPER_ATTACHMENT.ID)
             .from(PAPER_ATTACHMENT)
             .where(PAPER_ATTACHMENT.PAPER_ID.eq(TEST_PAPER_ID))
-            .fetchOneInto(Int::class.java) ?: fail("id must not be null")
-        val p = repo.deleteAttachment(id) ?: fail("Unable to delete attachments")
-        assertThat(p.attachments.map { it.id }).doesNotContain(id)
-        assertThat(
-            dsl
-                .select(PAPER_ATTACHMENT.ID)
-                .from(PAPER_ATTACHMENT)
-                .where(PAPER_ATTACHMENT.PAPER_ID.eq(TEST_PAPER_ID)).fetch()
-        ).isEmpty()
+            .fetchOneInto(Int::class.java) ?: fail { "id must not be null" }
+        val p = repo.deleteAttachment(id) ?: fail { "Unable to delete attachments" }
+        p.attachments.map { it.id } shouldNotContain id
+        dsl.select(PAPER_ATTACHMENT.ID)
+            .from(PAPER_ATTACHMENT)
+            .where(PAPER_ATTACHMENT.PAPER_ID.eq(TEST_PAPER_ID)).fetch().shouldBeEmpty()
     }
 
     /**
@@ -504,21 +513,21 @@ internal open class JooqPaperRepoIntegrationTest {
      */
     @Test
     fun testDeclarativeTransaction() {
-        var rollback = false
-        val paper = repo.findById(1L) ?: fail("Unable to find paper")
+        var rollback: Boolean
+        val paper = repo.findById(1L) ?: fail { "Unable to find paper" }
         try {
             paper.number = null
             repo.update(paper)
-            fail<Any>("Should have thrown exception due to null value on non-null column")
+            fail { "Should have thrown exception due to null value on non-null column" }
         } catch (dae: org.jooq.exception.DataAccessException) {
-            fail<Any>("JooqExceptionTranslator did not translate the jooqException into a spring exception")
+            fail { "JooqExceptionTranslator did not translate the jooqException into a spring exception" }
         } catch (dae: DataAccessException) {
             rollback = true
-            assertThat(dae).isInstanceOf(DataIntegrityViolationException::class.java)
-            assertThat(dae.message).startsWith("""jOOQ; SQL [update "public"."paper" set "number" = ?""")
+            dae shouldBeInstanceOf DataIntegrityViolationException::class
+            dae.message?.shouldStartWith("""jOOQ; SQL [update "public"."paper" set "number" = ?""")
         }
 
-        assertThat(rollback).isTrue()
+        rollback.shouldBeTrue()
     }
 
     @Test
@@ -526,28 +535,28 @@ internal open class JooqPaperRepoIntegrationTest {
         val filter = PaperFilter()
         filter.newsletterId = 1
         val papers = repo.findPageByFilter(filter, PaginationRequest(0, 10))
-        assertThat(papers).hasSize(5)
-        assertThat(papers.map { it.id }).contains(31L)
+        papers shouldHaveSize 5
+        papers.map { it.id } shouldContain 31L
     }
 
     @Test
     fun findingById_populatesNewsLetterWithAllFields() {
-        val paper = repo.findById(31L, "en") ?: fail("Unable to find paper")
-        assertThat(paper.newsletterLink).isNotNull()
+        val paper = repo.findById(31L, "en") ?: fail { "Unable to find paper" }
+        paper.newsletterLink.shouldNotBeNull()
         assertNewsletterLink(paper, "1802", 1, 1, "Ultrafine Particles", "some headline")
     }
 
     @Test
     fun findingById_populatesNewsLetterWithMostFields() {
-        val paper = repo.findById(20L, "en") ?: fail("Unable to find paper")
-        assertThat(paper.newsletterLink).isNotNull()
+        val paper = repo.findById(20L, "en") ?: fail { "Unable to find paper" }
+        paper.newsletterLink.shouldNotBeNull()
         assertNewsletterLink(paper, "1802", 1, 2, "Mortality", null)
     }
 
     @Test
     fun findingById_populatesNewsLetterWithSomeFields() {
-        val paper = repo.findById(39L, "en") ?: fail("Unable to find paper")
-        assertThat(paper.newsletterLink).isNotNull()
+        val paper = repo.findById(39L, "en") ?: fail { "Unable to find paper" }
+        paper.newsletterLink.shouldNotBeNull()
         assertNewsletterLink(paper, "1804", 0, null, null, null)
     }
 
@@ -559,59 +568,59 @@ internal open class JooqPaperRepoIntegrationTest {
         topic: String?,
         headline: String?
     ) {
-        assertThat(paper.newsletterLink.issue).isEqualTo(issue)
-        assertThat(paper.newsletterLink.publicationStatusId).isEqualTo(statusId)
+        paper.newsletterLink.issue shouldBeEqualTo issue
+        paper.newsletterLink.publicationStatusId shouldBeEqualTo statusId
         if (topicId != null)
-            assertThat(paper.newsletterLink.topicId).isEqualTo(topicId)
+            paper.newsletterLink.topicId shouldBeEqualTo topicId
         else
-            assertThat(paper.newsletterLink.topicId).isNull()
+            paper.newsletterLink.topicId.shouldBeNull()
 
         if (topic != null)
-            assertThat(paper.newsletterLink.topic).isEqualTo(topic)
+            paper.newsletterLink.topic shouldBeEqualTo topic
         else
-            assertThat(paper.newsletterLink.topic).isNull()
+            paper.newsletterLink.topic.shouldBeNull()
 
         if (headline != null)
-            assertThat(paper.newsletterLink.headline).isEqualTo(headline)
+            paper.newsletterLink.headline shouldBeEqualTo headline
         else
-            assertThat(paper.newsletterLink.headline).isNull()
+            paper.newsletterLink.headline.shouldBeNull()
     }
 
     @Test
     fun isDoiAlreadyAssigned_withDoiInDb_countsOtherPaperAsDuplicate() {
         // it's id 1 that has that doi
-        assertThat(repo.isDoiAlreadyAssigned("10.1093/aje/kwu275", 2L)).hasValue("1")
+        repo.isDoiAlreadyAssigned("10.1093/aje/kwu275", 2L).get() shouldBeEqualTo "1"
     }
 
     @Test
     fun isDoiAlreadyAssigned_withDoiInDb_doesNotCountCurrentPaperAsDuplicate() {
-        assertThat(repo.isDoiAlreadyAssigned("10.1093/aje/kwu275", 1L)).isNotPresent
+        repo.isDoiAlreadyAssigned("10.1093/aje/kwu275", 1L).isPresent.shouldBeFalse()
     }
 
     @Test
     fun isDoiAlreadyAssigned_withDoiNotInDb_reportsNoDuplicate() {
-        assertThat(repo.isDoiAlreadyAssigned("foobar", 1L)).isNotPresent
+        repo.isDoiAlreadyAssigned("foobar", 1L).isPresent.shouldBeFalse()
     }
 
     @Test
     fun isPmIdAlreadyAssigned_withDoiInDb_countsOtherPaperAsDuplicate() {
         // it's id 1 that has that pmId
-        assertThat(repo.isPmIdAlreadyAssigned(25395026, 2L)).hasValue("1")
+        repo.isPmIdAlreadyAssigned(25395026, 2L).get() shouldBeEqualTo "1"
     }
 
     @Test
     fun isPmIdAlreadyAssigned_withDoiInDb_doesNotCountCurrentPaperAsDuplicate() {
-        assertThat(repo.isPmIdAlreadyAssigned(25395026, 1L)).isNotPresent
+        repo.isPmIdAlreadyAssigned(25395026, 1L).isPresent.shouldBeFalse()
     }
 
     @Test
     fun isPmIdAlreadyAssigned_withDoiInDb_andWithNewEntityWithNullId_countsAnyRecordFoundWithPmId() {
-        assertThat(repo.isPmIdAlreadyAssigned(25395026, null)).isPresent
+        repo.isPmIdAlreadyAssigned(25395026, null).isPresent.shouldBeTrue()
     }
 
     @Test
     fun isPmIdAlreadyAssigned_withDoiNotInDb_reportsNoDuplicate() {
-        assertThat(repo.isPmIdAlreadyAssigned(-1, 1L)).isNotPresent
+        repo.isPmIdAlreadyAssigned(-1, 1L).isPresent.shouldBeFalse()
     }
 
     companion object {

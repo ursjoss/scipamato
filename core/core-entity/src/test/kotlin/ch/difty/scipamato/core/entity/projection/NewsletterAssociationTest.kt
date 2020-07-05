@@ -6,7 +6,8 @@ import ch.difty.scipamato.core.entity.CoreEntity.CoreEntityFields.CREATOR_ID
 import ch.difty.scipamato.core.entity.CoreEntity.CoreEntityFields.MODIFIER_ID
 import nl.jqno.equalsverifier.EqualsVerifier
 import nl.jqno.equalsverifier.Warning
-import org.assertj.core.api.Assertions.assertThat
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldContainSame
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
@@ -24,20 +25,20 @@ internal class NewsletterAssociationTest {
 
     @Test
     fun getting() {
-        assertThat(na.id).isEqualTo(1)
-        assertThat(na.issue).isEqualTo("issue")
-        assertThat(na.publicationStatusId).isEqualTo(2)
-        assertThat(na.headline).isEqualTo("hl")
+        na.id shouldBeEqualTo 1
+        na.issue shouldBeEqualTo "issue"
+        na.publicationStatusId shouldBeEqualTo 2
+        na.headline shouldBeEqualTo "hl"
     }
 
     @Test
     fun displayValue() {
-        assertThat(na.displayValue).isEqualTo("issue")
+        na.displayValue shouldBeEqualTo "issue"
     }
 
     @Test
     fun testingToString() {
-        assertThat(na.toString()).isEqualTo("NewsletterAssociation(issue=issue, publicationStatusId=2, headline=hl)")
+        na.toString() shouldBeEqualTo "NewsletterAssociation(issue=issue, publicationStatusId=2, headline=hl)"
     }
 
     @Test
@@ -59,7 +60,7 @@ internal class NewsletterAssociationTest {
 
     @Test
     fun assertEnumFields() {
-        assertThat(NewsletterAssociation.NewsletterAssociationFields.values().map { it.fieldName })
-            .containsExactly("id", "issue", "publicationStatusId", "headline")
+        NewsletterAssociation.NewsletterAssociationFields.values().map { it.fieldName } shouldContainSame
+            listOf("id", "issue", "publicationStatusId", "headline")
     }
 }

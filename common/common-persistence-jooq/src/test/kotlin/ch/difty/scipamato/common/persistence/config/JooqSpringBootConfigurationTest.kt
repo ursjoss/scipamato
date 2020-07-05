@@ -1,6 +1,6 @@
 package ch.difty.scipamato.common.persistence.config
 
-import org.assertj.core.api.Assertions.assertThat
+import org.amshove.kluent.shouldBeTrue
 import org.junit.jupiter.api.Test
 
 internal class JooqSpringBootConfigurationTest {
@@ -10,6 +10,6 @@ internal class JooqSpringBootConfigurationTest {
     @Test
     fun settings_haveOptimisticLockingConfigured() {
         val settings = conf.settings()
-        assertThat(settings.isExecuteWithOptimisticLocking).isTrue()
+        settings.isExecuteWithOptimisticLocking.shouldBeTrue()
     }
 }

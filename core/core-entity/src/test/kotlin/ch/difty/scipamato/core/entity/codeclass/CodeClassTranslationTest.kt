@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.entity.codeclass
 
-import org.assertj.core.api.Assertions.assertThat
+import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.Test
 
 internal class CodeClassTranslationTest {
@@ -8,17 +8,17 @@ internal class CodeClassTranslationTest {
     @Test
     fun comment() {
         val cct = CodeClassTranslation(1, "de", "code1", "description", 1)
-        assertThat(cct.description).isEqualTo("description")
+        cct.description shouldBeEqualTo "description"
     }
 
     @Test
     fun displayValue() {
         val cct = CodeClassTranslation(1, "de", "code1", "description", 1)
-        assertThat(cct.displayValue).isEqualTo("de: code1")
+        cct.displayValue shouldBeEqualTo "de: code1"
     }
 
     @Test
     fun field() {
-        assertThat(CodeClassTranslation.CodeClassTranslationFields.DESCRIPTION.fieldName).isEqualTo("description")
+        CodeClassTranslation.CodeClassTranslationFields.DESCRIPTION.fieldName shouldBeEqualTo "description"
     }
 }

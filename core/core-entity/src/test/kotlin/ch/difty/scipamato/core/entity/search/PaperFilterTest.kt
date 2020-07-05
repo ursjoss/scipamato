@@ -2,7 +2,8 @@ package ch.difty.scipamato.core.entity.search
 
 import nl.jqno.equalsverifier.EqualsVerifier
 import nl.jqno.equalsverifier.Warning
-import org.assertj.core.api.Assertions.assertThat
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldContainAll
 import org.junit.jupiter.api.Test
 
 internal class PaperFilterTest {
@@ -19,18 +20,17 @@ internal class PaperFilterTest {
         f.publicationYearUntil = 2017
         f.newsletterId = 2
 
-        assertThat(f.number).isEqualTo(1L)
-        assertThat(f.authorMask).isEqualTo("authorMask")
-        assertThat(f.methodsMask).isEqualTo("methodsMask")
-        assertThat(f.searchMask).isEqualTo("searchMask")
-        assertThat(f.publicationYearFrom).isEqualTo(2015)
-        assertThat(f.publicationYearUntil).isEqualTo(2017)
-        assertThat(f.newsletterId).isEqualTo(2)
+        f.number shouldBeEqualTo 1L
+        f.authorMask shouldBeEqualTo "authorMask"
+        f.methodsMask shouldBeEqualTo "methodsMask"
+        f.searchMask shouldBeEqualTo "searchMask"
+        f.publicationYearFrom shouldBeEqualTo 2015
+        f.publicationYearUntil shouldBeEqualTo 2017
+        f.newsletterId shouldBeEqualTo 2
 
-        assertThat(f.toString()).isEqualTo(
+        f.toString() shouldBeEqualTo
             "PaperFilter(number=1, authorMask=authorMask, methodsMask=methodsMask, searchMask=searchMask, " +
-                "publicationYearFrom=2015, publicationYearUntil=2017, newsletterId=2)"
-        )
+            "publicationYearFrom=2015, publicationYearUntil=2017, newsletterId=2)"
     }
 
     @Test
@@ -44,7 +44,7 @@ internal class PaperFilterTest {
 
     @Test
     fun assertEnumFields() {
-        assertThat(PaperFilter.PaperFilterFields.values().map { it.fieldName }).containsExactly(
+        PaperFilter.PaperFilterFields.values().map { it.fieldName } shouldContainAll listOf(
             "number",
             "authorMask",
             "methodsMask",

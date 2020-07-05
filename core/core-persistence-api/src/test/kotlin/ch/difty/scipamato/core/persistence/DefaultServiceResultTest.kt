@@ -1,6 +1,7 @@
 package ch.difty.scipamato.core.persistence
 
-import org.assertj.core.api.Assertions.assertThat
+import org.amshove.kluent.shouldBeEmpty
+import org.amshove.kluent.shouldContainSame
 import org.junit.jupiter.api.Test
 
 internal class DefaultServiceResultTest {
@@ -9,48 +10,48 @@ internal class DefaultServiceResultTest {
 
     @Test
     fun defaultServiceResult_hasNoMessages() {
-        assertThat(sr.infoMessages).isEmpty()
-        assertThat(sr.warnMessages).isEmpty()
-        assertThat(sr.errorMessages).isEmpty()
+        sr.infoMessages.shouldBeEmpty()
+        sr.warnMessages.shouldBeEmpty()
+        sr.errorMessages.shouldBeEmpty()
     }
 
     @Test
     fun addingInfoMessages() {
         sr.addInfoMessage("foo")
-        assertThat(sr.infoMessages).containsOnly("foo")
-        assertThat(sr.warnMessages).isEmpty()
-        assertThat(sr.errorMessages).isEmpty()
+        sr.infoMessages shouldContainSame listOf("foo")
+        sr.warnMessages.shouldBeEmpty()
+        sr.errorMessages.shouldBeEmpty()
 
         sr.addInfoMessage("bar")
-        assertThat(sr.infoMessages).containsOnly("foo", "bar")
-        assertThat(sr.warnMessages).isEmpty()
-        assertThat(sr.errorMessages).isEmpty()
+        sr.infoMessages shouldContainSame listOf("foo", "bar")
+        sr.warnMessages.shouldBeEmpty()
+        sr.errorMessages.shouldBeEmpty()
     }
 
     @Test
     fun addingWarnMessages() {
         sr.addWarnMessage("foo")
-        assertThat(sr.warnMessages).containsOnly("foo")
-        assertThat(sr.infoMessages).isEmpty()
-        assertThat(sr.errorMessages).isEmpty()
+        sr.warnMessages shouldContainSame listOf("foo")
+        sr.infoMessages.shouldBeEmpty()
+        sr.errorMessages.shouldBeEmpty()
 
         sr.addWarnMessage("bar")
-        assertThat(sr.warnMessages).containsOnly("foo", "bar")
-        assertThat(sr.infoMessages).isEmpty()
-        assertThat(sr.errorMessages).isEmpty()
+        sr.warnMessages shouldContainSame listOf("foo", "bar")
+        sr.infoMessages.shouldBeEmpty()
+        sr.errorMessages.shouldBeEmpty()
     }
 
     @Test
     fun addingErrorMessages() {
         sr.addErrorMessage("foo")
-        assertThat(sr.errorMessages).containsOnly("foo")
-        assertThat(sr.infoMessages).isEmpty()
-        assertThat(sr.warnMessages).isEmpty()
+        sr.errorMessages shouldContainSame listOf("foo")
+        sr.infoMessages.shouldBeEmpty()
+        sr.warnMessages.shouldBeEmpty()
 
         sr.addErrorMessage("bar")
-        assertThat(sr.errorMessages).containsOnly("foo", "bar")
-        assertThat(sr.infoMessages).isEmpty()
-        assertThat(sr.warnMessages).isEmpty()
+        sr.errorMessages shouldContainSame listOf("foo", "bar")
+        sr.infoMessages.shouldBeEmpty()
+        sr.warnMessages.shouldBeEmpty()
     }
 
     @Test
@@ -59,8 +60,8 @@ internal class DefaultServiceResultTest {
         sr.addWarnMessage(null)
         sr.addErrorMessage(null)
 
-        assertThat(sr.infoMessages).isEmpty()
-        assertThat(sr.warnMessages).isEmpty()
-        assertThat(sr.errorMessages).isEmpty()
+        sr.infoMessages.shouldBeEmpty()
+        sr.warnMessages.shouldBeEmpty()
+        sr.errorMessages.shouldBeEmpty()
     }
 }

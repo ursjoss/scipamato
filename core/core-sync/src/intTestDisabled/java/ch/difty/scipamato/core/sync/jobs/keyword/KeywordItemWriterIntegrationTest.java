@@ -35,7 +35,7 @@ class KeywordItemWriterIntegrationTest extends AbstractItemWriterIntegrationTest
         newKeyword = newKeyword(ID_NEW, NAME_NEW);
 
         existingKeyword = getExistingCodeFromDb(ID_EXISTING, LANG_CODE);
-        assertThat(existingKeyword.getSearchOverride()).isNull();
+        existingKeyword.getSearchOverride().shouldBeNull();
         existingKeyword.setSearchOverride("bar");
     }
 
@@ -87,7 +87,7 @@ class KeywordItemWriterIntegrationTest extends AbstractItemWriterIntegrationTest
     void insertingNewKeyword_succeeds() {
         int keywordId = newKeyword.getKeywordId();
         assertCodeDoesNotExistWith(keywordId, LANG_CODE);
-        assertThat(getWriter().executeUpdate(newKeyword)).isEqualTo(1);
+        getWriter().executeUpdate(newKeyword) shouldBeEqualTo 1;
         assertCodeExistsWith(keywordId, LANG_CODE);
     }
 
@@ -110,7 +110,7 @@ class KeywordItemWriterIntegrationTest extends AbstractItemWriterIntegrationTest
 
     @Test
     void updatingExistingCode_succeeds() {
-        assertThat(getWriter().executeUpdate(existingKeyword)).isEqualTo(1);
+        getWriter().executeUpdate(existingKeyword) shouldBeEqualTo 1;
     }
 
 }

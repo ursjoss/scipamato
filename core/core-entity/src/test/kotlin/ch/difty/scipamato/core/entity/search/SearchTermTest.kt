@@ -1,7 +1,14 @@
 package ch.difty.scipamato.core.entity.search
 
-import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.fail
+import org.amshove.kluent.invoking
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeFalse
+import org.amshove.kluent.shouldBeInstanceOf
+import org.amshove.kluent.shouldBeNull
+import org.amshove.kluent.shouldBeTrue
+import org.amshove.kluent.shouldHaveSize
+import org.amshove.kluent.shouldThrow
+import org.amshove.kluent.withMessage
 import org.junit.jupiter.api.Test
 
 internal class SearchTermTest {
@@ -9,69 +16,64 @@ internal class SearchTermTest {
     @Test
     fun booleanSearchTerm() {
         val st = SearchTerm.newSearchTerm(10, SearchTermType.BOOLEAN.id, 1L, "fn", "true")
-        assertThat(st).isInstanceOf(BooleanSearchTerm::class.java)
+        st shouldBeInstanceOf BooleanSearchTerm::class
 
         val bst = st as BooleanSearchTerm
-        assertThat(bst.id).isEqualTo(10)
-        assertThat(bst.searchTermType).isEqualTo(SearchTermType.BOOLEAN)
-        assertThat(bst.searchConditionId).isEqualTo(1L)
-        assertThat(bst.fieldName).isEqualTo("fn")
-        assertThat(bst.rawSearchTerm).isEqualTo("true")
-        assertThat(bst.value).isTrue()
+        bst.id shouldBeEqualTo 10
+        bst.searchTermType shouldBeEqualTo SearchTermType.BOOLEAN
+        bst.searchConditionId shouldBeEqualTo 1L
+        bst.fieldName shouldBeEqualTo "fn"
+        bst.rawSearchTerm shouldBeEqualTo "true"
+        bst.value.shouldBeTrue()
     }
 
     @Test
     fun integerSearchTerm() {
         val st = SearchTerm.newSearchTerm(11, SearchTermType.INTEGER.id, 2L, "fn2", "5-7")
-        assertThat(st).isInstanceOf(IntegerSearchTerm::class.java)
+        st shouldBeInstanceOf IntegerSearchTerm::class
 
         val ist = st as IntegerSearchTerm
-        assertThat(ist.id).isEqualTo(11)
-        assertThat(ist.searchTermType).isEqualTo(SearchTermType.INTEGER)
-        assertThat(ist.searchConditionId).isEqualTo(2L)
-        assertThat(ist.fieldName).isEqualTo("fn2")
-        assertThat(ist.rawSearchTerm).isEqualTo("5-7")
-        assertThat(ist.value).isEqualTo(5)
-        assertThat(ist.value2).isEqualTo(7)
+        ist.id shouldBeEqualTo 11
+        ist.searchTermType shouldBeEqualTo SearchTermType.INTEGER
+        ist.searchConditionId shouldBeEqualTo 2L
+        ist.fieldName shouldBeEqualTo "fn2"
+        ist.rawSearchTerm shouldBeEqualTo "5-7"
+        ist.value shouldBeEqualTo 5
+        ist.value2 shouldBeEqualTo 7
     }
 
     @Test
     fun stringSearchTerm() {
         val st = SearchTerm.newSearchTerm(12, SearchTermType.STRING.id, 3L, "fn3", "foo*")
-        assertThat(st).isInstanceOf(StringSearchTerm::class.java)
+        st shouldBeInstanceOf StringSearchTerm::class
 
         verify(st)
     }
 
     private fun verify(st: SearchTerm) {
         val sst = st as StringSearchTerm
-        assertThat(sst.id).isEqualTo(12)
-        assertThat(sst.searchTermType).isEqualTo(SearchTermType.STRING)
-        assertThat(sst.searchConditionId).isEqualTo(3L)
-        assertThat(sst.fieldName).isEqualTo("fn3")
-        assertThat(sst.rawSearchTerm).isEqualTo("foo*")
-        assertThat(sst.tokens).hasSize(1)
-        assertThat(sst.tokens[0].sqlData).isEqualTo("foo%")
-        assertThat(sst.tokens[0].negate).isFalse()
+        sst.id shouldBeEqualTo 12
+        sst.searchTermType shouldBeEqualTo SearchTermType.STRING
+        sst.searchConditionId shouldBeEqualTo 3L
+        sst.fieldName shouldBeEqualTo "fn3"
+        sst.rawSearchTerm shouldBeEqualTo "foo*"
+        sst.tokens shouldHaveSize 1
+        sst.tokens[0].sqlData shouldBeEqualTo "foo%"
+        sst.tokens[0].negate.shouldBeFalse()
     }
 
     @Test
     fun stringSearchTerm2() {
         val st = SearchTerm.newSearchTerm(12, SearchTermType.STRING, 3L, "fn3", "foo*")
-        assertThat(st).isInstanceOf(StringSearchTerm::class.java)
+        st shouldBeInstanceOf StringSearchTerm::class
         verify(st)
     }
 
     @Test
     fun undefinedSearchTerm_throws() {
-        try {
+        invoking {
             SearchTerm.newSearchTerm(13, SearchTermType.UNSUPPORTED, 4L, "fn4", "whatever")
-            fail<Any>("should have thrown exception")
-        } catch (ex: Error) {
-            assertThat(ex)
-                .isInstanceOf(AssertionError::class.java)
-                .hasMessage("SearchTermType.UNSUPPORTED is not supported")
-        }
+        } shouldThrow AssertionError::class withMessage "SearchTermType.UNSUPPORTED is not supported"
     }
 
     @Test
@@ -86,62 +88,62 @@ internal class SearchTermTest {
 
     private fun assertUserFieldEndingWith(userFieldTag: String) {
         val userFieldName = "fn4$userFieldTag"
-        val st = SearchTerm.newSearchTerm(13, 3, 4L, userFieldName, "foo >=\"2017-02-01\"")
-        assertThat(st).isInstanceOf(AuditSearchTerm::class.java)
+        val st = SearchTerm.newSearchTerm(13, 3, 4L, userFieldName, """foo >="2017-02-01"""")
+        st shouldBeInstanceOf AuditSearchTerm::class
 
         val ast = st as AuditSearchTerm
-        assertThat(ast.id).isEqualTo(13)
-        assertThat(ast.searchTermType).isEqualTo(SearchTermType.AUDIT)
-        assertThat(ast.searchConditionId).isEqualTo(4L)
-        assertThat(ast.fieldName).isEqualTo(userFieldName)
-        assertThat(ast.rawSearchTerm).isEqualTo("foo >=\"2017-02-01\"")
-        assertThat(ast.tokens).hasSize(1)
-        assertThat(ast.tokens[0].userSqlData).isEqualTo("foo")
-        assertThat(ast.tokens[0].dateSqlData).isNull()
+        ast.id shouldBeEqualTo 13
+        ast.searchTermType shouldBeEqualTo SearchTermType.AUDIT
+        ast.searchConditionId shouldBeEqualTo 4L
+        ast.fieldName shouldBeEqualTo userFieldName
+        ast.rawSearchTerm shouldBeEqualTo """foo >="2017-02-01""""
+        ast.tokens shouldHaveSize 1
+        ast.tokens[0].userSqlData shouldBeEqualTo "foo"
+        ast.tokens[0].dateSqlData.shouldBeNull()
     }
 
     @Test
     fun auditSearchTerm_forFieldNotEndingWithUserTag_akaDateField_returnsDateTokenOnly() {
         val userFieldName = "fn4"
         val st = SearchTerm.newSearchTerm(13, 3, 4L, userFieldName, "foo >=\"2017-02-01\"")
-        assertThat(st).isInstanceOf(AuditSearchTerm::class.java)
+        st shouldBeInstanceOf AuditSearchTerm::class
 
         val ast = st as AuditSearchTerm
-        assertThat(ast.id).isEqualTo(13)
-        assertThat(ast.searchTermType).isEqualTo(SearchTermType.AUDIT)
-        assertThat(ast.searchConditionId).isEqualTo(4L)
-        assertThat(ast.fieldName).isEqualTo(userFieldName)
-        assertThat(ast.rawSearchTerm).isEqualTo("foo >=\"2017-02-01\"")
-        assertThat(ast.tokens).hasSize(1)
-        assertThat(ast.tokens[0].userSqlData).isNull()
-        assertThat(ast.tokens[0].dateSqlData).isEqualTo("2017-02-01 00:00:00")
+        ast.id shouldBeEqualTo 13
+        ast.searchTermType shouldBeEqualTo SearchTermType.AUDIT
+        ast.searchConditionId shouldBeEqualTo 4L
+        ast.fieldName shouldBeEqualTo userFieldName
+        ast.rawSearchTerm shouldBeEqualTo "foo >=\"2017-02-01\""
+        ast.tokens shouldHaveSize 1
+        ast.tokens[0].userSqlData.shouldBeNull()
+        ast.tokens[0].dateSqlData shouldBeEqualTo "2017-02-01 00:00:00"
     }
 
     @Test
     fun newStringSearchTerm() {
         val st = SearchTerm.newStringSearchTerm("field", "rawSearchTerm")
-        assertThat(st.fieldName).isEqualTo("field")
-        assertThat(st.rawSearchTerm).isEqualTo("rawSearchTerm")
+        st.fieldName shouldBeEqualTo "field"
+        st.rawSearchTerm shouldBeEqualTo "rawSearchTerm"
     }
 
     @Test
     fun newIntegerSearchTerm() {
         val st = SearchTerm.newIntegerSearchTerm("field", "5")
-        assertThat(st.fieldName).isEqualTo("field")
-        assertThat(st.rawSearchTerm).isEqualTo("5")
+        st.fieldName shouldBeEqualTo "field"
+        st.rawSearchTerm shouldBeEqualTo "5"
     }
 
     @Test
     fun newBooleanSearchTerm() {
         val st = SearchTerm.newBooleanSearchTerm("field", "rawSearchTerm")
-        assertThat(st.fieldName).isEqualTo("field")
-        assertThat(st.rawSearchTerm).isEqualTo("rawSearchTerm")
+        st.fieldName shouldBeEqualTo "field"
+        st.rawSearchTerm shouldBeEqualTo "rawSearchTerm"
     }
 
     @Test
     fun newAuditSearchTerm() {
         val st = SearchTerm.newAuditSearchTerm("field", "rawSearchTerm")
-        assertThat(st.fieldName).isEqualTo("field")
-        assertThat(st.rawSearchTerm).isEqualTo("rawSearchTerm")
+        st.fieldName shouldBeEqualTo "field"
+        st.rawSearchTerm shouldBeEqualTo "rawSearchTerm"
     }
 }

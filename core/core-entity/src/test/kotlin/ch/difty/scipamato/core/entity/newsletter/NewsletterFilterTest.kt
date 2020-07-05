@@ -3,7 +3,8 @@ package ch.difty.scipamato.core.entity.newsletter
 import ch.difty.scipamato.common.entity.newsletter.PublicationStatus
 import nl.jqno.equalsverifier.EqualsVerifier
 import nl.jqno.equalsverifier.Warning
-import org.assertj.core.api.Assertions.assertThat
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldContainSame
 import org.junit.jupiter.api.Test
 
 internal class NewsletterFilterTest {
@@ -16,14 +17,13 @@ internal class NewsletterFilterTest {
         f.publicationStatus = PublicationStatus.CANCELLED
         f.newsletterTopic = NewsletterTopic(1, "foo")
 
-        assertThat(f.issueMask).isEqualTo("issueMask")
-        assertThat(f.publicationStatus).isEqualTo(PublicationStatus.CANCELLED)
-        assertThat(f.newsletterTopic.id).isEqualTo(1)
+        f.issueMask shouldBeEqualTo "issueMask"
+        f.publicationStatus shouldBeEqualTo PublicationStatus.CANCELLED
+        f.newsletterTopic.id shouldBeEqualTo 1
 
-        assertThat(f.toString()).isEqualTo(
+        f.toString() shouldBeEqualTo
             "NewsletterFilter(issueMask=issueMask, publicationStatus=CANCELLED," +
-                " newsletterTopic=NewsletterTopic(title=foo))"
-        )
+            " newsletterTopic=NewsletterTopic(title=foo))"
     }
 
     @Test
@@ -37,7 +37,7 @@ internal class NewsletterFilterTest {
 
     @Test
     fun assertEnumFields() {
-        assertThat(NewsletterFilter.NewsletterFilterFields.values().map { it.fieldName })
-            .containsExactly("issueMask", "publicationStatus", "newsletterTopic")
+        NewsletterFilter.NewsletterFilterFields.values().map { it.fieldName } shouldContainSame
+            listOf("issueMask", "publicationStatus", "newsletterTopic")
     }
 }

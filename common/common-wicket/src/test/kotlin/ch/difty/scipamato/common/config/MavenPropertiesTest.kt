@@ -1,6 +1,6 @@
 package ch.difty.scipamato.common.config
 
-import org.assertj.core.api.Assertions.assertThat
+import org.amshove.kluent.shouldBeNull
 import org.junit.jupiter.api.Test
 
 internal class MavenPropertiesTest {
@@ -9,6 +9,6 @@ internal class MavenPropertiesTest {
 
     @Test
     fun noDefaultValues() {
-        assertThat(mp.version).isNull()
+        mp.version.shouldBeNull()
     }
 }

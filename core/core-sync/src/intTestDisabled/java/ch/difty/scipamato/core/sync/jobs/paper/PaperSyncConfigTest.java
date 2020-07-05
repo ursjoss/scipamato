@@ -44,31 +44,31 @@ class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
     @Autowired
     private DateTimeService    dateTimeService;
 
-    @Mock
+    @MockK
     private CodeAggregator             codeAggregator;
-    @Mock
+    @MockK
     private SyncShortFieldConcatenator shortFieldConcatenator;
 
     @SpyBean(name = "dslContext")
     private DSLContext jooqCore;
 
-    @Mock
+    @MockK
     private DSLContext jooqPublic;
-    @Mock
+    @MockK
     private DataSource coreDataSource;
 
-    @Mock
+    @MockK
     private SelectSelectStep<Record>    selectSelectStep;
-    @Mock
+    @MockK
     private SelectJoinStep<Record>      selectJoinStep;
-    @Mock
+    @MockK
     private SelectConditionStep<Record> selectConditionStep;
-    @Mock
+    @MockK
     private ResultSet                   rs;
 
-    @Mock
+    @MockK
     private DeleteWhereStep<PaperRecord>     deleteWhereStep;
-    @Mock
+    @MockK
     private DeleteConditionStep<PaperRecord> deleteConditionStep;
 
     private final List<String> internalCodes = Arrays.asList("1N", "1U", "1Z");
@@ -92,7 +92,7 @@ class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
 
     @AfterEach
     void tearDown() {
-        verifyNoMoreInteractions(codeAggregator, jooqPublic, coreDataSource);
+        confirmVerified(codeAggregator, jooqPublic, coreDataSource);
     }
 
     @Override
@@ -178,63 +178,63 @@ class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
 
         PublicPaper pp = config.makeEntity(rs);
 
-        assertThat(pp.getId()).isEqualTo(1L);
-        assertThat(pp.getNumber()).isEqualTo(2L);
-        assertThat(pp.getPmId()).isEqualTo(3);
-        assertThat(pp.getAuthors()).isEqualTo("a");
-        assertThat(pp.getTitle()).isEqualTo("t");
-        assertThat(pp.getLocation()).isEqualTo("l");
-        assertThat(pp.getPublicationYear()).isEqualTo(2017);
-        assertThat(pp.getGoals()).isEqualTo("g");
-        assertThat(pp.getMethods()).isEqualTo("mfrs");
-        assertThat(pp.getPopulation()).isEqualTo("pfrs");
-        assertThat(pp.getResult()).isEqualTo("rfrs");
-        assertThat(pp.getComment()).isEqualTo("c");
-        assertThat(pp.getCodes()).containsExactly("1A", "2B");
-        assertThat(pp.getCodesPopulation()).containsExactly((short) 1, (short) 2);
-        assertThat(pp.getCodesStudyDesign()).containsExactly((short) 3, (short) 4);
-        assertThat(pp.getVersion()).isEqualTo(4);
-        assertThat(pp.getCreated()).isEqualTo(CREATED);
-        assertThat(pp.getLastModified()).isEqualTo(MODIFIED);
+        pp.getId() shouldBeEqualTo 1L;
+        pp.getNumber() shouldBeEqualTo 2L;
+        pp.getPmId() shouldBeEqualTo 3;
+        pp.getAuthors() shouldBeEqualTo "a";
+        pp.getTitle() shouldBeEqualTo "t";
+        pp.getLocation() shouldBeEqualTo "l";
+        pp.getPublicationYear() shouldBeEqualTo 2017;
+        pp.getGoals() shouldBeEqualTo "g";
+        pp.getMethods() shouldBeEqualTo "mfrs";
+        pp.getPopulation() shouldBeEqualTo "pfrs";
+        pp.getResult() shouldBeEqualTo "rfrs";
+        pp.getComment() shouldBeEqualTo "c";
+        pp.getCodes() shouldContainAll listOf("1A", "2B");
+        pp.getCodesPopulation() shouldContainAll listOf((short) 1, (short) 2);
+        pp.getCodesStudyDesign() shouldContainAll listOf((short) 3, (short) 4);
+        pp.getVersion() shouldBeEqualTo 4;
+        pp.getCreated() shouldBeEqualTo CREATED;
+        pp.getLastModified() shouldBeEqualTo MODIFIED;
         assertThat(pp.getLastSynched()).isCloseTo("2016-12-09T06:02:13.000", 1000);
 
-        verify(rs).getLong(Paper.PAPER.ID.getName());
-        verify(rs).getLong(Paper.PAPER.NUMBER.getName());
-        verify(rs).getInt(Paper.PAPER.PM_ID.getName());
-        verify(rs).getString(Paper.PAPER.AUTHORS.getName());
-        verify(rs).getString(Paper.PAPER.TITLE.getName());
-        verify(rs).getString(Paper.PAPER.LOCATION.getName());
-        verify(rs).getInt(Paper.PAPER.PUBLICATION_YEAR.getName());
-        verify(rs).getString(Paper.PAPER.GOALS.getName());
-        verify(rs).getString(Paper.PAPER.COMMENT.getName());
-        verify(rs).getArray("codes");
-        verify(rs).getInt(Paper.PAPER.VERSION.getName());
-        verify(rs).getTimestamp(Paper.PAPER.CREATED.getName());
-        verify(rs).getTimestamp(Paper.PAPER.LAST_MODIFIED.getName());
-        verify(rs, times(5)).wasNull();
+        verify{ rs.getLong(Paper.PAPER.ID.getName()); }
+        verify{ rs.getLong(Paper.PAPER.NUMBER.getName()); }
+        verify{ rs.getInt(Paper.PAPER.PM_ID.getName()); }
+        verify{ rs.getString(Paper.PAPER.AUTHORS.getName()); }
+        verify{ rs.getString(Paper.PAPER.TITLE.getName()); }
+        verify{ rs.getString(Paper.PAPER.LOCATION.getName()); }
+        verify{ rs.getInt(Paper.PAPER.PUBLICATION_YEAR.getName()); }
+        verify{ rs.getString(Paper.PAPER.GOALS.getName()); }
+        verify{ rs.getString(Paper.PAPER.COMMENT.getName()); }
+        verify{ rs.getArray("codes"); }
+        verify{ rs.getInt(Paper.PAPER.VERSION.getName()); }
+        verify{ rs.getTimestamp(Paper.PAPER.CREATED.getName()); }
+        verify{ rs.getTimestamp(Paper.PAPER.LAST_MODIFIED.getName()); }
+        verify(exactly=5) { rs.wasNull(); }
 
         verifyCodeAggregator();
 
-        verify(shortFieldConcatenator).methodsFrom(rs);
-        verify(shortFieldConcatenator).populationFrom(rs);
-        verify(shortFieldConcatenator).resultFrom(rs);
+        verify{ shortFieldConcatenator.methodsFrom(rs); }
+        verify{ shortFieldConcatenator.populationFrom(rs); }
+        verify{ shortFieldConcatenator.resultFrom(rs); }
 
-        verifyNoMoreInteractions(rs);
+        confirmVerified(rs);
     }
 
     private void verifyCodeAggregator() {
-        verify(codeAggregator).setInternalCodes(internalCodes);
-        verify(codeAggregator).load(new String[] { "1A", "2B" });
-        verify(codeAggregator).getCodesPopulation();
-        verify(codeAggregator).getCodesStudyDesign();
-        verify(codeAggregator).getAggregatedCodes();
+        verify{ codeAggregator.setInternalCodes(internalCodes); }
+        verify{ codeAggregator.load(new String[] { "1A", "2B" }); }
+        verify{ codeAggregator.getCodesPopulation(); }
+        verify{ codeAggregator.getCodesStudyDesign(); }
+        verify{ codeAggregator.getAggregatedCodes(); }
     }
 
     @Test
     void makingEntity_withNullValueInPM_ID() throws SQLException {
         final String fieldName = Paper.PAPER.PM_ID.getName();
         validateNullableInteger(fieldName);
-        verify(rs).getInt(fieldName);
+        verify{ rs.getInt(fieldName); }
         verifyCodeAggregator();
     }
 
@@ -253,7 +253,7 @@ class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
     void makingEntity_withNullValueInPublicationYear() throws SQLException {
         final String fieldName = Paper.PAPER.PUBLICATION_YEAR.getName();
         validateNullableInteger(fieldName);
-        verify(rs).getInt(fieldName);
+        verify{ rs.getInt(fieldName); }
         verifyCodeAggregator();
     }
 
@@ -268,7 +268,7 @@ class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
             }
             return null;
         });
-        verify(rs).getLong(fieldName);
+        verify{ rs.getLong(fieldName); }
 
         verifyCodeAggregator();
     }
@@ -290,38 +290,38 @@ class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
 
         PublicPaper pp = config.makeEntity(rs);
 
-        assertThat(pp.getNumber()).isNull();
-        verify(rs, times(5)).wasNull();
+        pp.getNumber().shouldBeNull();
+        verify(exactly=5) { rs.wasNull(); }
     }
 
     @Test
     void assertInternalCodesAreSet() {
-        verify(codeAggregator).setInternalCodes(anyList());
+        verify{ codeAggregator.setInternalCodes(anyList()); }
     }
 
     @Test
     @Override
     protected void assertingJobName() {
-        verify(codeAggregator).setInternalCodes(internalCodes);
+        verify{ codeAggregator.setInternalCodes(internalCodes); }
     }
 
     @Test
     @Override
     protected void jobIsRestartable() {
-        verify(codeAggregator).setInternalCodes(internalCodes);
+        verify{ codeAggregator.setInternalCodes(internalCodes); }
     }
 
     @Test
     @Override
     protected void assertingJobIncrementer_toBeRunIdIncrementer() {
-        verify(codeAggregator).setInternalCodes(internalCodes);
+        verify{ codeAggregator.setInternalCodes(internalCodes); }
     }
 
     @Test
     @Override
     protected void assertingSql() {
-        assertThat(selectSql()).isEqualTo(expectedSelectSql());
-        verify(codeAggregator).setInternalCodes(internalCodes);
+        selectSql() shouldBeEqualTo expectedSelectSql();
+        verify{ codeAggregator.setInternalCodes(internalCodes); }
     }
 
     @Test
@@ -329,18 +329,18 @@ class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
     protected void assertingPseudoRefDataEnforcementDdl() {
         final DeleteConditionStep<PaperRecord> dcs = getPseudoFkDcs();
         if (dcs != null)
-            assertThat(dcs.getSQL()).isEqualTo(expectedPseudoFkSql());
+            dcs.getSQL() shouldBeEqualTo expectedPseudoFkSql();
         else
-            assertThat(expectedPseudoFkSql()).isNull();
-        verify(codeAggregator).setInternalCodes(internalCodes);
-        verifyNoMoreInteractions(jooqPublic);
+            expectedPseudoFkSql().shouldBeNull();
+        verify{ codeAggregator.setInternalCodes(internalCodes); }
+        confirmVerified(jooqPublic);
     }
 
     @Test
     @Override
     protected void assertingPurgeLastSynchField() {
-        assertThat(lastSynchedField()).isEqualTo(expectedLastSyncField());
-        verify(codeAggregator).setInternalCodes(internalCodes);
+        lastSynchedField() shouldBeEqualTo expectedLastSyncField();
+        verify{ codeAggregator.setInternalCodes(internalCodes); }
     }
 
 }

@@ -9,9 +9,20 @@ import ch.difty.scipamato.core.entity.code.CodeDefinition
 import ch.difty.scipamato.core.entity.code.CodeFilter
 import ch.difty.scipamato.core.entity.code.CodeTranslation
 import ch.difty.scipamato.core.persistence.code.JooqCodeRepo
-import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.fail
+import org.amshove.kluent.invoking
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeFalse
+import org.amshove.kluent.shouldBeNull
+import org.amshove.kluent.shouldBeTrue
+import org.amshove.kluent.shouldContainAll
+import org.amshove.kluent.shouldContainSame
+import org.amshove.kluent.shouldHaveSize
+import org.amshove.kluent.shouldNotBeNull
+import org.amshove.kluent.shouldStartWith
+import org.amshove.kluent.shouldThrow
+import org.amshove.kluent.withMessage
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.fail
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.jooq.JooqTest
 import org.testcontainers.junit.jupiter.Testcontainers
@@ -29,21 +40,21 @@ internal open class JooqCodeRepoIntegrationTest {
     @Test
     fun findingAllCodes1InGerman() {
         val codesOfClass1 = repo.findCodesOfClass(CodeClassId.CC1, "de")
-        assertThat(codesOfClass1).hasSize(21)
+        codesOfClass1 shouldHaveSize 21
         codesOfClass1.forEach { c -> log.debug(c.toString()) }
     }
 
     @Test
     fun findingAllCodes2InEnglish() {
         val codesOfClass1 = repo.findCodesOfClass(CodeClassId.CC2, "en")
-        assertThat(codesOfClass1).hasSize(2)
+        codesOfClass1 shouldHaveSize 2
         codesOfClass1.forEach { c -> log.debug(c.toString()) }
     }
 
     @Test
     fun findingAllCodes3InEnglish() {
         val codesOfClass1 = repo.findCodesOfClass(CodeClassId.CC3, "fr")
-        assertThat(codesOfClass1).hasSize(14)
+        codesOfClass1 shouldHaveSize 14
         codesOfClass1.forEach { c -> log.debug(c.toString()) }
     }
 
@@ -54,27 +65,27 @@ internal open class JooqCodeRepoIntegrationTest {
             PaginationRequest(0, 10, Sort.Direction.ASC, "name")
         )
 
-        assertThat(cds).hasSize(10)
+        cds shouldHaveSize 10
 
         var cd = cds[0]
-        assertThat(cd.code).isEqualTo("4Y")
-        assertThat(cd.codeClass?.id).isEqualTo(4)
-        assertThat(cd.name).isEqualTo("Absenzen, eingeschränkte Aktivität")
-        assertThat(cd.sort).isEqualTo(17)
-        assertThat(cd.isInternal).isTrue()
-        assertThat(cd.getNameInLanguage("de")).startsWith("Absenzen,")
-        assertThat(cd.getNameInLanguage("en")).startsWith("Absenteeism")
-        assertThat(cd.getNameInLanguage("fr")).startsWith("Absentéisme")
+        cd.code shouldBeEqualTo "4Y"
+        cd.codeClass?.id shouldBeEqualTo 4
+        cd.name shouldBeEqualTo "Absenzen, eingeschränkte Aktivität"
+        cd.sort shouldBeEqualTo 17
+        cd.isInternal.shouldBeTrue()
+        cd.getNameInLanguage("de")?.shouldStartWith("Absenzen,")
+        cd.getNameInLanguage("en")?.shouldStartWith("Absenteeism")
+        cd.getNameInLanguage("fr")?.shouldStartWith("Absentéisme")
 
         cd = cds[1]
-        assertThat(cd.code).isEqualTo("7Z")
-        assertThat(cd.codeClass?.id).isEqualTo(7)
-        assertThat(cd.name).isEqualTo("Alle")
-        assertThat(cd.sort).isEqualTo(4)
-        assertThat(cd.isInternal).isTrue()
-        assertThat(cd.getNameInLanguage("de")).startsWith("Alle")
-        assertThat(cd.getNameInLanguage("en")).startsWith("All")
-        assertThat(cd.getNameInLanguage("fr")).startsWith("tous")
+        cd.code shouldBeEqualTo "7Z"
+        cd.codeClass?.id shouldBeEqualTo 7
+        cd.name shouldBeEqualTo "Alle"
+        cd.sort shouldBeEqualTo 4
+        cd.isInternal.shouldBeTrue()
+        cd.getNameInLanguage("de")?.shouldStartWith("Alle")
+        cd.getNameInLanguage("en")?.shouldStartWith("All")
+        cd.getNameInLanguage("fr")?.shouldStartWith("tous")
     }
 
     @Test
@@ -86,14 +97,14 @@ internal open class JooqCodeRepoIntegrationTest {
             PaginationRequest(Sort.Direction.ASC, "name")
         )
 
-        assertThat(kds).hasSize(1)
+        kds shouldHaveSize 1
 
         val ntd = kds[0]
-        assertThat(ntd.code).isEqualTo("5A")
-        assertThat(ntd.name).isEqualTo("Experimentelle Studie unter Belastung / Arbeit")
-        assertThat(ntd.getNameInLanguage("de")).isEqualTo("Experimentelle Studie unter Belastung / Arbeit")
-        assertThat(ntd.getNameInLanguage("en")).isEqualTo("Experimental study under exercising conditions")
-        assertThat(ntd.getNameInLanguage("fr")).isEqualTo("Etude expérimentale dans des conditions exercicantes")
+        ntd.code shouldBeEqualTo "5A"
+        ntd.name shouldBeEqualTo "Experimentelle Studie unter Belastung / Arbeit"
+        ntd.getNameInLanguage("de") shouldBeEqualTo "Experimentelle Studie unter Belastung / Arbeit"
+        ntd.getNameInLanguage("en") shouldBeEqualTo "Experimental study under exercising conditions"
+        ntd.getNameInLanguage("fr") shouldBeEqualTo "Etude expérimentale dans des conditions exercicantes"
     }
 
     @Test
@@ -102,82 +113,82 @@ internal open class JooqCodeRepoIntegrationTest {
         filter.nameMask = "Experimentelle Studie unter Belastung / Arbeit"
         val kds = repo.findPageOfCodeDefinitions(filter, PaginationRequest(Sort.Direction.ASC, "name"))
 
-        assertThat(kds).hasSize(1)
+        kds shouldHaveSize 1
 
         val cd = kds[0]
 
-        assertThat(cd.version).isEqualTo(1)
-        assertThat(cd.created).isNull()
-        assertThat(cd.lastModified).isNull()
+        cd.version shouldBeEqualTo 1
+        cd.created.shouldBeNull()
+        cd.lastModified.shouldBeNull()
 
         val tr = cd.getTranslations().first()
-        assertThat(tr.version).isEqualTo(1)
-        assertThat(tr.created).isNull()
-        assertThat(tr.lastModified).isNull()
+        tr.version shouldBeEqualTo 1
+        tr.created.shouldBeNull()
+        tr.lastModified.shouldBeNull()
     }
 
     @Test
     fun countingCodes_witNullFilter_findsAllDefinitions() {
-        assertThat(repo.countByFilter(null)).isEqualTo(82)
+        repo.countByFilter(null) shouldBeEqualTo 82
     }
 
     @Test
     fun countingCodes_withUnspecifiedFilter_findsAllDefinitions() {
-        assertThat(repo.countByFilter(CodeFilter())).isEqualTo(82)
+        repo.countByFilter(CodeFilter()) shouldBeEqualTo 82
     }
 
     @Test
     fun countingCodes_withFilter_findsAllMatchingDefinitions() {
         val filter = CodeFilter()
         filter.nameMask = "es"
-        assertThat(repo.countByFilter(filter)).isEqualTo(44)
+        repo.countByFilter(filter) shouldBeEqualTo 44
     }
 
     @Test
     fun countingCodes_withNonMatchingFilter_findsNone() {
         val filter = CodeFilter()
         filter.nameMask = "foobar"
-        assertThat(repo.countByFilter(filter)).isEqualTo(0)
+        repo.countByFilter(filter) shouldBeEqualTo 0
     }
 
     @Test
     fun gettingMainLanguage() {
-        assertThat(repo.mainLanguage).isEqualTo("de")
+        repo.mainLanguage shouldBeEqualTo "de"
     }
 
     @Test
     fun findingMainLanguage() {
         val cd = repo.newUnpersistedCodeDefinition()
 
-        assertThat(cd.code).isNull()
-        assertThat(cd.mainLanguageCode).isEqualTo("de")
-        assertThat(cd.codeClass).isNull()
-        assertThat(cd.sort).isEqualTo(1)
-        assertThat(cd.isInternal).isFalse()
-        assertThat(cd.name).isEqualTo("n.a.")
-        assertThat(cd.getNameInLanguage("de")).isNull()
+        cd.code.shouldBeNull()
+        cd.mainLanguageCode shouldBeEqualTo "de"
+        cd.codeClass.shouldBeNull()
+        cd.sort shouldBeEqualTo 1
+        cd.isInternal.shouldBeFalse()
+        cd.name shouldBeEqualTo "n.a."
+        cd.getNameInLanguage("de").shouldBeNull()
 
         val translations = cd.getTranslations()
-        assertThat(translations.map { it.langCode }).containsOnly("de", "en", "fr")
-        assertThat(translations.map { it.id }).containsExactly(null, null, null)
-        assertThat(translations.map { it.name }).containsExactly(null, null, null)
+        translations.map { it.langCode } shouldContainSame listOf("de", "en", "fr")
+        translations.map { it.id } shouldContainAll listOf(null, null, null)
+        translations.map { it.name } shouldContainAll listOf(null, null, null)
     }
 
     @Test
     fun findingCodeDefinition_withNonExistingId_returnsNull() {
-        assertThat(repo.findCodeDefinition("foo")).isNull()
+        repo.findCodeDefinition("foo").shouldBeNull()
     }
 
     @Test
     fun findingCodeDefinition_withExistingId_loadsWithAllLanguages() {
-        val existing = repo.findCodeDefinition("4Y") ?: fail("Unable to find code 4Y")
+        val existing = repo.findCodeDefinition("4Y") ?: fail { "Unable to find code 4Y" }
 
-        assertThat(existing.code).isEqualTo("4Y")
-        assertThat(existing.name).startsWith("Absenzen")
-        assertThat(existing.getTranslations()).hasSize(3)
-        assertThat(existing.getNameInLanguage("de")).startsWith("Absenzen,")
-        assertThat(existing.getNameInLanguage("en")).startsWith("Absenteeism")
-        assertThat(existing.getNameInLanguage("fr")).startsWith("Absentéisme")
+        existing.code shouldBeEqualTo "4Y"
+        existing.name shouldStartWith "Absenzen"
+        existing.getTranslations() shouldHaveSize 3
+        existing.getNameInLanguage("de")?.shouldStartWith("Absenzen,")
+        existing.getNameInLanguage("en")?.shouldStartWith("Absenteeism")
+        existing.getNameInLanguage("fr")?.shouldStartWith("Absentéisme")
     }
 
     @Test
@@ -189,92 +200,86 @@ internal open class JooqCodeRepoIntegrationTest {
         val cc = CodeClass(2, "cc2", "d2")
         val cd = CodeDefinition("2Z", "de", cc, 0, false, 1, ct_de, ct_en, ct_fr)
 
-        assertThat(cd.getTranslations().map { it.id }).containsExactly(null, null, null)
+        cd.getTranslations().map { it.id } shouldContainAll listOf(null, null, null)
 
-        val saved = repo.saveOrUpdate(cd) ?: fail("Unable to save code")
+        val saved = repo.saveOrUpdate(cd) ?: fail { "Unable to save code" }
 
-        assertThat(saved.code).isEqualTo("2Z")
-        assertThat(saved.name).isEqualTo("foo_de")
-        assertThat(saved.getTranslations().map { it.version }).containsExactly(1, 1, 1)
+        saved.code shouldBeEqualTo "2Z"
+        saved.name shouldBeEqualTo "foo_de"
+        saved.getTranslations().map { it.version } shouldContainAll listOf(1, 1, 1)
     }
 
     @Test
     fun updatingRecord() {
-        val cd = repo.findCodeDefinition("2R") ?: fail("Unable to find code 2R")
+        val cd = repo.findCodeDefinition("2R") ?: fail { "Unable to find code 2R" }
 
-        assertThat(cd.code).isEqualTo("2R")
-        assertThat(cd.name).isEqualTo("Europa")
-        assertThat(cd.getTranslations()).hasSize(3)
-        assertThat(cd.getNameInLanguage("de")).isEqualTo("Europa")
-        assertThat(cd.getNameInLanguage("en")).isEqualTo("Europe")
-        assertThat(cd.getNameInLanguage("fr")).isEqualTo("Europe")
-        assertThat(cd.getTranslations("de").first().version).isEqualTo(1)
-        assertThat(cd.getTranslations("en").first().version).isEqualTo(1)
+        cd.code shouldBeEqualTo "2R"
+        cd.name shouldBeEqualTo "Europa"
+        cd.getTranslations() shouldHaveSize 3
+        cd.getNameInLanguage("de") shouldBeEqualTo "Europa"
+        cd.getNameInLanguage("en") shouldBeEqualTo "Europe"
+        cd.getNameInLanguage("fr") shouldBeEqualTo "Europe"
+        cd.getTranslations("de").first().version shouldBeEqualTo 1
+        cd.getTranslations("en").first().version shouldBeEqualTo 1
 
         cd.setNameInLanguage("de", "eu")
         cd.setNameInLanguage("fr", "foo")
 
-        val updated = repo.saveOrUpdate(cd) ?: fail("Unable to save or update code")
+        val updated = repo.saveOrUpdate(cd) ?: fail { "Unable to save or update code" }
 
-        assertThat(updated.code).isEqualTo("2R")
-        assertThat(updated.getTranslations()).hasSize(3)
-        assertThat(updated.getNameInLanguage("de")).isEqualTo("eu")
-        assertThat(updated.getNameInLanguage("en")).isEqualTo("Europe")
-        assertThat(updated.getNameInLanguage("fr")).isEqualTo("foo")
+        updated.code shouldBeEqualTo "2R"
+        updated.getTranslations() shouldHaveSize 3
+        updated.getNameInLanguage("de") shouldBeEqualTo "eu"
+        updated.getNameInLanguage("en") shouldBeEqualTo "Europe"
+        updated.getNameInLanguage("fr") shouldBeEqualTo "foo"
 
-        assertThat(updated.version).isEqualTo(2)
-        assertThat(updated.getTranslations("de").first().version).isEqualTo(2)
-        assertThat(updated.getTranslations("en").first().version).isEqualTo(2)
-        assertThat(updated.getTranslations("fr").first().version).isEqualTo(2)
+        updated.version shouldBeEqualTo 2
+        updated.getTranslations("de").first().version shouldBeEqualTo 2
+        updated.getTranslations("en").first().version shouldBeEqualTo 2
+        updated.getTranslations("fr").first().version shouldBeEqualTo 2
     }
 
     @Test
     fun deleting_withNonExistingId_returnsNull() {
-        assertThat(repo.delete("ZZ", 1)).isNull()
+        repo.delete("ZZ", 1).shouldBeNull()
     }
 
     @Suppress("TooGenericExceptionCaught")
     @Test
     fun deleting_withExistingId_butWrongVersion_throwsOptimisticLockingException() {
-        try {
-            repo.delete("1A", -1)
-            fail<Any>("should have thrown exception")
-        } catch (ex: Exception) {
-            assertThat(ex)
-                .isInstanceOf(OptimisticLockingException::class.java)
-                .hasMessage("Record in table 'code' has been modified prior to the delete attempt. Aborting....")
-        }
+        invoking { repo.delete("1A", -1) } shouldThrow OptimisticLockingException::class withMessage
+            "Record in table 'code' has been modified prior to the delete attempt. Aborting...."
     }
 
     @Test
     fun deleting_withExistingIdAndVersion_deletes() {
         // insert new record to the database and verify it's there
         val cd = CodeDefinition("2Z", "de", CodeClass(2, "cc2", "d2"), 3, true, null)
-        val persisted = repo.saveOrUpdate(cd) ?: fail("Unable to save or update code")
-        val code = persisted.code ?: fail("code should not be null")
+        val persisted = repo.saveOrUpdate(cd) ?: fail { "Unable to save or update code" }
+        val code = persisted.code ?: fail { "code should not be null" }
         val version = persisted.version
-        assertThat(repo.findCodeDefinition(code)).isNotNull()
+        repo.findCodeDefinition(code).shouldNotBeNull()
 
         // delete the record
-        val deleted = repo.delete(code, version) ?: fail("Unable to delete code")
-        assertThat(deleted.code).isEqualTo(code)
+        val deleted = repo.delete(code, version) ?: fail { "Unable to delete code" }
+        deleted.code shouldBeEqualTo code
 
         // verify the record is not there anymore
-        assertThat(repo.findCodeDefinition(code)).isNull()
+        repo.findCodeDefinition(code).shouldBeNull()
     }
 
     @Test
     fun gettingCodeClass1_inAKnownLanguage() {
         val cc1 = repo.getCodeClass1("en")
-        assertThat(cc1.id).isEqualTo(1)
-        assertThat(cc1.name).isEqualTo("Exposure Agent")
+        cc1.id shouldBeEqualTo 1
+        cc1.name shouldBeEqualTo "Exposure Agent"
     }
 
     @Test
     fun gettingCodeClass1_inNotKnownLanguage() {
         val cc1 = repo.getCodeClass1("foo")
-        assertThat(cc1.id).isEqualTo(1)
-        assertThat(cc1.name).isEqualTo("not translated")
+        cc1.id shouldBeEqualTo 1
+        cc1.name shouldBeEqualTo "not translated"
     }
 
     @Test
@@ -288,10 +293,10 @@ internal open class JooqCodeRepoIntegrationTest {
             PaginationRequest(0, 10, Sort.Direction.DESC, sortProperty)
         )
 
-        assertThat(cds).hasSize(10)
+        cds shouldHaveSize 10
 
         val cd = cds[0]
-        assertThat(cd.code).isEqualTo(code)
+        cd.code shouldBeEqualTo code
     }
 
     @Test
@@ -306,7 +311,7 @@ internal open class JooqCodeRepoIntegrationTest {
             PaginationRequest(0, 10, Sort.Direction.DESC, "internal")
         )
 
-        assertThat(cds).hasSize(10)
+        cds shouldHaveSize 10
 
         // all are internal=true, no use asserting
     }
@@ -327,10 +332,10 @@ internal open class JooqCodeRepoIntegrationTest {
             PaginationRequest(0, 100, Sort.Direction.DESC, "sort")
         )
 
-        assertThat(cds).hasSize(count)
+        cds shouldHaveSize count
 
         val cd = cds[0]
-        assertThat(cd.code).isEqualTo(code)
+        cd.code shouldBeEqualTo code
     }
 
     @Test

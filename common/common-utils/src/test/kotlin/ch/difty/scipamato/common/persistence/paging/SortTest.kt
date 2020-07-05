@@ -2,8 +2,17 @@ package ch.difty.scipamato.common.persistence.paging
 
 import ch.difty.scipamato.common.persistence.paging.Sort.Direction
 import ch.difty.scipamato.common.persistence.paging.Sort.SortProperty
-import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.fail
+import org.amshove.kluent.invoking
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeFalse
+import org.amshove.kluent.shouldBeNull
+import org.amshove.kluent.shouldBeTrue
+import org.amshove.kluent.shouldContain
+import org.amshove.kluent.shouldHaveSize
+import org.amshove.kluent.shouldNotBeEqualTo
+import org.amshove.kluent.shouldNotContain
+import org.amshove.kluent.shouldThrow
+import org.amshove.kluent.withMessage
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
@@ -25,35 +34,24 @@ internal class SortTest {
 
     @Test
     fun degenerateConstruction_withNoSortProperties_throws() {
-        try {
-            Sort(emptyList())
-            fail<Any>("should have thrown exception")
-        } catch (ex: Exception) {
-            assertThat(ex)
-                .isInstanceOf(IllegalArgumentException::class.java)
-                .hasMessage("sortProperties can't be empty.")
-        }
+        invoking { Sort(emptyList()) } shouldThrow
+            IllegalArgumentException::class withMessage "sortProperties can't be empty."
     }
 
     @Test
     fun degenerateConstruction_withEmptyPropertyNames_throws() {
-        try {
-            Sort(Direction.ASC)
-            fail<Any>("should have thrown exception")
-        } catch (ex: Exception) {
-            assertThat(ex).isInstanceOf(IllegalArgumentException::class.java).hasMessage(
-                "propertyNames can't be empty."
-            )
-        }
+
+        invoking { Sort(Direction.ASC) } shouldThrow
+            IllegalArgumentException::class withMessage "propertyNames can't be empty."
     }
 
     private fun assertSortProperty(dir: Direction, propertyNames: Array<String>) {
         val sort = Sort(dir, *propertyNames)
 
-        assertThat(sort.iterator()).toIterable().hasSize(propertyNames.size)
+        sort.iterator().asSequence() shouldHaveSize propertyNames.size
 
         for (sp in sort)
-            assertThat(sp.direction).isEqualTo(dir)
+            sp.direction shouldBeEqualTo dir
     }
 
     @Test
@@ -73,71 +71,69 @@ internal class SortTest {
         assertSortProperty(it, Direction.DESC, "b")
         assertSortProperty(it, Direction.DESC, "c")
         assertSortProperty(it, Direction.ASC, "d")
-        assertThat(it.hasNext()).isFalse()
+        it.hasNext().shouldBeFalse()
     }
 
     private fun assertSortProperty(it: Iterator<SortProperty>, dir: Direction, p: String) {
         val sp = it.next()
-        assertThat(sp.direction).isEqualTo(dir)
-        assertThat(sp.name).isEqualTo(p)
+        sp.direction shouldBeEqualTo dir
+        sp.name shouldBeEqualTo p
     }
 
     @Test
     fun gettingSortPropertyFor_nonExistingName_returnsNull() {
         val p = "x"
-        assertThat(sortProperties.map { it.name }).doesNotContain(p)
-        assertThat(sort.getSortPropertyFor(p)).isNull()
+        sortProperties.map { it.name } shouldNotContain p
+        sort.getSortPropertyFor(p).shouldBeNull()
     }
 
     @Test
     fun gettingSortPropertyFor_existingName_returnsRespectiveSortProperty() {
         val p = "c"
-        assertThat(sortProperties.map { it.name }).contains(p)
-        assertThat(sort.getSortPropertyFor(p)?.name).isEqualTo(p)
+        sortProperties.map { it.name }.shouldContain(p)
+        sort.getSortPropertyFor(p)?.name shouldBeEqualTo p
     }
 
     @Test
     fun directionAsc_isAscending() {
-        assertThat(Direction.ASC.isAscending()).isTrue()
+        Direction.ASC.isAscending().shouldBeTrue()
     }
 
     @Test
     fun directionDesc_isNotAscending() {
-        assertThat(Direction.DESC.isAscending()).isFalse()
+        Direction.DESC.isAscending().shouldBeFalse()
     }
 
     @Test
     fun testingToString() {
-        assertThat(sort.toString()).isEqualTo("a: ASC,b: DESC,c: DESC,d: ASC")
+        sort.toString() shouldBeEqualTo "a: ASC,b: DESC,c: DESC,d: ASC"
     }
 
     @Test
     fun sortEqualityTests() {
-        assertThat(sort == sort).isTrue()
-        assertThat(sort == Sort(sortProperties)).isTrue()
-        assertThat(sort.equals(null)).isFalse()
-        assertThat(sort.equals("")).isFalse()
+        (sort == sort).shouldBeTrue()
+        (sort == Sort(sortProperties)).shouldBeTrue()
 
         val sortProperties2 = ArrayList<SortProperty>()
         sortProperties2.add(SortProperty("a", Direction.ASC))
         sortProperties2.add(SortProperty("b", Direction.DESC))
         sortProperties2.add(SortProperty("c", Direction.DESC))
-        assertThat(sort == Sort(sortProperties2)).isFalse()
-        assertThat(sort.hashCode()).isNotEqualTo(Sort(sortProperties2).hashCode())
+        (sort == Sort(sortProperties2)).shouldBeFalse()
+        sort.hashCode() shouldNotBeEqualTo Sort(sortProperties2).hashCode()
 
         sortProperties2.add(SortProperty("d", Direction.ASC))
-        assertThat(sort == Sort(sortProperties2)).isTrue()
-        assertThat(sort.hashCode()).isEqualTo(Sort(sortProperties2).hashCode())
+        (sort == Sort(sortProperties2)).shouldBeTrue()
+        sort.hashCode() shouldBeEqualTo Sort(sortProperties2).hashCode()
     }
 
     @Test
     fun sortPropertyEqualityTests() {
         val sf1: SortProperty? = SortProperty("foo", Direction.DESC)
 
-        assertThat(sf1 == null).isFalse()
-        assertThat(sf1 == sf1).isTrue()
-        assertThat(sf1 == SortProperty("foo", Direction.DESC)).isTrue()
-        assertThat(sf1 == SortProperty("foo", Direction.ASC)).isFalse()
-        assertThat(sf1 == SortProperty("bar", Direction.DESC)).isFalse()
+        (sf1 == null).shouldBeFalse()
+        (sf1 == sf1).shouldBeTrue()
+        (sf1 == SortProperty("foo", Direction.DESC)).shouldBeTrue()
+        (sf1 == SortProperty("foo", Direction.ASC)).shouldBeFalse()
+        (sf1 == SortProperty("bar", Direction.DESC)).shouldBeFalse()
     }
 }

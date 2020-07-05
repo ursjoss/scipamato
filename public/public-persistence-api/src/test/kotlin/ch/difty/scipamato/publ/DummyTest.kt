@@ -1,6 +1,6 @@
 package ch.difty.scipamato.publ
 
-import org.assertj.core.api.Assertions.assertThat
+import org.amshove.kluent.shouldBe
 import org.junit.jupiter.api.Test
 
 /**
@@ -10,6 +10,6 @@ internal class DummyTest {
 
     @Test
     fun dummyTest() {
-        assertThat(true).isTrue()
+        true shouldBe true
     }
 }

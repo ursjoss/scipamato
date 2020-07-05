@@ -1,3 +1,5 @@
+@file:Suppress("SpellCheckingInspection")
+
 package ch.difty.scipamato.core.persistence
 
 import ch.difty.scipamato.common.DateTimeService

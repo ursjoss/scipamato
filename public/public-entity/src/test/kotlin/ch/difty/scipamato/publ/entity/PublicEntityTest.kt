@@ -1,6 +1,6 @@
 package ch.difty.scipamato.publ.entity
 
-import org.assertj.core.api.Assertions.assertThat
+import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
@@ -25,16 +25,16 @@ internal abstract class PublicEntityTest<T : PublicEntity> {
     fun setGet() {
         assertSpecificGetters()
 
-        assertThat(entity.created).isEqualTo(CREATED_DATE)
-        assertThat(entity.lastModified).isEqualTo(LASTMOD_DATE)
-        assertThat(entity.version).isEqualTo(10)
+        entity.created shouldBeEqualTo CREATED_DATE
+        entity.lastModified shouldBeEqualTo LASTMOD_DATE
+        entity.version shouldBeEqualTo 10
     }
 
     protected abstract fun assertSpecificGetters()
 
     @Test
     fun testingToString() {
-        assertThat(entity.toString()).isEqualTo(toString)
+        entity.toString() shouldBeEqualTo toString
     }
 
     @Test

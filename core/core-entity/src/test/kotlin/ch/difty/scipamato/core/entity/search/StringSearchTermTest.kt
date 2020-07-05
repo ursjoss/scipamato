@@ -27,7 +27,9 @@ import ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType.WHITESPA
 import ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType.WORD
 import ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType.byMatchType
 import ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType.values
-import org.assertj.core.api.Assertions.assertThat
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldContainAll
+import org.amshove.kluent.shouldHaveSize
 import org.junit.jupiter.api.Test
 
 private const val FIELD_NAME = "fooField"
@@ -35,8 +37,8 @@ private const val FIELD_NAME = "fooField"
 internal class StringSearchTermTest {
 
     private fun assertSingleToken(st: StringSearchTerm, tt: TokenType, rawData: String, data: String, negate: Boolean) {
-        assertThat(st.fieldName).isEqualTo(FIELD_NAME)
-        assertThat(st.tokens).hasSize(1)
+        st.fieldName shouldBeEqualTo FIELD_NAME
+        st.tokens shouldHaveSize 1
         assertToken(st, 0, tt, rawData, data, negate)
     }
 
@@ -48,10 +50,10 @@ internal class StringSearchTermTest {
         data: String,
         negate: Boolean
     ) {
-        assertThat(st.tokens[idx].rawData).isEqualTo(rawData)
-        assertThat(st.tokens[idx].sqlData).isEqualTo(data)
-        assertThat(st.tokens[idx].type).isEqualTo(tt)
-        assertThat(st.tokens[idx].negate).isEqualTo(negate)
+        st.tokens[idx].rawData shouldBeEqualTo rawData
+        st.tokens[idx].sqlData shouldBeEqualTo data
+        st.tokens[idx].type shouldBeEqualTo tt
+        st.tokens[idx].negate shouldBeEqualTo negate
     }
 
     @Test
@@ -100,7 +102,7 @@ internal class StringSearchTermTest {
     @Test
     fun lexingOpenRight_withUnQuotedString_matchesContentWithoutQuotes() {
         val st = StringSearchTerm(FIELD_NAME, "hi ho*")
-        assertThat(st.tokens).hasSize(2)
+        st.tokens shouldHaveSize 2
         assertToken(st, 0, WORD, "hi", "hi", false)
         assertToken(st, 1, OPENRIGHT, "ho", "ho%", false)
     }
@@ -114,7 +116,7 @@ internal class StringSearchTermTest {
     @Test
     fun lexingOpenLeft_withUnQuotedString_matchesContentWithoutQuotes() {
         val st = StringSearchTerm(FIELD_NAME, "*hi lo")
-        assertThat(st.tokens).hasSize(2)
+        st.tokens shouldHaveSize 2
         assertToken(st, 0, OPENLEFT, "hi", "%hi", false)
         assertToken(st, 1, WORD, "lo", "lo", false)
     }
@@ -122,7 +124,7 @@ internal class StringSearchTermTest {
     @Test
     fun lexingOpenLeftRight_withQuotedString_matchesContentWithoutQuotes() {
         val st = StringSearchTerm(FIELD_NAME, "\"*abc*\" foo *def* ")
-        assertThat(st.tokens).hasSize(3)
+        st.tokens shouldHaveSize 3
         assertToken(st, 0, OPENLEFTRIGHTQUOTED, "abc", "%abc%", false)
         assertToken(st, 1, WORD, "foo", "foo", false)
         assertToken(st, 2, OPENLEFTRIGHT, "def", "%def%", false)
@@ -132,8 +134,8 @@ internal class StringSearchTermTest {
     fun lexingCombination_matchesQuotedTrimmedContent() {
         val st = StringSearchTerm(FIELD_NAME, " foo \"hi there\"   bar ")
 
-        assertThat(st.fieldName).isEqualTo(FIELD_NAME)
-        assertThat(st.tokens).hasSize(3)
+        st.fieldName shouldBeEqualTo FIELD_NAME
+        st.tokens shouldHaveSize 3
         assertToken(st, 0, WORD, "foo", "foo", false)
         assertToken(st, 1, QUOTED, "hi there", "hi there", false)
         assertToken(st, 2, WORD, "bar", "bar", false)
@@ -143,7 +145,7 @@ internal class StringSearchTermTest {
     fun lexingNot_() {
         val st = StringSearchTerm(FIELD_NAME, "foo -bar")
 
-        assertThat(st.tokens).hasSize(2)
+        st.tokens shouldHaveSize 2
         assertToken(st, 0, WORD, "foo", "foo", false)
         assertToken(st, 1, NOTWORD, "bar", "bar", true)
     }
@@ -152,7 +154,7 @@ internal class StringSearchTermTest {
     fun lexingNotQuoted() {
         val st = StringSearchTerm(FIELD_NAME, "foo -\"bar baz\"")
 
-        assertThat(st.tokens).hasSize(2)
+        st.tokens shouldHaveSize 2
         assertToken(st, 0, WORD, "foo", "foo", false)
         assertToken(st, 1, NOTQUOTED, "bar baz", "bar baz", true)
     }
@@ -161,7 +163,7 @@ internal class StringSearchTermTest {
     fun lexingNotOpenLeftQuoted() {
         val st = StringSearchTerm(FIELD_NAME, "foo -\"*bar baz\"")
 
-        assertThat(st.tokens).hasSize(2)
+        st.tokens shouldHaveSize 2
         assertToken(st, 0, WORD, "foo", "foo", false)
         assertToken(st, 1, NOTOPENLEFTQUOTED, "bar baz", "%bar baz", true)
     }
@@ -170,7 +172,7 @@ internal class StringSearchTermTest {
     fun lexingNotOpenRightQuoted() {
         val st = StringSearchTerm(FIELD_NAME, "foo -\"bar baz*\"")
 
-        assertThat(st.tokens).hasSize(2)
+        st.tokens shouldHaveSize 2
         assertToken(st, 0, WORD, "foo", "foo", false)
         assertToken(st, 1, NOTOPENRIGHTQUOTED, "bar baz", "bar baz%", true)
     }
@@ -179,7 +181,7 @@ internal class StringSearchTermTest {
     fun lexingNotOpenLeftRightQuoted() {
         val st = StringSearchTerm(FIELD_NAME, "foo -\"*bar baz*\"")
 
-        assertThat(st.tokens).hasSize(2)
+        st.tokens shouldHaveSize 2
         assertToken(st, 0, WORD, "foo", "foo", false)
         assertToken(st, 1, NOTOPENLEFTRIGHTQUOTED, "bar baz", "%bar baz%", true)
     }
@@ -188,7 +190,7 @@ internal class StringSearchTermTest {
     fun lexingNot_withNotOpenRight_() {
         val st = StringSearchTerm(FIELD_NAME, "foo -bar*")
 
-        assertThat(st.tokens).hasSize(2)
+        st.tokens shouldHaveSize 2
         assertToken(st, 0, WORD, "foo", "foo", false)
         assertToken(st, 1, NOTOPENRIGHT, "bar", "bar%", true)
     }
@@ -197,7 +199,7 @@ internal class StringSearchTermTest {
     fun lexingNot_withNotOpenLeft() {
         val st = StringSearchTerm(FIELD_NAME, "foo -*bar")
 
-        assertThat(st.tokens).hasSize(2)
+        st.tokens shouldHaveSize 2
         assertToken(st, 0, WORD, "foo", "foo", false)
         assertToken(st, 1, NOTOPENLEFT, "bar", "%bar", true)
     }
@@ -206,7 +208,7 @@ internal class StringSearchTermTest {
     fun lexingNot_withNotOpenLeftRight() {
         val st = StringSearchTerm(FIELD_NAME, "foo -*bar* baz ")
 
-        assertThat(st.tokens).hasSize(3)
+        st.tokens shouldHaveSize 3
         assertToken(st, 0, WORD, "foo", "foo", false)
         assertToken(st, 1, NOTOPENLEFTRIGHT, "bar", "%bar%", true)
         assertToken(st, 2, WORD, "baz", "baz", false)
@@ -216,7 +218,7 @@ internal class StringSearchTermTest {
     fun lexingSome() {
         val st = StringSearchTerm(FIELD_NAME, ">\"\"")
 
-        assertThat(st.tokens).hasSize(1)
+        st.tokens shouldHaveSize 1
         assertToken(st, 0, SOME, ">\"\"", ">\"\"", false)
     }
 
@@ -224,76 +226,74 @@ internal class StringSearchTermTest {
     fun lexingEmpty() {
         val st = StringSearchTerm(FIELD_NAME, "=\"\"")
 
-        assertThat(st.tokens).hasSize(1)
+        st.tokens shouldHaveSize 1
         assertToken(st, 0, EMPTY, "=\"\"", "=\"\"", true)
     }
 
     @Test
     fun assertTokenTypes() {
-        assertThat(values()).containsExactly(
-            NOTREGEX, REGEX, WHITESPACE, SOME, EMPTY,
-            NOTOPENLEFTRIGHTQUOTED, OPENLEFTRIGHTQUOTED, NOTOPENLEFTRIGHT, OPENLEFTRIGHT, NOTOPENRIGHTQUOTED,
-            OPENRIGHTQUOTED, NOTOPENRIGHT, OPENRIGHT, NOTOPENLEFTQUOTED, OPENLEFTQUOTED, NOTOPENLEFT, OPENLEFT,
-            NOTQUOTED, QUOTED, NOTWORD, WORD, RAW, UNSUPPORTED
+        values() shouldContainAll listOf(
+            NOTREGEX, REGEX, WHITESPACE, SOME, EMPTY, NOTOPENLEFTRIGHTQUOTED, OPENLEFTRIGHTQUOTED, NOTOPENLEFTRIGHT,
+            OPENLEFTRIGHT, NOTOPENRIGHTQUOTED, OPENRIGHTQUOTED, NOTOPENRIGHT, OPENRIGHT, NOTOPENLEFTQUOTED,
+            OPENLEFTQUOTED, NOTOPENLEFT, OPENLEFT, NOTQUOTED, QUOTED, NOTWORD, WORD, RAW, UNSUPPORTED
         )
     }
 
     @Test
     fun assertTokenTypes_contains() {
-        assertThat(byMatchType(MatchType.CONTAINS)).containsExactly(NOTWORD, WORD)
+        byMatchType(MatchType.CONTAINS) shouldContainAll listOf(NOTWORD, WORD)
     }
 
     @Test
     fun assertTokenTypes_equal() {
-        assertThat(byMatchType(MatchType.EQUALS)).containsExactly(NOTQUOTED, QUOTED)
+        byMatchType(MatchType.EQUALS) shouldContainAll listOf(NOTQUOTED, QUOTED)
     }
 
     @Test
     fun assertTokenTypes_like() {
-        assertThat(byMatchType(MatchType.LIKE)).containsExactly(
-            NOTOPENLEFTRIGHTQUOTED, OPENLEFTRIGHTQUOTED,
-            NOTOPENLEFTRIGHT, OPENLEFTRIGHT, NOTOPENRIGHTQUOTED, OPENRIGHTQUOTED, NOTOPENRIGHT, OPENRIGHT,
-            NOTOPENLEFTQUOTED, OPENLEFTQUOTED, NOTOPENLEFT, OPENLEFT
+        byMatchType(MatchType.LIKE) shouldContainAll listOf(
+            NOTOPENLEFTRIGHTQUOTED, OPENLEFTRIGHTQUOTED, NOTOPENLEFTRIGHT, OPENLEFTRIGHT, NOTOPENRIGHTQUOTED,
+            OPENRIGHTQUOTED, NOTOPENRIGHT, OPENRIGHT, NOTOPENLEFTQUOTED, OPENLEFTQUOTED, NOTOPENLEFT, OPENLEFT
         )
     }
 
     @Test
     fun assertTokenTypes_regex() {
-        assertThat(byMatchType(MatchType.REGEX)).containsExactly(NOTREGEX, REGEX)
+        byMatchType(MatchType.REGEX) shouldContainAll listOf(NOTREGEX, REGEX)
     }
 
     @Test
     fun assertTokenTypes_length() {
-        assertThat(byMatchType(MatchType.LENGTH)).containsExactly(SOME, EMPTY)
+        byMatchType(MatchType.LENGTH) shouldContainAll listOf(SOME, EMPTY)
     }
 
     @Test
     fun assertTokenTypes_none() {
-        assertThat(byMatchType(MatchType.NONE)).containsExactly(WHITESPACE, RAW)
+        byMatchType(MatchType.NONE) shouldContainAll listOf(WHITESPACE, RAW)
     }
 
     @Test
     fun lexingPm2dot5_shouldOnlyFindOneToken() {
         val st = StringSearchTerm(FIELD_NAME, "pm2.5")
-        assertThat(st.tokens).hasSize(1)
+        st.tokens shouldHaveSize 1
         assertToken(st, 0, WORD, "pm2.5", "pm2.5", false)
     }
 
     @Test
     fun tokenToString_forUserField() {
         val st = StringSearchTerm(FIELD_NAME, "pm2.5")
-        assertThat(st.tokens).hasSize(1)
-        assertThat(st.tokens[0].toString()).isEqualTo("(WORD pm2.5)")
+        st.tokens shouldHaveSize 1
+        st.tokens[0].toString() shouldBeEqualTo "(WORD pm2.5)"
     }
 
     @Test
     fun differentInterpretationOfQuotedAndWord() {
         val st = StringSearchTerm(FIELD_NAME, "=\"foo\" \"foo\" foo =foo")
-        assertThat(st.tokens).hasSize(4)
-        assertThat(st.tokens[0].toString()).isEqualTo("(QUOTED foo)")
-        assertThat(st.tokens[1].toString()).isEqualTo("(QUOTED foo)")
-        assertThat(st.tokens[2].toString()).isEqualTo("(WORD foo)")
-        assertThat(st.tokens[3].toString()).isEqualTo("(WORD foo)")
+        st.tokens shouldHaveSize 4
+        st.tokens[0].toString() shouldBeEqualTo "(QUOTED foo)"
+        st.tokens[1].toString() shouldBeEqualTo "(QUOTED foo)"
+        st.tokens[2].toString() shouldBeEqualTo "(WORD foo)"
+        st.tokens[3].toString() shouldBeEqualTo "(WORD foo)"
     }
 
     @Test

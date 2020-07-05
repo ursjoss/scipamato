@@ -1,7 +1,14 @@
 package ch.difty.scipamato.common.navigator
 
-import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.fail
+import org.amshove.kluent.invoking
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeFalse
+import org.amshove.kluent.shouldBeNull
+import org.amshove.kluent.shouldBeTrue
+import org.amshove.kluent.shouldContain
+import org.amshove.kluent.shouldNotContain
+import org.amshove.kluent.shouldThrow
+import org.amshove.kluent.withMessage
 import org.junit.jupiter.api.Test
 
 internal class LongNavigatorTest {
@@ -13,23 +20,23 @@ internal class LongNavigatorTest {
 
     @Test
     fun gettingItemWithFocus_withUninitializedNavigator_returnsNull() {
-        assertThat(nm.itemWithFocus == null).isTrue()
+        nm.itemWithFocus.shouldBeNull()
     }
 
     @Test
     fun settingFocus_withUninitializedNavigator_ignores() {
         nm.setFocusToItem(5L)
-        assertThat(nm.itemWithFocus == null).isTrue()
+        nm.itemWithFocus.shouldBeNull()
     }
 
     @Test
     fun hasPrevious_withUninitializedNavigator_isFalse() {
-        assertThat(nm.hasPrevious()).isFalse()
+        nm.hasPrevious().shouldBeFalse()
     }
 
     @Test
     fun hasNext_withUninitializedNavigator_isFalse() {
-        assertThat(nm.hasNext()).isFalse()
+        nm.hasNext().shouldBeFalse()
     }
 
     @Test
@@ -41,42 +48,42 @@ internal class LongNavigatorTest {
     @Test
     fun initializingEmptyList_isIgnored() {
         nm.initialize(ArrayList())
-        assertThat(nm.itemWithFocus == null).isTrue()
+        nm.itemWithFocus.shouldBeNull()
     }
 
     @Test
     fun initializingSingleItemList_setsFocusToSingleItem() {
         nm.initialize(single)
-        assertThat(nm.itemWithFocus).isEqualTo(5L)
+        nm.itemWithFocus shouldBeEqualTo 5L
     }
 
     @Test
     fun singleItemList_cannotMove_andKeepsFocusOnSingleItem() {
         nm.initialize(single)
-        assertThat(nm.hasPrevious()).isFalse()
+        nm.hasPrevious().shouldBeFalse()
         nm.previous()
-        assertThat(nm.itemWithFocus).isEqualTo(5L)
-        assertThat(nm.hasNext()).isFalse()
+        nm.itemWithFocus shouldBeEqualTo 5L
+        nm.hasNext().shouldBeFalse()
         nm.next()
-        assertThat(nm.itemWithFocus).isEqualTo(5L)
+        nm.itemWithFocus shouldBeEqualTo 5L
     }
 
     @Test
     fun initializingWithTripleItemList_hasFocusOnFirstItem() {
         nm.initialize(triple)
-        assertThat(nm.itemWithFocus).isEqualTo(5L)
+        nm.itemWithFocus shouldBeEqualTo 5L
     }
 
     @Test
     fun initializingWithTripleItemList_hasNoPrevious() {
         nm.initialize(triple)
-        assertThat(nm.hasPrevious()).isFalse()
+        nm.hasPrevious().shouldBeFalse()
     }
 
     @Test
     fun initializingWithTripleItemList_hasNextAndCanAdvance() {
         nm.initialize(triple)
-        assertThat(nm.itemWithFocus).isEqualTo(5L)
+        nm.itemWithFocus shouldBeEqualTo 5L
         assertNextIs(12L)
     }
 
@@ -84,37 +91,31 @@ internal class LongNavigatorTest {
     fun canSetFocus_withTripleItemList() {
         nm.initialize(triple)
         nm.setFocusToItem(12L)
-        assertThat(nm.itemWithFocus).isEqualTo(12L)
+        nm.itemWithFocus shouldBeEqualTo 12L
     }
 
     @Test
     fun canRetract_withTripleItemList_withFocusOnSecond() {
         nm.initialize(triple)
         nm.setFocusToItem(12L)
-        assertThat(nm.hasPrevious()).isTrue()
+        nm.hasPrevious().shouldBeTrue()
         nm.previous()
-        assertThat(nm.itemWithFocus).isEqualTo(5L)
+        nm.itemWithFocus shouldBeEqualTo 5L
     }
 
     @Test
     fun settingFocusToNull_isIgnored() {
         nm.initialize(triple)
         nm.setFocusToItem(null)
-        assertThat(nm.itemWithFocus).isEqualTo(5L)
+        nm.itemWithFocus shouldBeEqualTo 5L
     }
 
     @Test
     fun settingFocusToItemNotInList_throws() {
         nm.initialize(triple)
-        assertThat(triple).doesNotContain(100L)
-        try {
-            nm.setFocusToItem(100L)
-            fail<Any>("should have thrown exception")
-        } catch (ex: Exception) {
-            assertThat(ex)
-                .isInstanceOf(IllegalArgumentException::class.java)
-                .hasMessage("Cannot set focus to item that is not part of the managed list (item 100).")
-        }
+        triple shouldNotContain 100L
+        invoking { nm.setFocusToItem(100L) } shouldThrow IllegalArgumentException::class withMessage
+            "Cannot set focus to item that is not part of the managed list (item 100)."
     }
 
     @Test
@@ -124,122 +125,122 @@ internal class LongNavigatorTest {
 
     private fun assertAddingDoesNothing(id: Long) {
         nm.initialize(triple)
-        assertThat(nm.itemWithFocus).isEqualTo(5L)
-        assertThat(nm.hasPrevious()).isFalse()
-        assertThat(nm.hasNext()).isTrue()
+        nm.itemWithFocus shouldBeEqualTo 5L
+        nm.hasPrevious().shouldBeFalse()
+        nm.hasNext().shouldBeTrue()
 
         nm.setIdToHeadIfNotPresent(id)
 
-        assertThat(nm.itemWithFocus).isEqualTo(5L)
-        assertThat(nm.hasPrevious()).isFalse()
-        assertThat(nm.hasNext()).isTrue()
+        nm.itemWithFocus shouldBeEqualTo 5L
+        nm.hasPrevious().shouldBeFalse()
+        nm.hasNext().shouldBeTrue()
     }
 
     @Test
     fun settingIdToHeadIfNotPresent_ifNotPresent_addsToHeadAndFocuses() {
         val id = 200L
-        assertThat(triple).doesNotContain(id)
+        triple shouldNotContain id
 
         nm.initialize(triple)
-        assertThat(nm.itemWithFocus).isEqualTo(5L)
-        assertThat(nm.hasPrevious()).isFalse()
-        assertThat(nm.hasNext()).isTrue()
+        nm.itemWithFocus shouldBeEqualTo 5L
+        nm.hasPrevious().shouldBeFalse()
+        nm.hasNext().shouldBeTrue()
 
         nm.setIdToHeadIfNotPresent(id)
 
-        assertThat(nm.itemWithFocus).isEqualTo(id)
-        assertThat(nm.hasPrevious()).isFalse()
-        assertThat(nm.hasNext()).isTrue()
+        nm.itemWithFocus shouldBeEqualTo id
+        nm.hasPrevious().shouldBeFalse()
+        nm.hasNext().shouldBeTrue()
     }
 
     @Test
     fun removeFromManger_ifPresent_removesItAndIsModified() {
         val id = 12L
-        assertThat(triple).contains(id)
+        triple shouldContain id
         nm.initialize(triple)
-        assertThat(nm.itemWithFocus).isEqualTo(5L)
+        nm.itemWithFocus shouldBeEqualTo 5L
 
         nm.remove(id)
-        assertThat(nm.isModified).isTrue()
+        nm.isModified.shouldBeTrue()
 
-        assertThat(nm.itemWithFocus).isEqualTo(5L)
-        assertThat(nm.hasPrevious()).isFalse()
-        assertThat(nm.hasNext()).isTrue()
+        nm.itemWithFocus shouldBeEqualTo 5L
+        nm.hasPrevious().shouldBeFalse()
+        nm.hasNext().shouldBeTrue()
         assertNextIs(3L)
-        assertThat(nm.hasNext()).isFalse()
+        nm.hasNext().shouldBeFalse()
     }
 
     @Test
     fun removeFromManager_ifNotPresent_isNotModified() {
         val id = 200L
-        assertThat(triple).doesNotContain(id)
+        triple shouldNotContain id
         nm.initialize(triple)
-        assertThat(nm.itemWithFocus).isEqualTo(5L)
+        nm.itemWithFocus shouldBeEqualTo 5L
 
         nm.remove(id)
-        assertThat(nm.isModified).isFalse()
+        nm.isModified.shouldBeFalse()
 
-        assertThat(nm.itemWithFocus).isEqualTo(5L)
-        assertThat(nm.hasPrevious()).isFalse()
+        nm.itemWithFocus shouldBeEqualTo 5L
+        nm.hasPrevious().shouldBeFalse()
         assertNextIs(12L)
         assertNextIs(3L)
-        assertThat(nm.hasNext()).isFalse()
+        nm.hasNext().shouldBeFalse()
     }
 
     private fun assertNextIs(id: Long) {
-        assertThat(nm.hasNext()).isTrue()
+        nm.hasNext().shouldBeTrue()
         nm.next()
-        assertThat(nm.itemWithFocus).isEqualTo(id)
+        nm.itemWithFocus shouldBeEqualTo id
     }
 
     @Test
     fun removeFromManager_ifPresentAndWithFocusAndIsNotLast_removesItAndSetsFocusToNextItem() {
         val id = 12L
-        assertThat(triple).contains(id)
+        triple shouldContain id
         nm.initialize(triple)
 
         nm.setFocusToItem(id)
-        assertThat(nm.itemWithFocus).isEqualTo(id)
+        nm.itemWithFocus shouldBeEqualTo id
 
         nm.remove(id)
-        assertThat(nm.isModified).isTrue()
+        nm.isModified.shouldBeTrue()
 
-        assertThat(nm.itemWithFocus).isEqualTo(3L)
-        assertThat(nm.hasPrevious()).isTrue()
-        assertThat(nm.hasNext()).isFalse()
+        nm.itemWithFocus shouldBeEqualTo 3L
+        nm.hasPrevious().shouldBeTrue()
+        nm.hasNext().shouldBeFalse()
     }
 
     @Test
     fun removeFromManager_ifPresentAndWithFocusAndIsLast_removesItAndSetsFocusToPreviousItem() {
         val id = 3L
-        assertThat(triple).contains(id)
+        triple shouldContain id
         nm.initialize(triple)
 
         nm.setFocusToItem(id)
-        assertThat(nm.itemWithFocus).isEqualTo(id)
+        nm.itemWithFocus shouldBeEqualTo id
 
         nm.remove(id)
 
-        assertThat(nm.isModified).isTrue()
+        nm.isModified.shouldBeTrue()
 
-        assertThat(nm.itemWithFocus).isEqualTo(12L)
-        assertThat(nm.hasPrevious()).isTrue()
-        assertThat(nm.hasNext()).isFalse()
+        nm.itemWithFocus shouldBeEqualTo 12L
+        nm.hasPrevious().shouldBeTrue()
+        nm.hasNext().shouldBeFalse()
     }
 
     @Test
     fun removingFromManager_removingAll() {
         nm.initialize(triple)
-        assertThat(nm.itemWithFocus).isEqualTo(5L)
+        nm.itemWithFocus shouldBeEqualTo 5L
 
         nm.remove(3L)
-        assertThat(nm.itemWithFocus).isEqualTo(5L)
+        nm.itemWithFocus shouldBeEqualTo 5L
 
         nm.remove(5L)
-        assertThat(nm.itemWithFocus).isEqualTo(12L)
+        nm.itemWithFocus shouldBeEqualTo 12L
         nm.remove(12L)
 
-        assertThat(nm.isModified).isTrue()
-        assertThat(nm.itemWithFocus == null).isTrue()
+        nm.isModified.shouldBeTrue()
+        nm.itemWithFocus.shouldBeNull()
     }
 }

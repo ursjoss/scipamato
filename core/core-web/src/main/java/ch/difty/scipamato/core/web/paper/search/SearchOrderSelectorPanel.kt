@@ -181,8 +181,10 @@ class SearchOrderSelectorPanel internal constructor(
     }
 
     private fun saveOrUpdate() {
-        searchOrderService.saveOrUpdate(modelObject!!)?.let {
-            form.defaultModelObject = it
+        modelObject?.let { mo ->
+            searchOrderService.saveOrUpdate(mo)?.let { saved ->
+                form.defaultModelObject = saved
+            }
         }
     }
 
@@ -190,11 +192,12 @@ class SearchOrderSelectorPanel internal constructor(
         get() = modelObject?.id != null
 
     private val isUserEntitled: Boolean
-        get() = modelObject != null &&
+        get() = modelObject?.let { mo ->
             if (isViewMode)
-                !modelObject!!.isGlobal && modelObject!!.owner == activeUser.id
+                !mo.isGlobal && mo.owner == activeUser.id
             else
-                modelObject!!.owner == activeUser.id
+                mo.owner == activeUser.id
+        } ?: false
 
     private fun hasExclusions(): Boolean =
         isModelSelected && modelObject!!.excludedPaperIds.isNotEmpty()
@@ -228,7 +231,8 @@ class SearchOrderSelectorPanel internal constructor(
         showExcluded = object : AjaxCheckBox(id) {
             override fun onConfigure() {
                 super.onConfigure()
-                if (isVisible && !hasExclusions()) modelObject = false
+                if (isVisible && !hasExclusions() && modelObject != null)
+                    modelObject = false
                 isVisible = hasExclusions()
             }
 

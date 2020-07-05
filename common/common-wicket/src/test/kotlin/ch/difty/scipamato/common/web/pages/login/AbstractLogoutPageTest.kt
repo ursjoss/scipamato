@@ -4,20 +4,20 @@ import ch.difty.scipamato.common.DateTimeService
 import ch.difty.scipamato.common.config.ApplicationProperties
 import ch.difty.scipamato.common.web.AbstractPage
 import ch.difty.scipamato.common.web.WicketBaseTest
+import com.ninjasquad.springmockk.MockkBean
 import de.agilecoders.wicket.core.markup.html.bootstrap.common.NotificationPanel
 import org.apache.wicket.markup.html.form.StatelessForm
 import org.apache.wicket.request.mapper.parameter.PageParameters
 import org.junit.jupiter.api.Test
-import org.springframework.boot.test.mock.mockito.MockBean
 
 internal class AbstractLogoutPageTest : WicketBaseTest() {
 
     private lateinit var page: AbstractLogoutPage<*>
 
-    @MockBean
+    @MockkBean(relaxed = true)
     private lateinit var applicationProperties: ApplicationProperties
 
-    @MockBean
+    @MockkBean
     private lateinit var dateTimeService: DateTimeService
 
     override fun setUpHook() {

@@ -3,20 +3,21 @@ package ch.difty.scipamato.common.web.component.table.column
 import ch.difty.scipamato.common.web.TestRecord
 import ch.difty.scipamato.common.web.WicketBaseTest
 import ch.difty.scipamato.common.web.component.SerializableConsumer
-import com.nhaarman.mockitokotlin2.mock
+import io.mockk.mockk
+import io.mockk.verify
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeNull
 import org.apache.wicket.extensions.markup.html.repeater.data.grid.DataGridView
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DefaultDataTable
 import org.apache.wicket.markup.html.link.Link
 import org.apache.wicket.markup.html.panel.Panel
 import org.apache.wicket.model.IModel
 import org.apache.wicket.model.Model
-import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito.verify
 
 internal class ClickablePropertyColumnTest : WicketBaseTest() {
 
-    private val consumerMock = mock<SerializableConsumer<IModel<String>>>()
+    private val consumerMock = mockk<SerializableConsumer<IModel<String>>>(relaxed = true)
 
     private val displayModel = Model("foo")
 
@@ -28,7 +29,7 @@ internal class ClickablePropertyColumnTest : WicketBaseTest() {
         val c = ClickablePropertyColumn<String, String>(displayModel, property, consumerMock)
         val clickModel = Model.of("bar")
         c.onClick(clickModel)
-        verify<SerializableConsumer<IModel<String>>>(consumerMock).accept(clickModel)
+        verify { consumerMock.accept(clickModel) }
     }
 
     @Test
@@ -40,7 +41,7 @@ internal class ClickablePropertyColumnTest : WicketBaseTest() {
         )
         val clickModel = Model.of("bar")
         c.onClick(clickModel)
-        verify<SerializableConsumer<IModel<String>>>(consumerMock).accept(clickModel)
+        verify { consumerMock.accept(clickModel) }
     }
 
     @Test
@@ -52,7 +53,7 @@ internal class ClickablePropertyColumnTest : WicketBaseTest() {
         )
         val clickModel = Model.of("bar")
         c.onClick(clickModel)
-        verify<SerializableConsumer<IModel<String>>>(consumerMock).accept(clickModel)
+        verify { consumerMock.accept(clickModel) }
     }
 
     @Test
@@ -61,7 +62,7 @@ internal class ClickablePropertyColumnTest : WicketBaseTest() {
             ClickablePropertyColumnTestPanel("panel", SerializableConsumer { this.setVariable(it) }, false)
         )
         assertComponents()
-        assertThat(clickPerformed).isNull()
+        clickPerformed.shouldBeNull()
     }
 
     @Test
@@ -70,7 +71,7 @@ internal class ClickablePropertyColumnTest : WicketBaseTest() {
             ClickablePropertyColumnTestPanel("panel", SerializableConsumer { this.setVariable(it) }, false)
         )
         tester.clickLink("panel:table:body:rows:1:cells:2:cell:link")
-        assertThat(clickPerformed).isEqualTo("TestRecord(id=1, name=foo)")
+        clickPerformed shouldBeEqualTo "TestRecord(id=1, name=foo)"
     }
 
     @Test
@@ -79,7 +80,7 @@ internal class ClickablePropertyColumnTest : WicketBaseTest() {
             ClickablePropertyColumnTestPanel("panel", SerializableConsumer { this.setVariable(it) }, true)
         )
         tester.clickLink("panel:table:body:rows:1:cells:2:cell:link")
-        assertThat(clickPerformed).isEqualTo("TestRecord(id=1, name=foo)")
+        clickPerformed shouldBeEqualTo "TestRecord(id=1, name=foo)"
     }
 
     private fun setVariable(trModel: IModel<TestRecord>) {

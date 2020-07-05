@@ -72,10 +72,11 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Changed
 - Bumped detekt, jooq-modelator
 
-//.Deprecated
-//
-//.Removed
-//
+.Deprecated
+
+.Removed
+- {url-issues}177[#177] Removed mockito, mockito-kotlin, assertj. Converted all tests to kotlin.
+
 //.Fixed
 //
 //.Security

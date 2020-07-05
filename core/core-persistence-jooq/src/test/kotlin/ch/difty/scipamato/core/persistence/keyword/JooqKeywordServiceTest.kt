@@ -1,25 +1,28 @@
+@file:Suppress("SpellCheckingInspection")
+
 package ch.difty.scipamato.core.persistence.keyword
 
 import ch.difty.scipamato.common.persistence.paging.PaginationContext
 import ch.difty.scipamato.core.entity.keyword.Keyword
 import ch.difty.scipamato.core.entity.keyword.KeywordDefinition
 import ch.difty.scipamato.core.entity.keyword.KeywordFilter
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.whenever
-import org.assertj.core.api.Assertions.assertThat
+import io.mockk.confirmVerified
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.verify
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldContainSame
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito.verify
-import org.mockito.Mockito.verifyNoMoreInteractions
 
 internal class JooqKeywordServiceTest {
 
-    private val repo = mock<KeywordRepository>()
-    private val filterMock = mock<KeywordFilter>()
-    private val paginationContextMock = mock<PaginationContext>()
-    private val entity = mock<Keyword>()
-    private val keywordDefinitionMock = mock<KeywordDefinition>()
-    private val persistedKeywordDefinitionMock = mock<KeywordDefinition>()
+    private val repo = mockk<KeywordRepository>()
+    private val filterMock = mockk<KeywordFilter>()
+    private val paginationContextMock = mockk<PaginationContext>()
+    private val entity = mockk<Keyword>()
+    private val keywordDefinitionMock = mockk<KeywordDefinition>()
+    private val persistedKeywordDefinitionMock = mockk<KeywordDefinition>()
 
     private var service = JooqKeywordService(repo)
 
@@ -28,86 +31,86 @@ internal class JooqKeywordServiceTest {
 
     @AfterEach
     fun specificTearDown() {
-        verifyNoMoreInteractions(repo, filterMock, paginationContextMock, entity, keywordDefinitionMock)
+        confirmVerified(repo, filterMock, paginationContextMock, entity, keywordDefinitionMock)
     }
 
     @Test
     fun findingAll_delegatesToRepo() {
         val langCode = "en"
-        whenever(repo.findAll(langCode)).thenReturn(keywords)
-        assertThat(service.findAll(langCode)).isEqualTo(keywords)
-        verify(repo).findAll(langCode)
+        every { repo.findAll(langCode) } returns keywords
+        service.findAll(langCode) shouldBeEqualTo keywords
+        verify { repo.findAll(langCode) }
     }
 
     @Test
     fun newUnpersistedKeywordDefinition_delegatesToRepo() {
-        whenever(repo.newUnpersistedKeywordDefinition()).thenReturn(keywordDefinitionMock)
-        assertThat(service.newUnpersistedKeywordDefinition()).isEqualTo(keywordDefinitionMock)
-        verify(repo).newUnpersistedKeywordDefinition()
+        every { repo.newUnpersistedKeywordDefinition() } returns keywordDefinitionMock
+        service.newUnpersistedKeywordDefinition() shouldBeEqualTo keywordDefinitionMock
+        verify { keywordDefinitionMock == keywordDefinitionMock }
+        verify { repo.newUnpersistedKeywordDefinition() }
     }
 
     @Test
     fun findingPageOfKeywordDefinitions_delegatesToRepo() {
-        whenever(repo.findPageOfKeywordDefinitions(filterMock, paginationContextMock)).thenReturn(keywordDefinitions)
-        assertThat(service.findPageOfKeywordDefinitions(filterMock, paginationContextMock)).isEqualTo(
-            keywordDefinitions
-        )
-        verify(repo).findPageOfKeywordDefinitions(filterMock, paginationContextMock)
+        every { repo.findPageOfKeywordDefinitions(filterMock, paginationContextMock) } returns keywordDefinitions
+        service.findPageOfKeywordDefinitions(filterMock, paginationContextMock) shouldBeEqualTo keywordDefinitions
+        verify { repo.findPageOfKeywordDefinitions(filterMock, paginationContextMock) }
     }
 
     @Test
     fun findingPageOfEntityDefinitions_delegatesToRepo() {
-        whenever(repo.findPageOfKeywordDefinitions(filterMock, paginationContextMock)).thenReturn(keywordDefinitions)
-        assertThat(service.findPageOfEntityDefinitions(filterMock, paginationContextMock)).toIterable()
-            .hasSameElementsAs(keywordDefinitions)
-        verify(repo).findPageOfKeywordDefinitions(filterMock, paginationContextMock)
+        every { repo.findPageOfKeywordDefinitions(filterMock, paginationContextMock) } returns keywordDefinitions
+        service.findPageOfEntityDefinitions(filterMock, paginationContextMock).asSequence() shouldContainSame
+            keywordDefinitions.asSequence()
+        verify { keywordDefinitionMock == keywordDefinitionMock }
+        verify { repo.findPageOfKeywordDefinitions(filterMock, paginationContextMock) }
     }
 
     @Test
     fun countingKeywords_delegatesToRepo() {
-        whenever(repo.countByFilter(filterMock)).thenReturn(3)
-        assertThat(service.countByFilter(filterMock)).isEqualTo(3)
-        verify(repo).countByFilter(filterMock)
+        every { repo.countByFilter(filterMock) } returns 3
+        service.countByFilter(filterMock) shouldBeEqualTo 3
+        verify { repo.countByFilter(filterMock) }
     }
 
     @Test
     fun insertingKeywordDefinition_delegatesToRepo() {
-        whenever(repo.insert(keywordDefinitionMock)).thenReturn(persistedKeywordDefinitionMock)
-        assertThat(service.insert(keywordDefinitionMock)).isEqualTo(persistedKeywordDefinitionMock)
-        verify(repo).insert(keywordDefinitionMock)
+        every { repo.insert(keywordDefinitionMock) } returns persistedKeywordDefinitionMock
+        service.insert(keywordDefinitionMock) shouldBeEqualTo persistedKeywordDefinitionMock
+        verify { repo.insert(keywordDefinitionMock) }
     }
 
     @Test
     fun updatingKeywordDefinition_delegatesToRepo() {
-        whenever(repo.update(keywordDefinitionMock)).thenReturn(persistedKeywordDefinitionMock)
-        assertThat(service.update(keywordDefinitionMock)).isEqualTo(persistedKeywordDefinitionMock)
-        verify(repo).update(keywordDefinitionMock)
+        every { repo.update(keywordDefinitionMock) } returns persistedKeywordDefinitionMock
+        service.update(keywordDefinitionMock) shouldBeEqualTo persistedKeywordDefinitionMock
+        verify { repo.update(keywordDefinitionMock) }
     }
 
     @Test
     fun savingOrUpdatingKeywordDefinition_withNullId_callsInsert() {
-        whenever(keywordDefinitionMock.id).thenReturn(null)
-        whenever(repo.insert(keywordDefinitionMock)).thenReturn(persistedKeywordDefinitionMock)
-        assertThat(service.saveOrUpdate(keywordDefinitionMock)).isEqualTo(persistedKeywordDefinitionMock)
-        verify(keywordDefinitionMock).id
-        verify(repo).insert(keywordDefinitionMock)
+        every { keywordDefinitionMock.id } returns null
+        every { repo.insert(keywordDefinitionMock) } returns persistedKeywordDefinitionMock
+        service.saveOrUpdate(keywordDefinitionMock) shouldBeEqualTo persistedKeywordDefinitionMock
+        verify { keywordDefinitionMock.id }
+        verify { repo.insert(keywordDefinitionMock) }
     }
 
     @Test
     fun savingOrUpdatingKeywordDefinition_withNonNullId_callsUpdate() {
-        whenever(keywordDefinitionMock.id).thenReturn(1)
-        whenever(repo.update(keywordDefinitionMock)).thenReturn(persistedKeywordDefinitionMock)
-        assertThat(service.saveOrUpdate(keywordDefinitionMock)).isEqualTo(persistedKeywordDefinitionMock)
-        verify(keywordDefinitionMock).id
-        verify(repo).update(keywordDefinitionMock)
+        every { keywordDefinitionMock.id } returns 1
+        every { repo.update(keywordDefinitionMock) } returns persistedKeywordDefinitionMock
+        service.saveOrUpdate(keywordDefinitionMock) shouldBeEqualTo persistedKeywordDefinitionMock
+        verify { keywordDefinitionMock.id }
+        verify { repo.update(keywordDefinitionMock) }
     }
 
     @Test
     fun deletingKeywordDefinition_delegatesToRepo() {
         val id = 11
         val version = 12
-        whenever(repo.delete(id, version)).thenReturn(persistedKeywordDefinitionMock)
-        assertThat(service.delete(id, version)).isEqualTo(persistedKeywordDefinitionMock)
-        verify(repo).delete(id, version)
+        every { repo.delete(id, version) } returns persistedKeywordDefinitionMock
+        service.delete(id, version) shouldBeEqualTo persistedKeywordDefinitionMock
+        verify { repo.delete(id, version) }
     }
 }

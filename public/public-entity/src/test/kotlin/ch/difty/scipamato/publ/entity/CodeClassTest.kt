@@ -4,7 +4,8 @@ import ch.difty.scipamato.common.entity.ScipamatoEntity.ScipamatoEntityFields.CR
 import ch.difty.scipamato.common.entity.ScipamatoEntity.ScipamatoEntityFields.MODIFIED
 import nl.jqno.equalsverifier.EqualsVerifier
 import nl.jqno.equalsverifier.Warning
-import org.assertj.core.api.Assertions.assertThat
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldContainAll
 import org.junit.jupiter.api.Test
 
 internal class CodeClassTest : PublicEntityTest<CodeClass>() {
@@ -20,10 +21,10 @@ internal class CodeClassTest : PublicEntityTest<CodeClass>() {
         .build()
 
     override fun assertSpecificGetters() {
-        assertThat(entity.codeClassId).isEqualTo(1)
-        assertThat(entity.langCode).isEqualTo("lc")
-        assertThat(entity.name).isEqualTo("name")
-        assertThat(entity.description).isEqualTo("description")
+        entity.codeClassId shouldBeEqualTo 1
+        entity.langCode shouldBeEqualTo "lc"
+        entity.name shouldBeEqualTo "name"
+        entity.description shouldBeEqualTo "description"
     }
 
     override fun verifyEquals() {
@@ -37,7 +38,7 @@ internal class CodeClassTest : PublicEntityTest<CodeClass>() {
 
     @Test
     fun assertEnumFields() {
-        assertThat(CodeClass.CodeClassFields.values().map { it.fieldName })
-            .containsExactly("codeClassId", "langCode", "name", "description")
+        CodeClass.CodeClassFields.values().map { it.fieldName } shouldContainAll
+            listOf("codeClassId", "langCode", "name", "description")
     }
 }

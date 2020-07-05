@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.entity.newsletter
 
-import org.assertj.core.api.AssertionsForInterfaceTypes.assertThat
+import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.Test
 
 internal class NewsletterNewsletterTopicTest {
@@ -14,17 +14,16 @@ internal class NewsletterNewsletterTopicTest {
 
     @Test
     fun getters() {
-        assertThat(nnt.newsletterId).isEqualTo(newsletterId)
-        assertThat(nnt.newsletterTopicId).isEqualTo(newsletterTopicId)
-        assertThat(nnt.sort).isEqualTo(sort)
-        assertThat(nnt.title).isEqualTo("title")
-        assertThat(nnt.displayValue).isEqualTo(nnt.title)
+        nnt.newsletterId shouldBeEqualTo newsletterId
+        nnt.newsletterTopicId shouldBeEqualTo newsletterTopicId
+        nnt.sort shouldBeEqualTo sort
+        nnt.title shouldBeEqualTo "title"
+        nnt.displayValue shouldBeEqualTo nnt.title
     }
 
     @Test
     fun validatingToString() {
-        assertThat(nnt.toString()).isEqualTo(
+        nnt.toString() shouldBeEqualTo
             "NewsletterNewsletterTopic(newsletterId=1, newsletterTopicId=2, sort=3, title=title)"
-        )
     }
 }

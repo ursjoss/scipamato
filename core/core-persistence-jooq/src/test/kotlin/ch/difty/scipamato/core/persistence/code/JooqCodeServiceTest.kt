@@ -1,3 +1,5 @@
+@file:Suppress("SpellCheckingInspection")
+
 package ch.difty.scipamato.core.persistence.code
 
 import ch.difty.scipamato.common.entity.CodeClassId
@@ -6,21 +8,22 @@ import ch.difty.scipamato.core.entity.Code
 import ch.difty.scipamato.core.entity.CodeClass
 import ch.difty.scipamato.core.entity.code.CodeDefinition
 import ch.difty.scipamato.core.entity.code.CodeFilter
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.whenever
-import org.assertj.core.api.Assertions.assertThat
+import io.mockk.confirmVerified
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.verify
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldContainSame
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito.verify
-import org.mockito.Mockito.verifyNoMoreInteractions
 
 internal class JooqCodeServiceTest {
 
-    private val repo = mock<CodeRepository>()
-    private val filterMock = mock<CodeFilter>()
-    private val paginationContextMock = mock<PaginationContext>()
-    private val codeDefinitionMock = mock<CodeDefinition>()
-    private val persistedCodeDefinitionMock = mock<CodeDefinition>()
+    private val repo = mockk<CodeRepository>()
+    private val filterMock = mockk<CodeFilter>()
+    private val paginationContextMock = mockk<PaginationContext>()
+    private val codeDefinitionMock = mockk<CodeDefinition>()
+    private val persistedCodeDefinitionMock = mockk<CodeDefinition>()
 
     private val codeDefinitions = listOf(codeDefinitionMock, codeDefinitionMock)
 
@@ -28,7 +31,7 @@ internal class JooqCodeServiceTest {
 
     @AfterEach
     fun specificTearDown() {
-        verifyNoMoreInteractions(repo, filterMock, paginationContextMock, codeDefinitionMock)
+        confirmVerified(repo, filterMock, paginationContextMock, codeDefinitionMock)
     }
 
     @Test
@@ -40,65 +43,67 @@ internal class JooqCodeServiceTest {
             Code("c1", "Code1", null, false, 1, "cc1", "", 1),
             Code("c2", "Code2", null, false, 1, "cc1", "", 2)
         )
-        whenever(repo.findCodesOfClass(ccId, languageCode)).thenReturn(codes)
+        every { repo.findCodesOfClass(ccId, languageCode) } returns codes
 
-        assertThat(service.findCodesOfClass(ccId, languageCode).map { it.code }).containsOnly("c1", "c2")
+        service.findCodesOfClass(ccId, languageCode).map { it.code } shouldContainSame listOf("c1", "c2")
 
-        verify(repo).findCodesOfClass(ccId, languageCode)
+        verify { repo.findCodesOfClass(ccId, languageCode) }
 
-        verifyNoMoreInteractions(repo)
+        confirmVerified(repo)
     }
 
     @Test
     fun newUnpersistedCodeDefinition_delegatesToRepo() {
-        whenever(repo.newUnpersistedCodeDefinition()).thenReturn(codeDefinitionMock)
-        assertThat(service.newUnpersistedCodeDefinition()).isEqualTo(codeDefinitionMock)
-        verify(repo).newUnpersistedCodeDefinition()
+        every { repo.newUnpersistedCodeDefinition() } returns codeDefinitionMock
+        service.newUnpersistedCodeDefinition() shouldBeEqualTo codeDefinitionMock
+        verify { codeDefinitionMock == codeDefinitionMock }
+        verify { repo.newUnpersistedCodeDefinition() }
     }
 
     @Test
     fun findingPageOfCodeDefinitions_delegatesToRepo() {
-        whenever(repo.findPageOfCodeDefinitions(filterMock, paginationContextMock)).thenReturn(codeDefinitions)
-        assertThat(service.findPageOfCodeDefinitions(filterMock, paginationContextMock)).isEqualTo(codeDefinitions)
-        verify(repo).findPageOfCodeDefinitions(filterMock, paginationContextMock)
+        every { repo.findPageOfCodeDefinitions(filterMock, paginationContextMock) } returns codeDefinitions
+        service.findPageOfCodeDefinitions(filterMock, paginationContextMock) shouldBeEqualTo codeDefinitions
+        verify { repo.findPageOfCodeDefinitions(filterMock, paginationContextMock) }
     }
 
     @Test
     fun gettingPageOfEntityDefinitions_delegatesToRepo() {
-        whenever(repo.findPageOfCodeDefinitions(filterMock, paginationContextMock)).thenReturn(codeDefinitions)
-        assertThat(service.findPageOfEntityDefinitions(filterMock, paginationContextMock)).toIterable()
-            .hasSameElementsAs(codeDefinitions)
-        verify(repo).findPageOfCodeDefinitions(filterMock, paginationContextMock)
+        every { repo.findPageOfCodeDefinitions(filterMock, paginationContextMock) } returns codeDefinitions
+        service.findPageOfEntityDefinitions(filterMock, paginationContextMock).asSequence() shouldContainSame
+            codeDefinitions.asSequence()
+        verify { codeDefinitionMock == codeDefinitionMock }
+        verify { repo.findPageOfCodeDefinitions(filterMock, paginationContextMock) }
     }
 
     @Test
     fun countingCodes_delegatesToRepo() {
-        whenever(repo.countByFilter(filterMock)).thenReturn(3)
-        assertThat(service.countByFilter(filterMock)).isEqualTo(3)
-        verify(repo).countByFilter(filterMock)
+        every { repo.countByFilter(filterMock) } returns 3
+        service.countByFilter(filterMock) shouldBeEqualTo 3
+        verify { repo.countByFilter(filterMock) }
     }
 
     @Test
     fun insertingCodeDefinition_delegatesToRepo() {
-        whenever(repo.saveOrUpdate(codeDefinitionMock)).thenReturn(persistedCodeDefinitionMock)
-        assertThat(service.saveOrUpdate(codeDefinitionMock)).isEqualTo(persistedCodeDefinitionMock)
-        verify(repo).saveOrUpdate(codeDefinitionMock)
+        every { repo.saveOrUpdate(codeDefinitionMock) } returns persistedCodeDefinitionMock
+        service.saveOrUpdate(codeDefinitionMock) shouldBeEqualTo persistedCodeDefinitionMock
+        verify { repo.saveOrUpdate(codeDefinitionMock) }
     }
 
     @Test
     fun deletingCodeDefinition_delegatesToRepo() {
         val code = "1A"
         val version = 12
-        whenever(repo.delete(code, version)).thenReturn(persistedCodeDefinitionMock)
-        assertThat(service.delete(code, version)).isEqualTo(persistedCodeDefinitionMock)
-        verify(repo).delete(code, version)
+        every { repo.delete(code, version) } returns persistedCodeDefinitionMock
+        service.delete(code, version) shouldBeEqualTo persistedCodeDefinitionMock
+        verify { repo.delete(code, version) }
     }
 
     @Test
     fun gettingCodeClass1_delegatesToRepo() {
         val cc1 = CodeClass(1, "cc1", "d1")
-        whenever(repo.getCodeClass1("en")).thenReturn(cc1)
-        assertThat(service.getCodeClass1("en")).isEqualTo(cc1)
-        verify(repo).getCodeClass1("en")
+        every { repo.getCodeClass1("en") } returns cc1
+        service.getCodeClass1("en") shouldBeEqualTo cc1
+        verify { repo.getCodeClass1("en") }
     }
 }

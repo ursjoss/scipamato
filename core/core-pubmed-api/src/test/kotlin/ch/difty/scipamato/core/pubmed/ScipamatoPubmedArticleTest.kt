@@ -28,7 +28,9 @@ import ch.difty.scipamato.core.pubmed.api.Suffix
 import ch.difty.scipamato.core.pubmed.api.Year
 import nl.jqno.equalsverifier.EqualsVerifier
 import nl.jqno.equalsverifier.Warning
-import org.assertj.core.api.Assertions.assertThat
+import org.amshove.kluent.shouldBeEmpty
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeNull
 import org.junit.jupiter.api.Test
 
 @Suppress("SpellCheckingInspection")
@@ -38,15 +40,13 @@ internal class ScipamatoPubmedArticleTest {
 
     @Test
     fun extractingYearFromNeitherYearObjectNorMedlineDate_returnsYear0() {
-        assertThat(
-            pubmedArticle
-                .medlineCitation
-                .article
-                .journal
-                .journalIssue
-                .pubDate
-                .yearOrMonthOrDayOrSeasonOrMedlineDate
-        ).isEmpty()
+        pubmedArticle
+            .medlineCitation
+            .article
+            .journal
+            .journalIssue
+            .pubDate
+            .yearOrMonthOrDayOrSeasonOrMedlineDate.shouldBeEmpty()
         val month = Month()
         month.setvalue("2016")
         pubmedArticle
@@ -58,7 +58,7 @@ internal class ScipamatoPubmedArticleTest {
             .yearOrMonthOrDayOrSeasonOrMedlineDate
             .add(month)
         val spa = ScipamatoPubmedArticle(pubmedArticle)
-        assertThat(spa.publicationYear).isEqualTo("0")
+        spa.publicationYear shouldBeEqualTo "0"
     }
 
     @Test
@@ -74,7 +74,7 @@ internal class ScipamatoPubmedArticleTest {
             .yearOrMonthOrDayOrSeasonOrMedlineDate
             .add(year)
         val spa = ScipamatoPubmedArticle(pubmedArticle)
-        assertThat(spa.publicationYear).isEqualTo("2016")
+        spa.publicationYear shouldBeEqualTo "2016"
     }
 
     @Test
@@ -91,17 +91,17 @@ internal class ScipamatoPubmedArticleTest {
             .add(md)
 
         val spa = ScipamatoPubmedArticle(pubmedArticle)
-        assertThat(spa.publicationYear).isEqualTo("2016")
+        spa.publicationYear shouldBeEqualTo "2016"
     }
 
     @Test
     fun withNoFurtherAttributes() {
         val spa = ScipamatoPubmedArticle(pubmedArticle)
-        assertThat(spa.authors).isNull()
-        assertThat(spa.firstAuthor).isNull()
-        assertThat(spa.location).isEqualTo("null. 0;")
-        assertThat(spa.title).isNull()
-        assertThat(spa.doi).isNull()
+        spa.authors.shouldBeNull()
+        spa.firstAuthor.shouldBeNull()
+        spa.location shouldBeEqualTo "null. 0;"
+        spa.title.shouldBeNull()
+        spa.doi.shouldBeNull()
     }
 
     @Test
@@ -112,8 +112,8 @@ internal class ScipamatoPubmedArticleTest {
         authorList.author.add(makeAuthor("Joice", "James", "J", null, null))
         pubmedArticle.medlineCitation.article.authorList = authorList
         val spa = ScipamatoPubmedArticle(pubmedArticle)
-        assertThat(spa.authors).isEqualTo("Bond J, Kid B Jr, Joice J.")
-        assertThat(spa.firstAuthor).isEqualTo("Bond")
+        spa.authors shouldBeEqualTo "Bond J, Kid B Jr, Joice J."
+        spa.firstAuthor shouldBeEqualTo "Bond"
     }
 
     @Test
@@ -124,8 +124,8 @@ internal class ScipamatoPubmedArticleTest {
         authorList.author.add(makeAuthor(null, null, null, null, "Joice J"))
         pubmedArticle.medlineCitation.article.authorList = authorList
         val spa = ScipamatoPubmedArticle(pubmedArticle)
-        assertThat(spa.authors).isEqualTo("Bond J, Kid B Jr; Joice J.")
-        assertThat(spa.firstAuthor).isEqualTo("Bond")
+        spa.authors shouldBeEqualTo "Bond J, Kid B Jr; Joice J."
+        spa.firstAuthor shouldBeEqualTo "Bond"
     }
 
     @Test
@@ -134,8 +134,8 @@ internal class ScipamatoPubmedArticleTest {
         authorList.author.add(makeAuthor(null, null, null, null, "Joice J"))
         pubmedArticle.medlineCitation.article.authorList = authorList
         val spa = ScipamatoPubmedArticle(pubmedArticle)
-        assertThat(spa.authors).isEqualTo("Joice J.")
-        assertThat(spa.firstAuthor).isEqualTo("Joice J")
+        spa.authors shouldBeEqualTo "Joice J."
+        spa.firstAuthor shouldBeEqualTo "Joice J"
     }
 
     @Test
@@ -143,8 +143,8 @@ internal class ScipamatoPubmedArticleTest {
         val authorList = AuthorList()
         pubmedArticle.medlineCitation.article.authorList = authorList
         val spa = ScipamatoPubmedArticle(pubmedArticle)
-        assertThat(spa.authors).isEqualTo("")
-        assertThat(spa.firstAuthor).isEqualTo("")
+        spa.authors shouldBeEqualTo ""
+        spa.firstAuthor shouldBeEqualTo ""
     }
 
     @Test
@@ -189,7 +189,7 @@ internal class ScipamatoPubmedArticleTest {
             .paginationOrELocationID
             .add(pagination)
         val spa = ScipamatoPubmedArticle(pubmedArticle)
-        assertThat(spa.location).isEqualTo("Medline TA. 2016; 6 (10): 1145-1149.")
+        spa.location shouldBeEqualTo "Medline TA. 2016; 6 (10): 1145-1149."
     }
 
     @Test
@@ -229,7 +229,7 @@ internal class ScipamatoPubmedArticleTest {
             .paginationOrELocationID
             .add(pagination)
         val spa = ScipamatoPubmedArticle(pubmedArticle)
-        assertThat(spa.location).isEqualTo("Medline TA. 2016; 6 (10): 1145.")
+        spa.location shouldBeEqualTo "Medline TA. 2016; 6 (10): 1145."
     }
 
     @Test
@@ -272,7 +272,7 @@ internal class ScipamatoPubmedArticleTest {
             .paginationOrELocationID
             .add(elocationId2)
         val spa = ScipamatoPubmedArticle(pubmedArticle)
-        assertThat(spa.location).isEqualTo("Medline TA. 2016; 6 (10). pii: baz.")
+        spa.location shouldBeEqualTo "Medline TA. 2016; 6 (10). pii: baz."
     }
 
     private fun makeAuthor(
@@ -317,7 +317,7 @@ internal class ScipamatoPubmedArticleTest {
         articleTitle.mixedContent = listOf("article title")
         pubmedArticle.medlineCitation.article.articleTitle = articleTitle
         val spa = ScipamatoPubmedArticle(pubmedArticle)
-        assertThat(spa.title).isEqualTo("article title")
+        spa.title shouldBeEqualTo "article title"
     }
 
     @Test
@@ -335,7 +335,7 @@ internal class ScipamatoPubmedArticleTest {
         pubmedData.articleIdList = articleIdList
         pubmedArticle.pubmedData = pubmedData
         val spa = ScipamatoPubmedArticle(pubmedArticle)
-        assertThat(spa.doi).isEqualTo("10.0000012345")
+        spa.doi shouldBeEqualTo "10.0000012345"
     }
 
     @Test
@@ -348,7 +348,7 @@ internal class ScipamatoPubmedArticleTest {
             .paginationOrELocationID
             .add(elocationId)
         val spa = ScipamatoPubmedArticle(pubmedArticle)
-        assertThat(spa.doi).isEqualTo("eloc")
+        spa.doi shouldBeEqualTo "eloc"
     }
 
     @Test
@@ -362,10 +362,9 @@ internal class ScipamatoPubmedArticleTest {
     @Test
     fun testingToString() {
         val pa = ScipamatoPubmedArticle(pubmedArticle)
-        assertThat(pa.toString()).isEqualTo(
+        pa.toString() shouldBeEqualTo
             "AbstractPubmedArticleFacade(pmId=null, authors=null, firstAuthor=null, publicationYear=0, " +
-                "location=null. 0;, title=null, doi=null, originalAbstract=null)"
-        )
+            "location=null. 0;, title=null, doi=null, originalAbstract=null)"
     }
 
     @Test
@@ -398,7 +397,7 @@ internal class ScipamatoPubmedArticleTest {
         val pa = ScipamatoPubmedArticle(pubmedArticle)
         val sb = StringBuilder()
         pa.handleDatishObject(sb, o)
-        assertThat(sb.toString()).isEqualTo(expected)
+        sb.toString() shouldBeEqualTo expected
     }
 
     companion object {

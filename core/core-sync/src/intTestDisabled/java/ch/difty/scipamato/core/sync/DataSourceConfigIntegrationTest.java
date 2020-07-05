@@ -47,15 +47,15 @@ class DataSourceConfigIntegrationTest {
     }
 
     private void assertConfiguration(Configuration config) throws SQLException {
-        assertThat(config).isNotNull();
+        config.shouldNotBeNull();
 
-        assertThat(config.dialect()).isEqualTo(SQLDialect.POSTGRES);
+        config.dialect() shouldBeEqualTo SQLDialect.POSTGRES;
         assertThat(config
             .settings()
             .isExecuteWithOptimisticLocking()).isTrue();
 
         // assert Datasource Connection Provider
-        assertThat(config.connectionProvider()).isNotNull();
+        config.connectionProvider().shouldNotBeNull();
         assertThat(config.connectionProvider()).isInstanceOf(DataSourceConnectionProvider.class);
         DataSourceConnectionProvider dscp = (DataSourceConnectionProvider) config.connectionProvider();
         assertThat(dscp.dataSource()).isInstanceOf(TransactionAwareDataSourceProxy.class);
@@ -64,7 +64,7 @@ class DataSourceConfigIntegrationTest {
             .isWrapperFor(HikariDataSource.class)).isTrue();
 
         // assert executeListenerProviders
-        assertThat(config.executeListenerProviders()).hasSize(1);
+        config.executeListenerProviders() shouldHaveSize 2;
         DefaultExecuteListenerProvider elp = (DefaultExecuteListenerProvider) config.executeListenerProviders()[0];
         assertThat(elp
             .provide()
@@ -72,7 +72,7 @@ class DataSourceConfigIntegrationTest {
             .getName()).isEqualTo("org.springframework.boot.autoconfigure.jooq.JooqExceptionTranslator");
 
         // assert TransactionProvider
-        assertThat(config.transactionProvider()).isNotNull();
+        config.transactionProvider().shouldNotBeNull();
         assertThat(config
             .transactionProvider()
             .getClass()
@@ -81,7 +81,7 @@ class DataSourceConfigIntegrationTest {
 
     @Test
     void assertWarner() {
-        assertThat(warner).isNotNull();
+        warner.shouldNotBeNull();
     }
 
 }

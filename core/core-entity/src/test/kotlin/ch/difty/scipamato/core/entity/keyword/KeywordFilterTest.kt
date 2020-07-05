@@ -2,7 +2,8 @@ package ch.difty.scipamato.core.entity.keyword
 
 import nl.jqno.equalsverifier.EqualsVerifier
 import nl.jqno.equalsverifier.Warning
-import org.assertj.core.api.Assertions.assertThat
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldContainAll
 import org.junit.jupiter.api.Test
 
 internal class KeywordFilterTest {
@@ -12,8 +13,8 @@ internal class KeywordFilterTest {
     @Test
     fun getAndSet() {
         f.nameMask = "nameMask"
-        assertThat(f.nameMask).isEqualTo("nameMask")
-        assertThat(f.toString()).isEqualTo("KeywordFilter(nameMask=nameMask)")
+        f.nameMask shouldBeEqualTo "nameMask"
+        f.toString() shouldBeEqualTo "KeywordFilter(nameMask=nameMask)"
     }
 
     @Test
@@ -27,6 +28,6 @@ internal class KeywordFilterTest {
 
     @Test
     fun assertEnumFields() {
-        assertThat(KeywordFilter.KeywordFilterFields.values().map { it.fieldName }).containsExactly("nameMask")
+        KeywordFilter.KeywordFilterFields.values().map { it.fieldName } shouldContainAll listOf("nameMask")
     }
 }

@@ -3,7 +3,8 @@ package ch.difty.scipamato.core.sync.jobs.paper
 import ch.difty.scipamato.core.sync.jobs.CREATED
 import ch.difty.scipamato.core.sync.jobs.MODIFIED
 import ch.difty.scipamato.core.sync.jobs.SYNCHED
-import org.assertj.core.api.Assertions.assertThat
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldContainAll
 import org.junit.jupiter.api.Test
 
 internal class PublicPaperTest {
@@ -33,24 +34,24 @@ internal class PublicPaperTest {
             .lastSynched(SYNCHED)
             .build()
 
-        assertThat(pp.id).isEqualTo(1L)
-        assertThat(pp.number).isEqualTo(2L)
-        assertThat(pp.pmId).isEqualTo(10000)
-        assertThat(pp.authors).isEqualTo("authors")
-        assertThat(pp.title).isEqualTo("title")
-        assertThat(pp.location).isEqualTo("location")
-        assertThat(pp.publicationYear).isEqualTo(2017)
-        assertThat(pp.goals).isEqualTo("goals")
-        assertThat(pp.methods).isEqualTo("methods")
-        assertThat(pp.population).isEqualTo("population")
-        assertThat(pp.result).isEqualTo("result")
-        assertThat(pp.comment).isEqualTo("comment")
-        assertThat(pp.version).isEqualTo(3)
-        assertThat(pp.created).isEqualTo(CREATED)
-        assertThat(pp.lastModified).isEqualTo(MODIFIED)
-        assertThat(pp.codesPopulation).containsExactly(1.toShort(), 2.toShort())
-        assertThat(pp.codesStudyDesign).containsExactly(3.toShort(), 4.toShort())
-        assertThat(pp.codes).containsExactly("1A", "2B", "3C")
-        assertThat(pp.lastSynched).isEqualTo(SYNCHED)
+        pp.id shouldBeEqualTo 1L
+        pp.number shouldBeEqualTo 2L
+        pp.pmId shouldBeEqualTo 10000
+        pp.authors shouldBeEqualTo "authors"
+        pp.title shouldBeEqualTo "title"
+        pp.location shouldBeEqualTo "location"
+        pp.publicationYear shouldBeEqualTo 2017
+        pp.goals shouldBeEqualTo "goals"
+        pp.methods shouldBeEqualTo "methods"
+        pp.population shouldBeEqualTo "population"
+        pp.result shouldBeEqualTo "result"
+        pp.comment shouldBeEqualTo "comment"
+        pp.version shouldBeEqualTo 3
+        pp.created shouldBeEqualTo CREATED
+        pp.lastModified shouldBeEqualTo MODIFIED
+        pp.codesPopulation shouldContainAll listOf(1.toShort(), 2.toShort())
+        pp.codesStudyDesign shouldContainAll listOf(3.toShort(), 4.toShort())
+        pp.codes shouldContainAll listOf("1A", "2B", "3C")
+        pp.lastSynched shouldBeEqualTo SYNCHED
     }
 }

@@ -76,25 +76,25 @@ class NewsletterSyncConfigTest extends SyncConfigTest<NewsletterRecord> {
 
         PublicNewsletter pn = config.makeEntity(rs);
 
-        assertThat(pn.getId()).isEqualTo(1L);
-        assertThat(pn.getIssue()).isEqualTo("issue");
+        pn.getId() shouldBeEqualTo 1L;
+        pn.getIssue() shouldBeEqualTo "issue";
         assertThat(pn
             .getIssueDate()
             .toString()).isEqualTo("2018-06-14");
-        assertThat(pn.getVersion()).isEqualTo(4);
-        assertThat(pn.getCreated()).isEqualTo(CREATED);
-        assertThat(pn.getLastModified()).isEqualTo(MODIFIED);
+        pn.getVersion() shouldBeEqualTo 4;
+        pn.getCreated() shouldBeEqualTo CREATED;
+        pn.getLastModified() shouldBeEqualTo MODIFIED;
         assertThat(pn.getLastSynched()).isCloseTo("2016-12-09T06:02:13.000", 1000);
 
-        verify(rs).getInt(Newsletter.NEWSLETTER.ID.getName());
-        verify(rs).getString(Newsletter.NEWSLETTER.ISSUE.getName());
-        verify(rs).getDate(Newsletter.NEWSLETTER.ISSUE_DATE.getName());
-        verify(rs).getInt(Newsletter.NEWSLETTER.VERSION.getName());
-        verify(rs).getTimestamp(Newsletter.NEWSLETTER.CREATED.getName());
-        verify(rs).getTimestamp(Newsletter.NEWSLETTER.LAST_MODIFIED.getName());
-        verify(rs, times(2)).wasNull();
+        verify{ rs.getInt(Newsletter.NEWSLETTER.ID.getName()); }
+        verify{ rs.getString(Newsletter.NEWSLETTER.ISSUE.getName()); }
+        verify{ rs.getDate(Newsletter.NEWSLETTER.ISSUE_DATE.getName()); }
+        verify{ rs.getInt(Newsletter.NEWSLETTER.VERSION.getName()); }
+        verify{ rs.getTimestamp(Newsletter.NEWSLETTER.CREATED.getName()); }
+        verify{ rs.getTimestamp(Newsletter.NEWSLETTER.LAST_MODIFIED.getName()); }
+        verify(exactly=2) { rs.wasNull(); }
 
-        verifyNoMoreInteractions(rs);
+        confirmVerified(rs);
     }
 
 }

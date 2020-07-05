@@ -32,7 +32,7 @@ class NewStudyTopicItemWriterIntegrationTest
         newNewStudyTopic = newNewStudyTopic(NEWSLETTER_ID, NEWSLETTER_TOPIC_ID_NEW);
 
         existingNewStudyTopic = getExistingNewStudyTopicFromDb(NEWSLETTER_ID, NEWSLETTER_TOPIC_ID_EXISTING);
-        assertThat(existingNewStudyTopic.getSort()).isEqualTo(1);
+        existingNewStudyTopic.getSort() shouldBeEqualTo 1;
         existingNewStudyTopic.setSort(4);
     }
 
@@ -87,7 +87,7 @@ class NewStudyTopicItemWriterIntegrationTest
         int newsletterId = newNewStudyTopic.getNewsletterId();
         int newsletterTopicId = newNewStudyTopic.getNewsletterTopicId();
         assertNewStudyTopicDoesNotExistWith(newsletterId, newsletterTopicId);
-        assertThat(getWriter().executeUpdate(newNewStudyTopic)).isEqualTo(1);
+        getWriter().executeUpdate(newNewStudyTopic) shouldBeEqualTo 1;
         assertNewStudyTopicExistsWith(newsletterId, newsletterTopicId);
     }
 
@@ -110,7 +110,7 @@ class NewStudyTopicItemWriterIntegrationTest
 
     @Test
     void updatingExistingNewStudyTopic_succeeds() {
-        assertThat(getWriter().executeUpdate(existingNewStudyTopic)).isEqualTo(1);
+        getWriter().executeUpdate(existingNewStudyTopic) shouldBeEqualTo 1;
     }
 
 }

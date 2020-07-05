@@ -1,8 +1,9 @@
 package ch.difty.scipamato.core.persistence
 
 import ch.difty.scipamato.core.entity.CoreEntity
-import com.nhaarman.mockitokotlin2.whenever
-import org.assertj.core.api.Assertions.assertThat
+import io.mockk.every
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeNull
 import org.jooq.Record
 import org.jooq.RecordMapper
 import org.junit.jupiter.api.Test
@@ -50,16 +51,16 @@ abstract class RecordMapperTest<R : Record, E : CoreEntity> {
     protected abstract fun assertEntity(entity: E)
 
     private fun assertAuditFieldsOf(e: E) {
-        assertThat(e.version).isEqualTo(VERSION)
-        assertThat(e.created).isEqualTo(CREATED.toLocalDateTime())
-        assertThat(e.createdBy).isEqualTo(CREATED_BY)
-        assertThat(e.lastModified).isEqualTo(LAST_MOD.toLocalDateTime())
-        assertThat(e.lastModifiedBy).isEqualTo(LAST_MOD_BY)
+        e.version shouldBeEqualTo VERSION
+        e.created shouldBeEqualTo CREATED.toLocalDateTime()
+        e.createdBy shouldBeEqualTo CREATED_BY
+        e.lastModified shouldBeEqualTo LAST_MOD.toLocalDateTime()
+        e.lastModifiedBy shouldBeEqualTo LAST_MOD_BY
 
         // not enriched by service
-        assertThat(e.createdByName).isNull()
-        assertThat(e.createdByFullName).isNull()
-        assertThat(e.lastModifiedByName).isNull()
+        e.createdByName.shouldBeNull()
+        e.createdByFullName.shouldBeNull()
+        e.lastModifiedByName.shouldBeNull()
     }
 
     companion object {
@@ -76,8 +77,8 @@ abstract class RecordMapperTest<R : Record, E : CoreEntity> {
          * the mocked entity
          */
         fun auditFixtureFor(entityMock: CoreEntity) {
-            whenever(entityMock.createdBy).thenReturn(CREATED_BY)
-            whenever(entityMock.lastModifiedBy).thenReturn(LAST_MOD_BY)
+            every { entityMock.createdBy } returns CREATED_BY
+            every { entityMock.lastModifiedBy } returns LAST_MOD_BY
         }
 
         /**
@@ -87,9 +88,9 @@ abstract class RecordMapperTest<R : Record, E : CoreEntity> {
          * the mocked entity
          */
         fun auditExtendedFixtureFor(entityMock: CoreEntity) {
-            whenever(entityMock.created).thenReturn(CREATED.toLocalDateTime())
-            whenever(entityMock.lastModified).thenReturn(LAST_MOD.toLocalDateTime())
-            whenever(entityMock.version).thenReturn(VERSION)
+            every { entityMock.created } returns CREATED.toLocalDateTime()
+            every { entityMock.lastModified } returns LAST_MOD.toLocalDateTime()
+            every { entityMock.version } returns VERSION
         }
     }
 }

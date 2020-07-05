@@ -4,7 +4,8 @@ import ch.difty.scipamato.common.entity.ScipamatoEntity.ScipamatoEntityFields.CR
 import ch.difty.scipamato.common.entity.ScipamatoEntity.ScipamatoEntityFields.MODIFIED
 import nl.jqno.equalsverifier.EqualsVerifier
 import nl.jqno.equalsverifier.Warning
-import org.assertj.core.api.Assertions.assertThat
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldContainAll
 import org.junit.jupiter.api.Test
 
 internal class KeywordTest : PublicEntityTest<Keyword>() {
@@ -21,11 +22,11 @@ internal class KeywordTest : PublicEntityTest<Keyword>() {
         .build()
 
     override fun assertSpecificGetters() {
-        assertThat(entity.id).isEqualTo(1)
-        assertThat(entity.keywordId).isEqualTo(2)
-        assertThat(entity.langCode).isEqualTo("lc")
-        assertThat(entity.name).isEqualTo("name")
-        assertThat(entity.searchOverride).isEqualTo("n")
+        entity.id shouldBeEqualTo 1
+        entity.keywordId shouldBeEqualTo 2
+        entity.langCode shouldBeEqualTo "lc"
+        entity.name shouldBeEqualTo "name"
+        entity.searchOverride shouldBeEqualTo "n"
     }
 
     override fun verifyEquals() {
@@ -38,12 +39,12 @@ internal class KeywordTest : PublicEntityTest<Keyword>() {
 
     @Test
     fun displayValue() {
-        assertThat(entity.displayValue).isEqualTo("name")
+        entity.displayValue shouldBeEqualTo "name"
     }
 
     @Test
     fun assertEnumFields() {
-        assertThat(Keyword.KeywordFields.values().map { it.fieldName })
-            .containsExactly("id", "keywordId", "langCode", "name", "searchOverride", "displayValue")
+        Keyword.KeywordFields.values().map { it.fieldName } shouldContainAll
+            listOf("id", "keywordId", "langCode", "name", "searchOverride", "displayValue")
     }
 }

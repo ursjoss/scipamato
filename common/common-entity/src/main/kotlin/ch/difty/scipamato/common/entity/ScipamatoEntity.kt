@@ -19,7 +19,8 @@ open class ScipamatoEntity(
         VERSION("version");
     }
 
-    override fun toString(): String = "ScipamatoEntity[created=$created,lastModified=$lastModified,version=$version]"
+    override fun toString(): String =
+        "ScipamatoEntity[created=$created,lastModified=$lastModified,version=$version]"
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -27,9 +28,7 @@ open class ScipamatoEntity(
         return (version == (other as ScipamatoEntity).version)
     }
 
-    override fun hashCode(): Int {
-        return version
-    }
+    override fun hashCode(): Int = version
 
     companion object {
         private const val serialVersionUID = 1L

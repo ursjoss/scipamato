@@ -1,8 +1,14 @@
 package ch.difty.scipamato.common.persistence.paging
 
 import ch.difty.scipamato.common.persistence.paging.Sort.Direction
-import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Assertions
+import org.amshove.kluent.invoking
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeFalse
+import org.amshove.kluent.shouldBeNull
+import org.amshove.kluent.shouldBeTrue
+import org.amshove.kluent.shouldNotBe
+import org.amshove.kluent.shouldNotBeEqualTo
+import org.amshove.kluent.shouldThrow
 import org.junit.jupiter.api.Test
 
 internal class PaginationRequestTest {
@@ -12,23 +18,23 @@ internal class PaginationRequestTest {
 
     @Test
     fun degenerateConstruction_withInvalidOffset() {
-        Assertions.assertThrows(IllegalArgumentException::class.java) { PaginationRequest(-1, 1) }
+        invoking { PaginationRequest(-1, 1) } shouldThrow IllegalArgumentException::class
     }
 
     @Test
     fun degenerateConstruction_withInvalidPageSize() {
-        Assertions.assertThrows(IllegalArgumentException::class.java) { PaginationRequest(0, 0) }
+        invoking { PaginationRequest(0, 0) } shouldThrow IllegalArgumentException::class
     }
 
     private fun assertPaginationRequest(pc: PaginationContext, offSet: Int, pageSize: Int, fooSort: String?) {
-        assertThat(pc.offset).isEqualTo(offSet)
-        assertThat(pc.pageSize).isEqualTo(pageSize)
+        pc.offset shouldBeEqualTo offSet
+        pc.pageSize shouldBeEqualTo pageSize
         if (fooSort != null) {
             val s = pc.sort
-            assertThat(s.getSortPropertyFor("foo").toString()).isEqualTo(fooSort)
-            assertThat(s.getSortPropertyFor("bar")).isNull()
+            s.getSortPropertyFor("foo").toString() shouldBeEqualTo fooSort
+            s.getSortPropertyFor("bar").shouldBeNull()
         } else {
-            assertThat(pc.sort).isNull()
+            pc.sort.shouldBeNull()
         }
     }
 
@@ -38,7 +44,7 @@ internal class PaginationRequestTest {
         pr = PaginationRequest(Direction.DESC, "foo")
 
         assertPaginationRequest(pr, 0, Integer.MAX_VALUE, sort)
-        assertThat(pr.toString()).isEqualTo("Pagination request [offset: 0, size 2147483647, sort: foo: DESC]")
+        pr.toString() shouldBeEqualTo "Pagination request [offset: 0, size 2147483647, sort: foo: DESC]"
     }
 
     @Test
@@ -47,7 +53,7 @@ internal class PaginationRequestTest {
         pr = PaginationRequest(0, 10, Direction.DESC, "foo")
 
         assertPaginationRequest(pr, 0, 10, sort)
-        assertThat(pr.toString()).isEqualTo("Pagination request [offset: 0, size 10, sort: foo: DESC]")
+        pr.toString() shouldBeEqualTo "Pagination request [offset: 0, size 10, sort: foo: DESC]"
     }
 
     @Test
@@ -56,7 +62,7 @@ internal class PaginationRequestTest {
         pr = PaginationRequest(24, 12, Direction.ASC, "foo")
 
         assertPaginationRequest(pr, 24, 12, sort)
-        assertThat(pr.toString()).isEqualTo("Pagination request [offset: 24, size 12, sort: foo: ASC]")
+        pr.toString() shouldBeEqualTo "Pagination request [offset: 24, size 12, sort: foo: ASC]"
     }
 
     @Test
@@ -64,7 +70,7 @@ internal class PaginationRequestTest {
         pr = PaginationRequest(6, 2)
 
         assertPaginationRequest(pr, 6, 2, null)
-        assertThat(pr.toString()).isEqualTo("Pagination request [offset: 6, size 2, sort: null]")
+        pr.toString() shouldBeEqualTo "Pagination request [offset: 6, size 2, sort: null]"
     }
 
     @Test
@@ -74,8 +80,8 @@ internal class PaginationRequestTest {
     }
 
     private fun assertEquality(pr1: PaginationRequest, pr2: PaginationRequest) {
-        assertThat(pr1 == pr2).isTrue()
-        assertThat(pr1.hashCode()).isEqualTo(pr2.hashCode())
+        (pr1 == pr2).shouldBeTrue()
+        pr1.hashCode() shouldBeEqualTo pr2.hashCode()
     }
 
     @Test
@@ -85,8 +91,8 @@ internal class PaginationRequestTest {
     }
 
     private fun assertInequality(pr1: PaginationRequest, pr2: PaginationRequest) {
-        assertThat(pr1 == pr2).isFalse()
-        assertThat(pr1.hashCode()).isNotEqualTo(pr2.hashCode())
+        (pr1 == pr2).shouldBeFalse()
+        pr1.hashCode() shouldNotBe pr2.hashCode()
     }
 
     @Test
@@ -130,6 +136,6 @@ internal class PaginationRequestTest {
     fun inequality_ofPaginationRequestWithNonPaginationRequest() {
         pr = PaginationRequest(5, 6)
         val pr2 = ""
-        assertThat(pr.hashCode()).isNotEqualTo(pr2.hashCode())
+        pr.hashCode() shouldNotBeEqualTo pr2.hashCode()
     }
 }

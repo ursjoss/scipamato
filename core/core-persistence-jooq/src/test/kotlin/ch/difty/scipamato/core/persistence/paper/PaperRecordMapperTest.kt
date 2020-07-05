@@ -1,10 +1,13 @@
+@file:Suppress("SpellCheckingInspection")
+
 package ch.difty.scipamato.core.persistence.paper
 
 import ch.difty.scipamato.core.db.tables.records.PaperRecord
 import ch.difty.scipamato.core.entity.Paper
 import ch.difty.scipamato.core.persistence.RecordMapperTest
-import com.nhaarman.mockitokotlin2.whenever
-import org.assertj.core.api.Assertions.assertThat
+import io.mockk.every
+import org.amshove.kluent.shouldBeEmpty
+import org.amshove.kluent.shouldBeEqualTo
 import org.jooq.RecordMapper
 
 class PaperRecordMapperTest : RecordMapperTest<PaperRecord, Paper>() {
@@ -63,45 +66,45 @@ class PaperRecordMapperTest : RecordMapperTest<PaperRecord, Paper>() {
     }
 
     override fun assertEntity(entity: Paper) {
-        assertThat(entity.id).isEqualTo(ID)
-        assertThat(entity.number).isEqualTo(NUMBER)
-        assertThat(entity.pmId).isEqualTo(PM_ID)
-        assertThat(entity.doi).isEqualTo(DOI)
-        assertThat(entity.authors).isEqualTo(AUTHORS)
-        assertThat(entity.firstAuthor).isEqualTo(FIRST_AUTHOR)
-        assertThat(entity.isFirstAuthorOverridden).isEqualTo(FIRST_AUTHOR_OVERRIDDEN)
-        assertThat(entity.title).isEqualTo(TITLE)
-        assertThat(entity.location).isEqualTo(LOCATION)
-        assertThat(entity.publicationYear).isEqualTo(PUBLICATION_YEAR)
+        entity.id shouldBeEqualTo ID
+        entity.number shouldBeEqualTo NUMBER
+        entity.pmId shouldBeEqualTo PM_ID
+        entity.doi shouldBeEqualTo DOI
+        entity.authors shouldBeEqualTo AUTHORS
+        entity.firstAuthor shouldBeEqualTo FIRST_AUTHOR
+        entity.isFirstAuthorOverridden shouldBeEqualTo FIRST_AUTHOR_OVERRIDDEN
+        entity.title shouldBeEqualTo TITLE
+        entity.location shouldBeEqualTo LOCATION
+        entity.publicationYear shouldBeEqualTo PUBLICATION_YEAR
 
-        assertThat(entity.goals).isEqualTo(GOALS)
-        assertThat(entity.population).isEqualTo(POPULATION)
-        assertThat(entity.methods).isEqualTo(METHODS)
+        entity.goals shouldBeEqualTo GOALS
+        entity.population shouldBeEqualTo POPULATION
+        entity.methods shouldBeEqualTo METHODS
 
-        assertThat(entity.populationPlace).isEqualTo(POPULATION_PLACE)
-        assertThat(entity.populationParticipants).isEqualTo(POPULATION_PARTICIPANTS)
-        assertThat(entity.populationDuration).isEqualTo(POPULATION_DURATION)
-        assertThat(entity.exposurePollutant).isEqualTo(EXPOSURE_POLLUTANT)
-        assertThat(entity.exposureAssessment).isEqualTo(EXPOSURE_ASSESSMENT)
-        assertThat(entity.methodStudyDesign).isEqualTo(METHOD_STUDY_DESIGN)
-        assertThat(entity.methodOutcome).isEqualTo(METHOD_OUTCOME)
-        assertThat(entity.methodStatistics).isEqualTo(METHOD_STATISTICS)
-        assertThat(entity.methodConfounders).isEqualTo(METHOD_CONFOUNDERS)
+        entity.populationPlace shouldBeEqualTo POPULATION_PLACE
+        entity.populationParticipants shouldBeEqualTo POPULATION_PARTICIPANTS
+        entity.populationDuration shouldBeEqualTo POPULATION_DURATION
+        entity.exposurePollutant shouldBeEqualTo EXPOSURE_POLLUTANT
+        entity.exposureAssessment shouldBeEqualTo EXPOSURE_ASSESSMENT
+        entity.methodStudyDesign shouldBeEqualTo METHOD_STUDY_DESIGN
+        entity.methodOutcome shouldBeEqualTo METHOD_OUTCOME
+        entity.methodStatistics shouldBeEqualTo METHOD_STATISTICS
+        entity.methodConfounders shouldBeEqualTo METHOD_CONFOUNDERS
 
-        assertThat(entity.result).isEqualTo(RESULT)
-        assertThat(entity.comment).isEqualTo(COMMENT)
-        assertThat(entity.intern).isEqualTo(INTERN)
+        entity.result shouldBeEqualTo RESULT
+        entity.comment shouldBeEqualTo COMMENT
+        entity.intern shouldBeEqualTo INTERN
 
-        assertThat(entity.resultExposureRange).isEqualTo(RESULT_EXPOSURE_RANGE)
-        assertThat(entity.resultEffectEstimate).isEqualTo(RESULT_EFFECT_ESTIMATE)
-        assertThat(entity.resultMeasuredOutcome).isEqualTo(RESULT_MEASURED_OUTCOME)
-        assertThat(entity.conclusion).isEqualTo(CONCLUSION)
+        entity.resultExposureRange shouldBeEqualTo RESULT_EXPOSURE_RANGE
+        entity.resultEffectEstimate shouldBeEqualTo RESULT_EFFECT_ESTIMATE
+        entity.resultMeasuredOutcome shouldBeEqualTo RESULT_MEASURED_OUTCOME
+        entity.conclusion shouldBeEqualTo CONCLUSION
 
-        assertThat(entity.originalAbstract).isEqualTo(ORIGINAL_ABSTRACT)
+        entity.originalAbstract shouldBeEqualTo ORIGINAL_ABSTRACT
 
-        assertThat(entity.mainCodeOfCodeclass1).isEqualTo(MAIN_CODE_OF_CODECLASS1)
+        entity.mainCodeOfCodeclass1 shouldBeEqualTo MAIN_CODE_OF_CODECLASS1
 
-        assertThat(entity.codes).isEmpty()
+        entity.codes.shouldBeEmpty()
     }
 
     companion object {
@@ -139,42 +142,42 @@ class PaperRecordMapperTest : RecordMapperTest<PaperRecord, Paper>() {
         const val MAIN_CODE_OF_CODECLASS1 = "1F"
 
         fun entityFixtureWithoutIdFields(entityMock: Paper) {
-            whenever(entityMock.number).thenReturn(NUMBER)
-            whenever(entityMock.pmId).thenReturn(PM_ID)
-            whenever(entityMock.doi).thenReturn(DOI)
-            whenever(entityMock.authors).thenReturn(AUTHORS)
-            whenever(entityMock.firstAuthor).thenReturn(FIRST_AUTHOR)
-            whenever(entityMock.isFirstAuthorOverridden).thenReturn(FIRST_AUTHOR_OVERRIDDEN)
-            whenever(entityMock.title).thenReturn(TITLE)
-            whenever(entityMock.location).thenReturn(LOCATION)
-            whenever(entityMock.publicationYear).thenReturn(PUBLICATION_YEAR)
+            every { entityMock.number } returns NUMBER
+            every { entityMock.pmId } returns PM_ID
+            every { entityMock.doi } returns DOI
+            every { entityMock.authors } returns AUTHORS
+            every { entityMock.firstAuthor } returns FIRST_AUTHOR
+            every { entityMock.isFirstAuthorOverridden } returns FIRST_AUTHOR_OVERRIDDEN
+            every { entityMock.title } returns TITLE
+            every { entityMock.location } returns LOCATION
+            every { entityMock.publicationYear } returns PUBLICATION_YEAR
 
-            whenever(entityMock.goals).thenReturn(GOALS)
-            whenever(entityMock.population).thenReturn(POPULATION)
-            whenever(entityMock.methods).thenReturn(METHODS)
+            every { entityMock.goals } returns GOALS
+            every { entityMock.population } returns POPULATION
+            every { entityMock.methods } returns METHODS
 
-            whenever(entityMock.populationPlace).thenReturn(POPULATION_PLACE)
-            whenever(entityMock.populationParticipants).thenReturn(POPULATION_PARTICIPANTS)
-            whenever(entityMock.populationDuration).thenReturn(POPULATION_DURATION)
-            whenever(entityMock.exposurePollutant).thenReturn(EXPOSURE_POLLUTANT)
-            whenever(entityMock.exposureAssessment).thenReturn(EXPOSURE_ASSESSMENT)
-            whenever(entityMock.methodStudyDesign).thenReturn(METHOD_STUDY_DESIGN)
-            whenever(entityMock.methodOutcome).thenReturn(METHOD_OUTCOME)
-            whenever(entityMock.methodStatistics).thenReturn(METHOD_STATISTICS)
-            whenever(entityMock.methodConfounders).thenReturn(METHOD_CONFOUNDERS)
+            every { entityMock.populationPlace } returns POPULATION_PLACE
+            every { entityMock.populationParticipants } returns POPULATION_PARTICIPANTS
+            every { entityMock.populationDuration } returns POPULATION_DURATION
+            every { entityMock.exposurePollutant } returns EXPOSURE_POLLUTANT
+            every { entityMock.exposureAssessment } returns EXPOSURE_ASSESSMENT
+            every { entityMock.methodStudyDesign } returns METHOD_STUDY_DESIGN
+            every { entityMock.methodOutcome } returns METHOD_OUTCOME
+            every { entityMock.methodStatistics } returns METHOD_STATISTICS
+            every { entityMock.methodConfounders } returns METHOD_CONFOUNDERS
 
-            whenever(entityMock.result).thenReturn(RESULT)
-            whenever(entityMock.comment).thenReturn(COMMENT)
-            whenever(entityMock.intern).thenReturn(INTERN)
+            every { entityMock.result } returns RESULT
+            every { entityMock.comment } returns COMMENT
+            every { entityMock.intern } returns INTERN
 
-            whenever(entityMock.resultExposureRange).thenReturn(RESULT_EXPOSURE_RANGE)
-            whenever(entityMock.resultEffectEstimate).thenReturn(RESULT_EFFECT_ESTIMATE)
-            whenever(entityMock.resultMeasuredOutcome).thenReturn(RESULT_MEASURED_OUTCOME)
-            whenever(entityMock.conclusion).thenReturn(CONCLUSION)
+            every { entityMock.resultExposureRange } returns RESULT_EXPOSURE_RANGE
+            every { entityMock.resultEffectEstimate } returns RESULT_EFFECT_ESTIMATE
+            every { entityMock.resultMeasuredOutcome } returns RESULT_MEASURED_OUTCOME
+            every { entityMock.conclusion } returns CONCLUSION
 
-            whenever(entityMock.originalAbstract).thenReturn(ORIGINAL_ABSTRACT)
+            every { entityMock.originalAbstract } returns ORIGINAL_ABSTRACT
 
-            whenever(entityMock.mainCodeOfCodeclass1).thenReturn(MAIN_CODE_OF_CODECLASS1)
+            every { entityMock.mainCodeOfCodeclass1 } returns MAIN_CODE_OF_CODECLASS1
 
             auditFixtureFor(entityMock)
         }

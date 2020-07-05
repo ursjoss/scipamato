@@ -34,4 +34,4 @@ jobs:
           gradle-cache-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
 
     - name: Check with Gradle
-      run: ./gradlew check --no-daemon --info
+      run: ./gradlew check --stacktrace

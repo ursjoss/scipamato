@@ -6,7 +6,8 @@ import ch.difty.scipamato.common.entity.ScipamatoEntity.ScipamatoEntityFields.CR
 import ch.difty.scipamato.common.entity.ScipamatoEntity.ScipamatoEntityFields.MODIFIED
 import nl.jqno.equalsverifier.EqualsVerifier
 import nl.jqno.equalsverifier.Warning
-import org.assertj.core.api.Assertions.assertThat
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldContainAll
 import org.junit.jupiter.api.Test
 
 internal class NewStudyTest : PublicEntityTest<NewStudy>() {
@@ -17,11 +18,11 @@ internal class NewStudyTest : PublicEntityTest<NewStudy>() {
     override fun newEntity(): NewStudy = NewStudy(1, 10, 2018, "authors", "hl", "descr")
 
     override fun assertSpecificGetters() {
-        assertThat(entity.sort).isEqualTo(1)
-        assertThat(entity.number).isEqualTo(10)
-        assertThat(entity.reference).isEqualTo("(authors; 2018)")
-        assertThat(entity.headline).isEqualTo("hl")
-        assertThat(entity.description).isEqualTo("descr")
+        entity.sort shouldBeEqualTo 1
+        entity.number shouldBeEqualTo 10
+        entity.reference shouldBeEqualTo "(authors; 2018)"
+        entity.headline shouldBeEqualTo "hl"
+        entity.description shouldBeEqualTo "descr"
     }
 
     override fun verifyEquals() {
@@ -34,7 +35,7 @@ internal class NewStudyTest : PublicEntityTest<NewStudy>() {
 
     @Test
     fun assertEnumFields() {
-        assertThat(NewStudy.NewStudyFields.values().map { it.fieldName })
-            .containsExactly("sort", "number", "year", "authors", "reference", "headline", "description")
+        NewStudy.NewStudyFields.values().map { it.fieldName } shouldContainAll
+            listOf("sort", "number", "year", "authors", "reference", "headline", "description")
     }
 }

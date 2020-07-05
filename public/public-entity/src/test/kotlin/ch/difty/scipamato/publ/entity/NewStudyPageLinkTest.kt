@@ -4,7 +4,8 @@ import ch.difty.scipamato.common.entity.ScipamatoEntity.ScipamatoEntityFields.CR
 import ch.difty.scipamato.common.entity.ScipamatoEntity.ScipamatoEntityFields.MODIFIED
 import nl.jqno.equalsverifier.EqualsVerifier
 import nl.jqno.equalsverifier.Warning
-import org.assertj.core.api.Assertions.assertThat
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldContainAll
 import org.junit.jupiter.api.Test
 
 internal class NewStudyPageLinkTest : PublicEntityTest<NewStudyPageLink>() {
@@ -15,10 +16,10 @@ internal class NewStudyPageLinkTest : PublicEntityTest<NewStudyPageLink>() {
     override fun newEntity(): NewStudyPageLink = NewStudyPageLink("en", 1, "foo", "https://bar.org")
 
     override fun assertSpecificGetters() {
-        assertThat(entity.langCode).isEqualTo("en")
-        assertThat(entity.sort).isEqualTo(1)
-        assertThat(entity.title).isEqualTo("foo")
-        assertThat(entity.url).isEqualTo("https://bar.org")
+        entity.langCode shouldBeEqualTo "en"
+        entity.sort shouldBeEqualTo 1
+        entity.title shouldBeEqualTo "foo"
+        entity.url shouldBeEqualTo "https://bar.org"
     }
 
     override fun verifyEquals() {
@@ -31,7 +32,7 @@ internal class NewStudyPageLinkTest : PublicEntityTest<NewStudyPageLink>() {
 
     @Test
     fun assertEnumFields() {
-        assertThat(NewStudyPageLink.NewStudyPageLinkFields.values().map { it.fieldName })
-            .containsExactly("langCode", "sort", "title", "url")
+        NewStudyPageLink.NewStudyPageLinkFields.values().map { it.fieldName } shouldContainAll
+            listOf("langCode", "sort", "title", "url")
     }
 }

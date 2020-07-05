@@ -35,7 +35,7 @@ class NewStudyItemWriterIntegrationTest extends AbstractItemWriterIntegrationTes
         newNewStudy = newNewStudy(NL_ID_NEW, PAPER_NUMBER_NEW);
 
         existingNewStudy = getExistingNewStudyFromDb(NL_ID_EXISTING, PAPER_NUMBER_EXISTING);
-        assertThat(existingNewStudy.getAuthors()).isEqualTo("Di et al.");
+        existingNewStudy.getAuthors() shouldBeEqualTo "Di et al.";
         existingNewStudy.setAuthors("foo");
     }
 
@@ -106,7 +106,7 @@ class NewStudyItemWriterIntegrationTest extends AbstractItemWriterIntegrationTes
             .columns(Paper.PAPER.ID, Paper.PAPER.NUMBER, Paper.PAPER.PUBLICATION_YEAR)
             .values(PAPER_NUMBER_NEW, PAPER_NUMBER_NEW, 2007)
             .execute();
-        assertThat(getWriter().executeUpdate(newNewStudy)).isEqualTo(1);
+        getWriter().executeUpdate(newNewStudy) shouldBeEqualTo 1;
         assertNewStudyExistsWith(newsletterId, paperNumber);
         dsl
             .deleteFrom(Paper.PAPER)
@@ -134,7 +134,7 @@ class NewStudyItemWriterIntegrationTest extends AbstractItemWriterIntegrationTes
 
     @Test
     void updatingExistingNewStudy_succeeds() {
-        assertThat(getWriter().executeUpdate(existingNewStudy)).isEqualTo(1);
+        getWriter().executeUpdate(existingNewStudy) shouldBeEqualTo 1;
     }
 
 }

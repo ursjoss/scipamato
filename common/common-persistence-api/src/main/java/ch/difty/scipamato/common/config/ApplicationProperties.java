@@ -43,7 +43,7 @@ public interface ApplicationProperties extends Serializable {
     String getPubmedBaseUrl();
 
     /**
-     * @return The base url in PubMed to query by pm_id.
+     * @return The port from where an unsecured http connection is forward to the secured port.
      */
     @Nullable
     Integer getRedirectFromPort();

@@ -1,28 +1,21 @@
 package ch.difty.scipamato.common.web.event
 
-import com.nhaarman.mockitokotlin2.mock
+import ch.difty.scipamato.common.AjaxRequestTargetSpy
 import nl.jqno.equalsverifier.EqualsVerifier
 import nl.jqno.equalsverifier.Warning
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldStartWith
 import org.apache.wicket.ajax.AjaxRequestTarget
-import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito.verifyNoMoreInteractions
 
 internal class WicketEventTest {
 
-    private val targetMock = mock<AjaxRequestTarget>()
-
-    private val e: WicketEvent = object : WicketEvent(targetMock) {}
-
-    @AfterEach
-    fun tearDown() {
-        verifyNoMoreInteractions(targetMock)
-    }
+    private val targetSpy: AjaxRequestTarget = AjaxRequestTargetSpy()
+    private val e: WicketEvent = object : WicketEvent(targetSpy) {}
 
     @Test
     fun test() {
-        assertThat(e.target).isEqualTo(targetMock)
+        e.target shouldBeEqualTo targetSpy
     }
 
     @Test
@@ -34,6 +27,6 @@ internal class WicketEventTest {
 
     @Test
     fun testingToString() {
-        assertThat(e.toString()).startsWith("WicketEvent(target=Mock for AjaxRequestTarget")
+        e.toString().shouldStartWith("WicketEvent(target=AjaxRequestTarget")
     }
 }

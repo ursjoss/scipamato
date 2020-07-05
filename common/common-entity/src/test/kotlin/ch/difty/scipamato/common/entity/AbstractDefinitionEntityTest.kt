@@ -2,8 +2,10 @@ package ch.difty.scipamato.common.entity
 
 import nl.jqno.equalsverifier.EqualsVerifier
 import nl.jqno.equalsverifier.Warning
+import org.amshove.kluent.shouldBeEmpty
 import org.amshove.kluent.shouldBeEqualTo
-import org.assertj.core.api.Assertions.assertThat
+import org.amshove.kluent.shouldBeNull
+import org.amshove.kluent.shouldContainSame
 import org.junit.jupiter.api.Test
 
 @Suppress("PrivatePropertyName", "SpellCheckingInspection", "LocalVariableName")
@@ -68,66 +70,60 @@ class AbstractDefinitionEntityTest {
 
     @Test
     fun entity_canGetMainLanguageCode() {
-        assertThat(tde.mainLanguageCode).isEqualTo("de")
+        tde.mainLanguageCode shouldBeEqualTo "de"
     }
 
     @Test
     fun entity_canGetName() {
-        assertThat(tde.name).isEqualTo("mainName")
+        tde.name shouldBeEqualTo "mainName"
     }
 
     @Test
     fun definitionEntity_canChangeName() {
         tde.name = "foo"
-        assertThat(tde.name).isEqualTo("foo")
+        tde.name shouldBeEqualTo "foo"
     }
 
     @Test
     fun entity_canGetTranslationsInLanguage_evenMultiple() {
-        assertThat(tde.getTranslations("de")).containsExactly(dt_de, dt_de2)
-        assertThat(tde.getTranslations("en")).containsExactly(dt_en)
-        assertThat(tde.getTranslations("fr")).containsExactly(dt_fr)
+        tde.getTranslations("de") shouldContainSame listOf(dt_de, dt_de2)
+        tde.getTranslations("en") shouldContainSame listOf(dt_en)
+        tde.getTranslations("fr") shouldContainSame listOf(dt_fr)
     }
 
     @Test
     fun entity_gettingTranslationsInUndefinedLanguage_returnsEmptyList() {
-        assertThat(tde.getTranslations("es")).isEmpty()
+        tde.getTranslations("es").shouldBeEmpty()
     }
 
     @Test
     fun entity_canGetTranslationsAsString() {
-        assertThat(tde.translationsAsString).isEqualTo("DE: 'deutsch','deutsch2'; EN: 'english'; FR: 'francais'")
+        tde.translationsAsString shouldBeEqualTo "DE: 'deutsch','deutsch2'; EN: 'english'; FR: 'francais'"
     }
 
     @Test
     fun entity_canAddTranslationInLanguage() {
         tde.addTranslation("EN", TestDefinitionTranslation(20, "en", "english2", 20))
-        assertThat(tde.translationsAsString).isEqualTo(
-            "DE: 'deutsch','deutsch2'; EN: 'english'; FR: 'francais'; EN: 'english2'"
-        )
+        tde.translationsAsString shouldBeEqualTo "DE: 'deutsch','deutsch2'; EN: 'english'; FR: 'francais'; EN: 'english2'"
     }
 
     @Test
     fun entity_canRemoveTranslationInLanguage() {
-        assertThat(tde.translationsAsString).isEqualTo(
-            "DE: 'deutsch','deutsch2'; EN: 'english'; FR: 'francais'"
-        )
+        tde.translationsAsString shouldBeEqualTo "DE: 'deutsch','deutsch2'; EN: 'english'; FR: 'francais'"
         tde.removeTranslation(dt_de2)
-        assertThat(tde.translationsAsString).isEqualTo(
-            "DE: 'deutsch'; EN: 'english'; FR: 'francais'"
-        )
+        tde.translationsAsString shouldBeEqualTo "DE: 'deutsch'; EN: 'english'; FR: 'francais'"
     }
 
     @Test
     fun entity_gettingTranslationsAsString_withNoTranslations_returnsNull() {
-        assertThat(tde_wo_transl.translationsAsString).isNull()
+        tde_wo_transl.translationsAsString.shouldBeNull()
     }
 
     @Test
     fun entity_gettingTranslationsAsString_withSingleTranslationsInMainLanguage_WithNullName_returnsNA() {
         val t = TestDefinitionTranslation(1, "de", null, 10)
         val e = TestDefinitionEntity("de", "some", 1, arrayOf(t))
-        assertThat(e.translationsAsString).isEqualTo("DE: n.a.")
+        e.translationsAsString shouldBeEqualTo "DE: n.a."
     }
 
     @Test
@@ -136,112 +132,111 @@ class AbstractDefinitionEntityTest {
         val t_en = TestDefinitionTranslation(2, "en", null, 11)
         val t_fr = TestDefinitionTranslation(3, "fr", null, 12)
         val e = TestDefinitionEntity("de", "some", 1, arrayOf(t_de, t_en, t_fr))
-        assertThat(e.translationsAsString).isEqualTo("DE: 'd'; EN: n.a.; FR: n.a.")
+        e.translationsAsString shouldBeEqualTo "DE: 'd'; EN: n.a.; FR: n.a."
     }
 
     @Test
     fun entity_canSetNameInMainLanguage() {
-        assertThat(tde.getNameInLanguage("de")).isEqualTo("deutsch")
-        assertThat(tde.name).isEqualTo("mainName")
+        tde.getNameInLanguage("de") shouldBeEqualTo "deutsch"
+        tde.name shouldBeEqualTo "mainName"
         tde.setNameInLanguage("de", "d")
-        assertThat(tde.getNameInLanguage("de")).isEqualTo("d")
-        assertThat(tde.name).isEqualTo("d")
+        tde.getNameInLanguage("de") shouldBeEqualTo "d"
+        tde.name shouldBeEqualTo "d"
     }
 
     @Test
     fun entity_canSetNameInOtherDefinedLanguage() {
-        assertThat(tde.getNameInLanguage("en")).isEqualTo("english")
+        tde.getNameInLanguage("en") shouldBeEqualTo "english"
         tde.setNameInLanguage("en", "e")
-        assertThat(tde.getNameInLanguage("en")).isEqualTo("e")
-        assertThat(tde.name).isEqualTo("mainName")
+        tde.getNameInLanguage("en") shouldBeEqualTo "e"
+        tde.name shouldBeEqualTo "mainName"
     }
 
     @Test
     fun entity_settingNameInUndefinedLanguageHasNoEffect() {
-        assertThat(tde.getNameInLanguage("es")).isNull()
+        tde.getNameInLanguage("es").shouldBeNull()
         tde.setNameInLanguage("es", "d")
-        assertThat(tde.getNameInLanguage("es")).isNull()
+        tde.getNameInLanguage("es").shouldBeNull()
     }
 
     @Test
     fun entity_gettingNameInUndefinedLanguage_returnsNull() {
-        assertThat(tde.getNameInLanguage("es")).isNull()
+        tde.getNameInLanguage("es").shouldBeNull()
     }
 
     @Test
     fun entity_withNoTranslations_gettingNameInNormallyDefinedLanguage_returnsNull() {
-        assertThat(tde_wo_transl.getNameInLanguage("es")).isNull()
+        tde_wo_transl.getNameInLanguage("es").shouldBeNull()
     }
 
     @Test
     fun entity_canGetDisplayName() {
-        assertThat(tde.displayValue).isEqualTo("mainName")
+        tde.displayValue shouldBeEqualTo "mainName"
     }
 
     @Test
     fun entity_canGet_nullSafeId() {
-        assertThat(tde.nullSafeId).isEqualTo("foo")
+        tde.nullSafeId shouldBeEqualTo "foo"
     }
 
     @Test
     fun entity_testingToString() {
-        assertThat(tde.toString()).isEqualTo(
+        tde.toString() shouldBeEqualTo
             "AbstractDefinitionEntity[translations=DE: 'deutsch','deutsch2'; EN: 'english'; FR: 'francais', " +
-                "mainLanguageCode=de, name=mainName]"
-        )
+            "mainLanguageCode=de, name=mainName]"
     }
 
     @Test
     fun entity_settingVersionNull_resultsInZero() {
-        assertThat(tde_wo_transl_versionNull.version).isEqualTo(0)
+        tde_wo_transl_versionNull.version shouldBeEqualTo 0
     }
 
     @Test
     fun translation_canGetId() {
-        assertThat(dt_de.id).isEqualTo(1)
+        dt_de.id shouldBeEqualTo 1
     }
 
     @Test
     fun translation_canGetLangCode() {
-        assertThat(dt_de.langCode).isEqualTo("de")
+        dt_de.langCode shouldBeEqualTo "de"
     }
 
     @Test
     fun translation_canGetName() {
-        assertThat(dt_de.name).isEqualTo("deutsch")
+        dt_de.name shouldBeEqualTo "deutsch"
     }
 
     @Test
     fun translation_canGetDisplayValue() {
-        assertThat(dt_de.displayValue).isEqualTo("de: deutsch")
+        dt_de.displayValue shouldBeEqualTo "de: deutsch"
     }
 
     @Test
     fun translation_canGetVersion() {
-        assertThat(dt_de.version).isEqualTo(10)
+        dt_de.version shouldBeEqualTo 10
     }
 
     @Test
     fun translation_settingVersionNull_resultsInZero() {
         val dt = TestDefinitionTranslation(1, "de", "deutsch")
-        assertThat(dt.version).isEqualTo(0)
+        dt.version shouldBeEqualTo 0
     }
 
     @Test
     fun translation_testingToString() {
-        assertThat(dt_de.toString()).isEqualTo("AbstractDefinitionTranslation(id=1, langCode=de, name=deutsch)")
+        dt_de.toString() shouldBeEqualTo "AbstractDefinitionTranslation(id=1, langCode=de, name=deutsch)"
     }
 
     @Test
     fun translationFields() {
-        assertThat(AbstractDefinitionTranslation.DefinitionTranslationFields.values()).containsExactly(
+        AbstractDefinitionTranslation.DefinitionTranslationFields.values() shouldContainSame listOf(
             AbstractDefinitionTranslation.DefinitionTranslationFields.ID,
             AbstractDefinitionTranslation.DefinitionTranslationFields.LANG_CODE,
             AbstractDefinitionTranslation.DefinitionTranslationFields.NAME
         )
-        assertThat(AbstractDefinitionTranslation.DefinitionTranslationFields.ID.fieldName).isEqualTo("id")
-        assertThat(AbstractDefinitionTranslation.DefinitionTranslationFields.LANG_CODE.fieldName).isEqualTo("langCode")
-        assertThat(AbstractDefinitionTranslation.DefinitionTranslationFields.NAME.fieldName).isEqualTo("name")
+        AbstractDefinitionTranslation.DefinitionTranslationFields.ID.fieldName shouldBeEqualTo "id"
+        AbstractDefinitionTranslation.DefinitionTranslationFields.LANG_CODE.fieldName shouldBeEqualTo "langCode"
+        AbstractDefinitionTranslation.DefinitionTranslationFields.NAME.fieldName shouldBeEqualTo "name"
     }
 
     @Test

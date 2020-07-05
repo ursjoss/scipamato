@@ -4,8 +4,8 @@ import ch.difty.scipamato.core.db.tables.records.PaperRecord
 import ch.difty.scipamato.core.entity.projection.PaperSlim
 import ch.difty.scipamato.core.persistence.RecordMapperTest
 import ch.difty.scipamato.core.persistence.paper.PaperRecordMapperTest
-import com.nhaarman.mockitokotlin2.whenever
-import org.assertj.core.api.Assertions.assertThat
+import io.mockk.every
+import org.amshove.kluent.shouldBeEqualTo
 import org.jooq.RecordMapper
 
 internal class PaperSlimRecordMapperTest : RecordMapperTest<PaperRecord, PaperSlim>() {
@@ -30,19 +30,19 @@ internal class PaperSlimRecordMapperTest : RecordMapperTest<PaperRecord, PaperSl
     }
 
     override fun assertEntity(entity: PaperSlim) {
-        assertThat(entity.id).isEqualTo(PaperRecordMapperTest.ID)
-        assertThat(entity.number).isEqualTo(PaperRecordMapperTest.NUMBER)
-        assertThat(entity.firstAuthor).isEqualTo(PaperRecordMapperTest.FIRST_AUTHOR)
-        assertThat(entity.title).isEqualTo(PaperRecordMapperTest.TITLE)
-        assertThat(entity.publicationYear).isEqualTo(PaperRecordMapperTest.PUBLICATION_YEAR)
+        entity.id shouldBeEqualTo PaperRecordMapperTest.ID
+        entity.number shouldBeEqualTo PaperRecordMapperTest.NUMBER
+        entity.firstAuthor shouldBeEqualTo PaperRecordMapperTest.FIRST_AUTHOR
+        entity.title shouldBeEqualTo PaperRecordMapperTest.TITLE
+        entity.publicationYear shouldBeEqualTo PaperRecordMapperTest.PUBLICATION_YEAR
     }
 
     companion object {
         fun entityFixtureWithoutIdFields(entity: PaperSlim) {
-            whenever(entity.number).thenReturn(PaperRecordMapperTest.NUMBER)
-            whenever(entity.firstAuthor).thenReturn(PaperRecordMapperTest.FIRST_AUTHOR)
-            whenever(entity.title).thenReturn(PaperRecordMapperTest.TITLE)
-            whenever(entity.publicationYear).thenReturn(PaperRecordMapperTest.PUBLICATION_YEAR)
+            every { entity.number } returns PaperRecordMapperTest.NUMBER
+            every { entity.firstAuthor } returns PaperRecordMapperTest.FIRST_AUTHOR
+            every { entity.title } returns PaperRecordMapperTest.TITLE
+            every { entity.publicationYear } returns PaperRecordMapperTest.PUBLICATION_YEAR
 
             auditFixtureFor(entity)
         }

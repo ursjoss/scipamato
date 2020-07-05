@@ -1,16 +1,17 @@
 package ch.difty.scipamato.common.persistence.codeclass
 
 import ch.difty.scipamato.common.entity.CodeClassLike
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.whenever
-import org.assertj.core.api.Assertions.assertThat
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.verify
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldContainAll
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito.verify
 
 internal class JooqCodeClassLikeServiceTest {
 
-    private val cclMock = mock<CodeClassLike>()
-    private val repoMock = mock<CodeClassLikeRepository<CodeClassLike>>()
+    private val cclMock = mockk<CodeClassLike>()
+    private val repoMock = mockk<CodeClassLikeRepository<CodeClassLike>>()
 
     private val codeClasses = listOf(cclMock, cclMock)
 
@@ -20,14 +21,14 @@ internal class JooqCodeClassLikeServiceTest {
 
     @Test
     fun canGetRepo() {
-        assertThat(service.repo).isEqualTo(repoMock)
+        service.repo shouldBeEqualTo repoMock
     }
 
     @Test
     fun finding_delegatesToRepo() {
-        whenever(repoMock.find(LANG_CODE)).thenReturn(codeClasses)
-        assertThat(service.find(LANG_CODE)).containsExactly(cclMock, cclMock)
-        verify(repoMock).find(LANG_CODE)
+        every { repoMock.find(LANG_CODE) } returns codeClasses
+        service.find(LANG_CODE) shouldContainAll listOf(cclMock, cclMock)
+        verify { repoMock.find(LANG_CODE) }
     }
 
     companion object {

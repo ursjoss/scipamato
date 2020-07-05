@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.sync.code
 
-import org.assertj.core.api.Assertions.assertThat
+import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
@@ -18,21 +18,21 @@ internal class HidingInternalsCodeAggregatorTest {
         )
         ca.setInternalCodes(listOf(*internals))
         ca.load(input)
-        assertThat(ca.aggregatedCodes).isEqualTo(codes)
+        ca.aggregatedCodes shouldBeEqualTo codes
     }
 
     @ParameterizedTest(name = "{index}: code array {0} results in code population {1}")
     @MethodSource("paramsCodePopulation")
     fun gettingCodePopulation(input: Array<String>, codesPopulation: Array<Short>?) {
         ca.load(input)
-        assertThat(ca.codesPopulation).isEqualTo(codesPopulation)
+        ca.codesPopulation shouldBeEqualTo codesPopulation
     }
 
     @ParameterizedTest(name = "{index}: code array {0} results in code study design {1}")
     @MethodSource("paramsCodeStudyDesign")
     fun gettingCodeStudyDesign(input: Array<String>, codesStudyDesign: Array<Short>?) {
         ca.load(input)
-        assertThat(ca.codesStudyDesign).isEqualTo(codesStudyDesign)
+        ca.codesStudyDesign shouldBeEqualTo codesStudyDesign
     }
 
     @ParameterizedTest(
@@ -52,9 +52,9 @@ internal class HidingInternalsCodeAggregatorTest {
         )
         ca.setInternalCodes(listOf(*internals))
         ca.load(input)
-        assertThat(ca.aggregatedCodes).isEqualTo(codes)
-        assertThat(ca.codesPopulation).isEqualTo(codesPopulation)
-        assertThat(ca.codesStudyDesign).isEqualTo(codesStudyDesign)
+        ca.aggregatedCodes shouldBeEqualTo codes
+        ca.codesPopulation shouldBeEqualTo codesPopulation
+        ca.codesStudyDesign shouldBeEqualTo codesStudyDesign
     }
 
     @Suppress("unused")

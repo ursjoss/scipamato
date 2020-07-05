@@ -1,6 +1,10 @@
 package ch.difty.scipamato.core.entity.codeclass
 
-import org.assertj.core.api.Assertions.assertThat
+import org.amshove.kluent.shouldBeEmpty
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeNull
+import org.amshove.kluent.shouldContainSame
+import org.amshove.kluent.shouldNotBeNull
 import org.junit.jupiter.api.Test
 
 @Suppress("SpellCheckingInspection", "PrivatePropertyName")
@@ -14,29 +18,29 @@ internal class CodeClassDefinitionTest {
     @Test
     fun withNoTranslations_unableToEstablishMainName() {
         val codeClass = CodeClassDefinition(1, "de", 2)
-        assertThat(codeClass.id).isEqualTo(1)
-        assertThat(codeClass.name).isEqualTo("n.a.")
-        assertThat(codeClass.displayValue).isEqualTo("n.a.")
-        assertThat(codeClass.getTranslations()).isEmpty()
+        codeClass.id shouldBeEqualTo 1
+        codeClass.name shouldBeEqualTo "n.a."
+        codeClass.displayValue shouldBeEqualTo "n.a."
+        codeClass.getTranslations().shouldBeEmpty()
     }
 
     @Test
     fun withTranslations_onePerLanguage() {
         val code = CodeClassDefinition(1, "de", 1, cc_de, cc_en, cc_fr)
-        assertThat(code.id).isEqualTo(1)
-        assertThat(code.name).isEqualTo("codede2")
-        assertThat(code.mainLanguageCode).isEqualTo("de")
-        assertThat(code.displayValue).isEqualTo("codede2")
+        code.id shouldBeEqualTo 1
+        code.name shouldBeEqualTo "codede2"
+        code.mainLanguageCode shouldBeEqualTo "de"
+        code.displayValue shouldBeEqualTo "codede2"
         val trs = code.getTranslations()
-        assertThat(trs.map { it.name }).containsOnly("codede2", "codeen2", "codefr2")
+        trs.map { it.name } shouldContainSame listOf("codede2", "codeen2", "codefr2")
         for (tr in trs)
-            assertThat(tr.lastModified).isNull()
+            tr.lastModified.shouldBeNull()
     }
 
     @Test
     fun canGetTranslationsAsString_withTranslationsIncludingMainTranslation() {
         val code = CodeClassDefinition(1, "de", 1, cc_de, cc_en, cc_fr)
-        assertThat(code.translationsAsString).isEqualTo("DE: 'codede2'; EN: 'codeen2'; FR: 'codefr2'")
+        code.translationsAsString shouldBeEqualTo "DE: 'codede2'; EN: 'codeen2'; FR: 'codefr2'"
     }
 
     @Test
@@ -45,14 +49,14 @@ internal class CodeClassDefinitionTest {
             1, "de", 1, cc_de, cc_en,
             CodeClassTranslation(12, "fr", null, "remarc", 1)
         )
-        assertThat(code.translationsAsString).isEqualTo("DE: 'codede2'; EN: 'codeen2'; FR: n.a.")
+        code.translationsAsString shouldBeEqualTo "DE: 'codede2'; EN: 'codeen2'; FR: n.a."
     }
 
     @Test
     fun modifyTransl_withMainLangTranslModified_changesMainName_translationName_andSetsModifiedTimestamp() {
         val code = CodeClassDefinition(1, "de", 1, cc_de, cc_en, cc_fr)
         code.setNameInLanguage("de", "CODE 2")
-        assertThat(code.name).isEqualTo("CODE 2")
+        code.name shouldBeEqualTo "CODE 2"
         assertTranslatedName(code, "de", 0, "CODE 2")
         assertLastModifiedIsNotNull(code, "de", 0)
         assertLastModifiedIsNull(code, "en", 0)
@@ -60,66 +64,66 @@ internal class CodeClassDefinitionTest {
     }
 
     private fun assertTranslatedName(code: CodeClassDefinition, lc: String, index: Int, value: String) {
-        assertThat(code.getTranslations(lc)[index]?.name).isEqualTo(value)
+        code.getTranslations(lc)[index]?.name shouldBeEqualTo value
     }
 
     @Suppress("SameParameterValue")
     private fun assertLastModifiedIsNotNull(code: CodeClassDefinition, lc: String, index: Int) {
-        assertThat(code.getTranslations(lc)[index]?.lastModified).isNotNull()
+        code.getTranslations(lc)[index]?.lastModified.shouldNotBeNull()
     }
 
     private fun assertLastModifiedIsNull(code: CodeClassDefinition, lc: String, index: Int) {
-        assertThat(code.getTranslations(lc)[index]?.lastModified).isNull()
+        code.getTranslations(lc)[index]?.lastModified.shouldBeNull()
     }
 
     @Test
     fun modifyTransl_withNonMainLangTranslModified_keepsMainName_changesTranslName_andSetsModifiedTimestamp() {
         val code = CodeClassDefinition(1, "de", 1, cc_de, cc_en, cc_fr)
         code.setNameInLanguage("fr", "bar")
-        assertThat(code.name).isEqualTo("codede2")
+        code.name shouldBeEqualTo "codede2"
         assertTranslatedName(code, "fr", 0, "bar")
-        assertThat(code.getTranslations("de")[0]?.lastModified).isNull()
-        assertThat(code.getTranslations("en")[0]?.lastModified).isNull()
+        code.getTranslations("de")[0]?.lastModified.shouldBeNull()
+        code.getTranslations("en")[0]?.lastModified.shouldBeNull()
         assertLastModifiedIsNotNull(code, "fr", 0)
     }
 
     @Test
     fun gettingNameInLanguage_withValidLanguages_returnsNames() {
         val code = CodeClassDefinition(1, "de", 1, cc_de, cc_en, cc_fr)
-        assertThat(code.getNameInLanguage("de")).isEqualTo("codede2")
-        assertThat(code.getNameInLanguage("en")).isEqualTo("codeen2")
-        assertThat(code.getNameInLanguage("fr")).isEqualTo("codefr2")
+        code.getNameInLanguage("de") shouldBeEqualTo "codede2"
+        code.getNameInLanguage("en") shouldBeEqualTo "codeen2"
+        code.getNameInLanguage("fr") shouldBeEqualTo "codefr2"
     }
 
     @Test
     fun gettingNameInLanguage_withInvalidLanguage_returnsNames() {
         val ccd = CodeClassDefinition(1, "de", 1, cc_de, cc_en, cc_fr)
-        assertThat(ccd.getNameInLanguage("deX")).isNull()
+        ccd.getNameInLanguage("deX").shouldBeNull()
     }
 
     @Test
     fun withTranslations_moreThanOnePerLanguage() {
         val ccd = CodeClassDefinition(2, "de", 1, cc_de, cc_de2, cc_en, cc_fr)
-        assertThat(ccd.id).isEqualTo(2)
-        assertThat(ccd.name).isEqualTo("codede2")
-        assertThat(ccd.displayValue).isEqualTo("codede2")
+        ccd.id shouldBeEqualTo 2
+        ccd.name shouldBeEqualTo "codede2"
+        ccd.displayValue shouldBeEqualTo "codede2"
         val trs = ccd.getTranslations()
-        assertThat(trs.map { it.name }).containsOnly("codede2", "codede2foo", "codeen2", "codefr2")
+        trs.map { it.name } shouldContainSame listOf("codede2", "codede2foo", "codeen2", "codefr2")
         for (tr in trs)
-            assertThat(tr.lastModified).isNull()
+            tr.lastModified.shouldBeNull()
     }
 
     @Test
     fun canGetTranslationsAsString_withTranslationsIncludingMainTranslation_withMultipleTranslations() {
         val code = CodeClassDefinition(1, "de", 1, cc_de, cc_de2, cc_en, cc_fr)
-        assertThat(code.translationsAsString).isEqualTo("DE: 'codede2','codede2foo'; EN: 'codeen2'; FR: 'codefr2'")
+        code.translationsAsString shouldBeEqualTo "DE: 'codede2','codede2foo'; EN: 'codeen2'; FR: 'codefr2'"
     }
 
     @Test
     fun modifyTransl_withMainLangTranslModified_changesMainName_translName_andSetsModTimestamp_multipleTranslPerLang() {
         val code = CodeClassDefinition(1, "de", 1, cc_de, cc_de2, cc_en, cc_fr)
         code.setNameInLanguage("de", "Code 2")
-        assertThat(code.name).isEqualTo("Code 2")
+        code.name shouldBeEqualTo "Code 2"
         assertTranslatedName(code, "de", 0, "Code 2")
         assertTranslatedName(code, "de", 1, "codede2foo")
         assertLastModifiedIsNotNull(code, "de", 0)
@@ -130,13 +134,13 @@ internal class CodeClassDefinitionTest {
 
     @Test
     fun assertCodeFields() {
-        assertThat(CodeClassDefinition.CodeClassDefinitionFields.values().map { it.fieldName })
-            .containsExactly("id", "mainLanguageCode", "name")
+        CodeClassDefinition.CodeClassDefinitionFields.values().map { it.fieldName } shouldContainSame
+            listOf("id", "mainLanguageCode", "name")
     }
 
     @Test
     fun gettingNulSafeId() {
         val code = CodeClassDefinition(1, "de", 1, cc_de, cc_de2, cc_en, cc_fr)
-        assertThat(code.nullSafeId).isEqualTo(1)
+        code.nullSafeId shouldBeEqualTo 1
     }
 }

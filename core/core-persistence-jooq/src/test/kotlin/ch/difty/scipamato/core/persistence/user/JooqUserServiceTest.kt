@@ -4,27 +4,26 @@ import ch.difty.scipamato.common.persistence.paging.PaginationContext
 import ch.difty.scipamato.core.entity.User
 import ch.difty.scipamato.core.entity.search.UserFilter
 import ch.difty.scipamato.core.persistence.UserRepository
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.never
-import com.nhaarman.mockitokotlin2.times
-import com.nhaarman.mockitokotlin2.verify
-import com.nhaarman.mockitokotlin2.verifyNoMoreInteractions
-import com.nhaarman.mockitokotlin2.whenever
-import org.assertj.core.api.Assertions.assertThat
+import io.mockk.confirmVerified
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.verify
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeFalse
+import org.amshove.kluent.shouldBeTrue
+import org.amshove.kluent.shouldContainAll
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
-import org.mockito.ArgumentMatchers.anyInt
-import org.mockito.ArgumentMatchers.anyString
 import org.springframework.security.crypto.password.PasswordEncoder
 
 @Suppress("UsePropertyAccessSyntax")
 internal class JooqUserServiceTest {
 
-    private val repoMock = mock<UserRepository>()
-    private val passwordEncoderMock = mock<PasswordEncoder>()
-    private val filterMock = mock<UserFilter>()
-    private val paginationContextMock = mock<PaginationContext>()
-    private val userMock = mock<User>()
+    private val repoMock = mockk<UserRepository>()
+    private val passwordEncoderMock = mockk<PasswordEncoder>()
+    private val filterMock = mockk<UserFilter>()
+    private val paginationContextMock = mockk<PaginationContext>()
+    private val userMock = mockk<User>()
 
     private var service = JooqUserService(repoMock, passwordEncoderMock)
 
@@ -32,148 +31,164 @@ internal class JooqUserServiceTest {
 
     @AfterEach
     fun tearDown() {
-        verifyNoMoreInteractions(repoMock, passwordEncoderMock, filterMock, paginationContextMock, userMock)
+        confirmVerified(repoMock, passwordEncoderMock, filterMock, paginationContextMock, userMock)
     }
 
     @Test
     fun findingById_withFoundEntity_returnsOptionalOfIt() {
         val id = 7
-        whenever(repoMock.findById(id)).thenReturn(userMock)
+        every { repoMock.findById(id) } returns userMock
 
         val optUser = service.findById(id)
-        assertThat(optUser.isPresent).isTrue()
-        assertThat(optUser.get()).isEqualTo(userMock)
+        optUser.isPresent.shouldBeTrue()
+        optUser.get() shouldBeEqualTo userMock
 
-        verify(repoMock).findById(id)
+        verify { userMock == userMock }
+        verify { repoMock.findById(id) }
     }
 
     @Test
     fun findingById_withNotFoundEntity_returnsOptionalEmpty() {
         val id = 7
-        whenever(repoMock.findById(id)).thenReturn(null)
-        assertThat(service.findById(id).isPresent).isFalse()
-        verify(repoMock).findById(id)
+        every { repoMock.findById(id) } returns null
+        service.findById(id).isPresent.shouldBeFalse()
+        verify { repoMock.findById(id) }
     }
 
     @Test
     fun findingByFilter_delegatesToRepo() {
-        whenever(repoMock.findPageByFilter(filterMock, paginationContextMock)).thenReturn(users)
-        assertThat(service.findPageByFilter(filterMock, paginationContextMock)).isEqualTo(users)
-        verify(repoMock).findPageByFilter(filterMock, paginationContextMock)
+        every { repoMock.findPageByFilter(filterMock, paginationContextMock) } returns users
+        service.findPageByFilter(filterMock, paginationContextMock) shouldBeEqualTo users
+        verify { repoMock.findPageByFilter(filterMock, paginationContextMock) }
     }
 
     @Test
     fun countingByFilter_delegatesToRepo() {
-        whenever(repoMock.countByFilter(filterMock)).thenReturn(3)
-        assertThat(service.countByFilter(filterMock)).isEqualTo(3)
-        verify(repoMock).countByFilter(filterMock)
+        every { repoMock.countByFilter(filterMock) } returns 3
+        service.countByFilter(filterMock) shouldBeEqualTo 3
+        verify { repoMock.countByFilter(filterMock) }
     }
 
     @Test
     fun savingOrUpdating_withUserWithNullId_hasRepoAddTheUser() {
-        whenever(userMock.id).thenReturn(null)
-        whenever(repoMock.add(userMock)).thenReturn(userMock)
-        assertThat(service.saveOrUpdate(userMock)).isEqualTo(userMock)
-        verify(repoMock).add(userMock)
-        verify(userMock).id
-        verify(userMock).password
-        verify(userMock, never()).password = anyString()
+        every { userMock.id } returns null
+        every { userMock.password } returns "boo"
+        every { passwordEncoderMock.encode("boo") } returns "bar"
+        every { userMock.password = "bar" } returns Unit
+        every { repoMock.add(userMock) } returns userMock
+        service.saveOrUpdate(userMock) shouldBeEqualTo userMock
+        verify { repoMock.add(userMock) }
+        verify { userMock.id }
+        verify { userMock.password }
+        verify { userMock.password = "bar" }
+        verify { passwordEncoderMock.encode("boo") }
+        verify { userMock == userMock }
     }
 
     @Test
     fun savingOrUpdating_withUserWithNonNullId_hasRepoUpdateTheUser() {
-        whenever(userMock.id).thenReturn(17)
-        whenever(repoMock.update(userMock)).thenReturn(userMock)
-        assertThat(service.saveOrUpdate(userMock)).isEqualTo(userMock)
-        verify(repoMock).update(userMock)
-        verify(userMock).id
-        verify(userMock).password
-        verify(userMock, never()).password = anyString()
+        every { userMock.id } returns 17
+        every { repoMock.update(userMock) } returns userMock
+        every { userMock.password } returns "boo"
+        every { passwordEncoderMock.encode("boo") } returns "bar"
+        every { userMock.password = "bar" } returns Unit
+        service.saveOrUpdate(userMock) shouldBeEqualTo userMock
+        verify { repoMock.update(userMock) }
+        verify { userMock.id }
+        verify { userMock.password }
+        verify { passwordEncoderMock.encode("boo") }
+        verify { userMock.password = "bar" }
+        verify { userMock == userMock }
     }
 
     @Test
     fun savingOrUpdating_withUserWithNullId_withPassword_hasRepoAddTheUserAfterEncodingThePassword() {
-        whenever(userMock.id).thenReturn(null)
-        whenever(userMock.password).thenReturn("foo")
-        whenever(passwordEncoderMock.encode("foo")).thenReturn("bar")
-        whenever(repoMock.add(userMock)).thenReturn(userMock)
+        every { userMock.id } returns null
+        every { userMock.password } returns "foo"
+        every { passwordEncoderMock.encode("foo") } returns "bar"
+        every { userMock.password = "bar" } returns Unit
+        every { repoMock.add(userMock) } returns userMock
 
-        assertThat(service.saveOrUpdate(userMock)).isEqualTo(userMock)
+        service.saveOrUpdate(userMock) shouldBeEqualTo userMock
 
-        verify(repoMock).add(userMock)
-        verify(passwordEncoderMock).encode("foo")
-        verify(userMock).id
-        verify(userMock).password
-        verify(userMock).password = "bar"
+        verify { repoMock.add(userMock) }
+        verify { passwordEncoderMock.encode("foo") }
+        verify { userMock.id }
+        verify { userMock.password }
+        verify { userMock.password = "bar" }
+        verify { userMock == userMock }
     }
 
     @Test
     fun savingOrUpdating_withUserWithNonNullId_withPassword_hasRepoUpdateTheUserAfterEncodingThePassword() {
-        whenever(userMock.id).thenReturn(17)
-        whenever(userMock.password).thenReturn("foo")
-        whenever(passwordEncoderMock.encode("foo")).thenReturn("bar")
-        whenever(repoMock.update(userMock)).thenReturn(userMock)
+        every { userMock.id } returns 17
+        every { userMock.password } returns "foo"
+        every { passwordEncoderMock.encode("foo") } returns "bar"
+        every { userMock.password = "bar" } returns Unit
+        every { repoMock.update(userMock) } returns userMock
 
-        assertThat(service.saveOrUpdate(userMock)).isEqualTo(userMock)
+        service.saveOrUpdate(userMock) shouldBeEqualTo userMock
 
-        verify(repoMock).update(userMock)
-        verify(passwordEncoderMock).encode("foo")
-        verify(userMock).id
-        verify(userMock).password
-        verify(userMock).password = "bar"
+        verify { repoMock.update(userMock) }
+        verify { passwordEncoderMock.encode("foo") }
+        verify { userMock.id }
+        verify { userMock.password }
+        verify { userMock.password = "bar" }
+        verify { userMock == userMock }
     }
 
     @Test
     fun findingByUserName_withNullName_returnsEmptyOptional() {
-        assertThat(service.findByUserName(null).isPresent).isFalse()
+        service.findByUserName(null).isPresent.shouldBeFalse()
     }
 
     @Test
     fun findingByUserName_whenFindingUser_delegatesToRepoAndReturnsOptionalOfFoundUser() {
-        whenever(repoMock.findByUserName("foo")).thenReturn(userMock)
-        assertThat(service.findByUserName("foo")).isEqualTo(java.util.Optional.of(userMock))
-        verify(repoMock).findByUserName("foo")
+        every { repoMock.findByUserName("foo") } returns userMock
+        service.findByUserName("foo") shouldBeEqualTo java.util.Optional.of(userMock)
+        verify { repoMock.findByUserName("foo") }
     }
 
     @Test
     fun findingByUserName_whenNotFindingUser_delegatesToRepoAndReturnsOptionalEmpty() {
-        whenever(repoMock.findByUserName("foo")).thenReturn(null)
-        assertThat(service.findByUserName("foo")).isEqualTo(java.util.Optional.empty<Any>())
-        verify(repoMock).findByUserName("foo")
+        every { repoMock.findByUserName("foo") } returns null
+        service.findByUserName("foo") shouldBeEqualTo java.util.Optional.empty<Any>()
+        verify { repoMock.findByUserName("foo") }
     }
 
     @Test
     fun deleting_withNullEntity_doesNothing() {
         service.remove(null)
-        verify(repoMock, never()).delete(anyInt(), anyInt())
+        verify(exactly = 0) { repoMock.delete(any(), any()) }
     }
 
     @Test
     fun deleting_withEntityWithNullId_doesNothing() {
-        whenever(userMock.id).thenReturn(null)
+        every { userMock.id } returns null
 
         service.remove(userMock)
 
-        verify(userMock).id
-        verify(repoMock, never()).delete(anyInt(), anyInt())
+        verify { userMock.id }
+        verify(exactly = 0) { repoMock.delete(any(), any()) }
     }
 
     @Test
     fun deleting_withEntityWithNormalId_delegatesToRepo() {
-        whenever(userMock.id).thenReturn(3)
-        whenever(userMock.version).thenReturn(2)
+        every { userMock.id } returns 3
+        every { userMock.version } returns 2
+        every { repoMock.delete(3, 2) } returns userMock
 
         service.remove(userMock)
 
-        verify(userMock, times(2)).id
-        verify(userMock, times(1)).version
-        verify(repoMock, times(1)).delete(3, 2)
+        verify(exactly = 2) { userMock.id }
+        verify(exactly = 1) { userMock.version }
+        verify(exactly = 1) { repoMock.delete(3, 2) }
     }
 
     @Test
     fun findingPageOfIdsByFilter_delegatesToRepo() {
-        whenever(repoMock.findPageOfIdsByFilter(filterMock, paginationContextMock)).thenReturn(listOf(3, 8, 5))
-        assertThat(service.findPageOfIdsByFilter(filterMock, paginationContextMock)).containsExactly(3, 8, 5)
-        verify(repoMock).findPageOfIdsByFilter(filterMock, paginationContextMock)
+        every { repoMock.findPageOfIdsByFilter(filterMock, paginationContextMock) } returns listOf(3, 8, 5)
+        service.findPageOfIdsByFilter(filterMock, paginationContextMock) shouldContainAll listOf(3, 8, 5)
+        verify { repoMock.findPageOfIdsByFilter(filterMock, paginationContextMock) }
     }
 }

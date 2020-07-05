@@ -2,6 +2,8 @@ package ch.difty.scipamato.common.web.component.table.column
 
 import ch.difty.scipamato.common.web.TestRecord
 import ch.difty.scipamato.common.web.WicketBaseTest
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeNull
 import org.apache.wicket.ajax.AjaxRequestTarget
 import org.apache.wicket.ajax.markup.html.AjaxLink
 import org.apache.wicket.extensions.markup.html.repeater.data.grid.DataGridView
@@ -9,7 +11,6 @@ import org.apache.wicket.extensions.markup.html.repeater.data.table.DefaultDataT
 import org.apache.wicket.model.IModel
 import org.apache.wicket.model.Model
 import org.apache.wicket.util.tester.TagTester
-import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 internal class LinkIconColumnTest : WicketBaseTest() {
@@ -36,7 +37,7 @@ internal class LinkIconColumnTest : WicketBaseTest() {
         tester.startComponentInPage(newPanelWithTitle("the title"))
         assertComponents()
         assertImageTitle()
-        assertThat(clickPerformed).isNull()
+        clickPerformed.shouldBeNull()
     }
 
     private fun assertComponents() {
@@ -54,7 +55,7 @@ internal class LinkIconColumnTest : WicketBaseTest() {
             .lastResponse
             .document
         val tagTester = TagTester.createTagByName(responseTxt, "i")
-        assertThat(tagTester.getAttribute("title")).isEqualTo("the title")
+        tagTester.getAttribute("title") shouldBeEqualTo "the title"
     }
 
     @Test
@@ -62,30 +63,30 @@ internal class LinkIconColumnTest : WicketBaseTest() {
         tester.startComponentInPage(newPanelWithTitle(null))
         assertComponents()
         assertNoImageTitle()
-        assertThat(clickPerformed).isNull()
+        clickPerformed.shouldBeNull()
     }
 
     private fun assertNoImageTitle() {
         val responseTxt = tester.lastResponse.document
         val tagTester = TagTester.createTagByName(responseTxt, "i")
-        assertThat(tagTester.getAttribute("title")).isNull()
+        tagTester.getAttribute("title").shouldBeNull()
     }
 
     @Test
     fun clickingLink() {
         tester.startComponentInPage(newPanelWithTitle("foo"))
         tester.clickLink("panel:table:body:rows:1:cells:2:cell:link")
-        assertThat(clickPerformed).isEqualTo("TestRecord(id=1, name=foo)")
+        clickPerformed shouldBeEqualTo "TestRecord(id=1, name=foo)"
     }
 
     @Test
     fun cssClassIsNull_canSetLater() {
-        assertThat(lc.displayModel.getObject()).isEqualTo("headerText")
+        lc.displayModel.getObject() shouldBeEqualTo "headerText"
     }
 
     @Test
     fun creatingTitleModel_returnsNull() {
-        assertThat(lc.createTitleModel(Model.of(TestRecord(1, "foo"))) == null).isTrue()
+        lc.createTitleModel(Model.of(TestRecord(1, "foo"))).shouldBeNull()
     }
 
     companion object {

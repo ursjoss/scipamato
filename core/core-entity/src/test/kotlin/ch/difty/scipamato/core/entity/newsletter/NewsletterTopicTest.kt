@@ -2,7 +2,7 @@ package ch.difty.scipamato.core.entity.newsletter
 
 import ch.difty.scipamato.core.entity.Jsr303ValidatedEntityTest
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic.NewsletterTopicFields.TITLE
-import org.assertj.core.api.Assertions.assertThat
+import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.Test
 
 @Suppress("SpellCheckingInspection")
@@ -19,8 +19,8 @@ internal class NewsletterTopicTest : Jsr303ValidatedEntityTest<NewsletterTopic>(
     @Test
     fun get() {
         val nt = newValidEntity()
-        assertThat(nt.id).isEqualTo(10)
-        assertThat(nt.title).isEqualTo("sometopic")
+        nt.id shouldBeEqualTo 10
+        nt.title shouldBeEqualTo "sometopic"
     }
 
     @Test

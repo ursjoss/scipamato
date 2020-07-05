@@ -26,7 +26,7 @@ dependencies {
     api(Lib.springBootStarter("undertow"))
     api(Lib.springBootStarter("actuator"))
     api(Lib.springBootStarter("security"))
-    api(Lib.springBoot("configuration-processor").id) {
+    annotationProcessor(Lib.springBoot("configuration-processor").id) {
         exclude("com.vaadin.external.google", "android-json")
     }
     api(Lib.springBootAdmin())

@@ -2,7 +2,8 @@ package ch.difty.scipamato.core.entity.search
 
 import nl.jqno.equalsverifier.EqualsVerifier
 import nl.jqno.equalsverifier.Warning
-import org.assertj.core.api.Assertions.assertThat
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldContainSame
 import org.junit.jupiter.api.Test
 
 internal class UserFilterTest {
@@ -14,11 +15,11 @@ internal class UserFilterTest {
         f.emailMask = "email"
         f.enabled = true
 
-        assertThat(f.nameMask).isEqualTo("name")
-        assertThat(f.emailMask).isEqualTo("email")
-        assertThat(f.enabled).isEqualTo(true)
+        f.nameMask shouldBeEqualTo "name"
+        f.emailMask shouldBeEqualTo "email"
+        f.enabled shouldBeEqualTo true
 
-        assertThat(f.toString()).isEqualTo("UserFilter(nameMask=name, emailMask=email, enabled=true)")
+        f.toString() shouldBeEqualTo "UserFilter(nameMask=name, emailMask=email, enabled=true)"
     }
 
     @Test
@@ -32,7 +33,7 @@ internal class UserFilterTest {
 
     @Test
     fun assertEnumFields() {
-        assertThat(UserFilter.UserFilterFields.values().map { it.fieldName })
-            .containsExactly("nameMask", "emailMask", "enabled")
+        UserFilter.UserFilterFields.values().map { it.fieldName } shouldContainSame
+            listOf("nameMask", "emailMask", "enabled")
     }
 }

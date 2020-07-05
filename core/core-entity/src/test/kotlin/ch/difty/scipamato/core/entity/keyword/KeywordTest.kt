@@ -2,7 +2,7 @@ package ch.difty.scipamato.core.entity.keyword
 
 import ch.difty.scipamato.core.entity.Jsr303ValidatedEntityTest
 import ch.difty.scipamato.core.entity.keyword.Keyword.KeywordFields.NAME
-import org.assertj.core.api.Assertions.assertThat
+import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.Test
 
 internal class KeywordTest : Jsr303ValidatedEntityTest<Keyword>(Keyword::class.java) {
@@ -17,9 +17,9 @@ internal class KeywordTest : Jsr303ValidatedEntityTest<Keyword>(Keyword::class.j
     @Test
     fun get() {
         val nt = newValidEntity()
-        assertThat(nt.id).isEqualTo(10)
-        assertThat(nt.name).isEqualTo("kw")
-        assertThat(nt.searchOverride).isEqualTo("so")
+        nt.id shouldBeEqualTo 10
+        nt.name shouldBeEqualTo "kw"
+        nt.searchOverride shouldBeEqualTo "so"
     }
 
     @Test

@@ -210,22 +210,22 @@ public class AuditSearchTerm extends AbstractSearchTerm {
             return type;
         }
 
-        @NotNull
+        @Nullable
         String getUserRawData() {
             return rawDataMap.get(FieldType.USER);
         }
 
-        @NotNull
+        @Nullable
         String getDateRawData() {
             return rawDataMap.get(FieldType.DATE);
         }
 
-        @NotNull
+        @Nullable
         public String getUserSqlData() {
             return sqlDataMap.get(FieldType.USER);
         }
 
-        @NotNull
+        @Nullable
         public String getDateSqlData() {
             return sqlDataMap.get(FieldType.DATE);
         }

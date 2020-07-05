@@ -10,7 +10,7 @@ import ch.difty.scipamato.core.entity.search.IntegerSearchTerm.MatchType.LESS_TH
 import ch.difty.scipamato.core.entity.search.IntegerSearchTerm.MatchType.RANGE
 import ch.difty.scipamato.core.entity.search.SearchTerm
 import ch.difty.scipamato.core.entity.search.SearchTermType
-import org.assertj.core.api.Assertions.assertThat
+import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
@@ -36,14 +36,14 @@ open class IntegerSearchTermEvaluatorIntegrationTest : SearchTermEvaluatorIntegr
     @MethodSource("integerParameters")
     fun integerTest(rawSearchTerm: String, value: Int, value2: Int, type: MatchType, condition: String) {
         val st = makeSearchTerm(rawSearchTerm)
-        assertThat(st.value).isEqualTo(value)
-        assertThat(st.value2).isEqualTo(value2)
-        assertThat(st.type).isEqualTo(type)
+        st.value shouldBeEqualTo value
+        st.value2 shouldBeEqualTo value2
+        st.type shouldBeEqualTo type
 
         val ste = evaluator
         val s = ste.evaluate(st)
 
-        assertThat(s.toString()).isEqualTo(condition)
+        s.toString() shouldBeEqualTo condition
     }
 
     companion object {

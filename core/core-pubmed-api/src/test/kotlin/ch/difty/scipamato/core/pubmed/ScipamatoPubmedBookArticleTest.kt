@@ -17,8 +17,13 @@ import ch.difty.scipamato.core.pubmed.api.PubmedBookArticle
 import ch.difty.scipamato.core.pubmed.api.Year
 import nl.jqno.equalsverifier.EqualsVerifier
 import nl.jqno.equalsverifier.Warning
-import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.fail
+import org.amshove.kluent.invoking
+import org.amshove.kluent.shouldBeEmpty
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeNull
+import org.amshove.kluent.shouldStartWith
+import org.amshove.kluent.shouldThrow
+import org.amshove.kluent.withMessage
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
@@ -98,33 +103,32 @@ internal class ScipamatoPubmedBookArticleTest {
         pubmedBookArticle.bookDocument = BookDocument()
         val pa = ScipamatoPubmedBookArticle(pubmedBookArticle)
 
-        assertThat(pa.pmId).isNull()
-        assertThat(pa.authors).isNull()
-        assertThat(pa.firstAuthor).isNull()
-        assertThat(pa.publicationYear).isNull()
-        assertThat(pa.location).isEmpty()
-        assertThat(pa.title).isNull()
-        assertThat(pa.doi).isNull()
-        assertThat(pa.originalAbstract).isNull()
+        pa.pmId.shouldBeNull()
+        pa.authors.shouldBeNull()
+        pa.firstAuthor.shouldBeNull()
+        pa.publicationYear.shouldBeNull()
+        pa.location.shouldBeEmpty()
+        pa.title.shouldBeNull()
+        pa.doi.shouldBeNull()
+        pa.originalAbstract.shouldBeNull()
     }
 
     @Test
     fun canParseAllFieldsOfFullyEquippedPubmedBookArticle() {
         val pa = ScipamatoPubmedBookArticle(pubmedBookArticle)
 
-        assertThat(pa.pmId).isEqualTo("pmid")
-        assertThat(pa.authors).isEqualTo("ln1 i1, ln2 i2, ln3 i3.")
-        assertThat(pa.firstAuthor).isEqualTo("ln1")
-        assertThat(pa.publicationYear).isEqualTo("2017")
-        assertThat(pa.location).isEqualTo("ll1 - ll2")
-        assertThat(pa.title).isEqualTo("title")
-        assertThat(pa.doi).isEqualTo("DOI")
-        assertThat(pa.originalAbstract).startsWith("ABSTRACT: abstract")
+        pa.pmId shouldBeEqualTo "pmid"
+        pa.authors shouldBeEqualTo "ln1 i1, ln2 i2, ln3 i3."
+        pa.firstAuthor shouldBeEqualTo "ln1"
+        pa.publicationYear shouldBeEqualTo "2017"
+        pa.location shouldBeEqualTo "ll1 - ll2"
+        pa.title shouldBeEqualTo "title"
+        pa.doi shouldBeEqualTo "DOI"
+        pa.originalAbstract shouldStartWith "ABSTRACT: abstract"
 
-        assertThat(pa.toString()).isEqualTo(
+        pa.toString() shouldBeEqualTo
             "AbstractPubmedArticleFacade(pmId=pmid, authors=ln1 i1, ln2 i2, ln3 i3., firstAuthor=ln1," +
-                " publicationYear=2017, location=ll1 - ll2, title=title, doi=DOI, originalAbstract=ABSTRACT: abstract)"
-        )
+            " publicationYear=2017, location=ll1 - ll2, title=title, doi=DOI, originalAbstract=ABSTRACT: abstract)"
     }
 
     @Test
@@ -134,7 +138,7 @@ internal class ScipamatoPubmedBookArticleTest {
             .abstract
             .abstractText[0].label = null
         val pa = ScipamatoPubmedBookArticle(pubmedBookArticle)
-        assertThat(pa.originalAbstract).startsWith("abstract")
+        pa.originalAbstract shouldStartWith "abstract"
     }
 
     @Test
@@ -144,7 +148,7 @@ internal class ScipamatoPubmedBookArticleTest {
 
         val pa = ScipamatoPubmedBookArticle(pubmedBookArticle)
 
-        assertThat(pa.doi).isNull()
+        pa.doi.shouldBeNull()
     }
 
     @Test
@@ -156,20 +160,14 @@ internal class ScipamatoPubmedBookArticleTest {
 
         val pa = ScipamatoPubmedBookArticle(pubmedBookArticle)
 
-        assertThat(pa.authors).isNull()
-        assertThat(pa.firstAuthor).isNull()
+        pa.authors.shouldBeNull()
+        pa.firstAuthor.shouldBeNull()
     }
 
     @Test
     fun invalidConstructionUsingOfWithForeignObject() {
-        try {
-            PubmedArticleFacade.newPubmedArticleFrom(1)
-            fail<Any>("should have thrown exception")
-        } catch (ex: Exception) {
-            assertThat(ex)
-                .isInstanceOf(IllegalArgumentException::class.java)
-                .hasMessage("Cannot instantiate ScipamatoArticle from provided object 1")
-        }
+        invoking { PubmedArticleFacade.newPubmedArticleFrom(1) } shouldThrow
+            IllegalArgumentException::class withMessage "Cannot instantiate ScipamatoArticle from provided object 1"
     }
 
     @Test

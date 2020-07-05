@@ -1,17 +1,31 @@
+@file:Suppress("SpellCheckingInspection")
+
 package ch.difty.scipamato.common.web.config
 
 import ch.difty.scipamato.common.config.ApplicationProperties
-import com.nhaarman.mockitokotlin2.mock
+import io.mockk.confirmVerified
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.verify
 import io.undertow.Undertow
 import io.undertow.servlet.api.DeploymentInfo
 import io.undertow.servlet.api.SecurityInfo
 import io.undertow.servlet.api.TransportGuaranteeType
-import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.fail
+import org.amshove.kluent.invoking
+import org.amshove.kluent.shouldBeEmpty
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeFalse
+import org.amshove.kluent.shouldBeInstanceOf
+import org.amshove.kluent.shouldBeNull
+import org.amshove.kluent.shouldContainAll
+import org.amshove.kluent.shouldHaveSize
+import org.amshove.kluent.shouldNotBeEmpty
+import org.amshove.kluent.shouldStartWith
+import org.amshove.kluent.shouldThrow
+import org.amshove.kluent.withMessage
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito.verify
-import org.mockito.Mockito.verifyNoMoreInteractions
+import org.junit.jupiter.api.fail
 import org.springframework.boot.autoconfigure.web.ServerProperties
 import org.springframework.boot.web.embedded.undertow.UndertowServletWebServerFactory
 import org.springframework.boot.web.servlet.server.Session
@@ -23,8 +37,12 @@ import org.springframework.boot.web.servlet.server.Session
  */
 internal class UndertowConfigTest {
 
-    private val serverPropsMock = mock<ServerProperties>()
-    private val scipamatoPropertiesMock = mock<ApplicationProperties>()
+    private val serverPropsMock = mockk<ServerProperties> {
+        every { port } returns 8080
+    }
+    private val scipamatoPropertiesMock = mockk<ApplicationProperties> {
+        every { redirectFromPort } returns 8081
+    }
     private val config = UndertowConfig(serverPropsMock, scipamatoPropertiesMock)
 
     private val factory: UndertowServletWebServerFactory = config.undertow() as UndertowServletWebServerFactory
@@ -34,39 +52,39 @@ internal class UndertowConfigTest {
 
     @AfterEach
     fun tearDown() {
-        verify<ApplicationProperties>(scipamatoPropertiesMock).redirectFromPort
-        verify<ServerProperties>(serverPropsMock).port
+        verify { scipamatoPropertiesMock.redirectFromPort }
+        verify { serverPropsMock.port }
 
-        verifyNoMoreInteractions(scipamatoPropertiesMock, serverPropsMock)
+        confirmVerified(scipamatoPropertiesMock, serverPropsMock)
     }
 
     @Test
     fun assertBasicFactoryAttributes() {
-        assertThat(factory.accessLogPrefix).isNull()
-        assertThat(factory.address == null).isTrue()
-        assertThat(factory.compression == null).isTrue()
-        assertThat(factory.contextPath).isEmpty()
-        assertThat(factory.displayName).isNull()
-        assertThat(factory.documentRoot).isNull()
-        assertThat(factory.errorPages).isEmpty()
-        assertThat(factory.localeCharsetMappings).isEmpty()
-        assertThat(factory.port).isEqualTo(8080)
-        assertThat(factory.serverHeader).isNull()
-        assertThat(factory.session).isInstanceOf(Session::class.java)
-        assertThat(factory.session.storeDir == null).isTrue()
-        assertThat(factory.ssl == null).isTrue()
-        assertThat(factory.sslStoreProvider == null).isTrue()
+        factory.accessLogPrefix.shouldBeNull()
+        factory.address.shouldBeNull()
+        factory.compression.shouldBeNull()
+        factory.contextPath.shouldBeEmpty()
+        factory.displayName.shouldBeNull()
+        factory.documentRoot.shouldBeNull()
+        factory.errorPages.shouldBeEmpty()
+        factory.localeCharsetMappings.shouldBeEmpty()
+        factory.port shouldBeEqualTo 8080
+        factory.serverHeader.shouldBeNull()
+        factory.session shouldBeInstanceOf Session::class
+        factory.session.storeDir.shouldBeNull()
+        factory.ssl.shouldBeNull()
+        factory.sslStoreProvider.shouldBeNull()
     }
 
     @Test
     fun canStartAndStopUndertowServletContainer() {
         val server = factory.getWebServer()
-        assertThat(server.port).isEqualTo(0)
+        server.port shouldBeEqualTo 0
         try {
             server.start()
-            assertThat(server.port).isEqualTo(8080)
+            server.port shouldBeEqualTo 8080
         } catch (ex: Exception) {
-            fail<Any>("Did not start successfully: ", ex)
+            fail { "Did not start successfully: " }
         } finally {
             server.stop()
         }
@@ -75,25 +93,20 @@ internal class UndertowConfigTest {
     @Test
     fun gettingListenerInfo_beforeStartingServer_fails() {
         val undertow = undertowBuilder.build()
-        try {
-            undertow.listenerInfo
-            fail<Any>("server is not started, should not succeed")
-        } catch (ex: Exception) {
-            assertThat(ex).isInstanceOf(IllegalStateException::class.java).hasMessage("UT000138: Server not started")
-        }
+        invoking { undertow.listenerInfo } shouldThrow IllegalStateException::class withMessage "UT000138: Server not started"
     }
 
     @Test
     fun gettingListenerInfo_afterStartingServer_withNoBuilderCustomizers_hasNoListenerInfo() {
         val undertow = undertowBuilder.build()
         undertow.start()
-        assertThat(undertow.listenerInfo).isEmpty()
+        undertow.listenerInfo.shouldBeEmpty()
         undertow.stop()
     }
 
     @Test
     fun assertCustomizedUndertowBuilder() {
-        assertThat(factory.builderCustomizers).hasSize(1)
+        factory.builderCustomizers shouldHaveSize 1
         val bc = factory.builderCustomizers.iterator().next()
         bc.customize(undertowBuilder)
         val undertow = undertowBuilder.build()
@@ -101,22 +114,22 @@ internal class UndertowConfigTest {
         undertow.start()
         run {
             val listenerInfos = undertow.listenerInfo
-            assertThat(listenerInfos).hasSize(1)
+            listenerInfos shouldHaveSize 1
 
             val li = listenerInfos[0]
             val address = li.address.toString()
             if (address.contains("."))
-                assertThat(address).startsWith("/0.0.0.0:")
+                address.shouldStartWith("/0.0.0.0:")
             else
-                assertThat(address).startsWith("/0:0:0:0:0:0:0:0:")
-            assertThat(li.protcol).isEqualTo("http")
+                address.shouldStartWith("/0:0:0:0:0:0:0:0:")
+            li.protcol shouldBeEqualTo "http"
         }
         undertow.stop()
     }
 
     @Test
     fun assertingWorkers() {
-        assertThat(factory.builderCustomizers).hasSize(1)
+        factory.builderCustomizers shouldHaveSize 1
         val bc = factory.builderCustomizers.iterator().next()
         bc.customize(undertowBuilder)
         val undertow = undertowBuilder.build()
@@ -124,51 +137,51 @@ internal class UndertowConfigTest {
         undertow.start()
         run {
             val worker = undertow.worker
-            assertThat(worker.name).startsWith("XNIO-")
-            assertThat(worker.xnio.name).isEqualTo("nio")
+            worker.name.shouldStartWith("XNIO-")
+            worker.xnio.name shouldBeEqualTo "nio"
         }
         undertow.stop()
     }
 
     @Test
     fun uncustomizedDeploymentInfo_hasNoSecurityConstraints() {
-        assertThat(deploymentInfo.securityConstraints).isEmpty()
+        deploymentInfo.securityConstraints.shouldBeEmpty()
     }
 
     @Test
     fun assertSecurityConstraints() {
-        assertThat(factory.deploymentInfoCustomizers).hasSize(1)
+        factory.deploymentInfoCustomizers shouldHaveSize 1
         val dic = factory.deploymentInfoCustomizers.iterator().next()
         dic.customize(deploymentInfo)
 
-        assertThat(deploymentInfo.securityConstraints).hasSize(1)
+        deploymentInfo.securityConstraints shouldHaveSize 1
         val sc = deploymentInfo.securityConstraints.iterator().next()
 
-        assertThat(sc.webResourceCollections).hasSize(1)
+        sc.webResourceCollections shouldHaveSize 1
 
         val wrc = sc.webResourceCollections.iterator().next()
-        assertThat(wrc.urlPatterns).hasSize(1)
-        assertThat(wrc.urlPatterns.iterator().next()).isEqualTo("/*")
-        assertThat(wrc.httpMethods).isEmpty()
-        assertThat(wrc.httpMethodOmissions).isEmpty()
+        wrc.urlPatterns shouldHaveSize 1
+        wrc.urlPatterns.iterator().next() shouldBeEqualTo "/*"
+        wrc.httpMethods.shouldBeEmpty()
+        wrc.httpMethodOmissions.shouldBeEmpty()
 
-        assertThat(sc.transportGuaranteeType).isEqualTo(TransportGuaranteeType.CONFIDENTIAL)
-        assertThat(sc.emptyRoleSemantic).isEqualTo(SecurityInfo.EmptyRoleSemantic.PERMIT)
+        sc.transportGuaranteeType shouldBeEqualTo TransportGuaranteeType.CONFIDENTIAL
+        sc.emptyRoleSemantic shouldBeEqualTo SecurityInfo.EmptyRoleSemantic.PERMIT
 
-        assertThat(sc.rolesAllowed).isEmpty()
+        sc.rolesAllowed.shouldBeEmpty()
     }
 
     @Test
     fun hasMimeMappings() {
-        assertThat(factory.mimeMappings).isNotEmpty
+        factory.mimeMappings.shouldNotBeEmpty()
     }
 
     @Test
     fun assertJspServlet() {
         val jspServlet = factory.jsp
-        assertThat(jspServlet.className).isEqualTo("org.apache.jasper.servlet.JspServlet")
-        assertThat(jspServlet.initParameters.keys).containsExactly("development")
-        assertThat(jspServlet.initParameters["development"]).isEqualTo("false")
-        assertThat(jspServlet.registered).isFalse()
+        jspServlet.className shouldBeEqualTo "org.apache.jasper.servlet.JspServlet"
+        jspServlet.initParameters.keys shouldContainAll listOf("development")
+        jspServlet.initParameters["development"] shouldBeEqualTo "false"
+        jspServlet.registered.shouldBeFalse()
     }
 }

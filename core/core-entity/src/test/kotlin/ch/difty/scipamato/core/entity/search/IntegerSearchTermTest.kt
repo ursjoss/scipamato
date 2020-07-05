@@ -1,8 +1,10 @@
 package ch.difty.scipamato.core.entity.search
 
 import ch.difty.scipamato.core.entity.search.IntegerSearchTerm.MatchType
-import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.fail
+import org.amshove.kluent.invoking
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldThrow
+import org.amshove.kluent.withMessage
 import org.junit.jupiter.api.Test
 
 private const val CONDITION_ID: Long = 7
@@ -16,14 +18,14 @@ internal class IntegerSearchTermTest {
     }
 
     private fun assertTerm(st: IntegerSearchTerm, type: MatchType, value: Int, value2: Int, raw: String) {
-        assertThat(st.searchTermType).isEqualTo(SearchTermType.INTEGER)
-        assertThat(st.searchConditionId).isEqualTo(CONDITION_ID)
-        assertThat(st.fieldName).isEqualTo(FIELD_NAME)
-        assertThat(st.type).isEqualTo(type)
-        assertThat(st.value).isEqualTo(value)
-        assertThat(st.value2).isEqualTo(value2)
-        assertThat(st.rawSearchTerm).isEqualTo(raw)
-        assertThat(st.displayValue).isEqualTo(raw)
+        st.searchTermType shouldBeEqualTo SearchTermType.INTEGER
+        st.searchConditionId shouldBeEqualTo CONDITION_ID
+        st.fieldName shouldBeEqualTo FIELD_NAME
+        st.type shouldBeEqualTo type
+        st.value shouldBeEqualTo value
+        st.value2 shouldBeEqualTo value2
+        st.rawSearchTerm shouldBeEqualTo raw
+        st.displayValue shouldBeEqualTo raw
     }
 
     @Test
@@ -189,13 +191,7 @@ internal class IntegerSearchTermTest {
 
     @Test
     fun invalidSearch_withInvalidPattern() {
-        try {
-            IntegerSearchTerm(CONDITION_ID, FIELD_NAME, ">>2014")
-            fail<Any>("Should have thrown exception")
-        } catch (ex: Exception) {
-            assertThat(ex)
-                .isInstanceOf(IllegalArgumentException::class.java)
-                .hasMessage("For input string: \">2014\"")
-        }
+        invoking { IntegerSearchTerm(CONDITION_ID, FIELD_NAME, ">>2014") } shouldThrow
+            IllegalArgumentException::class withMessage """For input string: ">2014""""
     }
 }

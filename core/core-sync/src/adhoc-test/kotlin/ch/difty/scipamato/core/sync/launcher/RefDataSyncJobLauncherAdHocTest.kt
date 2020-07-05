@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.sync.launcher
 
-import org.assertj.core.api.Assertions.assertThat
+import org.amshove.kluent.shouldBeTrue
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -15,6 +15,6 @@ internal open class RefDataSyncJobLauncherAdHocTest {
     fun run() {
         val result = launcher.launch()
         result.messages.forEach { println(it) }
-        assertThat(result.isSuccessful).isTrue()
+        result.isSuccessful.shouldBeTrue()
     }
 }

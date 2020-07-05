@@ -1,49 +1,50 @@
 package ch.difty.scipamato.common
 
-import org.assertj.core.api.Assertions.assertThat
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeNull
 import org.junit.jupiter.api.Test
 
 internal class TranslationUtilsTest {
 
     @Test
     fun verifyNotTranslatedString() {
-        assertThat(TranslationUtils.NOT_TRANSL).isEqualTo("not translated")
+        TranslationUtils.NOT_TRANSL shouldBeEqualTo "not translated"
     }
 
     @Test
     fun trimmingLanguageCode_with2CharCode_returnsInput() {
-        assertThat(TranslationUtils.trimLanguageCode("de")).isEqualTo("de")
-        assertThat(TranslationUtils.trimLanguageCode("fr")).isEqualTo("fr")
+        TranslationUtils.trimLanguageCode("de") shouldBeEqualTo "de"
+        TranslationUtils.trimLanguageCode("fr") shouldBeEqualTo "fr"
     }
 
     @Test
     fun trimmingLanguageCode_withMoreThan2CharCode_returnsFirstTwoChars() {
-        assertThat(TranslationUtils.trimLanguageCode("de_CH")).isEqualTo("de")
-        assertThat(TranslationUtils.trimLanguageCode("en_US")).isEqualTo("en")
+        TranslationUtils.trimLanguageCode("de_CH") shouldBeEqualTo "de"
+        TranslationUtils.trimLanguageCode("en_US") shouldBeEqualTo "en"
     }
 
     @Test
     fun deCamelCasing_null_returnsNull() {
-        assertThat(TranslationUtils.deCamelCase(null)).isNull()
+        TranslationUtils.deCamelCase(null).shouldBeNull()
     }
 
     @Test
     fun deCamelCasing_blank_returnsBlank() {
-        assertThat(TranslationUtils.deCamelCase("")).isEqualTo("")
+        TranslationUtils.deCamelCase("") shouldBeEqualTo ""
     }
 
     @Test
     fun deCamelCasing_withCase_converts() {
-        assertThat(TranslationUtils.deCamelCase("fooBar")).isEqualTo("foo_bar")
+        TranslationUtils.deCamelCase("fooBar") shouldBeEqualTo "foo_bar"
     }
 
     @Test
     fun deCamelCasing_withoutCase_returnsOriginal() {
-        assertThat(TranslationUtils.deCamelCase("foobar")).isEqualTo("foobar")
+        TranslationUtils.deCamelCase("foobar") shouldBeEqualTo "foobar"
     }
 
     @Test
     fun deCamelCasing_withoutCaseAndUnderscore_returnsOriginal() {
-        assertThat(TranslationUtils.deCamelCase("foo_bar")).isEqualTo("foo_bar")
+        TranslationUtils.deCamelCase("foo_bar") shouldBeEqualTo "foo_bar"
     }
 }

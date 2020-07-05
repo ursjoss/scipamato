@@ -6,9 +6,15 @@ import ch.difty.scipamato.core.entity.search.SearchCondition
 import ch.difty.scipamato.core.entity.search.SearchOrder
 import ch.difty.scipamato.core.persistence.MAX_ID_PREPOPULATED
 import ch.difty.scipamato.core.persistence.RECORD_COUNT_PREPOPULATED
-import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.fail
+import org.amshove.kluent.shouldBeEmpty
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeNull
+import org.amshove.kluent.shouldContainSame
+import org.amshove.kluent.shouldHaveSize
+import org.amshove.kluent.shouldNotBeNull
+import org.amshove.kluent.shouldStartWith
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.fail
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.jooq.JooqTest
 import org.testcontainers.junit.jupiter.Testcontainers
@@ -24,46 +30,46 @@ internal open class JooqPaperSlimRepoIntegrationTest {
     @Test
     fun findingAll() {
         val papers = repo.findAll()
-        assertThat(papers).hasSize(RECORD_COUNT_PREPOPULATED)
+        papers shouldHaveSize RECORD_COUNT_PREPOPULATED
     }
 
     @Test
     fun findingById_withExistingId_returnsEntity() {
-        val paper = repo.findById(MAX_ID_PREPOPULATED) ?: fail("Unable to load paper")
+        val paper = repo.findById(MAX_ID_PREPOPULATED) ?: fail { "Unable to load paper" }
         @Suppress("ConstantConditionIf")
         if (MAX_ID_PREPOPULATED > 0)
-            assertThat(paper.id).isEqualTo(MAX_ID_PREPOPULATED)
+            paper.id shouldBeEqualTo MAX_ID_PREPOPULATED
         else
-            assertThat(paper).isNull()
+            paper.shouldBeNull()
     }
 
     @Test
     fun findingById_withNonExistingId_returnsNull() {
-        assertThat(repo.findById(-1L)).isNull()
+        repo.findById(-1L).shouldBeNull()
     }
 
     @Test
     fun findingById_withExistingIdAndVersion_returnsEntityWithCorrectIdButMissingVersion() {
-        val paper = repo.findById(31L, 11, "en") ?: fail("Unable to load paper")
-        assertThat(paper.id).isEqualTo(31L)
-        assertThat(paper.number).isEqualTo(31L)
-        assertThat(paper.publicationYear).isEqualTo(2016)
+        val paper = repo.findById(31L, 11, "en") ?: fail { "Unable to load paper" }
+        paper.id shouldBeEqualTo 31L
+        paper.number shouldBeEqualTo 31L
+        paper.publicationYear shouldBeEqualTo 2016
 
-        assertThat(paper.firstAuthor).isEqualTo("Lanzinger")
-        assertThat(paper.version).isEqualTo(0)
-        assertThat(paper.title).startsWith("Ultrafine")
+        paper.firstAuthor shouldBeEqualTo "Lanzinger"
+        paper.version shouldBeEqualTo 0
+        paper.title shouldStartWith "Ultrafine"
         val newsletterAssociation = paper.newsletterAssociation
-        assertThat(newsletterAssociation == null).isFalse()
-        assertThat(newsletterAssociation.id).isEqualTo(1L)
-        assertThat(newsletterAssociation.publicationStatusId).isEqualTo(1L)
-        assertThat(newsletterAssociation.issue).isEqualTo("1802")
-        assertThat(newsletterAssociation.headline).isEqualTo("some headline")
+        newsletterAssociation.shouldNotBeNull()
+        newsletterAssociation.id shouldBeEqualTo 1
+        newsletterAssociation.publicationStatusId shouldBeEqualTo 1
+        newsletterAssociation.issue shouldBeEqualTo "1802"
+        newsletterAssociation.headline shouldBeEqualTo "some headline"
     }
 
     @Test
     fun findingById_withExistingIdAndWrongVersion_returnsNull() {
         val paper = repo.findById(31L, 1, "en")
-        assertThat(paper).isNull()
+        paper.shouldBeNull()
     }
 
     @Test
@@ -73,8 +79,8 @@ internal open class JooqPaperSlimRepoIntegrationTest {
         pf.authorMask = "lanz"
         val pc = PaginationRequest(0, 10)
         val papers = repo.findPageByFilter(pf, pc)
-        assertThat(papers).hasSize(2)
-        assertThat(papers.map { it.number }).containsExactlyInAnyOrder(33L, 31L)
+        papers shouldHaveSize 2
+        papers.map { it.number } shouldContainSame listOf(33L, 31L)
     }
 
     @Suppress("DuplicatedCode")
@@ -118,16 +124,16 @@ internal open class JooqPaperSlimRepoIntegrationTest {
 
         sc.originalAbstract = x
 
-        assertThat(repo.findBySearchOrder(so)).isEmpty()
+        repo.findBySearchOrder(so).shouldBeEmpty()
     }
 
     @Test
     fun canQueryNewsletterFields() {
-        val paper = repo.findById(31L, "en") ?: fail("Unable to load paper")
+        val paper = repo.findById(31L, "en") ?: fail { "Unable to load paper" }
 
         val na = paper.newsletterAssociation
-        assertThat(na.issue).isEqualTo("1802")
-        assertThat(na.publicationStatusId).isEqualTo(1)
-        assertThat(na.headline).isEqualTo("some headline")
+        na.issue shouldBeEqualTo "1802"
+        na.publicationStatusId shouldBeEqualTo 1
+        na.headline shouldBeEqualTo "some headline"
     }
 }
