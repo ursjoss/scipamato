@@ -71,6 +71,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 //
 .Changed
 - Bumped detekt, jooq-modelator, gradle-wrapper, jasperreports
+- {url-issues}196[#196] Properly use UTF-8 property files for wicket localization
 
 .Deprecated
 
