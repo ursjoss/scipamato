@@ -73,7 +73,7 @@ internal class PaperListPageInEditModeAsUserTest : PaperListPageTest() {
         )
         assertExternalLink(
             "navbar:container:collapse:navRightListEnclosure:navRightList:1:component",
-            "https://github.com/ursjoss/scipamato/blob/master/CHANGELOG.asciidoc"
+            "https://github.com/ursjoss/scipamato/blob/main/CHANGELOG.adoc"
         )
         assertPageLinkButton(2, "Right", "Logout")
     }

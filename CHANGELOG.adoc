@@ -46,7 +46,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v0.0.0]]
 == [0.0.0] -- 2018-00-00
 
-{url-cl}<prev>$$...$$master[Full Changelog]
+{url-cl}<prev>$$...$$main[Full Changelog]
 
 .Added
 
@@ -65,13 +65,14 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[unreleased]]
 == [unreleased]
 
-{url-cl}1.4.6$$...$$master[Full Changelog]
+{url-cl}1.4.6$$...$$main[Full Changelog]
 
 //.Added
 //
 .Changed
 - Bumped detekt, jooq-modelator, gradle-wrapper, jasperreports
 - {url-issues}196[#196] Properly use UTF-8 property files for wicket localization
+- Rename master branch to main
 
 .Deprecated
 
