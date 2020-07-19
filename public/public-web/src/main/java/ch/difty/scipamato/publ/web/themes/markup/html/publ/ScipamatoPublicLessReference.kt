@@ -20,7 +20,10 @@ import org.apache.wicket.markup.head.HeaderItem
  * @author [Michael Haitz](mailto:michael.haitz@agilecoders.de)
  * @author Urs Joss
  */
-object ScipamatoPublicLessReference : LessResourceReference(ScipamatoPublicLessReference::class.java, "less/__main.less") {
+object ScipamatoPublicLessReference : LessResourceReference(
+    ScipamatoPublicLessReference::class.java,
+    "less/__main.less"
+) {
 
     override fun getDependencies(): List<HeaderItem> = Dependencies.combine(
         super.getDependencies(),

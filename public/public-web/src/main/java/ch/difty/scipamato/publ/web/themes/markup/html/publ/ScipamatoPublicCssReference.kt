@@ -18,8 +18,10 @@ import org.apache.wicket.request.resource.CssResourceReference
  * @author [Michael Haitz](mailto:michael.haitz@agilecoders.de)
  * @author Urs Joss
  */
-object ScipamatoPublicCssReference :
-    CssResourceReference(ScipamatoPublicCssReference::class.java, "css/scipamato-public-bootstrap.min.css") {
+object ScipamatoPublicCssReference : CssResourceReference(
+    ScipamatoPublicCssReference::class.java,
+    "css/scipamato-public-bootstrap.min.css"
+) {
 
     override fun getDependencies(): List<HeaderItem> = Dependencies.combine(
         super.getDependencies(),
