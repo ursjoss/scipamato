@@ -110,8 +110,7 @@ public abstract class BasePage<T> extends AbstractPage<T> {
      */
     private void renderPymForResponsiveIframe(final IHeaderResponse response) {
         response.render(JavaScriptHeaderItem.forReference(PymJavaScriptResourceReference.get()));
-        response.render(
-            new JavaScriptContentHeaderItem(PymScripts.INSTANTIATE.script, PymScripts.INSTANTIATE.id, null));
+        response.render(new JavaScriptContentHeaderItem(PymScripts.INSTANTIATE.script, PymScripts.INSTANTIATE.id));
         response.render(new OnLoadHeaderItem(PymScripts.RESIZE.script));
     }
 
