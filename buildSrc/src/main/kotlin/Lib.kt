@@ -45,7 +45,7 @@ object Lib {
     private const val kwikVersion = "0.6.0"
     private const val kluentVersion = "1.61"
     private const val mockkVersion = "1.10.0"
-    private const val springMockkVersion = "2.0.1"
+    private const val springMockkVersion = "2.0.2"
 
     private const val jsr305Version = "3.0.2"
     //endregion
