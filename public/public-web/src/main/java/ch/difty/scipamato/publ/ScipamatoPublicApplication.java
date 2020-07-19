@@ -43,8 +43,7 @@ public class ScipamatoPublicApplication extends WicketBootSecuredWebApplication 
         super.init();
 
         // enable putting JavaScript into Footer Container
-        setHeaderResponseDecorator(
-            r -> new ResourceAggregator(new JavaScriptFilteredIntoFooterHeaderResponse(r, "footer-container")));
+        setHeaderResponseDecorator(r -> new ResourceAggregator(new JavaScriptFilteredIntoFooterHeaderResponse(r, "footer-container")));
 
         logSpecialConfiguration();
     }
