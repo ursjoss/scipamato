@@ -41,7 +41,7 @@ object Lib {
 
     private const val testcontainersVersion = "1.14.3"
 
-    private const val spekVersion = "2.0.11"
+    private const val spekVersion = "2.0.12"
     private const val kwikVersion = "0.6.0"
     private const val kluentVersion = "1.61"
     private const val mockkVersion = "1.10.0"
