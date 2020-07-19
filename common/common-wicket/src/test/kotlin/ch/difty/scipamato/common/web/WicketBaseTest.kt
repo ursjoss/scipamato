@@ -1,6 +1,6 @@
 package ch.difty.scipamato.common.web
 
-import org.apache.wicket.markup.head.ResourceAggregator
+import ch.difty.scipamato.common.web.AbstractPage.FOOTER_CONTAINER
 import org.apache.wicket.markup.head.filter.JavaScriptFilteredIntoFooterHeaderResponse
 import org.apache.wicket.protocol.http.WebApplication
 import org.apache.wicket.util.tester.WicketTester
@@ -26,9 +26,7 @@ abstract class WicketBaseTest {
 
     @BeforeEach
     internal fun setUp() {
-        wicketApplication.setHeaderResponseDecorator { r ->
-            ResourceAggregator(JavaScriptFilteredIntoFooterHeaderResponse(r, "footer-container"))
-        }
+        wicketApplication.headerResponseDecorators.add { r -> JavaScriptFilteredIntoFooterHeaderResponse(r, FOOTER_CONTAINER) }
 
         ReflectionTestUtils.setField(wicketApplication, "applicationContext", applicationContextMock)
         tester = WicketTester(wicketApplication)

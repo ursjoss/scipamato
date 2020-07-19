@@ -1,9 +1,10 @@
 package ch.difty.scipamato.publ;
 
+import static ch.difty.scipamato.common.web.AbstractPage.FOOTER_CONTAINER;
+
 import com.giffing.wicket.spring.boot.starter.app.WicketBootSecuredWebApplication;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.wicket.Session;
-import org.apache.wicket.markup.head.ResourceAggregator;
 import org.apache.wicket.markup.head.filter.JavaScriptFilteredIntoFooterHeaderResponse;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
@@ -43,7 +44,7 @@ public class ScipamatoPublicApplication extends WicketBootSecuredWebApplication 
         super.init();
 
         // enable putting JavaScript into Footer Container
-        setHeaderResponseDecorator(r -> new ResourceAggregator(new JavaScriptFilteredIntoFooterHeaderResponse(r, "footer-container")));
+        getHeaderResponseDecorators().add(r -> new JavaScriptFilteredIntoFooterHeaderResponse(r, FOOTER_CONTAINER));
 
         logSpecialConfiguration();
     }

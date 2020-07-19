@@ -1,12 +1,11 @@
 package ch.difty.scipamato
 
+import ch.difty.scipamato.common.web.AbstractPage
 import ch.difty.scipamato.core.ScipamatoSession
 import ch.difty.scipamato.core.web.paper.list.PaperListPage
 import com.giffing.wicket.spring.boot.starter.app.WicketBootSecuredWebApplication
 import org.apache.wicket.Page
 import org.apache.wicket.Session
-import org.apache.wicket.markup.head.IHeaderResponse
-import org.apache.wicket.markup.head.ResourceAggregator
 import org.apache.wicket.markup.head.filter.JavaScriptFilteredIntoFooterHeaderResponse
 import org.apache.wicket.markup.html.SecurePackageResourceGuard
 import org.apache.wicket.request.Request
@@ -22,9 +21,7 @@ open class TestApplication : WicketBootSecuredWebApplication() {
         super.init()
 
         // enable putting JavaScript into Footer Container
-        setHeaderResponseDecorator { r: IHeaderResponse? ->
-            ResourceAggregator(JavaScriptFilteredIntoFooterHeaderResponse(r, "footer-container"))
-        }
+        headerResponseDecorators.add { r -> JavaScriptFilteredIntoFooterHeaderResponse(r, AbstractPage.FOOTER_CONTAINER) }
         registerJasperJrxmlFilesWithPackageResourceGuard()
     }
 
