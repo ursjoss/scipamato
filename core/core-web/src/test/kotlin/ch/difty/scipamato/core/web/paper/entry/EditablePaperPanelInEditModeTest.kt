@@ -379,6 +379,62 @@ internal class EditablePaperPanelInEditModeTest : EditablePaperPanelTest() {
     }
 
     @Test
+    fun clickingOnPubmedRetrievalButton_withMatchingPmId_withAheadOfPrintArticle_withFirstAuthorAndLocationStartAndOtherTitle_warns() {
+        tester.startComponentInPage(makeAheadOfPrintPanel())
+        fixPubmedRetrievalButtonClicked("_a", "fa", "_t", "J. FinalLocation.", "2016", "_doi", "_oa")
+        tester.executeAjaxEvent("$PANEL_ID:form:pubmedRetrieval", "click")
+        tester.assertFeedbackMessages(
+            ExactLevelFeedbackMessageFilter(FeedbackMessage.WARNING),
+            "PubMed Authors: _a", "PubMed Title: _t", "PubMed Pub. Year: 2016",
+            "PubMed Location: J. FinalLocation.", "PubMed DOI: _doi", "PubMed Original Abstract: _oa"
+        )
+        tester.assertNoInfoMessage()
+        tester.assertNoErrorMessage()
+        verifyPubmedRetrievalButtonClicked(1)
+    }
+
+    @Test
+    fun clickingOnPubmedRetrievalButton_withMatchingPmId_withAheadOfPrintArticle_withTitleAndStartOfLocationAndOtherFirstAuthor_warns() {
+        tester.startComponentInPage(makeAheadOfPrintPanel())
+        fixPubmedRetrievalButtonClicked("_a", "_fa", "t", "J. FinalLocation.", "2016", "_doi", "_oa")
+        tester.executeAjaxEvent("$PANEL_ID:form:pubmedRetrieval", "click")
+        tester.assertFeedbackMessages(
+            ExactLevelFeedbackMessageFilter(FeedbackMessage.WARNING),
+            "PubMed Authors: _a", "PubMed First Author: _fa", "PubMed Pub. Year: 2016",
+            "PubMed Location: J. FinalLocation.", "PubMed DOI: _doi", "PubMed Original Abstract: _oa"
+        )
+        tester.assertNoInfoMessage()
+        tester.assertNoErrorMessage()
+        verifyPubmedRetrievalButtonClicked(1)
+    }
+
+    @Test
+    fun clickingOnPubmedRetrievalButton_withMatchingPmId_withAheadOfPrintArticle_withTitleAndFirstAuthorAndOtherStartOfLocation_warns() {
+        tester.startComponentInPage(makeAheadOfPrintPanel())
+        fixPubmedRetrievalButtonClicked("_a", "fa", "t", "Y. FinalLocation.", "2016", "_doi", "_oa")
+        tester.executeAjaxEvent("$PANEL_ID:form:pubmedRetrieval", "click")
+        tester.assertFeedbackMessages(
+            ExactLevelFeedbackMessageFilter(FeedbackMessage.WARNING),
+            "PubMed Authors: _a", "PubMed Pub. Year: 2016",
+            "PubMed Location: Y. FinalLocation.", "PubMed DOI: _doi", "PubMed Original Abstract: _oa"
+        )
+        tester.assertNoInfoMessage()
+        tester.assertNoErrorMessage()
+        verifyPubmedRetrievalButtonClicked(1)
+    }
+
+    @Test
+    fun clickingOnPubmedRetrievalButton_withMatchingPmId_withAheadOfPrintArticle_withFirstAuthorAndTitleAndStartOfLocation_overwrites() {
+        tester.startComponentInPage(makeAheadOfPrintPanel())
+        fixPubmedRetrievalButtonClicked("_a", "fa", "t", "J. FinalLocation.", "2016", "_doi", "_oa")
+        tester.executeAjaxEvent("$PANEL_ID:form:pubmedRetrieval", "click")
+        tester.assertInfoMessages("Ahead-of-print article was updated from PubMed. Click save if you want to keep the changes.")
+        tester.assertFeedbackMessages(ExactLevelFeedbackMessageFilter(FeedbackMessage.WARNING))
+        tester.assertNoErrorMessage()
+        verifyPubmedRetrievalButtonClicked(1)
+    }
+
+    @Test
     fun withNoPmId_PubmedRetrievalLinkIsNotEnabled() {
         tester.startComponentInPage(makePanelWithEmptyPaper(null))
         tester.assertDisabled("$PANEL_ID:form:pubmedRetrieval")

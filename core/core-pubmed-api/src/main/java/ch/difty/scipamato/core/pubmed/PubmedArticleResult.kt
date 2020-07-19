@@ -1,3 +1,5 @@
+@file:Suppress("SpellCheckingInspection")
+
 package ch.difty.scipamato.core.pubmed
 
 import org.springframework.http.HttpStatus

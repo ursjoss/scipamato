@@ -4,6 +4,7 @@ import ch.difty.scipamato.common.entity.newsletter.PublicationStatus
 import ch.difty.scipamato.common.web.Mode
 import ch.difty.scipamato.core.entity.Paper
 import ch.difty.scipamato.core.entity.Paper.NewsletterLink
+import ch.difty.scipamato.core.pubmed.AHEAD_OF_PRINT_TAG
 import ch.difty.scipamato.core.pubmed.PubmedArticleFacade
 import ch.difty.scipamato.core.web.paper.common.PaperPanelTest
 import io.mockk.confirmVerified
@@ -40,6 +41,8 @@ internal abstract class EditablePaperPanelTest : PaperPanelTest<Paper?, Editable
     }
 
     override fun makePanel(): EditablePaperPanel = newPanel(paperFixture(), callingPageDummy, SEARCH_ORDER_ID, mode)
+
+    protected fun makeAheadOfPrintPanel(): EditablePaperPanel = newPanel(aheadOfPrintFixture(), callingPageDummy, SEARCH_ORDER_ID, mode)
 
     private fun newPanel(p: Paper, pageRef: PageReference?, searchOrderId: Long?, mode: Mode): EditablePaperPanel =
         object : EditablePaperPanel(PANEL_ID, Model.of(p), pageRef, searchOrderId, SHOW_EXCLUDED, mode, Model.of(0)) {
@@ -95,6 +98,10 @@ internal abstract class EditablePaperPanelTest : PaperPanelTest<Paper?, Editable
         addCode(newC(7, "A"))
         addCode(newC(8, "A"))
         originalAbstract = "oa"
+    }
+
+    private fun aheadOfPrintFixture(): Paper = paperFixture().apply {
+        location = "J. foobar. $AHEAD_OF_PRINT_TAG"
     }
 
     abstract val mode: Mode
