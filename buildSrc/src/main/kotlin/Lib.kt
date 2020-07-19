@@ -33,7 +33,7 @@ object Lib {
     private const val javaxElApiVersion = "3.0.1-b06"
     private const val javaxElVersion = "3.0.1-b11"
 
-    private const val fontAwesomeVersion = "5.12.0"
+    private const val fontAwesomeVersion = "5.13.0"
 
     private const val equalsverifierVersion = "3.3"
 
