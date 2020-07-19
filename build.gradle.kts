@@ -32,7 +32,6 @@ java {
 }
 
 extra["spring.cloudVersion"] = Lib.springCloudVersion
-extra["mockito.version"] = Lib.mockitoVersion
 extra["jooq.version"] = Lib.jooqVersion
 
 dependencyManagement {
