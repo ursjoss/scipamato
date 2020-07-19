@@ -21,13 +21,6 @@ open class TestApplication : WicketBootSecuredWebApplication() {
     override fun init() {
         super.init()
 
-        /**
-         * Inject a customized AjaxRequestTarget implementation into the application
-         * that scales better with many listeners and therefore massively improves the
-         * build time.
-         */
-        setAjaxRequestTargetProvider { page -> TestAjaxRequestHandler(page) }
-
         // enable putting JavaScript into Footer Container
         setHeaderResponseDecorator { r: IHeaderResponse? ->
             ResourceAggregator(JavaScriptFilteredIntoFooterHeaderResponse(r, "footer-container"))

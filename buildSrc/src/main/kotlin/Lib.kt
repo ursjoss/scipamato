@@ -15,8 +15,8 @@ object Lib {
     private const val springCloudStarterVersion = "2.2.3.RELEASE"
 
     private const val wicketSpringBootStarterVersion = "2.1.9"
-    private const val wicketVersion = "8.8.0"
-    private const val wicketstuffVersion = "8.8.0"
+    private const val wicketVersion = "8.9.0"
+    private const val wicketstuffVersion = "8.9.0"
     private const val wicketJqueryUiVersion = "8.8.0"
     private const val wicketBootstrapVersion = "2.0.13"
     private const val jasperReportVersion = "6.13.0"
@@ -188,6 +188,7 @@ class Plugin(val id: String, val version: String? = null) {
 fun DependencyHandler.annotationProcessor(dependencyNotation: Dep): Dependency? = add("annotationProcessor", dependencyNotation.id)
 fun DependencyHandler.api(dependencyNotation: Dep): Dependency? = add("api", dependencyNotation.id)
 fun DependencyHandler.compileOnly(dependencyNotation: Dep): Dependency? = add("compileOnly", dependencyNotation.id)
+fun DependencyHandler.developmentOnly(dependencyNotation: Dep): Dependency? = add("developmentOnly", dependencyNotation.id)
 fun DependencyHandler.implementation(dependencyNotation: Dep): Dependency? = add("implementation", dependencyNotation.id)
 fun DependencyHandler.runtimeOnly(dependencyNotation: Dep): Dependency? = add("runtimeOnly", dependencyNotation.id)
 
