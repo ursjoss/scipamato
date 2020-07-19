@@ -70,7 +70,8 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 //.Added
 //
 .Changed
-- Bumped detekt, jooq-modelator, gradle-wrapper, jasperreports, spring-cloud, jooq
+- Bumped detekt, jooq-modelator, gradle-wrapper, jasperreports, spring-cloud, jooq,
+  kotlin-logging
 - {url-issues}196[#196] Properly use UTF-8 property files for wicket localization
 - Rename master branch to main
 
