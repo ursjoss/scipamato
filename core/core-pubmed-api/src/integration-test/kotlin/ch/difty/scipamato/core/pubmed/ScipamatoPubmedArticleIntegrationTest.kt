@@ -268,7 +268,7 @@ internal class ScipamatoPubmedArticleIntegrationTest : PubmedIntegrationTest() {
             firstAuthor shouldBeEqualTo "Münzel"
             publicationYear shouldBeEqualTo "2018"
             location shouldBeEqualTo
-                "Eur Heart J. 2018 Aug 14. doi: 10.1093/eurheartj/ehy481. [Epub ahead of print]"
+                "Eur Heart J. 2018 Aug 14. doi: 10.1093/eurheartj/ehy481. [Epub ahead of print]."
             title shouldBeEqualTo
                 "Effects of gaseous and solid constituents of air pollution on endothelial function."
             doi shouldBeEqualTo "10.1093/eurheartj/ehy481"
