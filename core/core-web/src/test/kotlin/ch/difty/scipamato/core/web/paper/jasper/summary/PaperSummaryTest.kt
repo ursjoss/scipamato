@@ -5,7 +5,6 @@ import ch.difty.scipamato.core.web.paper.jasper.CoreShortFieldWithEmptyMainField
 import ch.difty.scipamato.core.web.paper.jasper.JasperEntityTest
 import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields
 import nl.jqno.equalsverifier.EqualsVerifier
-import nl.jqno.equalsverifier.Warning
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.Test
 
@@ -108,10 +107,9 @@ internal class PaperSummaryTest : JasperEntityTest() {
 
     @Test
     fun equalsVerify() {
-        EqualsVerifier
+        EqualsVerifier.simple()
             .forClass(PaperSummary::class.java)
             .withRedefinedSuperclass()
-            .suppress(Warning.STRICT_INHERITANCE)
             .verify()
     }
 }

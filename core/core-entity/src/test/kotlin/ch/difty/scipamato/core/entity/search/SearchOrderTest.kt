@@ -6,7 +6,6 @@ import ch.difty.scipamato.core.entity.CoreEntity.CoreEntityFields.CREATOR_ID
 import ch.difty.scipamato.core.entity.CoreEntity.CoreEntityFields.MODIFIER_ID
 import ch.difty.scipamato.core.entity.search.SearchOrder.SearchOrderFields.SHOW_EXCLUDED
 import nl.jqno.equalsverifier.EqualsVerifier
-import nl.jqno.equalsverifier.Warning
 import org.amshove.kluent.shouldBeEmpty
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeNull
@@ -323,7 +322,7 @@ internal class SearchOrderTest {
 
     @Test
     fun equals() {
-        EqualsVerifier
+        EqualsVerifier.simple()
             .forClass(SearchOrder::class.java)
             .withRedefinedSuperclass()
             .usingGetClass()
@@ -331,7 +330,6 @@ internal class SearchOrderTest {
                 SHOW_EXCLUDED.fieldName, CREATED.fieldName, CREATOR_ID.fieldName,
                 MODIFIED.fieldName, MODIFIER_ID.fieldName
             )
-            .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
             .withPrefabValues(SearchCondition::class.java, SearchCondition(1L), SearchCondition(2L))
             .verify()
     }

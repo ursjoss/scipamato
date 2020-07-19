@@ -5,7 +5,6 @@ import ch.difty.scipamato.common.entity.ScipamatoEntity.ScipamatoEntityFields.MO
 import ch.difty.scipamato.core.entity.CoreEntity.CoreEntityFields.CREATOR_ID
 import ch.difty.scipamato.core.entity.CoreEntity.CoreEntityFields.MODIFIER_ID
 import nl.jqno.equalsverifier.EqualsVerifier
-import nl.jqno.equalsverifier.Warning
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeNull
 import org.junit.jupiter.api.BeforeEach
@@ -94,12 +93,11 @@ internal class PaperSlimTest {
 
     @Test
     fun equals() {
-        EqualsVerifier
+        EqualsVerifier.simple()
             .forClass(PaperSlim::class.java)
             .withRedefinedSuperclass()
             .usingGetClass()
             .withIgnoredFields(CREATED.fieldName, CREATOR_ID.fieldName, MODIFIED.fieldName, MODIFIER_ID.fieldName)
-            .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
             .verify()
     }
 }

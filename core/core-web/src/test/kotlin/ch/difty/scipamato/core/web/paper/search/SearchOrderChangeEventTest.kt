@@ -3,7 +3,6 @@ package ch.difty.scipamato.core.web.paper.search
 import ch.difty.scipamato.common.AjaxRequestTargetSpy
 import ch.difty.scipamato.core.web.paper.SearchOrderChangeEvent
 import nl.jqno.equalsverifier.EqualsVerifier
-import nl.jqno.equalsverifier.Warning
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeFalse
 import org.amshove.kluent.shouldBeNull
@@ -80,10 +79,9 @@ internal class SearchOrderChangeEventTest {
 
     @Test
     fun equals() {
-        EqualsVerifier
+        EqualsVerifier.simple()
             .forClass(SearchOrderChangeEvent::class.java)
             .withRedefinedSuperclass()
-            .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
             .verify()
     }
 }

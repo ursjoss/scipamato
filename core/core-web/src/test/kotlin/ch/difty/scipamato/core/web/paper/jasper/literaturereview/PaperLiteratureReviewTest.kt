@@ -3,7 +3,6 @@ package ch.difty.scipamato.core.web.paper.jasper.literaturereview
 import ch.difty.scipamato.core.web.paper.jasper.JasperEntityTest
 import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields
 import nl.jqno.equalsverifier.EqualsVerifier
-import nl.jqno.equalsverifier.Warning
 import org.amshove.kluent.invoking
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeNull
@@ -78,10 +77,9 @@ internal class PaperLiteratureReviewTest : JasperEntityTest() {
 
     @Test
     fun equals() {
-        EqualsVerifier
+        EqualsVerifier.simple()
             .forClass(PaperLiteratureReview::class.java)
             .withRedefinedSuperclass()
-            .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
             .verify()
     }
 

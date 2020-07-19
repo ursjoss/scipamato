@@ -6,7 +6,6 @@ import ch.difty.scipamato.common.entity.ScipamatoEntity.ScipamatoEntityFields.MO
 import ch.difty.scipamato.core.entity.CoreEntity.CoreEntityFields.CREATOR_ID
 import ch.difty.scipamato.core.entity.CoreEntity.CoreEntityFields.MODIFIER_ID
 import nl.jqno.equalsverifier.EqualsVerifier
-import nl.jqno.equalsverifier.Warning
 import org.amshove.kluent.shouldBeEmpty
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldNotBeEmpty
@@ -91,12 +90,11 @@ abstract class Jsr303ValidatedEntityTest<T : CoreEntity> protected constructor(p
 
     @Test
     internal open fun verifyEquals() {
-        EqualsVerifier
+        EqualsVerifier.simple()
             .forClass(clazz)
             .usingGetClass()
             .withRedefinedSuperclass()
             .withIgnoredFields(CREATED.fieldName, CREATOR_ID.fieldName, MODIFIED.fieldName, MODIFIER_ID.fieldName)
-            .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
             .verify()
     }
 }

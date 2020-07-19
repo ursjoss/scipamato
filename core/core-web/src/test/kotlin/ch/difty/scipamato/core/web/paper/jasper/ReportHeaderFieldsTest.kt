@@ -1,7 +1,6 @@
 package ch.difty.scipamato.core.web.paper.jasper
 
 import nl.jqno.equalsverifier.EqualsVerifier
-import nl.jqno.equalsverifier.Warning
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.Test
 
@@ -9,10 +8,9 @@ internal class ReportHeaderFieldsTest {
 
     @Test
     fun equalsVerify() {
-        EqualsVerifier
+        EqualsVerifier.simple()
             .forClass(ReportHeaderFields::class.java)
             .withRedefinedSuperclass()
-            .suppress(Warning.STRICT_INHERITANCE)
             .verify()
     }
 

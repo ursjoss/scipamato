@@ -2,7 +2,6 @@ package ch.difty.scipamato.common.web.event
 
 import ch.difty.scipamato.common.AjaxRequestTargetSpy
 import nl.jqno.equalsverifier.EqualsVerifier
-import nl.jqno.equalsverifier.Warning
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldStartWith
 import org.apache.wicket.ajax.AjaxRequestTarget
@@ -20,8 +19,8 @@ internal class WicketEventTest {
 
     @Test
     fun equals() {
-        EqualsVerifier.forClass(WicketEvent::class.java)
-            .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
+        EqualsVerifier.simple()
+            .forClass(WicketEvent::class.java)
             .verify()
     }
 
