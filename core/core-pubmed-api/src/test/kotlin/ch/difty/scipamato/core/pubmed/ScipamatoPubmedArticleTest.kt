@@ -192,6 +192,62 @@ internal class ScipamatoPubmedArticleTest {
     }
 
     @Test
+    fun location_withMedlinePagination_aheadOfPrint() {
+        pubmedArticle
+            .medlineCitation
+            .medlineJournalInfo.medlineTA = "Medline TA"
+        pubmedArticle
+            .medlineCitation
+            .article
+            .journal
+            .journalIssue
+            .pubDate
+            .yearOrMonthOrDayOrSeasonOrMedlineDate
+            .addAll(listOf(
+                Year().apply { setvalue("2016") },
+                Month().apply { setvalue("Aug") },
+                Day().apply { setvalue("1") }
+            ))
+        pubmedArticle
+            .medlineCitation
+            .article
+            .journal
+            .journalIssue.volume = "6"
+        pubmedArticle
+            .medlineCitation
+            .article
+            .journal
+            .journalIssue.issue = "10"
+        val pagination = Pagination()
+        val medlinePgn = MedlinePgn()
+        medlinePgn.setvalue("1145-9")
+        pagination
+            .startPageOrEndPageOrMedlinePgn
+            .add(medlinePgn)
+        val medlinePgn2 = MedlinePgn()
+        medlinePgn2.setvalue("3456-3458")
+        pagination
+            .startPageOrEndPageOrMedlinePgn
+            .add(medlinePgn2)
+        pubmedArticle
+            .medlineCitation
+            .article
+            .paginationOrELocationID
+            .add(pagination)
+        pubmedArticle.pubmedData = PubmedData().apply {
+            articleIdList = ArticleIdList().apply {
+                articleId.add(ArticleId().apply {
+                    idType = "doi"
+                    setvalue("10.0000012345")
+                })
+            }
+            publicationStatus = "aheadofprint"
+        }
+        val spa = ScipamatoPubmedArticle(pubmedArticle)
+        spa.location shouldBeEqualTo "Medline TA. 2016 Aug 1. 6 (10): 1145-1149. doi: 10.0000012345. [Epub ahead of print]."
+    }
+
+    @Test
     fun location_withMedlinePaginationWithoutPageRange() {
         pubmedArticle
             .medlineCitation
