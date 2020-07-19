@@ -1,7 +1,6 @@
 package ch.difty.scipamato.common.entity
 
 import nl.jqno.equalsverifier.EqualsVerifier
-import nl.jqno.equalsverifier.Warning
 import org.amshove.kluent.shouldBeEmpty
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeNull
@@ -241,7 +240,7 @@ class AbstractDefinitionEntityTest {
 
     @Test
     fun equals() {
-        EqualsVerifier
+        EqualsVerifier.simple()
             .forClass(AbstractDefinitionEntity::class.java)
             .withRedefinedSuperclass()
             .usingGetClass()
@@ -249,7 +248,6 @@ class AbstractDefinitionEntityTest {
                 ScipamatoEntity.ScipamatoEntityFields.CREATED.fieldName,
                 ScipamatoEntity.ScipamatoEntityFields.MODIFIED.fieldName
             )
-            .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
             .verify()
     }
 

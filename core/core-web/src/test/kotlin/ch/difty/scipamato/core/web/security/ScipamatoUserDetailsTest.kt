@@ -4,7 +4,6 @@ import ch.difty.scipamato.core.auth.Role
 import ch.difty.scipamato.core.entity.User
 import ch.difty.scipamato.core.web.authentication.ScipamatoUserDetails
 import nl.jqno.equalsverifier.EqualsVerifier
-import nl.jqno.equalsverifier.Warning
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeTrue
 import org.amshove.kluent.shouldContain
@@ -58,12 +57,11 @@ internal class ScipamatoUserDetailsTest {
 
     @Test
     fun equals() {
-        EqualsVerifier
+        EqualsVerifier.simple()
             .forClass(User::class.java)
             .withRedefinedSuperclass()
             .usingGetClass()
             .withIgnoredFields("created", "createdBy", "lastModified", "lastModifiedBy")
-            .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
             .verify()
     }
 }

@@ -1,7 +1,6 @@
 package ch.difty.scipamato.core.entity.codeclass
 
 import nl.jqno.equalsverifier.EqualsVerifier
-import nl.jqno.equalsverifier.Warning
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldContainSame
 import org.junit.jupiter.api.Test
@@ -23,10 +22,9 @@ internal class CodeClassFilterTest {
 
     @Test
     fun equals() {
-        EqualsVerifier
+        EqualsVerifier.simple()
             .forClass(CodeClassFilter::class.java)
             .withRedefinedSuperclass()
-            .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
             .verify()
     }
 

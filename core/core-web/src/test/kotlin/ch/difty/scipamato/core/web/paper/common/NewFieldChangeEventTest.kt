@@ -4,7 +4,6 @@ import ch.difty.scipamato.common.AjaxRequestTargetSpy
 import io.mockk.every
 import io.mockk.mockk
 import nl.jqno.equalsverifier.EqualsVerifier
-import nl.jqno.equalsverifier.Warning
 import org.amshove.kluent.shouldBeEmpty
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeNull
@@ -132,10 +131,9 @@ internal class NewFieldChangeEventTest {
 
     @Test
     fun equals() {
-        EqualsVerifier
+        EqualsVerifier.simple()
             .forClass(NewFieldChangeEvent::class.java)
             .withRedefinedSuperclass()
-            .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
             .verify()
     }
 }

@@ -1,7 +1,6 @@
 package ch.difty.scipamato.core.entity.keyword
 
 import nl.jqno.equalsverifier.EqualsVerifier
-import nl.jqno.equalsverifier.Warning
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldContainAll
 import org.junit.jupiter.api.Test
@@ -19,10 +18,9 @@ internal class KeywordFilterTest {
 
     @Test
     fun equals() {
-        EqualsVerifier
+        EqualsVerifier.simple()
             .forClass(KeywordFilter::class.java)
             .withRedefinedSuperclass()
-            .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
             .verify()
     }
 

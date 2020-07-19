@@ -3,7 +3,6 @@ package ch.difty.scipamato.common.entity
 import ch.difty.scipamato.common.entity.ScipamatoEntity.ScipamatoEntityFields.CREATED
 import ch.difty.scipamato.common.entity.ScipamatoEntity.ScipamatoEntityFields.MODIFIED
 import nl.jqno.equalsverifier.EqualsVerifier
-import nl.jqno.equalsverifier.Warning
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -34,11 +33,10 @@ class ScipamatoEntityTest {
 
     @Test
     fun equals() {
-        EqualsVerifier
+        EqualsVerifier.simple()
             .forClass(ScipamatoEntity::class.java)
             .usingGetClass()
             .withIgnoredFields(CREATED.fieldName, MODIFIED.fieldName)
-            .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
             .verify()
     }
 

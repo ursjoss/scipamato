@@ -2,7 +2,6 @@ package ch.difty.scipamato.core.web.paper
 
 import ch.difty.scipamato.common.AjaxRequestTargetSpy
 import nl.jqno.equalsverifier.EqualsVerifier
-import nl.jqno.equalsverifier.Warning
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
@@ -33,10 +32,9 @@ internal class NewsletterChangeEventTest {
 
     @Test
     fun equals() {
-        EqualsVerifier
+        EqualsVerifier.simple()
             .forClass(NewsletterChangeEvent::class.java)
             .withRedefinedSuperclass()
-            .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
             .verify()
     }
 }

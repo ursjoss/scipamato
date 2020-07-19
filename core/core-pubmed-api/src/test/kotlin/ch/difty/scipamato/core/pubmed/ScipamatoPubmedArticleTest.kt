@@ -27,7 +27,6 @@ import ch.difty.scipamato.core.pubmed.api.PubmedData
 import ch.difty.scipamato.core.pubmed.api.Suffix
 import ch.difty.scipamato.core.pubmed.api.Year
 import nl.jqno.equalsverifier.EqualsVerifier
-import nl.jqno.equalsverifier.Warning
 import org.amshove.kluent.shouldBeEmpty
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeNull
@@ -353,9 +352,8 @@ internal class ScipamatoPubmedArticleTest {
 
     @Test
     fun equals() {
-        EqualsVerifier
+        EqualsVerifier.simple()
             .forClass(ScipamatoPubmedArticle::class.java)
-            .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
             .verify()
     }
 

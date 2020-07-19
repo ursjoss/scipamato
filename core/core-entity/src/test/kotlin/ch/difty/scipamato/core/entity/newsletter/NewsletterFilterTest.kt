@@ -2,7 +2,6 @@ package ch.difty.scipamato.core.entity.newsletter
 
 import ch.difty.scipamato.common.entity.newsletter.PublicationStatus
 import nl.jqno.equalsverifier.EqualsVerifier
-import nl.jqno.equalsverifier.Warning
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldContainSame
 import org.junit.jupiter.api.Test
@@ -28,10 +27,9 @@ internal class NewsletterFilterTest {
 
     @Test
     fun equals() {
-        EqualsVerifier
+        EqualsVerifier.simple()
             .forClass(NewsletterFilter::class.java)
             .withRedefinedSuperclass()
-            .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
             .verify()
     }
 

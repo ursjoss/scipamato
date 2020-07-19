@@ -5,7 +5,6 @@ import ch.difty.scipamato.publ.entity.Keyword
 import ch.difty.scipamato.publ.entity.PopulationCode
 import ch.difty.scipamato.publ.entity.StudyDesignCode
 import nl.jqno.equalsverifier.EqualsVerifier
-import nl.jqno.equalsverifier.Warning
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldContainAll
 import org.amshove.kluent.shouldContainSame
@@ -89,10 +88,9 @@ internal class PublicPaperFilterTest {
 
     @Test
     fun equals() {
-        EqualsVerifier
+        EqualsVerifier.simple()
             .forClass(PublicPaperFilter::class.java)
             .withRedefinedSuperclass()
-            .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
             .verify()
     }
 

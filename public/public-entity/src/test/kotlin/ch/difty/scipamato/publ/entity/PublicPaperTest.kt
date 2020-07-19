@@ -3,7 +3,6 @@ package ch.difty.scipamato.publ.entity
 import ch.difty.scipamato.common.entity.ScipamatoEntity.ScipamatoEntityFields.CREATED
 import ch.difty.scipamato.common.entity.ScipamatoEntity.ScipamatoEntityFields.MODIFIED
 import nl.jqno.equalsverifier.EqualsVerifier
-import nl.jqno.equalsverifier.Warning
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldContainAll
 import org.junit.jupiter.api.Test
@@ -51,10 +50,10 @@ internal class PublicPaperTest : PublicEntityTest<PublicPaper>() {
     }
 
     public override fun verifyEquals() {
-        EqualsVerifier.forClass(PublicPaper::class.java)
+        EqualsVerifier.simple()
+            .forClass(PublicPaper::class.java)
             .withRedefinedSuperclass()
             .withIgnoredFields(CREATED.fieldName, MODIFIED.fieldName)
-            .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
             .verify()
     }
 
