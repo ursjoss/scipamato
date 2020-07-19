@@ -1,3 +1,5 @@
+// stylelint-disable selector-max-type, selector-max-compound-selectors, selector-max-combinators, selector-max-class, declaration-no-important, selector-no-qualifying-type
+
 //
 // Toolbar
 // --------------------------------------------------
@@ -39,10 +41,10 @@
 // Brand/project name
 
 .navbar-toolbar .navbar-brand {
+  height: @navbar-toolbar-height;
   padding: @navbar-toolbar-padding-vertical @navbar-toolbar-padding-horizontal;
   font-size: @navbar-toolbar-brand-font-size;
-  font-weight: bold;
-  height: @navbar-toolbar-height;
+  font-weight: 700;
 
   @media (min-width: @grid-float-breakpoint) {
     .navbar > .container &,
@@ -86,17 +88,17 @@
     }
   }
   > .active > a {
-    font-weight: bold;
+    font-weight: 700;
     &:before {
       position: absolute;
       bottom: -1px;
       left: 50%;
       display: inline-block;
       margin-left: -8px; /* value should match border-width below */
-      border-right:  8px solid transparent;
+      content: "";
+      border-right: 8px solid transparent;
       border-bottom: 8px solid transparent;
-      border-left:   8px solid transparent;
-      content: '';
+      border-left: 8px solid transparent;
     }
     &:after {
       position: absolute;
@@ -104,10 +106,10 @@
       left: 50%;
       display: inline-block;
       margin-left: -7px; /* value should match border-width below */
-      border-right:  7px solid transparent;
+      content: "";
+      border-right: 7px solid transparent;
       border-bottom: 7px solid transparent;
-      border-left:   7px solid transparent;
-      content: '';
+      border-left: 7px solid transparent;
     }
   }
 
@@ -131,9 +133,9 @@
 // our navbars.
 
 .navbar-toolbar .navbar-form {
-  margin-left: -@navbar-toolbar-padding-horizontal;
-  margin-right: -@navbar-toolbar-padding-horizontal;
   padding: 10px @navbar-toolbar-padding-horizontal;
+  margin-right: -@navbar-toolbar-padding-horizontal;
+  margin-left: -@navbar-toolbar-padding-horizontal;
 
   > .input-group .form-control {
     .navbar-vertical-align(@input-height-base, @navbar-toolbar-height);
@@ -150,10 +152,10 @@
 
   // Undo 100% width for pull classes
   @media (min-width: @grid-float-breakpoint) {
-    margin-left: 0;
-    margin-right: 0;
     padding-top: 0;
     padding-bottom: 0;
+    margin-right: 0;
+    margin-left: 0;
   }
 
   .form-control {
@@ -265,33 +267,15 @@
         background-color: @navbar-toolbar-default-link-disabled-bg;
       }
     }
-  }
 
-  .navbar-toggle {
-    border-color: @navbar-toolbar-default-toggle-border-color;
-    &:hover,
-    &:focus {
-      background-color: @navbar-toolbar-default-toggle-hover-bg;
-    }
-    .icon-bar {
-      background-color: @navbar-toolbar-default-toggle-icon-bar-bg;
-    }
-  }
-
-  .navbar-collapse,
-  .navbar-form {
-    border-color: darken(@navbar-toolbar-default-bg, 7%);
-  }
-
-  // Dropdown menu items
-  .navbar-nav {
+    // Dropdown menu items
     // Remove background color from open dropdown
     > .open > a {
       &,
       &:hover,
       &:focus {
-        background-color: @navbar-toolbar-default-link-active-bg;
         color: @navbar-toolbar-default-link-active-color;
+        background-color: @navbar-toolbar-default-link-active-bg;
       }
     }
 
@@ -324,6 +308,22 @@
         }
       }
     }
+  }
+
+  .navbar-toggle {
+    border-color: @navbar-toolbar-default-toggle-border-color;
+    &:hover,
+    &:focus {
+      background-color: @navbar-toolbar-default-toggle-hover-bg;
+    }
+    .icon-bar {
+      background-color: @navbar-toolbar-default-toggle-icon-bar-bg;
+    }
+  }
+
+  .navbar-collapse,
+  .navbar-form {
+    border-color: darken(@navbar-toolbar-default-bg, 7%);
   }
 
 
@@ -385,7 +385,7 @@
     &:active,
     &.active,
     .open .dropdown-toggle& {
-      color: @btn-default-color
+      color: @btn-default-color;
     }
   }
 
@@ -432,33 +432,14 @@
         background-color: @navbar-toolbar-inverse-link-disabled-bg;
       }
     }
-  }
 
-  // Darken the responsive nav toggle
-  .navbar-toggle {
-    border-color: @navbar-toolbar-inverse-toggle-border-color;
-    &:hover,
-    &:focus {
-      background-color: @navbar-toolbar-inverse-toggle-hover-bg;
-    }
-    .icon-bar {
-      background-color: @navbar-toolbar-inverse-toggle-icon-bar-bg;
-    }
-  }
-
-  .navbar-collapse,
-  .navbar-form {
-    border-color: darken(@navbar-toolbar-inverse-bg, 7%);
-  }
-
-  // Dropdowns
-  .navbar-nav {
+    // Dropdowns
     > .open > a {
       &,
       &:hover,
       &:focus {
-        background-color: @navbar-toolbar-inverse-link-active-bg;
         color: @navbar-toolbar-inverse-link-active-color;
+        background-color: @navbar-toolbar-inverse-link-active-bg;
       }
     }
 
@@ -497,6 +478,23 @@
         }
       }
     }
+  }
+
+  // Darken the responsive nav toggle
+  .navbar-toggle {
+    border-color: @navbar-toolbar-inverse-toggle-border-color;
+    &:hover,
+    &:focus {
+      background-color: @navbar-toolbar-inverse-toggle-hover-bg;
+    }
+    .icon-bar {
+      background-color: @navbar-toolbar-inverse-toggle-icon-bar-bg;
+    }
+  }
+
+  .navbar-collapse,
+  .navbar-form {
+    border-color: darken(@navbar-toolbar-inverse-bg, 7%);
   }
 
   .navbar-link {

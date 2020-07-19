@@ -1,3 +1,5 @@
+// stylelint-disable selector-max-type, selector-max-compound-selectors, selector-max-combinators, no-duplicate-selectors, selector-no-qualifying-type
+
 //
 // Panels
 // --------------------------------------------------
@@ -75,8 +77,8 @@
   > .panel-collapse > .table {
 
     caption {
-      padding-left: @panel-body-padding;
       padding-right: @panel-body-padding;
+      padding-left: @panel-body-padding;
     }
   }
   // Add border top radius for first one
@@ -109,8 +111,8 @@
     > tbody:last-child,
     > tfoot:last-child {
       > tr:last-child {
-        border-bottom-left-radius: (@panel-border-radius - 1);
         border-bottom-right-radius: (@panel-border-radius - 1);
+        border-bottom-left-radius: (@panel-border-radius - 1);
 
         td:first-child,
         th:first-child {
@@ -184,8 +186,8 @@
       text-decoration: none;
 
       &:before {
-        content: "\e082";
         margin-right: 7px;
+        content: "\e082";
         &:extend(.glyphicon);
       }
 
@@ -198,8 +200,8 @@
       }
 
       &.collapsed:before {
-        content: "\e081";
         margin-right: 7px;
+        content: "\e081";
         &:extend(.glyphicon);
       }
     }

@@ -19,8 +19,8 @@
       left: -16px;
     }
     + li:before {
-      content: "";
       color: @breadcrumb-color;
+      content: "";
     }
     > a {
       color: @breadcrumb-color;
@@ -79,14 +79,14 @@
   &.breadcrumb-inverse {
     background-color: @breadcrumb-inverse-bg;
 
-  > li {
-    + li {
-      .chevron(right, 5px, @breadcrumb-inverse-bg, 9px, 1px, #666);
-    }
-    + li:before,
-    + li:after {
-      left: -16px;
+    > li {
+      + li {
+        .chevron(right, 5px, @breadcrumb-inverse-bg, 9px, 1px, #666);
+      }
+      + li:before,
+      + li:after {
+        left: -16px;
+      }
     }
   }
-}
 }
