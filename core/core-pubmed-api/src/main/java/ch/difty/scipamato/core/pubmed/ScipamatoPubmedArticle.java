@@ -1,5 +1,7 @@
 package ch.difty.scipamato.core.pubmed;
 
+import static ch.difty.scipamato.core.pubmed.ExtensionsKt.AHEAD_OF_PRINT_TAG;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -43,8 +45,8 @@ class ScipamatoPubmedArticle extends AbstractPubmedArticleFacade {
             "");
         setPublicationYear(getPublicationYearFrom(journal));
         setDoi(getDoiFrom(pubmedArticle));
-        setLocation(makeLocationFrom(medlineCitation.getMedlineJournalInfo(), journal.getJournalIssue(),
-            article.getPaginationOrELocationID(), isAheadOfPrint));
+        setLocation(makeLocationFrom(medlineCitation.getMedlineJournalInfo(), journal.getJournalIssue(), article.getPaginationOrELocationID(),
+            isAheadOfPrint));
 
         final ArticleTitle articleTitle = article.getArticleTitle();
         Objects.requireNonNull(articleTitle);
@@ -77,8 +79,8 @@ class ScipamatoPubmedArticle extends AbstractPubmedArticleFacade {
                 .orElse("0"));
     }
 
-    private String makeLocationFrom(@NotNull final MedlineJournalInfo medlineJournalInfo,
-        final JournalIssue journalIssue, final List<java.lang.Object> paginationElocation, boolean aheadOfPrint) {
+    private String makeLocationFrom(@NotNull final MedlineJournalInfo medlineJournalInfo, final JournalIssue journalIssue,
+        final List<java.lang.Object> paginationElocation, boolean aheadOfPrint) {
         final StringBuilder sb = new StringBuilder();
         appendMedlineTa(medlineJournalInfo, sb);
         appendPublicationYearOrDate(journalIssue, aheadOfPrint, sb);
@@ -96,8 +98,7 @@ class ScipamatoPubmedArticle extends AbstractPubmedArticleFacade {
         sb.append(". ");
     }
 
-    private void appendPublicationYearOrDate(final JournalIssue journalIssue, final boolean aheadOfPrint,
-        final StringBuilder sb) {
+    private void appendPublicationYearOrDate(final JournalIssue journalIssue, final boolean aheadOfPrint, final StringBuilder sb) {
         if (!aheadOfPrint) {
             sb.append(getPublicationYear());
             sb.append(";");
@@ -154,7 +155,8 @@ class ScipamatoPubmedArticle extends AbstractPubmedArticleFacade {
     private void appendAdditionalInfoForAheadOfPrint(final StringBuilder sb) {
         sb.append(" doi: ");
         sb.append(getDoi());
-        sb.append(". [Epub ahead of print]");
+        sb.append(". ");
+        sb.append(AHEAD_OF_PRINT_TAG);
     }
 
     /**

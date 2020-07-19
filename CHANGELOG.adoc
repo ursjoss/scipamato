@@ -67,8 +67,9 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 {url-cl}1.4.6$$...$$main[Full Changelog]
 
-//.Added
-//
+.Added
+- {url-issues}202[#202] Auto-correct ahead-of-print articles from PubMed
+
 .Changed
 - Bumped detekt, jooq-modelator, gradle-wrapper, jasperreports, spring-cloud, jooq,
   wicket, wicketstuff,
