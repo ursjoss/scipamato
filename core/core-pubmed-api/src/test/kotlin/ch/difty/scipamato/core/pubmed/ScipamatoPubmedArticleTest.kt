@@ -244,7 +244,7 @@ internal class ScipamatoPubmedArticleTest {
             publicationStatus = "aheadofprint"
         }
         val spa = ScipamatoPubmedArticle(pubmedArticle)
-        spa.location shouldBeEqualTo "Medline TA. 2016 Aug 1. 6 (10): 1145-1149. doi: 10.0000012345. [Epub ahead of print]."
+        spa.location shouldBeEqualTo "Medline TA. 2016 Aug 1. 6 (10): 1145-1149. doi: 10.0000012345. [Epub ahead of print]"
     }
 
     @Test
