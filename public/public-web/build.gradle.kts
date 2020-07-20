@@ -60,6 +60,4 @@ dependencies {
     testImplementation(project(Module.scipamatoCommon("test")))
     testImplementation(Lib.lombok())
     testAnnotationProcessor(Lib.lombok())
-
-    developmentOnly(Lib.springBoot("devtools"))
 }
