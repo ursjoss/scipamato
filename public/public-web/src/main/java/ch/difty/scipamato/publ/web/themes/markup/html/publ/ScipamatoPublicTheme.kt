@@ -36,10 +36,9 @@ class ScipamatoPublicTheme(
 
     private fun makeHeaderItem(): CssHeaderItem =
         if (useLessOverCss) {
-            log.info { "Loading style sheets via ScipamatoPublicLessReference" }
+            log.debug { "Loading style sheets via ScipamatoPublicLessReference" }
             CssHeaderItem.forReference(ScipamatoPublicLessReference).setId(ITheme.BOOTSTRAP_THEME_MARKUP_ID)
         } else {
-            log.info { "Loading style sheets via ScipamatoPublicCssReference" }
             CssHeaderItem.forReference(ScipamatoPublicCssReference).setId(ITheme.BOOTSTRAP_THEME_MARKUP_ID)
         }
 }
