@@ -10,6 +10,9 @@ import com.googlecode.wicket.jquery.ui.interaction.sortable.Sortable
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton
 import io.mockk.every
 import io.mockk.verify
+import org.amshove.kluent.invoking
+import org.amshove.kluent.shouldThrow
+import org.amshove.kluent.withMessage
 import org.apache.wicket.markup.html.form.Form
 import org.apache.wicket.model.Model
 import org.apache.wicket.request.mapper.parameter.PageParameters
@@ -61,8 +64,12 @@ internal class NewsletterTopicSortPageTest : BasePageTest<NewsletterTopicSortPag
     }
 
     @Test
-    fun startingPageWithNonModel__loadsSortedNewsletterTopics() {
-        tester.startPage(NewsletterTopicSortPage(null, null))
+    fun startingPageWithNonNullModelWithNullId_throws() {
+        newsletter.id = null
+        invoking {
+            tester.startPage(NewsletterTopicSortPage(Model.of(newsletter), null))
+        } shouldThrow IllegalStateException::class withMessage "Cannot start page w/o non-null newsletter topic id in model"
+
         verify(exactly = 0) { newsletterTopicServiceMock.getSortedNewsletterTopicsForNewsletter(any()) }
     }
 
