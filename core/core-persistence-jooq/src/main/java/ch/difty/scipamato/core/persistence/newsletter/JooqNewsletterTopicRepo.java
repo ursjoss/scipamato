@@ -38,8 +38,7 @@ import ch.difty.scipamato.core.persistence.OptimisticLockingException;
 @Profile("!wickettest")
 public class JooqNewsletterTopicRepo extends AbstractRepo implements NewsletterTopicRepository {
 
-    public JooqNewsletterTopicRepo(@Qualifier("dslContext") @NotNull final DSLContext dslContext,
-        @NotNull DateTimeService dateTimeService) {
+    public JooqNewsletterTopicRepo(@Qualifier("dslContext") @NotNull final DSLContext dslContext, @NotNull DateTimeService dateTimeService) {
         super(dslContext, dateTimeService);
     }
 
@@ -63,8 +62,8 @@ public class JooqNewsletterTopicRepo extends AbstractRepo implements NewsletterT
 
     @NotNull
     @Override
-    public List<NewsletterTopicDefinition> findPageOfNewsletterTopicDefinitions(
-        @Nullable final NewsletterTopicFilter filter, @NotNull final PaginationContext pc) {
+    public List<NewsletterTopicDefinition> findPageOfNewsletterTopicDefinitions(@Nullable final NewsletterTopicFilter filter,
+        @NotNull final PaginationContext pc) {
         final SelectOnConditionStep<Record> selectStep = getDsl()
             .select(NEWSLETTER_TOPIC.fields())
             .select(LANGUAGE.CODE)
@@ -114,8 +113,7 @@ public class JooqNewsletterTopicRepo extends AbstractRepo implements NewsletterT
         }
     }
 
-    private List<NewsletterTopicDefinition> mapRawRecordsIntoNewsletterTopicDefinitions(
-        final Map<Integer, Result<Record>> rawRecords) {
+    private List<NewsletterTopicDefinition> mapRawRecordsIntoNewsletterTopicDefinitions(final Map<Integer, Result<Record>> rawRecords) {
         final List<NewsletterTopicDefinition> definitions = new ArrayList<>();
         for (final Map.Entry<Integer, Result<Record>> entry : rawRecords.entrySet()) {
             final List<NewsletterTopicTranslation> translations = entry
@@ -165,11 +163,9 @@ public class JooqNewsletterTopicRepo extends AbstractRepo implements NewsletterT
             final String propName = sortProperty.getName();
             if (propName.equals(NEWSLETTER_TOPIC_TR.TITLE.getName())) {
                 if (sortProperty.getDirection() == Sort.Direction.DESC)
-                    results.sort(comparing(NewsletterTopicDefinition::getTranslationsAsString,
-                        String.CASE_INSENSITIVE_ORDER).reversed());
+                    results.sort(comparing(NewsletterTopicDefinition::getTranslationsAsString, String.CASE_INSENSITIVE_ORDER).reversed());
                 else
-                    results.sort(
-                        comparing(NewsletterTopicDefinition::getTranslationsAsString, String.CASE_INSENSITIVE_ORDER));
+                    results.sort(comparing(NewsletterTopicDefinition::getTranslationsAsString, String.CASE_INSENSITIVE_ORDER));
             }
         }
     }
@@ -220,15 +216,12 @@ public class JooqNewsletterTopicRepo extends AbstractRepo implements NewsletterT
         final int ntId = ntRecord.get(NEWSLETTER_TOPIC.ID);
 
         final List<NewsletterTopicTranslation> persistedTranslations = persistTranslations(entity, userId, ntId);
-        final NewsletterTopicDefinition persistedEntity = toTopicDefinition(ntId,
-            ntRecord.get(NEWSLETTER_TOPIC.VERSION), persistedTranslations);
-        log.info("{} inserted 1 record: {} with id {}.", getActiveUser().getUserName(), NEWSLETTER_TOPIC.getName(),
-            ntId);
+        final NewsletterTopicDefinition persistedEntity = toTopicDefinition(ntId, ntRecord.get(NEWSLETTER_TOPIC.VERSION), persistedTranslations);
+        log.info("{} inserted 1 record: {} with id {}.", getActiveUser().getUserName(), NEWSLETTER_TOPIC.getName(), ntId);
         return persistedEntity;
     }
 
-    private List<NewsletterTopicTranslation> persistTranslations(final NewsletterTopicDefinition entity,
-        final int userId, final int ntId) {
+    private List<NewsletterTopicTranslation> persistTranslations(final NewsletterTopicDefinition entity, final int userId, final int ntId) {
         final List<NewsletterTopicTranslation> nttPersisted = new ArrayList<>();
         for (final NewsletterTopicTranslation ntt : entity.getTranslations(null)) {
             final NewsletterTopicTrRecord nttRecord = insertAndGetNewsletterTopicTr(ntId, userId, ntt);
@@ -250,31 +243,28 @@ public class JooqNewsletterTopicRepo extends AbstractRepo implements NewsletterT
     }
 
     // package-private for testing purposes
+    // entity.id must not be null
     @NotNull
-    NewsletterTopicDefinition handleUpdatedRecord(@Nullable final NewsletterTopicRecord record,
-        @NotNull final NewsletterTopicDefinition entity, final int userId) {
+    NewsletterTopicDefinition handleUpdatedRecord(@Nullable final NewsletterTopicRecord record, @NotNull final NewsletterTopicDefinition entity,
+        final int userId) {
         if (record != null) {
-            final List<NewsletterTopicTranslation> persistedTranslations = updateOrInsertAndLoadNewsletterTopicTranslations(
-                entity, userId);
-            final NewsletterTopicDefinition updatedEntity = toTopicDefinition(entity.getId(),
-                record.get(NEWSLETTER_TOPIC.VERSION), persistedTranslations);
-            log.info("{} updated 1 record: {} with id {}.", getActiveUser().getUserName(), NEWSLETTER_TOPIC.getName(),
-                updatedEntity.getId());
+            final List<NewsletterTopicTranslation> persistedTranslations = updateOrInsertAndLoadNewsletterTopicTranslations(entity, userId);
+            final NewsletterTopicDefinition updatedEntity = toTopicDefinition(entity.getId(), record.get(NEWSLETTER_TOPIC.VERSION),
+                persistedTranslations);
+            log.info("{} updated 1 record: {} with id {}.", getActiveUser().getUserName(), NEWSLETTER_TOPIC.getName(), updatedEntity.getId());
             return updatedEntity;
         } else {
-            throw new OptimisticLockingException(NEWSLETTER_TOPIC.getName(), entity.toString(),
-                OptimisticLockingException.Type.UPDATE);
+            throw new OptimisticLockingException(NEWSLETTER_TOPIC.getName(), entity.toString(), OptimisticLockingException.Type.UPDATE);
         }
     }
 
     private NewsletterTopicDefinition toTopicDefinition(final Integer id, final int version,
         final List<NewsletterTopicTranslation> persistedTranslations) {
-        return new NewsletterTopicDefinition(id, getMainLanguage(), version,
-            persistedTranslations.toArray(new NewsletterTopicTranslation[0]));
+        return new NewsletterTopicDefinition(id, getMainLanguage(), version, persistedTranslations.toArray(new NewsletterTopicTranslation[0]));
     }
 
-    private NewsletterTopicRecord updateAndLoadNewsletterTopicDefinition(final NewsletterTopicDefinition entity,
-        final int userId, final int currentVersion) {
+    private NewsletterTopicRecord updateAndLoadNewsletterTopicDefinition(final NewsletterTopicDefinition entity, final int userId,
+        final int currentVersion) {
         return getDsl()
             .update(NEWSLETTER_TOPIC)
             .set(NEWSLETTER_TOPIC.VERSION, currentVersion + 1)
@@ -286,13 +276,13 @@ public class JooqNewsletterTopicRepo extends AbstractRepo implements NewsletterT
             .fetchOne();
     }
 
-    private List<NewsletterTopicTranslation> updateOrInsertAndLoadNewsletterTopicTranslations(
-        final NewsletterTopicDefinition entity, final int userId) {
+    // entity.id must not be null
+    private List<NewsletterTopicTranslation> updateOrInsertAndLoadNewsletterTopicTranslations(final NewsletterTopicDefinition entity,
+        final int userId) {
         final List<NewsletterTopicTranslation> nttPersisted = new ArrayList<>();
         for (final NewsletterTopicTranslation ntt : entity.getTranslations(null)) {
             if (ntt.getId() != null) {
-                final NewsletterTopicTrRecord nttRecord = updateNewsletterTopicTr(entity, ntt, userId,
-                    ntt.getVersion());
+                final NewsletterTopicTrRecord nttRecord = updateNewsletterTopicTr(entity, ntt, userId, ntt.getVersion());
                 addOrThrow(nttRecord, nttPersisted, ntt.toString());
             } else {
                 final NewsletterTopicTrRecord nttRecord = insertAndGetNewsletterTopicTr(entity.getId(), userId, ntt);
@@ -302,8 +292,7 @@ public class JooqNewsletterTopicRepo extends AbstractRepo implements NewsletterT
         return nttPersisted;
     }
 
-    private NewsletterTopicTrRecord insertAndGetNewsletterTopicTr(final int topicId, final int userId,
-        final NewsletterTopicTranslation ntt) {
+    private NewsletterTopicTrRecord insertAndGetNewsletterTopicTr(final int topicId, final int userId, final NewsletterTopicTranslation ntt) {
         return getDsl()
             .insertInto(NEWSLETTER_TOPIC_TR)
             .set(NEWSLETTER_TOPIC_TR.NEWSLETTER_TOPIC_ID, topicId)
@@ -315,8 +304,9 @@ public class JooqNewsletterTopicRepo extends AbstractRepo implements NewsletterT
             .fetchOne();
     }
 
-    private NewsletterTopicTrRecord updateNewsletterTopicTr(final NewsletterTopicDefinition entity,
-        final NewsletterTopicTranslation ntt, final int userId, final int currentNttVersion) {
+    // entity.id must not be null
+    private NewsletterTopicTrRecord updateNewsletterTopicTr(final NewsletterTopicDefinition entity, final NewsletterTopicTranslation ntt,
+        final int userId, final int currentNttVersion) {
         final int topicId = entity.getId();
         return getDsl()
             .update(NEWSLETTER_TOPIC_TR)
@@ -333,20 +323,18 @@ public class JooqNewsletterTopicRepo extends AbstractRepo implements NewsletterT
     }
 
     // package-private for test purposes
-    void addOrThrow(@Nullable final NewsletterTopicTrRecord nttRecord,
-        @NotNull final List<NewsletterTopicTranslation> nttPersisted, final String nttAsString) {
+    void addOrThrow(@Nullable final NewsletterTopicTrRecord nttRecord, @NotNull final List<NewsletterTopicTranslation> nttPersisted,
+        final String nttAsString) {
         if (nttRecord != null) {
             nttPersisted.add(toTopicTranslation(nttRecord));
         } else {
-            throw new OptimisticLockingException(NEWSLETTER_TOPIC_TR.getName(), nttAsString,
-                OptimisticLockingException.Type.UPDATE);
+            throw new OptimisticLockingException(NEWSLETTER_TOPIC_TR.getName(), nttAsString, OptimisticLockingException.Type.UPDATE);
         }
     }
 
     private NewsletterTopicTranslation toTopicTranslation(final NewsletterTopicTrRecord record) {
-        return new NewsletterTopicTranslation(record.get(NEWSLETTER_TOPIC_TR.ID),
-            record.get(NEWSLETTER_TOPIC_TR.LANG_CODE), record.get(NEWSLETTER_TOPIC_TR.TITLE),
-            record.get(NEWSLETTER_TOPIC_TR.VERSION));
+        return new NewsletterTopicTranslation(record.get(NEWSLETTER_TOPIC_TR.ID), record.get(NEWSLETTER_TOPIC_TR.LANG_CODE),
+            record.get(NEWSLETTER_TOPIC_TR.TITLE), record.get(NEWSLETTER_TOPIC_TR.VERSION));
     }
 
     @Nullable
@@ -358,8 +346,7 @@ public class JooqNewsletterTopicRepo extends AbstractRepo implements NewsletterT
                 final int deleteCount = doDelete(id, version);
                 logOrThrow(deleteCount, id, toBeDeleted.toString());
             } else {
-                throw new OptimisticLockingException(NEWSLETTER_TOPIC.getName(),
-                    OptimisticLockingException.Type.DELETE);
+                throw new OptimisticLockingException(NEWSLETTER_TOPIC.getName(), OptimisticLockingException.Type.DELETE);
             }
         }
         return toBeDeleted;
@@ -376,21 +363,18 @@ public class JooqNewsletterTopicRepo extends AbstractRepo implements NewsletterT
     // package-private for test purposes
     void logOrThrow(final int deleteCount, @NotNull final Integer id, @NotNull final String deletedAsString) {
         if (deleteCount > 0) {
-            log.info("{} deleted {} record: {} with id {}.", getActiveUser().getUserName(), deleteCount,
-                NEWSLETTER_TOPIC.getName(), id);
+            log.info("{} deleted {} record: {} with id {}.", getActiveUser().getUserName(), deleteCount, NEWSLETTER_TOPIC.getName(), id);
         } else {
-            throw new OptimisticLockingException(NEWSLETTER_TOPIC.getName(), deletedAsString,
-                OptimisticLockingException.Type.DELETE);
+            throw new OptimisticLockingException(NEWSLETTER_TOPIC.getName(), deletedAsString, OptimisticLockingException.Type.DELETE);
         }
     }
 
     @NotNull
     @Override
-    public List<NewsletterNewsletterTopic> findPersistedSortedNewsletterTopicsForNewsletterWithId(
-        final int newsletterId) {
+    public List<NewsletterNewsletterTopic> findPersistedSortedNewsletterTopicsForNewsletterWithId(final int newsletterId) {
         return getDsl()
-            .select(NEWSLETTER_NEWSLETTER_TOPIC.NEWSLETTER_ID, NEWSLETTER_NEWSLETTER_TOPIC.NEWSLETTER_TOPIC_ID,
-                NEWSLETTER_NEWSLETTER_TOPIC.SORT, NEWSLETTER_TOPIC_TR.TITLE)
+            .select(NEWSLETTER_NEWSLETTER_TOPIC.NEWSLETTER_ID, NEWSLETTER_NEWSLETTER_TOPIC.NEWSLETTER_TOPIC_ID, NEWSLETTER_NEWSLETTER_TOPIC.SORT,
+                NEWSLETTER_TOPIC_TR.TITLE)
             .from(NEWSLETTER_NEWSLETTER_TOPIC)
             .innerJoin(NEWSLETTER_TOPIC_TR)
             .on(NEWSLETTER_NEWSLETTER_TOPIC.NEWSLETTER_TOPIC_ID.eq(NEWSLETTER_TOPIC_TR.NEWSLETTER_TOPIC_ID))
@@ -404,8 +388,8 @@ public class JooqNewsletterTopicRepo extends AbstractRepo implements NewsletterT
     @Override
     public List<NewsletterNewsletterTopic> findAllSortedNewsletterTopicsForNewsletterWithId(final int newsletterId) {
         return getDsl()
-            .selectDistinct(PAPER_NEWSLETTER.NEWSLETTER_ID, PAPER_NEWSLETTER.NEWSLETTER_TOPIC_ID,
-                DSL.value(Integer.MAX_VALUE), NEWSLETTER_TOPIC_TR.TITLE)
+            .selectDistinct(PAPER_NEWSLETTER.NEWSLETTER_ID, PAPER_NEWSLETTER.NEWSLETTER_TOPIC_ID, DSL.value(Integer.MAX_VALUE),
+                NEWSLETTER_TOPIC_TR.TITLE)
             .from(PAPER_NEWSLETTER)
             .innerJoin(NEWSLETTER_TOPIC_TR)
             .on(PAPER_NEWSLETTER.NEWSLETTER_TOPIC_ID.eq(NEWSLETTER_TOPIC_TR.NEWSLETTER_TOPIC_ID))
@@ -417,10 +401,8 @@ public class JooqNewsletterTopicRepo extends AbstractRepo implements NewsletterT
 
     @Override
     public void removeObsoleteNewsletterTopicsFromSort(final int newsletterId) {
-        final List<NewsletterNewsletterTopic> persistedTopics = findPersistedSortedNewsletterTopicsForNewsletterWithId(
-            (newsletterId));
-        final List<NewsletterNewsletterTopic> usedTopics = findAllSortedNewsletterTopicsForNewsletterWithId(
-            (newsletterId));
+        final List<NewsletterNewsletterTopic> persistedTopics = findPersistedSortedNewsletterTopicsForNewsletterWithId((newsletterId));
+        final List<NewsletterNewsletterTopic> usedTopics = findAllSortedNewsletterTopicsForNewsletterWithId((newsletterId));
         persistedTopics.removeAll(usedTopics);
 
         persistedTopics.forEach(t -> getDsl()
@@ -432,17 +414,15 @@ public class JooqNewsletterTopicRepo extends AbstractRepo implements NewsletterT
     }
 
     @Override
-    public void saveSortedNewsletterTopics(final int newsletterId,
-        @NotNull final List<NewsletterNewsletterTopic> topics) {
+    public void saveSortedNewsletterTopics(final int newsletterId, @NotNull final List<NewsletterNewsletterTopic> topics) {
         final Timestamp ts = getDateTimeService().getCurrentTimestamp();
         topics
             .stream()
             .filter(t -> newsletterId == t.getNewsletterId())
             .forEach(t -> getDsl()
                 .insertInto(NEWSLETTER_NEWSLETTER_TOPIC)
-                .columns(NEWSLETTER_NEWSLETTER_TOPIC.NEWSLETTER_ID, NEWSLETTER_NEWSLETTER_TOPIC.NEWSLETTER_TOPIC_ID,
-                    NEWSLETTER_NEWSLETTER_TOPIC.SORT, NEWSLETTER_NEWSLETTER_TOPIC.VERSION,
-                    NEWSLETTER_NEWSLETTER_TOPIC.CREATED, NEWSLETTER_NEWSLETTER_TOPIC.CREATED_BY)
+                .columns(NEWSLETTER_NEWSLETTER_TOPIC.NEWSLETTER_ID, NEWSLETTER_NEWSLETTER_TOPIC.NEWSLETTER_TOPIC_ID, NEWSLETTER_NEWSLETTER_TOPIC.SORT,
+                    NEWSLETTER_NEWSLETTER_TOPIC.VERSION, NEWSLETTER_NEWSLETTER_TOPIC.CREATED, NEWSLETTER_NEWSLETTER_TOPIC.CREATED_BY)
                 .values(t.getNewsletterId(), t.getNewsletterTopicId(), t.getSort(), 1, ts, getUserId())
                 .onDuplicateKeyUpdate()
                 .set(NEWSLETTER_NEWSLETTER_TOPIC.SORT, t.getSort())
