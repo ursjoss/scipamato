@@ -74,7 +74,7 @@ reckon {
 detekt {
     failFast = false
     buildUponDefaultConfig = true
-    config = files("$rootDir/detekt-config.yml")
+    config = files("${rootProject.projectDir}/config/detekt/detekt.yml")
     baseline = file("detekt-baseline.xml")
 
     reports {

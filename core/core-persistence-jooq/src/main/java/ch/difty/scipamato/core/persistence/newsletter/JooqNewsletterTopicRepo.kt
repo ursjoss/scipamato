@@ -35,10 +35,13 @@ import java.util.function.Consumer
 private val log = logger()
 private val name = ch.difty.scipamato.core.db.tables.NewsletterTopic.NEWSLETTER_TOPIC.name
 
-@Suppress("SpellCheckingInspection")
+@Suppress("SpellCheckingInspection", "TooManyFunctions")
 @Repository
 @Profile("!wickettest")
-open class JooqNewsletterTopicRepo(@Qualifier("dslContext") dslContext: DSLContext, dateTimeService: DateTimeService) : AbstractRepo(dslContext, dateTimeService), NewsletterTopicRepository {
+open class JooqNewsletterTopicRepo(
+    @Qualifier("dslContext") dslContext: DSLContext,
+    dateTimeService: DateTimeService
+) : AbstractRepo(dslContext, dateTimeService), NewsletterTopicRepository {
 
     override fun findAll(languageCode: String): List<NewsletterTopic> {
         val lang = trimLanguageCode(languageCode)
@@ -63,7 +66,11 @@ open class JooqNewsletterTopicRepo(@Qualifier("dslContext") dslContext: DSLConte
         val selectConditionStep = applyWhereCondition(filter, selectBaseStep())
         // the subsequent grouping requires ordering by id then language_code
         val rawRecords = selectConditionStep
-            .orderBy(ch.difty.scipamato.core.db.tables.NewsletterTopic.NEWSLETTER_TOPIC.ID, Language.LANGUAGE.CODE, NewsletterTopicTr.NEWSLETTER_TOPIC_TR.TITLE)
+            .orderBy(
+                ch.difty.scipamato.core.db.tables.NewsletterTopic.NEWSLETTER_TOPIC.ID,
+                Language.LANGUAGE.CODE,
+                NewsletterTopicTr.NEWSLETTER_TOPIC_TR.TITLE
+            )
             .fetchGroups(ch.difty.scipamato.core.db.tables.NewsletterTopic.NEWSLETTER_TOPIC.ID)
         val results = mapRawRecordsIntoNewsletterTopicDefinitions(rawRecords)
         // need to page after sorting due to grouping, not profiting from DB filtering :-(
@@ -73,6 +80,7 @@ open class JooqNewsletterTopicRepo(@Qualifier("dslContext") dslContext: DSLConte
             .take(pc.pageSize)
     }
 
+    @Suppress("SpreadOperator")
     private fun selectBaseStep(): SelectOnConditionStep<Record> = dsl
         .select(*ch.difty.scipamato.core.db.tables.NewsletterTopic.NEWSLETTER_TOPIC.fields())
         .select(Language.LANGUAGE.CODE)
@@ -80,8 +88,11 @@ open class JooqNewsletterTopicRepo(@Qualifier("dslContext") dslContext: DSLConte
         .from(ch.difty.scipamato.core.db.tables.NewsletterTopic.NEWSLETTER_TOPIC)
         .crossJoin(Language.LANGUAGE)
         .leftOuterJoin(NewsletterTopicTr.NEWSLETTER_TOPIC_TR)
-        .on(ch.difty.scipamato.core.db.tables.NewsletterTopic.NEWSLETTER_TOPIC.ID.eq(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.NEWSLETTER_TOPIC_ID))
-        .and(Language.LANGUAGE.CODE.eq(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.LANG_CODE))
+        .on(
+            ch.difty.scipamato.core.db.tables.NewsletterTopic.NEWSLETTER_TOPIC.ID.eq(
+                NewsletterTopicTr.NEWSLETTER_TOPIC_TR.NEWSLETTER_TOPIC_ID
+            )
+        ).and(Language.LANGUAGE.CODE.eq(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.LANG_CODE))
 
     // package-private for test purposes
     fun <R : Record?> applyWhereCondition(
@@ -90,31 +101,56 @@ open class JooqNewsletterTopicRepo(@Qualifier("dslContext") dslContext: DSLConte
     ): SelectConditionStep<R> =
         if (filter != null && filter.titleMask != null) {
             val titleMask = filter.titleMask
-            if ("n.a." == titleMask) selectStep.where(ch.difty.scipamato.core.db.tables.NewsletterTopic.NEWSLETTER_TOPIC.ID.`in`(DSL
-                .selectDistinct(ch.difty.scipamato.core.db.tables.NewsletterTopic.NEWSLETTER_TOPIC.ID)
-                .from(ch.difty.scipamato.core.db.tables.NewsletterTopic.NEWSLETTER_TOPIC)
-                .crossJoin(Language.LANGUAGE)
-                .leftOuterJoin(NewsletterTopicTr.NEWSLETTER_TOPIC_TR)
-                .on(ch.difty.scipamato.core.db.tables.NewsletterTopic.NEWSLETTER_TOPIC.ID.eq(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.NEWSLETTER_TOPIC_ID))
-                .and(Language.LANGUAGE.CODE.eq(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.LANG_CODE))
-                .where(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.TITLE.isNull))) else selectStep.where(ch.difty.scipamato.core.db.tables.NewsletterTopic.NEWSLETTER_TOPIC.ID.`in`(DSL
-                .selectDistinct(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.NEWSLETTER_TOPIC_ID)
-                .from(NewsletterTopicTr.NEWSLETTER_TOPIC_TR)
-                .where(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.TITLE.likeIgnoreCase("%$titleMask%"))))
+            if ("n.a." == titleMask) {
+                selectStep.where(
+                    ch.difty.scipamato.core.db.tables.NewsletterTopic.NEWSLETTER_TOPIC.ID.`in`(
+                        DSL.selectDistinct(ch.difty.scipamato.core.db.tables.NewsletterTopic.NEWSLETTER_TOPIC.ID)
+                            .from(ch.difty.scipamato.core.db.tables.NewsletterTopic.NEWSLETTER_TOPIC)
+                            .crossJoin(Language.LANGUAGE)
+                            .leftOuterJoin(NewsletterTopicTr.NEWSLETTER_TOPIC_TR)
+                            .on(
+                                ch.difty.scipamato.core.db.tables.NewsletterTopic.NEWSLETTER_TOPIC.ID.eq(
+                                    NewsletterTopicTr.NEWSLETTER_TOPIC_TR.NEWSLETTER_TOPIC_ID
+                                )
+                            ).and(Language.LANGUAGE.CODE.eq(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.LANG_CODE))
+                            .where(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.TITLE.isNull)
+                    )
+                )
+            } else {
+                selectStep.where(
+                    ch.difty.scipamato.core.db.tables.NewsletterTopic.NEWSLETTER_TOPIC.ID.`in`(
+                        DSL.selectDistinct(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.NEWSLETTER_TOPIC_ID)
+                            .from(NewsletterTopicTr.NEWSLETTER_TOPIC_TR)
+                            .where(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.TITLE.likeIgnoreCase("%$titleMask%"))
+                    )
+                )
+            }
         } else {
             selectStep.where(DSL.noCondition())
         }
 
-    private fun mapRawRecordsIntoNewsletterTopicDefinitions(rawRecords: Map<Int, Result<Record>>): List<NewsletterTopicDefinition> {
+    private fun mapRawRecordsIntoNewsletterTopicDefinitions(
+        rawRecords: Map<Int, Result<Record>>
+    ): List<NewsletterTopicDefinition> {
         val definitions: MutableList<NewsletterTopicDefinition> = ArrayList()
         for ((key, value) in rawRecords) {
             val translations = value
                 .map { r: Record ->
-                    NewsletterTopicTranslation(r.getValue(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.ID), r.getValue(Language.LANGUAGE.CODE),
-                        r.getValue(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.TITLE), r.getValue(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.VERSION))
+                    NewsletterTopicTranslation(
+                        r.getValue(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.ID),
+                        r.getValue(Language.LANGUAGE.CODE),
+                        r.getValue(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.TITLE),
+                        r.getValue(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.VERSION)
+                    )
                 }
             val r = value.firstOrNull() ?: error("unable to find translation.")
-            definitions.add(toTopicDefinition(key, r.getValue(ch.difty.scipamato.core.db.tables.NewsletterTopic.NEWSLETTER_TOPIC.VERSION), translations))
+            definitions.add(
+                toTopicDefinition(
+                    id = key,
+                    version = r.getValue(ch.difty.scipamato.core.db.tables.NewsletterTopic.NEWSLETTER_TOPIC.VERSION),
+                    persistedTranslations = translations
+                )
+            )
         }
         return definitions
     }
@@ -131,7 +167,7 @@ open class JooqNewsletterTopicRepo(@Qualifier("dslContext") dslContext: DSLConte
             .from(Language.LANGUAGE)
             .fetchInto(String::class.java)
             .map { lc: String? -> NewsletterTopicTranslation(null, lc!!, null, 0) }
-        return toTopicDefinition(null, 0, translations)
+        return toTopicDefinition(id = null, version = 0, persistedTranslations = translations)
     }
 
     /**
@@ -175,7 +211,11 @@ open class JooqNewsletterTopicRepo(@Qualifier("dslContext") dslContext: DSLConte
             .fetchOne() ?: error("unable to find newsletter topic record")
         val ntId = ntRecord.get(ch.difty.scipamato.core.db.tables.NewsletterTopic.NEWSLETTER_TOPIC.ID)
         val persistedTranslations = persistTranslations(entity, userId, ntId)
-        val persistedEntity = toTopicDefinition(ntId, ntRecord.get(ch.difty.scipamato.core.db.tables.NewsletterTopic.NEWSLETTER_TOPIC.VERSION), persistedTranslations)
+        val persistedEntity = toTopicDefinition(
+            id = ntId,
+            version = ntRecord.get(ch.difty.scipamato.core.db.tables.NewsletterTopic.NEWSLETTER_TOPIC.VERSION),
+            persistedTranslations = persistedTranslations
+        )
         log.info { "${activeUser.userName} inserted 1 record: $name with id $ntId." }
         return persistedEntity
     }
@@ -191,8 +231,11 @@ open class JooqNewsletterTopicRepo(@Qualifier("dslContext") dslContext: DSLConte
 
     override fun update(entity: NewsletterTopicDefinition): NewsletterTopicDefinition? {
         require(entity.id != null) { "entity.id must not be null" }
-        val currentVersion = entity.version
-        val record = updateAndLoadNewsletterTopicDefinition(entity, userId, currentVersion)
+        val record = updateAndLoadNewsletterTopicDefinition(
+            entity = entity,
+            userId = userId,
+            currentVersion = entity.version
+        )
         return handleUpdatedRecord(record, entity, userId)
     }
 
@@ -205,19 +248,27 @@ open class JooqNewsletterTopicRepo(@Qualifier("dslContext") dslContext: DSLConte
     ): NewsletterTopicDefinition {
         if (record != null) {
             val persistedTranslations = updateOrInsertAndLoadNewsletterTopicTranslations(entity, userId)
-            val updatedEntity = toTopicDefinition(entity.id, record.get(ch.difty.scipamato.core.db.tables.NewsletterTopic.NEWSLETTER_TOPIC.VERSION),
-                persistedTranslations)
+            val updatedEntity = toTopicDefinition(
+                id = entity.id,
+                version = record.get(ch.difty.scipamato.core.db.tables.NewsletterTopic.NEWSLETTER_TOPIC.VERSION),
+                persistedTranslations = persistedTranslations)
             log.info { "${activeUser.userName} updated 1 record: $name with id ${updatedEntity.id}." }
             return updatedEntity
         } else {
-            throw OptimisticLockingException(ch.difty.scipamato.core.db.tables.NewsletterTopic.NEWSLETTER_TOPIC.name, entity.toString(), OptimisticLockingException.Type.UPDATE)
+            throw OptimisticLockingException(
+                ch.difty.scipamato.core.db.tables.NewsletterTopic.NEWSLETTER_TOPIC.name,
+                entity.toString(),
+                OptimisticLockingException.Type.UPDATE
+            )
         }
     }
 
+    @Suppress("SpreadOperator")
     private fun toTopicDefinition(
         id: Int?, version: Int,
         persistedTranslations: List<NewsletterTopicTranslation>
-    ): NewsletterTopicDefinition = NewsletterTopicDefinition(id, mainLanguage, version, *persistedTranslations.toTypedArray())
+    ): NewsletterTopicDefinition =
+        NewsletterTopicDefinition(id, mainLanguage, version, *persistedTranslations.toTypedArray())
 
     private fun updateAndLoadNewsletterTopicDefinition(
         entity: NewsletterTopicDefinition, userId: Int,
@@ -308,7 +359,10 @@ open class JooqNewsletterTopicRepo(@Qualifier("dslContext") dslContext: DSLConte
                 val deleteCount = doDelete(id, version)
                 logOrThrow(deleteCount, id, it.toString())
             } else {
-                throw OptimisticLockingException(ch.difty.scipamato.core.db.tables.NewsletterTopic.NEWSLETTER_TOPIC.name, OptimisticLockingException.Type.DELETE)
+                throw OptimisticLockingException(
+                    ch.difty.scipamato.core.db.tables.NewsletterTopic.NEWSLETTER_TOPIC.name,
+                    OptimisticLockingException.Type.DELETE
+                )
             }
         }
         return toBeDeleted
@@ -325,7 +379,11 @@ open class JooqNewsletterTopicRepo(@Qualifier("dslContext") dslContext: DSLConte
         if (deleteCount > 0) {
             log.info { "${activeUser.userName} deleted $deleteCount record: $name with id $id." }
         } else {
-            throw OptimisticLockingException(ch.difty.scipamato.core.db.tables.NewsletterTopic.NEWSLETTER_TOPIC.name, deletedAsString, OptimisticLockingException.Type.DELETE)
+            throw OptimisticLockingException(
+                ch.difty.scipamato.core.db.tables.NewsletterTopic.NEWSLETTER_TOPIC.name,
+                deletedAsString,
+                OptimisticLockingException.Type.DELETE
+            )
         }
     }
 
@@ -338,10 +396,17 @@ open class JooqNewsletterTopicRepo(@Qualifier("dslContext") dslContext: DSLConte
         )
         .from(ch.difty.scipamato.core.db.tables.NewsletterNewsletterTopic.NEWSLETTER_NEWSLETTER_TOPIC)
         .innerJoin(NewsletterTopicTr.NEWSLETTER_TOPIC_TR)
-        .on(ch.difty.scipamato.core.db.tables.NewsletterNewsletterTopic.NEWSLETTER_NEWSLETTER_TOPIC.NEWSLETTER_TOPIC_ID.eq(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.NEWSLETTER_TOPIC_ID))
+        .on(
+            ch.difty.scipamato.core.db.tables.NewsletterNewsletterTopic.NEWSLETTER_NEWSLETTER_TOPIC.NEWSLETTER_TOPIC_ID.eq(
+                NewsletterTopicTr.NEWSLETTER_TOPIC_TR.NEWSLETTER_TOPIC_ID
+            )
+        )
         .where(ch.difty.scipamato.core.db.tables.NewsletterNewsletterTopic.NEWSLETTER_NEWSLETTER_TOPIC.NEWSLETTER_ID.eq(newsletterId))
         .and(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.LANG_CODE.eq(mainLanguage))
-        .orderBy(ch.difty.scipamato.core.db.tables.NewsletterNewsletterTopic.NEWSLETTER_NEWSLETTER_TOPIC.SORT, NewsletterTopicTr.NEWSLETTER_TOPIC_TR.TITLE)
+        .orderBy(
+            ch.difty.scipamato.core.db.tables.NewsletterNewsletterTopic.NEWSLETTER_NEWSLETTER_TOPIC.SORT,
+            NewsletterTopicTr.NEWSLETTER_TOPIC_TR.TITLE
+        )
         .fetchInto(NewsletterNewsletterTopic::class.java)
 
     override fun findAllSortedNewsletterTopicsForNewsletterWithId(newsletterId: Int): List<NewsletterNewsletterTopic> = dsl
@@ -369,8 +434,11 @@ open class JooqNewsletterTopicRepo(@Qualifier("dslContext") dslContext: DSLConte
                     .deleteFrom(ch.difty.scipamato.core.db.tables.NewsletterNewsletterTopic.NEWSLETTER_NEWSLETTER_TOPIC)
                     .where(ch.difty.scipamato.core.db.tables.NewsletterNewsletterTopic.NEWSLETTER_NEWSLETTER_TOPIC.NEWSLETTER_ID
                         .eq(t.newsletterId)
-                        .and(ch.difty.scipamato.core.db.tables.NewsletterNewsletterTopic.NEWSLETTER_NEWSLETTER_TOPIC.NEWSLETTER_TOPIC_ID.eq(t.newsletterTopicId)))
-                    .execute()
+                        .and(
+                            ch.difty.scipamato.core.db.tables.NewsletterNewsletterTopic.NEWSLETTER_NEWSLETTER_TOPIC.NEWSLETTER_TOPIC_ID.eq(
+                                t.newsletterTopicId)
+                        )
+                    ).execute()
             })
     }
 

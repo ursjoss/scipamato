@@ -70,6 +70,7 @@ class NewsletterTopicSortPage(
             override fun onSubmit(target: AjaxRequestTarget) {
                 super.onSubmit(target)
                 alignSortToIndex(topics)
+                @Suppress("TooGenericExceptionCaught")
                 try {
                     service.saveSortedNewsletterTopics(
                         this@NewsletterTopicSortPage.modelObject!!.id!!, topics
@@ -78,7 +79,7 @@ class NewsletterTopicSortPage(
                         setResponsePage(pageRef.page)
                     } ?: setResponsePage(PaperListPage::class.java)
                 } catch (ex: Exception) {
-                    error("Unexpected error: " + ex.message)
+                    error("Unexpected error: ${ex.message}")
                 }
             }
         }
@@ -91,10 +92,16 @@ class NewsletterTopicSortPage(
     }
 
     private fun newCancelButton(id: String): BootstrapAjaxButton {
-        return object : BootstrapAjaxButton(id, StringResourceModel(id + LABEL, this, null), Buttons.Type.Default) {
+        return object : BootstrapAjaxButton(
+            id,
+            StringResourceModel(id + LABEL, this, null),
+            Buttons.Type.Default
+        ) {
             override fun onSubmit(target: AjaxRequestTarget) {
                 super.onSubmit(target)
-                if (previousPageRef != null) setResponsePage(previousPageRef.page) else setResponsePage(PaperListPage::class.java)
+                if (previousPageRef != null)
+                    setResponsePage(previousPageRef.page)
+                else setResponsePage(PaperListPage::class.java)
             }
         }
     }
