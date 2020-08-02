@@ -36,7 +36,9 @@ class NewsletterTopicSortPage(
         super.onInitialize()
 
         check(modelObject?.id != null) { "Cannot start page w/o non-null newsletter topic id in model" }
-        topics = service.getSortedNewsletterTopicsForNewsletter(modelObject!!.id!!)
+        val newsletterTopicId = modelObject!!.id!!
+        service.removeObsoleteNewsletterTopicsFromSort(newsletterTopicId)
+        topics = service.getSortedNewsletterTopicsForNewsletter(newsletterTopicId)
 
         queue(newHeader("header"))
         queue(Form<Void>("form"))

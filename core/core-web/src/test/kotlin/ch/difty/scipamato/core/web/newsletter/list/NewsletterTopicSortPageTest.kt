@@ -19,6 +19,8 @@ import org.apache.wicket.request.mapper.parameter.PageParameters
 import org.junit.jupiter.api.Test
 import java.time.LocalDate
 
+private const val NEWSLETTER_ID = 1
+
 internal class NewsletterTopicSortPageTest : BasePageTest<NewsletterTopicSortPage>() {
 
     private lateinit var newsletter: Newsletter
@@ -28,13 +30,14 @@ internal class NewsletterTopicSortPageTest : BasePageTest<NewsletterTopicSortPag
     override fun setUpHook() {
         super.setUpHook()
         newsletter = Newsletter("18/06", LocalDate.now(), PublicationStatus.WIP).apply {
-            id = 1
+            id = NEWSLETTER_ID
         }
         topics = listOf(
-            NewsletterNewsletterTopic(newsletter.id!!, 1, 0, "topic1"),
-            NewsletterNewsletterTopic(newsletter.id!!, 2, 1, "topic2")
+            NewsletterNewsletterTopic(NEWSLETTER_ID, 1, 0, "topic1"),
+            NewsletterNewsletterTopic(NEWSLETTER_ID, 2, 1, "topic2")
         )
-        every { newsletterTopicServiceMock.getSortedNewsletterTopicsForNewsletter(newsletter.id!!) } returns topics
+        every { newsletterTopicServiceMock.getSortedNewsletterTopicsForNewsletter(NEWSLETTER_ID) } returns topics
+        every { newsletterTopicServiceMock.removeObsoleteNewsletterTopicsFromSort(NEWSLETTER_ID) } returns Unit
     }
 
     override fun makePage(): NewsletterTopicSortPage = NewsletterTopicSortPage(Model.of(newsletter), null)
@@ -55,12 +58,7 @@ internal class NewsletterTopicSortPageTest : BasePageTest<NewsletterTopicSortPag
         bb = "$b:cancel"
         tester.assertComponent(bb, BootstrapAjaxButton::class.java)
         tester.assertLabel("$bb:label", "Cancel")
-    }
-
-    @Test
-    fun startingPageWithNonNullModel__loadsSortedNewsletterTopics() {
-        tester.startPage(NewsletterTopicSortPage(Model.of(newsletter), null))
-        verify { newsletterTopicServiceMock.getSortedNewsletterTopicsForNewsletter(newsletter.id!!) }
+        verify { newsletterTopicServiceMock.removeObsoleteNewsletterTopicsFromSort(NEWSLETTER_ID) }
     }
 
     @Test
@@ -71,6 +69,14 @@ internal class NewsletterTopicSortPageTest : BasePageTest<NewsletterTopicSortPag
         } shouldThrow IllegalStateException::class withMessage "Cannot start page w/o non-null newsletter topic id in model"
 
         verify(exactly = 0) { newsletterTopicServiceMock.getSortedNewsletterTopicsForNewsletter(any()) }
+        verify(exactly = 0) { newsletterTopicServiceMock.removeObsoleteNewsletterTopicsFromSort(any()) }
+    }
+
+    @Test
+    fun startingPageWithNonNullModel_loadsSortedNewsletterTopics() {
+        tester.startPage(NewsletterTopicSortPage(Model.of(newsletter), null))
+        verify { newsletterTopicServiceMock.removeObsoleteNewsletterTopicsFromSort(NEWSLETTER_ID) }
+        verify { newsletterTopicServiceMock.getSortedNewsletterTopicsForNewsletter(NEWSLETTER_ID) }
     }
 
     @Test
@@ -81,7 +87,8 @@ internal class NewsletterTopicSortPageTest : BasePageTest<NewsletterTopicSortPag
         tester.assertRenderedPage(PaperListPage::class.java)
         tester.assertNoErrorMessage()
         tester.assertNoInfoMessage()
-        verify { newsletterTopicServiceMock.saveSortedNewsletterTopics(newsletter.id!!, topics) }
+        verify { newsletterTopicServiceMock.removeObsoleteNewsletterTopicsFromSort(NEWSLETTER_ID) }
+        verify { newsletterTopicServiceMock.saveSortedNewsletterTopics(NEWSLETTER_ID, topics) }
     }
 
     @Test
@@ -94,12 +101,13 @@ internal class NewsletterTopicSortPageTest : BasePageTest<NewsletterTopicSortPag
         tester.assertRenderedPage(LoginPage::class.java)
         tester.assertNoErrorMessage()
         tester.assertNoInfoMessage()
-        verify { newsletterTopicServiceMock.saveSortedNewsletterTopics(newsletter.id!!, topics) }
+        verify { newsletterTopicServiceMock.removeObsoleteNewsletterTopicsFromSort(NEWSLETTER_ID) }
+        verify { newsletterTopicServiceMock.saveSortedNewsletterTopics(NEWSLETTER_ID, topics) }
     }
 
     @Test
     fun clickSubmit_withSaveThrowing_addsErrorMessage_andStaysOnPage() {
-        every { newsletterTopicServiceMock.saveSortedNewsletterTopics(newsletter.id!!, topics) } throws
+        every { newsletterTopicServiceMock.saveSortedNewsletterTopics(NEWSLETTER_ID, topics) } throws
             RuntimeException("boom")
         tester.startPage(makePage())
         tester.assertRenderedPage(pageClass)
@@ -107,7 +115,8 @@ internal class NewsletterTopicSortPageTest : BasePageTest<NewsletterTopicSortPag
         tester.assertNoInfoMessage()
         tester.assertErrorMessages("Unexpected error: boom")
         tester.assertRenderedPage(NewsletterTopicSortPage::class.java)
-        verify { newsletterTopicServiceMock.saveSortedNewsletterTopics(newsletter.id!!, topics) }
+        verify { newsletterTopicServiceMock.removeObsoleteNewsletterTopicsFromSort(NEWSLETTER_ID) }
+        verify { newsletterTopicServiceMock.saveSortedNewsletterTopics(NEWSLETTER_ID, topics) }
     }
 
     @Test
@@ -118,6 +127,7 @@ internal class NewsletterTopicSortPageTest : BasePageTest<NewsletterTopicSortPag
         tester.assertRenderedPage(PaperListPage::class.java)
         tester.assertNoErrorMessage()
         tester.assertNoInfoMessage()
+        verify { newsletterTopicServiceMock.removeObsoleteNewsletterTopicsFromSort(NEWSLETTER_ID) }
         verify(exactly = 0) { newsletterTopicServiceMock.saveSortedNewsletterTopics(any(), any()) }
     }
 
@@ -131,6 +141,7 @@ internal class NewsletterTopicSortPageTest : BasePageTest<NewsletterTopicSortPag
         tester.assertRenderedPage(LoginPage::class.java)
         tester.assertNoErrorMessage()
         tester.assertNoInfoMessage()
+        verify { newsletterTopicServiceMock.removeObsoleteNewsletterTopicsFromSort(NEWSLETTER_ID) }
         verify(exactly = 0) { newsletterTopicServiceMock.saveSortedNewsletterTopics(any(), any()) }
     }
 }
