@@ -1,3 +1,5 @@
+// suppress inspection "SpellCheckingInspection" for whole file
+
 = Changelog
 Urs Joss <urs.joss@gmx.ch>
 :icons: font
@@ -68,6 +70,8 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 
 .Changed
+- Bumped spring-boot-starter, jOOQ, spring-boot-admin, spring-cloud, spring-cloud-starter-openfeign
+  jasperreports
 
 .Deprecated
 
