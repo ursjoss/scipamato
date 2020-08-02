@@ -65,10 +65,10 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[unreleased]]
 == [unreleased]
 
-////
 .Added
 
 .Changed
+- Bumped spring-boot-starter
 
 .Deprecated
 
@@ -77,7 +77,6 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Fixed
 
 .Security
-////
 
 {url-cl}1.4.6$$...$$main[Full Changelog]
 
