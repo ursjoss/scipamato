@@ -1,3 +1,5 @@
+@file:Suppress("SpellCheckingInspection")
+
 import ch.ayedo.jooqmodelator.gradle.JooqModelatorTask
 
 plugins {
@@ -6,7 +8,12 @@ plugins {
 
 description = "SciPaMaTo-Core :: Persistence jOOQ Project"
 
+val moduleName = "core/core-persistence-jooq"
+val dbPackageName = "ch.difty.scipamato.core.db"
+val dbPackagePath get() = dbPackageName.replace('.', '/')
+val generatedSourcesPath = "build/generated-src/jooq"
 val jooqConfigFile = "$buildDir/jooqConfig.xml"
+val dockerDbPort = 15432
 val props = file("src/integration-test/resources/application.properties").asProperties()
 
 jooqModelator {
@@ -14,21 +21,19 @@ jooqModelator {
     jooqEdition = "OSS"
 
     jooqConfigPath = jooqConfigFile
-    // Important: this needs to be kept in sync with the path configured in the jooqConfig.xml
-    // the reason it needs to be configured here again is for incremental build support to work
-    jooqOutputPath = "build/generated-src/jooq/ch/difty/scipamato/core/db"
+    jooqOutputPath = "$generatedSourcesPath/$dbPackagePath"
 
     migrationEngine = "FLYWAY"
-    migrationsPaths = listOf("$rootDir/core/core-persistence-jooq/src/main/resources/db/migration/")
+    migrationsPaths = listOf("$rootDir/$moduleName/src/main/resources/db/migration/")
 
     dockerTag = "postgres:10"
     dockerEnv = listOf(
-        "POSTGRES_DB=scipamato",
-        "POSTGRES_USER=scipamato",
-        "POSTGRES_PASSWORD=scipamato"
+        "POSTGRES_DB=${props.getProperty("db.name")}",
+        "POSTGRES_USER=${props.getProperty("spring.datasource.hikari.username")}",
+        "POSTGRES_PASSWORD=${props.getProperty("spring.datasource.hikari.password")}"
     )
-    dockerHostPort = 15432
-    dockerContainerPort = 5432
+    dockerHostPort = dockerDbPort
+    dockerContainerPort = props.getProperty("db.port").toInt()
 }
 
 dependencies {
@@ -57,7 +62,6 @@ dependencies {
     integrationTestAnnotationProcessor(Lib.lombok())
 }
 
-val generatedSourcesPath = "build/generated-src/jooq"
 sourceSets {
     main {
         java {
@@ -76,15 +80,15 @@ tasks {
                 <configuration>
                     <jdbc>
                         <driver>org.postgresql.Driver</driver>
-                        <url>jdbc:postgresql://localhost:15432/scipamato?loggerLevel=OFF</url>
-                        <user>scipamato</user>
-                        <password>scipamato</password>
+                        <url>jdbc:postgresql://localhost:$dockerDbPort/${props.getProperty("db.name")}?loggerLevel=OFF</url>
+                        <user>${props.getProperty("spring.datasource.hikari.username")}</user>
+                        <password>${props.getProperty("spring.datasource.hikari.password")}</password>
                     </jdbc>
                     <generator>
                         <name>org.jooq.codegen.DefaultGenerator</name>
                         <database>
                             <name>org.jooq.meta.postgres.PostgresDatabase</name>
-                            <inputSchema>public</inputSchema>
+                            <inputSchema>${props.getProperty("db.schema")}</inputSchema>
                             <recordVersionFields>version</recordVersionFields>
                         </database>
                         <generate>
@@ -94,10 +98,9 @@ tasks {
                             <javaTimeTypes>false</javaTimeTypes>
                             <springAnnotations>true</springAnnotations>
                         </generate>
-                        <!-- Important: Keep in sync with jooqOutputPath build.gradle -->
                         <target>
-                            <packageName>ch.difty.scipamato.core.db</packageName>
-                            <directory>core/core-persistence-jooq/build/generated-src/jooq</directory>
+                            <packageName>$dbPackageName</packageName>
+                            <directory>$moduleName/$generatedSourcesPath</directory>
                         </target>
                     </generator>
                     <basedir>$rootDir</basedir>
