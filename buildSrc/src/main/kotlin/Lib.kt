@@ -10,7 +10,7 @@ object Lib {
     private const val kotlinVersion = "1.3.72"
 
     private const val springBootVersion = "2.3.2.RELEASE"
-    private const val springBootAdminVersion = "2.2.3"
+    private const val springBootAdminVersion = "2.2.4"
     const val springCloudVersion = "Hoxton.SR6"
     private const val springCloudStarterVersion = "2.2.3.RELEASE"
 
