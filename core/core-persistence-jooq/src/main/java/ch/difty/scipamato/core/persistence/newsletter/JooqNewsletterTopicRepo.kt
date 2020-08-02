@@ -329,7 +329,7 @@ open class JooqNewsletterTopicRepo(@Qualifier("dslContext") dslContext: DSLConte
         }
     }
 
-    override fun findPersistedSortedNewsletterTopicsForNewsletterWithId(newsletterId: Int): MutableList<NewsletterNewsletterTopic> = dsl
+    override fun findPersistedSortedNewsletterTopicsForNewsletterWithId(newsletterId: Int): List<NewsletterNewsletterTopic> = dsl
         .select(
             ch.difty.scipamato.core.db.tables.NewsletterNewsletterTopic.NEWSLETTER_NEWSLETTER_TOPIC.NEWSLETTER_ID,
             ch.difty.scipamato.core.db.tables.NewsletterNewsletterTopic.NEWSLETTER_NEWSLETTER_TOPIC.NEWSLETTER_TOPIC_ID,
@@ -361,22 +361,23 @@ open class JooqNewsletterTopicRepo(@Qualifier("dslContext") dslContext: DSLConte
 
     override fun removeObsoleteNewsletterTopicsFromSort(newsletterId: Int) {
         val persistedTopics = findPersistedSortedNewsletterTopicsForNewsletterWithId(newsletterId)
-        val usedTopics = findAllSortedNewsletterTopicsForNewsletterWithId(newsletterId)
-        persistedTopics.removeAll(usedTopics)
-        persistedTopics.forEach(Consumer { t: NewsletterNewsletterTopic ->
-            dsl
-                .deleteFrom(ch.difty.scipamato.core.db.tables.NewsletterNewsletterTopic.NEWSLETTER_NEWSLETTER_TOPIC)
-                .where(ch.difty.scipamato.core.db.tables.NewsletterNewsletterTopic.NEWSLETTER_NEWSLETTER_TOPIC.NEWSLETTER_ID
-                    .eq(t.newsletterId)
-                    .and(ch.difty.scipamato.core.db.tables.NewsletterNewsletterTopic.NEWSLETTER_NEWSLETTER_TOPIC.NEWSLETTER_TOPIC_ID.eq(t.newsletterTopicId)))
-                .execute()
-        })
+        val currentlyUsedTopics = findAllSortedNewsletterTopicsForNewsletterWithId(newsletterId).toSet()
+        persistedTopics
+            .filterNot { it in currentlyUsedTopics }
+            .forEach(Consumer { t: NewsletterNewsletterTopic ->
+                dsl
+                    .deleteFrom(ch.difty.scipamato.core.db.tables.NewsletterNewsletterTopic.NEWSLETTER_NEWSLETTER_TOPIC)
+                    .where(ch.difty.scipamato.core.db.tables.NewsletterNewsletterTopic.NEWSLETTER_NEWSLETTER_TOPIC.NEWSLETTER_ID
+                        .eq(t.newsletterId)
+                        .and(ch.difty.scipamato.core.db.tables.NewsletterNewsletterTopic.NEWSLETTER_NEWSLETTER_TOPIC.NEWSLETTER_TOPIC_ID.eq(t.newsletterTopicId)))
+                    .execute()
+            })
     }
 
     override fun saveSortedNewsletterTopics(newsletterId: Int, topics: List<NewsletterNewsletterTopic>) {
         val ts = dateTimeService.currentTimestamp
         topics
-            .filter { t: NewsletterNewsletterTopic -> newsletterId == t.newsletterId }
+            .filter { newsletterId == it.newsletterId }
             .forEach { t: NewsletterNewsletterTopic ->
                 dsl
                     .insertInto(ch.difty.scipamato.core.db.tables.NewsletterNewsletterTopic.NEWSLETTER_NEWSLETTER_TOPIC)
