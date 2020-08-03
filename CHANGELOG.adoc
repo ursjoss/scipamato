@@ -67,22 +67,37 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[unreleased]]
 == [unreleased]
 
+{url-cl}1.4.8$$...$$main[Full Changelog]
+
+////
+
 .Added
 
 .Changed
-- Bumped spring-boot-starter, jOOQ, spring-boot-admin, spring-cloud, spring-cloud-starter-openfeign
-  jasperreports
 
 .Deprecated
 
 .Removed
 
 .Fixed
+
+.Security
+
+////
+
+
+[[v1.4.8]]
+== {url-tree}1.4.8[1.4.8] -- 2020-08-03
+
+{url-cl}1.4.7$$...$$1.4.8[Full Changelog]
+
+.Changed
+- Bumped spring-boot-starter, jOOQ, spring-boot-admin, spring-cloud, spring-cloud-starter-openfeign
+  jasperreports
+
+.Fixed
 - {url-issues}204[#204] Fix storing newsletter topic sort
 
-//.Security
-
-{url-cl}1.4.6$$...$$main[Full Changelog]
 
 [[v1.4.7]]
 == {url-tree}1.4.7[1.4.7] -- 2020-07-21
