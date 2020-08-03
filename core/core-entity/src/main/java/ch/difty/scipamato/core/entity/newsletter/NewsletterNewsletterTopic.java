@@ -26,7 +26,7 @@ public class NewsletterNewsletterTopic extends CoreEntity {
     public boolean equals(Object other) {
         if (this == other)
             return true;
-        if (this.getClass() != other.getClass())
+        if (other == null || this.getClass() != other.getClass())
             return false;
         NewsletterNewsletterTopic o = (NewsletterNewsletterTopic) other;
         return this.newsletterId == o.newsletterId && this.newsletterTopicId == o.newsletterTopicId;

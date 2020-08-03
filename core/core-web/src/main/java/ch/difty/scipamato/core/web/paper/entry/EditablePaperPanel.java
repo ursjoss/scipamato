@@ -87,6 +87,8 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
 
     private static final String COLUMN_HEADER = "column.header.";
 
+    private static final int ATTACHMENT_PAGE_SIZE = 10;
+
     private final Long    searchOrderId;
     private final boolean showingExclusions;
 
@@ -713,7 +715,8 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
     protected DataTable<PaperAttachment, String> newAttachmentTable(@NotNull String id) {
         PropertyModel<List<PaperAttachment>> model = new PropertyModel<>(getModel(), ATTACHMENTS.getFieldName());
         PaperAttachmentProvider provider = new PaperAttachmentProvider(model);
-        BootstrapDefaultDataTable<PaperAttachment, String> table = new BootstrapDefaultDataTable<>(id, makeTableColumns(), provider, 10) {
+        BootstrapDefaultDataTable<PaperAttachment, String> table = new BootstrapDefaultDataTable<>(id, makeTableColumns(), provider,
+            ATTACHMENT_PAGE_SIZE) {
             private static final long serialVersionUID = 1L;
 
             @Override

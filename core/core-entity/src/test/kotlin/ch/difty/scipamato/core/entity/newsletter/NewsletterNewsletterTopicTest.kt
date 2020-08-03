@@ -36,6 +36,13 @@ internal class NewsletterNewsletterTopicTest {
     }
 
     @Test
+    fun equals_withNull_isDifferent() {
+        val ntt1 = NewsletterNewsletterTopic(1, 2, 1, "foo")
+        @Suppress("ReplaceCallWithBinaryOperator")
+        ntt1.equals(null) shouldBe false
+    }
+
+    @Test
     fun equals_withSameIds_butDifferentSort_isEqual() {
         val ntt1 = NewsletterNewsletterTopic(1, 2, 1, "foo")
         val ntt2 = ntt1.apply { sort = 2 }
