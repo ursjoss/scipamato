@@ -19,6 +19,7 @@ import org.amshove.kluent.shouldHaveSize
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 
+@Suppress("UnusedEquals")
 internal class JooqNewsletterTopicServiceTest {
 
     private val repo = mockk<NewsletterTopicRepository>(relaxed = true)
@@ -126,7 +127,6 @@ internal class JooqNewsletterTopicServiceTest {
 
         service.getSortedNewsletterTopicsForNewsletter(newsletterId).shouldBeEmpty()
 
-        verify { repo.removeObsoleteNewsletterTopicsFromSort(newsletterId) }
         verify { repo.findPersistedSortedNewsletterTopicsForNewsletterWithId(newsletterId) }
         verify { repo.findAllSortedNewsletterTopicsForNewsletterWithId(newsletterId) }
     }
@@ -150,7 +150,6 @@ internal class JooqNewsletterTopicServiceTest {
         topics.map { it.sort } shouldContainAll listOf(0, 1)
         topics.map { it.title } shouldContainAll listOf("topic1", "topic2")
 
-        verify { repo.removeObsoleteNewsletterTopicsFromSort(newsletterId) }
         verify { repo.findPersistedSortedNewsletterTopicsForNewsletterWithId(newsletterId) }
         verify { repo.findAllSortedNewsletterTopicsForNewsletterWithId(newsletterId) }
     }
@@ -174,7 +173,6 @@ internal class JooqNewsletterTopicServiceTest {
         topics.map { it.sort } shouldContainAll listOf(0, 1)
         topics.map { it.title } shouldContainAll listOf("topic1", "topic2")
 
-        verify { repo.removeObsoleteNewsletterTopicsFromSort(newsletterId) }
         verify { repo.findPersistedSortedNewsletterTopicsForNewsletterWithId(newsletterId) }
         verify { repo.findAllSortedNewsletterTopicsForNewsletterWithId(newsletterId) }
     }
@@ -202,7 +200,6 @@ internal class JooqNewsletterTopicServiceTest {
         topics.map { it.sort } shouldContainAll listOf(0, 1, 2)
         topics.map { it.title } shouldContainAll listOf("topic1", "topic2", "topic3")
 
-        verify { repo.removeObsoleteNewsletterTopicsFromSort(newsletterId) }
         verify { repo.findPersistedSortedNewsletterTopicsForNewsletterWithId(newsletterId) }
         verify { repo.findAllSortedNewsletterTopicsForNewsletterWithId(newsletterId) }
     }
@@ -222,5 +219,13 @@ internal class JooqNewsletterTopicServiceTest {
     @Test
     fun savingSortedNewsletterTopics_withNoTopics_skipsSaving() {
         service.saveSortedNewsletterTopics(1, emptyList())
+        verify(exactly = 0) { repo.saveSortedNewsletterTopics(any(), any()) }
+    }
+
+    @Test
+    fun removingObsoleteNewsletterTopicsFromSort_delegatesToRepo() {
+        val id = 11
+        service.removeObsoleteNewsletterTopicsFromSort(id)
+        verify { repo.removeObsoleteNewsletterTopicsFromSort(id) }
     }
 }

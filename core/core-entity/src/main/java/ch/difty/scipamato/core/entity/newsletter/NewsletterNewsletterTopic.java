@@ -2,12 +2,10 @@ package ch.difty.scipamato.core.entity.newsletter;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import ch.difty.scipamato.core.entity.CoreEntity;
 
 @Data
-@EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 public class NewsletterNewsletterTopic extends CoreEntity {
 
@@ -22,6 +20,24 @@ public class NewsletterNewsletterTopic extends CoreEntity {
     @Override
     public String getDisplayValue() {
         return title;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (this == other)
+            return true;
+        if (this.getClass() != other.getClass())
+            return false;
+        NewsletterNewsletterTopic o = (NewsletterNewsletterTopic) other;
+        return this.newsletterId == o.newsletterId && this.newsletterTopicId == o.newsletterTopicId;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 17;
+        result = 31 * result + newsletterId;
+        result = 31 * result + newsletterTopicId;
+        return result;
     }
 
 }

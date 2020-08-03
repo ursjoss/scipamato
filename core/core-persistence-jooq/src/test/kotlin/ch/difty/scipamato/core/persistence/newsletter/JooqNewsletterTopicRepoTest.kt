@@ -56,6 +56,15 @@ internal class JooqNewsletterTopicRepoTest {
     }
 
     @Test
+    fun updating_withNullEntityId_throws() {
+        val entity = NewsletterTopicDefinition(10, "de", 100)
+        entity.id = null
+        invoking {
+            repo.update(entity)
+        } shouldThrow java.lang.IllegalArgumentException::class withMessage "entity.id must not be null"
+    }
+
+    @Test
     fun handlingUpdatedRecord_withNullRecord_throwsOptimisticLockingException() {
         val entity = NewsletterTopicDefinition(10, "de", 100)
         val userId = 5
@@ -67,7 +76,7 @@ internal class JooqNewsletterTopicRepoTest {
 
     @Test
     fun addingOrThrowing_withNullRecord_throwsOptimisticLockingException() {
-        invoking { repo.addOrThrow(null, emptyList(), "nttObject") } shouldThrow
+        invoking { repo.addOrThrow(null, mutableListOf(), "nttObject") } shouldThrow
             OptimisticLockingException::class withMessage
             "Record in table 'newsletter_topic_tr' has been modified prior to the update attempt. " +
             "Aborting.... [nttObject]"

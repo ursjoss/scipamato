@@ -36,8 +36,8 @@ class JooqNewsletterTopicService implements NewsletterTopicService {
 
     @NotNull
     @Override
-    public List<NewsletterTopicDefinition> findPageOfNewsletterTopicDefinitions(
-        @Nullable final NewsletterTopicFilter filter, @NotNull final PaginationContext paginationContext) {
+    public List<NewsletterTopicDefinition> findPageOfNewsletterTopicDefinitions(@Nullable final NewsletterTopicFilter filter,
+        @NotNull final PaginationContext paginationContext) {
         return getRepo().findPageOfNewsletterTopicDefinitions(filter, paginationContext);
     }
 
@@ -89,10 +89,7 @@ class JooqNewsletterTopicService implements NewsletterTopicService {
     @NotNull
     @Override
     public List<NewsletterNewsletterTopic> getSortedNewsletterTopicsForNewsletter(final int newsletterId) {
-        repo.removeObsoleteNewsletterTopicsFromSort(newsletterId);
-
-        final List<NewsletterNewsletterTopic> results = new ArrayList<>(
-            repo.findPersistedSortedNewsletterTopicsForNewsletterWithId(newsletterId));
+        final List<NewsletterNewsletterTopic> results = new ArrayList<>(repo.findPersistedSortedNewsletterTopicsForNewsletterWithId(newsletterId));
         final Set<Integer> persistedTopics = results
             .stream()
             .map(NewsletterNewsletterTopic::getNewsletterTopicId)
@@ -112,9 +109,13 @@ class JooqNewsletterTopicService implements NewsletterTopicService {
     }
 
     @Override
-    public void saveSortedNewsletterTopics(final int newsletterId,
-        @NotNull final List<NewsletterNewsletterTopic> topics) {
+    public void saveSortedNewsletterTopics(final int newsletterId, @NotNull final List<NewsletterNewsletterTopic> topics) {
         if (!topics.isEmpty())
             repo.saveSortedNewsletterTopics(newsletterId, topics);
+    }
+
+    @Override
+    public void removeObsoleteNewsletterTopicsFromSort(final int newsletterId) {
+        repo.removeObsoleteNewsletterTopicsFromSort(newsletterId);
     }
 }

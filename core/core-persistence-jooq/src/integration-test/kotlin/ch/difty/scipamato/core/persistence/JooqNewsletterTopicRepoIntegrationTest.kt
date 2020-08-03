@@ -34,7 +34,7 @@ internal open class JooqNewsletterTopicRepoIntegrationTest {
 
     @Test
     fun findingAll() {
-        repo.findAll("en") shouldHaveSize 3
+        repo.findAll("en") shouldHaveSize 4
     }
 
     @Test
@@ -43,23 +43,30 @@ internal open class JooqNewsletterTopicRepoIntegrationTest {
             NewsletterTopicFilter(), PaginationRequest(Sort.Direction.ASC, "title")
         )
 
-        ntds shouldHaveSize 3
+        ntds shouldHaveSize 4
 
         var ntd = ntds[0]
+        ntd.id shouldBeEqualTo 4
+        ntd.title shouldBeEqualTo "Andere"
+        ntd.getTitleInLanguage("de") shouldBeEqualTo "Andere"
+        ntd.getTitleInLanguage("en") shouldBeEqualTo "Others"
+        ntd.getTitleInLanguage("fr").shouldBeNull()
+
+        ntd = ntds[1]
         ntd.id shouldBeEqualTo 3
         ntd.title shouldBeEqualTo "Gesundheitsfolgenabschätzung"
         ntd.getTitleInLanguage("de") shouldBeEqualTo "Gesundheitsfolgenabschätzung"
         ntd.getTitleInLanguage("en") shouldBeEqualTo "Health Impact Assessment"
         ntd.getTitleInLanguage("fr").shouldBeNull()
 
-        ntd = ntds[1]
+        ntd = ntds[2]
         ntd.id shouldBeEqualTo 2
         ntd.title shouldBeEqualTo "Sterblichkeit"
         ntd.getTitleInLanguage("de") shouldBeEqualTo "Sterblichkeit"
         ntd.getTitleInLanguage("en") shouldBeEqualTo "Mortality"
         ntd.getTitleInLanguage("fr").shouldBeNull()
 
-        ntd = ntds[2]
+        ntd = ntds[3]
         ntd.id shouldBeEqualTo 1
         ntd.title shouldBeEqualTo "Ultrafeine Partikel"
         ntd.getTitleInLanguage("de") shouldBeEqualTo "Ultrafeine Partikel"
@@ -73,7 +80,7 @@ internal open class JooqNewsletterTopicRepoIntegrationTest {
             NewsletterTopicFilter(), PaginationRequest(Sort.Direction.DESC, "title")
         )
 
-        ntds shouldHaveSize 3
+        ntds shouldHaveSize 4
 
         val ntd = ntds[0]
         ntd.id shouldBeEqualTo 1
@@ -105,9 +112,9 @@ internal open class JooqNewsletterTopicRepoIntegrationTest {
             PaginationRequest(Sort.Direction.ASC, "title")
         )
 
-        ntds shouldHaveSize 3
+        ntds shouldHaveSize 4
 
-        val ntd = ntds[0]
+        val ntd = ntds[1]
         ntd.id shouldBeEqualTo 3
         ntd.title shouldBeEqualTo "Gesundheitsfolgenabschätzung"
         ntd.getTitleInLanguage("de") shouldBeEqualTo "Gesundheitsfolgenabschätzung"
@@ -162,7 +169,7 @@ internal open class JooqNewsletterTopicRepoIntegrationTest {
 
     @Test
     fun countingNewsletterTopics_withUnspecifiedFilter_findsAllDefinitions() {
-        repo.countByFilter(NewsletterTopicFilter()) shouldBeEqualTo 3
+        repo.countByFilter(NewsletterTopicFilter()) shouldBeEqualTo 4
     }
 
     @Test
@@ -311,9 +318,8 @@ internal open class JooqNewsletterTopicRepoIntegrationTest {
     }
 
     @Test
-    fun savingSortedNewsletterTopics() {
+    fun savingSortedNewsletterTopics_ignoresAnyTopicsNotAsssignedToCurrentNewsletter() {
         val newsletterId = 1
-
         val initialRecords = repo.findPersistedSortedNewsletterTopicsForNewsletterWithId(newsletterId)
         initialRecords.shouldBeEmpty()
 
@@ -325,12 +331,37 @@ internal open class JooqNewsletterTopicRepoIntegrationTest {
         repo.saveSortedNewsletterTopics(newsletterId, topics)
 
         val newRecords = repo.findPersistedSortedNewsletterTopicsForNewsletterWithId(newsletterId)
+        newRecords.size shouldBeEqualTo 2
+        newRecords.map { it.newsletterId }.toSet() shouldContainSame setOf(newsletterId)
         newRecords.map { it.sort } shouldContainAll listOf(1, 2)
+    }
+
+    @Test
+    fun removingObsoleteNewsletterTopicsFromSort_doesNotRemoveActiveRecords() {
+        val newsletterId = 1
+
+        val initialRecords = repo.findPersistedSortedNewsletterTopicsForNewsletterWithId(newsletterId)
+        initialRecords.shouldBeEmpty()
+
+        val topics = ArrayList<NewsletterNewsletterTopic>()
+        // topics actually assigned to the newsletter in papers
+        topics.add(NewsletterNewsletterTopic(newsletterId, 1, 1, "foo"))
+        topics.add(NewsletterNewsletterTopic(newsletterId, 2, 2, "bar"))
+        topics.add(NewsletterNewsletterTopic(newsletterId, 3, 3, "baz"))
+        // topic not assigned to the newsletter in papers - obsolete
+        topics.add(NewsletterNewsletterTopic(newsletterId, 4, 4, "bam"))
+
+        repo.saveSortedNewsletterTopics(newsletterId, topics)
+
+        val newRecords = repo.findPersistedSortedNewsletterTopicsForNewsletterWithId(newsletterId)
+        newRecords.map { it.sort } shouldContainAll listOf(1, 2, 3, 4)
 
         repo.removeObsoleteNewsletterTopicsFromSort(newsletterId)
 
-        repo.findPersistedSortedNewsletterTopicsForNewsletterWithId(newsletterId).shouldBeEmpty()
+        val cleansedRecords = repo.findPersistedSortedNewsletterTopicsForNewsletterWithId(newsletterId)
+        cleansedRecords.map { it.sort } shouldContainAll listOf(1, 2, 3)
     }
+
 
     @Test
     fun findingNewsletterTopicDefinitions_sortedByName() {
@@ -348,7 +379,7 @@ internal open class JooqNewsletterTopicRepoIntegrationTest {
             NewsletterTopicFilter(), PaginationRequest(0, 10, Sort.Direction.DESC, sortProperty)
         )
 
-        cds shouldHaveSize 3
+        cds shouldHaveSize 4
 
         val ntd = cds[0]
         ntd.id shouldBeEqualTo id

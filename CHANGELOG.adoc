@@ -1,3 +1,5 @@
+// suppress inspection "SpellCheckingInspection" for whole file
+
 = Changelog
 Urs Joss <urs.joss@gmx.ch>
 :icons: font
@@ -76,8 +78,9 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Removed
 
 .Fixed
+- {url-issues}204[#204] Fix storing newsletter topic sort
 
-.Security
+//.Security
 
 {url-cl}1.4.6$$...$$main[Full Changelog]
 

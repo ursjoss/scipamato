@@ -134,4 +134,12 @@ public interface NewsletterTopicService
      *     a list of topics to store
      */
     void saveSortedNewsletterTopics(int newsletterId, @NotNull List<NewsletterNewsletterTopic> topics);
+
+    /**
+     * Removes newsletter topics from the sort list that were once defined for the newsletter but are not anymore.
+     *
+     * @param newsletterId
+     *     the id of the newsletter to cleanse from obsolete topics
+     */
+    void removeObsoleteNewsletterTopicsFromSort(int newsletterId);
 }

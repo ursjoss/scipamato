@@ -11,4 +11,4 @@ fun isAheadOfPrint(p: Paper, a: PubmedArticleFacade): Boolean =
     p.firstAuthor == a.firstAuthor &&
         p.title == a.title &&
         p.location?.endsWith(AHEAD_OF_PRINT_TAG) ?: false &&
-        p.location?.substringBefore('.') == a.location?.substringBefore('.')
+        p.location?.substringBefore('.') == a.location.substringBefore('.')

@@ -18,6 +18,9 @@ import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 import java.time.LocalDate
 
+private const val ID_PUB = 1
+private const val ID_WIP = 2
+
 @Suppress("SameParameterValue")
 internal class NewsletterListPageTest : BasePageTest<NewsletterListPage>() {
 
@@ -26,18 +29,19 @@ internal class NewsletterListPageTest : BasePageTest<NewsletterListPage>() {
         .issue("1801")
         .issueDate(LocalDate.parse("2018-01-01"))
         .publicationStatus(PublicationStatus.WIP)
-        .build().apply { id = 2 }
+        .build().apply { id = ID_WIP }
     private val newsletterPublished = Newsletter
         .builder()
         .issue("1801")
         .issueDate(LocalDate.parse("2018-01-01"))
         .publicationStatus(PublicationStatus.PUBLISHED)
-        .build().apply { id = 1 }
+        .build().apply { id = ID_PUB }
     private val results = listOf(newsletterInProgress, newsletterPublished)
 
     override fun setUpHook() {
         every { newsletterServiceMock.countByFilter(any()) } returns results.size
         every { newsletterServiceMock.findPageByFilter(any(), any()) } returns results
+        every { newsletterTopicServiceMock.removeObsoleteNewsletterTopicsFromSort(any()) } returns Unit
     }
 
     @AfterEach
@@ -151,6 +155,7 @@ internal class NewsletterListPageTest : BasePageTest<NewsletterListPage>() {
         verify { newsletterServiceMock.countByFilter(any()) }
         verify { newsletterServiceMock.findPageByFilter(any(), any()) }
         verify { newsletterServiceMock.canCreateNewsletterInProgress() }
+        verify { newsletterTopicServiceMock.removeObsoleteNewsletterTopicsFromSort(ID_WIP) }
     }
 
     @Test
