@@ -388,9 +388,9 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
 
         processStringField(AUTHORS.getFieldName(), a.getAuthors(), Paper::getAuthors, Paper::setAuthors, p, aheadOfPrint, pr, target, authors,
             firstAuthor);
-        processStringField(FIRST_AUTHOR.getFieldName(), a.getFirstAuthor(), Paper::getFirstAuthor, Paper::setFirstAuthor, p, false, pr, target,
+        processStringField(FIRST_AUTHOR.getFieldName(), a.getFirstAuthor(), Paper::getFirstAuthor, Paper::setFirstAuthor, p, aheadOfPrint, pr, target,
             firstAuthor);
-        processStringField(TITLE.getFieldName(), a.getTitle(), Paper::getTitle, Paper::setTitle, p, false, pr, target, title);
+        processStringField(TITLE.getFieldName(), a.getTitle(), Paper::getTitle, Paper::setTitle, p, aheadOfPrint, pr, target, title);
         processIntegerField(PUBL_YEAR.getFieldName(), a.getPublicationYear(), Paper::getPublicationYear, Paper::setPublicationYear,
             "year.parse.error", p, aheadOfPrint, pr, target, publicationYear);
         processStringField(LOCATION.getFieldName(), a.getLocation(), Paper::getLocation, Paper::setLocation, p, aheadOfPrint, pr, target, location);

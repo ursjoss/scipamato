@@ -69,12 +69,12 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 {url-cl}1.4.8$$...$$main[Full Changelog]
 
-////
-
-.Added
+//.Added
 
 .Changed
+- {url-issues}202[#202] Auto-correct ahead-of-print articles from PubMed - case-insensitivity
 
+////
 .Deprecated
 
 .Removed
@@ -84,7 +84,6 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Security
 
 ////
-
 
 [[v1.4.8]]
 == {url-tree}1.4.8[1.4.8] -- 2020-08-03
