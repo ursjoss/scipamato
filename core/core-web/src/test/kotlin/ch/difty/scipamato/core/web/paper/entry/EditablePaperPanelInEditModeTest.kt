@@ -435,6 +435,17 @@ internal class EditablePaperPanelInEditModeTest : EditablePaperPanelTest() {
     }
 
     @Test
+    fun clickingOnPubmedRetrievalButton_withMatchingPmId_aheadOfPrint_withAllMatchingButInDifferentCapitalization_overwrites() {
+        tester.startComponentInPage(makeAheadOfPrintPanel())
+        fixPubmedRetrievalButtonClicked("_a", "FA", "T", "j. FinalLocation.", "2016", "_doi", "_oa")
+        tester.executeAjaxEvent("$PANEL_ID:form:pubmedRetrieval", "click")
+        tester.assertInfoMessages("Ahead-of-print article was updated from PubMed. Click save if you want to keep the changes.")
+        tester.assertFeedbackMessages(ExactLevelFeedbackMessageFilter(FeedbackMessage.WARNING))
+        tester.assertNoErrorMessage()
+        verifyPubmedRetrievalButtonClicked(1)
+    }
+
+    @Test
     fun withNoPmId_PubmedRetrievalLinkIsNotEnabled() {
         tester.startComponentInPage(makePanelWithEmptyPaper(null))
         tester.assertDisabled("$PANEL_ID:form:pubmedRetrieval")
