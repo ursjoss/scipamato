@@ -88,7 +88,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.4.9]]
 == {url-tree}1.4.9[1.4.9] -- 2020-08-05
 
-{url-cl}1.4.8$$...1.4.9[Full Changelog]
+{url-cl}1.4.8$$...$$1.4.9[Full Changelog]
 
 .Changed
 - {url-issues}202[#202] Auto-correct ahead-of-print articles from PubMed - case-insensitivity
