@@ -22,6 +22,8 @@ import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 import java.util.Optional
 
+const val EDIT_LINK = "table:body:rows:1:cells:4:cell:link"
+
 internal abstract class ResultPanelTest : PanelTest<ResultPanel>() {
 
     val searchOrder = SearchOrder().apply { id = 10L }
@@ -49,14 +51,14 @@ internal abstract class ResultPanelTest : PanelTest<ResultPanel>() {
     abstract val mode: Mode
 
     fun assertEditableTableRow(bb: String) {
-        tester.assertLabel("$bb:1:cell", "1")
-        tester.assertLabel("$bb:2:cell", NUMBER.toString())
-        tester.assertLabel("$bb:3:cell", "firstAuthor")
-        tester.assertLabel("$bb:4:cell", "2016")
-        tester.assertLabel("$bb:5:cell:link:label", "title")
-        tester.assertComponent("$bb:6:cell:link", AjaxLink::class.java)
+        tester.assertLabel("$bb:1:cell", NUMBER.toString())
+        tester.assertLabel("$bb:2:cell", "firstAuthor")
+        tester.assertLabel("$bb:3:cell", "2016")
+        tester.assertLabel("$bb:4:cell:link:label", "title")
+        tester.assertComponent("$bb:5:cell:link", AjaxLink::class.java)
+        tester.assertLabel("$bb:5:cell:link:image", "")
         tester.assertLabel("$bb:6:cell:link:image", "")
-        tester.assertLabel("$bb:7:cell:link:image", "")
+        tester.assertLabel("$bb:7:cell", "1")
     }
 
     override fun assertSpecificComponents() {
@@ -90,7 +92,7 @@ internal abstract class ResultPanelTest : PanelTest<ResultPanel>() {
     fun assertClickingDeleteIconLink() {
         tester.startComponentInPage(makePanel())
 
-        tester.clickLink("$PANEL_ID:table:body:rows:1:cells:6:cell:link")
+        tester.clickLink("$PANEL_ID:table:body:rows:1:cells:5:cell:link")
         tester.assertComponentOnAjaxResponse("$PANEL_ID:table")
 
         verify(exactly = 2) { paperSlimServiceMock.countBySearchOrder(searchOrder) }
@@ -138,7 +140,7 @@ internal abstract class ResultPanelTest : PanelTest<ResultPanel>() {
 
         tester.startComponentInPage(makePanel())
 
-        tester.clickLink("$PANEL_ID:table:body:rows:1:cells:5:cell:link")
+        tester.clickLink("$PANEL_ID:$EDIT_LINK")
         tester.assertRenderedPage(PaperEntryPage::class.java)
 
         verify { paperSlimServiceMock.countBySearchOrder(searchOrder) }

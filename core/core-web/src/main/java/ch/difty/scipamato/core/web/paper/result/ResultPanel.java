@@ -101,8 +101,7 @@ public abstract class ResultPanel extends BasePanel<Void> {
      *     the data provider extending {@link AbstractPaperSlimProvider}
      *     holding the filter specs
      */
-    protected ResultPanel(@NotNull String id,
-        @NotNull AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider, @NotNull Mode mode) {
+    protected ResultPanel(@NotNull String id, @NotNull AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider, @NotNull Mode mode) {
         super(id);
         this.dataProvider = dataProvider;
         this.mode = mode;
@@ -146,7 +145,6 @@ public abstract class ResultPanel extends BasePanel<Void> {
 
     private List<IColumn<PaperSlim, String>> makeTableColumns() {
         final List<IColumn<PaperSlim, String>> columns = new ArrayList<>();
-        columns.add(makePropertyColumn(IdScipamatoEntity.IdScipamatoEntityFields.ID.getFieldName()));
         columns.add(makePropertyColumn(NUMBER.getFieldName()));
         columns.add(makePropertyColumn(FIRST_AUTHOR.getFieldName()));
         columns.add(makePropertyColumn(PUBL_YEAR.getFieldName()));
@@ -155,6 +153,7 @@ public abstract class ResultPanel extends BasePanel<Void> {
             columns.add(makeExcludeLinkIconColumn("exclude"));
         if (mode != Mode.VIEW)
             columns.add(makeNewsletterLinkIconColumn("newsletter"));
+        columns.add(makePropertyColumn(IdScipamatoEntity.IdScipamatoEntityFields.ID.getFieldName()));
         return columns;
     }
 
@@ -179,19 +178,16 @@ public abstract class ResultPanel extends BasePanel<Void> {
             .findByNumber(m
                 .getObject()
                 .getNumber(), languageCode)
-            .orElse(new Paper())), getPage().getPageReference(), dataProvider.getSearchOrderId(),
-            dataProvider.isShowExcluded(), Model.of(0));
+            .orElse(new Paper())), getPage().getPageReference(), dataProvider.getSearchOrderId(), dataProvider.isShowExcluded(), Model.of(0));
     }
 
     private PropertyColumn<PaperSlim, String> makePropertyColumn(String propExpression) {
-        return new PropertyColumn<>(new StringResourceModel(COLUMN_HEADER + propExpression, this, null), propExpression,
-            propExpression);
+        return new PropertyColumn<>(new StringResourceModel(COLUMN_HEADER + propExpression, this, null), propExpression, propExpression);
     }
 
-    private ClickablePropertyColumn<PaperSlim, String> makeClickableColumn(String propExpression,
-        SerializableConsumer<IModel<PaperSlim>> consumer) {
-        return new ClickablePropertyColumn<>(new StringResourceModel(COLUMN_HEADER + propExpression, this, null),
-            propExpression, propExpression, consumer);
+    private ClickablePropertyColumn<PaperSlim, String> makeClickableColumn(String propExpression, SerializableConsumer<IModel<PaperSlim>> consumer) {
+        return new ClickablePropertyColumn<>(new StringResourceModel(COLUMN_HEADER + propExpression, this, null), propExpression, propExpression,
+            consumer);
     }
 
     private IColumn<PaperSlim, String> makeExcludeLinkIconColumn(String id) {
@@ -213,14 +209,12 @@ public abstract class ResultPanel extends BasePanel<Void> {
 
             @Override
             protected IModel<String> createTitleModel(@NotNull IModel<PaperSlim> rowModel) {
-                return new StringResourceModel(
-                    dataProvider.isShowExcluded() ? "column.title.reinclude" : "column.title.exclude", ResultPanel.this,
+                return new StringResourceModel(dataProvider.isShowExcluded() ? "column.title.reinclude" : "column.title.exclude", ResultPanel.this,
                     null);
             }
 
             @Override
-            protected void onClickPerformed(@NotNull AjaxRequestTarget target, @NotNull IModel<PaperSlim> rowModel,
-                @NotNull AjaxLink<Void> link) {
+            protected void onClickPerformed(@NotNull AjaxRequestTarget target, @NotNull IModel<PaperSlim> rowModel, @NotNull AjaxLink<Void> link) {
                 final Long excludedId = rowModel
                     .getObject()
                     .getId();
@@ -306,14 +300,13 @@ public abstract class ResultPanel extends BasePanel<Void> {
                 } else if (hasNewsletterWip(paper)) {
                     return new StringResourceModel("column.title.newsletter.remove", ResultPanel.this, null);
                 } else {
-                    return new StringResourceModel("column.title.newsletter.closed", ResultPanel.this,
-                        Model.of(paper.getNewsletterAssociation()));
+                    return new StringResourceModel("column.title.newsletter.closed", ResultPanel.this, Model.of(paper.getNewsletterAssociation()));
                 }
             }
 
             @Override
-            protected void onClickPerformed(@NotNull final AjaxRequestTarget target,
-                @NotNull final IModel<PaperSlim> rowModel, @NotNull final AjaxLink<Void> link) {
+            protected void onClickPerformed(@NotNull final AjaxRequestTarget target, @NotNull final IModel<PaperSlim> rowModel,
+                @NotNull final AjaxLink<Void> link) {
                 final PaperSlim paper = rowModel.getObject();
 
                 if (hasNoNewsletter(paper)) {
@@ -324,8 +317,7 @@ public abstract class ResultPanel extends BasePanel<Void> {
                 } else if (hasNewsletterWip(paper)) {
                     newsletterService.removePaperFromWipNewsletter(paper.getId());
                 } else {
-                    warn(new StringResourceModel("newsletter.readonly", ResultPanel.this,
-                        Model.of(paper.getNewsletterAssociation())).getString());
+                    warn(new StringResourceModel("newsletter.readonly", ResultPanel.this, Model.of(paper.getNewsletterAssociation())).getString());
                 }
 
                 target.add(results);
@@ -337,8 +329,7 @@ public abstract class ResultPanel extends BasePanel<Void> {
     private void addOrReplacePdfSummaryLink(String id) {
         final String brand = getProperties().getBrand();
         final String headerPart = brand + "-" + new StringResourceModel("headerPart.summary", this, null).getString();
-        final String pdfCaption =
-            brand + "- " + new StringResourceModel("paper_summary.titlePart", this, null).getString();
+        final String pdfCaption = brand + "- " + new StringResourceModel("paper_summary.titlePart", this, null).getString();
         final ReportHeaderFields rhf = commonReportHeaderFieldsBuildPart(brand, headerPart)
             .populationLabel(getLabelResourceFor(POPULATION.getFieldName()))
             .resultLabel(getLabelResourceFor(RESULT.getFieldName()))
@@ -349,12 +340,10 @@ public abstract class ResultPanel extends BasePanel<Void> {
             .withCompression()
             .build();
 
-        addOrReplace(newJasperResourceLink(id, "summary",
-            new PaperSummaryDataSource(dataProvider, rhf, shortFieldConcatenator, config)));
+        addOrReplace(newJasperResourceLink(id, "summary", new PaperSummaryDataSource(dataProvider, rhf, shortFieldConcatenator, config)));
     }
 
-    private ReportHeaderFields.ReportHeaderFieldsBuilder commonReportHeaderFieldsBuildPart(final String brand,
-        final String headerPart) {
+    private ReportHeaderFields.ReportHeaderFieldsBuilder commonReportHeaderFieldsBuildPart(final String brand, final String headerPart) {
         return ReportHeaderFields
             .builder(headerPart, brand)
             .goalsLabel(getLabelResourceFor(GOALS.getFieldName()))
@@ -377,10 +366,8 @@ public abstract class ResultPanel extends BasePanel<Void> {
 
     private void addOrReplacePdfSummaryShortLink(String id) {
         final String brand = getProperties().getBrand();
-        final String headerPart =
-            brand + "-" + new StringResourceModel("headerPart.summaryShort", this, null).getString();
-        final String pdfCaption =
-            brand + "- " + new StringResourceModel("paper_summary.titlePart", this, null).getString();
+        final String headerPart = brand + "-" + new StringResourceModel("headerPart.summaryShort", this, null).getString();
+        final String pdfCaption = brand + "- " + new StringResourceModel("paper_summary.titlePart", this, null).getString();
         final ReportHeaderFields rhf = commonReportHeaderFieldsBuildPart(brand, headerPart).build();
         final ScipamatoPdfExporterConfiguration config = new ScipamatoPdfExporterConfiguration.Builder(pdfCaption)
             .withAuthor(getActiveUser())
@@ -388,14 +375,12 @@ public abstract class ResultPanel extends BasePanel<Void> {
             .withCompression()
             .build();
 
-        addOrReplace(
-            newJasperResourceLink(id, "summary-short", new PaperSummaryShortDataSource(dataProvider, rhf, config)));
+        addOrReplace(newJasperResourceLink(id, "summary-short", new PaperSummaryShortDataSource(dataProvider, rhf, config)));
     }
 
     private void addOrReplacePdfReviewLink(String id) {
         final String brand = getProperties().getBrand();
-        final String pdfCaption =
-            brand + "- " + new StringResourceModel("paper_review.titlePart", this, null).getString();
+        final String pdfCaption = brand + "- " + new StringResourceModel("paper_review.titlePart", this, null).getString();
         final ReportHeaderFields rhf = ReportHeaderFields
             .builder("", brand)
             .numberLabel(getLabelResourceFor(NUMBER.getFieldName()))
@@ -440,11 +425,9 @@ public abstract class ResultPanel extends BasePanel<Void> {
             .build();
 
         if (plus) {
-            addOrReplace(newJasperResourceLink(id, "literature_review_plus",
-                new PaperLiteratureReviewPlusDataSource(dataProvider, rhf, config)));
+            addOrReplace(newJasperResourceLink(id, "literature_review_plus", new PaperLiteratureReviewPlusDataSource(dataProvider, rhf, config)));
         } else {
-            addOrReplace(newJasperResourceLink(id, "literature_review",
-                new PaperLiteratureReviewDataSource(dataProvider, rhf, config)));
+            addOrReplace(newJasperResourceLink(id, "literature_review", new PaperLiteratureReviewDataSource(dataProvider, rhf, config)));
         }
     }
 
@@ -468,16 +451,14 @@ public abstract class ResultPanel extends BasePanel<Void> {
         return newJasperResourceLink(id, resourceKeyPart, new PaperSummaryTableDataSource(dataProvider, rhf, config));
     }
 
-    private ResourceLink<Void> newJasperResourceLink(String id, final String resourceKeyPart,
-        final JasperPaperDataSource<?> resource) {
+    private ResourceLink<Void> newJasperResourceLink(String id, final String resourceKeyPart, final JasperPaperDataSource<?> resource) {
         final String bodyResourceKey = LINK_RESOURCE_PREFIX + resourceKeyPart + LABEL_RESOURCE_TAG;
         final String titleResourceKey = LINK_RESOURCE_PREFIX + resourceKeyPart + TITLE_RESOURCE_TAG;
 
         ResourceLink<Void> reviewLink = new ResourceLink<>(id, resource);
         reviewLink.setOutputMarkupId(true);
         reviewLink.setBody(new StringResourceModel(bodyResourceKey));
-        reviewLink.add(
-            new AttributeModifier(TITLE_ATTR, new StringResourceModel(titleResourceKey, this, null).getString()));
+        reviewLink.add(new AttributeModifier(TITLE_ATTR, new StringResourceModel(titleResourceKey, this, null).getString()));
         return reviewLink;
     }
 
@@ -512,8 +493,7 @@ public abstract class ResultPanel extends BasePanel<Void> {
                 risDownload.initiate(target);
             }
         };
-        reviewLink.add(
-            new AttributeModifier(TITLE_ATTR, new StringResourceModel(titleResourceKey, this, null).getString()));
+        reviewLink.add(new AttributeModifier(TITLE_ATTR, new StringResourceModel(titleResourceKey, this, null).getString()));
         addOrReplace(reviewLink);
     }
 }

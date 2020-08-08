@@ -194,7 +194,7 @@ internal class PaperSearchPageTest : BasePageTest<PaperSearchPage>() {
         tester.assertRenderedPage(pageClass)
         val someTextInRow = "fas fa-ban fa-fw"
         tester.assertContains(someTextInRow)
-        val linkPath = "resultPanel:table:body:rows:1:cells:6:cell:link"
+        val linkPath = "resultPanel:table:body:rows:1:cells:5:cell:link"
         tester.assertComponent(linkPath, AjaxLink::class.java)
         tester.clickLink(linkPath)
         tester.assertContainsNot(someTextInRow)

@@ -79,7 +79,7 @@ internal class ResultPanelInEditModeTest : ResultPanelTest() {
 
     private fun clickNewsletterLink() {
         tester.startComponentInPage(newNonSearchRelevantResultPanel())
-        tester.clickLink("$PANEL_ID:table:body:rows:1:cells:6:cell:link")
+        tester.clickLink("$PANEL_ID:table:body:rows:1:cells:5:cell:link")
         verify(exactly = 2) { paperSlimServiceMock.countBySearchOrder(searchOrder) }
         verify(exactly = 2) { paperSlimServiceMock.findPageBySearchOrder(searchOrder, any()) }
         verify(exactly = 2) { paperServiceMock.findPageOfIdsBySearchOrder(any(), any()) }

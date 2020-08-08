@@ -5,6 +5,7 @@ import ch.difty.scipamato.core.entity.projection.PaperSlim
 import ch.difty.scipamato.core.logic.parsing.AuthorParserStrategy
 import ch.difty.scipamato.core.web.common.BasePageTest
 import ch.difty.scipamato.core.web.paper.entry.PaperEntryPage
+import ch.difty.scipamato.core.web.paper.result.EDIT_LINK
 import ch.difty.scipamato.core.web.paper.result.ResultPanel
 import com.ninjasquad.springmockk.MockkBean
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.dropdown.MenuBookmarkablePageLink
@@ -96,7 +97,7 @@ internal abstract class PaperListPageTest : BasePageTest<PaperListPage>() {
         every { paperSlimServiceMock.findPageByFilter(any(), any()) } returns list
         every { paperServiceMock.findByNumber(number, LC) } returns java.util.Optional.empty()
         tester.startPage(pageClass)
-        tester.clickLink("resultPanel:table:body:rows:1:cells:5:cell:link")
+        tester.clickLink("resultPanel:$EDIT_LINK")
         tester.assertRenderedPage(PaperEntryPage::class.java)
         verify(exactly = 2) { paperSlimServiceMock.countByFilter(any()) }
         verify { paperSlimServiceMock.findPageByFilter(any(), any()) }
