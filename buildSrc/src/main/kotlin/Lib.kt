@@ -52,7 +52,7 @@ object Lib {
 
     //region:pluginVersions
     private const val springDependencyManagementPluginVersion = "1.0.10.RELEASE"
-    private const val lombokPluginVersion = "5.1.0"
+    private const val lombokPluginVersion = "5.1.1"
     private const val jooqModelatorPluginVersion = "3.9.0"
     private const val reckonPluginVersion = "0.12.0"
     private const val jaxbPluginVersion = "4.3.1"
