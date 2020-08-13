@@ -76,6 +76,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Changed
 - Bumped spring-boot, gradle-wrapper, kwik, springmockk, detekt, spring-boot-admin
+  spring-dependency-management plugin
 - Moved ID column in Result panel table to the end
 
 ////
