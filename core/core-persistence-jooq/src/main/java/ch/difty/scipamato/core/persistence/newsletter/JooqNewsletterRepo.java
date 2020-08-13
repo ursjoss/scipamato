@@ -40,16 +40,13 @@ public class JooqNewsletterRepo extends
     JooqEntityRepo<NewsletterRecord, Newsletter, Integer, ch.difty.scipamato.core.db.tables.Newsletter, NewsletterRecordMapper, NewsletterFilter>
     implements NewsletterRepository {
 
-    protected JooqNewsletterRepo(@Qualifier("dslContext") @NotNull final DSLContext dsl,
-        @NotNull final NewsletterRecordMapper mapper,
+    protected JooqNewsletterRepo(@Qualifier("dslContext") @NotNull final DSLContext dsl, @NotNull final NewsletterRecordMapper mapper,
         @NotNull final JooqSortMapper<NewsletterRecord, Newsletter, ch.difty.scipamato.core.db.tables.Newsletter> sortMapper,
-        @NotNull final GenericFilterConditionMapper<NewsletterFilter> filterConditionMapper,
-        @NotNull final DateTimeService dateTimeService,
+        @NotNull final GenericFilterConditionMapper<NewsletterFilter> filterConditionMapper, @NotNull final DateTimeService dateTimeService,
         @NotNull final InsertSetStepSetter<NewsletterRecord, Newsletter> insertSetStepSetter,
         @NotNull final UpdateSetStepSetter<NewsletterRecord, Newsletter> updateSetStepSetter,
         @NotNull final ApplicationProperties applicationProperties) {
-        super(dsl, mapper, sortMapper, filterConditionMapper, dateTimeService, insertSetStepSetter, updateSetStepSetter,
-            applicationProperties);
+        super(dsl, mapper, sortMapper, filterConditionMapper, dateTimeService, insertSetStepSetter, updateSetStepSetter, applicationProperties);
     }
 
     @NotNull
@@ -95,8 +92,8 @@ public class JooqNewsletterRepo extends
     }
 
     private void enrichPaperAssociationsOf(final Newsletter entity, final String languageCode) {
-        final Result<Record7<Long, Long, String, Integer, String, Integer, String>> records = loadNewsletterPaperTopicRecords(
-            entity.getId(), languageCode);
+        final Result<Record7<Long, Long, String, Integer, String, Integer, String>> records = loadNewsletterPaperTopicRecords(entity.getId(),
+            languageCode);
         for (final Record record : records)
             entity.addPaper(extractPaperFrom(record), extractTopicFrom(record));
     }
@@ -110,11 +107,10 @@ public class JooqNewsletterRepo extends
      *     the language code, e.g. 'de' or 'en'
      * @return record containing paper, paper_newsletter and (left joined) newsletter_topic
      */
-    private Result<Record7<Long, Long, String, Integer, String, Integer, String>> loadNewsletterPaperTopicRecords(
-        final int newsletterId, final String languageCode) {
+    private Result<Record7<Long, Long, String, Integer, String, Integer, String>> loadNewsletterPaperTopicRecords(final int newsletterId,
+        final String languageCode) {
         return getDsl()
-            .select(PAPER.ID, PAPER.NUMBER, PAPER.FIRST_AUTHOR, PAPER.PUBLICATION_YEAR, PAPER.TITLE,
-                NEWSLETTER_TOPIC.ID, NEWSLETTER_TOPIC_TR.TITLE)
+            .select(PAPER.ID, PAPER.NUMBER, PAPER.FIRST_AUTHOR, PAPER.PUBLICATION_YEAR, PAPER.TITLE, NEWSLETTER_TOPIC.ID, NEWSLETTER_TOPIC_TR.TITLE)
             .from(PAPER)
             .join(PAPER_NEWSLETTER)
             .on(PAPER.ID.equal(PAPER_NEWSLETTER.PAPER_ID))
@@ -138,8 +134,8 @@ public class JooqNewsletterRepo extends
      * @return PaperSlim associated with the newsletter
      */
     private PaperSlim extractPaperFrom(final Record record) {
-        return new PaperSlim(record.get(PAPER.ID), record.get(PAPER.NUMBER), record.get(PAPER.FIRST_AUTHOR),
-            record.get(PAPER.PUBLICATION_YEAR), record.get(PAPER.TITLE));
+        return new PaperSlim(record.get(PAPER.ID), record.get(PAPER.NUMBER), record.get(PAPER.FIRST_AUTHOR), record.get(PAPER.PUBLICATION_YEAR),
+            record.get(PAPER.TITLE));
     }
 
     /**
@@ -184,22 +180,20 @@ public class JooqNewsletterRepo extends
     Optional<Paper.NewsletterLink> handleInsertedNewsletter(final int count, final int newsletterId, final long paperId,
         @NotNull final String languageCode) {
         if (count > 0) {
-            final Record6<Integer, String, Integer, Integer, String, String> r = fetchMergedNewsletter(newsletterId,
-                paperId, languageCode);
+            final Record6<Integer, String, Integer, Integer, String, String> r = fetchMergedNewsletter(newsletterId, paperId, languageCode);
             if (r != null)
-                return Optional.of(
-                    new Paper.NewsletterLink(r.value1(), r.value2(), r.value3(), r.value4(), r.value5(), r.value6()));
+                return Optional.of(new Paper.NewsletterLink(r.value1(), r.value2(), r.value3(), r.value4(), r.value5(), r.value6()));
         }
         return Optional.empty();
     }
 
     // package-private for stubbing purposes
     @Nullable
-    Record6<Integer, String, Integer, Integer, String, String> fetchMergedNewsletter(final int newsletterId,
-        final long paperId, @NotNull final String languageCode) {
+    Record6<Integer, String, Integer, Integer, String, String> fetchMergedNewsletter(final int newsletterId, final long paperId,
+        @NotNull final String languageCode) {
         return getDsl()
-            .select(NEWSLETTER.ID, NEWSLETTER.ISSUE, NEWSLETTER.PUBLICATION_STATUS, NEWSLETTER_TOPIC.ID,
-                NEWSLETTER_TOPIC_TR.TITLE, PAPER_NEWSLETTER.HEADLINE)
+            .select(NEWSLETTER.ID, NEWSLETTER.ISSUE, NEWSLETTER.PUBLICATION_STATUS, NEWSLETTER_TOPIC.ID, NEWSLETTER_TOPIC_TR.TITLE,
+                PAPER_NEWSLETTER.HEADLINE)
             .from(PAPER_NEWSLETTER)
             .innerJoin(NEWSLETTER)
             .on(PAPER_NEWSLETTER.NEWSLETTER_ID.eq(NEWSLETTER.ID))
@@ -216,12 +210,11 @@ public class JooqNewsletterRepo extends
     }
 
     // package-private for stubbing
-    int tryInserting(final int newsletterId, final long paperId, @Nullable final Integer newsletterTopicId,
-        @Nullable final Timestamp ts) {
-        return getDsl()
+    int tryInserting(final int newsletterId, final long paperId, @Nullable final Integer newsletterTopicId, @Nullable final Timestamp ts) {
+        final int inserted = getDsl()
             .insertInto(PAPER_NEWSLETTER)
-            .columns(PAPER_NEWSLETTER.PAPER_ID, PAPER_NEWSLETTER.NEWSLETTER_ID, PAPER_NEWSLETTER.NEWSLETTER_TOPIC_ID,
-                PAPER_NEWSLETTER.VERSION, PAPER_NEWSLETTER.CREATED, PAPER_NEWSLETTER.CREATED_BY)
+            .columns(PAPER_NEWSLETTER.PAPER_ID, PAPER_NEWSLETTER.NEWSLETTER_ID, PAPER_NEWSLETTER.NEWSLETTER_TOPIC_ID, PAPER_NEWSLETTER.VERSION,
+                PAPER_NEWSLETTER.CREATED, PAPER_NEWSLETTER.CREATED_BY)
             .values(paperId, newsletterId, newsletterTopicId, 1, ts, getUserId())
             .onDuplicateKeyUpdate()
             .set(PAPER_NEWSLETTER.NEWSLETTER_TOPIC_ID, newsletterTopicId)
@@ -229,14 +222,18 @@ public class JooqNewsletterRepo extends
             .set(PAPER_NEWSLETTER.LAST_MODIFIED, ts)
             .set(PAPER_NEWSLETTER.LAST_MODIFIED_BY, getUserId())
             .execute();
+        getLogger().info("{} merged paper with id {} to newsletter with id {}.", getActiveUser().getUserName(), paperId, newsletterId);
+        return inserted;
     }
 
     @Override
     public int removePaperFromNewsletter(final int newsletterId, final long paperId) {
-        return getDsl()
+        final int deleted = getDsl()
             .deleteFrom(PAPER_NEWSLETTER)
             .where(PAPER_NEWSLETTER.NEWSLETTER_ID.eq(newsletterId))
             .and(PAPER_NEWSLETTER.PAPER_ID.eq(paperId))
             .execute();
+        getLogger().info("{} removed paper with id {} from newsletter with id {}.", getActiveUser().getUserName(), paperId, newsletterId);
+        return deleted;
     }
 }
