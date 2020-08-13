@@ -75,7 +75,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 ////
 
 .Changed
-- Bumped springmockk
+- Bumped springmockk, detekt
 - Moved ID column in Result panel table to the end
 
 ////
