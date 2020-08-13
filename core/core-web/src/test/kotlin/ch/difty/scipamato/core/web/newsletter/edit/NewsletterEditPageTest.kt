@@ -7,6 +7,7 @@ import ch.difty.scipamato.core.entity.projection.PaperSlim
 import ch.difty.scipamato.core.persistence.OptimisticLockingException
 import ch.difty.scipamato.core.web.common.BasePageTest
 import ch.difty.scipamato.core.web.paper.entry.PaperEntryPage
+import ch.difty.scipamato.core.web.paper.result.EDIT_LINK
 import ch.difty.scipamato.core.web.paper.result.ResultPanel
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.LocalDateTextField
@@ -177,7 +178,7 @@ internal class NewsletterEditPageTest : BasePageTest<NewsletterEditPage>() {
         every { paperServiceMock.findByNumber(ps.number, "en_us") } returns Optional.of(p)
         tester.startPage(makePage())
         tester.assertRenderedPage(NewsletterEditPage::class.java)
-        tester.clickLink("resultPanel:table:body:rows:1:cells:5:cell:link")
+        tester.clickLink("resultPanel:$EDIT_LINK")
         tester.assertRenderedPage(PaperEntryPage::class.java)
         verify(exactly = 2) { paperSlimServiceMock.countByFilter(any()) }
         verify(exactly = 1) { paperSlimServiceMock.findPageByFilter(any(), any()) }
