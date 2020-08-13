@@ -9,8 +9,8 @@ object Lib {
     //region:dependencyVersions
     private const val kotlinVersion = "1.3.72"
 
-    private const val springBootVersion = "2.3.2.RELEASE"
-    private const val springBootAdminVersion = "2.2.4"
+    private const val springBootVersion = "2.3.3.RELEASE"
+    private const val springBootAdminVersion = "2.3.0"
     const val springCloudVersion = "Hoxton.SR7"
     private const val springCloudStarterVersion = "2.2.4.RELEASE"
 
@@ -42,7 +42,7 @@ object Lib {
     private const val testcontainersVersion = "1.14.3"
 
     private const val spekVersion = "2.0.12"
-    private const val kwikVersion = "0.6.1"
+    private const val kwikVersion = "0.6.2"
     private const val kluentVersion = "1.61"
     private const val mockkVersion = "1.10.0"
     private const val springMockkVersion = "2.0.3"
@@ -51,14 +51,14 @@ object Lib {
     //endregion
 
     //region:pluginVersions
-    private const val springDependencyManagementPluginVersion = "1.0.9.RELEASE"
-    private const val lombokPluginVersion = "5.1.0"
+    private const val springDependencyManagementPluginVersion = "1.0.10.RELEASE"
+    private const val lombokPluginVersion = "5.1.1"
     private const val jooqModelatorPluginVersion = "3.9.0"
     private const val reckonPluginVersion = "0.12.0"
     private const val jaxbPluginVersion = "4.3.1"
     private const val testSetsPluginVersion = "3.0.1"
     private const val sonarqubePluginVersion = "3.0"
-    private const val detektPluginVersion = "1.10.0"
+    private const val detektPluginVersion = "1.11.0"
     //endregion
 
     //region:dependencies
