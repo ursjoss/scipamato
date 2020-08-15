@@ -192,7 +192,7 @@ abstract class PaperPanelTest<T, P : PaperPanel<T>> : PanelTest<P>() where T : C
         bbb = "$bb:tab7Form"
         tester.assertComponent(bbb, Form::class.java)
         bb = "$b:tabs-container:tabs:"
-        tester.assertLabel(bb + "0:link:title", "Population, Goals, and Methods")
+        tester.assertLabel(bb + "0:link:title", "Goals, Population, and Methods")
         tester.assertLabel(bb + "1:link:title", "Results and Comments")
         tester.assertLabel(bb + "2:link:title", "Codes and new Studies")
         tester.assertLabel(bb + "3:link:title", "New Field Entry")
