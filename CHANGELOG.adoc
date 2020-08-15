@@ -73,9 +73,13 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 ////
 
 .Added
+////
 
 .Changed
+- Bumped kotlin
+- Renamed tab label in PaperEntryPage to align with field order
 
+////
 .Deprecated
 
 .Removed
@@ -97,7 +101,6 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
   spring-dependency-management plugin, lombok gradle plugin
 - Moved ID column in Result panel table to the end
 - Added some more logs for repo methods changing data
-- Renamed tab label in PaperEntryPage to align with field order
 
 
 [[v1.4.9]]
