@@ -35,14 +35,14 @@ object Lib {
 
     private const val fontAwesomeVersion = "5.13.0"
 
-    private const val equalsverifierVersion = "3.4.1"
+    private const val equalsverifierVersion = "3.4.2"
 
     private const val junit5Version = "5.6.2"
 
     private const val testcontainersVersion = "1.14.3"
 
     private const val spekVersion = "2.0.12"
-    private const val kwikVersion = "0.6.2"
+    private const val kwikVersion = "0.7.0"
     private const val kluentVersion = "1.61"
     private const val mockkVersion = "1.10.0"
     private const val springMockkVersion = "2.0.3"
@@ -58,7 +58,7 @@ object Lib {
     private const val jaxbPluginVersion = "4.3.1"
     private const val testSetsPluginVersion = "3.0.1"
     private const val sonarqubePluginVersion = "3.0"
-    private const val detektPluginVersion = "1.11.0"
+    private const val detektPluginVersion = "1.12.0"
     //endregion
 
     //region:dependencies

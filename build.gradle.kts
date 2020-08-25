@@ -140,7 +140,6 @@ subprojects {
     }
 
     dependencies {
-        implementation(Lib.kotlin("stdlib-jdk8"))
         implementation(Lib.kotlin("reflect"))
 
         compileOnly(Lib.lombok())
