@@ -77,7 +77,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Changed
 - Bumped gradle, kotlin, kwik, equalsverifier, detekt, spek, junit,
-  spring-cloud-starter, spring-cloud-openfeign
+  spring-cloud-starter, spring-cloud-openfeign, kotlin-logging
 - Renamed tab label in PaperEntryPage to align with field order
 
 ////
