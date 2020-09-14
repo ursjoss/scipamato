@@ -76,7 +76,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 ////
 
 .Changed
-- Bumped gradle, kotlin, kwik, equalsverifier, detekt, spek
+- Bumped gradle, kotlin, kwik, equalsverifier, detekt, spek, junit
 - Renamed tab label in PaperEntryPage to align with field order
 
 ////
