@@ -255,7 +255,7 @@ tasks {
     withType<KotlinCompile> {
         kotlinOptions {
             freeCompilerArgs = listOf("-Xjsr305=strict")
-            jvmTarget = jvmTarget
+            this.jvmTarget = jvmTarget
         }
     }
     withType<Detekt> {
