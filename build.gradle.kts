@@ -1,3 +1,4 @@
+import io.gitlab.arturbosch.detekt.Detekt
 import io.gitlab.arturbosch.detekt.DetektPlugin
 import io.gitlab.arturbosch.detekt.detekt
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
@@ -249,11 +250,16 @@ subprojects {
 }
 
 tasks {
+    val jvmTarget = JavaVersion.VERSION_11.toString()
+
     withType<KotlinCompile> {
         kotlinOptions {
             freeCompilerArgs = listOf("-Xjsr305=strict")
-            jvmTarget = "1.8"
+            this.jvmTarget = jvmTarget
         }
+    }
+    withType<Detekt> {
+        this.jvmTarget = jvmTarget
     }
     val projectsWithCoverage = subprojects.filter { it.name.mayHaveTestCoverage() }
     withType<SonarQubeTask> {

@@ -7,12 +7,12 @@ import java.util.Properties
 object Lib {
 
     //region:dependencyVersions
-    private const val kotlinVersion = "1.4.0"
+    private const val kotlinVersion = "1.4.10"
 
     private const val springBootVersion = "2.3.3.RELEASE"
     private const val springBootAdminVersion = "2.3.0"
-    const val springCloudVersion = "Hoxton.SR7"
-    private const val springCloudStarterVersion = "2.2.4.RELEASE"
+    const val springCloudVersion = "Hoxton.SR8"
+    private const val springCloudStarterVersion = "2.2.5.RELEASE"
 
     private const val wicketSpringBootStarterVersion = "2.1.9"
     private const val wicketVersion = "8.9.0"
@@ -23,7 +23,7 @@ object Lib {
     private const val krisVersion = "0.2.5"
     const val jooqVersion = "3.13.4"
 
-    private const val kotlinLoggingVersion = "1.8.3"
+    private const val kotlinLoggingVersion = "1.11.3"
 
     private const val openfeignVersion = "11.0"
 
@@ -37,11 +37,11 @@ object Lib {
 
     private const val equalsverifierVersion = "3.4.2"
 
-    private const val junit5Version = "5.6.2"
+    private const val junit5Version = "5.7.0"
 
     private const val testcontainersVersion = "1.14.3"
 
-    private const val spekVersion = "2.0.12"
+    private const val spekVersion = "2.0.13"
     private const val kwikVersion = "0.7.0"
     private const val kluentVersion = "1.61"
     private const val mockkVersion = "1.10.0"
@@ -52,13 +52,13 @@ object Lib {
 
     //region:pluginVersions
     private const val springDependencyManagementPluginVersion = "1.0.10.RELEASE"
-    private const val lombokPluginVersion = "5.1.1"
+    private const val lombokPluginVersion = "5.2.1"
     private const val jooqModelatorPluginVersion = "3.9.0"
     private const val reckonPluginVersion = "0.12.0"
     private const val jaxbPluginVersion = "4.3.1"
     private const val testSetsPluginVersion = "3.0.1"
     private const val sonarqubePluginVersion = "3.0"
-    private const val detektPluginVersion = "1.12.0"
+    private const val detektPluginVersion = "1.13.1"
     //endregion
 
     //region:dependencies
