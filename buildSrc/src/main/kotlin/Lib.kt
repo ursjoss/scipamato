@@ -54,7 +54,7 @@ object Lib {
     private const val springDependencyManagementPluginVersion = "1.0.10.RELEASE"
     private const val lombokPluginVersion = "5.2.1"
     private const val jooqModelatorPluginVersion = "3.9.0"
-    private const val reckonPluginVersion = "0.12.0"
+    private const val reckonPluginVersion = "0.13.0"
     private const val jaxbPluginVersion = "4.3.1"
     private const val testSetsPluginVersion = "3.0.1"
     private const val sonarqubePluginVersion = "3.0"
