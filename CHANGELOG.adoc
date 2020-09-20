@@ -68,23 +68,13 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[unreleased]]
 == [unreleased]
 
-{url-cl}1.4.10$$...$$main[Full Changelog]
+{url-cl}1.5.0$$...$$main[Full Changelog]
 
 ////
-
 .Added
-////
 
 .Changed
-- Bumped gradle, kotlin, kwik, equalsverifier, detekt, spek, junit,
-  spring-cloud-starter, spring-cloud-openfeign, kotlin-logging,
-  lombok-plugin, reckon gradle plugin
-- Renamed tab label in PaperEntryPage to align with field order
-- {url-issues}198[#198] Migrate to Wicket 9.0
-- {url-issues}215[#215] Improve Layout of various pages for small/medium screens
 
-
-////
 .Deprecated
 
 .Removed
@@ -94,6 +84,20 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Security
 
 ////
+
+
+[[v1.5.0]]
+== {url-tree}1.5.0[1.5.0] -- 2020-10-20
+
+{url-cl}1.4.9$$...$$1.5.0[Full Changelog]
+
+.Changed
+- Bumped gradle, kotlin, kwik, equalsverifier, detekt, spek, junit,
+  spring-cloud-starter, spring-cloud-openfeign, kotlin-logging,
+  lombok-plugin, reckon gradle plugin
+- Renamed tab label in PaperEntryPage to align with field order
+- {url-issues}198[#198] Migrate to Wicket 9.0
+- {url-issues}215[#215] Improve Layout of various pages for small/medium screens
 
 
 [[v1.4.10]]
