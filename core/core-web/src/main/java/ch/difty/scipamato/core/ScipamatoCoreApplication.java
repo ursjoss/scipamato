@@ -4,7 +4,6 @@ import static ch.difty.scipamato.common.web.AbstractPage.FOOTER_CONTAINER;
 
 import com.giffing.wicket.spring.boot.starter.app.WicketBootSecuredWebApplication;
 import org.apache.wicket.Session;
-import org.apache.wicket.markup.head.ResourceAggregator;
 import org.apache.wicket.markup.head.filter.JavaScriptFilteredIntoFooterHeaderResponse;
 import org.apache.wicket.markup.html.IPackageResourceGuard;
 import org.apache.wicket.markup.html.SecurePackageResourceGuard;
@@ -41,8 +40,6 @@ public class ScipamatoCoreApplication extends WicketBootSecuredWebApplication {
         getHeaderResponseDecorators().add(r -> new JavaScriptFilteredIntoFooterHeaderResponse(r, FOOTER_CONTAINER));
 
         registerJasperJrxmlFilesWithPackageResourceGuard();
-
-
     }
 
     // Allow access to jrxml jasper report definition files

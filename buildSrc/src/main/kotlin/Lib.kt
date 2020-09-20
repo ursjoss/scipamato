@@ -9,7 +9,7 @@ object Lib {
     //region:dependencyVersions
     private const val kotlinVersion = "1.4.10"
 
-    private const val springBootVersion = "2.3.3.RELEASE"
+    private const val springBootVersion = "2.3.4.RELEASE"
     private const val springBootAdminVersion = "2.3.0"
     const val springCloudVersion = "Hoxton.SR8"
     private const val springCloudStarterVersion = "2.2.5.RELEASE"
@@ -23,7 +23,7 @@ object Lib {
     private const val krisVersion = "0.2.5"
     const val jooqVersion = "3.13.4"
 
-    private const val kotlinLoggingVersion = "1.11.3"
+    private const val kotlinLoggingVersion = "2.0.3"
 
     private const val openfeignVersion = "11.0"
 
@@ -35,7 +35,7 @@ object Lib {
 
     private const val fontAwesomeVersion = "5.13.0"
 
-    private const val equalsverifierVersion = "3.4.2"
+    private const val equalsverifierVersion = "3.4.3"
 
     private const val junit5Version = "5.7.0"
 
@@ -54,7 +54,7 @@ object Lib {
     private const val springDependencyManagementPluginVersion = "1.0.10.RELEASE"
     private const val lombokPluginVersion = "5.2.1"
     private const val jooqModelatorPluginVersion = "3.9.0"
-    private const val reckonPluginVersion = "0.12.0"
+    private const val reckonPluginVersion = "0.13.0"
     private const val jaxbPluginVersion = "4.3.1"
     private const val testSetsPluginVersion = "3.0.1"
     private const val sonarqubePluginVersion = "3.0"
