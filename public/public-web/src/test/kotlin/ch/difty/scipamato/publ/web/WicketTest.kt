@@ -3,6 +3,7 @@ package ch.difty.scipamato.publ.web
 import ch.difty.scipamato.common.DateTimeService
 import ch.difty.scipamato.common.navigator.ItemNavigator
 import ch.difty.scipamato.common.persistence.paging.PaginationContext
+import ch.difty.scipamato.common.web.AbstractPage
 import ch.difty.scipamato.common.web.ScipamatoWebSessionFacade
 import ch.difty.scipamato.publ.ScipamatoPublicApplication
 import ch.difty.scipamato.publ.entity.Keyword
@@ -13,8 +14,6 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.Bootst
 import io.mockk.Matcher
 import io.mockk.MockKMatcherScope
 import io.mockk.every
-import org.apache.wicket.markup.head.IHeaderResponse
-import org.apache.wicket.markup.head.ResourceAggregator
 import org.apache.wicket.markup.head.filter.JavaScriptFilteredIntoFooterHeaderResponse
 import org.apache.wicket.markup.html.basic.Label
 import org.apache.wicket.markup.html.form.TextField
@@ -55,9 +54,7 @@ abstract class WicketTest {
 
     @BeforeEach
     fun setUp() {
-        application.setHeaderResponseDecorator { r: IHeaderResponse? ->
-            ResourceAggregator(JavaScriptFilteredIntoFooterHeaderResponse(r, "footer-container"))
-        }
+        application.headerResponseDecorators.add { r -> JavaScriptFilteredIntoFooterHeaderResponse(r, AbstractPage.FOOTER_CONTAINER) }
         ReflectionTestUtils.setField(application, "applicationContext", applicationContextMock)
         tester = WicketTester(application)
         every { sessionFacadeMock.paperIdManager } returns itemNavigator

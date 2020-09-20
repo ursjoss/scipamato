@@ -12,8 +12,8 @@ import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.event.IEvent;
-import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
-import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow.MaskType;
+import org.apache.wicket.extensions.ajax.markup.html.modal.ModalDialog;
+import org.apache.wicket.extensions.ajax.markup.html.modal.theme.DefaultTheme;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.filter.FilterForm;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
@@ -65,7 +65,7 @@ public class PaperListPage extends BasePage<Void> {
     private final Mode                           mode;
     private       PaperFilter                    filter;
     private       PaperSlimByPaperFilterProvider dataProvider;
-    private       ModalWindow                    xmlPasteModalWindow;
+    private       ModalDialog                    xmlPasteModalDialog;
     private       ResultPanel                    resultPanel;
 
     public PaperListPage(@Nullable PageParameters parameters) {
@@ -166,22 +166,21 @@ public class PaperListPage extends BasePage<Void> {
         queue(newXmlPasteModalLink(linkId));
     }
 
-    private ModalWindow newXmlPasteModalPanel(String modalId) {
-        xmlPasteModalWindow = new ModalWindow(modalId);
-        XmlPasteModalPanel panel = new XmlPasteModalPanel(xmlPasteModalWindow.getContentId());
-        xmlPasteModalWindow.setContent(panel);
-        xmlPasteModalWindow.setTitle(new StringResourceModel("xmlPasteModal.title", this, null).getString());
-        xmlPasteModalWindow.setResizable(true);
-        xmlPasteModalWindow.setAutoSize(true);
-        xmlPasteModalWindow.setInitialWidth(600);
-        xmlPasteModalWindow.setInitialHeight(500);
-        xmlPasteModalWindow.setMinimalWidth(600);
-        xmlPasteModalWindow.setMinimalHeight(500);
-        xmlPasteModalWindow.setMaskType(MaskType.SEMI_TRANSPARENT);
-        xmlPasteModalWindow.setCssClassName(ModalWindow.CSS_CLASS_BLUE);
-        xmlPasteModalWindow.setWindowClosedCallback(
-            target -> onXmlPasteModalPanelClose(panel.getPastedContent(), target));
-        return xmlPasteModalWindow;
+    private ModalDialog newXmlPasteModalPanel(String modalId) {
+        xmlPasteModalDialog = new ModalDialog(modalId);
+        String instruction = new StringResourceModel("xmlPasteModal.title", this, null).getString();
+        XmlPasteModalPanel panel = new XmlPasteModalPanel(ModalDialog.CONTENT_ID, instruction) {
+            @Override
+            protected void close(final AjaxRequestTarget target) {
+                xmlPasteModalDialog.close(target);
+                onXmlPasteModalPanelClose(getPastedContent(), target);
+            }
+        };
+        xmlPasteModalDialog.add(new DefaultTheme());
+        xmlPasteModalDialog.trapFocus();
+        xmlPasteModalDialog.closeOnEscape();
+        xmlPasteModalDialog.setContent(panel);
+        return xmlPasteModalDialog;
     }
 
     private BootstrapAjaxLink<Void> newXmlPasteModalLink(String linkId) {
@@ -190,13 +189,12 @@ public class PaperListPage extends BasePage<Void> {
 
             @Override
             public void onClick(@NotNull AjaxRequestTarget target) {
-                xmlPasteModalWindow.show(target);
+                xmlPasteModalDialog.open(target);
             }
         };
         link.setOutputMarkupPlaceholderTag(true);
         link.setLabel(new StringResourceModel("xmlPasteModalLink.label", this, null));
-        link.add(
-            new AttributeModifier("title", new StringResourceModel("xmlPasteModalLink.title", this, null).getString()));
+        link.add(new AttributeModifier("title", new StringResourceModel("xmlPasteModalLink.title", this, null).getString()));
         link.setVisible(mode != Mode.VIEW);
         return link;
     }
@@ -227,8 +225,7 @@ public class PaperListPage extends BasePage<Void> {
      * @param target
      *     the AjaxRequestTarget, may be null if called from constructor
      */
-    private void translateServiceResultMessagesToLocalizedUserMessages(final ServiceResult result,
-        final AjaxRequestTarget target) {
+    private void translateServiceResultMessagesToLocalizedUserMessages(final ServiceResult result, final AjaxRequestTarget target) {
         result
             .getErrorMessages()
             .stream()
@@ -253,8 +250,7 @@ public class PaperListPage extends BasePage<Void> {
     }
 
     private void queueNewPaperButton(final String id) {
-        BootstrapAjaxButton button = newResponsePageButton(id,
-            () -> new PaperEntryPage(getPageParameters(), getPage().getPageReference()));
+        BootstrapAjaxButton button = newResponsePageButton(id, () -> new PaperEntryPage(getPageParameters(), getPage().getPageReference()));
         button.setType(Buttons.Type.Primary);
         button.setVisible(mode != Mode.VIEW);
         queue(button);

@@ -7,7 +7,7 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxLink
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar
 import io.mockk.every
 import io.mockk.verify
-import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow
+import org.apache.wicket.extensions.ajax.markup.html.modal.ModalDialog
 import org.apache.wicket.markup.html.internal.HtmlHeaderContainer
 
 @Suppress("SpellCheckingInspection")
@@ -38,8 +38,8 @@ internal class PaperListPageInEditModeAsUserTest : PaperListPageTest() {
 
     @Suppress("SameParameterValue")
     private fun assertPasteModal(id: String) {
-        tester.assertComponent(id, ModalWindow::class.java)
-        tester.assertInvisible("$id:content")
+        tester.assertComponent(id, ModalDialog::class.java)
+        tester.assertContainsNot("$id:content")
     }
 
     private fun assertMenuEntries() {

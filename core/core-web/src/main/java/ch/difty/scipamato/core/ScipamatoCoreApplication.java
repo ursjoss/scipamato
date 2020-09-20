@@ -1,5 +1,7 @@
 package ch.difty.scipamato.core;
 
+import static ch.difty.scipamato.common.web.AbstractPage.FOOTER_CONTAINER;
+
 import com.giffing.wicket.spring.boot.starter.app.WicketBootSecuredWebApplication;
 import org.apache.wicket.Session;
 import org.apache.wicket.markup.head.ResourceAggregator;
@@ -30,13 +32,17 @@ public class ScipamatoCoreApplication extends WicketBootSecuredWebApplication {
 
     @Override
     protected void init() {
+        // TODO consider making it CSP compliant
+        getCspSettings().blocking().disabled();
+
         super.init();
 
         // enable putting JavaScript into Footer Container
-        setHeaderResponseDecorator(
-            r -> new ResourceAggregator(new JavaScriptFilteredIntoFooterHeaderResponse(r, "footer-container")));
+        getHeaderResponseDecorators().add(r -> new JavaScriptFilteredIntoFooterHeaderResponse(r, FOOTER_CONTAINER));
 
         registerJasperJrxmlFilesWithPackageResourceGuard();
+
+
     }
 
     // Allow access to jrxml jasper report definition files

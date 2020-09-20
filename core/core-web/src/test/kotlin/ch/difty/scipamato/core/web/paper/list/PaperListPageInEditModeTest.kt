@@ -4,7 +4,6 @@ import ch.difty.scipamato.common.AjaxRequestTargetSpy
 import ch.difty.scipamato.core.auth.Roles
 import ch.difty.scipamato.core.persistence.DefaultServiceResult
 import ch.difty.scipamato.core.persistence.ServiceResult
-import ch.difty.scipamato.core.web.common.pastemodal.XmlPasteModalPanel
 import ch.difty.scipamato.core.web.paper.entry.PaperEntryPage
 import ch.difty.scipamato.core.web.security.TestUserDetailsService
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton
@@ -14,9 +13,7 @@ import io.mockk.clearMocks
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow
-import org.apache.wicket.markup.html.form.Form
-import org.apache.wicket.markup.html.form.TextArea
+import org.apache.wicket.extensions.ajax.markup.html.modal.ModalDialog
 import org.apache.wicket.markup.html.internal.HtmlHeaderContainer
 import org.junit.jupiter.api.Test
 
@@ -47,8 +44,9 @@ internal class PaperListPageInEditModeTest : PaperListPageTest() {
 
     @Suppress("SameParameterValue")
     private fun assertPasteModal(id: String) {
-        tester.assertComponent(id, ModalWindow::class.java)
-        tester.assertInvisible("$id:content")
+        tester.assertComponent(id, ModalDialog::class.java)
+        tester.assertContainsNot("$id:content")
+        tester.assertContainsNot("Paste XML exported from PubMed")
     }
 
     private fun assertMenuEntries() {
@@ -108,20 +106,15 @@ internal class PaperListPageInEditModeTest : PaperListPageTest() {
     }
 
     @Test
-    fun clickingOnShowXmlPastePanelButton_opensModalWindow() {
+    fun clickingOnShowXmlPastePanelButton_opensModalModalDialog() {
         tester.startPage(pageClass)
+        tester.debugComponentTrees()
         var b = "searchForm"
         tester.executeAjaxEvent("$b:showXmlPasteModalLink", "click")
         b = "xmlPasteModal"
-        tester.assertComponent(b, ModalWindow::class.java)
-        b += ":content"
-        tester.isVisible(b)
-        tester.assertComponent(b, XmlPasteModalPanel::class.java)
-        b += ":form"
-        tester.assertComponent(b, Form::class.java)
-        tester.assertComponent("$b:content", TextArea::class.java)
-        tester.assertComponent("$b:submit", BootstrapAjaxButton::class.java)
-        verify(exactly = 2) { paperSlimServiceMock.countByFilter(any()) }
+        tester.assertComponent(b, ModalDialog::class.java)
+        tester.assertContains("Paste XML exported from PubMed")
+        verify(exactly = 3) { paperSlimServiceMock.countByFilter(any()) }
         verify(exactly = 4) { paperServiceMock.findPageOfIdsByFilter(any(), any()) }
     }
 

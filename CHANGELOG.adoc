@@ -80,7 +80,9 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
   spring-cloud-starter, spring-cloud-openfeign, kotlin-logging,
   lombok-plugin
 - Renamed tab label in PaperEntryPage to align with field order
+- {url-issues}198[#198] Migrate to Wicket 9.0
 - {url-issues}215[#215] Improve Layout of various pages for small/medium screens
+
 
 ////
 .Deprecated
@@ -141,7 +143,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Changed
 - Bumped detekt, jooq-modelator, gradle-wrapper, jasperreports, spring-cloud, jooq,
-  wicket, wicketstuff,
+  wicket, wicket-spring-boot-starter, wicketstuff, wicket-jquery-ui, wicket-bootstrap
   kotlin-logging, openfeign, fontawesome, equalsverifier, spek, spring-mockk,
   jooq-modelator-plugin, kwik
 - {url-issues}196[#196] Properly use UTF-8 property files for wicket localization

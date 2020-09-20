@@ -9,10 +9,13 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeFalse
 import org.amshove.kluent.shouldBeNull
-import org.amshove.kluent.shouldContain
+import org.amshove.kluent.shouldBeTrue
 import org.amshove.kluent.shouldNotBeEmpty
 import org.apache.commons.fileupload.FileItem
+import org.apache.wicket.ajax.AjaxRequestTarget
+import org.apache.wicket.markup.html.basic.Label
 import org.apache.wicket.markup.html.form.Form
 import org.apache.wicket.markup.html.form.TextArea
 import org.apache.wicket.markup.html.panel.Panel
@@ -20,17 +23,21 @@ import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 import java.util.ArrayList
 
+private const val INSTRUCTION = "instruction"
+
 @Suppress("SpellCheckingInspection")
 internal class XmlPasteModalPanelTest : PanelTest<XmlPasteModalPanel>() {
 
     private val targetSpy = AjaxRequestTargetSpy()
     private lateinit var fileItem: FileItem
+    private var closeCalled = false
 
     private val map = mutableMapOf<String, List<FileItem?>>()
     private val files: MutableList<FileItem?> = ArrayList()
 
     override fun setUpHook() {
         fileItem = mockk()
+        closeCalled = false
     }
 
     @AfterEach
@@ -39,7 +46,11 @@ internal class XmlPasteModalPanelTest : PanelTest<XmlPasteModalPanel>() {
         targetSpy.reset()
     }
 
-    override fun makePanel(): XmlPasteModalPanel = XmlPasteModalPanel(PANEL_ID)
+    override fun makePanel(): XmlPasteModalPanel = object : XmlPasteModalPanel(PANEL_ID, INSTRUCTION) {
+        override fun close(target: AjaxRequestTarget?) {
+            closeCalled = true
+        }
+    }
 
     override fun assertSpecificComponents() {
         var b = PANEL_ID
@@ -47,6 +58,7 @@ internal class XmlPasteModalPanelTest : PanelTest<XmlPasteModalPanel>() {
         b += ":form"
         tester.assertComponent(b, Form::class.java)
         b += ":"
+        tester.assertComponent(b + "instruction", Label::class.java)
         tester.assertComponent(b + "content", TextArea::class.java)
         tester.assertComponent(b + "dropzone", DropZoneFileUpload::class.java)
         tester.assertComponent(b + "submit", BootstrapAjaxButton::class.java)
@@ -62,11 +74,12 @@ internal class XmlPasteModalPanelTest : PanelTest<XmlPasteModalPanel>() {
         tester.executeAjaxEvent("panel:form:cancel", "click")
         panel.pastedContent.shouldBeNull()
         tester.assertNoFeedbackMessage(0)
-        tester.lastResponse.document shouldContain "win.current.close();"
+        closeCalled.shouldBeTrue()
     }
 
     @Test
     fun clickingSubmit_keepsPastedContentAndClosesWindow() {
+        closeCalled.shouldBeFalse()
         val panel = makePanel()
         tester.startComponentInPage(panel)
         panel["form:content"].defaultModelObject = "def"
@@ -74,7 +87,7 @@ internal class XmlPasteModalPanelTest : PanelTest<XmlPasteModalPanel>() {
         tester.executeAjaxEvent("panel:form:submit", "click")
         panel.pastedContent shouldBeEqualTo "def"
         tester.assertNoFeedbackMessage(0)
-        tester.lastResponse.document shouldContain "win.current.close();"
+        closeCalled.shouldBeTrue()
     }
 
     @Test

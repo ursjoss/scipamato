@@ -1,5 +1,6 @@
 package ch.difty.scipamato.core.web
 
+import ch.difty.scipamato.common.web.AbstractPage
 import ch.difty.scipamato.core.auth.Roles
 import ch.difty.scipamato.core.web.authentication.LoginPage
 import ch.difty.scipamato.core.web.paper.list.PaperListPage
@@ -8,8 +9,6 @@ import com.giffing.wicket.spring.boot.starter.configuration.extensions.external.
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.checkboxx.CheckBoxX
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelect
 import io.mockk.every
-import org.apache.wicket.markup.head.IHeaderResponse
-import org.apache.wicket.markup.head.ResourceAggregator
 import org.apache.wicket.markup.head.filter.JavaScriptFilteredIntoFooterHeaderResponse
 import org.apache.wicket.markup.html.basic.Label
 import org.apache.wicket.markup.html.form.TextArea
@@ -35,9 +34,7 @@ abstract class WicketTest : AbstractWicketTest() {
 
     @BeforeEach
     fun setUp() {
-        application.setHeaderResponseDecorator { hr: IHeaderResponse? ->
-            ResourceAggregator(JavaScriptFilteredIntoFooterHeaderResponse(hr, "footer-container"))
-        }
+        application.headerResponseDecorators.add { r -> JavaScriptFilteredIntoFooterHeaderResponse(r, AbstractPage.FOOTER_CONTAINER) }
         ReflectionTestUtils.setField(application, "applicationContext", applicationContextMock)
 
         tester = WicketTester(application)

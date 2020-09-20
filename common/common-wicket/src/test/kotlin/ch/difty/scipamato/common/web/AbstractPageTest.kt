@@ -95,7 +95,7 @@ internal class AbstractPageTest : WicketBaseTest() {
         tester.assertLabel("navbar:container:brandName:brandLabel", "SciPaMaTo")
 
         tester.assertComponent("feedback", NotificationPanel::class.java)
-        tester.assertComponent("footer-container", HeaderResponseContainer::class.java)
+        tester.assertComponent(AbstractPage.FOOTER_CONTAINER, HeaderResponseContainer::class.java)
 
         tester.assertInvisible("debug")
 

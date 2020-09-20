@@ -34,6 +34,8 @@ public abstract class AbstractPage<T> extends GenericWebPage<T> {
 
     private static final long serialVersionUID = 1L;
 
+    public static final String FOOTER_CONTAINER = "footer-container";
+
     protected static final String LABEL_TAG                 = WicketUtils.LABEL_TAG;
     protected static final String LABEL_RESOURCE_TAG        = WicketUtils.LABEL_RESOURCE_TAG;
     protected static final String LOADING_RESOURCE_TAG      = WicketUtils.LOADING_RESOURCE_TAG;
@@ -75,10 +77,8 @@ public abstract class AbstractPage<T> extends GenericWebPage<T> {
 
         response.render(new PriorityHeaderItem(MetaDataHeaderItem.forMetaTag("charset", "utf-8")));
         response.render(new PriorityHeaderItem(MetaDataHeaderItem.forMetaTag("X-UA-Compatible", "IE=edge")));
-        response.render(
-            new PriorityHeaderItem(MetaDataHeaderItem.forMetaTag("viewport", "width=device-width, initial-scale=1")));
-        response.render(
-            new PriorityHeaderItem(MetaDataHeaderItem.forMetaTag("Content-Type", "text/html; charset=UTF-8")));
+        response.render(new PriorityHeaderItem(MetaDataHeaderItem.forMetaTag("viewport", "width=device-width, initial-scale=1")));
+        response.render(new PriorityHeaderItem(MetaDataHeaderItem.forMetaTag("Content-Type", "text/html; charset=UTF-8")));
     }
 
     @Override
@@ -88,7 +88,7 @@ public abstract class AbstractPage<T> extends GenericWebPage<T> {
         createAndAddNavBar("navbar");
         createAndAddFeedbackPanel("feedback");
         createAndAddDebugBar("debug");
-        createAndAddFooterContainer("footer-container");
+        createAndAddFooterContainer(FOOTER_CONTAINER);
     }
 
     private void createAndAddTitle(String id) {
@@ -192,10 +192,8 @@ public abstract class AbstractPage<T> extends GenericWebPage<T> {
         label.setVisible(field.isVisible());
     }
 
-    protected BootstrapAjaxButton newResponsePageButton(@NotNull final String id,
-        @NotNull final SerializableSupplier<AbstractPage<?>> responsePage) {
-        return new BootstrapAjaxButton(id, new StringResourceModel(id + LABEL_RESOURCE_TAG, AbstractPage.this, null),
-            Type.Default) {
+    protected BootstrapAjaxButton newResponsePageButton(@NotNull final String id, @NotNull final SerializableSupplier<AbstractPage<?>> responsePage) {
+        return new BootstrapAjaxButton(id, new StringResourceModel(id + LABEL_RESOURCE_TAG, AbstractPage.this, null), Type.Default) {
             private static final long serialVersionUID = 1L;
 
             @Override
