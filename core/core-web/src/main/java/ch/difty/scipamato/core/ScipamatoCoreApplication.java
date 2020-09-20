@@ -32,12 +32,17 @@ public class ScipamatoCoreApplication extends WicketBootSecuredWebApplication {
 
     @Override
     protected void init() {
+        // TODO consider making it CSP compliant
+        getCspSettings().blocking().disabled();
+
         super.init();
 
         // enable putting JavaScript into Footer Container
         getHeaderResponseDecorators().add(r -> new JavaScriptFilteredIntoFooterHeaderResponse(r, FOOTER_CONTAINER));
 
         registerJasperJrxmlFilesWithPackageResourceGuard();
+
+
     }
 
     // Allow access to jrxml jasper report definition files

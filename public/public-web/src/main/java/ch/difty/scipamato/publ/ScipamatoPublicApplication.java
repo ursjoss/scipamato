@@ -41,6 +41,9 @@ public class ScipamatoPublicApplication extends WicketBootSecuredWebApplication 
 
     @Override
     protected void init() {
+        // temporarily disable CSS TODO consider activating
+        getCspSettings().blocking().disabled();
+
         super.init();
 
         // enable putting JavaScript into Footer Container
