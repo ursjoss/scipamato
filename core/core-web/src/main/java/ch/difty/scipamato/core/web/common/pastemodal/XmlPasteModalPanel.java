@@ -9,30 +9,33 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.button.LoadingBehavior;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.fileUpload.DropZoneFileUpload;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
+import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.model.StringResourceModel;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-@SuppressWarnings({ "SameParameterValue", "SpellCheckingInspection" })
-public class XmlPasteModalPanel extends Panel {
+@SuppressWarnings({ "SameParameterValue" })
+public abstract class XmlPasteModalPanel extends Panel {
 
     private static final long serialVersionUID = 1L;
 
     private static final String TEXT_XML = "text/xml";
     private static final String KEY_FILE = "file";
 
-    private String content;
+    private final String instruction;
+    private       String content;
 
     private Form<Object>     form;
     private TextArea<String> contentField;
 
-    public XmlPasteModalPanel(@NotNull String id) {
+    public XmlPasteModalPanel(@NotNull String id, @NotNull String instruction) {
         super(id);
+        this.instruction = instruction;
     }
 
     @Override
@@ -40,10 +43,15 @@ public class XmlPasteModalPanel extends Panel {
         super.onInitialize();
 
         queue(newForm("form"));
+        queue(newLabel("instruction", instruction));
         queue(newTextArea("content"));
         queue(newDropZoneFileUpload("dropzone"));
         queue(newButton("submit"));
         queue(newCancelButton("cancel"));
+    }
+
+    private Label newLabel(String id, String text) {
+        return new Label(id, Model.of(text));
     }
 
     private Form<Object> newForm(String id) {
@@ -95,24 +103,22 @@ public class XmlPasteModalPanel extends Panel {
     }
 
     private BootstrapAjaxButton newButton(String id) {
-        final BootstrapAjaxButton button = new BootstrapAjaxButton(id,
-            new StringResourceModel(id + ".label", this, null), form, Buttons.Type.Primary) {
+        final BootstrapAjaxButton button = new BootstrapAjaxButton(id, new StringResourceModel(id + ".label", this, null), form,
+            Buttons.Type.Primary) {
             private static final long serialVersionUID = 1L;
 
             @Override
             protected void onAfterSubmit(@NotNull AjaxRequestTarget target) {
                 super.onAfterSubmit(target);
-                ModalWindow.closeCurrent(target);
+                close(target);
             }
         };
-        //noinspection deprecation
         button.add(new LoadingBehavior(new StringResourceModel(id + ".loading", this, null)));
         return button;
     }
 
     private BootstrapAjaxButton newCancelButton(String id) {
-        return new BootstrapAjaxButton(id, new StringResourceModel(id + ".label", this, null), form,
-            Buttons.Type.Primary) {
+        return new BootstrapAjaxButton(id, new StringResourceModel(id + ".label", this, null), form, Buttons.Type.Primary) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -125,10 +131,12 @@ public class XmlPasteModalPanel extends Panel {
             @Override
             protected void onAfterSubmit(@NotNull AjaxRequestTarget target) {
                 super.onAfterSubmit(target);
-                ModalWindow.closeCurrent(target);
+                close(target);
             }
         };
     }
+
+    protected abstract void close(AjaxRequestTarget target);
 
     @Nullable
     public String getPastedContent() {
