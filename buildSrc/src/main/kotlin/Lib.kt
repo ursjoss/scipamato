@@ -17,7 +17,7 @@ object Lib {
     private const val wicketSpringBootStarterVersion = "3.0.4"
     private const val wicketVersion = "9.0.0"
     private const val wicketstuffVersion = "9.0.0"
-    private const val wicketJqueryUiVersion = "9.0.0-M5.1"
+    private const val wicketJqueryUiVersion = "9.0.0"
     private const val wicketBootstrapVersion = "4.0.0"
     private const val jasperReportVersion = "6.14.0"
     private const val krisVersion = "0.2.5"
@@ -44,7 +44,7 @@ object Lib {
     private const val spekVersion = "2.0.13"
     private const val kwikVersion = "0.7.0"
     private const val kluentVersion = "1.61"
-    private const val mockkVersion = "1.10.0"
+    private const val mockkVersion = "1.10.2"
     private const val springMockkVersion = "2.0.3"
 
     private const val jsr305Version = "3.0.2"
@@ -58,7 +58,7 @@ object Lib {
     private const val jaxbPluginVersion = "4.3.1"
     private const val testSetsPluginVersion = "3.0.1"
     private const val sonarqubePluginVersion = "3.0"
-    private const val detektPluginVersion = "1.13.1"
+    private const val detektPluginVersion = "1.14.1"
     //endregion
 
     //region:dependencies
