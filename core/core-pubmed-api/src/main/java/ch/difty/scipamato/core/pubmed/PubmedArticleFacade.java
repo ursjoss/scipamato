@@ -1,6 +1,7 @@
 package ch.difty.scipamato.core.pubmed;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import ch.difty.scipamato.core.pubmed.api.PubmedArticle;
 import ch.difty.scipamato.core.pubmed.api.PubmedBookArticle;
@@ -30,7 +31,7 @@ public interface PubmedArticleFacade {
             "Cannot instantiate ScipamatoArticle from provided object " + pubmedArticleOrPubmedBookArticle.toString());
     }
 
-    @NotNull
+    @Nullable
     String getPmId();
 
     @NotNull

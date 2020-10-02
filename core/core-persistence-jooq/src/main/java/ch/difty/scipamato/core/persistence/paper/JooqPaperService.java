@@ -63,6 +63,7 @@ public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter
         final List<Integer> pmIdCandidates = articles
             .stream()
             .map(PubmedArticleFacade::getPmId)
+            .filter(Objects::nonNull)
             .map(Integer::valueOf)
             .collect(Collectors.toList());
         if (!pmIdCandidates.isEmpty()) {
@@ -73,7 +74,7 @@ public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter
                 .collect(Collectors.toList());
             final List<Paper> savedPapers = articles
                 .stream()
-                .filter(a -> !existingPmIds.contains(a.getPmId()))
+                .filter(a -> a.getPmId() != null && !existingPmIds.contains(a.getPmId()))
                 .map((final PubmedArticleFacade a) -> this.savePubmedArticle(a, minimumNumber))
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());
