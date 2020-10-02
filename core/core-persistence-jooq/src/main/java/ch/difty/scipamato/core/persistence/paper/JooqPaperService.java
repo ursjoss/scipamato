@@ -27,8 +27,7 @@ import ch.difty.scipamato.core.pubmed.PubmedArticleFacade;
  * @author u.joss
  */
 @Service
-public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter, PaperRepository>
-    implements PaperService {
+public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter, PaperRepository> implements PaperService {
 
     private final NewsletterRepository newsletterRepo;
 
@@ -46,8 +45,8 @@ public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter
 
     @NotNull
     @Override
-    public List<Paper> findPageBySearchOrder(@NotNull final SearchOrder searchOrder,
-        @NotNull final PaginationContext paginationContext, @NotNull final String languageCode) {
+    public List<Paper> findPageBySearchOrder(@NotNull final SearchOrder searchOrder, @NotNull final PaginationContext paginationContext,
+        @NotNull final String languageCode) {
         return getRepository().findPageBySearchOrder(searchOrder, paginationContext, languageCode);
     }
 
@@ -59,13 +58,11 @@ public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter
     @NotNull
     @Override
     @Transactional
-    public ServiceResult dumpPubmedArticlesToDb(@NotNull final List<PubmedArticleFacade> articles,
-        final long minimumNumber) {
+    public ServiceResult dumpPubmedArticlesToDb(@NotNull final List<PubmedArticleFacade> articles, final long minimumNumber) {
         final ServiceResult sr = new DefaultServiceResult();
         final List<Integer> pmIdCandidates = articles
             .stream()
             .map(PubmedArticleFacade::getPmId)
-            .filter(Objects::nonNull)
             .map(Integer::valueOf)
             .collect(Collectors.toList());
         if (!pmIdCandidates.isEmpty()) {
@@ -76,7 +73,7 @@ public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter
                 .collect(Collectors.toList());
             final List<Paper> savedPapers = articles
                 .stream()
-                .filter(a -> a.getPmId() != null && !existingPmIds.contains(a.getPmId()))
+                .filter(a -> !existingPmIds.contains(a.getPmId()))
                 .map((final PubmedArticleFacade a) -> this.savePubmedArticle(a, minimumNumber))
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());
@@ -99,8 +96,7 @@ public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter
         return getRepository().add(p);
     }
 
-    private void fillServiceResultFrom(final List<Paper> newPapers, final List<String> existingPmIds,
-        final ServiceResult sr) {
+    private void fillServiceResultFrom(final List<Paper> newPapers, final List<String> existingPmIds, final ServiceResult sr) {
         existingPmIds
             .stream()
             .map(pmId -> "PMID " + pmId)
@@ -132,8 +128,7 @@ public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter
 
     @NotNull
     @Override
-    public List<Long> findPageOfIdsBySearchOrder(@NotNull final SearchOrder searchOrder,
-        @NotNull final PaginationContext paginationContext) {
+    public List<Long> findPageOfIdsBySearchOrder(@NotNull final SearchOrder searchOrder, @NotNull final PaginationContext paginationContext) {
         return getRepository().findPageOfIdsBySearchOrder(searchOrder, paginationContext);
     }
 
@@ -178,12 +173,10 @@ public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter
     @NotNull
     @Transactional
     @Override
-    public Optional<Paper.NewsletterLink> mergePaperIntoWipNewsletter(final long paperId,
-        @Nullable final Integer newsletterTopicId, @NotNull final String languageCode) {
+    public Optional<Paper.NewsletterLink> mergePaperIntoWipNewsletter(final long paperId, @Nullable final Integer newsletterTopicId,
+        @NotNull final String languageCode) {
         final Optional<Newsletter> nlo = newsletterRepo.getNewsletterInStatusWorkInProgress();
-        return nlo.flatMap(
-            newsletter -> newsletterRepo.mergePaperIntoNewsletter(newsletter.getId(), paperId, newsletterTopicId,
-                languageCode));
+        return nlo.flatMap(newsletter -> newsletterRepo.mergePaperIntoNewsletter(newsletter.getId(), paperId, newsletterTopicId, languageCode));
     }
 
     @Transactional
@@ -194,8 +187,8 @@ public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter
 
     @NotNull
     @Override
-    public Optional<String> hasDuplicateFieldNextToCurrent(@NotNull final String fieldName,
-        @Nullable final Object fieldValue, @NotNull final Long idOfCurrentPaper) {
+    public Optional<String> hasDuplicateFieldNextToCurrent(@NotNull final String fieldName, @Nullable final Object fieldValue,
+        @NotNull final Long idOfCurrentPaper) {
         if (fieldValue == null)
             return Optional.empty();
         switch (fieldName) {

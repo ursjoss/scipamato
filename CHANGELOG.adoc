@@ -76,7 +76,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Changed
 - Bumped wicket-jquery-ui, jOOQ, detekt, mockk, kwik, kris
-- Kotlin Conversion: FilterConditionMappers, SortMapper
+- Kotlin Conversion of common-persistence-jooq
 
 ////
 .Deprecated
