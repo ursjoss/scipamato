@@ -1,5 +1,7 @@
 package ch.difty.scipamato.core.persistence.keyword;
 
+import static ch.difty.scipamato.common.persistence.TranslationUtilsKt.NOT_TRANSL;
+import static ch.difty.scipamato.common.persistence.TranslationUtilsKt.trimLanguageCode;
 import static ch.difty.scipamato.core.db.tables.Keyword.KEYWORD;
 import static ch.difty.scipamato.core.db.tables.KeywordTr.KEYWORD_TR;
 import static ch.difty.scipamato.core.db.tables.Language.LANGUAGE;
@@ -18,7 +20,6 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import ch.difty.scipamato.common.DateTimeService;
-import ch.difty.scipamato.common.TranslationUtils;
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.common.persistence.paging.Sort;
 import ch.difty.scipamato.core.db.tables.records.KeywordRecord;
@@ -43,11 +44,11 @@ public class JooqKeywordRepo extends AbstractRepo implements KeywordRepository {
     @NotNull
     @Override
     public List<Keyword> findAll(@NotNull final String languageCode) {
-        final String lang = TranslationUtils.INSTANCE.trimLanguageCode(languageCode);
+        final String lang = trimLanguageCode(languageCode);
         // skipping the audit fields
         return getDsl()
             .select(KEYWORD.ID.as("K_ID"), DSL
-                .coalesce(KEYWORD_TR.NAME, TranslationUtils.NOT_TRANSL)
+                .coalesce(KEYWORD_TR.NAME, NOT_TRANSL)
                 .as("K_NAME"), KEYWORD.SEARCH_OVERRIDE)
             .from(KEYWORD)
             .leftOuterJoin(KEYWORD_TR)

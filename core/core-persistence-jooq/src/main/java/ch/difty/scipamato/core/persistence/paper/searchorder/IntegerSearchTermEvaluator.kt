@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.persistence.paper.searchorder
 
-import ch.difty.scipamato.common.TranslationUtils.deCamelCase
+import ch.difty.scipamato.common.persistence.deCamelCase
 import ch.difty.scipamato.core.entity.search.IntegerSearchTerm
 import org.jooq.Condition
 import org.jooq.impl.DSL
@@ -28,7 +28,7 @@ class IntegerSearchTermEvaluator : SearchTermEvaluator<IntegerSearchTerm?> {
         }
     }
 
-    private fun String.sanitize(): String? = when {
+    private fun String.sanitize(): String = when {
         "id" == this -> "paper.id"
         else -> deCamelCase(this)
     }

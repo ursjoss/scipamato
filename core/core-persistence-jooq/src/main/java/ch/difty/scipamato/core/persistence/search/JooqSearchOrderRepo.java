@@ -1,5 +1,6 @@
 package ch.difty.scipamato.core.persistence.search;
 
+import static ch.difty.scipamato.common.persistence.TranslationUtilsKt.NOT_TRANSL;
 import static ch.difty.scipamato.core.db.tables.Code.CODE;
 import static ch.difty.scipamato.core.db.tables.CodeClass.CODE_CLASS;
 import static ch.difty.scipamato.core.db.tables.CodeClassTr.CODE_CLASS_TR;
@@ -28,7 +29,6 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import ch.difty.scipamato.common.DateTimeService;
-import ch.difty.scipamato.common.TranslationUtils;
 import ch.difty.scipamato.common.config.ApplicationProperties;
 import ch.difty.scipamato.common.persistence.GenericFilterConditionMapper;
 import ch.difty.scipamato.common.persistence.JooqSortMapper;
@@ -456,12 +456,12 @@ public class JooqSearchOrderRepo extends
         @NotNull String languageCode) {
         return getDsl()
             .select(CODE.CODE_.as("C_ID"), DSL
-                    .coalesce(CODE_TR.NAME, TranslationUtils.NOT_TRANSL)
+                    .coalesce(CODE_TR.NAME, NOT_TRANSL)
                     .as("C_NAME"), CODE_TR.COMMENT.as("C_COMMENT"), CODE.INTERNAL.as("C_INTERNAL"),
                 CODE_CLASS.ID.as("CC_ID"), DSL
-                    .coalesce(CODE_CLASS_TR.NAME, TranslationUtils.NOT_TRANSL)
+                    .coalesce(CODE_CLASS_TR.NAME, NOT_TRANSL)
                     .as("CC_NAME"), DSL
-                    .coalesce(CODE_CLASS_TR.DESCRIPTION, TranslationUtils.NOT_TRANSL)
+                    .coalesce(CODE_CLASS_TR.DESCRIPTION, NOT_TRANSL)
                     .as("CC_DESCRIPTION"), CODE.SORT)
             .from(SEARCH_CONDITION_CODE)
             .join(SEARCH_CONDITION)

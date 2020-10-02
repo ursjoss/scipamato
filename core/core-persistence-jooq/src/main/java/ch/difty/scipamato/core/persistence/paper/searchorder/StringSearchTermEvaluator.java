@@ -1,5 +1,7 @@
 package ch.difty.scipamato.core.persistence.paper.searchorder;
 
+import static ch.difty.scipamato.common.persistence.TranslationUtilsKt.deCamelCase;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,7 +12,7 @@ import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.impl.DSL;
 
-import ch.difty.scipamato.common.TranslationUtils;
+import ch.difty.scipamato.common.persistence.TranslationUtilsKt;
 import ch.difty.scipamato.core.entity.search.StringSearchTerm;
 import ch.difty.scipamato.core.entity.search.StringSearchTerm.Token;
 import ch.difty.scipamato.core.persistence.ConditionalSupplier;
@@ -31,9 +33,9 @@ public class StringSearchTermEvaluator implements SearchTermEvaluator<StringSear
 
     public StringSearchTermEvaluator() {
         methodFields.addAll(Stream
-            .of(METHODS, "methodStudyDesign", "populationPlace", "methodOutcome", "exposurePollutant",
-                "exposureAssessment", "methodStatistics", "methodConfounders")
-            .map(TranslationUtils.INSTANCE::deCamelCase)
+            .of(METHODS, "methodStudyDesign", "populationPlace", "methodOutcome", "exposurePollutant", "exposureAssessment", "methodStatistics",
+                "methodConfounders")
+            .map(TranslationUtilsKt::deCamelCase)
             .map(DSL::field)
             .collect(Collectors.toList()));
     }
@@ -43,19 +45,18 @@ public class StringSearchTermEvaluator implements SearchTermEvaluator<StringSear
     public Condition evaluate(@NotNull final StringSearchTerm searchTerm) {
         final ConditionalSupplier conditions = new ConditionalSupplier();
         for (final Token token : searchTerm.getTokens()) {
-            final String fieldName = TranslationUtils.INSTANCE.deCamelCase(searchTerm.getFieldName());
+            final String fieldName = deCamelCase(searchTerm.getFieldName());
             addToConditions(conditions, token, DSL.field(fieldName), DSL.val(token.sqlData));
         }
         return conditions.combineWithAnd();
     }
 
-    private void addToConditions(final ConditionalSupplier cs, final Token tk, final Field<Object> field,
-        final Field<String> value) {
+    private void addToConditions(final ConditionalSupplier cs, final Token tk, final Field<Object> field, final Field<String> value) {
         distinguishConditions(cs, tk, field, value, tk.type.negate);
     }
 
-    private void distinguishConditions(final ConditionalSupplier cs, final Token tk, final Field<Object> field,
-        final Field<String> value, final boolean negate) {
+    private void distinguishConditions(final ConditionalSupplier cs, final Token tk, final Field<Object> field, final Field<String> value,
+        final boolean negate) {
         switch (tk.type.matchType) {
         case NONE:
             break;
@@ -80,8 +81,7 @@ public class StringSearchTermEvaluator implements SearchTermEvaluator<StringSear
         }
     }
 
-    private void containsCondition(final ConditionalSupplier cs, final Field<Object> field, final Field<String> value,
-        final boolean negate) {
+    private void containsCondition(final ConditionalSupplier cs, final Field<Object> field, final Field<String> value, final boolean negate) {
         if (METHODS.equalsIgnoreCase(field.getName())) {
             ConditionalSupplier csSub = new ConditionalSupplier();
             for (final Field<Object> mf : methodFields)
@@ -100,8 +100,7 @@ public class StringSearchTermEvaluator implements SearchTermEvaluator<StringSear
         }
     }
 
-    private void equalsCondition(final ConditionalSupplier cs, final Field<Object> field, final Field<String> value,
-        final boolean negate) {
+    private void equalsCondition(final ConditionalSupplier cs, final Field<Object> field, final Field<String> value, final boolean negate) {
         if (METHODS.equalsIgnoreCase(field.getName())) {
             ConditionalSupplier csSub = new ConditionalSupplier();
             for (final Field<Object> mf : methodFields)
@@ -112,8 +111,7 @@ public class StringSearchTermEvaluator implements SearchTermEvaluator<StringSear
         }
     }
 
-    private void likeCondition(final ConditionalSupplier cs, final Field<Object> field, final Field<String> value,
-        final boolean negate) {
+    private void likeCondition(final ConditionalSupplier cs, final Field<Object> field, final Field<String> value, final boolean negate) {
         if (METHODS.equalsIgnoreCase(field.getName())) {
             ConditionalSupplier csSub = new ConditionalSupplier();
             for (final Field<Object> mf : methodFields) {
@@ -133,8 +131,7 @@ public class StringSearchTermEvaluator implements SearchTermEvaluator<StringSear
         }
     }
 
-    private void regexCondition(final ConditionalSupplier cs, final Field<Object> field, final Field<String> value,
-        final boolean negate) {
+    private void regexCondition(final ConditionalSupplier cs, final Field<Object> field, final Field<String> value, final boolean negate) {
         if (METHODS.equalsIgnoreCase(field.getName())) {
             ConditionalSupplier csSub = new ConditionalSupplier();
             for (final Field<Object> mf : methodFields) {

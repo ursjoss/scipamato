@@ -1,5 +1,6 @@
 package ch.difty.scipamato.publ.persistence.codeclass;
 
+import static ch.difty.scipamato.common.persistence.TranslationUtilsKt.trimLanguageCode;
 import static ch.difty.scipamato.publ.db.tables.CodeClass.CODE_CLASS;
 
 import java.util.List;
@@ -10,7 +11,6 @@ import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
-import ch.difty.scipamato.common.TranslationUtils;
 import ch.difty.scipamato.publ.entity.CodeClass;
 
 @Repository
@@ -27,7 +27,7 @@ public class JooqCodeClassRepo implements CodeClassRepository {
     @Override
     @Cacheable
     public List<CodeClass> find(@NotNull final String languageCode) {
-        final String lang = TranslationUtils.INSTANCE.trimLanguageCode(languageCode);
+        final String lang = trimLanguageCode(languageCode);
         // skipping the audit fields
         return dslContext
             .select(CODE_CLASS.CODE_CLASS_ID, CODE_CLASS.LANG_CODE, CODE_CLASS.NAME, CODE_CLASS.DESCRIPTION)
