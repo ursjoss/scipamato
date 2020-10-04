@@ -20,7 +20,7 @@ object Lib {
     private const val wicketJqueryUiVersion = "9.0.0"
     private const val wicketBootstrapVersion = "4.0.0"
     private const val jasperReportVersion = "6.14.0"
-    private const val krisVersion = "0.2.5"
+    private const val krisVersion = "0.2.6"
     const val jooqVersion = "3.13.5"
 
     private const val kotlinLoggingVersion = "2.0.3"
