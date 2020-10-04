@@ -2,7 +2,6 @@ package ch.difty.scipamato.common.persistence.paging
 
 import ch.difty.scipamato.common.persistence.paging.Sort.Direction
 import ch.difty.scipamato.common.persistence.paging.Sort.SortProperty
-import org.amshove.kluent.invoking
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeFalse
 import org.amshove.kluent.shouldBeNull
@@ -11,8 +10,6 @@ import org.amshove.kluent.shouldContain
 import org.amshove.kluent.shouldHaveSize
 import org.amshove.kluent.shouldNotBeEqualTo
 import org.amshove.kluent.shouldNotContain
-import org.amshove.kluent.shouldThrow
-import org.amshove.kluent.withMessage
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
@@ -32,19 +29,6 @@ internal class SortTest {
         sort = Sort(sortProperties)
     }
 
-    @Test
-    fun degenerateConstruction_withNoSortProperties_throws() {
-        invoking { Sort(emptyList()) } shouldThrow
-            IllegalArgumentException::class withMessage "sortProperties can't be empty."
-    }
-
-    @Test
-    fun degenerateConstruction_withEmptyPropertyNames_throws() {
-
-        invoking { Sort(Direction.ASC) } shouldThrow
-            IllegalArgumentException::class withMessage "propertyNames can't be empty."
-    }
-
     private fun assertSortProperty(dir: Direction, propertyNames: Array<String>) {
         val sort = Sort(dir, *propertyNames)
 
@@ -52,6 +36,11 @@ internal class SortTest {
 
         for (sp in sort)
             sp.direction shouldBeEqualTo dir
+    }
+
+    @Test
+    fun creatingSortForNoProperties_returnsEmptyIterator() {
+        assertSortProperty(Direction.ASC, emptyArray())
     }
 
     @Test

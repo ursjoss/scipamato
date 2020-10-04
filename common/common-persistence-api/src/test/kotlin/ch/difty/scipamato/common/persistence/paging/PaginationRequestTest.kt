@@ -26,15 +26,15 @@ internal class PaginationRequestTest {
         invoking { PaginationRequest(0, 0) } shouldThrow IllegalArgumentException::class
     }
 
-    private fun assertPaginationRequest(pc: PaginationContext, offSet: Int, pageSize: Int, fooSort: String?) {
+    private fun assertPaginationRequest(pc: PaginationContext, offSet: Int, pageSize: Int, sort: String?) {
         pc.offset shouldBeEqualTo offSet
         pc.pageSize shouldBeEqualTo pageSize
-        if (fooSort != null) {
+        if (sort != null) {
             val s = pc.sort
-            s.getSortPropertyFor("foo").toString() shouldBeEqualTo fooSort
+            s.getSortPropertyFor("foo").toString() shouldBeEqualTo sort
             s.getSortPropertyFor("bar").shouldBeNull()
         } else {
-            pc.sort.shouldBeNull()
+            pc.sort.iterator().hasNext().shouldBeFalse()
         }
     }
 
@@ -44,7 +44,7 @@ internal class PaginationRequestTest {
         pr = PaginationRequest(Direction.DESC, "foo")
 
         assertPaginationRequest(pr, 0, Integer.MAX_VALUE, sort)
-        pr.toString() shouldBeEqualTo "Pagination request [offset: 0, size 2147483647, sort: foo: DESC]"
+        pr.toString() shouldBeEqualTo "PaginationRequest(offset=0, pageSize=2147483647, sort=foo: DESC)"
     }
 
     @Test
@@ -53,7 +53,7 @@ internal class PaginationRequestTest {
         pr = PaginationRequest(0, 10, Direction.DESC, "foo")
 
         assertPaginationRequest(pr, 0, 10, sort)
-        pr.toString() shouldBeEqualTo "Pagination request [offset: 0, size 10, sort: foo: DESC]"
+        pr.toString() shouldBeEqualTo "PaginationRequest(offset=0, pageSize=10, sort=foo: DESC)"
     }
 
     @Test
@@ -62,7 +62,7 @@ internal class PaginationRequestTest {
         pr = PaginationRequest(24, 12, Direction.ASC, "foo")
 
         assertPaginationRequest(pr, 24, 12, sort)
-        pr.toString() shouldBeEqualTo "Pagination request [offset: 24, size 12, sort: foo: ASC]"
+        pr.toString() shouldBeEqualTo "PaginationRequest(offset=24, pageSize=12, sort=foo: ASC)"
     }
 
     @Test
@@ -70,7 +70,7 @@ internal class PaginationRequestTest {
         pr = PaginationRequest(6, 2)
 
         assertPaginationRequest(pr, 6, 2, null)
-        pr.toString() shouldBeEqualTo "Pagination request [offset: 6, size 2, sort: null]"
+        pr.toString() shouldBeEqualTo "PaginationRequest(offset=6, pageSize=2, sort=)"
     }
 
     @Test

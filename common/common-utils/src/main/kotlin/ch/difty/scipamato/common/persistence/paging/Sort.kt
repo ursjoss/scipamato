@@ -16,7 +16,6 @@ class Sort : Iterable<SortProperty>, Serializable {
      * Instantiate [Sort] with predefined [sortProperties]
      */
     constructor(sortProperties: List<SortProperty>) {
-        require(sortProperties.isNotEmpty()) { "sortProperties can't be empty." }
         this.sortProperties = ArrayList(sortProperties.size)
         this.sortProperties.addAll(sortProperties)
     }
@@ -25,7 +24,6 @@ class Sort : Iterable<SortProperty>, Serializable {
      * Instantiate [Sort] with various [propertyNames] all to be sorted in the same [direction]
      */
     constructor(direction: Direction, vararg propertyNames: String) {
-        require(propertyNames.isNotEmpty()) { "propertyNames can't be empty." }
         sortProperties = ArrayList(propertyNames.size)
         propertyNames.forEach {
             sortProperties.add(SortProperty(it, direction))

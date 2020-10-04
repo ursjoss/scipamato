@@ -22,14 +22,14 @@ open class TestApplication {
 
 @Component
 class TestApplicationProperties : ApplicationProperties {
-    override fun getBuildVersion() = "0.0.0"
-    override fun getDefaultLocalization() = "en"
-    override fun getBrand() = "SciPaMaTo"
-    override fun getTitleOrBrand() = "SciPaMaTo"
-    override fun getPubmedBaseUrl() = "https://pubmed/"
-    override fun getCmsUrlSearchPage() = "http://localhost:8081/"
-    override fun getRedirectFromPort() = 8080
-    override fun getMultiSelectBoxActionBoxWithMoreEntriesThan() = 4
+    override val buildVersion get() = "0.0.0"
+    override val defaultLocalization get() = "en"
+    override val brand get() = "SciPaMaTo"
+    override val titleOrBrand get() = "SciPaMaTo"
+    override val pubmedBaseUrl get() = "https://pubmed/"
+    override val cmsUrlSearchPage get() = "http://localhost:8081/"
+    override val redirectFromPort get() = 8080
+    override val multiSelectBoxActionBoxWithMoreEntriesThan get() = 4
 }
 
 @Primary
