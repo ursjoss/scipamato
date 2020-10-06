@@ -13,23 +13,24 @@ internal class PaperReviewTest : JasperEntityTest() {
 
     private lateinit var pr: PaperReview
 
-    private fun newReportHeaderFields(): ReportHeaderFields = ReportHeaderFields
-        .builder("", BRAND)
-        .numberLabel(NUMBER_LABEL)
-        .authorYearLabel(AUTHOR_YEAR_LABEL)
-        .populationPlaceLabel(POPULATION_PLACE_LABEL)
-        .populationParticipantsLabel(POPULATION_PARTICIPANTS_LABEL)
-        .methodOutcomeLabel(METHOD_OUTCOME_LABEL)
-        .exposurePollutantLabel(EXPOSURE_POLLUTANT_LABEL)
-        .methodStudyDesignLabel(METHOD_STUDY_DESIGN_LABEL)
-        .populationDurationLabel(POPULATION_DURATION_LABEL)
-        .exposureAssessmentLabel(EXPOSURE_ASSESSMENT_LABEL)
-        .resultExposureRangeLabel(RESULT_EXPOSURE_RANGE_LABEL)
-        .methodConfoundersLabel(METHOD_CONFOUNDERS_LABEL)
-        .resultEffectEstimateLabel(RESULT_EFFECT_ESTIMATE_LABEL)
-        .conclusionLabel(CONCLUSION_LABEL)
-        .commentLabel(COMMENT_LABEL)
-        .build()
+    private fun newReportHeaderFields() = ReportHeaderFields(
+        headerPart = "",
+        brand = BRAND,
+        numberLabel = NUMBER_LABEL,
+        authorYearLabel = AUTHOR_YEAR_LABEL,
+        populationPlaceLabel = POPULATION_PLACE_LABEL,
+        populationParticipantsLabel = POPULATION_PARTICIPANTS_LABEL,
+        methodOutcomeLabel = METHOD_OUTCOME_LABEL,
+        exposurePollutantLabel = EXPOSURE_POLLUTANT_LABEL,
+        methodStudyDesignLabel = METHOD_STUDY_DESIGN_LABEL,
+        populationDurationLabel = POPULATION_DURATION_LABEL,
+        exposureAssessmentLabel = EXPOSURE_ASSESSMENT_LABEL,
+        resultExposureRangeLabel = RESULT_EXPOSURE_RANGE_LABEL,
+        methodConfoundersLabel = METHOD_CONFOUNDERS_LABEL,
+        resultEffectEstimateLabel = RESULT_EFFECT_ESTIMATE_LABEL,
+        conclusionLabel = CONCLUSION_LABEL,
+        commentLabel = COMMENT_LABEL,
+    )
 
     @Test
     fun instantiatingWithValidFieldsAndValidLabels() {
@@ -50,13 +51,6 @@ internal class PaperReviewTest : JasperEntityTest() {
         pr.conclusionLabel shouldBeEqualTo CONCLUSION_LABEL
         pr.brand shouldBeEqualTo BRAND
         pr.createdBy shouldBeEqualTo CREATED_BY
-    }
-
-    @Test
-    fun instantiatingWithNullNumber_returnsBlank() {
-        p.number = null
-        pr = PaperReview(p, rhf)
-        pr.number shouldBeEqualTo ""
     }
 
     @Test
@@ -136,6 +130,7 @@ internal class PaperReviewTest : JasperEntityTest() {
         EqualsVerifier.simple()
             .forClass(PaperReview::class.java)
             .withRedefinedSuperclass()
+            .withOnlyTheseFields("number")
             .verify()
     }
 }

@@ -26,9 +26,10 @@ internal class PaperLiteratureReviewReportResourceReferenceTest : JasperReportRe
         val rr: JasperReportResourceReference = object : JasperReportResourceReference(
             PaperLiteratureReviewReportResourceReference::class.java, "baz", false
         ) {
-            public override fun getResourceStreamFromResource(): IResourceStream? = null
+            override val resourceStreamFromResource: IResourceStream?
+                get() = null
         }
-        invoking { rr.report } shouldThrow
+        invoking { rr.getReport() } shouldThrow
             JasperReportException::class withMessage "Unable to locate resource stream for jasper file 'baz.jrxml'"
     }
 
@@ -37,11 +38,13 @@ internal class PaperLiteratureReviewReportResourceReferenceTest : JasperReportRe
         val rr: JasperReportResourceReference = object : JasperReportResourceReference(
             PaperLiteratureReviewReportResourceReference::class.java, "baz", false
         ) {
-            public override fun getResourceStreamFromResource(): IResourceStream = mockk<IResourceStream>()
-            public override fun getInputStream(rs: IResourceStream): InputStream =
+            override val resourceStreamFromResource: IResourceStream
+                get() = mockk()
+
+            override fun getInputStream(rs: IResourceStream): InputStream =
                 throw ResourceStreamNotFoundException("boom")
         }
-        invoking { rr.report } shouldThrow JasperReportException::class withMessage
+        invoking { rr.getReport() } shouldThrow JasperReportException::class withMessage
             "org.apache.wicket.util.resource.ResourceStreamNotFoundException: boom"
     }
 
@@ -50,9 +53,9 @@ internal class PaperLiteratureReviewReportResourceReferenceTest : JasperReportRe
         val rr: JasperReportResourceReference = object : JasperReportResourceReference(
             PaperLiteratureReviewReportResourceReference::class.java, "baz", false
         ) {
-            public override fun compileReport(): Unit = throw JRException("boom")
+            override fun compileReport(): Unit = throw JRException("boom")
         }
-        invoking { rr.report } shouldThrow JasperReportException::class withMessage
+        invoking { rr.getReport() } shouldThrow JasperReportException::class withMessage
             "net.sf.jasperreports.engine.JRException: boom"
     }
 }

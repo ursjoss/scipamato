@@ -8,22 +8,23 @@ internal class CoreShortFieldWithEmptyMainFieldConcatenatorTest {
 
     private val sfc: CoreShortFieldConcatenator = CoreShortFieldWithEmptyMainFieldConcatenator()
     private val p = Paper()
-    private val rhf = ReportHeaderFields
-        .builder("hp", "b")
-        .methodStudyDesignLabel("msdl")
-        .methodOutcomeLabel("mol")
-        .populationPlaceLabel("ppll")
-        .exposurePollutantLabel("epl")
-        .exposureAssessmentLabel("eal")
-        .methodStatisticsLabel("msl")
-        .methodConfoundersLabel("mcl")
-        .populationDurationLabel("pdl")
-        .populationParticipantsLabel("ppal")
-        .resultMeasuredOutcomeLabel("rmol")
-        .resultEffectEstimateLabel("reel")
-        .resultExposureRangeLabel("rerl")
-        .conclusionLabel("ccl")
-        .build()
+    private val rhf = ReportHeaderFields(
+        headerPart = "hp",
+        brand = "b",
+        methodStudyDesignLabel = "msdl",
+        methodOutcomeLabel = "mol",
+        populationPlaceLabel = "ppll",
+        exposurePollutantLabel = "epl",
+        exposureAssessmentLabel = "eal",
+        methodStatisticsLabel = "msl",
+        methodConfoundersLabel = "mcl",
+        populationDurationLabel = "pdl",
+        populationParticipantsLabel = "ppal",
+        resultMeasuredOutcomeLabel = "rmol",
+        resultEffectEstimateLabel = "reel",
+        resultExposureRangeLabel = "rerl",
+        conclusionLabel = "ccl",
+    )
 
     @Test
     fun methods_withNonNullMethod_returnsMethod() {

@@ -16,40 +16,39 @@ internal class ReportHeaderFieldsTest {
 
     @Test
     fun makeMinimalReportHeaderFields() {
-        val rhf = ReportHeaderFields
-            .builder("headerPart", "brand")
-            .build()
+        val rhf = ReportHeaderFields("headerPart", "brand")
         rhf.headerPart shouldBeEqualTo "headerPart"
         rhf.brand shouldBeEqualTo "brand"
     }
 
     @Test
     fun makeReportHeaderFields() {
-        val rhf = ReportHeaderFields
-            .builder("headerPart1", "brand1")
-            .goalsLabel("g")
-            .methodsLabel("m")
-            .methodOutcomeLabel("mo")
-            .resultMeasuredOutcomeLabel("rmo")
-            .methodStudyDesignLabel("msd")
-            .populationPlaceLabel("pp")
-            .populationParticipantsLabel("pap")
-            .populationDurationLabel("pd")
-            .exposurePollutantLabel("ep")
-            .exposureAssessmentLabel("ea")
-            .resultExposureRangeLabel("rer")
-            .methodStatisticsLabel("ms")
-            .methodConfoundersLabel("mc")
-            .resultEffectEstimateLabel("ree")
-            .conclusionLabel("cc")
-            .commentLabel("c")
-            .populationLabel("p")
-            .resultLabel("r")
-            .captionLabel("cap")
-            .numberLabel("n")
-            .authorYearLabel("ay")
-            .pubmedBaseUrl("pbu/")
-            .build()
+        val rhf = ReportHeaderFields(
+            headerPart = "headerPart1",
+            brand = "brand1",
+            goalsLabel = "g",
+            methodsLabel = "m",
+            methodOutcomeLabel = "mo",
+            resultMeasuredOutcomeLabel = "rmo",
+            methodStudyDesignLabel = "msd",
+            populationPlaceLabel = "pp",
+            populationParticipantsLabel = "pap",
+            populationDurationLabel = "pd",
+            exposurePollutantLabel = "ep",
+            exposureAssessmentLabel = "ea",
+            resultExposureRangeLabel = "rer",
+            methodStatisticsLabel = "ms",
+            methodConfoundersLabel = "mc",
+            resultEffectEstimateLabel = "ree",
+            conclusionLabel = "cc",
+            commentLabel = "c",
+            populationLabel = "p",
+            resultLabel = "r",
+            captionLabel = "cap",
+            numberLabel = "n",
+            authorYearLabel = "ay",
+            pubmedBaseUrl = "pbu/",
+        )
         rhf.headerPart shouldBeEqualTo "headerPart1"
         rhf.brand shouldBeEqualTo "brand1"
         rhf.goalsLabel shouldBeEqualTo "g"

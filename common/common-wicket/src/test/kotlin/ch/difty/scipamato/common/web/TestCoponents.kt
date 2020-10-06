@@ -35,8 +35,8 @@ class TestApplicationProperties : ApplicationProperties {
 @Primary
 @Component
 class TestWebSessionFacade : ScipamatoWebSessionFacade {
-    override fun getLanguageCode() = "de"
-    override fun getPaperIdManager() = LongNavigator()
+    override val languageCode get() = "de"
+    override val paperIdManager get() = LongNavigator()
     override fun hasAtLeastOneRoleOutOf(vararg roles: String) = true
 }
 

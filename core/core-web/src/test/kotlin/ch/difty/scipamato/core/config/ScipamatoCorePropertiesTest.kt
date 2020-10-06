@@ -9,16 +9,16 @@ import org.junit.jupiter.api.Test
 @Suppress("SpellCheckingInspection")
 internal class ScipamatoCorePropertiesTest {
 
-    private val scipamatoProp = ScipamatoProperties().apply {
-        brand = "brand"
-        pageTitle = "pt"
-        defaultLocalization = "dl"
-        pubmedBaseUrl = "pbUrl"
-        paperNumberMinimumToBeRecycled = 100
-        redirectFromPort = 5678
-        pubmedApiKey = "ak"
-        risExporter = RisExporterStrategy.DISTILLERSR.name
-    }
+    private val scipamatoProp = ScipamatoProperties(
+        brand = "brand",
+        pageTitle = "pt",
+        defaultLocalization = "dl",
+        pubmedBaseUrl = "pbUrl",
+        paperNumberMinimumToBeRecycled = 100,
+        redirectFromPort = 5678,
+        pubmedApiKey = "ak",
+        risExporter = RisExporterStrategy.DISTILLERSR.name,
+    )
 
     private val mavenProp = MavenProperties().apply {
         version = "0.0.1-SNAPSHOT"

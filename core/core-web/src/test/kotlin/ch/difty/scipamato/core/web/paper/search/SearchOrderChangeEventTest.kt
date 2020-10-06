@@ -68,16 +68,6 @@ internal class SearchOrderChangeEventTest {
     }
 
     @Test
-    fun canOverrideTarget() {
-        e = SearchOrderChangeEvent(targetDummy)
-        e.target shouldBeEqualTo targetDummy
-
-        val targetDummy2 = AjaxRequestTargetSpy()
-        e.target = targetDummy2
-        e.target shouldBeEqualTo targetDummy2
-    }
-
-    @Test
     fun equals() {
         EqualsVerifier.simple()
             .forClass(SearchOrderChangeEvent::class.java)

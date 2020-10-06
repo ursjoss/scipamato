@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.web.keyword
 
-import ch.difty.scipamato.common.web.AbstractPanel
+import ch.difty.scipamato.common.web.LABEL_RESOURCE_TAG
 import ch.difty.scipamato.core.entity.keyword.KeywordDefinition
 import ch.difty.scipamato.core.entity.keyword.KeywordTranslation
 import ch.difty.scipamato.core.web.common.DefinitionEditTranslationPanel
@@ -17,7 +17,7 @@ import org.apache.wicket.model.StringResourceModel
 
 internal abstract class KeywordEditTranslationPanel(
     id: String,
-    model: IModel<KeywordDefinition?>?
+    model: IModel<KeywordDefinition?>?,
 ) : DefinitionEditTranslationPanel<KeywordDefinition?, KeywordTranslation>(id, model) {
 
     override fun addColumns(item: Item<KeywordTranslation>) {
@@ -38,9 +38,10 @@ internal abstract class KeywordEditTranslationPanel(
         }
     }.apply<AjaxLink<Void>> {
         add(ButtonBehavior())
-        body = StringResourceModel("button." + id + AbstractPanel.LABEL_RESOURCE_TAG)
+        body = StringResourceModel("button.$id$LABEL_RESOURCE_TAG")
     }
 
+    @Suppress("SameParameterValue")
     private fun newRemoveLink(id: String, item: Item<KeywordTranslation>): AjaxLink<Void> =
         object : AjaxLink<Void>(id) {
             override fun onClick(target: AjaxRequestTarget) {
@@ -51,9 +52,13 @@ internal abstract class KeywordEditTranslationPanel(
             }
         }.apply<AjaxLink<Void>> {
             add(ButtonBehavior())
-            body = StringResourceModel("button." + id + AbstractPanel.LABEL_RESOURCE_TAG)
+            body = StringResourceModel("button.$id$LABEL_RESOURCE_TAG")
             add(ConfirmationBehavior())
         }
 
     protected abstract val form: Form<*>
+
+    companion object {
+        private const val serialVersionUID = 1L
+    }
 }

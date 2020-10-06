@@ -30,6 +30,7 @@ import org.junit.jupiter.api.Test
 import java.time.LocalDate
 import java.util.ArrayList
 
+@Suppress("unused")
 internal class NewStudyListPageTest : BasePageTest<NewStudyListPage>() {
 
     @MockkBean
@@ -208,9 +209,10 @@ internal class NewStudyListPageTest : BasePageTest<NewStudyListPage>() {
             every { isNavbarVisibleByDefault } returns false
         }
         val page: NewStudyListPage = object : NewStudyListPage(PageParameters()) {
-            override fun getProperties(): ApplicationPublicProperties {
-                return applicationProperties
-            }
+            override val properties: ApplicationPublicProperties
+                get() {
+                    return applicationProperties
+                }
         }
         val icon = page.chooseIcon(GlyphIconType.arrowright, IcoMoonIconType.arrow_right)
         icon shouldBeEqualTo IcoMoonIconType.arrow_right

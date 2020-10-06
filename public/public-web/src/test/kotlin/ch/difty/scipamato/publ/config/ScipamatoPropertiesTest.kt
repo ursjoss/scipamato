@@ -29,23 +29,20 @@ internal class ScipamatoPropertiesTest {
         sp.redirectFromPort.shouldBeNull()
     }
 
-    @get:Test
-    val isCommercialFontPresent: Unit
-        get() {
-            sp.isCommercialFontPresent.shouldBeFalse()
-        }
+    @Test
+    fun isCommercialFontPresent() {
+        sp.commercialFontPresent.shouldBeFalse()
+    }
 
-    @get:Test
-    val isLessUsedOverCss: Unit
-        get() {
-            sp.isLessUsedOverCss.shouldBeFalse()
-        }
+    @Test
+    fun isLessUsedOverCss() {
+        sp.lessUsedOverCss.shouldBeFalse()
+    }
 
-    @get:Test
-    val isNavbarVisibleByDefault: Unit
-        get() {
-            sp.isNavbarVisibleByDefault.shouldBeFalse()
-        }
+    @Test
+    fun isNavbarVisibleByDefault() {
+        sp.navbarVisibleByDefault.shouldBeFalse()
+    }
 
     @Test
     fun cmsUrlSearchPage() {
@@ -64,7 +61,7 @@ internal class ScipamatoPropertiesTest {
 
     @Test
     fun responsiveIFrameSupport_isDisabledByDefault() {
-        sp.isResponsiveIframeSupportEnabled.shouldBeFalse()
+        sp.responsiveIframeSupportEnabled.shouldBeFalse()
     }
 
     @Test

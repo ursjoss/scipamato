@@ -27,12 +27,11 @@ internal class SimpleFilterPanelTest : PanelTest<SimpleFilterPanel>() {
         assertLabeledTextField(PANEL, "titleSearch")
     }
 
-    private fun makePanelSpy(): SimpleFilterPanel {
-        return object : SimpleFilterPanel(Companion.PANEL, Model.of(PublicPaperFilter()), "en") {
-            public override fun handleChangeEvent(event: IEvent<*>, component: FormComponent<*>) {
-                super.handleChangeEvent(event, component)
-                eventHandlerCallCount++
-            }
+    private fun makePanelSpy(): SimpleFilterPanel = object :
+        SimpleFilterPanel(PANEL, Model.of(PublicPaperFilter()), "en") {
+        override fun handleChangeEvent(event: IEvent<*>, component: FormComponent<*>) {
+            super.handleChangeEvent(event, component)
+            eventHandlerCallCount++
         }
     }
 

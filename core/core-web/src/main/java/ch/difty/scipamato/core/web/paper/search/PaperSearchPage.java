@@ -1,5 +1,7 @@
 package ch.difty.scipamato.core.web.paper.search;
 
+import static ch.difty.scipamato.common.web.WicketUtilsKt.LABEL_TAG;
+import static ch.difty.scipamato.common.web.WicketUtilsKt.PANEL_HEADER_RESOURCE_TAG;
 import static ch.difty.scipamato.core.web.CorePageParameters.*;
 
 import java.util.Objects;
@@ -52,7 +54,7 @@ import ch.difty.scipamato.core.web.paper.result.ResultPanel;
 @MountPath("search")
 @Slf4j
 @AuthorizeInstantiation({ Roles.USER, Roles.ADMIN, Roles.VIEWER })
-@SuppressWarnings({ "SameParameterValue", "SpellCheckingInspection" })
+@SuppressWarnings({ "SameParameterValue", "SpellCheckingInspection", "unused" })
 public class PaperSearchPage extends BasePage<SearchOrder> {
 
     private static final long serialVersionUID = 1L;
@@ -116,8 +118,7 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
 
     private void trySettingSearchOrderModelFromDb() {
         final Long searchOrderId = searchOrderIdFromPageParameters();
-        final Optional<SearchOrder> so =
-            searchOrderId != null ? searchOrderService.findById(searchOrderId) : Optional.empty();
+        final Optional<SearchOrder> so = searchOrderId != null ? searchOrderService.findById(searchOrderId) : Optional.empty();
         so.ifPresent(this::setShowExcluded);
         setDefaultModel(Model.of(so.orElse(makeEmptyModelObject())));
     }
@@ -360,12 +361,10 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
 
     private void addSubPanelsAsTarget(final SearchOrderChangeEvent soce) {
         final AjaxRequestTarget target = soce.getTarget();
-        if (target != null) {
-            target.add(searchOrderSelectorPanel);
-            target.add(searchOrderPanel);
-            target.add(resultPanelLabel);
-            target.add(resultPanel);
-        }
+        target.add(searchOrderSelectorPanel);
+        target.add(searchOrderPanel);
+        target.add(resultPanelLabel);
+        target.add(resultPanel);
     }
 
     /**

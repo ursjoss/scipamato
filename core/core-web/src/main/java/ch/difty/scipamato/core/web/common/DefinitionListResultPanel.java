@@ -24,6 +24,8 @@ import ch.difty.scipamato.core.web.DefinitionProvider;
 public abstract class DefinitionListResultPanel<T extends DefinitionEntity<?, ?>, F extends ScipamatoFilter, S extends DefinitionProviderService<T, F>, P extends DefinitionProvider<T, F, S>>
     extends BasePanel<T> {
 
+    private static final long serialVersionUID = 1L;
+
     private static final int    ROWS_PER_PAGE = 10;
     private static final String COLUMN_HEADER = "column.header.";
 
@@ -41,8 +43,7 @@ public abstract class DefinitionListResultPanel<T extends DefinitionEntity<?, ?>
     }
 
     private void makeAndQueueTable(final String id) {
-        final DataTable<T, String> results = new BootstrapDefaultDataTable<>(id, makeTableColumns(), dataProvider,
-            ROWS_PER_PAGE);
+        final DataTable<T, String> results = new BootstrapDefaultDataTable<>(id, makeTableColumns(), dataProvider, ROWS_PER_PAGE);
         results.setOutputMarkupId(true);
         results.add(new TableBehavior()
             .striped()
@@ -55,15 +56,14 @@ public abstract class DefinitionListResultPanel<T extends DefinitionEntity<?, ?>
 
     @NotNull
     protected PropertyColumn<T, String> makePropertyColumn(@NotNull final String propExpression) {
-        return new PropertyColumn<>(new StringResourceModel(COLUMN_HEADER + propExpression, this, null), propExpression,
-            propExpression);
+        return new PropertyColumn<>(new StringResourceModel(COLUMN_HEADER + propExpression, this, null), propExpression, propExpression);
     }
 
     @NotNull
     protected ClickablePropertyColumn<T, String> makeClickableColumn(@NotNull final String propExpression,
         @NotNull final SerializableConsumer<IModel<T>> consumer) {
-        return new ClickablePropertyColumn<>(new StringResourceModel(COLUMN_HEADER + propExpression, this, null),
-            propExpression, propExpression, consumer);
+        return new ClickablePropertyColumn<>(new StringResourceModel(COLUMN_HEADER + propExpression, this, null), propExpression, consumer,
+            propExpression);
     }
 
     @NotNull
@@ -71,8 +71,7 @@ public abstract class DefinitionListResultPanel<T extends DefinitionEntity<?, ?>
         @NotNull final SerializableFunction<T, Boolean> predicate) {
         final String trueLabel = new StringResourceModel(propExpression + ".true", this, null).getString();
         final String falseLabel = new StringResourceModel(propExpression + ".false", this, null).getString();
-        return new PropertyColumn<>(new StringResourceModel(COLUMN_HEADER + propExpression, this, null), propExpression,
-            propExpression) {
+        return new PropertyColumn<>(new StringResourceModel(COLUMN_HEADER + propExpression, this, null), propExpression, propExpression) {
 
             @Override
             public IModel<?> getDataModel(final IModel<T> rowModel) {

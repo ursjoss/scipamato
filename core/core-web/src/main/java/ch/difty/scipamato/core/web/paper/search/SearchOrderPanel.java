@@ -1,5 +1,7 @@
 package ch.difty.scipamato.core.web.paper.search;
 
+import static ch.difty.scipamato.common.web.WicketUtilsKt.LABEL_RESOURCE_TAG;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +40,7 @@ import ch.difty.scipamato.core.web.paper.PageFactory;
 import ch.difty.scipamato.core.web.paper.SearchConditionProvider;
 import ch.difty.scipamato.core.web.paper.SearchOrderChangeEvent;
 
-@SuppressWarnings({ "SameParameterValue", "WicketForgeJavaIdInspection" })
+@SuppressWarnings({ "SameParameterValue", "WicketForgeJavaIdInspection", "unused" })
 public class SearchOrderPanel extends BasePanel<SearchOrder> {
 
     private static final long serialVersionUID = 1L;
@@ -61,8 +63,7 @@ public class SearchOrderPanel extends BasePanel<SearchOrder> {
 
     private void queueForm(final String id) {
         queue(new Form<>(id));
-        queueNewButton("addSearchCondition", pageFactory.newPaperSearchCriteriaPage(),
-            () -> Model.of(new SearchCondition()));
+        queueNewButton("addSearchCondition", pageFactory.newPaperSearchCriteriaPage(), () -> Model.of(new SearchCondition()));
 
         SearchConditionProvider p = new SearchConditionProvider(
             new PropertyModel<>(getModel(), SearchOrder.SearchOrderFields.CONDITIONS.getFieldName()));
@@ -74,8 +75,7 @@ public class SearchOrderPanel extends BasePanel<SearchOrder> {
         queue(searchConditions);
     }
 
-    private void queueNewButton(String id,
-        SerializableBiFunction<IModel<SearchCondition>, Long, GenericWebPage<SearchCondition>> pageFunction,
+    private void queueNewButton(String id, SerializableBiFunction<IModel<SearchCondition>, Long, GenericWebPage<SearchCondition>> pageFunction,
         SerializableSupplier<IModel<SearchCondition>> modelProvider) {
         queue(new BootstrapAjaxButton(id, new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null), Type.Default) {
             private static final long serialVersionUID = 1L;
@@ -83,8 +83,7 @@ public class SearchOrderPanel extends BasePanel<SearchOrder> {
             @Override
             protected void onConfigure() {
                 super.onConfigure();
-                setEnabled(SearchOrderPanel.this.isSearchOrderIdDefined() && isEntitledToModify(
-                    SearchOrderPanel.this.getModelObject()));
+                setEnabled(SearchOrderPanel.this.isSearchOrderIdDefined() && isEntitledToModify(SearchOrderPanel.this.getModelObject()));
             }
 
             @Override
@@ -103,10 +102,9 @@ public class SearchOrderPanel extends BasePanel<SearchOrder> {
 
     private List<IColumn<SearchCondition, String>> makeTableColumns() {
         final List<IColumn<SearchCondition, String>> columns = new ArrayList<>();
-        columns.add(makeClickableColumn("displayValue", null,
-            pageFactory.setResponsePageToPaperSearchCriteriaPageConsumer(this), () -> getModelObject().getId()));
-        columns.add(
-            makeLinkIconColumn("remove", (IModel<SearchCondition> m) -> getModelObject().remove(m.getObject())));
+        columns.add(makeClickableColumn("displayValue", null, pageFactory.setResponsePageToPaperSearchCriteriaPageConsumer(this),
+            () -> getModelObject().getId()));
+        columns.add(makeLinkIconColumn("remove", (IModel<SearchCondition> m) -> getModelObject().remove(m.getObject())));
         return columns;
     }
 
@@ -114,15 +112,13 @@ public class SearchOrderPanel extends BasePanel<SearchOrder> {
         return searchOrder.getOwner() == getActiveUser().getId() || !searchOrder.isGlobal();
     }
 
-    private ClickablePropertyColumn2<SearchCondition, String, Long> makeClickableColumn(String propExpression,
-        String sortProperty, SerializableBiConsumer<IModel<SearchCondition>, Long> consumer,
-        SerializableSupplier<Long> supplier) {
+    private ClickablePropertyColumn2<SearchCondition, String, Long> makeClickableColumn(String propExpression, String sortProperty,
+        SerializableBiConsumer<IModel<SearchCondition>, Long> consumer, SerializableSupplier<Long> supplier) {
         final StringResourceModel displayModel = new StringResourceModel("column.header." + propExpression, this, null);
-        return new ClickablePropertyColumn2<>(displayModel, sortProperty, propExpression, consumer, supplier);
+        return new ClickablePropertyColumn2<>(displayModel, propExpression, consumer, supplier, sortProperty);
     }
 
-    private IColumn<SearchCondition, String> makeLinkIconColumn(String id,
-        SerializableConsumer<IModel<SearchCondition>> consumer) {
+    private IColumn<SearchCondition, String> makeLinkIconColumn(String id, SerializableConsumer<IModel<SearchCondition>> consumer) {
         final FontAwesome5IconType trash = FontAwesome5IconTypeBuilder
             .on(FontAwesome5IconTypeBuilder.FontAwesome5Solid.trash_alt)
             .fixedWidth()
@@ -135,21 +131,21 @@ public class SearchOrderPanel extends BasePanel<SearchOrder> {
                 return isEntitledToModify(getModelObject());
             }
 
+            @NotNull
             @Override
             protected IModel<String> createIconModel(@NotNull IModel<SearchCondition> rowModel) {
                 return Model.of(trash.cssClassName() + " text-danger");
             }
 
             @Override
-            protected void onClickPerformed(@NotNull AjaxRequestTarget target,
-                @NotNull IModel<SearchCondition> rowModel, @NotNull AjaxLink<Void> link) {
+            protected void onClickPerformed(@NotNull AjaxRequestTarget target, @NotNull IModel<SearchCondition> rowModel,
+                @NotNull AjaxLink<Void> link) {
                 if (isEntitledToModify(getModelObject())) {
                     consumer.accept(rowModel);
                     target.add(searchConditions);
-                    send(getPage(), Broadcast.BREADTH, new SearchOrderChangeEvent(target).withDroppedConditionId(
-                        rowModel
-                            .getObject()
-                            .getSearchConditionId()));
+                    send(getPage(), Broadcast.BREADTH, new SearchOrderChangeEvent(target).withDroppedConditionId(rowModel
+                        .getObject()
+                        .getSearchConditionId()));
                     info("Removed " + rowModel
                         .getObject()
                         .getDisplayValue());

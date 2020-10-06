@@ -23,13 +23,13 @@ internal class PaperLiteratureReviewPlusDataSourceTest : PaperDataSourceTest() {
 
     private val rhf = newReportHeaderFields()
 
-    private fun newReportHeaderFields(): ReportHeaderFields =
-        ReportHeaderFields
-            .builder("", BRAND)
-            .numberLabel(NUMBER_LABEL)
-            .captionLabel(CAPTION)
-            .pubmedBaseUrl(PUBMED_BASE_URL)
-            .build()
+    private fun newReportHeaderFields() = ReportHeaderFields(
+        headerPart = "",
+        brand = BRAND,
+        numberLabel = NUMBER_LABEL,
+        captionLabel = CAPTION,
+        pubmedBaseUrl = PUBMED_BASE_URL,
+    )
 
     public override fun setUpHook() {
         every { paperMock.number } returns NUMBER

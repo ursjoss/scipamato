@@ -71,8 +71,7 @@ public class UserListPage extends BasePage<Void> {
     private void makeAndQueueFilterForm(final String id) {
         queue(new FilterForm<>(id, dataProvider));
 
-        queueFieldAndLabel(new TextField<>(USER_NAME.getFieldName(),
-            PropertyModel.of(filter, UserFilter.UserFilterFields.NAME_MASK.getFieldName())));
+        queueFieldAndLabel(new TextField<>(USER_NAME.getFieldName(), PropertyModel.of(filter, UserFilter.UserFilterFields.NAME_MASK.getFieldName())));
         queueNewButton("newUser");
     }
 
@@ -85,8 +84,7 @@ public class UserListPage extends BasePage<Void> {
     }
 
     private void makeAndQueueTable(String id) {
-        final DataTable<User, String> results = new BootstrapDefaultDataTable<>(id, makeTableColumns(), dataProvider,
-            ROWS_PER_PAGE);
+        final DataTable<User, String> results = new BootstrapDefaultDataTable<>(id, makeTableColumns(), dataProvider, ROWS_PER_PAGE);
         results.setOutputMarkupId(true);
         results.add(new TableBehavior()
             .striped()
@@ -104,10 +102,9 @@ public class UserListPage extends BasePage<Void> {
         return columns;
     }
 
-    private ClickablePropertyColumn<User, String> makeClickableColumn(String propExpression,
-        SerializableConsumer<IModel<User>> consumer) {
-        return new ClickablePropertyColumn<>(new StringResourceModel(COLUMN_HEADER + propExpression, this, null),
-            propExpression, propExpression, consumer);
+    private ClickablePropertyColumn<User, String> makeClickableColumn(String propExpression, SerializableConsumer<IModel<User>> consumer) {
+        return new ClickablePropertyColumn<>(new StringResourceModel(COLUMN_HEADER + propExpression, this, null), propExpression, consumer,
+            propExpression);
     }
 
     private void onTitleClick(final IModel<User> userModel) {
@@ -121,17 +118,16 @@ public class UserListPage extends BasePage<Void> {
     }
 
     private PropertyColumn<User, String> makePropertyColumn(String propExpression) {
-        return new PropertyColumn<>(new StringResourceModel(COLUMN_HEADER + propExpression, this, null), propExpression,
-            propExpression) {
+        return new PropertyColumn<>(new StringResourceModel(COLUMN_HEADER + propExpression, this, null), propExpression, propExpression) {
+            private static final long serialVersionUID = -6075124056081316865L;
         };
     }
 
-    private PropertyColumn<User, String> makeBooleanPropertyColumn(String propExpression,
-        final SerializableFunction<User, Boolean> predicate) {
+    private PropertyColumn<User, String> makeBooleanPropertyColumn(String propExpression, final SerializableFunction<User, Boolean> predicate) {
         final String trueLabel = new StringResourceModel(propExpression + ".true", this, null).getString();
         final String falseLabel = new StringResourceModel(propExpression + ".false", this, null).getString();
-        return new PropertyColumn<>(new StringResourceModel(COLUMN_HEADER + propExpression, this, null), propExpression,
-            propExpression) {
+        return new PropertyColumn<>(new StringResourceModel(COLUMN_HEADER + propExpression, this, null), propExpression, propExpression) {
+            private static final long serialVersionUID = 406991980303131840L;
 
             @Override
             public IModel<?> getDataModel(final IModel<User> rowModel) {

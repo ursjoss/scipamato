@@ -22,15 +22,6 @@ internal class NewsletterChangeEventTest {
     }
 
     @Test
-    fun canOverrideTarget() {
-        e.target shouldBeEqualTo targetMock
-
-        val targetDummy2 = AjaxRequestTargetSpy()
-        e.target = targetDummy2
-        e.target shouldBeEqualTo targetDummy2
-    }
-
-    @Test
     fun equals() {
         EqualsVerifier.simple()
             .forClass(NewsletterChangeEvent::class.java)

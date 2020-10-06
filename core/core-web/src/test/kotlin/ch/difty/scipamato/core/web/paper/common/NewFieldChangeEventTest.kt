@@ -49,35 +49,23 @@ internal class NewFieldChangeEventTest {
 
     @Test
     fun usingWithId_doesAddId() {
-        e = NewFieldChangeEvent(targetSpy).withId("foo")
+        e = NewFieldChangeEvent(targetSpy, id = "foo")
         e.id shouldBeEqualTo "foo"
         e.markupId.shouldBeNull()
     }
 
     @Test
     fun usingWithMarkupId_doesAddMarkupId() {
-        e = NewFieldChangeEvent(targetSpy).withMarkupId("bar")
+        e = NewFieldChangeEvent(targetSpy, markupId = "bar")
         e.id.shouldBeNull()
         e.markupId shouldBeEqualTo "bar"
     }
 
     @Test
     fun usingWithIdAndMarkupId_doesAddBoth() {
-        e = NewFieldChangeEvent(targetSpy)
-            .withId("hups")
-            .withMarkupId("goo")
+        e = NewFieldChangeEvent(targetSpy, id = "hups", markupId = "goo")
         e.id shouldBeEqualTo "hups"
         e.markupId shouldBeEqualTo "goo"
-    }
-
-    @Test
-    fun canOverrideTarget() {
-        e = NewFieldChangeEvent(targetSpy)
-        e.target shouldBeEqualTo targetSpy
-
-        val targetDummy2 = AjaxRequestTargetSpy()
-        e.target = targetDummy2
-        e.target shouldBeEqualTo targetDummy2
     }
 
     @Test
@@ -90,9 +78,7 @@ internal class NewFieldChangeEventTest {
 
     @Test
     fun consideringAddingToTarget_withDifferingId_doesNotAddTarget() {
-        e = NewFieldChangeEvent(targetSpy)
-            .withId("otherId")
-            .withMarkupId("mId")
+        e = NewFieldChangeEvent(targetSpy, id = "otherId", markupId = "mId")
         e.considerAddingToTarget(mockComponent)
         targetSpy.components.shouldBeEmpty()
     }
@@ -101,7 +87,7 @@ internal class NewFieldChangeEventTest {
     fun consideringAddingToTarget_withSameIdButNullMarkupId_addsTarget() {
         every { mockComponent.id } returns "id"
         every { mockComponent.markupId } returns "mId"
-        e = NewFieldChangeEvent(targetSpy).withId("id")
+        e = NewFieldChangeEvent(targetSpy, id = "id")
         e.markupId.shouldBeNull()
         e.considerAddingToTarget(mockComponent)
         targetSpy.components.shouldNotBeEmpty()
@@ -111,9 +97,7 @@ internal class NewFieldChangeEventTest {
     fun consideringAddingToTarget_withSameIdAndDifferingMarkupId_addsTarget() {
         every { mockComponent.id } returns "id"
         every { mockComponent.markupId } returns "mId"
-        e = NewFieldChangeEvent(targetSpy)
-            .withId("id")
-            .withMarkupId("otherMarkupId")
+        e = NewFieldChangeEvent(targetSpy, id = "id", markupId = "otherMarkupId")
         e.considerAddingToTarget(mockComponent)
         targetSpy.components.shouldNotBeEmpty()
     }
@@ -122,9 +106,7 @@ internal class NewFieldChangeEventTest {
     fun consideringAddingToTarget_withSameIdButSameMarkupId_doesNotAddTarget() {
         every { mockComponent.id } returns "id"
         every { mockComponent.markupId } returns "mId"
-        e = NewFieldChangeEvent(targetSpy)
-            .withId("id")
-            .withMarkupId("mId")
+        e = NewFieldChangeEvent(targetSpy, id = "id", markupId = "mId")
         e.considerAddingToTarget(mockComponent)
         targetSpy.components.shouldBeEmpty()
     }

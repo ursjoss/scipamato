@@ -43,7 +43,8 @@ internal class BasePageAdditionTest : WicketTest() {
 
     private fun newPageWithParameters(pp: PageParameters): BasePage<*> {
         return object : BasePage<Any?>(pp) {
-            override fun getProperties(): ApplicationPublicProperties = applicationProperties
+            override val properties: ApplicationPublicProperties
+                get() = applicationProperties
             override fun renderAdditionalCommercialFonts(response: IHeaderResponse) {
                 additionalCommercialFontsRendered = true
             }
@@ -115,7 +116,8 @@ internal class BasePageAdditionTest : WicketTest() {
         val response = mockk<IHeaderResponse>()
         // call it for coverage
         var page: BasePage<*> = object : BasePage<Any?>(pp) {
-            override fun getProperties(): ApplicationPublicProperties = applicationProperties
+            override val properties: ApplicationPublicProperties
+                get() = applicationProperties
         }
         page.renderAdditionalCommercialFonts(response)
 

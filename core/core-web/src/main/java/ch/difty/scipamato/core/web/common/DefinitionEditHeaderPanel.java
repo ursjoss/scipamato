@@ -1,5 +1,7 @@
 package ch.difty.scipamato.core.web.common;
 
+import static ch.difty.scipamato.common.web.WicketUtilsKt.LABEL_RESOURCE_TAG;
+
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
 import lombok.extern.slf4j.Slf4j;

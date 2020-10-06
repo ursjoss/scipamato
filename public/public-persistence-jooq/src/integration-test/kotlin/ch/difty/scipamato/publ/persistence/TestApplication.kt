@@ -26,16 +26,16 @@ open class TestApplication {
         override val pubmedBaseUrl get() = "https://pubmed/"
         override val redirectFromPort get() = 8081
         override val multiSelectBoxActionBoxWithMoreEntriesThan get() = 4
-        override fun isCommercialFontPresent() = false
-        override fun isLessUsedOverCss() = false
-        override fun isNavbarVisibleByDefault() = false
+        override val isCommercialFontPresent = false
+        override val isLessUsedOverCss = false
+        override val isNavbarVisibleByDefault = false
         override val cmsUrlSearchPage: String?
             get() = null
-        override fun getCmsUrlNewStudyPage(): String? = null
-        override fun getAuthorsAbbreviatedMaxLength() = 50
-        override fun isResponsiveIframeSupportEnabled() = false
-        override fun getManagementUserName() = "admin"
-        override fun getManagementUserPassword() = "admin"
-        override fun getNumberOfPreviousNewslettersInArchive() = 14
+        override val cmsUrlNewStudyPage: String? = null
+        override val authorsAbbreviatedMaxLength = 50
+        override val isResponsiveIframeSupportEnabled = false
+        override val managementUserName = "admin"
+        override val managementUserPassword = "admin"
+        override val numberOfPreviousNewslettersInArchive = 14
     }
 }

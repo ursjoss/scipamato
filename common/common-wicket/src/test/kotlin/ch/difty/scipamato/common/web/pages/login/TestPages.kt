@@ -6,9 +6,11 @@ import org.apache.wicket.request.mapper.parameter.PageParameters
 
 @WicketSignInPage
 class TestLoginPage(parameters: PageParameters) : AbstractLoginPage<TestLoginPage>(parameters) {
-    override fun getResponsePage(): TestLoginPage = TestLoginPage(pageParameters)
+    override val responsePage: TestLoginPage?
+        get() = TestLoginPage(pageParameters)
 }
 
 open class TestLogoutPage(parameters: PageParameters) : AbstractLogoutPage<AbstractPage<*>>(parameters) {
-    override fun getResponsePage(): AbstractPage<*>? = null
+    override val responsePage: AbstractPage<*>?
+        get() = null
 }

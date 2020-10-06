@@ -80,6 +80,7 @@ import ch.difty.scipamato.core.web.paper.jasper.summaryshort.PaperSummaryShortDa
  *
  * @author u.joss
  */
+@SuppressWarnings("ALL")
 @Slf4j
 public abstract class EditablePaperPanel extends PaperPanel<Paper> {
 
@@ -183,27 +184,15 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
     protected PaperSummaryDataSource getSummaryDataSource() {
         final String brand = getProperties().getBrand();
         final String headerPart = brand + "-" + new StringResourceModel("headerPart.summary", this, null).getString();
-        final ReportHeaderFields rhf = ReportHeaderFields
-            .builder(headerPart, brand)
-            .populationLabel(getLabelResourceFor(POPULATION.getFieldName()))
-            .goalsLabel(getLabelResourceFor(GOALS.getFieldName()))
-            .methodsLabel(getLabelResourceFor(METHODS.getFieldName()))
-            .resultLabel(getLabelResourceFor(RESULT.getFieldName()))
-            .commentLabel(getLabelResourceFor(COMMENT.getFieldName()))
-            .methodStudyDesignLabel(getLabelResourceFor(METHOD_STUDY_DESIGN.getFieldName()))
-            .methodOutcomeLabel(getLabelResourceFor(METHOD_OUTCOME.getFieldName()))
-            .populationPlaceLabel(getLabelResourceFor(POPULATION_PLACE.getFieldName()))
-            .exposurePollutantLabel(getLabelResourceFor(EXPOSURE_POLLUTANT.getFieldName()))
-            .exposureAssessmentLabel(getLabelResourceFor(EXPOSURE_ASSESSMENT.getFieldName()))
-            .methodStatisticsLabel(getLabelResourceFor(METHOD_STATISTICS.getFieldName()))
-            .methodConfoundersLabel(getLabelResourceFor(METHOD_CONFOUNDERS.getFieldName()))
-            .populationDurationLabel(getLabelResourceFor(POPULATION_DURATION.getFieldName()))
-            .populationParticipantsLabel(getLabelResourceFor(POPULATION_PARTICIPANTS.getFieldName()))
-            .resultEffectEstimateLabel(getLabelResourceFor(RESULT_EFFECT_ESTIMATE.getFieldName()))
-            .resultExposureRangeLabel(getLabelResourceFor(RESULT_EXPOSURE_RANGE.getFieldName()))
-            .resultMeasuredOutcomeLabel(getLabelResourceFor(RESULT_MEASURED_OUTCOME.getFieldName()))
-            .conclusionLabel(getLabelResourceFor(CONCLUSION.getFieldName()))
-            .build();
+        final ReportHeaderFields rhf = new ReportHeaderFields(headerPart, brand, getLabelResourceFor(POPULATION.getFieldName()),
+            getLabelResourceFor(GOALS.getFieldName()), getLabelResourceFor(METHODS.getFieldName()), getLabelResourceFor(RESULT.getFieldName()),
+            getLabelResourceFor(COMMENT.getFieldName()), getLabelResourceFor(METHOD_STUDY_DESIGN.getFieldName()),
+            getLabelResourceFor(METHOD_OUTCOME.getFieldName()), getLabelResourceFor(POPULATION_PLACE.getFieldName()),
+            getLabelResourceFor(EXPOSURE_POLLUTANT.getFieldName()), getLabelResourceFor(EXPOSURE_ASSESSMENT.getFieldName()),
+            getLabelResourceFor(METHOD_STATISTICS.getFieldName()), getLabelResourceFor(METHOD_CONFOUNDERS.getFieldName()),
+            getLabelResourceFor(POPULATION_DURATION.getFieldName()), getLabelResourceFor(POPULATION_PARTICIPANTS.getFieldName()),
+            getLabelResourceFor(RESULT_EFFECT_ESTIMATE.getFieldName()), getLabelResourceFor(RESULT_EXPOSURE_RANGE.getFieldName()),
+            getLabelResourceFor(RESULT_MEASURED_OUTCOME.getFieldName()), getLabelResourceFor(CONCLUSION.getFieldName()));
         final Paper p = getModelObject();
         final ScipamatoPdfExporterConfiguration config = makeExporterConfig(brand, headerPart, p);
         return new PaperSummaryDataSource(p, rhf, shortFieldConcatenator, config);
@@ -230,25 +219,15 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
     protected PaperSummaryShortDataSource getSummaryShortDataSource() {
         final String brand = getProperties().getBrand();
         final String headerPart = brand + "-" + new StringResourceModel("headerPart.summaryShort", this, null).getString();
-        final ReportHeaderFields rhf = ReportHeaderFields
-            .builder(headerPart, brand)
-            .goalsLabel(getLabelResourceFor(GOALS.getFieldName()))
-            .methodsLabel(getLabelResourceFor(METHODS.getFieldName()))
-            .methodOutcomeLabel(getLabelResourceFor(METHOD_OUTCOME.getFieldName()))
-            .resultMeasuredOutcomeLabel(getLabelResourceFor(RESULT_MEASURED_OUTCOME.getFieldName()))
-            .methodStudyDesignLabel(getLabelResourceFor(METHOD_STUDY_DESIGN.getFieldName()))
-            .populationPlaceLabel(getLabelResourceFor(POPULATION_PLACE.getFieldName()))
-            .populationParticipantsLabel(getLabelResourceFor(POPULATION_PARTICIPANTS.getFieldName()))
-            .populationDurationLabel(getLabelResourceFor(POPULATION_DURATION.getFieldName()))
-            .exposurePollutantLabel(getLabelResourceFor(EXPOSURE_POLLUTANT.getFieldName()))
-            .exposureAssessmentLabel(getLabelResourceFor(EXPOSURE_ASSESSMENT.getFieldName()))
-            .resultExposureRangeLabel(getLabelResourceFor(RESULT_EXPOSURE_RANGE.getFieldName()))
-            .methodStatisticsLabel(getLabelResourceFor(METHOD_STATISTICS.getFieldName()))
-            .methodConfoundersLabel(getLabelResourceFor(METHOD_CONFOUNDERS.getFieldName()))
-            .resultEffectEstimateLabel(getLabelResourceFor(RESULT_EFFECT_ESTIMATE.getFieldName()))
-            .conclusionLabel(getLabelResourceFor(CONCLUSION.getFieldName()))
-            .commentLabel(getLabelResourceFor(COMMENT.getFieldName()))
-            .build();
+        final ReportHeaderFields rhf = new ReportHeaderFields(headerPart, brand, getLabelResourceFor(GOALS.getFieldName()),
+            getLabelResourceFor(METHODS.getFieldName()), getLabelResourceFor(METHOD_OUTCOME.getFieldName()),
+            getLabelResourceFor(RESULT_MEASURED_OUTCOME.getFieldName()), getLabelResourceFor(METHOD_STUDY_DESIGN.getFieldName()),
+            getLabelResourceFor(POPULATION_PLACE.getFieldName()), getLabelResourceFor(POPULATION_PARTICIPANTS.getFieldName()),
+            getLabelResourceFor(POPULATION_DURATION.getFieldName()), getLabelResourceFor(EXPOSURE_POLLUTANT.getFieldName()),
+            getLabelResourceFor(EXPOSURE_ASSESSMENT.getFieldName()), getLabelResourceFor(RESULT_EXPOSURE_RANGE.getFieldName()),
+            getLabelResourceFor(METHOD_STATISTICS.getFieldName()), getLabelResourceFor(METHOD_CONFOUNDERS.getFieldName()),
+            getLabelResourceFor(RESULT_EFFECT_ESTIMATE.getFieldName()), getLabelResourceFor(CONCLUSION.getFieldName()),
+            getLabelResourceFor(COMMENT.getFieldName()));
         final Paper p = getModelObject();
         final ScipamatoPdfExporterConfiguration config = makeExporterConfig(brand, headerPart, p);
         return new PaperSummaryShortDataSource(p, rhf, config);
@@ -386,17 +365,18 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
 
         boolean aheadOfPrint = isAheadOfPrint(p, a);
 
-        processStringField(AUTHORS.getFieldName(), a.getAuthors(), Paper::getAuthors, Paper::setAuthors, p, aheadOfPrint, pr, target, authors,
-            firstAuthor);
+        processStringField(AUTHORS.getFieldName(), a.getAuthors(), Paper::getAuthors, Paper::setAuthors, p, aheadOfPrint, pr, target, getAuthors(),
+            getFirstAuthor());
         processStringField(FIRST_AUTHOR.getFieldName(), a.getFirstAuthor(), Paper::getFirstAuthor, Paper::setFirstAuthor, p, aheadOfPrint, pr, target,
-            firstAuthor);
-        processStringField(TITLE.getFieldName(), a.getTitle(), Paper::getTitle, Paper::setTitle, p, aheadOfPrint, pr, target, title);
+            getFirstAuthor());
+        processStringField(TITLE.getFieldName(), a.getTitle(), Paper::getTitle, Paper::setTitle, p, aheadOfPrint, pr, target, getTitle());
         processIntegerField(PUBL_YEAR.getFieldName(), a.getPublicationYear(), Paper::getPublicationYear, Paper::setPublicationYear,
-            "year.parse.error", p, aheadOfPrint, pr, target, publicationYear);
-        processStringField(LOCATION.getFieldName(), a.getLocation(), Paper::getLocation, Paper::setLocation, p, aheadOfPrint, pr, target, location);
-        processStringField(DOI.getFieldName(), a.getDoi(), Paper::getDoi, Paper::setDoi, p, aheadOfPrint, pr, target, doi);
+            "year.parse.error", p, aheadOfPrint, pr, target, getPublicationYear());
+        processStringField(LOCATION.getFieldName(), a.getLocation(), Paper::getLocation, Paper::setLocation, p, aheadOfPrint, pr, target,
+            getLocation());
+        processStringField(DOI.getFieldName(), a.getDoi(), Paper::getDoi, Paper::setDoi, p, aheadOfPrint, pr, target, getDoi());
         processStringField(ORIGINAL_ABSTRACT.getFieldName(), a.getOriginalAbstract(), Paper::getOriginalAbstract, Paper::setOriginalAbstract, p,
-            aheadOfPrint, pr, target, originalAbstract);
+            aheadOfPrint, pr, target, getOriginalAbstract());
 
         provideUserInfo(pr, aheadOfPrint);
     }
@@ -639,7 +619,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
 
     @NotNull
     @Override
-    protected DropZoneFileUpload newDropZoneFileUpload() {
+    public DropZoneFileUpload newDropZoneFileUpload() {
         DropZoneFileUpload upload = new DropZoneFileUpload("dropzone") {
             private static final long serialVersionUID = 1L;
 
@@ -712,7 +692,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
 
     @NotNull
     @Override
-    protected DataTable<PaperAttachment, String> newAttachmentTable(@NotNull String id) {
+    public DataTable<PaperAttachment, String> newAttachmentTable(@NotNull String id) {
         PropertyModel<List<PaperAttachment>> model = new PropertyModel<>(getModel(), ATTACHMENTS.getFieldName());
         PaperAttachmentProvider provider = new PaperAttachmentProvider(model);
         BootstrapDefaultDataTable<PaperAttachment, String> table = new BootstrapDefaultDataTable<>(id, makeTableColumns(), provider,
@@ -754,8 +734,8 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
     @SuppressWarnings("SameParameterValue")
     private ClickablePropertyColumn<PaperAttachment, String> makeClickableColumn(FieldEnumType propExpression,
         SerializableConsumer<IModel<PaperAttachment>> consumer) {
-        return new ClickablePropertyColumn<>(new StringResourceModel(COLUMN_HEADER + propExpression.getFieldName(), this, null), null,
-            propExpression.getFieldName(), consumer);
+        return new ClickablePropertyColumn<>(new StringResourceModel(COLUMN_HEADER + propExpression.getFieldName(), this, null),
+            propExpression.getFieldName(), consumer, null);
     }
 
     @SuppressWarnings("SameParameterValue")
@@ -773,7 +753,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
             }
 
             @Override
-            protected IModel<String> createTitleModel(@NotNull IModel<PaperAttachment> rowModel) {
+            public IModel<String> createTitleModel(@NotNull IModel<PaperAttachment> rowModel) {
                 return new StringResourceModel("column.title.removeAttachment", EditablePaperPanel.this, null).setParameters(rowModel
                     .getObject()
                     .getName());
@@ -792,12 +772,12 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
     }
 
     @Override
-    protected boolean isAssociatedWithNewsletter() {
+    public boolean isAssociatedWithNewsletter() {
         return getModelObject().getNewsletterLink() != null;
     }
 
     @Override
-    protected boolean isAssociatedWithWipNewsletter() {
+    public boolean isAssociatedWithWipNewsletter() {
         final Paper.NewsletterLink nl = getModelObject().getNewsletterLink();
         return nl != null && PublicationStatus.Companion
             .byId(nl.getPublicationStatusId())
@@ -805,7 +785,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
     }
 
     @Override
-    protected void modifyNewsletterAssociation(@NotNull final AjaxRequestTarget target) {
+    public void modifyNewsletterAssociation(@NotNull final AjaxRequestTarget target) {
         final Paper p = getModelObject();
         if (!isAssociatedWithNewsletter()) {
             if (p.getId() != null) {
@@ -823,8 +803,8 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
     @Override
     protected void considerAddingMoreValidation() {
         if (isEditMode()) {
-            getForm().add(new TextFieldValueMustBeUniqueValidator("doi", doi));
-            getForm().add(new TextFieldValueMustBeUniqueValidator("pmId", pmId));
+            getForm().add(new TextFieldValueMustBeUniqueValidator("doi", getDoi()));
+            getForm().add(new TextFieldValueMustBeUniqueValidator("pmId", getPmId()));
         }
     }
 
@@ -863,7 +843,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
     }
 
     @Override
-    protected boolean isaNewsletterInStatusWip() {
+    public boolean isaNewsletterInStatusWip() {
         return !newsletterService.canCreateNewsletterInProgress();
     }
 

@@ -9,6 +9,7 @@ import io.mockk.confirmVerified
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
+import org.amshove.kluent.shouldBe
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeInstanceOf
 import org.amshove.kluent.shouldBeNull
@@ -36,7 +37,8 @@ internal class AbstractPageTest : WicketBaseTest() {
 
     override fun setUpHook() {
         page = object : AbstractPage<TestRecord>(Model.of(TestRecord(1, "foo"))) {
-            override fun getProperties(): ApplicationProperties = TestApplicationProperties()
+            override val properties: ApplicationProperties
+                get() = TestApplicationProperties()
         }
     }
 
@@ -62,15 +64,12 @@ internal class AbstractPageTest : WicketBaseTest() {
     }
 
     @Test
-    fun gettingNavbarBeforeInitialize_returnsNull() {
-        page.navBar.shouldBeNull()
-    }
-
-    @Test
     fun test_withPageParametersConstructor() {
         page = object : AbstractPage<TestRecord>(PageParameters()) {
-            override fun getProperties(): ApplicationProperties = TestApplicationProperties()
-            override fun isNavbarVisible(): Boolean = true
+            override val properties: ApplicationProperties
+                get() = TestApplicationProperties()
+            override val isNavbarVisible: Boolean
+                get() = true
         }
 
         tester.startPage(page)
@@ -175,8 +174,10 @@ internal class AbstractPageTest : WicketBaseTest() {
         }
 
         page = object : AbstractPage<TestRecord>(Model.of(TestRecord(1, "foo"))) {
-            override fun getProperties(): ApplicationProperties = TestApplicationProperties()
-            override fun getDebugSettings(): DebugSettings = debugSettings
+            override val properties: ApplicationProperties
+                get() = TestApplicationProperties()
+            override val debugSettings: DebugSettings
+                get() = debugSettings
         }
 
         tester.startPage(page)

@@ -18,14 +18,13 @@ internal class PaperSummaryTableTest : JasperEntityTest() {
         assertPst()
     }
 
-    private fun newReportHeaderFields(): ReportHeaderFields {
-        return ReportHeaderFields
-            .builder(HEADER_PART, BRAND)
-            .captionLabel(CAPTION)
-            .methodsLabel(METHODS_LABEL)
-            .numberLabel(NUMBER_LABEL)
-            .build()
-    }
+    private fun newReportHeaderFields() = ReportHeaderFields(
+        headerPart = HEADER_PART,
+        brand = BRAND,
+        captionLabel = CAPTION,
+        methodsLabel = METHODS_LABEL,
+        numberLabel = NUMBER_LABEL,
+    )
 
     private fun assertPst() {
         pst.caption shouldBeEqualTo CAPTION
@@ -67,6 +66,7 @@ internal class PaperSummaryTableTest : JasperEntityTest() {
         EqualsVerifier.simple()
             .forClass(PaperSummaryTable::class.java)
             .withRedefinedSuperclass()
+            .withOnlyTheseFields("number")
             .verify()
     }
 

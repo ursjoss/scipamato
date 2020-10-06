@@ -48,14 +48,6 @@ internal class NavigatedListTest {
     }
 
     @Test
-    fun cannotModifyItemsOfResultSet() {
-        navigatedList
-            .items
-            .add(100L)
-        navigatedList.items shouldContainAll ids
-    }
-
-    @Test
     fun indexOfNewResultSet_isOnFirstItem() {
         navigatedList.itemWithFocus shouldBeEqualTo ids[0]
     }

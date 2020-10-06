@@ -70,16 +70,16 @@ internal class ScipamatoPublicPropertiesTest {
 
     @Test
     fun checkingCommercialFontPresence_ifPresent_delegatesToMavenProp() {
-        every { scipamatoPropMock.isCommercialFontPresent } returns true
+        every { scipamatoPropMock.commercialFontPresent } returns true
         prop.isCommercialFontPresent shouldBeEqualTo true
-        verify { scipamatoPropMock.isCommercialFontPresent }
+        verify { scipamatoPropMock.commercialFontPresent }
     }
 
     @Test
     fun checkingCommercialFontPresence_ifNotPresent_delegatesToMavenProp() {
-        every { scipamatoPropMock.isCommercialFontPresent } returns false
+        every { scipamatoPropMock.commercialFontPresent } returns false
         prop.isCommercialFontPresent shouldBeEqualTo false
-        verify { scipamatoPropMock.isCommercialFontPresent }
+        verify { scipamatoPropMock.commercialFontPresent }
     }
 
     @Test
@@ -98,23 +98,23 @@ internal class ScipamatoPublicPropertiesTest {
 
     @Test
     fun checkingLessOverCSS_ifTrue_delegatesToScipamatoProp() {
-        every { scipamatoPropMock.isLessUsedOverCss } returns true
+        every { scipamatoPropMock.lessUsedOverCss } returns true
         prop.isLessUsedOverCss shouldBeEqualTo true
-        verify { scipamatoPropMock.isLessUsedOverCss }
+        verify { scipamatoPropMock.lessUsedOverCss }
     }
 
     @Test
     fun checkingLessOverCSS_ifNotPresent_delegatesToScipamatoProp() {
-        every { scipamatoPropMock.isLessUsedOverCss } returns false
+        every { scipamatoPropMock.lessUsedOverCss } returns false
         prop.isLessUsedOverCss shouldBeEqualTo false
-        verify { scipamatoPropMock.isLessUsedOverCss }
+        verify { scipamatoPropMock.lessUsedOverCss }
     }
 
     @Test
     fun checkingNavbarDefaultVisibility_delegatesToScipamatoProp() {
-        every { scipamatoPropMock.isNavbarVisibleByDefault } returns true
+        every { scipamatoPropMock.navbarVisibleByDefault } returns true
         prop.isNavbarVisibleByDefault shouldBeEqualTo true
-        verify { scipamatoPropMock.isNavbarVisibleByDefault }
+        verify { scipamatoPropMock.navbarVisibleByDefault }
     }
 
     @Test

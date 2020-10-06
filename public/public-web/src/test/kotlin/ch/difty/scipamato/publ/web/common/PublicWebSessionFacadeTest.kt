@@ -34,7 +34,6 @@ internal class PublicWebSessionFacadeTest : WicketTest() {
     @Test
     fun hasAtLeastOneRoleOutOf_staticallyReturnsFalse() {
         sessionFacade.hasAtLeastOneRoleOutOf().shouldBeFalse()
-        sessionFacade.hasAtLeastOneRoleOutOf(null as String?).shouldBeFalse()
         sessionFacade.hasAtLeastOneRoleOutOf(Roles.ADMIN, Roles.USER).shouldBeFalse()
     }
 }

@@ -1,5 +1,8 @@
 package ch.difty.scipamato.core.web.code;
 
+import static ch.difty.scipamato.common.web.WicketUtilsKt.LABEL_RESOURCE_TAG;
+import static ch.difty.scipamato.common.web.WicketUtilsKt.LABEL_TAG;
+
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.checkboxx.CheckBoxX;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelect;
 import org.apache.wicket.markup.html.basic.Label;
@@ -22,6 +25,8 @@ import ch.difty.scipamato.core.web.model.CodeClassModel;
 @SuppressWarnings({ "SameParameterValue", "WicketForgeJavaIdInspection" })
 abstract class CodeEditHeaderPanel extends DeletableDefinitionEditHeaderPanel<CodeDefinition, CodeTranslation, String> {
 
+    private static final long serialVersionUID = 1L;
+
     private BootstrapSelect<CodeClass> codeClasses;
 
     CodeEditHeaderPanel(@NotNull final String id, @NotNull final IModel<CodeDefinition> model) {
@@ -35,8 +40,7 @@ abstract class CodeEditHeaderPanel extends DeletableDefinitionEditHeaderPanel<Co
         queueBootstrapSelectAndLabel("codeClass");
         queueFieldAndLabel(new TextField<>(CodeDefinition.CodeDefinitionFields.SORT.getFieldName()));
         queue(new Label("internalLabel",
-            new StringResourceModel(CodeDefinition.CodeDefinitionFields.INTERNAL.getFieldName() + LABEL_RESOURCE_TAG,
-                this, null)));
+            new StringResourceModel(CodeDefinition.CodeDefinitionFields.INTERNAL.getFieldName() + LABEL_RESOURCE_TAG, this, null)));
         CheckBoxX internal = new CheckBoxX(CodeDefinition.CodeDefinitionFields.INTERNAL.getFieldName());
         internal
             .getConfig()
@@ -51,11 +55,9 @@ abstract class CodeEditHeaderPanel extends DeletableDefinitionEditHeaderPanel<Co
 
     private void queueBootstrapSelectAndLabel(final String id) {
         queue(new Label(id + LABEL_TAG, new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null)));
-        final PropertyModel<CodeClass> model = PropertyModel.of(getModel(),
-            CodeFilter.CodeFilterFields.CODE_CLASS.getFieldName());
+        final PropertyModel<CodeClass> model = PropertyModel.of(getModel(), CodeFilter.CodeFilterFields.CODE_CLASS.getFieldName());
         final CodeClassModel choices = new CodeClassModel(getLocale().getLanguage());
-        final IChoiceRenderer<CodeClass> choiceRenderer = new ChoiceRenderer<>(
-            CoreEntity.CoreEntityFields.DISPLAY_VALUE.getFieldName(),
+        final IChoiceRenderer<CodeClass> choiceRenderer = new ChoiceRenderer<>(CoreEntity.CoreEntityFields.DISPLAY_VALUE.getFieldName(),
             IdScipamatoEntity.IdScipamatoEntityFields.ID.getFieldName());
         codeClasses = new BootstrapSelect<>(id, model, choices, choiceRenderer);
         queue(codeClasses);
@@ -70,8 +72,7 @@ abstract class CodeEditHeaderPanel extends DeletableDefinitionEditHeaderPanel<Co
 
         private final FormComponent<?>[] components;
 
-        CodeMustMatchCodeClassValidator(@NotNull final TextField<String> codeField,
-            @NotNull final BootstrapSelect<CodeClass> codeClasses) {
+        CodeMustMatchCodeClassValidator(@NotNull final TextField<String> codeField, @NotNull final BootstrapSelect<CodeClass> codeClasses) {
             this.components = new FormComponent<?>[] { codeField, codeClasses };
         }
 

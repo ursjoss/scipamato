@@ -30,12 +30,12 @@ internal class PaperSummaryTableDataSourceTest : PaperDataSourceTest() {
 
     private val rhf = newReportHeaderFields()
 
-    private fun newReportHeaderFields(): ReportHeaderFields =
-        ReportHeaderFields
-            .builder("", BRAND)
-            .numberLabel(NUMBER_LABEL)
-            .captionLabel(CAPTION)
-            .build()
+    private fun newReportHeaderFields() = ReportHeaderFields(
+        headerPart = "",
+        brand = BRAND,
+        numberLabel = NUMBER_LABEL,
+        captionLabel = CAPTION,
+    )
 
     public override fun setUpHook() {
         codesOfCodeClass1.add(Code("1F", "Code1F", "", false, CodeClassId.CC1.id, "CC1", "CC1D", 1))
