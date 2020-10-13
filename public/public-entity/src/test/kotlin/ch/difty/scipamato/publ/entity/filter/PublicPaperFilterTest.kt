@@ -10,31 +10,34 @@ import org.amshove.kluent.shouldContainAll
 import org.amshove.kluent.shouldContainSame
 import org.amshove.kluent.shouldHaveSize
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.fail
 
 internal class PublicPaperFilterTest {
 
     @Suppress("MaximumLineLength", "MaxLineLength")
     @Test
     fun construct() {
-        val filter = PublicPaperFilter().apply {
-            number = 1L
-            authorMask = "am"
-            titleMask = "tm"
-            methodsMask = "mm"
-            publicationYearFrom = 2000
-            publicationYearUntil = 3000
-            populationCodes = listOf(PopulationCode.CHILDREN, PopulationCode.ADULTS)
-            studyDesignCodes = listOf(StudyDesignCode.EXPERIMENTAL)
-            codesOfClass1 = listOf(newCode("1A"), newCode("1B"))
-            codesOfClass2 = listOf(newCode("2A"), newCode("2B"))
-            codesOfClass3 = listOf(newCode("3A"), newCode("3B"))
-            codesOfClass4 = listOf(newCode("4A"), newCode("4B"))
-            codesOfClass5 = listOf(newCode("5A"), newCode("5B"))
-            codesOfClass6 = listOf(newCode("6A"), newCode("6B"))
-            codesOfClass7 = listOf(newCode("7A"), newCode("7B"))
-            codesOfClass8 = listOf(newCode("8A"), newCode("8B"))
-            keywords = listOf(Keyword(1, 1, "de", "k1", null))
+        val filter = PublicPaperFilter(
+            number = 1L,
+            authorMask = "am",
+            titleMask = "tm",
+            methodsMask = "mm",
+            publicationYearFrom = 2000,
+            publicationYearUntil = 3000,
+            populationCodes = listOf(PopulationCode.CHILDREN, PopulationCode.ADULTS),
+            studyDesignCodes = listOf(StudyDesignCode.EXPERIMENTAL),
+            codesOfClass1 = listOf(newCode("1A"), newCode("1B")),
+            codesOfClass2 = listOf(newCode("2A"), newCode("2B")),
+            codesOfClass3 = listOf(newCode("3A"), newCode("3B")),
+            codesOfClass4 = listOf(newCode("4A"), newCode("4B")),
+            codesOfClass5 = listOf(newCode("5A"), newCode("5B")),
+            codesOfClass6 = listOf(newCode("6A"), newCode("6B")),
+            codesOfClass7 = listOf(newCode("7A"), newCode("7B")),
+            codesOfClass8 = listOf(newCode("8A"), newCode("8B")),
+            keywords = listOf(Keyword(1, 1, "de", "k1", null)),
+        )
 
+        with(filter) {
             number shouldBeEqualTo 1L
             authorMask shouldBeEqualTo "am"
             titleMask shouldBeEqualTo "tm"
@@ -42,19 +45,19 @@ internal class PublicPaperFilterTest {
             publicationYearFrom shouldBeEqualTo 2000
             publicationYearUntil shouldBeEqualTo 3000
 
-            populationCodes shouldContainSame listOf(PopulationCode.CHILDREN, PopulationCode.ADULTS)
-            studyDesignCodes shouldContainSame listOf(StudyDesignCode.EXPERIMENTAL)
+            populationCodes?.shouldContainSame(listOf(PopulationCode.CHILDREN, PopulationCode.ADULTS))
+            studyDesignCodes?.shouldContainSame(listOf(StudyDesignCode.EXPERIMENTAL))
 
-            codesOfClass1 shouldHaveSize 2
-            codesOfClass2 shouldHaveSize 2
-            codesOfClass3 shouldHaveSize 2
-            codesOfClass4 shouldHaveSize 2
-            codesOfClass5 shouldHaveSize 2
-            codesOfClass6 shouldHaveSize 2
-            codesOfClass7 shouldHaveSize 2
-            codesOfClass8 shouldHaveSize 2
+            codesOfClass1?.shouldHaveSize(2)
+            codesOfClass2?.shouldHaveSize(2)
+            codesOfClass3?.shouldHaveSize(2)
+            codesOfClass4?.shouldHaveSize(2)
+            codesOfClass5?.shouldHaveSize(2)
+            codesOfClass6?.shouldHaveSize(2)
+            codesOfClass7?.shouldHaveSize(2)
+            codesOfClass8?.shouldHaveSize(2)
 
-            keywords.map { it.keywordId } shouldContainAll listOf(1)
+            keywords?.map { it.keywordId }?.shouldContainAll(listOf(1)) ?: fail("keywords should not be null")
         }
 
         filter.toString() shouldBeEqualTo
@@ -91,14 +94,5 @@ internal class PublicPaperFilterTest {
             .forClass(PublicPaperFilter::class.java)
             .withRedefinedSuperclass()
             .verify()
-    }
-
-    @Test
-    fun assertEnumFields() {
-        PublicPaperFilter.PublicPaperFilterFields.values().map { it.fieldName } shouldContainAll listOf(
-            "number", "authorMask", "titleMask", "methodsMask", "publicationYearFrom", "publicationYearUntil",
-            "populationCodes", "studyDesignCodes", "codesOfClass1", "codesOfClass2", "codesOfClass3", "codesOfClass4",
-            "codesOfClass5", "codesOfClass6", "codesOfClass7", "codesOfClass8", "keywords"
-        )
     }
 }
