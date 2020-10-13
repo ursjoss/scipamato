@@ -13,16 +13,15 @@ internal class PaperSummaryTest : JasperEntityTest() {
     private val shortFieldConcatenator: CoreShortFieldConcatenator = CoreShortFieldWithEmptyMainFieldConcatenator()
     private lateinit var ps: PaperSummary
     private var rhf = newReportHeaderFields()
-    private fun newReportHeaderFields(): ReportHeaderFields {
-        return ReportHeaderFields
-            .builder(HEADER_PART, BRAND)
-            .populationLabel(POPULATION_LABEL)
-            .goalsLabel(GOALS_LABEL)
-            .methodsLabel(METHODS_LABEL)
-            .resultLabel(RESULT_LABEL)
-            .commentLabel(COMMENT_LABEL)
-            .build()
-    }
+    private fun newReportHeaderFields() = ReportHeaderFields(
+        headerPart = HEADER_PART,
+        brand = BRAND,
+        populationLabel = POPULATION_LABEL,
+        goalsLabel = GOALS_LABEL,
+        methodsLabel = METHODS_LABEL,
+        resultLabel = RESULT_LABEL,
+        commentLabel = COMMENT_LABEL,
+    )
 
     @Test
     fun instantiating() {
@@ -92,14 +91,15 @@ internal class PaperSummaryTest : JasperEntityTest() {
 
     @Test
     fun headerOnlyShowsIdIfHeaderPartIsBlank() {
-        rhf = ReportHeaderFields
-            .builder("", BRAND)
-            .populationLabel(POPULATION_LABEL)
-            .goalsLabel(GOALS_LABEL)
-            .methodsLabel(METHODS_LABEL)
-            .resultLabel(RESULT_LABEL)
-            .commentLabel(COMMENT_LABEL)
-            .build()
+        rhf = ReportHeaderFields(
+            headerPart = "",
+            brand = BRAND,
+            populationLabel = POPULATION_LABEL,
+            goalsLabel = GOALS_LABEL,
+            methodsLabel = METHODS_LABEL,
+            resultLabel = RESULT_LABEL,
+            commentLabel = COMMENT_LABEL,
+        )
         p.number = 5L
         ps = newPaperSummary()
         ps.header shouldBeEqualTo "5"
@@ -110,6 +110,7 @@ internal class PaperSummaryTest : JasperEntityTest() {
         EqualsVerifier.simple()
             .forClass(PaperSummary::class.java)
             .withRedefinedSuperclass()
+            .withOnlyTheseFields("number")
             .verify()
     }
 }

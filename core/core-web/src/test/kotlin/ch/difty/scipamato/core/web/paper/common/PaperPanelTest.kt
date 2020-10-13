@@ -19,7 +19,7 @@ import org.apache.wicket.markup.html.form.TextField
 import org.junit.jupiter.api.AfterEach
 import java.util.ArrayList
 
-abstract class PaperPanelTest<T, P : PaperPanel<T>> : PanelTest<P>() where T : CodeBoxAware?, T : NewsletterAware? {
+abstract class PaperPanelTest<T, P : PaperPanel<T>> : PanelTest<P>() where T : CodeBoxAware, T : NewsletterAware {
 
     private val codeClasses: MutableList<CodeClass> = ArrayList()
     private val codesOfClass1: MutableList<Code> = ArrayList()
@@ -110,7 +110,7 @@ abstract class PaperPanelTest<T, P : PaperPanel<T>> : PanelTest<P>() where T : C
         path: String,
         componentClass: Class<out Component?>,
         modelValue: Any,
-        labelText: String
+        labelText: String,
     ) {
         tester.assertComponent(path, componentClass)
         tester.assertModelValue(path, modelValue)

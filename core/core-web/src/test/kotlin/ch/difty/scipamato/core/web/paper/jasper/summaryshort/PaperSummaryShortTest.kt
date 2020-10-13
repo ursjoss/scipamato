@@ -17,25 +17,26 @@ internal class PaperSummaryShortTest : JasperEntityTest() {
         assertPaperSummaryShort()
     }
 
-    private fun newReportHeaderFields(): ReportHeaderFields = ReportHeaderFields
-        .builder(HEADER_PART, BRAND)
-        .goalsLabel(GOALS_LABEL)
-        .methodsLabel(METHODS_LABEL)
-        .methodOutcomeLabel(METHOD_OUTCOME_LABEL)
-        .resultMeasuredOutcomeLabel(RESULT_MEASURED_OUTCOME_LABEL)
-        .methodStudyDesignLabel(METHOD_STUDY_DESIGN_LABEL)
-        .populationPlaceLabel(POPULATION_PLACE_LABEL)
-        .populationParticipantsLabel(POPULATION_PARTICIPANTS_LABEL)
-        .populationDurationLabel(POPULATION_DURATION_LABEL)
-        .exposurePollutantLabel(EXPOSURE_POLLUTANT_LABEL)
-        .exposureAssessmentLabel(EXPOSURE_ASSESSMENT_LABEL)
-        .resultExposureRangeLabel(RESULT_EXPOSURE_RANGE_LABEL)
-        .methodStatisticsLabel(METHOD_STATISTICS_LABEL)
-        .methodConfoundersLabel(METHOD_CONFOUNDERS_LABEL)
-        .resultEffectEstimateLabel(RESULT_EFFECT_ESTIMATE_LABEL)
-        .conclusionLabel(CONCLUSION_LABEL)
-        .commentLabel(COMMENT_LABEL)
-        .build()
+    private fun newReportHeaderFields() = ReportHeaderFields(
+        headerPart = HEADER_PART,
+        brand = BRAND,
+        goalsLabel = GOALS_LABEL,
+        methodsLabel = METHODS_LABEL,
+        methodOutcomeLabel = METHOD_OUTCOME_LABEL,
+        resultMeasuredOutcomeLabel = RESULT_MEASURED_OUTCOME_LABEL,
+        methodStudyDesignLabel = METHOD_STUDY_DESIGN_LABEL,
+        populationPlaceLabel = POPULATION_PLACE_LABEL,
+        populationParticipantsLabel = POPULATION_PARTICIPANTS_LABEL,
+        populationDurationLabel = POPULATION_DURATION_LABEL,
+        exposurePollutantLabel = EXPOSURE_POLLUTANT_LABEL,
+        exposureAssessmentLabel = EXPOSURE_ASSESSMENT_LABEL,
+        resultExposureRangeLabel = RESULT_EXPOSURE_RANGE_LABEL,
+        methodStatisticsLabel = METHOD_STATISTICS_LABEL,
+        methodConfoundersLabel = METHOD_CONFOUNDERS_LABEL,
+        resultEffectEstimateLabel = RESULT_EFFECT_ESTIMATE_LABEL,
+        conclusionLabel = CONCLUSION_LABEL,
+        commentLabel = COMMENT_LABEL,
+    )
 
     private fun assertPaperSummaryShort() {
         ps.number shouldBeEqualTo NUMBER.toString()
@@ -212,6 +213,7 @@ internal class PaperSummaryShortTest : JasperEntityTest() {
         EqualsVerifier.simple()
             .forClass(PaperSummaryShort::class.java)
             .withRedefinedSuperclass()
+            .withOnlyTheseFields("number")
             .verify()
     }
 }

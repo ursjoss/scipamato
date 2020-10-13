@@ -23,23 +23,23 @@ internal class PaperReviewDataSourceTest : PaperDataSourceTest() {
 
     private val rhf = newReportHeaderFields()
 
-    private fun newReportHeaderFields(): ReportHeaderFields =
-        ReportHeaderFields
-            .builder("", "b")
-            .numberLabel("nl")
-            .authorYearLabel("ayl")
-            .populationPlaceLabel("ppl")
-            .methodOutcomeLabel("mol")
-            .exposurePollutantLabel("epl")
-            .methodStudyDesignLabel("msdl")
-            .populationDurationLabel("pdl")
-            .populationParticipantsLabel("ppal")
-            .exposureAssessmentLabel("eal")
-            .resultExposureRangeLabel("rerl")
-            .methodConfoundersLabel("mcl")
-            .resultEffectEstimateLabel("reel")
-            .conclusionLabel("cc")
-            .build()
+    private fun newReportHeaderFields() = ReportHeaderFields(
+        headerPart = "",
+        brand = "b",
+        numberLabel = "nl",
+        authorYearLabel = "ayl",
+        populationPlaceLabel = "ppl",
+        methodOutcomeLabel = "mol",
+        exposurePollutantLabel = "epl",
+        methodStudyDesignLabel = "msdl",
+        populationDurationLabel = "pdl",
+        populationParticipantsLabel = "ppal",
+        exposureAssessmentLabel = "eal",
+        resultExposureRangeLabel = "rerl",
+        methodConfoundersLabel = "mcl",
+        resultEffectEstimateLabel = "reel",
+        conclusionLabel = "cc",
+    )
 
     public override fun setUpHook() {
         every { paperMock.number } returns NUMBER

@@ -1,6 +1,7 @@
 package ch.difty.scipamato.core.web.paper.search
 
-import ch.difty.scipamato.common.web.AbstractPanel
+import ch.difty.scipamato.common.web.LABEL_RESOURCE_TAG
+import ch.difty.scipamato.common.web.LABEL_TAG
 import ch.difty.scipamato.common.web.Mode
 import ch.difty.scipamato.core.entity.CoreEntity
 import ch.difty.scipamato.core.entity.IdScipamatoEntity
@@ -57,7 +58,7 @@ private const val SEARCH_ORDER_MAX = 200
 class SearchOrderSelectorPanel internal constructor(
     id: String,
     model: IModel<SearchOrder?>?,
-    mode: Mode
+    mode: Mode,
 ) : BasePanel<SearchOrder?>(id, model, mode) {
 
     @SpringBean
@@ -134,8 +135,8 @@ class SearchOrderSelectorPanel internal constructor(
             })
         }.also { queue(it) }
 
-        StringResourceModel(id + AbstractPanel.LABEL_RESOURCE_TAG, this, null).also {
-            queue(Label(id + AbstractPanel.LABEL_TAG, it))
+        StringResourceModel(id + LABEL_RESOURCE_TAG, this, null).also {
+            queue(Label(id + LABEL_TAG, it))
         }
     }
 
@@ -247,10 +248,7 @@ class SearchOrderSelectorPanel internal constructor(
             outputMarkupPlaceholderTag = true
         }.also { queue(it) }
 
-        showExcludedLabel = object : Label(
-            id + AbstractPanel.LABEL_TAG,
-            StringResourceModel(id + AbstractPanel.LABEL_RESOURCE_TAG, this, null)
-        ) {
+        showExcludedLabel = object : Label("$id$LABEL_TAG", StringResourceModel("$id$LABEL_RESOURCE_TAG", this, null)) {
             override fun onConfigure() {
                 super.onConfigure()
                 isVisible = hasExclusions()

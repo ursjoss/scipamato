@@ -1,11 +1,11 @@
 package ch.difty.scipamato.core.persistence.newsletter
 
 import ch.difty.scipamato.common.DateTimeService
-import ch.difty.scipamato.common.TranslationUtils
-import ch.difty.scipamato.common.TranslationUtils.trimLanguageCode
 import ch.difty.scipamato.common.logger
+import ch.difty.scipamato.common.persistence.NOT_TRANSL
 import ch.difty.scipamato.common.persistence.paging.PaginationContext
 import ch.difty.scipamato.common.persistence.paging.Sort
+import ch.difty.scipamato.common.persistence.trimLanguageCode
 import ch.difty.scipamato.core.db.Tables
 import ch.difty.scipamato.core.db.tables.Language
 import ch.difty.scipamato.core.db.tables.NewsletterTopicTr
@@ -40,7 +40,7 @@ private val name = ch.difty.scipamato.core.db.tables.NewsletterTopic.NEWSLETTER_
 @Profile("!wickettest")
 open class JooqNewsletterTopicRepo(
     @Qualifier("dslContext") dslContext: DSLContext,
-    dateTimeService: DateTimeService
+    dateTimeService: DateTimeService,
 ) : AbstractRepo(dslContext, dateTimeService), NewsletterTopicRepository {
 
     override fun findAll(languageCode: String): List<NewsletterTopic> {
@@ -48,7 +48,7 @@ open class JooqNewsletterTopicRepo(
         // skipping the audit fields
         return dsl
             .select(ch.difty.scipamato.core.db.tables.NewsletterTopic.NEWSLETTER_TOPIC.ID.`as`("NT_ID"), DSL
-                .coalesce(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.TITLE, TranslationUtils.NOT_TRANSL)
+                .coalesce(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.TITLE, NOT_TRANSL)
                 .`as`("NT_TITLE"))
             .from(ch.difty.scipamato.core.db.tables.NewsletterTopic.NEWSLETTER_TOPIC)
             .leftOuterJoin(NewsletterTopicTr.NEWSLETTER_TOPIC_TR)
@@ -61,7 +61,7 @@ open class JooqNewsletterTopicRepo(
 
     override fun findPageOfNewsletterTopicDefinitions(
         filter: NewsletterTopicFilter?,
-        pc: PaginationContext
+        pc: PaginationContext,
     ): List<NewsletterTopicDefinition> {
         val selectConditionStep = applyWhereCondition(filter, selectBaseStep())
         // the subsequent grouping requires ordering by id then language_code
@@ -97,7 +97,7 @@ open class JooqNewsletterTopicRepo(
     // package-private for test purposes
     fun <R : Record?> applyWhereCondition(
         filter: NewsletterTopicFilter?,
-        selectStep: SelectJoinStep<R>
+        selectStep: SelectJoinStep<R>,
     ): SelectConditionStep<R> =
         if (filter != null && filter.titleMask != null) {
             val titleMask = filter.titleMask
@@ -130,7 +130,7 @@ open class JooqNewsletterTopicRepo(
         }
 
     private fun mapRawRecordsIntoNewsletterTopicDefinitions(
-        rawRecords: Map<Int, Result<Record>>
+        rawRecords: Map<Int, Result<Record>>,
     ): List<NewsletterTopicDefinition> {
         val definitions: MutableList<NewsletterTopicDefinition> = ArrayList()
         for ((key, value) in rawRecords) {
@@ -244,7 +244,7 @@ open class JooqNewsletterTopicRepo(
     fun handleUpdatedRecord(
         record: NewsletterTopicRecord?,
         entity: NewsletterTopicDefinition,
-        userId: Int
+        userId: Int,
     ): NewsletterTopicDefinition {
         if (record != null) {
             val persistedTranslations = updateOrInsertAndLoadNewsletterTopicTranslations(entity, userId)
@@ -266,13 +266,13 @@ open class JooqNewsletterTopicRepo(
     @Suppress("SpreadOperator")
     private fun toTopicDefinition(
         id: Int?, version: Int,
-        persistedTranslations: List<NewsletterTopicTranslation>
+        persistedTranslations: List<NewsletterTopicTranslation>,
     ): NewsletterTopicDefinition =
         NewsletterTopicDefinition(id, mainLanguage, version, *persistedTranslations.toTypedArray())
 
     private fun updateAndLoadNewsletterTopicDefinition(
         entity: NewsletterTopicDefinition, userId: Int,
-        currentVersion: Int
+        currentVersion: Int,
     ): NewsletterTopicRecord? = dsl
         .update(ch.difty.scipamato.core.db.tables.NewsletterTopic.NEWSLETTER_TOPIC)
         .set(ch.difty.scipamato.core.db.tables.NewsletterTopic.NEWSLETTER_TOPIC.VERSION, currentVersion + 1)
@@ -286,7 +286,7 @@ open class JooqNewsletterTopicRepo(
     // entity.id must not be null
     private fun updateOrInsertAndLoadNewsletterTopicTranslations(
         entity: NewsletterTopicDefinition,
-        userId: Int
+        userId: Int,
     ): List<NewsletterTopicTranslation> {
         val nttPersisted: MutableList<NewsletterTopicTranslation> = ArrayList()
         for (ntt in entity.getTranslations(null)) {
@@ -303,7 +303,7 @@ open class JooqNewsletterTopicRepo(
 
     private fun insertAndGetNewsletterTopicTr(
         topicId: Int, userId: Int,
-        ntt: NewsletterTopicTranslation
+        ntt: NewsletterTopicTranslation,
     ): NewsletterTopicTrRecord = dsl
         .insertInto(NewsletterTopicTr.NEWSLETTER_TOPIC_TR)
         .set(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.NEWSLETTER_TOPIC_ID, topicId)
@@ -317,7 +317,7 @@ open class JooqNewsletterTopicRepo(
     // entity.id must not be null
     private fun updateNewsletterTopicTr(
         entity: NewsletterTopicDefinition, ntt: NewsletterTopicTranslation,
-        userId: Int, currentNttVersion: Int
+        userId: Int, currentNttVersion: Int,
     ): NewsletterTopicTrRecord? = dsl
         .update(NewsletterTopicTr.NEWSLETTER_TOPIC_TR)
         .set(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.NEWSLETTER_TOPIC_ID, entity.id!!)
@@ -335,7 +335,7 @@ open class JooqNewsletterTopicRepo(
     fun addOrThrow(
         nttRecord: NewsletterTopicTrRecord?,
         nttPersisted: MutableList<NewsletterTopicTranslation>,
-        nttAsString: String?
+        nttAsString: String?,
     ) {
         if (nttRecord != null) {
             nttPersisted.add(toTopicTranslation(nttRecord))

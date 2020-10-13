@@ -9,6 +9,7 @@ import io.mockk.verify
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldContainAll
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.fail
 
 private const val LANG_CODE = "en"
 private val CC_ID = CodeClassId.CC1
@@ -40,7 +41,7 @@ internal class CodeLikeModelTest {
     @Test
     fun modelObject_gotCodeClassesFromService() {
         every { serviceMock.findCodesOfClass(CC_ID, LANG_CODE) } returns ccls
-        model.getObject() shouldContainAll listOf(cclMock, cclMock)
+        model.getObject()?.shouldContainAll(listOf(cclMock, cclMock)) ?: fail("should have list as object")
         verify { serviceMock.findCodesOfClass(CC_ID, LANG_CODE) }
     }
 }

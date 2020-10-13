@@ -12,22 +12,19 @@ internal class BasePanelTest : WicketTest() {
 
     @Test
     fun instantiatingWithIdOnly() {
-        panel = object : BasePanel<String>("panel") {
-        }
+        panel = object : BasePanel<String>("panel") {}
         panel.localization shouldBeEqualTo "en_us"
     }
 
     @Test
     fun instantiatingWithIdAndModel() {
-        panel = object : BasePanel<String>("panel", Model.of("foo")) {
-        }
+        panel = object : BasePanel<String>("panel", Model.of("foo")) {}
         panel.localization shouldBeEqualTo "en_us"
     }
 
     @Test
     fun instantiatingWithIdAndModelAndMode() {
-        panel = object : BasePanel<String>("panel", Model.of("foo"), Mode.EDIT) {
-        }
+        panel = object : BasePanel<String>("panel", Model.of("foo"), Mode.EDIT) {}
         panel.localization shouldBeEqualTo "en_us"
     }
 }

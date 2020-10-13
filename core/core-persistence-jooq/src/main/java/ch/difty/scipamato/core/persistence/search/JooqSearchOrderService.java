@@ -18,20 +18,18 @@ import ch.difty.scipamato.core.persistence.UserRepository;
  * @author u.joss
  */
 @Service
-public class JooqSearchOrderService
-    extends JooqEntityService<Long, SearchOrder, SearchOrderFilter, SearchOrderRepository>
+public class JooqSearchOrderService extends JooqEntityService<Long, SearchOrder, SearchOrderFilter, SearchOrderRepository>
     implements SearchOrderService {
 
-    protected JooqSearchOrderService(@NotNull final SearchOrderRepository repo,
-        @NotNull final UserRepository userRepo) {
+    protected JooqSearchOrderService(@NotNull final SearchOrderRepository repo, @NotNull final UserRepository userRepo) {
         super(repo, userRepo);
     }
 
     @Nullable
     @Override
     @Transactional
-    public SearchCondition saveOrUpdateSearchCondition(@NotNull final SearchCondition searchCondition,
-        final long searchOrderId, @NotNull final String languageCode) {
+    public SearchCondition saveOrUpdateSearchCondition(@NotNull final SearchCondition searchCondition, final long searchOrderId,
+        @NotNull final String languageCode) {
         if (searchCondition.getSearchConditionId() == null)
             return getRepository().addSearchCondition(searchCondition, searchOrderId, languageCode);
         else

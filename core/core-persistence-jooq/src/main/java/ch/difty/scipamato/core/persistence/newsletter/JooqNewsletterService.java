@@ -14,8 +14,7 @@ import ch.difty.scipamato.core.persistence.NewsletterService;
 import ch.difty.scipamato.core.persistence.UserRepository;
 
 @Service
-class JooqNewsletterService extends JooqEntityService<Integer, Newsletter, NewsletterFilter, NewsletterRepository>
-    implements NewsletterService {
+class JooqNewsletterService extends JooqEntityService<Integer, Newsletter, NewsletterFilter, NewsletterRepository> implements NewsletterService {
 
     JooqNewsletterService(@NotNull final NewsletterRepository repo, @NotNull final UserRepository userRepo) {
         super(repo, userRepo);
@@ -38,9 +37,7 @@ class JooqNewsletterService extends JooqEntityService<Integer, Newsletter, Newsl
     @Transactional
     public void mergePaperIntoWipNewsletter(final long paperId, @Nullable final Integer newsletterTopicId) {
         final Optional<Newsletter> opt = getRepository().getNewsletterInStatusWorkInProgress();
-        opt.ifPresent(
-            newsletter -> getRepository().mergePaperIntoNewsletter(newsletter.getId(), paperId, newsletterTopicId,
-                "en"));
+        opt.ifPresent(newsletter -> getRepository().mergePaperIntoNewsletter(newsletter.getId(), paperId, newsletterTopicId, "en"));
     }
 
     @Override

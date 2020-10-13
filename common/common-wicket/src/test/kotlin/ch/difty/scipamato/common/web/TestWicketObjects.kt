@@ -13,8 +13,10 @@ import org.apache.wicket.request.mapper.parameter.PageParameters
 
 @WicketHomePage
 class TestHomePage : AbstractPage<Void>(PageParameters()) {
-    override fun getProperties(): ApplicationProperties = TestApplicationProperties()
-    override fun isNavbarVisible(): Boolean = true
+    override val properties: ApplicationProperties
+        get() = TestApplicationProperties()
+    override val isNavbarVisible: Boolean
+        get() = true
 }
 
 class TestAbstractPage(model: IModel<TestRecord>) : AbstractPage<TestRecord>(CompoundPropertyModel.of(model)) {
@@ -27,8 +29,10 @@ class TestAbstractPage(model: IModel<TestRecord>) : AbstractPage<TestRecord>(Com
         queue(newResponsePageButton("respPageButton") { TestAbstractPage(Model(TestRecord(10, "bar"))) })
     }
 
-    override fun getProperties(): ApplicationProperties = TestApplicationProperties()
-    override fun isNavbarVisible(): Boolean = true
+    override val properties: ApplicationProperties
+        get() = TestApplicationProperties()
+    override val isNavbarVisible: Boolean
+        get() = true
 }
 
 class TestAbstractPanel(id: String, mode: Mode) : AbstractPanel<TestRecord>(id, null, mode) {

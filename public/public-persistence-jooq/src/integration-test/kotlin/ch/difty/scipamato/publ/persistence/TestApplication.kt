@@ -19,22 +19,23 @@ open class TestApplication {
 
     @Bean
     open fun applicationProperties() = object : ApplicationPublicProperties {
-        override fun getBuildVersion() = "vxy"
-        override fun getDefaultLocalization() = "de"
-        override fun getBrand() = "scipamato"
-        override fun getTitleOrBrand() = brand
-        override fun getPubmedBaseUrl() = "https://pubmed/"
-        override fun getRedirectFromPort() = 8081
-        override fun getMultiSelectBoxActionBoxWithMoreEntriesThan() = 4
-        override fun isCommercialFontPresent() = false
-        override fun isLessUsedOverCss() = false
-        override fun isNavbarVisibleByDefault() = false
-        override fun getCmsUrlSearchPage(): String? = null
-        override fun getCmsUrlNewStudyPage(): String? = null
-        override fun getAuthorsAbbreviatedMaxLength() = 50
-        override fun isResponsiveIframeSupportEnabled() = false
-        override fun getManagementUserName() = "admin"
-        override fun getManagementUserPassword() = "admin"
-        override fun getNumberOfPreviousNewslettersInArchive() = 14
+        override val buildVersion get() = "vxy"
+        override val defaultLocalization get() = "de"
+        override val brand get() = "scipamato"
+        override val titleOrBrand get() = brand
+        override val pubmedBaseUrl get() = "https://pubmed/"
+        override val redirectFromPort get() = 8081
+        override val multiSelectBoxActionBoxWithMoreEntriesThan get() = 4
+        override val isCommercialFontPresent = false
+        override val isLessUsedOverCss = false
+        override val isNavbarVisibleByDefault = false
+        override val cmsUrlSearchPage: String?
+            get() = null
+        override val cmsUrlNewStudyPage: String? = null
+        override val authorsAbbreviatedMaxLength = 50
+        override val isResponsiveIframeSupportEnabled = false
+        override val managementUserName = "admin"
+        override val managementUserPassword = "admin"
+        override val numberOfPreviousNewslettersInArchive = 14
     }
 }

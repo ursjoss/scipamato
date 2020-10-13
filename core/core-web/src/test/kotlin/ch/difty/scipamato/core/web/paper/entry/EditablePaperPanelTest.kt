@@ -24,7 +24,7 @@ import java.time.LocalDateTime
 import java.util.Optional
 
 @Suppress("SpellCheckingInspection")
-internal abstract class EditablePaperPanelTest : PaperPanelTest<Paper?, EditablePaperPanel>() {
+internal abstract class EditablePaperPanelTest : PaperPanelTest<Paper, EditablePaperPanel>() {
 
     lateinit var pubmedArticleMock: PubmedArticleFacade
 
@@ -126,7 +126,7 @@ internal abstract class EditablePaperPanelTest : PaperPanelTest<Paper?, Editable
         pmId: Int?,
         callingPage: PageReference?,
         searchOrderId: Long?,
-        showExcluded: Boolean
+        showExcluded: Boolean,
     ): EditablePaperPanel {
         val p = Paper().apply {
             id = 1L
@@ -139,7 +139,7 @@ internal abstract class EditablePaperPanelTest : PaperPanelTest<Paper?, Editable
         p: Paper,
         callingPage: PageReference?,
         searchOrderId: Long?,
-        showExcluded: Boolean
+        showExcluded: Boolean,
     ): EditablePaperPanel =
         object : EditablePaperPanel(PANEL_ID, Model.of(p), callingPage, searchOrderId, showExcluded, mode, Model.of(0)) {
             override fun onFormSubmit() {

@@ -11,7 +11,10 @@ import org.apache.wicket.markup.html.panel.Panel
 import org.apache.wicket.model.IModel
 import org.apache.wicket.model.Model
 
-internal abstract class LinkIconColumnTestPanel(id: String, private val titleModel: IModel<String>?) : Panel(id) {
+internal abstract class LinkIconColumnTestPanel(
+    id: String,
+    private val titleModel: IModel<String>?,
+) : Panel(id) {
 
     override fun onInitialize() {
         super.onInitialize()
@@ -24,22 +27,21 @@ internal abstract class LinkIconColumnTestPanel(id: String, private val titleMod
         add(DefaultDataTable("table", columns, TestDataProvider(), 10))
     }
 
-    private fun makeLinkIconColumn(): IColumn<TestRecord, String> =
+    private fun makeLinkIconColumn(): IColumn<TestRecord, String?> =
         object : LinkIconColumn<TestRecord>(Model.of("linkIconColumnLabel")) {
-            override fun createIconModel(rowModel: IModel<TestRecord>): IModel<String> =
-                Model.of("fa fa-fw fa-filter")
-
+            override fun createIconModel(rowModel: IModel<TestRecord>): IModel<String> = Model.of("fa fa-fw fa-filter")
             override fun createTitleModel(rowModel: IModel<TestRecord>): IModel<String>? = titleModel
             override fun onClickPerformed(
                 target: AjaxRequestTarget,
                 rowModel: IModel<TestRecord>,
-                link: AjaxLink<Void>
+                link: AjaxLink<Void>,
             ) {
                 this@LinkIconColumnTestPanel.onClickPerformed(rowModel, link)
             }
         }
 
-    protected abstract fun onClickPerformed(rowModel: IModel<TestRecord>?, link: AjaxLink<Void>)
+
+    protected abstract fun onClickPerformed(rowModel: IModel<TestRecord>, link: AjaxLink<Void>)
 
     internal class TestDataProvider : SortableDataProvider<TestRecord, String>() {
         override fun iterator(first: Long, count: Long): Iterator<TestRecord> = listOf(TestRecord(1, "foo")).iterator()

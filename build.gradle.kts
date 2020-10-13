@@ -34,6 +34,7 @@ java {
 
 extra["spring.cloudVersion"] = Lib.springCloudVersion
 extra["jooq.version"] = Lib.jooqVersion
+extra["flyway.version"] = Lib.flywayVersion
 
 dependencyManagement {
     imports {
@@ -88,6 +89,7 @@ allprojects {
     group = "ch.difty"
 
     repositories {
+        mavenLocal()
         mavenCentral()
         jcenter()
         maven { url = uri("https://dl.bintray.com/mockito/maven/") }

@@ -12,9 +12,7 @@ internal class AbstractFilterConditionMapperTest {
     private val condition = mockk<Condition>()
 
     private val filterConditionMapper = object : AbstractFilterConditionMapper<TestFilter>() {
-        override fun map(filter: TestFilter, conditions: MutableList<Condition>) {
-            conditions.add(condition)
-        }
+        override fun internalMap(filter: TestFilter): List<Condition> = listOf(condition)
     }
 
     @Test

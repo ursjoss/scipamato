@@ -45,7 +45,7 @@ internal class UndertowConfigTest {
     }
     private val config = UndertowConfig(serverPropsMock, scipamatoPropertiesMock)
 
-    private val factory: UndertowServletWebServerFactory = config.undertow() as UndertowServletWebServerFactory
+    private val factory: UndertowServletWebServerFactory = config.getUndertow() as UndertowServletWebServerFactory
 
     private val undertowBuilder = Undertow.builder()
     private val deploymentInfo = DeploymentInfo()

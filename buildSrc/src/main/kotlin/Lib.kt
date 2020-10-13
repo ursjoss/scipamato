@@ -15,13 +15,14 @@ object Lib {
     private const val springCloudStarterVersion = "2.2.5.RELEASE"
 
     private const val wicketSpringBootStarterVersion = "3.0.4"
-    private const val wicketVersion = "9.0.0"
-    private const val wicketstuffVersion = "9.0.0"
+    private const val wicketVersion = "9.1.0"
+    private const val wicketstuffVersion = "9.1.0"
     private const val wicketJqueryUiVersion = "9.0.0"
-    private const val wicketBootstrapVersion = "4.0.0"
-    private const val jasperReportVersion = "6.14.0"
+    private const val wicketBootstrapVersion = "4.0.1"
+    private const val jasperReportVersion = "6.15.0"
     private const val krisVersion = "0.2.6"
     const val jooqVersion = "3.13.5"
+    const val flywayVersion = "6.5.7"
 
     private const val kotlinLoggingVersion = "2.0.3"
 
@@ -33,7 +34,7 @@ object Lib {
     private const val javaxElApiVersion = "3.0.1-b06"
     private const val javaxElVersion = "3.0.1-b11"
 
-    private const val fontAwesomeVersion = "5.13.0"
+    private const val fontAwesomeVersion = "5.15.0"
 
     private const val equalsverifierVersion = "3.4.3"
 
@@ -42,7 +43,7 @@ object Lib {
     private const val testcontainersVersion = "1.14.3"
 
     private const val spekVersion = "2.0.13"
-    private const val kwikVersion = "0.8.0"
+    private const val kwikVersion = "0.8.2"
     private const val kluentVersion = "1.61"
     private const val mockkVersion = "1.10.2"
     private const val springMockkVersion = "2.0.3"

@@ -31,17 +31,17 @@ abstract class SelfUpdatingPageTest<T : BasePage<*>> : BasePageTest<T>() {
 }
 
 class TestApplicationCoreProperties : ApplicationCoreProperties {
-    override fun getBrand() = "SciPaMaTo"
-    override fun getMinimumPaperNumberToBeRecycled() = 7L
-    override fun getDefaultLocalization() = "de"
-    override fun getAuthorParserStrategy() = AuthorParserStrategy.PUBMED
+    override val brand get() = "SciPaMaTo"
+    override val minimumPaperNumberToBeRecycled get() = 7L
+    override val defaultLocalization get() = "de"
+    override val authorParserStrategy get() = AuthorParserStrategy.PUBMED
 
-    override fun getCmsUrlSearchPage() = null
-    override fun getRedirectFromPort() = null
-    override fun getMultiSelectBoxActionBoxWithMoreEntriesThan() = 0
-    override fun getBuildVersion() = null
-    override fun getPubmedBaseUrl() = ""
-    override fun getTitleOrBrand() = ""
-    override fun getRisExporterStrategy() = RisExporterStrategy.DEFAULT
-    override fun getPubmedApiKey() = null
+    override val cmsUrlSearchPage: String? get() = null
+    override val redirectFromPort: Int? get() = null
+    override val multiSelectBoxActionBoxWithMoreEntriesThan get() = 0
+    override val buildVersion: String? get() = null
+    override val pubmedBaseUrl get() = ""
+    override val titleOrBrand get() = ""
+    override val risExporterStrategy get() = RisExporterStrategy.DEFAULT
+    override val pubmedApiKey: String? get() = null
 }

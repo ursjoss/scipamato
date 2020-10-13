@@ -20,8 +20,7 @@ import ch.difty.scipamato.core.persistence.CodeClassService;
  * @author u.joss
  */
 @Service
-public class JooqCodeClassService extends JooqCodeClassLikeService<CodeClass, CodeClassRepository>
-    implements CodeClassService {
+public class JooqCodeClassService extends JooqCodeClassLikeService<CodeClass, CodeClassRepository> implements CodeClassService {
 
     public JooqCodeClassService(@NotNull final CodeClassRepository codeClassRepository) {
         super(codeClassRepository);

@@ -24,15 +24,15 @@ internal class PaperSummaryDataSourceTest : PaperDataSourceTest() {
 
     private val rhf = newReportHeaderFields()
 
-    private fun newReportHeaderFields(): ReportHeaderFields =
-        ReportHeaderFields
-            .builder(HEADER_PART, BRAND)
-            .populationLabel(POPULATION_LABEL)
-            .goalsLabel(GOALS_LABEL)
-            .methodsLabel(METHODS_LABEL)
-            .resultLabel(RESULT_LABEL)
-            .commentLabel(COMMENT_LABEL)
-            .build()
+    private fun newReportHeaderFields() = ReportHeaderFields(
+        headerPart = HEADER_PART,
+        brand = BRAND,
+        populationLabel = POPULATION_LABEL,
+        goalsLabel = GOALS_LABEL,
+        methodsLabel = METHODS_LABEL,
+        resultLabel = RESULT_LABEL,
+        commentLabel = COMMENT_LABEL,
+    )
 
     public override fun setUpHook() {
         every { paperMock.number } returns NUMBER

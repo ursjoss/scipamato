@@ -143,9 +143,9 @@ internal class AbstractMenuBuilderTest {
         icon.type.shouldBeNull()
     }
 
-    private class TestMenuBuilder internal constructor(
+    private class TestMenuBuilder constructor(
         applicationProperties: ApplicationProperties,
-        webSessionFacade: ScipamatoWebSessionFacade
+        webSessionFacade: ScipamatoWebSessionFacade,
     ) : AbstractMenuBuilder(applicationProperties, webSessionFacade) {
         override fun addMenuLinksTo(navbar: Navbar, page: Page) {
             // override if needed
@@ -154,8 +154,8 @@ internal class AbstractMenuBuilderTest {
 
     @Test
     fun addingMenu() {
-        val consumer = { _: List<AbstractLink> -> called = true }
-        menuBuilder.newMenu(navbar, TestLoginPage(PageParameters()), "foo", GlyphIconType.adjust, consumer)
+        val action = { _: List<AbstractLink> -> called = true }
+        menuBuilder.newMenu(navbar, TestLoginPage(PageParameters()), "foo", GlyphIconType.adjust, action)
         called.shouldBeTrue()
     }
 
@@ -197,7 +197,7 @@ internal class AbstractMenuBuilderTest {
 
     @Test
     fun addingEntryToMenu_withIcon() {
-        val links = ArrayList<AbstractLink>()
+        val links = mutableListOf<AbstractLink>()
         links.shouldBeEmpty()
 
         menuBuilder.addEntryToMenu("label.link", TestHomePage(), TestHomePage::class.java, GlyphIconType.adjust, links)

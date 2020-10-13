@@ -16,22 +16,24 @@ internal class PaperLiteratureReviewTest : JasperEntityTest() {
 
     private lateinit var plr: PaperLiteratureReview
 
-    private fun newReportHeaderFields(): ReportHeaderFields = ReportHeaderFields
-        .builder(HEADER_PART, BRAND)
-        .numberLabel(NUMBER_LABEL)
-        .captionLabel(CAPTION)
-        .pubmedBaseUrl(PUBMED_BASE_URL)
-        .build()
+    private fun newReportHeaderFields() = ReportHeaderFields(
+        headerPart = HEADER_PART,
+        brand = BRAND,
+        numberLabel = NUMBER_LABEL,
+        captionLabel = CAPTION,
+        pubmedBaseUrl = PUBMED_BASE_URL,
+    )
 
     @Test
     fun degenerateConstruction_withNullPubmedBaseUrl_throws() {
-        val rhf2 = ReportHeaderFields
-            .builder(HEADER_PART, BRAND)
-            .numberLabel(NUMBER_LABEL)
-            .captionLabel(CAPTION)
-            .build()
+        val rhf2 = ReportHeaderFields(
+            headerPart = HEADER_PART,
+            brand = BRAND,
+            numberLabel = NUMBER_LABEL,
+            captionLabel = CAPTION,
+        )
         rhf2.pubmedBaseUrl.shouldBeNull()
-        invoking { PaperLiteratureReview(p, rhf2) } shouldThrow NullPointerException::class
+        invoking { PaperLiteratureReview(p, rhf2) } shouldThrow IllegalArgumentException::class
     }
 
     @Test
@@ -80,6 +82,7 @@ internal class PaperLiteratureReviewTest : JasperEntityTest() {
         EqualsVerifier.simple()
             .forClass(PaperLiteratureReview::class.java)
             .withRedefinedSuperclass()
+            .withOnlyTheseFields("number")
             .verify()
     }
 

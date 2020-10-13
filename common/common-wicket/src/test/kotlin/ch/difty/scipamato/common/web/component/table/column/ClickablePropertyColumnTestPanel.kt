@@ -12,8 +12,8 @@ import org.apache.wicket.model.Model
 
 internal class ClickablePropertyColumnTestPanel(
     id: String,
-    private val consumer: SerializableConsumer<IModel<TestRecord>>,
-    private val inNewTab: Boolean
+    private val action: SerializableConsumer<IModel<TestRecord>>,
+    private val inNewTab: Boolean,
 ) : Panel(id) {
 
     override fun onInitialize() {
@@ -21,7 +21,7 @@ internal class ClickablePropertyColumnTestPanel(
 
         val columns = listOf(
             PropertyColumn(Model.of("name"), "name", "name"),
-            makeClickableColumn("test", consumer)
+            makeClickableColumn("test", action)
         )
         add(DefaultDataTable("table", columns, TestDataProvider(), 10))
     }
@@ -29,9 +29,9 @@ internal class ClickablePropertyColumnTestPanel(
     @Suppress("SameParameterValue")
     private fun makeClickableColumn(
         id: String,
-        consumer: SerializableConsumer<IModel<TestRecord>>
+        action: SerializableConsumer<IModel<TestRecord>>,
     ): IColumn<TestRecord, String> =
-        object : ClickablePropertyColumn<TestRecord, String>(Model.of(id), null, "name", consumer, inNewTab) {}
+        object : ClickablePropertyColumn<TestRecord, String>(Model.of(id), "name", action, null, inNewTab) {}
 
     internal class TestDataProvider : SortableDataProvider<TestRecord, String>() {
         override fun iterator(first: Long, count: Long): Iterator<TestRecord> = listOf(TestRecord(1, "foo")).iterator()

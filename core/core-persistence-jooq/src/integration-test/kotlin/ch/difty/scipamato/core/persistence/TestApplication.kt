@@ -31,14 +31,14 @@ open class TestApplication {
     @Bean
     open fun applicationProperties(): ApplicationProperties =
         object : ApplicationProperties {
-            override fun getBuildVersion() = "vxy"
-            override fun getDefaultLocalization() = "de"
-            override fun getBrand() = "scipamato"
-            override fun getTitleOrBrand() = brand
-            override fun getPubmedBaseUrl() = "https://pubmed/"
-            override fun getCmsUrlSearchPage() = "http://localhost/paper/number"
-            override fun getRedirectFromPort() = 8080
-            override fun getMultiSelectBoxActionBoxWithMoreEntriesThan() = 4
+            override val buildVersion get() = "vxy"
+            override val defaultLocalization get() = "de"
+            override val brand get() = "scipamato"
+            override val titleOrBrand get() = brand
+            override val pubmedBaseUrl get() = "https://pubmed/"
+            override val cmsUrlSearchPage get() = "http://localhost/paper/number"
+            override val redirectFromPort get() = 8080
+            override val multiSelectBoxActionBoxWithMoreEntriesThan get() = 4
         }
 
     @Bean

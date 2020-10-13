@@ -29,8 +29,7 @@ public class JooqCodeService extends JooqCodeLikeService<Code, CodeRepository> i
 
     @NotNull
     @Override
-    public List<CodeDefinition> findPageOfCodeDefinitions(@Nullable final CodeFilter filter,
-        @NotNull final PaginationContext paginationContext) {
+    public List<CodeDefinition> findPageOfCodeDefinitions(@Nullable final CodeFilter filter, @NotNull final PaginationContext paginationContext) {
         return getRepo().findPageOfCodeDefinitions(filter, paginationContext);
     }
 

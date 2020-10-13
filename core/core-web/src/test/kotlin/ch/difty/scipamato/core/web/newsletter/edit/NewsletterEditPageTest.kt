@@ -163,16 +163,28 @@ internal class NewsletterEditPageTest : BasePageTest<NewsletterEditPage>() {
 
     @Test
     fun clickingTitleInResultPanel_opensPaperEntryPage() {
-        val papers: MutableList<PaperSlim> = ArrayList()
-        val ps = PaperSlim()
-        ps.id = 1L
-        ps.number = 2L
-        ps.title = "some title"
-        ps.publicationYear = 2019
-        ps.firstAuthor = "Foo"
+        val papers = ArrayList<PaperSlim>()
+        val ps = PaperSlim().apply {
+            id = 1L
+            number = 2L
+            title = "some title"
+            publicationYear = 2019
+            firstAuthor = "Foo"
+        }
         papers.add(ps)
-        val p = Paper()
-        p.id = ps.id
+        val p = Paper().apply {
+            id = ps.id
+            number = ps.number
+            title = ps.title
+            publicationYear = ps.publicationYear
+            firstAuthor = ps.firstAuthor
+            authors = "Foo B."
+            location = "loc"
+            methods = "methods"
+            goals = "goals"
+            comment = "comment"
+            createdByName = "cb"
+        }
         every { paperSlimServiceMock.countByFilter(any()) } returns papers.size
         every { paperSlimServiceMock.findPageByFilter(any(), any()) } returns papers
         every { paperServiceMock.findByNumber(ps.number, "en_us") } returns Optional.of(p)

@@ -1,13 +1,13 @@
 description = "SciPaMaTo-Common :: Wicket Project"
 
 /**
- * Make the static wicket resources that reside next to the java classes in src{main,test} available.
+ * Make the static wicket resources that reside next to the kotlin classes in src{main,test} available.
  */
 sourceSets {
     /** main: html, css, properties files */
     main {
         resources {
-            srcDir("src/main/java")
+            srcDir("src/main/kotlin")
         }
     }
     /** test: html and properties files */

@@ -7,26 +7,21 @@ internal class WicketUtilsTest {
 
     @Test
     fun labelTag() {
-        WicketUtils.LABEL_TAG shouldBeEqualTo "Label"
+        LABEL_TAG shouldBeEqualTo "Label"
     }
 
     @Test
     fun labelResourceTag() {
-        WicketUtils.LABEL_RESOURCE_TAG shouldBeEqualTo ".label"
+        LABEL_RESOURCE_TAG shouldBeEqualTo ".label"
     }
 
     @Test
     fun shortLabelResourceTag() {
-        WicketUtils.SHORT_LABEL_RESOURCE_TAG shouldBeEqualTo ".short.label"
+        SHORT_LABEL_RESOURCE_TAG shouldBeEqualTo ".short.label"
     }
 
     @Test
     fun panelHeaderResourceTag() {
-        WicketUtils.PANEL_HEADER_RESOURCE_TAG shouldBeEqualTo ".header"
-    }
-
-    @Test
-    fun dummyTest() {
-        WicketUtils.dummyMethod() shouldBeEqualTo "Label.label.loading.title.short.label.header"
+        PANEL_HEADER_RESOURCE_TAG shouldBeEqualTo ".header"
     }
 }

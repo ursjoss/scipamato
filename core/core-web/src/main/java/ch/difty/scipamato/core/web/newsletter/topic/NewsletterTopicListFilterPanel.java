@@ -12,17 +12,16 @@ import ch.difty.scipamato.core.web.common.DefinitionListFilterPanel;
 import ch.difty.scipamato.core.web.newsletter.NewsletterTopicDefinitionProvider;
 
 @SuppressWarnings({ "SameParameterValue", "WicketForgeJavaIdInspection" })
-abstract class NewsletterTopicListFilterPanel extends
-    DefinitionListFilterPanel<NewsletterTopicDefinition, NewsletterTopicFilter, NewsletterTopicService, NewsletterTopicDefinitionProvider> {
+abstract class NewsletterTopicListFilterPanel
+    extends DefinitionListFilterPanel<NewsletterTopicDefinition, NewsletterTopicFilter, NewsletterTopicService, NewsletterTopicDefinitionProvider> {
 
-    NewsletterTopicListFilterPanel(@NotNull final String id,
-        @NotNull final NewsletterTopicDefinitionProvider provider) {
+    NewsletterTopicListFilterPanel(@NotNull final String id, @NotNull final NewsletterTopicDefinitionProvider provider) {
         super(id, provider);
     }
 
     protected void queueFilterFormFields() {
-        queueFieldAndLabel(new TextField<>("title", PropertyModel.of(getFilter(),
-            NewsletterTopicFilter.NewsletterTopicFilterFields.TITLE_MASK.getFieldName())));
+        queueFieldAndLabel(
+            new TextField<>("title", PropertyModel.of(getFilter(), NewsletterTopicFilter.NewsletterTopicFilterFields.TITLE_MASK.getFieldName())));
         queueNewNewsletterTopicButton("newNewsletterTopic");
     }
 

@@ -3,7 +3,6 @@ package ch.difty.scipamato.publ.web.paper.browse
 import ch.difty.scipamato.common.AjaxRequestTargetSpy
 import io.mockk.every
 import io.mockk.mockk
-import nl.jqno.equalsverifier.EqualsVerifier
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeNull
 import org.apache.wicket.markup.html.form.TextArea
@@ -48,34 +47,26 @@ internal class SimpleFilterPanelChangeEventTest {
 
     @Test
     fun usingWithId_doesAddId() {
-        val f = SimpleFilterPanelChangeEvent(targetSpy).withId("foo")
-        f.id shouldBeEqualTo "foo"
-        f.markupId.shouldBeNull()
+        SimpleFilterPanelChangeEvent(target = targetSpy, id = "foo").apply {
+            id shouldBeEqualTo "foo"
+            markupId.shouldBeNull()
+        }
     }
 
     @Test
     fun usingWithMarkupId_doesAddMarkupId() {
-        val f = SimpleFilterPanelChangeEvent(targetSpy).withMarkupId("bar")
-        f.id.shouldBeNull()
-        f.markupId shouldBeEqualTo "bar"
+        SimpleFilterPanelChangeEvent(target = targetSpy, markupId = "bar").apply {
+            id.shouldBeNull()
+            markupId shouldBeEqualTo "bar"
+        }
     }
 
     @Test
     fun usingWithIdAndMarkupId_doesAddBoth() {
-        val f = SimpleFilterPanelChangeEvent(targetSpy)
-            .withId("hups")
-            .withMarkupId("goo")
-        f.id shouldBeEqualTo "hups"
-        f.markupId shouldBeEqualTo "goo"
-    }
-
-    @Test
-    fun canOverrideTarget() {
-        e.target shouldBeEqualTo targetSpy
-
-        val targetDummy2 = AjaxRequestTargetSpy()
-        e.target = targetDummy2
-        e.target shouldBeEqualTo targetDummy2
+        SimpleFilterPanelChangeEvent(target = targetSpy, id = "hups", markupId = "goo").apply {
+            id shouldBeEqualTo "hups"
+            markupId shouldBeEqualTo "goo"
+        }
     }
 
     @Test
@@ -87,10 +78,9 @@ internal class SimpleFilterPanelChangeEventTest {
 
     @Test
     fun consideringAddingToTarget_withDifferingId_doesNotAddTarget() {
-        val f = SimpleFilterPanelChangeEvent(targetSpy)
-            .withId("otherId")
-            .withMarkupId(MARKUP_ID)
-        f.considerAddingToTarget(mockComponent)
+        SimpleFilterPanelChangeEvent(target = targetSpy, id = "otherId", markupId = MARKUP_ID).apply {
+            considerAddingToTarget(mockComponent)
+        }
         targetSpy.components.size shouldBeEqualTo 0
     }
 
@@ -98,9 +88,10 @@ internal class SimpleFilterPanelChangeEventTest {
     fun consideringAddingToTarget_withSameIdButNullMarkupId_addsTarget() {
         every { mockComponent.id } returns ID
         every { mockComponent.markupId } returns MARKUP_ID
-        val f = SimpleFilterPanelChangeEvent(targetSpy).withId(ID)
-        f.markupId.shouldBeNull()
-        f.considerAddingToTarget(mockComponent)
+        SimpleFilterPanelChangeEvent(targetSpy, id = ID).apply {
+            markupId.shouldBeNull()
+            considerAddingToTarget(mockComponent)
+        }
         targetSpy.components.size shouldBeEqualTo 1
     }
 
@@ -108,27 +99,17 @@ internal class SimpleFilterPanelChangeEventTest {
     fun consideringAddingToTarget_withSameIdAndDifferingMarkupId_addsTarget() {
         every { mockComponent.id } returns ID
         every { mockComponent.markupId } returns MARKUP_ID
-        val f = SimpleFilterPanelChangeEvent(targetSpy)
-            .withId(ID)
-            .withMarkupId("otherMarkupId")
-        f.considerAddingToTarget(mockComponent)
+        SimpleFilterPanelChangeEvent(target = targetSpy, id = ID, markupId = "otherMarkupId").apply {
+            considerAddingToTarget(mockComponent)
+        }
         targetSpy.components.size shouldBeEqualTo 1
     }
 
     @Test
     fun consideringAddingToTarget_withSameIdButSameMarkupId_doesNotAddTarget() {
-        val f = SimpleFilterPanelChangeEvent(targetSpy)
-            .withId(ID)
-            .withMarkupId(MARKUP_ID)
-        f.considerAddingToTarget(mockComponent)
+        SimpleFilterPanelChangeEvent(target = targetSpy, id = ID, markupId = MARKUP_ID).apply {
+            considerAddingToTarget(mockComponent)
+        }
         targetSpy.components.size shouldBeEqualTo 0
-    }
-
-    @Test
-    fun equals() {
-        EqualsVerifier.simple()
-            .forClass(SimpleFilterPanelChangeEvent::class.java)
-            .withRedefinedSuperclass()
-            .verify()
     }
 }

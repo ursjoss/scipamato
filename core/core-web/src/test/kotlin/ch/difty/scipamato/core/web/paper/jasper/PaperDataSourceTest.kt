@@ -39,8 +39,8 @@ abstract class PaperDataSourceTest : WicketTest() {
     }
 
     @Throws(JRException::class)
-    protected fun assertFieldValue(fieldName: String?, value: String?, f: JRDesignField, jsds: JRDataSource) {
-        f.name = fieldName
-        jsds.getFieldValue(f) shouldBeEqualTo value
+    protected fun assertFieldValue(fieldName: String?, value: String?, field: JRDesignField, dataSource: JRDataSource) {
+        field.name = fieldName
+        dataSource.getFieldValue(field) shouldBeEqualTo value
     }
 }

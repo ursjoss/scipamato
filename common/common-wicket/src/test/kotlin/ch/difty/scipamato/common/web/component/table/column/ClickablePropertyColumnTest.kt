@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test
 
 internal class ClickablePropertyColumnTest : WicketBaseTest() {
 
-    private val consumerMock = mockk<SerializableConsumer<IModel<String>>>(relaxed = true)
+    private val actionMock = mockk<SerializableConsumer<IModel<String>>>(relaxed = true)
 
     private val displayModel = Model("foo")
 
@@ -26,40 +26,40 @@ internal class ClickablePropertyColumnTest : WicketBaseTest() {
     @Test
     fun testOnClick() {
         val property = "prop"
-        val c = ClickablePropertyColumn<String, String>(displayModel, property, consumerMock)
+        val c = ClickablePropertyColumn<String, String>(displayModel, property, actionMock)
         val clickModel = Model.of("bar")
         c.onClick(clickModel)
-        verify { consumerMock.accept(clickModel) }
+        verify { actionMock.accept(clickModel) }
     }
 
     @Test
     fun testOnClick_withSort() {
         val property = "prop"
         val c = ClickablePropertyColumn(
-            displayModel, property, property,
-            consumerMock
+            displayModel, property, actionMock,
+            property
         )
         val clickModel = Model.of("bar")
         c.onClick(clickModel)
-        verify { consumerMock.accept(clickModel) }
+        verify { actionMock.accept(clickModel) }
     }
 
     @Test
     fun testOnClick_inNewTab() {
         val property = "prop"
         val c = ClickablePropertyColumn(
-            displayModel, property, property,
-            consumerMock, true
+            displayModel, property, actionMock,
+            property, true
         )
         val clickModel = Model.of("bar")
         c.onClick(clickModel)
-        verify { consumerMock.accept(clickModel) }
+        verify { actionMock.accept(clickModel) }
     }
 
     @Test
     fun testPanel() {
         tester.startComponentInPage(
-            ClickablePropertyColumnTestPanel("panel", SerializableConsumer { this.setVariable(it) }, false)
+            ClickablePropertyColumnTestPanel("panel", ::setVariable, false)
         )
         assertComponents()
         clickPerformed.shouldBeNull()
@@ -68,7 +68,7 @@ internal class ClickablePropertyColumnTest : WicketBaseTest() {
     @Test
     fun clickLink() {
         tester.startComponentInPage(
-            ClickablePropertyColumnTestPanel("panel", SerializableConsumer { this.setVariable(it) }, false)
+            ClickablePropertyColumnTestPanel("panel", ::setVariable, false)
         )
         tester.clickLink("panel:table:body:rows:1:cells:2:cell:link")
         clickPerformed shouldBeEqualTo "TestRecord(id=1, name=foo)"
@@ -77,16 +77,14 @@ internal class ClickablePropertyColumnTest : WicketBaseTest() {
     @Test
     fun clickLink_inNewTab() {
         tester.startComponentInPage(
-            ClickablePropertyColumnTestPanel("panel", SerializableConsumer { this.setVariable(it) }, true)
+            ClickablePropertyColumnTestPanel("panel", ::setVariable, true)
         )
         tester.clickLink("panel:table:body:rows:1:cells:2:cell:link")
         clickPerformed shouldBeEqualTo "TestRecord(id=1, name=foo)"
     }
 
-    private fun setVariable(trModel: IModel<TestRecord>) {
-        clickPerformed = trModel
-            .getObject()
-            .toString()
+    private fun setVariable(trModel: IModel<TestRecord>?) {
+        clickPerformed = trModel?.getObject()?.toString()
     }
 
     private fun assertComponents() {

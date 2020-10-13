@@ -1,5 +1,7 @@
 package ch.difty.scipamato.core.web.common;
 
+import static ch.difty.scipamato.common.web.WicketUtilsKt.LABEL_RESOURCE_TAG;
+
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.confirmation.ConfirmationBehavior;
@@ -19,6 +21,8 @@ import ch.difty.scipamato.core.persistence.OptimisticLockingException;
 public abstract class DeletableDefinitionEditHeaderPanel<E extends DefinitionEntity<ID, T>, T extends DefinitionTranslation, ID>
     extends DefinitionEditHeaderPanel<E, T, ID> {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * @param id
      *     the panel wicket id
@@ -36,8 +40,9 @@ public abstract class DeletableDefinitionEditHeaderPanel<E extends DefinitionEnt
     }
 
     private BootstrapButton newDeleteButton(final String id) {
-        final BootstrapButton db = new BootstrapButton(id, new StringResourceModel(id + LABEL_RESOURCE_TAG),
-            Buttons.Type.Default) {
+        final BootstrapButton db = new BootstrapButton(id, new StringResourceModel(id + LABEL_RESOURCE_TAG), Buttons.Type.Default) {
+            private static final long serialVersionUID = 1L;
+
             @Override
             public void onSubmit() {
                 super.onSubmit();
@@ -82,8 +87,8 @@ public abstract class DeletableDefinitionEditHeaderPanel<E extends DefinitionEnt
 
             @SuppressWarnings("unused")
             private void handleDataIntegrityViolationException(final DataIntegrityViolationException dive) {
-                @SuppressWarnings("SpellCheckingInspection") final String msg = new StringResourceModel(
-                    "delete.dataintegrityviolation.hint", this, null)
+                @SuppressWarnings("SpellCheckingInspection") final String msg = new StringResourceModel("delete.dataintegrityviolation.hint", this,
+                    null)
                     .setParameters(DeletableDefinitionEditHeaderPanel.this
                         .getModelObject()
                         .getNullSafeId())

@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test
 internal class WicketEventTest {
 
     private val targetSpy: AjaxRequestTarget = AjaxRequestTargetSpy()
-    private val e: WicketEvent = object : WicketEvent(targetSpy) {}
+    private val e: WicketEvent = WicketEvent(targetSpy)
 
     @Test
     fun test() {

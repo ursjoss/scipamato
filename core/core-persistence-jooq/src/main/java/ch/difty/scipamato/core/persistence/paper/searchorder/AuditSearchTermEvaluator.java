@@ -50,8 +50,7 @@ public class AuditSearchTermEvaluator implements SearchTermEvaluator<AuditSearch
         return conditions.combineWithAnd();
     }
 
-    private void handleUserField(final AuditSearchTerm searchTerm, final ConditionalSupplier conditions,
-        final Token token) {
+    private void handleUserField(final AuditSearchTerm searchTerm, final ConditionalSupplier conditions, final Token token) {
         final String fieldName = searchTerm.getFieldName();
         checkField(fieldName, CREATED_BY, LAST_MOD_BY, "user", "CONTAINS");
 
@@ -64,19 +63,19 @@ public class AuditSearchTermEvaluator implements SearchTermEvaluator<AuditSearch
             .from(PAPER)
             .innerJoin(SCIPAMATO_USER)
             .on(field.eq(SCIPAMATO_USER.ID))
-            .where(DSL.lower(SCIPAMATO_USER.USER_NAME)
+            .where(DSL
+                .lower(SCIPAMATO_USER.USER_NAME)
                 .like(userName));
         conditions.add(() -> PAPER.ID.in(step));
     }
 
-    private void checkField(final String fieldName, final Paper.PaperFields createdField,
-        final Paper.PaperFields lastModField, final String fieldType, final String matchType) {
+    private void checkField(final String fieldName, final Paper.PaperFields createdField, final Paper.PaperFields lastModField,
+        final String fieldType, final String matchType) {
         if (!isOneOrTheOther(createdField, lastModField, fieldName))
             throwWithMessage(fieldName, fieldType, createdField, lastModField, matchType);
     }
 
-    private boolean isOneOrTheOther(final Paper.PaperFields createdField, final Paper.PaperFields lastModField,
-        final String fieldName) {
+    private boolean isOneOrTheOther(final Paper.PaperFields createdField, final Paper.PaperFields lastModField, final String fieldName) {
         //@formatter:off
         return (
                createdField.getFieldName().equals(fieldName)
@@ -85,16 +84,13 @@ public class AuditSearchTermEvaluator implements SearchTermEvaluator<AuditSearch
         //@formatter:on
     }
 
-    private void throwWithMessage(final String fieldName, String fieldType, FieldEnumType fld1, FieldEnumType fld2,
-        String matchType) {
-        final String msg = String.format(
-            "Field %s is not one of the expected %s fields [%s, %s] entitled to use MatchType.%s", fieldName, fieldType,
+    private void throwWithMessage(final String fieldName, String fieldType, FieldEnumType fld1, FieldEnumType fld2, String matchType) {
+        final String msg = String.format("Field %s is not one of the expected %s fields [%s, %s] entitled to use MatchType.%s", fieldName, fieldType,
             fld1.getFieldName(), fld2.getFieldName(), matchType);
         throw new IllegalArgumentException(msg);
     }
 
-    private void handleDateField(final AuditSearchTerm searchTerm, final ConditionalSupplier conditions,
-        final Token token) {
+    private void handleDateField(final AuditSearchTerm searchTerm, final ConditionalSupplier conditions, final Token token) {
         final String fieldName = searchTerm.getFieldName();
         checkField(fieldName, CREATED, LAST_MOD, "date", token.getType().matchType.name());
 
@@ -114,18 +110,16 @@ public class AuditSearchTermEvaluator implements SearchTermEvaluator<AuditSearch
         final LocalDateTime ldt2 = LocalDateTime.parse(token
             .getDateSqlData()
             .substring(20), DateTimeFormatter.ofPattern(DATE_FORMAT));
-        addToConditions(token, DSL.field(fieldName), DSL.val(Timestamp.valueOf(ldt1)), DSL.val(Timestamp.valueOf(ldt2)),
-            conditions);
+        addToConditions(token, DSL.field(fieldName), DSL.val(Timestamp.valueOf(ldt1)), DSL.val(Timestamp.valueOf(ldt2)), conditions);
     }
 
     private void handleSingleDate(final ConditionalSupplier conditions, final Token token, final String fieldName) {
         final LocalDateTime ldt = LocalDateTime.parse(token.getDateSqlData(), DateTimeFormatter.ofPattern(DATE_FORMAT));
-        addToConditions(token, DSL.field(fieldName), DSL.val(Timestamp.valueOf(ldt)), DSL.val(Timestamp.valueOf(ldt)),
-            conditions);
+        addToConditions(token, DSL.field(fieldName), DSL.val(Timestamp.valueOf(ldt)), DSL.val(Timestamp.valueOf(ldt)), conditions);
     }
 
-    private void addToConditions(final Token token, final Field<Object> field, final Field<Timestamp> value1,
-        final Field<Timestamp> value2, final ConditionalSupplier conditions) {
+    private void addToConditions(final Token token, final Field<Object> field, final Field<Timestamp> value1, final Field<Timestamp> value2,
+        final ConditionalSupplier conditions) {
         switch (token.getType().matchType) {
         case RANGE:
             conditions.add(() -> field.between(value1, value2));

@@ -1,5 +1,7 @@
 package ch.difty.scipamato.core.persistence.codeclass;
 
+import static ch.difty.scipamato.common.persistence.TranslationUtilsKt.NOT_TRANSL;
+import static ch.difty.scipamato.common.persistence.TranslationUtilsKt.trimLanguageCode;
 import static ch.difty.scipamato.core.db.tables.CodeClass.CODE_CLASS;
 import static ch.difty.scipamato.core.db.tables.CodeClassTr.CODE_CLASS_TR;
 import static ch.difty.scipamato.core.db.tables.Language.LANGUAGE;
@@ -22,7 +24,6 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import ch.difty.scipamato.common.DateTimeService;
-import ch.difty.scipamato.common.TranslationUtils;
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.common.persistence.paging.Sort;
 import ch.difty.scipamato.core.db.tables.records.CodeClassRecord;
@@ -50,13 +51,13 @@ public class JooqCodeClassRepo extends AbstractRepo implements CodeClassReposito
     @Override
     @Cacheable
     public List<CodeClass> find(@NotNull final String languageCode) {
-        final String lang = TranslationUtils.INSTANCE.trimLanguageCode(languageCode);
+        final String lang = trimLanguageCode(languageCode);
         // skipping the audit fields
         return getDsl()
             .select(CODE_CLASS.ID.as("CC_ID"), DSL
-                .coalesce(CODE_CLASS_TR.NAME, TranslationUtils.NOT_TRANSL)
+                .coalesce(CODE_CLASS_TR.NAME, NOT_TRANSL)
                 .as("CC_NAME"), DSL
-                .coalesce(CODE_CLASS_TR.DESCRIPTION, TranslationUtils.NOT_TRANSL)
+                .coalesce(CODE_CLASS_TR.DESCRIPTION, NOT_TRANSL)
                 .as("CC_DESCRIPTION"))
             .from(CODE_CLASS)
             .leftOuterJoin(CODE_CLASS_TR)

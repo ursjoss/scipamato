@@ -1,5 +1,7 @@
 package ch.difty.scipamato.core.persistence.code;
 
+import static ch.difty.scipamato.common.persistence.TranslationUtilsKt.NOT_TRANSL;
+import static ch.difty.scipamato.common.persistence.TranslationUtilsKt.trimLanguageCode;
 import static ch.difty.scipamato.core.db.tables.Code.CODE;
 import static ch.difty.scipamato.core.db.tables.CodeClass.CODE_CLASS;
 import static ch.difty.scipamato.core.db.tables.CodeClassTr.CODE_CLASS_TR;
@@ -25,7 +27,6 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import ch.difty.scipamato.common.DateTimeService;
-import ch.difty.scipamato.common.TranslationUtils;
 import ch.difty.scipamato.common.entity.CodeClassId;
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.common.persistence.paging.Sort;
@@ -59,16 +60,16 @@ public class JooqCodeRepo extends AbstractRepo implements CodeRepository {
     @Override
     @Cacheable
     public List<Code> findCodesOfClass(@NotNull final CodeClassId codeClassId, @NotNull final String languageCode) {
-        final String lang = TranslationUtils.INSTANCE.trimLanguageCode(languageCode);
+        final String lang = trimLanguageCode(languageCode);
         // skipping the audit fields
         return getDsl()
             .select(CODE.CODE_.as("C_ID"), DSL
-                    .coalesce(CODE_TR.NAME, TranslationUtils.NOT_TRANSL)
+                    .coalesce(CODE_TR.NAME, NOT_TRANSL)
                     .as("C_NAME"), CODE_TR.COMMENT.as("C_COMMENT"), CODE.INTERNAL.as("C_INTERNAL"),
                 CODE_CLASS.ID.as("CC_ID"), DSL
-                    .coalesce(CODE_CLASS_TR.NAME, TranslationUtils.NOT_TRANSL)
+                    .coalesce(CODE_CLASS_TR.NAME, NOT_TRANSL)
                     .as("CC_NAME"), DSL
-                    .coalesce(CODE_CLASS_TR.DESCRIPTION, TranslationUtils.NOT_TRANSL)
+                    .coalesce(CODE_CLASS_TR.DESCRIPTION, NOT_TRANSL)
                     .as("CC_DESCRIPTION"), CODE.SORT.as("C_SORT"))
             .from(CODE)
             .join(CODE_CLASS)

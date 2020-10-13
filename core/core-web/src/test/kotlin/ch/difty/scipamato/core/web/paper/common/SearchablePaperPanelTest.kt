@@ -9,7 +9,7 @@ import org.apache.wicket.model.Model
 import org.junit.jupiter.api.Test
 
 @Suppress("SpellCheckingInspection")
-internal class SearchablePaperPanelTest : PaperPanelTest<SearchCondition?, SearchablePaperPanel>() {
+internal class SearchablePaperPanelTest : PaperPanelTest<SearchCondition, SearchablePaperPanel>() {
 
     override fun makePanel(): SearchablePaperPanel {
         val sc = SearchCondition().apply {
