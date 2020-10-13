@@ -1,7 +1,5 @@
 package ch.difty.scipamato.core.entity.search;
 
-import java.io.Serializable;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.jetbrains.annotations.NotNull;
@@ -11,7 +9,7 @@ import ch.difty.scipamato.common.entity.filter.ScipamatoFilter;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class UserFilter extends ScipamatoFilter implements Serializable {
+public class UserFilter implements ScipamatoFilter {
 
     private static final long serialVersionUID = 1L;
 

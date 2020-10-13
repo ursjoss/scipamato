@@ -7,7 +7,7 @@ import ch.difty.scipamato.common.entity.filter.ScipamatoFilter;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class SearchOrderFilter extends ScipamatoFilter {
+public class SearchOrderFilter implements ScipamatoFilter {
 
     private static final long serialVersionUID = 1L;
 
