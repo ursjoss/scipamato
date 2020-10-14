@@ -3,7 +3,7 @@ package ch.difty.scipamato.publ.persistence
 import ch.difty.scipamato.publ.persistence.newstudies.NewStudyRepository
 import org.amshove.kluent.shouldBeEmpty
 import org.amshove.kluent.shouldBeEqualTo
-import org.amshove.kluent.shouldBeFalse
+import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldContainAll
 import org.amshove.kluent.shouldHaveSize
 import org.amshove.kluent.shouldStartWith
@@ -52,13 +52,13 @@ internal open class JooqNewStudyRepoIntegrationTest {
         ns.year shouldBeEqualTo 2017
         ns.authors shouldBeEqualTo "Di et al."
         ns.reference shouldBeEqualTo "(Di et al.; 2017)"
-        ns.headline shouldStartWith "USA: Grosse Kohortenstudie zeigt, dass auch ein PM2.5-Grenzwert von 12"
-        ns.description shouldStartWith "Registerkohortenstudie in den USA zur Untersuchung, ob die Sterblichkeit"
+        ns.headline?.shouldStartWith("USA: Grosse Kohortenstudie zeigt, dass auch ein PM2.5-Grenzwert von 12")
+        ns.description?.shouldStartWith("Registerkohortenstudie in den USA zur Untersuchung, ob die Sterblichkeit")
     }
 
     @Test
     fun findingMostRecentNewsletterId() {
-        repo.findMostRecentNewsletterId().get() shouldBeEqualTo 2
+        repo.findMostRecentNewsletterId() shouldBeEqualTo 2
     }
 
     @Test
@@ -105,12 +105,12 @@ internal open class JooqNewStudyRepoIntegrationTest {
     @Test
     fun findingIdOfNewsletterWithIssue_forExistingNewsletter_findsIt() {
         val idOpt = repo.findIdOfNewsletterWithIssue("2018/06")
-        idOpt.get() shouldBeEqualTo 2
+        idOpt shouldBeEqualTo 2
     }
 
     @Test
     fun findingIdOfNewsletterWithIssue_forNonExistingNewsletter_returnsEmptyOptional() {
         val idOpt = repo.findIdOfNewsletterWithIssue("2018/06xxx")
-        idOpt.isPresent.shouldBeFalse()
+        idOpt.shouldBeNull()
     }
 }

@@ -1,6 +1,6 @@
 package ch.difty.scipamato.publ.persistence.paper
 
-import ch.difty.scipamato.common.persistence.JooqSortMapper
+import ch.difty.scipamato.common.persistence.JooqDbSortMapper
 import ch.difty.scipamato.common.persistence.paging.PaginationContext
 import ch.difty.scipamato.publ.db.tables.Language
 import ch.difty.scipamato.publ.db.tables.Paper
@@ -16,17 +16,15 @@ import java.util.ArrayList
 
 /**
  * The repository to read [PublicPaper]s.
- *
- * @author u.joss
  */
-@Suppress("SpellCheckingInspection")
 @Repository
+@Suppress("SpellCheckingInspection")
 open class JooqPublicPaperRepo(
     private val dsl: DSLContext,
-    private val sortMapper: JooqSortMapper<PaperRecord, PublicPaper, Paper>,
+    private val sortMapper: JooqDbSortMapper<PaperRecord, PublicPaper, Paper>,
     private val filterConditionMapper: PublicPaperFilterConditionMapper,
     private val authorsAbbreviator: AuthorsAbbreviator,
-    private val journalExtractor: JournalExtractor
+    private val journalExtractor: JournalExtractor,
 ) : PublicPaperRepository {
 
     private val table: Paper
@@ -40,60 +38,56 @@ open class JooqPublicPaperRepo(
             .where(Paper.PAPER.NUMBER.equal(number))
             .fetchOneInto(recordClass)?.let { map(it) }
 
-    override fun findPageByFilter(filter: PublicPaperFilter, pc: PaginationContext): List<PublicPaper> =
+    override fun findPageByFilter(filter: PublicPaperFilter, paginationContext: PaginationContext): List<PublicPaper> =
         dsl.selectFrom(table)
             .where(filter.asCondition())
-            .orderBy(sortMapper.map(pc.sort, table))
-            .limit(pc.pageSize)
-            .offset(pc.offset)
+            .orderBy(sortMapper.map(paginationContext.sort, table))
+            .limit(paginationContext.pageSize)
+            .offset(paginationContext.offset)
             .fetchInto(recordClass)
             .map { r: PaperRecord -> this.map(r) }.toList()
 
-    fun map(r: PaperRecord): PublicPaper =
-        PublicPaper.builder()
-            .id(r.id)
-            .number(r.number)
-            .pmId(r.pmId)
-            .authors(r.authors)
-            .authorsAbbreviated(authorsAbbreviator.abbreviate(r.authors))
-            .title(r.title)
-            .location(r.location)
-            .journal(journalExtractor.extractJournal(r.location))
-            .publicationYear(r.publicationYear)
-            .goals(r.goals)
-            .methods(r.methods)
-            .population(r.population)
-            .result(r.result)
-            .comment(r.comment)
-            .build().apply {
-                r.created?.let { created = it.toLocalDateTime() }
-                r.lastModified?.let { lastModified = it.toLocalDateTime() }
-                version = r.version
-            }
+    fun map(r: PaperRecord) = PublicPaper(
+        id = r.id,
+        number = r.number,
+        pmId = r.pmId,
+        authors = r.authors,
+        authorsAbbreviated = authorsAbbreviator.abbreviate(r.authors),
+        title = r.title,
+        location = r.location,
+        journal = journalExtractor.extractJournal(r.location),
+        publicationYear = r.publicationYear,
+        goals = r.goals,
+        methods = r.methods,
+        population = r.population,
+        result = r.result,
+        comment = r.comment,
+        created = r.created?.toLocalDateTime(),
+        lastModified = r.lastModified?.toLocalDateTime(),
+        version = r.version,
+    )
 
     override fun countByFilter(filter: PublicPaperFilter): Int =
         dsl.fetchCount(
-            dsl.selectOne()
-                .from(Paper.PAPER)
-                .where(filter.asCondition())
+            dsl.selectOne().from(Paper.PAPER).where(filter.asCondition())
         )
 
     override fun findPageOfNumbersByFilter(
         filter: PublicPaperFilter,
-        pc: PaginationContext
+        paginationContext: PaginationContext,
     ): List<Long> = dsl
         .select()
         .from(table)
         .where(filter.asCondition())
-        .orderBy(sortMapper.map(pc.sort, table))
-        .limit(pc.pageSize)
-        .offset(pc.offset)
+        .orderBy(sortMapper.map(paginationContext.sort, table))
+        .limit(paginationContext.pageSize)
+        .offset(paginationContext.offset)
         .fetch(Paper.PAPER.NUMBER)
 
     private fun PublicPaperFilter.asCondition(): Condition {
         val conditions = filterConditionMapper.map(this)
         return if (keywords?.isEmpty() != false) conditions
-        else DSL.and(conditions, keywords.asCondition())
+        else DSL.and(conditions, keywords?.asCondition())
     }
 
     private fun List<Keyword>.asCondition(): Condition {

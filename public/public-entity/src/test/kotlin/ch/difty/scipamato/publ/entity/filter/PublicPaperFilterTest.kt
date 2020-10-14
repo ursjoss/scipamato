@@ -14,7 +14,6 @@ import org.junit.jupiter.api.fail
 
 internal class PublicPaperFilterTest {
 
-    @Suppress("MaximumLineLength", "MaxLineLength")
     @Test
     fun construct() {
         val filter = PublicPaperFilter(

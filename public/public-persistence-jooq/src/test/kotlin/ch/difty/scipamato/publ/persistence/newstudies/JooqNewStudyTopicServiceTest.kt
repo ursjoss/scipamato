@@ -21,7 +21,7 @@ internal class JooqNewStudyTopicServiceTest {
 
     @Test
     fun findingMostRecentNewStudyTopics() {
-        every { repoMock.findMostRecentNewsletterId() } returns java.util.Optional.of(NL_ID)
+        every { repoMock.findMostRecentNewsletterId() } returns NL_ID
         every { repoMock.findNewStudyTopicsForNewsletter(NL_ID, "en") } returns studyTopics
 
         service.findMostRecentNewStudyTopics("en") shouldContainAll listOf(newStudyTopicDummy, newStudyTopicDummy)
@@ -32,7 +32,7 @@ internal class JooqNewStudyTopicServiceTest {
 
     @Test
     fun findNewStudyTopicsForNewsletterIssue() {
-        every { repoMock.findIdOfNewsletterWithIssue("2018/06") } returns java.util.Optional.of(NL_ID)
+        every { repoMock.findIdOfNewsletterWithIssue("2018/06") } returns NL_ID
         every { repoMock.findNewStudyTopicsForNewsletter(NL_ID, "en") } returns studyTopics
 
         service.findNewStudyTopicsForNewsletterIssue("2018/06", "en") shouldContainSame

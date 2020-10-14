@@ -63,7 +63,7 @@ dependencies {
 sourceSets {
     main {
         java {
-            srcDir(setOf(generatedSourcesPath, "src/main/java"))
+            srcDir(setOf(generatedSourcesPath, "src/main/kotlin"))
         }
     }
 }

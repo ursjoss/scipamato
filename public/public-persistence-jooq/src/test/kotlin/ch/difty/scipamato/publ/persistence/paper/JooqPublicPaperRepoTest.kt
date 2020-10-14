@@ -1,6 +1,6 @@
 package ch.difty.scipamato.publ.persistence.paper
 
-import ch.difty.scipamato.common.persistence.JooqSortMapper
+import ch.difty.scipamato.common.persistence.JooqDbSortMapper
 import ch.difty.scipamato.publ.db.tables.Paper
 import ch.difty.scipamato.publ.db.tables.records.PaperRecord
 import ch.difty.scipamato.publ.entity.PublicPaper
@@ -26,7 +26,7 @@ internal class JooqPublicPaperRepoTest {
     private lateinit var dslMock: DSLContext
 
     @MockK
-    private lateinit var sortMapperMock: JooqSortMapper<PaperRecord, PublicPaper, Paper>
+    private lateinit var sortMapperMock: JooqDbSortMapper<PaperRecord, PublicPaper, Paper>
 
     @MockK
     private lateinit var filterConditionMapperMock: PublicPaperFilterConditionMapper
