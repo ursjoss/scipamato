@@ -1,24 +1,22 @@
 package ch.difty.scipamato.publ.entity
 
-import ch.difty.scipamato.common.entity.ScipamatoEntity.ScipamatoEntityFields.CREATED
-import ch.difty.scipamato.common.entity.ScipamatoEntity.ScipamatoEntityFields.MODIFIED
 import nl.jqno.equalsverifier.EqualsVerifier
 import org.amshove.kluent.shouldBeEqualTo
-import org.amshove.kluent.shouldContainAll
 import org.junit.jupiter.api.Test
+import java.time.LocalDateTime
 
-internal class KeywordTest : PublicEntityTest<Keyword>() {
+internal class KeywordTest : PublicDbEntityTest<Keyword>() {
 
-    override val toString: String
-        get() = "Keyword(id=1, keywordId=2, langCode=lc, name=name, searchOverride=n)"
-
-    override fun newEntity(): Keyword = Keyword.builder()
-        .id(1)
-        .keywordId(2)
-        .langCode("lc")
-        .name("name")
-        .searchOverride("n")
-        .build()
+    override fun newEntity(created: LocalDateTime, lastModified: LocalDateTime, version: Int): Keyword = Keyword(
+        id = 1,
+        keywordId = 2,
+        langCode = "lc",
+        name = "name",
+        searchOverride = "n",
+        created = created,
+        lastModified = lastModified,
+        version = version,
+    )
 
     override fun assertSpecificGetters() {
         entity.id shouldBeEqualTo 1
@@ -29,21 +27,11 @@ internal class KeywordTest : PublicEntityTest<Keyword>() {
     }
 
     override fun verifyEquals() {
-        EqualsVerifier.simple()
-            .forClass(Keyword::class.java)
-            .withRedefinedSuperclass()
-            .withIgnoredFields(CREATED.fieldName, MODIFIED.fieldName)
-            .verify()
+        EqualsVerifier.simple().forClass(Keyword::class.java).verify()
     }
 
     @Test
     fun displayValue() {
         entity.displayValue shouldBeEqualTo "name"
-    }
-
-    @Test
-    fun assertEnumFields() {
-        Keyword.KeywordFields.values().map { it.fieldName } shouldContainAll
-            listOf("id", "keywordId", "langCode", "name", "searchOverride", "displayValue")
     }
 }

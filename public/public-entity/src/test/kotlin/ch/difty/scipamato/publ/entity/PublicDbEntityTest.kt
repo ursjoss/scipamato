@@ -5,21 +5,16 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
 
-internal abstract class PublicEntityTest<T : PublicEntity> {
+internal abstract class PublicDbEntityTest<T : PublicDbEntity> {
 
     lateinit var entity: T
 
-    protected abstract val toString: String
-
     @BeforeEach
     fun setUp() {
-        entity = newEntity()
-        entity.created = CREATED_DATE
-        entity.lastModified = LASTMOD_DATE
-        entity.version = 10
+        entity = newEntity(CREATED_DATE, LASTMOD_DATE, 10)
     }
 
-    protected abstract fun newEntity(): T
+    protected abstract fun newEntity(created: LocalDateTime, lastModified: LocalDateTime, version: Int): T
 
     @Test
     fun setGet() {
@@ -31,11 +26,6 @@ internal abstract class PublicEntityTest<T : PublicEntity> {
     }
 
     protected abstract fun assertSpecificGetters()
-
-    @Test
-    fun testingToString() {
-        entity.toString() shouldBeEqualTo toString
-    }
 
     @Test
     fun equals() {

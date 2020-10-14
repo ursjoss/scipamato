@@ -1,19 +1,21 @@
 package ch.difty.scipamato.publ.entity
 
-import ch.difty.scipamato.common.entity.ScipamatoEntity.ScipamatoEntityFields.CREATED
-import ch.difty.scipamato.common.entity.ScipamatoEntity.ScipamatoEntityFields.MODIFIED
 import nl.jqno.equalsverifier.EqualsVerifier
 import org.amshove.kluent.shouldBeEqualTo
-import org.amshove.kluent.shouldContainAll
-import org.junit.jupiter.api.Test
 import java.time.LocalDate
+import java.time.LocalDateTime
 
-internal class NewsletterTest : PublicEntityTest<Newsletter>() {
+internal class NewsletterTest : PublicDbEntityTest<Newsletter>() {
 
-    override val toString: String
-        get() = "Newsletter(id=1, issue=2018/04, issueDate=2018-04-10)"
-
-    override fun newEntity(): Newsletter = Newsletter(1, "2018/04", LocalDate.of(2018, 4, 10))
+    override fun newEntity(created: LocalDateTime, lastModified: LocalDateTime, version: Int) =
+        Newsletter(
+            id = 1,
+            issue = "2018/04",
+            issueDate = LocalDate.of(2018, 4, 10),
+            created = created,
+            lastModified = lastModified,
+            version = version
+        )
 
     override fun assertSpecificGetters() {
         entity.id shouldBeEqualTo 1
@@ -26,16 +28,6 @@ internal class NewsletterTest : PublicEntityTest<Newsletter>() {
     }
 
     override fun verifyEquals() {
-        EqualsVerifier.simple()
-            .forClass(NewStudy::class.java)
-            .withRedefinedSuperclass()
-            .withIgnoredFields(CREATED.fieldName, MODIFIED.fieldName)
-            .verify()
-    }
-
-    @Test
-    fun assertEnumFields() {
-        Newsletter.NewsletterFields.values().map { it.fieldName } shouldContainAll
-            listOf("id", "issue", "issueDate", "monthName")
+        EqualsVerifier.simple().forClass(Newsletter::class.java).verify()
     }
 }

@@ -1,36 +1,31 @@
 package ch.difty.scipamato.publ.entity
 
-import ch.difty.scipamato.common.entity.ScipamatoEntity.ScipamatoEntityFields.CREATED
-import ch.difty.scipamato.common.entity.ScipamatoEntity.ScipamatoEntityFields.MODIFIED
 import nl.jqno.equalsverifier.EqualsVerifier
 import org.amshove.kluent.shouldBeEqualTo
-import org.amshove.kluent.shouldContainAll
-import org.junit.jupiter.api.Test
+import java.time.LocalDateTime
 
 @Suppress("SpellCheckingInspection")
-internal class PublicPaperTest : PublicEntityTest<PublicPaper>() {
+internal class PublicPaperTest : PublicDbEntityTest<PublicPaper>() {
 
-    override val toString: String
-        get() = "PublicPaper(id=1, number=2, pmId=1000, authors=authors, authorsAbbreviated=auths, title=title, " +
-            "location=location, journal=journal, publicationYear=2016, goals=goals, methods=methods, " +
-            "population=population, result=result, comment=comment)"
-
-    override fun newEntity(): PublicPaper = PublicPaper.builder()
-        .id(1L)
-        .number(2L)
-        .pmId(1000)
-        .authors("authors")
-        .authorsAbbreviated("auths")
-        .title("title")
-        .location("location")
-        .journal("journal")
-        .publicationYear(2016)
-        .goals("goals")
-        .methods("methods")
-        .population("population")
-        .result("result")
-        .comment("comment")
-        .build()
+    override fun newEntity(created: LocalDateTime, lastModified: LocalDateTime, version: Int) = PublicPaper(
+        id = 1L,
+        number = 2L,
+        pmId = 1000,
+        authors = "authors",
+        authorsAbbreviated = "auths",
+        title = "title",
+        location = "location",
+        journal = "journal",
+        publicationYear = 2016,
+        goals = "goals",
+        methods = "methods",
+        population = "population",
+        result = "result",
+        comment = "comment",
+        created = created,
+        lastModified = lastModified,
+        version = version
+    )
 
     override fun assertSpecificGetters() {
         entity.id shouldBeEqualTo 1L
@@ -52,16 +47,6 @@ internal class PublicPaperTest : PublicEntityTest<PublicPaper>() {
     public override fun verifyEquals() {
         EqualsVerifier.simple()
             .forClass(PublicPaper::class.java)
-            .withRedefinedSuperclass()
-            .withIgnoredFields(CREATED.fieldName, MODIFIED.fieldName)
             .verify()
-    }
-
-    @Test
-    fun assertEnumFields() {
-        PublicPaper.PublicPaperFields.values().map { it.fieldName } shouldContainAll listOf(
-            "id", "number", "pmId", "authors", "authorsAbbreviated", "title", "location", "journal",
-            "publicationYear", "goals", "methods", "population", "result", "comment"
-        )
     }
 }

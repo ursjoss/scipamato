@@ -59,40 +59,16 @@ internal class PublicPaperFilterTest {
 
             keywords?.map { it.keywordId }?.shouldContainAll(listOf(1)) ?: fail("keywords should not be null")
         }
-
-        filter.toString() shouldBeEqualTo
-            "PublicPaperFilter(number=1, authorMask=am, titleMask=tm, methodsMask=mm, publicationYearFrom=2000, " +
-            "publicationYearUntil=3000, populationCodes=[CHILDREN, ADULTS], studyDesignCodes=[EXPERIMENTAL], " +
-            "codesOfClass1=[Code(codeClassId=1, code=1A, langCode=en, name=null, comment=null, sort=0), " +
-            "Code(codeClassId=1, code=1B, langCode=en, name=null, comment=null, sort=0)], " +
-            "codesOfClass2=[Code(codeClassId=2, code=2A, langCode=en, name=null, comment=null, sort=0), " +
-            "Code(codeClassId=2, code=2B, langCode=en, name=null, comment=null, sort=0)], " +
-            "codesOfClass3=[Code(codeClassId=3, code=3A, langCode=en, name=null, comment=null, sort=0), " +
-            "Code(codeClassId=3, code=3B, langCode=en, name=null, comment=null, sort=0)], " +
-            "codesOfClass4=[Code(codeClassId=4, code=4A, langCode=en, name=null, comment=null, sort=0), " +
-            "Code(codeClassId=4, code=4B, langCode=en, name=null, comment=null, sort=0)], " +
-            "codesOfClass5=[Code(codeClassId=5, code=5A, langCode=en, name=null, comment=null, sort=0), " +
-            "Code(codeClassId=5, code=5B, langCode=en, name=null, comment=null, sort=0)], " +
-            "codesOfClass6=[Code(codeClassId=6, code=6A, langCode=en, name=null, comment=null, sort=0), " +
-            "Code(codeClassId=6, code=6B, langCode=en, name=null, comment=null, sort=0)], " +
-            "codesOfClass7=[Code(codeClassId=7, code=7A, langCode=en, name=null, comment=null, sort=0), " +
-            "Code(codeClassId=7, code=7B, langCode=en, name=null, comment=null, sort=0)], " +
-            "codesOfClass8=[Code(codeClassId=8, code=8A, langCode=en, name=null, comment=null, sort=0), " +
-            "Code(codeClassId=8, code=8B, langCode=en, name=null, comment=null, sort=0)], " +
-            "keywords=[Keyword(id=1, keywordId=1, langCode=de, name=k1, searchOverride=null)])"
     }
 
-    private fun newCode(code: String): Code = Code.builder()
-        .code(code)
-        .codeClassId(Integer.parseInt(code.substring(0, 1)))
-        .langCode("en")
-        .build()
+    private fun newCode(code: String): Code = Code(
+        code = code,
+        codeClassId = Integer.parseInt(code.substring(0, 1)),
+        langCode = "en",
+    )
 
     @Test
     fun equals() {
-        EqualsVerifier.simple()
-            .forClass(PublicPaperFilter::class.java)
-            .withRedefinedSuperclass()
-            .verify()
+        EqualsVerifier.simple().forClass(PublicPaperFilter::class.java).verify()
     }
 }

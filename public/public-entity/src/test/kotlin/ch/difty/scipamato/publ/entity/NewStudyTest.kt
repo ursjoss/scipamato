@@ -2,19 +2,24 @@
 
 package ch.difty.scipamato.publ.entity
 
-import ch.difty.scipamato.common.entity.ScipamatoEntity.ScipamatoEntityFields.CREATED
-import ch.difty.scipamato.common.entity.ScipamatoEntity.ScipamatoEntityFields.MODIFIED
 import nl.jqno.equalsverifier.EqualsVerifier
 import org.amshove.kluent.shouldBeEqualTo
-import org.amshove.kluent.shouldContainAll
-import org.junit.jupiter.api.Test
+import java.time.LocalDateTime
 
-internal class NewStudyTest : PublicEntityTest<NewStudy>() {
+internal class NewStudyTest : PublicDbEntityTest<NewStudy>() {
 
-    override val toString: String
-        get() = "NewStudy(sort=1, number=10, year=2018, authors=authors, headline=hl, description=descr)"
-
-    override fun newEntity(): NewStudy = NewStudy(1, 10, 2018, "authors", "hl", "descr")
+    override fun newEntity(created: LocalDateTime, lastModified: LocalDateTime, version: Int) =
+        NewStudy(
+            sort = 1,
+            number = 10,
+            year = 2018,
+            authors = "authors",
+            headline = "hl",
+            description = "descr",
+            created = created,
+            lastModified = lastModified,
+            version = version
+        )
 
     override fun assertSpecificGetters() {
         entity.sort shouldBeEqualTo 1
@@ -25,16 +30,6 @@ internal class NewStudyTest : PublicEntityTest<NewStudy>() {
     }
 
     override fun verifyEquals() {
-        EqualsVerifier.simple()
-            .forClass(NewStudy::class.java)
-            .withRedefinedSuperclass()
-            .withIgnoredFields(CREATED.fieldName, MODIFIED.fieldName)
-            .verify()
-    }
-
-    @Test
-    fun assertEnumFields() {
-        NewStudy.NewStudyFields.values().map { it.fieldName } shouldContainAll
-            listOf("sort", "number", "year", "authors", "reference", "headline", "description")
+        EqualsVerifier.simple().forClass(NewStudy::class.java).verify()
     }
 }

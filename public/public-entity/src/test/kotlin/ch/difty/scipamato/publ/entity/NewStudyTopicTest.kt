@@ -1,38 +1,32 @@
 package ch.difty.scipamato.publ.entity
 
-import ch.difty.scipamato.common.entity.ScipamatoEntity.ScipamatoEntityFields.CREATED
-import ch.difty.scipamato.common.entity.ScipamatoEntity.ScipamatoEntityFields.MODIFIED
 import nl.jqno.equalsverifier.EqualsVerifier
 import org.amshove.kluent.shouldBeEmpty
 import org.amshove.kluent.shouldBeEqualTo
-import org.amshove.kluent.shouldContainAll
+import org.amshove.kluent.shouldHaveSize
 import org.junit.jupiter.api.Test
+import java.time.LocalDateTime
 
-internal class NewStudyTopicTest : PublicEntityTest<NewStudyTopic>() {
+internal class NewStudyTopicTest : PublicDbEntityTest<NewStudyTopic>() {
 
-    override val toString: String
-        get() = "NewStudyTopic(sort=1, title=title, studies=[])"
-
-    override fun newEntity(): NewStudyTopic = NewStudyTopic(1, "title", ArrayList())
+    override fun newEntity(created: LocalDateTime, lastModified: LocalDateTime, version: Int) =
+        NewStudyTopic(
+            sort = 1,
+            title = "title",
+            studies = listOf(NewStudy(1, 1), NewStudy(2, 2)),
+            created = created,
+            lastModified = lastModified,
+            version = version
+        )
 
     override fun assertSpecificGetters() {
         entity.sort shouldBeEqualTo 1
         entity.title shouldBeEqualTo "title"
-        entity.studies.shouldBeEmpty()
+        entity.studies.shouldHaveSize(2)
     }
 
     override fun verifyEquals() {
-        EqualsVerifier.simple()
-            .forClass(NewStudyTopic::class.java)
-            .withRedefinedSuperclass()
-            .withIgnoredFields(CREATED.fieldName, MODIFIED.fieldName)
-            .verify()
-    }
-
-    @Test
-    fun assertEnumFields() {
-        NewStudyTopic.NewStudyTopicFields.values().map { it.fieldName } shouldContainAll
-            listOf("sort", "title", "studies")
+        EqualsVerifier.simple().forClass(NewStudyTopic::class.java).verify()
     }
 
     @Test

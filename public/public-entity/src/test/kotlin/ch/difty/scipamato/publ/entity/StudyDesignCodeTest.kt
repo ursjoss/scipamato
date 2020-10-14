@@ -1,7 +1,7 @@
 package ch.difty.scipamato.publ.entity
 
 import org.amshove.kluent.shouldBeEqualTo
-import org.amshove.kluent.shouldBeTrue
+import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldContainAll
 import org.junit.jupiter.api.Test
 
@@ -23,11 +23,11 @@ internal class StudyDesignCodeTest {
 
     @Test
     fun of_withExistingId() {
-        StudyDesignCode.of(1.toShort()).get() shouldBeEqualTo StudyDesignCode.EXPERIMENTAL
+        StudyDesignCode.of(1.toShort()) shouldBeEqualTo StudyDesignCode.EXPERIMENTAL
     }
 
     @Test
     fun of_withNotExistingId_returnsEmptyOptional() {
-        StudyDesignCode.of(0.toShort()).isEmpty.shouldBeTrue()
+        StudyDesignCode.of(0.toShort()).shouldBeNull()
     }
 }
