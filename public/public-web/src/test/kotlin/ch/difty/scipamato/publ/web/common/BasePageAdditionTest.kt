@@ -45,6 +45,7 @@ internal class BasePageAdditionTest : WicketTest() {
         return object : BasePage<Any?>(pp) {
             override val properties: ApplicationPublicProperties
                 get() = applicationProperties
+
             override fun renderAdditionalCommercialFonts(response: IHeaderResponse) {
                 additionalCommercialFontsRendered = true
             }
@@ -58,7 +59,7 @@ internal class BasePageAdditionTest : WicketTest() {
 
     @Test
     fun callingPageWithParentUrlIndicatingChinese_setsChineseLocale() {
-        pp[PublicPageParameters.PARENT_URL.getName()] = "someParentUrlIndicatingChineseLocal"
+        pp[PublicPageParameters.PARENT_URL.parameterName] = "someParentUrlIndicatingChineseLocal"
         every { localeExtractor.extractLocaleFrom("someParentUrlIndicatingChineseLocal") } returns localeZh
         newPageWithParameters(pp).session.locale shouldBeEqualTo localeZh
     }
@@ -66,7 +67,7 @@ internal class BasePageAdditionTest : WicketTest() {
     @Test
     fun page_withCommercialFontsPresent_rendersMetaFontsAndAdditionalCommercialFonts() {
         every { applicationProperties.isCommercialFontPresent } returns true
-        every { metaOtFontResourceProvider.cssResourceReference } returns MetaOTCssResourceReference.get()
+        every { metaOtFontResourceProvider.cssResourceReference } returns MetaOTCssResourceReference
 
         tester.startPage(newPageWithParameters(pp))
 

@@ -10,7 +10,7 @@ import ch.difty.scipamato.common.entity.filter.ScipamatoFilter;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @SuppressWarnings("SameParameterValue")
-public class KeywordFilter extends ScipamatoFilter {
+public class KeywordFilter implements ScipamatoFilter {
     private static final long serialVersionUID = 1L;
 
     private String nameMask;

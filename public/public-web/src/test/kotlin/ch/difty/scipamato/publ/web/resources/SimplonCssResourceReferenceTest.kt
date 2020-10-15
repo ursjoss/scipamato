@@ -8,15 +8,11 @@ internal class SimplonCssResourceReferenceTest {
 
     @Test
     fun canGetInstance() {
-        REF shouldBeInstanceOf SimplonCssResourceReference::class
+        SimplonCssResourceReference shouldBeInstanceOf SimplonCssResourceReference::class
     }
 
     @Test
     fun assertResourceName() {
-        REF.name shouldBeEqualTo "css/Simplon.css"
-    }
-
-    companion object {
-        private val REF = SimplonCssResourceReference.get()
+        SimplonCssResourceReference.name shouldBeEqualTo "css/Simplon.css"
     }
 }

@@ -11,7 +11,7 @@ import ch.difty.scipamato.core.entity.CodeClass;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @SuppressWarnings("SameParameterValue")
-public class CodeFilter extends ScipamatoFilter {
+public class CodeFilter implements ScipamatoFilter {
     private static final long serialVersionUID = 1L;
 
     private CodeClass codeClass;

@@ -53,7 +53,7 @@ class PublicPaperFilterConditionMapper : AbstractFilterConditionMapper<PublicPap
 
     private fun hasNoOrIdenticalPubYearUntil(filter: PublicPaperFilter) =
         filter.publicationYearUntil == null ||
-            filter.publicationYearFrom.toInt() == filter.publicationYearUntil.toInt()
+            filter.publicationYearFrom == filter.publicationYearUntil
 
     /*
      * Currently does not allow to mix quoted and unquoted terms. If this will

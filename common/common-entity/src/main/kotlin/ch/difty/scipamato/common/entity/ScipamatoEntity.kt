@@ -3,14 +3,24 @@ package ch.difty.scipamato.common.entity
 import java.io.Serializable
 import java.time.LocalDateTime
 
+interface DbEntity : Serializable
+
+interface VersionedDbEntity : DbEntity {
+    val created: LocalDateTime?
+    val lastModified: LocalDateTime?
+    val version: Int
+}
+
+@Deprecated("use strings instead")
 interface FieldEnumType {
     val fieldName: String
 }
 
+@Deprecated("Replace with data classes and interface DbEntity")
 open class ScipamatoEntity(
     var created: LocalDateTime? = null,
     var lastModified: LocalDateTime? = null,
-    var version: Int = 0
+    var version: Int = 0,
 ) : Serializable {
 
     enum class ScipamatoEntityFields(override val fieldName: String) : FieldEnumType {

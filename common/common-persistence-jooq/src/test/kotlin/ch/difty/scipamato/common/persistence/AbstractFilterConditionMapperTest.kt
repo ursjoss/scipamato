@@ -32,4 +32,4 @@ internal class AbstractFilterConditionMapperTest {
     }
 }
 
-class TestFilter : ScipamatoFilter()
+class TestFilter : ScipamatoFilter

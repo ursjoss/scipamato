@@ -8,15 +8,11 @@ internal class IcoMoonCssResourceReferenceTest {
 
     @Test
     fun canGetInstance() {
-        REF shouldBeInstanceOf IcoMoonCssResourceReference::class
+        IcoMoonCssResourceReference shouldBeInstanceOf IcoMoonCssResourceReference::class
     }
 
     @Test
     fun assertResourceName() {
-        REF.name shouldBeEqualTo "css/IcoMoon.css"
-    }
-
-    companion object {
-        private val REF = IcoMoonCssResourceReference.get()
+        IcoMoonCssResourceReference.name shouldBeEqualTo "css/IcoMoon.css"
     }
 }

@@ -8,21 +8,20 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import org.amshove.kluent.shouldBeEqualTo
-import org.amshove.kluent.shouldBeFalse
-import org.amshove.kluent.shouldBeTrue
+import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldHaveSize
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 
 internal class JooqPublicPaperServiceTest {
 
-    private val publicPaper: PublicPaper = PublicPaper.builder().id(ID).build()
+    private val publicPaper: PublicPaper = PublicPaper(id = ID)
 
     private val mockRepo = mockk<PublicPaperRepository>()
     private val filterMock = mockk<PublicPaperFilter>()
     private val paginationContextMock = mockk<PaginationContext>()
 
-    private val papers = listOf(publicPaper, PublicPaper.builder().id(ID + 1).build())
+    private val papers = listOf(publicPaper, PublicPaper(id = ID + 1))
 
     private val service = JooqPublicPaperService(mockRepo)
 
@@ -37,8 +36,7 @@ internal class JooqPublicPaperServiceTest {
 
         val paperOp = service.findByNumber(NUMBER)
 
-        paperOp.isPresent.shouldBeTrue()
-        paperOp.get() shouldBeEqualTo publicPaper
+        paperOp shouldBeEqualTo publicPaper
         verify { mockRepo.findByNumber(NUMBER) }
     }
 
@@ -48,7 +46,7 @@ internal class JooqPublicPaperServiceTest {
 
         val paperOp = service.findByNumber(NUMBER)
 
-        paperOp.isPresent.shouldBeFalse()
+        paperOp.shouldBeNull()
         verify { mockRepo.findByNumber(NUMBER) }
     }
 

@@ -1,6 +1,6 @@
 package ch.difty.scipamato.publ.persistence.paper
 
-import ch.difty.scipamato.common.persistence.JooqSortMapper
+import ch.difty.scipamato.common.persistence.JooqDbSortMapper
 import ch.difty.scipamato.publ.db.tables.Paper
 import ch.difty.scipamato.publ.db.tables.records.PaperRecord
 import ch.difty.scipamato.publ.entity.PublicPaper
@@ -11,7 +11,6 @@ import io.mockk.junit5.MockKExtension
 import io.mockk.mockk
 import io.mockk.verify
 import org.amshove.kluent.shouldBeEqualTo
-import org.amshove.kluent.shouldBeNull
 import org.jooq.DSLContext
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
@@ -26,7 +25,7 @@ internal class JooqPublicPaperRepoTest {
     private lateinit var dslMock: DSLContext
 
     @MockK
-    private lateinit var sortMapperMock: JooqSortMapper<PaperRecord, PublicPaper, Paper>
+    private lateinit var sortMapperMock: JooqDbSortMapper<PaperRecord, PublicPaper, Paper>
 
     @MockK
     private lateinit var filterConditionMapperMock: PublicPaperFilterConditionMapper
@@ -55,17 +54,6 @@ internal class JooqPublicPaperRepoTest {
     @AfterEach
     fun tearDown() {
         confirmVerified(dslMock, sortMapperMock, filterConditionMapperMock)
-    }
-
-    @Test
-    fun mapping_withPaperRecordHandingBackNullEvenForAuditDates_doesNotThrow() {
-        val pr = mockk<PaperRecord>(relaxed = true) {
-            every { created } returns null
-            every { lastModified } returns null
-        }
-        val pp = repo.map(pr)
-        pp.created.shouldBeNull()
-        pp.lastModified.shouldBeNull()
     }
 
     @Test

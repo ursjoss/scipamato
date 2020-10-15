@@ -31,7 +31,6 @@ internal class SimpleJournalExtractorTest {
 
     @Test
     fun extractingJournal_fromLocationWithDotOnlyLast_returnsJournal() {
-        extractor.extractJournal("Air Qual Atmos Health (2017) 10: 129-137.") shouldBeEqualTo
-            "Air Qual Atmos Health"
+        extractor.extractJournal("Air Qual Atmos Health (2017) 10: 129-137.") shouldBeEqualTo "Air Qual Atmos Health"
     }
 }

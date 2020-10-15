@@ -10,7 +10,7 @@ import ch.difty.scipamato.common.entity.newsletter.PublicationStatus;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class NewsletterFilter extends ScipamatoFilter {
+public class NewsletterFilter implements ScipamatoFilter {
     private static final long serialVersionUID = 1L;
 
     private String            issueMask;
