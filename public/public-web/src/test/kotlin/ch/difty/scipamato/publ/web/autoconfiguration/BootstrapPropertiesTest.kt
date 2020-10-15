@@ -17,8 +17,9 @@ internal class BootstrapPropertiesTest {
 
     @Test
     fun canModifyTheme() {
-        bp.theme = BootswatchTheme.Cerulean
-        bp.theme shouldBeEqualTo BootswatchTheme.Cerulean
+        bp.copy(theme = BootswatchTheme.Cerulean).run {
+            theme shouldBeEqualTo BootswatchTheme.Cerulean
+        }
     }
 
     @Test
@@ -28,7 +29,8 @@ internal class BootstrapPropertiesTest {
 
     @Test
     fun canDisable() {
-        bp.isEnabled = false
-        bp.isEnabled.shouldBeFalse()
+        bp.copy(isEnabled = false).run {
+            isEnabled.shouldBeFalse()
+        }
     }
 }

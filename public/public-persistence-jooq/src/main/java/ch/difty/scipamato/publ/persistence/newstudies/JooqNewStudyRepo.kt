@@ -16,7 +16,7 @@ import java.sql.Date
 import java.sql.Timestamp
 
 @Repository
-class JooqNewStudyRepo(private val dsl: DSLContext) : NewStudyRepository {
+open class JooqNewStudyRepo(private val dsl: DSLContext) : NewStudyRepository {
 
     override fun findNewStudyTopicsForNewsletter(newsletterId: Int, languageCode: String): List<NewStudyTopic> {
         // References to aliased tables

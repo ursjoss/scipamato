@@ -140,9 +140,7 @@ internal class NewStudyListPageTest : BasePageTest<NewStudyListPage>() {
         tester.assertRenderedPage(pageClass)
         tester.clickLink("topics:1:topicStudies:0:reference")
         tester.assertRenderedPage(PublicPaperDetailPage::class.java)
-        tester
-            .newFormTester("form")
-            .submit("back")
+        tester.newFormTester("form").submit("back")
         tester.assertRenderedPage(NewStudyListPage::class.java)
     }
 
@@ -165,14 +163,14 @@ internal class NewStudyListPageTest : BasePageTest<NewStudyListPage>() {
     @Test
     fun withIssueNull() {
         val pp = PageParameters()
-        pp[PublicPageParameters.ISSUE.getName()] = null
+        pp[PublicPageParameters.ISSUE.parameterName] = null
         pageWithIssue(pp)
     }
 
     @Test
     fun withIssueBlank() {
         val pp = PageParameters()
-        pp[PublicPageParameters.ISSUE.getName()] = ""
+        pp[PublicPageParameters.ISSUE.parameterName] = ""
         pageWithIssue(pp)
     }
 
@@ -187,7 +185,7 @@ internal class NewStudyListPageTest : BasePageTest<NewStudyListPage>() {
     @Test
     fun withIssuePresent() {
         val pp = PageParameters()
-        pp[PublicPageParameters.ISSUE.getName()] = "1806"
+        pp[PublicPageParameters.ISSUE.parameterName] = "1806"
         val page = NewStudyListPage(pp)
         tester.startPage(page)
         tester.assertRenderedPage(pageClass)
@@ -210,9 +208,7 @@ internal class NewStudyListPageTest : BasePageTest<NewStudyListPage>() {
         }
         val page: NewStudyListPage = object : NewStudyListPage(PageParameters()) {
             override val properties: ApplicationPublicProperties
-                get() {
-                    return applicationProperties
-                }
+                get() = applicationProperties
         }
         val icon = page.chooseIcon(GlyphIconType.arrowright, IcoMoonIconType.arrow_right)
         icon shouldBeEqualTo IcoMoonIconType.arrow_right

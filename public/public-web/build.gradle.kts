@@ -14,7 +14,7 @@ sourceSets {
     /** main: html, css, less, properties files */
     main {
         resources {
-            srcDir("src/main/java")
+            srcDir("src/main/kotlin")
         }
     }
     /** test: html and properties files */
@@ -58,6 +58,4 @@ dependencies {
     implementation(Lib.validationApi())
 
     testImplementation(project(Module.scipamatoCommon("test")))
-    testImplementation(Lib.lombok())
-    testAnnotationProcessor(Lib.lombok())
 }

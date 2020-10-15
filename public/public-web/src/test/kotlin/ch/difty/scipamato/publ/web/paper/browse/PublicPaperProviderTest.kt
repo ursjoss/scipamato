@@ -91,10 +91,7 @@ internal class PublicPaperProviderTest {
 
     @Test
     fun newModel() {
-        val pp = PublicPaper
-            .builder()
-            .id(5L)
-            .build()
+        val pp = PublicPaper(id = 5L)
         val model = provider.model(pp)
 
         model.shouldNotBeNull()

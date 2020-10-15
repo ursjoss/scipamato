@@ -6,7 +6,7 @@ import org.jooq.DSLContext
 import org.springframework.stereotype.Repository
 
 @Repository
-class JooqKeywordRepo(private val dslContext: DSLContext) : KeywordRepository {
+open class JooqKeywordRepo(private val dslContext: DSLContext) : KeywordRepository {
 
     // skipping the audit fields
     override fun findKeywords(languageCode: String): List<Keyword> = dslContext

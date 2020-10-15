@@ -8,15 +8,11 @@ internal class MainCssResourceReferenceTest {
 
     @Test
     fun canGetInstance() {
-        REF shouldBeInstanceOf MainCssResourceReference::class
+        MainCssResourceReference shouldBeInstanceOf MainCssResourceReference::class
     }
 
     @Test
     fun assertResourceName() {
-        REF.name shouldBeEqualTo "css/main.css"
-    }
-
-    companion object {
-        private val REF = MainCssResourceReference.get()
+        MainCssResourceReference.name shouldBeEqualTo "css/main.css"
     }
 }

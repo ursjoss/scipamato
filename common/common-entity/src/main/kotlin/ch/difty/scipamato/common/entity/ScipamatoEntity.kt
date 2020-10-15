@@ -9,6 +9,7 @@ interface DbEntity : Serializable {
     val version: Int
 }
 
+@Deprecated("use strings instead")
 interface FieldEnumType {
     val fieldName: String
 }

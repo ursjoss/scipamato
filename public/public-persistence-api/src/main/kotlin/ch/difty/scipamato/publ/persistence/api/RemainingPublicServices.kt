@@ -23,5 +23,5 @@ interface KeywordService {
     /**
      * Find all keyword localized in language with the provided [languageCode] (e.g. 'en' or 'de')
      */
-    fun findKeywords(languageCode: String): List<Keyword?>
+    fun findKeywords(languageCode: String): List<Keyword>
 }

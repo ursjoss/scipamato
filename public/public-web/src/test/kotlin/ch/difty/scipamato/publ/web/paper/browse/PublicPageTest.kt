@@ -21,6 +21,7 @@ import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 import java.util.ArrayList
 
+@Suppress("SameParameterValue")
 internal class PublicPageTest : BasePageTest<PublicPage>() {
 
     @MockkBean(relaxed = true)
@@ -35,14 +36,38 @@ internal class PublicPageTest : BasePageTest<PublicPage>() {
         super.setUpHook()
         papers.add(
             PublicPaper(
-                1L, 10L, 1000, "authors1", "auths1", "title1", "location1", "journal1", 2016, "goals1",
-                "methods1", "population1", "result1", "comment1"
+                id = 1L,
+                number = 10L,
+                pmId = 1000,
+                authors = "authors1",
+                authorsAbbreviated = "auths1",
+                title = "title1",
+                location = "location1",
+                journal = "journal1",
+                publicationYear = 2016,
+                goals = "goals1",
+                methods = "methods1",
+                population = "population1",
+                result = "result1",
+                comment = "comment1"
             )
         )
         papers.add(
             PublicPaper(
-                2L, 20L, 1002, "authors2", "auths2", "title2", "location2", "journal2", 2017, "goals2",
-                "methods2", "population2", "result2", "comment2"
+                id = 2L,
+                number = 20L,
+                pmId = 1002,
+                authors = "authors2",
+                authorsAbbreviated = "auths2",
+                title = "title2",
+                location = "location2",
+                journal = "journal2",
+                publicationYear = 2017,
+                goals = "goals2",
+                methods = "methods2",
+                population = "population2",
+                result = "result2",
+                comment = "comment2"
             )
         )
 
@@ -136,16 +161,8 @@ internal class PublicPageTest : BasePageTest<PublicPage>() {
 
     @Test
     fun clickingTab2Title_showsTab2() {
-        val cc1 = CodeClass
-            .builder()
-            .codeClassId(1)
-            .name("cc1")
-            .build()
-        val cc2 = CodeClass
-            .builder()
-            .codeClassId(2)
-            .name("cc2")
-            .build()
+        val cc1 = CodeClass(codeClassId = 1, name = "cc1")
+        val cc2 = CodeClass(codeClassId = 2, name = "cc2")
         every { codeClassServiceMock.find("en_us") } returns listOf(cc1, cc2)
         tester.startPage(makePage())
         tester.assertRenderedPage(pageClass)

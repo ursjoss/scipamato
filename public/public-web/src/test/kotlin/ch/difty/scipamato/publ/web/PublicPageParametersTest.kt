@@ -20,11 +20,11 @@ internal class PublicPageParametersTest {
 
     @Test
     fun assertRoleNames() {
-        PublicPageParameters.SEARCH_ORDER_ID.getName() shouldBeEqualTo "searchOrderId"
-        PublicPageParameters.SHOW_EXCLUDED.getName() shouldBeEqualTo "showExcluded"
-        PublicPageParameters.SHOW_NAVBAR.getName() shouldBeEqualTo "showNavbar"
-        PublicPageParameters.NUMBER.getName() shouldBeEqualTo "number"
-        PublicPageParameters.ISSUE.getName() shouldBeEqualTo "issue"
-        PublicPageParameters.PARENT_URL.getName() shouldBeEqualTo "parentUrl"
+        PublicPageParameters.SEARCH_ORDER_ID.parameterName shouldBeEqualTo "searchOrderId"
+        PublicPageParameters.SHOW_EXCLUDED.parameterName shouldBeEqualTo "showExcluded"
+        PublicPageParameters.SHOW_NAVBAR.parameterName shouldBeEqualTo "showNavbar"
+        PublicPageParameters.NUMBER.parameterName shouldBeEqualTo "number"
+        PublicPageParameters.ISSUE.parameterName shouldBeEqualTo "issue"
+        PublicPageParameters.PARENT_URL.parameterName shouldBeEqualTo "parentUrl"
     }
 }

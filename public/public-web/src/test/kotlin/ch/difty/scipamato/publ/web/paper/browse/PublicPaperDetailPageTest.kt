@@ -13,17 +13,29 @@ import org.apache.wicket.model.Model
 import org.apache.wicket.request.mapper.parameter.PageParameters
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
-import java.util.Optional
 
+@Suppress("SameParameterValue")
 internal open class PublicPaperDetailPageTest : BasePageTest<PublicPaperDetailPage>() {
 
     override fun setUpHook() {
         super.setUpHook()
         val paper = PublicPaper(
-            1L, NUMBER, 10000, "authors", "auths", "title", "location", "journal", 2017,
-            "goals", "methods", "population", "result", "comment"
+            id = 1L,
+            number = NUMBER,
+            pmId = 10000,
+            authors = "authors",
+            authorsAbbreviated = "auths",
+            title = "title",
+            location = "location",
+            journal = "journal",
+            publicationYear = 2017,
+            goals = "goals",
+            methods = "methods",
+            population = "population",
+            result = "result",
+            comment = "comment"
         )
-        every { paperService.findByNumber(NUMBER) } returns Optional.of(paper)
+        every { paperService.findByNumber(NUMBER) } returns paper
     }
 
     override fun doVerify() {
@@ -37,7 +49,7 @@ internal open class PublicPaperDetailPageTest : BasePageTest<PublicPaperDetailPa
 
     override fun makePage(): PublicPaperDetailPage {
         val pp = PageParameters()
-        pp[PublicPageParameters.NUMBER.getName()] = NUMBER
+        pp[PublicPageParameters.NUMBER.parameterName] = NUMBER
         return PublicPaperDetailPage(pp)
     }
 
@@ -272,7 +284,7 @@ internal open class PublicPaperDetailPageTest : BasePageTest<PublicPaperDetailPa
     @Test
     fun constructingPage_withPageParameterProvidingNumber_loadsPaperWithNumber() {
         val pp = PageParameters()
-        pp[PublicPageParameters.NUMBER.getName()] = NUMBER
+        pp[PublicPageParameters.NUMBER.parameterName] = NUMBER
         PublicPaperDetailPage(pp)
         verify { paperService.findByNumber(NUMBER) }
     }
