@@ -7,16 +7,13 @@ import java.time.LocalDateTime
 
 internal class CodeTest : PublicDbEntityTest<Code>() {
 
-    override fun newEntity(created: LocalDateTime, lastModified: LocalDateTime, version: Int): Code = Code(
+    override fun newEntity(): Code = Code(
         codeClassId = 1,
         code = "code",
         langCode = "lc",
         name = "name",
         comment = "comment",
         sort = 3,
-        created = created,
-        lastModified = lastModified,
-        version = version,
     )
 
     override fun assertSpecificGetters() {

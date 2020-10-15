@@ -2,12 +2,11 @@ package ch.difty.scipamato.publ.entity
 
 import nl.jqno.equalsverifier.EqualsVerifier
 import org.amshove.kluent.shouldBeEqualTo
-import java.time.LocalDateTime
 
 @Suppress("SpellCheckingInspection")
 internal class PublicPaperTest : PublicDbEntityTest<PublicPaper>() {
 
-    override fun newEntity(created: LocalDateTime, lastModified: LocalDateTime, version: Int) = PublicPaper(
+    override fun newEntity() = PublicPaper(
         id = 1L,
         number = 2L,
         pmId = 1000,
@@ -22,9 +21,6 @@ internal class PublicPaperTest : PublicDbEntityTest<PublicPaper>() {
         population = "population",
         result = "result",
         comment = "comment",
-        created = created,
-        lastModified = lastModified,
-        version = version
     )
 
     override fun assertSpecificGetters() {

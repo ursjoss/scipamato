@@ -11,7 +11,6 @@ import io.mockk.junit5.MockKExtension
 import io.mockk.mockk
 import io.mockk.verify
 import org.amshove.kluent.shouldBeEqualTo
-import org.amshove.kluent.shouldBeNull
 import org.jooq.DSLContext
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
@@ -55,17 +54,6 @@ internal class JooqPublicPaperRepoTest {
     @AfterEach
     fun tearDown() {
         confirmVerified(dslMock, sortMapperMock, filterConditionMapperMock)
-    }
-
-    @Test
-    fun mapping_withPaperRecordHandingBackNullEvenForAuditDates_doesNotThrow() {
-        val pr = mockk<PaperRecord>(relaxed = true) {
-            every { created } returns null
-            every { lastModified } returns null
-        }
-        val pp = repo.map(pr)
-        pp.created.shouldBeNull()
-        pp.lastModified.shouldBeNull()
     }
 
     @Test

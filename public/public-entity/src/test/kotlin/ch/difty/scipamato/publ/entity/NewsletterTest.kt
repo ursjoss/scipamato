@@ -3,18 +3,14 @@ package ch.difty.scipamato.publ.entity
 import nl.jqno.equalsverifier.EqualsVerifier
 import org.amshove.kluent.shouldBeEqualTo
 import java.time.LocalDate
-import java.time.LocalDateTime
 
 internal class NewsletterTest : PublicDbEntityTest<Newsletter>() {
 
-    override fun newEntity(created: LocalDateTime, lastModified: LocalDateTime, version: Int) =
+    override fun newEntity() =
         Newsletter(
             id = 1,
             issue = "2018/04",
             issueDate = LocalDate.of(2018, 4, 10),
-            created = created,
-            lastModified = lastModified,
-            version = version
         )
 
     override fun assertSpecificGetters() {

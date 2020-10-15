@@ -3,19 +3,15 @@ package ch.difty.scipamato.publ.entity
 import nl.jqno.equalsverifier.EqualsVerifier
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.Test
-import java.time.LocalDateTime
 
 internal class KeywordTest : PublicDbEntityTest<Keyword>() {
 
-    override fun newEntity(created: LocalDateTime, lastModified: LocalDateTime, version: Int): Keyword = Keyword(
+    override fun newEntity(): Keyword = Keyword(
         id = 1,
         keywordId = 2,
         langCode = "lc",
         name = "name",
         searchOverride = "n",
-        created = created,
-        lastModified = lastModified,
-        version = version,
     )
 
     override fun assertSpecificGetters() {

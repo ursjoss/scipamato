@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository
 @CacheConfig(cacheNames = ["codeClasses"])
 open class JooqCodeClassRepo(private val dslContext: DSLContext) : CodeClassRepository {
 
-    // skipping the audit fields
     @Cacheable
     override fun find(languageCode: String): List<CodeClass> = dslContext
         .select(

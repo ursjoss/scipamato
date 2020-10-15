@@ -12,7 +12,6 @@ import org.springframework.stereotype.Repository
 @CacheConfig(cacheNames = ["codes"])
 open class JooqCodeRepo(private val dslContext: DSLContext) : CodeRepository {
 
-    // skipping the audit fields
     @Cacheable
     override fun findCodesOfClass(codeClassId: CodeClassId, languageCode: String): List<Code> = dslContext
         .select(
@@ -22,8 +21,7 @@ open class JooqCodeRepo(private val dslContext: DSLContext) : CodeRepository {
             ch.difty.scipamato.publ.db.tables.Code.CODE.NAME,
             ch.difty.scipamato.publ.db.tables.Code.CODE.COMMENT,
             ch.difty.scipamato.publ.db.tables.Code.CODE.SORT
-        )
-        .from(ch.difty.scipamato.publ.db.tables.Code.CODE)
+        ).from(ch.difty.scipamato.publ.db.tables.Code.CODE)
         .where(ch.difty.scipamato.publ.db.tables.Code.CODE.LANG_CODE.eq(trimLanguageCode(languageCode))
             .and(ch.difty.scipamato.publ.db.tables.Code.CODE.CODE_CLASS_ID.equal(codeClassId.id)))
         .orderBy(

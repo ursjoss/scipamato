@@ -71,9 +71,7 @@ open class JooqNewStudyRepo(private val dsl: DSLContext) : NewStudyRepository {
         )
     }
 
-    /*
-     * Walks through the recordset and extracts the NewStudyTopic with all associated NewStudies
-     */
+    /* Walks through the recordset and extracts the NewStudyTopic with all associated NewStudies */
     private fun processDbRecords(
         map: Map<Record, Result<Record13<Int, String, Int, Int, Int, Long, Int, String, String, String, Int, Timestamp, Timestamp>>>,
         titleOrBlankField: Field<String>, nstSort: Field<Int>,
@@ -84,16 +82,11 @@ open class JooqNewStudyRepo(private val dsl: DSLContext) : NewStudyRepository {
     /**
      * Creates a new newStudyTopic including the associated NewStudies as list.
      *
-     * @param newStudyTopicSortValue
-     * the sort value of the NewStudyTopic to be created
-     * @param newStudyTopicTitleValue
-     * the title value of the NewStudyTopic to be created
-     * @param newStudyRecords
-     * the database resultset of the newStudyRecord including NewStudy fields
-     * @param newStudyTable
-     * database table representation of the NewStudy table. Required to access the fields.
-     * @param aliasedNewsStudySortField
-     * the aliased NewStudy.Sort field, the value must not be null
+     * @param newStudyTopicSortValue the sort value of the NewStudyTopic to be created
+     * @param newStudyTopicTitleValue the title value of the NewStudyTopic to be created
+     * @param newStudyRecords the database resultset of the newStudyRecord including NewStudy fields
+     * @param newStudyTable database table representation of the NewStudy table. Required to access the fields.
+     * @param aliasedNewsStudySortField the aliased NewStudy.Sort field, the value must not be null
      * @return single NewStudyTopic
      */
     private fun newNewStudyTopic(

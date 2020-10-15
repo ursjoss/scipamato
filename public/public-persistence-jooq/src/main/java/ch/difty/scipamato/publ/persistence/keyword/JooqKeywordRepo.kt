@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository
 @Repository
 open class JooqKeywordRepo(private val dslContext: DSLContext) : KeywordRepository {
 
-    // skipping the audit fields
     override fun findKeywords(languageCode: String): List<Keyword> = dslContext
         .select(
             ch.difty.scipamato.publ.db.tables.Keyword.KEYWORD.ID,

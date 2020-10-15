@@ -3,7 +3,9 @@ package ch.difty.scipamato.common.entity
 import java.io.Serializable
 import java.time.LocalDateTime
 
-interface DbEntity : Serializable {
+interface DbEntity : Serializable
+
+interface VersionedDbEntity : DbEntity {
     val created: LocalDateTime?
     val lastModified: LocalDateTime?
     val version: Int

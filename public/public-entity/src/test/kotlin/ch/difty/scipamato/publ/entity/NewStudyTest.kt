@@ -4,11 +4,10 @@ package ch.difty.scipamato.publ.entity
 
 import nl.jqno.equalsverifier.EqualsVerifier
 import org.amshove.kluent.shouldBeEqualTo
-import java.time.LocalDateTime
 
 internal class NewStudyTest : PublicDbEntityTest<NewStudy>() {
 
-    override fun newEntity(created: LocalDateTime, lastModified: LocalDateTime, version: Int) =
+    override fun newEntity() =
         NewStudy(
             sort = 1,
             number = 10,
@@ -16,9 +15,6 @@ internal class NewStudyTest : PublicDbEntityTest<NewStudy>() {
             authors = "authors",
             headline = "hl",
             description = "descr",
-            created = created,
-            lastModified = lastModified,
-            version = version
         )
 
     override fun assertSpecificGetters() {

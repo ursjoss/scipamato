@@ -62,9 +62,6 @@ open class JooqPublicPaperRepo(
         population = r.population,
         result = r.result,
         comment = r.comment,
-        created = r.created?.toLocalDateTime(),
-        lastModified = r.lastModified?.toLocalDateTime(),
-        version = r.version,
     )
 
     override fun countByFilter(filter: PublicPaperFilter): Int =
