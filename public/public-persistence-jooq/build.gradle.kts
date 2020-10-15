@@ -50,14 +50,10 @@ dependencies {
     testImplementation(project(Module.scipamatoCommon("persistence-jooq-test")))
     testImplementation(project(Module.scipamatoCommon("test")))
 
-    testImplementation(Lib.lombok())
-    testAnnotationProcessor(Lib.lombok())
-
     integrationTestImplementation(Lib.testcontainers("testcontainers"))
     integrationTestImplementation(Lib.testcontainers("junit-jupiter"))
     integrationTestImplementation(Lib.testcontainers("postgresql"))
     integrationTestRuntimeOnly(Lib.postgres())
-    integrationTestAnnotationProcessor(Lib.lombok())
 }
 
 sourceSets {
