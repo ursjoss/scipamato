@@ -32,7 +32,7 @@ class ScipamatoEntityTest {
     }
 
     @Test
-    fun equals() {
+    fun equalsScipamatoEntity() {
         EqualsVerifier.simple()
             .forClass(ScipamatoEntity::class.java)
             .usingGetClass()
