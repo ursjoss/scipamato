@@ -58,4 +58,9 @@ dependencies {
     implementation(Lib.validationApi())
 
     testImplementation(project(Module.scipamatoCommon("test")))
+
+    integrationTestImplementation(Lib.testcontainers("testcontainers"))
+    integrationTestImplementation(Lib.testcontainers("junit-jupiter"))
+    integrationTestImplementation(Lib.testcontainers("postgresql"))
+    integrationTestRuntimeOnly(Lib.postgres())
 }
