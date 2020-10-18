@@ -75,7 +75,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 ////
 
 .Changed
-- Bumped wicket, wicket-bootstrap, wicket-jquery-ui, jOOQ, detekt, mockk, kwik, kris, jasperreports
+- Bumped wicket, wicket-bootstrap, wicket-jquery-ui, jOOQ, detekt, mockk, kluent, kwik, kris, jasperreports
   font-awesome, flyway, gradle
 - Kotlin Conversion of common-pesistence-api, common-persistence-jooq, common-wicket, public-*
 
