@@ -43,7 +43,7 @@ object Lib {
     private const val testcontainersVersion = "1.14.3"
 
     private const val spekVersion = "2.0.13"
-    private const val kwikVersion = "0.8.2"
+    private const val kwikVersion = "0.8.3"
     private const val kluentVersion = "1.62"
     private const val mockkVersion = "1.10.2"
     private const val springMockkVersion = "2.0.3"
@@ -59,7 +59,7 @@ object Lib {
     private const val jaxbPluginVersion = "4.3.1"
     private const val testSetsPluginVersion = "3.0.1"
     private const val sonarqubePluginVersion = "3.0"
-    private const val detektPluginVersion = "1.14.1"
+    private const val detektPluginVersion = "1.14.2"
     //endregion
 
     //region:dependencies
