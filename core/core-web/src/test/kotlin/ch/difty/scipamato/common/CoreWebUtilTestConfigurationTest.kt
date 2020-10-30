@@ -3,11 +3,11 @@ package ch.difty.scipamato.common
 import org.amshove.kluent.shouldBeInstanceOf
 import org.junit.jupiter.api.Test
 
-internal class UtilTestConfigurationTest {
+internal class CoreWebUtilTestConfigurationTest {
 
     @Test
     fun dateTimeService() {
-        val uc = UtilTestConfiguration()
+        val uc = CoreWebUtilTestConfiguration()
         uc.dateTimeService() shouldBeInstanceOf FrozenDateTimeService::class
     }
 }

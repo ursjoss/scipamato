@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Primary
 
 @Configuration
-open class UtilTestConfiguration {
+open class PublicWebUtilTestConfiguration {
 
     @Bean
     @Primary

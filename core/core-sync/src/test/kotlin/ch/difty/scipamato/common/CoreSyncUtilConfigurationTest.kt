@@ -3,10 +3,10 @@ package ch.difty.scipamato.common
 import org.amshove.kluent.shouldBeInstanceOf
 import org.junit.jupiter.api.Test
 
-internal class UtilConfigurationTest {
+internal class CoreSyncUtilConfigurationTest {
 
     @Test
     fun dateTimeService() {
-        UtilConfiguration().dateTimeService() shouldBeInstanceOf CurrentDateTimeService::class
+        CoreSyncUtilConfiguration().dateTimeService() shouldBeInstanceOf CurrentDateTimeService::class
     }
 }

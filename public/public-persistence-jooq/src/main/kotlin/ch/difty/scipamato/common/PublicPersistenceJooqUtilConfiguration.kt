@@ -4,7 +4,7 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
 @Configuration
-open class UtilConfiguration {
+open class PublicPersistenceJooqUtilConfiguration {
     @Bean
     open fun dateTimeService(): DateTimeService = CurrentDateTimeService()
 }
