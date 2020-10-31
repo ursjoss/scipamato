@@ -68,30 +68,36 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[unreleased]]
 == [unreleased]
 
-{url-cl}1.5.0$$...$$main[Full Changelog]
+{url-cl}1.5.1$$...$$main[Full Changelog]
 
 ////
 .Added
-////
 
 .Changed
-- Bumped spring-boot, wicket, wicket-bootstrap, wicket-jquery-ui, jOOQ, detekt, mockk, kluent, kwik, kris, jasperreports
-  font-awesome, flyway, gradle, equalsverifier, lombok-gradle-plugin
-- Kotlin Conversion of common-pesistence-api, common-persistence-jooq, common-wicket, public-*
 
-////
 .Deprecated
 
 .Removed
-////
 
 .Fixed
-- {url-issues}1114[#1114] Reactivate integration-tests for SciPaMaTo public-web
 
-////
 .Security
 
 ////
+
+
+[[v1.5.1]]
+== {url-tree}1.5.1[1.5.1] -- 2020-10-31
+
+{url-cl}1.5.0$$...$$1.5.1[Full Changelog]
+
+.Changed
+- Bumped spring-boot, wicket, wicket-bootstrap, wicket-jquery-ui, jOOQ, detekt, mockk, kluent,
+  kwik, kris, jasperreports, font-awesome, flyway, gradle, equalsverifier, lombok-gradle-plugin
+- Kotlin Conversion of common-pesistence-api, common-persistence-jooq, common-wicket, public-*
+
+.Fixed
+- {url-issues}1114[#1114] Reactivate integration-tests for SciPaMaTo public-web
 
 
 [[v1.5.0]]
