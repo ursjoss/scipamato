@@ -72,24 +72,32 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 ////
 .Added
+
+.Changed
+
+.Deprecated
+
+.Removed
+
+.Fixed
+
+.Security
+
 ////
+
+
+
+[[v1.5.2]]
+== {url-tree}1.5.2[1.5.2] -- 2020-11-07
+
+{url-cl}1.5.1$$...$$1.5.2[Full Changelog]
+
 
 .Changed
 - Bumped jasperreports, KRis, jOOQ, javax.el, testcontainers
 
-////
-.Deprecated
-
-.Removed
-////
-
 .Fixed
 - {url-issues}232[#232] Fix regression: Persisting papers with codes broken
-
-////
-.Security
-
-////
 
 
 [[v1.5.1]]
