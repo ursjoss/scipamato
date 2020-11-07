@@ -75,7 +75,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 ////
 
 .Changed
-- Bumped jasperreports, KRis, jOOQ, javax.el
+- Bumped jasperreports, KRis, jOOQ, javax.el, testcontainers
 
 ////
 .Deprecated
