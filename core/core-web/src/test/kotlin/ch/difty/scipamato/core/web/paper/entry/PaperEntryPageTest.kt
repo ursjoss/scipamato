@@ -1,5 +1,7 @@
 package ch.difty.scipamato.core.web.paper.entry
 
+import ch.difty.scipamato.core.entity.Code
+import ch.difty.scipamato.core.entity.CodeClass
 import ch.difty.scipamato.core.entity.Paper
 import ch.difty.scipamato.core.persistence.OptimisticLockingException
 import ch.difty.scipamato.core.web.common.SelfUpdatingPageTest
@@ -196,5 +198,33 @@ internal class PaperEntryPageTest : SelfUpdatingPageTest<PaperEntryPage>() {
     fun canStartPageWithDefaultConstructor() {
         tester.startPage(PaperEntryPage(PageParameters()))
         tester.assertRenderedPage(PaperEntryPage::class.java)
+    }
+
+    @Test
+    fun canModifyMultipleCodeClasses() {
+        every { codeClassServiceMock.find("en_us") } returns listOf(CodeClass(1, "CC1", ""))
+        every { codeServiceMock.findCodesOfClass(any(), "en_us") } returns listOf(
+            Code("C1", "C1", "", false, 1, "CC1", "", 1),
+            Code("C2", "C2", "", false, 1, "CC1", "", 2)
+        )
+
+        tester.startPage(makePage())
+        tester.clickLink("contentPanel:form:tabs:tabs-container:tabs:2:link")
+
+        val formTester = tester.newFormTester("contentPanel:form").apply {
+            setValue("authors", "Poe EA.")
+            setValue("title", "Title")
+            setValue("location", "loc")
+            setValue("publicationYear", "2017")
+
+            val indices = IntArray(2)
+            indices[0] = 1
+            indices[1] = 1
+            selectMultiple("tabs:panel:tab3Form:codesClass1", indices, true)
+        }
+        tester.executeAjaxEvent("contentPanel:form:tabs:panel:tab3Form:codesClass1", "change")
+        formTester.submit()
+
+        verify(exactly = 1) { paperServiceMock.saveOrUpdate(any()) }
     }
 }
