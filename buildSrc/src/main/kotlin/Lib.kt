@@ -21,7 +21,7 @@ object Lib {
     private const val wicketBootstrapVersion = "4.0.1"
     private const val jasperReportVersion = "6.16.0"
     private const val krisVersion = "0.3.0"
-    const val jooqVersion = "3.13.5"
+    const val jooqVersion = "3.13.6"
     const val flywayVersion = "6.5.7"
 
     private const val kotlinLoggingVersion = "2.0.3"
@@ -32,7 +32,7 @@ object Lib {
     private const val jaxbImplVersion = "2.3.3"
     private const val javaxActivationVersion = "1.2.0"
     private const val javaxElApiVersion = "3.0.1-b06"
-    private const val javaxElVersion = "3.0.1-b11"
+    private const val javaxElVersion = "3.0.1-b12"
 
     private const val fontAwesomeVersion = "5.15.0"
 
@@ -40,7 +40,7 @@ object Lib {
 
     private const val junit5Version = "5.7.0"
 
-    private const val testcontainersVersion = "1.14.3"
+    private const val testcontainersVersion = "1.15.0"
 
     private const val spekVersion = "2.0.13"
     private const val kwikVersion = "0.8.3"
