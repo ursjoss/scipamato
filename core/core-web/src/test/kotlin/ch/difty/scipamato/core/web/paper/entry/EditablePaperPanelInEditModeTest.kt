@@ -211,6 +211,31 @@ internal class EditablePaperPanelInEditModeTest : EditablePaperPanelTest() {
     }
 
     @Test
+    fun canModifyMultipleCodes() {
+        tester.startComponentInPage(makePanel())
+        tester.clickLink("panel:form:tabs:tabs-container:tabs:2:link")
+        val formId = "panel:form:tabs:panel:tab3Form:"
+        tester.assertModelValue(formId + "mainCodeOfCodeclass1", "mcocc1")
+        tester.assertModelValue(formId + "codesClass1", listOf(newC(1, "F")))
+        val formTester = tester.newFormTester(formId)
+        formTester.getTextComponentValue("mainCodeOfCodeclass1") shouldBeEqualTo "mcocc1"
+
+        // first choice selected -> keep mainCode as is
+        val indices = IntArray(2)
+        indices[0] = 1
+        indices[1] = 1
+        formTester.selectMultiple("codesClass1", indices, true)
+        tester.executeAjaxEvent(formId + "codesClass1", "change")
+
+        applyTestHackWithNestedMultiPartForms()
+        tester.submitForm("panel:form")
+
+        verifyCodeAndCodeClassCalls(4, 5)
+        verify(exactly = 3) { newsletterServiceMock.canCreateNewsletterInProgress() }
+        verify(exactly = 2) { paperServiceMock.findPageOfIdsByFilter(any(), any()) }
+    }
+
+    @Test
     fun clickingOnPubmedRetrievalButton_withNoPmIdInScipamatoPaper_warns() {
         tester.startComponentInPage(makePanel())
         every { pubmedArticleServiceMock.getPubmedArticleWithPmid(PMID) } returns

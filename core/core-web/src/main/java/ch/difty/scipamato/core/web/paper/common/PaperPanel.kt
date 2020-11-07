@@ -71,8 +71,7 @@ import org.apache.wicket.validation.IValidator
 
 private const val CODES_CLASS_BASE_NAME = "codesClass"
 
-
-@Suppress("SameParameterValue", "SameParameterValue")
+@Suppress("SameParameterValue")
 abstract class PaperPanel<T>(
     id: String,
     model: IModel<T>?,
@@ -647,18 +646,19 @@ abstract class PaperPanel<T>(
 
         private fun makeCodeClassComplex(codeClassId: CodeClassId, codeClasses: List<CodeClass?>): BootstrapMultiSelect<Code> {
             val id = codeClassId.id
-            val className = codeClasses.filterNotNull().filter { it.id != null && it.id == codeClassId.id }.map { it.name }.first()
+            val className = codeClasses.filterNotNull().filter { it.id != null && it.id == id }.map { it.name }.firstOrNull()
                 ?: codeClassId.name
             queue(Label("$CODES_CLASS_BASE_NAME${id}Label", Model.of(className)))
-            val model: ChainingModel<List<Code>> = object : ChainingModel<List<Code>>(this@PaperPanel.modelObject) {
-                override fun getObject(): List<Code> = (target as CodeBoxAware).getCodesOf(codeClassId)
+            val model: ChainingModel<List<Code>> = object : ChainingModel<List<Code>>(this@PaperPanel.model) {
+                @Suppress("UNCHECKED_CAST")
+                val modelObject: CodeBoxAware
+                    get() = (target as IModel<CodeBoxAware>).`object`
 
+                override fun getObject(): List<Code> = modelObject.getCodesOf(codeClassId)
                 override fun setObject(codes: List<Code>) {
-                    (target as CodeBoxAware).clearCodesOf(codeClassId)
-                    if (codes.isNotEmpty()) {
-                        (target as CodeBoxAware)
-                            .addCodes(codes)
-                    }
+                    modelObject.clearCodesOf(codeClassId)
+                    if (codes.isNotEmpty())
+                        modelObject.addCodes(codes)
                 }
             }
             val choices = CodeModel(codeClassId, localization)
@@ -805,15 +805,18 @@ abstract class PaperPanel<T>(
         }
 
         private fun makeAndQueueNewsletterTopicSelectBox(id: String) {
-            val model: ChainingModel<NewsletterTopic> = object : ChainingModel<NewsletterTopic>(this@PaperPanel.modelObject) {
+            val model: ChainingModel<NewsletterTopic> = object : ChainingModel<NewsletterTopic>(this@PaperPanel.model) {
+                @Suppress("UNCHECKED_CAST")
+                val modelObject: NewsletterAware
+                    get() = (target as IModel<NewsletterAware>).`object`
                 private val topics = newsletterTopicChoice.load()
                 override fun getObject(): NewsletterTopic? =
-                    (target as NewsletterAware).newsletterTopicId?.let {
-                        topics.first { it.id == (target as NewsletterAware).newsletterTopicId }
+                    modelObject.newsletterTopicId?.let {
+                        topics.first { it.id == modelObject.newsletterTopicId }
                     }
 
                 override fun setObject(topic: NewsletterTopic) {
-                    (target as NewsletterAware).setNewsletterTopic(topic)
+                    modelObject.setNewsletterTopic(topic)
                 }
             }
             val choiceRenderer: IChoiceRenderer<NewsletterTopic> = ChoiceRenderer(NewsletterTopic.NewsletterTopicFields.TITLE.fieldName,

@@ -81,9 +81,12 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Deprecated
 
 .Removed
+////
 
 .Fixed
+- {url-issues}232[#232] Fix regression: Persisting papers with codes broken
 
+////
 .Security
 
 ////
@@ -100,7 +103,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 - Kotlin Conversion of common-pesistence-api, common-persistence-jooq, common-wicket, public-*
 
 .Fixed
-- {url-issues}1114[#1114] Reactivate integration-tests for SciPaMaTo public-web
+- {url-issues}114[#114] Reactivate integration-tests for SciPaMaTo public-web
 
 
 [[v1.5.0]]
