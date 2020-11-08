@@ -83,7 +83,7 @@ import ch.difty.scipamato.core.web.paper.NewsletterChangeEvent;
  *
  * @author u.joss
  */
-@SuppressWarnings("WicketForgeJavaIdInspection")
+@SuppressWarnings("ALL")
 @MountPath("entry")
 @Slf4j
 @AuthorizeInstantiation({ Roles.USER, Roles.ADMIN, Roles.VIEWER })
@@ -202,8 +202,7 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
     }
 
     /**
-     * Sets the n.a. values so the paper could be saved or filled with PubMed
-     * information
+     * Sets the n.a. values so the paper could be saved or filled with PubMed information
      */
     private void initDefaultModel() {
         Paper paper = new Paper();
@@ -213,6 +212,7 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
         paper.setLocation(Paper.NA_STRING);
         paper.setPublicationYear(Paper.NA_PUBL_YEAR);
         paper.setGoals(Paper.NA_STRING);
+        paper.setResultExposureRange("μg/m3");
         setDefaultModel(Model.of(paper));
     }
 
