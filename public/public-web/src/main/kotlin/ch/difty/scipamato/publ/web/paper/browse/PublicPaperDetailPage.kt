@@ -32,22 +32,23 @@ class PublicPaperDetailPage : BasePage<PublicPaper> {
     private lateinit var publicPaperService: PublicPaperService
 
     private val callingPageRef: PageReference?
+    private val showBackButton: Boolean
 
     /**
      * Loads the page with the record specified by the 'id' passed in via
      * PageParameters. If the parameter 'no' contains a valid business key number
      * instead, the page will be loaded by number.
-     *
-     * This method has to be public, otherwise direct access via page parameters does not work.
      */
     @JvmOverloads
-    constructor(parameters: PageParameters, callingPageRef: PageReference? = null) : super(parameters) {
+    constructor(parameters: PageParameters, callingPageRef: PageReference? = null, showBackButton: Boolean = true) : super(parameters) {
         this.callingPageRef = callingPageRef
+        this.showBackButton = showBackButton
         parameters.tryLoadingRecordFromNumber()
     }
 
-    internal constructor(paperModel: IModel<PublicPaper>?, callingPageRef: PageReference?) : super(paperModel) {
+    internal constructor(paperModel: IModel<PublicPaper>?, callingPageRef: PageReference?, showBackButton: Boolean = true) : super(paperModel) {
         this.callingPageRef = callingPageRef
+        this.showBackButton = showBackButton
     }
 
     private fun PageParameters.tryLoadingRecordFromNumber() {
@@ -145,6 +146,7 @@ class PublicPaperDetailPage : BasePage<PublicPaper> {
                 if (callingPageRef != null) setResponsePage(callingPageRef.page) else setResponsePage(PublicPage::class.java)
             }
         }.apply {
+            isVisible = showBackButton
             defaultFormProcessing = false
             add(AttributeModifier(
                 AM_TITLE,

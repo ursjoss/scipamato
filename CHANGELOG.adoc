@@ -74,7 +74,8 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 - {url-issues}236[#236] Prepopulate field 'result exposure range' with value 'µg/m3' for new papers
 
 .Changed
-- Follow up of {url-issues}215[#215]: Enlarge PMID field, make DOI smaller on smaller screens 
+- Follow up of {url-issues}215[#215]: Enlarge PMID field, make DOI smaller on smaller screens
+- {url-issues}238[#238] SciPaMaTo-Public: Hide 'Back' button from paper detail page when opend from result panel
 
 ////
 .Deprecated

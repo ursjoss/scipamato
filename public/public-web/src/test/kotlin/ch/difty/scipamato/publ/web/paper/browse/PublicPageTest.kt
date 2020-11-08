@@ -205,14 +205,14 @@ internal class PublicPageTest : BasePageTest<PublicPage>() {
     }
 
     @Test
-    fun clickingTitle_forwardsToDetailsPage() {
+    fun clickingTitle_forwardsToDetailsPage_whichHasNoBackButton() {
         tester.startPage(makePage())
         tester.assertRenderedPage(pageClass)
-        tester
-            .newFormTester("searchForm")
-            .submit("query")
+        tester.newFormTester("searchForm").submit("query")
         tester.clickLink("results:body:rows:1:cells:2:cell:link")
         tester.assertRenderedPage(PublicPaperDetailPage::class.java)
+
+        tester.assertInvisible("form:back")
 
         verify { paperService.countByFilter(any()) }
         verify { paperService.findPageByFilter(any(), any()) }
