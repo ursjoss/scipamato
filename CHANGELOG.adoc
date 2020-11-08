@@ -68,16 +68,13 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[unreleased]]
 == [unreleased]
 
-{url-cl}1.5.1$$...$$main[Full Changelog]
-
-.Added
-- {url-issues}236[#236] Prepopulate field 'result exposure range' with value 'µg/m3' for new papers
-
-.Changed
-- Follow up of {url-issues}215[#215]: Enlarge PMID field, make DOI smaller on smaller screens
-- {url-issues}238[#238] SciPaMaTo-Public: Hide 'Back' button from paper detail page when opend from result panel
+{url-cl}1.5.3$$...$$main[Full Changelog]
 
 ////
+.Added
+
+.Changed
+
 .Deprecated
 
 .Removed
@@ -89,12 +86,23 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 ////
 
 
+[[v1.5.3]]
+== {url-tree}1.5.3[1.5.3] -- 2020-11-08
+
+{url-cl}1.5.2$$...$$1.5.3[Full Changelog]
+
+.Added
+- {url-issues}236[#236] Prepopulate field 'result exposure range' with value 'µg/m3' for new papers
+
+.Changed
+- Follow up of {url-issues}215[#215]: Enlarge PMID field, make DOI smaller on smaller screens
+- {url-issues}238[#238] SciPaMaTo-Public: Hide 'Back' button from paper detail page when opend from result panel
+
 
 [[v1.5.2]]
 == {url-tree}1.5.2[1.5.2] -- 2020-11-07
 
 {url-cl}1.5.1$$...$$1.5.2[Full Changelog]
-
 
 .Changed
 - Bumped jasperreports, KRis, jOOQ, javax.el, testcontainers
