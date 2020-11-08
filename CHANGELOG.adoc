@@ -72,9 +72,12 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 ////
 .Added
+////
 
 .Changed
+- Follow up of {url-issues}215[#215]: Enlarge PMID field, make DOI smaller on smaller screens 
 
+////
 .Deprecated
 
 .Removed
