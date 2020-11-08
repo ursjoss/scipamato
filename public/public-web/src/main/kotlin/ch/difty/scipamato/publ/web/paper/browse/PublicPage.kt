@@ -233,7 +233,7 @@ class PublicPage(parameters: PageParameters) : BasePage<Void>(parameters) {
      */
     private fun onTitleClick(m: IModel<PublicPaper>) {
         m.getObject().number?.let { paperIdManager.setFocusToItem(it) }
-        setResponsePage(PublicPaperDetailPage(m, page.pageReference))
+        setResponsePage(PublicPaperDetailPage(m, page.pageReference, showBackButton = false))
     }
 
     /**
