@@ -20,7 +20,7 @@ SciPaMaTo is a Spring Boot web-application using Apache Wicket as front-end and 
 [[technology-stack]]
 == Technology Stack
 
-* Java & Kotlin
+* Kotlin & Java
 * https://projects.spring.io/spring-boot/[Spring Boot] with
 https://projects.spring.io/spring-security/[Spring Security]
 * https://projectlombok.org/[Lombok]
