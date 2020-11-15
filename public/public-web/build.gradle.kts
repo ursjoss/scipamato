@@ -29,7 +29,7 @@ tasks {
     apply<ApplicationPropertiesFilterPlugin>()
     withType<BootJar> {
         enabled = true
-        mainClassName = "ch.difty.scipamato.publ.ScipamatoPublicApplicationKt"
+        mainClass.set("ch.difty.scipamato.publ.ScipamatoPublicApplicationKt")
         launchScript()
     }
 }
