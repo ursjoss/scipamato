@@ -53,7 +53,7 @@ class AjaxRequestTargetSpy : AjaxRequestTarget {
     override fun getPage(): Page? = null
     override fun getLogData(): ILogData? = null
     override fun respond(requestCycle: IRequestCycle?) = delegate.respond(requestCycle)
-    override fun equals(obj: Any?): Boolean = obj is AjaxRequestTargetSpy
+    override fun equals(other: Any?): Boolean = other is AjaxRequestTargetSpy
     override fun hashCode(): Int = HASH
     override fun toString() = "AjaxRequestTarget"
 
