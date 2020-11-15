@@ -72,9 +72,12 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 ////
 .Added
+////
 
 .Changed
+- kluent, spek, spring-boot-admin, jooq, spring-cloud, spring-cloud-starter
 
+////
 .Deprecated
 
 .Removed

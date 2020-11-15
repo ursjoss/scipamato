@@ -70,13 +70,13 @@ internal open class AuditSearchTermEvaluatorTest {
     @Test
     fun buildingConditionForWhitespace_appliesTrueCondition() {
         expectToken(TokenType.WHITESPACE, "   ", null)
-        e.evaluate(stMock).toString() shouldBeEqualTo "1 = 1"
+        e.evaluate(stMock).toString() shouldBeEqualTo "true"
     }
 
     @Test
     fun buildingConditionForWhitespace_appliesTrueCondition2() {
         expectToken(TokenType.WHITESPACE, "   ", null)
-        e.evaluate(stMock).toString() shouldBeEqualTo "1 = 1"
+        e.evaluate(stMock).toString() shouldBeEqualTo "true"
     }
 
     @Test
@@ -122,7 +122,7 @@ internal open class AuditSearchTermEvaluatorTest {
     @Test
     fun buildingConditionForRaw_appliesDummyTrue() {
         expectToken(TokenType.RAW, "foo", null)
-        e.evaluate(stMock).toString() shouldBeEqualTo "1 = 1"
+        e.evaluate(stMock).toString() shouldBeEqualTo "true"
     }
 
     @Test

@@ -28,7 +28,7 @@ internal class JooqPaperSlimBySearchOrderRepoTest {
     fun getConditions_withEmptySearchOrder() {
         val searchOrder = SearchOrder()
         val cond = finder.getConditionsFrom(searchOrder)
-        cond.toString() shouldBeEqualTo "1 = 0"
+        cond.toString() shouldBeEqualTo "false"
     }
 
     @Test
@@ -36,7 +36,7 @@ internal class JooqPaperSlimBySearchOrderRepoTest {
         val searchOrder = SearchOrder()
         searchOrder.addExclusionOfPaperWithId(3)
         val cond = finder.getConditionsFrom(searchOrder)
-        cond.toString() shouldBeEqualTo "1 = 0"
+        cond.toString() shouldBeEqualTo "false"
     }
 
     @Test
@@ -107,19 +107,19 @@ internal class JooqPaperSlimBySearchOrderRepoTest {
             """(
                   |  (
                   |    publication_year between 2014 and 2015
-                  |    and lower(cast(authors as varchar)) like lower(('%' || replace(
+                  |    and authors ilike ('%' || replace(
                   |      replace(
                   |        replace(
-                  |          'turner', 
-                  |          '!', 
+                  |          'turner',
+                  |          '!',
                   |          '!!'
-                  |        ), 
-                  |        '%', 
+                  |        ),
+                  |        '%',
                   |        '!%'
-                  |      ), 
-                  |      '_', 
+                  |      ),
+                  |      '_',
                   |      '!_'
-                  |    ) || '%')) escape '!'
+                  |    ) || '%') escape '!'
                   |  )
                   |  or (
                   |    first_author_overridden = false
@@ -155,19 +155,19 @@ internal class JooqPaperSlimBySearchOrderRepoTest {
                   |  (
                   |    (
                   |      publication_year between 2014 and 2015
-                  |      and lower(cast(authors as varchar)) like lower(('%' || replace(
+                  |      and authors ilike ('%' || replace(
                   |        replace(
                   |          replace(
-                  |            'turner', 
-                  |            '!', 
+                  |            'turner',
+                  |            '!',
                   |            '!!'
-                  |          ), 
-                  |          '%', 
+                  |          ),
+                  |          '%',
                   |          '!%'
-                  |        ), 
-                  |        '_', 
+                  |        ),
+                  |        '_',
                   |        '!_'
-                  |      ) || '%')) escape '!'
+                  |      ) || '%') escape '!'
                   |    )
                   |    or (
                   |      first_author_overridden = false
@@ -216,19 +216,19 @@ internal class JooqPaperSlimBySearchOrderRepoTest {
                   |  (
                   |    (
                   |      publication_year between 2014 and 2015
-                  |      and lower(cast(authors as varchar)) like lower(('%' || replace(
+                  |      and authors ilike ('%' || replace(
                   |        replace(
                   |          replace(
-                  |            'turner', 
-                  |            '!', 
+                  |            'turner',
+                  |            '!',
                   |            '!!'
-                  |          ), 
-                  |          '%', 
+                  |          ),
+                  |          '%',
                   |          '!%'
-                  |        ), 
-                  |        '_', 
+                  |        ),
+                  |        '_',
                   |        '!_'
-                  |      ) || '%')) escape '!'
+                  |      ) || '%') escape '!'
                   |    )
                   |    or (
                   |      first_author_overridden = false
@@ -291,7 +291,7 @@ internal class JooqPaperSlimBySearchOrderRepoTest {
                  |  where (
                  |    "public"."paper_newsletter"."paper_id" = "public"."paper"."id"
                  |    and "public"."paper_newsletter"."newsletter_topic_id" = 1
-                 |    and lower("public"."paper_newsletter"."headline") like lower('%hl%')
+                 |    and "public"."paper_newsletter"."headline" ilike '%hl%'
                  |  )
                  |)""".trimMargin()
     }
@@ -335,7 +335,7 @@ internal class JooqPaperSlimBySearchOrderRepoTest {
                   |      on "public"."paper_newsletter"."newsletter_id" = "public"."newsletter"."id"
                   |  where (
                   |    "public"."paper_newsletter"."paper_id" = "public"."paper"."id"
-                  |    and lower("public"."paper_newsletter"."headline") like lower('%hl%')
+                  |    and "public"."paper_newsletter"."headline" ilike '%hl%'
                   |  )
                   |)""".trimMargin()
     }
@@ -357,7 +357,7 @@ internal class JooqPaperSlimBySearchOrderRepoTest {
                   |      on "public"."paper_newsletter"."newsletter_id" = "public"."newsletter"."id"
                   |  where (
                   |    "public"."paper_newsletter"."paper_id" = "public"."paper"."id"
-                  |    and lower("public"."newsletter"."issue") like lower('%i%')
+                  |    and "public"."newsletter"."issue" ilike '%i%'
                   |  )
                   |)""".trimMargin()
     }
@@ -383,7 +383,7 @@ internal class JooqPaperSlimBySearchOrderRepoTest {
                   |        on "public"."paper_newsletter"."newsletter_id" = "public"."newsletter"."id"
                   |    where (
                   |      "public"."paper_newsletter"."paper_id" = "public"."paper"."id"
-                  |      and lower("public"."paper_newsletter"."headline") like lower('%hl%')
+                  |      and "public"."paper_newsletter"."headline" ilike '%hl%'
                   |    )
                   |  )
                   |  or exists (

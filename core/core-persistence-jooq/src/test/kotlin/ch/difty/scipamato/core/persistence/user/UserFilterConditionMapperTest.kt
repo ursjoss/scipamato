@@ -27,7 +27,7 @@ internal class UserFilterConditionMapperTest :
         val pattern = "m"
         filter.emailMask = pattern
         mapper.map(filter).toString() shouldBeEqualTo
-            """lower("public"."scipamato_user"."email") like lower('%m%')"""
+            """"public"."scipamato_user"."email" ilike '%m%'"""
     }
 
     @Test

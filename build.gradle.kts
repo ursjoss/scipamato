@@ -25,6 +25,7 @@ plugins {
     Lib.detektPlugin().run { id(id) version version }
     Lib.sonarqubePlugin().run { id(id) version version }
     Lib.reckonPlugin().run { id(id) version version }
+    Lib.versionsPlugin().run { id(id) version version }
 }
 
 java {

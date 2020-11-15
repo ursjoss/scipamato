@@ -43,108 +43,108 @@ internal class StringSearchTermEvaluatorIntegrationTest : SearchTermEvaluatorInt
         fun stringParameters() = listOf(
             Arguments.of(
                 "foo", "(WORD foo)",
-                """lower(cast(fn as varchar)) like lower(('%' || replace(
+                """fn ilike ('%' || replace(
                        |  replace(
                        |    replace(
-                       |      'foo', 
-                       |      '!', 
+                       |      'foo',
+                       |      '!',
                        |      '!!'
-                       |    ), 
-                       |    '%', 
+                       |    ),
+                       |    '%',
                        |    '!%'
-                       |  ), 
-                       |  '_', 
+                       |  ),
+                       |  '_',
                        |  '!_'
-                       |) || '%')) escape '!'""".trimMargin(),
+                       |) || '%') escape '!'""".trimMargin(),
                 CONTAINS
             ),
             Arguments.of(
                 "-foo", "(NOTWORD foo)",
-                """not(lower(cast(coalesce(
-                      |  fn, 
+                """not (coalesce(
+                      |  fn,
                       |  ''
-                      |) as varchar)) like lower(('%' || replace(
+                      |) ilike ('%' || replace(
                       |  replace(
                       |    replace(
-                      |      'foo', 
-                      |      '!', 
+                      |      'foo',
+                      |      '!',
                       |      '!!'
-                      |    ), 
-                      |    '%', 
+                      |    ),
+                      |    '%',
                       |    '!%'
-                      |  ), 
-                      |  '_', 
+                      |  ),
+                      |  '_',
                       |  '!_'
-                      |) || '%')) escape '!')""".trimMargin(),
+                      |) || '%') escape '!')""".trimMargin(),
                 CONTAINS
             ),
             Arguments.of(""""foo"""", "(QUOTED foo)", "lower(cast(fn as varchar)) = lower('foo')", EQUALS),
             Arguments.of("""-"foo"""", "(NOTQUOTED foo)", "lower(cast(fn as varchar)) <> lower('foo')", EQUALS),
             Arguments.of("""="foo"""", "(QUOTED foo)", "lower(cast(fn as varchar)) = lower('foo')", EQUALS),
 
-            Arguments.of("""*foo""", "(OPENLEFT %foo)", "lower(cast(fn as varchar)) like lower('%foo')", LIKE),
+            Arguments.of("""*foo""", "(OPENLEFT %foo)", "fn ilike '%foo'", LIKE),
             Arguments.of(
                 """-*foo""", "(NOTOPENLEFT %foo)",
-                """lower(cast(coalesce(
-                |  fn, 
+                """coalesce(
+                |  fn,
                 |  ''
-                |) as varchar)) not like lower('%foo')""".trimMargin(),
+                |) not ilike '%foo'""".trimMargin(),
                 LIKE
             ),
-            Arguments.of(""""*foo""""", "(OPENLEFTQUOTED %foo)", "lower(cast(fn as varchar)) like lower('%foo')", LIKE),
+            Arguments.of(""""*foo""""", "(OPENLEFTQUOTED %foo)", "fn ilike '%foo'", LIKE),
             Arguments.of(
                 """-"*foo"""",
                 "(NOTOPENLEFTQUOTED %foo)",
-                """lower(cast(coalesce(
-                    |  fn, 
+                """coalesce(
+                    |  fn,
                     |  ''
-                    |) as varchar)) not like lower('%foo')""".trimMargin(),
+                    |) not ilike '%foo'""".trimMargin(),
                 LIKE
             ),
 
             Arguments.of(
                 """*foo*""", "(OPENLEFTRIGHT %foo%)",
-                "lower(cast(fn as varchar)) like lower('%foo%')",
+                "fn ilike '%foo%'",
                 LIKE
             ),
             Arguments.of(
                 """-*foo*""", "(NOTOPENLEFTRIGHT %foo%)",
-                """lower(cast(coalesce(
-                    |  fn, 
+                """coalesce(
+                    |  fn,
                     |  ''
-                    |) as varchar)) not like lower('%foo%')""".trimMargin(),
+                    |) not ilike '%foo%'""".trimMargin(),
                 LIKE
             ),
             Arguments.of(
                 """"*foo*"""", "(OPENLEFTRIGHTQUOTED %foo%)",
-                "lower(cast(fn as varchar)) like lower('%foo%')",
+                "fn ilike '%foo%'",
                 LIKE
             ),
             Arguments.of(
                 """-"*foo*"""", "(NOTOPENLEFTRIGHTQUOTED %foo%)",
-                """lower(cast(coalesce(
-                    |  fn, 
+                """coalesce(
+                    |  fn,
                     |  ''
-                    |) as varchar)) not like lower('%foo%')""".trimMargin(),
+                    |) not ilike '%foo%'""".trimMargin(),
                 LIKE
             ),
 
-            Arguments.of("""foo*""", "(OPENRIGHT foo%)", "lower(cast(fn as varchar)) like lower('foo%')", LIKE),
+            Arguments.of("""foo*""", "(OPENRIGHT foo%)", "fn ilike 'foo%'", LIKE),
             Arguments.of(
                 """-foo*"""", "(NOTOPENRIGHT foo%)",
-                """lower(cast(coalesce(
-                    |  fn, 
+                """coalesce(
+                    |  fn,
                     |  ''
-                    |) as varchar)) not like lower('foo%')""".trimMargin(),
+                    |) not ilike 'foo%'""".trimMargin(),
                 LIKE
             ),
-            Arguments.of(""""foo*"""", "(OPENRIGHTQUOTED foo%)", "lower(cast(fn as varchar)) like lower('foo%')", LIKE),
+            Arguments.of(""""foo*"""", "(OPENRIGHTQUOTED foo%)", "fn ilike 'foo%'", LIKE),
             Arguments.of(
                 """-"foo*"""", "(NOTOPENRIGHTQUOTED foo%)",
-                """lower(cast(coalesce(
-                    |  fn, 
+                """coalesce(
+                    |  fn,
                     |  ''
-                    |) as varchar)) not like lower('foo%')""".trimMargin(),
+                    |) not ilike 'foo%'""".trimMargin(),
                 LIKE
             ),
 
@@ -164,12 +164,12 @@ internal class StringSearchTermEvaluatorIntegrationTest : SearchTermEvaluatorInt
                       |)""".trimMargin(),
                 LENGTH
             ),
-            Arguments.of("""-""""", """(RAW -"")""", "1 = 1", NONE),
+            Arguments.of("""-""""", """(RAW -"")""", "true", NONE),
 
-            Arguments.of("""s/foo/""", "(REGEX foo)", "(coalesce(\n  fn, \n  ''\n) like_regex 'foo')", REGEX),
-            Arguments.of("""-s/foo/""", "(NOTREGEX foo)", "not((coalesce(\n  fn, \n  ''\n) like_regex 'foo'))", REGEX),
+            Arguments.of("""s/foo/""", "(REGEX foo)", "(coalesce(\n  fn,\n  ''\n) like_regex 'foo')", REGEX),
+            Arguments.of("""-s/foo/""", "(NOTREGEX foo)", "not ((coalesce(\n  fn,\n  ''\n) like_regex 'foo'))", REGEX),
 
-            Arguments.of("""""""", """(RAW "")""", "1 = 1", NONE)
+            Arguments.of("""""""", """(RAW "")""", "true", NONE)
         )
     }
 }

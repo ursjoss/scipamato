@@ -125,7 +125,7 @@ public abstract class JooqBySearchOrderRepo<T extends IdScipamatoEntity<Long>, M
             final Condition scConditions = conditions.combineWithOr();
             if (searchOrder
                     .getExcludedPaperIds()
-                    .isEmpty() || "1 = 0".equals(scConditions.toString())) {
+                    .isEmpty() || "false".equals(scConditions.toString())) {
                 return scConditions;
             } else {
                 return scConditions.and(PAPER.ID.notIn(searchOrder.getExcludedPaperIds()));

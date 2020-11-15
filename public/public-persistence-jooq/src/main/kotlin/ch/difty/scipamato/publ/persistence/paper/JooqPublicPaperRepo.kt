@@ -107,7 +107,7 @@ open class JooqPublicPaperRepo(
                         .orderBy(ch.difty.scipamato.publ.db.tables.Keyword.KEYWORD.NAME)
                         .limit(1)
                         .fetchOne()
-                        .value1()
+                        ?.value1()
                 }.mapTo(ArrayList()) { Paper.PAPER.METHODS.containsIgnoreCase(it) }
         return if (conditions.size == 1) conditions.first() else DSL.and(conditions)
     }
@@ -118,5 +118,5 @@ open class JooqPublicPaperRepo(
             .where(Language.LANGUAGE.MAIN_LANGUAGE.eq(true))
             .limit(1)
             .fetchOne()
-            .value1()
+            ?.value1() ?: "en_US"
 }

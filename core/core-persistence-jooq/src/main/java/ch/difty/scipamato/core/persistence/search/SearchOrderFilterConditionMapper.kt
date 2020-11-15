@@ -25,7 +25,7 @@ class SearchOrderFilterConditionMapper : AbstractFilterConditionMapper<SearchOrd
         } else {
             filter.nameMask?.let { mask ->
                 conditions.add(
-                    DSL.lower(SearchOrder.SEARCH_ORDER.NAME).contains(mask.toLowerCase())
+                    SearchOrder.SEARCH_ORDER.NAME.containsIgnoreCase(mask)
                 )
             }
             filter.owner?.let { conditions.add(SearchOrder.SEARCH_ORDER.OWNER.equal(it)) }

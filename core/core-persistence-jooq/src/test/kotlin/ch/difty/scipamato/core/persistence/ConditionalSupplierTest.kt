@@ -11,7 +11,7 @@ internal class ConditionalSupplierTest {
     @Test
     fun combiningWithAnd_withNoConditions_createsDummySelectAllCondition() {
         val c = cs.combineWithAnd()
-        c.toString() shouldBeEqualTo "1 = 1"
+        c.toString() shouldBeEqualTo "true"
     }
 
     @Test
@@ -27,7 +27,7 @@ internal class ConditionalSupplierTest {
         val present = false
         cs.add(present) { DSL.field("foo").eq(DSL.value("bar")) }
         val c = cs.combineWithAnd()
-        c.toString() shouldBeEqualTo "1 = 1"
+        c.toString() shouldBeEqualTo "true"
     }
 
     @Test
@@ -52,13 +52,13 @@ internal class ConditionalSupplierTest {
     @Test
     fun combiningWithOr_withNoConditions_selectsAllRecords() {
         val c = cs.combineWithOr()
-        c.toString() shouldBeEqualTo "1 = 0"
+        c.toString() shouldBeEqualTo "false"
     }
 
     @Test
     fun combiningWithOr_withNoConditions_createsDummySelectNothingCondition() {
         val c = cs.combineWithOr()
-        c.toString() shouldBeEqualTo "1 = 0"
+        c.toString() shouldBeEqualTo "false"
     }
 
     @Test

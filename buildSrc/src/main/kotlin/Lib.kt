@@ -10,9 +10,9 @@ object Lib {
     private const val kotlinVersion = "1.4.10"
 
     private const val springBootVersion = "2.3.5.RELEASE"
-    private const val springBootAdminVersion = "2.3.0"
-    const val springCloudVersion = "Hoxton.SR8"
-    private const val springCloudStarterVersion = "2.2.5.RELEASE"
+    private const val springBootAdminVersion = "2.3.1"
+    const val springCloudVersion = "Hoxton.SR9"
+    private const val springCloudStarterVersion = "2.2.6.RELEASE"
 
     private const val wicketSpringBootStarterVersion = "3.0.4"
     private const val wicketVersion = "9.1.0"
@@ -21,7 +21,7 @@ object Lib {
     private const val wicketBootstrapVersion = "4.0.1"
     private const val jasperReportVersion = "6.16.0"
     private const val krisVersion = "0.3.0"
-    const val jooqVersion = "3.13.6"
+    const val jooqVersion = "3.14.3"
     const val flywayVersion = "6.5.7"
 
     private const val kotlinLoggingVersion = "2.0.3"
@@ -42,9 +42,9 @@ object Lib {
 
     private const val testcontainersVersion = "1.15.0"
 
-    private const val spekVersion = "2.0.13"
+    private const val spekVersion = "2.0.14"
     private const val kwikVersion = "0.8.3"
-    private const val kluentVersion = "1.63"
+    private const val kluentVersion = "1.64"
     private const val mockkVersion = "1.10.2"
     private const val springMockkVersion = "2.0.3"
 
@@ -56,6 +56,7 @@ object Lib {
     private const val lombokPluginVersion = "5.3.0"
     private const val jooqModelatorPluginVersion = "3.9.0"
     private const val reckonPluginVersion = "0.13.0"
+    private const val versionsPluginVersion = "0.36.0"
     private const val jaxbPluginVersion = "4.3.1"
     private const val testSetsPluginVersion = "3.0.1"
     private const val sonarqubePluginVersion = "3.0"
@@ -165,6 +166,8 @@ object Lib {
     fun testSetsPlugin() = Plugin("org.unbroken-dome.test-sets", testSetsPluginVersion)
 
     fun reckonPlugin() = Plugin("org.ajoberstar.reckon", reckonPluginVersion)
+
+    fun versionsPlugin() = Plugin("com.github.ben-manes.versions", versionsPluginVersion)
 
     fun jaxbPlugin() = Plugin("com.intershop.gradle.jaxb", jaxbPluginVersion)
 

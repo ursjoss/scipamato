@@ -159,7 +159,7 @@ open class JooqNewsletterTopicRepo(
         .select(Language.LANGUAGE.CODE)
         .from(Language.LANGUAGE)
         .where(Language.LANGUAGE.MAIN_LANGUAGE.eq(true))
-        .fetchOneInto(String::class.java)
+        .fetchOneInto(String::class.java) ?: "en_US"
 
     override fun newUnpersistedNewsletterTopicDefinition(): NewsletterTopicDefinition {
         val translations = dsl
@@ -190,7 +190,7 @@ open class JooqNewsletterTopicRepo(
         val selectStep = dsl
             .selectCount()
             .from(ch.difty.scipamato.core.db.tables.NewsletterTopic.NEWSLETTER_TOPIC)
-        return applyWhereCondition(filter, selectStep).fetchOneInto(Int::class.java)
+        return applyWhereCondition(filter, selectStep).fetchOneInto(Int::class.java) ?: 0
     }
 
     override fun findNewsletterTopicDefinitionById(id: Int): NewsletterTopicDefinition? {

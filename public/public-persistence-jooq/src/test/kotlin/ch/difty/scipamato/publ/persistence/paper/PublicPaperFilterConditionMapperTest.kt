@@ -54,8 +54,8 @@ class PublicPaperFilterConditionMapperTest : FilterConditionMapperTest<PaperReco
         filter.copy(authorMask = pattern).run {
             mapper.map(this).toString() shouldBeEqualTo
                 """(
-                   |  lower("public"."paper"."authors") like lower('%foo%')
-                   |  and lower("public"."paper"."authors") like lower('%bar%')
+                   |  "public"."paper"."authors" ilike '%foo%'
+                   |  and "public"."paper"."authors" ilike '%bar%'
                    |)""".trimMargin()
         }
     }
@@ -74,9 +74,9 @@ class PublicPaperFilterConditionMapperTest : FilterConditionMapperTest<PaperReco
         filter.copy(methodsMask = pattern).run {
             mapper.map(this).toString() shouldBeEqualTo
                 """(
-                |  lower("public"."paper"."methods") like lower('%m1%')
-                |  and lower("public"."paper"."methods") like lower('%m2%')
-                |  and lower("public"."paper"."methods") like lower('%m3%')
+                |  "public"."paper"."methods" ilike '%m1%'
+                |  and "public"."paper"."methods" ilike '%m2%'
+                |  and "public"."paper"."methods" ilike '%m3%'
                 |)""".trimMargin()
         }
     }
@@ -142,7 +142,7 @@ class PublicPaperFilterConditionMapperTest : FilterConditionMapperTest<PaperReco
         // @> array['c1', 'c2']");
         mapper.map(this).toString() shouldBeEqualTo
             """"public"."paper"."codes" @> array[
-                        |  cast('c1' as clob), 
+                        |  cast('c1' as clob),
                         |  cast('c2' as clob)
                         |]""".trimMargin()
     }
@@ -234,13 +234,13 @@ class PublicPaperFilterConditionMapperTest : FilterConditionMapperTest<PaperReco
             // @> array['1A', '2B', '3C', '4D', '5E', '6F', '7G', '8H']");
             mapper.map(this).toString() shouldBeEqualTo
                 """"public"."paper"."codes" @> array[
-                |  cast('1A' as clob), 
-                |  cast('2B' as clob), 
-                |  cast('3C' as clob), 
-                |  cast('4D' as clob), 
-                |  cast('5E' as clob), 
-                |  cast('6F' as clob), 
-                |  cast('7G' as clob), 
+                |  cast('1A' as clob),
+                |  cast('2B' as clob),
+                |  cast('3C' as clob),
+                |  cast('4D' as clob),
+                |  cast('5E' as clob),
+                |  cast('6F' as clob),
+                |  cast('7G' as clob),
                 |  cast('8H' as clob)
                 |]""".trimMargin()
         }
@@ -251,7 +251,7 @@ class PublicPaperFilterConditionMapperTest : FilterConditionMapperTest<PaperReco
     fun creatingWhereCondition_withSetButThenClearedCodes_doesNotFilterByCodes() {
         filter.copy(codesOfClass1 = mutableListOf(Code(code = "1A"))).run {
 //        filter.codesOfClass1.clear()
-            mapper.map(this).toString() shouldBeEqualTo "1 = 1"
+            mapper.map(this).toString() shouldBeEqualTo "true"
         }
     }
 
@@ -261,8 +261,8 @@ class PublicPaperFilterConditionMapperTest : FilterConditionMapperTest<PaperReco
         filter.copy(authorMask = pattern).run {
             mapper.map(this).toString() shouldBeEqualTo
                 """(
-                |  lower("public"."paper"."authors") like lower('%Last F%')
-                |  and lower("public"."paper"."authors") like lower('%Other S%')
+                |  "public"."paper"."authors" ilike '%Last F%'
+                |  and "public"."paper"."authors" ilike '%Other S%'
                 |)""".trimMargin()
         }
     }

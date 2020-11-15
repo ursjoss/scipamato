@@ -7,6 +7,7 @@ import org.amshove.kluent.shouldBeNull
 import org.jooq.Record
 import org.jooq.RecordMapper
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.fail
 import java.sql.Timestamp
 
 abstract class RecordMapperTest<R : Record, E : CoreEntity> {
@@ -17,7 +18,7 @@ abstract class RecordMapperTest<R : Record, E : CoreEntity> {
     internal fun mapping_mapsRecordToEntity() {
         val record = makeRecord()
         setAuditFieldsIn(record)
-        val entity = mapper.map(record)
+        val entity = mapper.map(record) ?: fail("Unable to get entity")
         assertEntity(entity)
         assertAuditFieldsOf(entity)
     }
