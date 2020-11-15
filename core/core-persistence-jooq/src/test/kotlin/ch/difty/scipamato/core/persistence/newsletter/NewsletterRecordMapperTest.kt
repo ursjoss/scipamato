@@ -10,6 +10,7 @@ import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeNull
 import org.jooq.RecordMapper
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.fail
 import java.sql.Date
 import java.time.LocalDate
 
@@ -46,7 +47,7 @@ internal class NewsletterRecordMapperTest : RecordMapperTest<NewsletterRecord, N
         val record = makeRecord()
         setAuditFieldsIn(record)
         record.issueDate = null
-        val entity = mapper.map(record)
+        val entity = mapper.map(record) ?: fail("unable to get entity")
         entity.issueDate.shouldBeNull()
     }
 

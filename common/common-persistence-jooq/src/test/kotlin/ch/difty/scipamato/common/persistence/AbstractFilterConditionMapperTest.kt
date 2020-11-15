@@ -18,7 +18,7 @@ internal class AbstractFilterConditionMapperTest {
     @Test
     fun withNullFilter() {
         val condition = filterConditionMapper.map(null)
-        condition.toString() shouldBeEqualTo "1 = 1"
+        condition.toString() shouldBeEqualTo "true"
     }
 
     @Test

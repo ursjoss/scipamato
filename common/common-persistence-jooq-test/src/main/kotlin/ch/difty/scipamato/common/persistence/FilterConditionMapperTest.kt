@@ -21,8 +21,8 @@ abstract class FilterConditionMapperTest<R : Record, TI : TableImpl<R>, F : Scip
         val sb = StringBuilder()
         if (withMultipleFields) sb.append("(").append("\n  ")
         fieldNames.forEach { fieldName ->
-            sb.append("lower(\"public\".\"").append(table.name).append("\".\"").append(fieldName)
-                .append("\") like lower('%").append(pattern).append("%')")
+            sb.append("\"public\".\"").append(table.name).append("\".\"").append(fieldName)
+                .append("\" ilike '%").append(pattern).append("%'")
             if (withMultipleFields) sb.append("\n")
             if (fields-- > 1) sb.append("  or ")
         }
@@ -32,11 +32,11 @@ abstract class FilterConditionMapperTest<R : Record, TI : TableImpl<R>, F : Scip
 
     @Test
     internal fun mappingFilter_withNullFilter_returnsNoOpCondition() {
-        mapper.map(null).toString() shouldBeEqualTo "1 = 1"
+        mapper.map(null).toString() shouldBeEqualTo "true"
     }
 
     @Test
     internal fun creatingWhereCondition_withNoFilterConditions_returnsNoOpCondition() {
-        mapper.map(filter).toString() shouldBeEqualTo "1 = 1"
+        mapper.map(filter).toString() shouldBeEqualTo "true"
     }
 }

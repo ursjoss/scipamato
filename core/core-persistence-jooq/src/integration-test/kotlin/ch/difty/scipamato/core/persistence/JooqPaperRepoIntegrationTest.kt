@@ -125,10 +125,11 @@ internal open class JooqPaperRepoIntegrationTest {
         paper.authors shouldBeEqualTo "a"
 
         val cr = dsl.selectFrom(Code.CODE).limit(1).fetchOne()
+            ?: fail("unable to fetch record")
         val ccr = dsl
             .selectFrom(CodeClass.CODE_CLASS)
             .where(CodeClass.CODE_CLASS.ID.eq(cr.codeClassId))
-            .fetchOne()
+            ?.fetchOne() ?: fail("Unable to fetch record")
         val codeClass = ch.difty.scipamato.core.entity.CodeClass(ccr.id, "", "")
         val code = ch.difty.scipamato.core.entity.Code(
             cr.code, "", "", true,
@@ -442,7 +443,7 @@ internal open class JooqPaperRepoIntegrationTest {
             .select()
             .from(PAPER_ATTACHMENT)
             .where(PAPER_ATTACHMENT.PAPER_ID.eq(TEST_PAPER_ID))
-            .fetchOneInto(PaperAttachment::class.java)
+            .fetchOneInto(PaperAttachment::class.java) ?: fail("Unable to fetch record")
 
         p.attachments.map { it.id } shouldContainAll listOf(saved.id)
 
@@ -469,7 +470,7 @@ internal open class JooqPaperRepoIntegrationTest {
             .select()
             .from(PAPER_ATTACHMENT)
             .where(PAPER_ATTACHMENT.PAPER_ID.eq(TEST_PAPER_ID))
-            .fetchOneInto(PaperAttachment::class.java)
+            .fetchOneInto(PaperAttachment::class.java) ?: fail("unable to fetch record")
 
         saved2.name shouldBeEqualTo pa1.name
         saved2.version shouldBeEqualTo 2
@@ -486,7 +487,7 @@ internal open class JooqPaperRepoIntegrationTest {
             .select(PAPER_ATTACHMENT.ID)
             .from(PAPER_ATTACHMENT)
             .where(PAPER_ATTACHMENT.PAPER_ID.eq(TEST_PAPER_ID))
-            .fetchOneInto(Int::class.java)
+            .fetchOneInto(Int::class.java) ?: fail("unable to fetch id")
         val attachment = repo.loadAttachmentWithContentBy(id) ?: fail { "Unable to load attachments" }
         attachment.content.shouldNotBeNull()
         String(attachment.content) shouldBeEqualTo content1
@@ -513,18 +514,17 @@ internal open class JooqPaperRepoIntegrationTest {
      */
     @Test
     fun testDeclarativeTransaction() {
-        var rollback: Boolean
         val paper = repo.findById(1L) ?: fail { "Unable to find paper" }
-        try {
+        val rollback = try {
             paper.number = null
             repo.update(paper)
             fail { "Should have thrown exception due to null value on non-null column" }
         } catch (dae: org.jooq.exception.DataAccessException) {
             fail { "JooqExceptionTranslator did not translate the jooqException into a spring exception" }
         } catch (dae: DataAccessException) {
-            rollback = true
             dae shouldBeInstanceOf DataIntegrityViolationException::class
             dae.message?.shouldStartWith("""jOOQ; SQL [update "public"."paper" set "number" = ?""")
+            true
         }
 
         rollback.shouldBeTrue()

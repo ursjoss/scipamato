@@ -47,6 +47,6 @@ internal class NewsletterFilterConditionMapperTest :
     @Test
     fun creatingWhereCondition_withNewsletterTopicWithNullId() {
         filter.newsletterTopic = NewsletterTopic(null, "foo")
-        mapper.map(filter).toString() shouldBeEqualTo "1 = 1"
+        mapper.map(filter).toString() shouldBeEqualTo "true"
     }
 }

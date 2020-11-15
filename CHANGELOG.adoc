@@ -54,7 +54,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 ////
 
 .Changed
-- kluent, spek, spring-boot-admin
+- kluent, spek, spring-boot-admin, jooq
 
 ////
 .Deprecated

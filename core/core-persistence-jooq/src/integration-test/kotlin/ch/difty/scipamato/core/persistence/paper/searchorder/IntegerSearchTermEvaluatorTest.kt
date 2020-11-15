@@ -90,7 +90,7 @@ internal class IntegerSearchTermEvaluatorTest {
         val any = 0
         expectSearchTerm(MatchType.INCOMPLETE, any)
         val c = evaluator.evaluate(stMock)
-        c.toString() shouldBeEqualTo "1 = 0"
+        c.toString() shouldBeEqualTo "false"
     }
 
     @Test
