@@ -51,9 +51,12 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 {url-cl}<prev>$$...$$main[Full Changelog]
 
 .Added
+////
 
 .Changed
+- kluent
 
+////
 .Deprecated
 
 .Removed
