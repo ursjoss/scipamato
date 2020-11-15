@@ -76,7 +76,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Changed
 - spring-boot, spring-cloud, spring-cloud-starter, jooq, flyway,
-  spek, kluent, spring-boot-admin
+  spek, kluent, spring-mockk, spring-boot-admin
 
 ////
 .Deprecated
