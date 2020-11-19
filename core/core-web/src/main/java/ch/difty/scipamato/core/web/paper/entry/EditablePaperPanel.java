@@ -645,7 +645,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
             @Override
             protected void onConfigure() {
                 super.onConfigure();
-                setVisible(isEditMode());
+                setVisible(isEditMode() && getModelObject().getId() != null);
             }
         };
         upload
