@@ -26,12 +26,10 @@ abstract class AbstractLogoutPage<R : AbstractPage<*>>(
     }
 
     @Suppress("SameParameterValue")
-    private fun newForm(id: String): StatelessForm<Void> {
-        return object : StatelessForm<Void>(id) {
-            override fun onSubmit() {
-                signOutAndInvalidate()
-                responsePage?.let { setResponsePage(it) }
-            }
+    private fun newForm(id: String): StatelessForm<Void> = object : StatelessForm<Void>(id) {
+        override fun onSubmit() {
+            signOutAndInvalidate()
+            responsePage?.let { setResponsePage(it) }
         }
     }
 
