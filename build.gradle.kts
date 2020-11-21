@@ -6,7 +6,6 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED
 import org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED
 import org.gradle.api.tasks.testing.logging.TestLogEvent.SKIPPED
 import org.gradle.api.tasks.testing.logging.TestLogEvent.STARTED
-import org.jetbrains.kotlin.gradle.plugin.KotlinPlatformJvmPlugin
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.sonarqube.gradle.SonarQubeTask
 import org.springframework.boot.gradle.plugin.SpringBootPlugin
@@ -103,7 +102,7 @@ allprojects {
 subprojects {
     apply<SpringBootPlugin>()
     apply(plugin = Lib.springDependencyManagementPlugin().id)
-    apply<KotlinPlatformJvmPlugin>()
+    apply(plugin = "org.jetbrains.kotlin.jvm")
     apply<JavaPlugin>()
     apply<IdeaPlugin>()
     apply<TestSetsPlugin>()
