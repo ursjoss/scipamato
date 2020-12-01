@@ -35,7 +35,6 @@ internal class SearchConditionTest {
     @Test
     fun allStringSearchTerms() {
         sc1.doi = X
-        sc1.pmId = X
         sc1.authors = X
         sc1.firstAuthor = X
         sc1.title = X
@@ -61,7 +60,7 @@ internal class SearchConditionTest {
         sc1.intern = X
         sc1.originalAbstract = X
         sc1.mainCodeOfCodeclass1 = X
-        sc1.stringSearchTerms shouldHaveSize 27
+        sc1.stringSearchTerms shouldHaveSize 26
         sc1.integerSearchTerms.shouldBeEmpty()
         sc1.booleanSearchTerms.shouldBeEmpty()
         sc1.auditSearchTerms.shouldBeEmpty()
@@ -74,10 +73,11 @@ internal class SearchConditionTest {
     @Test
     fun allIntegerSearchTerms() {
         sc1.id = "3"
+        sc1.pmId = "6"
         sc1.number = "30"
         sc1.publicationYear = "2017"
         sc1.stringSearchTerms.shouldBeEmpty()
-        sc1.integerSearchTerms shouldHaveSize 3
+        sc1.integerSearchTerms shouldHaveSize 4
         sc1.booleanSearchTerms.shouldBeEmpty()
         sc1.auditSearchTerms.shouldBeEmpty()
         sc1.createdDisplayValue.shouldBeNull()
@@ -213,15 +213,15 @@ internal class SearchConditionTest {
     @Test
     fun pmId() {
         sc1.pmId.shouldBeNull()
-        sc1.stringSearchTerms.shouldBeEmpty()
+        sc1.integerSearchTerms.shouldBeEmpty()
 
-        sc1.pmId = X
-        sc1.pmId shouldBeEqualTo X
-        sc1.stringSearchTerms shouldHaveSize 1
+        sc1.pmId = "6"
+        sc1.pmId shouldBeEqualTo "6"
+        sc1.integerSearchTerms shouldHaveSize 1
 
         sc1.pmId = null
         sc1.pmId.shouldBeNull()
-        sc1.stringSearchTerms.shouldBeEmpty()
+        sc1.integerSearchTerms.shouldBeEmpty()
     }
 
     @Test
