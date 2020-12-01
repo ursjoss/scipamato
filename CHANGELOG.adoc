@@ -68,30 +68,35 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[unreleased]]
 == [unreleased]
 
-{url-cl}1.5.3$$...$$main[Full Changelog]
+{url-cl}1.5.4$$...$$main[Full Changelog]
 
 ////
 .Added
+
+.Changed
+
+.Deprecated
+
+.Removed
+
+.Fixed
+
+.Security
 ////
+
+
+[[v1.5.4]]
+== {url-tree}1.5.4[1.5.4] -- 2020-12-01
+
+{url-cl}1.5.3$$...$$1.5.4[Full Changelog]
 
 .Changed
 - spring-boot, kotlin, spring-cloud, spring-cloud-starter, jooq, flyway,
   wicket, wicketstuff, wicket-bootstrap, kwik, jaxb, jackson-kotlin,
   gradle, spek, kluent, spring-mockk, spring-boot-admin, jaxb-gradle-plugin, mockk
 
-////
-.Deprecated
-
-.Removed
-////
-
 .Fixed
 - {url-issues}244[#244] Fix searching papers by pmId
-
-////
-.Security
-
-////
 
 
 [[v1.5.3]]
