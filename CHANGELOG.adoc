@@ -75,7 +75,9 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 ////
 
 .Changed
-- kluent, spek, spring-boot-admin, jooq, spring-cloud, spring-cloud-starter
+- spring-boot, kotlin, spring-cloud, spring-cloud-starter, jooq, flyway,
+  wicket, wicketstuff, wicket-bootstrap, kwik, jaxb, jackson-kotlin,
+  gradle, spek, kluent, spring-mockk, spring-boot-admin, jaxb-gradle-plugin, mockk
 
 ////
 .Deprecated

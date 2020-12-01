@@ -7,32 +7,33 @@ import java.util.Properties
 object Lib {
 
     //region:dependencyVersions
-    private const val kotlinVersion = "1.4.10"
+    private const val kotlinVersion = "1.4.20"
 
-    private const val springBootVersion = "2.3.5.RELEASE"
+    private const val springBootVersion = "2.4.0"
     private const val springBootAdminVersion = "2.3.1"
-    const val springCloudVersion = "Hoxton.SR9"
-    private const val springCloudStarterVersion = "2.2.6.RELEASE"
+    const val springCloudVersion = "2020.0.0-M5"
+    private const val springCloudStarterVersion = "3.0.0-M5"
 
     private const val wicketSpringBootStarterVersion = "3.0.4"
-    private const val wicketVersion = "9.1.0"
-    private const val wicketstuffVersion = "9.1.0"
+    private const val wicketVersion = "9.2.0"
+    private const val wicketstuffVersion = "9.2.0"
     private const val wicketJqueryUiVersion = "9.1.0"
-    private const val wicketBootstrapVersion = "4.0.1"
+    private const val wicketBootstrapVersion = "4.0.2"
     private const val jasperReportVersion = "6.16.0"
     private const val krisVersion = "0.3.0"
-    const val jooqVersion = "3.14.3"
-    const val flywayVersion = "6.5.7"
+    const val jooqVersion = "3.14.4"
+    const val flywayVersion = "7.3.0"
 
     private const val kotlinLoggingVersion = "2.0.3"
 
     private const val openfeignVersion = "11.0"
 
-    private const val jaxbCoreVersion = "2.3.0.1"
-    private const val jaxbImplVersion = "2.3.3"
+    private const val jaxbCoreVersion = "3.0.0"
+    private const val jaxbImplVersion = "3.0.0"
     private const val javaxActivationVersion = "1.2.0"
     private const val javaxElApiVersion = "3.0.1-b06"
     private const val javaxElVersion = "3.0.1-b12"
+    private const val jacksonKotlinVersion = "2.12.0"
 
     private const val fontAwesomeVersion = "5.15.0"
 
@@ -43,10 +44,10 @@ object Lib {
     private const val testcontainersVersion = "1.15.0"
 
     private const val spekVersion = "2.0.14"
-    private const val kwikVersion = "0.8.3"
+    private const val kwikVersion = "0.8.4"
     private const val kluentVersion = "1.64"
-    private const val mockkVersion = "1.10.2"
-    private const val springMockkVersion = "2.0.3"
+    private const val mockkVersion = "1.10.3"
+    private const val springMockkVersion = "3.0.0"
 
     private const val jsr305Version = "3.0.2"
     //endregion
@@ -57,7 +58,7 @@ object Lib {
     private const val jooqModelatorPluginVersion = "3.9.0"
     private const val reckonPluginVersion = "0.13.0"
     private const val versionsPluginVersion = "0.36.0"
-    private const val jaxbPluginVersion = "4.3.1"
+    private const val jaxbPluginVersion = "4.4.1"
     private const val testSetsPluginVersion = "3.0.1"
     private const val sonarqubePluginVersion = "3.0"
     private const val detektPluginVersion = "1.14.2"
@@ -131,7 +132,7 @@ object Lib {
     fun jaxbRuntime() = Dep("org.glassfish.jaxb", "jaxb-runtime")
     fun jaxbCore() = Dep("com.sun.xml.bind", "jaxb-core", jaxbCoreVersion)
     fun jaxb(module: String) = Dep("com.sun.xml.bind", "jaxb-$module", jaxbImplVersion)
-    fun jacksonKotlin() = Dep("com.fasterxml.jackson.module", "jackson-module-kotlin")
+    fun jacksonKotlin() = Dep("com.fasterxml.jackson.module", "jackson-module-kotlin", jacksonKotlinVersion)
 
     // Test Libraries
 
