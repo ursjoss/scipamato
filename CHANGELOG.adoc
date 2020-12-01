@@ -81,9 +81,12 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Deprecated
 
 .Removed
+////
 
 .Fixed
+- {url-issues}244[#244] Fix searching papers by pmId
 
+////
 .Security
 
 ////

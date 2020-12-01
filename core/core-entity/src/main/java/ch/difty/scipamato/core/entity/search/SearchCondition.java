@@ -171,11 +171,11 @@ public class SearchCondition implements ScipamatoFilter, CodeBoxAware, Newslette
 
     @Nullable
     public String getPmId() {
-        return getStringValue(PMID);
+        return getIntegerValue(PMID);
     }
 
     public void setPmId(final String value) {
-        setStringValue(value, PMID);
+        setIntegerValue(value, PMID);
     }
 
     @Nullable
