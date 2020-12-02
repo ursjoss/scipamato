@@ -91,7 +91,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 {url-cl}1.5.3$$...$$1.5.4[Full Changelog]
 
 .Changed
-- spring-boot, kotlin, spring-cloud, spring-cloud-starter, jooq, flyway,
+- Bumped spring-boot, kotlin, spring-cloud, spring-cloud-starter, jooq, flyway,
   wicket, wicketstuff, wicket-bootstrap, kwik, jaxb, jackson-kotlin,
   gradle, spek, kluent, spring-mockk, spring-boot-admin, jaxb-gradle-plugin, mockk
 
