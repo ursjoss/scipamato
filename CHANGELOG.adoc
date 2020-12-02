@@ -96,6 +96,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
   gradle, spek, kluent, spring-mockk, spring-boot-admin, jaxb-gradle-plugin, mockk
 
 .Fixed
+- {url-issues}242[#242] Only allow uploading attachments once paper is saved
 - {url-issues}244[#244] Fix searching papers by pmId
 
 
