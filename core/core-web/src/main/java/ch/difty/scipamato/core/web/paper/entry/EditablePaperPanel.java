@@ -231,15 +231,25 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
     protected PaperSummaryShortDataSource getSummaryShortDataSource() {
         final String brand = getProperties().getBrand();
         final String headerPart = brand + "-" + new StringResourceModel("headerPart.summaryShort", this, null).getString();
-        final ReportHeaderFields rhf = new ReportHeaderFields(headerPart, brand, getLabelResourceFor(GOALS.getFieldName()),
-            getLabelResourceFor(METHODS.getFieldName()), getLabelResourceFor(METHOD_OUTCOME.getFieldName()),
-            getLabelResourceFor(RESULT_MEASURED_OUTCOME.getFieldName()), getLabelResourceFor(METHOD_STUDY_DESIGN.getFieldName()),
-            getLabelResourceFor(POPULATION_PLACE.getFieldName()), getLabelResourceFor(POPULATION_PARTICIPANTS.getFieldName()),
-            getLabelResourceFor(POPULATION_DURATION.getFieldName()), getLabelResourceFor(EXPOSURE_POLLUTANT.getFieldName()),
-            getLabelResourceFor(EXPOSURE_ASSESSMENT.getFieldName()), getLabelResourceFor(RESULT_EXPOSURE_RANGE.getFieldName()),
-            getLabelResourceFor(METHOD_STATISTICS.getFieldName()), getLabelResourceFor(METHOD_CONFOUNDERS.getFieldName()),
-            getLabelResourceFor(RESULT_EFFECT_ESTIMATE.getFieldName()), getLabelResourceFor(CONCLUSION.getFieldName()),
-            getLabelResourceFor(COMMENT.getFieldName()));
+        final ReportHeaderFields rhf = new ReportHeaderFields(
+            headerPart, brand,
+            getLabelResourceFor(GOALS.getFieldName()),
+            getLabelResourceFor(METHODS.getFieldName()),
+            getLabelResourceFor(METHOD_OUTCOME.getFieldName()),
+            getLabelResourceFor(RESULT_MEASURED_OUTCOME.getFieldName()),
+            getLabelResourceFor(METHOD_STUDY_DESIGN.getFieldName()),
+            getLabelResourceFor(POPULATION_PLACE.getFieldName()),
+            getLabelResourceFor(POPULATION_PARTICIPANTS.getFieldName()),
+            getLabelResourceFor(POPULATION_DURATION.getFieldName()),
+            getLabelResourceFor(EXPOSURE_POLLUTANT.getFieldName()),
+            getLabelResourceFor(EXPOSURE_ASSESSMENT.getFieldName()),
+            getLabelResourceFor(RESULT_EXPOSURE_RANGE.getFieldName()),
+            getLabelResourceFor(METHOD_STATISTICS.getFieldName()),
+            getLabelResourceFor(METHOD_CONFOUNDERS.getFieldName()),
+            getLabelResourceFor(RESULT_EFFECT_ESTIMATE.getFieldName()),
+            getLabelResourceFor(CONCLUSION.getFieldName()),
+            getLabelResourceFor(COMMENT.getFieldName())
+        );
         final Paper p = getModelObject();
         final ScipamatoPdfExporterConfiguration config = makeExporterConfig(brand, headerPart, p);
         return new PaperSummaryShortDataSource(p, rhf, config);
