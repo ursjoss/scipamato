@@ -75,7 +75,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 ////
 
 .Changed
-- Bumped spring-cloud, spring-cloud-starter, flyway
+- Bumped kotlin, spring-cloud, spring-cloud-starter, flyway
 
 ////
 .Deprecated
