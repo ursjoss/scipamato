@@ -78,9 +78,11 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Deprecated
 
 .Removed
-
+////
 .Fixed
+- {url-issues}247[#247] Fix captions in Paper Summary PDF
 
+////
 .Security
 ////
 
