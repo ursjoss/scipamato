@@ -7,12 +7,12 @@ import java.util.Properties
 object Lib {
 
     //region:dependencyVersions
-    private const val kotlinVersion = "1.4.20"
+    private const val kotlinVersion = "1.4.21"
 
     private const val springBootVersion = "2.4.0"
     private const val springBootAdminVersion = "2.3.1"
-    const val springCloudVersion = "2020.0.0-M5"
-    private const val springCloudStarterVersion = "3.0.0-M5"
+    const val springCloudVersion = "2020.0.0-M6"
+    private const val springCloudStarterVersion = "3.0.0-M6"
 
     private const val wicketSpringBootStarterVersion = "3.0.4"
     private const val wicketVersion = "9.2.0"
@@ -22,7 +22,7 @@ object Lib {
     private const val jasperReportVersion = "6.16.0"
     private const val krisVersion = "0.3.0"
     const val jooqVersion = "3.14.4"
-    const val flywayVersion = "7.3.0"
+    const val flywayVersion = "7.3.1"
 
     private const val kotlinLoggingVersion = "2.0.3"
 
