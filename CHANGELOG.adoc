@@ -91,7 +91,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Changed
 - Bumped spring-boot, kotlin, spring-cloud, spring-cloud-starter, flyway, spek,
-  spring-cloud-starter, spring-cloud-openfeign
+  spring-cloud-starter, spring-cloud-openfeign, testcontainers
 
 .Fixed
 - {url-issues}247[#247] Fix captions in Paper Summary PDF
