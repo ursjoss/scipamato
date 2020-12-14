@@ -90,7 +90,8 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 {url-cl}1.5.4$$...$$1.5.5[Full Changelog]
 
 .Changed
-- Bumped spring-boot, kotlin, spring-cloud, spring-cloud-starter, flyway, spek
+- Bumped spring-boot, kotlin, spring-cloud, spring-cloud-starter, flyway, spek,
+  spring-cloud-starter, spring-cloud-openfeign
 
 .Fixed
 - {url-issues}247[#247] Fix captions in Paper Summary PDF
