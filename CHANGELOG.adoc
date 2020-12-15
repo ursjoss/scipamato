@@ -69,10 +69,15 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 {url-cl}1.5.5$$...$$main[Full Changelog]
 
+////
 .Added
 ////
-.Changed
 
+.Changed
+- Bumped spring-boot, spring-cloud-starter, spring-cloud-openfeignd,
+  spek, testcontainers
+
+////
 .Deprecated
 
 .Removed
@@ -90,8 +95,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 {url-cl}1.5.4$$...$$1.5.5[Full Changelog]
 
 .Changed
-- Bumped spring-boot, kotlin, spring-cloud, spring-cloud-starter, flyway, spek,
-  spring-cloud-starter, spring-cloud-openfeign, testcontainers
+- Bumped kotlin, spring-cloud, spring-cloud-starter, flyway
 
 .Fixed
 - {url-issues}247[#247] Fix captions in Paper Summary PDF
