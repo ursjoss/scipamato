@@ -75,7 +75,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Changed
 - Bumped spring-boot, spring-cloud-starter, spring-cloud-openfeignd,
-  spek, testcontainers, kotlin-logging
+  spek, testcontainers, kotlin-logging, detekt
 
 ////
 .Deprecated
