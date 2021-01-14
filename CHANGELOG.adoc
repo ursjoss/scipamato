@@ -77,7 +77,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 - Bumped spring-boot, spring-cloud-starter, spring-cloud-openfeignd,
   spek, testcontainers, kotlin-logging, detekt, flyway, wicket-jquery-ui,
   mockk, springmockk, kluent, gradle-wrapper, jackson-kotlin,
-  spring-dependency-management
+  spring-dependency-management, equalsverifier
 
 ////
 .Deprecated
