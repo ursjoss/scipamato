@@ -54,6 +54,7 @@ internal class JooqNewsletterServiceTest : AbstractServiceTest<Int, Newsletter, 
 
         verify { repoMock.findById(id) }
         verify { entity == entity }
+        verify { newsletterMock.toString() }
 
         verifyAudit(1)
     }
@@ -72,6 +73,7 @@ internal class JooqNewsletterServiceTest : AbstractServiceTest<Int, Newsletter, 
         auditFixture()
         service.findPageByFilter(filterMock, paginationContextMock) shouldBeEqualTo newsletters
         verify { repoMock.findPageByFilter(filterMock, paginationContextMock) }
+        verify { newsletterMock.toString() }
         verifyAudit(2)
     }
 
@@ -143,6 +145,7 @@ internal class JooqNewsletterServiceTest : AbstractServiceTest<Int, Newsletter, 
         verify { newsletterMock.id }
         verify { newsletterMock.publicationStatus }
         verify { newsletterMock == newsletterMock }
+        verify { newsletterMock.toString() }
         verifyAudit(1)
     }
 
@@ -157,6 +160,7 @@ internal class JooqNewsletterServiceTest : AbstractServiceTest<Int, Newsletter, 
         verify { newsletterMock.id }
         verify { newsletterMock.publicationStatus }
         verify { newsletterMock == newsletterMock }
+        verify { newsletterMock.toString() }
         verifyAudit(1)
     }
 
@@ -176,6 +180,7 @@ internal class JooqNewsletterServiceTest : AbstractServiceTest<Int, Newsletter, 
         verify { newsletterMock.id }
         verify { newsletterMock == newsletterMock }
         verify { newsletterMock.publicationStatus }
+        verify { newsletterMock.toString() }
         verifyAudit(1)
     }
 

@@ -46,6 +46,7 @@ internal class JooqPaperSlimServiceTest : AbstractServiceTest<Long, PaperSlim, P
 
         verify { repo.findById(id) }
         verify { entity == entity }
+        verify { entity.toString() }
 
         verifyAudit(1)
     }
@@ -64,6 +65,7 @@ internal class JooqPaperSlimServiceTest : AbstractServiceTest<Long, PaperSlim, P
         auditFixture()
         service.findPageByFilter(filterMock, paginationContextMock) shouldBeEqualTo papers
         verify { repo.findPageByFilter(filterMock, paginationContextMock) }
+        verify { entity.toString() }
         verifyAudit(2)
     }
 
@@ -87,6 +89,7 @@ internal class JooqPaperSlimServiceTest : AbstractServiceTest<Long, PaperSlim, P
         every { repo.findPageBySearchOrder(searchOrderMock, paginationContextMock) } returns papers
         service.findPageBySearchOrder(searchOrderMock, paginationContextMock) shouldBeEqualTo papers
         verify { repo.findPageBySearchOrder(searchOrderMock, paginationContextMock) }
+        verify { entity.toString() }
     }
 
     @Test

@@ -40,6 +40,7 @@ internal class JooqKeywordServiceTest {
         every { repo.findAll(langCode) } returns keywords
         service.findAll(langCode) shouldBeEqualTo keywords
         verify { repo.findAll(langCode) }
+        verify(exactly = 4) {  entity.toString() }
     }
 
     @Test
@@ -48,6 +49,7 @@ internal class JooqKeywordServiceTest {
         service.newUnpersistedKeywordDefinition() shouldBeEqualTo keywordDefinitionMock
         verify { keywordDefinitionMock == keywordDefinitionMock }
         verify { repo.newUnpersistedKeywordDefinition() }
+        verify { keywordDefinitionMock.toString() }
     }
 
     @Test
@@ -55,6 +57,7 @@ internal class JooqKeywordServiceTest {
         every { repo.findPageOfKeywordDefinitions(filterMock, paginationContextMock) } returns keywordDefinitions
         service.findPageOfKeywordDefinitions(filterMock, paginationContextMock) shouldBeEqualTo keywordDefinitions
         verify { repo.findPageOfKeywordDefinitions(filterMock, paginationContextMock) }
+        verify { keywordDefinitionMock.toString() }
     }
 
     @Test

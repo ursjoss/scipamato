@@ -44,6 +44,7 @@ internal class JooqUserServiceTest {
         optUser.get() shouldBeEqualTo userMock
 
         verify { userMock == userMock }
+        verify { userMock.toString() }
         verify { repoMock.findById(id) }
     }
 
@@ -60,6 +61,7 @@ internal class JooqUserServiceTest {
         every { repoMock.findPageByFilter(filterMock, paginationContextMock) } returns users
         service.findPageByFilter(filterMock, paginationContextMock) shouldBeEqualTo users
         verify { repoMock.findPageByFilter(filterMock, paginationContextMock) }
+        verify { userMock.toString() }
     }
 
     @Test
@@ -83,6 +85,7 @@ internal class JooqUserServiceTest {
         verify { userMock.password = "bar" }
         verify { passwordEncoderMock.encode("boo") }
         verify { userMock == userMock }
+        verify { userMock.toString() }
     }
 
     @Test
@@ -99,6 +102,7 @@ internal class JooqUserServiceTest {
         verify { passwordEncoderMock.encode("boo") }
         verify { userMock.password = "bar" }
         verify { userMock == userMock }
+        verify { userMock.toString() }
     }
 
     @Test
@@ -117,6 +121,7 @@ internal class JooqUserServiceTest {
         verify { userMock.password }
         verify { userMock.password = "bar" }
         verify { userMock == userMock }
+        verify { userMock.toString() }
     }
 
     @Test
@@ -135,6 +140,7 @@ internal class JooqUserServiceTest {
         verify { userMock.password }
         verify { userMock.password = "bar" }
         verify { userMock == userMock }
+        verify { userMock.toString() }
     }
 
     @Test
@@ -147,6 +153,7 @@ internal class JooqUserServiceTest {
         every { repoMock.findByUserName("foo") } returns userMock
         service.findByUserName("foo") shouldBeEqualTo java.util.Optional.of(userMock)
         verify { repoMock.findByUserName("foo") }
+        verify { userMock.toString() }
     }
 
     @Test
