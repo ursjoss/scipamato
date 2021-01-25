@@ -25,6 +25,7 @@ class PaperReview(p: Paper, rhf: ReportHeaderFields) : JasperEntity {
     val methodConfounders: String = na(p.methodConfounders)
     val resultEffectEstimate: String = na(p.resultEffectEstimate)
     val conclusion: String = na(p.conclusion)
+    val comment: String = na(p.comment)
     val numberLabel: String = na2(rhf.numberLabel!!, p.number?.toString())
     val authorYearLabel: String = na(rhf.authorYearLabel)
     val populationPlaceLabel: String = na(rhf.populationPlaceLabel)
@@ -38,6 +39,7 @@ class PaperReview(p: Paper, rhf: ReportHeaderFields) : JasperEntity {
     val methodConfoundersLabel: String = na(rhf.methodConfoundersLabel)
     val resultEffectEstimateLabel: String = na(rhf.resultEffectEstimateLabel)
     val conclusionLabel: String = na(rhf.conclusionLabel)
+    val commentLabel: String = na(rhf.commentLabel)
     val brand: String = na(rhf.brand)
     val createdBy: String = na(p.createdByName)
 
