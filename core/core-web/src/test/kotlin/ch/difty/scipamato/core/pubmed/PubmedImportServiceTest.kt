@@ -67,5 +67,6 @@ internal class PubmedImportServiceTest {
         verify { pubmedArticleServiceMock.extractArticlesFrom("content") }
         verify { paperServiceMock.dumpPubmedArticlesToDb(pubmedArticles, minimumNumber) }
         verify { serviceResultMock == serviceResultMock }
+        verify { serviceResultMock.toString() }
     }
 }

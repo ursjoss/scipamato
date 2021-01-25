@@ -79,7 +79,7 @@ internal class UndertowConfigTest {
     @Test
     fun canStartAndStopUndertowServletContainer() {
         val server = factory.getWebServer()
-        server.port shouldBeEqualTo 0
+        server.port shouldBeEqualTo -1
         try {
             server.start()
             server.port shouldBeEqualTo 8080

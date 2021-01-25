@@ -45,6 +45,7 @@ internal class JooqSearchOrderServiceTest : AbstractServiceTest<Long, SearchOrde
 
         verify { repo.findById(id) }
         verify { entity == entity }
+        verify { entity.toString() }
         verifyAudit(1)
     }
 
@@ -62,6 +63,7 @@ internal class JooqSearchOrderServiceTest : AbstractServiceTest<Long, SearchOrde
         auditFixture()
         service.findPageByFilter(filterMock, paginationContextMock) shouldBeEqualTo searchOrders
         verify { repo.findPageByFilter(filterMock, paginationContextMock) }
+        verify { entity.toString() }
         verifyAudit(2)
     }
 
@@ -81,6 +83,7 @@ internal class JooqSearchOrderServiceTest : AbstractServiceTest<Long, SearchOrde
         verify { repo.add(entity) }
         verify { entity.id }
         verify { entity == entity }
+        verify { entity.toString() }
         verifyAudit(1)
     }
 
@@ -93,6 +96,7 @@ internal class JooqSearchOrderServiceTest : AbstractServiceTest<Long, SearchOrde
         verify { repo.update(entity) }
         verify { entity.id }
         verify { entity == entity }
+        verify { entity.toString() }
         verifyAudit(1)
     }
 
@@ -105,6 +109,7 @@ internal class JooqSearchOrderServiceTest : AbstractServiceTest<Long, SearchOrde
         verify { repo.addSearchCondition(searchConditionMock, searchOrderId, LC) }
         verify { searchConditionMock.searchConditionId }
         verify { searchConditionMock == searchConditionMock }
+        verify { searchConditionMock.toString() }
     }
 
     @Test
@@ -116,6 +121,7 @@ internal class JooqSearchOrderServiceTest : AbstractServiceTest<Long, SearchOrde
         verify { repo.updateSearchCondition(searchConditionMock, searchOrderId, LC) }
         verify { searchConditionMock.searchConditionId }
         verify { searchConditionMock == searchConditionMock }
+        verify { searchConditionMock.toString() }
     }
 
     @Test
