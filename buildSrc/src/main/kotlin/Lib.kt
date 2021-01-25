@@ -37,7 +37,7 @@ object Lib {
 
     private const val fontAwesomeVersion = "5.15.0"
 
-    private const val equalsverifierVersion = "3.5.1"
+    private const val equalsverifierVersion = "3.5.2"
 
     private const val junit5Version = "5.7.0"
 
@@ -60,7 +60,7 @@ object Lib {
     private const val versionsPluginVersion = "0.36.0"
     private const val jaxbPluginVersion = "4.4.1"
     private const val testSetsPluginVersion = "3.0.1"
-    private const val sonarqubePluginVersion = "3.1"
+    private const val sonarqubePluginVersion = "3.1.1"
     private const val detektPluginVersion = "1.15.0"
     //endregion
 
