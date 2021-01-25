@@ -1,7 +1,7 @@
 package ch.difty.scipamato.core.web.paper.jasper.review
 
 import ch.difty.scipamato.core.entity.Paper
-import ch.difty.scipamato.core.web.paper.jasper.JasperEntity
+import ch.difty.scipamato.core.web.paper.jasper.ExportEntity
 import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields
 import ch.difty.scipamato.core.web.paper.jasper.literaturereview.PaperLiteratureReview
 import ch.difty.scipamato.core.web.paper.jasper.na
@@ -10,7 +10,7 @@ import ch.difty.scipamato.core.web.paper.jasper.na2
 /**
  * DTO to feed the PaperReviewDataSource
  */
-class PaperReview(p: Paper, rhf: ReportHeaderFields) : JasperEntity {
+class PaperReview(p: Paper, rhf: ReportHeaderFields) : ExportEntity {
 
     val number: String = p.number?.toString() ?: ""
     val authorYear: String = makeAuthorYearFrom(p)

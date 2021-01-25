@@ -1,14 +1,14 @@
 package ch.difty.scipamato.core.web.paper.jasper.literaturereview
 
 import ch.difty.scipamato.core.entity.Paper
-import ch.difty.scipamato.core.web.paper.jasper.JasperEntity
+import ch.difty.scipamato.core.web.paper.jasper.ExportEntity
 import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields
 import ch.difty.scipamato.core.web.paper.jasper.na
 
 /**
  * DTO to feed the PaperLiteratureReviewDataSource
  */
-class PaperLiteratureReview(p: Paper, rhf: ReportHeaderFields) : JasperEntity {
+class PaperLiteratureReview(p: Paper, rhf: ReportHeaderFields) : ExportEntity {
 
     init {
         requireNotNull(rhf.pubmedBaseUrl)

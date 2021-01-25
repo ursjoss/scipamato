@@ -5,7 +5,7 @@ import ch.difty.scipamato.core.entity.Code
 import ch.difty.scipamato.core.entity.Paper
 import org.junit.jupiter.api.BeforeEach
 
-abstract class JasperEntityTest {
+abstract class ExportEntityTest {
 
     protected val p = Paper()
 

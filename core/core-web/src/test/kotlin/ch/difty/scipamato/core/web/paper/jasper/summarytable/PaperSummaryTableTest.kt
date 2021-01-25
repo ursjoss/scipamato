@@ -1,13 +1,13 @@
 package ch.difty.scipamato.core.web.paper.jasper.summarytable
 
-import ch.difty.scipamato.core.web.paper.jasper.JasperEntityTest
+import ch.difty.scipamato.core.web.paper.jasper.ExportEntityTest
 import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields
 import nl.jqno.equalsverifier.EqualsVerifier
 import org.amshove.kluent.shouldBeEmpty
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.Test
 
-internal class PaperSummaryTableTest : JasperEntityTest() {
+internal class PaperSummaryTableTest : ExportEntityTest() {
 
     private val rhf = newReportHeaderFields()
     private lateinit var pst: PaperSummaryTable

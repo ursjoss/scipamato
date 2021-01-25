@@ -11,7 +11,7 @@ abstract class PaperSummaryCommon private constructor(
     goals: String?, methods: String?, comment: String?, goalsLabel: String,
     methodsLabel: String, commentLabel: String, headerPart: String, brand: String?,
     createdBy: String?,
-) : JasperEntity {
+) : ExportEntity {
     val number: String = number?.toString() ?: ""
     val authors: String = na(authors)
     val title: String = na(title)

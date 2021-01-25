@@ -3,7 +3,7 @@ package ch.difty.scipamato.core.web.paper.jasper
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.Test
 
-internal class JasperEntityCommonTest : JasperEntity {
+internal class ExportEntityCommonTest : ExportEntity {
 
     @Test
     fun na_withNullParameter_returnsBlank() {

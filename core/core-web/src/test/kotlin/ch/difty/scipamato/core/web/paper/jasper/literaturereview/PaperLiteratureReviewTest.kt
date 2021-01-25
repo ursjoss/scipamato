@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.web.paper.jasper.literaturereview
 
-import ch.difty.scipamato.core.web.paper.jasper.JasperEntityTest
+import ch.difty.scipamato.core.web.paper.jasper.ExportEntityTest
 import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields
 import nl.jqno.equalsverifier.EqualsVerifier
 import org.amshove.kluent.invoking
@@ -10,7 +10,7 @@ import org.amshove.kluent.shouldThrow
 import org.junit.jupiter.api.Test
 
 @Suppress("SpellCheckingInspection")
-internal class PaperLiteratureReviewTest : JasperEntityTest() {
+internal class PaperLiteratureReviewTest : ExportEntityTest() {
 
     private val rhf = newReportHeaderFields()
 

@@ -2,7 +2,7 @@ package ch.difty.scipamato.core.web.paper.jasper
 
 import java.io.Serializable
 
-interface JasperEntity : Serializable
+interface ExportEntity : Serializable
 
 fun na(s: String?): String = s ?: ""
 
