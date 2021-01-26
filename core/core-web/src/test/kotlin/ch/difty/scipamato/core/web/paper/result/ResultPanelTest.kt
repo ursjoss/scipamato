@@ -74,6 +74,8 @@ internal abstract class ResultPanelTest : PanelTest<ResultPanel>() {
         tester.assertComponent(bb, ResourceLink::class.java)
         bb = "$b:reviewLink"
         tester.assertComponent(bb, ResourceLink::class.java)
+        bb = "$b:reviewCsvLink"
+        tester.assertComponent(bb, AjaxLink::class.java)
         bb = "$b:literatureReviewLink"
         tester.assertComponent(bb, ResourceLink::class.java)
         bb = "$b:literatureReviewPlusLink"

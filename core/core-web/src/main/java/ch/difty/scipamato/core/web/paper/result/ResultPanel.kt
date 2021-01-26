@@ -15,6 +15,7 @@ import ch.difty.scipamato.core.entity.projection.PaperSlim
 import ch.difty.scipamato.core.logic.exporting.RisAdapterFactory
 import ch.difty.scipamato.core.persistence.NewsletterService
 import ch.difty.scipamato.core.persistence.PaperService
+import ch.difty.scipamato.core.web.behavior.AjaxCsvDownload
 import ch.difty.scipamato.core.web.behavior.AjaxDownload
 import ch.difty.scipamato.core.web.behavior.AjaxTextDownload
 import ch.difty.scipamato.core.web.common.BasePanel
@@ -29,10 +30,14 @@ import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields
 import ch.difty.scipamato.core.web.paper.jasper.ScipamatoPdfExporterConfiguration
 import ch.difty.scipamato.core.web.paper.jasper.literaturereview.PaperLiteratureReviewDataSource
 import ch.difty.scipamato.core.web.paper.jasper.literaturereview.PaperLiteratureReviewPlusDataSource
+import ch.difty.scipamato.core.web.paper.jasper.review.PaperReview
 import ch.difty.scipamato.core.web.paper.jasper.review.PaperReviewDataSource
 import ch.difty.scipamato.core.web.paper.jasper.summary.PaperSummaryDataSource
 import ch.difty.scipamato.core.web.paper.jasper.summaryshort.PaperSummaryShortDataSource
 import ch.difty.scipamato.core.web.paper.jasper.summarytable.PaperSummaryTableDataSource
+import com.univocity.parsers.csv.CsvFormat
+import com.univocity.parsers.csv.CsvWriter
+import com.univocity.parsers.csv.CsvWriterSettings
 import de.agilecoders.wicket.core.markup.html.bootstrap.table.TableBehavior
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome5IconType
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome5IconTypeBuilder
@@ -51,6 +56,7 @@ import org.apache.wicket.model.StringResourceModel
 import org.apache.wicket.spring.injection.annot.SpringBean
 import java.io.IOException
 import java.io.ObjectInputStream
+import java.io.StringWriter
 
 /**
  * The result panel shows the results of searches (by filter or by search order)
@@ -78,19 +84,22 @@ abstract class ResultPanel protected constructor(
 
     private lateinit var results: DataTable<PaperSlim, String>
     private lateinit var risDownload: AjaxDownload
+    private lateinit var csvDownload: AjaxDownload
 
     override fun onInitialize() {
         super.onInitialize()
         makeAndQueueTable("table")
         addExportRisAjax()
+        addExportReviewCsvAjax()
         addOrReplaceExportLinks()
     }
 
     private fun addOrReplaceExportLinks() {
-        addOrReplaceExportRisLink("exportRisLink")
+        addOrReplaceExportLink("exportRisLink") { risDownload.initiate(it) }
         addOrReplacePdfSummaryLink("summaryLink")
         addOrReplacePdfSummaryShortLink("summaryShortLink")
         addOrReplacePdfReviewLink("reviewLink")
+        addOrReplaceExportLink("reviewCsvLink") { csvDownload.initiate(it) }
         addOrReplacePdfLiteratureReviewLink("literatureReviewLink", false)
         addOrReplacePdfLiteratureReviewLink("literatureReviewPlusLink", true)
         addOrReplacePdfSummaryTableLink("summaryTableLink")
@@ -160,7 +169,7 @@ abstract class ResultPanel protected constructor(
                 return Model.of(if (dataProvider.isShowExcluded) checkCircle.cssClassName() else ban.cssClassName())
             }
 
-            override fun createTitleModel(rowModel: IModel<PaperSlim>): IModel<String>? =
+            override fun createTitleModel(rowModel: IModel<PaperSlim>): IModel<String> =
                 StringResourceModel(if (dataProvider.isShowExcluded) "column.title.reinclude" else "column.title.exclude", this@ResultPanel, null)
 
             override fun onClickPerformed(target: AjaxRequestTarget, rowModel: IModel<PaperSlim>, link: AjaxLink<Void>) {
@@ -306,23 +315,7 @@ abstract class ResultPanel protected constructor(
     private fun addOrReplacePdfReviewLink(id: String) {
         val brand = properties.brand
         val pdfCaption = "$brand- ${StringResourceModel("paper_review.titlePart", this, null).string}"
-        val rhf = ReportHeaderFields(
-            headerPart = "",
-            brand = brand,
-            numberLabel = getLabelResourceFor(PaperFields.NUMBER.fieldName),
-            authorYearLabel = getLabelResourceFor("authorYear"),
-            populationPlaceLabel = getShortLabelResourceFor(PaperFields.POPULATION_PLACE.fieldName),
-            methodOutcomeLabel = getShortLabelResourceFor(PaperFields.METHOD_OUTCOME.fieldName),
-            exposurePollutantLabel = getLabelResourceFor(PaperFields.EXPOSURE_POLLUTANT.fieldName),
-            methodStudyDesignLabel = getShortLabelResourceFor(PaperFields.METHOD_STUDY_DESIGN.fieldName),
-            populationDurationLabel = getShortLabelResourceFor(PaperFields.POPULATION_DURATION.fieldName),
-            populationParticipantsLabel = getShortLabelResourceFor(PaperFields.POPULATION_PARTICIPANTS.fieldName),
-            exposureAssessmentLabel = getShortLabelResourceFor(PaperFields.EXPOSURE_ASSESSMENT.fieldName),
-            resultExposureRangeLabel = getShortLabelResourceFor(PaperFields.RESULT_EXPOSURE_RANGE.fieldName),
-            methodConfoundersLabel = getLabelResourceFor(PaperFields.METHOD_CONFOUNDERS.fieldName),
-            resultEffectEstimateLabel = getShortLabelResourceFor(PaperFields.RESULT_EFFECT_ESTIMATE.fieldName),
-            conclusionLabel = getShortLabelResourceFor(PaperFields.CONCLUSION.fieldName)
-        )
+        val rhf = reviewReportHeaderFields(brand)
         val config = ScipamatoPdfExporterConfiguration.Builder(pdfCaption)
             .withAuthor(activeUser)
             .withCreator(brand)
@@ -330,6 +323,25 @@ abstract class ResultPanel protected constructor(
             .build()
         addOrReplace(newJasperResourceLink(id, "review", PaperReviewDataSource(dataProvider, rhf, config)))
     }
+
+    private fun reviewReportHeaderFields(brand: String) = ReportHeaderFields(
+        headerPart = "",
+        brand = brand,
+        numberLabel = getLabelResourceFor(PaperFields.NUMBER.fieldName),
+        authorYearLabel = getLabelResourceFor("authorYear"),
+        populationPlaceLabel = getShortLabelResourceFor(PaperFields.POPULATION_PLACE.fieldName),
+        methodOutcomeLabel = getShortLabelResourceFor(PaperFields.METHOD_OUTCOME.fieldName),
+        exposurePollutantLabel = getLabelResourceFor(PaperFields.EXPOSURE_POLLUTANT.fieldName),
+        methodStudyDesignLabel = getShortLabelResourceFor(PaperFields.METHOD_STUDY_DESIGN.fieldName),
+        populationDurationLabel = getShortLabelResourceFor(PaperFields.POPULATION_DURATION.fieldName),
+        populationParticipantsLabel = getShortLabelResourceFor(PaperFields.POPULATION_PARTICIPANTS.fieldName),
+        exposureAssessmentLabel = getShortLabelResourceFor(PaperFields.EXPOSURE_ASSESSMENT.fieldName),
+        resultExposureRangeLabel = getShortLabelResourceFor(PaperFields.RESULT_EXPOSURE_RANGE.fieldName),
+        methodConfoundersLabel = getLabelResourceFor(PaperFields.METHOD_CONFOUNDERS.fieldName),
+        resultEffectEstimateLabel = getShortLabelResourceFor(PaperFields.RESULT_EFFECT_ESTIMATE.fieldName),
+        conclusionLabel = getShortLabelResourceFor(PaperFields.CONCLUSION.fieldName),
+        commentLabel = getLabelResourceFor(PaperFields.COMMENT.fieldName),
+    )
 
     private fun addOrReplacePdfLiteratureReviewLink(id: String, plus: Boolean) {
         val brand = properties.brand
@@ -409,15 +421,71 @@ abstract class ResultPanel protected constructor(
         }
     }
 
-    private fun addOrReplaceExportRisLink(id: String) {
+    private fun addOrReplaceExportLink(id: String, initiate: (AjaxRequestTarget) -> Unit) {
         val titleResourceKey = LINK_RESOURCE_PREFIX + id + TITLE_RESOURCE_TAG
         val reviewLink: AjaxLink<Void> = object : AjaxLink<Void>(id) {
             override fun onClick(target: AjaxRequestTarget) {
-                risDownload.initiate(target)
+                initiate(target)
             }
         }
         reviewLink.add(AttributeModifier(TITLE_ATTR, StringResourceModel(titleResourceKey, this, null).string))
         addOrReplace(reviewLink)
+    }
+
+    private fun addExportReviewCsvAjax() {
+        val rhf = reviewReportHeaderFields("")
+        csvDownload = object : AjaxCsvDownload(true) {
+            override fun onRequest() {
+                val rows = dataProvider.findAllPapersByFilter()
+                    .map { PaperReview(it, rhf) }
+                    .map {
+                        arrayOf(
+                            it.number,
+                            it.authorYear,
+                            it.populationPlace,
+                            it.methodOutcome,
+                            it.exposurePollutant,
+                            it.methodStudyDesign,
+                            it.populationDuration,
+                            it.populationParticipants,
+                            it.exposureAssessment,
+                            it.resultExposureRange,
+                            it.methodConfounders,
+                            it.resultEffectEstimate,
+                            it.conclusion,
+                            it.comment,
+                        )
+                    }
+                StringWriter().apply {
+                    CsvWriter(this, CsvWriterSettings().apply {
+                        format = CsvFormat().apply { delimiter = ';' }
+                    }).apply {
+                        writeHeaders(
+                            rhf.numberLabel,
+                            rhf.authorYearLabel,
+                            rhf.populationPlaceLabel,
+                            rhf.methodOutcomeLabel,
+                            rhf.exposurePollutantLabel,
+                            rhf.methodStudyDesignLabel,
+                            rhf.populationDurationLabel,
+                            rhf.populationParticipantsLabel,
+                            rhf.exposureAssessmentLabel,
+                            rhf.resultExposureRangeLabel,
+                            rhf.methodConfoundersLabel,
+                            rhf.resultEffectEstimateLabel,
+                            rhf.conclusionLabel,
+                            rhf.commentLabel,
+                        )
+                        writeRowsAndClose(rows)
+                    }
+                    content = toString()
+                }
+                fileName = "review.csv"
+                super.onRequest()
+            }
+        }.also {
+            add(it)
+        }
     }
 
     companion object {

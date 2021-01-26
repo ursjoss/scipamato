@@ -60,6 +60,7 @@ dependencies {
         exclude("commons-logging", "commons-logging")
     }
     implementation(Lib.jasperreports("fonts"))
+    implementation(Lib.univocity())
 
     implementation(Lib.kris("core"))
 

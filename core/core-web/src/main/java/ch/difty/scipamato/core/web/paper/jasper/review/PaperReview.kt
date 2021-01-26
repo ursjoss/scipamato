@@ -3,7 +3,6 @@ package ch.difty.scipamato.core.web.paper.jasper.review
 import ch.difty.scipamato.core.entity.Paper
 import ch.difty.scipamato.core.web.paper.jasper.ExportEntity
 import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields
-import ch.difty.scipamato.core.web.paper.jasper.literaturereview.PaperLiteratureReview
 import ch.difty.scipamato.core.web.paper.jasper.na
 import ch.difty.scipamato.core.web.paper.jasper.na2
 
