@@ -47,6 +47,7 @@ internal class ReportHeaderFieldsTest {
             captionLabel = "cap",
             numberLabel = "n",
             authorYearLabel = "ay",
+            internLabel = "int",
             pubmedBaseUrl = "pbu/",
         )
         rhf.headerPart shouldBeEqualTo "headerPart1"
@@ -72,6 +73,7 @@ internal class ReportHeaderFieldsTest {
         rhf.captionLabel shouldBeEqualTo "cap"
         rhf.numberLabel shouldBeEqualTo "n"
         rhf.authorYearLabel shouldBeEqualTo "ay"
+        rhf.internLabel shouldBeEqualTo "int"
         rhf.pubmedBaseUrl shouldBeEqualTo "pbu/"
     }
 }
