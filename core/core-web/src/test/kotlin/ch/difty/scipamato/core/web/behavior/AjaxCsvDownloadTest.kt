@@ -9,9 +9,9 @@ import org.apache.wicket.ajax.markup.html.AjaxLink
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 
-internal class AjaxTextDownloadTest : WicketTest() {
+internal class AjaxCsvDownloadTest : WicketTest() {
 
-    private val ad = AjaxTextDownload(false)
+    private val ad = AjaxCsvDownload(false)
 
     private val targetDummy = AjaxRequestTargetSpy()
 
@@ -21,20 +21,20 @@ internal class AjaxTextDownloadTest : WicketTest() {
     }
 
     @Test
-    fun `can instantiate AjaxTextDownload`() {
+    fun `can instantiate AjaxCsvDownload`() {
         ad.content.shouldBeNull()
         ad.fileName.shouldBeNull()
-        ad.contentType shouldBeEqualTo "application/text"
+        ad.contentType shouldBeEqualTo "text/csv"
     }
 
     @Test
     fun `can set title and content`() {
         ad.apply {
-            content = "foo"
-            fileName = "bar.txt"
+            content = "a;b;c"
+            fileName = "file.csv"
         }
-        ad.content shouldBeEqualTo "foo"
-        ad.fileName shouldBeEqualTo "bar.txt"
+        ad.content shouldBeEqualTo "a;b;c"
+        ad.fileName shouldBeEqualTo "file.csv"
     }
 
     @Test
@@ -51,7 +51,7 @@ internal class AjaxTextDownloadTest : WicketTest() {
 
     @Test
     fun `clicking the link adds javascript to target`() {
-        val ad2 = AjaxTextDownload(true)
+        val ad2 = AjaxCsvDownload(true)
         val l = object : AjaxLink<Void>("l") {
             override fun onClick(target: AjaxRequestTarget?) {
                 ad2.initiate(targetDummy)

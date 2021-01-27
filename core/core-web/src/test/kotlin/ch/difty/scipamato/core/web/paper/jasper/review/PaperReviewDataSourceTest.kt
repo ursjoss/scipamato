@@ -38,7 +38,8 @@ internal class PaperReviewDataSourceTest : PaperDataSourceTest() {
         resultExposureRangeLabel = "rerl",
         methodConfoundersLabel = "mcl",
         resultEffectEstimateLabel = "reel",
-        conclusionLabel = "cc",
+        conclusionLabel = "ccl",
+        commentLabel = "col",
     )
 
     public override fun setUpHook() {
@@ -56,6 +57,7 @@ internal class PaperReviewDataSourceTest : PaperDataSourceTest() {
         every { paperMock.methodConfounders } returns "mc"
         every { paperMock.resultEffectEstimate } returns "ree"
         every { paperMock.conclusion } returns "cc"
+        every { paperMock.comment } returns "co"
         every { paperMock.createdByName } returns "cb"
     }
 
@@ -85,6 +87,7 @@ internal class PaperReviewDataSourceTest : PaperDataSourceTest() {
         assertFieldValue("methodConfounders", "mc", f, jsds)
         assertFieldValue("resultEffectEstimate", "ree", f, jsds)
         assertFieldValue("conclusion", "cc", f, jsds)
+        assertFieldValue("comment", "co", f, jsds)
         assertFieldValue("numberLabel", "nl", f, jsds)
         assertFieldValue("authorYearLabel", "ayl", f, jsds)
         assertFieldValue("populationPlaceLabel", "ppl", f, jsds)
@@ -97,7 +100,8 @@ internal class PaperReviewDataSourceTest : PaperDataSourceTest() {
         assertFieldValue("resultExposureRangeLabel", "rerl", f, jsds)
         assertFieldValue("methodConfoundersLabel", "mcl", f, jsds)
         assertFieldValue("resultEffectEstimateLabel", "reel", f, jsds)
-        assertFieldValue("conclusionLabel", "cc", f, jsds)
+        assertFieldValue("conclusionLabel", "ccl", f, jsds)
+        assertFieldValue("commentLabel", "col", f, jsds)
         assertFieldValue("brand", "b", f, jsds)
         assertFieldValue("createdBy", "cb", f, jsds)
         jsds.next().shouldBeFalse()
@@ -126,6 +130,7 @@ internal class PaperReviewDataSourceTest : PaperDataSourceTest() {
         verify { paperMock.methodConfounders }
         verify { paperMock.resultEffectEstimate }
         verify { paperMock.conclusion }
+        verify { paperMock.comment }
         verify { paperMock.createdByName }
     }
 

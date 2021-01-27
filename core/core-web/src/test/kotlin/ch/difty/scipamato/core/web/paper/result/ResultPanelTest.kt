@@ -190,6 +190,15 @@ internal abstract class ResultPanelTest : PanelTest<ResultPanel>() {
     }
 
     @Test
+    fun clickingReviewCsvLink_succeeds() {
+        tester.startComponentInPage(makePanel())
+        tester.clickLink("$PANEL_ID:reviewCsvLink")
+        verify(exactly = 1) { paperSlimServiceMock.countBySearchOrder(searchOrder) }
+        verify(exactly = 1) { paperSlimServiceMock.findPageBySearchOrder(searchOrder, any()) }
+        verify { paperServiceMock.findPageOfIdsBySearchOrder(any(), any()) }
+    }
+
+    @Test
     fun clickingLiteratureReviewLink_succeeds() {
         tester.startComponentInPage(makePanel())
         tester.clickLink("$PANEL_ID:literatureReviewLink")
