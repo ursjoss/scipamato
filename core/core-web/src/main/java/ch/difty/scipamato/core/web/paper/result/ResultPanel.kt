@@ -457,6 +457,8 @@ abstract class ResultPanel protected constructor(
                         )
                     }
                 StringWriter().apply {
+                    // add BOM
+                    write("\ufeff")
                     CsvWriter(this, CsvWriterSettings().apply {
                         format = CsvFormat().apply { delimiter = ';' }
                     }).apply {
