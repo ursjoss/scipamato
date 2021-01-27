@@ -39,12 +39,20 @@ sealed class AjaxDownload(private val addAntiCache: Boolean) : AbstractAjaxBehav
     }
 }
 
-open class AjaxTextDownload @JvmOverloads constructor(addAntiCache: Boolean = true) : AjaxDownload(addAntiCache) {
+open class AjaxTextDownload @JvmOverloads constructor(
+    addAntiCache: Boolean = true
+) : AbstractAjaxTextDownload("application/text", addAntiCache)
 
+open class AjaxCsvDownload @JvmOverloads constructor(
+    addAntiCache: Boolean = true
+) : AbstractAjaxTextDownload("text/csv", addAntiCache)
+
+abstract class AbstractAjaxTextDownload(
+    val contentType: String,
+    addAntiCache: Boolean = true,
+) : AjaxDownload(addAntiCache) {
     var content: String? = null
-
-    override val resourceStream: IResourceStream
-        get() = StringResourceStream(content, "application/text")
+    override val resourceStream: IResourceStream get() = StringResourceStream(content, contentType)
 }
 
 private fun CharSequence.toUrl(antiCache: Boolean): String =

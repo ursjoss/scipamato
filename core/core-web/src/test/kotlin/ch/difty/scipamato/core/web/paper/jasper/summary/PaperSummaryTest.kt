@@ -2,13 +2,13 @@ package ch.difty.scipamato.core.web.paper.jasper.summary
 
 import ch.difty.scipamato.core.web.paper.jasper.CoreShortFieldConcatenator
 import ch.difty.scipamato.core.web.paper.jasper.CoreShortFieldWithEmptyMainFieldConcatenator
-import ch.difty.scipamato.core.web.paper.jasper.JasperEntityTest
+import ch.difty.scipamato.core.web.paper.jasper.ExportEntityTest
 import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields
 import nl.jqno.equalsverifier.EqualsVerifier
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.Test
 
-internal class PaperSummaryTest : JasperEntityTest() {
+internal class PaperSummaryTest : ExportEntityTest() {
 
     private val shortFieldConcatenator: CoreShortFieldConcatenator = CoreShortFieldWithEmptyMainFieldConcatenator()
     private lateinit var ps: PaperSummary

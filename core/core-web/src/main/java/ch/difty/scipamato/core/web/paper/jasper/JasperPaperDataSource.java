@@ -21,10 +21,10 @@ import ch.difty.scipamato.core.web.paper.AbstractPaperSlimProvider;
  * Common base class for Jasper paper data sources.
  *
  * @param <E>
- *     the type of the {@link JasperEntity}
+ *     the type of the {@link ExportEntity}
  * @author u.joss
  */
-public abstract class JasperPaperDataSource<E extends JasperEntity>
+public abstract class JasperPaperDataSource<E extends ExportEntity>
     extends JRConcreteResource<ScipamatoPdfResourceHandler> {
 
     private static final long serialVersionUID = 1L;
@@ -41,7 +41,7 @@ public abstract class JasperPaperDataSource<E extends JasperEntity>
      * @param baseName
      *     the file name without the extension (.pdf)
      * @param jasperEntities
-     *     a collection of {@link JasperEntity} items that will be used for
+     *     a collection of {@link ExportEntity} items that will be used for
      *     populating the report.
      */
     protected JasperPaperDataSource(@NotNull final ScipamatoPdfResourceHandler handler, @NotNull final String baseName,

@@ -20,6 +20,8 @@ object Lib {
     private const val wicketJqueryUiVersion = "9.2.0"
     private const val wicketBootstrapVersion = "4.0.2"
     private const val jasperReportVersion = "6.16.0"
+    private const val univocityParsersVersion = "2.9.1"
+
     private const val krisVersion = "0.3.0"
     const val jooqVersion = "3.14.6"
     const val flywayVersion = "7.5.1"
@@ -109,6 +111,7 @@ object Lib {
     fun wicketJqueryUi(module: String = "") = Dep("com.googlecode.wicket-jquery-ui", "wicket-jquery-ui${if (module.isNotBlank()) "-$module" else ""}", wicketJqueryUiVersion)
     fun fontAwesome() = Dep("org.webjars", "font-awesome", fontAwesomeVersion)
     fun jasperreports(module: String = "") = Dep("net.sf.jasperreports", "jasperreports${if (module.isNotBlank()) "-$module" else ""}", jasperReportVersion)
+    fun univocity() = Dep("com.univocity", "univocity-parsers", univocityParsersVersion)
     fun kris(module: String) = Dep("ch.difty.kris", "kris-$module", krisVersion)
 
     // JSR 303 bean validation provider implementation

@@ -1,16 +1,15 @@
 package ch.difty.scipamato.core.web.paper.jasper.review
 
 import ch.difty.scipamato.core.entity.Paper
-import ch.difty.scipamato.core.web.paper.jasper.JasperEntity
+import ch.difty.scipamato.core.web.paper.jasper.ExportEntity
 import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields
-import ch.difty.scipamato.core.web.paper.jasper.literaturereview.PaperLiteratureReview
 import ch.difty.scipamato.core.web.paper.jasper.na
 import ch.difty.scipamato.core.web.paper.jasper.na2
 
 /**
  * DTO to feed the PaperReviewDataSource
  */
-class PaperReview(p: Paper, rhf: ReportHeaderFields) : JasperEntity {
+class PaperReview(p: Paper, rhf: ReportHeaderFields) : ExportEntity {
 
     val number: String = p.number?.toString() ?: ""
     val authorYear: String = makeAuthorYearFrom(p)
@@ -25,6 +24,7 @@ class PaperReview(p: Paper, rhf: ReportHeaderFields) : JasperEntity {
     val methodConfounders: String = na(p.methodConfounders)
     val resultEffectEstimate: String = na(p.resultEffectEstimate)
     val conclusion: String = na(p.conclusion)
+    val comment: String = na(p.comment)
     val numberLabel: String = na2(rhf.numberLabel!!, p.number?.toString())
     val authorYearLabel: String = na(rhf.authorYearLabel)
     val populationPlaceLabel: String = na(rhf.populationPlaceLabel)
@@ -38,6 +38,7 @@ class PaperReview(p: Paper, rhf: ReportHeaderFields) : JasperEntity {
     val methodConfoundersLabel: String = na(rhf.methodConfoundersLabel)
     val resultEffectEstimateLabel: String = na(rhf.resultEffectEstimateLabel)
     val conclusionLabel: String = na(rhf.conclusionLabel)
+    val commentLabel: String = na(rhf.commentLabel)
     val brand: String = na(rhf.brand)
     val createdBy: String = na(p.createdByName)
 

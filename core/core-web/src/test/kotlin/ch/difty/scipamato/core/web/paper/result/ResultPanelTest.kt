@@ -74,6 +74,8 @@ internal abstract class ResultPanelTest : PanelTest<ResultPanel>() {
         tester.assertComponent(bb, ResourceLink::class.java)
         bb = "$b:reviewLink"
         tester.assertComponent(bb, ResourceLink::class.java)
+        bb = "$b:reviewCsvLink"
+        tester.assertComponent(bb, AjaxLink::class.java)
         bb = "$b:literatureReviewLink"
         tester.assertComponent(bb, ResourceLink::class.java)
         bb = "$b:literatureReviewPlusLink"
@@ -185,6 +187,15 @@ internal abstract class ResultPanelTest : PanelTest<ResultPanel>() {
         tester.startComponentInPage(makePanel())
         tester.clickLink("$PANEL_ID:reviewLink")
         verifyPdfExport()
+    }
+
+    @Test
+    fun clickingReviewCsvLink_succeeds() {
+        tester.startComponentInPage(makePanel())
+        tester.clickLink("$PANEL_ID:reviewCsvLink")
+        verify(exactly = 1) { paperSlimServiceMock.countBySearchOrder(searchOrder) }
+        verify(exactly = 1) { paperSlimServiceMock.findPageBySearchOrder(searchOrder, any()) }
+        verify { paperServiceMock.findPageOfIdsBySearchOrder(any(), any()) }
     }
 
     @Test

@@ -69,9 +69,8 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 {url-cl}1.5.5$$...$$main[Full Changelog]
 
-////
 .Added
-////
+- {url-issues}250[#250] Review CSV Export
 
 .Changed
 - Bumped spring-boot, spring-cloud-starter, spring-cloud-openfeign, jOOQ

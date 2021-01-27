@@ -2,14 +2,14 @@ package ch.difty.scipamato.core.web.paper.jasper.summarytable
 
 import ch.difty.scipamato.common.entity.CodeClassId
 import ch.difty.scipamato.core.entity.Paper
-import ch.difty.scipamato.core.web.paper.jasper.JasperEntity
+import ch.difty.scipamato.core.web.paper.jasper.ExportEntity
 import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields
 import ch.difty.scipamato.core.web.paper.jasper.na
 
 /**
  * DTO to feed the PaperSummaryTableDataSource
  */
-class PaperSummaryTable(p: Paper, rhf: ReportHeaderFields) : JasperEntity {
+class PaperSummaryTable(p: Paper, rhf: ReportHeaderFields) : ExportEntity {
 
     val number: String = p.number?.toString() ?: ""
     val firstAuthor: String = na(p.firstAuthor)
