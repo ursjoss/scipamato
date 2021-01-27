@@ -40,6 +40,11 @@ internal class PaperReviewDataSourceTest : PaperDataSourceTest() {
         resultEffectEstimateLabel = "reel",
         conclusionLabel = "ccl",
         commentLabel = "col",
+        internLabel = "il",
+        goalsLabel = "gl",
+        populationLabel = "pl",
+        methodsLabel = "ml",
+        resultLabel = "rl",
     )
 
     public override fun setUpHook() {
@@ -58,6 +63,11 @@ internal class PaperReviewDataSourceTest : PaperDataSourceTest() {
         every { paperMock.resultEffectEstimate } returns "ree"
         every { paperMock.conclusion } returns "cc"
         every { paperMock.comment } returns "co"
+        every { paperMock.intern } returns "i"
+        every { paperMock.goals } returns "g"
+        every { paperMock.methods } returns "m"
+        every { paperMock.population } returns "p"
+        every { paperMock.result } returns "r"
         every { paperMock.createdByName } returns "cb"
     }
 
@@ -102,6 +112,11 @@ internal class PaperReviewDataSourceTest : PaperDataSourceTest() {
         assertFieldValue("resultEffectEstimateLabel", "reel", f, jsds)
         assertFieldValue("conclusionLabel", "ccl", f, jsds)
         assertFieldValue("commentLabel", "col", f, jsds)
+        assertFieldValue("internLabel", "il", f, jsds)
+        assertFieldValue("goalsLabel", "gl", f, jsds)
+        assertFieldValue("methodsLabel", "ml", f, jsds)
+        assertFieldValue("populationLabel", "pl", f, jsds)
+        assertFieldValue("resultLabel", "rl", f, jsds)
         assertFieldValue("brand", "b", f, jsds)
         assertFieldValue("createdBy", "cb", f, jsds)
         jsds.next().shouldBeFalse()
@@ -131,6 +146,11 @@ internal class PaperReviewDataSourceTest : PaperDataSourceTest() {
         verify { paperMock.resultEffectEstimate }
         verify { paperMock.conclusion }
         verify { paperMock.comment }
+        verify { paperMock.intern }
+        verify { paperMock.goals }
+        verify { paperMock.methods }
+        verify { paperMock.population }
+        verify { paperMock.result }
         verify { paperMock.createdByName }
     }
 

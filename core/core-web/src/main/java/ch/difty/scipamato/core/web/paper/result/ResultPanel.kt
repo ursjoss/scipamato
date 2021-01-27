@@ -341,6 +341,11 @@ abstract class ResultPanel protected constructor(
         resultEffectEstimateLabel = getShortLabelResourceFor(PaperFields.RESULT_EFFECT_ESTIMATE.fieldName),
         conclusionLabel = getShortLabelResourceFor(PaperFields.CONCLUSION.fieldName),
         commentLabel = getLabelResourceFor(PaperFields.COMMENT.fieldName),
+        internLabel = getLabelResourceFor(PaperFields.INTERN.fieldName),
+        goalsLabel = getLabelResourceFor(PaperFields.GOALS.fieldName),
+        populationLabel = getLabelResourceFor(PaperFields.POPULATION.fieldName),
+        methodsLabel = getLabelResourceFor(PaperFields.METHODS.fieldName),
+        resultLabel = getLabelResourceFor(PaperFields.RESULT.fieldName),
     )
 
     private fun addOrReplacePdfLiteratureReviewLink(id: String, plus: Boolean) {
@@ -454,9 +459,16 @@ abstract class ResultPanel protected constructor(
                             it.resultEffectEstimate,
                             it.conclusion,
                             it.comment,
+                            it.intern,
+                            it.goals,
+                            it.population,
+                            it.methods,
+                            it.result,
                         )
                     }
                 StringWriter().apply {
+                    // add BOM
+                    write("\ufeff")
                     CsvWriter(this, CsvWriterSettings().apply {
                         format = CsvFormat().apply { delimiter = ';' }
                     }).apply {
@@ -475,6 +487,11 @@ abstract class ResultPanel protected constructor(
                             rhf.resultEffectEstimateLabel,
                             rhf.conclusionLabel,
                             rhf.commentLabel,
+                            rhf.internLabel,
+                            rhf.goalsLabel,
+                            rhf.populationLabel,
+                            rhf.methodsLabel,
+                            rhf.resultLabel,
                         )
                         writeRowsAndClose(rows)
                     }

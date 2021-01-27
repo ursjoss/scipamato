@@ -70,6 +70,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 {url-cl}1.5.6$$...$$main[Full Changelog]
 
 .Added
+- {url-issues}253[#253] Review CSV Export - Followup
 
 ////
 .Changed

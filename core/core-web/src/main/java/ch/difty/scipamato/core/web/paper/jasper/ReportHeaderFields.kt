@@ -36,6 +36,7 @@ data class ReportHeaderFields @JvmOverloads constructor(
     val numberLabel: String? = null,
     val authorYearLabel: String? = null,
     val pubmedBaseUrl: String? = null,
+    val internLabel: String? = null,
 ) : IClusterable {
 
     companion object {
