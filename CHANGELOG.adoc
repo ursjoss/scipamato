@@ -70,7 +70,6 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 {url-cl}1.5.6$$...$$main[Full Changelog]
 
 .Added
-- {url-issues}253[#253] Review CSV Export - Followup
 
 ////
 .Changed
@@ -84,6 +83,17 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Security
 
 ////
+
+
+[[v1.5.7]]
+== {url-tree}1.5.7[1.5.7] -- 2021-01-27
+
+{url-cl}1.5.6$$...$$1.5.7[Full Changelog]
+
+
+.Added
+- {url-issues}253[#253] Review CSV Export - Followup
+
 
 [[v1.5.6]]
 == {url-tree}1.5.6[1.5.6] -- 2021-01-27
