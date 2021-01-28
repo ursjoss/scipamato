@@ -66,13 +66,13 @@ class ScipamatoPubmedArticle extends AbstractPubmedArticleFacade {
         return datishObjects
             .stream()
             .filter(o -> o instanceof Year)
-            .map(o -> (Year) o)
+            .map(Year.class::cast)
             .map(Year::getvalue)
             .findFirst()
             .orElseGet(() -> datishObjects
                 .stream()
                 .filter(o -> o instanceof MedlineDate)
-                .map(o -> (MedlineDate) o)
+                .map(MedlineDate.class::cast)
                 .map(MedlineDate::getvalue)
                 .map(mld -> mld.substring(0, 4))
                 .findFirst()
@@ -140,7 +140,7 @@ class ScipamatoPubmedArticle extends AbstractPubmedArticleFacade {
                 .orElseGet(() -> paginationElocation
                     .stream()
                     .filter(pe -> pe instanceof ELocationID)
-                    .map(eli -> (ELocationID) eli)
+                    .map(ELocationID.class::cast)
                     .filter(eli -> PII.equals(eli.getEIdType()))
                     .map(eli -> ". " + eli.getEIdType() + ": " + eli.getvalue())
                     .findFirst()

@@ -23,6 +23,7 @@ import ch.difty.scipamato.core.web.fixed
 import ch.difty.scipamato.core.web.paper.AbstractPaperSlimProvider
 import ch.difty.scipamato.core.web.paper.NewsletterChangeEvent
 import ch.difty.scipamato.core.web.paper.SearchOrderChangeEvent
+import ch.difty.scipamato.core.web.paper.csv.ReviewCsvAdapter
 import ch.difty.scipamato.core.web.paper.entry.PaperEntryPage
 import ch.difty.scipamato.core.web.paper.jasper.CoreShortFieldConcatenator
 import ch.difty.scipamato.core.web.paper.jasper.JasperPaperDataSource
@@ -30,14 +31,10 @@ import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields
 import ch.difty.scipamato.core.web.paper.jasper.ScipamatoPdfExporterConfiguration
 import ch.difty.scipamato.core.web.paper.jasper.literaturereview.PaperLiteratureReviewDataSource
 import ch.difty.scipamato.core.web.paper.jasper.literaturereview.PaperLiteratureReviewPlusDataSource
-import ch.difty.scipamato.core.web.paper.jasper.review.PaperReview
 import ch.difty.scipamato.core.web.paper.jasper.review.PaperReviewDataSource
 import ch.difty.scipamato.core.web.paper.jasper.summary.PaperSummaryDataSource
 import ch.difty.scipamato.core.web.paper.jasper.summaryshort.PaperSummaryShortDataSource
 import ch.difty.scipamato.core.web.paper.jasper.summarytable.PaperSummaryTableDataSource
-import com.univocity.parsers.csv.CsvFormat
-import com.univocity.parsers.csv.CsvWriter
-import com.univocity.parsers.csv.CsvWriterSettings
 import de.agilecoders.wicket.core.markup.html.bootstrap.table.TableBehavior
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome5IconType
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome5IconTypeBuilder
@@ -56,7 +53,6 @@ import org.apache.wicket.model.StringResourceModel
 import org.apache.wicket.spring.injection.annot.SpringBean
 import java.io.IOException
 import java.io.ObjectInputStream
-import java.io.StringWriter
 
 /**
  * The result panel shows the results of searches (by filter or by search order)
@@ -438,66 +434,11 @@ abstract class ResultPanel protected constructor(
     }
 
     private fun addExportReviewCsvAjax() {
-        val rhf = reviewReportHeaderFields("")
+        val csvBuilder = ReviewCsvAdapter(reviewReportHeaderFields(""))
         csvDownload = object : AjaxCsvDownload(true) {
             override fun onRequest() {
-                val rows = dataProvider.findAllPapersByFilter()
-                    .map { PaperReview(it, rhf) }
-                    .map {
-                        arrayOf(
-                            it.number,
-                            it.authorYear,
-                            it.populationPlace,
-                            it.methodOutcome,
-                            it.exposurePollutant,
-                            it.methodStudyDesign,
-                            it.populationDuration,
-                            it.populationParticipants,
-                            it.exposureAssessment,
-                            it.resultExposureRange,
-                            it.methodConfounders,
-                            it.resultEffectEstimate,
-                            it.conclusion,
-                            it.comment,
-                            it.intern,
-                            it.goals,
-                            it.population,
-                            it.methods,
-                            it.result,
-                        )
-                    }
-                StringWriter().apply {
-                    // add BOM
-                    write("\ufeff")
-                    CsvWriter(this, CsvWriterSettings().apply {
-                        format = CsvFormat().apply { delimiter = ';' }
-                    }).apply {
-                        writeHeaders(
-                            rhf.numberLabel,
-                            rhf.authorYearLabel,
-                            rhf.populationPlaceLabel,
-                            rhf.methodOutcomeLabel,
-                            rhf.exposurePollutantLabel,
-                            rhf.methodStudyDesignLabel,
-                            rhf.populationDurationLabel,
-                            rhf.populationParticipantsLabel,
-                            rhf.exposureAssessmentLabel,
-                            rhf.resultExposureRangeLabel,
-                            rhf.methodConfoundersLabel,
-                            rhf.resultEffectEstimateLabel,
-                            rhf.conclusionLabel,
-                            rhf.commentLabel,
-                            rhf.internLabel,
-                            rhf.goalsLabel,
-                            rhf.populationLabel,
-                            rhf.methodsLabel,
-                            rhf.resultLabel,
-                        )
-                        writeRowsAndClose(rows)
-                    }
-                    content = toString()
-                }
-                fileName = "review.csv"
+                content = csvBuilder.build(dataProvider.findAllPapersByFilter())
+                fileName = ReviewCsvAdapter.FILE_NAME
                 super.onRequest()
             }
         }.also {

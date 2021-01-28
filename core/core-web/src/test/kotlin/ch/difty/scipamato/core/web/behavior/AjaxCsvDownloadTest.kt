@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test
 
 internal class AjaxCsvDownloadTest : WicketTest() {
 
-    private val ad = AjaxCsvDownload(false)
+    private val ad = AjaxCsvDownload(addAntiCache = false)
 
     private val targetDummy = AjaxRequestTargetSpy()
 
@@ -38,7 +38,7 @@ internal class AjaxCsvDownloadTest : WicketTest() {
     }
 
     @Test
-    fun `clicking the link adds javascript to target2`() {
+    fun `clicking the link adds javascript to target`() {
         val l = object : AjaxLink<Void>("l") {
             override fun onClick(target: AjaxRequestTarget?) = ad.initiate(targetDummy)
         }
@@ -50,14 +50,22 @@ internal class AjaxCsvDownloadTest : WicketTest() {
     }
 
     @Test
-    fun `clicking the link adds javascript to target`() {
-        val ad2 = AjaxCsvDownload(true)
+    fun `clicking the link applying antiCache explicitly adds javascript to target`() {
+        assertAntiCacheBehavior(AjaxCsvDownload(addAntiCache = true))
+    }
+
+    @Test
+    fun `clicking the link applying antiCache implicitly adds javascript to target`() {
+        assertAntiCacheBehavior(AjaxCsvDownload())
+    }
+
+    private fun assertAntiCacheBehavior(ad: AjaxCsvDownload) {
         val l = object : AjaxLink<Void>("l") {
             override fun onClick(target: AjaxRequestTarget?) {
-                ad2.initiate(targetDummy)
+                ad.initiate(targetDummy)
             }
         }
-        l.add(ad2)
+        l.add(ad)
         tester.startComponentInPage(l)
         tester.clickLink(l)
         // containing timestamp -> difficult to test
