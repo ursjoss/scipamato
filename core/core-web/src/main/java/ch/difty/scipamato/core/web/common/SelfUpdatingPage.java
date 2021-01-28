@@ -85,8 +85,7 @@ public abstract class SelfUpdatingPage<T> extends BasePage<T> {
      */
     protected void tuneDownFeedbackMessages() {
         final NotificationPanel panel = getFeedbackPanel();
-        if (panel != null)
-            panel.setMaxMessages(1);
+        panel.setMaxMessages(1);
     }
 
     /**
@@ -96,7 +95,6 @@ public abstract class SelfUpdatingPage<T> extends BasePage<T> {
      */
     protected void resetFeedbackMessages() {
         final NotificationPanel panel = getFeedbackPanel();
-        if (panel != null)
-            panel.setMaxMessages(Integer.MAX_VALUE);
+        panel.setMaxMessages(Integer.MAX_VALUE);
     }
 }

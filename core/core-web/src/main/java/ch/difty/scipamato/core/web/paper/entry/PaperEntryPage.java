@@ -310,10 +310,8 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
                 .getPayload()
                 .getClass() == NewsletterChangeEvent.class) {
             final AjaxRequestTarget target = ((NewsletterChangeEvent) event.getPayload()).getTarget();
-            if (target != null) {
-                target.add(contentPanel);
-                target.add(getFeedbackPanel());
-            }
+            target.add(contentPanel);
+            target.add(getFeedbackPanel());
             event.dontBroadcastDeeper();
         }
     }
