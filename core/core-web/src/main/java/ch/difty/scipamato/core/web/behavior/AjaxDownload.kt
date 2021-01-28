@@ -49,7 +49,7 @@ open class AjaxCsvDownload @JvmOverloads constructor(
 
 abstract class AbstractAjaxTextDownload(
     val contentType: String,
-    addAntiCache: Boolean = true,
+    addAntiCache: Boolean,
 ) : AjaxDownload(addAntiCache) {
     var content: String? = null
     override val resourceStream: IResourceStream get() = StringResourceStream(content, contentType)

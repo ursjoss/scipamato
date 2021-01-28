@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test
 
 internal class AjaxTextDownloadTest : WicketTest() {
 
-    private val ad = AjaxTextDownload(false)
+    private val ad = AjaxTextDownload(addAntiCache = false)
 
     private val targetDummy = AjaxRequestTargetSpy()
 
@@ -38,20 +38,16 @@ internal class AjaxTextDownloadTest : WicketTest() {
     }
 
     @Test
-    fun `clicking the link adds javascript to target2`() {
-        val l = object : AjaxLink<Void>("l") {
-            override fun onClick(target: AjaxRequestTarget?) = ad.initiate(targetDummy)
-        }
-        l.add(ad)
-        tester.startComponentInPage(l)
-        tester.clickLink(l)
-        targetDummy.javaScripts.size shouldBeEqualTo 1
-        targetDummy.javaScripts.contains("""setTimeout("window.location.href='./page?2-1.0-l'", 100);""")
+    fun `clicking the link applying antiCache explicitly adds javascript to target`() {
+        assertAntiCacheBehavior(AjaxTextDownload(addAntiCache = true))
     }
 
     @Test
-    fun `clicking the link adds javascript to target`() {
-        val ad2 = AjaxTextDownload(true)
+    fun `clicking the link applying antiCache implicitly adds javascript to target`() {
+        assertAntiCacheBehavior(AjaxTextDownload())
+    }
+
+    private fun assertAntiCacheBehavior(ad2: AjaxTextDownload) {
         val l = object : AjaxLink<Void>("l") {
             override fun onClick(target: AjaxRequestTarget?) {
                 ad2.initiate(targetDummy)
