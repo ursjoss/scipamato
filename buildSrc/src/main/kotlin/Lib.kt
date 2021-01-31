@@ -64,6 +64,7 @@ object Lib {
     private const val testSetsPluginVersion = "3.0.1"
     private const val sonarqubePluginVersion = "3.1.1"
     private const val detektPluginVersion = "1.15.0"
+    private const val licensePluginVersion = "0.15.0"
     //endregion
 
     //region:dependencies
@@ -178,6 +179,8 @@ object Lib {
     fun detektPlugin() = Plugin("io.gitlab.arturbosch.detekt", detektPluginVersion)
 
     fun sonarqubePlugin() = Plugin("org.sonarqube", sonarqubePluginVersion)
+
+    fun licensePlugin(module : String = "") = Plugin("com.github.hierynomus.license${if (module.isNotBlank()) "-$module" else ""}", licensePluginVersion)
     //endregion
 }
 

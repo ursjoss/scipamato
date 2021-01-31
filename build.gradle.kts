@@ -25,6 +25,7 @@ plugins {
     Lib.sonarqubePlugin().run { id(id) version version }
     Lib.reckonPlugin().run { id(id) version version }
     Lib.versionsPlugin().run { id(id) version version }
+    Lib.licensePlugin("report").run { id(id) version version }
 }
 
 java {
@@ -271,6 +272,10 @@ tasks {
         dependsOn(projectsWithCoverage.map { it.tasks.getByName("jacocoTestReport") })
         dependsOn(subprojects.map { it.tasks.getByName("detekt") })
     }
+}
+
+downloadLicenses {
+    dependencyConfiguration = "runtimeClasspath"
 }
 
 fun String.mayHaveTestCoverage(): Boolean = this !in testModules
