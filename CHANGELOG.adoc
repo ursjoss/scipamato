@@ -71,10 +71,10 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Added
 
-////
 .Changed
-- Bumped kotlin
+- Bumped kotlin, jOOQ
 
+////
 .Deprecated
 
 .Removed
