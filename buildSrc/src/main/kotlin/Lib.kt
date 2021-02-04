@@ -39,7 +39,7 @@ object Lib {
 
     private const val fontAwesomeVersion = "5.15.0"
 
-    private const val equalsverifierVersion = "3.5.2"
+    private const val equalsverifierVersion = "3.5.3"
 
     private const val junit5Version = "5.7.0"
 
