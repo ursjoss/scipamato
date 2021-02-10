@@ -33,6 +33,9 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+    - name: Download postgres
+      uses: docker://postgres:10
+
     - name: Run sonar task
       run: ./gradlew sonarqube --no-daemon
       env:
