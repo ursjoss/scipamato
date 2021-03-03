@@ -37,7 +37,7 @@ object Lib {
     private const val javaxElVersion = "3.0.1-b12"
     private const val jacksonKotlinVersion = "2.12.1"
 
-    private const val fontAwesomeVersion = "5.15.0"
+    private const val fontAwesomeVersion = "5.15.2"
 
     private const val equalsverifierVersion = "3.5.5"
 
