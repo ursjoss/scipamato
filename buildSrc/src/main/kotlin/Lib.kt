@@ -7,24 +7,24 @@ import java.util.Properties
 object Lib {
 
     //region:dependencyVersions
-    private const val kotlinVersion = "1.4.21"
+    private const val kotlinVersion = "1.4.31"
 
-    private const val springBootVersion = "2.4.2"
-    private const val springBootAdminVersion = "2.3.1"
+    private const val springBootVersion = "2.4.3"
+    private const val springBootAdminVersion = "2.4.0"
     const val springCloudVersion = "2020.0.0"
     private const val springCloudStarterVersion = "3.0.0"
 
     private const val wicketSpringBootStarterVersion = "3.0.4"
     private const val wicketVersion = "9.2.0"
     private const val wicketstuffVersion = "9.2.0"
-    private const val wicketJqueryUiVersion = "9.2.0"
+    private const val wicketJqueryUiVersion = "9.2.1"
     private const val wicketBootstrapVersion = "4.0.3"
     private const val jasperReportVersion = "6.16.0"
     private const val univocityParsersVersion = "2.9.1"
 
-    private const val krisVersion = "0.3.0"
-    const val jooqVersion = "3.14.6"
-    const val flywayVersion = "7.5.1"
+    private const val krisVersion = "0.3.1"
+    const val jooqVersion = "3.14.8"
+    const val flywayVersion = "7.5.4"
 
     private const val kotlinLoggingVersion = "2.0.4"
 
@@ -37,18 +37,18 @@ object Lib {
     private const val javaxElVersion = "3.0.1-b12"
     private const val jacksonKotlinVersion = "2.12.1"
 
-    private const val fontAwesomeVersion = "5.15.0"
+    private const val fontAwesomeVersion = "5.15.2"
 
-    private const val equalsverifierVersion = "3.5.2"
+    private const val equalsverifierVersion = "3.5.5"
 
-    private const val junit5Version = "5.7.0"
+    private const val junit5Version = "5.7.1"
 
-    private const val testcontainersVersion = "1.15.1"
+    private const val testcontainersVersion = "1.15.2"
 
     private const val spekVersion = "2.0.15"
     private const val kwikVersion = "0.8.4"
     private const val kluentVersion = "1.65"
-    private const val mockkVersion = "1.10.5"
+    private const val mockkVersion = "1.10.6"
     private const val springMockkVersion = "3.0.1"
 
     private const val jsr305Version = "3.0.2"
