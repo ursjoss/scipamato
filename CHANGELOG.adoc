@@ -75,16 +75,8 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 - Bumped spring-boot, kotlin, jOOQ, flyway, equalsverifier, kris, junit, mockk, gradle-wrapper
   wicket-jquery-ui, spring-boot-admin, testcontainers, font-awesome
 
-////
-.Deprecated
-
-.Removed
-
 .Fixed
-
-.Security
-
-////
+- {url-issues}262[#262] Restore ability to delete searches (Restore Confirmation behavior)
 
 
 [[v1.5.7]]
