@@ -72,7 +72,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 
 .Changed
-- Bumped detekt
+- Bumped detekt, jackson-kotlin
 
 ////
 .Deprecated
