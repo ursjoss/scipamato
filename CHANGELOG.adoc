@@ -70,9 +70,11 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 {url-cl}1.5.8$$...$$main[Full Changelog]
 
 .Added
-////
-.Changed
 
+.Changed
+- Bumped detekt
+
+////
 .Deprecated
 
 .Removed
