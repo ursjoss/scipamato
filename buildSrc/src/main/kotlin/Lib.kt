@@ -59,7 +59,7 @@ object Lib {
     private const val lombokPluginVersion = "5.3.0"
     private const val jooqModelatorPluginVersion = "3.9.0"
     private const val reckonPluginVersion = "0.13.0"
-    private const val versionsPluginVersion = "0.36.0"
+    private const val versionsPluginVersion = "0.38.0"
     private const val jaxbPluginVersion = "4.4.1"
     private const val testSetsPluginVersion = "3.0.1"
     private const val sonarqubePluginVersion = "3.1.1"
