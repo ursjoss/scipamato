@@ -12,7 +12,7 @@ object Lib {
     private const val springBootVersion = "2.4.4"
     private const val springBootAdminVersion = "2.4.0"
     const val springCloudVersion = "2020.0.0"
-    private const val springCloudStarterVersion = "3.0.0"
+    private const val springCloudStarterVersion = "3.0.2"
 
     private const val wicketSpringBootStarterVersion = "3.0.4"
     private const val wicketVersion = "9.2.0"
@@ -28,7 +28,7 @@ object Lib {
 
     private const val kotlinLoggingVersion = "2.0.6"
 
-    private const val openfeignVersion = "11.0"
+    private const val openfeignVersion = "11.1"
 
     private const val jaxbCoreVersion = "3.0.0"
     private const val jaxbImplVersion = "3.0.0"
