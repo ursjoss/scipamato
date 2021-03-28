@@ -73,7 +73,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Changed
 - Bumped spring-boot, flyway, detekt, jackson-kotlin, gradle versions-plugin, kotlin-logging, mockk,
-  spring-cloud-starter, openfeign
+  spring-cloud-starter, openfeign, KRis
 
 ////
 .Deprecated
