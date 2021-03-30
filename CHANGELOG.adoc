@@ -72,9 +72,11 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 - {url-issues}265[#265] Enable complex search to filter for papers with or without attachments or by attachment name
 
-////
 .Changed
+- Bumped spring-boot, kotlin, flyway, detekt, jackson-kotlin, gradle versions-plugin, kotlin-logging, mockk,
+  spring-cloud-starter, openfeign, KRis
 
+////
 .Deprecated
 
 .Removed
