@@ -22,6 +22,7 @@ import org.amshove.kluent.shouldNotBeEqualTo
 import org.amshove.kluent.shouldThrow
 import org.amshove.kluent.withMessage
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.fail
 
 private const val SEARCH_CONDITION_ID: Long = 1
 private const val X = "x"
@@ -702,6 +703,30 @@ internal class SearchConditionTest {
     }
 
     @Test
+    fun testDisplayValue_withHasAttachment() {
+        sc1.hasAttachments = true
+        sc1.displayValue shouldBeEqualTo "attachment=true"
+
+        sc1.hasAttachments = false
+        sc1.displayValue shouldBeEqualTo "attachment=false"
+    }
+
+    @Test
+    fun testDisplayValue_withAttachmentMask_displaysItRegardlessOfHasAttachment() {
+        // attachmentNameMask is not considered if hasAttachment is set to non-null
+        sc1.attachmentNameMask = "foo"
+
+        sc1.hasAttachments = true
+        sc1.displayValue shouldBeEqualTo "attachment=foo"
+
+        sc1.hasAttachments = false
+        sc1.displayValue shouldBeEqualTo "attachment=foo"
+
+        sc1.hasAttachments = null
+        sc1.displayValue shouldBeEqualTo "attachment=foo"
+    }
+
+    @Test
     fun testDisplayValue_withMultipleSearchTerms_joinsThemAllUsingAND() {
         sc1.authors = "fooAuth"
         sc1.methodStudyDesign = "bar"
@@ -1131,5 +1156,31 @@ internal class SearchConditionTest {
 
         sc1.newsletterIssue = null
         sc1.newsletterIssue.shouldBeNull()
+    }
+
+    @Test
+    fun hasAttachments() {
+        sc1.hasAttachments.shouldBeNull()
+
+        sc1.hasAttachments = true
+        sc1.hasAttachments?.shouldBeTrue() ?: fail("should not be null")
+
+        sc1.hasAttachments = false
+        sc1.hasAttachments?.shouldBeFalse() ?: fail("should not be null")
+
+        sc1.hasAttachments = null
+        sc1.hasAttachments.shouldBeNull()
+    }
+
+
+    @Test
+    fun attachmentNameMas() {
+        sc1.attachmentNameMask.shouldBeNull()
+
+        sc1.attachmentNameMask = "foo"
+        sc1.attachmentNameMask shouldBeEqualTo "foo"
+
+        sc1.attachmentNameMask = null
+        sc1.attachmentNameMask.shouldBeNull()
     }
 }

@@ -92,4 +92,25 @@ internal open class JooqPaperSlimBySearchOrderRepoIntegrationTest {
         so.add(sc)
         repo.findPageBySearchOrder(so, pc).map { it.number } shouldContainSame listOf(15L, 18L, 25L)
     }
+
+    @Test
+    fun findingPaged_withSearchCondition_withNoAttachments() {
+        sc.hasAttachments = false
+        so.add(sc)
+        repo.findPageBySearchOrder(so, pc).map { it.number } shouldContainSame listOf(1L, 2L, 3L, 4L, 10L, 11L, 12L, 13L, 14L, 15L)
+    }
+
+    @Test
+    fun findingPaged_withSearchCondition_withAttachments() {
+        sc.hasAttachments = true
+        so.add(sc)
+        repo.findPageBySearchOrder(so, pc).shouldBeEmpty()
+    }
+
+    @Test
+    fun findingPaged_withSearchCondition_withNotExistingAttachmentName() {
+        sc.attachmentNameMask = "foobarbaz"
+        so.add(sc)
+        repo.findPageBySearchOrder(so, pc).shouldBeEmpty()
+    }
 }

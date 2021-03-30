@@ -1,5 +1,6 @@
 package ch.difty.scipamato.core.persistence.paper.searchorder;
 
+import static ch.difty.scipamato.core.db.Tables.PAPER_ATTACHMENT;
 import static ch.difty.scipamato.core.db.tables.Paper.PAPER;
 import static ch.difty.scipamato.core.db.tables.PaperCode.PAPER_CODE;
 import static ch.difty.scipamato.core.db.tables.PaperNewsletter.PAPER_NEWSLETTER;
@@ -156,6 +157,9 @@ public abstract class JooqBySearchOrderRepo<T extends IdScipamatoEntity<Long>, M
             || searchCondition.getNewsletterIssue() != null) {
             conditions.add(() -> newsletterConditions(searchCondition));
         }
+        if (searchCondition.getHasAttachments() != null || searchCondition.getAttachmentNameMask() != null) {
+            conditions.add(() -> attachmentConditions(searchCondition));
+        }
         return conditions.combineWithAnd();
     }
 
@@ -198,6 +202,24 @@ public abstract class JooqBySearchOrderRepo<T extends IdScipamatoEntity<Long>, M
         return nlConditions.combineWithAnd();
     }
 
+    private Condition attachmentConditions(final SearchCondition sc) {
+        final ConditionalSupplier attConditions = new ConditionalSupplier();
+        final SelectConditionStep<Record1<Integer>> step0 = DSL
+            .selectOne()
+            .from(PAPER_ATTACHMENT)
+            .where(PAPER_ATTACHMENT.PAPER_ID.eq(PAPER.ID));
+        if (sc.getAttachmentNameMask() != null) {
+            final SelectConditionStep<Record1<Integer>> step1 = step0.and(PAPER_ATTACHMENT.NAME.containsIgnoreCase(sc.getAttachmentNameMask()));
+            attConditions.add(() -> DSL.exists(step1));
+        } else if (sc.getHasAttachments() != null) {
+            if (sc.getHasAttachments())
+                attConditions.add(() -> DSL.exists(step0));
+            else
+                attConditions.add(() -> DSL.notExists(step0));
+        }
+        return attConditions.combineWithAnd();
+    }
+
     @NotNull
     @Override
     public List<T> findPageBySearchOrder(@NotNull final SearchOrder searchOrder, @NotNull final PaginationContext pc) {
@@ -227,8 +249,7 @@ public abstract class JooqBySearchOrderRepo<T extends IdScipamatoEntity<Long>, M
 
     @NotNull
     @Override
-    public List<Long> findPageOfIdsBySearchOrder(@NotNull final SearchOrder searchOrder,
-        @NotNull final PaginationContext pc) {
+    public List<Long> findPageOfIdsBySearchOrder(@NotNull final SearchOrder searchOrder, @NotNull final PaginationContext pc) {
         final Condition conditions = getConditionsFrom(searchOrder);
         final Collection<SortField<T>> sortCriteria = getSortMapper().map(pc.getSort(), PAPER);
         return getDsl()

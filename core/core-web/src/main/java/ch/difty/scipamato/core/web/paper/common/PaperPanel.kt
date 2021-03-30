@@ -6,6 +6,7 @@ import ch.difty.scipamato.common.web.LABEL_RESOURCE_TAG
 import ch.difty.scipamato.common.web.LABEL_TAG
 import ch.difty.scipamato.common.web.Mode
 import ch.difty.scipamato.common.web.component.SerializableSupplier
+import ch.difty.scipamato.core.AttachmentAware
 import ch.difty.scipamato.core.NewsletterAware
 import ch.difty.scipamato.core.entity.Code
 import ch.difty.scipamato.core.entity.CodeBoxAware
@@ -82,7 +83,7 @@ abstract class PaperPanel<T>(
     id,
     model,
     mode
-) where T : CodeBoxAware, T : NewsletterAware {
+) where T : CodeBoxAware, T : NewsletterAware, T : AttachmentAware {
 
     private var summaryLink: ResourceLink<Void>? = null
     private var summaryShortLink: ResourceLink<Void>? = null
@@ -513,7 +514,7 @@ abstract class PaperPanel<T>(
          * The new fields are present on the page more than once, they need to be able
          * to handle the [NewFieldChangeEvent].
          */
-        private fun makeField(id: String, newField: Boolean): TextArea<String> =
+        fun makeField(id: String, newField: Boolean): TextArea<String> =
             if (!newField) {
                 TextArea(id)
             } else {
@@ -545,6 +546,27 @@ abstract class PaperPanel<T>(
         override fun onConfigure() {
             super.onConfigure()
             tabIndexModel.setObject(tabIndex())
+        }
+
+        fun queueSearchOnlyTextFieldName(field: FieldEnumType) {
+            val labelModel = StringResourceModel("${field.fieldName}$LABEL_RESOURCE_TAG", this, null)
+            object : TextField<String>(field.fieldName) {
+                override fun onConfigure() {
+                    super.onConfigure()
+                    isVisible = isSearchMode
+                }
+            }.apply {
+                outputMarkupId = true
+                label = labelModel
+            }.also {
+                queue(it)
+                queue(object : Label("${field.fieldName}$LABEL_TAG", labelModel) {
+                    override fun onConfigure() {
+                        super.onConfigure()
+                        isVisible = isSearchMode
+                    }
+                })
+            }
         }
     }
 
@@ -748,6 +770,35 @@ abstract class PaperPanel<T>(
             queue(newDropZoneFileUpload())
             attachments = newAttachmentTable("attachments")
             queue(attachments)
+
+            queueSearchOnlyTextFieldName(PaperFields.ATTACHMENT_NAME_MASK)
+            queueHasAttachments(PaperFields.HAS_ATTACHMENTS)
+        }
+
+        private fun queueHasAttachments(field: FieldEnumType) {
+            val labelModel = StringResourceModel("${field.fieldName}$LABEL_RESOURCE_TAG", this, null)
+            val checkBoxModel = PropertyModel<Boolean>(model, field.fieldName)
+            object : CheckBoxX(field.fieldName, checkBoxModel) {
+                override fun onConfigure() {
+                    super.onConfigure()
+                    isVisible = isSearchMode
+                    add(AttributeModifier(TITLE_ATTR, checkBoxModel))
+                }
+            }.apply {
+                config
+                    .withThreeState(true)
+                    .withUseNative(true)
+                outputMarkupId = true
+                label = labelModel
+            }.also {
+                queue(it)
+                queue(object : Label("${field.fieldName}$LABEL_TAG", labelModel) {
+                    override fun onConfigure() {
+                        super.onConfigure()
+                        isVisible = isSearchMode
+                    }
+                })
+            }
         }
     }
 
@@ -766,7 +817,7 @@ abstract class PaperPanel<T>(
             queue(tab7Form)
             queueHeadline(PaperFields.NEWSLETTER_HEADLINE)
             makeAndQueueNewsletterTopicSelectBox("newsletterTopic")
-            queueIssue("newsletterIssue")
+            queueSearchOnlyTextFieldName(PaperFields.NEWSLETTER_ISSUE)
         }
 
         private fun queueHeadline(fieldType: FieldEnumType) {
@@ -782,25 +833,6 @@ abstract class PaperPanel<T>(
             queue(Label(id + LABEL_TAG, labelModel))
             field.label = labelModel
             addDisableBehavior(field)
-            queue(field)
-        }
-
-        private fun queueIssue(id: String) {
-            val field: TextField<String> = object : TextField<String>(id) {
-                override fun onConfigure() {
-                    super.onConfigure()
-                    isVisible = isSearchMode
-                }
-            }
-            field.outputMarkupId = true
-            val labelModel = StringResourceModel("$id$LABEL_RESOURCE_TAG", this, null)
-            queue(object : Label("$id$LABEL_TAG", labelModel) {
-                override fun onConfigure() {
-                    super.onConfigure()
-                    isVisible = isSearchMode
-                }
-            })
-            field.label = labelModel
             queue(field)
         }
 
