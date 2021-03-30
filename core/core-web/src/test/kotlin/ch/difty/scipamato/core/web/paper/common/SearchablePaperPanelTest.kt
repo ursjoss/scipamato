@@ -3,15 +3,19 @@ package ch.difty.scipamato.core.web.paper.common
 import ch.difty.scipamato.common.AjaxRequestTargetSpy
 import ch.difty.scipamato.core.entity.search.SearchCondition
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.checkboxx.CheckBoxX
 import org.amshove.kluent.shouldBeFalse
 import org.amshove.kluent.shouldBeNull
+import org.apache.wicket.markup.html.form.Form
 import org.apache.wicket.model.Model
 import org.junit.jupiter.api.Test
 
 @Suppress("SpellCheckingInspection")
 internal class SearchablePaperPanelTest : PaperPanelTest<SearchCondition, SearchablePaperPanel>() {
 
-    override fun makePanel(): SearchablePaperPanel {
+    override fun makePanel(): SearchablePaperPanel = newPanel()
+
+    private fun newPanel(attachments: Boolean? = null, attachmentName: String? = null): SearchablePaperPanel {
         val sc = SearchCondition().apply {
             id = "1"
             number = "100"
@@ -54,6 +58,8 @@ internal class SearchablePaperPanelTest : PaperPanelTest<SearchCondition, Search
             addCode(newC(7, "A"))
             addCode(newC(8, "A"))
             originalAbstract = "oa"
+            hasAttachments = attachments
+            attachmentNameMask = attachmentName
         }
         return object : SearchablePaperPanel("panel", Model.of(sc)) {
             override fun onFormSubmit() {
@@ -84,6 +90,14 @@ internal class SearchablePaperPanelTest : PaperPanelTest<SearchCondition, Search
         assertTextFieldWithLabel("$b:modifiedDisplayValue", "lmdv", "Last Modified")
         tester.assertComponent("$b:submit", BootstrapButton::class.java)
         verifyCodeAndCodeClassCalls(1)
+
+        tester.clickLink("panel:form:tabs:tabs-container:tabs:5:link")
+        val bb = "$b:tabs:panel"
+        val bbb = "$bb:tab6Form"
+        assertTextFieldWithLabel("$bbb:attachmentNameMask", null, "Attachment Name Mask")
+        assertComponentWithLabel("$bbb:hasAttachments", CheckBoxX::class.java, null, "W/ or w/o Attachments")
+
+        tester.assertComponent(bbb, Form::class.java)
     }
 
     @Test
@@ -151,5 +165,35 @@ internal class SearchablePaperPanelTest : PaperPanelTest<SearchCondition, Search
         makePanel().modifyNewsletterAssociation(targetDummy)
         targetDummy.components.isEmpty()
         targetDummy.javaScripts.isEmpty()
+    }
+
+    @Test
+    fun withAttachmentFilter_havingAttachments() {
+        tester.startComponentInPage(newPanel(attachments = true))
+        val bbb = prepareAttachmentPanel()
+        assertTextFieldWithLabel("$bbb:attachmentNameMask", null, "Attachment Name Mask")
+        assertComponentWithLabel("$bbb:hasAttachments", CheckBoxX::class.java, true, "W/ or w/o Attachments")
+    }
+
+    @Test
+    fun withAttachmentFilter_notHavingAttachments() {
+        tester.startComponentInPage(newPanel(attachments = false))
+        val bbb = prepareAttachmentPanel()
+        assertTextFieldWithLabel("$bbb:attachmentNameMask", null, "Attachment Name Mask")
+        assertComponentWithLabel("$bbb:hasAttachments", CheckBoxX::class.java, false, "W/ or w/o Attachments")
+    }
+
+    @Test
+    fun withAttachmentFilter_havingAttachmentFilterWithAttachmentName() {
+        tester.startComponentInPage(newPanel(attachmentName = "foo"))
+        val bbb = prepareAttachmentPanel()
+        assertTextFieldWithLabel("$bbb:attachmentNameMask", "foo", "Attachment Name Mask")
+        assertComponentWithLabel("$bbb:hasAttachments", CheckBoxX::class.java, null, "W/ or w/o Attachments")
+    }
+
+    private fun prepareAttachmentPanel(): String {
+        val b = "panel:form:tabs"
+        tester.clickLink("$b:tabs-container:tabs:5:link")
+        return "$b:panel:tab6Form"
     }
 }

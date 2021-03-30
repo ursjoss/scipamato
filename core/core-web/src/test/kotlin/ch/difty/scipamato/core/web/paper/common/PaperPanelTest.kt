@@ -1,6 +1,7 @@
 package ch.difty.scipamato.core.web.paper.common
 
 import ch.difty.scipamato.common.entity.CodeClassId
+import ch.difty.scipamato.core.AttachmentAware
 import ch.difty.scipamato.core.NewsletterAware
 import ch.difty.scipamato.core.entity.Code
 import ch.difty.scipamato.core.entity.CodeBoxAware
@@ -19,7 +20,7 @@ import org.apache.wicket.markup.html.form.TextField
 import org.junit.jupiter.api.AfterEach
 import java.util.ArrayList
 
-abstract class PaperPanelTest<T, P : PaperPanel<T>> : PanelTest<P>() where T : CodeBoxAware, T : NewsletterAware {
+abstract class PaperPanelTest<T, P : PaperPanel<T>> : PanelTest<P>() where T : CodeBoxAware, T : NewsletterAware, T: AttachmentAware {
 
     private val codeClasses: MutableList<CodeClass> = ArrayList()
     private val codesOfClass1: MutableList<Code> = ArrayList()
@@ -96,7 +97,7 @@ abstract class PaperPanelTest<T, P : PaperPanel<T>> : PanelTest<P>() where T : C
         assertComponentWithLabel(path, TextArea::class.java, modelValue, labelText)
     }
 
-    protected fun assertTextFieldWithLabel(path: String, modelValue: Any, labelText: String) {
+    protected fun assertTextFieldWithLabel(path: String, modelValue: Any?, labelText: String) {
         assertComponentWithLabel(path, TextField::class.java, modelValue, labelText)
     }
 
@@ -106,10 +107,10 @@ abstract class PaperPanelTest<T, P : PaperPanel<T>> : PanelTest<P>() where T : C
         tester.assertLabel(path + "Label", labelText)
     }
 
-    private fun assertComponentWithLabel(
+    fun assertComponentWithLabel(
         path: String,
         componentClass: Class<out Component?>,
-        modelValue: Any,
+        modelValue: Any?,
         labelText: String,
     ) {
         tester.assertComponent(path, componentClass)

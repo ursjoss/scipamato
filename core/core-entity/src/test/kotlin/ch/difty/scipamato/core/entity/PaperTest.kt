@@ -581,6 +581,22 @@ internal class PaperTest : Jsr303ValidatedEntityTest<Paper>(Paper::class.java) {
         p.newsletterIssue.shouldBeNull()
     }
 
+    @Test
+    fun settingAttachmentName_isNoOp() {
+        val p = newValidEntity()
+        p.attachmentNameMask.shouldBeNull()
+        p.attachmentNameMask = "whatever"
+        p.attachmentNameMask.shouldBeNull()
+    }
+
+    @Test
+    fun settingWithAttachment_isNoOp() {
+        val p = newValidEntity()
+        p.hasAttachments.shouldBeNull()
+        p.hasAttachments = true
+        p.hasAttachments.shouldBeNull()
+    }
+
     companion object {
         private const val VALID_AUTHORS =
             "Turner MC, Cohen A, Jerret M, Gapstur SM, Driver WR, Pope CA 3rd, Krewsky D, Beckermann BS, Samet JM."

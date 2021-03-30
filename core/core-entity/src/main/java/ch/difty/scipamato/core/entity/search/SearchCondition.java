@@ -16,11 +16,9 @@ import org.jetbrains.annotations.Nullable;
 import ch.difty.scipamato.common.entity.CodeClassId;
 import ch.difty.scipamato.common.entity.FieldEnumType;
 import ch.difty.scipamato.common.entity.filter.ScipamatoFilter;
+import ch.difty.scipamato.core.AttachmentAware;
 import ch.difty.scipamato.core.NewsletterAware;
-import ch.difty.scipamato.core.entity.Code;
-import ch.difty.scipamato.core.entity.CodeBox;
-import ch.difty.scipamato.core.entity.CodeBoxAware;
-import ch.difty.scipamato.core.entity.Paper;
+import ch.difty.scipamato.core.entity.*;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic;
 
 /**
@@ -43,7 +41,7 @@ import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic;
  * @author u.joss
  */
 @SuppressWarnings({ "SameParameterValue" })
-public class SearchCondition implements ScipamatoFilter, CodeBoxAware, NewsletterAware {
+public class SearchCondition implements ScipamatoFilter, CodeBoxAware, NewsletterAware, AttachmentAware {
 
     private static final long serialVersionUID = 1L;
 
@@ -54,6 +52,8 @@ public class SearchCondition implements ScipamatoFilter, CodeBoxAware, Newslette
     private String  newsletterHeadline;
     private Integer newsletterTopicId;
     private String  newsletterIssue;
+    private Boolean hasAttachments;
+    private String  attachmentNameMask;
     // only used for the display value - not identifying and therefore not used for equals or hashcode
     private String  newsletterTopicTitle;
 
@@ -614,6 +614,19 @@ public class SearchCondition implements ScipamatoFilter, CodeBoxAware, Newslette
                 .append("topic=")
                 .append(newsletterTopicTitle);
         }
+        if (attachmentNameMask != null){
+            if (sb.length() > 0)
+                sb.append(JOIN_DELIMITER);
+            sb
+                .append("attachment=")
+                .append(attachmentNameMask);
+        } else if (hasAttachments != null) {
+            if (sb.length() > 0)
+                sb.append(JOIN_DELIMITER);
+            sb
+                .append("attachment=")
+                .append(hasAttachments ? "true" : "false");
+        }
         return sb.toString();
     }
 
@@ -701,5 +714,27 @@ public class SearchCondition implements ScipamatoFilter, CodeBoxAware, Newslette
     @Override
     public String getNewsletterIssue() {
         return newsletterIssue;
+    }
+
+    @Nullable
+    @Override
+    public Boolean getHasAttachments() {
+        return hasAttachments;
+    }
+
+    @Override
+    public void setHasAttachments(@Nullable Boolean hasAttachments) {
+        this.hasAttachments = hasAttachments;
+    }
+
+    @Nullable
+    @Override
+    public String getAttachmentNameMask() {
+        return attachmentNameMask;
+    }
+
+    @Override
+    public void setAttachmentNameMask(@Nullable final String attachmentNameMask) {
+        this.attachmentNameMask = attachmentNameMask;
     }
 }

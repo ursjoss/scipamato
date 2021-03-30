@@ -298,7 +298,7 @@ internal class JooqSearchOrderRepoTest :
 
     @Test
     fun addingSearchCondition_nonDirty_returnsPersistedEquivalentSearchCondition() {
-        val equivalentPersistedSearchCondition = mockk<SearchCondition>()
+        val equivalentPersistedSearchCondition = mockk<SearchCondition>(relaxed = true)
         val repo = object : JooqSearchOrderRepo(
             dsl,
             mapper,
@@ -316,6 +316,11 @@ internal class JooqSearchOrderRepoTest :
             ): java.util.Optional<SearchCondition> = java.util.Optional.of(equivalentPersistedSearchCondition)
 
             override fun hasDirtyNewsletterFields(
+                searchCondition: SearchCondition,
+                psc: SearchCondition
+            ): Boolean = false
+
+            override fun hasDirtyAttachmentFields(
                 searchCondition: SearchCondition,
                 psc: SearchCondition
             ): Boolean = false
