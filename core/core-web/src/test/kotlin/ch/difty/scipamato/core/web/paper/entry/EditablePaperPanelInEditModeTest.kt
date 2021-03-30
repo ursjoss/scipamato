@@ -70,6 +70,25 @@ internal class EditablePaperPanelInEditModeTest : EditablePaperPanelTest() {
     }
 
     @Test
+    fun doesNotShowAttachmentSearchFields() {
+        tester.startComponentInPage(makePanel())
+        var b = "panel"
+        tester.assertComponent(b, EditablePaperPanel::class.java)
+        assertCommonComponents(b)
+        b += ":form"
+
+        tester.clickLink("panel:form:tabs:tabs-container:tabs:5:link")
+        val bb = "$b:tabs:panel"
+        val bbb = "$bb:tab6Form"
+        tester.assertInvisible("$bbb:attachmentNameMask")
+        tester.assertInvisible("$bbb:hasAttachments")
+
+        verify(exactly=1) { codeClassServiceMock.find(any())}
+        verify(exactly=8) { codeServiceMock.findCodesOfClass(any(), any())}
+        verify(exactly= 8) { newsletterServiceMock.canCreateNewsletterInProgress()}
+    }
+
+    @Test
     fun assertSubmit() {
         tester.startComponentInPage(makePanel())
         applyTestHackWithNestedMultiPartForms()

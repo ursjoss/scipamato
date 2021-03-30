@@ -13,6 +13,7 @@ import org.jetbrains.annotations.Nullable;
 
 import ch.difty.scipamato.common.entity.CodeClassId;
 import ch.difty.scipamato.common.entity.FieldEnumType;
+import ch.difty.scipamato.core.AttachmentAware;
 import ch.difty.scipamato.core.NewsletterAware;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic;
 
@@ -32,7 +33,7 @@ import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic;
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = true)
-public class Paper extends IdScipamatoEntity<Long> implements CodeBoxAware, NewsletterAware {
+public class Paper extends IdScipamatoEntity<Long> implements CodeBoxAware, NewsletterAware, AttachmentAware {
 
     private static final long serialVersionUID = 1L;
 
@@ -145,7 +146,9 @@ public class Paper extends IdScipamatoEntity<Long> implements CodeBoxAware, News
         CODES("codes"),
         NEWSLETTER_LINK("newsletterLink"),
         NEWSLETTER_HEADLINE("newsletterHeadline"),
-        NEWSLETTER_TOPIC_ID("newsletterTopicId"),
+        NEWSLETTER_ISSUE("newsletterIssue"),
+        HAS_ATTACHMENTS("hasAttachments"),
+        ATTACHMENT_NAME_MASK("attachmentNameMask"),
         CREATED("paper.created"),
         CREATED_BY("paper.created_by"),
         LAST_MOD("paper.last_modified"),
@@ -356,5 +359,27 @@ public class Paper extends IdScipamatoEntity<Long> implements CodeBoxAware, News
     @Override
     public void setNewsletterIssue(@Nullable final String issue) {
         // no-op - only used for searching by newsletter issue
+    }
+
+    @Nullable
+    @Override
+    public Boolean getHasAttachments() {
+        return null;
+    }
+
+    @Override
+    public void setHasAttachments(@Nullable final Boolean hasAttachments) {
+        // no-op - only used for searching whether the paper has attachment or not
+    }
+
+    @Override
+    public void setAttachmentNameMask(@Nullable final String attachmentName) {
+        // no-op - only used for searching by attachment name
+    }
+
+    @Nullable
+    @Override
+    public String getAttachmentNameMask() {
+        return null;
     }
 }
