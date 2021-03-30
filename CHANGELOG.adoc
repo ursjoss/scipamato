@@ -67,16 +67,13 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[unreleased]]
 == [unreleased]
 
-{url-cl}1.5.8$$...$$main[Full Changelog]
+{url-cl}1.5.9$$...$$main[Full Changelog]
 
 .Added
-- {url-issues}265[#265] Enable complex search to filter for papers with or without attachments or by attachment name
-
-.Changed
-- Bumped spring-boot, kotlin, flyway, detekt, jackson-kotlin, gradle versions-plugin, kotlin-logging, mockk,
-  spring-cloud-starter, openfeign, KRis
 
 ////
+.Changed
+
 .Deprecated
 
 .Removed
@@ -86,6 +83,19 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Security
 
 ////
+
+
+[[v1.5.9]]
+== {url-tree}1.5.9[1.5.9] -- 2021-03-30
+
+{url-cl}1.5.8$$...$$1.5.9[Full Changelog]
+
+.Added
+- {url-issues}265[#265] Enable complex search to filter for papers with or without attachments or by attachment name
+
+.Changed
+- Bumped spring-boot, kotlin, flyway, detekt, jackson-kotlin, gradle versions-plugin, kotlin-logging, mockk,
+  spring-cloud-starter, openfeign, KRis
 
 
 [[v1.5.8]]
