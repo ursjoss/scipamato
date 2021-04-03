@@ -71,9 +71,10 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Added
 
-////
 .Changed
+- Bumped wicket, wicketstuff, wicket-jqury-ui, wicket-bootstrap
 
+////
 .Deprecated
 
 .Removed
