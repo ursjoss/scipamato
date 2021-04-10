@@ -73,6 +73,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Changed
 - Bumped wicket, wicketstuff, wicket-jqury-ui, wicket-bootstrap, flyway, jaxb-gradle-plugin
+  lombok-gradle-plugin
 
 ////
 .Deprecated
