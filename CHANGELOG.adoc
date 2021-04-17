@@ -73,7 +73,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Changed
 - Bumped spring-boot, wicket, wicketstuff, wicket-jqury-ui, wicket-bootstrap, flyway, jaxb-gradle-plugin
-  lombok-gradle-plugin, jackson-kotlin
+  lombok-gradle-plugin, jackson-kotlin, spring-boot-admin-starter
 
 ////
 .Deprecated
