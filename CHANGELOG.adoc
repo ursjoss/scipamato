@@ -77,9 +77,12 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Deprecated
 
 .Removed
+////
 
 .Fixed
+- Optimized Layout for very small screens
 
+////
 .Security
 
 ////
