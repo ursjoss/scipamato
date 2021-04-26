@@ -67,7 +67,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[unreleased]]
 == [unreleased]
 
-{url-cl}1.5.10$$...$$main[Full Changelog]
+{url-cl}1.5.11$$...$$main[Full Changelog]
 
 .Added
 
@@ -83,6 +83,14 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Security
 
 ////
+
+[[v1.5.11]]
+== {url-tree}1.5.11[1.5.11] -- 2021-04-26
+
+{url-cl}1.5.10$$...$$1.5.11[Full Changelog]
+
+.Fixed
+- Fixed regression in 1.5.10 with optimized layout
 
 
 [[v1.5.10]]
