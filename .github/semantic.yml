@@ -3,3 +3,4 @@ titleOnly: true
 scopes:
   - core
   - public
+  - deps
