@@ -30,6 +30,7 @@ import javax.sql.DataSource
  * [T] type of sync classes
  * [R] related record implementation
  */
+@Suppress("LongParameterList")
 abstract class SyncConfig<T, R : UpdatableRecordImpl<R>?>(
     private val topic: String,
     private val chunkSize: Int,

@@ -37,6 +37,7 @@ import javax.sql.DataSource
  */
 @Configuration
 @Profile("!wickettest")
+@Suppress("LongParameterList")
 open class PaperSyncConfig(
     private val codeAggregator: CodeAggregator,
     @Qualifier("dslContext") jooqCore: DSLContext,

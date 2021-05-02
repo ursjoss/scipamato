@@ -36,6 +36,7 @@ private val log = logger()
  */
 @Component
 @Profile("!wickettest")
+@Suppress("LongParameterList")
 open class RefDataSyncJobLauncher(
     private val jobLauncher: JobLauncher,
     @Qualifier("syncLanguageJob") private val syncLanguageJob: Job,

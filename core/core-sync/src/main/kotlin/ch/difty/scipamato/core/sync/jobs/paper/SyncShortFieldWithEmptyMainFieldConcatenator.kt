@@ -34,7 +34,7 @@ internal open class SyncShortFieldWithEmptyMainFieldConcatenator : AbstractShort
         null
     }
 
-    // package-private for stubbing purposes
+    @Suppress("LongParameterList")
     @Throws(SQLException::class)
     open fun methodsFrom(
         rs: ResultSet,
