@@ -1,5 +1,6 @@
 package ch.difty.scipamato.core.sync.jobs.language
 
+import ch.difty.scipamato.core.sync.PublicLanguage
 import ch.difty.scipamato.core.sync.jobs.AbstractItemWriterTest
 import org.jooq.DSLContext
 

@@ -26,31 +26,31 @@ internal class SyncShortFieldWithEmptyMainFieldConcatenatorTest {
     private val throwingConcatenator = object : SyncShortFieldWithEmptyMainFieldConcatenator() {
         override fun methodsFrom(
             rs: ResultSet,
-            methodField: TableField<PaperRecord, String>,
-            methodStudyDesignField: TableField<PaperRecord, String>,
-            methodOutcomeField: TableField<PaperRecord, String>,
-            populationPlaceField: TableField<PaperRecord, String>,
-            exposurePollutantField: TableField<PaperRecord, String>,
-            exposureAssessmentField: TableField<PaperRecord, String>,
-            methodStatisticsField: TableField<PaperRecord, String>,
-            methodConfoundersField: TableField<PaperRecord, String>
+            methodField: TableField<PaperRecord, String?>,
+            methodStudyDesignField: TableField<PaperRecord, String?>,
+            methodOutcomeField: TableField<PaperRecord, String?>,
+            populationPlaceField: TableField<PaperRecord, String?>,
+            exposurePollutantField: TableField<PaperRecord, String?>,
+            exposureAssessmentField: TableField<PaperRecord, String?>,
+            methodStatisticsField: TableField<PaperRecord, String?>,
+            methodConfoundersField: TableField<PaperRecord, String?>
         ): String = throw SQLException("boom")
 
         override fun populationFrom(
             rs: ResultSet,
-            populationField: TableField<PaperRecord, String>,
-            populationPlaceField: TableField<PaperRecord, String>,
-            populationParticipantsField: TableField<PaperRecord, String>,
-            populationDurationField: TableField<PaperRecord, String>
+            populationField: TableField<PaperRecord, String?>,
+            populationPlaceField: TableField<PaperRecord, String?>,
+            populationParticipantsField: TableField<PaperRecord, String?>,
+            populationDurationField: TableField<PaperRecord, String?>
         ): String = throw SQLException("boom")
 
         override fun resultFrom(
             rs: ResultSet,
-            resultField: TableField<PaperRecord, String>,
-            resultMeasuredOutcomeField: TableField<PaperRecord, String>,
-            resultExposureRangeField: TableField<PaperRecord, String>,
-            resultEffectEstimateField: TableField<PaperRecord, String>,
-            conclusionField: TableField<PaperRecord, String>
+            resultField: TableField<PaperRecord, String?>,
+            resultMeasuredOutcomeField: TableField<PaperRecord, String?>,
+            resultExposureRangeField: TableField<PaperRecord, String?>,
+            resultEffectEstimateField: TableField<PaperRecord, String?>,
+            conclusionField: TableField<PaperRecord, String?>
         ): String = throw SQLException("boom")
     }
 

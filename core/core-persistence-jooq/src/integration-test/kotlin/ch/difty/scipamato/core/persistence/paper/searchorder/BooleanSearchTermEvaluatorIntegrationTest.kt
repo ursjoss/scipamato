@@ -1,12 +1,12 @@
 package ch.difty.scipamato.core.persistence.paper.searchorder
 
 import ch.difty.scipamato.core.entity.search.BooleanSearchTerm
+import ch.difty.scipamato.core.entity.search.IntegerSearchTerm
 import ch.difty.scipamato.core.entity.search.SearchTerm
 import ch.difty.scipamato.core.entity.search.SearchTermType
 import org.amshove.kluent.shouldBeEqualTo
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.Arguments
-import org.junit.jupiter.params.provider.MethodSource
+import org.junit.jupiter.api.DynamicTest
+import org.junit.jupiter.api.TestFactory
 import org.springframework.boot.test.autoconfigure.jooq.JooqTest
 import org.testcontainers.junit.jupiter.Testcontainers
 
@@ -24,24 +24,24 @@ open class BooleanSearchTermEvaluatorIntegrationTest : SearchTermEvaluatorIntegr
     override fun makeSearchTerm(rawSearchTerm: String) =
         SearchTerm.newSearchTerm(ID, searchTermType, SC_ID, FN, rawSearchTerm) as BooleanSearchTerm
 
-    @ParameterizedTest(name = "[{index}] {0} -> {1} ({4})")
-    @MethodSource("booleanParameters")
-    fun booleanTest(rawSearchTerm: String, value: Boolean?, condition: String) {
-        val st = makeSearchTerm(rawSearchTerm)
-        st.value shouldBeEqualTo value
+    @TestFactory
+    fun booleanTests() : List<DynamicTest> = mapOf(
+        "true" to BooleanExp(true, "fn = true"),
+        "false" to BooleanExp(false, "fn = false"),
+    ).map { (rawSearchTerm, exp) ->
+        DynamicTest.dynamicTest("$rawSearchTerm -> $exp") {
+            val st = makeSearchTerm(rawSearchTerm)
+            st.value shouldBeEqualTo exp.value
 
-        val ste = evaluator
-        val s = ste.evaluate(st)
+            val ste = evaluator
+            val s = ste.evaluate(st)
 
-        s.toString() shouldBeEqualTo condition
-    }
-
-    companion object {
-        @JvmStatic
-        @Suppress("unused")
-        private fun booleanParameters() = listOf(
-            Arguments.of("true", true, "fn = true"),
-            Arguments.of("false", false, "fn = false")
-        )
+            s.toString() shouldBeEqualTo exp.condition
+        }
     }
 }
+
+private data class BooleanExp(
+    val value: Boolean,
+    val condition: String,
+)
