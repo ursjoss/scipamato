@@ -31,7 +31,7 @@ object Lib {
     private const val openfeignVersion = "11.1"
 
     private const val jaxbCoreVersion = "3.0.0"
-    private const val jaxbImplVersion = "3.0.0"
+    private const val jaxbImplVersion = "3.0.1"
     private const val javaxActivationVersion = "1.2.0"
     private const val javaxElApiVersion = "3.0.1-b06"
     private const val javaxElVersion = "3.0.1-b12"
