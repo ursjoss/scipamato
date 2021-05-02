@@ -168,6 +168,6 @@ open class DataSourceConfig(
         DSL.using(batchConfiguration())
 
     @Bean
-    open fun unsynchronizedEntitiesWarner(@Qualifier("dslContext") jooqCore: DSLContext?): Warner =
-        UnsynchronizedEntitiesWarner(jooqCore!!)
+    open fun unsynchronizedEntitiesWarner(@Qualifier("dslContext") jooqCore: DSLContext): Warner =
+        UnsynchronizedEntitiesWarner(jooqCore)
 }

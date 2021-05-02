@@ -78,7 +78,7 @@ internal class RefDataSyncJobLauncherTest {
 
     @Test
     fun launching_withUnsynchronizedPapersAndAllStepsSuccessful_addsWarningBeforeStepResultsAndSucceeds() {
-        every { warner.findUnsynchronizedPapers() } returns java.util.Optional.of(UNSYNCHED_PAPERS_MSG)
+        every { warner.findUnsynchronizedPapers() } returns UNSYNCHED_PAPERS_MSG
         val expectedMessages = messagesWithAllStepsSuccessful(jobMap, true)
 
         val result = launcher.launch()
@@ -163,7 +163,7 @@ internal class RefDataSyncJobLauncherTest {
 
     @Test
     fun launching_withoutUnsynchronizedPapers_onlyAddsInfoMessages() {
-        every { warner.findUnsynchronizedPapers() } returns java.util.Optional.empty()
+        every { warner.findUnsynchronizedPapers() } returns null
         val expectedMessages = messagesWithAllStepsSuccessful(jobMap, false)
 
         val result = launcher.launch()
@@ -176,7 +176,7 @@ internal class RefDataSyncJobLauncherTest {
 
     @Test
     fun launching_withFailingStep_failsJob() {
-        every { warner.findUnsynchronizedPapers() } returns java.util.Optional.empty()
+        every { warner.findUnsynchronizedPapers() } returns null
         val expectedMessages = messagesWithFailingStepInPosition3(jobMap)
 
         val result = launcher.launch()
@@ -232,7 +232,7 @@ internal class RefDataSyncJobLauncherTest {
 
     @Test
     fun launching_withUnexpectedException_stopsRunningSubsequentJobs() {
-        every { warner.findUnsynchronizedPapers() } returns java.util.Optional.empty()
+        every { warner.findUnsynchronizedPapers() } returns null
         val expectedMessages = messagesWithExceptionAfter2nd(jobMap)
         expectedMessages.add(
             "Unexpected exception of type class java.lang.RuntimeException: unexpected exception somewhere"

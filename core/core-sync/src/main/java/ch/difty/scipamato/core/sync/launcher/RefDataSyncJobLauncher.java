@@ -153,8 +153,8 @@ public class RefDataSyncJobLauncher implements SyncJobLauncher {
     }
 
     private void warnAboutUnsynchronizedEntities(final SyncJobResult result) {
-        warner
-            .findUnsynchronizedPapers()
-            .ifPresent(result::setWarning);
+        String unsynchronized = warner.findUnsynchronizedPapers();
+        if (unsynchronized != null)
+            result.setWarning(unsynchronized);
     }
 }
