@@ -2,11 +2,13 @@
 
 package ch.difty.scipamato.core.sync.jobs
 
-import ch.difty.scipamato.core.sync.jobs.paper.PublicPaper
+import ch.difty.scipamato.core.sync.PublicLanguage
 import io.mockk.mockk
 import org.amshove.kluent.shouldBeEqualTo
 import org.jooq.DSLContext
 import org.junit.jupiter.api.Test
+import java.sql.Timestamp
+import java.time.Instant
 
 internal class ScipamatoItemWriterTest {
 
@@ -14,28 +16,36 @@ internal class ScipamatoItemWriterTest {
 
     private val dslContext = mockk<DSLContext>()
 
-    private val p1 = PublicPaper.builder().pmId(1).build()
-    private val p2 = PublicPaper.builder().pmId(10).build()
+    private val l1 = PublicLanguage(
+        code = "2",
+        lastSynched = Timestamp.from(Instant.now()),
+        mainLanguage = true,
+    )
+    private val l2 = PublicLanguage(
+        code = "3",
+        lastSynched = Timestamp.from(Instant.now()),
+        mainLanguage = true,
+    )
 
-    private val papers = mutableListOf<PublicPaper>(p1)
+    private val papers = mutableListOf(l1)
 
-    private var writer = object : ScipamatoItemWriter<PublicPaper>(dslContext, "topic") {
-        override fun executeUpdate(pp: PublicPaper): Int {
-            tracker += pp.pmId
-            return pp.pmId
+    private var writer = object : ScipamatoItemWriter<PublicLanguage>(dslContext, "topic") {
+        override fun executeUpdate(l: PublicLanguage): Int {
+            tracker += l.code.toInt()
+            return l.code.toInt()
         }
     }
 
     @Test
     fun writingOnePaper() {
         writer.write(papers)
-        tracker shouldBeEqualTo 1
+        tracker shouldBeEqualTo 2
     }
 
     @Test
     fun writingTwoPapers() {
-        papers.add(p2)
+        papers.add(l2)
         writer.write(papers)
-        tracker shouldBeEqualTo 11
+        tracker shouldBeEqualTo 5
     }
 }
