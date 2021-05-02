@@ -24,14 +24,14 @@ object Lib {
 
     private const val krisVersion = "0.3.2"
     const val jooqVersion = "3.14.9"
-    const val flywayVersion = "7.8.1"
+    const val flywayVersion = "7.8.2"
 
     private const val kotlinLoggingVersion = "2.0.6"
 
     private const val openfeignVersion = "11.1"
 
     private const val jaxbCoreVersion = "3.0.0"
-    private const val jaxbImplVersion = "3.0.0"
+    private const val jaxbImplVersion = "3.0.1"
     private const val javaxActivationVersion = "1.2.0"
     private const val javaxElApiVersion = "3.0.1-b06"
     private const val javaxElVersion = "3.0.1-b12"
@@ -62,7 +62,7 @@ object Lib {
     private const val versionsPluginVersion = "0.38.0"
     private const val jaxbPluginVersion = "4.4.2"
     private const val testSetsPluginVersion = "3.0.1"
-    private const val sonarqubePluginVersion = "3.1.1"
+    private const val sonarqubePluginVersion = "3.2.0"
     private const val detektPluginVersion = "1.16.0"
     private const val licensePluginVersion = "0.15.0"
     //endregion
