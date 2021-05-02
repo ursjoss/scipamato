@@ -33,8 +33,8 @@ internal class PseudoForeignKeyConstraintEnforcerTest {
     }
 
     @Test
-    fun executing_withNullPlural_returnsFinishedStatus_asIfPluralWereS() {
-        enforcer = PseudoForeignKeyConstraintEnforcer(stepMock, "code", null)
+    fun executing_withNoExplicitPlural_returnsFinishedStatus_asIfPluralWereS() {
+        enforcer = PseudoForeignKeyConstraintEnforcer(stepMock, "code")
         enforcer.execute(contributionMock, chunkContextMock) shouldBeEqualTo RepeatStatus.FINISHED
         verify { stepMock.execute() }
     }
