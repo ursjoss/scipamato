@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.sync.code
 
-import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldContainSame
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.specification.describe
 
@@ -43,7 +43,7 @@ object HidingInternalsCodeAggregatorSpec : Spek({
                 it("should be aggregated to $e") {
                     ca.setInternalCodes(internals)
                     ca.load(f)
-                    ca.aggregatedCodes shouldBeEqualTo e
+                    ca.aggregatedCodes shouldContainSame e
                 }
             }
         }
@@ -69,7 +69,7 @@ object HidingInternalsCodeAggregatorSpec : Spek({
             describe("with $f") {
                 it("should be aggregated to $e") {
                     ca.load(f)
-                    ca.codesPopulation shouldBeEqualTo e
+                    ca.codesPopulation shouldContainSame e
                 }
             }
         }
@@ -108,7 +108,7 @@ object HidingInternalsCodeAggregatorSpec : Spek({
             describe("with $f") {
                 it("should be aggregated to $e") {
                     ca.load(f)
-                    ca.codesStudyDesign shouldBeEqualTo e
+                    ca.codesStudyDesign shouldContainSame e
                 }
             }
         }
@@ -141,9 +141,9 @@ object HidingInternalsCodeAggregatorSpec : Spek({
                 it("should be aggregated to $e") {
                     ca.setInternalCodes(internals)
                     ca.load(f)
-                    ca.aggregatedCodes shouldBeEqualTo e.aggregated
-                    ca.codesPopulation shouldBeEqualTo e.population
-                    ca.codesStudyDesign shouldBeEqualTo e.studyDesign
+                    ca.aggregatedCodes shouldContainSame e.aggregated
+                    ca.codesPopulation shouldContainSame e.population
+                    ca.codesStudyDesign shouldContainSame e.studyDesign
                 }
             }
         }
