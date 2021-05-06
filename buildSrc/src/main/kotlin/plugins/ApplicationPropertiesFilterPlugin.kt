@@ -3,6 +3,7 @@ package plugins
 import org.apache.tools.ant.filters.ReplaceTokens
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.file.DuplicatesStrategy
 import org.gradle.kotlin.dsl.filter
 import org.gradle.kotlin.dsl.named
 import org.gradle.language.jvm.tasks.ProcessResources
@@ -26,6 +27,7 @@ class ApplicationPropertiesFilterPlugin : Plugin<Project> {
                     val tokens: Map<String, Any> = project.collectProperties()
                     inputs.properties(tokens)
                     filter<ReplaceTokens>("tokens" to tokens)
+                    duplicatesStrategy = DuplicatesStrategy.WARN
                 }
                 into("build/resources/main")
             }
