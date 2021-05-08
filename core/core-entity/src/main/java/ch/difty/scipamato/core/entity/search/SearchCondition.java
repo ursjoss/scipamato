@@ -591,7 +591,7 @@ public class SearchCondition implements ScipamatoFilter, CodeBoxAware, Newslette
         if (!codes.isEmpty()) {
             if (sb.length() > 0)
                 sb.append(JOIN_DELIMITER);
-            sb.append(codes.toString());
+            sb.append(codes);
         }
         if (newsletterIssue != null) {
             if (sb.length() > 0)

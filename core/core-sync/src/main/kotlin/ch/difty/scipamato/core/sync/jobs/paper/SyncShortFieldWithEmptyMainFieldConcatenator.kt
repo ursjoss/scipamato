@@ -34,7 +34,7 @@ internal open class SyncShortFieldWithEmptyMainFieldConcatenator : AbstractShort
         null
     }
 
-    @Suppress("LongParameterList")
+    @Suppress("LongParameterList", "kotlin:S107")
     @Throws(SQLException::class)
     open fun methodsFrom(
         rs: ResultSet,

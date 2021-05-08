@@ -278,7 +278,7 @@ abstract class ResultPanel protected constructor(
             headerPart = headerPart,
             brand = brand,
             goalsLabel = getLabelResourceFor(PaperFields.GOALS.fieldName),
-            methodsLabel = getLabelResourceFor(PaperFields.METHODS.fieldName),
+                methodsLabel = getLabelResourceFor(PaperFields.METHODS.fieldName),
             methodOutcomeLabel = getLabelResourceFor(PaperFields.METHOD_OUTCOME.fieldName),
             resultMeasuredOutcomeLabel = getLabelResourceFor(PaperFields.RESULT_MEASURED_OUTCOME.fieldName),
             methodStudyDesignLabel = getLabelResourceFor(PaperFields.METHOD_STUDY_DESIGN.fieldName),

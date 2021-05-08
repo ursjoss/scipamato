@@ -212,7 +212,7 @@ public abstract class JooqBySearchOrderRepo<T extends IdScipamatoEntity<Long>, M
             final SelectConditionStep<Record1<Integer>> step1 = step0.and(PAPER_ATTACHMENT.NAME.containsIgnoreCase(sc.getAttachmentNameMask()));
             attConditions.add(() -> DSL.exists(step1));
         } else if (sc.getHasAttachments() != null) {
-            if (sc.getHasAttachments())
+            if (Boolean.TRUE.equals(sc.getHasAttachments()))
                 attConditions.add(() -> DSL.exists(step0));
             else
                 attConditions.add(() -> DSL.notExists(step0));

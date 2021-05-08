@@ -93,7 +93,7 @@ public abstract class AbstractPubmedArticleFacade implements PubmedArticleFacade
     private String combine(final String individualAuthors, final String collectives) {
         final StringBuilder comb = new StringBuilder();
         comb.append(individualAuthors);
-        if (!StringUtils.isEmpty(collectives)) {
+        if (StringUtils.hasLength(collectives)) {
             if (comb.length() > 0)
                 comb.append("; ");
             comb.append(collectives);
@@ -110,7 +110,7 @@ public abstract class AbstractPubmedArticleFacade implements PubmedArticleFacade
             .stream()
             .map(Author::getLastNameOrForeNameOrInitialsOrSuffixOrCollectiveName)
             .flatMap(List<java.lang.Object>::stream)
-            .filter(o -> o instanceof LastName)
+            .filter(LastName.class::isInstance)
             .map(ln -> ((LastName) ln).getvalue())
             .limit(1)
             .findFirst()
@@ -119,7 +119,7 @@ public abstract class AbstractPubmedArticleFacade implements PubmedArticleFacade
                 .stream()
                 .map(Author::getLastNameOrForeNameOrInitialsOrSuffixOrCollectiveName)
                 .flatMap(List<java.lang.Object>::stream)
-                .filter(o -> o instanceof CollectiveName)
+                .filter(CollectiveName.class::isInstance)
                 .map(cn -> ((CollectiveName) cn).getvalue())
                 .limit(1)
                 .findFirst()

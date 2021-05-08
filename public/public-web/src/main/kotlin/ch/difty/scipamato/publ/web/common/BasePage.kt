@@ -82,7 +82,9 @@ abstract class BasePage<T> : AbstractPage<T> {
      *
      * @param response the response to render the css header item references on
      */
-    open fun renderAdditionalCommercialFonts(response: IHeaderResponse) {}
+    open fun renderAdditionalCommercialFonts(response: IHeaderResponse) {
+        // no default implementation
+    }
 
     /**
      * Adds pym.js to the page and instantiates the `pymChild`.
