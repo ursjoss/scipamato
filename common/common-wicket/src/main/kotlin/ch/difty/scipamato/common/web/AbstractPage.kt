@@ -91,7 +91,9 @@ abstract class AbstractPage<T> : GenericWebPage<T> {
     /**
      * Override if you need to extend the [Navbar]
      */
-    private fun extendNavBar() {}
+    private fun extendNavBar() {
+        // no default implementation
+    }
 
     private fun createAndAddFeedbackPanel(label: String) {
         feedbackPanel = NotificationPanel(label).apply {
