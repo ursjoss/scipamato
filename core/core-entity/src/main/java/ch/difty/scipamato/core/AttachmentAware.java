@@ -2,8 +2,6 @@ package ch.difty.scipamato.core;
 
 import org.jetbrains.annotations.Nullable;
 
-import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic;
-
 /**
  * Accessor methods to the attachment fields for searching attachment specific stuff.
  *

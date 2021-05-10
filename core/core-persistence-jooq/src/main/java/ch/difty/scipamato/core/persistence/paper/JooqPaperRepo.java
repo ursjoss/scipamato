@@ -144,7 +144,7 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
                 .and(CODE_CLASS_TR.LANG_CODE.equal(languageCode)))
             .where(PAPER_CODE.PAPER_ID.equal(entity.getId()))
             .fetchInto(Code.class);
-        if (codes != null && !codes.isEmpty())
+        if (!codes.isEmpty())
             entity.addCodes(codes);
     }
 

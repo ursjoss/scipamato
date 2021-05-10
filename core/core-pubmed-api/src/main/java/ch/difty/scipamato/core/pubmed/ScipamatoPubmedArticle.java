@@ -65,13 +65,13 @@ class ScipamatoPubmedArticle extends AbstractPubmedArticleFacade {
         final List<java.lang.Object> datishObjects = pubDate.getYearOrMonthOrDayOrSeasonOrMedlineDate();
         return datishObjects
             .stream()
-            .filter(o -> o instanceof Year)
+            .filter(Year.class::isInstance)
             .map(Year.class::cast)
             .map(Year::getvalue)
             .findFirst()
             .orElseGet(() -> datishObjects
                 .stream()
-                .filter(o -> o instanceof MedlineDate)
+                .filter(MedlineDate.class::isInstance)
                 .map(MedlineDate.class::cast)
                 .map(MedlineDate::getvalue)
                 .map(mld -> mld.substring(0, 4))
@@ -110,7 +110,7 @@ class ScipamatoPubmedArticle extends AbstractPubmedArticleFacade {
 
     private void appendVolume(final JournalIssue journalIssue, final StringBuilder sb) {
         final String volume = journalIssue.getVolume();
-        if (!StringUtils.isEmpty(volume)) {
+        if (StringUtils.hasLength(volume)) {
             sb.append(" ");
             sb.append(volume);
         }
@@ -118,7 +118,7 @@ class ScipamatoPubmedArticle extends AbstractPubmedArticleFacade {
 
     private void appendIssue(final JournalIssue journalIssue, final StringBuilder sb) {
         final String issue = journalIssue.getIssue();
-        if (!StringUtils.isEmpty(issue)) {
+        if (StringUtils.hasLength(issue)) {
             sb.append(" (");
             sb.append(issue);
             sb.append(")");
@@ -129,17 +129,17 @@ class ScipamatoPubmedArticle extends AbstractPubmedArticleFacade {
         if (!CollectionUtils.isEmpty(paginationElocation)) {
             final String pages = paginationElocation
                 .stream()
-                .filter(pe -> pe instanceof Pagination)
+                .filter(Pagination.class::isInstance)
                 .flatMap(p -> ((Pagination) p)
                     .getStartPageOrEndPageOrMedlinePgn()
                     .stream())
-                .filter(mlp -> mlp instanceof MedlinePgn)
+                .filter(MedlinePgn.class::isInstance)
                 .map(mlp -> complementPageRange(((MedlinePgn) mlp).getvalue()))
                 .map(range -> ": " + range)
                 .findFirst()
                 .orElseGet(() -> paginationElocation
                     .stream()
-                    .filter(pe -> pe instanceof ELocationID)
+                    .filter(ELocationID.class::isInstance)
                     .map(ELocationID.class::cast)
                     .filter(eli -> PII.equals(eli.getEIdType()))
                     .map(eli -> ". " + eli.getEIdType() + ": " + eli.getvalue())
@@ -225,7 +225,7 @@ class ScipamatoPubmedArticle extends AbstractPubmedArticleFacade {
             doi = article
                 .getPaginationOrELocationID()
                 .stream()
-                .filter(pel -> pel instanceof ELocationID)
+                .filter(ELocationID.class::isInstance)
                 .map(l -> ((ELocationID) l).getvalue())
                 .findFirst()
                 .orElse(null);

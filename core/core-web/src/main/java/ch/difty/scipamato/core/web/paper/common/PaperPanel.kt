@@ -257,7 +257,10 @@ abstract class PaperPanel<T>(
     /**
      * If more validators are required, override this
      */
-    protected open fun considerAddingMoreValidation() {}
+    protected open fun considerAddingMoreValidation() {
+        // no default implementation
+    }
+
     private fun newPmIdChangeBehavior(): OnChangeAjaxBehavior = object :
         OnChangeAjaxBehavior() {
         override fun onUpdate(target: AjaxRequestTarget) {
@@ -355,6 +358,7 @@ abstract class PaperPanel<T>(
         authors: TextArea<String>, firstAuthorOverridden: CheckBox,
         firstAuthor: TextField<String>,
     ) {
+        // not default implementation
     }
 
     protected abstract fun newNavigationButton(
@@ -951,7 +955,9 @@ abstract class PaperPanel<T>(
      * @param target
      * the ajax request target
      */
-    protected open fun getPubmedArticleAndCompare(target: AjaxRequestTarget) {}
+    protected open fun getPubmedArticleAndCompare(target: AjaxRequestTarget) {
+        // no default implementation
+    }
 
     companion object {
         private const val serialVersionUID = 1L
