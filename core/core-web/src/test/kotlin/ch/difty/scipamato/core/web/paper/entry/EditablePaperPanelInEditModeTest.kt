@@ -293,6 +293,7 @@ internal class EditablePaperPanelInEditModeTest : EditablePaperPanelTest() {
         verifyPubmedRetrievalButtonClicked(1)
     }
 
+    @Suppress("LongParameterList")
     private fun fixPubmedRetrievalButtonClicked(
         a: String,
         fa: String,
