@@ -73,6 +73,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Changed
 - Bump gradle-wrapper, gradle-testsets-plugin, license-gradle-plugin, jaxbCore, openfeign
+  flyway
 
 ////
 .Deprecated
