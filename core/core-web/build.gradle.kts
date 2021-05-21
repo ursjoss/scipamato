@@ -80,7 +80,7 @@ dependencies {
     implementation(Lib.jaxbCore())
     implementation(Lib.jaxb("impl"))
     implementation(Lib.javaxActivation())
-    implementation(Lib.jaxbRuntime())
+    runtimeOnly(Lib.jaxbRuntime())
     implementation(Lib.jacksonKotlin())
 
     testImplementation(project(Module.scipamatoCommon("test")))
