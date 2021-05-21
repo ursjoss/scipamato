@@ -9,7 +9,7 @@ object Lib {
     //region:dependencyVersions
     private const val kotlinVersion = "1.4.32"
 
-    private const val springBootVersion = "2.4.5"
+    private const val springBootVersion = "2.4.6"
     private const val springBootAdminVersion = "2.4.1"
     const val springCloudVersion = "2020.0.0"
     private const val springCloudStarterVersion = "3.0.2"
@@ -19,12 +19,12 @@ object Lib {
     private const val wicketstuffVersion = "9.3.0"
     private const val wicketJqueryUiVersion = "9.3.1"
     private const val wicketBootstrapVersion = "4.0.4"
-    private const val jasperReportVersion = "6.16.0"
+    private const val jasperReportVersion = "6.17.0"
     private const val univocityParsersVersion = "2.9.1"
 
     private const val krisVersion = "0.3.2"
     const val jooqVersion = "3.14.9"
-    const val flywayVersion = "7.8.2"
+    const val flywayVersion = "7.9.1"
 
     private const val kotlinLoggingVersion = "2.0.6"
 
@@ -41,7 +41,7 @@ object Lib {
 
     private const val equalsverifierVersion = "3.6"
 
-    private const val junit5Version = "5.7.1"
+    private const val junit5Version = "5.7.2"
 
     private const val testcontainersVersion = "1.15.3"
 
@@ -63,7 +63,7 @@ object Lib {
     private const val jaxbPluginVersion = "4.4.2"
     private const val testSetsPluginVersion = "4.0.0"
     private const val sonarqubePluginVersion = "3.2.0"
-    private const val detektPluginVersion = "1.16.0"
+    private const val detektPluginVersion = "1.17.1"
     private const val licensePluginVersion = "0.16.1"
     //endregion
 

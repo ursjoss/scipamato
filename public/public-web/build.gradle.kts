@@ -51,6 +51,7 @@ dependencies {
 
     implementation(Lib.jaxbApi())
     implementation(Lib.jaxbCore())
+    runtimeOnly(Lib.jaxbRuntime())
     implementation(Lib.jaxb("impl"))
     implementation(Lib.javaxActivation())
     implementation(Lib.jacksonKotlin())
