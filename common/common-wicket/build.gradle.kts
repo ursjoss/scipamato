@@ -59,11 +59,11 @@ dependencies {
     testImplementation(Lib.lombok())
     testAnnotationProcessor(Lib.lombok())
 
-    testLibCompile(project(Module.scipamatoCommon("test")))
+    testImplementation(project(Module.scipamatoCommon("test")))
 
-    testLibImplementation(Lib.lombok())
-    testLibAnnotationProcessor(Lib.lombok())
+    testImplementation(Lib.lombok())
+    testAnnotationProcessor(Lib.lombok())
 
-    testLibImplementation(Lib.servletApi())
-    testLibImplementation(Lib.validationApi())
+    testImplementation(Lib.servletApi())
+    testImplementation(Lib.validationApi())
 }

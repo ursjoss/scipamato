@@ -112,22 +112,11 @@ subprojects {
     apply<DetektPlugin>()
 
     testSets {
-        val testLib by libraries.creating {
-            dirName = "test-lib"
-        }
-
-        named("unitTest") {
-            imports(testLib)
-        }
-
         register("integrationTest") {
             dirName = "integration-test"
-            imports(testLib)
         }
-
         register("adhocTest") {
             dirName = "adhoc-test"
-            imports(testLib)
         }
     }
 
