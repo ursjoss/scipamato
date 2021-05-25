@@ -50,6 +50,7 @@ object Lib {
     private const val kluentVersion = "1.65"
     private const val mockkVersion = "1.11.0"
     private const val springMockkVersion = "3.0.1"
+    const val jacocoToolVersion = "0.8.7"
 
     private const val jsr305Version = "3.0.2"
     //endregion

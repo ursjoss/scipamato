@@ -262,6 +262,11 @@ tasks {
         dependsOn(projectsWithCoverage.map { it.tasks.getByName("jacocoTestReport") })
         dependsOn(subprojects.map { it.tasks.getByName("detekt") })
     }
+    projectsWithCoverage.forEach { project ->
+        project.jacoco {
+            toolVersion = Lib.jacocoToolVersion
+        }
+    }
 }
 
 downloadLicenses {
