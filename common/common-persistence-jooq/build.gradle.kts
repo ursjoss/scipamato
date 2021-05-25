@@ -10,6 +10,6 @@ dependencies {
     implementation(project(Module.scipamatoCommon("entity")))
     implementation(project(Module.scipamatoCommon("utils")))
 
-    testLibApi(project(Module.scipamatoCommon("test")))
-    testLibApi(project(Module.scipamatoCommon("persistence-jooq-test")))
+    testApi(project(Module.scipamatoCommon("test")))
+    testApi(project(Module.scipamatoCommon("persistence-jooq-test")))
 }

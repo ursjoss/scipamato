@@ -7,7 +7,7 @@ import java.util.Properties
 object Lib {
 
     //region:dependencyVersions
-    private const val kotlinVersion = "1.4.32"
+    private const val kotlinVersion = "1.5.10"
 
     private const val springBootVersion = "2.5.0"
     private const val springBootAdminVersion = "2.4.1"
@@ -205,9 +205,6 @@ fun DependencyHandler.runtimeOnly(dependencyNotation: Dep): Dependency? = add("r
 fun DependencyHandler.testAnnotationProcessor(dependencyNotation: Dep): Dependency? = add("testAnnotationProcessor", dependencyNotation.id)
 fun DependencyHandler.testImplementation(dependencyNotation: Dep): Dependency? = add("testImplementation", dependencyNotation.id)
 fun DependencyHandler.testRuntimeOnly(dependencyNotation: Dep): Dependency? = add("testRuntimeOnly", dependencyNotation.id)
-fun DependencyHandler.testLibImplementation(dependencyNotation: Dep): Dependency? = add("testLibImplementation", dependencyNotation.id)
-fun DependencyHandler.testLibAnnotationProcessor(dependencyNotation: Dep): Dependency? = add("testLibAnnotationProcessor", dependencyNotation.id)
-fun DependencyHandler.adhocTestImplementation(dependencyNotation: Dep): Dependency? = add("adhocTestImplementation", dependencyNotation.id)
 fun DependencyHandler.integrationTestImplementation(dependencyNotation: Dep): Dependency? = add("integrationTestImplementation", dependencyNotation.id)
 fun DependencyHandler.integrationTestAnnotationProcessor(dependencyNotation: Dep): Dependency? = add("integrationTestAnnotationProcessor", dependencyNotation.id)
 fun DependencyHandler.integrationTestRuntimeOnly(dependencyNotation: Dep): Dependency? = add("integrationTestRuntimeOnly", dependencyNotation.id)

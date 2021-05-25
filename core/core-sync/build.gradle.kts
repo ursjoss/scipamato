@@ -33,9 +33,9 @@ dependencies {
     runtimeOnly(Lib.postgres())
     implementation(Lib.jOOQ("jooq"))
 
-    testLibCompile(project(Module.scipamatoCommon("persistence-jooq-test")))
-    testLibCompile(project(Module.scipamatoCommon("test")))
-    testLibImplementation(Lib.jOOQ("jooq"))
+    testImplementation(project(Module.scipamatoCommon("persistence-jooq-test")))
+    testImplementation(project(Module.scipamatoCommon("test")))
+    testImplementation(Lib.jOOQ("jooq"))
 
     testImplementation(Lib.lombok())
     testAnnotationProcessor(Lib.lombok())
