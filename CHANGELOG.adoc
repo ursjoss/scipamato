@@ -67,15 +67,13 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[unreleased]]
 == [unreleased]
 
-{url-cl}1.5.12$$...$$main[Full Changelog]
+{url-cl}1.6.0$$...$$main[Full Changelog]
 
 .Added
 
-.Changed
-- Bump spring-boot, gradle-wrapper, kotlin, gradle-testsets-plugin, license-gradle-plugin, jaxbCore, openfeign
-  jOOQ, flyway, jasperreports, junit, detekt, equalsverifier
-
 ////
+.Changed
+
 .Deprecated
 
 .Removed
@@ -83,8 +81,17 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Fixed
 
 .Security
-
 ////
+
+
+[[v1.6.0]]
+== {url-tree}1.6.0[1.6.0] -- 2021-05-26
+
+{url-cl}1.5.12$$...$$1.6.0[Full Changelog]
+
+.Changed
+- Bump spring-boot, gradle-wrapper, kotlin, gradle-testsets-plugin, license-gradle-plugin, jaxbCore, openfeign
+  jOOQ, flyway, jasperreports, junit, detekt, equalsverifier
 
 
 [[v1.5.12]]
