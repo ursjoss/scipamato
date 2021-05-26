@@ -73,7 +73,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Changed
 - Bump spring-boot, gradle-wrapper, kotlin, gradle-testsets-plugin, license-gradle-plugin, jaxbCore, openfeign
-  jOOQ, flyway, jasperreports, junit, detekt
+  jOOQ, flyway, jasperreports, junit, detekt, equalsverifier
 
 ////
 .Deprecated
