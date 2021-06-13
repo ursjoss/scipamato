@@ -71,9 +71,12 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Added
 
-////
 .Changed
+- Bumped spring-boot, flyway, gradle-versions-plugin, jaxb-gradle-plugin, kotlin-logging
+  spring-cloud, spring-cloud-starter
+  kluent, sonarqube-gradle-plugin
 
+////
 .Deprecated
 
 .Removed

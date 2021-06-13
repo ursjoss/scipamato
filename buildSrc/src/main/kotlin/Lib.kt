@@ -9,10 +9,10 @@ object Lib {
     //region:dependencyVersions
     private const val kotlinVersion = "1.5.10"
 
-    private const val springBootVersion = "2.5.0"
+    private const val springBootVersion = "2.5.1"
     private const val springBootAdminVersion = "2.4.1"
-    const val springCloudVersion = "2020.0.0"
-    private const val springCloudStarterVersion = "3.0.2"
+    const val springCloudVersion = "2020.0.3"
+    private const val springCloudStarterVersion = "3.0.3"
 
     private const val wicketSpringBootStarterVersion = "3.0.4"
     private const val wicketVersion = "9.3.0"
@@ -24,9 +24,9 @@ object Lib {
 
     private const val krisVersion = "0.3.2"
     const val jooqVersion = "3.14.11"
-    const val flywayVersion = "7.9.1"
+    const val flywayVersion = "7.10.0"
 
-    private const val kotlinLoggingVersion = "2.0.6"
+    private const val kotlinLoggingVersion = "2.0.8"
 
     private const val openfeignVersion = "11.2"
 
@@ -47,7 +47,7 @@ object Lib {
 
     private const val spekVersion = "2.0.15"
     private const val kwikVersion = "0.8.4"
-    private const val kluentVersion = "1.65"
+    private const val kluentVersion = "1.66"
     private const val mockkVersion = "1.11.0"
     private const val springMockkVersion = "3.0.1"
     const val jacocoToolVersion = "0.8.7"
@@ -60,10 +60,10 @@ object Lib {
     private const val lombokPluginVersion = "5.3.3.3"
     private const val jooqModelatorPluginVersion = "3.9.0"
     private const val reckonPluginVersion = "0.13.0"
-    private const val versionsPluginVersion = "0.38.0"
-    private const val jaxbPluginVersion = "4.4.2"
+    private const val versionsPluginVersion = "0.39.0"
+    private const val jaxbPluginVersion = "5.1.0"
     private const val testSetsPluginVersion = "4.0.0"
-    private const val sonarqubePluginVersion = "3.2.0"
+    private const val sonarqubePluginVersion = "3.3"
     private const val detektPluginVersion = "1.17.1"
     private const val licensePluginVersion = "0.16.1"
     //endregion
