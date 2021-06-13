@@ -26,7 +26,7 @@ object Lib {
     const val jooqVersion = "3.14.11"
     const val flywayVersion = "7.9.1"
 
-    private const val kotlinLoggingVersion = "2.0.6"
+    private const val kotlinLoggingVersion = "2.0.8"
 
     private const val openfeignVersion = "11.2"
 
