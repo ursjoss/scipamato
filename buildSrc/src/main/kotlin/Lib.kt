@@ -63,7 +63,7 @@ object Lib {
     private const val versionsPluginVersion = "0.39.0"
     private const val jaxbPluginVersion = "5.1.0"
     private const val testSetsPluginVersion = "4.0.0"
-    private const val sonarqubePluginVersion = "3.2.0"
+    private const val sonarqubePluginVersion = "3.3"
     private const val detektPluginVersion = "1.17.1"
     private const val licensePluginVersion = "0.16.1"
     //endregion
