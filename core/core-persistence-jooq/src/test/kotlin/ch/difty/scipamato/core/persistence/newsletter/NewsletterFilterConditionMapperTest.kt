@@ -23,20 +23,20 @@ internal class NewsletterFilterConditionMapperTest :
     fun creatingWhereCondition_withIssueMask_searchesFirstIssue() {
         val pattern = "im"
         filter.issueMask = pattern
-        mapper.map(filter).toString().toLowerCase() shouldBeEqualTo makeWhereClause(pattern, "ISSUE")
+        mapper.map(filter).toString() shouldBeEqualTo makeWhereClause(pattern, "issue")
     }
 
     @Test
     fun creatingWhereCondition_withPublicationStatus() {
         filter.publicationStatus = PublicationStatus.CANCELLED
-        mapper.map(filter).toString().toLowerCase() shouldBeEqualTo
+        mapper.map(filter).toString() shouldBeEqualTo
             """"public"."newsletter"."publication_status" = -1"""
     }
 
     @Test
     fun creatingWhereCondition_withNewsletterTopic() {
         filter.newsletterTopic = NewsletterTopic(5, "foo")
-        mapper.map(filter).toString().toLowerCase() shouldBeEqualTo
+        mapper.map(filter).toString() shouldBeEqualTo
             """"public"."newsletter"."id" in (
             |  select "public"."paper_newsletter"."newsletter_id"
             |  from "public"."paper_newsletter"

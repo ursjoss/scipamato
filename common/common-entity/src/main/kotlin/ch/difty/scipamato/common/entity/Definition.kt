@@ -2,6 +2,7 @@ package ch.difty.scipamato.common.entity
 
 import java.io.Serializable
 import java.time.LocalDateTime
+import java.util.*
 
 /**
  * Interface for entities that have translations in multiple languages.
@@ -85,11 +86,11 @@ abstract class AbstractDefinitionEntity<T : DefinitionTranslation, ID>(
 
             val mainNames = trs.mapNotNull { it.name }.joinToString("','")
             val sb = StringBuilder()
-            sb.append("${mainLanguageCode.toUpperCase()}: ")
+            sb.append("${mainLanguageCode.uppercase(Locale.getDefault())}: ")
             sb.append(if (mainNames.isEmpty()) "n.a." else "'$mainNames'")
             translations.filterNot { it.key == mainLanguageCode }.forEach { (kw, value) ->
                 sb.append("; ")
-                sb.append(kw.toUpperCase()).append(": ")
+                sb.append(kw.uppercase(Locale.getDefault())).append(": ")
                 val nameString = value.mapNotNull { it.name }.joinToString("','")
                 if (nameString.isNotBlank()) sb.append("'$nameString'") else sb.append("n.a.")
             }

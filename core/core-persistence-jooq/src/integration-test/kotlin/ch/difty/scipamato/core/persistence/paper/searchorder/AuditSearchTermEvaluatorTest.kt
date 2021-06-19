@@ -82,7 +82,7 @@ internal open class AuditSearchTermEvaluatorTest {
     @Test
     fun buildingConditionForWord_appliesContains() {
         expectToken(TokenType.WORD, "foo", "paper.created_by")
-        e.evaluate(stMock).toString().toLowerCase() shouldBeEqualTo
+        e.evaluate(stMock).toString() shouldBeEqualTo
             """"public"."paper"."id" in (
                    |  select "public"."paper"."id"
                    |  from "public"."paper"
@@ -95,7 +95,7 @@ internal open class AuditSearchTermEvaluatorTest {
     @Test
     fun buildingConditionForWord_appliesContains2() {
         expectToken(TokenType.WORD, "foo", "paper.last_modified_by")
-        e.evaluate(stMock).toString().toLowerCase() shouldBeEqualTo
+        e.evaluate(stMock).toString() shouldBeEqualTo
             """"public"."paper"."id" in (
                   |  select "public"."paper"."id"
                   |  from "public"."paper"
@@ -108,14 +108,14 @@ internal open class AuditSearchTermEvaluatorTest {
     @Test
     fun buildingConditionForGreaterOrEquals() {
         expectToken(TokenType.GREATEROREQUAL, "2019-01-05", "paper.created")
-        e.evaluate(stMock).toString().toLowerCase() shouldBeEqualTo
+        e.evaluate(stMock).toString() shouldBeEqualTo
             "paper.created >= timestamp '2019-01-05 00:00:00.0'"
     }
 
     @Test
     fun buildingConditionForGreaterOrEquals2() {
         expectToken(TokenType.GREATEROREQUAL, "2019-01-05", "paper.last_modified")
-        e.evaluate(stMock).toString().toLowerCase() shouldBeEqualTo
+        e.evaluate(stMock).toString() shouldBeEqualTo
             "paper.last_modified >= timestamp '2019-01-05 00:00:00.0'"
     }
 

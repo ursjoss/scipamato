@@ -29,23 +29,23 @@ internal class PaperFilterConditionMapperTest : FilterConditionMapperTest<PaperR
     fun creatingWhereCondition_withAuthorMask_searchesFirstAuthorAndAuthors() {
         val pattern = "am"
         filter.authorMask = pattern
-        mapper.map(filter).toString().toLowerCase() shouldBeEqualTo makeWhereClause(pattern, "FIRST_AUTHOR", "AUTHORS")
+        mapper.map(filter).toString() shouldBeEqualTo makeWhereClause(pattern, "first_author", "authors")
     }
 
     @Test
     fun creatingWhereCondition_withMethodsMask_searchesExposureAndMethodFields() {
         val pattern = "m"
         filter.methodsMask = pattern
-        mapper.map(filter).toString().toLowerCase() shouldBeEqualTo makeWhereClause(
+        mapper.map(filter).toString() shouldBeEqualTo makeWhereClause(
             pattern,
-            "EXPOSURE_POLLUTANT",
-            "EXPOSURE_ASSESSMENT",
-            "METHODS",
-            "METHOD_STUDY_DESIGN",
-            "METHOD_OUTCOME",
-            "METHOD_STATISTICS",
-            "METHOD_CONFOUNDERS",
-            "POPULATION_PLACE"
+            "exposure_pollutant",
+            "exposure_assessment",
+            "methods",
+            "method_study_design",
+            "method_outcome",
+            "method_statistics",
+            "method_confounders",
+            "population_place"
         )
     }
 
@@ -53,23 +53,23 @@ internal class PaperFilterConditionMapperTest : FilterConditionMapperTest<PaperR
     fun creatingWhereCondition_withSearchMask_searchesRemainingTextFields() {
         val pattern = "foo"
         filter.searchMask = pattern
-        mapper.map(filter).toString().toLowerCase() shouldBeEqualTo makeWhereClause(
+        mapper.map(filter).toString() shouldBeEqualTo makeWhereClause(
             pattern,
-            "DOI",
-            "LOCATION",
-            "TITLE",
-            "GOALS",
-            "POPULATION",
-            "POPULATION_PARTICIPANTS",
-            "POPULATION_DURATION",
-            "RESULT",
-            "RESULT_EXPOSURE_RANGE",
-            "RESULT_EFFECT_ESTIMATE",
-            "RESULT_MEASURED_OUTCOME",
-            "CONCLUSION",
-            "COMMENT",
-            "INTERN",
-            "ORIGINAL_ABSTRACT"
+            "doi",
+            "location",
+            "title",
+            "goals",
+            "population",
+            "population_participants",
+            "population_duration",
+            "result",
+            "result_exposure_range",
+            "result_effect_estimate",
+            "result_measured_outcome",
+            "conclusion",
+            "comment",
+            "intern",
+            "original_abstract"
         )
     }
 

@@ -18,7 +18,7 @@ internal class UserFilterConditionMapperTest :
     fun creatingWhereCondition_withNameMask_searchesUserNameAndFirstNameAndLastName() {
         val pattern = "am"
         filter.nameMask = pattern
-        mapper.map(filter).toString().toLowerCase() shouldBeEqualTo
+        mapper.map(filter).toString() shouldBeEqualTo
             makeWhereClause(pattern, "user_name", "first_name", "last_name")
     }
 

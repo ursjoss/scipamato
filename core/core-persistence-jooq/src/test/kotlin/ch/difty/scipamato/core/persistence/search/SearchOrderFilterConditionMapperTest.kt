@@ -20,11 +20,11 @@ internal class SearchOrderFilterConditionMapperTest :
     @Test
     fun creatingWhereCondition_withNameMask_searchesForName() {
         filter.nameMask = "fOo"
-        mapper.map(filter).toString().toLowerCase() shouldBeEqualTo
+        mapper.map(filter).toString() shouldBeEqualTo
             """"public"."search_order"."name" ilike ('%' || replace(
                 |  replace(
                 |    replace(
-                |      'foo',
+                |      'fOo',
                 |      '!',
                 |      '!!'
                 |    ),
@@ -39,11 +39,11 @@ internal class SearchOrderFilterConditionMapperTest :
     @Test
     fun creatingWhereCondition_withOwnerIncludingGlobal_searchesForOwnerIdOrGlobal() {
         filter.ownerIncludingGlobal = 10
-        mapper.map(filter).toString().toLowerCase() shouldBeEqualTo
+        mapper.map(filter).toString() shouldBeEqualTo
             """(
-            |  "PUBLIC"."SEARCH_ORDER"."OWNER" = 10
-            |  or "PUBLIC"."SEARCH_ORDER"."GLOBAL" = true
-            |)""".trimMargin().toLowerCase()
+            |  "public"."search_order"."owner" = 10
+            |  or "public"."search_order"."global" = true
+            |)""".trimMargin()
     }
 
     @Test

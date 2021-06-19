@@ -28,7 +28,7 @@ class PublicPaperFilterConditionMapperTest : FilterConditionMapperTest<PaperReco
     fun creatingWhereCondition_withNumber_searchesNumber() {
         val number = 17L
         filter.copy(number = number).run {
-            mapper.map(this).toString().toUpperCase() shouldBeEqualTo """"PUBLIC"."PAPER"."NUMBER" = 17"""
+            mapper.map(this).toString() shouldBeEqualTo """"public"."paper"."number" = 17"""
         }
     }
 
@@ -36,7 +36,7 @@ class PublicPaperFilterConditionMapperTest : FilterConditionMapperTest<PaperReco
     fun creatingWhereCondition_withAuthorMask_searchesAuthors() {
         val pattern = "am"
         filter.copy(authorMask = pattern).run {
-            mapper.map(this).toString().toLowerCase() shouldBeEqualTo makeWhereClause(pattern, "AUTHORS")
+            mapper.map(this).toString() shouldBeEqualTo makeWhereClause(pattern, "authors")
         }
     }
 
@@ -44,7 +44,7 @@ class PublicPaperFilterConditionMapperTest : FilterConditionMapperTest<PaperReco
     fun creatingWhereCondition_withTitleMask_searchesTitle() {
         val pattern = "tm"
         filter.copy(titleMask = pattern).run {
-            mapper.map(this).toString().toLowerCase() shouldBeEqualTo makeWhereClause(pattern, "TITLE")
+            mapper.map(this).toString() shouldBeEqualTo makeWhereClause(pattern, "title")
         }
     }
 
@@ -64,7 +64,7 @@ class PublicPaperFilterConditionMapperTest : FilterConditionMapperTest<PaperReco
     fun creatingWhereCondition_withMethodsMask_searchesMethodFields() {
         val pattern = "m"
         filter.copy(methodsMask = pattern).run {
-            mapper.map(this).toString().toLowerCase() shouldBeEqualTo makeWhereClause(pattern, "METHODS")
+            mapper.map(this).toString() shouldBeEqualTo makeWhereClause(pattern, "methods")
         }
     }
 
@@ -138,8 +138,7 @@ class PublicPaperFilterConditionMapperTest : FilterConditionMapperTest<PaperReco
 
     private fun PublicPaperFilter.assertBasicCodeMappingC1C2() {
         // Due to bug https://github.com/jOOQ/jOOQ/issues/4754
-        // mapper.map(filter).toString().toUpperCase() shouldBeEqualTo""PUBLIC"."PAPER"."CODES"
-        // @> array['c1', 'c2']");
+        // mapper.map(filter).toString() shouldBeEqualTo ""public"."paper"."codes" @> array['c1', 'c2']");
         mapper.map(this).toString() shouldBeEqualTo
             """"public"."paper"."codes" @> array[
                         |  cast('c1' as clob),
@@ -230,8 +229,7 @@ class PublicPaperFilterConditionMapperTest : FilterConditionMapperTest<PaperReco
             codesOfClass8 = listOf(Code(code = "8H")),
         ).run {
             // Due to bug https://github.com/jOOQ/jOOQ/issues/4754
-            // mapper.map(filter).toString().toUpperCase() shouldBeEqualTo""PUBLIC"."PAPER"."CODES"
-            // @> array['1A', '2B', '3C', '4D', '5E', '6F', '7G', '8H']");
+            // mapper.map(filter).toString() shouldBeEqualTo ""public"."paper"."codes" @> array['1A', '2B', '3C', '4D', '5E', '6F', '7G', '8H']");
             mapper.map(this).toString() shouldBeEqualTo
                 """"public"."paper"."codes" @> array[
                 |  cast('1A' as clob),

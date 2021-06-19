@@ -58,7 +58,7 @@ internal class JooqPaperSlimBySearchOrderRepoTest {
         searchOrder.add(sc1)
 
         val cond = finder.getConditionsFrom(searchOrder)
-        cond.toString().toLowerCase() shouldBeEqualTo
+        cond.toString() shouldBeEqualTo
             """"public"."paper"."id" in (
                   |  select "public"."paper"."id"
                   |  from "public"."paper"
@@ -103,7 +103,7 @@ internal class JooqPaperSlimBySearchOrderRepoTest {
         val searchOrder = makeSearchOrderWithConditions()
 
         val cond = finder.getConditionsFrom(searchOrder)
-        cond.toString().toLowerCase() shouldBeEqualTo
+        cond.toString() shouldBeEqualTo
             """(
                   |  (
                   |    publication_year between 2014 and 2015
@@ -150,7 +150,7 @@ internal class JooqPaperSlimBySearchOrderRepoTest {
         searchOrder.addExclusionOfPaperWithId(3)
 
         val cond = finder.getConditionsFrom(searchOrder)
-        cond.toString().toLowerCase() shouldBeEqualTo
+        cond.toString() shouldBeEqualTo
             """(
                   |  (
                   |    (
@@ -200,7 +200,7 @@ internal class JooqPaperSlimBySearchOrderRepoTest {
         searchOrder.addExclusionOfPaperWithId(3)
 
         val cond = finder.getConditionsFrom(searchOrder)
-        cond.toString().toLowerCase() shouldBeEqualTo """"public"."paper"."id" in (3)"""
+        cond.toString() shouldBeEqualTo """"public"."paper"."id" in (3)"""
     }
 
     @Test
@@ -211,7 +211,7 @@ internal class JooqPaperSlimBySearchOrderRepoTest {
         searchOrder.addExclusionOfPaperWithId(17)
 
         val cond = finder.getConditionsFrom(searchOrder)
-        cond.toString().toLowerCase() shouldBeEqualTo
+        cond.toString() shouldBeEqualTo
             """(
                   |  (
                   |    (
@@ -282,7 +282,7 @@ internal class JooqPaperSlimBySearchOrderRepoTest {
         searchOrder.add(sc1)
 
         val cond = finder.getConditionsFrom(searchOrder)
-        cond.toString().toLowerCase() shouldBeEqualTo
+        cond.toString() shouldBeEqualTo
             """exists (
                  |  select 1 "one"
                  |  from "public"."paper_newsletter"
@@ -305,7 +305,7 @@ internal class JooqPaperSlimBySearchOrderRepoTest {
         searchOrder.add(sc1)
 
         val cond = finder.getConditionsFrom(searchOrder)
-        cond.toString().toLowerCase() shouldBeEqualTo
+        cond.toString() shouldBeEqualTo
             """exists (
                   |  select 1 "one"
                   |  from "public"."paper_newsletter"
@@ -327,7 +327,7 @@ internal class JooqPaperSlimBySearchOrderRepoTest {
         searchOrder.add(sc1)
 
         val cond = finder.getConditionsFrom(searchOrder)
-        cond.toString().toLowerCase() shouldBeEqualTo
+        cond.toString() shouldBeEqualTo
             """exists (
                   |  select 1 "one"
                   |  from "public"."paper_newsletter"
@@ -349,7 +349,7 @@ internal class JooqPaperSlimBySearchOrderRepoTest {
         searchOrder.add(sc1)
 
         val cond = finder.getConditionsFrom(searchOrder)
-        cond.toString().toLowerCase() shouldBeEqualTo
+        cond.toString() shouldBeEqualTo
             """exists (
                   |  select 1 "one"
                   |  from "public"."paper_newsletter"
@@ -374,7 +374,7 @@ internal class JooqPaperSlimBySearchOrderRepoTest {
         searchOrder.add(sc2)
 
         val cond = finder.getConditionsFrom(searchOrder)
-        cond.toString().toLowerCase() shouldBeEqualTo
+        cond.toString() shouldBeEqualTo
             """(
                   |  exists (
                   |    select 1 "one"

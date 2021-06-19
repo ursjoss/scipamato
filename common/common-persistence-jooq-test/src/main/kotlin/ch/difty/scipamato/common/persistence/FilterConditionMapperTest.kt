@@ -27,7 +27,7 @@ abstract class FilterConditionMapperTest<R : Record, TI : TableImpl<R>, F : Scip
             if (fields-- > 1) sb.append("  or ")
         }
         if (withMultipleFields) sb.append(")")
-        return sb.toString().toLowerCase()
+        return sb.toString()
     }
 
     @Test

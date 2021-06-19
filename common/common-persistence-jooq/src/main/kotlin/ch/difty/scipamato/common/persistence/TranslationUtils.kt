@@ -1,5 +1,7 @@
 package ch.difty.scipamato.common.persistence
 
+import java.util.*
+
 const val NOT_TRANSL = "not translated"
 
 private const val LANG_CODE_BASE_LENGTH = 2
@@ -18,5 +20,5 @@ fun trimLanguageCode(languageCode: String): String =
  */
 fun deCamelCase(original: String): String = when {
     original.isEmpty() -> original
-    else -> original.replace(DE_CAMEL_REGEX, "$1_$2").toLowerCase()
+    else -> original.replace(DE_CAMEL_REGEX, "$1_$2").lowercase(Locale.getDefault())
 }

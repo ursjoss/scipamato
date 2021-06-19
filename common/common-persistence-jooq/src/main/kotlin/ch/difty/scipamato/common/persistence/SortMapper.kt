@@ -9,6 +9,7 @@ import org.jooq.TableField
 import org.jooq.impl.TableImpl
 import org.springframework.dao.InvalidDataAccessApiUsageException
 import org.springframework.stereotype.Component
+import java.util.*
 
 /**
  * Default implementation of the [JooqSortMapper] interface.
@@ -31,7 +32,7 @@ class SortMapper<R : Record, T : ScipamatoEntity, TI : TableImpl<R>> : JooqSortM
         } ?: emptyList()
 
     private fun TI.getField(fieldName: String): TableField<R, T> = try {
-        getTableFieldFor(this, deCamelCase(fieldName).toUpperCase())
+        getTableFieldFor(this, deCamelCase(fieldName).uppercase(Locale.getDefault()))
     } catch (ex: ReflectiveOperationException) {
         throw InvalidDataAccessApiUsageException("Could not find table field: $fieldName", ex)
     }
@@ -57,7 +58,7 @@ class DbSortMapper<R : Record, T : DbEntity, TI : TableImpl<R>> : JooqDbSortMapp
         } ?: emptyList()
 
     private fun TI.getField(fieldName: String): TableField<R, T> = try {
-        getTableFieldFor(this, deCamelCase(fieldName).toUpperCase())
+        getTableFieldFor(this, deCamelCase(fieldName).uppercase(Locale.getDefault()))
     } catch (ex: ReflectiveOperationException) {
         throw InvalidDataAccessApiUsageException("Could not find table field: $fieldName", ex)
     }
