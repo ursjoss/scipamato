@@ -71,9 +71,11 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Added
 
-////
 .Changed
+- Bump spring-boot, kotlin, kluent, mockk, spring-boot-admin, jOOQ, gradle,
+  wicket-jquery-ui, flyway
 
+////
 .Deprecated
 
 .Removed
