@@ -24,7 +24,7 @@ object Lib {
 
     private const val krisVersion = "0.3.2"
     const val jooqVersion = "3.14.12"
-    const val flywayVersion = "7.11.0"
+    const val flywayVersion = "7.11.1"
 
     private const val kotlinLoggingVersion = "2.0.8"
 
