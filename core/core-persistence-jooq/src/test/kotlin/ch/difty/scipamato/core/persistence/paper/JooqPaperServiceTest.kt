@@ -72,7 +72,6 @@ internal class JooqPaperServiceTest : AbstractServiceTest<Long, Paper, PaperRepo
 
         verify { repo.findById(id) }
         verify { entity == entity }
-        verify { entity.toString() }
 
         verifyAudit(1)
     }
@@ -91,7 +90,6 @@ internal class JooqPaperServiceTest : AbstractServiceTest<Long, Paper, PaperRepo
         auditFixture()
         service.findPageByFilter(filterMock, paginationContextMock) shouldBeEqualTo papers
         verify { repo.findPageByFilter(filterMock, paginationContextMock) }
-        verify { entity.toString() }
         verifyAudit(2)
     }
 
@@ -111,7 +109,6 @@ internal class JooqPaperServiceTest : AbstractServiceTest<Long, Paper, PaperRepo
         verify { repo.add(entity) }
         verify { entity.id }
         verify { entity == entity }
-        verify { entity.toString() }
         verifyAudit(1)
     }
 
@@ -124,7 +121,6 @@ internal class JooqPaperServiceTest : AbstractServiceTest<Long, Paper, PaperRepo
         verify { repo.update(entity) }
         verify { entity.id }
         verify { entity == entity }
-        verify { entity.toString() }
         verifyAudit(1)
     }
 
@@ -169,7 +165,6 @@ internal class JooqPaperServiceTest : AbstractServiceTest<Long, Paper, PaperRepo
         every { repo.findPageBySearchOrder(searchOrderMock, paginationContextMock, LC) } returns papers
         service.findPageBySearchOrder(searchOrderMock, paginationContextMock, LC) shouldBeEqualTo papers
         verify { repo.findPageBySearchOrder(searchOrderMock, paginationContextMock, LC) }
-        verify { entity.toString() }
     }
 
     @Test
@@ -308,7 +303,6 @@ internal class JooqPaperServiceTest : AbstractServiceTest<Long, Paper, PaperRepo
         every { repo.findByNumbers(listOf(1L), LC) } returns listOf(entity)
         auditFixture()
         testFindingByNumbers()
-        verify { entity.toString() }
     }
 
     private fun testFindingByNumbers() {
@@ -332,7 +326,6 @@ internal class JooqPaperServiceTest : AbstractServiceTest<Long, Paper, PaperRepo
         every { repo.findByNumbers(listOf(1L), LC) } returns listOf(entity, paperMock2)
         auditFixture()
         testFindingByNumbers()
-        verify { entity.toString() }
     }
 
     @Test
@@ -397,7 +390,6 @@ internal class JooqPaperServiceTest : AbstractServiceTest<Long, Paper, PaperRepo
         service.deleteAttachment(id) shouldBeEqualTo entity
         verify { repo.deleteAttachment(id) }
         verify { entity == entity }
-        verify { entity.toString() }
     }
 
     @Test

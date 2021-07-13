@@ -58,7 +58,6 @@ internal class JooqCodeServiceTest {
         service.newUnpersistedCodeDefinition() shouldBeEqualTo codeDefinitionMock
         verify { codeDefinitionMock == codeDefinitionMock }
         verify { repo.newUnpersistedCodeDefinition() }
-        verify { codeDefinitionMock.toString() }
     }
 
     @Test
@@ -66,7 +65,6 @@ internal class JooqCodeServiceTest {
         every { repo.findPageOfCodeDefinitions(filterMock, paginationContextMock) } returns codeDefinitions
         service.findPageOfCodeDefinitions(filterMock, paginationContextMock) shouldBeEqualTo codeDefinitions
         verify { repo.findPageOfCodeDefinitions(filterMock, paginationContextMock) }
-        verify { codeDefinitionMock.toString() }
     }
 
     @Test

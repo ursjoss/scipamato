@@ -7,7 +7,6 @@ import ch.difty.scipamato.core.entity.newsletter.NewsletterNewsletterTopic
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicDefinition
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicFilter
-import io.mockk.InternalPlatformDsl.toStr
 import io.mockk.confirmVerified
 import io.mockk.every
 import io.mockk.mockk
@@ -46,7 +45,6 @@ internal class JooqNewsletterTopicServiceTest {
         every { repo.findAll(langCode) } returns topics
         service.findAll(langCode) shouldBeEqualTo topics
         verify { repo.findAll(langCode) }
-        verify { entity.toString() }
     }
 
     @Test
@@ -55,7 +53,6 @@ internal class JooqNewsletterTopicServiceTest {
         service.newUnpersistedNewsletterTopicDefinition() shouldBeEqualTo topicDefinitionMock
         verify { topicDefinitionMock == topicDefinitionMock }
         verify { repo.newUnpersistedNewsletterTopicDefinition() }
-        verify { topicDefinitionMock.toString() }
     }
 
     @Test
@@ -63,7 +60,6 @@ internal class JooqNewsletterTopicServiceTest {
         every { repo.findPageOfNewsletterTopicDefinitions(filterMock, paginationContextMock) } returns topicDefinitions
         service.findPageOfNewsletterTopicDefinitions(filterMock, paginationContextMock) shouldBeEqualTo topicDefinitions
         verify { repo.findPageOfNewsletterTopicDefinitions(filterMock, paginationContextMock) }
-        verify { topicDefinitionMock.toString() }
     }
 
     @Test
