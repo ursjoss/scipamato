@@ -1,8 +1,8 @@
 package ch.difty.scipamato.core.pubmed
 
 import ch.difty.scipamato.core.config.ApplicationCoreProperties
+import ch.difty.scipamato.core.persistence.DefaultServiceResult
 import ch.difty.scipamato.core.persistence.PaperService
-import ch.difty.scipamato.core.persistence.ServiceResult
 import io.mockk.confirmVerified
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
@@ -31,8 +31,7 @@ internal class PubmedImportServiceTest {
     @MockK
     private lateinit var applicationPropertiesMock: ApplicationCoreProperties
 
-    @MockK
-    private lateinit var serviceResultMock: ServiceResult
+    private val serviceResult = DefaultServiceResult()
 
     private val pubmedArticles = listOf(mockk<PubmedArticleFacade>())
 
@@ -45,7 +44,7 @@ internal class PubmedImportServiceTest {
     @AfterEach
     fun tearDown() {
         confirmVerified(
-            pubmedArticleServiceMock, paperServiceMock, serviceResultMock, applicationPropertiesMock
+            pubmedArticleServiceMock, paperServiceMock, applicationPropertiesMock
         )
     }
 
@@ -61,12 +60,10 @@ internal class PubmedImportServiceTest {
     fun persistingPubmedArticlesFromXml_delegatesExtractionAndPersistingToNestedServices() {
         val minimumNumber = 7L
         every { pubmedArticleServiceMock.extractArticlesFrom("content") } returns pubmedArticles
-        every { paperServiceMock.dumpPubmedArticlesToDb(pubmedArticles, minimumNumber) } returns serviceResultMock
-        pubmedImporter.persistPubmedArticlesFromXml("content") shouldBeEqualTo serviceResultMock
+        every { paperServiceMock.dumpPubmedArticlesToDb(pubmedArticles, minimumNumber) } returns serviceResult
+        pubmedImporter.persistPubmedArticlesFromXml("content") shouldBeEqualTo serviceResult
         verify { applicationPropertiesMock.minimumPaperNumberToBeRecycled }
         verify { pubmedArticleServiceMock.extractArticlesFrom("content") }
         verify { paperServiceMock.dumpPubmedArticlesToDb(pubmedArticles, minimumNumber) }
-        verify { serviceResultMock == serviceResultMock }
-        verify { serviceResultMock.toString() }
     }
 }
