@@ -9,8 +9,8 @@ object Lib {
     //region:dependencyVersions
     private const val kotlinVersion = "1.5.21"
 
-    private const val springBootVersion = "2.5.2"
-    private const val springBootAdminVersion = "2.4.3"
+    private const val springBootVersion = "2.5.4"
+    private const val springBootAdminVersion = "2.5.0"
     const val springCloudVersion = "2020.0.3"
     private const val springCloudStarterVersion = "3.0.3"
 
@@ -24,14 +24,14 @@ object Lib {
 
     private const val krisVersion = "0.3.2"
     const val jooqVersion = "3.14.12"
-    const val flywayVersion = "7.11.2"
+    const val flywayVersion = "7.14.0"
 
     private const val kotlinLoggingVersion = "2.0.10"
 
-    private const val openfeignVersion = "11.2"
+    private const val openfeignVersion = "11.6"
 
-    private const val jaxbCoreVersion = "3.0.1"
-    private const val jaxbImplVersion = "3.0.1"
+    private const val jaxbCoreVersion = "3.0.2"
+    private const val jaxbImplVersion = "3.0.2"
     private const val javaxActivationVersion = "1.2.0"
     private const val javaxElApiVersion = "3.0.1-b06"
     private const val javaxElVersion = "3.0.1-b12"
@@ -39,13 +39,13 @@ object Lib {
 
     private const val fontAwesomeVersion = "5.15.2"
 
-    private const val equalsverifierVersion = "3.7"
+    private const val equalsverifierVersion = "3.7.1"
 
     private const val junit5Version = "5.7.2"
 
-    private const val testcontainersVersion = "1.15.3"
+    private const val testcontainersVersion = "1.16.0"
 
-    private const val spekVersion = "2.0.15"
+    private const val spekVersion = "2.0.17"
     private const val kwikVersion = "0.8.4"
     private const val kluentVersion = "1.68"
     private const val mockkVersion = "1.12.0"
@@ -57,14 +57,14 @@ object Lib {
 
     //region:pluginVersions
     private const val springDependencyManagementPluginVersion = "1.0.11.RELEASE"
-    private const val lombokPluginVersion = "5.3.3.3"
+    private const val lombokPluginVersion = "6.1.0"
     private const val jooqModelatorPluginVersion = "3.9.0"
     private const val reckonPluginVersion = "0.13.0"
     private const val versionsPluginVersion = "0.39.0"
     private const val jaxbPluginVersion = "5.1.0"
     private const val testSetsPluginVersion = "4.0.0"
     private const val sonarqubePluginVersion = "3.3"
-    private const val detektPluginVersion = "1.17.1"
+    private const val detektPluginVersion = "1.18.0"
     private const val licensePluginVersion = "0.16.1"
     //endregion
 
