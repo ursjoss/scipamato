@@ -72,7 +72,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 
 .Changed
-- Bumped kotlin, spring-boot, flyway, kluent, kotlin-logging
+- Bumped kotlin, spring-boot, gradle, flyway, kluent, kotlin-logging
 
 ////
 .Deprecated
