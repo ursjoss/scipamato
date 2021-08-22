@@ -73,7 +73,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Changed
 - Bumped kotlin, spring-boot, gradle, flyway, kluent, kotlin-logging, jaxb-core and impl
-  spring-boot-admin, openfeign, detekt, equalsverifier, spek
+  spring-boot-admin, openfeign, detekt, equalsverifier, spek, testcontainers
 
 ////
 .Deprecated
