@@ -193,13 +193,43 @@ public abstract class JooqBySearchOrderRepo<T extends IdScipamatoEntity<Long>, M
             step0.and(PAPER_NEWSLETTER.NEWSLETTER_TOPIC_ID.eq(sc.getNewsletterTopicId())) :
             step0;
         final SelectConditionStep<Record1<Integer>> step2 = (sc.getNewsletterHeadline() != null) ?
-            step1.and(PAPER_NEWSLETTER.HEADLINE.likeIgnoreCase("%" + sc.getNewsletterHeadline() + "%")) :
+            step1.and(evaluateStringValue(PAPER_NEWSLETTER.HEADLINE, sc.getNewsletterHeadline())) :
             step1;
         final SelectConditionStep<Record1<Integer>> step3 = (sc.getNewsletterIssue() != null) ?
-            step2.and(Newsletter.NEWSLETTER.ISSUE.likeIgnoreCase("%" + sc.getNewsletterIssue() + "%")) :
+            step2.and(evaluateStringValue(Newsletter.NEWSLETTER.ISSUE, sc.getNewsletterIssue())) :
             step2;
         nlConditions.add(() -> DSL.exists(step3));
         return nlConditions.combineWithAnd();
+    }
+
+    @NotNull
+    private Condition evaluateStringValue(final TableField<?, String> field, final String value) {
+        final String v = value.trim();
+        switch (v) {
+        case ">\"\"":
+            return field.isNotNull();
+        case "=\"\"":
+        case "\"\"":
+            return field.isNull();
+        default:
+            if (v.startsWith("-\""))
+                return field.notEqual(removeQuotes(v.substring(1)));
+            else if (v.startsWith("-"))
+                return field.notLikeIgnoreCase("%" + v.substring(1) + "%");
+            else if (v.startsWith("=\""))
+                return field.eq(removeQuotes(v.substring(1)));
+            else if (v.startsWith("\""))
+                return field.eq(removeQuotes(v));
+            else if (v.startsWith("="))
+                return field.eq(v.substring(1));
+            else
+                return field.likeIgnoreCase("%" + v + "%");
+        }
+    }
+
+    @NotNull
+    private String removeQuotes(final String value) {
+        return value.endsWith("\"") ? value.substring(1, value.length() - 1) : value.substring(1);
     }
 
     private Condition attachmentConditions(final SearchCondition sc) {
@@ -209,7 +239,8 @@ public abstract class JooqBySearchOrderRepo<T extends IdScipamatoEntity<Long>, M
             .from(PAPER_ATTACHMENT)
             .where(PAPER_ATTACHMENT.PAPER_ID.eq(PAPER.ID));
         if (sc.getAttachmentNameMask() != null) {
-            final SelectConditionStep<Record1<Integer>> step1 = step0.and(PAPER_ATTACHMENT.NAME.containsIgnoreCase(sc.getAttachmentNameMask()));
+            final SelectConditionStep<Record1<Integer>> step1 =
+                step0.and(evaluateStringValue(PAPER_ATTACHMENT.NAME, sc.getAttachmentNameMask()));
             attConditions.add(() -> DSL.exists(step1));
         } else if (sc.getHasAttachments() != null) {
             if (Boolean.TRUE.equals(sc.getHasAttachments()))
