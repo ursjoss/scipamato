@@ -67,23 +67,36 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[unreleased]]
 == [unreleased]
 
-{url-cl}1.6.4$$...$$main[Full Changelog]
+{url-cl}1.6.5$$...$$main[Full Changelog]
 
 .Added
 
+////
 .Changed
-- Bumped kotlin, spring-boot-admin, kotlin-logging, detekt, wicket, wicketstuff, flyway, jOOQ,
-  junit-jupiter,
-  lombok-gradle-plugin
 
 .Deprecated
 
 .Removed
 
 .Fixed
-- {url-issues}294[#294] Searching by Newsletter Issue and other fields don't provide all search options
 
 .Security
+
+////
+
+
+[[v1.6.5]]
+== {url-tree}1.6.5[1.6.5] -- 2021-09-23
+
+{url-cl}1.6.4$$...$$1.6.5[Full Changelog]
+
+.Changed
+- Bumped kotlin, spring-boot-admin, kotlin-logging, detekt, wicket, wicketstuff, flyway, jOOQ,
+  junit-jupiter,
+  lombok-gradle-plugin
+
+.Fixed
+- {url-issues}294[#294] Searching by Newsletter Issue and other fields don't provide all search options
 
 
 [[v1.6.4]]
