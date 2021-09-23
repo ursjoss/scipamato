@@ -208,11 +208,6 @@ public abstract class JooqBySearchOrderRepo<T extends IdScipamatoEntity<Long>, M
         return stringSearchTermEvaluator.evaluate(st);
     }
 
-    @NotNull
-    private String removeQuotes(final String value) {
-        return value.endsWith("\"") ? value.substring(1, value.length() - 1) : value.substring(1);
-    }
-
     private Condition attachmentConditions(final SearchCondition sc) {
         final ConditionalSupplier attConditions = new ConditionalSupplier();
         final SelectConditionStep<Record1<Integer>> step0 = DSL
