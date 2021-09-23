@@ -291,7 +291,19 @@ internal class JooqPaperSlimBySearchOrderRepoTest {
                  |  where (
                  |    "public"."paper_newsletter"."paper_id" = "public"."paper"."id"
                  |    and "public"."paper_newsletter"."newsletter_topic_id" = 1
-                 |    and "public"."paper_newsletter"."headline" ilike '%hl%'
+                 |    and "paper_newsletter"."headline" ilike ('%' || replace(
+                 |      replace(
+                 |        replace(
+                 |          'hl',
+                 |          '!',
+                 |          '!!'
+                 |        ),
+                 |        '%',
+                 |        '!%'
+                 |      ),
+                 |      '_',
+                 |      '!_'
+                 |    ) || '%') escape '!'
                  |  )
                  |)""".trimMargin()
     }
@@ -335,7 +347,19 @@ internal class JooqPaperSlimBySearchOrderRepoTest {
                   |      on "public"."paper_newsletter"."newsletter_id" = "public"."newsletter"."id"
                   |  where (
                   |    "public"."paper_newsletter"."paper_id" = "public"."paper"."id"
-                  |    and "public"."paper_newsletter"."headline" ilike '%hl%'
+                  |    and "paper_newsletter"."headline" ilike ('%' || replace(
+                  |      replace(
+                  |        replace(
+                  |          'hl',
+                  |          '!',
+                  |          '!!'
+                  |        ),
+                  |        '%',
+                  |        '!%'
+                  |      ),
+                  |      '_',
+                  |      '!_'
+                  |    ) || '%') escape '!'
                   |  )
                   |)""".trimMargin()
     }
@@ -357,7 +381,19 @@ internal class JooqPaperSlimBySearchOrderRepoTest {
                   |      on "public"."paper_newsletter"."newsletter_id" = "public"."newsletter"."id"
                   |  where (
                   |    "public"."paper_newsletter"."paper_id" = "public"."paper"."id"
-                  |    and "public"."newsletter"."issue" ilike '%i%'
+                  |    and "newsletter"."issue" ilike ('%' || replace(
+                  |      replace(
+                  |        replace(
+                  |          'i',
+                  |          '!',
+                  |          '!!'
+                  |        ),
+                  |        '%',
+                  |        '!%'
+                  |      ),
+                  |      '_',
+                  |      '!_'
+                  |    ) || '%') escape '!'
                   |  )
                   |)""".trimMargin()
     }
@@ -369,7 +405,7 @@ internal class JooqPaperSlimBySearchOrderRepoTest {
         val sc1 = SearchCondition(1L)
         sc1.newsletterIssue = ">\"\""
         sc1.newsletterHeadline = "=\"\""
-        sc1.attachmentNameMask = "\"\""
+        sc1.attachmentNameMask = " =\"\""
         searchOrder.add(sc1)
 
         val cond = finder.getConditionsFrom(searchOrder)
@@ -382,8 +418,12 @@ internal class JooqPaperSlimBySearchOrderRepoTest {
                |        on "public"."paper_newsletter"."newsletter_id" = "public"."newsletter"."id"
                |    where (
                |      "public"."paper_newsletter"."paper_id" = "public"."paper"."id"
-               |      and "public"."paper_newsletter"."headline" is null
-               |      and "public"."newsletter"."issue" is not null
+               |      and (
+               |        "paper_newsletter"."headline" is null
+               |        or char_length(cast("paper_newsletter"."headline" as varchar)) = 0
+               |      )
+               |      and "newsletter"."issue" is not null
+               |      and char_length(cast("newsletter"."issue" as varchar)) > 0
                |    )
                |  )
                |  and exists (
@@ -391,7 +431,10 @@ internal class JooqPaperSlimBySearchOrderRepoTest {
                |    from "public"."paper_attachment"
                |    where (
                |      "public"."paper_attachment"."paper_id" = "public"."paper"."id"
-               |      and "public"."paper_attachment"."name" is null
+               |      and (
+               |        "paper_attachment"."name" is null
+               |        or char_length(cast("paper_attachment"."name" as varchar)) = 0
+               |      )
                |    )
                |  )
                |)""".trimMargin()
@@ -417,8 +460,8 @@ internal class JooqPaperSlimBySearchOrderRepoTest {
                |        on "public"."paper_newsletter"."newsletter_id" = "public"."newsletter"."id"
                |    where (
                |      "public"."paper_newsletter"."paper_id" = "public"."paper"."id"
-               |      and "public"."paper_newsletter"."headline" = 'bar'
-               |      and "public"."newsletter"."issue" = 'foo'
+               |      and lower(cast("paper_newsletter"."headline" as varchar)) = lower('bar')
+               |      and lower(cast("newsletter"."issue" as varchar)) = lower('foo')
                |    )
                |  )
                |  and exists (
@@ -426,7 +469,7 @@ internal class JooqPaperSlimBySearchOrderRepoTest {
                |    from "public"."paper_attachment"
                |    where (
                |      "public"."paper_attachment"."paper_id" = "public"."paper"."id"
-               |      and "public"."paper_attachment"."name" <> 'baz'
+               |      and lower(cast("paper_attachment"."name" as varchar)) <> lower('baz')
                |    )
                |  )
                |)""".trimMargin()
@@ -449,7 +492,22 @@ internal class JooqPaperSlimBySearchOrderRepoTest {
                |      on "public"."paper_newsletter"."newsletter_id" = "public"."newsletter"."id"
                |  where (
                |    "public"."paper_newsletter"."paper_id" = "public"."paper"."id"
-               |    and "public"."newsletter"."issue" not ilike '%foo%'
+               |    and not (coalesce(
+               |      "newsletter"."issue",
+               |      ''
+               |    ) ilike ('%' || replace(
+               |      replace(
+               |        replace(
+               |          'foo',
+               |          '!',
+               |          '!!'
+               |        ),
+               |        '%',
+               |        '!%'
+               |      ),
+               |      '_',
+               |      '!_'
+               |    ) || '%') escape '!')
                |  )
                |)""".trimMargin()
     }
@@ -475,7 +533,19 @@ internal class JooqPaperSlimBySearchOrderRepoTest {
                   |        on "public"."paper_newsletter"."newsletter_id" = "public"."newsletter"."id"
                   |    where (
                   |      "public"."paper_newsletter"."paper_id" = "public"."paper"."id"
-                  |      and "public"."paper_newsletter"."headline" ilike '%hl%'
+                  |      and "paper_newsletter"."headline" ilike ('%' || replace(
+                  |        replace(
+                  |          replace(
+                  |            'hl',
+                  |            '!',
+                  |            '!!'
+                  |          ),
+                  |          '%',
+                  |          '!%'
+                  |        ),
+                  |        '_',
+                  |        '!_'
+                  |      ) || '%') escape '!'
                   |    )
                   |  )
                   |  or exists (
