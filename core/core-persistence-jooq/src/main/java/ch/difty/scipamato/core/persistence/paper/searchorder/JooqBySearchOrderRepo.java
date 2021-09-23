@@ -193,13 +193,19 @@ public abstract class JooqBySearchOrderRepo<T extends IdScipamatoEntity<Long>, M
             step0.and(PAPER_NEWSLETTER.NEWSLETTER_TOPIC_ID.eq(sc.getNewsletterTopicId())) :
             step0;
         final SelectConditionStep<Record1<Integer>> step2 = (sc.getNewsletterHeadline() != null) ?
-            step1.and(PAPER_NEWSLETTER.HEADLINE.likeIgnoreCase("%" + sc.getNewsletterHeadline() + "%")) :
+            step1.and(evaluateStringSearchTerm(PAPER_NEWSLETTER.HEADLINE, sc.getNewsletterHeadline())) :
             step1;
         final SelectConditionStep<Record1<Integer>> step3 = (sc.getNewsletterIssue() != null) ?
-            step2.and(Newsletter.NEWSLETTER.ISSUE.likeIgnoreCase("%" + sc.getNewsletterIssue() + "%")) :
+            step2.and(evaluateStringSearchTerm(Newsletter.NEWSLETTER.ISSUE, sc.getNewsletterIssue())) :
             step2;
         nlConditions.add(() -> DSL.exists(step3));
         return nlConditions.combineWithAnd();
+    }
+
+    @NotNull
+    private Condition evaluateStringSearchTerm(final TableField<?, String> field, final String value) {
+        final StringSearchTerm st = SearchTerm.newStringSearchTerm(field.getQualifiedName().toString(), value);
+        return stringSearchTermEvaluator.evaluate(st);
     }
 
     private Condition attachmentConditions(final SearchCondition sc) {
@@ -209,7 +215,8 @@ public abstract class JooqBySearchOrderRepo<T extends IdScipamatoEntity<Long>, M
             .from(PAPER_ATTACHMENT)
             .where(PAPER_ATTACHMENT.PAPER_ID.eq(PAPER.ID));
         if (sc.getAttachmentNameMask() != null) {
-            final SelectConditionStep<Record1<Integer>> step1 = step0.and(PAPER_ATTACHMENT.NAME.containsIgnoreCase(sc.getAttachmentNameMask()));
+            final SelectConditionStep<Record1<Integer>> step1 =
+                step0.and(evaluateStringSearchTerm(PAPER_ATTACHMENT.NAME, sc.getAttachmentNameMask()));
             attConditions.add(() -> DSL.exists(step1));
         } else if (sc.getHasAttachments() != null) {
             if (Boolean.TRUE.equals(sc.getHasAttachments()))

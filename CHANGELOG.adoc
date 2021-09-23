@@ -71,7 +71,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Added
 
-////
+
 .Changed
 
 .Deprecated
@@ -79,10 +79,9 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Removed
 
 .Fixed
+- {url-issues}294[#294] Searching by Newsletter Issue and other fields don't provide all search options
 
 .Security
-
-////
 
 
 [[v1.6.4]]

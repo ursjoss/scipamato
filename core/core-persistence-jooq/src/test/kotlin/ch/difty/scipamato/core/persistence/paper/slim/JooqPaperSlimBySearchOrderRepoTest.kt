@@ -291,7 +291,19 @@ internal class JooqPaperSlimBySearchOrderRepoTest {
                  |  where (
                  |    "public"."paper_newsletter"."paper_id" = "public"."paper"."id"
                  |    and "public"."paper_newsletter"."newsletter_topic_id" = 1
-                 |    and "public"."paper_newsletter"."headline" ilike '%hl%'
+                 |    and "paper_newsletter"."headline" ilike ('%' || replace(
+                 |      replace(
+                 |        replace(
+                 |          'hl',
+                 |          '!',
+                 |          '!!'
+                 |        ),
+                 |        '%',
+                 |        '!%'
+                 |      ),
+                 |      '_',
+                 |      '!_'
+                 |    ) || '%') escape '!'
                  |  )
                  |)""".trimMargin()
     }
@@ -335,7 +347,19 @@ internal class JooqPaperSlimBySearchOrderRepoTest {
                   |      on "public"."paper_newsletter"."newsletter_id" = "public"."newsletter"."id"
                   |  where (
                   |    "public"."paper_newsletter"."paper_id" = "public"."paper"."id"
-                  |    and "public"."paper_newsletter"."headline" ilike '%hl%'
+                  |    and "paper_newsletter"."headline" ilike ('%' || replace(
+                  |      replace(
+                  |        replace(
+                  |          'hl',
+                  |          '!',
+                  |          '!!'
+                  |        ),
+                  |        '%',
+                  |        '!%'
+                  |      ),
+                  |      '_',
+                  |      '!_'
+                  |    ) || '%') escape '!'
                   |  )
                   |)""".trimMargin()
     }
@@ -357,9 +381,135 @@ internal class JooqPaperSlimBySearchOrderRepoTest {
                   |      on "public"."paper_newsletter"."newsletter_id" = "public"."newsletter"."id"
                   |  where (
                   |    "public"."paper_newsletter"."paper_id" = "public"."paper"."id"
-                  |    and "public"."newsletter"."issue" ilike '%i%'
+                  |    and "newsletter"."issue" ilike ('%' || replace(
+                  |      replace(
+                  |        replace(
+                  |          'i',
+                  |          '!',
+                  |          '!!'
+                  |        ),
+                  |        '%',
+                  |        '!%'
+                  |      ),
+                  |      '_',
+                  |      '!_'
+                  |    ) || '%') escape '!'
                   |  )
                   |)""".trimMargin()
+    }
+
+    @Test
+    fun getConditions_withSearchOrderWithCertainStringValues1() {
+        val searchOrder = SearchOrder()
+
+        val sc1 = SearchCondition(1L)
+        sc1.newsletterIssue = ">\"\""
+        sc1.newsletterHeadline = "=\"\""
+        sc1.attachmentNameMask = " =\"\""
+        searchOrder.add(sc1)
+
+        val cond = finder.getConditionsFrom(searchOrder)
+        cond.toString() shouldBeEqualTo
+            """(
+               |  exists (
+               |    select 1 "one"
+               |    from "public"."paper_newsletter"
+               |      join "public"."newsletter"
+               |        on "public"."paper_newsletter"."newsletter_id" = "public"."newsletter"."id"
+               |    where (
+               |      "public"."paper_newsletter"."paper_id" = "public"."paper"."id"
+               |      and (
+               |        "paper_newsletter"."headline" is null
+               |        or char_length(cast("paper_newsletter"."headline" as varchar)) = 0
+               |      )
+               |      and "newsletter"."issue" is not null
+               |      and char_length(cast("newsletter"."issue" as varchar)) > 0
+               |    )
+               |  )
+               |  and exists (
+               |    select 1 "one"
+               |    from "public"."paper_attachment"
+               |    where (
+               |      "public"."paper_attachment"."paper_id" = "public"."paper"."id"
+               |      and (
+               |        "paper_attachment"."name" is null
+               |        or char_length(cast("paper_attachment"."name" as varchar)) = 0
+               |      )
+               |    )
+               |  )
+               |)""".trimMargin()
+    }
+
+    @Test
+    fun getConditions_withSearchOrderWithCertainStringValues2() {
+        val searchOrder = SearchOrder()
+
+        val sc1 = SearchCondition(1L)
+        sc1.newsletterIssue = "\"foo\""
+        sc1.newsletterHeadline = " =\"bar\"  "
+        sc1.attachmentNameMask = "-\"baz\""
+        searchOrder.add(sc1)
+
+        val cond = finder.getConditionsFrom(searchOrder)
+        cond.toString() shouldBeEqualTo
+            """(
+               |  exists (
+               |    select 1 "one"
+               |    from "public"."paper_newsletter"
+               |      join "public"."newsletter"
+               |        on "public"."paper_newsletter"."newsletter_id" = "public"."newsletter"."id"
+               |    where (
+               |      "public"."paper_newsletter"."paper_id" = "public"."paper"."id"
+               |      and lower(cast("paper_newsletter"."headline" as varchar)) = lower('bar')
+               |      and lower(cast("newsletter"."issue" as varchar)) = lower('foo')
+               |    )
+               |  )
+               |  and exists (
+               |    select 1 "one"
+               |    from "public"."paper_attachment"
+               |    where (
+               |      "public"."paper_attachment"."paper_id" = "public"."paper"."id"
+               |      and lower(cast("paper_attachment"."name" as varchar)) <> lower('baz')
+               |    )
+               |  )
+               |)""".trimMargin()
+    }
+
+    @Test
+    fun getConditions_withSearchOrderWithCertainStringValues3() {
+        val searchOrder = SearchOrder()
+
+        val sc1 = SearchCondition(1L)
+        sc1.newsletterIssue = "-foo"
+        searchOrder.add(sc1)
+
+        val cond = finder.getConditionsFrom(searchOrder)
+        cond.toString() shouldBeEqualTo
+            """exists (
+               |  select 1 "one"
+               |  from "public"."paper_newsletter"
+               |    join "public"."newsletter"
+               |      on "public"."paper_newsletter"."newsletter_id" = "public"."newsletter"."id"
+               |  where (
+               |    "public"."paper_newsletter"."paper_id" = "public"."paper"."id"
+               |    and not (coalesce(
+               |      "newsletter"."issue",
+               |      ''
+               |    ) ilike ('%' || replace(
+               |      replace(
+               |        replace(
+               |          'foo',
+               |          '!',
+               |          '!!'
+               |        ),
+               |        '%',
+               |        '!%'
+               |      ),
+               |      '_',
+               |      '!_'
+               |    ) || '%') escape '!')
+               |  )
+               |)""".trimMargin()
     }
 
     @Test
@@ -383,7 +533,19 @@ internal class JooqPaperSlimBySearchOrderRepoTest {
                   |        on "public"."paper_newsletter"."newsletter_id" = "public"."newsletter"."id"
                   |    where (
                   |      "public"."paper_newsletter"."paper_id" = "public"."paper"."id"
-                  |      and "public"."paper_newsletter"."headline" ilike '%hl%'
+                  |      and "paper_newsletter"."headline" ilike ('%' || replace(
+                  |        replace(
+                  |          replace(
+                  |            'hl',
+                  |            '!',
+                  |            '!!'
+                  |          ),
+                  |          '%',
+                  |          '!%'
+                  |        ),
+                  |        '_',
+                  |        '!_'
+                  |      ) || '%') escape '!'
                   |    )
                   |  )
                   |  or exists (
