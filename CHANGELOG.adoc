@@ -73,6 +73,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Changed
 - Bumped kotlin, spring-boot-admin, kotlin-logging, detekt, wicket, wicketstuff, flyway, jOOQ,
+  junit-jupiter,
   lombok-gradle-plugin
 
 .Deprecated
