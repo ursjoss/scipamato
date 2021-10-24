@@ -73,7 +73,8 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 
 .Changed
-- Bumped spring-boot, jackons-module-kotlin, wicket-jquery-ui, spring-boot-starter-admin
+- Bumped spring-boot, jackons-module-kotlin, wicket-jquery-ui, spring-boot-starter-admin,
+  equalsverifier
 
 ////
 .Deprecated
