@@ -11,9 +11,8 @@ import org.apache.wicket.markup.html.SecurePackageResourceGuard
 import org.apache.wicket.request.Request
 import org.apache.wicket.request.Response
 import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.autoconfigure.r2dbc.R2dbcAutoConfiguration
 
-@SpringBootApplication(exclude = [R2dbcAutoConfiguration::class])
+@SpringBootApplication
 open class TestApplication : WicketBootSecuredWebApplication() {
 
     override fun getHomePage(): Class<out Page?> = PaperListPage::class.java

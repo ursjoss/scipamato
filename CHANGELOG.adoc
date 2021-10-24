@@ -74,7 +74,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Changed
 - Bumped spring-boot, jackons-module-kotlin, wicket-jquery-ui, spring-boot-starter-admin,
-  flyway, jOOQ,
+  flyway,
   testcontainers, equalsverifier
 
 ////

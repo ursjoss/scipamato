@@ -10,14 +10,13 @@ import org.apache.wicket.markup.head.filter.JavaScriptFilteredIntoFooterHeaderRe
 import org.apache.wicket.request.Request
 import org.apache.wicket.request.Response
 import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.autoconfigure.r2dbc.R2dbcAutoConfiguration
 import org.springframework.boot.runApplication
 import org.springframework.cache.annotation.EnableCaching
 import org.springframework.context.annotation.ComponentScan
 
 private val log = logger()
 
-@SpringBootApplication(exclude = [R2dbcAutoConfiguration::class])
+@SpringBootApplication
 @EnableCaching
 @ComponentScan(basePackages = ["ch.difty.scipamato"])
 open class ScipamatoPublicApplication(
