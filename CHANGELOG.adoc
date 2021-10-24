@@ -69,11 +69,13 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 {url-cl}1.6.5$$...$$main[Full Changelog]
 
-////
+
 .Added
 
 .Changed
+- Bumped spring-boot
 
+////
 .Deprecated
 
 .Removed
