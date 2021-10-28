@@ -67,29 +67,36 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[unreleased]]
 == [unreleased]
 
-{url-cl}1.6.5$$...$$main[Full Changelog]
-
+{url-cl}1.6.7$$...$$main[Full Changelog]
 
 .Added
+
+////
+.Changed
+
+.Deprecated
+
+.Removed
+
+.Fixed
+
+.Security
+
+////
+
+
+[[v1.6.7]]
+== {url-tree}1.6.7[1.6.7] -- 2021-10-26
+
+{url-cl}1.6.6$$...$$1.6.7[Full Changelog]
 
 .Changed
 - Bumped spring-boot, jackons-module-kotlin, wicket-jquery-ui, spring-boot-starter-admin,
   flyway, openfeign, jasperrports,
   testcontainers, equalsverifier
 
-////
-.Deprecated
-
-.Removed
-////
-
 .Fixed
 - {url-issues}300[#300] Fix synchronization corner case with Newsletters with Papers without code
-
-////
-.Security
-
-////
 
 
 [[v1.6.6]]
