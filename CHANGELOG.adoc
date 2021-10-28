@@ -80,7 +80,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 ////
 
 .Fixed
-- {url-issues}300[#300] Fix Synchornization Corner Case with Newsletters with Papers without code
+- {url-issues}300[#300] Fix synchronization corner case with Newsletters with Papers without code
 
 ////
 .Security
