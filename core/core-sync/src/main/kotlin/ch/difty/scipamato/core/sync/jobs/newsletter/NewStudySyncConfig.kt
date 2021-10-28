@@ -3,6 +3,7 @@ package ch.difty.scipamato.core.sync.jobs.newsletter
 import ch.difty.scipamato.common.DateTimeService
 import ch.difty.scipamato.core.db.tables.Newsletter
 import ch.difty.scipamato.core.db.tables.Paper
+import ch.difty.scipamato.core.db.tables.PaperCode
 import ch.difty.scipamato.core.db.tables.PaperNewsletter
 import ch.difty.scipamato.core.db.tables.records.PaperRecord
 import ch.difty.scipamato.core.sync.PublicNewStudy
@@ -68,6 +69,8 @@ open class NewStudySyncConfig(
             .from(PaperNewsletter.PAPER_NEWSLETTER)
             .innerJoin(Paper.PAPER)
             .on(PaperNewsletter.PAPER_NEWSLETTER.PAPER_ID.eq(Paper.PAPER.ID))
+            .innerJoin(PaperCode.PAPER_CODE)
+            .on(Paper.PAPER.ID.eq(PaperCode.PAPER_CODE.PAPER_ID))
             .innerJoin(Newsletter.NEWSLETTER)
             .on(PaperNewsletter.PAPER_NEWSLETTER.NEWSLETTER_ID.eq(Newsletter.NEWSLETTER.ID))
             .where(Newsletter.NEWSLETTER.PUBLICATION_STATUS.eq(PUBLICATION_STATUS_PUBLISHED))
