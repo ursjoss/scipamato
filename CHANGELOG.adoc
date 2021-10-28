@@ -69,11 +69,15 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 {url-cl}1.6.5$$...$$main[Full Changelog]
 
-////
+
 .Added
 
 .Changed
+- Bumped spring-boot, jackons-module-kotlin, wicket-jquery-ui, spring-boot-starter-admin,
+  flyway, openfeign, jasperrports,
+  testcontainers, equalsverifier
 
+////
 .Deprecated
 
 .Removed

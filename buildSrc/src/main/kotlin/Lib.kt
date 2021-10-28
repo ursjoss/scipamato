@@ -9,41 +9,41 @@ object Lib {
     //region:dependencyVersions
     private const val kotlinVersion = "1.5.31"
 
-    private const val springBootVersion = "2.5.5"
-    private const val springBootAdminVersion = "2.5.1"
+    private const val springBootVersion = "2.5.6"
+    private const val springBootAdminVersion = "2.5.2"
     const val springCloudVersion = "2020.0.3"
     private const val springCloudStarterVersion = "3.0.3"
 
     private const val wicketSpringBootStarterVersion = "3.0.4"
     private const val wicketVersion = "9.5.0"
     private const val wicketstuffVersion = "9.5.0"
-    private const val wicketJqueryUiVersion = "9.3.2"
+    private const val wicketJqueryUiVersion = "9.5.0"
     private const val wicketBootstrapVersion = "4.0.4"
-    private const val jasperReportVersion = "6.17.0"
+    private const val jasperReportVersion = "6.18.0"
     private const val univocityParsersVersion = "2.9.1"
 
     private const val krisVersion = "0.3.2"
     const val jooqVersion = "3.14.15"
-    const val flywayVersion = "7.15.0"
+    const val flywayVersion = "8.0.2"
 
     private const val kotlinLoggingVersion = "2.0.11"
 
-    private const val openfeignVersion = "11.6"
+    private const val openfeignVersion = "11.7"
 
     private const val jaxbCoreVersion = "3.0.2"
     private const val jaxbImplVersion = "3.0.2"
     private const val javaxActivationVersion = "1.2.0"
     private const val javaxElApiVersion = "3.0.1-b06"
     private const val javaxElVersion = "3.0.1-b12"
-    private const val jacksonKotlinVersion = "2.12.4"
+    private const val jacksonKotlinVersion = "2.12.5"
 
     private const val fontAwesomeVersion = "5.15.2"
 
-    private const val equalsverifierVersion = "3.7.1"
+    private const val equalsverifierVersion = "3.7.2"
 
     private const val junit5Version = "5.8.1"
 
-    private const val testcontainersVersion = "1.16.0"
+    private const val testcontainersVersion = "1.16.2"
 
     private const val spekVersion = "2.0.17"
     private const val kwikVersion = "0.8.4"
