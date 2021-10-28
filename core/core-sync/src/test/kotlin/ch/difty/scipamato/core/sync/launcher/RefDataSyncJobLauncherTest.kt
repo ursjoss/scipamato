@@ -79,7 +79,8 @@ internal class RefDataSyncJobLauncherTest {
     @Test
     fun launching_withUnsynchronizedPapersAndAllStepsSuccessful_addsWarningBeforeStepResultsAndSucceeds() {
         every { warner.findUnsynchronizedPapers() } returns UNSYNCHED_PAPERS_MSG
-        val expectedMessages = messagesWithAllStepsSuccessful(jobMap, true)
+        every { warner.findNewsletterswithUnsynchronizedPapers() } returns null
+        val expectedMessages = messagesWithAllStepsSuccessful(jobMap, withUnsynchedPapers = true, withUnsynchedNewsletters = false)
 
         val result = launcher.launch()
 
@@ -90,11 +91,29 @@ internal class RefDataSyncJobLauncherTest {
         verifyMocks(jobMap)
     }
 
-    private fun messagesWithAllStepsSuccessful(jobMap: Map<String, Job>, withUnsynchedPapers: Boolean): List<String> {
+    @Test
+    fun launching_withUnsynchronizedPapersAndNewslettersAndAllStepsSuccessful_addsWarningBeforeStepResultsAndSucceeds() {
+        every { warner.findUnsynchronizedPapers() } returns null
+        every { warner.findNewsletterswithUnsynchronizedPapers() } returns UNSYNCHED_NEWSLETTER_MSG
+        val expectedMessages = messagesWithAllStepsSuccessful(jobMap, withUnsynchedPapers = false, withUnsynchedNewsletters = true)
+
+        val result = launcher.launch()
+
+        result.isSuccessful.shouldBeTrue()
+        result.isFailed.shouldBeFalse()
+        assertAllJobsSuccessfulButWithUnsynchedPapersAndNewsletters(expectedMessages, result)
+
+        verifyMocks(jobMap)
+    }
+
+    private fun messagesWithAllStepsSuccessful(jobMap: Map<String, Job>, withUnsynchedPapers: Boolean, withUnsynchedNewsletters: Boolean): List<String> {
         val expectedMessages = ArrayList<String>()
 
         if (withUnsynchedPapers)
             expectedMessages.add(UNSYNCHED_PAPERS_MSG)
+
+        if (withUnsynchedNewsletters)
+            expectedMessages.add(UNSYNCHED_NEWSLETTER_MSG)
 
         var jobId = JOB_STEP_ID_START
         jobMap.keys.forEach { key ->
@@ -136,12 +155,18 @@ internal class RefDataSyncJobLauncherTest {
         return jobExecution
     }
 
-    private fun assertAllJobsSuccessfulButWithUnsynchedPapers(expectedMessages: List<String>, result: SyncJobResult) {
+    private fun assertAllJobsSuccessfulButWithUnsynchedPapers(expectedMessages: List<String>, result: SyncJobResult) =
+        assertAllJobsSuccessfulButWithUnsynchedPapersx(expectedMessages, result, UNSYNCHED_PAPERS_MSG)
+
+    private fun assertAllJobsSuccessfulButWithUnsynchedPapersAndNewsletters(expectedMessages: List<String>, result: SyncJobResult) =
+        assertAllJobsSuccessfulButWithUnsynchedPapersx(expectedMessages, result, UNSYNCHED_NEWSLETTER_MSG)
+
+    private fun assertAllJobsSuccessfulButWithUnsynchedPapersx(expectedMessages: List<String>, result: SyncJobResult, warnMsg: String) {
         result.messages shouldHaveSize 11
 
         // warning due to unsynchronized papers
         val logMessage = result.messages[0]
-        logMessage.message shouldBeEqualTo UNSYNCHED_PAPERS_MSG
+        logMessage.message shouldBeEqualTo warnMsg
         logMessage.messageLevel shouldBeEqualTo SyncJobResult.MessageLevel.WARNING
 
         // job step results
@@ -158,13 +183,15 @@ internal class RefDataSyncJobLauncherTest {
 
     private fun verifyMocks(jobMap: Map<String, Job>) {
         verify { warner.findUnsynchronizedPapers() }
+        verify { warner.findNewsletterswithUnsynchronizedPapers() }
         jobMap.values.forEach { job -> verify { jobLauncher.run(job, any()) } }
     }
 
     @Test
     fun launching_withoutUnsynchronizedPapers_onlyAddsInfoMessages() {
         every { warner.findUnsynchronizedPapers() } returns null
-        val expectedMessages = messagesWithAllStepsSuccessful(jobMap, false)
+        every { warner.findNewsletterswithUnsynchronizedPapers() } returns null
+        val expectedMessages = messagesWithAllStepsSuccessful(jobMap, withUnsynchedPapers = false, withUnsynchedNewsletters = false)
 
         val result = launcher.launch()
         result.isSuccessful.shouldBeTrue()
@@ -177,6 +204,7 @@ internal class RefDataSyncJobLauncherTest {
     @Test
     fun launching_withFailingStep_failsJob() {
         every { warner.findUnsynchronizedPapers() } returns null
+        every { warner.findNewsletterswithUnsynchronizedPapers() } returns null
         val expectedMessages = messagesWithFailingStepInPosition3(jobMap)
 
         val result = launcher.launch()
@@ -233,6 +261,7 @@ internal class RefDataSyncJobLauncherTest {
     @Test
     fun launching_withUnexpectedException_stopsRunningSubsequentJobs() {
         every { warner.findUnsynchronizedPapers() } returns null
+        every { warner.findNewsletterswithUnsynchronizedPapers() } returns null
         val expectedMessages = messagesWithExceptionAfter2nd(jobMap)
         expectedMessages.add(
             "Unexpected exception of type class java.lang.RuntimeException: unexpected exception somewhere"
@@ -248,6 +277,7 @@ internal class RefDataSyncJobLauncherTest {
         result.messages.map { it.message } shouldContainSame expectedMessages
 
         verify { warner.findUnsynchronizedPapers() }
+        verify { warner.findNewsletterswithUnsynchronizedPapers() }
         jobMap.values.take(3).forEach { job -> verify { jobLauncher.run(job, any()) } }
     }
 
@@ -285,5 +315,6 @@ internal class RefDataSyncJobLauncherTest {
         private const val JOB_STEP_ID_START = 75
         private const val BATCH_SIZE = 100
         private const val UNSYNCHED_PAPERS_MSG = "unsynched papers"
+        private const val UNSYNCHED_NEWSLETTER_MSG = "unsynched newsletters"
     }
 }
