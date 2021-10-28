@@ -77,9 +77,12 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Deprecated
 
 .Removed
+////
 
 .Fixed
+- {url-issues}300[#300] Fix Synchornization Corner Case with Newsletters with Papers without code
 
+////
 .Security
 
 ////

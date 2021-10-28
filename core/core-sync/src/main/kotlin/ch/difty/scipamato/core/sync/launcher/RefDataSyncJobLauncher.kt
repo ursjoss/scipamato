@@ -109,5 +109,8 @@ open class RefDataSyncJobLauncher(
         warner.findUnsynchronizedPapers()?.let {
             result.setWarning(it)
         }
+        warner.findNewsletterswithUnsynchronizedPapers()?.let {
+            result.setWarning(it)
+        }
     }
 }
