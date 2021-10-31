@@ -24,18 +24,25 @@ internal class PublicPaperProvider(
     resultPageSize: Int,
 ) : SortableDataProvider<PublicPaper, String>(), ISortableDataProvider<PublicPaper, String>, IFilterStateLocator<PublicPaperFilter> {
 
-    private var paperFilter: PublicPaperFilter?
-
-    /**
-     * Return the (max) rowsPerPage (or pageSize), regardless of the number of
-     * records actually available on the page.
-     */
-    val rowsPerPage: Int
-
     @SpringBean
     private lateinit var service: PublicPaperService
 
-    /** package-private for test purposes  */
+    private var paperFilter: PublicPaperFilter
+
+    /**
+     * Return the (max) rowsPerPage (or pageSize), regardless of the number of records actually available on the page.
+     */
+    val rowsPerPage: Int
+
+    init {
+        Injector.get().inject(this)
+        this.paperFilter = paperFilter ?: PublicPaperFilter()
+        rowsPerPage = resultPageSize
+        setSort("number", SortOrder.DESCENDING)
+    }
+
+
+    /** for test purposes  */
     fun setService(service: PublicPaperService) {
         this.service = service
     }
@@ -44,16 +51,16 @@ internal class PublicPaperProvider(
         val dir = if (sort.isAscending) Sort.Direction.ASC else Sort.Direction.DESC
         val sortProp = sort.property!!
         val pc: PaginationContext = PaginationRequest(offset.toInt(), count.toInt(), dir, sortProp)
-        return service.findPageByFilter(paperFilter!!, pc).iterator()
+        return service.findPageByFilter(paperFilter, pc).iterator()
     }
 
-    override fun size(): Long = service.countByFilter(paperFilter!!).toLong()
+    override fun size(): Long = service.countByFilter(paperFilter).toLong()
 
     override fun model(entity: PublicPaper?): IModel<PublicPaper> = Model(entity)
 
-    override fun getFilterState(): PublicPaperFilter? = paperFilter
+    override fun getFilterState(): PublicPaperFilter = paperFilter
 
-    override fun setFilterState(filterState: PublicPaperFilter?) {
+    override fun setFilterState(filterState: PublicPaperFilter) {
         paperFilter = filterState
     }
 
@@ -64,19 +71,10 @@ internal class PublicPaperProvider(
     fun findAllPaperNumbersByFilter(): List<Long> {
         val dir = if (sort.isAscending) Sort.Direction.ASC else Sort.Direction.DESC
         val sortProp = sort.property!!
-        return service.findPageOfNumbersByFilter(filterState!!, PaginationRequest(dir, sortProp))
+        return service.findPageOfNumbersByFilter(filterState, PaginationRequest(dir, sortProp))
     }
 
     companion object {
         private const val serialVersionUID = 1L
-    }
-
-    init {
-        Injector
-            .get()
-            .inject(this)
-        this.paperFilter = paperFilter ?: PublicPaperFilter()
-        rowsPerPage = resultPageSize
-        setSort("number", SortOrder.DESCENDING)
     }
 }

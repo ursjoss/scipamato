@@ -12,6 +12,7 @@ import io.mockk.verify
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeInstanceOf
 import org.amshove.kluent.shouldContainSame
+import org.amshove.kluent.shouldNotBeEqualTo
 import org.amshove.kluent.shouldNotBeNull
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder
 import org.apache.wicket.util.tester.WicketTester
@@ -20,7 +21,6 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import java.util.ArrayList
 
 @SpringBootTest
 class PublicPaperProviderTest {
@@ -30,18 +30,17 @@ class PublicPaperProviderTest {
     @MockK
     private lateinit var serviceMock: PublicPaperService
 
-    @MockK
-    private lateinit var filterMock: PublicPaperFilter
-
     @Autowired
     private lateinit var application: ScipamatoPublicApplication
+
+    private val filterDummy = PublicPaperFilter(number = 1L)
 
     private val papers: MutableList<PublicPaper> = ArrayList()
 
     @BeforeEach
     fun setUp() {
         WicketTester(application)
-        provider = PublicPaperProvider(filterMock, 20)
+        provider = PublicPaperProvider(filterDummy, 20)
         provider.setService(serviceMock)
         papers.add(
             PublicPaper(
@@ -55,8 +54,8 @@ class PublicPaperProviderTest {
                 "methods2", "population2", "result2", "comment2"
             )
         )
-        every { serviceMock.countByFilter(filterMock) } returns 2
-        every { serviceMock.findPageByFilter(filterMock, any()) } returns papers
+        every { serviceMock.countByFilter(filterDummy) } returns 2
+        every { serviceMock.findPageByFilter(filterDummy, any()) } returns papers
     }
 
     @AfterEach
@@ -66,7 +65,7 @@ class PublicPaperProviderTest {
 
     @Test
     fun construct() {
-        provider.filterState shouldBeEqualTo filterMock
+        provider.filterState shouldBeEqualTo filterDummy
         provider.rowsPerPage shouldBeEqualTo 20
     }
 
@@ -76,16 +75,16 @@ class PublicPaperProviderTest {
         with(provider2.filterState) {
             shouldNotBeNull()
             this shouldBeInstanceOf PublicPaperFilter::class
-//            this shouldNotBeEqualTo filterMock // breaks because of lomboks canEqual, comment out for now
+            this shouldNotBeEqualTo filterDummy
         }
         provider2.rowsPerPage shouldBeEqualTo 10
     }
 
     @Test
     fun canSetFilterState() {
-        provider.filterState shouldBeEqualTo filterMock
+        provider.filterState shouldBeEqualTo filterDummy
         provider.filterState = PublicPaperFilter()
-//        provider.filterState shouldNotBeEqualTo filterMock // breaks because of lomboks canEqual, comment out for now
+        provider.filterState shouldNotBeEqualTo filterDummy
         provider.filterState shouldBeInstanceOf PublicPaperFilter::class
     }
 
@@ -103,20 +102,20 @@ class PublicPaperProviderTest {
     fun gettingIterator_withAscendingSort() {
         provider.setSort("title", SortOrder.ASCENDING)
         provider.iterator(0L, 10L).asSequence().map { it.id } shouldContainSame listOf(1L, 2L).asSequence()
-        verify { serviceMock.findPageByFilter(filterMock, any()) }
+        verify { serviceMock.findPageByFilter(filterDummy, any()) }
     }
 
     @Test
     fun gettingIterator_withDescendingSort() {
         provider.setSort("title", SortOrder.DESCENDING)
         provider.iterator(0L, 10L).asSequence().map { it.id } shouldContainSame listOf(2L, 1L).asSequence()
-        verify { serviceMock.findPageByFilter(filterMock, any()) }
+        verify { serviceMock.findPageByFilter(filterDummy, any()) }
     }
 
     @Test
     fun gettingSize() {
         provider.size() shouldBeEqualTo 2
-        verify { serviceMock.countByFilter(filterMock) }
+        verify { serviceMock.countByFilter(filterDummy) }
     }
 
     @Test
@@ -134,9 +133,9 @@ class PublicPaperProviderTest {
         provider.setSort("title", srt)
 
         every {
-            serviceMock.findPageOfNumbersByFilter(filterMock, matchPaginationContext(0, Int.MAX_VALUE, sortDescription))
+            serviceMock.findPageOfNumbersByFilter(filterDummy, matchPaginationContext(0, Int.MAX_VALUE, sortDescription))
         } returns listOf(5L, 3L, 17L)
         provider.findAllPaperNumbersByFilter() shouldContainSame listOf(5L, 3L, 17L)
-        verify { serviceMock.findPageOfNumbersByFilter(filterMock, any()) }
+        verify { serviceMock.findPageOfNumbersByFilter(filterDummy, any()) }
     }
 }
