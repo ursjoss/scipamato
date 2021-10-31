@@ -23,7 +23,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import java.util.ArrayList
 
 @SpringBootTest
-internal class PublicPaperProviderTest {
+class PublicPaperProviderTest {
 
     private lateinit var provider: PublicPaperProvider
 

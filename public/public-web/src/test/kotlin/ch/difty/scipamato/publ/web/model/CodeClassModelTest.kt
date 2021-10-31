@@ -10,7 +10,8 @@ import org.amshove.kluent.shouldContainSame
 import org.junit.jupiter.api.Test
 import java.util.ArrayList
 
-internal class CodeClassModelTest : ModelTest() {
+class CodeClassModelTest : ModelTest() {
+
     @MockkBean
     private lateinit var serviceMock: CodeClassService
 

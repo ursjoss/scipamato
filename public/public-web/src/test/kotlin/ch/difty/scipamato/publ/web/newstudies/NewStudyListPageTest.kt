@@ -31,7 +31,7 @@ import java.time.LocalDate
 import java.util.ArrayList
 
 @Suppress("unused")
-internal class NewStudyListPageTest : BasePageTest<NewStudyListPage>() {
+class NewStudyListPageTest : BasePageTest<NewStudyListPage>() {
 
     @MockkBean
     private lateinit var serviceMock: NewStudyTopicService

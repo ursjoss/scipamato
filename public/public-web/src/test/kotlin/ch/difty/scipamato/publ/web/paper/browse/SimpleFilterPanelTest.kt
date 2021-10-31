@@ -8,7 +8,7 @@ import org.apache.wicket.markup.html.form.FormComponent
 import org.apache.wicket.model.Model
 import org.junit.jupiter.api.Test
 
-internal class SimpleFilterPanelTest : PanelTest<SimpleFilterPanel>() {
+class SimpleFilterPanelTest : PanelTest<SimpleFilterPanel>() {
 
     private var eventHandlerCallCount = 0
 

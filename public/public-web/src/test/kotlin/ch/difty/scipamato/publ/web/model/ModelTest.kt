@@ -11,6 +11,7 @@ import java.util.Locale
 
 @SpringBootTest
 abstract class ModelTest {
+
     @Autowired
     private val application: ScipamatoPublicApplication? = null
 

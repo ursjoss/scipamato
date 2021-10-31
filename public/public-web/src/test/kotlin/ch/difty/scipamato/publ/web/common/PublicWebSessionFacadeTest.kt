@@ -10,7 +10,7 @@ import org.apache.wicket.authroles.authorization.strategies.role.Roles
 import org.junit.jupiter.api.Test
 import java.util.Locale
 
-internal class PublicWebSessionFacadeTest : WicketTest() {
+class PublicWebSessionFacadeTest : WicketTest() {
 
     private val sessionFacade: ScipamatoWebSessionFacade = PublicWebSessionFacade()
 

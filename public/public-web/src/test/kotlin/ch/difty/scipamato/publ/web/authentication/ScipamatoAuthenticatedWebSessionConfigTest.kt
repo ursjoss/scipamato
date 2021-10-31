@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import kotlin.reflect.jvm.jvmName
 
-internal class ScipamatoAuthenticatedWebSessionConfigTest : WicketTest() {
+class ScipamatoAuthenticatedWebSessionConfigTest : WicketTest() {
 
     @Autowired
     private lateinit var config: ScipamatoAuthenticatedWebSessionConfig

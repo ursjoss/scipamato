@@ -14,7 +14,7 @@ private const val ID = "id"
 private const val MARKUP_ID = "mId"
 
 @Suppress("SpellCheckingInspection")
-internal class SimpleFilterPanelChangeEventTest {
+class SimpleFilterPanelChangeEventTest {
 
     private val targetSpy = AjaxRequestTargetSpy()
     private val e = SimpleFilterPanelChangeEvent(targetSpy)

@@ -3,7 +3,7 @@ package ch.difty.scipamato.publ.web.resources
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.Test
 
-internal class IcoMoonIconTypeTest {
+class IcoMoonIconTypeTest {
 
     @Test
     fun arrow_right() {

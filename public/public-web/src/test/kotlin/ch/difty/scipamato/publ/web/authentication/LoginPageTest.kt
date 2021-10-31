@@ -8,7 +8,7 @@ import org.apache.wicket.markup.html.internal.HtmlHeaderContainer
 import org.apache.wicket.request.mapper.parameter.PageParameters
 import org.junit.jupiter.api.Test
 
-internal class LoginPageTest : WicketTest() {
+class LoginPageTest : WicketTest() {
 
     @Test
     fun assertPage() {

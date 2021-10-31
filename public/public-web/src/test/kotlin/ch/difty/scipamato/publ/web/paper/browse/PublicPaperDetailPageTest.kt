@@ -14,8 +14,10 @@ import org.apache.wicket.request.mapper.parameter.PageParameters
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 
+private const val NUMBER = 17L
+
 @Suppress("SameParameterValue")
-internal open class PublicPaperDetailPageTest : BasePageTest<PublicPaperDetailPage>() {
+class PublicPaperDetailPageTest : BasePageTest<PublicPaperDetailPage>() {
 
     override fun setUpHook() {
         super.setUpHook()
@@ -293,9 +295,5 @@ internal open class PublicPaperDetailPageTest : BasePageTest<PublicPaperDetailPa
     fun constructingPage_withoutPageParameterProvidingNumber_loadsNothing() {
         PublicPaperDetailPage(PageParameters())
         verify(exactly = 0) { paperService.findByNumber(any()) }
-    }
-
-    companion object {
-        private const val NUMBER = 17L
     }
 }

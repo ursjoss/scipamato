@@ -6,7 +6,7 @@ import org.amshove.kluent.shouldHaveSize
 import org.apache.wicket.markup.head.CssReferenceHeaderItem
 import org.junit.jupiter.api.Test
 
-internal class ScipamatoPublicThemeTest {
+class ScipamatoPublicThemeTest {
     @Test
     fun newTheme_withNoSpecificName_hasDefaultName() {
         val theme = ScipamatoPublicTheme(false)

@@ -6,7 +6,7 @@ import org.amshove.kluent.shouldBeFalse
 import org.amshove.kluent.shouldBeTrue
 import org.junit.jupiter.api.Test
 
-internal class BootstrapPropertiesTest {
+class BootstrapPropertiesTest {
 
     private val bp = BootstrapProperties()
 

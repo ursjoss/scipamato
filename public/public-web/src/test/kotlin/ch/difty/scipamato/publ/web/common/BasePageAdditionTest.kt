@@ -26,7 +26,7 @@ import org.apache.wicket.request.mapper.parameter.PageParameters
 import org.junit.jupiter.api.Test
 import java.util.Locale
 
-internal class BasePageAdditionTest : WicketTest() {
+class BasePageAdditionTest : WicketTest() {
 
     @MockkBean
     private lateinit var localeExtractor: LocaleExtractor
