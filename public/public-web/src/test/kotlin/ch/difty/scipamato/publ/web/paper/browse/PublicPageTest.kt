@@ -22,13 +22,15 @@ import org.junit.jupiter.api.Test
 import java.util.ArrayList
 
 @Suppress("SameParameterValue")
-internal class PublicPageTest : BasePageTest<PublicPage>() {
-
-    @MockkBean(relaxed = true)
-    private lateinit var codeServiceMock: CodeService
+class PublicPageTest : BasePageTest<PublicPage>() {
 
     @MockkBean(relaxed = true)
     private lateinit var codeClassServiceMock: CodeClassService
+
+    // Required for Tab2
+    @Suppress("unused")
+    @MockkBean(relaxed = true)
+    private lateinit var codeServiceMock: CodeService
 
     private val papers: MutableList<PublicPaper> = ArrayList()
 

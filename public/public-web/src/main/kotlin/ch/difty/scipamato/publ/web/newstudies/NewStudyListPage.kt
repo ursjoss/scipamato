@@ -81,17 +81,16 @@ open class NewStudyListPage(parameters: PageParameters) : BasePage<Void>(paramet
         queue(newDbSearchLink("dbLink", properties.cmsUrlSearchPage))
     }
 
-    private fun newDbSearchLink(id: String, href: String?) =
-        object : ExternalLink(
-            id,
-            href,
-            StringResourceModel("$id$LABEL_RESOURCE_TAG", this, null).string
-        ) {
-            override fun onComponentTag(tag: ComponentTag) {
-                super.onComponentTag(tag)
-                tag.put(TARGET, BLANK)
-            }
+    private fun newDbSearchLink(id: String, href: String?) = object : ExternalLink(
+        id,
+        href,
+        StringResourceModel("$id$LABEL_RESOURCE_TAG", this, null).string
+    ) {
+        override fun onComponentTag(tag: ComponentTag) {
+            super.onComponentTag(tag)
+            tag.put(TARGET, BLANK)
         }
+    }
 
     /**
      * The actual newsletter/new study list part with topics and nested studies
@@ -158,13 +157,15 @@ open class NewStudyListPage(parameters: PageParameters) : BasePage<Void>(paramet
         }
     }
 
-    private fun newExternalLink(id: String, linkItem: ListItem<NewStudyPageLink>) =
-        object : BootstrapExternalLink(id, Model.of(linkItem.modelObject.url)) {
-        }.apply {
-            setTarget(BootstrapExternalLink.Target.blank)
-            setIconType(chooseIcon(GlyphIconType.arrowright, IcoMoonIconType.arrow_right))
-            setLabel(Model.of(linkItem.modelObject.title))
-        }
+    private fun newExternalLink(id: String, linkItem: ListItem<NewStudyPageLink>) = object : BootstrapExternalLink(
+        id,
+        Model.of(linkItem.modelObject.url)
+    ) {
+    }.apply {
+        setTarget(BootstrapExternalLink.Target.blank)
+        setIconType(chooseIcon(GlyphIconType.arrowright, IcoMoonIconType.arrow_right))
+        setLabel(Model.of(linkItem.modelObject.title))
+    }
 
     fun chooseIcon(free: IconType, commercial: IconType): IconType = if (properties.isCommercialFontPresent) commercial else free
 
@@ -174,8 +175,10 @@ open class NewStudyListPage(parameters: PageParameters) : BasePage<Void>(paramet
         queue(newNewsletterArchive("archive"))
     }
 
-    private fun newLabel(id: String): Label =
-        Label(id, StringResourceModel("$id$LABEL_RESOURCE_TAG", this, null))
+    private fun newLabel(id: String) = Label(
+        id,
+        StringResourceModel("$id$LABEL_RESOURCE_TAG", this, null)
+    )
 
     private fun newNewsletterArchive(id: String): ListView<Newsletter> {
         val newsletterCount = properties.numberOfPreviousNewslettersInArchive

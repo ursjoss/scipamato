@@ -8,9 +8,8 @@ import io.mockk.every
 import io.mockk.verify
 import org.amshove.kluent.shouldContainSame
 import org.junit.jupiter.api.Test
-import java.util.ArrayList
 
-internal class KeywordModelTest : ModelTest() {
+class KeywordModelTest : ModelTest() {
 
     @MockkBean
     private lateinit var serviceMock: KeywordService

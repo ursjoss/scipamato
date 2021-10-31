@@ -8,7 +8,7 @@ import org.apache.wicket.markup.html.form.Form
 import org.apache.wicket.request.mapper.parameter.PageParameters
 import org.junit.jupiter.api.Test
 
-internal class LogoutPageTest : WicketTest() {
+class LogoutPageTest : WicketTest() {
 
     override fun setUpHook() {
         super.setUpHook()

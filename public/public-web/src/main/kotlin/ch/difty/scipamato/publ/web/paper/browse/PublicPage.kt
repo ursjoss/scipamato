@@ -75,10 +75,10 @@ class PublicPage(parameters: PageParameters) : BasePage<Void>(parameters) {
     ) {
         mutableListOf<ITab>().apply {
             add(object : AbstractTab(StringResourceModel("tab1$LABEL_RESOURCE_TAG", this@PublicPage, null)) {
-                override fun getPanel(panelId: String): Panel = TabPanel1(panelId, Model.of<PublicPaperFilter?>(filter))
+                override fun getPanel(panelId: String): Panel = TabPanel1(panelId, Model.of(filter))
             })
             add(object : AbstractTab(StringResourceModel("tab2$LABEL_RESOURCE_TAG", this@PublicPage, null)) {
-                override fun getPanel(panelId: String): Panel = TabPanel2(panelId, Model.of<PublicPaperFilter?>(filter))
+                override fun getPanel(panelId: String): Panel = TabPanel2(panelId, Model.of(filter))
             })
         }.also {
             filterForm.add(BootstrapTabbedPanel(tabId, it))
@@ -87,7 +87,7 @@ class PublicPage(parameters: PageParameters) : BasePage<Void>(parameters) {
 
     private inner class TabPanel1(
         id: String,
-        model: IModel<PublicPaperFilter?>?,
+        model: IModel<PublicPaperFilter>,
     ) : AbstractTabPanel(id, model) {
         override fun onInitialize() {
             super.onInitialize()
@@ -98,7 +98,7 @@ class PublicPage(parameters: PageParameters) : BasePage<Void>(parameters) {
 
     private inner class TabPanel2(
         id: String,
-        model: IModel<PublicPaperFilter?>?,
+        model: IModel<PublicPaperFilter>,
     ) : AbstractTabPanel(id, model) {
         override fun onInitialize() {
             super.onInitialize()
@@ -215,18 +215,22 @@ class PublicPage(parameters: PageParameters) : BasePage<Void>(parameters) {
         add(makePropertyColumn("publicationYear", "publicationYear"))
     }
 
-    private fun makePropertyColumn(fieldType: String, sortField: String) =
-        PropertyColumn<PublicPaper, String>(
-            StringResourceModel("$COLUMN_HEADER${fieldType}", this, null),
-            sortField,
-            fieldType
-        )
+    private fun makePropertyColumn(fieldType: String, sortField: String) = PropertyColumn<PublicPaper, String>(
+        StringResourceModel("$COLUMN_HEADER${fieldType}", this, null),
+        sortField,
+        fieldType,
+    )
 
     private fun makeClickableColumn(
         fieldType: String,
         consumer: SerializableConsumer<IModel<PublicPaper>>,
-    ): ClickablePropertyColumn<PublicPaper, String> =
-        ClickablePropertyColumn(StringResourceModel("$COLUMN_HEADER$fieldType", this, null), fieldType, consumer, fieldType, true)
+    ) = ClickablePropertyColumn(
+        displayModel = StringResourceModel("$COLUMN_HEADER$fieldType", this, null),
+        property = fieldType,
+        action = consumer,
+        sort = fieldType,
+        inNewTab = true,
+    )
 
     /*
      * Note: The PaperIdManger manages the number in scipamato-public, not the id

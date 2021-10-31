@@ -4,7 +4,7 @@ import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldContainSame
 import org.junit.jupiter.api.Test
 
-internal class PymScriptsTest {
+class PymScriptsTest {
 
     @Test
     fun testValues() {

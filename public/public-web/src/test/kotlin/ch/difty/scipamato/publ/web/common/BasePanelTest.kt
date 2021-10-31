@@ -6,7 +6,7 @@ import org.amshove.kluent.shouldBeEqualTo
 import org.apache.wicket.model.Model
 import org.junit.jupiter.api.Test
 
-internal class BasePanelTest : WicketTest() {
+class BasePanelTest : WicketTest() {
 
     private lateinit var panel: BasePanel<String>
 

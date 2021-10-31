@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 
 private val log = logger()
 
-internal class ScipamatoPublicApplicationTest {
+class ScipamatoPublicApplicationTest {
 
     @Test
     fun withCommercialFontEnabled_willOutputLog() {

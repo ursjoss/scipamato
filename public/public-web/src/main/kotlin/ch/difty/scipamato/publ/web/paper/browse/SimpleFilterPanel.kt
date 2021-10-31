@@ -23,45 +23,46 @@ import org.apache.wicket.markup.html.form.TextField
 import org.apache.wicket.model.IModel
 import org.apache.wicket.model.PropertyModel
 import org.apache.wicket.model.StringResourceModel
+import kotlin.reflect.KProperty1
 
 /**
  * The SimpleFilterPanel is added to the PublicPage twice and should be kept synchronized.
- * The fields are therefore change aware, i.e. send an event upon changes that let's the other fields instances.
+ * The fields are therefore change-aware, i.e. send an event upon changes letting other fields update.
  */
 open class SimpleFilterPanel(
     id: String,
-    model: IModel<PublicPaperFilter?>,
+    model: IModel<PublicPaperFilter>,
     private val languageCode: String,
-) : AbstractPanel<PublicPaperFilter?>(id, model) {
+) : AbstractPanel<PublicPaperFilter>(id, model) {
 
     override fun onInitialize() {
         super.onInitialize()
-        addTextFieldTo("methodsSearch", "methodsMask")
-        addTextFieldTo("authorsSearch", "authorMask")
-        addTextFieldTo("pubYearFrom", "publicationYearFrom")
-        addTextFieldTo("pubYearUntil", "publicationYearUntil")
-        addCodesComplex("populationCodes", "populationCodes", PopulationCode.values(), "160px")
-        addCodesComplex("studyDesignCodes", "studyDesignCodes", StudyDesignCode.values(), "220px")
-        queueKeywordMultiselect("keywords", "keywords")
-        addTextFieldTo("titleSearch", "titleMask")
+        PublicPaperFilter::methodsMask.queueAsTextFieldWithLabel("methodsSearch")
+        PublicPaperFilter::authorMask.queueAsTextFieldWithLabel("authorsSearch")
+        PublicPaperFilter::publicationYearFrom.queueAsTextFieldWithLabel("pubYearFrom")
+        PublicPaperFilter::publicationYearUntil.queueAsTextFieldWithLabel("pubYearUntil")
+        PublicPaperFilter::populationCodes.addCodesComplex("populationCodes", PopulationCode.values(), "160px")
+        PublicPaperFilter::studyDesignCodes.addCodesComplex("studyDesignCodes", StudyDesignCode.values(), "220px")
+        PublicPaperFilter::keywords.queueKeywordMultiselect("keywords")
+        PublicPaperFilter::titleMask.queueAsTextFieldWithLabel("titleSearch")
     }
 
-    private fun addTextFieldTo(id: String, filterField: String) {
-        object : TextField<String>(id, PropertyModel.of(model, filterField)) {
+    private fun <V> KProperty1<PublicPaperFilter, V>.queueAsTextFieldWithLabel(id: String) {
+        object : TextField<String>(id, PropertyModel.of(this@SimpleFilterPanel.model, name)) {
             override fun onEvent(event: IEvent<*>) {
                 handleChangeEvent(event, this)
             }
-        }.apply {
+        }.apply<TextField<String>> {
             add(object : AjaxFormComponentUpdatingBehavior(CHANGE) {
                 override fun onUpdate(target: AjaxRequestTarget) {
                     sendChangeEvent(target, this@apply)
                 }
             })
-            label = StringResourceModel("$id$LABEL_RESOURCE_TAG", this, null)
+            label = StringResourceModel("$id$LABEL_RESOURCE_TAG", this@SimpleFilterPanel, null)
         }.also {
             queue(it)
         }
-        queue(Label("$id$LABEL_TAG", StringResourceModel("$id$LABEL_RESOURCE_TAG", this, null)))
+        queue(Label("$id$LABEL_TAG", StringResourceModel("$id$LABEL_RESOURCE_TAG", this@SimpleFilterPanel, null)))
     }
 
     private fun sendChangeEvent(target: AjaxRequestTarget, component: FormComponent<*>) {
@@ -76,13 +77,12 @@ open class SimpleFilterPanel(
         }
     }
 
-    private fun <C : Enum<C>?> addCodesComplex(
+    private fun <C : Enum<C>, V> KProperty1<PublicPaperFilter, V>.addCodesComplex(
         id: String,
-        filterField: String,
         values: Array<C>,
         width: String,
     ) {
-        StringResourceModel("$id$LABEL_RESOURCE_TAG", this, null).also {
+        StringResourceModel("$id$LABEL_RESOURCE_TAG", this@SimpleFilterPanel, null).also {
             queue(Label("$id$LABEL_TAG", it))
         }
 
@@ -90,12 +90,12 @@ open class SimpleFilterPanel(
             .withMultiple(true)
             .withLiveSearch(true)
             .withLiveSearchStyle("startsWith")
-            .withSelectAllText(StringResourceModel(SELECT_ALL_RESOURCE_TAG, this, null).string)
-            .withDeselectAllText(StringResourceModel(DESELECT_ALL_RESOURCE_TAG, this, null).string)
-            .withNoneSelectedText(StringResourceModel(CODES_NONE_SELECT_RESOURCE_TAG, this, null).string)
+            .withSelectAllText(StringResourceModel(SELECT_ALL_RESOURCE_TAG, this@SimpleFilterPanel, null).string)
+            .withDeselectAllText(StringResourceModel(DESELECT_ALL_RESOURCE_TAG, this@SimpleFilterPanel, null).string)
+            .withNoneSelectedText(StringResourceModel(CODES_NONE_SELECT_RESOURCE_TAG, this@SimpleFilterPanel, null).string)
 
-        val model = PropertyModel.of<Collection<C>>(model, filterField)
-        object : BootstrapMultiSelect<C>(id, model, listOf(*values), EnumChoiceRenderer(this)) {
+        val model = PropertyModel.of<Collection<C>>(this@SimpleFilterPanel.model, name)
+        object : BootstrapMultiSelect<C>(id, model, listOf(*values), EnumChoiceRenderer(this@SimpleFilterPanel)) {
             override fun onEvent(event: IEvent<*>) {
                 handleChangeEvent(event, this)
             }
@@ -112,18 +112,15 @@ open class SimpleFilterPanel(
     }
 
     @Suppress("SameParameterValue")
-    private fun queueKeywordMultiselect(
-        id: String,
-        filterField: String,
-    ) {
-        val model = PropertyModel.of<List<Keyword>>(model, filterField)
+    private fun KProperty1<PublicPaperFilter, List<Keyword>?>.queueKeywordMultiselect(id: String) {
+        val model = PropertyModel.of<List<Keyword>>(this@SimpleFilterPanel.model, name)
         val choiceRenderer = ChoiceRenderer<Keyword>("displayValue", "id")
         val config = BootstrapSelectConfig()
             .withMultiple(true)
             .withActionsBox(true)
-            .withSelectAllText(StringResourceModel(SELECT_ALL_RESOURCE_TAG, this, null).string)
-            .withDeselectAllText(StringResourceModel(DESELECT_ALL_RESOURCE_TAG, this, null).string)
-            .withNoneSelectedText(StringResourceModel(KEYWORDS_NONE_SELECT_RESOURCE_TAG, this, null).string)
+            .withSelectAllText(StringResourceModel(SELECT_ALL_RESOURCE_TAG, this@SimpleFilterPanel, null).string)
+            .withDeselectAllText(StringResourceModel(DESELECT_ALL_RESOURCE_TAG, this@SimpleFilterPanel, null).string)
+            .withNoneSelectedText(StringResourceModel(KEYWORDS_NONE_SELECT_RESOURCE_TAG, this@SimpleFilterPanel, null).string)
             .withLiveSearch(true)
             .withLiveSearchStyle("startsWith")
         object : BootstrapMultiSelect<Keyword>(id, model, KeywordModel(languageCode), choiceRenderer) {
@@ -139,7 +136,7 @@ open class SimpleFilterPanel(
         }.also {
             queue(it)
         }
-        queue(Label("$id$LABEL_TAG", StringResourceModel("$id$LABEL_RESOURCE_TAG", this, null)))
+        queue(Label("$id$LABEL_TAG", StringResourceModel("$id$LABEL_RESOURCE_TAG", this@SimpleFilterPanel, null)))
     }
 
     companion object {

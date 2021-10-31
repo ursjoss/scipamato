@@ -4,7 +4,7 @@ import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeInstanceOf
 import org.junit.jupiter.api.Test
 
-internal class MetaOTCssResourceReferenceTest {
+class MetaOTCssResourceReferenceTest {
 
     @Test
     fun canGetInstance() {

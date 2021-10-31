@@ -11,7 +11,7 @@ import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldBeTrue
 import org.junit.jupiter.api.Test
 
-internal class MetaOTFontResourceProviderTest {
+class MetaOTFontResourceProviderTest {
 
     @Test
     fun withNoCommercialFontPresentSetting_getsNull() {
