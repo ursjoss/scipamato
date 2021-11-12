@@ -72,7 +72,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 
 .Changed
-- Bumped gradle, spring-boot-admin, wicket, wicketstuff
+- Bumped gradle, spring-boot-admin, wicket, wicketstuff, flyway
 
 ////
 .Deprecated
