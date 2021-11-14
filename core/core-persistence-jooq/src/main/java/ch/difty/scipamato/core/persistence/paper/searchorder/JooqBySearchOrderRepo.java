@@ -7,6 +7,7 @@ import static ch.difty.scipamato.core.db.tables.PaperNewsletter.PAPER_NEWSLETTER
 
 import java.util.Collection;
 import java.util.List;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.jetbrains.annotations.NotNull;
@@ -151,7 +152,17 @@ public abstract class JooqBySearchOrderRepo<T extends IdScipamatoEntity<Long>, M
         if (!searchCondition
             .getCodes()
             .isEmpty()) {
-            conditions.add(() -> codeConditions(searchCondition.getCodes()));
+            final List<String> codes = searchCondition
+                .getCodes()
+                .stream()
+                .map(Code::getCode)
+                .collect(Collectors.toList());
+            conditions.add(() -> codeConditions(codes, DSL::exists));
+        }
+        if (!searchCondition
+            .getExcludedCodeCodes()
+            .isEmpty()) {
+            conditions.add(() -> codeConditions(searchCondition.getExcludedCodeCodes(), DSL::notExists));
         }
         if (searchCondition.getNewsletterHeadline() != null || searchCondition.getNewsletterTopicId() != null
             || searchCondition.getNewsletterIssue() != null) {
@@ -163,17 +174,14 @@ public abstract class JooqBySearchOrderRepo<T extends IdScipamatoEntity<Long>, M
         return conditions.combineWithAnd();
     }
 
-    private Condition codeConditions(final List<Code> codes) {
+    private Condition codeConditions(final List<String> codes, final Function<SelectConditionStep<Record1<Integer>>, Condition> selector) {
         final ConditionalSupplier codeConditions = new ConditionalSupplier();
-        for (final String code : codes
-            .stream()
-            .map(Code::getCode)
-            .collect(Collectors.toList())) {
+        for (final String code : codes) {
             final SelectConditionStep<Record1<Integer>> step = DSL
                 .selectOne()
                 .from(PAPER_CODE)
                 .where(PAPER_CODE.PAPER_ID.eq(PAPER.ID));
-            codeConditions.add(() -> DSL.exists(step.and(DSL
+            codeConditions.add(() -> selector.apply(step.and(DSL
                 .lower(PAPER_CODE.CODE)
                 .eq(code.toLowerCase()))));
         }

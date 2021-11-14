@@ -648,6 +648,7 @@ abstract class PaperPanel<T>(
             makeCodeClassComplex(CodeClassId.CC6, codeClasses)
             makeCodeClassComplex(CodeClassId.CC7, codeClasses)
             makeCodeClassComplex(CodeClassId.CC8, codeClasses)
+            queueSearchOnlyTextFieldName(PaperFields.CODES_EXCLUDED)
         }
 
         private fun makeCodeClass1Complex(codeClasses: List<CodeClass>, form: Form<T>) {

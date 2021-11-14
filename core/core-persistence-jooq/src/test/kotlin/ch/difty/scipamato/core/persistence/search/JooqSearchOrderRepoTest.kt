@@ -183,7 +183,7 @@ internal class JooqSearchOrderRepoTest :
             ): List<Code> =
                 listOf(Code("1F", "Code 1F", "", false, 1, "CC 1", "", 0))
 
-            override fun fetchSearchConditionWithId(scId: Long): SearchCondition? = SearchCondition(scId)
+            override fun fetchSearchConditionWithId(scId: Long): SearchCondition = SearchCondition(scId)
             override fun findConditionIdsWithSearchTerms(searchOrderId: Long): List<Long> = ArrayList()
             override fun findConditionsOf(searchOrderId: Long): List<SearchCondition> = ArrayList()
         }

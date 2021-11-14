@@ -57,6 +57,7 @@ internal class SearchablePaperPanelTest : PaperPanelTest<SearchCondition, Search
             addCode(newC(6, "A"))
             addCode(newC(7, "A"))
             addCode(newC(8, "A"))
+            codesExcluded = "1B 2C"
             originalAbstract = "oa"
             hasAttachments = attachments
             attachmentNameMask = attachmentName
@@ -168,6 +169,14 @@ internal class SearchablePaperPanelTest : PaperPanelTest<SearchCondition, Search
     }
 
     @Test
+    fun withExcludedCodeFilter() {
+        tester.startComponentInPage(newPanel())
+        val bbb = prepareCodePanel()
+        assertTextFieldWithLabel("$bbb:codesExcluded", "1B 2C", "Excluded Codes")
+        verifyCodeAndCodeClassCalls(1)
+    }
+
+    @Test
     fun withAttachmentFilter_havingAttachments() {
         tester.startComponentInPage(newPanel(attachments = true))
         val bbb = prepareAttachmentPanel()
@@ -191,9 +200,12 @@ internal class SearchablePaperPanelTest : PaperPanelTest<SearchCondition, Search
         assertComponentWithLabel("$bbb:hasAttachments", CheckBoxX::class.java, null, "W/ or w/o Attachments")
     }
 
-    private fun prepareAttachmentPanel(): String {
+    private fun prepareCodePanel() = prepareTabPanel(tabIndex = 2)
+    private fun prepareAttachmentPanel() = prepareTabPanel(tabIndex = 5)
+
+    private fun prepareTabPanel(tabIndex: Int): String {
         val b = "panel:form:tabs"
-        tester.clickLink("$b:tabs-container:tabs:5:link")
-        return "$b:panel:tab6Form"
+        tester.clickLink("$b:tabs-container:tabs:$tabIndex:link")
+        return "$b:panel:tab${tabIndex + 1}Form"
     }
 }

@@ -144,6 +144,67 @@ internal class JooqPaperSlimBySearchOrderRepoTest {
     }
 
     @Test
+    fun getConditions_withSearchOrderWithCodeInclusionsAndCodeExclusions() {
+        val searchOrder = makeSearchOrderWithConditions(withExclusions = true)
+
+        val cond = finder.getConditionsFrom(searchOrder)
+        cond.toString() shouldBeEqualTo
+            """(
+                  |  (
+                  |    publication_year between 2014 and 2015
+                  |    and authors ilike ('%' || replace(
+                  |      replace(
+                  |        replace(
+                  |          'turner',
+                  |          '!',
+                  |          '!!'
+                  |        ),
+                  |        '%',
+                  |        '!%'
+                  |      ),
+                  |      '_',
+                  |      '!_'
+                  |    ) || '%') escape '!'
+                  |  )
+                  |  or (
+                  |    first_author_overridden = false
+                  |    and exists (
+                  |      select 1 "one"
+                  |      from "public"."paper_code"
+                  |      where (
+                  |        "public"."paper_code"."paper_id" = "public"."paper"."id"
+                  |        and lower("public"."paper_code"."code") = '1f'
+                  |      )
+                  |    )
+                  |    and exists (
+                  |      select 1 "one"
+                  |      from "public"."paper_code"
+                  |      where (
+                  |        "public"."paper_code"."paper_id" = "public"."paper"."id"
+                  |        and lower("public"."paper_code"."code") = '5s'
+                  |      )
+                  |    )
+                  |    and not (exists (
+                  |      select 1 "one"
+                  |      from "public"."paper_code"
+                  |      where (
+                  |        "public"."paper_code"."paper_id" = "public"."paper"."id"
+                  |        and lower("public"."paper_code"."code") = '2b'
+                  |      )
+                  |    ))
+                  |    and not (exists (
+                  |      select 1 "one"
+                  |      from "public"."paper_code"
+                  |      where (
+                  |        "public"."paper_code"."paper_id" = "public"."paper"."id"
+                  |        and lower("public"."paper_code"."code") = '3a'
+                  |      )
+                  |    ))
+                  |  )
+                  |)""".trimMargin()
+    }
+
+    @Test
     fun getConditions_withSearchOrderWithConditionsAndExclusions_ignoresExclusions() {
         val searchOrder = makeSearchOrderWithConditions()
 
@@ -256,19 +317,20 @@ internal class JooqPaperSlimBySearchOrderRepoTest {
                   |)""".trimMargin()
     }
 
-    private fun makeSearchOrderWithConditions(): SearchOrder {
+    private fun makeSearchOrderWithConditions(withExclusions: Boolean = false): SearchOrder {
         val searchOrder = SearchOrder()
+        SearchCondition(1L).apply {
+            addSearchTerm(SearchTerm.newSearchTerm(1L, SearchTermType.STRING.id, 1, "authors", "turner"))
+            addSearchTerm(SearchTerm.newSearchTerm(2L, SearchTermType.INTEGER.id, 1, "publicationYear", "2014-2015"))
+        }.also { searchOrder.add(it) }
 
-        val sc1 = SearchCondition(1L)
-        sc1.addSearchTerm(SearchTerm.newSearchTerm(1L, SearchTermType.STRING.id, 1, "authors", "turner"))
-        sc1.addSearchTerm(SearchTerm.newSearchTerm(2L, SearchTermType.INTEGER.id, 1, "publicationYear", "2014-2015"))
-        searchOrder.add(sc1)
-
-        val sc2 = SearchCondition(2L)
-        sc2.addSearchTerm(SearchTerm.newSearchTerm(3L, SearchTermType.BOOLEAN.id, 2, "firstAuthorOverridden", "false"))
-        sc2.addCode(Code("1F", "C1F", "", false, 1, "CC1", "", 0))
-        sc2.addCode(Code("5S", "C5S", "", false, 5, "CC5", "", 1))
-        searchOrder.add(sc2)
+        SearchCondition(2L).apply {
+            addSearchTerm(SearchTerm.newSearchTerm(3L, SearchTermType.BOOLEAN.id, 2, "firstAuthorOverridden", "false"))
+            addCode(Code("1F", "C1F", "", false, 1, "CC1", "", 0))
+            addCode(Code("5S", "C5S", "", false, 5, "CC5", "", 1))
+            if (withExclusions)
+                codesExcluded = "2B 3A"
+        }.also { searchOrder.add(it) }
         return searchOrder
     }
 
