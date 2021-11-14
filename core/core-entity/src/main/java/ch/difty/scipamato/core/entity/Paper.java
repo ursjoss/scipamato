@@ -1,5 +1,7 @@
 package ch.difty.scipamato.core.entity;
 
+import static java.util.Collections.emptyList;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -149,6 +151,7 @@ public class Paper extends IdScipamatoEntity<Long> implements CodeBoxAware, News
         NEWSLETTER_ISSUE("newsletterIssue"),
         HAS_ATTACHMENTS("hasAttachments"),
         ATTACHMENT_NAME_MASK("attachmentNameMask"),
+        CODES_EXCLUDED("codesExcluded"),
         CREATED("paper.created"),
         CREATED_BY("paper.created_by"),
         LAST_MOD("paper.last_modified"),
@@ -271,6 +274,23 @@ public class Paper extends IdScipamatoEntity<Long> implements CodeBoxAware, News
     @Override
     public void addCodes(@NotNull List<Code> codes) {
         this.codes.addCodes(codes);
+    }
+
+    @Override
+    public void setCodesExcluded(@Nullable final String codesExcluded) {
+        // no-op - only used for searching by excluded codes
+    }
+
+    @Nullable
+    @Override
+    public String getCodesExcluded() {
+        return null;
+    }
+
+    @NotNull
+    @Override
+    public List<String> getExcludedCodeCodes() {
+        return emptyList();
     }
 
     @NotNull

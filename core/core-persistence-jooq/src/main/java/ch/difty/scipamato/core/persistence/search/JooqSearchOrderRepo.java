@@ -353,6 +353,8 @@ public class JooqSearchOrderRepo extends
                     enrichNewsletterFields(searchCondition, psc);
                 if (hasDirtyAttachmentFields(searchCondition, psc))
                     enrichAttachmentFields(searchCondition, psc);
+                if (hasDirtyCodeExclusionField(searchCondition, psc))
+                    enrichCodeExclusionField(searchCondition, psc);
                 return updateSearchCondition(psc, searchOrderId, languageCode);
             } else {
                 return psc;
@@ -362,11 +364,12 @@ public class JooqSearchOrderRepo extends
             final SearchConditionRecord searchConditionRecord = getDsl()
                 .insertInto(SEARCH_CONDITION, SEARCH_CONDITION.SEARCH_ORDER_ID, SEARCH_CONDITION.NEWSLETTER_TOPIC_ID,
                     SEARCH_CONDITION.NEWSLETTER_HEADLINE, SEARCH_CONDITION.NEWSLETTER_ISSUE, SEARCH_CONDITION.ATTACHMENT_NAME_MASK,
-                    SEARCH_CONDITION.HAS_ATTACHMENTS, SEARCH_CONDITION.CREATED_TERM, SEARCH_CONDITION.MODIFIED_TERM, SEARCH_CONDITION.CREATED_BY,
-                    SEARCH_CONDITION.LAST_MODIFIED_BY)
+                    SEARCH_CONDITION.HAS_ATTACHMENTS, SEARCH_CONDITION.CODES_EXCLUDED, SEARCH_CONDITION.CREATED_TERM, SEARCH_CONDITION.MODIFIED_TERM,
+                    SEARCH_CONDITION.CREATED_BY, SEARCH_CONDITION.LAST_MODIFIED_BY)
                 .values(searchOrderId, searchCondition.getNewsletterTopicId(), searchCondition.getNewsletterHeadline(),
                     searchCondition.getNewsletterIssue(), searchCondition.getAttachmentNameMask(), searchCondition.getHasAttachments(),
-                    searchCondition.getCreatedDisplayValue(), searchCondition.getModifiedDisplayValue(), userId, userId)
+                    searchCondition.getCodesExcluded(), searchCondition.getCreatedDisplayValue(), searchCondition.getModifiedDisplayValue(), userId,
+                    userId)
                 .returning()
                 .fetchOne();
             persistSearchTerms(searchCondition, searchConditionRecord.getSearchConditionId());
@@ -406,6 +409,14 @@ public class JooqSearchOrderRepo extends
     private void enrichAttachmentFields(final SearchCondition searchCondition, final SearchCondition psc) {
         psc.setAttachmentNameMask(searchCondition.getAttachmentNameMask());
         psc.setHasAttachments(searchCondition.getHasAttachments());
+    }
+
+    boolean hasDirtyCodeExclusionField(@NotNull final SearchCondition searchCondition, @NotNull final SearchCondition psc) {
+        return !Objects.equals(psc.getCodesExcluded(), searchCondition.getCodesExcluded());
+    }
+
+    private void enrichCodeExclusionField(final SearchCondition searchCondition, final SearchCondition psc) {
+        psc.setCodesExcluded(searchCondition.getCodesExcluded());
     }
 
     /**
@@ -588,6 +599,7 @@ public class JooqSearchOrderRepo extends
             .set(SEARCH_CONDITION.NEWSLETTER_ISSUE, searchCondition.getNewsletterIssue())
             .set(SEARCH_CONDITION.ATTACHMENT_NAME_MASK, searchCondition.getAttachmentNameMask())
             .set(SEARCH_CONDITION.HAS_ATTACHMENTS, searchCondition.getHasAttachments())
+            .set(SEARCH_CONDITION.CODES_EXCLUDED, searchCondition.getCodesExcluded())
             .set(SEARCH_CONDITION.CREATED_TERM, searchCondition.getCreatedDisplayValue())
             .set(SEARCH_CONDITION.MODIFIED_TERM, searchCondition.getModifiedDisplayValue())
             .set(SEARCH_CONDITION.LAST_MODIFIED, getTs())

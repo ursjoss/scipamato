@@ -2,7 +2,9 @@ package ch.difty.scipamato.core.entity.search;
 
 import static ch.difty.scipamato.core.entity.IdScipamatoEntity.IdScipamatoEntityFields.ID;
 import static ch.difty.scipamato.core.entity.Paper.PaperFields.*;
+import static java.util.Collections.emptyList;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -54,6 +56,7 @@ public class SearchCondition implements ScipamatoFilter, CodeBoxAware, Newslette
     private String  newsletterIssue;
     private Boolean hasAttachments;
     private String  attachmentNameMask;
+    private String  codesExcluded;
     // only used for the display value - not identifying and therefore not used for equals or hashcode
     private String  newsletterTopicTitle;
 
@@ -491,6 +494,31 @@ public class SearchCondition implements ScipamatoFilter, CodeBoxAware, Newslette
         this.codes.addCodes(codes);
     }
 
+    @Override
+    public void setCodesExcluded(@Nullable final String codesExcluded) {
+        this.codesExcluded = codesExcluded;
+    }
+
+    @Nullable
+    @Override
+    public String getCodesExcluded() {
+        return codesExcluded;
+    }
+
+    @NotNull
+    @Override
+    public List<String> getExcludedCodeCodes() {
+        if (codesExcluded == null)
+            return emptyList();
+        final String[] parts = codesExcluded
+            .trim()
+            .split(" +");
+        return Arrays
+            .stream(parts)
+            .map(String::toUpperCase)
+            .collect(Collectors.toList());
+    }
+
     private String getStringValue(final FieldEnumType fieldType) {
         final StringSearchTerm st = stringSearchTerms.get(fieldType.getFieldName());
         return st != null ? st.getRawSearchTerm() : null;
@@ -593,6 +621,22 @@ public class SearchCondition implements ScipamatoFilter, CodeBoxAware, Newslette
                 sb.append(JOIN_DELIMITER);
             sb.append(codes);
         }
+        if (!(codesExcluded == null || codesExcluded.isBlank())) {
+            if (sb.length() > 0)
+                sb.append(JOIN_DELIMITER);
+            sb.append("-");
+            final List<String> codes = getExcludedCodeCodes();
+            String delim = "";
+            if (codes.size() > 1)
+                sb.append("(");
+            for (String c : codes) {
+                sb.append(delim);
+                sb.append(c);
+                delim = "|";
+            }
+            if (codes.size() > 1)
+                sb.append(")");
+        }
         if (newsletterIssue != null) {
             if (sb.length() > 0)
                 sb.append(JOIN_DELIMITER);
@@ -614,7 +658,7 @@ public class SearchCondition implements ScipamatoFilter, CodeBoxAware, Newslette
                 .append("topic=")
                 .append(newsletterTopicTitle);
         }
-        if (attachmentNameMask != null){
+        if (attachmentNameMask != null) {
             if (sb.length() > 0)
                 sb.append(JOIN_DELIMITER);
             sb

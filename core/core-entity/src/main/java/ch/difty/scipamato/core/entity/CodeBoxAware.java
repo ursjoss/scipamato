@@ -57,4 +57,18 @@ public interface CodeBoxAware {
      *     to add
      */
     void addCodes(@NotNull List<Code> codes);
+
+    void setCodesExcluded(@Nullable final String codesExcluded);
+
+    /**
+     * @return the String with the codes to be excluded
+     */
+    @Nullable
+    String getCodesExcluded();
+
+    /**
+     * @return as list of the individual codes considered excluded
+     */
+    @NotNull
+    List<String> getExcludedCodeCodes();
 }

@@ -703,6 +703,36 @@ internal class SearchConditionTest {
     }
 
     @Test
+    fun testExcludedCodes_withCodeExclusions() {
+        sc1.codesExcluded = null
+        sc1.codesExcluded.shouldBeNull()
+        sc1.excludedCodeCodes.shouldBeEmpty()
+
+        sc1.codesExcluded = "  5f "
+        sc1.codesExcluded shouldBeEqualTo "  5f "
+        sc1.excludedCodeCodes shouldContainSame listOf("5F")
+
+        sc1.codesExcluded = "   5f   3c   "
+        sc1.excludedCodeCodes shouldContainSame listOf("5F", "3C")
+
+        sc1.codesExcluded = null
+        sc1.codesExcluded.shouldBeNull()
+        sc1.excludedCodeCodes.shouldBeEmpty()
+    }
+
+    @Test
+    fun testDisplayValue_withCodeExclusions() {
+        sc1.codesExcluded = null
+        sc1.displayValue shouldBeEqualTo ""
+
+        sc1.codesExcluded = "  5f "
+        sc1.displayValue shouldBeEqualTo "-5F"
+
+        sc1.codesExcluded = "   5f   3c   "
+        sc1.displayValue shouldBeEqualTo "-(5F|3C)"
+    }
+
+    @Test
     fun testDisplayValue_withHasAttachment() {
         sc1.hasAttachments = true
         sc1.displayValue shouldBeEqualTo "attachment=true"
@@ -1174,7 +1204,7 @@ internal class SearchConditionTest {
 
 
     @Test
-    fun attachmentNameMas() {
+    fun attachmentNameMask() {
         sc1.attachmentNameMask.shouldBeNull()
 
         sc1.attachmentNameMask = "foo"

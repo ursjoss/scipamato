@@ -9,15 +9,7 @@ import ch.difty.scipamato.core.entity.search.SearchOrder
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import org.amshove.kluent.shouldBeEqualTo
-import org.amshove.kluent.shouldBeGreaterOrEqualTo
-import org.amshove.kluent.shouldBeGreaterThan
-import org.amshove.kluent.shouldBeNull
-import org.amshove.kluent.shouldContainAll
-import org.amshove.kluent.shouldContainSame
-import org.amshove.kluent.shouldHaveSize
-import org.amshove.kluent.shouldNotBeEqualTo
-import org.amshove.kluent.shouldNotBeNull
+import org.amshove.kluent.*
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.fail
 import org.springframework.beans.factory.annotation.Autowired
@@ -307,6 +299,18 @@ internal open class JooqSearchOrderRepoIntegrationTest {
         }
         repo.removeObsoleteSearchTerms(sc, -1L)
         verify { sc.clearRemovedKeys() }
+    }
+
+    @Test
+    fun excludedCodeCodes_withMultipleCodesExcluded_findsThem() {
+        repo.findById(4)?.searchConditions?.firstOrNull()?.excludedCodeCodes?.shouldContainSame(listOf("2B", "3A"))
+            ?: fail("should have found excluded codes")
+    }
+
+    @Test
+    fun excludedCodeCodes_withNoExcluded_returnsEmptyList() {
+        repo.findById(1)?.searchConditions?.firstOrNull()?.excludedCodeCodes?.shouldBeEmpty()
+            ?: fail("should have found empty but non-null list of excluded codes")
     }
 
     companion object {

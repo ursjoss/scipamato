@@ -70,6 +70,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 {url-cl}1.6.7$$...$$main[Full Changelog]
 
 .Added
+- {url-issues}292[#292] Add option to exclude codes from a complex search
 
 .Changed
 - Bumped gradle, spring-boot-admin, wicket, wicketstuff, flyway, jasperreports,
