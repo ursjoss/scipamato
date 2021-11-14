@@ -67,16 +67,13 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[unreleased]]
 == [unreleased]
 
-{url-cl}1.6.7$$...$$main[Full Changelog]
+{url-cl}1.6.8$$...$$main[Full Changelog]
 
 .Added
-- {url-issues}292[#292] Add option to exclude codes from a complex search
-
-.Changed
-- Bumped gradle, spring-boot-admin, wicket, wicketstuff, flyway, jasperreports,
-  lombok-gradle-plugin, jackson-module-kotlin
 
 ////
+.Changed
+
 .Deprecated
 
 .Removed
@@ -86,6 +83,18 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Security
 
 ////
+
+
+[[v1.6.8]]
+== {url-tree}1.6.8[1.6.8] -- 2021-11-14
+
+
+.Added
+- {url-issues}292[#292] Add option to exclude codes from a complex search
+
+.Changed
+- Bumped gradle, spring-boot-admin, wicket, wicketstuff, flyway, jasperreports,
+  lombok-gradle-plugin, jackson-module-kotlin
 
 
 [[v1.6.7]]
