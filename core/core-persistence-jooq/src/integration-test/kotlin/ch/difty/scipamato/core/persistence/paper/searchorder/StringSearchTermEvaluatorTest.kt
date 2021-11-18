@@ -1288,4 +1288,630 @@ internal class StringSearchTermEvaluatorTest {
                |)""".trimMargin()
     }
     //endregion
+
+    //region:populationField
+    private fun expectPopulationToken(type: TokenType, term: String) {
+        every { stMock.fieldName } returns "population"
+        tokens.add(Token(type, term))
+        every { stMock.tokens } returns tokens
+    }
+
+    @Test
+    fun buildingConditionForNotRegex_withPopulationField_appliesNotRegexToAllPopulationFields() {
+        expectPopulationToken(TokenType.NOTREGEX, "foo")
+        evaluator.evaluate(stMock).toString() shouldBeEqualTo
+            """(
+               |  not ((lower(cast(coalesce(
+               |    population,
+               |    ''
+               |  ) as varchar)) like_regex 'foo'))
+               |  and not ((lower(cast(coalesce(
+               |    population_place,
+               |    ''
+               |  ) as varchar)) like_regex 'foo'))
+               |  and not ((lower(cast(coalesce(
+               |    population_participants,
+               |    ''
+               |  ) as varchar)) like_regex 'foo'))
+               |  and not ((lower(cast(coalesce(
+               |    population_duration,
+               |    ''
+               |  ) as varchar)) like_regex 'foo'))
+               |)""".trimMargin()
+    }
+
+    @Test
+    fun buildingConditionForRegex_withPopulationField_appliesRegexToAllPopulationFields() {
+        expectPopulationToken(TokenType.REGEX, "foo")
+        evaluator.evaluate(stMock).toString() shouldBeEqualTo
+            """(
+               |  (lower(cast(coalesce(
+               |    population,
+               |    ''
+               |  ) as varchar)) like_regex 'foo')
+               |  or (lower(cast(coalesce(
+               |    population_place,
+               |    ''
+               |  ) as varchar)) like_regex 'foo')
+               |  or (lower(cast(coalesce(
+               |    population_participants,
+               |    ''
+               |  ) as varchar)) like_regex 'foo')
+               |  or (lower(cast(coalesce(
+               |    population_duration,
+               |    ''
+               |  ) as varchar)) like_regex 'foo')
+               |)""".trimMargin()
+    }
+
+    @Test
+    fun buildingConditionForWhitespace_withPopulationField_appliesTrueCondition() {
+        expectPopulationToken(TokenType.WHITESPACE, "   ")
+        evaluator.evaluate(stMock).toString() shouldBeEqualTo "true"
+    }
+
+    @Test
+    fun buildingConditionForSome_withPopulationField_appliesNotEmpty() {
+        expectPopulationToken(TokenType.SOME, "whatever")
+        evaluator.evaluate(stMock).toString() shouldBeEqualTo
+            """(
+                   |  (
+                   |    population is not null
+                   |    and char_length(cast(population as varchar)) > 0
+                   |  )
+                   |  or (
+                   |    population_place is not null
+                   |    and char_length(cast(population_place as varchar)) > 0
+                   |  )
+                   |  or (
+                   |    population_participants is not null
+                   |    and char_length(cast(population_participants as varchar)) > 0
+                   |  )
+                   |  or (
+                   |    population_duration is not null
+                   |    and char_length(cast(population_duration as varchar)) > 0
+                   |  )
+                   |)""".trimMargin()
+    }
+
+    @Test
+    fun buildingConditionForEmpty_withPopulationField_appliesEmptyToAllPopulationFields() {
+        expectPopulationToken(TokenType.EMPTY, "whatever")
+        evaluator.evaluate(stMock).toString() shouldBeEqualTo
+            """(
+               |  (
+               |    population is null
+               |    or char_length(cast(population as varchar)) = 0
+               |  )
+               |  and (
+               |    population_place is null
+               |    or char_length(cast(population_place as varchar)) = 0
+               |  )
+               |  and (
+               |    population_participants is null
+               |    or char_length(cast(population_participants as varchar)) = 0
+               |  )
+               |  and (
+               |    population_duration is null
+               |    or char_length(cast(population_duration as varchar)) = 0
+               |  )
+               |)""".trimMargin()
+    }
+
+    @Test
+    fun buildingConditionForNotOpenLeftRightQuoted_withPopulationField_appliesLikeToAllPopulationFields() {
+        expectPopulationToken(TokenType.NOTOPENLEFTRIGHTQUOTED, "foo")
+        evaluator.evaluate(stMock).toString() shouldBeEqualTo
+            """(
+               |  coalesce(
+               |    population,
+               |    ''
+               |  ) not ilike '%foo%'
+               |  and coalesce(
+               |    population_place,
+               |    ''
+               |  ) not ilike '%foo%'
+               |  and coalesce(
+               |    population_participants,
+               |    ''
+               |  ) not ilike '%foo%'
+               |  and coalesce(
+               |    population_duration,
+               |    ''
+               |  ) not ilike '%foo%'
+               |)""".trimMargin()
+    }
+
+    @Test
+    fun buildingConditionForOpenLeftRightQuoted_withPopulationField_appliesLikeToAllPopulationFields() {
+        expectPopulationToken(TokenType.OPENLEFTRIGHTQUOTED, "foo")
+        evaluator.evaluate(stMock).toString() shouldBeEqualTo
+            """(
+                   |  population ilike '%foo%'
+                   |  or population_place ilike '%foo%'
+                   |  or population_participants ilike '%foo%'
+                   |  or population_duration ilike '%foo%'
+                   |)""".trimMargin()
+    }
+
+    @Test
+    fun buildingConditionForNotOpenLeftRight_withPopulationField_appliesNotLikeToAllPolpulationFields() {
+        expectPopulationToken(TokenType.NOTOPENLEFTRIGHT, "foo")
+        evaluator.evaluate(stMock).toString() shouldBeEqualTo
+            """(
+                   |  coalesce(
+                   |    population,
+                   |    ''
+                   |  ) not ilike '%foo%'
+                   |  and coalesce(
+                   |    population_place,
+                   |    ''
+                   |  ) not ilike '%foo%'
+                   |  and coalesce(
+                   |    population_participants,
+                   |    ''
+                   |  ) not ilike '%foo%'
+                   |  and coalesce(
+                   |    population_duration,
+                   |    ''
+                   |  ) not ilike '%foo%'
+                   |)""".trimMargin()
+    }
+
+    @Test
+    fun buildingConditionForOpenLeftRight_withPopulationField_appliesLikeToAllPopulationFields() {
+        expectPopulationToken(TokenType.OPENLEFTRIGHT, "foo")
+        evaluator.evaluate(stMock).toString() shouldBeEqualTo
+            """(
+                   |  population ilike '%foo%'
+                   |  or population_place ilike '%foo%'
+                   |  or population_participants ilike '%foo%'
+                   |  or population_duration ilike '%foo%'
+                   |)""".trimMargin()
+    }
+
+    @Test
+    fun buildingConditionForNotOpenRightQuoted_withPopulationField_appliesLikeToAllPopulationFields() {
+        expectPopulationToken(TokenType.NOTOPENRIGHTQUOTED, "foo")
+        evaluator.evaluate(stMock).toString() shouldBeEqualTo
+            """(
+                   |  coalesce(
+                   |    population,
+                   |    ''
+                   |  ) not ilike 'foo%'
+                   |  and coalesce(
+                   |    population_place,
+                   |    ''
+                   |  ) not ilike 'foo%'
+                   |  and coalesce(
+                   |    population_participants,
+                   |    ''
+                   |  ) not ilike 'foo%'
+                   |  and coalesce(
+                   |    population_duration,
+                   |    ''
+                   |  ) not ilike 'foo%'
+                   |)""".trimMargin()
+    }
+
+    @Test
+    fun buildingConditionForOpenRightQuoted_withPopulationField_appliesLikeToAllPopulationFields() {
+        expectPopulationToken(TokenType.OPENRIGHTQUOTED, "foo")
+        evaluator.evaluate(stMock).toString() shouldBeEqualTo
+            """(
+                   |  population ilike 'foo%'
+                   |  or population_place ilike 'foo%'
+                   |  or population_participants ilike 'foo%'
+                   |  or population_duration ilike 'foo%'
+                   |)""".trimMargin()
+    }
+
+    @Test
+    fun buildingConditionForNotOpenRight_withPopulationField_appliesNotLikeToAllPopulationFields() {
+        expectPopulationToken(TokenType.NOTOPENRIGHT, "foo")
+        evaluator.evaluate(stMock).toString() shouldBeEqualTo
+            """(
+                   |  coalesce(
+                   |    population,
+                   |    ''
+                   |  ) not ilike 'foo%'
+                   |  and coalesce(
+                   |    population_place,
+                   |    ''
+                   |  ) not ilike 'foo%'
+                   |  and coalesce(
+                   |    population_participants,
+                   |    ''
+                   |  ) not ilike 'foo%'
+                   |  and coalesce(
+                   |    population_duration,
+                   |    ''
+                   |  ) not ilike 'foo%'
+                   |)""".trimMargin()
+    }
+
+    @Test
+    fun buildingConditionForOpenRight_withPopulationField_appliesLikeToAllPopulationFields() {
+        expectPopulationToken(TokenType.OPENRIGHT, "foo")
+        evaluator.evaluate(stMock).toString() shouldBeEqualTo
+            """(
+                   |  population ilike 'foo%'
+                   |  or population_place ilike 'foo%'
+                   |  or population_participants ilike 'foo%'
+                   |  or population_duration ilike 'foo%'
+                   |)""".trimMargin()
+    }
+
+    @Test
+    fun buildingConditionForNotOpenLeftQuoted_withPopulationField_appliesLikeToAllPopulationFields() {
+        expectPopulationToken(TokenType.NOTOPENLEFTQUOTED, "foo")
+        evaluator.evaluate(stMock).toString() shouldBeEqualTo
+            """(
+                   |  coalesce(
+                   |    population,
+                   |    ''
+                   |  ) not ilike '%foo'
+                   |  and coalesce(
+                   |    population_place,
+                   |    ''
+                   |  ) not ilike '%foo'
+                   |  and coalesce(
+                   |    population_participants,
+                   |    ''
+                   |  ) not ilike '%foo'
+                   |  and coalesce(
+                   |    population_duration,
+                   |    ''
+                   |  ) not ilike '%foo'
+                   |)""".trimMargin()
+    }
+
+    @Test
+    fun buildingConditionForOpenLeftQuoted_withPopulationField_appliesLikeToAllPopulationFields() {
+        expectPopulationToken(TokenType.OPENLEFTQUOTED, "foo")
+        evaluator.evaluate(stMock).toString() shouldBeEqualTo
+            """(
+               |  population ilike '%foo'
+               |  or population_place ilike '%foo'
+               |  or population_participants ilike '%foo'
+               |  or population_duration ilike '%foo'
+               |)""".trimMargin()
+    }
+
+    @Test
+    fun buildingConditionForNotOpenLeft_withPopulationField_appliesNotLikeToAllPopulationFields() {
+        expectPopulationToken(TokenType.NOTOPENLEFT, "foo")
+        evaluator.evaluate(stMock).toString() shouldBeEqualTo
+            """(
+               |  coalesce(
+               |    population,
+               |    ''
+               |  ) not ilike '%foo'
+               |  and coalesce(
+               |    population_place,
+               |    ''
+               |  ) not ilike '%foo'
+               |  and coalesce(
+               |    population_participants,
+               |    ''
+               |  ) not ilike '%foo'
+               |  and coalesce(
+               |    population_duration,
+               |    ''
+               |  ) not ilike '%foo'
+               |)""".trimMargin()
+    }
+
+    @Test
+    fun buildingConditionForOpenLeft_withPopulationField_appliesLikeToAllPopulationFields() {
+        expectPopulationToken(TokenType.OPENLEFT, "foo")
+        evaluator.evaluate(stMock).toString() shouldBeEqualTo
+            """(
+               |  population ilike '%foo'
+               |  or population_place ilike '%foo'
+               |  or population_participants ilike '%foo'
+               |  or population_duration ilike '%foo'
+               |)""".trimMargin()
+    }
+
+    @Test
+    fun buildingConditionForNotQuoted_withParticipantsField_appliesUnequalToAllParticipantsFields() {
+        expectPopulationToken(TokenType.NOTQUOTED, "foo")
+        evaluator.evaluate(stMock).toString() shouldBeEqualTo
+            """(
+                   |  lower(cast(population as varchar)) <> lower('foo')
+                   |  and lower(cast(population_place as varchar)) <> lower('foo')
+                   |  and lower(cast(population_participants as varchar)) <> lower('foo')
+                   |  and lower(cast(population_duration as varchar)) <> lower('foo')
+                   |)""".trimMargin()
+    }
+
+    @Test
+    fun buildingConditionForQuoted_withParticipantsField_appliesEqualToAllParticipantsFields() {
+        expectPopulationToken(TokenType.QUOTED, "foo")
+        evaluator.evaluate(stMock).toString() shouldBeEqualTo
+            """(
+                   |  lower(cast(population as varchar)) = lower('foo')
+                   |  or lower(cast(population_place as varchar)) = lower('foo')
+                   |  or lower(cast(population_participants as varchar)) = lower('foo')
+                   |  or lower(cast(population_duration as varchar)) = lower('foo')
+                   |)""".trimMargin()
+    }
+
+    @Test
+    fun buildingConditionForNotWord_withPopulationField_appliesNotContainsToAllPopulationFields() {
+        expectPopulationToken(TokenType.NOTWORD, "foo")
+        evaluator.evaluate(stMock).toString() shouldBeEqualTo
+            """(
+               |  not (coalesce(
+               |    population,
+               |    ''
+               |  ) ilike ('%' || replace(
+               |    replace(
+               |      replace(
+               |        'foo',
+               |        '!',
+               |        '!!'
+               |      ),
+               |      '%',
+               |      '!%'
+               |    ),
+               |    '_',
+               |    '!_'
+               |  ) || '%') escape '!')
+               |  and not (coalesce(
+               |    population_place,
+               |    ''
+               |  ) ilike ('%' || replace(
+               |    replace(
+               |      replace(
+               |        'foo',
+               |        '!',
+               |        '!!'
+               |      ),
+               |      '%',
+               |      '!%'
+               |    ),
+               |    '_',
+               |    '!_'
+               |  ) || '%') escape '!')
+               |  and not (coalesce(
+               |    population_participants,
+               |    ''
+               |  ) ilike ('%' || replace(
+               |    replace(
+               |      replace(
+               |        'foo',
+               |        '!',
+               |        '!!'
+               |      ),
+               |      '%',
+               |      '!%'
+               |    ),
+               |    '_',
+               |    '!_'
+               |  ) || '%') escape '!')
+               |  and not (coalesce(
+               |    population_duration,
+               |    ''
+               |  ) ilike ('%' || replace(
+               |    replace(
+               |      replace(
+               |        'foo',
+               |        '!',
+               |        '!!'
+               |      ),
+               |      '%',
+               |      '!%'
+               |    ),
+               |    '_',
+               |    '!_'
+               |  ) || '%') escape '!')
+               |)""".trimMargin()
+    }
+
+    @Test
+    fun buildingConditionForWord_withPopulationField_appliesContainsToAllPopulationFields() {
+        expectPopulationToken(TokenType.WORD, "foo")
+        evaluator.evaluate(stMock).toString() shouldBeEqualTo
+            """(
+               |  population ilike ('%' || replace(
+               |    replace(
+               |      replace(
+               |        'foo',
+               |        '!',
+               |        '!!'
+               |      ),
+               |      '%',
+               |      '!%'
+               |    ),
+               |    '_',
+               |    '!_'
+               |  ) || '%') escape '!'
+               |  or population_place ilike ('%' || replace(
+               |    replace(
+               |      replace(
+               |        'foo',
+               |        '!',
+               |        '!!'
+               |      ),
+               |      '%',
+               |      '!%'
+               |    ),
+               |    '_',
+               |    '!_'
+               |  ) || '%') escape '!'
+               |  or population_participants ilike ('%' || replace(
+               |    replace(
+               |      replace(
+               |        'foo',
+               |        '!',
+               |        '!!'
+               |      ),
+               |      '%',
+               |      '!%'
+               |    ),
+               |    '_',
+               |    '!_'
+               |  ) || '%') escape '!'
+               |  or population_duration ilike ('%' || replace(
+               |    replace(
+               |      replace(
+               |        'foo',
+               |        '!',
+               |        '!!'
+               |      ),
+               |      '%',
+               |      '!%'
+               |    ),
+               |    '_',
+               |    '!_'
+               |  ) || '%') escape '!'
+               |)""".trimMargin()
+    }
+
+    @Test
+    fun buildingConditionForRaw_withPopulationField_appliesDummyTrue() {
+        expectPopulationToken(TokenType.RAW, "foo")
+        evaluator.evaluate(stMock).toString() shouldBeEqualTo "true"
+    }
+
+    @Suppress("TooGenericExceptionCaught")
+    @Test
+    fun buildingConditionForUnsupported_withPopulationField_throws() {
+        expectPopulationToken(TokenType.UNSUPPORTED, "foo")
+        invoking { evaluator.evaluate(stMock) } shouldThrow AssertionError::class withMessage
+            "Evaluation of type UNSUPPORTED is not supported..."
+    }
+
+    @Test
+    fun buildingConditionForCombinedSearchTerm_withPopulationField_() {
+        val sst = SearchTerm.newSearchTerm(
+            1L, SearchTermType.STRING.id, 1L,
+            "population", "foo -bar"
+        ) as StringSearchTerm
+        evaluator.evaluate(sst).toString() shouldBeEqualTo
+            """(
+               |  (
+               |    population ilike ('%' || replace(
+               |      replace(
+               |        replace(
+               |          'foo',
+               |          '!',
+               |          '!!'
+               |        ),
+               |        '%',
+               |        '!%'
+               |      ),
+               |      '_',
+               |      '!_'
+               |    ) || '%') escape '!'
+               |    or population_place ilike ('%' || replace(
+               |      replace(
+               |        replace(
+               |          'foo',
+               |          '!',
+               |          '!!'
+               |        ),
+               |        '%',
+               |        '!%'
+               |      ),
+               |      '_',
+               |      '!_'
+               |    ) || '%') escape '!'
+               |    or population_participants ilike ('%' || replace(
+               |      replace(
+               |        replace(
+               |          'foo',
+               |          '!',
+               |          '!!'
+               |        ),
+               |        '%',
+               |        '!%'
+               |      ),
+               |      '_',
+               |      '!_'
+               |    ) || '%') escape '!'
+               |    or population_duration ilike ('%' || replace(
+               |      replace(
+               |        replace(
+               |          'foo',
+               |          '!',
+               |          '!!'
+               |        ),
+               |        '%',
+               |        '!%'
+               |      ),
+               |      '_',
+               |      '!_'
+               |    ) || '%') escape '!'
+               |  )
+               |  and not (coalesce(
+               |    population,
+               |    ''
+               |  ) ilike ('%' || replace(
+               |    replace(
+               |      replace(
+               |        'bar',
+               |        '!',
+               |        '!!'
+               |      ),
+               |      '%',
+               |      '!%'
+               |    ),
+               |    '_',
+               |    '!_'
+               |  ) || '%') escape '!')
+               |  and not (coalesce(
+               |    population_place,
+               |    ''
+               |  ) ilike ('%' || replace(
+               |    replace(
+               |      replace(
+               |        'bar',
+               |        '!',
+               |        '!!'
+               |      ),
+               |      '%',
+               |      '!%'
+               |    ),
+               |    '_',
+               |    '!_'
+               |  ) || '%') escape '!')
+               |  and not (coalesce(
+               |    population_participants,
+               |    ''
+               |  ) ilike ('%' || replace(
+               |    replace(
+               |      replace(
+               |        'bar',
+               |        '!',
+               |        '!!'
+               |      ),
+               |      '%',
+               |      '!%'
+               |    ),
+               |    '_',
+               |    '!_'
+               |  ) || '%') escape '!')
+               |  and not (coalesce(
+               |    population_duration,
+               |    ''
+               |  ) ilike ('%' || replace(
+               |    replace(
+               |      replace(
+               |        'bar',
+               |        '!',
+               |        '!!'
+               |      ),
+               |      '%',
+               |      '!%'
+               |    ),
+               |    '_',
+               |    '!_'
+               |  ) || '%') escape '!')
+               |)""".trimMargin()
+    }
+    //endregion
+
 }

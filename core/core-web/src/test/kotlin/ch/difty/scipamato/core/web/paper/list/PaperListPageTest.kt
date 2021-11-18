@@ -51,6 +51,7 @@ internal abstract class PaperListPageTest : BasePageTest<PaperListPage>() {
         assertLabeledTextField(b!!, "number")
         assertLabeledTextField(b, "authorsSearch")
         assertLabeledTextField(b, "methodsSearch")
+        assertLabeledTextField(b, "populationSearch")
         assertLabeledTextField(b, "fieldSearch")
         assertLabeledTextField(b, "pubYearFrom")
         assertLabeledTextField(b, "pubYearUntil")

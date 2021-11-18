@@ -27,14 +27,21 @@ import ch.difty.scipamato.core.persistence.ConditionalSupplier;
 @SuppressWarnings("SpellCheckingInspection")
 public class StringSearchTermEvaluator implements SearchTermEvaluator<StringSearchTerm> {
 
-    private static final String METHODS = "methods";
+    private static final String METHODS    = "methods";
+    private static final String POPULATION = "population";
 
-    private final List<Field<Object>> methodFields = new ArrayList<>();
+    private final List<Field<Object>> methodFields     = new ArrayList<>();
+    private final List<Field<Object>> populationFields = new ArrayList<>();
 
     public StringSearchTermEvaluator() {
         methodFields.addAll(Stream
             .of(METHODS, "methodStudyDesign", "populationPlace", "methodOutcome", "exposurePollutant", "exposureAssessment", "methodStatistics",
                 "methodConfounders")
+            .map(TranslationUtilsKt::deCamelCase)
+            .map(DSL::field)
+            .collect(Collectors.toList()));
+        populationFields.addAll(Stream
+            .of(POPULATION, "populationPlace", "populationParticipants", "populationDuration")
             .map(TranslationUtilsKt::deCamelCase)
             .map(DSL::field)
             .collect(Collectors.toList()));
@@ -83,14 +90,9 @@ public class StringSearchTermEvaluator implements SearchTermEvaluator<StringSear
 
     private void containsCondition(final ConditionalSupplier cs, final Field<Object> field, final Field<String> value, final boolean negate) {
         if (METHODS.equalsIgnoreCase(field.getName())) {
-            ConditionalSupplier csSub = new ConditionalSupplier();
-            for (final Field<Object> mf : methodFields)
-                csSub.add(() -> negate ?
-                    DSL
-                        .coalesce(mf, "")
-                        .notContainsIgnoreCase(value) :
-                    mf.containsIgnoreCase(value));
-            cs.add(() -> negate ? csSub.combineWithAnd() : csSub.combineWithOr());
+            containsMultiple(cs, value, negate, methodFields);
+        } else if (POPULATION.equalsIgnoreCase(field.getName())) {
+            containsMultiple(cs, value, negate, populationFields);
         } else {
             cs.add(() -> negate ?
                 DSL
@@ -100,28 +102,39 @@ public class StringSearchTermEvaluator implements SearchTermEvaluator<StringSear
         }
     }
 
+    private void containsMultiple(final ConditionalSupplier cs, final Field<String> value, final boolean negate, final List<Field<Object>> fields) {
+        ConditionalSupplier csSub = new ConditionalSupplier();
+        for (final Field<Object> mf : fields)
+            csSub.add(() -> negate ?
+                DSL
+                    .coalesce(mf, "")
+                    .notContainsIgnoreCase(value) :
+                mf.containsIgnoreCase(value));
+        cs.add(() -> negate ? csSub.combineWithAnd() : csSub.combineWithOr());
+    }
+
     private void equalsCondition(final ConditionalSupplier cs, final Field<Object> field, final Field<String> value, final boolean negate) {
         if (METHODS.equalsIgnoreCase(field.getName())) {
-            ConditionalSupplier csSub = new ConditionalSupplier();
-            for (final Field<Object> mf : methodFields)
-                csSub.add(() -> negate ? mf.notEqualIgnoreCase(value) : mf.equalIgnoreCase(value));
-            cs.add(() -> negate ? csSub.combineWithAnd() : csSub.combineWithOr());
+            equalsMultiple(cs, value, negate, methodFields);
+        } else if (POPULATION.equalsIgnoreCase(field.getName())) {
+            equalsMultiple(cs, value, negate, populationFields);
         } else {
             cs.add(() -> negate ? field.notEqualIgnoreCase(value) : field.equalIgnoreCase(value));
         }
     }
 
+    private void equalsMultiple(final ConditionalSupplier cs, final Field<String> value, final boolean negate, final List<Field<Object>> fields) {
+        ConditionalSupplier csSub = new ConditionalSupplier();
+        for (final Field<Object> mf : fields)
+            csSub.add(() -> negate ? mf.notEqualIgnoreCase(value) : mf.equalIgnoreCase(value));
+        cs.add(() -> negate ? csSub.combineWithAnd() : csSub.combineWithOr());
+    }
+
     private void likeCondition(final ConditionalSupplier cs, final Field<Object> field, final Field<String> value, final boolean negate) {
         if (METHODS.equalsIgnoreCase(field.getName())) {
-            ConditionalSupplier csSub = new ConditionalSupplier();
-            for (final Field<Object> mf : methodFields) {
-                csSub.add(() -> negate ?
-                    DSL
-                        .coalesce(mf, "")
-                        .notLikeIgnoreCase(value) :
-                    mf.likeIgnoreCase(value));
-            }
-            cs.add(() -> negate ? csSub.combineWithAnd() : csSub.combineWithOr());
+            likeMultiple(cs, value, negate, methodFields);
+        } else if (POPULATION.equalsIgnoreCase(field.getName())) {
+            likeMultiple(cs, value, negate, populationFields);
         } else {
             cs.add(() -> negate ?
                 DSL
@@ -131,23 +144,23 @@ public class StringSearchTermEvaluator implements SearchTermEvaluator<StringSear
         }
     }
 
+    private void likeMultiple(final ConditionalSupplier cs, final Field<String> value, final boolean negate, final List<Field<Object>> fields) {
+        ConditionalSupplier csSub = new ConditionalSupplier();
+        for (final Field<Object> mf : fields) {
+            csSub.add(() -> negate ?
+                DSL
+                    .coalesce(mf, "")
+                    .notLikeIgnoreCase(value) :
+                mf.likeIgnoreCase(value));
+        }
+        cs.add(() -> negate ? csSub.combineWithAnd() : csSub.combineWithOr());
+    }
+
     private void regexCondition(final ConditionalSupplier cs, final Field<Object> field, final Field<String> value, final boolean negate) {
         if (METHODS.equalsIgnoreCase(field.getName())) {
-            ConditionalSupplier csSub = new ConditionalSupplier();
-            for (final Field<Object> mf : methodFields) {
-                csSub.add(() -> negate ?
-                    DSL
-                        .lower(DSL
-                            .coalesce(mf, "")
-                            .cast(String.class))
-                        .notLikeRegex(value) :
-                    DSL
-                        .lower(DSL
-                            .coalesce(mf, "")
-                            .cast(String.class))
-                        .likeRegex(value));
-            }
-            cs.add(() -> negate ? csSub.combineWithAnd() : csSub.combineWithOr());
+            regexMultiple(cs, value, negate, methodFields);
+        } else if (POPULATION.equalsIgnoreCase(field.getName())) {
+            regexMultiple(cs, value, negate, populationFields);
         } else {
             cs.add(() -> negate ?
                 DSL
@@ -159,16 +172,40 @@ public class StringSearchTermEvaluator implements SearchTermEvaluator<StringSear
         }
     }
 
+    private void regexMultiple(final ConditionalSupplier cs, final Field<String> value, final boolean negate, final List<Field<Object>> fields) {
+        ConditionalSupplier csSub = new ConditionalSupplier();
+        for (final Field<Object> mf : fields) {
+            csSub.add(() -> negate ?
+                DSL
+                    .lower(DSL
+                        .coalesce(mf, "")
+                        .cast(String.class))
+                    .notLikeRegex(value) :
+                DSL
+                    .lower(DSL
+                        .coalesce(mf, "")
+                        .cast(String.class))
+                    .likeRegex(value));
+        }
+        cs.add(() -> negate ? csSub.combineWithAnd() : csSub.combineWithOr());
+    }
+
     private void lengthCondition(final ConditionalSupplier cs, final Field<Object> field, final boolean negate) {
         if (METHODS.equalsIgnoreCase(field.getName())) {
-            ConditionalSupplier csSub = new ConditionalSupplier();
-            for (final Field<Object> mf : methodFields) {
-                lengthCond(csSub, mf, negate);
-            }
-            cs.add(() -> negate ? csSub.combineWithAnd() : csSub.combineWithOr());
+            lengthMultiple(cs, negate, methodFields);
+        } else if (POPULATION.equalsIgnoreCase(field.getName())) {
+            lengthMultiple(cs, negate, populationFields);
         } else {
             lengthCond(cs, field, negate);
         }
+    }
+
+    private void lengthMultiple(final ConditionalSupplier cs, final boolean negate, final List<Field<Object>> fields) {
+        ConditionalSupplier csSub = new ConditionalSupplier();
+        for (final Field<Object> mf : fields) {
+            lengthCond(csSub, mf, negate);
+        }
+        cs.add(() -> negate ? csSub.combineWithAnd() : csSub.combineWithOr());
     }
 
     private void lengthCond(final ConditionalSupplier cs, final Field<Object> field, final boolean negate) {

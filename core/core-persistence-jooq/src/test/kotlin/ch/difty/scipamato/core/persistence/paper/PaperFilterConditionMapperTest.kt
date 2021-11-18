@@ -50,6 +50,19 @@ internal class PaperFilterConditionMapperTest : FilterConditionMapperTest<PaperR
     }
 
     @Test
+    fun creatingWhereCondition_withPopulationMask_searchesPopulationFields() {
+        val pattern = "m"
+        filter.populationMask = pattern
+        mapper.map(filter).toString() shouldBeEqualTo makeWhereClause(
+            pattern,
+            "population",
+            "population_place",
+            "population_participants",
+            "population_duration",
+        )
+    }
+
+    @Test
     fun creatingWhereCondition_withSearchMask_searchesRemainingTextFields() {
         val pattern = "foo"
         filter.searchMask = pattern
@@ -59,9 +72,6 @@ internal class PaperFilterConditionMapperTest : FilterConditionMapperTest<PaperR
             "location",
             "title",
             "goals",
-            "population",
-            "population_participants",
-            "population_duration",
             "result",
             "result_exposure_range",
             "result_effect_estimate",
