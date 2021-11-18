@@ -70,6 +70,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 {url-cl}1.6.8$$...$$main[Full Changelog]
 
 .Added
+- {url-issues}306[#306] Population Filter & Search
 
 ////
 .Changed
