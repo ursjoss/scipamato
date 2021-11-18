@@ -17,6 +17,7 @@ public class PaperFilter implements ScipamatoFilter, PaperSlimFilter {
     private Long    number;
     private String  authorMask;
     private String  methodsMask;
+    private String  populationMask;
     private String  searchMask;
     private Integer publicationYearFrom;
     private Integer publicationYearUntil;
@@ -26,6 +27,7 @@ public class PaperFilter implements ScipamatoFilter, PaperSlimFilter {
         NUMBER("number"),
         AUTHOR_MASK("authorMask"),
         METHODS_MASK("methodsMask"),
+        POPULATION_MASK("populationMask"),
         SEARCH_MASK("searchMask"),
         PUB_YEAR_FROM("publicationYearFrom"),
         PUB_YEAR_UNTIL("publicationYearUntil"),

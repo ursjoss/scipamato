@@ -14,6 +14,7 @@ internal class PaperFilterTest {
         f.number = 1L
         f.authorMask = "authorMask"
         f.methodsMask = "methodsMask"
+        f.populationMask = "populationMask"
         f.searchMask = "searchMask"
         f.publicationYearFrom = 2015
         f.publicationYearUntil = 2017
@@ -22,13 +23,14 @@ internal class PaperFilterTest {
         f.number shouldBeEqualTo 1L
         f.authorMask shouldBeEqualTo "authorMask"
         f.methodsMask shouldBeEqualTo "methodsMask"
+        f.populationMask shouldBeEqualTo "populationMask"
         f.searchMask shouldBeEqualTo "searchMask"
         f.publicationYearFrom shouldBeEqualTo 2015
         f.publicationYearUntil shouldBeEqualTo 2017
         f.newsletterId shouldBeEqualTo 2
 
         f.toString() shouldBeEqualTo
-            "PaperFilter(number=1, authorMask=authorMask, methodsMask=methodsMask, searchMask=searchMask, " +
+            "PaperFilter(number=1, authorMask=authorMask, methodsMask=methodsMask, populationMask=populationMask, searchMask=searchMask, " +
             "publicationYearFrom=2015, publicationYearUntil=2017, newsletterId=2)"
     }
 
@@ -46,6 +48,7 @@ internal class PaperFilterTest {
             "number",
             "authorMask",
             "methodsMask",
+            "populationMask",
             "searchMask",
             "publicationYearFrom",
             "publicationYearUntil",

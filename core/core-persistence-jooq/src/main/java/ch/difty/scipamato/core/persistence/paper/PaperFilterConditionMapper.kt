@@ -37,6 +37,15 @@ class PaperFilterConditionMapper : AbstractFilterConditionMapper<PaperFilter>() 
                     .or(Paper.PAPER.POPULATION_PLACE.likeIgnoreCase(likeExpression))
             )
         }
+        filter.populationMask?.let {
+            val likeExpression = "%$it%"
+            conditions.add(
+                Paper.PAPER.POPULATION.likeIgnoreCase(likeExpression)
+                    .or(Paper.PAPER.POPULATION_PLACE.likeIgnoreCase(likeExpression))
+                    .or(Paper.PAPER.POPULATION_PARTICIPANTS.likeIgnoreCase(likeExpression))
+                    .or(Paper.PAPER.POPULATION_DURATION.likeIgnoreCase(likeExpression))
+            )
+        }
         filter.searchMask?.let {
             val likeExpression = "%$it%"
             conditions.add(
@@ -44,9 +53,6 @@ class PaperFilterConditionMapper : AbstractFilterConditionMapper<PaperFilter>() 
                     .or(Paper.PAPER.LOCATION.likeIgnoreCase(likeExpression))
                     .or(Paper.PAPER.TITLE.likeIgnoreCase(likeExpression))
                     .or(Paper.PAPER.GOALS.likeIgnoreCase(likeExpression))
-                    .or(Paper.PAPER.POPULATION.likeIgnoreCase(likeExpression))
-                    .or(Paper.PAPER.POPULATION_PARTICIPANTS.likeIgnoreCase(likeExpression))
-                    .or(Paper.PAPER.POPULATION_DURATION.likeIgnoreCase(likeExpression))
                     .or(Paper.PAPER.RESULT.likeIgnoreCase(likeExpression))
                     .or(Paper.PAPER.RESULT_EXPOSURE_RANGE.likeIgnoreCase(likeExpression))
                     .or(Paper.PAPER.RESULT_EFFECT_ESTIMATE.likeIgnoreCase(likeExpression))

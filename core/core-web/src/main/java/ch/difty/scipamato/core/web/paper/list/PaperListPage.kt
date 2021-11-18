@@ -103,6 +103,7 @@ class PaperListPage(parameters: PageParameters?) : BasePage<Void?>(parameters) {
         queueFieldAndLabel(TextField("number", PropertyModel.of<Any>(filter, PaperFilterFields.NUMBER.fieldName)))
         queueFieldAndLabel(TextField("authorsSearch", PropertyModel.of<Any>(filter, PaperFilterFields.AUTHOR_MASK.fieldName)))
         queueFieldAndLabel(TextField("methodsSearch", PropertyModel.of<Any>(filter, PaperFilterFields.METHODS_MASK.fieldName)))
+        queueFieldAndLabel(TextField("populationSearch", PropertyModel.of<Any>(filter, PaperFilterFields.POPULATION_MASK.fieldName)))
         queueFieldAndLabel(TextField("fieldSearch", PropertyModel.of<Any>(filter, PaperFilterFields.SEARCH_MASK.fieldName)))
         queueFieldAndLabel(TextField("pubYearFrom", PropertyModel.of<Any>(filter, PaperFilterFields.PUB_YEAR_FROM.fieldName)))
         queueFieldAndLabel(TextField("pubYearUntil", PropertyModel.of<Any>(filter, PaperFilterFields.PUB_YEAR_UNTIL.fieldName)))
