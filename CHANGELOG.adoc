@@ -67,15 +67,12 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[unreleased]]
 == [unreleased]
 
-{url-cl}1.6.8$$...$$main[Full Changelog]
+{url-cl}1.6.9$$...$$main[Full Changelog]
 
 .Added
-- {url-issues}306[#306] Population Filter & Search
-
-.Changed
-- Bumped spring-boot, kotlin, flyway, mockk
-
 ////
+.Changed
+
 .Deprecated
 
 .Removed
@@ -83,13 +80,25 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Fixed
 
 .Security
-
 ////
+
+
+[[v1.6.9]]
+== {url-tree}1.6.9[1.6.9] -- 2021-11-18
+
+{url-cl}1.6.8$$...$$1.6.9[Full Changelog]
+
+.Added
+- {url-issues}306[#306] Population Filter & Search
+
+.Changed
+- Bumped spring-boot, kotlin, flyway, mockk
 
 
 [[v1.6.8]]
 == {url-tree}1.6.8[1.6.8] -- 2021-11-14
 
+{url-cl}1.6.7$$...$$1.6.8[Full Changelog]
 
 .Added
 - {url-issues}292[#292] Add option to exclude codes from a complex search
