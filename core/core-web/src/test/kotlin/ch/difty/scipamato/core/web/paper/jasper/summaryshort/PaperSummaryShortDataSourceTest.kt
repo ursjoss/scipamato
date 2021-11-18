@@ -229,7 +229,7 @@ internal class PaperSummaryShortDataSourceTest : PaperDataSourceTest() {
         private const val METHOD_OUTCOME_LABEL = "Gesundheitliche Zielgrössen"
         private const val RESULT_MEASURED_OUTCOME_LABEL = "Gemessene Zielgrösse"
         private const val METHOD_STUDY_DESIGN_LABEL = "Studiendesign"
-        private const val POPULATION_PLACE_LABEL = "Ort/Land (Studie)"
+        private const val POPULATION_PLACE_LABEL = "Ort/Land"
         private const val POPULATION_PARTICIPANTS_LABEL = "Studienteilnehmer"
         private const val POPULATION_DURATION_LABEL = "Studiendauer"
         private const val EXPOSURE_POLLUTANT_LABEL = "Schadstoff"

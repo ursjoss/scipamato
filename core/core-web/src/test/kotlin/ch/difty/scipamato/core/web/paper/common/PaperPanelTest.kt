@@ -135,7 +135,7 @@ abstract class PaperPanelTest<T, P : PaperPanel<T>> : PanelTest<P>() where T : C
         assertTextAreaWithLabel("$bbb:goals", "g", "Goals")
         assertTextAreaWithLabel("$bbb:population", "p", "Population")
         assertTextAreaWithLabel("$bbb:methods", "m", "Methods")
-        assertTextAreaWithLabel("$bbb:populationPlace", "ppl", "Place/Country (study name)")
+        assertTextAreaWithLabel("$bbb:populationPlace", "ppl", "Place/Country")
         assertTextAreaWithLabel("$bbb:populationParticipants", "ppa", "Participants")
         assertTextAreaWithLabel("$bbb:populationDuration", "pd", "Study Duration")
         assertTextAreaWithLabel("$bbb:exposurePollutant", "ep", "Pollutant")
@@ -169,7 +169,7 @@ abstract class PaperPanelTest<T, P : PaperPanel<T>> : PanelTest<P>() where T : C
         tester.clickLink("panel:form:tabs:tabs-container:tabs:3:link")
         bbb = "$bb:tab4Form"
         tester.assertComponent(bbb, Form::class.java)
-        assertTextAreaWithLabel("$bbb:populationPlace", "ppl", "Place/Country (study name)")
+        assertTextAreaWithLabel("$bbb:populationPlace", "ppl", "Place/Country")
         assertTextAreaWithLabel("$bbb:populationParticipants", "ppa", "Participants")
         assertTextAreaWithLabel("$bbb:populationDuration", "pd", "Study Duration")
         assertTextAreaWithLabel("$bbb:exposurePollutant", "ep", "Pollutant")
