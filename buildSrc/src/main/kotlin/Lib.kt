@@ -9,7 +9,7 @@ object Lib {
     //region:dependencyVersions
     private const val kotlinVersion = "1.5.31"
 
-    private const val springBootVersion = "2.5.6"
+    private const val springBootVersion = "2.5.7"
     private const val springBootAdminVersion = "2.5.4"
     const val springCloudVersion = "2020.0.3"
     private const val springCloudStarterVersion = "3.0.3"
@@ -24,7 +24,7 @@ object Lib {
 
     private const val krisVersion = "0.3.2"
     const val jooqVersion = "3.14.15"
-    const val flywayVersion = "8.0.4"
+    const val flywayVersion = "8.0.5"
 
     private const val kotlinLoggingVersion = "2.0.11"
 
@@ -48,7 +48,7 @@ object Lib {
     private const val spekVersion = "2.0.17"
     private const val kwikVersion = "0.8.4"
     private const val kluentVersion = "1.68"
-    private const val mockkVersion = "1.12.0"
+    private const val mockkVersion = "1.12.1"
     private const val springMockkVersion = "3.0.1"
     const val jacocoToolVersion = "0.8.7"
 
