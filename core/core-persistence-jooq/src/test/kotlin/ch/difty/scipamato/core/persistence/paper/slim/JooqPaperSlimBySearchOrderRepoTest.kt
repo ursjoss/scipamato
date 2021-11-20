@@ -109,11 +109,7 @@ internal class JooqPaperSlimBySearchOrderRepoTest {
                   |    publication_year between 2014 and 2015
                   |    and authors ilike ('%' || replace(
                   |      replace(
-                  |        replace(
-                  |          'turner',
-                  |          '!',
-                  |          '!!'
-                  |        ),
+                  |        replace('turner', '!', '!!'),
                   |        '%',
                   |        '!%'
                   |      ),
@@ -154,11 +150,7 @@ internal class JooqPaperSlimBySearchOrderRepoTest {
                   |    publication_year between 2014 and 2015
                   |    and authors ilike ('%' || replace(
                   |      replace(
-                  |        replace(
-                  |          'turner',
-                  |          '!',
-                  |          '!!'
-                  |        ),
+                  |        replace('turner', '!', '!!'),
                   |        '%',
                   |        '!%'
                   |      ),
@@ -218,11 +210,7 @@ internal class JooqPaperSlimBySearchOrderRepoTest {
                   |      publication_year between 2014 and 2015
                   |      and authors ilike ('%' || replace(
                   |        replace(
-                  |          replace(
-                  |            'turner',
-                  |            '!',
-                  |            '!!'
-                  |          ),
+                  |          replace('turner', '!', '!!'),
                   |          '%',
                   |          '!%'
                   |        ),
@@ -279,11 +267,7 @@ internal class JooqPaperSlimBySearchOrderRepoTest {
                   |      publication_year between 2014 and 2015
                   |      and authors ilike ('%' || replace(
                   |        replace(
-                  |          replace(
-                  |            'turner',
-                  |            '!',
-                  |            '!!'
-                  |          ),
+                  |          replace('turner', '!', '!!'),
                   |          '%',
                   |          '!%'
                   |        ),
@@ -355,11 +339,7 @@ internal class JooqPaperSlimBySearchOrderRepoTest {
                  |    and "public"."paper_newsletter"."newsletter_topic_id" = 1
                  |    and "paper_newsletter"."headline" ilike ('%' || replace(
                  |      replace(
-                 |        replace(
-                 |          'hl',
-                 |          '!',
-                 |          '!!'
-                 |        ),
+                 |        replace('hl', '!', '!!'),
                  |        '%',
                  |        '!%'
                  |      ),
@@ -411,11 +391,7 @@ internal class JooqPaperSlimBySearchOrderRepoTest {
                   |    "public"."paper_newsletter"."paper_id" = "public"."paper"."id"
                   |    and "paper_newsletter"."headline" ilike ('%' || replace(
                   |      replace(
-                  |        replace(
-                  |          'hl',
-                  |          '!',
-                  |          '!!'
-                  |        ),
+                  |        replace('hl', '!', '!!'),
                   |        '%',
                   |        '!%'
                   |      ),
@@ -445,11 +421,7 @@ internal class JooqPaperSlimBySearchOrderRepoTest {
                   |    "public"."paper_newsletter"."paper_id" = "public"."paper"."id"
                   |    and "newsletter"."issue" ilike ('%' || replace(
                   |      replace(
-                  |        replace(
-                  |          'i',
-                  |          '!',
-                  |          '!!'
-                  |        ),
+                  |        replace('i', '!', '!!'),
                   |        '%',
                   |        '!%'
                   |      ),
@@ -559,11 +531,7 @@ internal class JooqPaperSlimBySearchOrderRepoTest {
                |      ''
                |    ) ilike ('%' || replace(
                |      replace(
-               |        replace(
-               |          'foo',
-               |          '!',
-               |          '!!'
-               |        ),
+               |        replace('foo', '!', '!!'),
                |        '%',
                |        '!%'
                |      ),
@@ -597,11 +565,7 @@ internal class JooqPaperSlimBySearchOrderRepoTest {
                   |      "public"."paper_newsletter"."paper_id" = "public"."paper"."id"
                   |      and "paper_newsletter"."headline" ilike ('%' || replace(
                   |        replace(
-                  |          replace(
-                  |            'hl',
-                  |            '!',
-                  |            '!!'
-                  |          ),
+                  |          replace('hl', '!', '!!'),
                   |          '%',
                   |          '!%'
                   |        ),

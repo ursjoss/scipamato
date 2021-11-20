@@ -194,11 +194,7 @@ internal class StringSearchTermEvaluatorTest {
                |  ''
                |) ilike ('%' || replace(
                |  replace(
-               |    replace(
-               |      'foo',
-               |      '!',
-               |      '!!'
-               |    ),
+               |    replace('foo', '!', '!!'),
                |    '%',
                |    '!%'
                |  ),
@@ -213,11 +209,7 @@ internal class StringSearchTermEvaluatorTest {
         evaluator.evaluate(stMock).toString() shouldBeEqualTo
             """field_x ilike ('%' || replace(
                |  replace(
-               |    replace(
-               |      'foo',
-               |      '!',
-               |      '!!'
-               |    ),
+               |    replace('foo', '!', '!!'),
                |    '%',
                |    '!%'
                |  ),
@@ -791,11 +783,7 @@ internal class StringSearchTermEvaluatorTest {
                |    ''
                |  ) ilike ('%' || replace(
                |    replace(
-               |      replace(
-               |        'foo',
-               |        '!',
-               |        '!!'
-               |      ),
+               |      replace('foo', '!', '!!'),
                |      '%',
                |      '!%'
                |    ),
@@ -807,11 +795,7 @@ internal class StringSearchTermEvaluatorTest {
                |    ''
                |  ) ilike ('%' || replace(
                |    replace(
-               |      replace(
-               |        'foo',
-               |        '!',
-               |        '!!'
-               |      ),
+               |      replace('foo', '!', '!!'),
                |      '%',
                |      '!%'
                |    ),
@@ -823,11 +807,7 @@ internal class StringSearchTermEvaluatorTest {
                |    ''
                |  ) ilike ('%' || replace(
                |    replace(
-               |      replace(
-               |        'foo',
-               |        '!',
-               |        '!!'
-               |      ),
+               |      replace('foo', '!', '!!'),
                |      '%',
                |      '!%'
                |    ),
@@ -839,11 +819,7 @@ internal class StringSearchTermEvaluatorTest {
                |    ''
                |  ) ilike ('%' || replace(
                |    replace(
-               |      replace(
-               |        'foo',
-               |        '!',
-               |        '!!'
-               |      ),
+               |      replace('foo', '!', '!!'),
                |      '%',
                |      '!%'
                |    ),
@@ -855,11 +831,7 @@ internal class StringSearchTermEvaluatorTest {
                |    ''
                |  ) ilike ('%' || replace(
                |    replace(
-               |      replace(
-               |        'foo',
-               |        '!',
-               |        '!!'
-               |      ),
+               |      replace('foo', '!', '!!'),
                |      '%',
                |      '!%'
                |    ),
@@ -871,11 +843,7 @@ internal class StringSearchTermEvaluatorTest {
                |    ''
                |  ) ilike ('%' || replace(
                |    replace(
-               |      replace(
-               |        'foo',
-               |        '!',
-               |        '!!'
-               |      ),
+               |      replace('foo', '!', '!!'),
                |      '%',
                |      '!%'
                |    ),
@@ -887,11 +855,7 @@ internal class StringSearchTermEvaluatorTest {
                |    ''
                |  ) ilike ('%' || replace(
                |    replace(
-               |      replace(
-               |        'foo',
-               |        '!',
-               |        '!!'
-               |      ),
+               |      replace('foo', '!', '!!'),
                |      '%',
                |      '!%'
                |    ),
@@ -903,11 +867,7 @@ internal class StringSearchTermEvaluatorTest {
                |    ''
                |  ) ilike ('%' || replace(
                |    replace(
-               |      replace(
-               |        'foo',
-               |        '!',
-               |        '!!'
-               |      ),
+               |      replace('foo', '!', '!!'),
                |      '%',
                |      '!%'
                |    ),
@@ -924,11 +884,7 @@ internal class StringSearchTermEvaluatorTest {
             """(
                |  methods ilike ('%' || replace(
                |    replace(
-               |      replace(
-               |        'foo',
-               |        '!',
-               |        '!!'
-               |      ),
+               |      replace('foo', '!', '!!'),
                |      '%',
                |      '!%'
                |    ),
@@ -937,11 +893,7 @@ internal class StringSearchTermEvaluatorTest {
                |  ) || '%') escape '!'
                |  or method_study_design ilike ('%' || replace(
                |    replace(
-               |      replace(
-               |        'foo',
-               |        '!',
-               |        '!!'
-               |      ),
+               |      replace('foo', '!', '!!'),
                |      '%',
                |      '!%'
                |    ),
@@ -950,11 +902,7 @@ internal class StringSearchTermEvaluatorTest {
                |  ) || '%') escape '!'
                |  or population_place ilike ('%' || replace(
                |    replace(
-               |      replace(
-               |        'foo',
-               |        '!',
-               |        '!!'
-               |      ),
+               |      replace('foo', '!', '!!'),
                |      '%',
                |      '!%'
                |    ),
@@ -963,11 +911,7 @@ internal class StringSearchTermEvaluatorTest {
                |  ) || '%') escape '!'
                |  or method_outcome ilike ('%' || replace(
                |    replace(
-               |      replace(
-               |        'foo',
-               |        '!',
-               |        '!!'
-               |      ),
+               |      replace('foo', '!', '!!'),
                |      '%',
                |      '!%'
                |    ),
@@ -976,11 +920,7 @@ internal class StringSearchTermEvaluatorTest {
                |  ) || '%') escape '!'
                |  or exposure_pollutant ilike ('%' || replace(
                |    replace(
-               |      replace(
-               |        'foo',
-               |        '!',
-               |        '!!'
-               |      ),
+               |      replace('foo', '!', '!!'),
                |      '%',
                |      '!%'
                |    ),
@@ -989,11 +929,7 @@ internal class StringSearchTermEvaluatorTest {
                |  ) || '%') escape '!'
                |  or exposure_assessment ilike ('%' || replace(
                |    replace(
-               |      replace(
-               |        'foo',
-               |        '!',
-               |        '!!'
-               |      ),
+               |      replace('foo', '!', '!!'),
                |      '%',
                |      '!%'
                |    ),
@@ -1002,11 +938,7 @@ internal class StringSearchTermEvaluatorTest {
                |  ) || '%') escape '!'
                |  or method_statistics ilike ('%' || replace(
                |    replace(
-               |      replace(
-               |        'foo',
-               |        '!',
-               |        '!!'
-               |      ),
+               |      replace('foo', '!', '!!'),
                |      '%',
                |      '!%'
                |    ),
@@ -1015,11 +947,7 @@ internal class StringSearchTermEvaluatorTest {
                |  ) || '%') escape '!'
                |  or method_confounders ilike ('%' || replace(
                |    replace(
-               |      replace(
-               |        'foo',
-               |        '!',
-               |        '!!'
-               |      ),
+               |      replace('foo', '!', '!!'),
                |      '%',
                |      '!%'
                |    ),
@@ -1054,11 +982,7 @@ internal class StringSearchTermEvaluatorTest {
                |  (
                |    methods ilike ('%' || replace(
                |      replace(
-               |        replace(
-               |          'foo',
-               |          '!',
-               |          '!!'
-               |        ),
+               |        replace('foo', '!', '!!'),
                |        '%',
                |        '!%'
                |      ),
@@ -1067,11 +991,7 @@ internal class StringSearchTermEvaluatorTest {
                |    ) || '%') escape '!'
                |    or method_study_design ilike ('%' || replace(
                |      replace(
-               |        replace(
-               |          'foo',
-               |          '!',
-               |          '!!'
-               |        ),
+               |        replace('foo', '!', '!!'),
                |        '%',
                |        '!%'
                |      ),
@@ -1080,11 +1000,7 @@ internal class StringSearchTermEvaluatorTest {
                |    ) || '%') escape '!'
                |    or population_place ilike ('%' || replace(
                |      replace(
-               |        replace(
-               |          'foo',
-               |          '!',
-               |          '!!'
-               |        ),
+               |        replace('foo', '!', '!!'),
                |        '%',
                |        '!%'
                |      ),
@@ -1093,11 +1009,7 @@ internal class StringSearchTermEvaluatorTest {
                |    ) || '%') escape '!'
                |    or method_outcome ilike ('%' || replace(
                |      replace(
-               |        replace(
-               |          'foo',
-               |          '!',
-               |          '!!'
-               |        ),
+               |        replace('foo', '!', '!!'),
                |        '%',
                |        '!%'
                |      ),
@@ -1106,11 +1018,7 @@ internal class StringSearchTermEvaluatorTest {
                |    ) || '%') escape '!'
                |    or exposure_pollutant ilike ('%' || replace(
                |      replace(
-               |        replace(
-               |          'foo',
-               |          '!',
-               |          '!!'
-               |        ),
+               |        replace('foo', '!', '!!'),
                |        '%',
                |        '!%'
                |      ),
@@ -1119,11 +1027,7 @@ internal class StringSearchTermEvaluatorTest {
                |    ) || '%') escape '!'
                |    or exposure_assessment ilike ('%' || replace(
                |      replace(
-               |        replace(
-               |          'foo',
-               |          '!',
-               |          '!!'
-               |        ),
+               |        replace('foo', '!', '!!'),
                |        '%',
                |        '!%'
                |      ),
@@ -1132,11 +1036,7 @@ internal class StringSearchTermEvaluatorTest {
                |    ) || '%') escape '!'
                |    or method_statistics ilike ('%' || replace(
                |      replace(
-               |        replace(
-               |          'foo',
-               |          '!',
-               |          '!!'
-               |        ),
+               |        replace('foo', '!', '!!'),
                |        '%',
                |        '!%'
                |      ),
@@ -1145,11 +1045,7 @@ internal class StringSearchTermEvaluatorTest {
                |    ) || '%') escape '!'
                |    or method_confounders ilike ('%' || replace(
                |      replace(
-               |        replace(
-               |          'foo',
-               |          '!',
-               |          '!!'
-               |        ),
+               |        replace('foo', '!', '!!'),
                |        '%',
                |        '!%'
                |      ),
@@ -1162,11 +1058,7 @@ internal class StringSearchTermEvaluatorTest {
                |    ''
                |  ) ilike ('%' || replace(
                |    replace(
-               |      replace(
-               |        'bar',
-               |        '!',
-               |        '!!'
-               |      ),
+               |      replace('bar', '!', '!!'),
                |      '%',
                |      '!%'
                |    ),
@@ -1178,11 +1070,7 @@ internal class StringSearchTermEvaluatorTest {
                |    ''
                |  ) ilike ('%' || replace(
                |    replace(
-               |      replace(
-               |        'bar',
-               |        '!',
-               |        '!!'
-               |      ),
+               |      replace('bar', '!', '!!'),
                |      '%',
                |      '!%'
                |    ),
@@ -1194,11 +1082,7 @@ internal class StringSearchTermEvaluatorTest {
                |    ''
                |  ) ilike ('%' || replace(
                |    replace(
-               |      replace(
-               |        'bar',
-               |        '!',
-               |        '!!'
-               |      ),
+               |      replace('bar', '!', '!!'),
                |      '%',
                |      '!%'
                |    ),
@@ -1210,11 +1094,7 @@ internal class StringSearchTermEvaluatorTest {
                |    ''
                |  ) ilike ('%' || replace(
                |    replace(
-               |      replace(
-               |        'bar',
-               |        '!',
-               |        '!!'
-               |      ),
+               |      replace('bar', '!', '!!'),
                |      '%',
                |      '!%'
                |    ),
@@ -1226,11 +1106,7 @@ internal class StringSearchTermEvaluatorTest {
                |    ''
                |  ) ilike ('%' || replace(
                |    replace(
-               |      replace(
-               |        'bar',
-               |        '!',
-               |        '!!'
-               |      ),
+               |      replace('bar', '!', '!!'),
                |      '%',
                |      '!%'
                |    ),
@@ -1242,11 +1118,7 @@ internal class StringSearchTermEvaluatorTest {
                |    ''
                |  ) ilike ('%' || replace(
                |    replace(
-               |      replace(
-               |        'bar',
-               |        '!',
-               |        '!!'
-               |      ),
+               |      replace('bar', '!', '!!'),
                |      '%',
                |      '!%'
                |    ),
@@ -1258,11 +1130,7 @@ internal class StringSearchTermEvaluatorTest {
                |    ''
                |  ) ilike ('%' || replace(
                |    replace(
-               |      replace(
-               |        'bar',
-               |        '!',
-               |        '!!'
-               |      ),
+               |      replace('bar', '!', '!!'),
                |      '%',
                |      '!%'
                |    ),
@@ -1274,11 +1142,7 @@ internal class StringSearchTermEvaluatorTest {
                |    ''
                |  ) ilike ('%' || replace(
                |    replace(
-               |      replace(
-               |        'bar',
-               |        '!',
-               |        '!!'
-               |      ),
+               |      replace('bar', '!', '!!'),
                |      '%',
                |      '!%'
                |    ),
@@ -1648,11 +1512,7 @@ internal class StringSearchTermEvaluatorTest {
                |    ''
                |  ) ilike ('%' || replace(
                |    replace(
-               |      replace(
-               |        'foo',
-               |        '!',
-               |        '!!'
-               |      ),
+               |      replace('foo', '!', '!!'),
                |      '%',
                |      '!%'
                |    ),
@@ -1664,11 +1524,7 @@ internal class StringSearchTermEvaluatorTest {
                |    ''
                |  ) ilike ('%' || replace(
                |    replace(
-               |      replace(
-               |        'foo',
-               |        '!',
-               |        '!!'
-               |      ),
+               |      replace('foo', '!', '!!'),
                |      '%',
                |      '!%'
                |    ),
@@ -1680,11 +1536,7 @@ internal class StringSearchTermEvaluatorTest {
                |    ''
                |  ) ilike ('%' || replace(
                |    replace(
-               |      replace(
-               |        'foo',
-               |        '!',
-               |        '!!'
-               |      ),
+               |      replace('foo', '!', '!!'),
                |      '%',
                |      '!%'
                |    ),
@@ -1696,11 +1548,7 @@ internal class StringSearchTermEvaluatorTest {
                |    ''
                |  ) ilike ('%' || replace(
                |    replace(
-               |      replace(
-               |        'foo',
-               |        '!',
-               |        '!!'
-               |      ),
+               |      replace('foo', '!', '!!'),
                |      '%',
                |      '!%'
                |    ),
@@ -1717,11 +1565,7 @@ internal class StringSearchTermEvaluatorTest {
             """(
                |  population ilike ('%' || replace(
                |    replace(
-               |      replace(
-               |        'foo',
-               |        '!',
-               |        '!!'
-               |      ),
+               |      replace('foo', '!', '!!'),
                |      '%',
                |      '!%'
                |    ),
@@ -1730,11 +1574,7 @@ internal class StringSearchTermEvaluatorTest {
                |  ) || '%') escape '!'
                |  or population_place ilike ('%' || replace(
                |    replace(
-               |      replace(
-               |        'foo',
-               |        '!',
-               |        '!!'
-               |      ),
+               |      replace('foo', '!', '!!'),
                |      '%',
                |      '!%'
                |    ),
@@ -1743,11 +1583,7 @@ internal class StringSearchTermEvaluatorTest {
                |  ) || '%') escape '!'
                |  or population_participants ilike ('%' || replace(
                |    replace(
-               |      replace(
-               |        'foo',
-               |        '!',
-               |        '!!'
-               |      ),
+               |      replace('foo', '!', '!!'),
                |      '%',
                |      '!%'
                |    ),
@@ -1756,11 +1592,7 @@ internal class StringSearchTermEvaluatorTest {
                |  ) || '%') escape '!'
                |  or population_duration ilike ('%' || replace(
                |    replace(
-               |      replace(
-               |        'foo',
-               |        '!',
-               |        '!!'
-               |      ),
+               |      replace('foo', '!', '!!'),
                |      '%',
                |      '!%'
                |    ),
@@ -1795,11 +1627,7 @@ internal class StringSearchTermEvaluatorTest {
                |  (
                |    population ilike ('%' || replace(
                |      replace(
-               |        replace(
-               |          'foo',
-               |          '!',
-               |          '!!'
-               |        ),
+               |        replace('foo', '!', '!!'),
                |        '%',
                |        '!%'
                |      ),
@@ -1808,11 +1636,7 @@ internal class StringSearchTermEvaluatorTest {
                |    ) || '%') escape '!'
                |    or population_place ilike ('%' || replace(
                |      replace(
-               |        replace(
-               |          'foo',
-               |          '!',
-               |          '!!'
-               |        ),
+               |        replace('foo', '!', '!!'),
                |        '%',
                |        '!%'
                |      ),
@@ -1821,11 +1645,7 @@ internal class StringSearchTermEvaluatorTest {
                |    ) || '%') escape '!'
                |    or population_participants ilike ('%' || replace(
                |      replace(
-               |        replace(
-               |          'foo',
-               |          '!',
-               |          '!!'
-               |        ),
+               |        replace('foo', '!', '!!'),
                |        '%',
                |        '!%'
                |      ),
@@ -1834,11 +1654,7 @@ internal class StringSearchTermEvaluatorTest {
                |    ) || '%') escape '!'
                |    or population_duration ilike ('%' || replace(
                |      replace(
-               |        replace(
-               |          'foo',
-               |          '!',
-               |          '!!'
-               |        ),
+               |        replace('foo', '!', '!!'),
                |        '%',
                |        '!%'
                |      ),
@@ -1851,11 +1667,7 @@ internal class StringSearchTermEvaluatorTest {
                |    ''
                |  ) ilike ('%' || replace(
                |    replace(
-               |      replace(
-               |        'bar',
-               |        '!',
-               |        '!!'
-               |      ),
+               |      replace('bar', '!', '!!'),
                |      '%',
                |      '!%'
                |    ),
@@ -1867,11 +1679,7 @@ internal class StringSearchTermEvaluatorTest {
                |    ''
                |  ) ilike ('%' || replace(
                |    replace(
-               |      replace(
-               |        'bar',
-               |        '!',
-               |        '!!'
-               |      ),
+               |      replace('bar', '!', '!!'),
                |      '%',
                |      '!%'
                |    ),
@@ -1883,11 +1691,7 @@ internal class StringSearchTermEvaluatorTest {
                |    ''
                |  ) ilike ('%' || replace(
                |    replace(
-               |      replace(
-               |        'bar',
-               |        '!',
-               |        '!!'
-               |      ),
+               |      replace('bar', '!', '!!'),
                |      '%',
                |      '!%'
                |    ),
@@ -1899,11 +1703,7 @@ internal class StringSearchTermEvaluatorTest {
                |    ''
                |  ) ilike ('%' || replace(
                |    replace(
-               |      replace(
-               |        'bar',
-               |        '!',
-               |        '!!'
-               |      ),
+               |      replace('bar', '!', '!!'),
                |      '%',
                |      '!%'
                |    ),

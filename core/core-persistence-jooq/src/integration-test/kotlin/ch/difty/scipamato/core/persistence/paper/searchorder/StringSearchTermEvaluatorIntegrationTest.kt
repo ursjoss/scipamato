@@ -33,11 +33,7 @@ internal class StringSearchTermEvaluatorIntegrationTest : SearchTermEvaluatorInt
             tokenString = "(WORD foo)",
             condition = """fn ilike ('%' || replace(
                                        |  replace(
-                                       |    replace(
-                                       |      'foo',
-                                       |      '!',
-                                       |      '!!'
-                                       |    ),
+                                       |    replace('foo', '!', '!!'),
                                        |    '%',
                                        |    '!%'
                                        |  ),
@@ -53,11 +49,7 @@ internal class StringSearchTermEvaluatorIntegrationTest : SearchTermEvaluatorInt
                                       |  ''
                                       |) ilike ('%' || replace(
                                       |  replace(
-                                      |    replace(
-                                      |      'foo',
-                                      |      '!',
-                                      |      '!!'
-                                      |    ),
+                                      |    replace('foo', '!', '!!'),
                                       |    '%',
                                       |    '!%'
                                       |  ),

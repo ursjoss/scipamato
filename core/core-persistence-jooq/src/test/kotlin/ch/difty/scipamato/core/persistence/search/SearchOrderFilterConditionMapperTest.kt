@@ -23,11 +23,7 @@ internal class SearchOrderFilterConditionMapperTest :
         mapper.map(filter).toString() shouldBeEqualTo
             """"public"."search_order"."name" ilike ('%' || replace(
                 |  replace(
-                |    replace(
-                |      'fOo',
-                |      '!',
-                |      '!!'
-                |    ),
+                |    replace('fOo', '!', '!!'),
                 |    '%',
                 |    '!%'
                 |  ),
