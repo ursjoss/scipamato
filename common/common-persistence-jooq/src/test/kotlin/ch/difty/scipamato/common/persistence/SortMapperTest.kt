@@ -10,24 +10,25 @@ import io.mockk.mockk
 import io.mockk.spyk
 import io.mockk.verify
 import org.amshove.kluent.invoking
+import org.amshove.kluent.shouldBe
 import org.amshove.kluent.shouldBeEmpty
 import org.amshove.kluent.shouldContainSame
 import org.amshove.kluent.shouldThrow
 import org.amshove.kluent.withMessage
 import org.jooq.Record
 import org.jooq.SortField
+import org.jooq.Table
 import org.jooq.TableField
-import org.jooq.impl.TableImpl
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 import org.springframework.dao.InvalidDataAccessApiUsageException
 
 internal class SortMapperTest {
 
-    private val mapperSpy = spyk<SortMapper<Record, ScipamatoEntity, TableImpl<Record>>>()
+    private val mapperSpy = spyk<SortMapper<Record, ScipamatoEntity, Table<Record>>>()
 
     private val sortSpecMock = mockk<Sort>()
-    private val tableMock = mockk<TableImpl<Record>>()
+    private val tableMock = mockk<Table<Record>>()
     private val tableFieldMock = mockk<TableField<Record, ScipamatoEntity>>()
     private val sortFieldMock = mockk<SortField<ScipamatoEntity>>()
 
@@ -41,6 +42,7 @@ internal class SortMapperTest {
     @Test
     fun mapping_withNullSortSpecification_returnsEmptyList() {
         mapperSpy.map(null, tableMock).shouldBeEmpty()
+        true shouldBe true
     }
 
     @Test

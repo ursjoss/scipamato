@@ -25,8 +25,8 @@ import org.jooq.SelectSeekStepN
 import org.jooq.SelectSelectStep
 import org.jooq.SelectWhereStep
 import org.jooq.SortField
+import org.jooq.Table
 import org.jooq.TableField
-import org.jooq.impl.TableImpl
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -35,7 +35,7 @@ abstract class JooqReadOnlyRepoTest<
     R : Record,
     T : IdScipamatoEntity<ID>,
     ID : Number,
-    TI : TableImpl<R>,
+    TI : Table<R>,
     M : RecordMapper<R, T>,
     F : ScipamatoFilter> {
 

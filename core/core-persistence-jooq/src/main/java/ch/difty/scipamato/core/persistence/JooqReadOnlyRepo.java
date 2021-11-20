@@ -6,7 +6,6 @@ import java.util.List;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jooq.*;
-import org.jooq.impl.TableImpl;
 
 import ch.difty.scipamato.common.DateTimeService;
 import ch.difty.scipamato.common.config.ApplicationProperties;
@@ -35,7 +34,7 @@ import ch.difty.scipamato.core.entity.CoreEntity;
  * @author u.joss
  */
 @SuppressWarnings("WeakerAccess")
-public abstract class JooqReadOnlyRepo<R extends Record, T extends CoreEntity, ID, TI extends TableImpl<R>, M extends RecordMapper<R, T>, F extends ScipamatoFilter>
+public abstract class JooqReadOnlyRepo<R extends Record, T extends CoreEntity, ID, TI extends Table<R>, M extends RecordMapper<R, T>, F extends ScipamatoFilter>
     extends AbstractRepo implements ReadOnlyRepository<T, ID, F> {
 
     private final M                               mapper;
@@ -59,8 +58,7 @@ public abstract class JooqReadOnlyRepo<R extends Record, T extends CoreEntity, I
      * @param applicationProperties
      *     the object providing the application properties
      */
-    protected JooqReadOnlyRepo(@NotNull final DSLContext dsl, @NotNull final M mapper,
-        @NotNull final JooqSortMapper<R, T, TI> sortMapper,
+    protected JooqReadOnlyRepo(@NotNull final DSLContext dsl, @NotNull final M mapper, @NotNull final JooqSortMapper<R, T, TI> sortMapper,
         @NotNull GenericFilterConditionMapper<F> filterConditionMapper, @NotNull DateTimeService dateTimeService,
         @NotNull ApplicationProperties applicationProperties) {
         super(dsl, dateTimeService);
@@ -192,8 +190,7 @@ public abstract class JooqReadOnlyRepo<R extends Record, T extends CoreEntity, I
 
     @NotNull
     @Override
-    public List<T> findPageByFilter(@Nullable final F filter, @NotNull final PaginationContext pc,
-        @Nullable final String languageCode) {
+    public List<T> findPageByFilter(@Nullable final F filter, @NotNull final PaginationContext pc, @Nullable final String languageCode) {
         final Condition conditions = filterConditionMapper.map(filter);
         final Collection<SortField<T>> sortCriteria = getSortMapper().map(pc.getSort(), getTable());
         final List<T> entities = getDsl()

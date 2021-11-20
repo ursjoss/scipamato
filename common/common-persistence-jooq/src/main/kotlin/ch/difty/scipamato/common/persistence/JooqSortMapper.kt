@@ -5,7 +5,7 @@ import ch.difty.scipamato.common.entity.ScipamatoEntity
 import ch.difty.scipamato.common.persistence.paging.Sort
 import org.jooq.Record
 import org.jooq.SortField
-import org.jooq.impl.TableImpl
+import org.jooq.Table
 
 /**
  * Implementations of this interface map sorting specifications into the jOOQ specific [SortField]s.
@@ -15,7 +15,7 @@ import org.jooq.impl.TableImpl
  * @param [T] the type of the table implementation of record [R]
  */
 @Deprecated("replace with JooqDbSortMapper")
-fun interface JooqSortMapper<R : Record, T : ScipamatoEntity, TI : TableImpl<R>> {
+fun interface JooqSortMapper<R : Record, T : ScipamatoEntity, TI : Table<R>> {
 
     /**
      * Maps spring data [sortSpecification] of [table] [TI] into the jOOQ specific [SortField]s.
@@ -30,7 +30,7 @@ fun interface JooqSortMapper<R : Record, T : ScipamatoEntity, TI : TableImpl<R>>
  * @param [T] the type of the entity, extending [DbEntity]
  * @param [T] the type of the table implementation of record [R]
  */
-fun interface JooqDbSortMapper<R : Record, T : DbEntity, TI : TableImpl<R>> {
+fun interface JooqDbSortMapper<R : Record, T : DbEntity, TI : Table<R>> {
 
     /**
      * Maps spring data [sortSpecification] of [table] [TI] into the jOOQ specific [SortField]s.

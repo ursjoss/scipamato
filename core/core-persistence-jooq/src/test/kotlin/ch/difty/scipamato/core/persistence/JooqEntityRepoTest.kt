@@ -21,12 +21,12 @@ import org.jooq.InsertSetMoreStep
 import org.jooq.InsertSetStep
 import org.jooq.Record
 import org.jooq.RecordMapper
+import org.jooq.Table
 import org.jooq.TableField
 import org.jooq.UpdateConditionStep
 import org.jooq.UpdateResultStep
 import org.jooq.UpdateSetFirstStep
 import org.jooq.UpdateSetMoreStep
-import org.jooq.impl.TableImpl
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.test.context.junit.jupiter.SpringExtension
@@ -46,7 +46,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension
  * pressure of sonarqube :-) )
  */
 @ExtendWith(SpringExtension::class)
-abstract class JooqEntityRepoTest<R : Record, T : IdScipamatoEntity<ID>, ID : Number, TI : TableImpl<R>,
+abstract class JooqEntityRepoTest<R : Record, T : IdScipamatoEntity<ID>, ID : Number, TI : Table<R>,
     M : RecordMapper<R, T>, F : ScipamatoFilter> : JooqReadOnlyRepoTest<R, T, ID, TI, M, F>() {
 
     protected val insertSetStepSetter = mockk<InsertSetStepSetter<R, T>>()
