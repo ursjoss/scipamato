@@ -1,6 +1,7 @@
 spring:
   main:
     banner-mode: "off"
+    allow-circular-references: true
 logging:
   level:
     root: WARN

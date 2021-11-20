@@ -5,7 +5,6 @@ import java.util.Objects;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jooq.*;
-import org.jooq.impl.TableImpl;
 import org.slf4j.Logger;
 
 import ch.difty.scipamato.common.DateTimeService;
@@ -35,7 +34,7 @@ import ch.difty.scipamato.core.persistence.OptimisticLockingException.Type;
  * @author u.joss
  */
 @SuppressWarnings("WeakerAccess")
-public abstract class JooqEntityRepo<R extends Record, T extends CoreEntity, ID, TI extends TableImpl<R>, M extends RecordMapper<R, T>, F extends ScipamatoFilter>
+public abstract class JooqEntityRepo<R extends Record, T extends CoreEntity, ID, TI extends Table<R>, M extends RecordMapper<R, T>, F extends ScipamatoFilter>
     extends JooqReadOnlyRepo<R, T, ID, TI, M, F> implements EntityRepository<T, ID, F> {
 
     private final InsertSetStepSetter<R, T> insertSetStepSetter;
@@ -105,8 +104,7 @@ public abstract class JooqEntityRepo<R extends Record, T extends CoreEntity, ID,
     public T add(@NotNull final T entity, @NotNull final String languageCode) {
         R saved = doSave(entity, languageCode);
         if (saved != null) {
-            getLogger().info("{} inserted 1 record: {} with id {}.", getActiveUser().getUserName(),
-                getTable().getName(), getIdFrom(saved));
+            getLogger().info("{} inserted 1 record: {} with id {}.", getActiveUser().getUserName(), getTable().getName(), getIdFrom(saved));
             T savedEntity = getMapper().map(saved);
             enrichAssociatedEntitiesOf(savedEntity, languageCode);
             return savedEntity;
@@ -155,8 +153,7 @@ public abstract class JooqEntityRepo<R extends Record, T extends CoreEntity, ID,
                 .and(getRecordVersion().eq(version))
                 .execute();
             if (deleteCount > 0) {
-                getLogger().info("{} deleted {} record: {} with id {}.", getActiveUser().getUserName(), deleteCount,
-                    getTable().getName(), id);
+                getLogger().info("{} deleted {} record: {} with id {}.", getActiveUser().getUserName(), deleteCount, getTable().getName(), id);
             } else {
                 throw new OptimisticLockingException(getTable().getName(), toBeDeleted.toString(), Type.DELETE);
             }
@@ -202,8 +199,7 @@ public abstract class JooqEntityRepo<R extends Record, T extends CoreEntity, ID,
             updateAssociatedEntities(entity, languageCode);
             T savedEntity = findById(id);
             enrichAssociatedEntitiesOf(savedEntity, languageCode);
-            getLogger().info("{} updated 1 record: {} with id {}.", getActiveUser().getUserName(), getTable().getName(),
-                id);
+            getLogger().info("{} updated 1 record: {} with id {}.", getActiveUser().getUserName(), getTable().getName(), id);
             return savedEntity;
         } else {
             throw new OptimisticLockingException(getTable().getName(), entity.toString(), Type.UPDATE);

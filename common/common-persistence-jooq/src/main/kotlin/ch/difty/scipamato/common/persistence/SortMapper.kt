@@ -5,8 +5,8 @@ import ch.difty.scipamato.common.entity.ScipamatoEntity
 import ch.difty.scipamato.common.persistence.paging.Sort
 import org.jooq.Record
 import org.jooq.SortField
+import org.jooq.Table
 import org.jooq.TableField
-import org.jooq.impl.TableImpl
 import org.springframework.dao.InvalidDataAccessApiUsageException
 import org.springframework.stereotype.Component
 import java.util.*
@@ -24,7 +24,7 @@ import java.util.*
  */
 @Component
 @Deprecated("use DbSortMapper instead")
-class SortMapper<R : Record, T : ScipamatoEntity, TI : TableImpl<R>> : JooqSortMapper<R, T, TI> {
+class SortMapper<R : Record, T : ScipamatoEntity, TI : Table<R>> : JooqSortMapper<R, T, TI> {
 
     override fun map(sortSpecification: Sort?, table: TI): Collection<SortField<T>> =
         sortSpecification?.map { (propName, sortDirection) ->
@@ -38,7 +38,7 @@ class SortMapper<R : Record, T : ScipamatoEntity, TI : TableImpl<R>> : JooqSortM
     }
 
     /**
-     * reflection based field extraction so we can stub it out in tests
+     * reflection based field extraction, so we can stub it out in tests
      */
     @Suppress("UNCHECKED_CAST")
     @Throws(NoSuchFieldException::class, IllegalAccessException::class)
@@ -50,7 +50,7 @@ class SortMapper<R : Record, T : ScipamatoEntity, TI : TableImpl<R>> : JooqSortM
 }
 
 @Component
-class DbSortMapper<R : Record, T : DbEntity, TI : TableImpl<R>> : JooqDbSortMapper<R, T, TI> {
+class DbSortMapper<R : Record, T : DbEntity, TI : Table<R>> : JooqDbSortMapper<R, T, TI> {
 
     override fun map(sortSpecification: Sort?, table: TI): Collection<SortField<T>> =
         sortSpecification?.map { (propName, sortDirection) ->
@@ -64,7 +64,7 @@ class DbSortMapper<R : Record, T : DbEntity, TI : TableImpl<R>> : JooqDbSortMapp
     }
 
     /**
-     * reflection based field extraction so we can stub it out in tests
+     * reflection based field extraction, so we can stub it out in tests
      */
     @Suppress("UNCHECKED_CAST")
     @Throws(NoSuchFieldException::class, IllegalAccessException::class)

@@ -3,11 +3,11 @@ package ch.difty.scipamato.common.persistence
 import ch.difty.scipamato.common.entity.filter.ScipamatoFilter
 import org.amshove.kluent.shouldBeEqualTo
 import org.jooq.Record
-import org.jooq.impl.TableImpl
+import org.jooq.Table
 import org.junit.jupiter.api.Test
 
 @Suppress("FunctionName", "kotlin:S100")
-abstract class FilterConditionMapperTest<R : Record, TI : TableImpl<R>, F : ScipamatoFilter> {
+abstract class FilterConditionMapperTest<R : Record, TI : Table<R>, F : ScipamatoFilter> {
 
     protected abstract val table: TI
 

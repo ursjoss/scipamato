@@ -1,6 +1,7 @@
 spring:
   main:
     allow-bean-definition-overriding: true
+    allow-circular-references: true
     banner-mode: "off"
   autoconfigure:
     exclude: org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration
