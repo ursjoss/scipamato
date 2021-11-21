@@ -74,15 +74,14 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Changed
 - Bumped spring-boot, spring-cloud, spring-cloud-starter, jOOQ
 
-////
 .Deprecated
 
 .Removed
+- dependency on jackson-module-kotlin
 
 .Fixed
 
 .Security
-////
 
 
 [[v1.6.9]]

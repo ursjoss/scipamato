@@ -35,7 +35,6 @@ object Lib {
     private const val javaxActivationVersion = "1.2.0"
     private const val javaxElApiVersion = "3.0.1-b06"
     private const val javaxElVersion = "3.0.1-b12"
-    private const val jacksonKotlinVersion = "2.13.0"
 
     private const val fontAwesomeVersion = "5.15.2"
 
@@ -137,7 +136,6 @@ object Lib {
     fun jaxbRuntime() = Dep("org.glassfish.jaxb", "jaxb-runtime")
     fun jaxbCore() = Dep("com.sun.xml.bind", "jaxb-core", jaxbCoreVersion)
     fun jaxb(module: String) = Dep("com.sun.xml.bind", "jaxb-$module", jaxbImplVersion)
-    fun jacksonKotlin() = Dep("com.fasterxml.jackson.module", "jackson-module-kotlin", jacksonKotlinVersion)
 
     // Test Libraries
 

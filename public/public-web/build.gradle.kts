@@ -54,7 +54,6 @@ dependencies {
     runtimeOnly(Lib.jaxbRuntime())
     implementation(Lib.jaxb("impl"))
     implementation(Lib.javaxActivation())
-    implementation(Lib.jacksonKotlin())
 
     implementation(Lib.validationApi())
 
