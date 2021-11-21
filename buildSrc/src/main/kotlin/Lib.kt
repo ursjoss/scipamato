@@ -33,8 +33,6 @@ object Lib {
     private const val javaxElApiVersion = "3.0.1-b06"
     private const val javaxElVersion = "3.0.1-b12"
 
-    private const val fontAwesomeVersion = "5.15.2"
-
     private const val equalsverifierVersion = "3.7.2"
 
     private const val junit5Version = "5.8.1"
@@ -107,7 +105,7 @@ object Lib {
     fun wicketStuff(module: String) = Dep("org.wicketstuff", "wicketstuff-$module", wicketstuffVersion)
     fun wicketBootstrap(module: String) = Dep("de.agilecoders.wicket", "wicket-bootstrap-$module", wicketBootstrapVersion)
     fun wicketJqueryUi(module: String = "") = Dep("com.googlecode.wicket-jquery-ui", "wicket-jquery-ui${if (module.isNotBlank()) "-$module" else ""}", wicketJqueryUiVersion)
-    fun fontAwesome() = Dep("org.webjars", "font-awesome", fontAwesomeVersion)
+    fun fontAwesome() = Dep("org.webjars", "font-awesome")
     fun jasperreports(module: String = "") = Dep("net.sf.jasperreports", "jasperreports${if (module.isNotBlank()) "-$module" else ""}", jasperReportVersion)
     fun univocity() = Dep("com.univocity", "univocity-parsers", univocityParsersVersion)
     fun kris(module: String) = Dep("ch.difty.kris", "kris-$module", krisVersion)
