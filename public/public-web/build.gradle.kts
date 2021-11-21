@@ -55,8 +55,6 @@ dependencies {
     implementation(Lib.jaxb("impl"))
     implementation(Lib.javaxActivation())
 
-    implementation(Lib.validationApi())
-
     testImplementation(project(Module.scipamatoCommon("test")))
 
     integrationTestImplementation(Lib.testcontainers("testcontainers"))
