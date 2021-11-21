@@ -30,9 +30,6 @@ object Lib {
 
     private const val openfeignVersion = "11.7"
 
-    private const val jaxbCoreVersion = "3.0.2"
-    private const val jaxbImplVersion = "3.0.2"
-    private const val javaxActivationVersion = "1.2.0"
     private const val javaxElApiVersion = "3.0.1-b06"
     private const val javaxElVersion = "3.0.1-b12"
 
@@ -122,11 +119,6 @@ object Lib {
     fun javaxElApi() = Dep("javax.el", "javax.el-api", javaxElApiVersion)
     fun javaxElImpl() = Dep("org.glassfish", "javax.el", javaxElVersion)
 
-    // Utility libraries
-
-    fun javaxActivation() = Dep("com.sun.activation", "javax.activation", javaxActivationVersion)
-    fun javaxActivationApi() = Dep("javax.activation", "javax.activation-api", javaxActivationVersion)
-
     // Caching: JCache with ehcache as cache provider
 
     fun cacheApi() = Dep("javax.cache", "cache-api")
@@ -134,8 +126,6 @@ object Lib {
 
     fun jaxbApi() = Dep("javax.xml.bind", "jaxb-api")
     fun jaxbRuntime() = Dep("org.glassfish.jaxb", "jaxb-runtime")
-    fun jaxbCore() = Dep("com.sun.xml.bind", "jaxb-core", jaxbCoreVersion)
-    fun jaxb(module: String) = Dep("com.sun.xml.bind", "jaxb-$module", jaxbImplVersion)
 
     // Test Libraries
 

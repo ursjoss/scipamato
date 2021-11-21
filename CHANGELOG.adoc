@@ -77,7 +77,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Deprecated
 
 .Removed
-- dependency on jackson-module-kotlin
+- dependency on jackson-module-kotlin, a few explicit jaxb-dependencies
 
 .Fixed
 

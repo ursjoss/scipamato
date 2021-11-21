@@ -76,12 +76,6 @@ dependencies {
     implementation(Lib.cacheApi())
     implementation(Lib.ehcache())
 
-    implementation(Lib.jaxbApi())
-    implementation(Lib.jaxbCore())
-    implementation(Lib.jaxb("impl"))
-    implementation(Lib.javaxActivation())
-    runtimeOnly(Lib.jaxbRuntime())
-
     testImplementation(project(Module.scipamatoCommon("test")))
     testImplementation(project(Module.scipamatoCommon("persistence-jooq-test")))
     testImplementation(Lib.servletApi())
