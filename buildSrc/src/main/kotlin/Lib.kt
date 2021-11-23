@@ -17,7 +17,7 @@ object Lib {
     private const val wicketSpringBootStarterVersion = "3.0.4"
     private const val wicketVersion = "9.6.0"
     private const val wicketstuffVersion = "9.6.0"
-    private const val wicketJqueryUiVersion = "9.5.0"
+    private const val wicketJqueryUiVersion = "9.6.0"
     private const val wicketBootstrapVersion = "4.0.4"
     private const val jasperReportVersion = "6.18.1"
     private const val univocityParsersVersion = "2.9.1"
