@@ -21,7 +21,7 @@ jobs:
         java-version: '11'
 
     - name: Cache global .gradle folder
-      uses: actions/cache@v2.1.6
+      uses: actions/cache@v2.1.7
       with:
         path: ~/.gradle/caches
         key: global-gradle-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}-${{ hashFiles('**/*.kt*') }}-${{ hashFiles('**/*.java') }}
