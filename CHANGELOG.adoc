@@ -72,7 +72,8 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 
 .Changed
-- Bumped spring-boot, spring-cloud, spring-cloud-starter, jOOQ, junit-jupiter
+- Bumped spring-boot, spring-cloud, spring-cloud-starter, jOOQ, junit-jupiter,
+  detekt
 
 .Deprecated
 
