@@ -72,17 +72,17 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 
 .Changed
-- Bumped spring-boot, spring-cloud, spring-cloud-starter, jOOQ
+- Bumped spring-boot, spring-cloud, spring-cloud-starter, jOOQ, flyway, wicket,
+  gradle, detekt, junit-jupiter, kotlin-logging, equalsverifier, reckon
 
-////
 .Deprecated
 
 .Removed
+- dependency on jackson-module-kotlin, a few explicit jaxb-dependencies
 
 .Fixed
 
 .Security
-////
 
 
 [[v1.6.9]]

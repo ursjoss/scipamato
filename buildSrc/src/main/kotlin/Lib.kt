@@ -9,13 +9,13 @@ object Lib {
     //region:dependencyVersions
     private const val kotlinVersion = "1.6.0"
 
-    private const val springBootVersion = "2.6.0"
+    private const val springBootVersion = "2.6.1"
     private const val springBootAdminVersion = "2.5.4"
     const val springCloudVersion = "2021.0.0"
-    private const val springCloudStarterVersion = "3.1.0-RC1"
+    private const val springCloudStarterVersion = "3.1.0"
 
     private const val wicketSpringBootStarterVersion = "3.0.4"
-    private const val wicketVersion = "9.6.0"
+    private const val wicketVersion = "9.7.0"
     private const val wicketstuffVersion = "9.6.0"
     private const val wicketJqueryUiVersion = "9.5.0"
     private const val wicketBootstrapVersion = "4.0.4"
@@ -23,25 +23,19 @@ object Lib {
     private const val univocityParsersVersion = "2.9.1"
 
     private const val krisVersion = "0.3.2"
-    const val jooqVersion = "3.15.4"
-    const val flywayVersion = "8.0.5"
+    const val jooqVersion = "3.15.5"
+    const val flywayVersion = "8.2.0"
 
-    private const val kotlinLoggingVersion = "2.0.11"
+    private const val kotlinLoggingVersion = "2.1.15"
 
     private const val openfeignVersion = "11.7"
 
-    private const val jaxbCoreVersion = "3.0.2"
-    private const val jaxbImplVersion = "3.0.2"
-    private const val javaxActivationVersion = "1.2.0"
     private const val javaxElApiVersion = "3.0.1-b06"
     private const val javaxElVersion = "3.0.1-b12"
-    private const val jacksonKotlinVersion = "2.13.0"
 
-    private const val fontAwesomeVersion = "5.15.2"
+    private const val equalsverifierVersion = "3.8"
 
-    private const val equalsverifierVersion = "3.7.2"
-
-    private const val junit5Version = "5.8.1"
+    private const val junit5Version = "5.8.2"
 
     private const val testcontainersVersion = "1.16.2"
 
@@ -59,12 +53,12 @@ object Lib {
     private const val springDependencyManagementPluginVersion = "1.0.11.RELEASE"
     private const val lombokPluginVersion = "6.3.0"
     private const val jooqModelatorPluginVersion = "3.9.0"
-    private const val reckonPluginVersion = "0.13.0"
+    private const val reckonPluginVersion = "0.13.1"
     private const val versionsPluginVersion = "0.39.0"
     private const val jaxbPluginVersion = "5.1.0"
     private const val testSetsPluginVersion = "4.0.0"
     private const val sonarqubePluginVersion = "3.3"
-    private const val detektPluginVersion = "1.18.1"
+    private const val detektPluginVersion = "1.19.0"
     private const val licensePluginVersion = "0.16.1"
     //endregion
 
@@ -111,7 +105,7 @@ object Lib {
     fun wicketStuff(module: String) = Dep("org.wicketstuff", "wicketstuff-$module", wicketstuffVersion)
     fun wicketBootstrap(module: String) = Dep("de.agilecoders.wicket", "wicket-bootstrap-$module", wicketBootstrapVersion)
     fun wicketJqueryUi(module: String = "") = Dep("com.googlecode.wicket-jquery-ui", "wicket-jquery-ui${if (module.isNotBlank()) "-$module" else ""}", wicketJqueryUiVersion)
-    fun fontAwesome() = Dep("org.webjars", "font-awesome", fontAwesomeVersion)
+    fun fontAwesome() = Dep("org.webjars", "font-awesome")
     fun jasperreports(module: String = "") = Dep("net.sf.jasperreports", "jasperreports${if (module.isNotBlank()) "-$module" else ""}", jasperReportVersion)
     fun univocity() = Dep("com.univocity", "univocity-parsers", univocityParsersVersion)
     fun kris(module: String) = Dep("ch.difty.kris", "kris-$module", krisVersion)
@@ -123,11 +117,6 @@ object Lib {
     fun javaxElApi() = Dep("javax.el", "javax.el-api", javaxElApiVersion)
     fun javaxElImpl() = Dep("org.glassfish", "javax.el", javaxElVersion)
 
-    // Utility libraries
-
-    fun javaxActivation() = Dep("com.sun.activation", "javax.activation", javaxActivationVersion)
-    fun javaxActivationApi() = Dep("javax.activation", "javax.activation-api", javaxActivationVersion)
-
     // Caching: JCache with ehcache as cache provider
 
     fun cacheApi() = Dep("javax.cache", "cache-api")
@@ -135,9 +124,6 @@ object Lib {
 
     fun jaxbApi() = Dep("javax.xml.bind", "jaxb-api")
     fun jaxbRuntime() = Dep("org.glassfish.jaxb", "jaxb-runtime")
-    fun jaxbCore() = Dep("com.sun.xml.bind", "jaxb-core", jaxbCoreVersion)
-    fun jaxb(module: String) = Dep("com.sun.xml.bind", "jaxb-$module", jaxbImplVersion)
-    fun jacksonKotlin() = Dep("com.fasterxml.jackson.module", "jackson-module-kotlin", jacksonKotlinVersion)
 
     // Test Libraries
 

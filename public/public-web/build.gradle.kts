@@ -48,15 +48,7 @@ dependencies {
     implementation(Lib.springBootStarter("cache"))
     implementation(Lib.cacheApi())
     implementation(Lib.ehcache())
-
-    implementation(Lib.jaxbApi())
-    implementation(Lib.jaxbCore())
     runtimeOnly(Lib.jaxbRuntime())
-    implementation(Lib.jaxb("impl"))
-    implementation(Lib.javaxActivation())
-    implementation(Lib.jacksonKotlin())
-
-    implementation(Lib.validationApi())
 
     testImplementation(project(Module.scipamatoCommon("test")))
 

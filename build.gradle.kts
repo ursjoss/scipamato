@@ -1,6 +1,5 @@
 import io.gitlab.arturbosch.detekt.Detekt
 import io.gitlab.arturbosch.detekt.DetektPlugin
-import io.gitlab.arturbosch.detekt.detekt
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED
 import org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED
@@ -72,18 +71,6 @@ sonarqube {
 reckon {
     scopeFromProp()
     snapshotFromProp()
-}
-
-detekt {
-    failFast = false
-    buildUponDefaultConfig = true
-    config = files("${rootProject.projectDir}/config/detekt/detekt.yml")
-    baseline = file("detekt-baseline.xml")
-
-    reports {
-        xml.enabled = true
-        html.enabled = true
-    }
 }
 
 allprojects {
@@ -253,7 +240,23 @@ tasks {
         }
     }
     withType<Detekt> {
+        allRules = true
+        buildUponDefaultConfig = true
+        config.setFrom(files("${rootProject.projectDir}/config/detekt/detekt.yml"))
+        baseline.set(file("detekt-baseline.xml"))
         this.jvmTarget = jvmTarget
+        reports {
+            xml.required.set(true)
+            html.required.set(true)
+        }
+    }
+    detektMain {
+        reports {
+            xml {
+                outputLocation.set(file("build/reports/detekt/customPath.xml"))
+                required.set(true)
+            }
+        }
     }
     val projectsWithCoverage = subprojects.filter { it.name.mayHaveTestCoverage() }
     withType<SonarQubeTask> {
@@ -262,6 +265,7 @@ tasks {
         dependsOn(projectsWithCoverage.map { it.tasks.getByName("jacocoTestReport") })
         dependsOn(subprojects.map { it.tasks.getByName("detekt") })
     }
+
     projectsWithCoverage.forEach { project ->
         project.jacoco {
             toolVersion = Lib.jacocoToolVersion
