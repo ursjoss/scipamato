@@ -67,20 +67,31 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[unreleased]]
 == [unreleased]
 
-{url-cl}1.7.1$$...$$main[Full Changelog]
+{url-cl}1.7.2$$...$$main[Full Changelog]
 
 .Added
 
-.Changed
-- Bumped flyway, equalsverifier, gradle
-
 ////
+.Changed
+
 .Deprecated
 
 .Removed
 
 .Fixed
+
+.Security
+
 ////
+
+
+[[v1.7.2]]
+== {url-tree}1.7.2[1.7.2] -- 2021-12-15
+
+{url-cl}1.7.1$$...$$1.7.2[Full Changelog]
+
+.Changed
+- Bumped flyway, equalsverifier, gradle
 
 .Security
 - [CVE 2021-44228] (Log4Shell): Bump log4j from 2.15.0 to 2.16.0
