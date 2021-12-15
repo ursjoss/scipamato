@@ -24,7 +24,7 @@ object Lib {
 
     private const val krisVersion = "0.3.2"
     const val jooqVersion = "3.15.5"
-    const val flywayVersion = "8.2.1"
+    const val flywayVersion = "8.2.2"
 
     private const val kotlinLoggingVersion = "2.1.16"
 
@@ -33,7 +33,7 @@ object Lib {
     private const val javaxElApiVersion = "3.0.1-b06"
     private const val javaxElVersion = "3.0.1-b12"
 
-    private const val equalsverifierVersion = "3.8"
+    private const val equalsverifierVersion = "3.8.1"
 
     private const val junit5Version = "5.8.2"
 

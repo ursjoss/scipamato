@@ -71,17 +71,19 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Added
 
-////
 .Changed
+- Bumped flyway, equalsverifier, gradle
 
+////
 .Deprecated
 
 .Removed
 
 .Fixed
+////
 
 .Security
-////
+- [CVE 2021-44228] (Log4Shell): Bump log4j from 2.15.0 to 2.16.0
 
 
 [[v1.7.1]]
