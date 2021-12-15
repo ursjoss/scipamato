@@ -71,9 +71,9 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Added
 
-////
 .Changed
-
+- Bumped flyway
+////
 .Deprecated
 
 .Removed
