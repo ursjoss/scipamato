@@ -70,7 +70,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 {url-cl}1.7.2$$...$$main[Full Changelog]
 
 .Added
-- Bumped springmockk, spring-boot-admin
+- Bumped springmockk, spring-boot-admin, kotlin-loggin
 
 ////
 .Changed
