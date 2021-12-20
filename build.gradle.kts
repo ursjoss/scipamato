@@ -36,6 +36,7 @@ extra["spring.cloudVersion"] = Lib.springCloudVersion
 extra["jooq.version"] = Lib.jooqVersion
 extra["flyway.version"] = Lib.flywayVersion
 // temporary workaround
+extra["logback.version"] = "1.2.9"
 extra["log4j2.version"] = "2.17.0"
 
 dependencyManagement {
