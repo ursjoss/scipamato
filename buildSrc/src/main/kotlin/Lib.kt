@@ -9,12 +9,12 @@ object Lib {
     //region:dependencyVersions
     private const val kotlinVersion = "1.6.10"
 
-    private const val springBootVersion = "2.6.1"
+    private const val springBootVersion = "2.6.2"
     private const val springBootAdminVersion = "2.5.5"
     const val springCloudVersion = "2021.0.0"
     private const val springCloudStarterVersion = "3.1.0"
 
-    private const val wicketSpringBootStarterVersion = "3.1.5"
+    private const val wicketSpringBootStarterVersion = "3.1.6"
     private const val wicketVersion = "9.7.0"
     private const val wicketstuffVersion = "9.7.0"
     private const val wicketJqueryUiVersion = "9.5.0"
@@ -24,7 +24,7 @@ object Lib {
 
     private const val krisVersion = "0.3.2"
     const val jooqVersion = "3.15.5"
-    const val flywayVersion = "8.2.2"
+    const val flywayVersion = "8.2.3"
 
     private const val kotlinLoggingVersion = "2.1.21"
 
