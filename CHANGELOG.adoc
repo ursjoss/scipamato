@@ -68,14 +68,13 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[unreleased]]
 == [unreleased]
 
-{url-cl}1.7.4$$...$$main[Full Changelog]
+{url-cl}1.7.5$$...$$main[Full Changelog]
 
 .Added
 
-.Changed
-- Bump spring-boot, wicket-spring-boot-starter, flyway
-
 ////
+.Changed
+
 .Deprecated
 
 .Removed
@@ -85,6 +84,15 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Security
 
 ////
+
+
+[[v1.7.5]]
+== {url-tree}1.7.5[1.7.5] -- 2021-12-22
+
+{url-cl}1.7.4$$...$$1.7.5[Full Changelog]
+
+.Changed
+- Bump spring-boot, wicket-spring-boot-starter, flyway
 
 
 [[v1.7.4]]
