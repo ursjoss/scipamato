@@ -54,6 +54,7 @@ dependencies {
         exclude("om.vaadin.external.google", "android-json")
     }
     implementation(Lib.springBootStarter("security"))
+    implementation(Lib.kotlinCoroutines("core"))
 
     implementation(Lib.wicketJqueryUi())
     implementation(Lib.wicketJqueryUi("theme-uilightness"))

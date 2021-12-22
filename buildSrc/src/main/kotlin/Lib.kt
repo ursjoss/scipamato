@@ -8,6 +8,7 @@ object Lib {
 
     //region:dependencyVersions
     private const val kotlinVersion = "1.6.10"
+    private const val coroutinesVersion = "1.6.0"
 
     private const val springBootVersion = "2.6.2"
     private const val springBootAdminVersion = "2.5.5"
@@ -67,6 +68,7 @@ object Lib {
     // Kotlin
 
     fun kotlin(module: String) = Dep("org.jetbrains.kotlin:kotlin-$module", kotlinVersion)
+    fun kotlinCoroutines(module: String) = Dep("org.jetbrains.kotlinx:kotlinx-coroutines-$module", coroutinesVersion)
 
     // Spring
 
