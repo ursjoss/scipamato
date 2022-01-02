@@ -73,7 +73,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 
 .Changed
-- Bump gradle-wrapper, KRis-core, mockk, versions gradle plugin
+- Bump gradle-wrapper, KRis-core, mockk, openfeign, versions gradle plugin
 
 ////
 .Deprecated

@@ -29,7 +29,7 @@ object Lib {
 
     private const val kotlinLoggingVersion = "2.1.21"
 
-    private const val openfeignVersion = "11.7"
+    private const val openfeignVersion = "11.8"
 
     private const val javaxElApiVersion = "3.0.1-b06"
     private const val javaxElVersion = "3.0.1-b12"
