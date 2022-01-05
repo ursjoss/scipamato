@@ -74,6 +74,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Changed
 - Bump gradle-wrapper, flyway, wicket-jquery-ui, KRis-core, mockk, openfeign, versions gradle plugin
+  equalsverifier
 
 ////
 .Deprecated
