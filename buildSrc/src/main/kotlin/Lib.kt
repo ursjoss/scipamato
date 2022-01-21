@@ -24,7 +24,7 @@ object Lib {
     private const val univocityParsersVersion = "2.9.1"
 
     private const val krisVersion = "0.3.3"
-    const val jooqVersion = "3.15.5"
+    const val jooqVersion = "3.15.6"
     const val flywayVersion = "8.4.2"
 
     private const val kotlinLoggingVersion = "2.1.21"
