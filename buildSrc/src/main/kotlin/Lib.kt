@@ -10,40 +10,40 @@ object Lib {
     private const val kotlinVersion = "1.6.10"
     private const val coroutinesVersion = "1.6.0"
 
-    private const val springBootVersion = "2.6.2"
-    private const val springBootAdminVersion = "2.5.5"
+    private const val springBootVersion = "2.6.3"
+    private const val springBootAdminVersion = "2.6.1"
     const val springCloudVersion = "2021.0.0"
     private const val springCloudStarterVersion = "3.1.0"
 
     private const val wicketSpringBootStarterVersion = "3.1.6"
     private const val wicketVersion = "9.7.0"
     private const val wicketstuffVersion = "9.7.0"
-    private const val wicketJqueryUiVersion = "9.5.0"
+    private const val wicketJqueryUiVersion = "9.7.0"
     private const val wicketBootstrapVersion = "4.0.4"
     private const val jasperReportVersion = "6.18.1"
     private const val univocityParsersVersion = "2.9.1"
 
     private const val krisVersion = "0.3.3"
-    const val jooqVersion = "3.15.5"
-    const val flywayVersion = "8.2.3"
+    const val jooqVersion = "3.15.6"
+    const val flywayVersion = "8.4.2"
 
     private const val kotlinLoggingVersion = "2.1.21"
 
-    private const val openfeignVersion = "11.7"
+    private const val openfeignVersion = "11.8"
 
     private const val javaxElApiVersion = "3.0.1-b06"
     private const val javaxElVersion = "3.0.1-b12"
 
-    private const val equalsverifierVersion = "3.8.1"
+    private const val equalsverifierVersion = "3.8.2"
 
     private const val junit5Version = "5.8.2"
 
-    private const val testcontainersVersion = "1.16.2"
+    private const val testcontainersVersion = "1.16.3"
 
     private const val spekVersion = "2.0.17"
     private const val kwikVersion = "0.8.4"
     private const val kluentVersion = "1.68"
-    private const val mockkVersion = "1.12.1"
+    private const val mockkVersion = "1.12.2"
     private const val springMockkVersion = "3.1.0"
     const val jacocoToolVersion = "0.8.7"
 
@@ -55,7 +55,7 @@ object Lib {
     private const val lombokPluginVersion = "6.3.0"
     private const val jooqModelatorPluginVersion = "3.9.0"
     private const val reckonPluginVersion = "0.13.1"
-    private const val versionsPluginVersion = "0.39.0"
+    private const val versionsPluginVersion = "0.41.0"
     private const val jaxbPluginVersion = "5.1.0"
     private const val testSetsPluginVersion = "4.0.0"
     private const val sonarqubePluginVersion = "3.3"
