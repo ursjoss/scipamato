@@ -73,7 +73,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 
 .Changed
-- Bumped spring-boot, wicket, wicketstuff, wicket-jquery-ui, spring-boot-admin-starter, jOOQ, flyway, jasperreports,
+- Bumped spring-boot, wicket, wicketstuff, wicket-jquery-ui, spring-boot-admin-starter, jOOQ, flyway, jasperreports, gradle,
   springmockk, equals-verifier,
   gradle versions plugin, lombok-gradle-plugin, reckon-gradle-plugin
 
