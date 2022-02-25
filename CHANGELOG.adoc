@@ -73,7 +73,8 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 
 .Changed
-- Bumped spring-boot, springmockk, wicket-jquery-ui, spring-boot-admin-starter, jasperreports
+- Bumped spring-boot, wicket-jquery-ui, spring-boot-admin-starter, jasperreports,
+  springmockk, equals-verifier,
   gradle versions plugin, lombok-gradle-plugin
 
 ////
