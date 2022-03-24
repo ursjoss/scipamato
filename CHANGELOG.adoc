@@ -73,7 +73,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 
 .Changed
-- Bumped spring-boot, flyway, jOOQ, gradle-wrapper, spek, mockk, equalsverifier
+- Bumped spring-boot, flyway, jOOQ, spring-cloud-starter, gradle-wrapper, spek, mockk, equalsverifier
 
 ////
 .Deprecated
