@@ -68,14 +68,13 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[unreleased]]
 == [unreleased]
 
-{url-cl}1.7.7$$...$$main[Full Changelog]
+{url-cl}1.7.8$$...$$main[Full Changelog]
 
 .Added
 
-.Changed
-- Bumped spring-boot, flyway, jOOQ, spring-cloud-starter, gradle-wrapper, spek, mockk, equalsverifier
-
 ////
+.Changed
+
 .Deprecated
 
 .Removed
@@ -86,6 +85,14 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 ////
 
+
+[[v1.7.8]]
+== {url-tree}1.7.8[1.7.8] -- 2022-03-25
+
+{url-cl}1.7.7$$...$$1.7.8[Full Changelog]
+
+.Changed
+- Bumped spring-boot, flyway, jOOQ, spring-cloud-starter, gradle-wrapper, spek, mockk, equalsverifier
 
 
 [[v1.7.7]]
