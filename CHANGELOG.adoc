@@ -73,7 +73,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 
 .Changed
-- Bumped spring-boot, wicket and wicketstuff, jasperreports, flyway
+- Bumped spring-boot, wicket and wicketstuff, jasperreports, flyway, spring-boot-admin
 
 ////
 .Deprecated
