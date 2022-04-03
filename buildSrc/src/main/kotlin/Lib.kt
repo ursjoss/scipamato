@@ -7,25 +7,25 @@ import java.util.Properties
 object Lib {
 
     //region:dependencyVersions
-    private const val kotlinVersion = "1.6.10"
+    private const val kotlinVersion = "1.6.20"
     private const val coroutinesVersion = "1.6.0"
 
-    private const val springBootVersion = "2.6.5"
-    private const val springBootAdminVersion = "2.6.2"
+    private const val springBootVersion = "2.6.6"
+    private const val springBootAdminVersion = "2.6.4"
     const val springCloudVersion = "2021.0.0"
     private const val springCloudStarterVersion = "3.1.1"
 
     private const val wicketSpringBootStarterVersion = "3.1.6"
-    private const val wicketVersion = "9.8.0"
-    private const val wicketstuffVersion = "9.8.0"
+    private const val wicketVersion = "9.9.0"
+    private const val wicketstuffVersion = "9.9.0"
     private const val wicketJqueryUiVersion = "9.8.0"
     private const val wicketBootstrapVersion = "4.0.4"
-    private const val jasperReportVersion = "6.19.0"
+    private const val jasperReportVersion = "6.19.1"
     private const val univocityParsersVersion = "2.9.1"
 
     private const val krisVersion = "0.3.3"
     const val jooqVersion = "3.15.9"
-    const val flywayVersion = "8.5.4"
+    const val flywayVersion = "8.5.5"
 
     private const val kotlinLoggingVersion = "2.1.21"
 

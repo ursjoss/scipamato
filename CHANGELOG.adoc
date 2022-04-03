@@ -72,9 +72,11 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Added
 
-////
 .Changed
+- Bumped kotlin, spring-boot, wicket and wicketstuff, jasperreports, flyway, spring-boot-admin,
+  gradle-wrapper
 
+////
 .Deprecated
 
 .Removed
