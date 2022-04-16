@@ -11,7 +11,7 @@ object Lib {
     private const val coroutinesVersion = "1.6.0"
 
     private const val springBootVersion = "2.6.6"
-    private const val springBootAdminVersion = "2.6.4"
+    private const val springBootAdminVersion = "2.6.6"
     const val springCloudVersion = "2021.0.0"
     private const val springCloudStarterVersion = "3.1.1"
 
