@@ -8,7 +8,7 @@ object Lib {
 
     //region:dependencyVersions
     private const val kotlinVersion = "1.6.20"
-    private const val coroutinesVersion = "1.6.0"
+    private const val coroutinesVersion = "1.6.1"
 
     private const val springBootVersion = "2.6.6"
     private const val springBootAdminVersion = "2.6.6"
