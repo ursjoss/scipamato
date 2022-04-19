@@ -73,7 +73,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 
 .Changed
-- Bumped wicket, wicketstuff, flyway, detekt, spring-boot-admin, coroutines, testcontainers,
+- Bumped wicket, wicketstuff, jOOQ, flyway, detekt, spring-boot-admin, coroutines, testcontainers,
   lombok-gradle-plugin
 
 ////
