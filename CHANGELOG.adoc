@@ -72,9 +72,11 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Added
 
-////
 .Changed
+- Bumped spring-boot, kotlin, wicket, wicketstuff, jOOQ, flyway, detekt, spring-boot-admin, coroutines, testcontainers,
+  lombok-gradle-plugin
 
+////
 .Deprecated
 
 .Removed
