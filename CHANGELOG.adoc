@@ -68,15 +68,13 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[unreleased]]
 == [unreleased]
 
-{url-cl}1.7.8$$...$$main[Full Changelog]
+{url-cl}1.7.10$$...$$main[Full Changelog]
 
 .Added
 
-.Changed
-- Bumped spring-boot, kotlin, wicket, wicketstuff, jOOQ, flyway, detekt, spring-boot-admin, coroutines, testcontainers,
-  lombok-gradle-plugin
-
 ////
+.Changed
+
 .Deprecated
 
 .Removed
@@ -84,7 +82,18 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Fixed
 
 .Security
+
 ////
+
+
+[[v1.7.10]]
+== {url-tree}1.7.10[1.7.10] -- 2022-04-21
+
+{url-cl}1.7.9$$...$$1.7.10[Full Changelog]
+
+.Changed
+- Bumped spring-boot, kotlin, wicket, wicketstuff, jOOQ, flyway, detekt, spring-boot-admin, coroutines, testcontainers,
+  lombok-gradle-plugin
 
 
 [[v1.7.9]]
