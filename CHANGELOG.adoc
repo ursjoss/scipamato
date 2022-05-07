@@ -73,7 +73,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 
 .Changed
-- Bumped wicket and wicketstuff,
+- Bumped wicket and wicketstuff, flyway,
   lombok-gradle-plugin
 
 ////
