@@ -16,8 +16,8 @@ object Lib {
     private const val springCloudStarterVersion = "3.1.1"
 
     private const val wicketSpringBootStarterVersion = "3.1.6"
-    private const val wicketVersion = "9.9.1"
-    private const val wicketstuffVersion = "9.9.1"
+    private const val wicketVersion = "9.10.0"
+    private const val wicketstuffVersion = "9.10.0"
     private const val wicketJqueryUiVersion = "9.8.0"
     private const val wicketBootstrapVersion = "4.0.4"
     private const val jasperReportVersion = "6.19.1"
@@ -25,7 +25,7 @@ object Lib {
 
     private const val krisVersion = "0.3.3"
     const val jooqVersion = "3.15.10"
-    const val flywayVersion = "8.5.8"
+    const val flywayVersion = "8.5.10"
 
     private const val kotlinLoggingVersion = "2.1.21"
 
@@ -52,7 +52,7 @@ object Lib {
 
     //region:pluginVersions
     private const val springDependencyManagementPluginVersion = "1.0.11.RELEASE"
-    private const val lombokPluginVersion = "6.4.2"
+    private const val lombokPluginVersion = "6.4.3"
     private const val jooqModelatorPluginVersion = "3.9.0"
     private const val reckonPluginVersion = "0.16.1"
     private const val versionsPluginVersion = "0.42.0"
