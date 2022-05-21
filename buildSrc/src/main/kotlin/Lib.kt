@@ -13,7 +13,7 @@ object Lib {
     private const val springBootVersion = "2.6.8"
     private const val springBootAdminVersion = "2.6.7"
     const val springCloudVersion = "2021.0.0"
-    private const val springCloudStarterVersion = "3.1.1"
+    private const val springCloudStarterVersion = "3.1.2"
 
     private const val wicketSpringBootStarterVersion = "3.1.6"
     private const val wicketVersion = "9.10.0"
