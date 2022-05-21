@@ -10,10 +10,10 @@ object Lib {
     private const val kotlinVersion = "1.6.21"
     private const val coroutinesVersion = "1.6.1"
 
-    private const val springBootVersion = "2.6.7"
-    private const val springBootAdminVersion = "2.6.6"
+    private const val springBootVersion = "2.6.8"
+    private const val springBootAdminVersion = "2.6.7"
     const val springCloudVersion = "2021.0.0"
-    private const val springCloudStarterVersion = "3.1.1"
+    private const val springCloudStarterVersion = "3.1.2"
 
     private const val wicketSpringBootStarterVersion = "3.1.6"
     private const val wicketVersion = "9.10.0"
@@ -25,9 +25,9 @@ object Lib {
 
     private const val krisVersion = "0.3.3"
     const val jooqVersion = "3.15.10"
-    const val flywayVersion = "8.5.10"
+    const val flywayVersion = "8.5.11"
 
-    private const val kotlinLoggingVersion = "2.1.21"
+    private const val kotlinLoggingVersion = "2.1.23"
 
     private const val openfeignVersion = "11.8"
 
@@ -38,12 +38,12 @@ object Lib {
 
     private const val junit5Version = "5.8.2"
 
-    private const val testcontainersVersion = "1.17.1"
+    private const val testcontainersVersion = "1.17.2"
 
     private const val spekVersion = "2.0.18"
     private const val kwikVersion = "0.8.4"
     private const val kluentVersion = "1.68"
-    private const val mockkVersion = "1.12.3"
+    private const val mockkVersion = "1.12.4"
     private const val springMockkVersion = "3.1.1"
     const val jacocoToolVersion = "0.8.7"
 

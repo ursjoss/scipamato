@@ -73,7 +73,9 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 
 .Changed
-- Bumped wicket and wicketstuff, flyway,
+- Bumped spring-boot, wicket and wicketstuff, flyway, kotlin-logging,
+  spring-cloud, spring-boot-admin,
+  mockk, testcontainers,
   lombok-gradle-plugin
 
 ////
