@@ -299,7 +299,6 @@ downloadLicenses {
         "ch.difty.kris:kris-core:0.3.3" to mitLicense,
         "com.google.elemental2:elemental2-core:1.0.0-RC1" to apacheLicense,
         "org.codehaus.jettison:jettison:1.2" to apacheLicense,
-        "org.codehaus.woodstox:stax2-api" to bsd2License,
     )
 
     aliases = mapOf(
