@@ -84,10 +84,6 @@ allprojects {
     }
 }
 
-lombok {
-    config.put("lombok.extern.findbugs.addSuppressFBWarnings", "false")
-}
-
 subprojects {
     apply<SpringBootPlugin>()
     apply(plugin = Lib.springDependencyManagementPlugin().id)
