@@ -1,5 +1,6 @@
 import io.gitlab.arturbosch.detekt.Detekt
 import io.gitlab.arturbosch.detekt.DetektPlugin
+import nl.javadude.gradle.plugins.license.LicenseMetadata
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED
 import org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED
@@ -275,6 +276,123 @@ tasks {
 
 downloadLicenses {
     dependencyConfiguration = "runtimeClasspath"
+    includeProjectDependencies = false
+
+    val apacheLicense = LicenseMetadata("Apache License 2.0", "https://spdx.org/licenses/Apache-2.0.html")
+    val bsd1License = LicenseMetadata("BSD 1-Clause License", "https://spdx.org/licenses/BSD-1-Clause.html")
+    val bsd2License = LicenseMetadata("BSD 2-Clause \"Simplified\" License", "https://spdx.org/licenses/BSD-2-Clause.html")
+    val bsd3License = LicenseMetadata("BSD 3-Clause \"New\" or \"Revised\" License", "https://spdx.org/licenses/BSD-3-Clause.html")
+    val cc0License = LicenseMetadata("Creative Commons Zero v1.0 Universal", "https://spdx.org/licenses/CC0-1.0.html")
+    val ccby30License = LicenseMetadata("Creative Commons Attribution 3.0 Unported", "https://spdx.org/licenses/CC-BY-3.0.html")
+    val cddl11License = LicenseMetadata("Common Development and Distribution License 1.1", "https://spdx.org/licenses/CDDL-1.1.html")
+    val edlLicense = LicenseMetadata("Eclipse Distribution License - v 1.0", "https://www.eclipse.org/org/documents/edl-v10.php")
+    val epl1License = LicenseMetadata("Eclipse Public License 1.0", "https://spdx.org/licenses/EPL-1.0.html")
+    val epl2License = LicenseMetadata("Eclipse Public License 2.0", "https://spdx.org/licenses/EPL-2.0.html")
+    val glpl21License = LicenseMetadata("GNU Lesser General Public License v2.1 only", "https://spdx.org/licenses/LGPL-2.1-only.html")
+    val glpl3License = LicenseMetadata("GNU Lesser General Public License v3.0 only", "https://spdx.org/licenses/LGPL-3.0-only.html")
+    val gpl2wcpeLicense = LicenseMetadata("GNU General Public License v2.0 w/Classpath exception", "https://spdx.org/licenses/GPL-2.0-with-classpath-exception.html")
+    val gpl3onlyLicense = LicenseMetadata("GNU General Public License v3.0 only", "https://spdx.org/licenses/GPL-3.0-only.html")
+    val mitLicense = LicenseMetadata("MIT License", "https://spdx.org/licenses/MIT.html")
+    val mpl11License = LicenseMetadata("Mozilla Public License 1.1", "https://spdx.org/licenses/MPL-1.1.html")
+
+    licenses = mapOf(
+        "ch.difty.kris:kris-core:0.3.3" to mitLicense,
+        "com.google.elemental2:elemental2-core:1.0.0-RC1" to apacheLicense,
+        "org.codehaus.jettison:jettison:1.2" to apacheLicense,
+        "org.codehaus.woodstox:stax2-api" to bsd2License,
+    )
+
+    aliases = mapOf(
+        apacheLicense to listOf(
+            "ASF 2.0",
+            "Apache 2",
+            "Apache 2.0",
+            "Apache License 2.0",
+            "Apache License Version 2.0",
+            "Apache License, Version 2.0",
+            "Apache License, version 2.0",
+            "Apache-2.0",
+            "The Apache License, Version 2.0",
+            "The Apache Software License, Version 2.0",
+        ),
+        bsd1License to listOf(
+            "BSD 1-Clause License",
+            "BSD licence",
+            "BSD-1-Clause",
+        ),
+        bsd2License to listOf(
+            "BSD 2-Clause \"Simplified\" Licensee",
+            "BSD-2-Clause",
+            "The BSD License",
+        ),
+        bsd3License to listOf(
+            "BSD 3-Clause \"New\" or \"Revised\" License",
+            "BSD License 3",
+            "BSD-3-Clause",
+        ),
+        cc0License to listOf(
+            "CC0",
+            "CC0-1.0",
+            "Creative Commons Zero v1.0 Universal",
+            "Public Domain, per Creative Commons CC0",
+        ),
+        ccby30License to listOf(
+            "CC BY 3.0",
+            "CC-BY-3.0",
+            "Creative Commons Attribution 3.0 Unported",
+        ),
+        cddl11License to listOf(
+            "CDDL 1.1",
+            "CDDL-1.1",
+            "CDDL/GPLv2+CE",
+            "Common Development and Distribution License 1.1",
+        ),
+        edlLicense to listOf(
+            "EDL 1.0",
+            "Eclipse Distribution License - v 1.0",
+        ),
+        epl1License to listOf(
+            "EPL-1.0",
+            "Eclipse Public License (EPL)",
+            "Eclipse Public License - v 1.0",
+            "Eclipse Public License 1.0",
+        ),
+        epl2License to listOf(
+            "EPL 2.0",
+            "EPL-2.0",
+            "Eclipse Public License - v 2.0",
+            "Eclipse Public License 2.0",
+            "Eclipse Public License v2.0",
+        ),
+        gpl2wcpeLicense to listOf(
+            "GNU General Public License v2.0 w/Classpath exception",
+            "GNU General Public License, version 2 with the GNU Classpath Exception",
+            "GPL-2.0-with-classpath-exception",
+            "GPL2 w/ CPE",
+        ),
+        glpl21License to listOf(
+            "GNU Lesser General Public Licence",
+            "GNU Lesser General Public License v2.1 only",
+            "GNU Lesser General Public License",
+            "LGPL-2.1-onlyy",
+        ),
+        gpl3onlyLicense to listOf(
+            "GNU General Public License v3.0 only",
+            "GPL-3.0-only",
+            "Gnu General Public License, Version 3",
+        ),
+        mitLicense to listOf(
+            "MIT License",
+            "MIT",
+            "The MIT License",
+        ),
+        mpl11License to listOf(
+            "MPL-1.1",
+            "Mozilla Public License 1.1",
+            "Mozilla Public License",
+        ),
+    )
+
 }
 
 fun String.mayHaveTestCoverage(): Boolean = this !in testModules
