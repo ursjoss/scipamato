@@ -69,8 +69,8 @@ sonarqube {
 }
 
 reckon {
-    scopeFromProp()
-    snapshotFromProp()
+    setScopeCalc(calcScopeFromProp().or(calcScopeFromCommitMessages()))
+    setStageCalc(calcStageFromProp())
 }
 
 allprojects {
