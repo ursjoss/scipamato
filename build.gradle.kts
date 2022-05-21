@@ -70,8 +70,8 @@ sonarqube {
 }
 
 reckon {
-    scopeFromProp()
-    snapshotFromProp()
+    setScopeCalc(calcScopeFromProp().or(calcScopeFromCommitMessages()))
+    setStageCalc(calcStageFromProp())
 }
 
 allprojects {
@@ -83,10 +83,6 @@ allprojects {
         maven { url = uri("https://jaspersoft.jfrog.io/jaspersoft/third-party-ce-artifacts") }
         maven { url = uri("https://repo.spring.io/milestone") }
     }
-}
-
-lombok {
-    config.put("lombok.extern.findbugs.addSuppressFBWarnings", "false")
 }
 
 subprojects {
@@ -205,9 +201,9 @@ subprojects {
             enabled = project.name.mayHaveTestCoverage()
             @Suppress("UnstableApiUsage")
             reports {
-                xml.isEnabled = true
-                html.isEnabled = false
-                csv.isEnabled = false
+                xml.required.set(true)
+                html.required.set(false)
+                csv.required.set(false)
             }
             afterEvaluate {
                 classDirectories.setFrom(
