@@ -98,7 +98,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Changed
 - Bumped spring-boot, kotlin, wicket, wicketstuff, jOOQ, flyway, detekt, spring-boot-admin, coroutines, testcontainers,
   lombok-gradle-plugin
-
+- {url-issues}333[#333] Organize licenses for license report
 
 [[v1.7.9]]
 == {url-tree}1.7.9[1.7.9] -- 2022-04-03
