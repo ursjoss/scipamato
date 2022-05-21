@@ -289,7 +289,6 @@ downloadLicenses {
     val epl1License = LicenseMetadata("Eclipse Public License 1.0", "https://spdx.org/licenses/EPL-1.0.html")
     val epl2License = LicenseMetadata("Eclipse Public License 2.0", "https://spdx.org/licenses/EPL-2.0.html")
     val glpl21License = LicenseMetadata("GNU Lesser General Public License v2.1 only", "https://spdx.org/licenses/LGPL-2.1-only.html")
-    val glpl3License = LicenseMetadata("GNU Lesser General Public License v3.0 only", "https://spdx.org/licenses/LGPL-3.0-only.html")
     val gpl2wcpeLicense = LicenseMetadata("GNU General Public License v2.0 w/Classpath exception", "https://spdx.org/licenses/GPL-2.0-with-classpath-exception.html")
     val gpl3onlyLicense = LicenseMetadata("GNU General Public License v3.0 only", "https://spdx.org/licenses/GPL-3.0-only.html")
     val mitLicense = LicenseMetadata("MIT License", "https://spdx.org/licenses/MIT.html")
