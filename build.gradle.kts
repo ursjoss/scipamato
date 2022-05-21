@@ -204,9 +204,9 @@ subprojects {
             enabled = project.name.mayHaveTestCoverage()
             @Suppress("UnstableApiUsage")
             reports {
-                xml.isEnabled = true
-                html.isEnabled = false
-                csv.isEnabled = false
+                xml.required.set(true)
+                html.required.set(false)
+                csv.required.set(false)
             }
             afterEvaluate {
                 classDirectories.setFrom(
