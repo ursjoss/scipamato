@@ -78,6 +78,7 @@ allprojects {
 
     repositories {
         mavenCentral()
+        jcenter()
         maven { url = uri("https://jaspersoft.jfrog.io/jaspersoft/third-party-ce-artifacts") }
         maven { url = uri("https://repo.spring.io/milestone") }
     }
