@@ -363,7 +363,7 @@ abstract class PaperPanel<T>(
 
     protected abstract fun newNavigationButton(
         id: String,
-        icon: GlyphIconType,
+        icon: IconType,
         isEnabled: SerializableSupplier<Boolean>,
         idSupplier: SerializableSupplier<Long?>?,
     ): BootstrapButton

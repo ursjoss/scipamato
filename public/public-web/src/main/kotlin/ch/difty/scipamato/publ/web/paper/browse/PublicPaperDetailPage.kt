@@ -11,6 +11,7 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapExternalLink
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons
 import de.agilecoders.wicket.core.markup.html.bootstrap.image.GlyphIconType
+import de.agilecoders.wicket.core.markup.html.bootstrap.image.IconType
 import org.apache.wicket.AttributeModifier
 import org.apache.wicket.PageReference
 import org.apache.wicket.markup.html.basic.Label
@@ -105,7 +106,7 @@ class PublicPaperDetailPage : BasePage<PublicPaper> {
 
     private fun newNavigationButton(
         id: String,
-        icon: GlyphIconType,
+        icon: IconType,
         getEnabled: () -> Boolean,
         getId: () -> Long?,
     ) = object : BootstrapButton(id, Model.of(""), Buttons.Type.Default) {

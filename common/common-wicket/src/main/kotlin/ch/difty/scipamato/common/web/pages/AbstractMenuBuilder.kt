@@ -6,7 +6,6 @@ import ch.difty.scipamato.common.web.ScipamatoWebSessionFacade
 import ch.difty.scipamato.common.web.component.SerializableConsumer
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapExternalLink
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.dropdown.MenuBookmarkablePageLink
-import de.agilecoders.wicket.core.markup.html.bootstrap.image.GlyphIconType
 import de.agilecoders.wicket.core.markup.html.bootstrap.image.IconType
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarButton
@@ -59,7 +58,7 @@ abstract class AbstractMenuBuilder protected constructor(
         navbar: Navbar,
         page: Page,
         labelResource: String,
-        iconType: GlyphIconType,
+        iconType: IconType,
         action: SerializableConsumer<List<AbstractLink>>,
     ) {
         navbar.addComponents(
@@ -67,7 +66,7 @@ abstract class AbstractMenuBuilder protected constructor(
                 Navbar.ComponentPosition.LEFT,
                 object : NavbarDropDownButton(
                     StringResourceModel("menu.$labelResource", page, null),
-                    Model.of(iconType as IconType)
+                    Model.of(iconType)
                 ) {
                     override fun newSubMenuButtons(buttonMarkupId: String) = ArrayList<AbstractLink>().apply { action.accept(this) }
                 }
