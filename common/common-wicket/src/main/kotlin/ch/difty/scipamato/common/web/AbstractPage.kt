@@ -7,6 +7,7 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButt
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons
 import de.agilecoders.wicket.core.markup.html.bootstrap.common.NotificationPanel
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar
+import de.agilecoders.wicket.core.markup.html.bootstrap.utilities.BackgroundColorBehavior
 import org.apache.wicket.ajax.AjaxRequestTarget
 import org.apache.wicket.authroles.authentication.AuthenticatedWebSession
 import org.apache.wicket.bean.validation.PropertyValidator
@@ -120,10 +121,9 @@ abstract class AbstractPage<T> : GenericWebPage<T> {
                 isVisible = isNavbarVisible
             }
         }.apply {
-            fluid()
-            position = Navbar.Position.STATIC_TOP
             setBrandName(Model.of(getBrandName(properties.brand)))
             setInverted(true)
+            setBackgroundColor(BackgroundColorBehavior.Color.Dark)
         }.also {
             addLinksTo(it)
         }
