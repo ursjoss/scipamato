@@ -10,9 +10,8 @@ import ch.difty.scipamato.core.web.paper.jasper.summaryshort.PaperSummaryShortDa
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons
 import de.agilecoders.wicket.core.markup.html.bootstrap.image.IconType
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.fileUpload.DropZoneFileUpload
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.fileinput.BootstrapFileInput
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable
-import org.apache.commons.fileupload.FileItem
 import org.apache.wicket.ajax.AjaxRequestTarget
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable
 import org.apache.wicket.model.IModel
@@ -51,12 +50,12 @@ abstract class SearchablePaperPanel protected constructor(
             isVisible = false
         }
 
-    override fun newDropZoneFileUpload(): DropZoneFileUpload =
-        object : DropZoneFileUpload("dropzone") {
-            override fun onUpload(target: AjaxRequestTarget, fileMap: Map<String, List<FileItem>>) {
+    override fun newFileInput(): BootstrapFileInput =
+        object : BootstrapFileInput("bootstrapFileinput") {
+            override fun onSubmit(target: AjaxRequestTarget) {
                 // no-op, as it's not visible anyway
             }
-        }.apply<DropZoneFileUpload> {
+        }.apply<BootstrapFileInput> {
             isVisible = false
         }
 

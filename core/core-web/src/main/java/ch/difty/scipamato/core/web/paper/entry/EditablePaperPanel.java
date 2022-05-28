@@ -13,13 +13,12 @@ import java.util.function.ObjIntConsumer;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
 import de.agilecoders.wicket.core.markup.html.bootstrap.image.IconType;
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.fileUpload.DropZoneFileUpload;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.fileinput.BootstrapFileInput;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome5IconType;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome5IconTypeBuilder;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.fileupload.FileItem;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.PageReference;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -31,12 +30,14 @@ import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.markup.html.GenericWebPage;
 import org.apache.wicket.markup.html.form.*;
+import org.apache.wicket.markup.html.form.upload.FileUpload;
 import org.apache.wicket.markup.html.form.validation.AbstractFormValidator;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
+import org.apache.wicket.model.util.ListModel;
 import org.apache.wicket.request.handler.resource.ResourceRequestHandler;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.request.resource.ByteArrayResource;
@@ -619,19 +620,36 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
 
     @NotNull
     @Override
-    public DropZoneFileUpload newDropZoneFileUpload() {
-        DropZoneFileUpload upload = new DropZoneFileUpload("dropzone") {
+    public BootstrapFileInput newFileInput() {
+        final IModel<List<FileUpload>> model = new ListModel<FileUpload>();
+        Form<Void> bootstrapFileUploadForm = new Form<Void>("bootstrapFileUploadForm") {
+            @Override
+            protected void onSubmit() {
+                super.onSubmit();
+
+                List<FileUpload> fileUploads = model.getObject();
+                if (fileUploads != null) {
+                    for (FileUpload upload : fileUploads) {
+                        success("Normal Upload: " + upload.getClientFileName());
+                    }
+                }
+            }
+        };
+        bootstrapFileUploadForm.setOutputMarkupId(true);
+        add(bootstrapFileUploadForm);
+        BootstrapFileInput upload = new BootstrapFileInput("bootstrapFileinput", model) {
             private static final long serialVersionUID = 1L;
 
             @Override
-            protected void onUpload(@NotNull AjaxRequestTarget target, @NotNull Map<String, List<FileItem>> fileMap) {
-                if (fileMap.containsKey("file")) {
-                    Paper p = null;
-                    for (final FileItem file : fileMap.get("file")) {
+            protected void onSubmit(@NotNull AjaxRequestTarget target) {
+                super.onSubmit(target);
+                Paper p = null;
+                List<FileUpload> fileUploads = model.getObject();
+                for (FileUpload upload : fileUploads) {
                         try {
-                            p = paperService.saveAttachment(convertToPaperAttachment(file));
+                            p = paperService.saveAttachment(convertToPaperAttachment(upload));
                         } catch (Exception ex) {
-                            log.error("Unexpected error when uploading file {}: {}", file.getName(), ex.getMessage());
+                            log.error("Unexpected error when uploading file {}: {}", upload.getClientFileName(), ex.getMessage());
                             error("Unexpected error: " + ex.getMessage());
                         }
                     }
@@ -639,22 +657,22 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
                         EditablePaperPanel.this.setModelObject(p);
                         target.add(getAttachments());
                     }
-                }
             }
 
             @Override
             protected void onConfigure() {
                 super.onConfigure();
-                setVisible(isEditMode() && getModelObject().getId() != null);
+                setVisible(isEditMode() && getId() != null);
             }
         };
         upload
             .getConfig()
-            .withMaxFileSize(getMaxFileSize())
-            .withThumbnailHeight(80)
-            .withThumbnailWidth(80)
-            .withPreviewsContainer(".dropzone-previews")
-            .withParallelUploads(4);
+            .maxFileCount(10);
+//            .withMaxFileSize(getMaxFileSize()) // TODO
+//            .withThumbnailHeight(80)
+//            .withThumbnailWidth(80)
+//            .withPreviewsContainer(".dropzone-previews")
+//            .withParallelUploads(4);
         return upload;
     }
 
@@ -674,15 +692,15 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
         return -1;
     }
 
-    private PaperAttachment convertToPaperAttachment(final FileItem file) {
+    private PaperAttachment convertToPaperAttachment(final FileUpload upload) {
         final PaperAttachment pa = new PaperAttachment();
         pa.setPaperId(EditablePaperPanel.this
             .getModelObject()
             .getId());
-        pa.setContent(file.get());
-        pa.setContentType(file.getContentType());
-        pa.setSize(file.getSize());
-        pa.setName(sanitize(file.getName()));
+        pa.setContent(upload.getBytes());
+        pa.setContentType(upload.getContentType());
+        pa.setSize(upload.getSize());
+        pa.setName(sanitize(upload.getClientFileName()));
         return pa;
     }
 
