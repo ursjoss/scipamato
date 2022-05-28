@@ -40,7 +40,6 @@ internal class PaperListPageInEditModeTest : PaperListPageTest() {
 
     override fun assertSpecificSearchFormComponents(b: String?) {
         tester.assertComponent("$b:newPaper", BootstrapAjaxButton::class.java)
-        tester.assertComponent("$b:showXmlPasteModalLink", BootstrapAjaxLink::class.java)
     }
 
     @Suppress("SameParameterValue")
@@ -104,19 +103,6 @@ internal class PaperListPageInEditModeTest : PaperListPageTest() {
         verify { paperServiceMock.findLowestFreeNumberStartingFrom(minimumNumber) }
         // from PaperEntryPage
         verify(exactly = 5) { paperServiceMock.findPageOfIdsByFilter(any(), any()) }
-    }
-
-    @Test
-    fun clickingOnShowXmlPastePanelButton_opensModalModalDialog() {
-        tester.startPage(pageClass)
-        tester.debugComponentTrees()
-        var b = "searchForm"
-        tester.executeAjaxEvent("$b:showXmlPasteModalLink", "click")
-        b = "xmlPasteModal"
-        tester.assertComponent(b, ModalDialog::class.java)
-        tester.assertContains("Paste XML exported from PubMed")
-        verify(exactly = 3) { paperSlimServiceMock.countByFilter(any()) }
-        verify(exactly = 4) { paperServiceMock.findPageOfIdsByFilter(any(), any()) }
     }
 
     @Test

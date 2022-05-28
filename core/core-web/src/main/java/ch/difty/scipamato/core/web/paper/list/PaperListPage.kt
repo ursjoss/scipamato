@@ -14,10 +14,8 @@ import ch.difty.scipamato.core.web.paper.entry.PaperEntryPage
 import ch.difty.scipamato.core.web.paper.result.ResultPanel
 import com.giffing.wicket.spring.boot.context.scan.WicketHomePage
 import com.google.common.base.Strings
-import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxLink
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome5CDNCSSReference
-import org.apache.wicket.AttributeModifier
 import org.apache.wicket.ajax.AjaxRequestTarget
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation
 import org.apache.wicket.event.IEvent
@@ -108,7 +106,7 @@ class PaperListPage(parameters: PageParameters?) : BasePage<Void?>(parameters) {
         queueFieldAndLabel(TextField("pubYearFrom", PropertyModel.of<Any>(filter, PaperFilterFields.PUB_YEAR_FROM.fieldName)))
         queueFieldAndLabel(TextField("pubYearUntil", PropertyModel.of<Any>(filter, PaperFilterFields.PUB_YEAR_UNTIL.fieldName)))
         queueNewPaperButton("newPaper")
-        queueXmlPasteModalPanelAndLink("xmlPasteModal", "showXmlPasteModalLink")
+        queueXmlPasteModalPanelAndLink("xmlPasteModal")
     }
 
 
@@ -123,9 +121,8 @@ class PaperListPage(parameters: PageParameters?) : BasePage<Void?>(parameters) {
         }
     }
 
-    private fun queueXmlPasteModalPanelAndLink(modalId: String, linkId: String) {
+    private fun queueXmlPasteModalPanelAndLink(modalId: String) {
         queue(newXmlPasteModalPanel(modalId))
-        queue(newXmlPasteModalLink(linkId))
     }
 
     private fun newXmlPasteModalPanel(modalId: String): ModalDialog {
@@ -144,18 +141,6 @@ class PaperListPage(parameters: PageParameters?) : BasePage<Void?>(parameters) {
         }
         return xmlPasteModalDialog
     }
-
-    private fun newXmlPasteModalLink(linkId: String): BootstrapAjaxLink<Void> =
-        object : BootstrapAjaxLink<Void>(linkId, Buttons.Type.Default) {
-            override fun onClick(target: AjaxRequestTarget) {
-                xmlPasteModalDialog.open(target)
-            }
-        }.apply {
-            outputMarkupPlaceholderTag = true
-            setLabel(StringResourceModel("xmlPasteModalLink.label", this@PaperListPage, null))
-            add(AttributeModifier("title", StringResourceModel("xmlPasteModalLink.title", this@PaperListPage, null).string))
-            isVisible = mode !== Mode.VIEW
-        }
 
     /**
      * Converts the XML string [pubmedContent] to articles and dump the new papers into the db.

@@ -37,6 +37,5 @@ internal class PaperListPageInViewModeTest : PaperListPageTest() {
 
     override fun assertSpecificSearchFormComponents(b: String?) {
         tester.assertInvisible("$b:newPaper")
-        tester.assertInvisible("$b:showXmlPasteModalLink")
     }
 }

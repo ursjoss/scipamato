@@ -3,7 +3,6 @@ package ch.difty.scipamato.core.web.paper.list
 import ch.difty.scipamato.core.auth.Roles
 import ch.difty.scipamato.core.web.security.TestUserDetailsService
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton
-import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxLink
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar
 import io.mockk.every
 import io.mockk.verify
@@ -33,7 +32,6 @@ internal class PaperListPageInEditModeAsUserTest : PaperListPageTest() {
 
     override fun assertSpecificSearchFormComponents(b: String?) {
         tester.assertComponent("$b:newPaper", BootstrapAjaxButton::class.java)
-        tester.assertComponent("$b:showXmlPasteModalLink", BootstrapAjaxLink::class.java)
     }
 
     @Suppress("SameParameterValue")
