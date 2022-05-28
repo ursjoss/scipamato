@@ -12,7 +12,6 @@ import ch.difty.scipamato.core.persistence.paper.searchorder.PaperSlimBackedSear
 import ch.difty.scipamato.core.persistence.paper.slim.PaperSlimRepository
 import ch.difty.scipamato.core.persistence.search.SearchOrderRepository
 import ch.difty.scipamato.core.persistence.user.UserRoleRepository
-import ch.difty.scipamato.core.pubmed.PubmedImportService
 import com.ninjasquad.springmockk.MockkBean
 import com.zaxxer.hikari.HikariDataSource
 import org.amshove.kluent.shouldBeEqualTo
@@ -36,9 +35,6 @@ import javax.sql.DataSource
 @SpringBootTest
 @Disabled("might have to move it into integration-test TODO")
 internal class JooqCoreConfigurationTest {
-
-    @MockkBean
-    private lateinit var pubmedImportServiceMock: PubmedImportService
 
     @MockkBean
     private lateinit var userRepoMock: UserRepository

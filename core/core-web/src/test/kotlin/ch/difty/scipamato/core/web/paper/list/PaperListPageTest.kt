@@ -42,7 +42,7 @@ internal abstract class PaperListPageTest : BasePageTest<PaperListPage>() {
     fun tearDown() {
         confirmVerified(
             paperSlimServiceMock, paperServiceMock, codeServiceMock,
-            codeClassServiceMock, paperServiceMock, pubmedImporterMock
+            codeClassServiceMock, paperServiceMock
         )
     }
 
@@ -104,7 +104,6 @@ internal abstract class PaperListPageTest : BasePageTest<PaperListPage>() {
         verify { paperSlimServiceMock.findPageByFilter(any(), any()) }
         verify(exactly = 4) { paperServiceMock.findPageOfIdsByFilter(any(), any()) }
         verify { paperServiceMock.findByNumber(number, LC) }
-        verify(exactly = 0) { pubmedImporterMock.persistPubmedArticlesFromXml(any()) }
     }
 
     companion object {
