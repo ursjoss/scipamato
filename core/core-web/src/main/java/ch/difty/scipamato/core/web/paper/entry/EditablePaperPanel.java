@@ -12,7 +12,6 @@ import java.util.function.ObjIntConsumer;
 
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
-import de.agilecoders.wicket.core.markup.html.bootstrap.image.GlyphIconType;
 import de.agilecoders.wicket.core.markup.html.bootstrap.image.IconType;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.fileUpload.DropZoneFileUpload;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect;
@@ -594,10 +593,10 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
                 super.onConfigure();
                 setVisible(searchOrderId != null && !isViewMode());
                 if (showingExclusions) {
-                    setIconType(GlyphIconType.okcircle);
+                    setIconType(FontAwesome5IconType.check_circle_s);
                     add(new AttributeModifier(TITLE_ATTR, new StringResourceModel("button.exclude.title.reinclude", this, null).getString()));
                 } else {
-                    setIconType(GlyphIconType.bancircle);
+                    setIconType(FontAwesome5IconType.minus_circle_s);
                     add(new AttributeModifier(TITLE_ATTR, new StringResourceModel("button.exclude.title.exclude", this, null).getString()));
                 }
             }

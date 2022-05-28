@@ -29,7 +29,6 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxLink
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.ButtonBehavior
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons
-import de.agilecoders.wicket.core.markup.html.bootstrap.image.GlyphIconType
 import de.agilecoders.wicket.core.markup.html.bootstrap.image.IconType
 import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.BootstrapTabbedPanel
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.fileUpload.DropZoneFileUpload
@@ -139,11 +138,11 @@ abstract class PaperPanel<T>(
         queueAuthorComplex(PaperFields.AUTHORS.fieldName, PaperFields.FIRST_AUTHOR.fieldName, PaperFields.FIRST_AUTHOR_OVERRIDDEN.fieldName)
         title = TextArea(PaperFields.TITLE.fieldName)
         val pm = paperIdManager
-        queue(newNavigationButton("previous", GlyphIconType.stepbackward, { pm.hasPrevious() }) {
+        queue(newNavigationButton("previous", FontAwesome5IconType.step_backward_s, { pm.hasPrevious() }) {
             pm.previous()
             pm.itemWithFocus
         })
-        queue(newNavigationButton("next", GlyphIconType.stepforward, { pm.hasNext() }) {
+        queue(newNavigationButton("next", FontAwesome5IconType.step_forward_s, { pm.hasNext() }) {
             pm.next()
             pm.itemWithFocus
         })
@@ -297,7 +296,7 @@ abstract class PaperPanel<T>(
     }
 
     /*
-     * The authors field determines the firstAuthor field, but only unless overridden.
+     * The author's field determines the firstAuthor field, but only unless overridden.
      * Changes in the author field (if not overridden) or in the override checkbox
      * can have an effect on the firstAuthor field (enabled, content)
      */
