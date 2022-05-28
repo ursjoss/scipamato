@@ -21,7 +21,6 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButt
 import de.agilecoders.wicket.core.markup.html.bootstrap.table.TableBehavior
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelect
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelectConfig
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome5CDNCSSReference
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome5IconTypeBuilder
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable
 import org.apache.wicket.ajax.AjaxRequestTarget
@@ -32,8 +31,6 @@ import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn
 import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn
 import org.apache.wicket.extensions.markup.html.repeater.data.table.filter.FilterForm
-import org.apache.wicket.markup.head.CssHeaderItem
-import org.apache.wicket.markup.head.IHeaderResponse
 import org.apache.wicket.markup.html.basic.Label
 import org.apache.wicket.markup.html.form.ChoiceRenderer
 import org.apache.wicket.markup.html.form.EnumChoiceRenderer
@@ -64,11 +61,6 @@ class NewsletterListPage(parameters: PageParameters?) : BasePage<Void>(parameter
 
     private var results: DataTable<Newsletter, String>? = null
     private var newNewsletterButton: BootstrapAjaxButton? = null
-
-    override fun renderHead(response: IHeaderResponse) {
-        super.renderHead(response)
-        response.render(CssHeaderItem.forReference(FontAwesome5CDNCSSReference.instance()))
-    }
 
     override fun onInitialize() {
         super.onInitialize()

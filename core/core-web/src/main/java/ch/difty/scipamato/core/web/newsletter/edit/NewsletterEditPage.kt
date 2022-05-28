@@ -18,12 +18,9 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.LocalDateTextField
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelect
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome5CDNCSSReference
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation
 import org.apache.wicket.bean.validation.PropertyValidator
 import org.apache.wicket.event.IEvent
-import org.apache.wicket.markup.head.CssHeaderItem
-import org.apache.wicket.markup.head.IHeaderResponse
 import org.apache.wicket.markup.html.basic.Label
 import org.apache.wicket.markup.html.form.EnumChoiceRenderer
 import org.apache.wicket.markup.html.form.Form
@@ -77,11 +74,6 @@ class NewsletterEditPage(model: IModel<Newsletter>?) : BasePage<Newsletter>(getM
      */
     private val relevantNewsletterId: Int?
         get() = if (modelObject!!.id != null) modelObject!!.id else -1
-
-    override fun renderHead(response: IHeaderResponse) {
-        super.renderHead(response)
-        response.render(CssHeaderItem.forReference(FontAwesome5CDNCSSReference.instance()))
-    }
 
     override fun onEvent(event: IEvent<*>) {
         super.onEvent(event)
