@@ -6,11 +6,11 @@ import ch.difty.scipamato.common.web.ScipamatoWebSessionFacade
 import ch.difty.scipamato.common.web.TestHomePage
 import ch.difty.scipamato.common.web.pages.login.TestLoginPage
 import com.ninjasquad.springmockk.MockkBean
-import de.agilecoders.wicket.core.markup.html.bootstrap.image.GlyphIconType
 import de.agilecoders.wicket.core.markup.html.bootstrap.image.Icon
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarButton
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarExternalLink
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome5IconType
 import io.mockk.every
 import io.mockk.verify
 import org.amshove.kluent.shouldBeEmpty
@@ -83,7 +83,7 @@ internal class AbstractMenuBuilderTest {
             TestHomePage(),
             TestHomePage::class.java,
             "test",
-            GlyphIconType.volumedown,
+            FontAwesome5IconType.volume_down_s,
             Navbar.ComponentPosition.LEFT
         )
 
@@ -94,7 +94,7 @@ internal class AbstractMenuBuilderTest {
 
         theLink.defaultModelObjectAsString shouldBeEqualTo ""
         theLink.get("label").defaultModelObject shouldBeEqualTo "foobar"
-        (theLink.get("icon") as Icon).type shouldBeEqualTo GlyphIconType.volumedown
+        (theLink.get("icon") as Icon).type shouldBeEqualTo FontAwesome5IconType.volume_down_s
     }
 
     private fun getExternalLinksFrom(navbar: Navbar): List<NavbarExternalLink> {
@@ -114,7 +114,7 @@ internal class AbstractMenuBuilderTest {
             navbar,
             "https://test.com",
             "mylabel",
-            GlyphIconType.adjust,
+            FontAwesome5IconType.adjust_s,
             Navbar.ComponentPosition.LEFT
         )
 
@@ -125,7 +125,7 @@ internal class AbstractMenuBuilderTest {
 
         theLink.defaultModelObjectAsString shouldBeEqualTo "https://test.com"
         theLink.get("label").defaultModelObject shouldBeEqualTo "mylabel"
-        (theLink.get("icon") as Icon).type shouldBeEqualTo GlyphIconType.adjust
+        (theLink.get("icon") as Icon).type shouldBeEqualTo FontAwesome5IconType.adjust_s
     }
 
     @Test
@@ -155,7 +155,7 @@ internal class AbstractMenuBuilderTest {
     @Test
     fun addingMenu() {
         val action = { _: List<AbstractLink> -> called = true }
-        menuBuilder.newMenu(navbar, TestLoginPage(PageParameters()), "foo", GlyphIconType.adjust, action)
+        menuBuilder.newMenu(navbar, TestLoginPage(PageParameters()), "foo", FontAwesome5IconType.adjust_s, action)
         called.shouldBeTrue()
     }
 
@@ -200,12 +200,12 @@ internal class AbstractMenuBuilderTest {
         val links = mutableListOf<AbstractLink>()
         links.shouldBeEmpty()
 
-        menuBuilder.addEntryToMenu("label.link", TestHomePage(), TestHomePage::class.java, GlyphIconType.adjust, links)
+        menuBuilder.addEntryToMenu("label.link", TestHomePage(), TestHomePage::class.java, FontAwesome5IconType.adjust_s, links)
 
         links shouldHaveSize 1
         val link = links[0]
         link.get("label").defaultModelObject shouldBeEqualTo "somelink"
-        (link.get("icon") as Icon).type shouldBeEqualTo GlyphIconType.adjust
+        (link.get("icon") as Icon).type shouldBeEqualTo FontAwesome5IconType.adjust_s
     }
 
     @Test

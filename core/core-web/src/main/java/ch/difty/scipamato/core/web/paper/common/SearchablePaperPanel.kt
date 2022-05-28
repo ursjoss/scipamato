@@ -9,7 +9,7 @@ import ch.difty.scipamato.core.web.paper.jasper.summary.PaperSummaryDataSource
 import ch.difty.scipamato.core.web.paper.jasper.summaryshort.PaperSummaryShortDataSource
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons
-import de.agilecoders.wicket.core.markup.html.bootstrap.image.GlyphIconType
+import de.agilecoders.wicket.core.markup.html.bootstrap.image.IconType
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.fileUpload.DropZoneFileUpload
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable
 import org.apache.commons.fileupload.FileItem
@@ -39,7 +39,7 @@ abstract class SearchablePaperPanel protected constructor(
     override fun hasPubMedId(): Boolean = false
 
     override fun newNavigationButton(
-        id: String, icon: GlyphIconType,
+        id: String, icon: IconType,
         isEnabled: SerializableSupplier<Boolean>, idSupplier: SerializableSupplier<Long?>?,
     ): BootstrapButton = BootstrapButton(id, Model.of(""), Buttons.Type.Default).apply {
         isVisible = false

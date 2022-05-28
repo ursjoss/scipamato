@@ -10,7 +10,8 @@ import ch.difty.scipamato.publ.web.common.BasePage
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapExternalLink
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons
-import de.agilecoders.wicket.core.markup.html.bootstrap.image.GlyphIconType
+import de.agilecoders.wicket.core.markup.html.bootstrap.image.IconType
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome5IconType
 import org.apache.wicket.AttributeModifier
 import org.apache.wicket.PageReference
 import org.apache.wicket.markup.html.basic.Label
@@ -74,11 +75,11 @@ class PublicPaperDetailPage : BasePage<PublicPaper> {
 
         queue(Form<Void>("form"))
 
-        queue(newNavigationButton("previous", GlyphIconType.stepbackward, paperIdManager::hasPrevious) {
+        queue(newNavigationButton("previous", FontAwesome5IconType.step_backward_s, paperIdManager::hasPrevious) {
             paperIdManager.previous()
             paperIdManager.itemWithFocus
         })
-        queue(newNavigationButton("next", GlyphIconType.stepforward, paperIdManager::hasNext) {
+        queue(newNavigationButton("next", FontAwesome5IconType.step_forward_s, paperIdManager::hasNext) {
             paperIdManager.next()
             paperIdManager.itemWithFocus
         })
@@ -105,7 +106,7 @@ class PublicPaperDetailPage : BasePage<PublicPaper> {
 
     private fun newNavigationButton(
         id: String,
-        icon: GlyphIconType,
+        icon: IconType,
         getEnabled: () -> Boolean,
         getId: () -> Long?,
     ) = object : BootstrapButton(id, Model.of(""), Buttons.Type.Default) {

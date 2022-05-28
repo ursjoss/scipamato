@@ -2,14 +2,11 @@ package ch.difty.scipamato.core.web.paper.entry;
 
 import static ch.difty.scipamato.core.web.CorePageParameters.*;
 
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome5CDNCSSReference;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.wicket.PageReference;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.event.IEvent;
-import org.apache.wicket.markup.head.CssHeaderItem;
-import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -133,8 +130,8 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
      *     excluded from it. If true, the current paper has already been
      *     excluded from the search order. You can re-include it.
      */
-    public PaperEntryPage(@Nullable IModel<Paper> paperModel, @Nullable PageReference callingPage,
-        @Nullable Long searchOrderId, boolean showingExclusions, @Nullable Model<Integer> tabIndexModel) {
+    public PaperEntryPage(@Nullable IModel<Paper> paperModel, @Nullable PageReference callingPage, @Nullable Long searchOrderId,
+        boolean showingExclusions, @Nullable Model<Integer> tabIndexModel) {
         super(paperModel);
         this.callingPage = callingPage;
         this.searchOrderId = searchOrderId;
@@ -195,12 +192,6 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
         return Model.of(sv.isNull() ? 0 : sv.toInt(0));
     }
 
-    @Override
-    public void renderHead(@NotNull final IHeaderResponse response) {
-        super.renderHead(response);
-        response.render(CssHeaderItem.forReference(FontAwesome5CDNCSSReference.instance()));
-    }
-
     /**
      * Sets the n.a. values so the paper could be saved or filled with PubMed information
      */
@@ -222,8 +213,7 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
 
     @Override
     protected void implSpecificOnInitialize() {
-        contentPanel = new EditablePaperPanel("contentPanel", getModel(), callingPage, searchOrderId, showingExclusions,
-            mode, tabIndexModel) {
+        contentPanel = new EditablePaperPanel("contentPanel", getModel(), callingPage, searchOrderId, showingExclusions, mode, tabIndexModel) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -233,10 +223,8 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
 
             @NotNull
             @Override
-            protected PaperEntryPage getResponsePage(@NotNull Paper p, @Nullable Long searchOrderId,
-                boolean showingExclusions) {
-                return new PaperEntryPage(Model.of(p), getCallingPage(), searchOrderId, showingExclusions,
-                    tabIndexModel);
+            protected PaperEntryPage getResponsePage(@NotNull Paper p, @Nullable Long searchOrderId, boolean showingExclusions) {
+                return new PaperEntryPage(Model.of(p), getCallingPage(), searchOrderId, showingExclusions, tabIndexModel);
             }
         };
         contentPanel.setOutputMarkupId(true);
@@ -266,8 +254,7 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
                 }
             }
         } catch (OptimisticLockingException ole) {
-            @SuppressWarnings("SpellCheckingInspection") final String msg = new StringResourceModel(
-                "save.optimisticlockexception.hint", this, null)
+            @SuppressWarnings("SpellCheckingInspection") final String msg = new StringResourceModel("save.optimisticlockexception.hint", this, null)
                 .setParameters(ole.getTableName(), getNullSafeId())
                 .getString();
             log.error(msg);

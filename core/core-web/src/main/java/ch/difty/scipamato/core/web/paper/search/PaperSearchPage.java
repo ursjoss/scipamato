@@ -7,13 +7,10 @@ import static ch.difty.scipamato.core.web.CorePageParameters.*;
 import java.util.Objects;
 import java.util.Optional;
 
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome5CDNCSSReference;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.event.IEvent;
-import org.apache.wicket.markup.head.CssHeaderItem;
-import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -161,12 +158,6 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
         so.setName(null);
         so.setOwner(getActiveUser().getId());
         return so;
-    }
-
-    @Override
-    public void renderHead(@NotNull final IHeaderResponse response) {
-        super.renderHead(response);
-        response.render(CssHeaderItem.forReference(FontAwesome5CDNCSSReference.instance()));
     }
 
     @Override
