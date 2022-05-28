@@ -6,7 +6,7 @@ import ch.difty.scipamato.common.web.AbstractPage
 import ch.difty.scipamato.common.web.LABEL_RESOURCE_TAG
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons
-import de.agilecoders.wicket.core.markup.html.bootstrap.button.LoadingBehavior
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.spinner.SpinnerBehavior
 import lombok.extern.slf4j.Slf4j
 import org.apache.wicket.markup.html.basic.Label
 import org.apache.wicket.markup.html.form.PasswordTextField
@@ -70,7 +70,7 @@ abstract class AbstractLoginPage<R : AbstractPage<*>>(
         StringResourceModel("$id.value", this, null),
         Buttons.Type.Default
     ).apply {
-        add(LoadingBehavior(StringResourceModel("$id.loading", this, null)))
+        add(SpinnerBehavior())
     }
 
     companion object {
