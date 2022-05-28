@@ -20,7 +20,6 @@ import ch.difty.scipamato.core.persistence.PaperSlimService
 import ch.difty.scipamato.core.persistence.SearchOrderService
 import ch.difty.scipamato.core.persistence.UserService
 import ch.difty.scipamato.core.pubmed.PubmedArticleService
-import ch.difty.scipamato.core.pubmed.PubmedImporter
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.junit5.MockKExtension
 import org.junit.jupiter.api.extension.ExtendWith
@@ -56,9 +55,6 @@ abstract class AbstractWicketTest {
 
     @MockkBean
     protected lateinit var itemNavigatorMock: ItemNavigator<Long>
-
-    @MockkBean
-    protected lateinit var pubmedImporterMock: PubmedImporter
 
     @MockkBean
     protected lateinit var pubmedArticleServiceMock: PubmedArticleService

@@ -3,11 +3,9 @@ package ch.difty.scipamato.core.web.paper.list
 import ch.difty.scipamato.core.auth.Roles
 import ch.difty.scipamato.core.web.security.TestUserDetailsService
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton
-import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxLink
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar
 import io.mockk.every
 import io.mockk.verify
-import org.apache.wicket.extensions.ajax.markup.html.modal.ModalDialog
 import org.apache.wicket.markup.html.internal.HtmlHeaderContainer
 
 @Suppress("SpellCheckingInspection")
@@ -24,7 +22,6 @@ internal class PaperListPageInEditModeAsUserTest : PaperListPageTest() {
 
     override fun assertSpecificComponents() {
         assertSearchForm("searchForm")
-        assertPasteModal("xmlPasteModal")
         assertResultPanel("resultPanel")
         assertMenuEntries()
         verify(exactly = 2) { paperSlimServiceMock.countByFilter(any()) }
@@ -33,13 +30,6 @@ internal class PaperListPageInEditModeAsUserTest : PaperListPageTest() {
 
     override fun assertSpecificSearchFormComponents(b: String?) {
         tester.assertComponent("$b:newPaper", BootstrapAjaxButton::class.java)
-        tester.assertComponent("$b:showXmlPasteModalLink", BootstrapAjaxLink::class.java)
-    }
-
-    @Suppress("SameParameterValue")
-    private fun assertPasteModal(id: String) {
-        tester.assertComponent(id, ModalDialog::class.java)
-        tester.assertContainsNot("$id:content")
     }
 
     private fun assertMenuEntries() {

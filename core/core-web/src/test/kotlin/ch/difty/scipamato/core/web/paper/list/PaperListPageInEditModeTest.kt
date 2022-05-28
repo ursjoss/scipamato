@@ -1,21 +1,15 @@
 package ch.difty.scipamato.core.web.paper.list
 
-import ch.difty.scipamato.common.AjaxRequestTargetSpy
 import ch.difty.scipamato.core.auth.Roles
-import ch.difty.scipamato.core.persistence.DefaultServiceResult
-import ch.difty.scipamato.core.persistence.ServiceResult
 import ch.difty.scipamato.core.web.paper.entry.PaperEntryPage
 import ch.difty.scipamato.core.web.security.TestUserDetailsService
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton
-import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxLink
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar
 import io.mockk.clearMocks
 import io.mockk.every
-import io.mockk.mockk
 import io.mockk.verify
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalDialog
 import org.apache.wicket.markup.html.internal.HtmlHeaderContainer
-import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 
 @Suppress("SpellCheckingInspection")
@@ -31,7 +25,6 @@ internal class PaperListPageInEditModeTest : PaperListPageTest() {
 
     override fun assertSpecificComponents() {
         assertSearchForm("searchForm")
-        assertPasteModal("xmlPasteModal")
         assertResultPanel("resultPanel")
         assertMenuEntries()
         verify(exactly = 2) { paperSlimServiceMock.countByFilter(any()) }
@@ -40,14 +33,6 @@ internal class PaperListPageInEditModeTest : PaperListPageTest() {
 
     override fun assertSpecificSearchFormComponents(b: String?) {
         tester.assertComponent("$b:newPaper", BootstrapAjaxButton::class.java)
-        tester.assertComponent("$b:showXmlPasteModalLink", BootstrapAjaxLink::class.java)
-    }
-
-    @Suppress("SameParameterValue")
-    private fun assertPasteModal(id: String) {
-        tester.assertComponent(id, ModalDialog::class.java)
-        tester.assertContainsNot("$id:content")
-        tester.assertContainsNot("Paste XML exported from PubMed")
     }
 
     private fun assertMenuEntries() {
@@ -105,57 +90,4 @@ internal class PaperListPageInEditModeTest : PaperListPageTest() {
         // from PaperEntryPage
         verify(exactly = 5) { paperServiceMock.findPageOfIdsByFilter(any(), any()) }
     }
-
-    @Test
-    fun clickingOnShowXmlPastePanelButton_opensModalModalDialog() {
-        tester.startPage(pageClass)
-        tester.debugComponentTrees()
-        var b = "searchForm"
-        tester.executeAjaxEvent("$b:showXmlPasteModalLink", "click")
-        b = "xmlPasteModal"
-        tester.assertComponent(b, ModalDialog::class.java)
-        tester.assertContains("Paste XML exported from PubMed")
-        verify(exactly = 3) { paperSlimServiceMock.countByFilter(any()) }
-        verify(exactly = 4) { paperServiceMock.findPageOfIdsByFilter(any(), any()) }
-    }
-
-    @Test
-    fun onXmlPasteModalPanelClose_withNullContent_doesNotPersists() {
-        makePage().onXmlPasteModalPanelClose(null, mockk())
-        verify(exactly = 0) { pubmedImporterMock.persistPubmedArticlesFromXml(any()) }
-        verify { paperSlimServiceMock.countByFilter(any()) }
-        verify(exactly = 4) { paperServiceMock.findPageOfIdsByFilter(any(), any()) }
-    }
-
-    @Test
-    fun onXmlPasteModalPanelClose_withBlankContent_doesNotPersists() {
-        val content = ""
-        makePage().onXmlPasteModalPanelClose(content, mockk())
-        verify(exactly = 0) { pubmedImporterMock.persistPubmedArticlesFromXml(any()) }
-        verify { paperSlimServiceMock.countByFilter(any()) }
-        verify(exactly = 4) { paperServiceMock.findPageOfIdsByFilter(any(), any()) }
-    }
-
-    @Test
-    @Disabled // TODO check and reactivate
-    fun onXmlPasteModalPanelClose_withContent_persistsArticlesAndUpdatesNavigateable() {
-        val content = "content"
-        every { pubmedImporterMock.persistPubmedArticlesFromXml(content) } returns makeServiceResult()
-        val targetDummy = AjaxRequestTargetSpy()
-        makePage().apply {
-            onXmlPasteModalPanelClose("content", targetDummy)
-        }
-        verify { pubmedImporterMock.persistPubmedArticlesFromXml(content) }
-        verify { paperSlimServiceMock.countByFilter(any()) }
-        // The third call to findPageOfIds... is to update the Navigateable, the fourth
-        // one because of the page redirect
-        verify(exactly = 5) { paperServiceMock.findPageOfIdsByFilter(any(), any()) }
-    }
-
-    private fun makeServiceResult(): ServiceResult =
-        DefaultServiceResult().apply {
-            addInfoMessage("info")
-            addWarnMessage("warn")
-            addErrorMessage("error")
-        }
 }
