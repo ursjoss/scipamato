@@ -71,7 +71,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 {url-cl}1.7.11$$...$$main[Full Changelog]
 
 .Added
-- Bumped spring-boot, wicket-jquery-ui,
+- Bumped spring-boot, wicket-jquery-ui, flyway,
   lombok-gradle-plugin
 
 ////
