@@ -5,51 +5,56 @@ import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointR
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.authentication.AuthenticationManager
+import org.springframework.security.authentication.ProviderManager
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
+import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer
 import org.springframework.security.core.userdetails.User
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
-import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.provisioning.InMemoryUserDetailsManager
+import org.springframework.security.web.SecurityFilterChain
 
 @Configuration
-open class WicketWebSecurityConfig(
-    private val properties: ScipamatoPublicProperties,
-) : WebSecurityConfigurerAdapter() {
+open class WicketSecurityConfiguration(
+    private val properties: ScipamatoPublicProperties
+) {
 
-    @Bean(name = ["authenticationManager"])
-    @Throws(Exception::class)
-    override fun authenticationManagerBean(): AuthenticationManager = super.authenticationManagerBean()
-
-    @Throws(Exception::class)
-    override fun configure(http: HttpSecurity) {
+    @Bean
+    open fun filterChain(http: HttpSecurity): SecurityFilterChain =
         http.csrf().disable()
             .headers().frameOptions().disable()
             .and()
-            .authorizeRequests { r ->
-                r.requestMatchers(EndpointRequest.to("health", "info")).permitAll()
+            .authorizeRequests {
+                it.requestMatchers(EndpointRequest.to("health", "info")).permitAll()
                     .antMatchers("/actuator/").hasRole(ADMIN_ROLE)
                     .requestMatchers(EndpointRequest.toAnyEndpoint()).hasRole(ADMIN_ROLE)
                     .antMatchers("/**").permitAll()
             }
-            .logout { logout -> logout.permitAll() }
-    }
+            .logout(LogoutConfigurer<HttpSecurity>::permitAll)
+            .build()
 
     @Bean
-    public override fun userDetailsService(): UserDetailsService =
+    open fun userDetailsService(): UserDetailsService =
         InMemoryUserDetailsManager().apply {
             createUser(User
                 .withUsername(properties.managementUserName)
-                .password(passwordEncoder().encode(properties.managementUserPassword))
+                .password(BCryptPasswordEncoder().encode(properties.managementUserPassword))
                 .roles(ADMIN_ROLE)
                 .build())
         }
 
+    @Bean
+    @Throws(Exception::class)
+    open fun authenticationManager(): AuthenticationManager {
+        val provider = DaoAuthenticationProvider().apply {
+            setPasswordEncoder(BCryptPasswordEncoder())
+            setUserDetailsService(userDetailsService())
+        }
+        return ProviderManager(provider)
+    }
+
     companion object {
         private const val ADMIN_ROLE = "ADMIN"
-
-        @Bean
-        fun passwordEncoder(): PasswordEncoder = BCryptPasswordEncoder()
     }
 }
