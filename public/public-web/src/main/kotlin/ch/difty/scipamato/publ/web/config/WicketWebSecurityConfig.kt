@@ -27,13 +27,13 @@ open class WicketWebSecurityConfig(
         http.csrf().disable()
             .headers().frameOptions().disable()
             .and()
-            .authorizeRequests()
-            .requestMatchers(EndpointRequest.to("health", "info")).permitAll()
-            .antMatchers("/actuator/").hasRole(ADMIN_ROLE)
-            .requestMatchers(EndpointRequest.toAnyEndpoint()).hasRole(ADMIN_ROLE)
-            .antMatchers("/**").permitAll()
-            .and()
-            .logout().permitAll()
+            .authorizeRequests { r ->
+                r.requestMatchers(EndpointRequest.to("health", "info")).permitAll()
+                    .antMatchers("/actuator/").hasRole(ADMIN_ROLE)
+                    .requestMatchers(EndpointRequest.toAnyEndpoint()).hasRole(ADMIN_ROLE)
+                    .antMatchers("/**").permitAll()
+            }
+            .logout { logout -> logout.permitAll() }
     }
 
     @Bean

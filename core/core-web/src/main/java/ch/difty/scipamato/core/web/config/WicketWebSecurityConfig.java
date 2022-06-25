@@ -8,6 +8,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -46,14 +47,14 @@ public class WicketWebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(@NotNull HttpSecurity http) throws Exception {
         // @formatter:off
-        http.csrf().disable()
-            .authorizeRequests()
+        http
+            .csrf().disable()
+            .authorizeRequests(authorizeRequests -> authorizeRequests
                 .requestMatchers(EndpointRequest.to("health", "info")).permitAll()
                 .antMatchers("/actuator/").hasRole(ADMIN_ROLE)
-                    .requestMatchers(EndpointRequest.toAnyEndpoint()).hasRole(ADMIN_ROLE)
-                .antMatchers("/**").permitAll()
-            .and()
-                .logout().permitAll();
+                .requestMatchers(EndpointRequest.toAnyEndpoint()).hasRole(ADMIN_ROLE)
+                .antMatchers("/**").permitAll())
+            .logout(LogoutConfigurer::permitAll);
         // @formatter:on
     }
 }
