@@ -72,6 +72,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Added
 - Bumped spring-boot, wicket-jquery-ui, flyway, kotlin, kotlinx-coroutines, jOOQ,
+  spring-boot-admin-starter-client,
   lombok-gradle-plugin
 
 ////
