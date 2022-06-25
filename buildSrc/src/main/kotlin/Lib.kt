@@ -7,25 +7,25 @@ import java.util.Properties
 object Lib {
 
     //region:dependencyVersions
-    private const val kotlinVersion = "1.6.21"
-    private const val coroutinesVersion = "1.6.1"
+    private const val kotlinVersion = "1.7.0"
+    private const val coroutinesVersion = "1.6.3"
 
-    private const val springBootVersion = "2.6.8"
-    private const val springBootAdminVersion = "2.6.7"
+    private const val springBootVersion = "2.6.9"
+    private const val springBootAdminVersion = "2.7.1"
     const val springCloudVersion = "2021.0.0"
-    private const val springCloudStarterVersion = "3.1.2"
+    private const val springCloudStarterVersion = "3.1.3"
 
     private const val wicketSpringBootStarterVersion = "3.1.6"
     private const val wicketVersion = "9.10.0"
     private const val wicketstuffVersion = "9.10.0"
-    private const val wicketJqueryUiVersion = "9.8.0"
+    private const val wicketJqueryUiVersion = "9.8.1"
     private const val wicketBootstrapVersion = "4.0.4"
     private const val jasperReportVersion = "6.19.1"
     private const val univocityParsersVersion = "2.9.1"
 
     private const val krisVersion = "0.3.3"
-    const val jooqVersion = "3.15.10"
-    const val flywayVersion = "8.5.11"
+    const val jooqVersion = "3.15.11"
+    const val flywayVersion = "8.5.13"
 
     private const val kotlinLoggingVersion = "2.1.23"
 
@@ -52,13 +52,13 @@ object Lib {
 
     //region:pluginVersions
     private const val springDependencyManagementPluginVersion = "1.0.11.RELEASE"
-    private const val lombokPluginVersion = "6.4.3"
+    private const val lombokPluginVersion = "6.5.0.2"
     private const val jooqModelatorPluginVersion = "3.9.0"
     private const val reckonPluginVersion = "0.16.1"
     private const val versionsPluginVersion = "0.42.0"
     private const val jaxbPluginVersion = "5.1.0"
     private const val testSetsPluginVersion = "4.0.0"
-    private const val sonarqubePluginVersion = "3.3"
+    private const val sonarqubePluginVersion = "3.4.0.2513"
     private const val detektPluginVersion = "1.20.0"
     private const val licensePluginVersion = "0.16.1"
     //endregion

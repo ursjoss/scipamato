@@ -31,7 +31,7 @@ internal class StringSearchTermEvaluatorIntegrationTest : SearchTermEvaluatorInt
     fun stringTests(): List<DynamicTest> = mapOf(
         "foo" to StringExp(
             tokenString = "(WORD foo)",
-            condition = """fn ilike ('%' || replace(
+            condition = """cast(fn as varchar) ilike ('%' || replace(
                                        |  replace(
                                        |    replace('foo', '!', '!!'),
                                        |    '%',
@@ -44,10 +44,10 @@ internal class StringSearchTermEvaluatorIntegrationTest : SearchTermEvaluatorInt
 
         "-foo" to StringExp(
             tokenString = "(NOTWORD foo)",
-            condition = """not (coalesce(
+            condition = """not (cast(coalesce(
                                       |  fn,
                                       |  ''
-                                      |) ilike ('%' || replace(
+                                      |) as varchar) ilike ('%' || replace(
                                       |  replace(
                                       |    replace('foo', '!', '!!'),
                                       |    '%',
@@ -61,67 +61,67 @@ internal class StringSearchTermEvaluatorIntegrationTest : SearchTermEvaluatorInt
         """-"foo"""" to StringExp("(NOTQUOTED foo)", "lower(cast(fn as varchar)) <> lower('foo')", EQUALS),
         """="foo"""" to StringExp("(QUOTED foo)", "lower(cast(fn as varchar)) = lower('foo')", EQUALS),
 
-        """*foo""" to StringExp("(OPENLEFT %foo)", "fn ilike '%foo'", LIKE),
+        """*foo""" to StringExp("(OPENLEFT %foo)", "cast(fn as varchar) ilike '%foo'", LIKE),
 
         """-*foo""" to StringExp(
             tokenString = "(NOTOPENLEFT %foo)",
-            condition = """coalesce(
+            condition = """cast(coalesce(
                                 |  fn,
                                 |  ''
-                                |) not ilike '%foo'""".trimMargin(),
+                                |) as varchar) not ilike '%foo'""".trimMargin(),
             type = LIKE),
-        """"*foo""""" to StringExp("(OPENLEFTQUOTED %foo)", "fn ilike '%foo'", LIKE),
+        """"*foo""""" to StringExp("(OPENLEFTQUOTED %foo)", "cast(fn as varchar) ilike '%foo'", LIKE),
 
         """-"*foo"""" to StringExp(
             tokenString = "(NOTOPENLEFTQUOTED %foo)",
-            condition = """coalesce(
+            condition = """cast(coalesce(
                                 |  fn,
                                 |  ''
-                                |) not ilike '%foo'""".trimMargin(),
+                                |) as varchar) not ilike '%foo'""".trimMargin(),
             type = LIKE),
 
         """*foo*""" to StringExp(
             tokenString = "(OPENLEFTRIGHT %foo%)",
-            condition = "fn ilike '%foo%'",
+            condition = "cast(fn as varchar) ilike '%foo%'",
             type = LIKE),
 
         """-*foo*""" to StringExp(
             tokenString = "(NOTOPENLEFTRIGHT %foo%)",
-            condition = """coalesce(
+            condition = """cast(coalesce(
                                     |  fn,
                                     |  ''
-                                    |) not ilike '%foo%'""".trimMargin(),
+                                    |) as varchar) not ilike '%foo%'""".trimMargin(),
             type = LIKE),
 
         """"*foo*"""" to StringExp(
             tokenString = "(OPENLEFTRIGHTQUOTED %foo%)",
-            condition = "fn ilike '%foo%'",
+            condition = "cast(fn as varchar) ilike '%foo%'",
             type = LIKE),
 
         """-"*foo*"""" to StringExp(
             tokenString = "(NOTOPENLEFTRIGHTQUOTED %foo%)",
-            condition = """coalesce(
+            condition = """cast(coalesce(
                                     |  fn,
                                     |  ''
-                                    |) not ilike '%foo%'""".trimMargin(),
+                                    |) as varchar) not ilike '%foo%'""".trimMargin(),
             type = LIKE),
 
-        """foo*""" to StringExp("(OPENRIGHT foo%)", "fn ilike 'foo%'", LIKE),
+        """foo*""" to StringExp("(OPENRIGHT foo%)", "cast(fn as varchar) ilike 'foo%'", LIKE),
 
         """-foo*"""" to StringExp(
             tokenString = "(NOTOPENRIGHT foo%)",
-            condition = """coalesce(
+            condition = """cast(coalesce(
                                     |  fn,
                                     |  ''
-                                    |) not ilike 'foo%'""".trimMargin(),
+                                    |) as varchar) not ilike 'foo%'""".trimMargin(),
             type = LIKE),
-        """"foo*"""" to StringExp("(OPENRIGHTQUOTED foo%)", "fn ilike 'foo%'", LIKE),
+        """"foo*"""" to StringExp("(OPENRIGHTQUOTED foo%)", "cast(fn as varchar) ilike 'foo%'", LIKE),
 
         """-"foo*"""" to StringExp("(NOTOPENRIGHTQUOTED foo%)",
-            """coalesce(
+            """cast(coalesce(
                     |  fn,
                     |  ''
-                    |) not ilike 'foo%'""".trimMargin(),
+                    |) as varchar) not ilike 'foo%'""".trimMargin(),
             LIKE
         ),
 

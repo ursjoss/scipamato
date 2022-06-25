@@ -107,7 +107,7 @@ internal class JooqPaperSlimBySearchOrderRepoTest {
             """(
                   |  (
                   |    publication_year between 2014 and 2015
-                  |    and authors ilike ('%' || replace(
+                  |    and cast(authors as varchar) ilike ('%' || replace(
                   |      replace(
                   |        replace('turner', '!', '!!'),
                   |        '%',
@@ -148,7 +148,7 @@ internal class JooqPaperSlimBySearchOrderRepoTest {
             """(
                   |  (
                   |    publication_year between 2014 and 2015
-                  |    and authors ilike ('%' || replace(
+                  |    and cast(authors as varchar) ilike ('%' || replace(
                   |      replace(
                   |        replace('turner', '!', '!!'),
                   |        '%',
@@ -208,7 +208,7 @@ internal class JooqPaperSlimBySearchOrderRepoTest {
                   |  (
                   |    (
                   |      publication_year between 2014 and 2015
-                  |      and authors ilike ('%' || replace(
+                  |      and cast(authors as varchar) ilike ('%' || replace(
                   |        replace(
                   |          replace('turner', '!', '!!'),
                   |          '%',
@@ -265,7 +265,7 @@ internal class JooqPaperSlimBySearchOrderRepoTest {
                   |  (
                   |    (
                   |      publication_year between 2014 and 2015
-                  |      and authors ilike ('%' || replace(
+                  |      and cast(authors as varchar) ilike ('%' || replace(
                   |        replace(
                   |          replace('turner', '!', '!!'),
                   |          '%',
@@ -337,7 +337,7 @@ internal class JooqPaperSlimBySearchOrderRepoTest {
                  |  where (
                  |    "public"."paper_newsletter"."paper_id" = "public"."paper"."id"
                  |    and "public"."paper_newsletter"."newsletter_topic_id" = 1
-                 |    and "paper_newsletter"."headline" ilike ('%' || replace(
+                 |    and cast("paper_newsletter"."headline" as varchar) ilike ('%' || replace(
                  |      replace(
                  |        replace('hl', '!', '!!'),
                  |        '%',
@@ -389,7 +389,7 @@ internal class JooqPaperSlimBySearchOrderRepoTest {
                   |      on "public"."paper_newsletter"."newsletter_id" = "public"."newsletter"."id"
                   |  where (
                   |    "public"."paper_newsletter"."paper_id" = "public"."paper"."id"
-                  |    and "paper_newsletter"."headline" ilike ('%' || replace(
+                  |    and cast("paper_newsletter"."headline" as varchar) ilike ('%' || replace(
                   |      replace(
                   |        replace('hl', '!', '!!'),
                   |        '%',
@@ -419,7 +419,7 @@ internal class JooqPaperSlimBySearchOrderRepoTest {
                   |      on "public"."paper_newsletter"."newsletter_id" = "public"."newsletter"."id"
                   |  where (
                   |    "public"."paper_newsletter"."paper_id" = "public"."paper"."id"
-                  |    and "newsletter"."issue" ilike ('%' || replace(
+                  |    and cast("newsletter"."issue" as varchar) ilike ('%' || replace(
                   |      replace(
                   |        replace('i', '!', '!!'),
                   |        '%',
@@ -526,10 +526,10 @@ internal class JooqPaperSlimBySearchOrderRepoTest {
                |      on "public"."paper_newsletter"."newsletter_id" = "public"."newsletter"."id"
                |  where (
                |    "public"."paper_newsletter"."paper_id" = "public"."paper"."id"
-               |    and not (coalesce(
+               |    and not (cast(coalesce(
                |      "newsletter"."issue",
                |      ''
-               |    ) ilike ('%' || replace(
+               |    ) as varchar) ilike ('%' || replace(
                |      replace(
                |        replace('foo', '!', '!!'),
                |        '%',
@@ -563,7 +563,7 @@ internal class JooqPaperSlimBySearchOrderRepoTest {
                   |        on "public"."paper_newsletter"."newsletter_id" = "public"."newsletter"."id"
                   |    where (
                   |      "public"."paper_newsletter"."paper_id" = "public"."paper"."id"
-                  |      and "paper_newsletter"."headline" ilike ('%' || replace(
+                  |      and cast("paper_newsletter"."headline" as varchar) ilike ('%' || replace(
                   |        replace(
                   |          replace('hl', '!', '!!'),
                   |          '%',
