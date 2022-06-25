@@ -70,11 +70,14 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 {url-cl}1.7.12$$...$$main[Full Changelog]
 
+////
 .Added
+////
+
+.Changed
+- Bumped spring-boot
 
 ////
-.Changed
-
 .Deprecated
 
 .Removed

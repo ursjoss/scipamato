@@ -10,7 +10,7 @@ object Lib {
     private const val kotlinVersion = "1.7.0"
     private const val coroutinesVersion = "1.6.3"
 
-    private const val springBootVersion = "2.6.9"
+    private const val springBootVersion = "2.7.1"
     private const val springBootAdminVersion = "2.7.1"
     const val springCloudVersion = "2021.0.0"
     private const val springCloudStarterVersion = "3.1.3"
@@ -197,7 +197,6 @@ fun DependencyHandler.testRuntimeOnly(dependencyNotation: Dep): Dependency? = ad
 fun DependencyHandler.integrationTestImplementation(dependencyNotation: Dep): Dependency? = add("integrationTestImplementation", dependencyNotation.id)
 fun DependencyHandler.integrationTestAnnotationProcessor(dependencyNotation: Dep): Dependency? = add("integrationTestAnnotationProcessor", dependencyNotation.id)
 fun DependencyHandler.integrationTestRuntimeOnly(dependencyNotation: Dep): Dependency? = add("integrationTestRuntimeOnly", dependencyNotation.id)
-fun DependencyHandler.jaxb(dependencyNotation: Dep): Dependency? = add("jaxb", dependencyNotation.id)
 fun DependencyHandler.jooqModelatorRuntime(dependencyNotation: Dep): Dependency? = add("jooqModelatorRuntime", dependencyNotation.id)
 
 fun File.asProperties() = Properties().apply {
