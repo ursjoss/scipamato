@@ -31,7 +31,7 @@ open class ScipamatoPublicApplication(
         super.init()
 
         // enable putting JavaScript into Footer Container
-        headerResponseDecorators.add { r: IHeaderResponse? -> JavaScriptFilteredIntoFooterHeaderResponse(r, AbstractPage.FOOTER_CONTAINER) }
+        headerResponseDecorators.add { JavaScriptFilteredIntoFooterHeaderResponse(it, AbstractPage.FOOTER_CONTAINER) }
         logSpecialConfiguration()
     }
 
