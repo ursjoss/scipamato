@@ -1,10 +1,20 @@
 <!DOCTYPE html>
 <html xmlns:wicket="https://wicket.apache.org">
 <body>
+    <head>
+        <link rel="stylesheet" href="style.css" type="text/css" media="screen" title="Stylesheet"/>
+    </head>
     <wicket:extend>
         <div class="container-fluid">
             <form wicket:id="synchForm" role="form">
-                <button wicket:id="synchronize"></button>
+                <div class="row">
+                    <div class="col-sm-2 col-md-2">
+                        <button wicket:id="synchronize"></button>
+                    </div>
+                    <div class="col-sm-10 col-md-10">
+                        <div wicket:id="syncResults"/>
+                    </div>
+                </div>
             </form>
         </div>
     </wicket:extend>

@@ -81,9 +81,12 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Deprecated
 
 .Removed
+////
 
 .Fixed
+- {url-issues}344[#344] Handle spring batch data synchronization from core to public asynchronously
 
+////
 .Security
 
 ////

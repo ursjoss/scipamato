@@ -1,19 +1,25 @@
 package ch.difty.scipamato.core.web.sync
 
+import ch.difty.scipamato.core.ScipamatoCoreApplication
+import ch.difty.scipamato.core.ScipamatoSession
+import ch.difty.scipamato.core.auth.Roles
 import ch.difty.scipamato.core.sync.launcher.SyncJobLauncher
-import ch.difty.scipamato.core.sync.launcher.SyncJobResult
-import ch.difty.scipamato.core.sync.launcher.SyncJobResult.MessageLevel
 import ch.difty.scipamato.core.web.common.BasePage
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons
 import de.agilecoders.wicket.core.markup.html.bootstrap.form.BootstrapForm
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.ladda.LaddaAjaxButton
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.ladda.LaddaBehavior
 import org.apache.wicket.ajax.AjaxRequestTarget
+import org.apache.wicket.ajax.AjaxSelfUpdatingTimerBehavior
+import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation
+import org.apache.wicket.event.Broadcast
+import org.apache.wicket.event.IEvent
 import org.apache.wicket.model.StringResourceModel
 import org.apache.wicket.request.mapper.parameter.PageParameters
 import org.apache.wicket.spring.injection.annot.SpringBean
+import java.time.Duration
 
+@Suppress("serial")
+@AuthorizeInstantiation(Roles.USER, Roles.ADMIN)
 class RefDataSyncPage(parameters: PageParameters) : BasePage<Void>(parameters) {
 
     @SpringBean
@@ -23,36 +29,38 @@ class RefDataSyncPage(parameters: PageParameters) : BasePage<Void>(parameters) {
         super.onInitialize()
         queue(BootstrapForm<Void>("synchForm"))
         queue(newButton("synchronize"))
+        queue(SyncResultListPanel("syncResults"))
     }
 
     private fun newButton(id: String): BootstrapAjaxButton {
         val labelModel = StringResourceModel("button.$id.label", this, null)
-        return object : LaddaAjaxButton(id, labelModel, Buttons.Type.Primary) {
+        return object : BootstrapAjaxButton(id, labelModel, Buttons.Type.Primary) {
             override fun onSubmit(target: AjaxRequestTarget) {
                 super.onSubmit(target)
-                jobLauncher.launch().let {
-                    reportJobResult(it)
-                    reportLogMessages(it)
-                }
-                target.add(feedbackPanel)
+                ScipamatoCoreApplication.getApplication().launchSyncTask(SyncBatchTask(jobLauncher))
+                page.send(page, Broadcast.DEPTH, BatchJobLaunchedEvent(target))
+                info(StringResourceModel("feedback.msg.started", this, null).string)
+                target.add(this)
             }
 
-            private fun reportJobResult(result: SyncJobResult) =
-                if (result.isSuccessful)
-                    info(StringResourceModel("feedback.msg.success", this, null).string)
-                else
-                    error(StringResourceModel("feedback.msg.failed", this, null).string)
-
-            private fun reportLogMessages(result: SyncJobResult) {
-                for ((message, messageLevel) in result.messages) {
-                    when (messageLevel) {
-                        MessageLevel.INFO -> info(message)
-                        MessageLevel.WARNING -> warn(message)
-                        else -> error(message)
-                    }
+            override fun onConfigure() {
+                super.onConfigure()
+                if (ScipamatoSession.get().syncJobResult.isRunning) {
+                    isEnabled = false
+                    label = StringResourceModel("button.$id-wip.label", this, null)
+                } else {
+                    isEnabled = true
+                    label = StringResourceModel("button.$id.label", this, null)
                 }
             }
-        }.setEffect(LaddaBehavior.Effect.ZOOM_IN)
+        }
+    }
+
+    override fun onEvent(event: IEvent<*>) {
+        (event.payload as? BatchJobLaunchedEvent)?.let { jobLaunchedEvent ->
+            this@RefDataSyncPage.add(AjaxSelfUpdatingTimerBehavior(Duration.ofSeconds(5)))
+            jobLaunchedEvent.target.add(this@RefDataSyncPage)
+        }
     }
 
     companion object {
