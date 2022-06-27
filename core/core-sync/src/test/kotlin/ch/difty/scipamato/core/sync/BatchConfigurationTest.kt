@@ -7,23 +7,21 @@ import io.mockk.verify
 import org.jooq.DSLContext
 import org.junit.jupiter.api.Test
 import org.springframework.boot.autoconfigure.batch.BatchProperties
-import org.springframework.core.io.ResourceLoader
 import javax.sql.DataSource
 
 internal class BatchConfigurationTest {
 
     private val batchProperties = mockk<BatchProperties> {
-        every { jdbc } returns mockk()
+        every { jdbc } returns mockk(relaxed = true)
     }
     private val dataSource = mockk<DataSource>()
-    private val resourceLoader = mockk<ResourceLoader>()
     private val jooqCore = mockk<DSLContext>()
 
     @Test
     fun instantiating_doesNotCallServicesYet() {
         val bc = BatchConfiguration(batchProperties)
-        bc.batchDataSourceInitializer(dataSource, resourceLoader)
+        bc.batchDataSourceInitializer(dataSource)
         verify { batchProperties.jdbc }
-        confirmVerified(batchProperties, dataSource, resourceLoader, jooqCore)
+        confirmVerified(batchProperties, dataSource, jooqCore)
     }
 }

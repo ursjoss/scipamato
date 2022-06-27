@@ -2,39 +2,39 @@ package ch.difty.scipamato.common.web
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
+import org.springframework.security.authentication.AuthenticationManager
+import org.springframework.security.authentication.ProviderManager
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
+import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.AuthorityUtils
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+import org.springframework.security.web.SecurityFilterChain
 
 @Configuration
-open class TestWicketWebSecurityConfig : WebSecurityConfigurerAdapter() {
+open class TestWicketSecurityConfiguration {
 
-    @Bean(name = ["authenticationManager"])
-    override fun authenticationManagerBean() = super.authenticationManagerBean()!!
-
-    override fun configure(auth: AuthenticationManagerBuilder) {
-        auth.userDetailsService(userDetailsService()).passwordEncoder(passwordEncoder())
+    @Bean
+    @Throws(Exception::class)
+    open fun authenticationManager(): AuthenticationManager {
+        val provider = DaoAuthenticationProvider().apply {
+            setPasswordEncoder(BCryptPasswordEncoder())
+            setUserDetailsService(TestUserDetailsService())
+        }
+        return ProviderManager(provider)
     }
 
     @Bean
-    public override fun userDetailsService() = TestUserDetailsService()
-
-    @Bean
-    open fun passwordEncoder() = BCryptPasswordEncoder()
-
-    override fun configure(http: HttpSecurity) {
-        http.csrf().disable()
-            .authorizeRequests()
-            .antMatchers("/**").permitAll()
-            .and()
-            .logout().permitAll()
-    }
+    open fun filterChain(http: HttpSecurity): SecurityFilterChain =
+        http
+            .csrf().disable()
+            .authorizeRequests { it.antMatchers("/**").permitAll() }
+            .logout(LogoutConfigurer<HttpSecurity>::permitAll)
+            .build()
 
     /**
      * This service has precedence over the productive implementations of
@@ -58,6 +58,7 @@ open class TestWicketWebSecurityConfig : WebSecurityConfigurerAdapter() {
         override fun loadUserByUsername(username: String): UserDetails =
             users[username] ?: throw UsernameNotFoundException("No user found with name $username")
 
+        @Suppress("LongParameterList")
         class User(
             private val accountNonExpired: Boolean = true,
             private val accountNonLocked: Boolean = true,
@@ -85,6 +86,7 @@ open class TestWicketWebSecurityConfig : WebSecurityConfigurerAdapter() {
             private const val ADMIN = "testadmin"
             private const val USER = "testuser"
             private const val VIEWER = "testviewer"
+
             // BCrypt encrypted password 'secretpw' as defined in {@link WicketTest}
             private const val PASSWORD = "$2a$08\$O/YZvh/jf1RWaZkpLPzfUeCkVczIaGLV0.vTKDCbxb0qn37qpj.Je"
         }

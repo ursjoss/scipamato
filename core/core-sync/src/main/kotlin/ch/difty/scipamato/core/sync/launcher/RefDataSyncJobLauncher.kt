@@ -71,7 +71,7 @@ open class RefDataSyncJobLauncher(
             log.info("Job finished ${if (result.isSuccessful) "successfully" else "with issues"}.")
         } catch (ex: Exception) {
             log.error("Job terminated.", ex)
-            result.setFailure("Unexpected exception of type " + ex.javaClass + ": " + ex.message)
+            result.setFailure("Unexpected exception of type ${ex.javaClass}: ${ex.message}")
         }
         return result
     }
