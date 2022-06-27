@@ -68,28 +68,34 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[unreleased]]
 == [unreleased]
 
-{url-cl}1.7.12$$...$$main[Full Changelog]
+{url-cl}1.8.0$$...$$main[Full Changelog]
+
+.Added
 
 ////
-.Added
+.Changed
+
+.Deprecated
+
+.Removed
+
+.Fixed
+
+.Security
+
 ////
+
+
+[[v1.8.0]]
+== {url-tree}1.8.0[1.8.0] -- 2022-06-27
+
+{url-cl}1.7.12$$...$$1.8.0[Full Changelog]
 
 .Changed
 - Bumped spring-boot
 
-////
-.Deprecated
-
-.Removed
-////
-
 .Fixed
 - {url-issues}344[#344] Handle spring batch data synchronization from core to public asynchronously
-
-////
-.Security
-
-////
 
 
 [[v1.7.12]]
