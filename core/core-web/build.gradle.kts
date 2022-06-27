@@ -36,7 +36,7 @@ tasks {
     apply<ApplicationPropertiesFilterPlugin>()
     withType<BootJar> {
         enabled = true
-        mainClass.set("ch.difty.scipamato.core.ScipamatoCoreApplication")
+        mainClass.set("ch.difty.scipamato.core.ScipamatoCoreApplicationKt")
         launchScript()
     }
 }

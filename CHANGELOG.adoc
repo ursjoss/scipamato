@@ -68,7 +68,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[unreleased]]
 == [unreleased]
 
-{url-cl}1.8.0$$...$$main[Full Changelog]
+{url-cl}1.8.1$$...$$main[Full Changelog]
 
 .Added
 
@@ -84,6 +84,15 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Security
 
 ////
+
+[[v1.8.1]]
+== {url-tree}1.8.1[1.8.1] -- 2022-06-27
+
+{url-cl}1.8.0$$...$$1.8.1[Full Changelog]
+
+.Fixed
+- Main class name for core application after conversion to kotlin
+
 
 
 [[v1.8.0]]
