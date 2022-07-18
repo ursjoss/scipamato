@@ -73,7 +73,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 
 .Changed
-- Bumped openfeign, spring-dependency-management,
+- Bumped openfeign, spring-dependency-management, jasperreports,
   detekt,
   gradle-wrapper, lombok-gradle-plugin
 
