@@ -74,7 +74,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Changed
 - Bumped kotlin, coroutines, wicket, wicketstuff, jOOQ, openfeign, spring-dependency-management, jasperreports,
-  detekt,
+  detekt, testcontainers,
   gradle-wrapper, lombok-gradle-plugin
 
 ////
