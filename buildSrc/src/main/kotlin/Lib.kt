@@ -7,29 +7,29 @@ import java.util.Properties
 object Lib {
 
     //region:dependencyVersions
-    private const val kotlinVersion = "1.7.0"
-    private const val coroutinesVersion = "1.6.3"
+    private const val kotlinVersion = "1.7.10"
+    private const val coroutinesVersion = "1.6.4"
 
-    private const val springBootVersion = "2.7.1"
+    private const val springBootVersion = "2.7.2"
     private const val springBootAdminVersion = "2.7.1"
     const val springCloudVersion = "2021.0.0"
     private const val springCloudStarterVersion = "3.1.3"
 
     private const val wicketSpringBootStarterVersion = "3.1.6"
-    private const val wicketVersion = "9.10.0"
-    private const val wicketstuffVersion = "9.10.0"
+    private const val wicketVersion = "9.11.0"
+    private const val wicketstuffVersion = "9.11.0"
     private const val wicketJqueryUiVersion = "9.8.1"
     private const val wicketBootstrapVersion = "4.0.4"
-    private const val jasperReportVersion = "6.19.1"
+    private const val jasperReportVersion = "6.20.0"
     private const val univocityParsersVersion = "2.9.1"
 
     private const val krisVersion = "0.3.3"
-    const val jooqVersion = "3.15.11"
+    const val jooqVersion = "3.15.12"
     const val flywayVersion = "8.5.13"
 
     private const val kotlinLoggingVersion = "2.1.23"
 
-    private const val openfeignVersion = "11.8"
+    private const val openfeignVersion = "11.9.1"
 
     private const val javaxElApiVersion = "3.0.1-b06"
     private const val javaxElVersion = "3.0.1-b12"
@@ -38,7 +38,7 @@ object Lib {
 
     private const val junit5Version = "5.8.2"
 
-    private const val testcontainersVersion = "1.17.2"
+    private const val testcontainersVersion = "1.17.3"
 
     private const val spekVersion = "2.0.18"
     private const val kwikVersion = "0.8.4"
@@ -51,15 +51,15 @@ object Lib {
     //endregion
 
     //region:pluginVersions
-    private const val springDependencyManagementPluginVersion = "1.0.11.RELEASE"
-    private const val lombokPluginVersion = "6.5.0.2"
+    private const val springDependencyManagementPluginVersion = "1.0.12.RELEASE"
+    private const val lombokPluginVersion = "6.5.0.3"
     private const val jooqModelatorPluginVersion = "3.9.0"
     private const val reckonPluginVersion = "0.16.1"
     private const val versionsPluginVersion = "0.42.0"
     private const val jaxbPluginVersion = "5.1.0"
     private const val testSetsPluginVersion = "4.0.0"
     private const val sonarqubePluginVersion = "3.4.0.2513"
-    private const val detektPluginVersion = "1.20.0"
+    private const val detektPluginVersion = "1.21.0"
     private const val licensePluginVersion = "0.16.1"
     //endregion
 
