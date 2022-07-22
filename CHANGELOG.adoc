@@ -68,16 +68,13 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[unreleased]]
 == [unreleased]
 
-{url-cl}1.8.1$$...$$main[Full Changelog]
+{url-cl}1.8.2$$...$$main[Full Changelog]
 
 .Added
 
-.Changed
-- Bumped spring-boot, kotlin, coroutines, wicket, wicketstuff, jOOQ, openfeign, spring-dependency-management, jasperreports,
-  detekt, testcontainers,
-  gradle-wrapper, lombok-gradle-plugin
-
 ////
+.Changed
+
 .Deprecated
 
 .Removed
@@ -87,6 +84,18 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Security
 
 ////
+
+
+[[v1.8.2]]
+== {url-tree}1.8.2[1.8.2] -- 2022-07-22
+
+{url-cl}1.8.1$$...$$1.8.2[Full Changelog]
+
+.Changed
+- Bumped spring-boot, kotlin, coroutines, wicket, wicketstuff, jOOQ, openfeign, spring-dependency-management, jasperreports,
+  detekt, testcontainers,
+  gradle-wrapper, lombok-gradle-plugin
+
 
 [[v1.8.1]]
 == {url-tree}1.8.1[1.8.1] -- 2022-06-27
