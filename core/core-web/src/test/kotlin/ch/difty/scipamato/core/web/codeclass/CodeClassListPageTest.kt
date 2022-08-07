@@ -12,7 +12,7 @@ import org.apache.wicket.markup.html.link.Link
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 
-@Suppress("PrivatePropertyName")
+@Suppress("PrivatePropertyName", "VariableNaming")
 internal class CodeClassListPageTest : BasePageTest<CodeClassListPage>() {
 
     private val cct1_de = CodeClassTranslation(1, "de", "Name1", "a description", 1)

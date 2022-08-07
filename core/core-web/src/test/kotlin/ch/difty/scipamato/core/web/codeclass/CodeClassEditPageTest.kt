@@ -21,7 +21,7 @@ import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 import org.springframework.dao.DuplicateKeyException
 
-@Suppress("PrivatePropertyName")
+@Suppress("PrivatePropertyName", "VariableNaming")
 internal class CodeClassEditPageTest : BasePageTest<CodeClassEditPage>() {
 
     private val cct_de = CodeClassTranslation(1, "de", "Name1", "some description", 1)
@@ -149,7 +149,7 @@ internal class CodeClassEditPageTest : BasePageTest<CodeClassEditPage>() {
         val cc1 = CodeClass(1, "cc1", "d1")
         every { codeServiceMock.getCodeClass1("en_us") } returns cc1
         every { codeServiceMock.countByFilter(any()) } returns 1
-        every { codeServiceMock.findPageOfEntityDefinitions(any(), any()) } returns listOf(
+        every { codeServiceMock.findPageOfEntityDefinitions(any(), any()) } returns mutableListOf(
             CodeDefinition("c1", "en", cc1, 1, false, 1)
         ).iterator()
         tester.startPage(CodeClassEditPage(Model.of(ccd), null))
