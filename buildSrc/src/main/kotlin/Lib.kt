@@ -10,8 +10,8 @@ object Lib {
     private const val kotlinVersion = "1.7.10"
     private const val coroutinesVersion = "1.6.4"
 
-    private const val springBootVersion = "2.7.2"
-    private const val springBootAdminVersion = "2.7.1"
+    private const val springBootVersion = "2.7.3"
+    private const val springBootAdminVersion = "2.7.4"
     const val springCloudVersion = "2021.0.0"
     private const val springCloudStarterVersion = "3.1.3"
 
@@ -34,16 +34,16 @@ object Lib {
     private const val javaxElApiVersion = "3.0.1-b06"
     private const val javaxElVersion = "3.0.1-b12"
 
-    private const val equalsverifierVersion = "3.10"
+    private const val equalsverifierVersion = "3.10.1"
 
-    private const val junit5Version = "5.8.2"
+    private const val junit5Version = "5.9.0"
 
     private const val testcontainersVersion = "1.17.3"
 
     private const val spekVersion = "2.0.18"
     private const val kwikVersion = "0.8.4"
     private const val kluentVersion = "1.68"
-    private const val mockkVersion = "1.12.4"
+    private const val mockkVersion = "1.12.5"
     private const val springMockkVersion = "3.1.1"
     const val jacocoToolVersion = "0.8.7"
 
@@ -51,7 +51,7 @@ object Lib {
     //endregion
 
     //region:pluginVersions
-    private const val springDependencyManagementPluginVersion = "1.0.12.RELEASE"
+    private const val springDependencyManagementPluginVersion = "1.0.13.RELEASE"
     private const val lombokPluginVersion = "6.5.0.3"
     private const val jooqModelatorPluginVersion = "3.9.0"
     private const val reckonPluginVersion = "0.16.1"
