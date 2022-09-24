@@ -72,9 +72,12 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Added
 
-////
 .Changed
+- Bumped spring-boot, wicket-jquery-ui, spring-boot-admin, flyway, openfeign, spring-dependency-management,
+  junit-jupiter, spek, mockk,
+  jaxb-gradle-plugin, lombok-gradle-plugin
 
+////
 .Deprecated
 
 .Removed
