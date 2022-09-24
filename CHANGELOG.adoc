@@ -73,7 +73,8 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 
 .Changed
-- Bumped spring-boot, wicket-jquery-ui
+- Bumped spring-boot, wicket-jquery-ui,
+  jaxb-gradle-plugin
 
 ////
 .Deprecated
