@@ -80,7 +80,6 @@ allprojects {
 
     repositories {
         mavenCentral()
-        jcenter()
         maven { url = uri("https://jaspersoft.jfrog.io/jaspersoft/third-party-ce-artifacts") }
         maven { url = uri("https://repo.spring.io/milestone") }
     }
@@ -292,7 +291,6 @@ downloadLicenses {
     val mpl11License = LicenseMetadata("Mozilla Public License 1.1", "https://spdx.org/licenses/MPL-1.1.html")
 
     licenses = mapOf(
-        "ch.difty.kris:kris-core:0.3.3" to mitLicense,
         "com.google.elemental2:elemental2-core:1.0.0-RC1" to apacheLicense,
         "org.codehaus.jettison:jettison:1.2" to apacheLicense,
     )
