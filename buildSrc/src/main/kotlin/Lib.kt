@@ -23,7 +23,7 @@ object Lib {
     private const val jasperReportVersion = "6.20.0"
     private const val univocityParsersVersion = "2.9.1"
 
-    private const val krisVersion = "0.3.3"
+    private const val krisVersion = "0.4.0"
     const val jooqVersion = "3.15.12"
     const val flywayVersion = "9.3.1"
 

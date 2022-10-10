@@ -169,7 +169,6 @@ subprojects {
         }
         withType<Test> {
             maxHeapSize = "2g"
-            @Suppress("UnstableApiUsage")
             useJUnitPlatform {
                 includeEngines("junit-jupiter", "spek2")
             }
@@ -200,7 +199,6 @@ subprojects {
         }
         withType<JacocoReport> {
             enabled = project.name.mayHaveTestCoverage()
-            @Suppress("UnstableApiUsage")
             reports {
                 xml.required.set(true)
                 html.required.set(false)
@@ -292,7 +290,6 @@ downloadLicenses {
     val mpl11License = LicenseMetadata("Mozilla Public License 1.1", "https://spdx.org/licenses/MPL-1.1.html")
 
     licenses = mapOf(
-        "ch.difty.kris:kris-core:0.3.3" to mitLicense,
         "com.google.elemental2:elemental2-core:1.0.0-RC1" to apacheLicense,
         "org.codehaus.jettison:jettison:1.2" to apacheLicense,
     )

@@ -7,13 +7,6 @@ plugins {
     Lib.springBootPlugin().run { id(id) } apply true
 }
 
-// TODO revert in https://github.com/ursjoss/scipamato/issues/274
-repositories {
-    flatDir {
-        dirs("$rootDir/lib")
-    }
-}
-
 /**
  * Make the static wicket resources that reside next to the java classes in src{main,test} available.
  */
