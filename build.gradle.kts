@@ -80,6 +80,7 @@ allprojects {
 
     repositories {
         mavenCentral()
+        jcenter()
         maven { url = uri("https://jaspersoft.jfrog.io/jaspersoft/third-party-ce-artifacts") }
         maven { url = uri("https://repo.spring.io/milestone") }
     }
@@ -168,7 +169,6 @@ subprojects {
         }
         withType<Test> {
             maxHeapSize = "2g"
-            @Suppress("UnstableApiUsage")
             useJUnitPlatform {
                 includeEngines("junit-jupiter", "spek2")
             }
@@ -199,7 +199,6 @@ subprojects {
         }
         withType<JacocoReport> {
             enabled = project.name.mayHaveTestCoverage()
-            @Suppress("UnstableApiUsage")
             reports {
                 xml.required.set(true)
                 html.required.set(false)
