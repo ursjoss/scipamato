@@ -40,8 +40,8 @@ object Lib {
 
     private const val testcontainersVersion = "1.17.3"
 
+    private const val kotestVersion = "5.5.1"
     private const val spekVersion = "2.0.19"
-    private const val kwikVersion = "0.8.4"
     private const val kluentVersion = "1.68"
     private const val mockkVersion = "1.13.1"
     private const val springMockkVersion = "3.1.1"
@@ -133,11 +133,12 @@ object Lib {
 
     fun testcontainers(module: String) = Dep("org.testcontainers", module, testcontainersVersion)
     fun equalsverifier() = Dep("nl.jqno.equalsverifier", "equalsverifier", equalsverifierVersion)
+    fun kotest(module: String) = Dep("io.kotest", "kotest-$module", kotestVersion)
+    @Deprecated("Use kotest instead")
     fun spek(module: String) = Dep("org.spekframework.spek2", "spek-$module", spekVersion)
     fun kluent() = Dep("org.amshove.kluent", "kluent", kluentVersion)
     fun mockk() = Dep("io.mockk", "mockk", mockkVersion)
     fun springMockk() = Dep("com.ninja-squad", "springmockk", springMockkVersion)
-    fun kwik(module: String) = Dep("com.github.jcornaz.kwik", "kwik-$module-jvm", kwikVersion)
 
     fun servletApi() = Dep("javax.servlet", "javax.servlet-api")
 
