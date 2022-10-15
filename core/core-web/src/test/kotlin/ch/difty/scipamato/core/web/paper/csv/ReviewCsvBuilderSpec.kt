@@ -8,7 +8,7 @@ import org.spekframework.spek2.style.specification.describe
 
 private const val BOM = "\ufeff"
 
-object ReviewCsvBuilderSpek : Spek({
+object ReviewCsvBuilderSpec : Spek({
 
     describe("csv builder") {
         val builder = ReviewCsvAdapter(            rhf = rhf        )
