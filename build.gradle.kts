@@ -140,7 +140,6 @@ subprojects {
         }
         testImplementation(Lib.kotest("framework-api"))
         testImplementation(Lib.kotest("property"))
-        testImplementation(Lib.spek("dsl-jvm"))
         testImplementation(Lib.kluent().id) {
             exclude("org.mockito", "mockito-core")
             exclude("com.nhaarman.mockitokotlin2", "mockito-kotlin")
@@ -149,7 +148,6 @@ subprojects {
         testImplementation(Lib.springMockk())
 
         testRuntimeOnly(Lib.kotest("runner-junit5"))
-        testRuntimeOnly(Lib.spek("runner-junit5"))
     }
 
     tasks {
@@ -170,7 +168,7 @@ subprojects {
         withType<Test> {
             maxHeapSize = "2g"
             useJUnitPlatform {
-                includeEngines("junit-jupiter", "spek2")
+                includeEngines("junit-jupiter", "kotest")
             }
             failFast = true
             testLogging {
