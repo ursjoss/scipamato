@@ -139,6 +139,8 @@ subprojects {
             exclude("org.hamcrest", "hamcrest")
             exclude("org.assertj", "assertj-core")
         }
+        testImplementation(Lib.kotest("framework-api"))
+        testImplementation(Lib.kotest("property"))
         testImplementation(Lib.spek("dsl-jvm"))
         testImplementation(Lib.kluent().id) {
             exclude("org.mockito", "mockito-core")
@@ -149,6 +151,7 @@ subprojects {
         testImplementation(Lib.kwik("evaluator"))
         testImplementation(Lib.kwik("generator-stdlib"))
 
+        testRuntimeOnly(Lib.kotest("runner-junit5"))
         testRuntimeOnly(Lib.spek("runner-junit5"))
     }
 
