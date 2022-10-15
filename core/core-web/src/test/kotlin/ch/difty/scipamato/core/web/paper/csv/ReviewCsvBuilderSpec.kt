@@ -2,16 +2,16 @@ package ch.difty.scipamato.core.web.paper.csv
 
 import ch.difty.scipamato.core.entity.Paper
 import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields
+import io.kotest.core.spec.style.DescribeSpec
 import org.amshove.kluent.shouldBeEqualTo
-import org.spekframework.spek2.Spek
-import org.spekframework.spek2.style.specification.describe
 
 private const val BOM = "\ufeff"
 
-object ReviewCsvBuilderSpec : Spek({
+@Suppress("unused")
+object ReviewCsvBuilderSpec : DescribeSpec({
 
     describe("csv builder") {
-        val builder = ReviewCsvAdapter(            rhf = rhf        )
+        val builder = ReviewCsvAdapter(rhf = rhf)
         it("can build CSV with multiline fields with dynamic quoting") {
             builder.build(listOf(PaperWithIndex(1), PaperWithIndex(2))) shouldBeEqualTo """
                 ${BOM}nl;ayl;ppl;mol;epl;msdl;pdl;ppl;eal;rerl;mcl;reel;cl1;cl2;il;gl;pl;ml;rl
