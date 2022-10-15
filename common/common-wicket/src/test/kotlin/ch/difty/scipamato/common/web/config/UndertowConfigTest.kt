@@ -76,6 +76,7 @@ internal class UndertowConfigTest {
         factory.sslStoreProvider.shouldBeNull()
     }
 
+    @Suppress("SwallowedException")
     @Test
     fun canStartAndStopUndertowServletContainer() {
         val server = factory.getWebServer()
@@ -93,7 +94,9 @@ internal class UndertowConfigTest {
     @Test
     fun gettingListenerInfo_beforeStartingServer_fails() {
         val undertow = undertowBuilder.build()
-        invoking { undertow.listenerInfo } shouldThrow IllegalStateException::class withMessage "UT000138: Server not started"
+        invoking {
+            undertow.listenerInfo
+        } shouldThrow IllegalStateException::class withMessage "UT000138: Server not started"
     }
 
     @Test
