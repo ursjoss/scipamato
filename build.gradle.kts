@@ -288,7 +288,7 @@ downloadLicenses {
     val mpl11License = LicenseMetadata("Mozilla Public License 1.1", "https://spdx.org/licenses/MPL-1.1.html")
 
     licenses = mapOf(
-        "com.google.elemental2:elemental2-core:1.0.0-RC1" to apacheLicense,
+        "com.google.elemental2:elemental2-core:1.1.0" to apacheLicense,
         "org.codehaus.jettison:jettison:1.2" to apacheLicense,
     )
 
