@@ -71,14 +71,18 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 {url-cl}1.8.3$$...$$main[Full Changelog]
 
 .Added
+- kotest
 
 ////
 .Changed
 
 .Deprecated
+////
 
 .Removed
+- spek, kwik, jcenter
 
+////
 .Fixed
 
 .Security
