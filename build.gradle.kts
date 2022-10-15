@@ -148,8 +148,6 @@ subprojects {
         }
         testImplementation(Lib.mockk())
         testImplementation(Lib.springMockk())
-        testImplementation(Lib.kwik("evaluator"))
-        testImplementation(Lib.kwik("generator-stdlib"))
 
         testRuntimeOnly(Lib.kotest("runner-junit5"))
         testRuntimeOnly(Lib.spek("runner-junit5"))
