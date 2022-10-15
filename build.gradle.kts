@@ -289,7 +289,7 @@ downloadLicenses {
 
     licenses = mapOf(
         "com.google.elemental2:elemental2-core:1.0.0-RC1" to apacheLicense,
-        "org.codehaus.jettison:jettison:1.2" to apacheLicense,
+        "org.codehaus.jettison:jettison:1.5.1" to apacheLicense,
     )
 
     aliases = mapOf(
