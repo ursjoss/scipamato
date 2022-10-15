@@ -170,7 +170,7 @@ subprojects {
         withType<Test> {
             maxHeapSize = "2g"
             useJUnitPlatform {
-                includeEngines("junit-jupiter", "spek2")
+                includeEngines("junit-jupiter", "spek2", "kotest")
             }
             failFast = true
             testLogging {
