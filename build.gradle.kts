@@ -12,30 +12,38 @@ import org.springframework.boot.gradle.plugin.SpringBootPlugin
 import org.springframework.boot.gradle.tasks.bundling.BootJar
 import org.unbrokendome.gradle.plugins.testsets.TestSetsPlugin
 
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath(libs.plugin.kotlin)
+        classpath(libs.plugin.reckon)
+    }
+}
+
 plugins {
-    Lib.springBootPlugin().run { id(id) version version } apply false
-    Lib.springDependencyManagementPlugin().run { id(id) version version }
-    Lib.kotlinJvmPlugin().run { kotlin(id) version version }
-    Lib.kotlinSpringPlugin().run { kotlin(id) version version } apply false
-    Lib.lombokPlugin().run { id(id) version version }
+    kotlin("jvm") version libs.versions.kotlin.get()
+    kotlin("plugin.spring") version libs.versions.kotlin.get() apply false
+    alias(libs.plugins.springBoot).apply(false)
+    alias(libs.plugins.springDependencyManagement)
+    alias(libs.plugins.lombok)
     idea
     jacoco
-    Lib.testSetsPlugin().run { id(id) version version }
-    Lib.detektPlugin().run { id(id) version version }
-    Lib.sonarqubePlugin().run { id(id) version version }
-    Lib.reckonPlugin().run { id(id) version version }
-    Lib.versionsPlugin().run { id(id) version version }
-    Lib.licensePlugin("report").run { id(id) version version }
+    alias(libs.plugins.testSets)
+    alias(libs.plugins.detekt)
+    alias(libs.plugins.sonarqube)
+    alias(libs.plugins.reckon)
+    alias(libs.plugins.licenseReport)
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
+    toolchain.languageVersion.set(JavaLanguageVersion.of(libs.versions.java.get()))
 }
 
-extra["spring.cloudVersion"] = Lib.springCloudVersion
-extra["jooq.version"] = Lib.jooqVersion
-extra["flyway.version"] = Lib.flywayVersion
+extra["spring.cloudVersion"] = libs.versions.springCloud.get()
+extra["jooq.version"] = libs.versions.jooq.get()
+extra["flyway.version"] = libs.versions.flyway.get()
 
 dependencyManagement {
     imports {
@@ -75,19 +83,9 @@ reckon {
     setStageCalc(calcStageFromProp())
 }
 
-allprojects {
-    group = "ch.difty"
-
-    repositories {
-        mavenCentral()
-        maven { url = uri("https://jaspersoft.jfrog.io/jaspersoft/third-party-ce-artifacts") }
-        maven { url = uri("https://repo.spring.io/milestone") }
-    }
-}
-
 subprojects {
     apply<SpringBootPlugin>()
-    apply(plugin = Lib.springDependencyManagementPlugin().id)
+    apply(plugin = "io.spring.dependency-management")
     apply(plugin = "org.jetbrains.kotlin.jvm")
     apply<JavaPlugin>()
     apply<IdeaPlugin>()
@@ -119,18 +117,18 @@ subprojects {
     }
 
     dependencies {
-        implementation(Lib.kotlin("reflect"))
+        implementation(rootProject.libs.kotlin.reflect)
 
-        compileOnly(Lib.lombok())
-        annotationProcessor(Lib.lombok())
+        compileOnly(rootProject.libs.lombok)
+        annotationProcessor(rootProject.libs.lombok)
 
-        api(Lib.slf4j())
-        implementation(Lib.kotlinLogging())
-        runtimeOnly(Lib.logback())
+        api(rootProject.libs.slf4j.api)
+        implementation(rootProject.libs.kotlinLogging)
+        runtimeOnly(rootProject.libs.logback.core)
 
-        compileOnly(Lib.jsr305())
+        compileOnly(rootProject.libs.jsr305)
 
-        testImplementation(Lib.springBootStarter("test").id) {
+        testImplementation(rootProject.libs.spring.boot.starter.test) {
             exclude("junit", "junit")
             exclude("org.skyscreamer", "jsonassert")
             exclude("org.mockito", "mockito-core")
@@ -138,25 +136,26 @@ subprojects {
             exclude("org.hamcrest", "hamcrest")
             exclude("org.assertj", "assertj-core")
         }
-        testImplementation(Lib.kotest("framework-api"))
-        testImplementation(Lib.kotest("property"))
-        testImplementation(Lib.kluent().id) {
+        testImplementation(rootProject.libs.kotest.framework.api)
+        testImplementation(rootProject.libs.kotest.property)
+        testImplementation(rootProject.libs.kluent) {
             exclude("org.mockito", "mockito-core")
             exclude("com.nhaarman.mockitokotlin2", "mockito-kotlin")
         }
-        testImplementation(Lib.mockk())
-        testImplementation(Lib.springMockk())
+        testImplementation(rootProject.libs.mockk)
+        testImplementation(rootProject.libs.springMockk)
 
-        testRuntimeOnly(Lib.kotest("runner-junit5"))
+        testRuntimeOnly(rootProject.libs.kotest.runner.junit5)
     }
 
+    val jvmTargetVersion = rootProject.libs.versions.java.get()
     tasks {
         withType<JavaCompile> {
             options.encoding = "UTF-8"
         }
         withType<KotlinCompile> {
             kotlinOptions {
-                jvmTarget = "11"
+                jvmTarget = jvmTargetVersion
             }
         }
         val deleteOutFolderTask by registering(Delete::class) {
@@ -225,12 +224,11 @@ subprojects {
 }
 
 tasks {
-    val jvmTarget = JavaVersion.VERSION_11.toString()
-
+    val jvmTargetVersion = libs.versions.java.get()
     withType<KotlinCompile> {
         kotlinOptions {
             freeCompilerArgs = listOf("-Xjsr305=strict")
-            this.jvmTarget = jvmTarget
+            jvmTarget = jvmTargetVersion
         }
     }
     withType<Detekt> {
@@ -238,7 +236,7 @@ tasks {
         buildUponDefaultConfig = true
         config.setFrom(files("${rootProject.projectDir}/config/detekt/detekt.yml"))
         baseline.set(file("detekt-baseline.xml"))
-        this.jvmTarget = jvmTarget
+        jvmTarget = jvmTargetVersion
         reports {
             xml.required.set(true)
             html.required.set(true)
@@ -262,7 +260,7 @@ tasks {
 
     projectsWithCoverage.forEach { project ->
         project.jacoco {
-            toolVersion = Lib.jacocoToolVersion
+            toolVersion = libs.versions.jacoco.get()
         }
     }
 }

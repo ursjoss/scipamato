@@ -1,6 +1,16 @@
+@file:Suppress("UnstableApiUsage", "SpreadOperator")
+
 pluginManagement {
     repositories {
         gradlePluginPortal()
+    }
+}
+
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        mavenCentral()
+        maven { url = uri("https://jaspersoft.jfrog.io/jaspersoft/third-party-ce-artifacts") }
     }
 }
 
@@ -27,6 +37,8 @@ fun String.scipamatoModule(module: String) = ":$this-$module"
 include(*scipamatoCommonProjects(commonProjects))
 include(*scipamatoCoreProjects(coreProjects))
 include(*scipamatoPublicProjects(publicProjects))
+
+includeBuild("gradle-plugins")
 
 defineProjectPaths()
 

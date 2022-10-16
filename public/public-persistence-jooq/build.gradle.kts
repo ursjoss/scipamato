@@ -3,7 +3,7 @@
 import ch.ayedo.jooqmodelator.gradle.JooqModelatorTask
 
 plugins {
-    Lib.jooqModelatorPlugin().run { id(id) version version }
+    alias(libs.plugins.jooqModelator)
 }
 
 description = "SciPaMaTo-Public:: Persistence jOOQ Project"
@@ -17,7 +17,7 @@ val dockerDbPort = 15432
 val props = file("src/integration-test/resources/application.properties").asProperties()
 
 jooqModelator {
-    jooqVersion = Lib.jooqVersion
+    jooqVersion = libs.versions.jooq.get()
     jooqEdition = "OSS"
 
     jooqConfigPath = jooqConfigFile
@@ -43,17 +43,17 @@ dependencies {
     implementation(project(Module.scipamatoPublic("entity")))
     implementation(project(Module.scipamatoCommon("utils")))
 
-    jooqModelatorRuntime(Lib.postgres())
-    runtimeOnly(Lib.postgres())
-    api(Lib.jOOQ("jooq"))
+    jooqModelatorRuntime(libs.postgresql)
+    runtimeOnly(libs.postgresql)
+    api(libs.jooq)
 
     testImplementation(project(Module.scipamatoCommon("persistence-jooq-test")))
     testImplementation(project(Module.scipamatoCommon("test")))
 
-    integrationTestImplementation(Lib.testcontainers("testcontainers"))
-    integrationTestImplementation(Lib.testcontainers("junit-jupiter"))
-    integrationTestImplementation(Lib.testcontainers("postgresql"))
-    integrationTestRuntimeOnly(Lib.postgres())
+    integrationTestImplementation(libs.testcontainers.testcontainers)
+    integrationTestImplementation(libs.testcontainers.junitJupiter)
+    integrationTestImplementation(libs.testcontainers.postgresql)
+    integrationTestRuntimeOnly(libs.postgresql)
 }
 
 sourceSets {

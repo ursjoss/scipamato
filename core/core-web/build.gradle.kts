@@ -1,10 +1,10 @@
 import org.springframework.boot.gradle.tasks.bundling.BootJar
-import plugins.ApplicationPropertiesFilterPlugin
 
 description = "SciPaMaTo-Core :: Web GUI Project"
 
 plugins {
-    Lib.springBootPlugin().run { id(id) } apply true
+    alias(libs.plugins.springBoot).apply(true)
+    id("application-properties-filter")
 }
 
 /**
@@ -26,7 +26,6 @@ sourceSets {
 }
 
 tasks {
-    apply<ApplicationPropertiesFilterPlugin>()
     withType<BootJar> {
         enabled = true
         mainClass.set("ch.difty.scipamato.core.ScipamatoCoreApplicationKt")
@@ -43,39 +42,39 @@ dependencies {
     implementation(project(Module.scipamatoCore("sync")))
     implementation(project(Module.scipamatoCommon("wicket")))
 
-    annotationProcessor(Lib.springBoot("configuration-processor").id) {
+    annotationProcessor(libs.spring.boot.configurationprocessor) {
         exclude("om.vaadin.external.google", "android-json")
     }
-    implementation(Lib.springBootStarter("security"))
-    implementation(Lib.kotlinCoroutines("core"))
+    implementation(libs.spring.boot.starter.security)
+    implementation(libs.coroutines.core)
 
-    implementation(Lib.wicketJqueryUi())
-    implementation(Lib.wicketJqueryUi("theme-uilightness"))
-    implementation(Lib.wicketStuff("jasperreports").id) {
+    implementation(libs.wicketJqueryUi)
+    implementation(libs.wicketJqueryUi.theme.uilightness)
+    implementation(libs.wicketstuff.jasperreports) {
         exclude("net.sf.jasperreports", "jasperreports")
         exclude("commons-logging", "commons-logging")
     }
-    implementation(Lib.jasperreports().id) {
+    implementation(libs.jasperreports) {
         exclude("commons-lang", "commons-lang")
         exclude("commons-collections", "commons-collections")
         exclude("commons-logging", "commons-logging")
     }
-    implementation(Lib.jasperreports("fonts"))
-    implementation(Lib.univocity())
+    implementation(libs.jasperreports.fonts)
+    implementation(libs.univocity)
 
-    implementation(Lib.kris("core"))
+    implementation(libs.kris.core)
 
     /** Caching: JCache with ehcache as cache provider */
-    implementation(Lib.springBootStarter("cache"))
-    implementation(Lib.cacheApi())
-    implementation(Lib.ehcache())
+    implementation(libs.spring.boot.starter.cache)
+    implementation(libs.cacheApi)
+    implementation(libs.ehcache)
 
     testImplementation(project(Module.scipamatoCommon("test")))
     testImplementation(project(Module.scipamatoCommon("persistence-jooq-test")))
-    testImplementation(Lib.servletApi())
-    testImplementation(Lib.validationApi())
-    testImplementation(Lib.lombok())
-    testAnnotationProcessor(Lib.lombok())
+    testImplementation(libs.javax.servletApi)
+    testImplementation(libs.validationApi)
+    testImplementation(libs.lombok)
+    testAnnotationProcessor(libs.lombok)
 }
 
 idea {

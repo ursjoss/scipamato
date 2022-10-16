@@ -1,0 +1,137 @@
+[versions]
+coroutines = "1.6.4"
+detektPlugin = "1.21.0"
+equalsverifier = "3.10.1"
+flyway = "9.3.1"
+jacoco = "0.8.8"
+jasperreports = "6.20.0"
+java = "11"
+javaxEl = "3.0.1-b12"
+javaxElApi = "3.0.1-b06"
+jaxbPlugin = "5.2.1"
+jooq = "3.15.12"
+jooqModelatorPlugin = "3.9.0"
+jsr305 = "3.0.2"
+junitJupiter = "5.9.1"
+kluent = "1.68"
+kotest = "5.5.1"
+kotlin = "1.7.20"
+kotlinLogging = "2.1.23"
+kris = "0.4.0"
+licensePlugin = "0.16.1"
+lombokPlugin = "6.5.1"
+mockk = "1.13.1"
+openfeign = "11.10"
+reckonPlugin = "0.16.1"
+sonarqubePlugin = "3.4.0.2513"
+springBoot = "2.7.4"
+springBootAdmin = "2.7.5"
+springCloud = "2021.0.0"
+springCloudStarter = "3.1.3"
+springDependencyManagementPlugin = "1.0.14.RELEASE"
+springMockk = "3.1.1"
+testSetsPlugin = "4.0.0"
+testcontainers = "1.17.3"
+univocityParsers = "2.9.1"
+wicket = "9.11.0"
+wicketBootstrap = "4.0.4"
+wicketJqueryUi = "9.11.0"
+wicketSpringBootStarter = "3.1.6"
+wicketstuff = "9.11.0"
+
+[libraries]
+cacheApi = { module = "javax.cache:cache-api" }
+coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
+ehcache = { module = "org.ehcache:ehcache" }
+equalsverifier = { module = "nl.jqno.equalsverifier:equalsverifier", version.ref = "equalsverifier" }
+flyway-core = { module = "org.flywaydb:flyway-core", version.ref = "flyway" }
+fontAwesome = { module = "org.webjars:font-awesome" }
+hibernate-validator = { module = "org.hibernate.validator:hibernate-validator" }
+jasperreports = { module = "net.sf.jasperreports:jasperreports", version.ref = "jasperreports" }
+jasperreports-fonts = { module = "net.sf.jasperreports:jasperreports-fonts", version.ref = "jasperreports" }
+javax-el-api = { module = "javax.el:javax.el-api", version.ref = "javaxElApi" }
+javax-el-impl = { module = "org.glassfish:javax.el", version.ref = "javaxEl" }
+javax-servletApi = { module = "javax.servlet:javax.servlet-api" }
+jaxb-api = { module = "javax.xml.bind:jaxb-api" }
+jaxb-runtime = { module = "org.glassfish.jaxb:jaxb-runtime" }
+jooq = { module = "org.jooq:jooq", version.ref = "jooq" }
+jsr305 = { module = "com.google.code.findbugs:jsr305", version.ref = "jsr305" }
+junitJupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junitJupiter" }
+junitJupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junitJupiter" }
+junitJupiter-params = { module = "org.junit.jupiter:junit-jupiter-params", version.ref = "junitJupiter" }
+kluent = { module = "org.amshove.kluent:kluent", version.ref = "kluent" }
+kotest-framework-api = { module = "io.kotest:kotest-framework-api", version.ref = "kotest" }
+kotest-property = { module = "io.kotest:kotest-property", version.ref = "kotest" }
+kotest-runner-junit5 = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
+kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
+kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlin" }
+kotlinLogging = { module = "io.github.microutils:kotlin-logging", version.ref = "kotlinLogging" }
+kris-core = { module = "ch.difty.kris:kris-core", version.ref = "kris" }
+logback-core = { module = "ch.qos.logback:logback-core" }
+lombok = { module = "org.projectlombok:lombok" }
+mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
+openfeign-jaxb = { module = "io.github.openfeign:feign-jaxb", version.ref = "openfeign" }
+openfeign-okhttp = { module = "io.github.openfeign:feign-okhttp", version.ref = "openfeign" }
+openfeign-slf4j = { module = "io.github.openfeign:feign-slf4j", version.ref = "openfeign" }
+postgresql = { module = "org.postgresql:postgresql" }
+slf4j-api = { module = "org.slf4j:slf4j-api" }
+spring-boot-admin-starter-client = { module = "de.codecentric:spring-boot-admin-starter-client", version.ref = "springBootAdmin" }
+spring-boot-configurationprocessor = { module = "org.springframework.boot:spring-boot-configuration-processor", version.ref = "springBoot" }
+spring-boot-starter-actuator = { module = "org.springframework.boot:spring-boot-starter-actuator", version.ref = "springBoot" }
+spring-boot-starter-batch = { module = "org.springframework.boot:spring-boot-starter-batch", version.ref = "springBoot" }
+spring-boot-starter-cache = { module = "org.springframework.boot:spring-boot-starter-cache", version.ref = "springBoot" }
+spring-boot-starter-jooq = { module = "org.springframework.boot:spring-boot-starter-jooq", version.ref = "springBoot" }
+spring-boot-starter-security = { module = "org.springframework.boot:spring-boot-starter-security", version.ref = "springBoot" }
+spring-boot-starter-test = { module = "org.springframework.boot:spring-boot-starter-test", version.ref = "springBoot" }
+spring-boot-starter-undertow = { module = "org.springframework.boot:spring-boot-starter-undertow", version.ref = "springBoot" }
+spring-boot-starter-validation = { module = "org.springframework.boot:spring-boot-starter-validation", version.ref = "springBoot" }
+spring-boot-starter-web = { module = "org.springframework.boot:spring-boot-starter-web", version.ref = "springBoot" }
+spring-boot-starter-wicket = { module = "com.giffing.wicket.spring.boot.starter:wicket-spring-boot-starter", version.ref = "wicketSpringBootStarter" }
+spring-cloud-starter-openfeign = { module = "org.springframework.cloud:spring-cloud-starter-openfeign", version.ref = "springCloudStarter" }
+spring-context = { module = "org.springframework:spring-context" }
+spring-core = { module = "org.springframework:spring-core" }
+spring-oxm = { module = "org.springframework:spring-oxm" }
+spring-security-core = { module = "org.springframework.security:spring-security-core" }
+springMockk = { module = "com.ninja-squad:springmockk", version.ref = "springMockk" }
+testcontainers-junitJupiter = { module = "org.testcontainers:junit-jupiter", version.ref = "testcontainers" }
+testcontainers-postgresql = { module = "org.testcontainers:postgresql", version.ref = "testcontainers" }
+testcontainers-testcontainers = { module = "org.testcontainers:testcontainers", version.ref = "testcontainers" }
+univocity = { module = "com.univocity:univocity-parsers", version.ref = "univocityParsers" }
+validationApi = { module = "javax.validation:validation-api" }
+wicket-authroles = { module = "org.apache.wicket:wicket-auth-roles", version.ref = "wicket" }
+wicket-beanvalidation = { module = "org.apache.wicket:wicket-bean-validation", version.ref = "wicket" }
+wicket-core = { module = "org.apache.wicket:wicket-core", version.ref = "wicket" }
+wicket-devutils = { module = "org.apache.wicket:wicket-devutils", version.ref = "wicket" }
+wicket-extensions = { module = "org.apache.wicket:wicket-extensions", version.ref = "wicket" }
+wicket-ioc = { module = "org.apache.wicket:wicket-ioc", version.ref = "wicket" }
+wicket-request = { module = "org.apache.wicket:wicket-request", version.ref = "wicket" }
+wicket-spring = { module = "org.apache.wicket:wicket-spring", version.ref = "wicket" }
+wicketBootstrap-core = { module = "de.agilecoders.wicket:wicket-bootstrap-core", version.ref = "wicketBootstrap" }
+wicketBootstrap-extensions = { module = "de.agilecoders.wicket:wicket-bootstrap-extensions", version.ref = "wicketBootstrap" }
+wicketBootstrap-less = { module = "de.agilecoders.wicket:wicket-bootstrap-less", version.ref = "wicketBootstrap" }
+wicketBootstrap-themes = { module = "de.agilecoders.wicket:wicket-bootstrap-themes", version.ref = "wicketBootstrap" }
+wicketJqueryUi = { module = "com.googlecode.wicket-jquery-ui:wicket-jquery-ui", version.ref = "wicketJqueryUi" }
+wicketJqueryUi-theme-uilightness = { module = "com.googlecode.wicket-jquery-ui:wicket-jquery-ui-theme-uilightness", version.ref = "wicketJqueryUi" }
+wicketstuff-annotation = { module = "org.wicketstuff:wicketstuff-annotation", version.ref = "wicketstuff" }
+wicketstuff-jasperreports = { module = "org.wicketstuff:wicketstuff-jasperreports", version.ref = "wicketstuff" }
+
+plugin-detekt = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "detektPlugin" }
+plugin-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+plugin-reckon = { module = "org.ajoberstar.reckon:reckon-gradle", version.ref = "reckonPlugin" }
+
+[bundles]
+kotlin = ["kotlin-stdlib", "kotlin-reflect", "coroutines-core"]
+testDeps = ["junitJupiter-api", "kotest-framework-api", "mockk", "kluent"]
+testEngines = ["junitJupiter-engine", "kotest-runner-junit5"]
+
+[plugins]
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detektPlugin" }
+jaxb = { id = "com.intershop.gradle.jaxb", version.ref = "jaxbPlugin" }
+jooqModelator = { id = "ch.ayedo.jooqmodelator", version.ref = "jooqModelatorPlugin" }
+licenseReport = { id = "com.github.hierynomus.license-report", version.ref = "licensePlugin" }
+lombok = { id = "io.freefair.lombok", version.ref = "lombokPlugin" }
+reckon = { id = "org.ajoberstar.reckon", version.ref = "reckonPlugin" }
+sonarqube = { id = "org.sonarqube", version.ref = "sonarqubePlugin" }
+springBoot = { id = "org.springframework.boot", version.ref = "springBoot" }
+springDependencyManagement = { id = "io.spring.dependency-management", version.ref = "springDependencyManagementPlugin" }
+testSets = { id = "org.unbroken-dome.test-sets", version.ref = "testSetsPlugin" }

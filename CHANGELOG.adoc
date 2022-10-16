@@ -73,9 +73,10 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 - kotest
 
-////
 .Changed
+- {url-issues}360[#360] Use version catalogs (instead of buildSrc/Lib) for version management
 
+////
 .Deprecated
 ////
 

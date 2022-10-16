@@ -4,10 +4,10 @@ dependencies {
     api(project(Module.scipamatoCommon("entity")))
     implementation(project(Module.scipamatoCommon("utils")))
 
-    api(Lib.springBootStarter("validation"))
+    api(libs.spring.boot.starter.validation)
 
     testImplementation(project(Module.scipamatoCommon("test")))
-    testImplementation(Lib.hibernateValidator())
-    testImplementation(Lib.javaxElApi())
-    testImplementation(Lib.javaxElImpl())
+    testImplementation(libs.hibernate.validator)
+    testImplementation(libs.javax.el.api)
+    testImplementation(libs.javax.el.impl)
 }
