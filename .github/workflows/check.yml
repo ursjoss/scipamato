@@ -21,13 +21,20 @@ jobs:
       uses: actions/checkout@v3
 
     - name: Gradle wrapper validation
-      uses: gradle/wrapper-validation-action@v1.0.4
+      uses: gradle/wrapper-validation-action@v1
       
     - name: Set up JDK 11
       uses: actions/setup-java@v3
       with:
         distribution: 'zulu'
         java-version: '11'
+
+    - name: Cache SonarCloud packages
+      uses: actions/cache@v3
+      with:
+        path: ~/.sonar/cache
+        key: ${{ runner.os }}-sonar
+        restore-keys: ${{ runner.os }}-sonar
 
     - name: Cache global .gradle folder
       uses: actions/cache@v3
@@ -46,5 +53,26 @@ jobs:
     - name: Download postgres
       run: docker pull postgres:10
 
-    - name: Check with Gradle
-      run: ./gradlew check --stacktrace
+    - name: Build
+      uses: gradle/gradle-build-action@v2
+      with:
+        arguments: |
+          check
+          detekt
+          mergeDetektSarif
+          :gradle-plugins:buildPlugins
+          --continue
+
+    - name: Upload sarif file to GitHub
+      uses: github/codeql-action/upload-sarif@v2
+      if: success() || failure()
+      with:
+        sarif_file: build/detekt-merged.sarif
+        category: detekt
+
+    - name: Upload fialure artifacts
+      if: failure()
+      uses: actions/upload-artifact@v3
+      with:
+        name: reports
+        path: '**/build/reports'
