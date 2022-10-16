@@ -116,6 +116,8 @@ abstract class JooqEntityRepoTest<R : Record, T : IdScipamatoEntity<ID>, ID : Nu
         verify { deleteUsingStep.where(tableId.equal(id)) }
         verify { deleteConditionStep1Mock.and(recordVersion.eq(0)) }
         verify { deleteConditionStep2Mock.execute() }
+        @Suppress("UnusedEquals")
+        verify { persistedEntity == persistedEntity }
     }
 
     abstract override fun makeRepoFindingEntityById(entity: T): EntityRepository<T, ID, F>
