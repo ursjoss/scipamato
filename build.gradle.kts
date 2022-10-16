@@ -25,6 +25,7 @@ buildscript {
 plugins {
     kotlin("jvm") version libs.versions.kotlin.get()
     kotlin("plugin.spring") version libs.versions.kotlin.get() apply false
+    id("scipamato-collect-sarif")
     alias(libs.plugins.springBoot).apply(false)
     alias(libs.plugins.springDependencyManagement)
     alias(libs.plugins.lombok)
@@ -87,6 +88,9 @@ subprojects {
     apply<SpringBootPlugin>()
     apply(plugin = "io.spring.dependency-management")
     apply(plugin = "org.jetbrains.kotlin.jvm")
+    apply<ScipamatoDetektPlugin>()
+    apply<CollectSarifPlugin>()
+    apply<ScipamatoJacocoPlugin>()
     apply<JavaPlugin>()
     apply<IdeaPlugin>()
     apply<TestSetsPlugin>()
