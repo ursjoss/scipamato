@@ -44,6 +44,7 @@ class PaperReview(p: Paper, rhf: ReportHeaderFields) : ExportEntity {
     val resultEffectEstimateLabel: String = na(rhf.resultEffectEstimateLabel)
     val conclusionLabel: String = na(rhf.conclusionLabel)
     val commentLabel: String = na(rhf.commentLabel)
+    val internLabel: String = na(rhf.internLabel)
     val goalsLabel: String = na(rhf.goalsLabel)
     val populationLabel: String = na(rhf.populationLabel)
     val methodsLabel: String = na(rhf.methodsLabel)
