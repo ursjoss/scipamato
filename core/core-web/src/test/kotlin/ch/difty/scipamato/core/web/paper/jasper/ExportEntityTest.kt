@@ -5,6 +5,7 @@ import ch.difty.scipamato.core.entity.Code
 import ch.difty.scipamato.core.entity.Paper
 import org.junit.jupiter.api.BeforeEach
 
+@Suppress("UnnecessaryAbstractClass")
 abstract class ExportEntityTest {
 
     protected val p = Paper()

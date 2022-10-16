@@ -7,7 +7,7 @@ import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldContainSame
 import org.junit.jupiter.api.Test
 
-@Suppress("PrivatePropertyName", "SpellCheckingInspection", "LocalVariableName")
+@Suppress("PrivatePropertyName", "LocalVariableName", "VariableNaming", "serial")
 class AbstractDefinitionEntityTest {
 
     private var dt_de = TestDefinitionTranslation(1, "de", "deutsch", 10)
@@ -33,38 +33,38 @@ class AbstractDefinitionEntityTest {
         translations = arrayOf()
     )
 
-    private inner class TestDefinitionEntity internal constructor(
+    private inner class TestDefinitionEntity(
         mainLanguageCode: String,
         mainName: String,
         version: Int? = 0,
-        translations: Array<AbstractDefinitionTranslation>
+        translations: Array<AbstractDefinitionTranslation>,
     ) : AbstractDefinitionEntity<DefinitionTranslation, String>(mainLanguageCode, mainName, version, translations) {
-        override val nullSafeId: String? get() = "foo"
+        override val nullSafeId: String get() = "foo"
     }
 
-    private inner class TestDefinitionEntity2 internal constructor(
+    private inner class TestDefinitionEntity2(
         mainLanguageCode: String,
         mainName: String,
-        translations: Array<AbstractDefinitionTranslation>
+        translations: Array<AbstractDefinitionTranslation>,
     ) : AbstractDefinitionEntity<DefinitionTranslation, String>(
         mainLanguageCode,
         mainName,
         translationArray = translations
     ) {
-        override val nullSafeId: String? get() = "foo"
+        override val nullSafeId: String get() = "foo"
     }
 
     private inner class TestDefinitionTranslation(
         id: Int?,
         langCode: String,
         name: String?,
-        version: Int? = 0
+        version: Int? = 0,
     ) : AbstractDefinitionTranslation(id, langCode, name, version)
 
     private inner class TestDefinitionTranslation2(
         id: Int?,
         langCode: String,
-        name: String?
+        name: String?,
     ) : AbstractDefinitionTranslation(id, langCode, name)
 
     @Test
@@ -103,7 +103,8 @@ class AbstractDefinitionEntityTest {
     @Test
     fun entity_canAddTranslationInLanguage() {
         tde.addTranslation("EN", TestDefinitionTranslation(20, "en", "english2", 20))
-        tde.translationsAsString shouldBeEqualTo "DE: 'deutsch','deutsch2'; EN: 'english'; FR: 'francais'; EN: 'english2'"
+        tde.translationsAsString shouldBeEqualTo
+            "DE: 'deutsch','deutsch2'; EN: 'english'; FR: 'francais'; EN: 'english2'"
     }
 
     @Test

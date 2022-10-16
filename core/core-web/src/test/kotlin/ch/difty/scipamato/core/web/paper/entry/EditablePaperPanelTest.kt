@@ -42,7 +42,8 @@ internal abstract class EditablePaperPanelTest : PaperPanelTest<Paper, EditableP
 
     override fun makePanel(): EditablePaperPanel = newPanel(paperFixture(), callingPageDummy, SEARCH_ORDER_ID, mode)
 
-    protected fun makeAheadOfPrintPanel(): EditablePaperPanel = newPanel(aheadOfPrintFixture(), callingPageDummy, SEARCH_ORDER_ID, mode)
+    protected fun makeAheadOfPrintPanel(): EditablePaperPanel =
+        newPanel(aheadOfPrintFixture(), callingPageDummy, SEARCH_ORDER_ID, mode)
 
     private fun newPanel(p: Paper, pageRef: PageReference?, searchOrderId: Long?, mode: Mode): EditablePaperPanel =
         object : EditablePaperPanel(PANEL_ID, Model.of(p), pageRef, searchOrderId, SHOW_EXCLUDED, mode, Model.of(0)) {
@@ -146,6 +147,7 @@ internal abstract class EditablePaperPanelTest : PaperPanelTest<Paper, EditableP
                 // no-op
             }
 
+            @Suppress("TooGenericExceptionThrown")
             override fun getResponsePage(p: Paper, searchOrderId: Long?, showingExclusions: Boolean): PaperEntryPage =
                 throw RuntimeException("forward to calling page triggered")
         }
@@ -214,7 +216,8 @@ internal abstract class EditablePaperPanelTest : PaperPanelTest<Paper, EditableP
     fun cannotInstantiateInSearchMode() {
         invoking { newPanel(paperFixture(), callingPageDummy, SEARCH_ORDER_ID, Mode.SEARCH) } shouldThrow
             IllegalArgumentException::class withMessage
-            "Mode SEARCH is not enabled in class ch.difty.scipamato.core.web.paper.entry.EditablePaperPanelTest\$newPanel$1"
+            "Mode SEARCH is not enabled in class ch.difty.scipamato.core.web.paper.entry." +
+            "EditablePaperPanelTest\$newPanel$1"
     }
 
     companion object {

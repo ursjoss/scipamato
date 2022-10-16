@@ -71,7 +71,7 @@ import org.apache.wicket.validation.IValidator
 
 private const val CODES_CLASS_BASE_NAME = "codesClass"
 
-@Suppress("SameParameterValue")
+@Suppress("SameParameterValue", "TooManyFunctions")
 abstract class PaperPanel<T>(
     id: String,
     model: IModel<T>?,
@@ -134,8 +134,13 @@ abstract class PaperPanel<T>(
 
     fun getForm(): Form<T> = form
 
+    @Suppress("LongMethod")
     private fun queueHeaderFields() {
-        queueAuthorComplex(PaperFields.AUTHORS.fieldName, PaperFields.FIRST_AUTHOR.fieldName, PaperFields.FIRST_AUTHOR_OVERRIDDEN.fieldName)
+        queueAuthorComplex(
+            PaperFields.AUTHORS.fieldName,
+            PaperFields.FIRST_AUTHOR.fieldName,
+            PaperFields.FIRST_AUTHOR_OVERRIDDEN.fieldName
+        )
         title = TextArea(PaperFields.TITLE.fieldName)
         val pm = paperIdManager
         queue(newNavigationButton("previous", FontAwesome5IconType.step_backward_s, { pm.hasPrevious() }) {
@@ -198,8 +203,8 @@ abstract class PaperPanel<T>(
 
             // Hide if in EditMode
             // Otherwise show if we have an open newsletter or if it is already assigned to a (closed) newsletter
-            private fun shallBeVisible(): Boolean = isEditMode && (isaNewsletterInStatusWip() || isAssociatedWithNewsletter)
-            private fun shallBeEnabled(): Boolean = !isAssociatedWithNewsletter || isAssociatedWithWipNewsletter
+            private fun shallBeVisible() = isEditMode && (isaNewsletterInStatusWip() || isAssociatedWithNewsletter)
+            private fun shallBeEnabled() = !isAssociatedWithNewsletter || isAssociatedWithWipNewsletter
 
             private val titleResourceModel: StringResourceModel
                 get() = StringResourceModel("modNewsletterAssociation-$titleKey.title", this, this@PaperPanel.model)
@@ -344,7 +349,8 @@ abstract class PaperPanel<T>(
      * @param firstAuthorOverridden the checkbox for firstAuthorOverridden
      * @return the first author TextField
      */
-    protected open fun makeFirstAuthor(firstAuthorId: String, firstAuthorOverridden: CheckBox): TextField<String> = TextField(firstAuthorId)
+    protected open fun makeFirstAuthor(firstAuthorId: String, firstAuthorOverridden: CheckBox): TextField<String> =
+        TextField(firstAuthorId)
 
     /**
      * override if special behavior is required
@@ -370,7 +376,10 @@ abstract class PaperPanel<T>(
     private fun makeAndQueueBackButton(id: String, forceRequerySupplier: SerializableSupplier<Boolean>) {
         object : BootstrapButton(id, StringResourceModel("button.back.label"), Buttons.Type.Default) {
             override fun onSubmit() {
-                if (java.lang.Boolean.TRUE == forceRequerySupplier.get()) restartSearchInPaperSearchPage() else if (callingPage != null) setResponsePage(callingPage.page)
+                if (java.lang.Boolean.TRUE == forceRequerySupplier.get())
+                    restartSearchInPaperSearchPage()
+                else if (callingPage != null)
+                    setResponsePage(callingPage.page)
             }
 
             override fun onConfigure() {
@@ -466,7 +475,12 @@ abstract class PaperPanel<T>(
                         .javaClass == SelfUpdateEvent::class.java) {
                     if (isVisible) {
                         isEnabled = false
-                        add(AttributeModifier(TITLE_ATTR, StringResourceModel("$button$id.title.disabled", this, null).string))
+                        add(
+                            AttributeModifier(
+                                TITLE_ATTR,
+                                StringResourceModel("$button$id.title.disabled", this, null).string,
+                            )
+                        )
                         (event.payload as SelfUpdateEvent)
                             .target
                             .add(this)
@@ -688,8 +702,10 @@ abstract class PaperPanel<T>(
                 }
             }
             val choices = CodeModel(codeClassId, localization)
-            val choiceRenderer: IChoiceRenderer<Code> = ChoiceRenderer(CoreEntity.CoreEntityFields.DISPLAY_VALUE.fieldName,
-                Code.CodeFields.CODE.fieldName)
+            val choiceRenderer: IChoiceRenderer<Code> = ChoiceRenderer(
+                CoreEntity.CoreEntityFields.DISPLAY_VALUE.fieldName,
+                Code.CodeFields.CODE.fieldName,
+            )
             val noneSelectedModel = StringResourceModel("codes.noneSelected", this, null)
             val selectAllModel = StringResourceModel(SELECT_ALL_RESOURCE_TAG, this, null)
             val deselectAllModel = StringResourceModel(DESELECT_ALL_RESOURCE_TAG, this, null)
@@ -855,8 +871,10 @@ abstract class PaperPanel<T>(
                     modelObject.setNewsletterTopic(topic)
                 }
             }
-            val choiceRenderer: IChoiceRenderer<NewsletterTopic> = ChoiceRenderer(NewsletterTopic.NewsletterTopicFields.TITLE.fieldName,
-                NewsletterTopic.NewsletterTopicFields.ID.fieldName)
+            val choiceRenderer: IChoiceRenderer<NewsletterTopic> = ChoiceRenderer(
+                NewsletterTopic.NewsletterTopicFields.TITLE.fieldName,
+                NewsletterTopic.NewsletterTopicFields.ID.fieldName
+            )
             val noneSelectedModel = StringResourceModel("$id.noneSelected", this, null)
             val config = BootstrapSelectConfig()
                 .withNoneSelectedText(noneSelectedModel.getObject())
@@ -895,7 +913,10 @@ abstract class PaperPanel<T>(
     ) {
     }
 
-    internal class CodeClass1ConsistencyValidator(codeClass1: BootstrapMultiSelect<Code>, mainCodeOfCodeClass1: TextField<String>) : AbstractFormValidator() {
+    internal class CodeClass1ConsistencyValidator(
+        codeClass1: BootstrapMultiSelect<Code>,
+        mainCodeOfCodeClass1: TextField<String>,
+    ) : AbstractFormValidator() {
         private val components: Array<FormComponent<*>> = arrayOf(codeClass1, mainCodeOfCodeClass1)
         override fun getDependentFormComponents(): Array<FormComponent<*>> = components
 
@@ -933,10 +954,16 @@ abstract class PaperPanel<T>(
                 isVisible = isEditMode
                 if (hasPubMedId()) {
                     isEnabled = true
-                    add(AttributeModifier(TITLE_ATTR, StringResourceModel("pubmedRetrieval.title", this, null).string))
+                    add(AttributeModifier(
+                        TITLE_ATTR,
+                        StringResourceModel("pubmedRetrieval.title", this, null).string,
+                    ))
                 } else {
                     isEnabled = false
-                    add(AttributeModifier(TITLE_ATTR, StringResourceModel("pubmedRetrieval.title.disabled", this, null).string))
+                    add(AttributeModifier(
+                        TITLE_ATTR,
+                        StringResourceModel("pubmedRetrieval.title.disabled", this, null).string,
+                    ))
                 }
             }
         }.apply {

@@ -26,7 +26,7 @@ import org.apache.wicket.request.mapper.parameter.PageParameters
 import org.apache.wicket.settings.DebugSettings
 import org.apache.wicket.spring.injection.annot.SpringBean
 
-@Suppress("SameParameterValue")
+@Suppress("SameParameterValue", "TooManyFunctions")
 abstract class AbstractPage<T> : GenericWebPage<T> {
 
     @SpringBean
@@ -129,7 +129,7 @@ abstract class AbstractPage<T> : GenericWebPage<T> {
         }
 
     fun getBrandName(brand: String?): String =
-        if (brand == null || brand.isBlank() || "n.a." == brand)
+        if (brand.isNullOrBlank() || "n.a." == brand)
             StringResourceModel("brandname", this, null).string
         else brand
 

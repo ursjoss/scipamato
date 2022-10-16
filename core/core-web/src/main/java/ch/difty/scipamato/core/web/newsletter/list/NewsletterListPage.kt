@@ -13,10 +13,10 @@ import ch.difty.scipamato.core.entity.newsletter.NewsletterFilter.NewsletterFilt
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic
 import ch.difty.scipamato.core.persistence.NewsletterService
 import ch.difty.scipamato.core.web.common.BasePage
+import ch.difty.scipamato.core.web.fixed
 import ch.difty.scipamato.core.web.model.NewsletterTopicModel
 import ch.difty.scipamato.core.web.newsletter.NewsletterProvider
 import ch.difty.scipamato.core.web.newsletter.edit.NewsletterEditPage
-import ch.difty.scipamato.core.web.fixed
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton
 import de.agilecoders.wicket.core.markup.html.bootstrap.table.TableBehavior
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelect
@@ -50,7 +50,7 @@ import org.wicketstuff.annotation.mount.MountPath
  */
 @MountPath("/newsletters")
 @AuthorizeInstantiation(Roles.USER, Roles.ADMIN)
-@Suppress("SameParameterValue")
+@Suppress("SameParameterValue", "TooManyFunctions")
 class NewsletterListPage(parameters: PageParameters?) : BasePage<Void>(parameters) {
 
     @SpringBean
@@ -70,7 +70,12 @@ class NewsletterListPage(parameters: PageParameters?) : BasePage<Void>(parameter
 
     private fun makeAndQueueFilterForm(id: String) {
         queue(FilterForm(id, dataProvider))
-        queueFieldAndLabel(TextField(Newsletter.NewsletterFields.ISSUE.fieldName, PropertyModel.of<Any>(filter, NewsletterFilterFields.ISSUE_MASK.fieldName)))
+        queueFieldAndLabel(
+            TextField(
+                Newsletter.NewsletterFields.ISSUE.fieldName,
+                PropertyModel.of<Any>(filter, NewsletterFilterFields.ISSUE_MASK.fieldName)
+            )
+        )
         queueStatusSelectAndLabel(Newsletter.NewsletterFields.PUBLICATION_STATUS.fieldName)
         queueTopicsSelectAndLabel(Newsletter.NewsletterFields.TOPICS.fieldName)
         queueNewButton("newNewsletter")
@@ -80,7 +85,10 @@ class NewsletterListPage(parameters: PageParameters?) : BasePage<Void>(parameter
         StringResourceModel("$id$LABEL_RESOURCE_TAG", this, null).also {
             queue(Label("$id$LABEL_TAG", it))
         }
-        val selectionModel = PropertyModel.of<PublicationStatus>(filter, NewsletterFilterFields.PUBLICATION_STATUS.fieldName)
+        val selectionModel =
+            PropertyModel.of<PublicationStatus>(filter, NewsletterFilterFields.PUBLICATION_STATUS.fieldName)
+
+        @Suppress("SpreadOperator")
         val choicesModel = Model.ofList(listOf(*PublicationStatus.values()))
         BootstrapSelect(id, selectionModel, choicesModel, EnumChoiceRenderer(this)).apply {
             isNullValid = true
@@ -99,9 +107,13 @@ class NewsletterListPage(parameters: PageParameters?) : BasePage<Void>(parameter
         StringResourceModel("$id$LABEL_RESOURCE_TAG", this, null).also {
             queue(Label(id + LABEL_TAG, it))
         }
-        val selectionModel = PropertyModel.of<NewsletterTopic>(filter, NewsletterFilterFields.NEWSLETTER_TOPIC_ID.fieldName)
+        val selectionModel =
+            PropertyModel.of<NewsletterTopic>(filter, NewsletterFilterFields.NEWSLETTER_TOPIC_ID.fieldName)
         val choicesModel = NewsletterTopicModel(languageCode)
-        val choiceRenderer = ChoiceRenderer<NewsletterTopic>(NewsletterTopic.NewsletterTopicFields.TITLE.fieldName, NewsletterTopic.NewsletterTopicFields.ID.fieldName)
+        val choiceRenderer = ChoiceRenderer<NewsletterTopic>(
+            NewsletterTopic.NewsletterTopicFields.TITLE.fieldName,
+            NewsletterTopic.NewsletterTopicFields.ID.fieldName
+        )
         val noneSelectedModel = StringResourceModel("$id.noneSelected", this, null)
         val config = BootstrapSelectConfig()
             .withNoneSelectedText(noneSelectedModel.getObject())
@@ -124,7 +136,7 @@ class NewsletterListPage(parameters: PageParameters?) : BasePage<Void>(parameter
 
     private fun makeTableColumns(): List<IColumn<Newsletter, String>> =
         mutableListOf<IColumn<Newsletter, String>>().apply {
-            add(makeClickableColumn(Newsletter.NewsletterFields.ISSUE.fieldName) { newsletterModel: IModel<Newsletter> ->
+            add(makeClickableColumn(Newsletter.NewsletterFields.ISSUE.fieldName) { newsletterModel ->
                 onTitleClick(newsletterModel)
             })
             add(makePropertyColumn(Newsletter.NewsletterFields.ISSUE_DATE.fieldName))
@@ -137,7 +149,11 @@ class NewsletterListPage(parameters: PageParameters?) : BasePage<Void>(parameter
         propExpression: String,
         action: SerializableConsumer<IModel<Newsletter>>,
     ): ClickablePropertyColumn<Newsletter, String> =
-        ClickablePropertyColumn(StringResourceModel("$COLUMN_HEADER$propExpression", this, null), propExpression, action, propExpression)
+        ClickablePropertyColumn(StringResourceModel(
+            "$COLUMN_HEADER$propExpression",
+            this,
+            null
+        ), propExpression, action, propExpression)
 
     private fun onTitleClick(newsletterModel: IModel<Newsletter>) {
         setResponsePage(NewsletterEditPage(newsletterModel))
@@ -164,12 +180,18 @@ class NewsletterListPage(parameters: PageParameters?) : BasePage<Void>(parameter
 
     private fun makeSortTopicLinkColumn(id: String): IColumn<Newsletter, String> {
         val random = FontAwesome5IconTypeBuilder.FontAwesome5Solid.random.fixed()
-        return object : LinkIconColumn<Newsletter>(StringResourceModel("$COLUMN_HEADER$id", this@NewsletterListPage, null)) {
+        return object : LinkIconColumn<Newsletter>(
+            StringResourceModel("$COLUMN_HEADER$id", this@NewsletterListPage, null)
+        ) {
             override fun createIconModel(rowModel: IModel<Newsletter>): IModel<String> = Model.of(random.cssClassName())
             override fun createTitleModel(rowModel: IModel<Newsletter>): IModel<String> =
                 StringResourceModel("column.title.$id", this@NewsletterListPage, rowModel)
 
-            override fun onClickPerformed(target: AjaxRequestTarget, rowModel: IModel<Newsletter>, link: AjaxLink<Void>) {
+            override fun onClickPerformed(
+                target: AjaxRequestTarget,
+                rowModel: IModel<Newsletter>,
+                link: AjaxLink<Void>,
+            ) {
                 setResponsePage(NewsletterTopicSortPage(rowModel, pageReference))
             }
         }
@@ -177,18 +199,26 @@ class NewsletterListPage(parameters: PageParameters?) : BasePage<Void>(parameter
 
     private fun makeRemoveLinkColumn(id: String): IColumn<Newsletter, String> {
         val trash = FontAwesome5IconTypeBuilder.FontAwesome5Solid.trash_alt.fixed()
-        return object : LinkIconColumn<Newsletter>(StringResourceModel("$COLUMN_HEADER$id", this@NewsletterListPage, null)) {
+        return object : LinkIconColumn<Newsletter>(
+            StringResourceModel("$COLUMN_HEADER$id", this@NewsletterListPage, null)
+        ) {
             override fun createIconModel(rowModel: IModel<Newsletter>): IModel<String> =
                 Model.of(if (rowModel.getObject().isDeletable) trash.cssClassName() else "")
 
             override fun createTitleModel(rowModel: IModel<Newsletter>): IModel<String> =
                 StringResourceModel("column.title.$id", this@NewsletterListPage, rowModel)
 
-            override fun onClickPerformed(target: AjaxRequestTarget, rowModel: IModel<Newsletter>, link: AjaxLink<Void>) {
+            override fun onClickPerformed(
+                target: AjaxRequestTarget,
+                rowModel: IModel<Newsletter>,
+                link: AjaxLink<Void>,
+            ) {
                 val nl = rowModel.getObject()
                 if (nl.isDeletable) {
                     service.remove(nl)
-                    info(StringResourceModel("newsletter.deleted.success", this@NewsletterListPage, rowModel).string)
+                    info(StringResourceModel(
+                        "newsletter.deleted.success", this@NewsletterListPage, rowModel
+                    ).string)
                     target.add(results)
                     target.add(newNewsletterButton)
                     target.add(feedbackPanel)

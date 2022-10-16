@@ -15,7 +15,7 @@ import org.apache.wicket.markup.html.link.Link
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 
-@Suppress("PrivatePropertyName")
+@Suppress("PrivatePropertyName", "VariableNaming")
 internal class CodeListPageTest : BasePageTest<CodeListPage>() {
 
     private val cc1 = CodeClass(1, "cc1", "d1")

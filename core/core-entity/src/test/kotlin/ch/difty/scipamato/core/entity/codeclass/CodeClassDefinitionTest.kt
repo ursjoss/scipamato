@@ -7,7 +7,7 @@ import org.amshove.kluent.shouldContainSame
 import org.amshove.kluent.shouldNotBeNull
 import org.junit.jupiter.api.Test
 
-@Suppress("SpellCheckingInspection", "PrivatePropertyName")
+@Suppress("SpellCheckingInspection", "PrivatePropertyName", "VariableNaming")
 internal class CodeClassDefinitionTest {
 
     private val cc_de = CodeClassTranslation(10, "de", "codede2", "beschreibung", 1)

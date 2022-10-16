@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository
 @CacheConfig(cacheNames = ["codes"])
 open class JooqCodeRepo(private val dslContext: DSLContext) : CodeRepository {
 
+    @Suppress("MagicNumber")
     @Cacheable
     override fun findCodesOfClass(codeClassId: CodeClassId, languageCode: String): List<Code> = dslContext
         .select(

@@ -19,7 +19,7 @@ interface CsvAdapter<T> : Serializable {
     fun build(types: List<T>): String
 }
 
-@Suppress("FunctionName")
+@Suppress("FunctionName", "SpreadOperator")
 abstract class AbstractCsvAdapter<T>(
     private val rowMapper: (Collection<T>) -> List<Array<String>>,
     private val headers: Array<String?>

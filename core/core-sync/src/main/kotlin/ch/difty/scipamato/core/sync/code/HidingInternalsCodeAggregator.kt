@@ -1,3 +1,5 @@
+@file:Suppress("MagicNumber")
+
 package ch.difty.scipamato.core.sync.code
 
 import org.springframework.context.annotation.Scope
@@ -74,12 +76,9 @@ class HidingInternalsCodeAggregator : CodeAggregator {
     private fun gatherCodesStudyDesign(): List<Short> =
         _codes.mapNotNull { studyDesignCodeMapper[it] }.distinct()
 
-    override val aggregatedCodes: Array<String>
-        get() = _codes.toTypedArray()
+    override val aggregatedCodes get() = _codes.toTypedArray()
 
-    override val codesPopulation: Array<Short>
-        get() = _codesPopulation.toTypedArray()
+    override val codesPopulation get() = _codesPopulation.toTypedArray()
 
-    override val codesStudyDesign: Array<Short>
-        get() = _codesStudyDesign.toTypedArray()
+    override val codesStudyDesign get() = _codesStudyDesign.toTypedArray()
 }

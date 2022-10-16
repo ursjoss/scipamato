@@ -12,12 +12,15 @@ import org.jooq.DSLContext
  *  * Every record will be updated at least with the current timestamp in last_synched.
  *  * id columns and audit fields are those of the scipamato-core tables
  */
-class NewsletterTopicItemWriter(jooqDslContextPublic: DSLContext) : ScipamatoItemWriter<PublicNewsletterTopic>(jooqDslContextPublic, "newsletterTopic") {
+class NewsletterTopicItemWriter(
+    jooqDslContextPublic: DSLContext
+) : ScipamatoItemWriter<PublicNewsletterTopic>(jooqDslContextPublic, "newsletterTopic") {
     override fun executeUpdate(i: PublicNewsletterTopic): Int =
         dslContext
             .insertInto(NewsletterTopic.NEWSLETTER_TOPIC)
-            .columns(NewsletterTopic.NEWSLETTER_TOPIC.ID, NewsletterTopic.NEWSLETTER_TOPIC.LANG_CODE, NewsletterTopic.NEWSLETTER_TOPIC.TITLE,
-                NewsletterTopic.NEWSLETTER_TOPIC.VERSION, NewsletterTopic.NEWSLETTER_TOPIC.CREATED, NewsletterTopic.NEWSLETTER_TOPIC.LAST_MODIFIED,
+            .columns(NewsletterTopic.NEWSLETTER_TOPIC.ID, NewsletterTopic.NEWSLETTER_TOPIC.LANG_CODE,
+                NewsletterTopic.NEWSLETTER_TOPIC.TITLE, NewsletterTopic.NEWSLETTER_TOPIC.VERSION,
+                NewsletterTopic.NEWSLETTER_TOPIC.CREATED, NewsletterTopic.NEWSLETTER_TOPIC.LAST_MODIFIED,
                 NewsletterTopic.NEWSLETTER_TOPIC.LAST_SYNCHED)
             .values(i.id, i.langCode, i.title, i.version, i.created, i.lastModified,
                 i.lastSynched)
@@ -28,6 +31,7 @@ class NewsletterTopicItemWriter(jooqDslContextPublic: DSLContext) : ScipamatoIte
             .set(NewsletterTopic.NEWSLETTER_TOPIC.CREATED, i.created)
             .set(NewsletterTopic.NEWSLETTER_TOPIC.LAST_MODIFIED, i.lastModified)
             .set(NewsletterTopic.NEWSLETTER_TOPIC.LAST_SYNCHED, i.lastSynched)
-            .where(NewsletterTopic.NEWSLETTER_TOPIC.ID.eq(i.id).and(NewsletterTopic.NEWSLETTER_TOPIC.LANG_CODE.eq(i.langCode)))
+            .where(NewsletterTopic.NEWSLETTER_TOPIC.ID.eq(i.id)
+                .and(NewsletterTopic.NEWSLETTER_TOPIC.LANG_CODE.eq(i.langCode)))
             .execute()
 }

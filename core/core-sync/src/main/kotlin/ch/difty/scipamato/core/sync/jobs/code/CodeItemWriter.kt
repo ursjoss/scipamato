@@ -19,10 +19,12 @@ class CodeItemWriter(
     override fun executeUpdate(i: PublicCode): Int =
         dslContext
             .insertInto(Code.CODE)
-            .columns(Code.CODE.CODE_, Code.CODE.LANG_CODE, Code.CODE.CODE_CLASS_ID, Code.CODE.NAME, Code.CODE.COMMENT, Code.CODE.SORT, Code.CODE.VERSION,
-                    Code.CODE.CREATED, Code.CODE.LAST_MODIFIED, Code.CODE.LAST_SYNCHED)
-            .values(i.code, i.langCode, i.codeClassId, i.name, i.comment, i.sort, i.version, i.created, i.lastModified, i.lastSynched)
-            .onConflict(Code.CODE.CODE_, Code.CODE.LANG_CODE)
+            .columns(Code.CODE.CODE_, Code.CODE.LANG_CODE, Code.CODE.CODE_CLASS_ID, Code.CODE.NAME, Code.CODE.COMMENT,
+                Code.CODE.SORT, Code.CODE.VERSION, Code.CODE.CREATED, Code.CODE.LAST_MODIFIED, Code.CODE.LAST_SYNCHED)
+            .values(
+                i.code, i.langCode, i.codeClassId, i.name, i.comment, i.sort, i.version,
+                i.created, i.lastModified, i.lastSynched
+            ).onConflict(Code.CODE.CODE_, Code.CODE.LANG_CODE)
             .doUpdate()
             .set(Code.CODE.CODE_CLASS_ID, i.codeClassId)
             .set(Code.CODE.NAME, i.name)

@@ -30,7 +30,7 @@ import javax.sql.DataSource
  * [T] type of sync classes
  * [R] related record implementation
  */
-@Suppress("LongParameterList")
+@Suppress("LongParameterList", "TooManyFunctions")
 abstract class SyncConfig<T, R : UpdatableRecordImpl<R>?>(
     private val topic: String,
     private val chunkSize: Int,
@@ -126,13 +126,14 @@ abstract class SyncConfig<T, R : UpdatableRecordImpl<R>?>(
     fun getString(field: TableField<*, String?>, rs: ResultSet): String? = rs.getString(field.name)
 
     @Throws(SQLException::class)
-    fun getBoolean(field: TableField<*, Boolean?>, rs: ResultSet): Boolean? = rs.getBoolean(field.name)
+    fun getBoolean(field: TableField<*, Boolean?>, rs: ResultSet): Boolean = rs.getBoolean(field.name)
 
     /**
      * @param [field] the integer field to get the value from
      * @param [rs] the [ResultSet] providing the values
      * Returns `null` if the column was null, the boxed integer value otherwise
-     * @throws [SQLException] if the columnLabel is not valid; if a database access error occurs or this method is called on a closed result set
+     * @throws [SQLException] if the columnLabel is not valid;
+     *         if a database access error occurs or this method is called on a closed result set
      */
     @Throws(SQLException::class)
     fun getInteger(field: TableField<*, Int?>, rs: ResultSet): Int? {
@@ -144,7 +145,8 @@ abstract class SyncConfig<T, R : UpdatableRecordImpl<R>?>(
      * @param [field] the long field to get the value from
      * @param [rs] the [ResultSet] providing the values
      * Returns `null` if the column was null, the boxed long value otherwise
-     * @throws SQLException if the columnLabel is not valid; if a database access error occurs or this method is called on a closed result set
+     * @throws SQLException if the columnLabel is not valid;
+     *         if a database access error occurs or this method is called on a closed result set
      */
     @Throws(SQLException::class)
     fun getLong(field: TableField<*, Long?>, rs: ResultSet): Long? {

@@ -29,7 +29,8 @@ import javax.sql.DataSource
  * Defines the code synchronization job, applying two steps:
  *
  *  1. codeInsertingOrUpdating: inserts new records or updates if already present
- *  1. codePurging: removes records that have not been touched by the first step (within a defined grace time in minutes)
+ *  1. codePurging: removes records that have not been touched by the first step
+ *     (within a defined grace time in minutes)
  */
 @Configuration
 @Profile("!wickettest")
@@ -58,6 +59,7 @@ open class CodeSyncConfig(
 
     override fun publicWriter(): ItemWriter<PublicCode> = CodeItemWriter(jooqPublic)
 
+    @Suppress("MagicNumber")
     /**
      * HARDCODED consider moving the aggregated code 5abc into some table in
      * scipamato-core. See also HidingInternalsCodeAggregator#filterAndEnrich
@@ -96,7 +98,8 @@ open class CodeSyncConfig(
         lastSynched = getNow(),
         )
 
-    override fun lastSynchedField(): TableField<CodeRecord, Timestamp> = ch.difty.scipamato.publ.db.tables.Code.CODE.LAST_SYNCHED
+    override fun lastSynchedField(): TableField<CodeRecord, Timestamp> =
+        ch.difty.scipamato.publ.db.tables.Code.CODE.LAST_SYNCHED
 
     override val pseudoFkDcs: DeleteConditionStep<CodeRecord>?
         get() = jooqPublic

@@ -54,6 +54,7 @@ open class RefDataSyncJobLauncher(
             .addDate("runDate", Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()), true)
             .toJobParameters()
 
+    @Suppress("TooGenericExceptionCaught")
     override fun launch(
         setSuccess: (String) -> Unit,
         setFailure: (String) -> Unit,

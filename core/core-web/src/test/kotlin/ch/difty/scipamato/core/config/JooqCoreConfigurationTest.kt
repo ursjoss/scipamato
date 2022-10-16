@@ -34,6 +34,7 @@ import javax.sql.DataSource
 
 @SpringBootTest
 @Disabled("might have to move it into integration-test TODO")
+@Suppress("UnusedPrivateMember")
 internal class JooqCoreConfigurationTest {
 
     @MockkBean

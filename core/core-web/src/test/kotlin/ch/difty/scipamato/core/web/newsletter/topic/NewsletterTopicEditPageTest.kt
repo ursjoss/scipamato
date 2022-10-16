@@ -22,7 +22,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.dao.DuplicateKeyException
 
-@Suppress("PrivatePropertyName")
+@Suppress("PrivatePropertyName", "VariableNaming")
 internal class NewsletterTopicEditPageTest : BasePageTest<NewsletterTopicEditPage>() {
 
     private val ntt_de = NewsletterTopicTranslation(1, "de", "thema1", 1)

@@ -12,6 +12,7 @@ import org.springframework.test.util.ReflectionTestUtils
 internal const val USERNAME = "testuser"
 internal const val PASSWORD = "secretpw"
 
+@Suppress("SerialVersionUIDInSerializableClass", "UnnecessaryAbstractClass")
 @SpringBootTest(classes = [TestApplication::class])
 abstract class WicketBaseTest {
 
@@ -25,7 +26,9 @@ abstract class WicketBaseTest {
 
     @BeforeEach
     internal fun setUp() {
-        wicketApplication.headerResponseDecorators.add { r -> JavaScriptFilteredIntoFooterHeaderResponse(r, AbstractPage.FOOTER_CONTAINER) }
+        wicketApplication.headerResponseDecorators.add { r ->
+            JavaScriptFilteredIntoFooterHeaderResponse(r, AbstractPage.FOOTER_CONTAINER)
+        }
 
         ReflectionTestUtils.setField(wicketApplication, "applicationContext", applicationContextMock)
         tester = WicketTester(wicketApplication)

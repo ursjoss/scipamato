@@ -17,6 +17,7 @@ internal class EtAlAuthorsAbbreviator(properties: ApplicationPublicProperties) :
     private val authorsAbbreviatedCutOff: Int = authorsAbbreviatedMaxLength - ET_AL.length
     private val authorsTruncatedCutOff: Int = authorsAbbreviatedMaxLength - ELLIPSIS.length
 
+    @Suppress("ReturnCount")
     override fun abbreviate(authors: String?): String {
         if (authors == null) return ""
         if (noNeedToAbbreviate(authors)) return authors

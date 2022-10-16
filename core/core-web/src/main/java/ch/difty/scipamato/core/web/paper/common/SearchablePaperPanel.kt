@@ -60,6 +60,7 @@ abstract class SearchablePaperPanel protected constructor(
             isVisible = false
         }
 
+    @Suppress("MagicNumber")
     override fun newAttachmentTable(id: String): DataTable<PaperAttachment, String> {
         val provider = PaperAttachmentProvider(Model.ofList(ArrayList()))
         return BootstrapDefaultDataTable(id, ArrayList(), provider, 10)

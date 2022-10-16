@@ -7,7 +7,7 @@ import org.amshove.kluent.shouldContainSame
 import org.amshove.kluent.shouldNotBeNull
 import org.junit.jupiter.api.Test
 
-@Suppress("PrivatePropertyName", "SpellCheckingInspection")
+@Suppress("PrivatePropertyName", "SpellCheckingInspection", "VariableNaming")
 internal class NewsletterTopicDefinitionTest {
 
     private val ntt_de = NewsletterTopicTranslation(10, "de", "thema2", 1)

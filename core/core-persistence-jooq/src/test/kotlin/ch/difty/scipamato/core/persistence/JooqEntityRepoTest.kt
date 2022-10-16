@@ -5,7 +5,6 @@ package ch.difty.scipamato.core.persistence
 import ch.difty.scipamato.common.DateTimeService
 import ch.difty.scipamato.common.FrozenDateTimeService
 import ch.difty.scipamato.common.entity.filter.ScipamatoFilter
-import ch.difty.scipamato.common.persistence.paging.PaginationContext
 import ch.difty.scipamato.core.entity.IdScipamatoEntity
 import io.mockk.confirmVerified
 import io.mockk.every
@@ -61,12 +60,8 @@ abstract class JooqEntityRepoTest<R : Record, T : IdScipamatoEntity<ID>, ID : Nu
     private val updateConditionStepMock = mockk<UpdateConditionStep<R>>()
     private val updateSetMoreStepMock = mockk<UpdateSetMoreStep<R>>()
     private val updateResultStepMock = mockk<UpdateResultStep<R>>()
-    private val paginationContextMock = mockk<PaginationContext>()
 
     abstract override val repo: EntityRepository<T, ID, F>
-
-    private val entities = mutableListOf<T>()
-    private val records = mutableListOf<R>()
 
     private lateinit var id: ID
 
@@ -121,7 +116,6 @@ abstract class JooqEntityRepoTest<R : Record, T : IdScipamatoEntity<ID>, ID : Nu
         verify { deleteUsingStep.where(tableId.equal(id)) }
         verify { deleteConditionStep1Mock.and(recordVersion.eq(0)) }
         verify { deleteConditionStep2Mock.execute() }
-        verify { persistedEntity == persistedEntity }
     }
 
     abstract override fun makeRepoFindingEntityById(entity: T): EntityRepository<T, ID, F>

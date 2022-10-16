@@ -29,7 +29,7 @@ import org.springframework.context.ApplicationContext
 import org.springframework.context.annotation.Bean
 import org.springframework.test.context.ActiveProfiles
 
-@Suppress("SpellCheckingInspection")
+@Suppress("SpellCheckingInspection", "UnnecessaryAbstractClass")
 @SpringBootTest
 @ActiveProfiles("wickettest")
 @ExtendWith(MockKExtension::class)

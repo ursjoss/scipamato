@@ -20,7 +20,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.dao.DuplicateKeyException
 
-@Suppress("SpellCheckingInspection", "PrivatePropertyName")
+@Suppress("SpellCheckingInspection", "PrivatePropertyName", "VariableNaming")
 internal class KeywordEditPageTest : BasePageTest<KeywordEditPage>() {
 
     private val kt_de = KeywordTranslation(1, "de", "Name1", 1)
@@ -155,8 +155,8 @@ internal class KeywordEditPageTest : BasePageTest<KeywordEditPage>() {
 
     @Test
     fun submittingDelete_withForeignKeyConstraintViolationException_addsErrorMsg() {
-        val msg =
-            """... is still referenced from table "paper_code".; nested exception is org.postgresql.util.PSQLException..."""
+        @Suppress("MaxLineLength")
+        val msg = """... is still referenced from table "paper_code".; nested exception is org.postgresql.util.PSQLException..."""
         every { keywordServiceMock.delete(any(), any()) } throws DataIntegrityViolationException(msg)
         tester.startPage(KeywordEditPage(Model.of(kd), null))
 

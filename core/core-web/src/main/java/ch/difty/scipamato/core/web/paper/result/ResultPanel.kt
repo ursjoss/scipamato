@@ -59,7 +59,7 @@ import java.io.ObjectInputStream
  * which are provided by the instantiating page through the data provider
  * holding the filter specification.
  */
-@Suppress("SameParameterValue")
+@Suppress("SameParameterValue", "TooManyFunctions")
 abstract class ResultPanel protected constructor(
     id: String,
     private val dataProvider: AbstractPaperSlimProvider<out PaperSlimFilter>,
@@ -151,14 +151,22 @@ abstract class ResultPanel protected constructor(
         paperService.findByNumber(m.getObject()?.number ?: 0, languageCode)
             .orElse(Paper())), page.pageReference, dataProvider.searchOrderId, dataProvider.isShowExcluded, Model.of(0))
 
-    private fun makePropertyColumn(propExpression: String): PropertyColumn<PaperSlim, String> =
-        PropertyColumn(StringResourceModel("$COLUMN_HEADER$propExpression", this@ResultPanel, null), propExpression, propExpression)
+    private fun makePropertyColumn(propExpression: String) = PropertyColumn<PaperSlim, String>(
+        StringResourceModel("$COLUMN_HEADER$propExpression", this@ResultPanel, null), propExpression, propExpression
+    )
 
-    private fun makeClickableColumn(propExpression: String, consumer: SerializableConsumer<IModel<PaperSlim>>): ClickablePropertyColumn<PaperSlim, String> =
-        ClickablePropertyColumn(StringResourceModel("$COLUMN_HEADER$propExpression", this@ResultPanel, null), propExpression, consumer, propExpression)
+    private fun makeClickableColumn(propExpression: String, consumer: SerializableConsumer<IModel<PaperSlim>>) =
+        ClickablePropertyColumn(
+            displayModel = StringResourceModel("$COLUMN_HEADER$propExpression", this@ResultPanel, null),
+            property = propExpression,
+            action = consumer,
+            sort = propExpression,
+        )
 
     private fun makeExcludeLinkIconColumn(id: String): IColumn<PaperSlim, String> =
-        object : LinkIconColumn<PaperSlim>(StringResourceModel("$COLUMN_HEADER$id", this@ResultPanel, null)) {
+        object : LinkIconColumn<PaperSlim>(
+            StringResourceModel("$COLUMN_HEADER$id", this@ResultPanel, null)
+        ) {
             override fun createIconModel(rowModel: IModel<PaperSlim>): IModel<String> {
                 val checkCircle = FontAwesome5IconTypeBuilder.FontAwesome5Regular.check_circle.fixed()
                 val ban = FontAwesome5IconTypeBuilder.FontAwesome5Solid.ban.fixed()
@@ -166,12 +174,16 @@ abstract class ResultPanel protected constructor(
             }
 
             override fun createTitleModel(rowModel: IModel<PaperSlim>): IModel<String> =
-                StringResourceModel(if (dataProvider.isShowExcluded) "column.title.reinclude" else "column.title.exclude", this@ResultPanel, null)
+                StringResourceModel(
+                    if (dataProvider.isShowExcluded) "column.title.reinclude" else "column.title.exclude", this@ResultPanel, null
+                )
 
             override fun onClickPerformed(target: AjaxRequestTarget, rowModel: IModel<PaperSlim>, link: AjaxLink<Void>) {
                 val excludedId = rowModel.getObject().id
                 target.add(results)
-                excludedId?.let { send(page, Broadcast.BREADTH, SearchOrderChangeEvent(target).withExcludedPaperId(it)) }
+                excludedId?.let {
+                    send(page, Broadcast.BREADTH, SearchOrderChangeEvent(target).withExcludedPaperId(it))
+                }
             }
         }
 
@@ -200,7 +212,7 @@ abstract class ResultPanel protected constructor(
         envelopeOpen: FontAwesome5IconType, envelope: FontAwesome5IconType,
     ): LinkIconColumn<PaperSlim> = object :
         LinkIconColumn<PaperSlim>(StringResourceModel("$COLUMN_HEADER$id", this@ResultPanel, null)) {
-        override fun createIconModel(rowModel: IModel<PaperSlim>): IModel<String> = Model.of(newLinkIcon(rowModel.getObject()))
+        override fun createIconModel(rowModel: IModel<PaperSlim>) = Model.of(newLinkIcon(rowModel.getObject()))
         private fun newLinkIcon(paper: PaperSlim): String =
             if (hasNoNewsletter(paper))
                 if (isThereOneNewsletterInStatusWip) plusSquare.cssClassName() else ""
@@ -226,7 +238,9 @@ abstract class ResultPanel protected constructor(
             } else if (hasNewsletterWip(paper)) {
                 StringResourceModel("column.title.newsletter.remove", this@ResultPanel, null)
             } else {
-                StringResourceModel("column.title.newsletter.closed", this@ResultPanel, Model.of(paper.newsletterAssociation))
+                StringResourceModel(
+                    "column.title.newsletter.closed", this@ResultPanel, Model.of(paper.newsletterAssociation)
+                )
             }
         }
 
@@ -243,7 +257,9 @@ abstract class ResultPanel protected constructor(
             } else if (hasNewsletterWip(paper)) {
                 newsletterService.removePaperFromWipNewsletter(paper.id!!)
             } else {
-                warn(StringResourceModel("newsletter.readonly", this@ResultPanel, Model.of(paper.newsletterAssociation)).string)
+                warn(
+                    StringResourceModel("newsletter.readonly", this@ResultPanel, Model.of(paper.newsletterAssociation)).string
+                )
             }
             target.add(results)
             send(page, Broadcast.BREADTH, NewsletterChangeEvent(target))
@@ -362,9 +378,13 @@ abstract class ResultPanel protected constructor(
             .withCompression()
             .build()
         if (plus)
-            addOrReplace(newJasperResourceLink(id, "literature_review_plus", PaperLiteratureReviewPlusDataSource(dataProvider, rhf, config)))
+            addOrReplace(
+                newJasperResourceLink(id, "literature_review_plus", PaperLiteratureReviewPlusDataSource(dataProvider, rhf, config))
+            )
         else
-            addOrReplace(newJasperResourceLink(id, "literature_review", PaperLiteratureReviewDataSource(dataProvider, rhf, config)))
+            addOrReplace(
+                newJasperResourceLink(id, "literature_review", PaperLiteratureReviewDataSource(dataProvider, rhf, config))
+            )
     }
 
     private fun addOrReplacePdfSummaryTableLink(id: String) {
@@ -394,12 +414,15 @@ abstract class ResultPanel protected constructor(
             body = StringResourceModel("$LINK_RESOURCE_PREFIX$resourceKeyPart$LABEL_RESOURCE_TAG")
             add(AttributeModifier(
                 TITLE_ATTR,
-                StringResourceModel("$LINK_RESOURCE_PREFIX$resourceKeyPart$TITLE_RESOURCE_TAG", this@ResultPanel, null).string
+                StringResourceModel(
+                    "$LINK_RESOURCE_PREFIX$resourceKeyPart$TITLE_RESOURCE_TAG", this@ResultPanel, null
+                ).string
             ))
         }
 
     // Deserialization of the panel without recreating the jasper links renders them invalid
     // see https://github.com/ursjoss/scipamato/issues/2
+    @Suppress("UnusedPrivateMember")
     @Throws(IOException::class, ClassNotFoundException::class)
     private fun readObject(s: ObjectInputStream) {
         s.defaultReadObject()

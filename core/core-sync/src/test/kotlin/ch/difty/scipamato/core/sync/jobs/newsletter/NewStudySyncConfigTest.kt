@@ -85,6 +85,7 @@ internal class NewStudySyncConfigTest {
         newStudy.lastSynched.toString() shouldBeEqualTo "2016-12-09 06:02:13.0"
     }
 
+    @Suppress("MaxLineLength")
     @Test
     fun selectSql() {
         /* ktlint-disable max-line-length */

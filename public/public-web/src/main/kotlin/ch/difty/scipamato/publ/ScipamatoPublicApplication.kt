@@ -5,7 +5,6 @@ import ch.difty.scipamato.common.web.AbstractPage
 import ch.difty.scipamato.publ.config.ScipamatoPublicProperties
 import com.giffing.wicket.spring.boot.starter.app.WicketBootSecuredWebApplication
 import org.apache.wicket.Session
-import org.apache.wicket.markup.head.IHeaderResponse
 import org.apache.wicket.markup.head.filter.JavaScriptFilteredIntoFooterHeaderResponse
 import org.apache.wicket.request.Request
 import org.apache.wicket.request.Response
@@ -42,6 +41,7 @@ open class ScipamatoPublicApplication(
     }
 }
 
+@Suppress("SpreadOperator")
 fun main(args: Array<String>) {
     runApplication<ScipamatoPublicApplication>(*args)
 }

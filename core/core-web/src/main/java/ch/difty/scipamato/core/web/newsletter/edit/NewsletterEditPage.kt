@@ -88,7 +88,10 @@ class NewsletterEditPage(model: IModel<Newsletter>?) : BasePage<Newsletter>(getM
         super.onInitialize()
         queueForm("form")
         queueFieldAndLabel(newIssueField(Newsletter.NewsletterFields.ISSUE.fieldName), PropertyValidator<Any>())
-        queueFieldAndLabel(newIssueDateField(Newsletter.NewsletterFields.ISSUE_DATE.fieldName), PropertyValidator<Any>())
+        queueFieldAndLabel(
+            newIssueDateField(Newsletter.NewsletterFields.ISSUE_DATE.fieldName),
+            PropertyValidator<Any>(),
+        )
         makeAndQueuePublicationStatusSelectBox(Newsletter.NewsletterFields.PUBLICATION_STATUS.fieldName)
         queueSubmitButton("submit")
         makeAndQueueResultPanel("resultPanel")
@@ -127,6 +130,7 @@ class NewsletterEditPage(model: IModel<Newsletter>?) : BasePage<Newsletter>(getM
         queue(form)
     }
 
+    @Suppress("SpreadOperator")
     private fun makeAndQueuePublicationStatusSelectBox(id: String) {
         val publicationStatus = object : BootstrapSelect<PublicationStatus>(
             id,
@@ -143,6 +147,7 @@ class NewsletterEditPage(model: IModel<Newsletter>?) : BasePage<Newsletter>(getM
         queue(Label("$id$LABEL_TAG", StringResourceModel("$id$LABEL_RESOURCE_TAG", this, null)))
     }
 
+    @Suppress("TooGenericExceptionCaught")
     private fun doUpdate() {
         try {
             val persisted = service.saveOrUpdate(modelObject!!)
@@ -194,5 +199,4 @@ class NewsletterEditPage(model: IModel<Newsletter>?) : BasePage<Newsletter>(getM
                 publicationStatus = PublicationStatus.WIP
             })
     }
-
 }

@@ -7,7 +7,7 @@ import org.amshove.kluent.shouldContainSame
 import org.amshove.kluent.shouldNotBeNull
 import org.junit.jupiter.api.Test
 
-@Suppress("PrivatePropertyName", "PrivatePropertyName", "SpellCheckingInspection")
+@Suppress("PrivatePropertyName", "PrivatePropertyName", "SpellCheckingInspection", "VariableNaming")
 internal class KeywordDefinitionTest {
 
     private val kw_de = KeywordTranslation(10, "de", "stichwort2", 1)

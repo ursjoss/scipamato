@@ -11,6 +11,7 @@ import org.apache.wicket.request.mapper.parameter.PageParameters
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 
+@Suppress("UnusedPrivateMember")
 internal class AbstractLogoutPageTest : WicketBaseTest() {
 
     private lateinit var page: AbstractLogoutPage<*>
@@ -40,7 +41,7 @@ internal class AbstractLogoutPageTest : WicketBaseTest() {
     fun submit_withResponsePage() {
         val parameters = PageParameters()
         val page2 = object : TestLogoutPage(parameters) {
-            override val responsePage: AbstractPage<*>?
+            override val responsePage: AbstractPage<*>
                 get() = TestLoginPage(parameters)
         }
         tester.startPage(page2)
