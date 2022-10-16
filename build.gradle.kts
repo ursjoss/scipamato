@@ -11,7 +11,6 @@ import org.sonarqube.gradle.SonarQubeTask
 import org.springframework.boot.gradle.plugin.SpringBootPlugin
 import org.springframework.boot.gradle.tasks.bundling.BootJar
 import org.unbrokendome.gradle.plugins.testsets.TestSetsPlugin
-import java.util.Properties
 
 buildscript {
     repositories {
@@ -24,7 +23,6 @@ buildscript {
 }
 
 plugins {
-////    id("application-properties-filter") TODO
     kotlin("jvm") version libs.versions.kotlin.get()
     kotlin("plugin.spring") version libs.versions.kotlin.get() apply false
     alias(libs.plugins.springBoot).apply(false)

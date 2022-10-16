@@ -1,8 +1,8 @@
 import org.springframework.boot.gradle.tasks.bundling.BootJar
-import plugins.ApplicationPropertiesFilterPlugin
 
 plugins {
     alias(libs.plugins.springBoot).apply(true)
+    id("application-properties-filter")
 }
 
 description = "SciPaMaTo-Public :: Web Project"
@@ -26,7 +26,6 @@ sourceSets {
 }
 
 tasks {
-    apply<ApplicationPropertiesFilterPlugin>()
     withType<BootJar> {
         enabled = true
         mainClass.set("ch.difty.scipamato.publ.ScipamatoPublicApplicationKt")

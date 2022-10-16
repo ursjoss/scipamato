@@ -1,10 +1,10 @@
 import org.springframework.boot.gradle.tasks.bundling.BootJar
-import plugins.ApplicationPropertiesFilterPlugin
 
 description = "SciPaMaTo-Core :: Web GUI Project"
 
 plugins {
     alias(libs.plugins.springBoot).apply(true)
+    id("application-properties-filter")
 }
 
 /**
@@ -26,7 +26,6 @@ sourceSets {
 }
 
 tasks {
-    apply<ApplicationPropertiesFilterPlugin>()
     withType<BootJar> {
         enabled = true
         mainClass.set("ch.difty.scipamato.core.ScipamatoCoreApplicationKt")

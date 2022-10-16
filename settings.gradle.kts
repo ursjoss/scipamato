@@ -38,6 +38,8 @@ include(*scipamatoCommonProjects(commonProjects))
 include(*scipamatoCoreProjects(coreProjects))
 include(*scipamatoPublicProjects(publicProjects))
 
+includeBuild("gradle-plugins")
+
 defineProjectPaths()
 
 fun defineProjectPaths() {

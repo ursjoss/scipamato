@@ -1,5 +1,3 @@
-package plugins
-
 import org.apache.tools.ant.filters.ReplaceTokens
 import org.gradle.api.Plugin
 import org.gradle.api.Project
