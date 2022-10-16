@@ -201,27 +201,6 @@ subprojects {
             dependsOn(integrationTest)
         }
 
-//        withType<JacocoReport> {
-//            enabled = project.name.mayHaveTestCoverage()
-//            reports {
-//                xml.required.set(true)
-//                html.required.set(false)
-//                csv.required.set(false)
-//            }
-//            afterEvaluate {
-//                classDirectories.setFrom(
-//                    files(
-//                        classDirectories.files.map {
-//                            fileTree(it) {
-//                                exclude(generatedPackages)
-//                            }
-//                        }
-//                    )
-//                )
-//            }
-//            dependsOn(check)
-//        }
-
         register("version") {
             doLast {
                 println(project.version)
@@ -238,38 +217,6 @@ tasks {
             jvmTarget = jvmTargetVersion
         }
     }
-//    withType<Detekt> {
-//        allRules = true
-//        buildUponDefaultConfig = true
-//        config.setFrom(files("${rootProject.projectDir}/config/detekt/detekt.yml"))
-//        baseline.set(file("detekt-baseline.xml"))
-//        jvmTarget = jvmTargetVersion
-//        reports {
-//            xml.required.set(true)
-//            html.required.set(true)
-//        }
-//    }
-//    detektMain {
-//        reports {
-//            xml {
-//                outputLocation.set(file("build/reports/detekt/customPath.xml"))
-//                required.set(true)
-//            }
-//        }
-//    }
-//    val projectsWithCoverage = subprojects.filter { it.name.mayHaveTestCoverage() }
-//    withType<SonarQubeTask> {
-//        description = "Push jacoco analysis to sonarcloud."
-//        group = "Verification"
-//        dependsOn(projectsWithCoverage.map { it.tasks.getByName("jacocoTestReport") })
-//        dependsOn(subprojects.map { it.tasks.getByName("detekt") })
-//    }
-//
-//    projectsWithCoverage.forEach { project ->
-//        project.jacoco {
-//            toolVersion = libs.versions.jacoco.get()
-//        }
-//    }
 }
 
 downloadLicenses {
@@ -389,5 +336,4 @@ downloadLicenses {
 
 }
 
-//fun String.mayHaveTestCoverage(): Boolean = this !in testModules
 fun Project.isWebProject() = path.endsWith("web")
