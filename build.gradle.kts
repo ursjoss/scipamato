@@ -1,5 +1,3 @@
-import io.gitlab.arturbosch.detekt.Detekt
-import io.gitlab.arturbosch.detekt.DetektPlugin
 import nl.javadude.gradle.plugins.license.LicenseMetadata
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED
@@ -7,7 +5,6 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED
 import org.gradle.api.tasks.testing.logging.TestLogEvent.SKIPPED
 import org.gradle.api.tasks.testing.logging.TestLogEvent.STARTED
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import org.sonarqube.gradle.SonarQubeTask
 import org.springframework.boot.gradle.plugin.SpringBootPlugin
 import org.springframework.boot.gradle.tasks.bundling.BootJar
 import org.unbrokendome.gradle.plugins.testsets.TestSetsPlugin
@@ -25,6 +22,7 @@ buildscript {
 plugins {
     kotlin("jvm") version libs.versions.kotlin.get()
     kotlin("plugin.spring") version libs.versions.kotlin.get() apply false
+    id("scipamato-collect-sarif")
     alias(libs.plugins.springBoot).apply(false)
     alias(libs.plugins.springDependencyManagement)
     alias(libs.plugins.lombok)
@@ -61,6 +59,10 @@ val generatedPackages: Set<String> = setOf(
     "**/ch/difty/scipamato/publ/db/**"
 )
 
+jacoco {
+    toolVersion = libs.versions.jacoco.get()
+}
+
 val jacocoTestReportFile = "$buildDir/reports/jacoco/test/jacocoTestReport.xml"
 val jacocoTestPattern = "**/build/jacoco/*.exec"
 val genPkg = generatedPackages.joinToString(",")
@@ -68,12 +70,12 @@ val genPkg = generatedPackages.joinToString(",")
 sonarqube {
     properties {
         property("sonar.host.url", "https://sonarcloud.io")
-        property("sonar.projectKey", "ursjoss_scipamato")
+        property("sonar.projectKey", "ursjoss_${project.name}")
         property("sonar.organization", "ursjoss-github")
         property("sonar.exclusions", "**/ch/difty/scipamato/publ/web/themes/markup/html/publ/**/*,$genPkg")
         property("sonar.coverage.exclusions", (generatedPackages + testPackages).joinToString(","))
         property("sonar.coverage.jacoco.xmlReportPaths", jacocoTestReportFile)
-        property("sonar.kotlin.detekt.reportPaths", "build/reports/detekt/detekt.xml")
+        property("sonar.kotlin.detekt.reportPaths", "$buildDir/reports/detekt/detekt.xml")
     }
 }
 
@@ -87,11 +89,13 @@ subprojects {
     apply<SpringBootPlugin>()
     apply(plugin = "io.spring.dependency-management")
     apply(plugin = "org.jetbrains.kotlin.jvm")
+    apply<ScipamatoDetektPlugin>()
+    apply<CollectSarifPlugin>()
+    apply<ScipamatoJacocoPlugin>()
     apply<JavaPlugin>()
     apply<IdeaPlugin>()
     apply<TestSetsPlugin>()
     apply<JacocoPlugin>()
-    apply<DetektPlugin>()
 
     testSets {
         register("integrationTest") {
@@ -148,14 +152,21 @@ subprojects {
         testRuntimeOnly(rootProject.libs.kotest.runner.junit5)
     }
 
+    val kotlinVersion = rootProject.libs.versions.kotlin.get()
+    val kotlinApiLangVersion = kotlinVersion.subSequence(0, 3).toString()
     val jvmTargetVersion = rootProject.libs.versions.java.get()
     tasks {
         withType<JavaCompile> {
             options.encoding = "UTF-8"
+            sourceCompatibility = jvmTargetVersion
+            targetCompatibility = jvmTargetVersion
         }
         withType<KotlinCompile> {
             kotlinOptions {
+                apiVersion = kotlinApiLangVersion
+                languageVersion = kotlinApiLangVersion
                 jvmTarget = jvmTargetVersion
+                freeCompilerArgs = freeCompilerArgs + listOf("-opt-in=kotlin.RequiresOptIn")
             }
         }
         val deleteOutFolderTask by registering(Delete::class) {
@@ -190,31 +201,6 @@ subprojects {
             dependsOn(integrationTest)
         }
 
-        jacocoTestReport {
-            sourceSets(sourceSets["main"])
-            executionData(fileTree(project.rootDir.absolutePath).include(jacocoTestPattern))
-        }
-        withType<JacocoReport> {
-            enabled = project.name.mayHaveTestCoverage()
-            reports {
-                xml.required.set(true)
-                html.required.set(false)
-                csv.required.set(false)
-            }
-            afterEvaluate {
-                classDirectories.setFrom(
-                    files(
-                        classDirectories.files.map {
-                            fileTree(it) {
-                                exclude(generatedPackages)
-                            }
-                        }
-                    )
-                )
-            }
-            dependsOn(check)
-        }
-
         register("version") {
             doLast {
                 println(project.version)
@@ -229,38 +215,6 @@ tasks {
         kotlinOptions {
             freeCompilerArgs = listOf("-Xjsr305=strict")
             jvmTarget = jvmTargetVersion
-        }
-    }
-    withType<Detekt> {
-        allRules = true
-        buildUponDefaultConfig = true
-        config.setFrom(files("${rootProject.projectDir}/config/detekt/detekt.yml"))
-        baseline.set(file("detekt-baseline.xml"))
-        jvmTarget = jvmTargetVersion
-        reports {
-            xml.required.set(true)
-            html.required.set(true)
-        }
-    }
-    detektMain {
-        reports {
-            xml {
-                outputLocation.set(file("build/reports/detekt/customPath.xml"))
-                required.set(true)
-            }
-        }
-    }
-    val projectsWithCoverage = subprojects.filter { it.name.mayHaveTestCoverage() }
-    withType<SonarQubeTask> {
-        description = "Push jacoco analysis to sonarcloud."
-        group = "Verification"
-        dependsOn(projectsWithCoverage.map { it.tasks.getByName("jacocoTestReport") })
-        dependsOn(subprojects.map { it.tasks.getByName("detekt") })
-    }
-
-    projectsWithCoverage.forEach { project ->
-        project.jacoco {
-            toolVersion = libs.versions.jacoco.get()
         }
     }
 }
@@ -382,5 +336,4 @@ downloadLicenses {
 
 }
 
-fun String.mayHaveTestCoverage(): Boolean = this !in testModules
 fun Project.isWebProject() = path.endsWith("web")
