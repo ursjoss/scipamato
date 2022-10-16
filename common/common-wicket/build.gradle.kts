@@ -23,47 +23,47 @@ dependencies {
     implementation(project(Module.scipamatoCommon("entity")))
     implementation(project(Module.scipamatoCommon("persistence-api")))
 
-    api(Lib.springBootStarter("undertow"))
-    api(Lib.springBootStarter("actuator"))
-    api(Lib.springBootStarter("security"))
-    annotationProcessor(Lib.springBoot("configuration-processor").id) {
+    api(libs.spring.boot.starter.undertow)
+    api(libs.spring.boot.starter.actuator)
+    api(libs.spring.boot.starter.security)
+    annotationProcessor(libs.spring.boot.configurationprocessor) {
         exclude("com.vaadin.external.google", "android-json")
     }
-    api(Lib.springBootAdmin())
-    api(Lib.spring("core"))
+    api(libs.spring.boot.admin.starter.client)
+    api(libs.spring.core)
 
-    api(Lib.springBootStarter("web").id) {
+    api(libs.spring.boot.starter.web) {
         exclude("org.springframework.boot", "spring-boot-starter-tomcat")
     }
-    api(Lib.springBootStarterWicket().id) {
+    api(libs.spring.boot.starter.wicket) {
         exclude("org.springframework.boot", "spring-boot-starter-tomcat")
     }
-    api(Lib.wicket("core"))
-    api(Lib.wicket("ioc"))
-    api(Lib.wicket("extensions"))
-    api(Lib.wicket("request"))
-    api(Lib.wicket("spring"))
-    api(Lib.wicket("auth-roles"))
-    api(Lib.wicket("bean-validation"))
-    api(Lib.wicket("devutils"))
-    api(Lib.wicketStuff("annotation"))
-    api(Lib.wicketBootstrap("core"))
-    api(Lib.wicketBootstrap("extensions"))
-    api(Lib.wicketBootstrap("less").id) {
+    api(libs.wicket.core)
+    api(libs.wicket.ioc)
+    api(libs.wicket.extensions)
+    api(libs.wicket.request)
+    api(libs.wicket.spring)
+    api(libs.wicket.authroles)
+    api(libs.wicket.beanvalidation)
+    api(libs.wicket.devutils)
+    api(libs.wicketstuff.annotation)
+    api(libs.wicketBootstrap.core)
+    api(libs.wicketBootstrap.extensions)
+    api(libs.wicketBootstrap.less){
         exclude("commons-collections", "commons-collections")
         exclude("commons-logging", "commons-logging")
     }
-    api(Lib.wicketBootstrap("themes"))
-    api(Lib.fontAwesome())
+    api(libs.wicketBootstrap.themes)
+    api(libs.fontAwesome)
 
-    testImplementation(Lib.lombok())
-    testAnnotationProcessor(Lib.lombok())
+    testImplementation(libs.lombok)
+    testAnnotationProcessor(libs.lombok)
 
     testImplementation(project(Module.scipamatoCommon("test")))
 
-    testImplementation(Lib.lombok())
-    testAnnotationProcessor(Lib.lombok())
+    testImplementation(libs.lombok)
+    testAnnotationProcessor(libs.lombok)
 
-    testImplementation(Lib.servletApi())
-    testImplementation(Lib.validationApi())
+    testImplementation(libs.javax.servletApi)
+    testImplementation(libs.validationApi)
 }

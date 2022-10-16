@@ -1,29 +1,29 @@
 description = "SciPaMaTo-Core :: Pubmed API Project"
 
 plugins {
-    Lib.jaxbPlugin().run { id(id) version version }
+    alias(libs.plugins.jaxb)
 }
 
 dependencies {
     implementation(project(Module.scipamatoCommon("utils")))
 
     // Cloud access
-    api(Lib.springCloud("openfeign").id) {
+    api(libs.spring.cloud.starter.openfeign) {
         exclude("com.netflix.archaius", "archaius-core")
     }
-    implementation(Lib.openfeign("jaxb"))
-    implementation(Lib.openfeign("okhttp"))
-    implementation(Lib.openfeign("slf4j"))
+    implementation(libs.openfeign.jaxb)
+    implementation(libs.openfeign.okhttp)
+    implementation(libs.openfeign.slf4j)
 
     // Object/XML mapping
-    implementation(Lib.spring("oxm"))
-    implementation(Lib.jaxbApi())
-    runtimeOnly(Lib.jaxbRuntime())
+    implementation(libs.spring.oxm)
+    implementation(libs.jaxb.api)
+    runtimeOnly(libs.jaxb.runtime)
 
     testImplementation(project(Module.scipamatoCommon("test")))
 
-    integrationTestAnnotationProcessor(Lib.lombok())
-    integrationTestRuntimeOnly(Lib.lombok())
+    integrationTestAnnotationProcessor(libs.lombok)
+    integrationTestRuntimeOnly(libs.lombok)
 }
 
 /**

@@ -2,7 +2,7 @@ import org.springframework.boot.gradle.tasks.bundling.BootJar
 import plugins.ApplicationPropertiesFilterPlugin
 
 plugins {
-    Lib.springBootPlugin().run { id(id) } apply true
+    alias(libs.plugins.springBoot).apply(true)
 }
 
 description = "SciPaMaTo-Public :: Web Project"
@@ -40,20 +40,20 @@ dependencies {
     implementation(project(Module.scipamatoPublic("persistence-jooq")))
     implementation(project(Module.scipamatoCommon("wicket")))
 
-    annotationProcessor(Lib.springBoot("configuration-processor").id) {
+    annotationProcessor(libs.spring.boot.configurationprocessor) {
         exclude("om.vaadin.external.google", "android-json")
     }
-    implementation(Lib.springBootStarter("security"))
+    implementation(libs.spring.boot.starter.security)
 
-    implementation(Lib.springBootStarter("cache"))
-    implementation(Lib.cacheApi())
-    implementation(Lib.ehcache())
-    runtimeOnly(Lib.jaxbRuntime())
+    implementation(libs.spring.boot.starter.cache)
+    implementation(libs.cacheApi)
+    implementation(libs.ehcache)
+    runtimeOnly(libs.jaxb.runtime)
 
     testImplementation(project(Module.scipamatoCommon("test")))
 
-    integrationTestImplementation(Lib.testcontainers("testcontainers"))
-    integrationTestImplementation(Lib.testcontainers("junit-jupiter"))
-    integrationTestImplementation(Lib.testcontainers("postgresql"))
-    integrationTestRuntimeOnly(Lib.postgres())
+    integrationTestImplementation(libs.testcontainers.testcontainers)
+    integrationTestImplementation(libs.testcontainers.junitJupiter)
+    integrationTestImplementation(libs.testcontainers.postgresql)
+    integrationTestRuntimeOnly(libs.postgresql)
 }

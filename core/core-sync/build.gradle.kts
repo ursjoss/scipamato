@@ -24,23 +24,23 @@ sourceSets {
 
 dependencies {
     implementation(project(Module.scipamatoCommon("utils")))
-    implementation(Lib.springBootStarter("batch"))
-    implementation(Lib.springBootStarter("jooq"))
-    annotationProcessor(Lib.springBoot("configuration-processor").id) {
+    implementation(libs.spring.boot.starter.batch)
+    implementation(libs.spring.boot.starter.jooq)
+    annotationProcessor(libs.spring.boot.configurationprocessor) {
         exclude("com.vaadin.external.google", "android-json")
     }
 
-    runtimeOnly(Lib.postgres())
-    implementation(Lib.jOOQ("jooq"))
+    runtimeOnly(libs.postgresql)
+    implementation(libs.jooq)
 
     testImplementation(project(Module.scipamatoCommon("persistence-jooq-test")))
     testImplementation(project(Module.scipamatoCommon("test")))
-    testImplementation(Lib.jOOQ("jooq"))
+    testImplementation(libs.jooq)
 
-    testImplementation(Lib.lombok())
-    testAnnotationProcessor(Lib.lombok())
+    testImplementation(libs.lombok)
+    testAnnotationProcessor(libs.lombok)
 
-    integrationTestRuntimeOnly(Lib.postgres())
+    integrationTestRuntimeOnly(libs.postgresql)
 }
 
 tasks {
