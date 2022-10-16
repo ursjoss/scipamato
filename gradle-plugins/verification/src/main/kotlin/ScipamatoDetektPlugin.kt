@@ -31,7 +31,7 @@ class ScipamatoDetektPlugin : Plugin<Project> {
 
             // add detekt output to inputs of ReportMergeTask
             // mustRunAfter should be used here otherwise the merged report won't be generated on fail
-            rootProject.plugins.withId("kris-collect-sarif") {
+            rootProject.plugins.withId( "scipamato-collect-sarif") {
                 rootProject.tasks.named(
                     CollectSarifPlugin.MERGE_DETEKT_TASK_NAME,
                     ReportMergeTask::class.java
