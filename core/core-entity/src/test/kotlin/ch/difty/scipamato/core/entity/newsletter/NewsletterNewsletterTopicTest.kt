@@ -32,14 +32,8 @@ internal class NewsletterNewsletterTopicTest {
     @Test
     fun equals_withItself_isEqual() {
         val ntt1 = NewsletterNewsletterTopic(1, 2, 1, "foo")
+        @Suppress("KotlinConstantConditions")
         (ntt1 == ntt1) shouldBe true
-    }
-
-    @Test
-    fun equals_withNull_isDifferent() {
-        val ntt1 = NewsletterNewsletterTopic(1, 2, 1, "foo")
-        @Suppress("ReplaceCallWithBinaryOperator")
-        ntt1.equals(null) shouldBe false
     }
 
     @Test

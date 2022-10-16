@@ -12,12 +12,16 @@ import org.jooq.DSLContext
  *  * Every record will be updated at least with the current timestamp in last_synched.
  *  * id columns and audit fields are those of the scipamato-core tables
  */
-class NewsletterItemWriter(jooqDslContextPublic: DSLContext) : ScipamatoItemWriter<PublicNewsletter>(jooqDslContextPublic, "newsletter") {
+class NewsletterItemWriter(
+    jooqDslContextPublic: DSLContext
+) : ScipamatoItemWriter<PublicNewsletter>(jooqDslContextPublic, "newsletter") {
     override fun executeUpdate(i: PublicNewsletter): Int =
         dslContext
             .insertInto(Newsletter.NEWSLETTER)
-            .columns(Newsletter.NEWSLETTER.ID, Newsletter.NEWSLETTER.ISSUE, Newsletter.NEWSLETTER.ISSUE_DATE, Newsletter.NEWSLETTER.VERSION, Newsletter.NEWSLETTER.CREATED,
-                Newsletter.NEWSLETTER.LAST_MODIFIED, Newsletter.NEWSLETTER.LAST_SYNCHED)
+            .columns(Newsletter.NEWSLETTER.ID, Newsletter.NEWSLETTER.ISSUE, Newsletter.NEWSLETTER.ISSUE_DATE,
+                Newsletter.NEWSLETTER.VERSION, Newsletter.NEWSLETTER.CREATED, Newsletter.NEWSLETTER.LAST_MODIFIED,
+                Newsletter.NEWSLETTER.LAST_SYNCHED
+            )
             .values(i.id, i.issue, i.issueDate, i.version, i.created, i.lastModified, i.lastSynched)
             .onConflict(Newsletter.NEWSLETTER.ID)
             .doUpdate()

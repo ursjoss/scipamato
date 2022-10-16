@@ -56,6 +56,7 @@ class RefDataSyncPage(parameters: PageParameters) : BasePage<Void>(parameters) {
         }
     }
 
+    @Suppress("MagicNumber")
     override fun onEvent(event: IEvent<*>) {
         (event.payload as? BatchJobLaunchedEvent)?.let { jobLaunchedEvent ->
             this@RefDataSyncPage.add(AjaxSelfUpdatingTimerBehavior(Duration.ofSeconds(5)))

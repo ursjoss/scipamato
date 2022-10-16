@@ -42,7 +42,7 @@ import org.wicketstuff.annotation.mount.MountPath
  * The page is typically shown in an iframe of a CMS.
  */
 @MountPath("new-studies")
-@Suppress("SameParameterValue")
+@Suppress("SameParameterValue", "TooManyFunctions")
 open class NewStudyListPage(parameters: PageParameters) : BasePage<Void>(parameters) {
 
     @SpringBean

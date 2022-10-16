@@ -41,7 +41,7 @@ import org.wicketstuff.annotation.mount.MountPath
 
 @WicketHomePage
 @MountPath("/")
-@Suppress("SameParameterValue")
+@Suppress("SameParameterValue", "UnnecessaryAbstractClass", "TooManyFunctions")
 class PublicPage(parameters: PageParameters) : BasePage<Void>(parameters) {
 
     private val filter: PublicPaperFilter = PublicPaperFilter()
@@ -126,7 +126,10 @@ class PublicPage(parameters: PageParameters) : BasePage<Void>(parameters) {
         ) {
             val id = codeClassId.id
             val componentId = "$CODES_CLASS_BASE_NAME$id"
-            val className = codeClasses.filter { it.codeClassId == id }.map { it.name }.firstOrNull() ?: codeClassId.name
+            val className = codeClasses
+                .filter { it.codeClassId == id }
+                .map { it.name }
+                .firstOrNull() ?: codeClassId.name
             val model = PropertyModel.of<List<Code>>(filter, componentId)
             val choices = CodeModel(codeClassId, languageCode)
             val choiceRenderer = ChoiceRenderer<Code>("displayValue", "code")

@@ -118,6 +118,7 @@ abstract class PaperPanelTest<T, P : PaperPanel<T>> : PanelTest<P>() where T : C
         tester.assertLabel(path + "Label", labelText)
     }
 
+    @Suppress("LongMethod")
     protected fun assertCommonComponents(id: String) {
         var b = "$id:form"
         tester.assertComponent(b, Form::class.java)

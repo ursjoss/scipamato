@@ -27,14 +27,17 @@ abstract class WicketTest : AbstractWicketTest() {
 
     // override if needed
     protected open val userName = "testuser"
-    protected open val PASSWORD = "secretpw"
+    protected open val password = "secretpw"
 
     lateinit var tester: WicketTester
         private set
 
+    @Suppress("LongMethod")
     @BeforeEach
     fun setUp() {
-        application.headerResponseDecorators.add { r -> JavaScriptFilteredIntoFooterHeaderResponse(r, AbstractPage.FOOTER_CONTAINER) }
+        application.headerResponseDecorators.add { r ->
+            JavaScriptFilteredIntoFooterHeaderResponse(r, AbstractPage.FOOTER_CONTAINER)
+        }
         ReflectionTestUtils.setField(application, "applicationContext", applicationContextMock)
 
         tester = WicketTester(application)
@@ -48,10 +51,14 @@ abstract class WicketTest : AbstractWicketTest() {
             every { hasAtLeastOneRoleOutOf(Roles.ADMIN) } returns currentUserIsAnyOf(Roles.ADMIN)
             every { hasAtLeastOneRoleOutOf(Roles.USER) } returns currentUserIsAnyOf(Roles.USER)
             every { hasAtLeastOneRoleOutOf(Roles.VIEWER) } returns currentUserIsAnyOf(Roles.VIEWER)
-            every { hasAtLeastOneRoleOutOf(Roles.USER, Roles.ADMIN) } returns currentUserIsAnyOf(Roles.ADMIN, Roles.USER)
-            every { hasAtLeastOneRoleOutOf(Roles.ADMIN, Roles.USER) } returns currentUserIsAnyOf(Roles.ADMIN, Roles.USER)
-            every { hasAtLeastOneRoleOutOf(Roles.USER, Roles.VIEWER) } returns currentUserIsAnyOf(Roles.USER, Roles.VIEWER)
-            every { hasAtLeastOneRoleOutOf(Roles.ADMIN, Roles.VIEWER) } returns currentUserIsAnyOf(Roles.ADMIN, Roles.VIEWER)
+            every { hasAtLeastOneRoleOutOf(Roles.USER, Roles.ADMIN) } returns
+                currentUserIsAnyOf(Roles.ADMIN, Roles.USER)
+            every { hasAtLeastOneRoleOutOf(Roles.ADMIN, Roles.USER) } returns
+                currentUserIsAnyOf(Roles.ADMIN, Roles.USER)
+            every { hasAtLeastOneRoleOutOf(Roles.USER, Roles.VIEWER) } returns
+                currentUserIsAnyOf(Roles.USER, Roles.VIEWER)
+            every { hasAtLeastOneRoleOutOf(Roles.ADMIN, Roles.VIEWER) } returns
+                currentUserIsAnyOf(Roles.ADMIN, Roles.VIEWER)
             every { hasAtLeastOneRoleOutOf(Roles.ADMIN, Roles.USER, Roles.VIEWER) } returns
                 currentUserIsAnyOf(Roles.ADMIN, Roles.USER, Roles.VIEWER)
         }
@@ -99,9 +106,10 @@ abstract class WicketTest : AbstractWicketTest() {
 
         setUpHook()
 
-        login(userName, PASSWORD)
+        login(userName, password)
     }
 
+    @Suppress("ReturnCount")
     private fun currentUserIsAnyOf(vararg roles: String): Boolean {
         roles.forEach { role ->
             when (userName) {

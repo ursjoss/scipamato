@@ -40,6 +40,7 @@ abstract class DefinitionEditPage<E : DefinitionEntity<ID, T>, T : DefinitionTra
         queue(newDefinitionTranslationPanel("translationsPanel"))
     }
 
+    @Suppress("TooGenericExceptionCaught")
     private fun newForm(id: String): Form<E> = object : Form<E>(id, CompoundPropertyModel(model)) {
         override fun onSubmit() {
             super.onSubmit()

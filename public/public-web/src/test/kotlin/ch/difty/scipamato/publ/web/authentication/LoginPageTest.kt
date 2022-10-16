@@ -19,12 +19,12 @@ class LoginPageTest : WicketTest() {
         tester.assertNoInfoMessage()
     }
 
-    protected fun makePage(): LoginPage = LoginPage(PageParameters())
+    private fun makePage(): LoginPage = LoginPage(PageParameters())
 
-    protected val pageClass: Class<LoginPage>
+    private val pageClass: Class<LoginPage>
         get() = LoginPage::class.java
 
-    protected fun assertSpecificComponents() {
+    private fun assertSpecificComponents() {
         val b = "form"
         tester.assertComponent(b, Form::class.java)
         assertLabeledTextField(b, "username")

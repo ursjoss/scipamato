@@ -20,6 +20,7 @@ private const val QUOTED_GROUP_INDEX = 1
 @FilterConditionMapper
 class PublicPaperFilterConditionMapper : AbstractFilterConditionMapper<PublicPaperFilter>() {
 
+    @Suppress("ComplexMethod")
     override fun internalMap(filter: PublicPaperFilter): List<Condition> {
         val conditions = mutableListOf<Condition>()
         filter.number?.let { conditions.add(Paper.PAPER.NUMBER.eq(it)) }
@@ -44,7 +45,17 @@ class PublicPaperFilterConditionMapper : AbstractFilterConditionMapper<PublicPap
             val ids = codes.map { it.id }.toTypedArray()
             conditions.add(Paper.PAPER.CODES_STUDY_DESIGN.contains(ids))
         }
-        if (filter.codesOfClass1 != null || filter.codesOfClass2 != null || filter.codesOfClass3 != null || filter.codesOfClass4 != null || filter.codesOfClass5 != null || filter.codesOfClass6 != null || filter.codesOfClass7 != null || filter.codesOfClass8 != null) {
+        @Suppress("ComplexCondition")
+        if (
+            filter.codesOfClass1 != null ||
+            filter.codesOfClass2 != null ||
+            filter.codesOfClass3 != null ||
+            filter.codesOfClass4 != null ||
+            filter.codesOfClass5 != null ||
+            filter.codesOfClass6 != null ||
+            filter.codesOfClass7 != null ||
+            filter.codesOfClass8 != null
+        ) {
             val allCodes = filter.allCodes()
             if (allCodes.isNotEmpty()) conditions.add(allCodes.toCondition())
         }

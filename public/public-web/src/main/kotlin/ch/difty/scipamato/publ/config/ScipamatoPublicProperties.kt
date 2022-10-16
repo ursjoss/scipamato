@@ -1,3 +1,5 @@
+@file:Suppress("MaxLineLength")
+
 package ch.difty.scipamato.publ.config
 
 import ch.difty.scipamato.common.config.AbstractScipamatoProperties

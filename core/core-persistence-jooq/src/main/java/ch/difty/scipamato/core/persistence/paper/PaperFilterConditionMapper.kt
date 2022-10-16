@@ -14,6 +14,7 @@ import org.jooq.impl.DSL
 @FilterConditionMapper
 class PaperFilterConditionMapper : AbstractFilterConditionMapper<PaperFilter>() {
 
+    @Suppress("LongMethod")
     override fun internalMap(filter: PaperFilter): List<Condition> {
         val conditions = mutableListOf<Condition>()
         filter.number?.let { conditions.add(Paper.PAPER.NUMBER.eq(it)) }

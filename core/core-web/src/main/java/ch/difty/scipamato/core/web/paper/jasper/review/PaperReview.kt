@@ -52,6 +52,7 @@ class PaperReview(p: Paper, rhf: ReportHeaderFields) : ExportEntity {
     val brand: String = na(rhf.brand)
     val createdBy: String = na(p.createdByName)
 
+    @Suppress("NestedBlockDepth")
     private fun makeAuthorYearFrom(p: Paper): String {
         val fa = p.firstAuthor
         val py = p.publicationYear

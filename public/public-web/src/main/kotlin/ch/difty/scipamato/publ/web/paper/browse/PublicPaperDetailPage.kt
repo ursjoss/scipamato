@@ -25,7 +25,7 @@ import org.apache.wicket.spring.injection.annot.SpringBean
 import org.wicketstuff.annotation.mount.MountPath
 import kotlin.reflect.KProperty1
 
-@Suppress("SameParameterValue")
+@Suppress("SameParameterValue", "TooManyFunctions")
 @MountPath("/paper/number/\${number}")
 class PublicPaperDetailPage : BasePage<PublicPaper> {
 

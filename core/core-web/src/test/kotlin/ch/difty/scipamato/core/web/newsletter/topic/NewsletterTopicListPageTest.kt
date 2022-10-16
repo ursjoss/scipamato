@@ -1,4 +1,4 @@
-@file:Suppress("SpellCheckingInspection")
+@file:Suppress("SpellCheckingInspection", "VariableNaming")
 
 package ch.difty.scipamato.core.web.newsletter.topic
 
@@ -72,7 +72,7 @@ internal class NewsletterTopicListPageTest : BasePageTest<NewsletterTopicListPag
             tester.assertLabel(p, label)
         }
 
-    @Suppress("SameParameterValue")
+    @Suppress("SameParameterValue", "MaxLineLength")
     private fun assertTableValuesOfRow(b: String, rowIdx: Int, colIdxAsLink: Int?, values: Array<String>) {
         colIdxAsLink?.let { idx ->
             tester.assertComponent("$b:body:rows:$rowIdx:cells:$idx:cell:link", Link::class.java)

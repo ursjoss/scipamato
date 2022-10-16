@@ -13,6 +13,7 @@ import org.apache.wicket.markup.html.form.StatelessForm
 import org.apache.wicket.request.mapper.parameter.PageParameters
 import org.junit.jupiter.api.Test
 
+@Suppress("unused")
 internal class AbstractLoginPageTest : WicketBaseTest() {
 
     private lateinit var page: AbstractLoginPage<*>

@@ -28,6 +28,7 @@ import javax.sql.DataSource
 @Configuration
 @EnableConfigurationProperties(JooqProperties::class)
 @Profile("!wickettest")
+@Suppress("TooManyFunctions")
 open class DataSourceConfig(
     private val jooqProperties: JooqProperties
 ) {

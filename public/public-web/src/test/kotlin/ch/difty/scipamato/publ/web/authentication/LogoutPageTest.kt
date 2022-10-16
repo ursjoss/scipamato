@@ -15,7 +15,7 @@ class LogoutPageTest : WicketTest() {
         login(USERNAME, PASSWORD)
     }
 
-    protected fun login(username: String?, password: String?) {
+    private fun login(username: String?, password: String?) {
         val session = tester.session as SecureWebSession
         session.signOut()
         tester.startPage(LoginPage::class.java)
@@ -36,12 +36,12 @@ class LogoutPageTest : WicketTest() {
         tester.assertNoInfoMessage()
     }
 
-    protected fun makePage(): LogoutPage = LogoutPage(PageParameters())
+    private fun makePage(): LogoutPage = LogoutPage(PageParameters())
 
-    protected val pageClass: Class<LogoutPage>
+    private val pageClass: Class<LogoutPage>
         get() = LogoutPage::class.java
 
-    protected fun assertSpecificComponents() {
+    private fun assertSpecificComponents() {
         tester.assertComponent(FORM, Form::class.java)
     }
 

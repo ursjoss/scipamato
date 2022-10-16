@@ -25,6 +25,7 @@ import org.springframework.context.ApplicationContext
 import org.springframework.test.util.ReflectionTestUtils
 import java.util.Locale
 
+@Suppress("UnusedPrivateMember", "UnnecessaryAbstractClass")
 @SpringBootTest
 abstract class WicketTest {
 

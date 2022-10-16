@@ -30,6 +30,7 @@ internal class PaperReviewTest : ExportEntityTest() {
         resultEffectEstimateLabel = RESULT_EFFECT_ESTIMATE_LABEL,
         conclusionLabel = CONCLUSION_LABEL,
         commentLabel = COMMENT_LABEL,
+        internLabel = INTERN_LABEL,
     )
 
     @Test
@@ -49,6 +50,7 @@ internal class PaperReviewTest : ExportEntityTest() {
         pr.methodConfoundersLabel shouldBeEqualTo METHOD_CONFOUNDERS_LABEL
         pr.resultEffectEstimateLabel shouldBeEqualTo RESULT_EFFECT_ESTIMATE_LABEL
         pr.conclusionLabel shouldBeEqualTo CONCLUSION_LABEL
+        pr.internLabel shouldBeEqualTo INTERN_LABEL
         pr.brand shouldBeEqualTo BRAND
         pr.createdBy shouldBeEqualTo CREATED_BY
     }

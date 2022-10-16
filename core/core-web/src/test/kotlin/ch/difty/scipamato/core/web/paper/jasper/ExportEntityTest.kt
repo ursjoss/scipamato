@@ -5,6 +5,7 @@ import ch.difty.scipamato.core.entity.Code
 import ch.difty.scipamato.core.entity.Paper
 import org.junit.jupiter.api.BeforeEach
 
+@Suppress("UnnecessaryAbstractClass")
 abstract class ExportEntityTest {
 
     protected val p = Paper()
@@ -63,6 +64,7 @@ abstract class ExportEntityTest {
         const val RESULT_LABEL = "resultLabel"
         const val CONCLUSION_LABEL = "conclusionLabel"
         const val COMMENT_LABEL = "commentLabel"
+        const val INTERN_LABEL = "internLabel"
         const val HEADER_PART = "headerPart"
         const val BRAND = "brand"
         const val CREATED_BY = "creatingUser"

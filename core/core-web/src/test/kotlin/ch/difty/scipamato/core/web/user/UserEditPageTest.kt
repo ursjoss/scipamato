@@ -26,7 +26,7 @@ import org.apache.wicket.markup.html.form.TextField
 import org.apache.wicket.request.mapper.parameter.PageParameters
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
-import java.util.Optional
+import java.util.*
 
 @Suppress("PrivatePropertyName", "SpellCheckingInspection", "SameParameterValue")
 internal class UserEditPageTest : BasePageTest<UserEditPage>() {
@@ -35,7 +35,7 @@ internal class UserEditPageTest : BasePageTest<UserEditPage>() {
         1, "user", "first", "last", "foo@bar.baz", PW1__HASH, true,
         setOf(Role.ADMIN, Role.USER)
     )
-    private val user_saved = User(
+    private val userSaved = User(
         1, "user", "first", "last", "foo@bar.baz", PW2__HASH, true,
         setOf(Role.ADMIN, Role.USER)
     )
@@ -176,7 +176,7 @@ internal class UserEditPageTest : BasePageTest<UserEditPage>() {
         modelValue: Any?,
         labelText: String,
         enabled: Boolean,
-        clazz: Class<out FormComponent<*>?>
+        clazz: Class<out FormComponent<*>?>,
     ) {
         tester.assertLabel(bb + "Label", labelText)
         tester.assertComponent(bb, clazz)
@@ -192,7 +192,9 @@ internal class UserEditPageTest : BasePageTest<UserEditPage>() {
         assertVisibleFieldAndLabel(bb, modelValue, labelText, enabled, CheckBox::class.java)
     }
 
-    private fun assertVisiblePasswordFieldAndLabel(bb: String, modelValue: String?, labelText: String, enabled: Boolean) {
+    private fun assertVisiblePasswordFieldAndLabel(
+        bb: String, modelValue: String?, labelText: String, enabled: Boolean,
+    ) {
         assertVisibleFieldAndLabel(bb, modelValue, labelText, enabled, PasswordTextField::class.java)
     }
 
@@ -216,7 +218,7 @@ internal class UserEditPageTest : BasePageTest<UserEditPage>() {
 
     @Test
     fun submitting_inEditMode_delegatesUserSaveWithoutPasswordToService() {
-        every { userServiceMock.saveOrUpdate(matchUser(null)) } returns user_saved
+        every { userServiceMock.saveOrUpdate(matchUser(null)) } returns userSaved
 
         tester.startPage(newUserEditPageInMode(UserEditPage.Mode.EDIT))
         tester.assertRenderedPage(pageClass)
@@ -232,7 +234,7 @@ internal class UserEditPageTest : BasePageTest<UserEditPage>() {
 
     @Test
     fun submitting_inPWChangeMode_withCurrentPasswordCorrectAndTwoMatchingPasswords_delegatesToService() {
-        every { userServiceMock.saveOrUpdate(matchUser(PASSWORD2)) } returns user_saved
+        every { userServiceMock.saveOrUpdate(matchUser(PASSWORD2)) } returns userSaved
 
         tester.startPage(newUserEditPageInMode(UserEditPage.Mode.CHANGE_PASSWORD))
         tester.assertRenderedPage(pageClass)
@@ -303,7 +305,7 @@ internal class UserEditPageTest : BasePageTest<UserEditPage>() {
 
     @Test
     fun submitting_inManageMode_withNoPasswordsSet_delegatesToService() {
-        every { userServiceMock.saveOrUpdate(matchUser(null)) } returns user_saved
+        every { userServiceMock.saveOrUpdate(matchUser(null)) } returns userSaved
 
         tester.startPage(newUserEditPageInMode(UserEditPage.Mode.MANAGE))
         tester.assertRenderedPage(pageClass)
@@ -334,7 +336,7 @@ internal class UserEditPageTest : BasePageTest<UserEditPage>() {
 
     @Test
     fun submitting_inManageMode_withPasswordsSetIdentically_delegatesToService() {
-        every { userServiceMock.saveOrUpdate(matchUser(PASSWORD2)) } returns user_saved
+        every { userServiceMock.saveOrUpdate(matchUser(PASSWORD2)) } returns userSaved
 
         tester.startPage(newUserEditPageInMode(UserEditPage.Mode.MANAGE))
         tester.assertRenderedPage(pageClass)
@@ -352,7 +354,7 @@ internal class UserEditPageTest : BasePageTest<UserEditPage>() {
 
     @Test
     fun submitting_inCreateMode_delegatesCreateToService() {
-        every { userServiceMock.saveOrUpdate(matchUser(PASSWORD2)) } returns user_saved
+        every { userServiceMock.saveOrUpdate(matchUser(PASSWORD2)) } returns userSaved
 
         tester.startPage(newUserEditPageInMode(UserEditPage.Mode.CREATE, null))
         tester.assertRenderedPage(pageClass)

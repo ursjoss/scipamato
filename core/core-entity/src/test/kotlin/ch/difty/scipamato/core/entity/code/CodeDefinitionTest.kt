@@ -10,7 +10,7 @@ import org.amshove.kluent.shouldHaveSize
 import org.amshove.kluent.shouldNotBeNull
 import org.junit.jupiter.api.Test
 
-@Suppress("PrivatePropertyName", "SpellCheckingInspection", "SameParameterValue")
+@Suppress("PrivatePropertyName", "SpellCheckingInspection", "SameParameterValue", "VariableNaming")
 internal class CodeDefinitionTest {
 
     private val c_de = CodeTranslation(10, "de", "codede2", "kommentar", 1)

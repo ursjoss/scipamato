@@ -11,7 +11,9 @@ import org.jooq.DSLContext
  *  * Takes care of inserts and updates.
  *  * Every record will be updated at least with the current timestamp in last_synched.
  */
-class NewStudyPageLinkItemWriter(jooqDslContextPublic: DSLContext) : ScipamatoItemWriter<PublicNewStudyPageLink>(jooqDslContextPublic, "newStudyPageLink") {
+class NewStudyPageLinkItemWriter(
+    jooqDslContextPublic: DSLContext,
+) : ScipamatoItemWriter<PublicNewStudyPageLink>(jooqDslContextPublic, "newStudyPageLink") {
     override fun executeUpdate(i: PublicNewStudyPageLink): Int =
         dslContext
             .insertInto(NewStudyPageLink.NEW_STUDY_PAGE_LINK)
@@ -27,6 +29,7 @@ class NewStudyPageLinkItemWriter(jooqDslContextPublic: DSLContext) : ScipamatoIt
             .set(NewStudyPageLink.NEW_STUDY_PAGE_LINK.TITLE, i.title)
             .set(NewStudyPageLink.NEW_STUDY_PAGE_LINK.URL, i.url)
             .set(NewStudyPageLink.NEW_STUDY_PAGE_LINK.LAST_SYNCHED, i.lastSynched)
-            .where(NewStudyPageLink.NEW_STUDY_PAGE_LINK.LANG_CODE.eq(i.langCode).and(NewStudyPageLink.NEW_STUDY_PAGE_LINK.SORT.eq(i.sort)))
+            .where(NewStudyPageLink.NEW_STUDY_PAGE_LINK.LANG_CODE.eq(i.langCode)
+                .and(NewStudyPageLink.NEW_STUDY_PAGE_LINK.SORT.eq(i.sort)))
             .execute()
 }

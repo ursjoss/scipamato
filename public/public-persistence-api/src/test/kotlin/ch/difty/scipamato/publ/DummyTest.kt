@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 internal class DummyTest {
 
     @Test
-    fun dummyTest() {
+    fun dummyTestCase() {
         true shouldBe true
     }
 }

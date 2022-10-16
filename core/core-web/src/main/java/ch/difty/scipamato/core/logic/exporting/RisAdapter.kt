@@ -60,6 +60,7 @@ sealed class JRisAdapter(
             sort = sort
         ).joinToString(separator = "")
 
+    @Suppress("DestructuringDeclarationWithTooManyEntries")
     private fun toRisRecords(p: Paper): RisRecord {
         val (periodical, volume, issue, startPage, endPage) = p.locationComponents()
         return newRisRecord(p, startPage, endPage, periodical, volume, issue)
@@ -136,7 +137,7 @@ sealed class JRisAdapter(
         private val authorRegex =
             """^((?:$RW_WW ?)+) ([A-Z]+)(?: (Sr))?$""".toRegex()
         private val locationRegex =
-            """^([^.]+)\. \d+; (\d+(?:-\d+)?)(?: \(((?:[\d-])+)\))?: (\d+)?(?:-(\d+))?(?:\.? ?e\d+)?\.$""".toRegex()
+            """^([^.]+)\. \d+; (\d+(?:-\d+)?)(?: \(([\d-]+)\))?: (\d+)?(?:-(\d+))?(?:\.? ?e\d+)?\.$""".toRegex()
     }
 }
 

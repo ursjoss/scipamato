@@ -333,7 +333,7 @@ internal class JooqPaperRepoTest :
 
     @Test
     fun evaluatingNumbers_withRecordWithNullValue1_returnsEmpty() {
-        val numbers: Record1<Array<Long>> = mockk {
+        val numbers = mockk<Record1<Array<Long>>> {
             every { value1() } returns null
         }
         repo.evaluateNumbers(numbers).isPresent.shouldBeFalse()
@@ -341,7 +341,7 @@ internal class JooqPaperRepoTest :
 
     @Test
     fun evaluatingNumbers_withRecordWithEmptyValue1_returnsEmpty() {
-        val numbers: Record1<Array<Long>> = mockk {
+        val numbers = mockk<Record1<Array<Long>>> {
             every { value1() } returns arrayOf()
         }
         repo.evaluateNumbers(numbers).isPresent.shouldBeFalse()

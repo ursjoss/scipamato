@@ -30,6 +30,10 @@ class TestApplicationProperties : ApplicationProperties {
     override val cmsUrlSearchPage get() = "http://localhost:8081/"
     override val redirectFromPort get() = 8080
     override val multiSelectBoxActionBoxWithMoreEntriesThan get() = 4
+
+    companion object {
+        private const val serialVersionUID: Long = 1572649704495652217L
+    }
 }
 
 @Primary
@@ -38,6 +42,10 @@ class TestWebSessionFacade : ScipamatoWebSessionFacade {
     override val languageCode get() = "de"
     override val paperIdManager get() = LongNavigator()
     override fun hasAtLeastOneRoleOutOf(vararg roles: String) = true
+
+    companion object {
+        private const val serialVersionUID: Long = 4928608410325981664L
+    }
 }
 
 @Primary
@@ -57,6 +65,14 @@ class TestMenuBuilder(
             FontAwesome5IconType.question_circle_s, Navbar.ComponentPosition.RIGHT
         )
     }
+
+    companion object {
+        private const val serialVersionUID: Long = -3636310190556316753L
+    }
 }
 
-data class TestRecord(val id: Int, val name: String) : Serializable
+data class TestRecord(val id: Int, val name: String) : Serializable {
+    companion object {
+        private const val serialVersionUID: Long = -6684112836747553253L
+    }
+}

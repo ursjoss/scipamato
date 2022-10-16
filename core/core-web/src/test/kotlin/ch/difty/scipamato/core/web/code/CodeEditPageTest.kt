@@ -27,7 +27,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.dao.DuplicateKeyException
 
-@Suppress("SpellCheckingInspection", "PrivatePropertyName")
+@Suppress("PrivatePropertyName", "VariableNaming")
 internal class CodeEditPageTest : BasePageTest<CodeEditPage>() {
 
     private lateinit var codeDefinitionDummy: CodeDefinition
@@ -45,7 +45,6 @@ internal class CodeEditPageTest : BasePageTest<CodeEditPage>() {
     private val kt_fr = CodeTranslation(3, "fr", "nom1", null, 1)
     private val cd = CodeDefinition("2A", "de", cc2, 1, false, 1, kt_de, kt_en, kt_fr, kt_de2)
 
-    @Suppress("LocalVariableName")
     public override fun setUpHook() {
         codeDefinitionDummy = mockk()
         formDummy = mockk()
@@ -156,7 +155,8 @@ internal class CodeEditPageTest : BasePageTest<CodeEditPage>() {
     fun submitting_withDuplicateKeyConstraintViolationException_addsErrorMsg() {
         val msg = (
             "...Detail: Key (code_class_id, sort)=(2, 1) already exists.; " +
-                "nested exception is org.postgresql.util.PSQLException: ERROR: duplicate key value violates unique constraint..."
+                "nested exception is org.postgresql.util.PSQLException: " +
+                "ERROR: duplicate key value violates unique constraint..."
             )
         every { codeServiceMock.saveOrUpdate(any()) } throws DuplicateKeyException(msg)
         runSubmitTest()
@@ -227,7 +227,8 @@ internal class CodeEditPageTest : BasePageTest<CodeEditPage>() {
 
     @Test
     fun submittingDelete_withForeignKeyConstraintViolationException_addsErrorMsg() {
-        val msg = "... is still referenced from table \"paper_code\".; nested exception is org.postgresql.util.PSQLException..."
+        val msg = "... is still referenced from table \"paper_code\".; " +
+            "nested exception is org.postgresql.util.PSQLException..."
         every { codeServiceMock.delete(any(), any()) } throws DataIntegrityViolationException(msg)
         tester.startPage(CodeEditPage(Model.of(cd), null))
         val formTester = tester.newFormTester("form")
@@ -246,7 +247,8 @@ internal class CodeEditPageTest : BasePageTest<CodeEditPage>() {
         formTester.submit("headerPanel:delete")
         tester.assertNoInfoMessage()
         tester.assertErrorMessages(
-            "The code_class with id 2A has been modified concurrently by another user. Please reload it and apply your changes once more."
+            "The code_class with id 2A has been modified concurrently by another user. " +
+                "Please reload it and apply your changes once more."
         )
         verify { codeServiceMock.delete(any(), any()) }
     }

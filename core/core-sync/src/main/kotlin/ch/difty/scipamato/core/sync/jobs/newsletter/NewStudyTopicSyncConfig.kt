@@ -34,7 +34,8 @@ private const val NNTLM = "NNTLM"
  * Defines the newStudyTopic synchronization job, applying two steps:
  *
  *  1. insertingOrUpdating: inserts new records or updates if already present
- *  1. purging: removes records that have not been touched during the first step (within a defined grace time in minutes)
+ *  1. purging: removes records that have not been touched during the first step
+ *     (within a defined grace time in minutes)
  */
 @Configuration
 @Profile("!wickettest")
@@ -44,7 +45,7 @@ open class NewStudyTopicSyncConfig(
     @Qualifier("dataSource") coreDataSource: DataSource,
     jobBuilderFactory: JobBuilderFactory,
     stepBuilderFactory: StepBuilderFactory,
-    dateTimeService: DateTimeService
+    dateTimeService: DateTimeService,
 ) : SyncConfig<PublicNewStudyTopic, NewStudyTopicRecord>(TOPIC,
     CHUNK_SIZE,
     jooqCore,
@@ -69,12 +70,16 @@ open class NewStudyTopicSyncConfig(
                 NNT_SORT, NNT_LAST_MODIFIED.`as`(NNTLM))
             .from(PaperNewsletter.PAPER_NEWSLETTER)
             .innerJoin(ch.difty.scipamato.core.db.tables.NewsletterTopic.NEWSLETTER_TOPIC)
-            .on(PaperNewsletter.PAPER_NEWSLETTER.NEWSLETTER_TOPIC_ID.eq(ch.difty.scipamato.core.db.tables.NewsletterTopic.NEWSLETTER_TOPIC.ID))
+            .on(PaperNewsletter.PAPER_NEWSLETTER.NEWSLETTER_TOPIC_ID
+                .eq(ch.difty.scipamato.core.db.tables.NewsletterTopic.NEWSLETTER_TOPIC.ID))
             .innerJoin(NewsletterTopicTr.NEWSLETTER_TOPIC_TR)
-            .on(ch.difty.scipamato.core.db.tables.NewsletterTopic.NEWSLETTER_TOPIC.ID.eq(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.NEWSLETTER_TOPIC_ID))
+            .on(ch.difty.scipamato.core.db.tables.NewsletterTopic.NEWSLETTER_TOPIC.ID
+                .eq(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.NEWSLETTER_TOPIC_ID))
             .leftOuterJoin(NewsletterNewsletterTopic.NEWSLETTER_NEWSLETTER_TOPIC)
-            .on(PaperNewsletter.PAPER_NEWSLETTER.NEWSLETTER_ID.eq(NewsletterNewsletterTopic.NEWSLETTER_NEWSLETTER_TOPIC.NEWSLETTER_ID))
-            .and(ch.difty.scipamato.core.db.tables.NewsletterTopic.NEWSLETTER_TOPIC.ID.eq(NewsletterNewsletterTopic.NEWSLETTER_NEWSLETTER_TOPIC.NEWSLETTER_TOPIC_ID))
+            .on(PaperNewsletter.PAPER_NEWSLETTER.NEWSLETTER_ID
+                .eq(NewsletterNewsletterTopic.NEWSLETTER_NEWSLETTER_TOPIC.NEWSLETTER_ID))
+            .and(ch.difty.scipamato.core.db.tables.NewsletterTopic.NEWSLETTER_TOPIC.ID
+                .eq(NewsletterNewsletterTopic.NEWSLETTER_NEWSLETTER_TOPIC.NEWSLETTER_TOPIC_ID))
             .innerJoin(Newsletter.NEWSLETTER)
             .on(PaperNewsletter.PAPER_NEWSLETTER.NEWSLETTER_ID.eq(Newsletter.NEWSLETTER.ID))
             .where(Newsletter.NEWSLETTER.PUBLICATION_STATUS.eq(PUBLICATION_STATUS_PUBLISHED))
@@ -100,7 +105,7 @@ open class NewStudyTopicSyncConfig(
     private fun getLaterTimeStampFrom(
         nttLastModified: String,
         nntLastModified: String,
-        rs: ResultSet
+        rs: ResultSet,
     ): Timestamp? {
         val ts1 = getTimestamp(nttLastModified, rs)
         val ts2 = getTimestamp(nntLastModified, rs)
@@ -108,7 +113,8 @@ open class NewStudyTopicSyncConfig(
         return if (ts1.after(ts2)) ts1 else ts2
     }
 
-    override fun lastSynchedField(): TableField<NewStudyTopicRecord, Timestamp> = NewStudyTopic.NEW_STUDY_TOPIC.LAST_SYNCHED
+    override fun lastSynchedField(): TableField<NewStudyTopicRecord, Timestamp> =
+        NewStudyTopic.NEW_STUDY_TOPIC.LAST_SYNCHED
 
     override val pseudoFkDcs: DeleteConditionStep<NewStudyTopicRecord>?
         get() = jooqPublic

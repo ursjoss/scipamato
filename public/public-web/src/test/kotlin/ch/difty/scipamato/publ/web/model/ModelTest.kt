@@ -10,6 +10,7 @@ import org.springframework.test.util.ReflectionTestUtils
 import java.util.Locale
 
 @SpringBootTest
+@Suppress("UnnecessaryAbstractClass")
 abstract class ModelTest {
 
     @Autowired

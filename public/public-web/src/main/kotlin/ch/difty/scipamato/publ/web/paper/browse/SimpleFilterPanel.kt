@@ -92,9 +92,12 @@ open class SimpleFilterPanel(
             .withLiveSearchStyle("startsWith")
             .withSelectAllText(StringResourceModel(SELECT_ALL_RESOURCE_TAG, this@SimpleFilterPanel, null).string)
             .withDeselectAllText(StringResourceModel(DESELECT_ALL_RESOURCE_TAG, this@SimpleFilterPanel, null).string)
-            .withNoneSelectedText(StringResourceModel(CODES_NONE_SELECT_RESOURCE_TAG, this@SimpleFilterPanel, null).string)
+            .withNoneSelectedText(
+                StringResourceModel(CODES_NONE_SELECT_RESOURCE_TAG, this@SimpleFilterPanel, null).string
+            )
 
         val model = PropertyModel.of<Collection<C>>(this@SimpleFilterPanel.model, name)
+        @Suppress("SpreadOperator")
         object : BootstrapMultiSelect<C>(id, model, listOf(*values), EnumChoiceRenderer(this@SimpleFilterPanel)) {
             override fun onEvent(event: IEvent<*>) {
                 handleChangeEvent(event, this)
@@ -120,7 +123,9 @@ open class SimpleFilterPanel(
             .withActionsBox(true)
             .withSelectAllText(StringResourceModel(SELECT_ALL_RESOURCE_TAG, this@SimpleFilterPanel, null).string)
             .withDeselectAllText(StringResourceModel(DESELECT_ALL_RESOURCE_TAG, this@SimpleFilterPanel, null).string)
-            .withNoneSelectedText(StringResourceModel(KEYWORDS_NONE_SELECT_RESOURCE_TAG, this@SimpleFilterPanel, null).string)
+            .withNoneSelectedText(
+                StringResourceModel(KEYWORDS_NONE_SELECT_RESOURCE_TAG, this@SimpleFilterPanel, null).string
+            )
             .withLiveSearch(true)
             .withLiveSearchStyle("startsWith")
         object : BootstrapMultiSelect<Keyword>(id, model, KeywordModel(languageCode), choiceRenderer) {

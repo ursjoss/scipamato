@@ -13,7 +13,7 @@ import org.apache.wicket.markup.html.link.Link
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 
-@Suppress("SameParameterValue", "PrivatePropertyName")
+@Suppress("SameParameterValue", "PrivatePropertyName", "VariableNaming")
 internal class KeywordListPageTest : BasePageTest<KeywordListPage>() {
 
     private val kt1_de = KeywordTranslation(1, "de", "Name1", 1)

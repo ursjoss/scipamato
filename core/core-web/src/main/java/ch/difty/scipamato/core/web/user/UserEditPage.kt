@@ -120,6 +120,7 @@ class UserEditPage(pp: PageParameters) : BasePage<ChangePasswordUser>(pp) {
             .ifPresent { u: User -> defaultModel = Model.of(ChangePasswordUser(u, !isInPasswordResetMode)) }
     }
 
+    @Suppress("ComplexMethod", "LongMethod")
     override fun onInitialize() {
         super.onInitialize()
         val form = Form("form", CompoundPropertyModel(model)).also { add(it) }
@@ -140,7 +141,10 @@ class UserEditPage(pp: PageParameters) : BasePage<ChangePasswordUser>(pp) {
         Label(ROLES + LABEL_TAG, StringResourceModel("$ROLES$LABEL_RESOURCE_TAG", this, null)).apply {
             isVisible = isInAdminMode
         }.also { queue(it) }
-        BootstrapMultiSelect(ROLES, PropertyModel(model, ROLES), listOf(*Role.values()), EnumChoiceRenderer(this)).apply {
+        @Suppress("SpreadOperator")
+        BootstrapMultiSelect(
+            ROLES, PropertyModel(model, ROLES), listOf(*Role.values()), EnumChoiceRenderer(this)
+        ).apply {
             with(BootstrapSelectConfig()
                 .withMultiple(true)
                 .withLiveSearch(true)
@@ -197,6 +201,7 @@ class UserEditPage(pp: PageParameters) : BasePage<ChangePasswordUser>(pp) {
         })
     }
 
+    @Suppress("TooGenericExceptionCaught", "NestedBlockDepth")
     private fun doOnSubmit() {
         if (modelObject != null) {
             try {
@@ -229,6 +234,7 @@ class UserEditPage(pp: PageParameters) : BasePage<ChangePasswordUser>(pp) {
         }
     }
 
+    @Suppress("TooGenericExceptionCaught")
     private fun doOnDelete() {
         val user = modelObject!!.toUser()
         val userName = user.userName

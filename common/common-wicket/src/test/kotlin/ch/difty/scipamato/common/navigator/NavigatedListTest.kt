@@ -84,7 +84,7 @@ internal class NavigatedListTest {
     @Test
     fun cannotAdvanceBeyondLastItem() {
         navigatedList.setFocusToItem(ids[ids.size - 1])
-        for (i in 0..9) {
+        repeat(9) {
             navigatedList.itemWithFocus shouldBeEqualTo ids[ids.size - 1]
             navigatedList.next()
         }
@@ -93,7 +93,7 @@ internal class NavigatedListTest {
 
     @Test
     fun cannotRetreatBeyondFirstItem() {
-        for (i in 0..9) {
+        repeat(9) {
             navigatedList.itemWithFocus shouldBeEqualTo ids[0]
             navigatedList.previous()
         }

@@ -71,6 +71,7 @@ open class JooqNewStudyRepo(private val dsl: DSLContext) : NewStudyRepository {
         )
     }
 
+    @Suppress("MaxLineLength")
     /* Walks through the recordset and extracts the NewStudyTopic with all associated NewStudies */
     private fun processDbRecords(
         map: Map<Record, Result<Record13<Int, String, Int, Int, Int, Long, Int, String, String, String, Int, Timestamp, Timestamp>>>,
@@ -89,6 +90,7 @@ open class JooqNewStudyRepo(private val dsl: DSLContext) : NewStudyRepository {
      * @param aliasedNewsStudySortField the aliased NewStudy.Sort field, the value must not be null
      * @return single NewStudyTopic
      */
+    @Suppress("MaxLineLength")
     private fun newNewStudyTopic(
         newStudyTopicSortValue: Int, newStudyTopicTitleValue: String,
         newStudyRecords: Result<Record13<Int, String, Int, Int, Int, Long, Int, String, String, String, Int, Timestamp, Timestamp>>,
@@ -131,6 +133,7 @@ open class JooqNewStudyRepo(private val dsl: DSLContext) : NewStudyRepository {
         .limit(newsletterCount)
         .map { r -> Newsletter(r[0] as Int, r[1] as String?, (r[2] as Date?)?.toLocalDate()) }
 
+    @Suppress("MagicNumber")
     override fun findNewStudyPageLinks(languageCode: String): List<NewStudyPageLink> = dsl
         .select(
             ch.difty.scipamato.publ.db.tables.NewStudyPageLink.NEW_STUDY_PAGE_LINK.LANG_CODE,

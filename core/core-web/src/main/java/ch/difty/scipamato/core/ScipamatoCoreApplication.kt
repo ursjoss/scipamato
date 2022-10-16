@@ -48,6 +48,7 @@ open class ScipamatoCoreApplication : WicketBootSecuredWebApplication() {
 
     override fun newSession(request: Request, response: Response): Session = ScipamatoSession(request)
 
+    @Suppress("MagicNumber")
     override fun onDestroy() {
         executorService.shutdown()
         try {
@@ -72,6 +73,7 @@ open class ScipamatoCoreApplication : WicketBootSecuredWebApplication() {
 }
 
 
+@Suppress("SpreadOperator")
 fun main(args: Array<String>) {
     runApplication<ScipamatoCoreApplication>(*args)
 }

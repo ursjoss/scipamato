@@ -389,6 +389,7 @@ internal class DistillerSrRisAdapterTest {
             authors = "Pan P."
             location = "0123456789".repeat(30)
         }
+        @Suppress("MaxLineLength")
         val expected =
             """
             |TY  - JOUR

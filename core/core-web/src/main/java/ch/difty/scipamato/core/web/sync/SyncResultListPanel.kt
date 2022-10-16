@@ -9,7 +9,7 @@ import org.apache.wicket.markup.html.panel.Panel
 import org.apache.wicket.model.StringResourceModel
 import java.time.Duration
 
-@Suppress("serial")
+@Suppress("MagicNumber")
 class SyncResultListPanel(id: String) : Panel(id) {
 
     override fun onInitialize() {
