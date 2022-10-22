@@ -44,9 +44,7 @@ dependencies {
     }
     implementation(libs.spring.boot.starter.security)
 
-    implementation(libs.spring.boot.starter.cache)
-    implementation(libs.cacheApi)
-    implementation(libs.ehcache)
+    implementation(libs.bundles.caching)
     runtimeOnly(libs.jaxb.runtime)
 
     testImplementation(project(Module.scipamatoCommon("test")))

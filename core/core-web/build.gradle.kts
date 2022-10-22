@@ -65,9 +65,7 @@ dependencies {
     implementation(libs.kris.core)
 
     /** Caching: JCache with ehcache as cache provider */
-    implementation(libs.spring.boot.starter.cache)
-    implementation(libs.cacheApi)
-    implementation(libs.ehcache)
+    implementation(libs.bundles.caching)
 
     testImplementation(project(Module.scipamatoCommon("test")))
     testImplementation(project(Module.scipamatoCommon("persistence-jooq-test")))
