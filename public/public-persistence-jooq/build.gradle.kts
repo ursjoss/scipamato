@@ -50,9 +50,7 @@ dependencies {
     testImplementation(project(Module.scipamatoCommon("persistence-jooq-test")))
     testImplementation(project(Module.scipamatoCommon("test")))
 
-    integrationTestImplementation(libs.testcontainers.testcontainers)
-    integrationTestImplementation(libs.testcontainers.junitJupiter)
-    integrationTestImplementation(libs.testcontainers.postgresql)
+    integrationTestImplementation(libs.bundles.dbTest)
     integrationTestRuntimeOnly(libs.postgresql)
 }
 

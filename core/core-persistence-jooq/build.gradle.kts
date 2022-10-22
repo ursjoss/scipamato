@@ -27,6 +27,7 @@ jooqModelator {
     migrationsPaths = listOf("$rootDir/$moduleName/src/main/resources/db/migration/")
 
     dockerTag = "postgres:10"
+
     dockerEnv = listOf(
         "POSTGRES_DB=${props.getProperty("db.name")}",
         "POSTGRES_USER=${props.getProperty("spring.datasource.hikari.username")}",
@@ -55,9 +56,7 @@ dependencies {
     testImplementation(libs.lombok)
     testAnnotationProcessor(libs.lombok)
 
-    integrationTestImplementation(libs.testcontainers.testcontainers)
-    integrationTestImplementation(libs.testcontainers.junitJupiter)
-    integrationTestImplementation(libs.testcontainers.postgresql)
+    integrationTestImplementation(libs.bundles.dbTest)
     integrationTestRuntimeOnly(libs.postgresql)
     integrationTestAnnotationProcessor(libs.lombok)
 }

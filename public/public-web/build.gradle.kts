@@ -1,11 +1,11 @@
 import org.springframework.boot.gradle.tasks.bundling.BootJar
 
+description = "SciPaMaTo-Public :: Web Project"
+
 plugins {
     alias(libs.plugins.springBoot).apply(true)
     id("application-properties-filter")
 }
-
-description = "SciPaMaTo-Public :: Web Project"
 
 /**
  * Make the static wicket resources that reside next to the java classes in src{main,test} available.
@@ -44,15 +44,11 @@ dependencies {
     }
     implementation(libs.spring.boot.starter.security)
 
-    implementation(libs.spring.boot.starter.cache)
-    implementation(libs.cacheApi)
-    implementation(libs.ehcache)
+    implementation(libs.bundles.caching)
     runtimeOnly(libs.jaxb.runtime)
 
     testImplementation(project(Module.scipamatoCommon("test")))
 
-    integrationTestImplementation(libs.testcontainers.testcontainers)
-    integrationTestImplementation(libs.testcontainers.junitJupiter)
-    integrationTestImplementation(libs.testcontainers.postgresql)
+    integrationTestImplementation(libs.bundles.dbTest)
     integrationTestRuntimeOnly(libs.postgresql)
 }
