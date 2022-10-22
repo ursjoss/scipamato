@@ -1,11 +1,11 @@
 import org.springframework.boot.gradle.tasks.bundling.BootJar
 
+description = "SciPaMaTo-Public :: Web Project"
+
 plugins {
     alias(libs.plugins.springBoot).apply(true)
     id("application-properties-filter")
 }
-
-description = "SciPaMaTo-Public :: Web Project"
 
 /**
  * Make the static wicket resources that reside next to the java classes in src{main,test} available.

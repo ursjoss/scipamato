@@ -27,6 +27,7 @@ jooqModelator {
     migrationsPaths = listOf("$rootDir/$moduleName/src/main/resources/db/migration/")
 
     dockerTag = "postgres:10"
+
     dockerEnv = listOf(
         "POSTGRES_DB=${props.getProperty("db.name")}",
         "POSTGRES_USER=${props.getProperty("spring.datasource.hikari.username")}",
