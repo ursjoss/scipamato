@@ -56,9 +56,7 @@ dependencies {
     testImplementation(libs.lombok)
     testAnnotationProcessor(libs.lombok)
 
-    integrationTestImplementation(libs.testcontainers.testcontainers)
-    integrationTestImplementation(libs.testcontainers.junitJupiter)
-    integrationTestImplementation(libs.testcontainers.postgresql)
+    integrationTestImplementation(libs.bundles.dbTest)
     integrationTestRuntimeOnly(libs.postgresql)
     integrationTestAnnotationProcessor(libs.lombok)
 }

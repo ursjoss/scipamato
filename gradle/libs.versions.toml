@@ -121,6 +121,7 @@ plugin-reckon = { module = "org.ajoberstar.reckon:reckon-gradle", version.ref = 
 
 [bundles]
 caching = ["spring-boot-starter-cache", "cacheApi", "ehcache"]
+dbTest = ["testcontainers-testcontainers", "testcontainers-junitJupiter", "testcontainers-postgresql"]
 
 kotlin = ["kotlin-stdlib", "kotlin-reflect", "coroutines-core"]
 testDeps = ["junitJupiter-api", "kotest-framework-api", "mockk", "kluent"]
