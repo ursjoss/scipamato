@@ -70,7 +70,7 @@ jobs:
         sarif_file: build/detekt-merged.sarif
         category: detekt
 
-    - name: Upload fialure artifacts
+    - name: Upload failure artifacts
       if: failure()
       uses: actions/upload-artifact@v3
       with:
