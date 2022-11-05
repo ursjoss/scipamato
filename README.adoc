@@ -17,40 +17,144 @@ SciPaMaTo consists of two main components:
 
 SciPaMaTo is a Spring Boot web-application using Apache Wicket as front-end and stores the data in PostgreSQL-Databases. It offers simplified ways of importing relevant items of information from Pubmed. SciPaMaTo offers quite extensive search facilities that allow scrutinizing the database. Parts of the data managed within ScipMaTo-Core can be synchronized into SciPaMaTo-Public, which is accessible for the interested public over the internet.
 
+=== C4-Diagrams
+
+==== Context Diagram
+
 ```mermaid
 flowchart TD
   PM["PubMed<br/>[Software System]<br/><br/>National Library of Medicine"]
   click PM href "https://pubmed.ncbi.nlm.nih.gov" _blank
   PublicViewer["Public Viewer<br/>[Person]<br/><br/>Anonymous Reader<br/>on the Internet"]
-  subgraph "DMZ"
+  subgraph dmz[DMZ]
     SP["SciPaMaTo Public<br/>[Software System]<br/><br/>Public System,<br/>reachable anonymously<br/>from public internet"]
     click SP href "https://www.swisstph.ch/en/projects/ludok/datenbanksuche" _blank
-    SPDB("Public Database<br/>[System DB]")
-    subgraph "Internal Network"
+    SPDB("fas:fa-database Public Database<br/>[System DB]")
+    subgraph internal[Internal Network]
       Editor["Editor<br/>[Person]<br/><br/>Maintaining<br/>data in Core"]
       Viewer["Read only user<br/>[Person]<br/><br/>Read only viewer<br/>in SciPaMaTo-Core"]
       Admin["Admin user<br/>[Person]<br/><br/>User maintaining<br/>user accounts"]
       SC["SciPaMaTo Core<br/>[Software System]<br/><br/>Core System,<br/>only reachable inside<br/>the private network"]
-      SCDB("Core Database<br/>[System DB]")
+      SCDB("fas:fa-database Core Database<br/>[System DB]")
     end
   end
-  Editor<==>|Enters and<br/>maintains data|SC
-  Viewer<-->|Views Data|SC
-  Admin<-->|Maintains user<br/>accounts in|SC
-  SC--->|imports from|PM
-  SC<-.->|read/write|SCDB
-  SC-.->|synchronizes|SPDB
-  SP-.-|read only|SPDB
+  Editor<==>|"Enters and<br/>maintains data"|SC
+  Viewer<-->|"Views Data"|SC
+  Admin<-->|"Maintains user<br/>accounts in"|SC
+  SC--->|"imports from"|PM
+  SC<-.->|"read/write"|SCDB
+  SC-.->|"synchronizes"|SPDB
+  SP-.-|"read only"|SPDB
 
-  PublicViewer-->|searches database<br/>views newsletters|SP
+  PublicViewer-->|"searches database,<br/>views newsletters"|SP
 
   classDef focusSystem fill:#1168bd,stroke:#0b4884,color:#ffffff
   classDef supportingSystem fill:#666,stroke:#0b4884,color:#ffffff
   classDef person fill:#08427b,stroke:#052e56,color:#ffffff
+  classDef boundary fill:none,stroke:#CCC,stroke-width:2px,stroke-dasharray: 5 5
 
   class Editor,Viewer,Admin,PublicViewer person
   class SC,SP focusSystem
   class PM supportingSystem
+  class dmz,internal boundary
+```
+
+==== Component Diagram SciPaMaTo-Core
+
+```mermaid
+flowchart TD
+  PM["PubMed<br/>[Software System]<br/><br/>National Library of Medicine"]
+  subgraph dmz[DMZ]
+    subgraph dbserver2[DB Server]
+      SPDB("fas:fa-database Public Database<br/>[PostgreSQL]")
+    end
+    subgraph internal[Internal Network]
+      Editor["Editor<br/>[Person]<br/><br/>Maintaining<br/>data in Core"]
+      Viewer["Read only user<br/>[Person]<br/><br/>Read only viewer<br/>in SciPaMaTo-Core"]
+      Admin["Admin user<br/>[Person]<br/><br/>User maintaining<br/>user accounts"]
+      subgraph webserver[Web Server]
+        RP["Reverse Proxy<br/>[Apache HTTPD]"]
+        SC["Web Application<br/>[Spring Boot Application]"]
+      end
+      subgraph dbserver1[DB Server]
+        SCDB("fas:fa-database Core Database<br/>[PostgreSQL]")
+      end
+      
+      Editor<==>|"enters and<br/>maintains data<br/>[HTTPS]"|RP
+      Editor<-->|"triggers<br/>sync to public<br/>[HTTPS]"|RP
+      Editor<-->|"triggers<br/>import from PubMed<br/>[HTTPS]"|RP
+      Viewer<-->|"Views Data<br/>[HTTPS]"|RP
+      Admin<-->|"Maintains user<br/>accounts in<br/>[HTTPS]"|RP
+    end
+  end
+  
+  RP<-->|"relays<br/>[HTTP]"|SC
+  SC-.-|"reads/writes<br/>[JDBC]"|SCDB
+  SC-..->|"synchronizes<br/>[JDBC]"|SPDB
+  SC<--->|"imports<br/>from<br/>[HTTPS]"|PM
+  
+  classDef container fill:#1168bd,stroke:#0b4884,color:#ffffff
+  classDef supportingSystem fill:#666,stroke:#0b4884,color:#ffffff
+  classDef person fill:#08427b,stroke:#052e56,color:#ffffff
+
+  class Editor,Viewer,Admin person
+  class SC,RP,SCDB container
+  class PM,SPDB supportingSystem
+
+  classDef boundary fill:none,stroke:#CCC,stroke-width:2px,stroke-dasharray: 5 5
+  class dmz,internal boundary
+
+  classDef server fill:none,stroke:#CCC,stroke-width:2px,stroke-dasharray: 5 5
+  class dbserver1,dbserver2,webserver server
+```
+
+==== Component Diagram SciPaMaTo-Public
+
+```mermaid
+flowchart TD
+  Searcher["Database Searcher<br/>[Person]<br/><br/>Anonymous Reader<br/>on the Internet"]
+  Viewer["Newsletter Viewer<br/>[Person]<br/><br/>Anonymous Reader<br/>on the Internet"]
+  subgraph dmz[DMZ]
+    subgraph webserverp[Web Server]
+      RP["Reverse Proxy<br/>[Apache HTTPD]"]
+      SP["Web Application<br/>[Spring Boot Application]"]
+      click SP href "https://www.swisstph.ch/en/projects/ludok/datenbanksuche" _blank
+    end
+    subgraph dbserverp[DB Server]
+      SPDB("fas:fa-database Public Database<br/>[PostgreSQL]")
+    end
+  end
+  
+  subgraph internal[Internal Network]
+    subgraph webserverc[Web Server]
+      SC["Web Application<br/>[Spring Boot Application]"]
+    end
+    subgraph dbserverc[DB Server]
+      SCDB("fas:fa-database Core Database<br/>[PostgreSQL]")
+    end
+    SC<-.->|"[JDBC]"|SCDB
+  end
+
+  Searcher<-->|"searches database<br/>[HTTPS]"|RP
+  Viewer<-->|"views newsletters<br/>[HTTPS]"|RP
+  
+  RP<-->|"relays<br/>[HTTP]"|SP
+  SP-.-|"read only<br/>[JDBC]"|SPDB
+  SC-.->|"synchronizes<br/>[JDBC]"|SPDB
+  
+  classDef container fill:#1168bd,stroke:#0b4884,color:#ffffff
+  classDef supportingSystem fill:#666,stroke:#0b4884,color:#ffffff
+  classDef person fill:#08427b,stroke:#052e56,color:#ffffff
+
+  class Searcher,Viewer,CoreUser person
+  class SP,RP,SPDB,SC,SCDB container
+
+  classDef boundary fill:none,stroke:#CCC,stroke-width:2px,stroke-dasharray: 5 5
+  class dmz,internal boundary
+
+  classDef server fill:none,stroke:#CCC,stroke-width:2px,stroke-dasharray: 5 5
+  class dbserverp,dbserverc,webserverp,webserverc server
+
 ```
 
 
