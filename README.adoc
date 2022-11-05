@@ -147,14 +147,14 @@ flowchart TD
   classDef person fill:#08427b,stroke:#052e56,color:#ffffff
 
   class Searcher,Viewer,CoreUser person
-  class SP,RP,SPDB,SC,SCDB container
+  class SP,RP,SPDB container
+  class SC,SCDB supportingSystem
 
   classDef boundary fill:none,stroke:#CCC,stroke-width:2px,stroke-dasharray: 5 5
   class dmz,internal boundary
 
   classDef server fill:none,stroke:#CCC,stroke-width:2px,stroke-dasharray: 5 5
   class dbserverp,dbserverc,webserverp,webserverc server
-
 ```
 
 
