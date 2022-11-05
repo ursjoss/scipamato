@@ -18,40 +18,39 @@ SciPaMaTo consists of two main components:
 SciPaMaTo is a Spring Boot web-application using Apache Wicket as front-end and stores the data in PostgreSQL-Databases. It offers simplified ways of importing relevant items of information from Pubmed. SciPaMaTo offers quite extensive search facilities that allow scrutinizing the database. Parts of the data managed within ScipMaTo-Core can be synchronized into SciPaMaTo-Public, which is accessible for the interested public over the internet.
 
 ```mermaid
-C4Context
-  title "System Context diagram for SciPaMaTo"
-  Boundary(Web, "Internet") {
-    System_Ext(PubMed, "PubMed", "National Library of Medicine")
-    System_Ext(Dummy1, "")
-    Person_Ext(PublicViewer, "Public Viewer", "Anonymous Reader<br/>in the public network")
-    Enterprise_Boundary(DMZ, "DMZ") {
-        System(Dummy2, "")
-        SystemDb(SciPubDb, "Public Database")
-        System(SciPub, "SciPaMaTo-Public", "Public Access to Search and Newsletter")
-        Enterprise_Boundary(INT, "Internal Network") {
-            Person(Editor, "Editor", "Key SciPaMaTo<br/>user working with<br/>SciPaMaTo-Core")
-            Person(Admin, "Admin user", "User account administrator")
-            Person(Viewer, "Read-only viewer", "Read only viewer<br/>in SciPaMaTo-Core")
+flowchart TD
+  PM["PubMed<br/>[Software System]<br/><br/>National Library of Medicine"]
+  click PM href "https://pubmed.ncbi.nlm.nih.gov" _blank
+  PublicViewer["Public Viewer<br/>[Person]<br/><br/>Anonymous Reader<br/>on the Internet"]
+  subgraph "DMZ"
+    SP["SciPaMaTo Public<br/>[Software System]<br/><br/>Public System,<br/>reachable anonymously<br/>from public internet"]
+    click SP href "https://www.swisstph.ch/en/projects/ludok/datenbanksuche" _blank
+    SPDB("Public Database<br/>[System DB]")
+    subgraph "Internal Network"
+      Editor["Editor<br/>[Person]<br/><br/>Maintaining<br/>data in Core"]
+      Viewer["Read only user<br/>[Person]<br/><br/>Read only viewer<br/>in SciPaMaTo-Core"]
+      Admin["Admin user<br/>[Person]<br/><br/>User maintaining<br/>user accounts"]
+      SC["SciPaMaTo Core<br/>[Software System]<br/><br/>Core System,<br/>only reachable inside<br/>the private network"]
+      SCDB("Core Database<br/>[System DB]")
+    end
+  end
+  Editor<==>|Enters and<br/>maintains data|SC
+  Viewer<-->|Views Data|SC
+  Admin<-->|Maintains user<br/>accounts in|SC
+  SC--->|imports from|PM
+  SC<-.->|read/write|SCDB
+  SC-.->|synchronizes|SPDB
+  SP-.-|read only|SPDB
 
-            SystemDb(SciCoreDb, "Core Database")
-            System(SciCore, "SciPaMaTo-Core", "Core System,<br/>only reachable inside<br/>the private network")
-        }
-    }
-  }
+  PublicViewer-->|searches database<br/>views newsletters|SP
 
-BiRel(Editor, SciCore, "r/w")
-BiRel(Viewer, SciCore, "ro")
-BiRel(Admin, SciCore, "maintains<br/>user accounts")
-BiRel(PublicViewer, SciPub, "searches database<br/>views newsletters")
-BiRel(SciCore, SciCoreDb, "reads/writes")
-Rel(SciPubDb, SciPub, "read<br/>only")
-Rel(SciCore, SciPubDb, "synchronizes to")
-Rel(PubMed, SciCore, "import")
+  classDef focusSystem fill:#1168bd,stroke:#0b4884,color:#ffffff
+  classDef supportingSystem fill:#666,stroke:#0b4884,color:#ffffff
+  classDef person fill:#08427b,stroke:#052e56,color:#ffffff
 
-UpdateElementStyle(Dummy1, $fontColor="transparent", $bgColor="transparent", $borderColor="transparent")
-UpdateElementStyle(Dummy2, $fontColor="transparent", $bgColor="transparent", $borderColor="transparent")
-
-UpdateLayoutConfig($c4ShapeInRow="3", $c4BoundaryInRow="2")
+  class Editor,Viewer,Admin,PublicViewer person
+  class SC,SP focusSystem
+  class PM supportingSystem
 ```
 
 
