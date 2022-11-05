@@ -59,7 +59,7 @@ flowchart TD
   class dmz,internal boundary
 ```
 
-==== Component Diagram SciPaMaTo-Core
+==== Container Diagram SciPaMaTo-Core
 
 ```mermaid
 flowchart TD
@@ -108,7 +108,7 @@ flowchart TD
   class dbserver1,dbserver2,webserver server
 ```
 
-==== Component Diagram SciPaMaTo-Public
+==== Container Diagram SciPaMaTo-Public
 
 ```mermaid
 flowchart TD
