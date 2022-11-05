@@ -17,6 +17,44 @@ SciPaMaTo consists of two main components:
 
 SciPaMaTo is a Spring Boot web-application using Apache Wicket as front-end and stores the data in PostgreSQL-Databases. It offers simplified ways of importing relevant items of information from Pubmed. SciPaMaTo offers quite extensive search facilities that allow scrutinizing the database. Parts of the data managed within ScipMaTo-Core can be synchronized into SciPaMaTo-Public, which is accessible for the interested public over the internet.
 
+```mermaid
+C4Context
+  title "System Context diagram for SciPaMaTo"
+  Boundary(Web, "Internet") {
+    System_Ext(PubMed, "PubMed", "National Library of Medicine")
+    System_Ext(Dummy1, "")
+    Person_Ext(PublicViewer, "Public Viewer", "Anonymous Reader<br/>in the public network")
+    Enterprise_Boundary(DMZ, "DMZ") {
+        System(Dummy2, "")
+        SystemDb(SciPubDb, "Public Database")
+        System(SciPub, "SciPaMaTo-Public", "Public Access to Search and Newsletter")
+        Enterprise_Boundary(INT, "Internal Network") {
+            Person(Editor, "Editor", "Key SciPaMaTo<br/>user working with<br/>SciPaMaTo-Core")
+            Person(Admin, "Admin user", "User account administrator")
+            Person(Viewer, "Read-only viewer", "Read only viewer<br/>in SciPaMaTo-Core")
+
+            SystemDb(SciCoreDb, "Core Database")
+            System(SciCore, "SciPaMaTo-Core", "Core System,<br/>only reachable inside<br/>the private network")
+        }
+    }
+  }
+
+BiRel(Editor, SciCore, "r/w")
+BiRel(Viewer, SciCore, "ro")
+BiRel(Admin, SciCore, "maintains<br/>user accounts")
+BiRel(PublicViewer, SciPub, "searches database<br/>views newsletters")
+BiRel(SciCore, SciCoreDb, "reads/writes")
+Rel(SciPubDb, SciPub, "read<br/>only")
+Rel(SciCore, SciPubDb, "synchronizes to")
+Rel(PubMed, SciCore, "import")
+
+UpdateElementStyle(Dummy1, $fontColor="transparent", $bgColor="transparent", $borderColor="transparent")
+UpdateElementStyle(Dummy2, $fontColor="transparent", $bgColor="transparent", $borderColor="transparent")
+
+UpdateLayoutConfig($c4ShapeInRow="3", $c4BoundaryInRow="2")
+```
+
+
 [[technology-stack]]
 == Technology Stack
 
