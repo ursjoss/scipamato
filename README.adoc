@@ -30,18 +30,18 @@ flowchart TD
     SP["SciPaMaTo Public<br/>[Software System]<br/><br/>Public System,<br/>reachable anonymously<br/>from public internet"]
     click SP href "https://www.swisstph.ch/en/projects/ludok/datenbanksuche" _blank
     SPDB("fas:fa-database Public Database<br/>[System DB]")
-    subgraph internal[Internal Network]
-      Editor["Editor<br/>[Person]<br/><br/>Maintaining<br/>data in Core"]
-      Viewer["Read only user<br/>[Person]<br/><br/>Read only viewer<br/>in SciPaMaTo-Core"]
-      Admin["Admin user<br/>[Person]<br/><br/>User maintaining<br/>user accounts"]
-      SC["SciPaMaTo Core<br/>[Software System]<br/><br/>Core System,<br/>only reachable inside<br/>the private network"]
-      SCDB("fas:fa-database Core Database<br/>[System DB]")
-    end
+  end
+  subgraph internal[Internal Network]
+    Editor["Editor<br/>[Person]<br/><br/>Maintaining<br/>data in Core"]
+    Viewer["Read only user<br/>[Person]<br/><br/>Read only viewer<br/>in SciPaMaTo-Core"]
+    Admin["Admin user<br/>[Person]<br/><br/>User maintaining<br/>user accounts"]
+    SC["SciPaMaTo Core<br/>[Software System]<br/><br/>Core System,<br/>only reachable inside<br/>the private network"]
+    SCDB("fas:fa-database Core Database<br/>[System DB]")
   end
   Editor<==>|"Enters and<br/>maintains data"|SC
   Viewer<-->|"Views Data"|SC
   Admin<-->|"Maintains user<br/>accounts in"|SC
-  SC--->|"imports from"|PM
+  SC<--->|"imports from"|PM
   SC<-.->|"read/write"|SCDB
   SC-.->|"synchronizes"|SPDB
   SP-.-|"read only"|SPDB
@@ -68,29 +68,29 @@ flowchart TD
     subgraph dbserver2[DB Server]
       SPDB("fas:fa-database Public Database<br/>[PostgreSQL]")
     end
-    subgraph internal[Internal Network]
-      Editor["Editor<br/>[Person]<br/><br/>Maintaining<br/>data in Core"]
-      Viewer["Read only user<br/>[Person]<br/><br/>Read only viewer<br/>in SciPaMaTo-Core"]
-      Admin["Admin user<br/>[Person]<br/><br/>User maintaining<br/>user accounts"]
-      subgraph webserver[Web Server]
-        RP["Reverse Proxy<br/>[Apache HTTPD]"]
-        SC["Web Application<br/>[Spring Boot Application]"]
-      end
-      subgraph dbserver1[DB Server]
-        SCDB("fas:fa-database Core Database<br/>[PostgreSQL]")
-      end
-      
-      Editor<==>|"enters and<br/>maintains data<br/>[HTTPS]"|RP
-      Editor<-->|"triggers<br/>sync to public<br/>[HTTPS]"|RP
-      Editor<-->|"triggers<br/>import from PubMed<br/>[HTTPS]"|RP
-      Viewer<-->|"Views Data<br/>[HTTPS]"|RP
-      Admin<-->|"Maintains user<br/>accounts in<br/>[HTTPS]"|RP
+  end
+  subgraph internal[Internal Network]
+    Editor["Editor<br/>[Person]<br/><br/>Maintaining<br/>data in Core"]
+    Viewer["Read only user<br/>[Person]<br/><br/>Read only viewer<br/>in SciPaMaTo-Core"]
+    Admin["Admin user<br/>[Person]<br/><br/>User maintaining<br/>user accounts"]
+    subgraph webserver[Web Server]
+      RP["Reverse Proxy<br/>[Apache HTTPD]"]
+      SC["Web Application<br/>[Spring Boot Application]"]
     end
+    subgraph dbserver1[DB Server]
+      SCDB("fas:fa-database Core Database<br/>[PostgreSQL]")
+    end
+    
+    Editor<==>|"enters and<br/>maintains data<br/>[HTTPS]"|RP
+    Editor<-->|"triggers<br/>sync to public<br/>[HTTPS]"|RP
+    Editor<-->|"triggers<br/>import from PubMed<br/>[HTTPS]"|RP
+    Viewer<-->|"Views Data<br/>[HTTPS]"|RP
+    Admin<-->|"Maintains user<br/>accounts in<br/>[HTTPS]"|RP
   end
   
   RP<-->|"relays<br/>[HTTP]"|SC
   SC-.-|"reads/writes<br/>[JDBC]"|SCDB
-  SC-..->|"synchronizes<br/>[JDBC]"|SPDB
+  SC-.->|"synchronizes<br/>[JDBC]"|SPDB
   SC<--->|"imports<br/>from<br/>[HTTPS]"|PM
   
   classDef container fill:#1168bd,stroke:#0b4884,color:#ffffff
