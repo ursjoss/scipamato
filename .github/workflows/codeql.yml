@@ -33,8 +33,10 @@ jobs:
       with:
         languages: ${{ matrix.language }}
 
-    - name: Autobuild
-      uses: github/codeql-action/autobuild@v2
+    - name: Build
+      uses: gradle/gradle-build-action@v2
+      with:
+        arguments: build
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v2
