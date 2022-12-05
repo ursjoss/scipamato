@@ -11,7 +11,9 @@ import org.apache.wicket.markup.html.SecurePackageResourceGuard
 import org.apache.wicket.request.Request
 import org.apache.wicket.request.Response
 import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.context.annotation.Primary
 
+@Primary
 @SpringBootApplication
 open class TestApplication : WicketBootSecuredWebApplication() {
 
