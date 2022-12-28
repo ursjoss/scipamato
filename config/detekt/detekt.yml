@@ -7,3 +7,7 @@ complexity:
     active: true
     functionThreshold: 7
     ignoreDefaultParameters: true
+
+potential-bugs:
+  ImplicitDefaultLocale:
+    active: false
