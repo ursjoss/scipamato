@@ -256,7 +256,7 @@ public class AuditSearchTerm extends AbstractSearchTerm {
         final StringBuilder tokenPatternBuilder = new StringBuilder();
         for (final TokenType tokenType : TokenType.TOKEN_TYPES)
             if (tokenType != TokenType.RAW)
-                tokenPatternBuilder.append(String.format("|(?<%s>%s)", tokenType.name(), tokenType.pattern));
+                tokenPatternBuilder.append(String.format(Locale.US, "|(?<%s>%s)", tokenType.name(), tokenType.pattern));
         return Pattern.compile(tokenPatternBuilder.substring(1));
     }
 

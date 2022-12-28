@@ -3,6 +3,7 @@ package ch.difty.scipamato.core.entity.search;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -199,7 +200,7 @@ public class StringSearchTerm extends AbstractSearchTerm {
 
         @Override
         public String toString() {
-            return String.format("(%s %s)", type.name(), sqlData);
+            return String.format(Locale.US, "(%s %s)", type.name(), sqlData);
         }
     }
 

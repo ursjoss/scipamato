@@ -44,7 +44,7 @@ open class RefDataSyncJobLauncher(
     @Qualifier("syncNewsletterTopicJob") private val syncNewsletterTopicJob: Job,
     @Qualifier("syncNewStudyJob") private val syncNewStudyJob: Job,
     @Qualifier("syncNewStudyTopicJob") private val syncNewStudyTopicJob: Job,
-    @Qualifier("syncKeywordJob") private val syncKeywordJob: Job, private val warner: Warner
+    @Qualifier("syncKeywordJob") private val syncKeywordJob: Job, private val warner: Warner,
 ) : SyncJobLauncher {
 
     private var jobSuccess: BatchStatus = BatchStatus.UNKNOWN
@@ -92,12 +92,13 @@ open class RefDataSyncJobLauncher(
     private fun JobExecution.handle(
         topic: String,
         setSuccess: (String) -> Unit,
-        setFailure: (String) -> Unit
+        setFailure: (String) -> Unit,
     ) {
         val msg = String.format(
+            Locale.US,
             "Job $id has returned with exitCode ${exitStatus.exitCode} (" +
                 "status ${this.status.name}" +
-                "): ${stepExecutions.sumOf { it.writeCount }} $topic were synchronized."
+                "): ${stepExecutions.sumOf { it.writeCount }} $topic were synchronized.",
         )
         if (this.status == BatchStatus.COMPLETED) {
             setSuccess(msg)

@@ -7,6 +7,7 @@ import static ch.difty.scipamato.core.entity.Paper.PaperFields.*;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 import org.jetbrains.annotations.NotNull;
 import org.jooq.Condition;
@@ -85,8 +86,8 @@ public class AuditSearchTermEvaluator implements SearchTermEvaluator<AuditSearch
     }
 
     private void throwWithMessage(final String fieldName, String fieldType, FieldEnumType fld1, FieldEnumType fld2, String matchType) {
-        final String msg = String.format("Field %s is not one of the expected %s fields [%s, %s] entitled to use MatchType.%s", fieldName, fieldType,
-            fld1.getFieldName(), fld2.getFieldName(), matchType);
+        final String msg = String.format(Locale.US, "Field %s is not one of the expected %s fields [%s, %s] entitled to use MatchType.%s", fieldName,
+            fieldType, fld1.getFieldName(), fld2.getFieldName(), matchType);
         throw new IllegalArgumentException(msg);
     }
 
