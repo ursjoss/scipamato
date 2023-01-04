@@ -1,5 +1,4 @@
 name: "CodeQL"
-
 on:
   push:
     branches: [ "main" ]
@@ -11,6 +10,7 @@ on:
 
 jobs:
   analyze:
+    if: ${{ false }}  # disable until https://github.com/github/codeql/pull/11637 has been deployed
     name: Analyze
     runs-on: ubuntu-latest
     permissions:
