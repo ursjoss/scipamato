@@ -41,7 +41,7 @@ class ScipamatoDetektPlugin : Plugin<Project> {
                 }
             }
         }
-        target.rootProject.tasks.named("sonarqube") {
+        target.rootProject.tasks.named("sonar") {
             dependsOn(target.tasks.getByName("detekt"))
         }
     }
