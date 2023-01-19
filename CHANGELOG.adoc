@@ -68,22 +68,17 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[unreleased]]
 == [unreleased]
 
-{url-cl}1.8.3$$...$$main[Full Changelog]
+{url-cl}1.8.5$$...$$main[Full Changelog]
 
 .Added
-- kotest
 
+////
 .Changed
-- {url-issues}360[#360] Use version catalogs (instead of buildSrc/Lib) for version management
 
-////
 .Deprecated
-////
 
 .Removed
-- spek, kwik, jcenter
 
-////
 .Fixed
 
 .Security
@@ -91,10 +86,30 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 ////
 
 
+[[v1.8.5]]
+== {url-tree}1.8.5[1.8.5] -- 2023-01-19
+
+{url-cl}1.8.4$$...$$1.8.5[Full Changelog]
+
+.Added
+- kotest
+
+.Changed
+- Bumped kotlin, sprign-boot, wicket, wicketstuff, wicket-spring-boot-starter, spring-boot-admin-starter-client, flyway, lombok, kris
+  spring-dependency-management, spring-cloud-starter-openfeign, feign, kotlin-loggin,
+  mockk, spring-mockk, kluent, equalsverifier, junit5, kotest, testcontainers,
+  gradle, sonarqube-plugin, detekt,
+  login-action
+- {url-issues}360[#360] Use version catalogs (instead of buildSrc/Lib) for version management
+
+.Removed
+- spek, kwik, jcenter
+
+
 [[v1.8.4]]
 == {url-tree}1.8.4[1.8.4] -- 2022-09-24
 
-{url-cl}1.8.3$$...$$1.8.3[Full Changelog]
+{url-cl}1.8.3$$...$$1.8.4[Full Changelog]
 
 .Changed
 - Bumped spring-boot, wicket-jquery-ui, spring-boot-admin, flyway, openfeign, spring-dependency-management,
