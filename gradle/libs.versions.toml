@@ -1,7 +1,7 @@
 [versions]
 coroutines = "1.6.4"
 detektPlugin = "1.22.0"
-equalsverifier = "3.13"
+equalsverifier = "3.13.1"
 flyway = "9.14.1"
 jacoco = "0.8.8"
 jasperreports = "6.20.0"
