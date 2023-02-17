@@ -61,6 +61,7 @@ jobs:
           detekt
           mergeDetektSarif
           :gradle-plugins:buildPlugins
+          sonar
           --continue
 
     - name: Upload sarif file to GitHub
