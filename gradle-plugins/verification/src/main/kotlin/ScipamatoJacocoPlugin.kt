@@ -22,7 +22,8 @@ class ScipamatoJacocoPlugin : Plugin<Project> {
                 }
                 dependsOn(test)
             }
-            target.rootProject.tasks.named("sonarqube") {
+            target.rootProject.tasks.named("sonar") {
+                dependsOn(tasks.getByName("check"))
                 dependsOn(tasks.getByName("jacocoTestReport"))
             }
         }

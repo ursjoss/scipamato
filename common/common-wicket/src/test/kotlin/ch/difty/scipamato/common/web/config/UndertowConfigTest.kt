@@ -17,6 +17,7 @@ import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeFalse
 import org.amshove.kluent.shouldBeInstanceOf
 import org.amshove.kluent.shouldBeNull
+import org.amshove.kluent.shouldContain
 import org.amshove.kluent.shouldContainAll
 import org.amshove.kluent.shouldHaveSize
 import org.amshove.kluent.shouldNotBeEmpty
@@ -122,9 +123,9 @@ internal class UndertowConfigTest {
             val li = listenerInfos[0]
             val address = li.address.toString()
             if (address.contains("."))
-                address.shouldStartWith("/0.0.0.0:")
+                address.shouldContain("0.0.0.0ko")
             else
-                address.shouldStartWith("/0:0:0:0:0:0:0:0:")
+                address.shouldContain("0:0:0:0:0:0:0:0")
             li.protcol shouldBeEqualTo "http"
         }
         undertow.stop()
