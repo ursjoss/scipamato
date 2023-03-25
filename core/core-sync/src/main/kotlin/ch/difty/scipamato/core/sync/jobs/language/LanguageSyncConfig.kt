@@ -59,7 +59,7 @@ open class LanguageSyncConfig(
         return PublicLanguage(
             code = getString(C_CODE, rs),
             lastSynched = getNow(),
-            mainLanguage = value != null && value,
+            mainLanguage = value,
         )
     }
 
