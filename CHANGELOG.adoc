@@ -68,7 +68,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[unreleased]]
 == [unreleased]
 
-{url-cl}1.8.5$$...$$main[Full Changelog]
+{url-cl}1.8.6$$...$$main[Full Changelog]
 
 .Added
 
@@ -84,6 +84,17 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Security
 
 ////
+
+[[v1.8.6]]
+== {url-tree}1.8.6[1.8.6] -- 2023-03-25
+
+{url-cl}1.8.5$$...$$1.8.6[Full Changelog]
+
+.Changed
+- Bumped spring-boot, flyway, KRis, kotlin-logging, feign, spring-cloud-start-openfeign,
+  jasperreports, wicket-jquery-ui,
+  gradle-wrapper, lombok, sonarqube-gradle-plugin,
+  kotest, mockk, equalsverifier
 
 
 [[v1.8.5]]
