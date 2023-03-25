@@ -91,7 +91,8 @@ internal class ScipamatoPubmedArticleIntegrationTest : PubmedIntegrationTest() {
                 "cardiovascular disease (CVD) morbidity and mortality. However, less is known " +
                 "about the populations most susceptible to these adverse effects."
             originalAbstract shouldEndWith
-                "women with diabetes were identified as the subpopulation most sensitive to the adverse cardiovascular health effects of PM."
+                "women with diabetes were identified as the subpopulation most sensitive to the " +
+                "adverse cardiovascular health effects of PM."
         }
     }
 

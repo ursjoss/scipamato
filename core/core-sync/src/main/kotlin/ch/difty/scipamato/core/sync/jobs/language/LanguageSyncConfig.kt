@@ -31,7 +31,7 @@ open class LanguageSyncConfig(
     @Qualifier("dataSource") coreDataSource: DataSource,
     jobBuilderFactory: JobBuilderFactory,
     stepBuilderFactory: StepBuilderFactory,
-    dateTimeService: DateTimeService
+    dateTimeService: DateTimeService,
 ) : SyncConfig<PublicLanguage, LanguageRecord>(
     TOPIC, CHUNK_SIZE, jooqCore, jooqPublic, coreDataSource, jobBuilderFactory, stepBuilderFactory,
     dateTimeService
@@ -63,7 +63,8 @@ open class LanguageSyncConfig(
         )
     }
 
-    override fun lastSynchedField(): TableField<LanguageRecord, Timestamp> = ch.difty.scipamato.publ.db.tables.Language.LANGUAGE.LAST_SYNCHED
+    override fun lastSynchedField(): TableField<LanguageRecord, Timestamp> =
+        ch.difty.scipamato.publ.db.tables.Language.LANGUAGE.LAST_SYNCHED
 
     companion object {
         private const val TOPIC = "language"
