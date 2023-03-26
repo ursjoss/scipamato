@@ -57,9 +57,9 @@ dependencies {
     testImplementation(libs.lombok)
     testAnnotationProcessor(libs.lombok)
 
-    integrationTestImplementation(libs.bundles.dbTest)
-    integrationTestRuntimeOnly(libs.postgresql)
-    integrationTestAnnotationProcessor(libs.lombok)
+//    integrationTestImplementation(libs.bundles.dbTest)
+//    integrationTestRuntimeOnly(libs.postgresql)
+//    integrationTestAnnotationProcessor(libs.lombok)
 }
 
 sourceSets {

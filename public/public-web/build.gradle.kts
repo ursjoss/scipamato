@@ -50,6 +50,6 @@ dependencies {
 
     testImplementation(project(Module.scipamatoCommon("test")))
 
-    integrationTestImplementation(libs.bundles.dbTest)
-    integrationTestRuntimeOnly(libs.postgresql)
+//    integrationTestImplementation(libs.bundles.dbTest)
+//    integrationTestRuntimeOnly(libs.postgresql)
 }

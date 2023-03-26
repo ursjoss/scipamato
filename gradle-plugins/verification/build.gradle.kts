@@ -35,5 +35,13 @@ gradlePlugin {
             id = "scipamato-jacoco"
             implementationClass = "ScipamatoJacocoPlugin"
         }
+        create("scipamato-adhoc-test") {
+            id = "scipamato-adhoc-test"
+            implementationClass = "ScipamatoAdhocTestPlugin"
+        }
+        create("scipamato-integration-test") {
+            id = "scipamato-integration-test"
+            implementationClass = "ScipamatoIntegrationTestPlugin"
+        }
     }
 }
