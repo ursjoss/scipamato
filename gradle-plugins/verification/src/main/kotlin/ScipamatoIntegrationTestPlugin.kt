@@ -5,7 +5,6 @@ import org.gradle.api.plugins.JvmTestSuitePlugin
 import org.gradle.api.plugins.jvm.JvmTestSuite
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.configure
-import org.gradle.kotlin.dsl.existing
 import org.gradle.kotlin.dsl.invoke
 import org.gradle.kotlin.dsl.register
 import org.gradle.testing.base.TestingExtension
@@ -15,11 +14,9 @@ class ScipamatoIntegrationTestPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
             apply<JvmTestSuitePlugin>()
+            val test = tasks.named("test")
             configure<TestingExtension> {
                 suites {
-                    val test = existing(JvmTestSuite::class) {
-                        useJUnitJupiter()
-                    }
                     register("integrationTest", JvmTestSuite::class) {
                         testType.set(TestSuiteType.INTEGRATION_TEST)
                         sources {

@@ -3,7 +3,19 @@ description = "SciPaMaTo-Core :: Pubmed API Project"
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     alias(libs.plugins.jaxb)
+    id("scipamato-integration-test")
     id("scipamato-adhoc-test")
+}
+
+testing {
+    suites {
+        val integrationTest by existing {
+            dependencies {
+                annotationProcessor(libs.lombok)
+                runtimeOnly(libs.lombok)
+            }
+        }
+    }
 }
 
 dependencies {
@@ -23,9 +35,6 @@ dependencies {
     runtimeOnly(libs.jaxb.runtime)
 
     testImplementation(project(Module.scipamatoCommon("test")))
-
-//    integrationTestAnnotationProcessor(libs.lombok)
-//    integrationTestRuntimeOnly(libs.lombok)
 }
 
 /**
