@@ -2,6 +2,7 @@ import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 description = "SciPaMaTo-Public :: Web Project"
 
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     alias(libs.plugins.springBoot).apply(true)
     id("application-properties-filter")

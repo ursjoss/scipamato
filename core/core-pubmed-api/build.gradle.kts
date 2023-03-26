@@ -1,5 +1,6 @@
 description = "SciPaMaTo-Core :: Pubmed API Project"
 
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     alias(libs.plugins.jaxb)
 }

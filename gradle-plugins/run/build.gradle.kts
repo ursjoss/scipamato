@@ -1,5 +1,6 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     `java-gradle-plugin`
     `kotlin-dsl`

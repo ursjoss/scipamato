@@ -2,6 +2,7 @@
 
 import ch.ayedo.jooqmodelator.gradle.JooqModelatorTask
 
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     alias(libs.plugins.jooqModelator)
 }
