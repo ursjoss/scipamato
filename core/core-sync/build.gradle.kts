@@ -1,5 +1,9 @@
 description = "SciPaMaTo-Core :: Synchronization Project"
 
+plugins{
+    id("scipamato-adhoc-test")
+}
+
 /**
  * Make the static wicket resources that reside next to the java classes in src{main,test} available.
  */
@@ -40,7 +44,7 @@ dependencies {
     testImplementation(libs.lombok)
     testAnnotationProcessor(libs.lombok)
 
-    integrationTestRuntimeOnly(libs.postgresql)
+//    integrationTestRuntimeOnly(libs.postgresql)
 }
 
 tasks {

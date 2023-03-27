@@ -10,12 +10,12 @@ import org.springframework.boot.test.context.SpringBootTest
 
 /**
  * Note: This ad-hoc integration test should not run automatically, as it
- * actually issues a call to PubMed over the internet. Thus this test fails if
+ * actually issues a call to PubMed over the internet. Thus, this test fails if
  * the machine running the test is offline or cannot reach PubMed for some other
  * reason.
  *
  *
- * Also it's not polite to continuously access the public service.
+ * Also, it's not polite to continuously access the public service.
  *
  * @author u.joss
  */

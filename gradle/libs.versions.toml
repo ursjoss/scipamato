@@ -30,7 +30,6 @@ springCloud = "2021.0.0"
 springCloudStarter = "3.1.6"
 springDependencyManagementPlugin = "1.1.0"
 springMockk = "3.1.2"
-testSetsPlugin = "4.0.0"
 testcontainers = "1.17.6"
 univocityParsers = "2.9.1"
 wicket = "9.12.0"
@@ -133,4 +132,3 @@ reckon = { id = "org.ajoberstar.reckon", version.ref = "reckonPlugin" }
 sonarqube = { id = "org.sonarqube", version.ref = "sonarqubePlugin" }
 springBoot = { id = "org.springframework.boot", version.ref = "springBoot" }
 springDependencyManagement = { id = "io.spring.dependency-management", version.ref = "springDependencyManagementPlugin" }
-testSets = { id = "org.unbroken-dome.test-sets", version.ref = "testSetsPlugin" }

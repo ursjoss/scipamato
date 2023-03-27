@@ -1,5 +1,6 @@
-import org.jetbrains.kotlin.gradle.dsl.KotlinJvmCompile
+import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     `java-gradle-plugin`
     `kotlin-dsl`
@@ -33,6 +34,14 @@ gradlePlugin {
         create("scipamato-jacoco") {
             id = "scipamato-jacoco"
             implementationClass = "ScipamatoJacocoPlugin"
+        }
+        create("scipamato-adhoc-test") {
+            id = "scipamato-adhoc-test"
+            implementationClass = "ScipamatoAdhocTestPlugin"
+        }
+        create("scipamato-integration-test") {
+            id = "scipamato-integration-test"
+            implementationClass = "ScipamatoIntegrationTestPlugin"
         }
     }
 }

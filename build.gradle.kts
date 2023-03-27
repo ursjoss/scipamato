@@ -7,7 +7,6 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent.STARTED
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.springframework.boot.gradle.plugin.SpringBootPlugin
 import org.springframework.boot.gradle.tasks.bundling.BootJar
-import org.unbrokendome.gradle.plugins.testsets.TestSetsPlugin
 
 buildscript {
     repositories {
@@ -19,6 +18,7 @@ buildscript {
     }
 }
 
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     kotlin("jvm") version libs.versions.kotlin.get()
     kotlin("plugin.spring") version libs.versions.kotlin.get() apply false
@@ -28,7 +28,6 @@ plugins {
     alias(libs.plugins.lombok)
     idea
     jacoco
-    alias(libs.plugins.testSets)
     alias(libs.plugins.detekt)
     alias(libs.plugins.sonarqube)
     alias(libs.plugins.reckon)
@@ -94,17 +93,7 @@ subprojects {
     apply<ScipamatoJacocoPlugin>()
     apply<JavaPlugin>()
     apply<IdeaPlugin>()
-    apply<TestSetsPlugin>()
     apply<JacocoPlugin>()
-
-    testSets {
-        register("integrationTest") {
-            dirName = "integration-test"
-        }
-        register("adhocTest") {
-            dirName = "adhoc-test"
-        }
-    }
 
     // Breaks running the project from the IntelliJ Run Dashboard - disabling for now
     // idea {
@@ -192,13 +181,6 @@ subprojects {
         }
         withType<BootJar> {
             enabled = false
-        }
-        val integrationTest by existing {
-            description = "Runs the integration tests."
-            dependsOn(test)
-        }
-        named("check") {
-            dependsOn(integrationTest)
         }
 
         register("version") {

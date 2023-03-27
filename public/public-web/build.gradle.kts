@@ -2,10 +2,23 @@ import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 description = "SciPaMaTo-Public :: Web Project"
 
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     alias(libs.plugins.springBoot).apply(true)
     id("application-properties-filter")
+//    id("scipamato-integration-test")
 }
+
+//testing {
+//    suites {
+//        val integrationTest by existing {
+//            dependencies {
+//                implementation(libs.bundles.dbTest)
+//                runtimeOnly(libs.postgresql)
+//            }
+//        }
+//    }
+//}
 
 /**
  * Make the static wicket resources that reside next to the java classes in src{main,test} available.
@@ -48,7 +61,4 @@ dependencies {
     runtimeOnly(libs.jaxb.runtime)
 
     testImplementation(project(Module.scipamatoCommon("test")))
-
-    integrationTestImplementation(libs.bundles.dbTest)
-    integrationTestRuntimeOnly(libs.postgresql)
 }

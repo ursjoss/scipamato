@@ -2,8 +2,10 @@
 
 import ch.ayedo.jooqmodelator.gradle.JooqModelatorTask
 
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     alias(libs.plugins.jooqModelator)
+    id("scipamato-integration-test")
 }
 
 description = "SciPaMaTo-Core :: Persistence jOOQ Project"
@@ -15,6 +17,18 @@ val generatedSourcesPath = "build/generated-src/jooq"
 val jooqConfigFile = "$buildDir/jooqConfig.xml"
 val dockerDbPort = 15432
 val props = file("src/integration-test/resources/application.properties").asProperties()
+
+testing {
+    suites {
+        val integrationTest by existing {
+            dependencies {
+                implementation(libs.bundles.dbTest)
+                runtimeOnly(libs.postgresql)
+                annotationProcessor(libs.lombok)
+            }
+        }
+    }
+}
 
 jooqModelator {
     jooqVersion = libs.versions.jooq.get()
@@ -55,10 +69,6 @@ dependencies {
 
     testImplementation(libs.lombok)
     testAnnotationProcessor(libs.lombok)
-
-    integrationTestImplementation(libs.bundles.dbTest)
-    integrationTestRuntimeOnly(libs.postgresql)
-    integrationTestAnnotationProcessor(libs.lombok)
 }
 
 sourceSets {
