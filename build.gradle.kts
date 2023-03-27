@@ -58,6 +58,14 @@ val generatedPackages: Set<String> = setOf(
     "**/ch/difty/scipamato/publ/db/**"
 )
 
+testing {
+    suites {
+        val test by getting(JvmTestSuite::class) {
+            useJUnitJupiter()
+        }
+    }
+}
+
 jacoco {
     toolVersion = libs.versions.jacoco.get()
 }
@@ -166,9 +174,6 @@ subprojects {
         }
         withType<Test> {
             maxHeapSize = "2g"
-            useJUnitPlatform {
-                includeEngines("junit-jupiter", "kotest")
-            }
             failFast = true
             testLogging {
                 events = setOf(STARTED, FAILED, PASSED, SKIPPED)
