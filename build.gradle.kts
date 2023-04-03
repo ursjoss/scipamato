@@ -58,14 +58,6 @@ val generatedPackages: Set<String> = setOf(
     "**/ch/difty/scipamato/publ/db/**"
 )
 
-testing {
-    suites {
-        val test by getting(JvmTestSuite::class) {
-            useJUnitJupiter()
-        }
-    }
-}
-
 jacoco {
     toolVersion = libs.versions.jacoco.get()
 }
@@ -102,6 +94,15 @@ subprojects {
     apply<JavaPlugin>()
     apply<IdeaPlugin>()
     apply<JacocoPlugin>()
+
+    testing {
+        suites {
+            @Suppress("UnstableApiUsage")
+            val test by getting(JvmTestSuite::class) {
+                useJUnitJupiter()
+            }
+        }
+    }
 
     // Breaks running the project from the IntelliJ Run Dashboard - disabling for now
     // idea {
