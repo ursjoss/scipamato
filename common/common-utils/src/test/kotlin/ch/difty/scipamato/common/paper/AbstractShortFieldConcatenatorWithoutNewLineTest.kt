@@ -18,21 +18,21 @@ internal class AbstractShortFieldConcatenatorWithoutNewLineTest {
     fun method_withMethodNull_returnsConcatenatedShortFields() {
         concatenator.methodsFrom(null, "msd", "mo", "pp", "ep", "ea", "ms", "mc")
             .shouldBeEqualTo(
-                "Study Design: msd / Outcome: mo / Place: pp / Pollutant: ep / " +
-                    "Exposure Assessment: ea / Statistical Method: ms / Confounders: mc"
+                "Studiendesign: msd / Gesundheitliche Zielgrössen: mo / Ort/Land: pp / Schadstoff: ep / " +
+                    "Belastungsabschätzung: ea / Statistische Methode: ms / Störfaktoren: mc"
             )
     }
 
     @Test
     fun method_withMethodNull_returnsConcatenatedShortFieldsWhereNotBlank() {
         concatenator.methodsFrom(null, "", " ", "pp", "ep", "ea", "ms", "mc") shouldBeEqualTo
-            "Place: pp / Pollutant: ep / Exposure Assessment: ea / Statistical Method: ms / Confounders: mc"
+            "Ort/Land: pp / Schadstoff: ep / Belastungsabschätzung: ea / Statistische Methode: ms / Störfaktoren: mc"
     }
 
     @Test
     fun method_withMethodNullAndSomeShortFieldsNull_returnsConcatenatedShortFields() {
         concatenator.methodsFrom(null, "msd", null, "pp", "ep", "ea", "ms", "mc") shouldBeEqualTo
-            "Study Design: msd / Place: pp / Pollutant: ep / Exposure Assessment: ea / Statistical Method: ms / Confounders: mc"
+            "Studiendesign: msd / Ort/Land: pp / Schadstoff: ep / Belastungsabschätzung: ea / Statistische Methode: ms / Störfaktoren: mc"
     }
 
     @Test
@@ -70,7 +70,7 @@ internal class AbstractShortFieldConcatenatorWithoutNewLineTest {
     @Test
     fun population_withPopulationNull_returnsConcatenatedShortFields() {
         concatenator.populationFrom(null, "ppl", "ppa", "pd") shouldBeEqualTo
-            "Place: ppl / Participants: ppa / Study Duration: pd"
+            "Ort/Land: ppl / Studienteilnehmer: ppa / Studiendauer: pd"
     }
 
     @Test
@@ -87,7 +87,7 @@ internal class AbstractShortFieldConcatenatorWithoutNewLineTest {
     @Test
     fun result_withResultNull_returnsConcatenatedShortFields() {
         concatenator.resultFrom(null, "rmo", "rer", "ree", "cc") shouldBeEqualTo
-            "Measured Outcome: rmo / Exposure (Range): rer / Effect Estimate: ree / Conclusion: cc"
+            "Gemessene Zielgrösse: rmo / Gemessene Belastung (Spanne): rer / Effektschätzer: ree / Schlussfolgerung: cc"
     }
 
     @Test
