@@ -18,7 +18,7 @@ internal class AbstractShortFieldConcatenatorWithNewLineTest {
     fun method_withMethodNull_returnsConcatenatedShortFields() {
         concatenator.methodsFrom(null, "msd", "mo", "pp", "ep", "ea", "ms", "mc") shouldBeEqualTo
             """Studiendesign: msd
-                |Gesundheitliche Zielgrössen: mo
+                |Zielgrössen: mo
                 |Ort/Land: pp
                 |Schadstoff: ep
                 |Belastungsabschätzung: ea
@@ -86,7 +86,7 @@ internal class AbstractShortFieldConcatenatorWithNewLineTest {
     @Test
     fun result_withResultNull_returnsConcatenatedShortFields() {
         concatenator.resultFrom(null, "rmo", "rer", "ree", "cc") shouldBeEqualTo
-            "Gemessene Zielgrösse: rmo\nGemessene Belastung (Spanne): rer\nEffektschätzer: ree\nSchlussfolgerung: cc"
+            "Gemessene Zielgrösse: rmo\nGemessene Belastung (Spanne): rer\nResultate: ree\nSchlussfolgerung: cc"
     }
 
     @Test

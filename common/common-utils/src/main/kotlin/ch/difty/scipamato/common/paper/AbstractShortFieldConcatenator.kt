@@ -23,7 +23,7 @@ abstract class AbstractShortFieldConcatenator protected constructor(private val 
     ) = methodsFrom(
         method,
         Tuple("Studiendesign", methodStudyDesign),
-        Tuple("Gesundheitliche Zielgrössen", methodOutcome),
+        Tuple("Zielgrössen", methodOutcome),
         Tuple("Ort/Land", populationPlace),
         Tuple("Schadstoff", exposurePollutant),
         Tuple("Belastungsabschätzung", exposureAssessment),
@@ -89,7 +89,7 @@ abstract class AbstractShortFieldConcatenator protected constructor(private val 
         result,
         Tuple("Gemessene Zielgrösse", resultMeasuredOutcome),
         Tuple("Gemessene Belastung (Spanne)", resultExposureRange),
-        Tuple("Effektschätzer", resultEffectEstimate),
+        Tuple("Resultate", resultEffectEstimate),
         Tuple("Schlussfolgerung", conclusion)
     )
 

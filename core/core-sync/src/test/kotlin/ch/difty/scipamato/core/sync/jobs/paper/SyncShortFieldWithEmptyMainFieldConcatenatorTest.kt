@@ -71,7 +71,7 @@ internal class SyncShortFieldWithEmptyMainFieldConcatenatorTest {
     fun methods_withNullMethod_returnsConcatenatedShortMethodFieldsConcatenated() {
         stubMethodFieldsWithMainFieldReturning(null)
         sfc.methodsFrom(resultSet) shouldBeEqualTo
-            "Studiendesign: msd / Gesundheitliche Zielgrössen: mo / Ort/Land: pp / Schadstoff: ep / " +
+            "Studiendesign: msd / Zielgrössen: mo / Ort/Land: pp / Schadstoff: ep / " +
             "Belastungsabschätzung: ea / Statistische Methode: ms / Störfaktoren: mc"
         verifyCallingMethodsFields()
     }
@@ -150,7 +150,7 @@ internal class SyncShortFieldWithEmptyMainFieldConcatenatorTest {
     fun result_withNullResult_returnsResultShortFieldsConcatenated() {
         stubResultFieldsWithMainFieldReturning(null)
         sfc.resultFrom(resultSet) shouldBeEqualTo
-            "Gemessene Zielgrösse: rmo / Gemessene Belastung (Spanne): rer / Effektschätzer: ree / Schlussfolgerung: cc"
+            "Gemessene Zielgrösse: rmo / Gemessene Belastung (Spanne): rer / Resultate: ree / Schlussfolgerung: cc"
         verifyCallingResultFields()
     }
 
