@@ -9,6 +9,7 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
 import io.mockk.verify
+import org.amshove.kluent.shouldBe
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeNull
 import org.jooq.TableField
@@ -70,8 +71,8 @@ internal class SyncShortFieldWithEmptyMainFieldConcatenatorTest {
     fun methods_withNullMethod_returnsConcatenatedShortMethodFieldsConcatenated() {
         stubMethodFieldsWithMainFieldReturning(null)
         sfc.methodsFrom(resultSet) shouldBeEqualTo
-            "Study Design: msd / Outcome: mo / Place: pp / Pollutant: ep / " +
-            "Exposure Assessment: ea / Statistical Method: ms / Confounders: mc"
+            "Studiendesign: msd / Zielgrössen: mo / Ort/Land: pp / Schadstoff: ep / " +
+            "Belastungsabschätzung: ea / Statistische Methode: ms / Störfaktoren: mc"
         verifyCallingMethodsFields()
     }
 
@@ -114,7 +115,7 @@ internal class SyncShortFieldWithEmptyMainFieldConcatenatorTest {
     @Test
     fun population_withNullPopulation_returnsPopulationShortFieldsConcatenated() {
         stubPopulationFieldsWithMainFieldReturning(null)
-        sfc.populationFrom(resultSet) shouldBeEqualTo "Place: ppl / Participants: ppa / Study Duration: pd"
+        sfc.populationFrom(resultSet) shouldBeEqualTo "Ort/Land: ppl / Studienteilnehmer: ppa / Studiendauer: pd"
         verifyCallingPopulationFields()
     }
 
@@ -149,7 +150,7 @@ internal class SyncShortFieldWithEmptyMainFieldConcatenatorTest {
     fun result_withNullResult_returnsResultShortFieldsConcatenated() {
         stubResultFieldsWithMainFieldReturning(null)
         sfc.resultFrom(resultSet) shouldBeEqualTo
-            "Measured Outcome: rmo / Exposure (Range): rer / Effect Estimate: ree / Conclusion: cc"
+            "Gemessene Zielgrösse: rmo / Gemessene Belastung (Spanne): rer / Resultate: ree / Schlussfolgerung: cc"
         verifyCallingResultFields()
     }
 

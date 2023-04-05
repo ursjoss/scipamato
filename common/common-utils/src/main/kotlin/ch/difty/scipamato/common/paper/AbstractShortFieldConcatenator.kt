@@ -22,13 +22,13 @@ abstract class AbstractShortFieldConcatenator protected constructor(private val 
         methodConfounders: String?
     ) = methodsFrom(
         method,
-        Tuple("Study Design", methodStudyDesign),
-        Tuple("Outcome", methodOutcome),
-        Tuple("Place", populationPlace),
-        Tuple("Pollutant", exposurePollutant),
-        Tuple("Exposure Assessment", exposureAssessment),
-        Tuple("Statistical Method", methodStatistics),
-        Tuple("Confounders", methodConfounders)
+        Tuple("Studiendesign", methodStudyDesign),
+        Tuple("Zielgrössen", methodOutcome),
+        Tuple("Ort/Land", populationPlace),
+        Tuple("Schadstoff", exposurePollutant),
+        Tuple("Belastungsabschätzung", exposureAssessment),
+        Tuple("Statistische Methode", methodStatistics),
+        Tuple("Störfaktoren", methodConfounders)
     )
 
     fun methodsFrom(
@@ -60,9 +60,9 @@ abstract class AbstractShortFieldConcatenator protected constructor(private val 
         populationDuration: String?
     ) = populationFrom(
         population,
-        Tuple("Place", populationPlace),
-        Tuple("Participants", populationParticipants),
-        Tuple("Study Duration", populationDuration)
+        Tuple("Ort/Land", populationPlace),
+        Tuple("Studienteilnehmer", populationParticipants),
+        Tuple("Studiendauer", populationDuration)
     )
 
     fun populationFrom(
@@ -87,10 +87,10 @@ abstract class AbstractShortFieldConcatenator protected constructor(private val 
         conclusion: String?
     ) = resultFrom(
         result,
-        Tuple("Measured Outcome", resultMeasuredOutcome),
-        Tuple("Exposure (Range)", resultExposureRange),
-        Tuple("Effect Estimate", resultEffectEstimate),
-        Tuple("Conclusion", conclusion)
+        Tuple("Gemessene Zielgrösse", resultMeasuredOutcome),
+        Tuple("Gemessene Belastung (Spanne)", resultExposureRange),
+        Tuple("Resultate", resultEffectEstimate),
+        Tuple("Schlussfolgerung", conclusion)
     )
 
     fun resultFrom(

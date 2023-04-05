@@ -17,24 +17,24 @@ internal class AbstractShortFieldConcatenatorWithNewLineTest {
     @Test
     fun method_withMethodNull_returnsConcatenatedShortFields() {
         concatenator.methodsFrom(null, "msd", "mo", "pp", "ep", "ea", "ms", "mc") shouldBeEqualTo
-            """Study Design: msd
-                |Outcome: mo
-                |Place: pp
-                |Pollutant: ep
-                |Exposure Assessment: ea
-                |Statistical Method: ms
-                |Confounders: mc""".trimMargin()
+            """Studiendesign: msd
+                |Zielgrössen: mo
+                |Ort/Land: pp
+                |Schadstoff: ep
+                |Belastungsabschätzung: ea
+                |Statistische Methode: ms
+                |Störfaktoren: mc""".trimMargin()
     }
 
     @Test
     fun method_withMethodNullAndSomeShortFieldsNull_returnsConcatenatedShortFields() {
         concatenator.methodsFrom(null, "msd", null, "pp", "ep", "ea", "ms", "mc") shouldBeEqualTo
-            """Study Design: msd
-                |Place: pp
-                |Pollutant: ep
-                |Exposure Assessment: ea
-                |Statistical Method: ms
-                |Confounders: mc""".trimMargin()
+            """Studiendesign: msd
+                |Ort/Land: pp
+                |Schadstoff: ep
+                |Belastungsabschätzung: ea
+                |Statistische Methode: ms
+                |Störfaktoren: mc""".trimMargin()
     }
 
     @Test
@@ -69,7 +69,7 @@ internal class AbstractShortFieldConcatenatorWithNewLineTest {
     @Test
     fun population_withPopulationNull_returnsConcatenatedShortFields() {
         concatenator.populationFrom(null, "ppl", "ppa", "pd") shouldBeEqualTo
-            "Place: ppl\nParticipants: ppa\nStudy Duration: pd"
+            "Ort/Land: ppl\nStudienteilnehmer: ppa\nStudiendauer: pd"
     }
 
     @Test
@@ -86,7 +86,7 @@ internal class AbstractShortFieldConcatenatorWithNewLineTest {
     @Test
     fun result_withResultNull_returnsConcatenatedShortFields() {
         concatenator.resultFrom(null, "rmo", "rer", "ree", "cc") shouldBeEqualTo
-            "Measured Outcome: rmo\nExposure (Range): rer\nEffect Estimate: ree\nConclusion: cc"
+            "Gemessene Zielgrösse: rmo\nGemessene Belastung (Spanne): rer\nResultate: ree\nSchlussfolgerung: cc"
     }
 
     @Test

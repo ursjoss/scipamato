@@ -72,8 +72,10 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Added
 
-////
 .Changed
+- {url-issues}463[#463] Synchronization from core to public to use german labels for concatenated short studies
+
+////
 
 .Deprecated
 
