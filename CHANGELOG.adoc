@@ -68,7 +68,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[unreleased]]
 == [unreleased]
 
-{url-cl}1.8.7$$...$$main[Full Changelog]
+{url-cl}1.8.8$$...$$main[Full Changelog]
 
 .Added
 
@@ -85,6 +85,16 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Security
 
 ////
+
+[[v1.8.8]]
+== {url-tree}1.8.8[1.8.8] -- 2023-04-20
+
+{url-cl}1.8.7$$...$$1.8.8[Full Changelog]
+
+.Changed
+- Bumped spring-boot, wicket, wicketstuff, jasperreports, feign,
+  kotest, mockk,
+  gradle, gradle-jaxb-plugin
 
 
 [[v1.8.7]]
