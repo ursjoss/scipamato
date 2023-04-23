@@ -89,7 +89,7 @@ subprojects {
 
     testing {
         suites {
-            @Suppress("UnstableApiUsage")
+            @Suppress("UnstableApiUsage", "UNUSED_VARIABLE")
             val test by getting(JvmTestSuite::class) {
                 useJUnitJupiter()
             }
