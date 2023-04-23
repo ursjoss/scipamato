@@ -9,6 +9,7 @@ plugins {
 
 testing {
     suites {
+        @Suppress("UNUSED_VARIABLE")
         val integrationTest by existing {
             dependencies {
                 annotationProcessor(libs.lombok)

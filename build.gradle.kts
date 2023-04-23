@@ -14,7 +14,6 @@ buildscript {
     }
     dependencies {
         classpath(libs.plugin.kotlin)
-        classpath(libs.plugin.reckon)
     }
 }
 
@@ -30,7 +29,6 @@ plugins {
     jacoco
     alias(libs.plugins.detekt)
     alias(libs.plugins.sonarqube)
-    alias(libs.plugins.reckon)
     alias(libs.plugins.licenseReport)
 }
 
@@ -78,12 +76,6 @@ sonarqube {
     }
 }
 
-reckon {
-    stages("rc", "final")
-    setScopeCalc(calcScopeFromProp().or(calcScopeFromCommitMessages()))
-    setStageCalc(calcStageFromProp())
-}
-
 subprojects {
     apply<SpringBootPlugin>()
     apply(plugin = "io.spring.dependency-management")
@@ -97,7 +89,7 @@ subprojects {
 
     testing {
         suites {
-            @Suppress("UnstableApiUsage")
+            @Suppress("UnstableApiUsage", "UNUSED_VARIABLE")
             val test by getting(JvmTestSuite::class) {
                 useJUnitJupiter()
             }
