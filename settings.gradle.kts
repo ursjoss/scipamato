@@ -1,9 +1,22 @@
-@file:Suppress("UnstableApiUsage", "SpreadOperator")
+@file:Suppress("UnstableApiUsage")
+
+import org.ajoberstar.reckon.gradle.ReckonExtension
 
 pluginManagement {
     repositories {
         gradlePluginPortal()
     }
+}
+
+plugins {
+    id("org.ajoberstar.reckon.settings") version "0.18.0"
+}
+
+configure<ReckonExtension> {
+    setDefaultInferredScope("patch")
+    stages("rc", "final")
+    setScopeCalc(calcScopeFromProp().or(calcScopeFromCommitMessages()))
+    setStageCalc(calcStageFromProp())
 }
 
 dependencyResolutionManagement {

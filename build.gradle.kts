@@ -14,7 +14,6 @@ buildscript {
     }
     dependencies {
         classpath(libs.plugin.kotlin)
-        classpath(libs.plugin.reckon)
     }
 }
 
@@ -30,7 +29,6 @@ plugins {
     jacoco
     alias(libs.plugins.detekt)
     alias(libs.plugins.sonarqube)
-    alias(libs.plugins.reckon)
     alias(libs.plugins.licenseReport)
 }
 
@@ -76,12 +74,6 @@ sonarqube {
         property("sonar.coverage.jacoco.xmlReportPaths", jacocoTestReportFile)
         property("sonar.kotlin.detekt.reportPaths", "$buildDir/reports/detekt/detekt.xml")
     }
-}
-
-reckon {
-    stages("rc", "final")
-    setScopeCalc(calcScopeFromProp().or(calcScopeFromCommitMessages()))
-    setStageCalc(calcStageFromProp())
 }
 
 subprojects {
