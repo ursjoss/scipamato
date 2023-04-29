@@ -68,7 +68,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[unreleased]]
 == [unreleased]
 
-{url-cl}1.8.8$$...$$main[Full Changelog]
+{url-cl}1.8.9$$...$$main[Full Changelog]
 
 .Added
 
@@ -85,6 +85,20 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Security
 
 ////
+[[v1.8.9]]
+== {url-tree}1.8.9[1.8.9] -- 2023-04-29
+
+{url-cl}1.8.8$$...$$1.8.9[Full Changelog]
+
+.Changed
+- Bumped kotlin, jasperreports, flyway,
+  junit-jupiter,
+  gradle,
+  reckon
+
+.Fixed
+- Typo in German localization when syncronizing core to public
+
 
 [[v1.8.8]]
 == {url-tree}1.8.8[1.8.8] -- 2023-04-20
