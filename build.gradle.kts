@@ -32,10 +32,6 @@ plugins {
     alias(libs.plugins.licenseReport)
 }
 
-java {
-    toolchain.languageVersion.set(JavaLanguageVersion.of(libs.versions.java.get()))
-}
-
 extra["spring.cloudVersion"] = libs.versions.springCloud.get()
 extra["jooq.version"] = libs.versions.jooq.get()
 extra["flyway.version"] = libs.versions.flyway.get()
@@ -73,6 +69,12 @@ sonarqube {
         property("sonar.coverage.exclusions", (generatedPackages + testPackages).joinToString(","))
         property("sonar.coverage.jacoco.xmlReportPaths", jacocoTestReportFile)
         property("sonar.kotlin.detekt.reportPaths", "$buildDir/reports/detekt/detekt.xml")
+    }
+}
+
+kotlin {
+    jvmToolchain {
+        languageVersion.set(JavaLanguageVersion.of(libs.versions.java.get()))
     }
 }
 
@@ -142,20 +144,9 @@ subprojects {
         testRuntimeOnly(rootProject.libs.kotest.runner.junit5)
     }
 
-    val kotlinVersion = rootProject.libs.versions.kotlin.get()
-    val kotlinApiLangVersion = kotlinVersion.subSequence(0, 3).toString()
-    val jvmTargetVersion = rootProject.libs.versions.java.get()
     tasks {
-        withType<JavaCompile> {
-            options.encoding = "UTF-8"
-            sourceCompatibility = jvmTargetVersion
-            targetCompatibility = jvmTargetVersion
-        }
         withType<KotlinCompile> {
             kotlinOptions {
-                apiVersion = kotlinApiLangVersion
-                languageVersion = kotlinApiLangVersion
-                jvmTarget = jvmTargetVersion
                 freeCompilerArgs = freeCompilerArgs + listOf("-opt-in=kotlin.RequiresOptIn")
             }
         }
@@ -190,11 +181,9 @@ subprojects {
 }
 
 tasks {
-    val jvmTargetVersion = libs.versions.java.get()
     withType<KotlinCompile> {
         kotlinOptions {
             freeCompilerArgs = listOf("-Xjsr305=strict")
-            jvmTarget = jvmTargetVersion
         }
     }
 }

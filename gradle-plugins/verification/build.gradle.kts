@@ -12,8 +12,10 @@ dependencies {
     implementation(libs.plugin.detekt)
 }
 
-tasks.withType(KotlinJvmCompile::class.java).configureEach {
-    kotlinOptions.jvmTarget = libs.versions.java.get()
+kotlin {
+    jvmToolchain {
+        languageVersion.set(JavaLanguageVersion.of(libs.versions.java.get()))
+    }
 }
 
 detekt {
