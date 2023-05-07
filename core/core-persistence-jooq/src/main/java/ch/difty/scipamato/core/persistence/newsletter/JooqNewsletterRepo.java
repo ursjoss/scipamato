@@ -12,6 +12,7 @@ import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jooq.Record;
 import org.jooq.*;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -176,8 +177,7 @@ public class JooqNewsletterRepo extends
     }
 
     // package-private for testing purposes
-    @NotNull
-    Optional<Paper.NewsletterLink> handleInsertedNewsletter(final int count, final int newsletterId, final long paperId,
+    @NotNull Optional<Paper.NewsletterLink> handleInsertedNewsletter(final int count, final int newsletterId, final long paperId,
         @NotNull final String languageCode) {
         if (count > 0) {
             final Record6<Integer, String, Integer, Integer, String, String> r = fetchMergedNewsletter(newsletterId, paperId, languageCode);
@@ -188,8 +188,7 @@ public class JooqNewsletterRepo extends
     }
 
     // package-private for stubbing purposes
-    @Nullable
-    Record6<Integer, String, Integer, Integer, String, String> fetchMergedNewsletter(final int newsletterId, final long paperId,
+    @Nullable Record6<Integer, String, Integer, Integer, String, String> fetchMergedNewsletter(final int newsletterId, final long paperId,
         @NotNull final String languageCode) {
         return getDsl()
             .select(NEWSLETTER.ID, NEWSLETTER.ISSUE, NEWSLETTER.PUBLICATION_STATUS, NEWSLETTER_TOPIC.ID, NEWSLETTER_TOPIC_TR.TITLE,

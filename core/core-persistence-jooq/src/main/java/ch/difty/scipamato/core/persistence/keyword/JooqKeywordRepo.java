@@ -13,6 +13,7 @@ import java.util.*;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jooq.Record;
 import org.jooq.*;
 import org.jooq.impl.DSL;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -36,8 +37,7 @@ import ch.difty.scipamato.core.persistence.OptimisticLockingException;
 @Profile("!wickettest")
 public class JooqKeywordRepo extends AbstractRepo implements KeywordRepository {
 
-    public JooqKeywordRepo(@Qualifier("dslContext") @NotNull final DSLContext dslContext,
-        @NotNull DateTimeService dateTimeService) {
+    public JooqKeywordRepo(@Qualifier("dslContext") @NotNull final DSLContext dslContext, @NotNull DateTimeService dateTimeService) {
         super(dslContext, dateTimeService);
     }
 
@@ -61,8 +61,7 @@ public class JooqKeywordRepo extends AbstractRepo implements KeywordRepository {
 
     @NotNull
     @Override
-    public List<KeywordDefinition> findPageOfKeywordDefinitions(@Nullable final KeywordFilter filter,
-        @NotNull final PaginationContext pc) {
+    public List<KeywordDefinition> findPageOfKeywordDefinitions(@Nullable final KeywordFilter filter, @NotNull final PaginationContext pc) {
         final SelectOnConditionStep<Record> selectStep = getDsl()
             .select(KEYWORD.fields())
             .select(LANGUAGE.CODE)
@@ -87,8 +86,7 @@ public class JooqKeywordRepo extends AbstractRepo implements KeywordRepository {
             .collect(toList());
     }
 
-    private <R extends Record> SelectConditionStep<R> applyWhereCondition(final KeywordFilter filter,
-        final SelectJoinStep<R> selectStep) {
+    private <R extends Record> SelectConditionStep<R> applyWhereCondition(final KeywordFilter filter, final SelectJoinStep<R> selectStep) {
         if (filter != null && filter.getNameMask() != null) {
             final String nameMask = filter.getNameMask();
             if ("n.a.".equals(nameMask)) {
@@ -112,8 +110,8 @@ public class JooqKeywordRepo extends AbstractRepo implements KeywordRepository {
             .where(KEYWORD_TR.NAME.isNull())));
     }
 
-    private <R extends Record> SelectConditionStep<R> findNameMaskInSearchOverrideOrTranslatedNames(
-        final SelectJoinStep<R> selectStep, final String nameMask) {
+    private <R extends Record> SelectConditionStep<R> findNameMaskInSearchOverrideOrTranslatedNames(final SelectJoinStep<R> selectStep,
+        final String nameMask) {
         final String mask = '%' + nameMask + '%';
         return selectStep.where(KEYWORD.SEARCH_OVERRIDE
             .likeIgnoreCase(mask)
@@ -129,17 +127,15 @@ public class JooqKeywordRepo extends AbstractRepo implements KeywordRepository {
             final List<KeywordTranslation> translations = entry
                 .getValue()
                 .stream()
-                .map(r -> new KeywordTranslation(r.getValue(KEYWORD_TR.ID), r.getValue(LANGUAGE.CODE),
-                    r.getValue(KEYWORD_TR.NAME), r.getValue(KEYWORD_TR.VERSION)))
+                .map(r -> new KeywordTranslation(r.getValue(KEYWORD_TR.ID), r.getValue(LANGUAGE.CODE), r.getValue(KEYWORD_TR.NAME),
+                    r.getValue(KEYWORD_TR.VERSION)))
                 .collect(toList());
             final Record r = entry
                 .getValue()
                 .stream()
                 .findFirst()
                 .orElseThrow();
-            definitions.add(
-                toKeywordDefinition(entry.getKey(), r.getValue(KEYWORD.SEARCH_OVERRIDE), r.getValue(KEYWORD.VERSION),
-                    translations));
+            definitions.add(toKeywordDefinition(entry.getKey(), r.getValue(KEYWORD.SEARCH_OVERRIDE), r.getValue(KEYWORD.VERSION), translations));
         }
         return definitions;
     }
@@ -232,14 +228,12 @@ public class JooqKeywordRepo extends AbstractRepo implements KeywordRepository {
         final String searchOverride = ntRecord.get(KEYWORD.SEARCH_OVERRIDE);
 
         final List<KeywordTranslation> persistedTranslations = persistTranslations(entity, userId, ntId);
-        final KeywordDefinition persistedEntity = toKeywordDefinition(ntId, searchOverride,
-            ntRecord.get(KEYWORD.VERSION), persistedTranslations);
+        final KeywordDefinition persistedEntity = toKeywordDefinition(ntId, searchOverride, ntRecord.get(KEYWORD.VERSION), persistedTranslations);
         log.info("{} inserted 1 record: {} with id {}.", getActiveUser().getUserName(), KEYWORD.getName(), ntId);
         return persistedEntity;
     }
 
-    private List<KeywordTranslation> persistTranslations(final KeywordDefinition entity, final int userId,
-        final int ntId) {
+    private List<KeywordTranslation> persistTranslations(final KeywordDefinition entity, final int userId, final int ntId) {
         final List<KeywordTranslation> kts = new ArrayList<>();
         for (final KeywordTranslation kt : entity.getTranslations(null)) {
             final KeywordTrRecord ktRecord = insertAndGetKeywordTr(ntId, userId, kt);
@@ -260,15 +254,13 @@ public class JooqKeywordRepo extends AbstractRepo implements KeywordRepository {
         return manageTranslations(record, entity, persistedTranslations);
     }
 
-    private List<KeywordTranslation> updateOrInsertAndLoadKeywordTranslations(final KeywordDefinition entity,
-        final int userId) {
+    private List<KeywordTranslation> updateOrInsertAndLoadKeywordTranslations(final KeywordDefinition entity, final int userId) {
         final Collection<KeywordTranslation> entityTranslations = entity.getTranslations(null);
         removeObsoletePersistedRecords(entity.getId(), entityTranslations);
         return addOrUpdate(entity, entityTranslations, userId);
     }
 
-    private void removeObsoletePersistedRecords(final Integer id,
-        final Collection<KeywordTranslation> entityTranslations) {
+    private void removeObsoletePersistedRecords(final Integer id, final Collection<KeywordTranslation> entityTranslations) {
         final Result<KeywordTrRecord> persistedTranslations = loadTranslationsFromDbFor(id);
         removeObsoletePersistedRecordsFor(persistedTranslations, entityTranslations);
     }
@@ -289,29 +281,24 @@ public class JooqKeywordRepo extends AbstractRepo implements KeywordRepository {
     }
 
     // package-private for testing purposes
-    @NotNull
-    KeywordDefinition manageTranslations(@Nullable final KeywordRecord record, @NotNull final KeywordDefinition entity,
+    @NotNull KeywordDefinition manageTranslations(@Nullable final KeywordRecord record, @NotNull final KeywordDefinition entity,
         final List<KeywordTranslation> persistedTranslations) {
         if (record != null) {
-            final KeywordDefinition updatedEntity = toKeywordDefinition(entity.getId(),
-                record.get(KEYWORD.SEARCH_OVERRIDE), record.get(KEYWORD.VERSION), persistedTranslations);
-            log.info("{} updated 1 record: {} with id {}.", getActiveUser().getUserName(), KEYWORD.getName(),
-                updatedEntity.getId());
+            final KeywordDefinition updatedEntity = toKeywordDefinition(entity.getId(), record.get(KEYWORD.SEARCH_OVERRIDE),
+                record.get(KEYWORD.VERSION), persistedTranslations);
+            log.info("{} updated 1 record: {} with id {}.", getActiveUser().getUserName(), KEYWORD.getName(), updatedEntity.getId());
             return updatedEntity;
         } else {
-            throw new OptimisticLockingException(KEYWORD.getName(), entity.toString(),
-                OptimisticLockingException.Type.UPDATE);
+            throw new OptimisticLockingException(KEYWORD.getName(), entity.toString(), OptimisticLockingException.Type.UPDATE);
         }
     }
 
     private KeywordDefinition toKeywordDefinition(final Integer id, final String searchOverride, final int version,
         final List<KeywordTranslation> persistedTranslations) {
-        return new KeywordDefinition(id, getMainLanguage(), searchOverride, version,
-            persistedTranslations.toArray(new KeywordTranslation[0]));
+        return new KeywordDefinition(id, getMainLanguage(), searchOverride, version, persistedTranslations.toArray(new KeywordTranslation[0]));
     }
 
-    private KeywordRecord updateAndLoadKeywordDefinition(final KeywordDefinition entity, final int userId,
-        final int currentVersion) {
+    private KeywordRecord updateAndLoadKeywordDefinition(final KeywordDefinition entity, final int userId, final int currentVersion) {
         return getDsl()
             .update(KEYWORD)
             .set(KEYWORD.SEARCH_OVERRIDE, entity.getSearchOverride())
@@ -324,8 +311,8 @@ public class JooqKeywordRepo extends AbstractRepo implements KeywordRepository {
             .fetchOne();
     }
 
-    private List<KeywordTranslation> addOrUpdate(final KeywordDefinition entity,
-        final Collection<KeywordTranslation> entityTranslations, final int userId) {
+    private List<KeywordTranslation> addOrUpdate(final KeywordDefinition entity, final Collection<KeywordTranslation> entityTranslations,
+        final int userId) {
         final List<KeywordTranslation> ktPersisted = new ArrayList<>();
         for (final KeywordTranslation kt : entityTranslations)
             addOrUpdateTranslation(kt, entity, userId, ktPersisted);
@@ -333,8 +320,8 @@ public class JooqKeywordRepo extends AbstractRepo implements KeywordRepository {
     }
 
     // package-private for test purposes
-    void addOrUpdateTranslation(@NotNull final KeywordTranslation kt, @NotNull final KeywordDefinition entity,
-        final int userId, @NotNull final List<KeywordTranslation> ktPersisted) {
+    void addOrUpdateTranslation(@NotNull final KeywordTranslation kt, @NotNull final KeywordDefinition entity, final int userId,
+        @NotNull final List<KeywordTranslation> ktPersisted) {
         if (kt.getId() != null) {
             final int currentVersion = kt.getVersion();
             final KeywordTrRecord ktRecord = updateKeywordTr(entity, kt, userId, currentVersion);
@@ -347,13 +334,11 @@ public class JooqKeywordRepo extends AbstractRepo implements KeywordRepository {
     }
 
     // package-private for testing purposes
-    void addOrThrow(@Nullable final KeywordTrRecord ktRecord, @NotNull final String translationAsString,
-        final List<KeywordTranslation> ktPersisted) {
+    void addOrThrow(@Nullable final KeywordTrRecord ktRecord, @NotNull final String translationAsString, final List<KeywordTranslation> ktPersisted) {
         if (ktRecord != null) {
             ktPersisted.add(toKeywordTranslation(ktRecord));
         } else {
-            throw new OptimisticLockingException(KEYWORD_TR.getName(), translationAsString,
-                OptimisticLockingException.Type.UPDATE);
+            throw new OptimisticLockingException(KEYWORD_TR.getName(), translationAsString, OptimisticLockingException.Type.UPDATE);
         }
     }
 
@@ -367,8 +352,7 @@ public class JooqKeywordRepo extends AbstractRepo implements KeywordRepository {
     }
 
     // package-private for stubbing purposes
-    @Nullable
-    KeywordTrRecord insertAndGetKeywordTr(final int keywordId, final int userId, @NotNull final KeywordTranslation kt) {
+    @Nullable KeywordTrRecord insertAndGetKeywordTr(final int keywordId, final int userId, @NotNull final KeywordTranslation kt) {
         return getDsl()
             .insertInto(KEYWORD_TR)
             .set(KEYWORD_TR.KEYWORD_ID, keywordId)
@@ -380,8 +364,8 @@ public class JooqKeywordRepo extends AbstractRepo implements KeywordRepository {
             .fetchOne();
     }
 
-    private KeywordTrRecord updateKeywordTr(final KeywordDefinition entity, final KeywordTranslation kt,
-        final int userId, final int currentNttVersion) {
+    private KeywordTrRecord updateKeywordTr(final KeywordDefinition entity, final KeywordTranslation kt, final int userId,
+        final int currentNttVersion) {
         final int keywordId = entity.getId();
         return getDsl()
             .update(KEYWORD_TR)
@@ -398,8 +382,8 @@ public class JooqKeywordRepo extends AbstractRepo implements KeywordRepository {
     }
 
     private KeywordTranslation toKeywordTranslation(final KeywordTrRecord record) {
-        return new KeywordTranslation(record.get(KEYWORD_TR.ID), record.get(KEYWORD_TR.LANG_CODE),
-            record.get(KEYWORD_TR.NAME), record.get(KEYWORD_TR.VERSION));
+        return new KeywordTranslation(record.get(KEYWORD_TR.ID), record.get(KEYWORD_TR.LANG_CODE), record.get(KEYWORD_TR.NAME),
+            record.get(KEYWORD_TR.VERSION));
     }
 
     @Nullable
@@ -424,11 +408,9 @@ public class JooqKeywordRepo extends AbstractRepo implements KeywordRepository {
     // package-private for testing purposes
     void logOrThrow(final int deleteCount, final Integer id, final KeywordDefinition toBeDeleted) {
         if (deleteCount > 0) {
-            log.info("{} deleted {} record: {} with id {}.", getActiveUser().getUserName(), deleteCount,
-                KEYWORD.getName(), id);
+            log.info("{} deleted {} record: {} with id {}.", getActiveUser().getUserName(), deleteCount, KEYWORD.getName(), id);
         } else {
-            throw new OptimisticLockingException(KEYWORD.getName(), toBeDeleted.toString(),
-                OptimisticLockingException.Type.DELETE);
+            throw new OptimisticLockingException(KEYWORD.getName(), toBeDeleted.toString(), OptimisticLockingException.Type.DELETE);
         }
     }
 }

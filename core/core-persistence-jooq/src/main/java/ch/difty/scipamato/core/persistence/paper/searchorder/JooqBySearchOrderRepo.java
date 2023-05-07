@@ -11,6 +11,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.jetbrains.annotations.NotNull;
+import org.jooq.Record;
 import org.jooq.*;
 import org.jooq.impl.DSL;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -212,7 +213,9 @@ public abstract class JooqBySearchOrderRepo<T extends IdScipamatoEntity<Long>, M
 
     @NotNull
     private Condition evaluateStringSearchTerm(final TableField<?, String> field, final String value) {
-        final StringSearchTerm st = SearchTerm.newStringSearchTerm(field.getQualifiedName().toString(), value);
+        final StringSearchTerm st = SearchTerm.newStringSearchTerm(field
+            .getQualifiedName()
+            .toString(), value);
         return stringSearchTermEvaluator.evaluate(st);
     }
 
@@ -223,8 +226,8 @@ public abstract class JooqBySearchOrderRepo<T extends IdScipamatoEntity<Long>, M
             .from(PAPER_ATTACHMENT)
             .where(PAPER_ATTACHMENT.PAPER_ID.eq(PAPER.ID));
         if (sc.getAttachmentNameMask() != null) {
-            final SelectConditionStep<Record1<Integer>> step1 =
-                step0.and(evaluateStringSearchTerm(PAPER_ATTACHMENT.NAME, sc.getAttachmentNameMask()));
+            final SelectConditionStep<Record1<Integer>> step1 = step0.and(
+                evaluateStringSearchTerm(PAPER_ATTACHMENT.NAME, sc.getAttachmentNameMask()));
             attConditions.add(() -> DSL.exists(step1));
         } else if (sc.getHasAttachments() != null) {
             if (Boolean.TRUE.equals(sc.getHasAttachments()))

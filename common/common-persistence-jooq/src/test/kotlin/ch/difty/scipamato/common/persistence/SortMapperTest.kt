@@ -83,7 +83,6 @@ internal class SortMapperTest {
         verify { mapperSpy.getTableFieldFor(tableMock, "FIELD2") }
     }
 
-    @Suppress("SpellCheckingInspection")
     @Test
     fun mapping_withWrongFieldName_throwsInvalidDataAccessApiUsageException() {
         sortProps.add(SortProperty("inexistentField", Direction.ASC))
