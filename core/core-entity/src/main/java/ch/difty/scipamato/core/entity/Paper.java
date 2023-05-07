@@ -170,8 +170,8 @@ public class Paper extends IdScipamatoEntity<Long> implements CodeBoxAware, News
         }
     }
 
-    @javax.validation.constraints.NotNull
-    @javax.validation.constraints.Min(0)
+    @jakarta.validation.constraints.NotNull
+    @jakarta.validation.constraints.Min(0)
     private Long number;
 
     /**
@@ -179,30 +179,30 @@ public class Paper extends IdScipamatoEntity<Long> implements CodeBoxAware, News
      * <p>
      * /^10.\d{4,9}/[-._;()/:A-Z0-9]+$/i
      */
-    @javax.validation.constraints.Pattern(regexp = DOI_REGEX, flags = {
-        javax.validation.constraints.Pattern.Flag.CASE_INSENSITIVE }, message = "{paper.invalidDOI}")
+    @jakarta.validation.constraints.Pattern(regexp = DOI_REGEX, flags = {
+        jakarta.validation.constraints.Pattern.Flag.CASE_INSENSITIVE }, message = "{paper.invalidDOI}")
     private String doi;
 
     private Integer pmId;
 
-    @javax.validation.constraints.NotNull
-    @javax.validation.constraints.Pattern(regexp = AUTHOR_REGEX, message = "{paper.invalidAuthor}")
+    @jakarta.validation.constraints.NotNull
+    @jakarta.validation.constraints.Pattern(regexp = AUTHOR_REGEX, message = "{paper.invalidAuthor}")
     private String authors;
 
-    @javax.validation.constraints.NotNull
+    @jakarta.validation.constraints.NotNull
     private String  firstAuthor;
     private boolean firstAuthorOverridden;
-    @javax.validation.constraints.NotNull
+    @jakarta.validation.constraints.NotNull
     private String  title;
-    @javax.validation.constraints.NotNull
+    @jakarta.validation.constraints.NotNull
     private String  location;
 
-    @javax.validation.constraints.NotNull
-    @javax.validation.constraints.Min(value = 1500, message = "{paper.invalidPublicationYear}")
-    @javax.validation.constraints.Max(value = 2100, message = "{paper.invalidPublicationYear}")
+    @jakarta.validation.constraints.NotNull
+    @jakarta.validation.constraints.Min(value = 1500, message = "{paper.invalidPublicationYear}")
+    @jakarta.validation.constraints.Max(value = 2100, message = "{paper.invalidPublicationYear}")
     private Integer publicationYear;
 
-    @javax.validation.constraints.NotNull
+    @jakarta.validation.constraints.NotNull
     private String goals;
     private String population;
     private String populationPlace;

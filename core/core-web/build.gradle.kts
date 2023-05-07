@@ -70,7 +70,7 @@ dependencies {
 
     testImplementation(project(Module.scipamatoCommon("test")))
     testImplementation(project(Module.scipamatoCommon("persistence-jooq-test")))
-    testImplementation(libs.javax.servletApi)
+    testImplementation(libs.jakarta.servletApi)
     testImplementation(libs.validationApi)
     testImplementation(libs.lombok)
     testAnnotationProcessor(libs.lombok)

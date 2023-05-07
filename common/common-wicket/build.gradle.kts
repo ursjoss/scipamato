@@ -64,6 +64,6 @@ dependencies {
     testImplementation(libs.lombok)
     testAnnotationProcessor(libs.lombok)
 
-    testImplementation(libs.javax.servletApi)
+    testImplementation(libs.jakarta.servletApi)
     testImplementation(libs.validationApi)
 }

@@ -31,6 +31,6 @@ internal class KeywordTest : Jsr303ValidatedEntityTest<Keyword>(Keyword::class.j
     fun validatingNewsletter_withNullIssue_fails() {
         val nt = newValidEntity()
         nt.name = null
-        validateAndAssertFailure(nt, NAME, null, "{javax.validation.constraints.NotNull.message}")
+        validateAndAssertFailure(nt, NAME, null, "{jakarta.validation.constraints.NotNull.message}")
     }
 }

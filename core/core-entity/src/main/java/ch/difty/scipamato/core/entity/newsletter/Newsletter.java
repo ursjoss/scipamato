@@ -21,10 +21,10 @@ import ch.difty.scipamato.core.entity.projection.PaperSlim;
 public class Newsletter extends IdScipamatoEntity<Integer> {
     private static final long serialVersionUID = 1L;
 
-    @javax.validation.constraints.NotNull
+    @jakarta.validation.constraints.NotNull
     private String            issue;
     private LocalDate         issueDate;
-    @javax.validation.constraints.NotNull
+    @jakarta.validation.constraints.NotNull
     private PublicationStatus publicationStatus;
 
     /**

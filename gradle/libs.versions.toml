@@ -1,6 +1,7 @@
 [versions]
 coroutines = "1.7.0"
 detektPlugin = "1.22.0"
+ehcache = "3.10.8"
 equalsverifier = "3.14.1"
 flyway = "9.17.0"
 jacoco = "0.8.8"
@@ -40,7 +41,7 @@ wicketstuff = "9.13.0"
 [libraries]
 cacheApi = { module = "javax.cache:cache-api" }
 coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
-ehcache = { module = "org.ehcache:ehcache" }
+ehcache = { module = "org.ehcache:ehcache", version.ref = "ehcache" }
 equalsverifier = { module = "nl.jqno.equalsverifier:equalsverifier", version.ref = "equalsverifier" }
 flyway-core = { module = "org.flywaydb:flyway-core", version.ref = "flyway" }
 fontAwesome = { module = "org.webjars:font-awesome" }
@@ -49,7 +50,7 @@ jasperreports = { module = "net.sf.jasperreports:jasperreports", version.ref = "
 jasperreports-fonts = { module = "net.sf.jasperreports:jasperreports-fonts", version.ref = "jasperreports" }
 javax-el-api = { module = "javax.el:javax.el-api", version.ref = "javaxElApi" }
 javax-el-impl = { module = "org.glassfish:javax.el", version.ref = "javaxEl" }
-javax-servletApi = { module = "javax.servlet:javax.servlet-api" }
+jakarta-servletApi = { module = "jakarta.servlet:jakarta.servlet-api" }
 jaxb-api = { module = "javax.xml.bind:jaxb-api" }
 jaxb-runtime = { module = "org.glassfish.jaxb:jaxb-runtime" }
 jooq = { module = "org.jooq:jooq", version.ref = "jooq" }
@@ -95,7 +96,7 @@ testcontainers-junitJupiter = { module = "org.testcontainers:junit-jupiter", ver
 testcontainers-postgresql = { module = "org.testcontainers:postgresql", version.ref = "testcontainers" }
 testcontainers-testcontainers = { module = "org.testcontainers:testcontainers", version.ref = "testcontainers" }
 univocity = { module = "com.univocity:univocity-parsers", version.ref = "univocityParsers" }
-validationApi = { module = "javax.validation:validation-api" }
+validationApi = { module = "jakarta.validation:jakarta.validation-api" }
 wicket-authroles = { module = "org.apache.wicket:wicket-auth-roles", version.ref = "wicket" }
 wicket-beanvalidation = { module = "org.apache.wicket:wicket-bean-validation", version.ref = "wicket" }
 wicket-core = { module = "org.apache.wicket:wicket-core", version.ref = "wicket" }
