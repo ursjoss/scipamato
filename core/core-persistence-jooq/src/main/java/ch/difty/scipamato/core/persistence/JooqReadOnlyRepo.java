@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jooq.Record;
 import org.jooq.*;
 
 import ch.difty.scipamato.common.DateTimeService;
@@ -59,8 +60,8 @@ public abstract class JooqReadOnlyRepo<R extends Record, T extends CoreEntity, I
      *     the object providing the application properties
      */
     protected JooqReadOnlyRepo(@NotNull final DSLContext dsl, @NotNull final M mapper, @NotNull final JooqSortMapper<R, T, TI> sortMapper,
-        @NotNull GenericFilterConditionMapper<F> filterConditionMapper, @NotNull DateTimeService dateTimeService,
-        @NotNull ApplicationProperties applicationProperties) {
+        @NotNull final GenericFilterConditionMapper<F> filterConditionMapper, @NotNull final DateTimeService dateTimeService,
+        @NotNull final ApplicationProperties applicationProperties) {
         super(dsl, dateTimeService);
 
         this.mapper = mapper;
@@ -113,7 +114,7 @@ public abstract class JooqReadOnlyRepo<R extends Record, T extends CoreEntity, I
 
     @NotNull
     @Override
-    public List<T> findAll(@Nullable String languageCode) {
+    public List<T> findAll(@Nullable final String languageCode) {
         final List<T> entities = getDsl()
             .selectFrom(getTable())
             .fetch(getMapper());
@@ -136,7 +137,7 @@ public abstract class JooqReadOnlyRepo<R extends Record, T extends CoreEntity, I
     @Nullable
     @Override
     public T findById(@NotNull final ID id, @Nullable final String languageCode) {
-        T entity = getDsl()
+        final T entity = getDsl()
             .selectFrom(getTable())
             .where(getTableId().equal(id))
             .fetchOne(getMapper());

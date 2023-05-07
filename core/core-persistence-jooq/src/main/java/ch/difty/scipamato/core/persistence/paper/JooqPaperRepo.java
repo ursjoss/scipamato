@@ -23,6 +23,7 @@ import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jooq.Record;
 import org.jooq.*;
 import org.jooq.impl.DSL;
 import org.slf4j.Logger;
@@ -484,8 +485,7 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
             return condition;
     }
 
-    @NotNull
-    Optional<String> evaluateNumbers(@Nullable final Record1<Long[]> numbers) {
+    @NotNull Optional<String> evaluateNumbers(@Nullable final Record1<Long[]> numbers) {
         if (numbers == null || numbers.value1() == null || numbers.value1().length == 0)
             return Optional.empty();
         return Optional.of(Arrays

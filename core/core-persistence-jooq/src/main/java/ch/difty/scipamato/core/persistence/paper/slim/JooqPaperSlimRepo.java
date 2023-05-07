@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jooq.Record;
 import org.jooq.*;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Profile;
@@ -29,18 +30,17 @@ import ch.difty.scipamato.core.persistence.paper.searchorder.PaperSlimBackedSear
 
 @Repository
 @Profile("!wickettest")
-public class JooqPaperSlimRepo extends
-    JooqReadOnlyRepo<PaperRecord, PaperSlim, Long, ch.difty.scipamato.core.db.tables.Paper, PaperSlimRecordMapper, PaperFilter>
+public class JooqPaperSlimRepo
+    extends JooqReadOnlyRepo<PaperRecord, PaperSlim, Long, ch.difty.scipamato.core.db.tables.Paper, PaperSlimRecordMapper, PaperFilter>
     implements PaperSlimRepository {
 
     private final PaperSlimBackedSearchOrderRepository searchOrderRepository;
 
-    public JooqPaperSlimRepo(@Qualifier("dslContext") @NotNull final DSLContext dsl,
-        @NotNull final PaperSlimRecordMapper mapper,
+    public JooqPaperSlimRepo(@Qualifier("dslContext") @NotNull final DSLContext dsl, @NotNull final PaperSlimRecordMapper mapper,
         @NotNull final JooqSortMapper<PaperRecord, PaperSlim, ch.difty.scipamato.core.db.tables.Paper> sortMapper,
         @NotNull final GenericFilterConditionMapper<PaperFilter> filterConditionMapper,
-        @NotNull final PaperSlimBackedSearchOrderRepository searchOrderRepository,
-        @NotNull final DateTimeService dateTimeService, @NotNull final ApplicationProperties applicationProperties) {
+        @NotNull final PaperSlimBackedSearchOrderRepository searchOrderRepository, @NotNull final DateTimeService dateTimeService,
+        @NotNull final ApplicationProperties applicationProperties) {
         super(dsl, mapper, sortMapper, filterConditionMapper, dateTimeService, applicationProperties);
         this.searchOrderRepository = searchOrderRepository;
     }
@@ -70,16 +70,16 @@ public class JooqPaperSlimRepo extends
             .where(getTableId().equal(id))
             .fetchOne();
         if (record != null)
-            return new PaperSlim(record.value1(), record.value2(), record.value3(), record.value4(), record.value5(),
-                record.value6(), record.value7(), getStatusId(record), record.value9());
+            return new PaperSlim(record.value1(), record.value2(), record.value3(), record.value4(), record.value5(), record.value6(),
+                record.value7(), getStatusId(record), record.value9());
         else
             return null;
     }
 
     private SelectOnConditionStep<Record9<Long, Long, String, Integer, String, Integer, String, Integer, String>> getBaseQuery() {
         return getDsl()
-            .select(PAPER.ID, PAPER.NUMBER, PAPER.FIRST_AUTHOR, PAPER.PUBLICATION_YEAR, PAPER.TITLE, NEWSLETTER.ID,
-                NEWSLETTER.ISSUE, NEWSLETTER.PUBLICATION_STATUS, PAPER_NEWSLETTER.HEADLINE)
+            .select(PAPER.ID, PAPER.NUMBER, PAPER.FIRST_AUTHOR, PAPER.PUBLICATION_YEAR, PAPER.TITLE, NEWSLETTER.ID, NEWSLETTER.ISSUE,
+                NEWSLETTER.PUBLICATION_STATUS, PAPER_NEWSLETTER.HEADLINE)
             .from(PAPER)
             .leftOuterJoin(PAPER_NEWSLETTER)
             .on(PAPER.ID.eq(PAPER_NEWSLETTER.PAPER_ID))
@@ -87,14 +87,13 @@ public class JooqPaperSlimRepo extends
             .on(PAPER_NEWSLETTER.NEWSLETTER_ID.eq(NEWSLETTER.ID));
     }
 
-    private int getStatusId(
-        final Record9<Long, Long, String, Integer, String, Integer, String, Integer, String> record) {
+    private int getStatusId(final Record9<Long, Long, String, Integer, String, Integer, String, Integer, String> record) {
         return record.get(NEWSLETTER.PUBLICATION_STATUS.getName(), Integer.class);
     }
 
     @Nullable
     @Override
-    public PaperSlim findById(@NotNull final Long id, final int version, @Nullable String languageCode) {
+    public PaperSlim findById(@NotNull final Long id, final int version, @Nullable final String languageCode) {
         final Record9<Long, Long, String, Integer, String, Integer, String, Integer, String> record = getBaseQuery()
             .where(getTableId().equal(id))
             .and(getRecordVersion().equal(version))
@@ -107,27 +106,24 @@ public class JooqPaperSlimRepo extends
 
     @NotNull
     @Override
-    public List<PaperSlim> findAll(@Nullable String languageCode) {
+    public List<PaperSlim> findAll(@Nullable final String languageCode) {
         final List<PaperSlim> results = new ArrayList<>();
         for (final Record9<Long, Long, String, Integer, String, Integer, String, Integer, String> r : getBaseQuery().fetch())
             results.add(newPaperSlim(r));
         return results;
     }
 
-    private PaperSlim newPaperSlim(
-        final Record9<Long, Long, String, Integer, String, Integer, String, Integer, String> r) {
+    private PaperSlim newPaperSlim(final Record9<Long, Long, String, Integer, String, Integer, String, Integer, String> r) {
         final Integer newsletterId = r.value6();
         if (newsletterId != null)
-            return new PaperSlim(r.value1(), r.value2(), r.value3(), r.value4(), r.value5(), newsletterId, r.value7(),
-                getStatusId(r), r.value9());
+            return new PaperSlim(r.value1(), r.value2(), r.value3(), r.value4(), r.value5(), newsletterId, r.value7(), getStatusId(r), r.value9());
         else
             return new PaperSlim(r.value1(), r.value2(), r.value3(), r.value4(), r.value5());
     }
 
     @NotNull
     @Override
-    public List<PaperSlim> findPageByFilter(final PaperFilter filter, @NotNull final PaginationContext pc,
-        @Nullable final String languageCode) {
+    public List<PaperSlim> findPageByFilter(final PaperFilter filter, @NotNull final PaginationContext pc, @Nullable final String languageCode) {
         final List<PaperSlim> results = new ArrayList<>();
         final Condition conditions = getFilterConditionMapper().map(filter);
         final Collection<SortField<PaperSlim>> sortCriteria = getSortMapper().map(pc.getSort(), getTable());
@@ -151,15 +147,14 @@ public class JooqPaperSlimRepo extends
 
     @NotNull
     @Override
-    public List<PaperSlim> findPageBySearchOrder(@NotNull SearchOrder searchOrder,
-        @NotNull PaginationContext paginationContext) {
+    public List<PaperSlim> findPageBySearchOrder(@NotNull final SearchOrder searchOrder, @NotNull final PaginationContext paginationContext) {
         final List<PaperSlim> entities = searchOrderRepository.findPageBySearchOrder(searchOrder, paginationContext);
         enrichAssociatedEntitiesOfAll(entities, null);
         return entities;
     }
 
     @Override
-    public int countBySearchOrder(@NotNull SearchOrder searchOrder) {
+    public int countBySearchOrder(@NotNull final SearchOrder searchOrder) {
         return searchOrderRepository.countBySearchOrder(searchOrder);
     }
 }

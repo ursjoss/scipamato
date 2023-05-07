@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jooq.Record;
 import org.jooq.*;
 import org.jooq.impl.DSL;
 import org.slf4j.Logger;
@@ -217,8 +218,7 @@ public class JooqSearchOrderRepo extends
     }
 
     // package-private for testing purposes
-    @NotNull
-    List<SearchCondition> findTermLessConditions(@NotNull final Map<Long, SearchCondition> idToSc,
+    @NotNull List<SearchCondition> findTermLessConditions(@NotNull final Map<Long, SearchCondition> idToSc,
         @NotNull final List<Long> conditionIdsWithSearchTerms) {
         return idToSc
             .values()
@@ -433,8 +433,7 @@ public class JooqSearchOrderRepo extends
      *     identifying the search order
      * @return optional of the persisted version (if found - empty otherwise)
      */
-    @NotNull
-    Optional<SearchCondition> findEquivalentPersisted(@NotNull final SearchCondition searchCondition, final long searchOrderId,
+    @NotNull Optional<SearchCondition> findEquivalentPersisted(@NotNull final SearchCondition searchCondition, final long searchOrderId,
         @NotNull final String languageCode) {
         final List<SearchCondition> persisted = getDsl()
             .selectFrom(SEARCH_CONDITION)
