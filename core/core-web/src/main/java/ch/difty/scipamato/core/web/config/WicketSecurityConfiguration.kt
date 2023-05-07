@@ -21,11 +21,11 @@ open class WicketSecurityConfiguration(
     @Bean
     open fun filterChain(http: HttpSecurity): SecurityFilterChain =
         http.csrf().disable()
-            .authorizeRequests {
+            .authorizeHttpRequests {
                 it.requestMatchers(EndpointRequest.to("health", "info")).permitAll()
-                    .antMatchers("/actuator/").hasRole(ADMIN_ROLE)
+                    .requestMatchers("/actuator/").hasRole(ADMIN_ROLE)
                     .requestMatchers(EndpointRequest.toAnyEndpoint()).hasRole(ADMIN_ROLE)
-                    .antMatchers("/**").permitAll()
+                    .requestMatchers("/**").permitAll()
             }
             .logout(LogoutConfigurer<HttpSecurity>::permitAll)
             .build()

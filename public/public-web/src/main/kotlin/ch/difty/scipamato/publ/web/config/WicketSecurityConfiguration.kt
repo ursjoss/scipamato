@@ -17,7 +17,7 @@ import org.springframework.security.web.SecurityFilterChain
 
 @Configuration
 open class WicketSecurityConfiguration(
-    private val properties: ScipamatoPublicProperties
+    private val properties: ScipamatoPublicProperties,
 ) {
 
     @Bean
@@ -25,11 +25,11 @@ open class WicketSecurityConfiguration(
         http.csrf().disable()
             .headers().frameOptions().disable()
             .and()
-            .authorizeRequests {
+            .authorizeHttpRequests {
                 it.requestMatchers(EndpointRequest.to("health", "info")).permitAll()
-                    .antMatchers("/actuator/").hasRole(ADMIN_ROLE)
+                    .requestMatchers("/actuator/").hasRole(ADMIN_ROLE)
                     .requestMatchers(EndpointRequest.toAnyEndpoint()).hasRole(ADMIN_ROLE)
-                    .antMatchers("/**").permitAll()
+                    .requestMatchers("/**").permitAll()
             }
             .logout(LogoutConfigurer<HttpSecurity>::permitAll)
             .build()

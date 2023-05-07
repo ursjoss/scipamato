@@ -32,7 +32,7 @@ open class TestWicketSecurityConfiguration {
     open fun filterChain(http: HttpSecurity): SecurityFilterChain =
         http
             .csrf().disable()
-            .authorizeRequests { it.antMatchers("/**").permitAll() }
+            .authorizeHttpRequests { it.requestMatchers("/**").permitAll() }
             .logout(LogoutConfigurer<HttpSecurity>::permitAll)
             .build()
 
@@ -66,7 +66,7 @@ open class TestWicketSecurityConfiguration {
             private val enabled: Boolean = true,
             private val username: String,
             private val password: String?,
-            private val roles: List<Role>
+            private val roles: List<Role>,
         ) : UserDetails {
             override fun getUsername() = username
             override fun isCredentialsNonExpired() = credentialsNonExpired
