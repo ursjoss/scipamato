@@ -1,5 +1,5 @@
 [versions]
-coroutines = "1.7.0"
+coroutines = "1.7.1"
 detektPlugin = "1.22.0"
 equalsverifier = "3.14.1"
 flyway = "9.17.0"
