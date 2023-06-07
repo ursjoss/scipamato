@@ -2,7 +2,7 @@
 coroutines = "1.7.1"
 detektPlugin = "1.23.0"
 equalsverifier = "3.14.2"
-flyway = "9.19.1"
+flyway = "9.19.2"
 jacoco = "0.8.8"
 jasperreports = "6.20.5"
 java = "11"
