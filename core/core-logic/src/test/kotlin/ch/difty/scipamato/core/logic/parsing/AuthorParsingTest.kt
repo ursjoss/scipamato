@@ -6,7 +6,6 @@ import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeInstanceOf
 import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldContain
-import org.amshove.kluent.shouldContainAll
 import org.amshove.kluent.shouldContainSame
 import org.junit.jupiter.api.Test
 
@@ -66,7 +65,7 @@ internal class PubmedAuthorParserTest {
         p = PubmedAuthorParser("Ln FN 1st, Ln FN 2nd, Ln FN 3rd, Ln FN 4th, Ln FN 5th, Ln FN 100th, Ln FN.")
         p.firstAuthor shouldBeEqualTo "Ln"
         p.authors.map { it.lastName } shouldContain "Ln"
-        p.authors.map { it.firstName } shouldContainAll listOf(
+        p.authors.map { it.firstName } shouldContainSame listOf(
             "FN 1st", "FN 2nd", "FN 3rd", "FN 4th", "FN 5th", "FN 100th", "FN"
         )
     }
@@ -97,17 +96,17 @@ internal class PubmedAuthorParserTest {
         p = PubmedAuthorParser(
             "Turner MC, Cohen A, Jerret M, Gapstur SM, Driver WR, Krewsky D, Beckermann BS, Samet JM."
         )
-        p.authors.map { it.lastName } shouldContainAll listOf(
+        p.authors.map { it.lastName } shouldContainSame listOf(
             "Turner", "Cohen", "Jerret", "Gapstur", "Driver", "Krewsky", "Beckermann", "Samet"
         )
-        p.authors.map { it.firstName } shouldContainAll listOf("MC", "A", "M", "SM", "WR", "D", "BS", "JM")
+        p.authors.map { it.firstName } shouldContainSame listOf("MC", "A", "M", "SM", "WR", "D", "BS", "JM")
     }
 
     @Test
     fun canDoUmlaute() {
         p = PubmedAuthorParser("Flückiger P, Bäni HU.")
-        p.authors.map { it.lastName } shouldContainAll listOf("Flückiger", "Bäni")
-        p.authors.map { it.firstName } shouldContainAll listOf("P", "HU")
+        p.authors.map { it.lastName } shouldContainSame listOf("Flückiger", "Bäni")
+        p.authors.map { it.firstName } shouldContainSame listOf("P", "HU")
     }
 
     @Test
