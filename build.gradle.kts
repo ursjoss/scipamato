@@ -178,6 +178,15 @@ subprojects {
             }
         }
     }
+
+    // see https://github.com/detekt/detekt/issues/6198
+    configurations.matching { it.name == "detekt" }.all {
+        resolutionStrategy.eachDependency {
+            if (requested.group == "org.jetbrains.kotlin") {
+                useVersion(libs.versions.detektKotlinVersion.get())
+            }
+        }
+    }
 }
 
 tasks {
