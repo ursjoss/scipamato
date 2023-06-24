@@ -7,6 +7,7 @@ import org.amshove.kluent.shouldBeInstanceOf
 import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldContain
 import org.amshove.kluent.shouldContainAll
+import org.amshove.kluent.shouldContainSame
 import org.junit.jupiter.api.Test
 
 internal class PubmedAuthorParserTest {
@@ -107,6 +108,17 @@ internal class PubmedAuthorParserTest {
         p = PubmedAuthorParser("Flückiger P, Bäni HU.")
         p.authors.map { it.lastName } shouldContainAll listOf("Flückiger", "Bäni")
         p.authors.map { it.firstName } shouldContainAll listOf("P", "HU")
+    }
+
+    @Test
+    fun canParsePmId35469927() {
+        val authors = "Markozannes G, Pantavou K, Rizos EC, Sindosi OΑ, Tagkas C, Seyfried M, " +
+            "Saldanha IJ, Hatzianastassiou N, Nikolopoulos GK, Ntzani E."
+        p = PubmedAuthorParser(authors)
+        p.authors.map { it.lastName } shouldContainSame listOf(
+            "Markozannes", "Pantavou", "Rizos", "Sindosi", "Tagkas", "Seyfried",
+            "Saldanha", "Hatzianastassiou", "Nikolopoulos", "Ntzani"
+        )
     }
 }
 
