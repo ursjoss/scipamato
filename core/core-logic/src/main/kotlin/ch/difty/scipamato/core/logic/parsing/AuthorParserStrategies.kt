@@ -35,9 +35,11 @@ enum class AuthorParserStrategy {
  *
  * `Turner MC, Cohen A, Jerret M, Gapstur SM, Driver WR, Pope CA 3rd, Krewsky D, Beckermann BS, Samet JM.`
  *
+ *
  *  * An author can have one or more names + initials.
  *  * One or more authors appear in a comma delimited list.
  *  * The last character is a period.
+ *
  *
  * **Note:** The entity [Paper] currently has a static JSR303 bean
  * validation regex making sure the author string only contains an authors
