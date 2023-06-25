@@ -127,7 +127,7 @@ public class PubmedXmlService implements PubmedArticleService {
             articles.addAll(article
                 .stream()
                 .map(PubmedArticleFacade::newPubmedArticleFrom)
-                .toList());
+                .collect(Collectors.toList()));
         } catch (final Exception e) {
             log.info("Unable to parse xmlString '{}': {}", xmlString, e.getMessage());
         }
