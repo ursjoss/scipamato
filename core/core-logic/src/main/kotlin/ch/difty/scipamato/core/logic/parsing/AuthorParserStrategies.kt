@@ -35,11 +35,9 @@ enum class AuthorParserStrategy {
  *
  * `Turner MC, Cohen A, Jerret M, Gapstur SM, Driver WR, Pope CA 3rd, Krewsky D, Beckermann BS, Samet JM.`
  *
- *
  *  * An author can have one or more names + initials.
  *  * One or more authors appear in a comma delimited list.
  *  * The last character is a period.
- *
  *
  * **Note:** The entity [Paper] currently has a static JSR303 bean
  * validation regex making sure the author string only contains an authors
@@ -47,12 +45,34 @@ enum class AuthorParserStrategy {
  * author parser strategy, we need a different (more dynamic) way of validating
  * the author strings in the entity.
  *
+ * In case the author string from Pubmed contains capital greek letters that are visually
+ * very close (or even identical) to regular capital letters (as found in PM ID 35469927),
+ * The parser replaces the greek letters with their visual identical counterpart.
+ *
  * @author u.joss
  */
 @Suppress("SpellCheckingInspection")
 class PubmedAuthorParser(authorsString: String) : AuthorParser {
 
-    override val authorsString: String = authorsString.trim { it <= ' ' }
+    @Suppress("MagicNumber")
+    private val greekLetterReplacement = mapOf(
+        913 to 65,
+        914 to 66,
+        917 to 69,
+        918 to 90,
+        919 to 72,
+        921 to 73,
+        922 to 75,
+        924 to 77,
+        925 to 78,
+        927 to 79,
+        929 to 80,
+        932 to 84,
+        933 to 89,
+        935 to 88,
+    ).map { (key, value) -> Char(key) to Char(value) }
+
+    override val authorsString: String = authorsString.trim { it <= ' ' }.replaceGreekLetters()
     override val authors: List<Author> = lexedAuthors().map(::parseAuthor)
     override val firstAuthor: String? = authors.firstOrNull()?.lastName
 
@@ -77,6 +97,14 @@ class PubmedAuthorParser(authorsString: String) : AuthorParser {
     private fun List<String>.firstNameIndex(): Int {
         val i = size - 1
         return if (CARDINALITY_PATTERN.matcher(this[i]).find()) i - 1 else i
+    }
+
+    private fun String.replaceGreekLetters(): String {
+        var tmp = this
+        greekLetterReplacement.forEach { (greek, replacement) ->
+            tmp = tmp.replace(greek, replacement)
+        }
+        return tmp
     }
 
     companion object {
