@@ -108,7 +108,7 @@ public class PubmedXmlService implements PubmedArticleService {
      * <ul>
      * <li>via API, e.g.
      * {@code https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=25395026&retmode=xml}</li>
-     * <li>through the Web UI (e.g. https://www.ncbi.nlm.nih.gov/pubmed/25395026)
+     * <li>through the Web UI (e.g. <a href="https://www.ncbi.nlm.nih.gov/pubmed/25395026">...</a>)
      * when sending to {@code file} in format {@code XML}</li>
      * </ul>
      *
