@@ -35,8 +35,8 @@ class ScipamatoPubmedArticle extends AbstractPubmedArticleFacade {
         setPmId(pmid.getvalue());
         final AuthorList authorList = article.getAuthorList();
         if (authorList != null) {
-            setAuthors(getAuthorsFrom(authorList));
-            setFirstAuthor(getFirstAuthorFrom(authorList));
+            setAuthors(GreekLetterTranslator.INSTANCE.replaceGreekLetters(getAuthorsFrom(authorList)));
+            setFirstAuthor(GreekLetterTranslator.INSTANCE.replaceGreekLetters(getFirstAuthorFrom(authorList)));
         }
         final boolean isAheadOfPrint = "aheadofprint".equals(pubmedArticle.getPubmedData() != null ?
             pubmedArticle
