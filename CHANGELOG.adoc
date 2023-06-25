@@ -72,7 +72,6 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Added
 
-////
 
 .Changed
 
@@ -81,10 +80,11 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Removed
 
 .Fixed
+- {url-issues}528[#528] Handle authors from PubMed with greek capital letters that otherwise fail author string validation
 
 .Security
 
-////
+
 [[v1.8.9]]
 == {url-tree}1.8.9[1.8.9] -- 2023-04-29
 
