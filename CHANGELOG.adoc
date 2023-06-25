@@ -68,11 +68,11 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[unreleased]]
 == [unreleased]
 
-{url-cl}1.8.9$$...$$main[Full Changelog]
+{url-cl}1.8.10$$...$$main[Full Changelog]
 
 .Added
 
-
+////
 .Changed
 
 .Deprecated
@@ -80,9 +80,27 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Removed
 
 .Fixed
-- {url-issues}528[#528] Handle authors from PubMed with greek capital letters that otherwise fail author string validation
 
 .Security
+
+////
+
+
+
+[[v1.8.10]]
+== {url-tree}1.8.10[1.8.10] -- 2023-06-25
+
+{url-cl}1.8.9$$...$$1.8.10[Full Changelog]
+
+.Changed
+- Bumped spring-boot, kotlin, couroutines, wicket, wicketstuff, flyway, jasperreports,
+  kotest, kluent, testcontainers, detekt, equalsverifier,
+  sonarqube-gradle-plugin, docker-login-action
+- Let scipamato run on JVM 17
+
+.Fixed
+- {url-issues}528[#528] Handle authors from PubMed with greek capital letters that otherwise fail author string validation
+
 
 
 [[v1.8.9]]
