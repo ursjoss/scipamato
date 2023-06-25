@@ -110,6 +110,22 @@ internal class PaperTest : Jsr303ValidatedEntityTest<Paper>(Paper::class.java) {
     }
 
     @Test
+    fun validatingPaper_withGreekCapitalAlphaInAuthor_insteadOfRegularA_fails() {
+        val regularA = "A"
+        regularA.first().code shouldBeEqualTo 65
+
+        // as found in Author string in PM ID 35469927
+        val invalidValue = "Sindosi OΑ."
+        val greekCapitalAlpha = invalidValue.split(" ")[1].drop(1)
+        greekCapitalAlpha.first().code shouldBeEqualTo 913
+
+        val p = newValidEntity()
+        p.authors = invalidValue
+
+        verifyFailedAuthorValidation(p, invalidValue)
+    }
+
+    @Test
     fun validatingPaper_withSingleAuthorWithoutFirstname_withoutPeriod_fails() {
         val invalidValue = "Turner"
         val p = newValidEntity()
