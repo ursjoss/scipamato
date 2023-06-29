@@ -1,5 +1,5 @@
 [versions]
-coroutines = "1.7.1"
+coroutines = "1.7.2"
 detektPlugin = "1.23.0"
 # see https://github.com/detekt/detekt/issues/6198
 detektKotlinVersion = "1.8.21"
