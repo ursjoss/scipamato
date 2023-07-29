@@ -1,6 +1,6 @@
 [versions]
 coroutines = "1.7.3"
-detektPlugin = "1.23.0"
+detektPlugin = "1.23.1"
 # see https://github.com/detekt/detekt/issues/6198
 detektKotlinVersion = "1.8.21"
 equalsverifier = "3.15"
