@@ -49,10 +49,7 @@ dependencies {
     api(libs.wicketstuff.annotation)
     api(libs.wicketBootstrap.core)
     api(libs.wicketBootstrap.extensions)
-    api(libs.wicketBootstrap.less){
-        exclude("commons-collections", "commons-collections")
-        exclude("commons-logging", "commons-logging")
-    }
+    api(libs.wicketBootstrap.sass)
     api(libs.wicketBootstrap.themes)
     api(libs.fontAwesome)
 

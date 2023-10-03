@@ -108,7 +108,7 @@ wicket-request = { module = "org.apache.wicket:wicket-request", version.ref = "w
 wicket-spring = { module = "org.apache.wicket:wicket-spring", version.ref = "wicket" }
 wicketBootstrap-core = { module = "de.agilecoders.wicket:wicket-bootstrap-core", version.ref = "wicketBootstrap" }
 wicketBootstrap-extensions = { module = "de.agilecoders.wicket:wicket-bootstrap-extensions", version.ref = "wicketBootstrap" }
-wicketBootstrap-less = { module = "de.agilecoders.wicket:wicket-bootstrap-less", version.ref = "wicketBootstrap" }
+wicketBootstrap-sass = { module = "de.agilecoders.wicket:wicket-bootstrap-sass", version.ref = "wicketBootstrap" }
 wicketBootstrap-themes = { module = "de.agilecoders.wicket:wicket-bootstrap-themes", version.ref = "wicketBootstrap" }
 wicketJqueryUi = { module = "com.googlecode.wicket-jquery-ui:wicket-jquery-ui", version.ref = "wicketJqueryUi" }
 wicketJqueryUi-theme-uilightness = { module = "com.googlecode.wicket-jquery-ui:wicket-jquery-ui-theme-uilightness", version.ref = "wicketJqueryUi" }

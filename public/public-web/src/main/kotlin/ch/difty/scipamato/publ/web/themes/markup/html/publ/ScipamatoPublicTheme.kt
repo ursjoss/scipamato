@@ -9,11 +9,11 @@ import org.apache.wicket.markup.head.HeaderItem
 private val log = logger()
 
 /**
- * Kotlin representation of the SciPaMaTo-Public Theme. Is based on TODC Bootstrap
+ * Kotlin-representation of the SciPaMaTo-Public Theme. Is based on TODC Bootstrap
  * and the wicket-bootstrap implementation of Michael Haitz in wicket-bootstrap.
  *
- * A flag [useLessOverCss] passed into the constructor indicates whether the precompiled CSS classes
- * will be used (preferable in production) or if the LESS files shall be dynamically compiled into CSS.
+ * A flag [useSassOverCss] passed into the constructor indicates whether the precompiled CSS classes
+ * will be used directly (preferable in production) or if the SASS files shall be dynamically compiled into CSS.
  *
  * This theme modifies bootstrap and therefore both css files get loaded
  * (`bootstrap.css` and `scipamato-public-bootstrap.css`).
@@ -28,16 +28,16 @@ private val log = logger()
  * @author Urs Joss
  */
 class ScipamatoPublicTheme(
-    private val useLessOverCss: Boolean = false,
+    private val useSassOverCss: Boolean = false,
     name: String = "scipamato-public"
 ) : Theme(name) {
 
     override fun getDependencies(): List<HeaderItem> = listOf(makeHeaderItem())
 
     private fun makeHeaderItem(): CssHeaderItem =
-        if (useLessOverCss) {
-            log.debug { "Loading style sheets via ScipamatoPublicLessReference" }
-            CssHeaderItem.forReference(ScipamatoPublicLessReference).setId(ITheme.BOOTSTRAP_THEME_MARKUP_ID)
+        if (useSassOverCss) {
+            log.debug { "Loading style sheets via ScipamatoPublicSassReference" }
+            CssHeaderItem.forReference(ScipamatoPublicSassReference).setId(ITheme.BOOTSTRAP_THEME_MARKUP_ID)
         } else {
             CssHeaderItem.forReference(ScipamatoPublicCssReference).setId(ITheme.BOOTSTRAP_THEME_MARKUP_ID)
         }

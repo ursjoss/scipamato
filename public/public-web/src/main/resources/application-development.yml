@@ -49,5 +49,5 @@ logging:
       jooq: INFO
 scipamato:
   commercial-font-present: true
-  less-used-over-css: true
+  sass-used-over-css: true
   responsive-iframe-support-enabled: true
