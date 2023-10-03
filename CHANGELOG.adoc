@@ -16,7 +16,6 @@ endif::[]
 :url-tree: {url-repo}tree/
 :url-cl: {url-repo}compare/
 
-
 All notable changes to this project will be documented in this file.
 
 == Format and Versioning Scheme
@@ -48,7 +47,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v0.0.0]]
 == [0.0.0] -- 2018-00-00
 
-{url-cl}<prev>$$...$$main[Full Changelog]
+{url-cl}<prev>++...++main[Full Changelog]
 
 .Added
 
@@ -68,7 +67,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[unreleased]]
 == [unreleased]
 
-{url-cl}1.8.10$$...$$main[Full Changelog]
+{url-cl}1.8.11++...++main[Full Changelog]
 
 .Added
 
@@ -86,11 +85,34 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 ////
 
 
+[[v1.8.11]]
+== {url-tree}1.8.11[1.8.11] -- 2023-09-03
+
+{url-cl}1.8.10++...++1.8.11[Full Changelog]
+
+.Changed
+- Bumped kotlin, kotlinx-corouteines,
+  wicket, wicketstuff,
+  spring-boot, spring-dependency-management, spring-cloud-starter-openfeign, spring-boot-admin-starter-client,
+  feign, flyway, kris-core, jasperreports
+  lombok,
+  junit5, kotest, mockk, equalsverifier, testcontainers
+- Bumped gradle, sonarqube plugin, detekt
+- Bumped checkout action, docker login action
+
+.Deprecated
+
+.Removed
+
+.Fixed
+
+.Security
+
 
 [[v1.8.10]]
 == {url-tree}1.8.10[1.8.10] -- 2023-06-25
 
-{url-cl}1.8.9$$...$$1.8.10[Full Changelog]
+{url-cl}1.8.9++...++1.8.10[Full Changelog]
 
 .Changed
 - Bumped spring-boot, kotlin, couroutines, wicket, wicketstuff, flyway, jasperreports,
@@ -106,7 +128,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.8.9]]
 == {url-tree}1.8.9[1.8.9] -- 2023-04-29
 
-{url-cl}1.8.8$$...$$1.8.9[Full Changelog]
+{url-cl}1.8.8++...++1.8.9[Full Changelog]
 
 .Changed
 - Bumped kotlin, jasperreports, flyway,
@@ -121,7 +143,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.8.8]]
 == {url-tree}1.8.8[1.8.8] -- 2023-04-20
 
-{url-cl}1.8.7$$...$$1.8.8[Full Changelog]
+{url-cl}1.8.7++...++1.8.8[Full Changelog]
 
 .Changed
 - Bumped spring-boot, wicket, wicketstuff, jasperreports, feign,
@@ -132,7 +154,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.8.7]]
 == {url-tree}1.8.7[1.8.7] -- 2023-04-05
 
-{url-cl}1.8.6$$...$$1.8.7[Full Changelog]
+{url-cl}1.8.6++...++1.8.7[Full Changelog]
 
 .Changed
 - {url-issues}463[#463] Synchronization from core to public to use german labels for concatenated short studies
@@ -142,7 +164,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.8.6]]
 == {url-tree}1.8.6[1.8.6] -- 2023-03-25
 
-{url-cl}1.8.5$$...$$1.8.6[Full Changelog]
+{url-cl}1.8.5++...++1.8.6[Full Changelog]
 
 .Changed
 - Bumped spring-boot, flyway, KRis, kotlin-logging, feign, spring-cloud-start-openfeign,
@@ -154,7 +176,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.8.5]]
 == {url-tree}1.8.5[1.8.5] -- 2023-01-19
 
-{url-cl}1.8.4$$...$$1.8.5[Full Changelog]
+{url-cl}1.8.4++...++1.8.5[Full Changelog]
 
 .Added
 - kotest
@@ -174,7 +196,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.8.4]]
 == {url-tree}1.8.4[1.8.4] -- 2022-09-24
 
-{url-cl}1.8.3$$...$$1.8.4[Full Changelog]
+{url-cl}1.8.3++...++1.8.4[Full Changelog]
 
 .Changed
 - Bumped spring-boot, wicket-jquery-ui, spring-boot-admin, flyway, openfeign, spring-dependency-management,
@@ -185,7 +207,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.8.3]]
 == {url-tree}1.8.3[1.8.3] -- 2022-08-18
 
-{url-cl}1.8.2$$...$$1.8.3[Full Changelog]
+{url-cl}1.8.2++...++1.8.3[Full Changelog]
 
 .Changed
 - Bumped spring-boot, spring dependency-management, spring-boot-admin,
@@ -195,7 +217,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.8.2]]
 == {url-tree}1.8.2[1.8.2] -- 2022-07-22
 
-{url-cl}1.8.1$$...$$1.8.2[Full Changelog]
+{url-cl}1.8.1++...++1.8.2[Full Changelog]
 
 .Changed
 - Bumped spring-boot, kotlin, coroutines, wicket, wicketstuff, jOOQ, openfeign, spring-dependency-management, jasperreports,
@@ -206,7 +228,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.8.1]]
 == {url-tree}1.8.1[1.8.1] -- 2022-06-27
 
-{url-cl}1.8.0$$...$$1.8.1[Full Changelog]
+{url-cl}1.8.0++...++1.8.1[Full Changelog]
 
 .Fixed
 - Main class name for core application after conversion to kotlin
@@ -216,7 +238,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.8.0]]
 == {url-tree}1.8.0[1.8.0] -- 2022-06-27
 
-{url-cl}1.7.12$$...$$1.8.0[Full Changelog]
+{url-cl}1.7.12++...++1.8.0[Full Changelog]
 
 .Changed
 - Bumped spring-boot
@@ -228,7 +250,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.7.12]]
 == {url-tree}1.7.12[1.7.12] -- 2022-06-25
 
-{url-cl}1.7.11$$...$$1.7.12[Full Changelog]
+{url-cl}1.7.11++...++1.7.12[Full Changelog]
 
 .Changed
 - Bumped spring-boot, wicket-jquery-ui, flyway, kotlin, kotlinx-coroutines, jOOQ,
@@ -240,7 +262,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.7.11]]
 == {url-tree}1.7.11[1.7.11] -- 2022-05-21
 
-{url-cl}1.7.10$$...$$1.7.11[Full Changelog]
+{url-cl}1.7.10++...++1.7.11[Full Changelog]
 
 .Changed
 - Bumped spring-boot, wicket and wicketstuff, flyway, kotlin-logging,
@@ -253,7 +275,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.7.10]]
 == {url-tree}1.7.10[1.7.10] -- 2022-04-21
 
-{url-cl}1.7.9$$...$$1.7.10[Full Changelog]
+{url-cl}1.7.9++...++1.7.10[Full Changelog]
 
 .Changed
 - Bumped spring-boot, kotlin, wicket, wicketstuff, jOOQ, flyway, detekt, spring-boot-admin, coroutines, testcontainers,
@@ -262,7 +284,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.7.9]]
 == {url-tree}1.7.9[1.7.9] -- 2022-04-03
 
-{url-cl}1.7.8$$...$$1.7.9[Full Changelog]
+{url-cl}1.7.8++...++1.7.9[Full Changelog]
 
 
 .Changed
@@ -274,7 +296,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.7.8]]
 == {url-tree}1.7.8[1.7.8] -- 2022-03-25
 
-{url-cl}1.7.7$$...$$1.7.8[Full Changelog]
+{url-cl}1.7.7++...++1.7.8[Full Changelog]
 
 .Changed
 - Bumped spring-boot, flyway, jOOQ, spring-cloud-starter, gradle-wrapper, spek, mockk, equalsverifier
@@ -283,7 +305,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.7.7]]
 == {url-tree}1.7.7[1.7.7] -- 2022-02-25
 
-{url-cl}1.7.6$$...$$1.7.7[Full Changelog]
+{url-cl}1.7.6++...++1.7.7[Full Changelog]
 
 .Changed
 - Bumped spring-boot, wicket, wicketstuff, wicket-jquery-ui, spring-boot-admin-starter, jOOQ, flyway, jasperreports, gradle,
@@ -294,7 +316,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.7.6]]
 == {url-tree}1.7.6[1.7.6] -- 2022-01-21
 
-{url-cl}1.7.5$$...$$1.7.6[Full Changelog]
+{url-cl}1.7.5++...++1.7.6[Full Changelog]
 
 .Changed
 - Bump spring-boot, gradle-wrapper, jOOQ, flyway, wicket-jquery-ui, KRis-core, mockk, openfeign, versions gradle plugin,
@@ -304,7 +326,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.7.5]]
 == {url-tree}1.7.5[1.7.5] -- 2021-12-22
 
-{url-cl}1.7.4$$...$$1.7.5[Full Changelog]
+{url-cl}1.7.4++...++1.7.5[Full Changelog]
 
 .Changed
 - Bump spring-boot, wicket-spring-boot-starter, flyway
@@ -313,7 +335,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.7.4]]
 == {url-tree}1.7.4[1.7.4] -- 2021-12-20
 
-{url-cl}1.7.3$$...$$1.7.4[Full Changelog]
+{url-cl}1.7.3++...++1.7.4[Full Changelog]
 
 .Security
 - [CVE-2021-42550] Bump logback from 1.2.7 to 1.2.9
@@ -322,7 +344,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.7.3]]
 == {url-tree}1.7.3[1.7.3] -- 2021-12-19
 
-{url-cl}1.7.2$$...$$1.7.3[Full Changelog]
+{url-cl}1.7.2++...++1.7.3[Full Changelog]
 
 .Added
 - Bumped wicket-spring-boot-starter, springmockk, spring-boot-admin, kotlin-loggin
@@ -334,7 +356,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.7.2]]
 == {url-tree}1.7.2[1.7.2] -- 2021-12-15
 
-{url-cl}1.7.1$$...$$1.7.2[Full Changelog]
+{url-cl}1.7.1++...++1.7.2[Full Changelog]
 
 .Changed
 - Bumped flyway, equalsverifier, gradle
@@ -346,7 +368,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.7.1]]
 == {url-tree}1.7.1[1.7.1] -- 2021-12-14
 
-{url-cl}1.7.0$$...$$1.7.1[Full Changelog]
+{url-cl}1.7.0++...++1.7.1[Full Changelog]
 
 
 .Changed
@@ -359,7 +381,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.7.0]]
 == {url-tree}1.7.0[1.7.0] -- 2021-12-07
 
-{url-cl}1.6.9$$...$$1.7.0[Full Changelog]
+{url-cl}1.6.9++...++1.7.0[Full Changelog]
 
 .Changed
 - Bumped spring-boot, spring-cloud, spring-cloud-starter, jOOQ, flyway, wicket,
@@ -372,7 +394,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.6.9]]
 == {url-tree}1.6.9[1.6.9] -- 2021-11-18
 
-{url-cl}1.6.8$$...$$1.6.9[Full Changelog]
+{url-cl}1.6.8++...++1.6.9[Full Changelog]
 
 .Added
 - {url-issues}306[#306] Population Filter & Search
@@ -384,7 +406,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.6.8]]
 == {url-tree}1.6.8[1.6.8] -- 2021-11-14
 
-{url-cl}1.6.7$$...$$1.6.8[Full Changelog]
+{url-cl}1.6.7++...++1.6.8[Full Changelog]
 
 .Added
 - {url-issues}292[#292] Add option to exclude codes from a complex search
@@ -397,7 +419,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.6.7]]
 == {url-tree}1.6.7[1.6.7] -- 2021-10-26
 
-{url-cl}1.6.6$$...$$1.6.7[Full Changelog]
+{url-cl}1.6.6++...++1.6.7[Full Changelog]
 
 .Changed
 - Bumped spring-boot, jackons-module-kotlin, wicket-jquery-ui, spring-boot-starter-admin,
@@ -411,7 +433,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.6.6]]
 == {url-tree}1.6.6[1.6.6] -- 2021-09-23
 
-{url-cl}1.6.5$$...$$1.6.6[Full Changelog]
+{url-cl}1.6.5++...++1.6.6[Full Changelog]
 
 .Changed
 - Bumped spring-boot
@@ -420,7 +442,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.6.5]]
 == {url-tree}1.6.5[1.6.5] -- 2021-09-23
 
-{url-cl}1.6.4$$...$$1.6.5[Full Changelog]
+{url-cl}1.6.4++...++1.6.5[Full Changelog]
 
 .Changed
 - Bumped kotlin, spring-boot-admin, kotlin-logging, detekt, wicket, wicketstuff, flyway, jOOQ,
@@ -434,7 +456,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.6.4]]
 == {url-tree}1.6.4[1.6.4] -- 2021-08-22
 
-{url-cl}1.6.3$$...$$1.6.4[Full Changelog]
+{url-cl}1.6.3++...++1.6.4[Full Changelog]
 
 .Changed
 - Bumped kotlin, spring-boot, gradle, flyway, kluent, kotlin-logging, jaxb-core and impl
@@ -444,7 +466,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.6.3]]
 == {url-tree}1.6.3[1.6.3] -- 2021-07-10
 
-{url-cl}1.6.2$$...$$1.6.3[Full Changelog]
+{url-cl}1.6.2++...++1.6.3[Full Changelog]
 
 .Changed
 - Bumped wicket, wicketstuff, jackson-kotlin, flyway, equalsverifier
@@ -456,7 +478,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.6.2]]
 == {url-tree}1.6.2[1.6.2] -- 2021-07-04
 
-{url-cl}1.6.1$$...$$1.6.2[Full Changelog]
+{url-cl}1.6.1++...++1.6.2[Full Changelog]
 
 .Changed
 - Bump spring-boot, kotlin, kluent, mockk, spring-boot-admin, jOOQ, gradle,
@@ -466,7 +488,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.6.1]]
 == {url-tree}1.6.1[1.6.1] -- 2021-06-19
 
-{url-cl}1.6.0$$...$$1.6.1[Full Changelog]
+{url-cl}1.6.0++...++1.6.1[Full Changelog]
 
 .Changed
 - Bumped spring-boot, flyway, gradle-versions-plugin, jaxb-gradle-plugin, kotlin-logging
@@ -476,7 +498,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.6.0]]
 == {url-tree}1.6.0[1.6.0] -- 2021-05-26
 
-{url-cl}1.5.12$$...$$1.6.0[Full Changelog]
+{url-cl}1.5.12++...++1.6.0[Full Changelog]
 
 .Changed
 - Bump spring-boot, gradle-wrapper, kotlin, gradle-testsets-plugin, license-gradle-plugin, jaxbCore, openfeign
@@ -486,7 +508,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.5.12]]
 == {url-tree}1.5.12[1.5.12] -- 2021-05-01
 
-{url-cl}1.5.11$$...$$1.5.12[Full Changelog]
+{url-cl}1.5.11++...++1.5.12[Full Changelog]
 
 .Changed
 - Bump flyway, jaxb-impl, SonarQube gradle plugin
@@ -499,7 +521,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.5.11]]
 == {url-tree}1.5.11[1.5.11] -- 2021-04-26
 
-{url-cl}1.5.10$$...$$1.5.11[Full Changelog]
+{url-cl}1.5.10++...++1.5.11[Full Changelog]
 
 .Fixed
 - Fixed regression in 1.5.10 with optimized layout
@@ -508,7 +530,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.5.10]]
 == {url-tree}1.5.10[1.5.10] -- 2021-04-25
 
-{url-cl}1.5.9$$...$$1.5.10[Full Changelog]
+{url-cl}1.5.9++...++1.5.10[Full Changelog]
 
 .Changed
 - Bumped spring-boot, wicket, wicketstuff, wicket-jqury-ui, wicket-bootstrap, flyway, jaxb-gradle-plugin
@@ -521,7 +543,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.5.9]]
 == {url-tree}1.5.9[1.5.9] -- 2021-03-30
 
-{url-cl}1.5.8$$...$$1.5.9[Full Changelog]
+{url-cl}1.5.8++...++1.5.9[Full Changelog]
 
 .Added
 - {url-issues}265[#265] Enable complex search to filter for papers with or without attachments or by attachment name
@@ -534,7 +556,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.5.8]]
 == {url-tree}1.5.8[1.5.8] -- 2021-03-03
 
-{url-cl}1.5.7$$...$$1.5.8[Full Changelog]
+{url-cl}1.5.7++...++1.5.8[Full Changelog]
 
 .Changed
 - Bumped spring-boot, kotlin, jOOQ, flyway, equalsverifier, kris, junit, mockk, gradle-wrapper
@@ -547,7 +569,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.5.7]]
 == {url-tree}1.5.7[1.5.7] -- 2021-01-27
 
-{url-cl}1.5.6$$...$$1.5.7[Full Changelog]
+{url-cl}1.5.6++...++1.5.7[Full Changelog]
 
 
 .Added
@@ -557,7 +579,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.5.6]]
 == {url-tree}1.5.6[1.5.6] -- 2021-01-27
 
-{url-cl}1.5.5$$...$$1.5.6[Full Changelog]
+{url-cl}1.5.5++...++1.5.6[Full Changelog]
 
 .Added
 - {url-issues}250[#250] Review CSV Export
@@ -572,7 +594,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.5.5]]
 == {url-tree}1.5.5[1.5.5] -- 2020-12-10
 
-{url-cl}1.5.4$$...$$1.5.5[Full Changelog]
+{url-cl}1.5.4++...++1.5.5[Full Changelog]
 
 .Changed
 - Bumped kotlin, spring-cloud, spring-cloud-starter, flyway
@@ -584,7 +606,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.5.4]]
 == {url-tree}1.5.4[1.5.4] -- 2020-12-01
 
-{url-cl}1.5.3$$...$$1.5.4[Full Changelog]
+{url-cl}1.5.3++...++1.5.4[Full Changelog]
 
 .Changed
 - Bumped spring-boot, kotlin, spring-cloud, spring-cloud-starter, jooq, flyway,
@@ -599,7 +621,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.5.3]]
 == {url-tree}1.5.3[1.5.3] -- 2020-11-08
 
-{url-cl}1.5.2$$...$$1.5.3[Full Changelog]
+{url-cl}1.5.2++...++1.5.3[Full Changelog]
 
 .Added
 - {url-issues}236[#236] Prepopulate field 'result exposure range' with value 'µg/m3' for new papers
@@ -612,7 +634,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.5.2]]
 == {url-tree}1.5.2[1.5.2] -- 2020-11-07
 
-{url-cl}1.5.1$$...$$1.5.2[Full Changelog]
+{url-cl}1.5.1++...++1.5.2[Full Changelog]
 
 .Changed
 - Bumped jasperreports, KRis, jOOQ, javax.el, testcontainers
@@ -624,7 +646,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.5.1]]
 == {url-tree}1.5.1[1.5.1] -- 2020-10-31
 
-{url-cl}1.5.0$$...$$1.5.1[Full Changelog]
+{url-cl}1.5.0++...++1.5.1[Full Changelog]
 
 .Changed
 - Bumped spring-boot, wicket, wicket-bootstrap, wicket-jquery-ui, jOOQ, detekt, mockk, kluent,
@@ -638,7 +660,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.5.0]]
 == {url-tree}1.5.0[1.5.0] -- 2020-10-20
 
-{url-cl}1.4.9$$...$$1.5.0[Full Changelog]
+{url-cl}1.4.9++...++1.5.0[Full Changelog]
 
 .Changed
 - Bumped gradle, kotlin, kwik, equalsverifier, detekt, spek, junit,
@@ -652,7 +674,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.4.10]]
 == {url-tree}1.4.10[1.4.10] -- 2020-08-14
 
-{url-cl}1.4.9$$...$$1.4.10[Full Changelog]
+{url-cl}1.4.9++...++1.4.10[Full Changelog]
 
 .Changed
 - Bumped spring-boot, gradle-wrapper, kwik, springmockk, detekt, spring-boot-admin
@@ -664,7 +686,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.4.9]]
 == {url-tree}1.4.9[1.4.9] -- 2020-08-05
 
-{url-cl}1.4.8$$...$$1.4.9[Full Changelog]
+{url-cl}1.4.8++...++1.4.9[Full Changelog]
 
 .Changed
 - {url-issues}202[#202] Auto-correct ahead-of-print articles from PubMed - case-insensitivity
@@ -676,7 +698,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.4.8]]
 == {url-tree}1.4.8[1.4.8] -- 2020-08-03
 
-{url-cl}1.4.7$$...$$1.4.8[Full Changelog]
+{url-cl}1.4.7++...++1.4.8[Full Changelog]
 
 .Changed
 - Bumped spring-boot-starter, jOOQ, spring-boot-admin, spring-cloud, spring-cloud-starter-openfeign
@@ -689,7 +711,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.4.7]]
 == {url-tree}1.4.7[1.4.7] -- 2020-07-21
 
-{url-cl}1.4.6$$...$$1.4.7[Full Changelog]
+{url-cl}1.4.6++...++1.4.7[Full Changelog]
 
 .Added
 - {url-issues}202[#202] Auto-correct ahead-of-print articles from PubMed
@@ -709,7 +731,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.4.6]]
 == {url-tree}1.4.6[1.4.6] -- 2020-06-22
 
-{url-cl}1.4.5$$...$$1.4.6[Full Changelog]
+{url-cl}1.4.5++...++1.4.6[Full Changelog]
 
 .Changed
 - Bumped spring-boot-starter, spring-boot-admin, spring-cloud-starter, jOOQ, KRis, kotlin-logging, jaxb-impl,
@@ -720,7 +742,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.4.5]]
 == {url-tree}1.4.5[1.4.5] -- 2020-05-11
 
-{url-cl}1.4.4$$...$$1.4.5[Full Changelog]
+{url-cl}1.4.4++...++1.4.5[Full Changelog]
 
 .Changed
 - Bumped spring-boot, kotlin, detekt, KRis, kwik, wicket-boostrap, wicketstuff, font-awesome,
@@ -735,7 +757,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.4.4]]
 == {url-tree}1.4.4[1.4.4] -- 2020-03-27
 
-{url-cl}1.4.3$$...$$1.4.4[Full Changelog]
+{url-cl}1.4.3++...++1.4.4[Full Changelog]
 
 .Changed
 - Bumped spring-boot, kotlin, gradle, detekt, jasperreports, junit, spring-cloud and starter,
@@ -745,7 +767,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.4.3]]
 == {url-tree}1.4.3[1.4.3] -- 2020-03-13
 
-{url-cl}1.4.2$$...$$1.4.3[Full Changelog]
+{url-cl}1.4.2++...++1.4.3[Full Changelog]
 
 .Added
 - Bumped kotlin, gradle-wrapper, jasperreports, spek, kluent, kris
@@ -754,7 +776,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.4.2]]
 == {url-tree}1.4.2[1.4.2] -- 2020-03-02
 
-{url-cl}1.4.1$$...$$1.4.2[Full Changelog]
+{url-cl}1.4.1++...++1.4.2[Full Changelog]
 
 .Changed
 - Bumped spring-boot-starter, jOOQ, wicket-spring-boot-starter, junit, gradle-wrapper, spring-boot-admin, kwik, detekt,
@@ -765,7 +787,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.4.1]]
 == {url-tree}1.4.1[1.4.1] -- 2020-01-18
 
-{url-cl}1.4.0$$...$$1.4.1[Full Changelog]
+{url-cl}1.4.0++...++1.4.1[Full Changelog]
 
 
 .Changed
@@ -775,7 +797,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.4.0]]
 == {url-tree}1.4.0[1.4.0] -- 2020-01-14
 
-{url-cl}scipamato-1.3.1$$...$$1.4.0[Full Changelog]
+{url-cl}scipamato-1.3.1++...++1.4.0[Full Changelog]
 
 .Changed
 - {url-issues}136[#136] Upgrade Spring-Boot to 2.2, Flyway 6.0, jOOQ 3.12.1
@@ -788,7 +810,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.3.1]]
 == {url-tree}1.3.1[1.3.1] -- 2019-10-15
 
-{url-cl}scipamato-1.3.0$$...$$scipamato-1.3.1[Full Changelog]
+{url-cl}scipamato-1.3.0++...++scipamato-1.3.1[Full Changelog]
 
 .Changed
 - {url-issues}119[#119] Core - Truncate Display value for SearchOrder to not have the combobox in the
@@ -803,7 +825,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.3.0]]
 == {url-tree}scipamato-1.3.0[1.3.0] -- 2019-09-25
 
-{url-cl}scipamato-1.2.4$$...$$scipamato-1.3.0[Full Changelog]
+{url-cl}scipamato-1.2.4++...++scipamato-1.3.0[Full Changelog]
 
 .Added
 - {url-issues}118[#118] Core - Export stuies in RIS format for import into citiation programs
@@ -819,7 +841,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.2.4]]
 == {url-tree}scipamato-1.2.4[1.2.4] -- 2019-08-20
 
-{url-cl}scipamato-1.2.3$$...$$scipamato-1.2.4[Full Changelog]
+{url-cl}scipamato-1.2.3++...++scipamato-1.2.4[Full Changelog]
 
 .Changed
 - Dependency updates for spring-boot-starter, openfeign, font-awesome, mockito,
@@ -833,7 +855,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.2.3]]
 == {url-tree}scipamato-1.2.3[1.2.3] -- 2019-07-20
 
-{url-cl}scipamato-1.2.2$$...$$scipamato-1.2.3[Full Changelog]
+{url-cl}scipamato-1.2.2++...++scipamato-1.2.3[Full Changelog]
 
 .Changed
 - Dependency updates for kotlin, junit, lombok-plugin, commons-collections4, font-awesome,
@@ -846,7 +868,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.2.2]]
 == {url-tree}scipamato-1.2.2[1.2.2] -- 2019-06-26
 
-{url-cl}scipamato-1.2.1$$...$$scipamato-1.2.2[Full Changelog]
+{url-cl}scipamato-1.2.1++...++scipamato-1.2.2[Full Changelog]
 
 .Changed
 - Bumped version of spring-boot-starter, spring-cloud, openfeign, spring-dependency-management, jasperreports, lombok-plugin
@@ -855,7 +877,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.2.1]]
 == {url-tree}scipamato-1.2.1[1.2.1] -- 2019-06-18
 
-{url-cl}scipamato-1.2.0$$...$$scipamato-1.2.1[Full Changelog]
+{url-cl}scipamato-1.2.0++...++scipamato-1.2.1[Full Changelog]
 
 .Added
 - {url-issues}91[#91] Core - complex search enhancement: Method search to include short study fields
@@ -869,7 +891,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.2.0]]
 == {url-tree}scipamato-1.2.0[1.2.0] -- 2019-05-24
 
-{url-cl}scipamato-1.1.6$$...$$scipamato-1.2.0[Full Changelog]
+{url-cl}scipamato-1.1.6++...++scipamato-1.2.0[Full Changelog]
 
 .Changed
 - Bumped versions of spring-boot-starter, wicket, wicket-bootstrap, wicket-webjars, jasperreports and -fonts,
@@ -885,7 +907,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.1.6]]
 == {url-tree}scipamato-1.1.6[1.1.6] -- 2019-03-27
 
-{url-cl}scipamato-1.1.5$$...$$scipamato-1.1.6[Full Changelog]
+{url-cl}scipamato-1.1.5++...++scipamato-1.1.6[Full Changelog]
 
 .Fixed
 - {url-issues}70[#70] - Core: Filter Newsletters by newsletter topic - fix query
@@ -894,7 +916,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.1.5]]
 == {url-tree}scipamato-1.1.5[1.1.5] -- 2019-03-22
 
-{url-cl}scipamato-1.1.4$$...$$scipamato-1.1.5[Full Changelog]
+{url-cl}scipamato-1.1.4++...++scipamato-1.1.5[Full Changelog]
 
 .Changed
 - Bumped version of asm, spring-cloud, jasperreports, commons-collections4,
@@ -909,7 +931,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.1.4]]
 == {url-tree}scipamato-1.1.4[1.1.4] -- 2019-03-13
 
-{url-cl}scipamato-1.1.3$$...$$scipamato-1.1.4[Full Changelog]
+{url-cl}scipamato-1.1.3++...++scipamato-1.1.4[Full Changelog]
 
 .Added
 - {url-issues}70[#70] - Core: Filter Newsletters by newsletter topic
@@ -930,7 +952,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.1.3]]
 == {url-tree}scipamato-1.1.3[1.1.3] -- 2019-02-12
 
-{url-cl}scipamato-1.1.2$$...$$scipamato-1.1.3[Full Changelog]
+{url-cl}scipamato-1.1.2++...++scipamato-1.1.3[Full Changelog]
 
 .Added
 - {url-issues}56[#56] - Public: Add help link in Public Filter page pointing to wiki in Github
@@ -944,7 +966,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.1.2]]
 == {url-tree}scipamato-1.1.2[1.1.2] -- 2019-01-29
 
-{url-cl}scipamato-1.1.1$$...$$scipamato-1.1.2[Full Changelog]
+{url-cl}scipamato-1.1.1++...++scipamato-1.1.2[Full Changelog]
 
 .Changed
 - Updated the wiki to better reflect the current state of the project
@@ -960,7 +982,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.1.1]]
 == {url-tree}scipamato-1.1.1[1.1.1] -- 2019-01-16
 
-{url-cl}scipamato-1.1.0$$...$$scipamato-1.1.1[Full Changelog]
+{url-cl}scipamato-1.1.0++...++scipamato-1.1.1[Full Changelog]
 
 .Changed
 - {url-issues}34[#34] - Dependency updates: spring-boot-parent-2.1.2, jaxb-impl, spring-boot-admin-starter-client,equalsverifier, sonar-maven-plugin
@@ -977,7 +999,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.1.0]]
 == {url-tree}scipamato-1.1.0[1.1.0] -- 2018-12-20
 
-{url-cl}scipamato-1.0.5$$...$$scipamato-1.1.0[Full Changelog]
+{url-cl}scipamato-1.0.5++...++scipamato-1.1.0[Full Changelog]
 
 .Changed
 - {url-issues}13[#13] - Core: SummaryPDF to show concatenated short fields if main fields methods/population/results are null.
@@ -995,7 +1017,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.0.5]]
 == {url-tree}scipamato-1.0.5[1.0.5] -- 2018-12-03
 
-{url-cl}scipamato-1.0.4$$...$$scipamato-1.0.5[Full Changelog]
+{url-cl}scipamato-1.0.4++...++scipamato-1.0.5[Full Changelog]
 
 .Changed
 - {url-issues}9[#9] - Public: Reorder the filter fields in the SimpleFilterPanel
@@ -1011,7 +1033,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.0.4]]
 == {url-tree}scipamato-1.0.4[1.0.4] -- 2018-12-02
 
-{url-cl}scipamato-1.0.3$$...$$scipamato-1.0.4[Full Changelog]
+{url-cl}scipamato-1.0.3++...++scipamato-1.0.4[Full Changelog]
 
 .Added
 - {url-issues}6[#6] - Core: Extension of the Literature Review PDF Report: Original without the goals field, additional one called Literature Review Plus with the goals field
@@ -1028,7 +1050,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.0.3]]
 == {url-tree}scipamato-1.0.3[1.0.3] -- 2018-11-26
 
-{url-cl}scipamato-1.0.2$$...$$scipamato-1.0.3[Full Changelog]
+{url-cl}scipamato-1.0.2++...++scipamato-1.0.3[Full Changelog]
 
 .Added
 - Enhanced test coverage
@@ -1041,7 +1063,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.0.2]]
 == {url-tree}scipamato-1.0.2[1.0.2] -- 2018-11-26
 
-{url-cl}scipamato-1.0.1$$...$$scipamato-1.0.2[Full Changelog]
+{url-cl}scipamato-1.0.1++...++scipamato-1.0.2[Full Changelog]
 
 .Added
 - {url-issues}3[#3]: Core: Excluding papers from search from within paper edit page should not jump to the result page
@@ -1053,7 +1075,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.0.1]]
 == {url-tree}scipamato-1.0.1[1.0.1] -- 2018-11-21
 
-{url-cl}scipamato-1.0.0$$...$$scipamato-1.0.1[Full Changelog]
+{url-cl}scipamato-1.0.0++...++scipamato-1.0.1[Full Changelog]
 
 .Added
 - {url-issues}1[#1]: Translate Exception into more user friendly form:
@@ -1069,7 +1091,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v1.0.0]]
 == {url-tree}scipamato-1.0.0[1.0.0] -- 2018-11-11
 
-{url-cl}scipamato-0.9.4$$...$$scipamato-1.1.0[Full Changelog]
+{url-cl}scipamato-0.9.4++...++scipamato-1.1.0[Full Changelog]
 
 .Added
 - 09/87: New short field ('Kurzerfassungs-Feld') conclusion.
@@ -1103,7 +1125,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v0.9.4]]
 == {url-tree}scipamato-0.9.4[0.9.4] -- 2018-10-28
 
-{url-cl}scipamato-0.9.3$$...$$scipamato-0.9.4[Full Changelog]
+{url-cl}scipamato-0.9.3++...++scipamato-0.9.4[Full Changelog]
 
 .Added
 - 09/73 - Core: Add facility to manage the keywords
@@ -1119,7 +1141,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v0.9.3]]
 == {url-tree}scipamato-0.9.3[0.9.3] -- 2018-10-24
 
-{url-cl}scipamato-0.9.2$$...$$scipamato-0.9.3[Full Changelog]
+{url-cl}scipamato-0.9.2++...++scipamato-0.9.3[Full Changelog]
 
 .Added
 
@@ -1139,7 +1161,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v0.9.2]]
 == {url-tree}scipamato-0.9.2[0.9.2] -- 2018-10-03
 
-{url-cl}scipamato-0.9.1$$...$$scipamato-0.9.2[Full Changelog]
+{url-cl}scipamato-0.9.1++...++scipamato-0.9.2[Full Changelog]
 
 .Changed
 - Updated dependencies wicket, wicketstuff, wicket-bootstrap
@@ -1158,7 +1180,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v0.9.1]]
 == {url-tree}scipamato-0.9.1[0.9.1] -- 2018-09-17
 
-{url-cl}scipamato-0.9.0$$...$$scipamato-0.9.1[Full Changelog]
+{url-cl}scipamato-0.9.0++...++scipamato-0.9.1[Full Changelog]
 
 .Added
 - Public: French translation of the PublicPaperDetailPage
@@ -1177,7 +1199,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v0.9.0]]
 == {url-tree}scipamato-0.9.0[0.9.0] -- 2018-09-09
 
-{url-cl}scipamato-0.8.9$$...$$scipamato-0.9.0[Full Changelog]
+{url-cl}scipamato-0.8.9++...++scipamato-0.9.0[Full Changelog]
 
 .Added
 - 09/41 - Public: Include configuration for commercial font IcoMoon
@@ -1200,7 +1222,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v0.8.9]]
 == {url-tree}scipamato-0.8.9[0.8.9] -- 2018-08-30
 
-{url-cl}scipamato-0.8.8$$...$$scipamato-0.8.9[Full Changelog]
+{url-cl}scipamato-0.8.8++...++scipamato-0.8.9[Full Changelog]
 
 
 .Added
@@ -1233,7 +1255,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v0.8.8]]
 == {url-tree}scipamato-0.8.8[0.8.8] -- 2018-08-06
 
-{url-cl}scipamato-0.8.7$$...$$scipamato-0.8.8[Full Changelog]
+{url-cl}scipamato-0.8.7++...++scipamato-0.8.8[Full Changelog]
 
 .Fixed
 - 08/47: Fix Layout of scipamato page to avoid a cut button in scipamato public when shown in an iframe
@@ -1242,7 +1264,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v0.8.7]]
 == {url-tree}scipamato-0.8.7[0.8.7] -- 2018-08-03
 
-{url-cl}scipamato-0.8.6$$...$$scipamato-0.8.7[Full Changelog]
+{url-cl}scipamato-0.8.6++...++scipamato-0.8.7[Full Changelog]
 
 .Changed
 - Bumped dependencies: spring-boot-starter-parent, jOOQ, Flyway, lombok, jOOL, mockito,
@@ -1259,7 +1281,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v0.8.6]]
 == {url-tree}scipamato-0.8.6[0.8.6] -- 2018-07-02
 
-{url-cl}scipamato-0.8.5$$...$$scipamato-0.8.6[Full Changelog]
+{url-cl}scipamato-0.8.5++...++scipamato-0.8.6[Full Changelog]
 
 .Changed
 - Migrated to Java 10, Spring Boot 2.0.3 and Apache Wicket 8.0.0
@@ -1278,7 +1300,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v0.8.5]]
 == {url-tree}scipamato-0.8.5[0.8.5] -- 2018-06-15
 
-{url-cl}scipamato-0.8.4$$...$$scipamato-0.8.5[Full Changelog]
+{url-cl}scipamato-0.8.4++...++scipamato-0.8.5[Full Changelog]
 
 .Added
 - 08/08 - Core: Add/Maintain Newsletter. Assign/remove papers to/from newsletter. Search by newsletter attributes
@@ -1297,7 +1319,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v0.8.4]]
 == {url-tree}scipamato-0.8.4[0.8.4] -- 2018-04-18
 
-{url-cl}scipamato-0.8.3$$...$$scipamato-0.8.4[Full Changelog]
+{url-cl}scipamato-0.8.3++...++scipamato-0.8.4[Full Changelog]
 
 .Changed
 - Upgraded dependencies: spring-boot-parent
@@ -1311,7 +1333,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v0.8.3]]
 == {url-tree}scipamato-0.8.3[0.8.3] -- 2018-04-06
 
-{url-cl}scipamato-0.8.2$$...$$scipamato-0.8.3[Full Changelog]
+{url-cl}scipamato-0.8.2++...++scipamato-0.8.3[Full Changelog]
 
 .Changed
 - dependency bumps: wicket-spring-boot, jOOQ, PostgreSQL JDBC Driver, spring-cloud
@@ -1325,7 +1347,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v0.8.2]]
 == {url-tree}scipamato-0.8.2[0.8.2] -- 2018-03-15
 
-{url-cl}scipamato-0.8.1$$...$$scipamato-0.8.2[Full Changelog]
+{url-cl}scipamato-0.8.1++...++scipamato-0.8.2[Full Changelog]
 
 .Fixed
 - 08/17 - Public: Fix Internal Error when opening papers with Numbers that don't exist as IDs
@@ -1335,7 +1357,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v0.8.1]]
 == {url-tree}scipamato-0.8.1[0.8.1] -- 2018-03-14
 
-{url-cl}scipamato-0.8.0$$...$$scipamato-0.8.1[Full Changelog]
+{url-cl}scipamato-0.8.0++...++scipamato-0.8.1[Full Changelog]
 
 .Changed
 - 07/65 - Public: Searching with PubYearFrom w/o PubYearUntil only finds papers with the exact PubYear
@@ -1352,7 +1374,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v0.8.0]]
 == {url-tree}scipamato-0.8.0[0.8.0] -- 2018-03-13
 
-{url-cl}scipamato-0.7.7$$...$$scipamato-0.8.0[Full Changelog]
+{url-cl}scipamato-0.7.7++...++scipamato-0.8.0[Full Changelog]
 
 .Added
 - 08/13 - Public: Add page with new study (with stubbed data for now)
@@ -1364,7 +1386,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v0.7.7]]
 == {url-tree}scipamato-0.7.7[0.7.7] -- 2018-03-09
 
-{url-cl}scipamato-0.7.6$$...$$scipamato-0.7.7[Full Changelog]
+{url-cl}scipamato-0.7.6++...++scipamato-0.7.7[Full Changelog]
 
 .Added
 - 07/62 - Public: New Button to clear the search criteria
@@ -1381,7 +1403,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v0.7.6]]
 == {url-tree}scipamato-0.7.6[0.7.6] -- 2018-03-07
 
-{url-cl}scipamato-0.7.5$$...$$scipamato-0.7.6[Full Changelog]
+{url-cl}scipamato-0.7.5++...++scipamato-0.7.6[Full Changelog]
 
 .Added
 - Added customized sonar quality profile used for SciPaMaTo
@@ -1404,7 +1426,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v0.7.5]]
 == {url-tree}scipamato-0.7.5[0.7.5] -- 2018-02-05
 
-{url-cl}scipamato-0.7.4$$...$$scipamato-0.7.5[Full Changelog]
+{url-cl}scipamato-0.7.4++...++scipamato-0.7.5[Full Changelog]
 
 .Added
 - Added structure101 configuration to project both for studio and workspace
@@ -1423,7 +1445,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v0.7.4]]
 == {url-tree}scipamato-0.7.4[0.7.4] -- 2018-01-19
 
-{url-cl}scipamato-0.7.3$$...$$scipamato-0.7.4[Full Changelog]
+{url-cl}scipamato-0.7.3++...++scipamato-0.7.4[Full Changelog]
 
 .Changed
 - Updated jOOQ, jasperreports, spring-cloud, flyway
@@ -1436,7 +1458,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v0.7.3]]
 == {url-tree}scipamato-0.7.3[0.7.3] -- 2018-01-14
 
-{url-cl}scipamato-0.7.2$$...$$scipamato-0.7.3[Full Changelog]
+{url-cl}scipamato-0.7.2++...++scipamato-0.7.3[Full Changelog]
 
 .Added
 - Test Coverage of untested parts of SciPaMaTo
@@ -1464,7 +1486,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v0.7.2]]
 == {url-tree}scipamato-0.7.2[0.7.2] -- 2017-12-22
 
-{url-cl}scipamato-0.7.1$$...$$scipamato-0.7.2[Full Changelog]
+{url-cl}scipamato-0.7.1++...++scipamato-0.7.2[Full Changelog]
 
 .Changed
 - 07/44: Use @ConfigurationProperties to define custom properties
@@ -1480,7 +1502,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[v0.7.1]]
 == {url-tree}scipamato-0.7.1[0.7.1] -- 2017-12-13
 
-{url-cl}scipamato-0.7.0$$...$$scipamato-0.7.1[Full Changelog]
+{url-cl}scipamato-0.7.0++...++scipamato-0.7.1[Full Changelog]
 
 .Added
 - QuickStart guide Wiki page
@@ -1491,14 +1513,14 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 - Switched to implicit constructor injection as of spring 4.3
 
 .Fixed
-- 07/30: Do not synchronize null int/long columns as 0 (PublicationYear, PM_ID$$...$$)
+- 07/30: Do not synchronize null int/long columns as 0 (PublicationYear, PM_ID++...++)
 - 07/25: Code-Synchronization: Don't synchronize internals, aggregate 5A/B/C to 5abc
 
 
 [[v0.7.0]]
 == {url-tree}scipamato-0.7.0[0.7.0] -- 2017-12-09
 
-{url-cl}scipamato-0.6.3$$...$$scipamato-0.7.0[Full Changelog]
+{url-cl}scipamato-0.6.3++...++scipamato-0.7.0[Full Changelog]
 
 .Added
 - Public: 07/01: Add table paper and two sample records. Simple filter in public GUI to retrieve and display the data from database.
@@ -1537,7 +1559,7 @@ the table in your database instances (`alter table schema_version rename to flyw
 [[v0.6.3]]
 == {url-tree}scipamato-0.6.3[0.6.3] -- 2017-11-06
 
-{url-cl}scipamato-0.6.2$$...$$scipamato-0.6.3[Full Changelog]
+{url-cl}scipamato-0.6.2++...++scipamato-0.6.3[Full Changelog]
 
 .Changed
 - Updated jaxb-api, jasper-reports, spring-cloud-starter-feign, assertJ, JUnitParams
@@ -1553,7 +1575,7 @@ the table in your database instances (`alter table schema_version rename to flyw
 [[v0.6.2]]
 == {url-tree}scipamato-0.6.2[0.6.2] -- 2017-11-01
 
-{url-cl}scipamato-0.6.1$$...$$scipamato-0.6.2[Full Changelog]
+{url-cl}scipamato-0.6.1++...++scipamato-0.6.2[Full Changelog]
 
 .Added
 - new maven modules scipamato-wicket and scipamato-public with minimal functionality
@@ -1574,7 +1596,7 @@ the table in your database instances (`alter table schema_version rename to flyw
 [[v0.6.1]]
 == {url-tree}scipamato-0.6.1[0.6.1] -- 2017-09-20
 
-{url-cl}scipamato-0.6.0$$...$$scipamato-0.6.1[Full Changelog]
+{url-cl}scipamato-0.6.0++...++scipamato-0.6.1[Full Changelog]
 
 .Added
 - 6/12: enable caching (ehcache3) for static reference data
@@ -1603,7 +1625,7 @@ the table in your database instances (`alter table schema_version rename to flyw
 [[v0.6.0]]
 == {url-tree}scipamato-0.6.0[0.6.0] -- 2017-07-17
 
-{url-cl}scipamato-0.5.6$$...$$scipamato-0.6.0[Full Changelog]
+{url-cl}scipamato-0.5.6++...++scipamato-0.6.0[Full Changelog]
 
 .Added
 - 6/7: Drag and drop import of PubmedXML (using DropZoneUpload)
@@ -1619,7 +1641,7 @@ the table in your database instances (`alter table schema_version rename to flyw
 [[v0.5.6]]
 == {url-tree}scipamato-0.5.6[0.5.6] -- 2017-07-03
 
-{url-cl}scipamato-0.5.5$$...$$scipamato-0.5.6[Full Changelog]
+{url-cl}scipamato-0.5.5++...++scipamato-0.5.6[Full Changelog]
 
 .Added
 - 5/26: Optimistic locking
@@ -1631,7 +1653,7 @@ the table in your database instances (`alter table schema_version rename to flyw
 [[v0.5.5]]
 == {url-tree}scipamato-0.5.5[0.5.5] -- 2017-07-02
 
-{url-cl}scipamato-0.5.4$$...$$scipamato-0.5.5[Full Changelog]
+{url-cl}scipamato-0.5.4++...++scipamato-0.5.5[Full Changelog]
 
 .Added
 - 5/38: Short Summary PDF (Kurzerfassung)
@@ -1646,7 +1668,7 @@ the table in your database instances (`alter table schema_version rename to flyw
 [[v0.5.4]]
 == {url-tree}scipamato-0.5.4[0.5.4] -- 2017-06-28
 
-{url-cl}scipamato-0.5.3$$...$$scipamato-0.5.4[Full Changelog]
+{url-cl}scipamato-0.5.3++...++scipamato-0.5.4[Full Changelog]
 
 .Added
 - 5/36: Improved exclusion handling (exclude/re-include directly out of paper. Icon)
@@ -1665,7 +1687,7 @@ the table in your database instances (`alter table schema_version rename to flyw
 [[v0.5.3]]
 == {url-tree}scipamato-0.5.3[0.5.3] -- 2017-06-25
 
-{url-cl}scipamato-0.5.2$$...$$scipamato-0.5.3[Full Changelog]
+{url-cl}scipamato-0.5.2++...++scipamato-0.5.3[Full Changelog]
 
 .Added
 - 5/9: Adding attachments to papers
@@ -1681,7 +1703,7 @@ the table in your database instances (`alter table schema_version rename to flyw
 [[v0.5.2]]
 == {url-tree}scipamato-0.5.2[0.5.2] -- 2017-06-19
 
-{url-cl}scipamato-0.5.1$$...$$scipamato-0.5.2[Full Changelog]
+{url-cl}scipamato-0.5.1++...++scipamato-0.5.2[Full Changelog]
 
 .Added
 - 5/30: Allow excluding papers from PaperEntryPage
@@ -1699,7 +1721,7 @@ the table in your database instances (`alter table schema_version rename to flyw
 [[v0.5.1]]
 == {url-tree}scipamato-0.5.1[0.5.1] -- 2017-06-15
 
-{url-cl}scipamato-0.5.0$$...$$scipamato-0.5.1[Full Changelog]
+{url-cl}scipamato-0.5.0++...++scipamato-0.5.1[Full Changelog]
 
 .Added
 - 5/28: Navigation through the different papers in the search result
@@ -1715,7 +1737,7 @@ the table in your database instances (`alter table schema_version rename to flyw
 [[v0.5.0]]
 == {url-tree}scipamato-0.5.0[0.5.0] -- 2017-06-09
 
-{url-cl}scipamato-0.4.5$$...$$scipamato-0.5.0[Full Changelog]
+{url-cl}scipamato-0.4.5++...++scipamato-0.5.0[Full Changelog]
 
 .Added
 - added spring-boot-admin-starter-client
@@ -1730,7 +1752,7 @@ the table in your database instances (`alter table schema_version rename to flyw
 [[v0.4.5]]
 == {url-tree}scipamato-0.4.5[0.4.5] -- 2017-06-01
 
-{url-cl}scipamato-0.4.4$$...$$scipamato-0.4.5[Full Changelog]
+{url-cl}scipamato-0.4.4++...++scipamato-0.4.5[Full Changelog]
 
 .Changed
 - dependency updates: postgres-jdbc, jOOQ, flyway, feign-jaxb, JUnitParams, jaxb2-maven-plugin
@@ -1744,7 +1766,7 @@ the table in your database instances (`alter table schema_version rename to flyw
 [[v0.4.4]]
 == {url-tree}scipamato-0.4.4[0.4.4] -- 2017-05-11
 
-{url-cl}scipamato-0.4.3$$...$$scipamato-0.4.4[Full Changelog]
+{url-cl}scipamato-0.4.3++...++scipamato-0.4.4[Full Changelog]
 
 .Changed
 - Test release from jenkins
@@ -1753,7 +1775,7 @@ the table in your database instances (`alter table schema_version rename to flyw
 [[v0.4.3]]
 == {url-tree}scipamato-0.4.3[0.4.3] -- 2017-05-11
 
-{url-cl}scipamato-0.4.2$$...$$scipamato-0.4.3[Full Changelog]
+{url-cl}scipamato-0.4.2++...++scipamato-0.4.3[Full Changelog]
 
 .Added
 - Releasing the project with the jenkins release job
@@ -1762,7 +1784,7 @@ the table in your database instances (`alter table schema_version rename to flyw
 [[v0.4.2]]
 == {url-tree}scipamato-0.4.2[0.4.2] -- 2017-05-10
 
-{url-cl}scipamato-0.4.1$$...$$scipamato-0.4.2[Full Changelog]
+{url-cl}scipamato-0.4.1++...++scipamato-0.4.2[Full Changelog]
 
 .Added
 - new business id (Number), which is different from the sequence backed database id
@@ -1786,7 +1808,7 @@ the table in your database instances (`alter table schema_version rename to flyw
 [[v0.4.1]]
 == {url-tree}scipamato-0.4.1[0.4.1] -- 2017-03-11
 
-{url-cl}scipamato-0.4.0$$...$$scipamato-0.4.1[Full Changelog]
+{url-cl}scipamato-0.4.0++...++scipamato-0.4.1[Full Changelog]
 
 .Added
 - Added License: GPLv3
@@ -1799,7 +1821,7 @@ the table in your database instances (`alter table schema_version rename to flyw
 [[v0.4.0]]
 == {url-tree}scipamato-0.4.0[0.4.0] -- 2017-02-23
 
-{url-cl}scipamato-0.3.5$$...$$scipamato-0.4.0[Full Changelog]
+{url-cl}scipamato-0.3.5++...++scipamato-0.4.0[Full Changelog]
 
 .Added
 - First shot at parsing, importing from and comparing SiPaMaTo content with PubMed articles based on PMID. Working with Pubmed XML file exports. Direct API call to PubMed in order to compare common fields.
@@ -1812,7 +1834,7 @@ the table in your database instances (`alter table schema_version rename to flyw
 [[v0.3.5]]
 == {url-tree}scipamato-0.3.5[0.3.5] -- 2017-02-08
 
-{url-cl}scipamato-0.3.4$$...$$scipamato-0.3.5[Full Changelog]
+{url-cl}scipamato-0.3.4++...++scipamato-0.3.5[Full Changelog]
 
 .Added
 - Searching by created/last modified
@@ -1829,7 +1851,7 @@ the table in your database instances (`alter table schema_version rename to flyw
 [[v0.3.4]]
 == {url-tree}scipamato-0.3.4[0.3.4] -- 2017-02-01
 
-{url-cl}scipamato-0.3.3$$...$$scipamato-0.3.4[Full Changelog]
+{url-cl}scipamato-0.3.3++...++scipamato-0.3.4[Full Changelog]
 
 .Changed
 - Implemented various feed-back items from users
@@ -1841,7 +1863,7 @@ the table in your database instances (`alter table schema_version rename to flyw
 [[v0.3.3]]
 == {url-tree}scipamato-0.3.3[0.3.3] -- 2017-01-29
 
-{url-cl}scipamato-0.3.2$$...$$scipamato-0.3.3[Full Changelog]
+{url-cl}scipamato-0.3.2++...++scipamato-0.3.3[Full Changelog]
 
 .Added
 - additional PDF reports
@@ -1853,7 +1875,7 @@ the table in your database instances (`alter table schema_version rename to flyw
 [[v0.3.2]]
 == {url-tree}scipamato-0.3.2[0.3.2] -- 2017-01-25
 
-{url-cl}scipamato-0.3.1$$...$$scipamato-0.3.2[Full Changelog]
+{url-cl}scipamato-0.3.1++...++scipamato-0.3.2[Full Changelog]
 
 .Added
 - PDF reports
@@ -1873,7 +1895,7 @@ the table in your database instances (`alter table schema_version rename to flyw
 [[v0.3.1]]
 == {url-tree}scipamato-0.3.1[0.3.1] -- 2017-01-06
 
-{url-cl}scipamato-0.3.0$$...$$scipamato-0.3.1[Full Changelog]
+{url-cl}scipamato-0.3.0++...++scipamato-0.3.1[Full Changelog]
 
 .Added
 - new field for paper: 'original abstract'
@@ -1885,7 +1907,7 @@ the table in your database instances (`alter table schema_version rename to flyw
 [[v0.3.0]]
 == {url-tree}scipamato-0.3.0[0.3.0] -- 2017-01-06
 
-{url-cl}scipamato-0.2.0$$...$$scipamato-0.3.0[Full Changelog]
+{url-cl}scipamato-0.2.0++...++scipamato-0.3.0[Full Changelog]
 
 .Added
 - Show a papers creator/last modifying user
@@ -1899,7 +1921,7 @@ the table in your database instances (`alter table schema_version rename to flyw
 [[v0.2.0]]
 == {url-tree}scipamato-0.2.0[0.2.0] -- 2016-12-15
 
-{url-cl}scipamato-0.1.0$$...$$scipamato-0.2.0[Full Changelog]
+{url-cl}scipamato-0.1.0++...++scipamato-0.2.0[Full Changelog]
 
 .Added
 - Complex search capability
