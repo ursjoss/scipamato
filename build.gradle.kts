@@ -92,7 +92,7 @@ subprojects {
 
     testing {
         suites {
-            @Suppress("UnstableApiUsage", "UNUSED_VARIABLE")
+            @Suppress("UnstableApiUsage", "unused")
             val test by getting(JvmTestSuite::class) {
                 useJUnitJupiter()
             }
@@ -198,6 +198,7 @@ tasks {
     }
 }
 
+@Suppress("MaxLineLength")
 downloadLicenses {
     dependencyConfiguration = "runtimeClasspath"
     includeProjectDependencies = false

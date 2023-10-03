@@ -20,7 +20,7 @@ val props = file("src/integration-test/resources/application.properties").asProp
 
 testing {
     suites {
-        @Suppress("UNUSED_VARIABLE")
+        @Suppress("unused")
         val integrationTest by existing {
             dependencies {
                 implementation(libs.bundles.dbTest)
