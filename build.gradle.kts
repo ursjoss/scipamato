@@ -56,9 +56,10 @@ jacoco {
     toolVersion = libs.versions.jacoco.get()
 }
 
-val jacocoTestReportFile = "$buildDir/reports/jacoco/test/jacocoTestReport.xml"
+val jacocoTestReportFile = layout.buildDirectory.get().asFile.resolve("reports/jacoco/test/jacocoTestReport.xml")
 val jacocoTestPattern = "**/build/jacoco/*.exec"
 val genPkg = generatedPackages.joinToString(",")
+val detektReportFile = layout.buildDirectory.get().asFile.resolve("reports/detekt/detekt.xml")
 
 sonarqube {
     properties {
@@ -68,7 +69,7 @@ sonarqube {
         property("sonar.exclusions", "**/ch/difty/scipamato/publ/web/themes/markup/html/publ/**/*,$genPkg")
         property("sonar.coverage.exclusions", (generatedPackages + testPackages).joinToString(","))
         property("sonar.coverage.jacoco.xmlReportPaths", jacocoTestReportFile)
-        property("sonar.kotlin.detekt.reportPaths", "$buildDir/reports/detekt/detekt.xml")
+        property("sonar.kotlin.detekt.reportPaths", detektReportFile)
     }
 }
 
