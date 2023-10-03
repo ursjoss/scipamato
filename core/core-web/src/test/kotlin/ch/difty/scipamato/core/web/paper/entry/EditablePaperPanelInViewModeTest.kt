@@ -9,7 +9,6 @@ import org.amshove.kluent.shouldBeTrue
 import org.apache.wicket.markup.html.form.Form
 import org.junit.jupiter.api.Test
 
-@Suppress("SpellCheckingInspection")
 internal class EditablePaperPanelInViewModeTest : EditablePaperPanelTest() {
 
     override val mode: Mode

@@ -116,6 +116,10 @@ abstract class AbstractPage<T> : GenericWebPage<T> {
 
     private fun newNavbar(markupId: String): Navbar =
         object : Navbar(markupId) {
+
+            @java.io.Serial
+            private val serialVersionUID: Long = 1L
+
             override fun onConfigure() {
                 super.onConfigure()
                 isVisible = isNavbarVisible
@@ -156,6 +160,9 @@ abstract class AbstractPage<T> : GenericWebPage<T> {
             StringResourceModel(id + LABEL_RESOURCE_TAG, this@AbstractPage, null),
             Buttons.Type.Default
         ) {
+            @java.io.Serial
+            private val serialVersionUID: Long = 1L
+
             override fun onSubmit(target: AjaxRequestTarget) {
                 super.onSubmit(target)
                 setResponsePage(responsePage.get())
@@ -165,6 +172,7 @@ abstract class AbstractPage<T> : GenericWebPage<T> {
                 super.onConfigure()
                 isEnabled = setResponsePageButtonEnabled()
             }
+
         }
 
     /**

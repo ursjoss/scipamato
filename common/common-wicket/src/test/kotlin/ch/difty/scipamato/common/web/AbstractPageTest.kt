@@ -27,7 +27,6 @@ import org.apache.wicket.settings.DebugSettings
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 
-@Suppress("SpellCheckingInspection")
 internal class AbstractPageTest : WicketBaseTest() {
 
     @MockkBean

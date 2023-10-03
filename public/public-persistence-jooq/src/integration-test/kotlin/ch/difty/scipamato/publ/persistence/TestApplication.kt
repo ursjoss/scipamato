@@ -18,6 +18,7 @@ open class TestApplication {
     }
 
     @Bean
+    @Suppress("MagicNumber")
     open fun applicationProperties() = object : ApplicationPublicProperties {
         override val buildVersion get() = "vxy"
         override val defaultLocalization get() = "de"

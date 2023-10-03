@@ -143,7 +143,7 @@ internal class AbstractMenuBuilderTest {
         icon.type.shouldBeNull()
     }
 
-    private class TestMenuBuilder constructor(
+    private class TestMenuBuilder(
         applicationProperties: ApplicationProperties,
         webSessionFacade: ScipamatoWebSessionFacade,
     ) : AbstractMenuBuilder(applicationProperties, webSessionFacade) {
