@@ -72,7 +72,6 @@ internal class AbstractMenuBuilderTest {
         return navLeftList.defaultModelObject as List<NavbarButton<Void>>
     }
 
-    @Disabled // TODO reactivate
     @Test
     fun pageLinks_withNoneAdded_isEmpty() {
         getPageLinksFrom(navbar).shouldBeEmpty()
@@ -156,6 +155,11 @@ internal class AbstractMenuBuilderTest {
         override fun addMenuLinksTo(navbar: Navbar, page: Page) {
             // override if needed
         }
+
+        companion object {
+            @java.io.Serial
+            private val serialVersionUID: Long = 1L
+        }
     }
 
     @Disabled // TODO reactivate
@@ -208,7 +212,13 @@ internal class AbstractMenuBuilderTest {
         val links = mutableListOf<AbstractLink>()
         links.shouldBeEmpty()
 
-        menuBuilder.addEntryToMenu("label.link", TestHomePage(), TestHomePage::class.java, FontAwesome5IconType.adjust_s, links)
+        menuBuilder.addEntryToMenu(
+            label = "label.link",
+            component = TestHomePage(),
+            pageClass = TestHomePage::class.java,
+            iconType = FontAwesome5IconType.adjust_s,
+            links = links,
+        )
 
         links shouldHaveSize 1
         val link = links[0]

@@ -21,7 +21,6 @@ import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 import java.util.ArrayList
 
-@Suppress("SpellCheckingInspection")
 internal abstract class PaperListPageTest : BasePageTest<PaperListPage>() {
 
     @MockkBean(relaxed = true)
