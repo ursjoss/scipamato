@@ -51,7 +51,7 @@ abstract class SearchablePaperPanel protected constructor(
         }
 
     override fun newFileInput(): BootstrapFileInput =
-        object : BootstrapFileInput("bootstrapFileinput") {
+        object : BootstrapFileInput("bootstrapFileInput") {
             override fun onSubmit(target: AjaxRequestTarget) {
                 // no-op, as it's not visible anyway
             }

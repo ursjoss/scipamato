@@ -18,6 +18,7 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.Bootst
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome5IconType;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome5IconTypeBuilder;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
+import de.agilecoders.wicket.jquery.Key;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.PageReference;
@@ -622,22 +623,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
     @Override
     public BootstrapFileInput newFileInput() {
         final IModel<List<FileUpload>> model = new ListModel<FileUpload>();
-        Form<Void> bootstrapFileUploadForm = new Form<Void>("bootstrapFileUploadForm") {
-            @Override
-            protected void onSubmit() {
-                super.onSubmit();
-
-                List<FileUpload> fileUploads = model.getObject();
-                if (fileUploads != null) {
-                    for (FileUpload upload : fileUploads) {
-                        success("Normal Upload: " + upload.getClientFileName());
-                    }
-                }
-            }
-        };
-        bootstrapFileUploadForm.setOutputMarkupId(true);
-        add(bootstrapFileUploadForm);
-        BootstrapFileInput upload = new BootstrapFileInput("bootstrapFileinput", model) {
+        BootstrapFileInput upload = new BootstrapFileInput("bootstrapFileInput", model) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -646,17 +632,24 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
                 Paper p = null;
                 List<FileUpload> fileUploads = model.getObject();
                 for (FileUpload upload : fileUploads) {
-                        try {
-                            p = paperService.saveAttachment(convertToPaperAttachment(upload));
-                        } catch (Exception ex) {
-                            log.error("Unexpected error when uploading file {}: {}", upload.getClientFileName(), ex.getMessage());
-                            error("Unexpected error: " + ex.getMessage());
-                        }
+                    try {
+                        p = paperService.saveAttachment(convertToPaperAttachment(upload));
+                    } catch (Exception ex) {
+                        log.error("Unexpected error when uploading file {}: {}", upload.getClientFileName(), ex.getMessage());
+                        error("Unexpected error saving file " + upload.getClientFileName() + ": " + ex.getMessage());
                     }
-                    if (p != null) {
-                        EditablePaperPanel.this.setModelObject(p);
-                        target.add(getAttachments());
-                    }
+                }
+                if (p != null) {
+                    EditablePaperPanel.this.setModelObject(p);
+                    target.add(getAttachments());
+                }
+            }
+
+            @Override
+            protected void onError(final AjaxRequestTarget target) {
+                super.onError(target);
+                log.error("Unexpected error: " + target.getLogData());
+                error("Unexpected error during upload");
             }
 
             @Override
@@ -668,11 +661,10 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
         upload
             .getConfig()
             .maxFileCount(10);
-//            .withMaxFileSize(getMaxFileSize()) // TODO
-//            .withThumbnailHeight(80)
-//            .withThumbnailWidth(80)
-//            .withPreviewsContainer(".dropzone-previews")
-//            .withParallelUploads(4);
+        // Migrate to upload.getConfig().maxFileSize(
+        upload
+            .getConfig()
+            .put(new Key<Integer>("maxFileSize", 0), getMaxFileSize());
         return upload;
     }
 
@@ -685,7 +677,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
                 .equalsIgnoreCase(unit))
                 return Integer.parseInt(prop
                     .substring(0, prop.length() - unit.length())
-                    .trim());
+                    .trim()) * 1_024;
         } catch (Exception ex) {
             log.error("Unexpected exception when evaluating the max-file-size for file uploads ", ex);
         }
