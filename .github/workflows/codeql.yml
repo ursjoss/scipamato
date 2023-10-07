@@ -48,7 +48,7 @@ jobs:
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
     - name: Download postgres
-      run: docker pull postgres:10
+      run: docker pull postgres:15.4
 
     - name: Build
       uses: gradle/gradle-build-action@v2

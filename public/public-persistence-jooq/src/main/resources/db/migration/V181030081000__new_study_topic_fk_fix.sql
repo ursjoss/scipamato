@@ -6,8 +6,8 @@ ALTER TABLE new_study_topic
 
 -- replace non cascading foreign key on new_study_topic with cascading one
 ALTER TABLE new_study
-  DROP CONSTRAINT new_study_newsletter_id_fkey,
-  ADD CONSTRAINT new_study_new_study_topic_newsletter_id_newsletter_topic_id_fkey
+  DROP CONSTRAINT IF EXISTS new_study_newsletter_id_fkey,
+  ADD CONSTRAINT new_study_new_study_topic_newsletter_id_nl_topic_id_fkey
 FOREIGN KEY (newsletter_id, newsletter_topic_id)
 REFERENCES new_study_topic (newsletter_id, newsletter_topic_id)
 ON DELETE CASCADE ON UPDATE CASCADE;

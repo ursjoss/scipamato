@@ -40,7 +40,7 @@ jooqModelator {
     migrationEngine = "FLYWAY"
     migrationsPaths = listOf("$rootDir/$moduleName/src/main/resources/db/migration/")
 
-    dockerTag = "postgres:10"
+    dockerTag = "postgres:15.4"
 
     dockerEnv = listOf(
         "POSTGRES_DB=${props.getProperty("db.name")}",

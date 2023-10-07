@@ -18,7 +18,7 @@ internal class HikariDatasourceProductionSettingsIntegrationTest : AbstractInteg
     fun jdbcUrl() {
         datasource shouldBeInstanceOf HikariDataSource::class
         val ds = datasource as HikariDataSource
-        ds.jdbcUrl shouldBeEqualTo "jdbc:tc:postgresql:10.6://localhost:5432/scipamato_public"
+        ds.jdbcUrl shouldBeEqualTo "jdbc:tc:postgresql:15.4://localhost:5432/scipamato_public"
     }
 
     @Test
