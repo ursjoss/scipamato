@@ -7,6 +7,8 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED
 import org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED
 import org.gradle.api.tasks.testing.logging.TestLogEvent.SKIPPED
 import org.gradle.api.tasks.testing.logging.TestLogEvent.STARTED
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.sonarqube.gradle.SonarQubePlugin
 import org.springframework.boot.gradle.plugin.SpringBootPlugin
 import org.springframework.boot.gradle.tasks.bundling.BootJar
 
@@ -19,7 +21,6 @@ buildscript {
     }
 }
 
-@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     kotlin("jvm") version libs.versions.kotlin.get()
     kotlin("plugin.spring") version libs.versions.kotlin.get() apply false
@@ -44,7 +45,6 @@ dependencyManagement {
 }
 
 val testModuleDirs = setOf("common/common-test", "common/common-persistence-jooq-test")
-val testModules = testModuleDirs.map { it.substringAfter("/") }
 val testPackages = testModuleDirs.map { "$it/**/*" }
 val generatedPackages: Set<String> = setOf(
     "**/ch/difty/scipamato/core/db/**",
@@ -54,7 +54,7 @@ val generatedPackages: Set<String> = setOf(
 
 testing {
     suites {
-        @Suppress("UnstableApiUsage")
+        @Suppress("UnstableApiUsage", "unused")
         val test by getting(JvmTestSuite::class) {
             useJUnitJupiter()
         }
@@ -65,10 +65,8 @@ jacoco {
     toolVersion = libs.versions.jacoco.get()
 }
 
-val jacocoTestReportFile = layout.buildDirectory.get().asFile.resolve("reports/jacoco/test/jacocoTestReport.xml")
 val jacocoTestPattern = "**/build/jacoco/*.exec"
 val genPkg = generatedPackages.joinToString(",")
-val detektReportFile = layout.buildDirectory.get().asFile.resolve("reports/detekt/detekt.xml")
 
 sonarqube {
     properties {
@@ -77,8 +75,6 @@ sonarqube {
         property("sonar.organization", "ursjoss-github")
         property("sonar.exclusions", "**/ch/difty/scipamato/publ/web/themes/markup/html/publ/**/*,$genPkg")
         property("sonar.coverage.exclusions", (generatedPackages + testPackages).joinToString(","))
-        property("sonar.coverage.jacoco.xmlReportPaths", jacocoTestReportFile)
-        property("sonar.kotlin.detekt.reportPaths", detektReportFile)
     }
 }
 
@@ -98,6 +94,20 @@ subprojects {
     apply<JavaPlugin>()
     apply<IdeaPlugin>()
     apply<JacocoPlugin>()
+    apply<SonarQubePlugin>()
+
+    sonarqube {
+        properties {
+            property(
+                "sonar.kotlin.detekt.reportPaths",
+                layout.buildDirectory.get().asFile.resolve("reports/detekt/detekt.xml")
+            )
+            property(
+                "sonar.coverage.jacoco.xmlReportPaths",
+                layout.buildDirectory.get().asFile.resolve("reports/jacoco/test/jacocoTestReport.xml")
+            )
+        }
+    }
 
     testing {
         suites {
