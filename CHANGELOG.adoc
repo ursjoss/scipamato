@@ -85,6 +85,22 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 ////
 
 
+[[v1.9.0]]
+== {url-tree}1.9.0[1.9.0] -- 2023-10-08
+
+{url-cl}1.8.11++...++1.9.0[Full Changelog]
+
+.Changed
+- Bumped dependency
+  postgresql, kris,
+  gradle,
+  sonarqube,
+  setup-java-action
+
+.Removed
+- Remoed java platform 11 compatibility: Require minimum java platform 17.
+
+
 [[v1.8.11]]
 == {url-tree}1.8.11[1.8.11] -- 2023-09-03
 
@@ -99,14 +115,6 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
   junit5, kotest, mockk, equalsverifier, testcontainers
 - Bumped gradle, sonarqube plugin, detekt
 - Bumped checkout action, docker login action
-
-.Deprecated
-
-.Removed
-
-.Fixed
-
-.Security
 
 
 [[v1.8.10]]
