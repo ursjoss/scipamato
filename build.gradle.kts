@@ -5,6 +5,7 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED
 import org.gradle.api.tasks.testing.logging.TestLogEvent.SKIPPED
 import org.gradle.api.tasks.testing.logging.TestLogEvent.STARTED
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.sonarqube.gradle.SonarQubePlugin
 import org.springframework.boot.gradle.plugin.SpringBootPlugin
 import org.springframework.boot.gradle.tasks.bundling.BootJar
 
@@ -56,10 +57,8 @@ jacoco {
     toolVersion = libs.versions.jacoco.get()
 }
 
-val jacocoTestReportFile = layout.buildDirectory.get().asFile.resolve("reports/jacoco/test/jacocoTestReport.xml")
 val jacocoTestPattern = "**/build/jacoco/*.exec"
 val genPkg = generatedPackages.joinToString(",")
-val detektReportFile = layout.buildDirectory.get().asFile.resolve("reports/detekt/detekt.xml")
 
 sonarqube {
     properties {
@@ -68,8 +67,6 @@ sonarqube {
         property("sonar.organization", "ursjoss-github")
         property("sonar.exclusions", "**/ch/difty/scipamato/publ/web/themes/markup/html/publ/**/*,$genPkg")
         property("sonar.coverage.exclusions", (generatedPackages + testPackages).joinToString(","))
-        property("sonar.coverage.jacoco.xmlReportPaths", jacocoTestReportFile)
-        property("sonar.kotlin.detekt.reportPaths", detektReportFile)
     }
 }
 
@@ -89,6 +86,20 @@ subprojects {
     apply<JavaPlugin>()
     apply<IdeaPlugin>()
     apply<JacocoPlugin>()
+    apply<SonarQubePlugin>()
+
+    sonarqube {
+        properties {
+            property(
+                "sonar.kotlin.detekt.reportPaths",
+                layout.buildDirectory.get().asFile.resolve("reports/detekt/detekt.xml")
+            )
+            property(
+                "sonar.coverage.jacoco.xmlReportPaths",
+                layout.buildDirectory.get().asFile.resolve("reports/jacoco/test/jacocoTestReport.xml")
+            )
+        }
+    }
 
     testing {
         suites {
