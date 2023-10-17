@@ -193,7 +193,7 @@ class UserEditPage(pp: PageParameters) : BasePage<ChangePasswordUser>(pp) {
 
     @Suppress("SameParameterValue")
     private fun queueSubmitButton(id: String) {
-        queue(object : BootstrapButton(id, StringResourceModel("submit.label"), Buttons.Type.Default) {
+        queue(object : BootstrapButton(id, StringResourceModel("submit.label"), Buttons.Type.Primary) {
             override fun onSubmit() {
                 super.onSubmit()
                 doOnSubmit()

@@ -68,7 +68,7 @@ abstract class AbstractLoginPage<R : AbstractPage<*>>(
     private fun newButton(id: String): BootstrapButton = BootstrapButton(
         id,
         StringResourceModel("$id.value", this, null),
-        Buttons.Type.Default
+        Buttons.Type.Primary
     ).apply {
         add(SpinnerBehavior())
     }

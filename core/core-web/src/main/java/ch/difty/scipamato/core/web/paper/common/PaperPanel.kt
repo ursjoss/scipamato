@@ -397,7 +397,7 @@ abstract class PaperPanel<T>(
     protected abstract fun restartSearchInPaperSearchPage()
     protected abstract fun newExcludeButton(id: String): BootstrapButton
     private fun makeAndQueueSubmitButton(id: String) {
-        submit = object : BootstrapButton(id, StringResourceModel(submitLinkResourceLabel), Buttons.Type.Default) {
+        submit = object : BootstrapButton(id, StringResourceModel(submitLinkResourceLabel), Buttons.Type.Primary) {
             override fun onSubmit() {
                 super.onSubmit()
                 onFormSubmit()
