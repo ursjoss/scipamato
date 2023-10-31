@@ -3,3 +3,19 @@
 .newField {
     border-color: #276cdb;
 }
+
+.container-fluid {
+    margin-top: 0.5rem
+}
+
+.card-header {
+    padding: 0.3rem 0.75rem;
+}
+
+.card-body {
+    padding: 0.3rem;
+}
+
+.table {
+    margin-bottom: 0.3rem
+}
