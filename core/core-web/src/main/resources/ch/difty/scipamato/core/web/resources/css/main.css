@@ -3,8 +3,3 @@
 .newField {
     border-color: #276cdb;
 }
-
-/* Fix DropZone Caption appearance */
-div.wicket-modal div.w_caption {
-    height: 2em;
-}
