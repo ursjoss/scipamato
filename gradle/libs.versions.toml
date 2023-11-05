@@ -45,6 +45,7 @@ coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", ve
 ehcache = { module = "org.ehcache:ehcache" }
 equalsverifier = { module = "nl.jqno.equalsverifier:equalsverifier", version.ref = "equalsverifier" }
 flyway-core = { module = "org.flywaydb:flyway-core", version.ref = "flyway" }
+flyway-postgresql = { module = "org.flywaydb:flyway-database-postgresql", version.ref = "flyway" }
 fontAwesome = { module = "org.webjars:font-awesome" }
 hibernate-validator = { module = "org.hibernate.validator:hibernate-validator" }
 jasperreports = { module = "net.sf.jasperreports:jasperreports", version.ref = "jasperreports" }
