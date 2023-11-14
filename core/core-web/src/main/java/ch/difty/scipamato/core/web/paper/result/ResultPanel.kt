@@ -31,6 +31,8 @@ import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields
 import ch.difty.scipamato.core.web.paper.jasper.ScipamatoPdfExporterConfiguration
 import ch.difty.scipamato.core.web.paper.jasper.literaturereview.PaperLiteratureReviewDataSource
 import ch.difty.scipamato.core.web.paper.jasper.literaturereview.PaperLiteratureReviewPlusDataSource
+import ch.difty.scipamato.core.web.paper.jasper.referenceabstract.PaperReferenceAbstract
+import ch.difty.scipamato.core.web.paper.jasper.referenceabstract.PaperReferenceAbstractDataSource
 import ch.difty.scipamato.core.web.paper.jasper.review.PaperReviewDataSource
 import ch.difty.scipamato.core.web.paper.jasper.summary.PaperSummaryDataSource
 import ch.difty.scipamato.core.web.paper.jasper.summaryshort.PaperSummaryShortDataSource
@@ -99,6 +101,7 @@ abstract class ResultPanel protected constructor(
         addOrReplacePdfLiteratureReviewLink("literatureReviewLink", false)
         addOrReplacePdfLiteratureReviewLink("literatureReviewPlusLink", true)
         addOrReplacePdfSummaryTableLink("summaryTableLink")
+        addOrReplacePdfReferenceAbstractLink("referenceAbstractLink")
     }
 
     private fun makeAndQueueTable(id: String) {
@@ -391,6 +394,7 @@ abstract class ResultPanel protected constructor(
         addOrReplace(newPdfSummaryTable(id, "summary_table"))
     }
 
+
     private fun newPdfSummaryTable(id: String, resourceKeyPart: String): ResourceLink<Void> {
         val pdfCaption = StringResourceModel("paper_summary_table.titlePart", this, null).string
         val brand = properties.brand
@@ -406,6 +410,31 @@ abstract class ResultPanel protected constructor(
             .withCompression()
             .build()
         return newJasperResourceLink(id, resourceKeyPart, PaperSummaryTableDataSource(dataProvider, rhf, config))
+    }
+
+    private fun addOrReplacePdfReferenceAbstractLink(id: String) {
+        addOrReplace(newPdfReferenceAbstract(id, "reference_abstract"))
+    }
+
+
+    private fun newPdfReferenceAbstract(id: String, resourceKeyPart: String): ResourceLink<Void> {
+        val brand = properties.brand
+        val pdfCaption = StringResourceModel("paper_reference_abstract.caption", this, null)
+            .setParameters(brand).string
+        val url = properties.pubmedBaseUrl
+        val rhf = ReportHeaderFields(
+            headerPart = "",
+            brand = brand,
+            numberLabel = getLabelResourceFor(PaperFields.NUMBER.fieldName),
+            captionLabel = pdfCaption,
+            pubmedBaseUrl = url
+        )
+        val config = ScipamatoPdfExporterConfiguration.Builder(pdfCaption)
+            .withAuthor(activeUser)
+            .withCreator(brand)
+            .withCompression()
+            .build()
+        return newJasperResourceLink(id, resourceKeyPart, PaperReferenceAbstractDataSource(dataProvider, rhf, config))
     }
 
     private fun newJasperResourceLink(id: String, resourceKeyPart: String, resource: JasperPaperDataSource<*>) =

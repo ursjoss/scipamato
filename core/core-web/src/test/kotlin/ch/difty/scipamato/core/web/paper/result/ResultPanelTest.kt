@@ -157,7 +157,6 @@ internal abstract class ResultPanelTest : PanelTest<ResultPanel>() {
      * Provider here in order to make sure the functionality is triggered. Not sure
      * how to verify the action otherwise.
      *
-     *
      * Also, this is not really asserting anything, just verifying the methods have
      * been called. Bit of a workaround
      */
@@ -216,6 +215,13 @@ internal abstract class ResultPanelTest : PanelTest<ResultPanel>() {
     fun clickingSummaryTableLink_succeeds() {
         tester.startComponentInPage(makePanel())
         tester.clickLink("$PANEL_ID:summaryTableLink")
+        verifyPdfExport()
+    }
+
+    @Test
+    fun clickingReferenceAbstractLink_succeeds() {
+        tester.startComponentInPage(makePanel())
+        tester.clickLink("$PANEL_ID:referenceAbstractLink")
         verifyPdfExport()
     }
 
