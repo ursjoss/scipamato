@@ -67,7 +67,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[unreleased]]
 == [unreleased]
 
-{url-cl}1.8.11++...++main[Full Changelog]
+{url-cl}1.10.0++...++main[Full Changelog]
 
 .Added
 
@@ -84,6 +84,20 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 ////
 
+[[v1.10.0]]
+== {url-tree}1.10.0[1.10.0] -- 2023-11-14
+
+{url-cl}1.9.0++...++1.10.0[Full Changelog]
+
+.Added
+- {url-issues}604[#604] New (internal) Reference Abstract Report
+.Changed
+- {url-issues}338[#338] Migrate from Bootsrap 3.4 to 4.0
+- Bumped dependency
+  kotlin,
+  spring-boot, spring-dependency-management, spring-boot-admin, feign, flyway, lombok,
+  junit5, kotest, equalsverifier,
+  detekt, reckon
 
 [[v1.9.0]]
 == {url-tree}1.9.0[1.9.0] -- 2023-10-08
