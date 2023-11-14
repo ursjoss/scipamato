@@ -35,8 +35,8 @@ internal class ScipamatoPropertiesTest {
     }
 
     @Test
-    fun isLessUsedOverCss() {
-        sp.lessUsedOverCss.shouldBeFalse()
+    fun isSassUsedOverCss() {
+        sp.sassUsedOverCss.shouldBeFalse()
     }
 
     @Test

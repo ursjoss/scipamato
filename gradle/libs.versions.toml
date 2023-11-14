@@ -34,7 +34,7 @@ springMockk = "3.1.2"
 testcontainers = "1.19.1"
 univocityParsers = "2.9.1"
 wicket = "9.15.0"
-wicketBootstrap = "4.0.4"
+wicketBootstrap = "5.0.6"
 wicketJqueryUi = "9.12.0"
 wicketSpringBootStarter = "3.1.7"
 wicketstuff = "9.15.0"
@@ -108,7 +108,7 @@ wicket-request = { module = "org.apache.wicket:wicket-request", version.ref = "w
 wicket-spring = { module = "org.apache.wicket:wicket-spring", version.ref = "wicket" }
 wicketBootstrap-core = { module = "de.agilecoders.wicket:wicket-bootstrap-core", version.ref = "wicketBootstrap" }
 wicketBootstrap-extensions = { module = "de.agilecoders.wicket:wicket-bootstrap-extensions", version.ref = "wicketBootstrap" }
-wicketBootstrap-less = { module = "de.agilecoders.wicket:wicket-bootstrap-less", version.ref = "wicketBootstrap" }
+wicketBootstrap-sass = { module = "de.agilecoders.wicket:wicket-bootstrap-sass", version.ref = "wicketBootstrap" }
 wicketBootstrap-themes = { module = "de.agilecoders.wicket:wicket-bootstrap-themes", version.ref = "wicketBootstrap" }
 wicketJqueryUi = { module = "com.googlecode.wicket-jquery-ui:wicket-jquery-ui", version.ref = "wicketJqueryUi" }
 wicketJqueryUi-theme-uilightness = { module = "com.googlecode.wicket-jquery-ui:wicket-jquery-ui-theme-uilightness", version.ref = "wicketJqueryUi" }

@@ -108,7 +108,7 @@ class SearchOrderSelectorPanel internal constructor(
                     send(page, Broadcast.BREADTH, SearchOrderChangeEvent(target))
                 }
             })
-            add(AttributeModifier("data-width", "fit"))
+            add(AttributeModifier("data-width", "100%"))
         }.also { queue(it) }
     }
 

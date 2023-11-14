@@ -21,7 +21,6 @@ import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 import java.util.ArrayList
 
-@Suppress("SpellCheckingInspection")
 internal abstract class PaperListPageTest : BasePageTest<PaperListPage>() {
 
     @MockkBean(relaxed = true)
@@ -66,19 +65,19 @@ internal abstract class PaperListPageTest : BasePageTest<PaperListPage>() {
     }
 
     fun assertPageLinkButton(index: Int, position: String, expectedLabelText: String?) {
-        val path = "navbar:container:collapse:nav${position}ListEnclosure:nav${position}List:$index:component"
+        val path = "navbar:collapse:nav${position}ListEnclosure:nav${position}List:$index:component"
         tester.assertComponent(path, NavbarButton::class.java)
         tester.assertLabel("$path:label", expectedLabelText)
     }
 
     fun assertTopLevelMenu(index: Int, position: String, expectedLabelText: String?) {
-        val path = "navbar:container:collapse:nav${position}ListEnclosure:nav${position}List:$index:component:btn"
+        val path = "navbar:collapse:nav${position}ListEnclosure:nav${position}List:$index:component:btn"
         tester.assertComponent(path, WebMarkupContainer::class.java)
         tester.assertLabel("$path:label", expectedLabelText)
     }
 
     fun assertNestedMenu(topLevelIndex: Int, menuIndex: Int, position: String, expectedLabelText: String?) {
-        val path = "navbar:container:collapse:nav${position}ListEnclosure:nav$position" +
+        val path = "navbar:collapse:nav${position}ListEnclosure:nav$position" +
             "List:$topLevelIndex:component:dropdown-menu:buttons:$menuIndex:button"
         tester.assertComponent(path, MenuBookmarkablePageLink::class.java)
         tester.assertLabel("$path:label", expectedLabelText)

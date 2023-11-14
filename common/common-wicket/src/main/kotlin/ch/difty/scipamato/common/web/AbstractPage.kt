@@ -7,6 +7,7 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButt
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons
 import de.agilecoders.wicket.core.markup.html.bootstrap.common.NotificationPanel
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar
+import de.agilecoders.wicket.core.markup.html.bootstrap.utilities.BackgroundColorBehavior
 import org.apache.wicket.ajax.AjaxRequestTarget
 import org.apache.wicket.authroles.authentication.AuthenticatedWebSession
 import org.apache.wicket.bean.validation.PropertyValidator
@@ -26,7 +27,7 @@ import org.apache.wicket.request.mapper.parameter.PageParameters
 import org.apache.wicket.settings.DebugSettings
 import org.apache.wicket.spring.injection.annot.SpringBean
 
-@Suppress("SameParameterValue", "TooManyFunctions")
+@Suppress("SameParameterValue", "TooManyFunctions", "serial")
 abstract class AbstractPage<T> : GenericWebPage<T> {
 
     @SpringBean
@@ -120,10 +121,9 @@ abstract class AbstractPage<T> : GenericWebPage<T> {
                 isVisible = isNavbarVisible
             }
         }.apply {
-            fluid()
-            position = Navbar.Position.STATIC_TOP
             setBrandName(Model.of(getBrandName(properties.brand)))
             setInverted(true)
+            setBackgroundColor(BackgroundColorBehavior.Color.Dark)
         }.also {
             addLinksTo(it)
         }
@@ -165,6 +165,7 @@ abstract class AbstractPage<T> : GenericWebPage<T> {
                 super.onConfigure()
                 isEnabled = setResponsePageButtonEnabled()
             }
+
         }
 
     /**

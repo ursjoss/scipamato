@@ -24,8 +24,8 @@ class ScipamatoPublicProperties(
     override val isCommercialFontPresent: Boolean
         get() = scipamatoProperties.commercialFontPresent
 
-    override val isLessUsedOverCss: Boolean
-        get() = scipamatoProperties.lessUsedOverCss
+    override val isSassUsedOverCss: Boolean
+        get() = scipamatoProperties.sassUsedOverCss
 
     override val isNavbarVisibleByDefault: Boolean
         get() = scipamatoProperties.navbarVisibleByDefault
