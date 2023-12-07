@@ -71,6 +71,7 @@ open class ScipamatoCoreApplication : WicketBootSecuredWebApplication() {
         }
     }
 
+    @Suppress("MagicNumber")
     private fun triggerStartupMigration(dsl: DSLContext, getAbstract: (Long) -> String?) {
         val adminUserId = (dsl
             .select(ScipamatoUser.SCIPAMATO_USER.ID)
