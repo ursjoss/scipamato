@@ -67,7 +67,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[unreleased]]
 == [unreleased]
 
-{url-cl}1.10.0++...++main[Full Changelog]
+{url-cl}1.10.2++...++main[Full Changelog]
 
 .Added
 
@@ -83,6 +83,31 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Security
 
 ////
+
+
+[[v1.10.2]]
+== {url-tree}1.10.2[1.10.2] -- 2023-12-08
+
+{url-cl}1.10.0++...++1.10.2[Full Changelog]
+
+.Changed
+- Bumped dependency
+  kotlin,
+  spring boot,
+  wicket, wicketstuff, feign, spring-boot-admin-starter-client, jasperreports,
+  testcontainers-java monorepo, equalsverifier,
+  gradle, detektplugin, jaxb gradle plugin,
+  setup-java action
+- {url-issues}620[#620] Reverted (Data Migration: Update Abstract of old Studies with PM_ID)
+
+[[v1.10.1]]
+== {url-tree}1.10.1[1.10.1] -- 2023-12-07
+
+{url-cl}1.10.0++...++1.10.2[Full Changelog]
+
+.Changed
+- {url-issues}620[#620] Data Migration: Update Abstract of old Studies with PM_ID
+
 
 [[v1.10.0]]
 == {url-tree}1.10.0[1.10.0] -- 2023-11-14
