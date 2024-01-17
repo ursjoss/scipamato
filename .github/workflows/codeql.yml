@@ -39,7 +39,7 @@ jobs:
         languages: ${{ matrix.language }}
 
     - name: Cache global .gradle folder
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: ~/.gradle/caches
         key: global-gradle-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}-${{ hashFiles('**/*.kt*') }}-${{ hashFiles('**/*.java') }}
