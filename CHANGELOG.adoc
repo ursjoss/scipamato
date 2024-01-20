@@ -137,7 +137,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
   setup-java-action
 
 .Removed
-- Remoed java platform 11 compatibility: Require minimum java platform 17.
+- Removed java platform 11 compatibility: Require minimum java platform 17.
 
 
 [[v1.8.11]]
@@ -229,7 +229,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 - kotest
 
 .Changed
-- Bumped kotlin, sprign-boot, wicket, wicketstuff, wicket-spring-boot-starter, spring-boot-admin-starter-client, flyway, lombok, kris
+- Bumped kotlin, spring-boot, wicket, wicketstuff, wicket-spring-boot-starter, spring-boot-admin-starter-client, flyway, lombok, kris
   spring-dependency-management, spring-cloud-starter-openfeign, feign, kotlin-loggin,
   mockk, spring-mockk, kluent, equalsverifier, junit5, kotest, testcontainers,
   gradle, sonarqube-plugin, detekt,
