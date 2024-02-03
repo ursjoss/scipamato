@@ -71,9 +71,11 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Added
 
-////
 .Changed
+- {url-issues}621[#621] Migrate from Bootsrap 4.x to 5.3
 
+
+////
 .Deprecated
 
 .Removed
