@@ -37,15 +37,15 @@
             </div>
             <div class="col-xs-12 col-md-4">
                 <div class="row">
-                    <div class="col-xs-3 col-md-3" style="float: none; display: table-cell; vertical-align: bottom">
+                    <div class="col-xs-3 col-md-3" style="float: none; display: table-cell">
                         <div wicket:id="numberLabel"></div>
                         <input wicket:id="number" class="form-control">
                     </div>
-                    <div class="col-xs-3 col-md-3" style="float: none; display: table-cell; vertical-align: bottom">
+                    <div class="col-xs-3 col-md-3" style="float: none; display: table-cell">
                         <div wicket:id="idLabel"></div>
                         <input wicket:id="id" class="form-control">
                     </div>
-                    <div class="col-xs-6 col-md-6 text-right" style="float: none; display: table-cell; vertical-align: bottom">
+                    <div class="col-xs-6 col-md-6 text-right" style="float: none; display: table-cell; margin-top: 1.5em">
                         <button type="submit" wicket:id="exclude" class="btn-md"></button>
                         <button type="submit" wicket:id="back" class="btn-md"></button>
                         <button type="submit" wicket:id="previous" tabindex="-1">
@@ -57,16 +57,18 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-3 col-md-4" style="float: none; display: table-cell; vertical-align: bottom">
+                    <div class="col-xs-3 col-md-4" style="float: none; display: table-cell; margin-top: 1.5em">
                         <div wicket:id="doiLabel"></div>
                         <input wicket:id="doi" class="form-control">
                     </div>
-                    <div class="col-xs-6 col-md-5 col-lg-5" style="float: none; display: table-cell; vertical-align: bottom">
+                    <div class="col-xs-6 col-md-5 col-lg-5" style="float: none; display: table-cell; margin-top: 1.5em">
                         <div wicket:id="pmIdLabel"></div>
                         <input wicket:id="pmId" class="form-control">
                     </div>
-                    <div class="col-xs-3 col-md-3 text-right" style="float: none; display: table-cell; vertical-align: bottom">
-                        <a wicket:id="pubmedRetrieval" tabindex="-1">PubMed Retrieval</a>
+                    <div class="col-xs-3 col-md-3" style="margin-top: 3em">
+                        <div class="d-grid d-md-flex justify-content-md-end">
+                            <a wicket:id="pubmedRetrieval" tabindex="-1">PubMed Retrieval</a>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -79,17 +81,17 @@
                         <input wicket:id="modifiedDisplayValue" class="form-control">
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-xs-3 col-md-3">
+                <div class="row" style="margin-top: 0.5em">
+                    <div class="col-xs-3 col-md-3 d-grid">
                         <a href="#" wicket:id="summary" tabindex="-1">PDF</a>
                     </div>
-                    <div class="col-xs-3 col-md-3">
+                    <div class="col-xs-3 col-md-3 d-grid gap-2">
                         <a href="#" wicket:id="summaryShort" tabindex="-1">PDF short</a>
                     </div>
-                    <div class="col-xs-2 col-md-2">
+                    <div class="col-xs-3 col-md-3 d-grid gap-2">
                         <a href="#" wicket:id="modAssociation">Newsletter</a>
                     </div>
-                    <div class="col-xs-4 col-md-4 text-right">
+                    <div class="col-xs-6 col-md-3 d-md-flex justify-content-md-end">
                         <button type="submit" wicket:id="submit" class="btn-md"></button>
                     </div>
                 </div>

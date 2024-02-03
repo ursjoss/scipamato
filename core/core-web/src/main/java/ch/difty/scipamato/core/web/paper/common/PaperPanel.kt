@@ -464,7 +464,6 @@ abstract class PaperPanel<T>(
                 super.onInitialize()
                 if (isVisible) add(ButtonBehavior()
                     .setType(Buttons.Type.Info)
-//                    .setBlock(true) // TODO check
                     .setSize(Buttons.Size.Medium))
             }
 
