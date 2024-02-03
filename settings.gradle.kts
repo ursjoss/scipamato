@@ -24,6 +24,8 @@ dependencyResolutionManagement {
     repositories {
         mavenCentral()
         maven { url = uri("https://jaspersoft.jfrog.io/jaspersoft/third-party-ce-artifacts") }
+        // repository providing ua.kasta:jsass
+        maven { url = uri("https://repo.clojars.org") }
     }
 }
 

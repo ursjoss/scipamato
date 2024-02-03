@@ -2,22 +2,22 @@
 <html xmlns:wicket="https://wicket.apache.org">
 <wicket:panel>
     <form wicket:id="form" role="form">
-        <div class="form-row">
-            <div class="col-sm-3">
+        <div class="row">
+            <div class="col-sm-3" style="margin-top: 1.5em">
                 <select wicket:id="searchOrder"></select>
             </div>
-            <div class="col-sm-4" style="bottom: 1.5em;">
+            <div class="col-sm-4">
                 <wicket:container id="nameLabel" wicket:id="nameLabel" class="col-form-label" for="name"/>
                 <input id="name" wicket:id="name" type="text" class="form-control">
             </div>
-            <div class="col-sm-1">
+            <div class="col-sm-1" style="margin-top: 1.5em">
                 <input id="global" wicket:id="global" type="checkbox">
                 <wicket:container id="globalLabel" wicket:id="globalLabel" for="global"/>
             </div>
-            <div class="col-sm-2">
+            <div class="col-sm-2" style="margin-top: 1.5em">
                 <a wicket:id="delete">Delete</a> <a wicket:id="new">New</a>
             </div>
-            <div class="col-sm-2">
+            <div class="col-sm-2" style="margin-top: 1.5em">
                 <input id="showExcluded" wicket:id="showExcluded" type="checkbox">
                 <wicket:container id="showExcludedLabel" wicket:id="showExcludedLabel" for="showExcluded"/>
             </div>

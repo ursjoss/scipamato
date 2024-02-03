@@ -123,7 +123,7 @@ abstract class AbstractPage<T> : GenericWebPage<T> {
         }.apply {
             setBrandName(Model.of(getBrandName(properties.brand)))
             setInverted(true)
-            setBackgroundColor(BackgroundColorBehavior.Color.Dark)
+            setBackgroundColor(BackgroundColorBehavior.Color.Primary)
         }.also {
             addLinksTo(it)
         }
