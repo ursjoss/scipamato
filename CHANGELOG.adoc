@@ -67,15 +67,13 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[unreleased]]
 == [unreleased]
 
-{url-cl}1.10.2++...++main[Full Changelog]
+{url-cl}1.10.3++...++main[Full Changelog]
 
 .Added
 
-.Changed
-- {url-issues}621[#621] Migrate from Bootsrap 4.x to 5.3
-
-
 ////
+.Changed
+
 .Deprecated
 
 .Removed
@@ -85,6 +83,22 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Security
 
 ////
+
+
+
+[[v1.10.3]]
+== {url-tree}1.10.3[1.10.3] -- 2024-02-04
+
+{url-cl}1.10.2++...++1.10.3[Full Changelog]
+
+.Changed
+- {url-issues}621[#621] Migrate from Bootsrap 4.x to 5.3
+- Bumped dependencies
+  kotlin, spring-boot-admin-starter-client, guava, feign, spring-cloud-starter-openfeign,
+  gradle, reckon,
+  jaxb, detekt,
+  unit5, mockk, testcontainers, equalsverifier,
+  github actions gradle-build-action, gradle-wrapper-validation, cache, upload-artifact and codeql
 
 
 [[v1.10.2]]
@@ -101,6 +115,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
   gradle, detektplugin, jaxb gradle plugin,
   setup-java action
 - {url-issues}620[#620] Reverted (Data Migration: Update Abstract of old Studies with PM_ID)
+
 
 [[v1.10.1]]
 == {url-tree}1.10.1[1.10.1] -- 2023-12-07
@@ -125,6 +140,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
   spring-boot, spring-dependency-management, spring-boot-admin, feign, flyway, lombok,
   junit5, kotest, equalsverifier,
   detekt, reckon
+
 
 [[v1.9.0]]
 == {url-tree}1.9.0[1.9.0] -- 2023-10-08
