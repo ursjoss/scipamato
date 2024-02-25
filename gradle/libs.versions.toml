@@ -1,42 +1,44 @@
 [versions]
-coroutines = "1.7.0"
-detektPlugin = "1.22.0"
+coroutines = "1.8.0"
+detektPlugin = "1.23.5"
+# see https://github.com/detekt/detekt/issues/6198
+detektKotlinVersion = "1.9.22"
 ehcache = "3.10.8"
 equalsverifier = "3.14.1"
-flyway = "9.17.0"
+flyway = "9.22.3"
 jacoco = "0.8.8"
-jasperreports = "6.20.4"
+jasperreports = "6.21.2"
 java = "17"
 javaxEl = "3.0.1-b12"
 javaxElApi = "3.0.1-b06"
-jaxbPlugin = "6.0.0"
+jaxbPlugin = "7.0.0"
 jooq = "3.18.3"
 jooqModelatorPlugin = "3.9.0"
 jsr305 = "3.0.2"
-junitJupiter = "5.9.3"
+junitJupiter = "5.10.2"
 kluent = "1.73"
-kotest = "5.6.1"
-kotlin = "1.8.21"
+kotest = "5.8.0"
+kotlin = "1.9.22"
 kotlinLogging = "3.0.5"
-kris = "0.4.6"
+kris = "0.5.0"
 licensePlugin = "0.16.1"
-lombokPlugin = "8.0.1"
-mockk = "1.13.5"
-openfeign = "12.3"
-sonarqubePlugin = "4.0.0.2929"
+lombokPlugin = "8.6"
+mockk = "1.13.9"
+openfeign = "13.2.1"
+sonarqubePlugin = "4.4.1.3373"
 springBoot = "3.0.6"
 springBootAdmin = "3.0.3"
 springCloud = "2021.0.0"
 springCloudStarter = "4.0.2"
-springDependencyManagementPlugin = "1.1.0"
+springDependencyManagementPlugin = "1.1.4"
 springMockk = "4.0.2"
-testcontainers = "1.18.0"
+testcontainers = "1.19.6"
 univocityParsers = "2.9.1"
-wicket = "9.13.0"
-wicketBootstrap = "4.0.4"
+wicket = "9.16.0"
+wicketBootstrap = "6.0.5"
 wicketJqueryUi = "9.12.0"
 wicketSpringBootStarter = "3.1.7"
-wicketstuff = "9.13.0"
+wicketstuff = "9.16.0"
 
 [libraries]
 cacheApi = { module = "javax.cache:cache-api" }
@@ -107,7 +109,7 @@ wicket-request = { module = "org.apache.wicket:wicket-request", version.ref = "w
 wicket-spring = { module = "org.apache.wicket:wicket-spring", version.ref = "wicket" }
 wicketBootstrap-core = { module = "de.agilecoders.wicket:wicket-bootstrap-core", version.ref = "wicketBootstrap" }
 wicketBootstrap-extensions = { module = "de.agilecoders.wicket:wicket-bootstrap-extensions", version.ref = "wicketBootstrap" }
-wicketBootstrap-less = { module = "de.agilecoders.wicket:wicket-bootstrap-less", version.ref = "wicketBootstrap" }
+wicketBootstrap-sass = { module = "de.agilecoders.wicket:wicket-bootstrap-sass", version.ref = "wicketBootstrap" }
 wicketBootstrap-themes = { module = "de.agilecoders.wicket:wicket-bootstrap-themes", version.ref = "wicketBootstrap" }
 wicketJqueryUi = { module = "com.googlecode.wicket-jquery-ui:wicket-jquery-ui", version.ref = "wicketJqueryUi" }
 wicketJqueryUi-theme-uilightness = { module = "com.googlecode.wicket-jquery-ui:wicket-jquery-ui-theme-uilightness", version.ref = "wicketJqueryUi" }

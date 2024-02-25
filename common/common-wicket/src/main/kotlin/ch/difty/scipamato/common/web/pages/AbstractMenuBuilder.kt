@@ -18,13 +18,13 @@ import org.apache.wicket.markup.html.link.AbstractLink
 import org.apache.wicket.model.Model
 import org.apache.wicket.model.StringResourceModel
 import org.apache.wicket.request.mapper.parameter.PageParameters
-import java.util.ArrayList
 
 abstract class AbstractMenuBuilder protected constructor(
     val applicationProperties: ApplicationProperties,
     private val webSessionFacade: ScipamatoWebSessionFacade,
 ) : MenuBuilder {
 
+    @Suppress("LongParameterList")
     fun <P : Page> addPageLink(
         navbar: Navbar,
         menuPage: Page,
@@ -68,11 +68,17 @@ abstract class AbstractMenuBuilder protected constructor(
                     StringResourceModel("menu.$labelResource", page, null),
                     Model.of(iconType)
                 ) {
-                    override fun newSubMenuButtons(buttonMarkupId: String) = ArrayList<AbstractLink>().apply { action.accept(this) }
+                    @java.io.Serial
+                    private val serialVersionUID: Long = 1L
+
+                    override fun newSubMenuButtons(buttonMarkupId: String) = ArrayList<AbstractLink>().apply {
+                        action.accept(this)
+                    }
                 }
             ))
     }
 
+    @Suppress("LongParameterList")
     @JvmOverloads
     fun <P : AbstractPage<*>?> addEntryToMenu(
         label: String,
@@ -93,7 +99,7 @@ abstract class AbstractMenuBuilder protected constructor(
     val versionAnker: String
         get() {
             val buildVersion = applicationProperties.buildVersion
-            return if (buildVersion == null || buildVersion.isEmpty()) ""
+            return if (buildVersion.isNullOrEmpty()) ""
             else "#" + if (buildVersion.endsWith("SNAPSHOT")) "unreleased" else "v$buildVersion"
         }
 
@@ -101,4 +107,9 @@ abstract class AbstractMenuBuilder protected constructor(
         get() = "version ${applicationProperties.buildVersion}"
 
     fun hasOneOfRoles(vararg roles: String): Boolean = webSessionFacade.hasAtLeastOneRoleOutOf(*roles)
+
+    companion object {
+        @java.io.Serial
+        private val serialVersionUID: Long = 1L
+    }
 }

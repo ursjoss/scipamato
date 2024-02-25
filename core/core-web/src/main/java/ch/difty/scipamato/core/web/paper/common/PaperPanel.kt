@@ -31,8 +31,8 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.button.ButtonBehavior
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons
 import de.agilecoders.wicket.core.markup.html.bootstrap.image.IconType
 import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.BootstrapTabbedPanel
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.fileUpload.DropZoneFileUpload
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.checkboxx.CheckBoxX
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.fileinput.BootstrapFileInput
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelect
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelectConfig
@@ -397,7 +397,7 @@ abstract class PaperPanel<T>(
     protected abstract fun restartSearchInPaperSearchPage()
     protected abstract fun newExcludeButton(id: String): BootstrapButton
     private fun makeAndQueueSubmitButton(id: String) {
-        submit = object : BootstrapButton(id, StringResourceModel(submitLinkResourceLabel), Buttons.Type.Default) {
+        submit = object : BootstrapButton(id, StringResourceModel(submitLinkResourceLabel), Buttons.Type.Primary) {
             override fun onSubmit() {
                 super.onSubmit()
                 onFormSubmit()
@@ -464,7 +464,6 @@ abstract class PaperPanel<T>(
                 super.onInitialize()
                 if (isVisible) add(ButtonBehavior()
                     .setType(Buttons.Type.Info)
-                    .setBlock(true)
                     .setSize(Buttons.Size.Medium))
             }
 
@@ -787,7 +786,7 @@ abstract class PaperPanel<T>(
             tab6Form.isMultiPart = true
             tab6Form.add(SelfUpdateBroadcastingBehavior(page))
             queue(tab6Form)
-            queue(newDropZoneFileUpload())
+            queue(newFileInput())
             attachments = newAttachmentTable("attachments")
             queue(attachments)
 
@@ -897,7 +896,7 @@ abstract class PaperPanel<T>(
     abstract fun isaNewsletterInStatusWip(): Boolean
     abstract fun modifyNewsletterAssociation(target: AjaxRequestTarget)
     abstract fun newAttachmentTable(id: String): DataTable<PaperAttachment, String>
-    abstract fun newDropZoneFileUpload(): DropZoneFileUpload
+    abstract fun newFileInput(): BootstrapFileInput
 
     /**
      * override if needed

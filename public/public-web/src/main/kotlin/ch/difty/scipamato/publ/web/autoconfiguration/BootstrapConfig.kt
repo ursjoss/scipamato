@@ -6,7 +6,7 @@ import com.giffing.wicket.spring.boot.context.extensions.ApplicationInitExtensio
 import com.giffing.wicket.spring.boot.context.extensions.WicketApplicationInitConfiguration
 import de.agilecoders.wicket.core.Bootstrap
 import de.agilecoders.wicket.core.settings.SingleThemeProvider
-import de.agilecoders.wicket.less.BootstrapLess
+import de.agilecoders.wicket.sass.BootstrapSass
 import de.agilecoders.wicket.webjars.WicketWebjars
 import org.apache.wicket.protocol.http.WebApplication
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass
@@ -23,13 +23,12 @@ open class BootstrapConfig(
 ) : WicketApplicationInitConfiguration {
 
     override fun init(webApplication: WebApplication) {
-        prop.themeProvider = SingleThemeProvider(ScipamatoPublicTheme(applicationProperties.isLessUsedOverCss))
+        prop.themeProvider = SingleThemeProvider(ScipamatoPublicTheme(applicationProperties.isSassUsedOverCss))
 
         WicketWebjars.install(webApplication)
 
         Bootstrap.install(webApplication, prop)
 
-        BootstrapLess.install(webApplication)
+        BootstrapSass.install(webApplication)
     }
-
 }

@@ -5,14 +5,16 @@
     <div class="row">
         <div class="col-sm-4 col-md-4">
             <div class="row">
-                <div wicket:id="searchOverrideLabel"></div>
-                <input wicket:id="searchOverride" class="form-control"/>
+                <div class="col-sm-3 col-md-3">
+                    <div wicket:id="searchOverrideLabel"></div>
+                    <input wicket:id="searchOverride" class="form-control"/>
+                </div>
             </div>
         </div>
-        <div class="col-sm-8 col-md-8 text-right" style="bottom: -20px;">
-            <button type="submit" wicket:id="submit" class="btn btn-md btn-primary" tabindex="-1"></button>
-            <button type="submit" wicket:id="delete" class="btn btn-md" tabindex="-1"></button>
-            <button type="submit" wicket:id="back" class="btn btn-md" tabindex="-1"></button>
+        <div class="col-sm-8 col-md-8 d-md-flex justify-content-md-end" style="margin-top: 1.5em;">
+            <button type="submit" wicket:id="submit" class="btn-md" tabindex="-1"></button>
+            <button type="submit" wicket:id="delete" class="btn-md" tabindex="-1"></button>
+            <button type="submit" wicket:id="back" class="btn-md" tabindex="-1"></button>
         </div>
     </div>
 </wicket:panel>

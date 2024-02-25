@@ -52,7 +52,7 @@ public class Paper extends IdScipamatoEntity<Long> implements CodeBoxAware, News
     private static final String RE_S_WW = "\\s" + RE_WW;
 
     /**
-     * Regex verifying the correctness of an Author string. Comprises of:
+     * Regex verifying the correctness of an Author string. Consists of:
      * <ol>
      * <li>a single author, made up of one or more "name words", each made up of
      * <ul>
@@ -87,7 +87,7 @@ public class Paper extends IdScipamatoEntity<Long> implements CodeBoxAware, News
 
     /**
      * Regex to validate DOIs. Does not capture the full range of possible DOIs, but
-     * nearly all of the likely ones.
+     * nearly all the likely ones.
      *
      * <ol>
      * <li>starting with {@literal 10} followed by a period</li>

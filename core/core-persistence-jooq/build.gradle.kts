@@ -14,13 +14,13 @@ val moduleName = "core/core-persistence-jooq"
 val dbPackageName = "ch.difty.scipamato.core.db"
 val dbPackagePath get() = dbPackageName.replace('.', '/')
 val generatedSourcesPath = "build/generated-src/jooq"
-val jooqConfigFile = "$buildDir/jooqConfig.xml"
+val jooqConfigFile = layout.buildDirectory.get().asFile.resolve("jooqConfig.xml")
 val dockerDbPort = 15432
 val props = file("src/integration-test/resources/application.properties").asProperties()
 
 testing {
     suites {
-        @Suppress("UNUSED_VARIABLE")
+        @Suppress("unused")
         val integrationTest by existing {
             dependencies {
                 implementation(libs.bundles.dbTest)
@@ -35,13 +35,13 @@ jooqModelator {
     jooqVersion = libs.versions.jooq.get()
     jooqEdition = "OSS"
 
-    jooqConfigPath = jooqConfigFile
+    jooqConfigPath = jooqConfigFile.absolutePath
     jooqOutputPath = "$generatedSourcesPath/$dbPackagePath"
 
     migrationEngine = "FLYWAY"
     migrationsPaths = listOf("$rootDir/$moduleName/src/main/resources/db/migration/")
 
-    dockerTag = "postgres:10"
+    dockerTag = "postgres:15.4"
 
     dockerEnv = listOf(
         "POSTGRES_DB=${props.getProperty("db.name")}",
@@ -121,7 +121,7 @@ tasks {
     val jooqMetamodelTaskName = "generateJooqMetamodel"
     withType<JooqModelatorTask> {
         // prevent parallel run of this task between core and public
-        outputs.dir("${rootProject.buildDir}/$jooqMetamodelTaskName")
+        outputs.dir(rootProject.layout.buildDirectory.get().asFile.resolve(jooqMetamodelTaskName))
         dependsOn(processResources)
     }
     getByName("compileKotlin").dependsOn += jooqMetamodelTaskName

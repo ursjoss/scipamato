@@ -1,8 +1,21 @@
+import org.ajoberstar.reckon.gradle.ReckonExtension
+
 pluginManagement {
     repositories {
         mavenCentral()
         gradlePluginPortal()
     }
+}
+
+plugins {
+    id("org.ajoberstar.reckon.settings") version "0.18.3"
+}
+
+configure<ReckonExtension> {
+    setDefaultInferredScope("patch")
+    stages("rc", "final")
+    setScopeCalc(calcScopeFromProp().or(calcScopeFromCommitMessages()))
+    setStageCalc(calcStageFromProp())
 }
 
 @Suppress("UnstableApiUsage")

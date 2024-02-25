@@ -9,7 +9,7 @@ pluginManagement {
 }
 
 plugins {
-    id("org.ajoberstar.reckon.settings") version "0.18.0"
+    id("org.ajoberstar.reckon.settings") version "0.18.3"
 }
 
 configure<ReckonExtension> {
@@ -24,6 +24,8 @@ dependencyResolutionManagement {
     repositories {
         mavenCentral()
         maven { url = uri("https://jaspersoft.jfrog.io/jaspersoft/third-party-ce-artifacts") }
+        // repository providing ua.kasta:jsass
+        maven { url = uri("https://repo.clojars.org") }
     }
 }
 

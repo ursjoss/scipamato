@@ -10,7 +10,7 @@ private val reasonRegex =
     """.+Reason: <strong>([^<]+)</strong>+.+""".toRegex(RegexOption.DOT_MATCHES_ALL)
 
 /**
- * Data Class providing the [PubmedArticleFacade] or an error specific message
+ * Providing the [PubmedArticleFacade] or an error specific message
  * providing information about the problem that prevented the retrieval of the article.
  */
 class PubmedArticleResult(

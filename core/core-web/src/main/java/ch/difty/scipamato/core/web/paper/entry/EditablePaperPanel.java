@@ -13,13 +13,13 @@ import java.util.function.ObjIntConsumer;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
 import de.agilecoders.wicket.core.markup.html.bootstrap.image.IconType;
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.fileUpload.DropZoneFileUpload;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.fileinput.BootstrapFileInput;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome5IconType;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome5IconTypeBuilder;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
+import de.agilecoders.wicket.jquery.Key;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.fileupload.FileItem;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.PageReference;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -31,12 +31,14 @@ import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.markup.html.GenericWebPage;
 import org.apache.wicket.markup.html.form.*;
+import org.apache.wicket.markup.html.form.upload.FileUpload;
 import org.apache.wicket.markup.html.form.validation.AbstractFormValidator;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
+import org.apache.wicket.model.util.ListModel;
 import org.apache.wicket.request.handler.resource.ResourceRequestHandler;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.request.resource.ByteArrayResource;
@@ -619,42 +621,50 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
 
     @NotNull
     @Override
-    public DropZoneFileUpload newDropZoneFileUpload() {
-        DropZoneFileUpload upload = new DropZoneFileUpload("dropzone") {
+    public BootstrapFileInput newFileInput() {
+        final IModel<List<FileUpload>> model = new ListModel<FileUpload>();
+        BootstrapFileInput upload = new BootstrapFileInput("bootstrapFileInput", model) {
             private static final long serialVersionUID = 1L;
 
             @Override
-            protected void onUpload(@NotNull AjaxRequestTarget target, @NotNull Map<String, List<FileItem>> fileMap) {
-                if (fileMap.containsKey("file")) {
-                    Paper p = null;
-                    for (final FileItem file : fileMap.get("file")) {
-                        try {
-                            p = paperService.saveAttachment(convertToPaperAttachment(file));
-                        } catch (Exception ex) {
-                            log.error("Unexpected error when uploading file {}: {}", file.getName(), ex.getMessage());
-                            error("Unexpected error: " + ex.getMessage());
-                        }
-                    }
-                    if (p != null) {
-                        EditablePaperPanel.this.setModelObject(p);
-                        target.add(getAttachments());
+            protected void onSubmit(@NotNull AjaxRequestTarget target) {
+                super.onSubmit(target);
+                Paper p = null;
+                List<FileUpload> fileUploads = model.getObject();
+                for (FileUpload upload : fileUploads) {
+                    try {
+                        p = paperService.saveAttachment(convertToPaperAttachment(upload));
+                    } catch (Exception ex) {
+                        log.error("Unexpected error when uploading file {}: {}", upload.getClientFileName(), ex.getMessage());
+                        error("Unexpected error saving file " + upload.getClientFileName() + ": " + ex.getMessage());
                     }
                 }
+                if (p != null) {
+                    EditablePaperPanel.this.setModelObject(p);
+                    target.add(getAttachments());
+                }
+            }
+
+            @Override
+            protected void onError(final AjaxRequestTarget target) {
+                super.onError(target);
+                log.error("Unexpected error: " + target.getLogData());
+                error("Unexpected error during upload");
             }
 
             @Override
             protected void onConfigure() {
                 super.onConfigure();
-                setVisible(isEditMode() && getModelObject().getId() != null);
+                setVisible(isEditMode() && getId() != null);
             }
         };
         upload
             .getConfig()
-            .withMaxFileSize(getMaxFileSize())
-            .withThumbnailHeight(80)
-            .withThumbnailWidth(80)
-            .withPreviewsContainer(".dropzone-previews")
-            .withParallelUploads(4);
+            .maxFileCount(10);
+        // Migrate to upload.getConfig().maxFileSize(
+        upload
+            .getConfig()
+            .put(new Key<Integer>("maxFileSize", 0), getMaxFileSize());
         return upload;
     }
 
@@ -667,22 +677,22 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
                 .equalsIgnoreCase(unit))
                 return Integer.parseInt(prop
                     .substring(0, prop.length() - unit.length())
-                    .trim());
+                    .trim()) * 1_024;
         } catch (Exception ex) {
             log.error("Unexpected exception when evaluating the max-file-size for file uploads ", ex);
         }
         return -1;
     }
 
-    private PaperAttachment convertToPaperAttachment(final FileItem file) {
+    private PaperAttachment convertToPaperAttachment(final FileUpload upload) {
         final PaperAttachment pa = new PaperAttachment();
         pa.setPaperId(EditablePaperPanel.this
             .getModelObject()
             .getId());
-        pa.setContent(file.get());
-        pa.setContentType(file.getContentType());
-        pa.setSize(file.getSize());
-        pa.setName(sanitize(file.getName()));
+        pa.setContent(upload.getBytes());
+        pa.setContentType(upload.getContentType());
+        pa.setSize(upload.getSize());
+        pa.setName(sanitize(upload.getClientFileName()));
         return pa;
     }
 
