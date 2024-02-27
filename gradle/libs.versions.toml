@@ -9,9 +9,9 @@ flyway = "9.22.3"
 jacoco = "0.8.8"
 jasperreports = "6.21.2"
 java = "17"
-javaxEl = "3.0.1-b12"
-javaxElApi = "3.0.1-b06"
-jaxbPlugin = "7.0.0"
+jakartaElApi = "5.0.1"
+jaxbPlugin = "6.0.0"
+jaxb = "3.0.2"
 jooq = "3.17.20"
 jooqModelatorPlugin = "3.9.0"
 jsr305 = "3.0.2"
@@ -50,11 +50,10 @@ fontAwesome = { module = "org.webjars:font-awesome" }
 hibernate-validator = { module = "org.hibernate.validator:hibernate-validator" }
 jasperreports = { module = "net.sf.jasperreports:jasperreports", version.ref = "jasperreports" }
 jasperreports-fonts = { module = "net.sf.jasperreports:jasperreports-fonts", version.ref = "jasperreports" }
-javax-el-api = { module = "javax.el:javax.el-api", version.ref = "javaxElApi" }
-javax-el-impl = { module = "org.glassfish:javax.el", version.ref = "javaxEl" }
+jakarta-el-api = { module = "jakarta.el:jakarta.el-api", version.ref = "jakartaElApi" }
 jakarta-servletApi = { module = "jakarta.servlet:jakarta.servlet-api" }
-jaxb-api = { module = "javax.xml.bind:jaxb-api" }
-jaxb-runtime = { module = "org.glassfish.jaxb:jaxb-runtime" }
+jakarta-bind-api = { module = "jakarta.xml.bind:jakarta.xml.bind-api" }
+jaxb-runtime = { module = "org.glassfish.jaxb:jaxb-runtime", version.ref = "jaxb" }
 jooq = { module = "org.jooq:jooq", version.ref = "jooq" }
 jsr305 = { module = "com.google.code.findbugs:jsr305", version.ref = "jsr305" }
 junitJupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junitJupiter" }
