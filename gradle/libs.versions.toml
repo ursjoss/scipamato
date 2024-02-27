@@ -121,7 +121,7 @@ plugin-detekt = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", v
 plugin-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 
 [bundles]
-caching = ["spring-boot-starter-cache", "cacheApi", "ehcache"]
+caching = ["spring-boot-starter-cache", "cacheApi"]
 dbTest = ["testcontainers-testcontainers", "testcontainers-junitJupiter", "testcontainers-postgresql"]
 
 [plugins]

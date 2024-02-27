@@ -58,6 +58,11 @@ dependencies {
     implementation(libs.spring.boot.starter.security)
 
     implementation(libs.bundles.caching)
+    implementation(libs.ehcache) {
+        capabilities {
+            requireCapability("org.ehcache:ehcache-jakarta")
+        }
+    }
     runtimeOnly(libs.jaxb.runtime)
 
     testImplementation(project(Module.scipamatoCommon("test")))
