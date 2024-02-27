@@ -63,7 +63,6 @@ dependencies {
             requireCapability("org.ehcache:ehcache-jakarta")
         }
     }
-    runtimeOnly(libs.jaxb.runtime)
 
     testImplementation(project(Module.scipamatoCommon("test")))
 }
