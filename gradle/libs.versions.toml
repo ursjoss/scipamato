@@ -34,11 +34,11 @@ springDependencyManagementPlugin = "1.1.4"
 springMockk = "4.0.2"
 testcontainers = "1.19.6"
 univocityParsers = "2.9.1"
-wicket = "9.16.0"
-wicketBootstrap = "6.0.5"
-wicketJqueryUi = "9.12.0"
-wicketSpringBootStarter = "3.1.7"
-wicketstuff = "9.16.0"
+wicket = "10.0.0-M2"
+wicketBootstrap = "7.0.1"
+wicketJqueryUi = "10.0.0-M1"
+wicketSpringBootStarter = "4.0.0-M1"
+wicketstuff = "10.0.0-M2"
 
 [libraries]
 cacheApi = { module = "javax.cache:cache-api" }
@@ -107,6 +107,7 @@ wicket-extensions = { module = "org.apache.wicket:wicket-extensions", version.re
 wicket-ioc = { module = "org.apache.wicket:wicket-ioc", version.ref = "wicket" }
 wicket-request = { module = "org.apache.wicket:wicket-request", version.ref = "wicket" }
 wicket-spring = { module = "org.apache.wicket:wicket-spring", version.ref = "wicket" }
+wicket-tester = { module = "org.apache.wicket:wicket-tester", version.ref = "wicket" }
 wicketBootstrap-core = { module = "de.agilecoders.wicket:wicket-bootstrap-core", version.ref = "wicketBootstrap" }
 wicketBootstrap-extensions = { module = "de.agilecoders.wicket:wicket-bootstrap-extensions", version.ref = "wicketBootstrap" }
 wicketBootstrap-sass = { module = "de.agilecoders.wicket:wicket-bootstrap-sass", version.ref = "wicketBootstrap" }
