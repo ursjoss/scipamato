@@ -45,6 +45,7 @@ dependencies {
     api(libs.wicket.spring)
     api(libs.wicket.authroles)
     api(libs.wicket.beanvalidation)
+    api(libs.hibernate.validator)
     api(libs.wicket.devutils)
     api(libs.wicket.tester)
     api(libs.wicketstuff.annotation)
