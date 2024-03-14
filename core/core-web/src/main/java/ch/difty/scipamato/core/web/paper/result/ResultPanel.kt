@@ -38,8 +38,8 @@ import ch.difty.scipamato.core.web.paper.jasper.summary.PaperSummaryDataSource
 import ch.difty.scipamato.core.web.paper.jasper.summaryshort.PaperSummaryShortDataSource
 import ch.difty.scipamato.core.web.paper.jasper.summarytable.PaperSummaryTableDataSource
 import de.agilecoders.wicket.core.markup.html.bootstrap.table.TableBehavior
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome5IconType
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome5IconTypeBuilder
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome6IconType
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome6IconTypeBuilder
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable
 import org.apache.wicket.AttributeModifier
 import org.apache.wicket.ajax.AjaxRequestTarget
@@ -171,9 +171,9 @@ abstract class ResultPanel protected constructor(
             StringResourceModel("$COLUMN_HEADER$id", this@ResultPanel, null)
         ) {
             override fun createIconModel(rowModel: IModel<PaperSlim>): IModel<String> {
-                val checkCircle = FontAwesome5IconTypeBuilder.FontAwesome5Regular.check_circle.fixed()
-                val ban = FontAwesome5IconTypeBuilder.FontAwesome5Solid.ban.fixed()
-                return Model.of(if (dataProvider.isShowExcluded) checkCircle.cssClassName() else ban.cssClassName())
+                val circle = FontAwesome6IconTypeBuilder.FontAwesome6Regular.circle_check.fixed()
+                val ban = FontAwesome6IconTypeBuilder.FontAwesome6Solid.ban.fixed()
+                return Model.of(if (dataProvider.isShowExcluded) circle.cssClassName() else ban.cssClassName())
             }
 
             override fun createTitleModel(rowModel: IModel<PaperSlim>): IModel<String> =
@@ -204,15 +204,15 @@ abstract class ResultPanel protected constructor(
      *  * >Otherwise the association is read only.
      */
     private fun makeNewsletterLinkIconColumn(id: String): IColumn<PaperSlim, String> {
-        val plusSquare = FontAwesome5IconTypeBuilder.FontAwesome5Solid.plus_square.fixed()
-        val envelopeOpen = FontAwesome5IconTypeBuilder.FontAwesome5Regular.envelope_open.fixed()
-        val envelope = FontAwesome5IconTypeBuilder.FontAwesome5Regular.envelope.fixed()
+        val plusSquare = FontAwesome6IconTypeBuilder.FontAwesome6Solid.square_plus.fixed()
+        val envelopeOpen = FontAwesome6IconTypeBuilder.FontAwesome6Regular.envelope_open.fixed()
+        val envelope = FontAwesome6IconTypeBuilder.FontAwesome6Regular.envelope.fixed()
         return newLinkIconColumn(id, plusSquare, envelopeOpen, envelope)
     }
 
     private fun newLinkIconColumn(
-        id: String, plusSquare: FontAwesome5IconType,
-        envelopeOpen: FontAwesome5IconType, envelope: FontAwesome5IconType,
+        id: String, plusSquare: FontAwesome6IconType,
+        envelopeOpen: FontAwesome6IconType, envelope: FontAwesome6IconType,
     ): LinkIconColumn<PaperSlim> = object :
         LinkIconColumn<PaperSlim>(StringResourceModel("$COLUMN_HEADER$id", this@ResultPanel, null)) {
         override fun createIconModel(rowModel: IModel<PaperSlim>) = Model.of(newLinkIcon(rowModel.getObject()))

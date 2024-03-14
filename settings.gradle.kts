@@ -22,6 +22,7 @@ configure<ReckonExtension> {
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
+        mavenLocal()
         mavenCentral()
         maven { url = uri("https://jaspersoft.jfrog.io/jaspersoft/third-party-ce-artifacts") }
         // repository providing ua.kasta:jsass
