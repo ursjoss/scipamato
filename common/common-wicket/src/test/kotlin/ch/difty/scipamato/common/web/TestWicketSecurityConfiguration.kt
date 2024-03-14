@@ -31,6 +31,7 @@ open class TestWicketSecurityConfiguration {
     @Bean
     open fun filterChain(http: HttpSecurity): SecurityFilterChain =
         http
+            .securityContext { ctx -> ctx.requireExplicitSave(false) }
             .csrf().disable()
             .authorizeHttpRequests { it.requestMatchers("/**").permitAll() }
             .logout(LogoutConfigurer<HttpSecurity>::permitAll)

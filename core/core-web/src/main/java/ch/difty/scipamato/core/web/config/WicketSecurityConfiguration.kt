@@ -20,7 +20,9 @@ open class WicketSecurityConfiguration(
 
     @Bean
     open fun filterChain(http: HttpSecurity): SecurityFilterChain =
-        http.csrf().disable()
+        http
+            .securityContext { ctx -> ctx.requireExplicitSave(false) }
+            .csrf().disable()
             .authorizeHttpRequests {
                 it.requestMatchers(EndpointRequest.to("health", "info")).permitAll()
                     .requestMatchers("/actuator/").hasRole(ADMIN_ROLE)
