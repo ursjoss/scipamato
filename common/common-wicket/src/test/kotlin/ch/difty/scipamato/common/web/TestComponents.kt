@@ -71,7 +71,7 @@ class TestMenuBuilder(
     }
 }
 
-data class TestRecord(val id: Int, val name: String) : Serializable {
+data class TestRecord(@JvmField val id: Int, @JvmField val name: String) : Serializable {
     companion object {
         private const val serialVersionUID: Long = -6684112836747553253L
     }
