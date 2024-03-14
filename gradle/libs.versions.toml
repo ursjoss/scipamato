@@ -26,13 +26,12 @@ lombokPlugin = "8.6"
 mockk = "1.13.10"
 openfeign = "13.2.1"
 sonarqubePlugin = "4.4.1.3373"
-springBoot = "3.0.13"
+springBoot = "3.1.9"
 springBootAdmin = "3.2.2"
 springCloud = "2022.0.5"
 springCloudStarter = "4.0.6"
 springDependencyManagementPlugin = "1.1.4"
 springMockk = "4.0.2"
-testcontainers = "1.19.7"
 univocityParsers = "2.9.1"
 wicket = "10.0.0"
 wicketBootstrap = "7.0.3-SNAPSHOT"
@@ -93,9 +92,9 @@ spring-core = { module = "org.springframework:spring-core" }
 spring-oxm = { module = "org.springframework:spring-oxm" }
 spring-security-core = { module = "org.springframework.security:spring-security-core" }
 springMockk = { module = "com.ninja-squad:springmockk", version.ref = "springMockk" }
-testcontainers-junitJupiter = { module = "org.testcontainers:junit-jupiter", version.ref = "testcontainers" }
-testcontainers-postgresql = { module = "org.testcontainers:postgresql", version.ref = "testcontainers" }
-testcontainers-testcontainers = { module = "org.testcontainers:testcontainers", version.ref = "testcontainers" }
+testcontainers-junitJupiter = { module = "org.testcontainers:junit-jupiter" }
+testcontainers-postgresql = { module = "org.testcontainers:postgresql" }
+testcontainers-testcontainers = { module = "org.testcontainers:testcontainers" }
 univocity = { module = "com.univocity:univocity-parsers", version.ref = "univocityParsers" }
 validationApi = { module = "jakarta.validation:jakarta.validation-api" }
 wicket-authroles = { module = "org.apache.wicket:wicket-auth-roles", version.ref = "wicket" }
