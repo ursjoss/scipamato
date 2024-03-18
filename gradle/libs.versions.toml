@@ -9,9 +9,8 @@ flyway = "10.10.0"
 jacoco = "0.8.8"
 jasperreports = "6.21.2"
 java = "17"
-jakartaElApi = "5.0.1"
-jaxbPlugin = "6.0.0"
-jaxb = "3.0.2"
+jakartaElApi = "6.0.0-RC1"
+jaxbPlugin = "7.0.0"
 jooq = "3.19.6"
 jooqModelatorPlugin = "3.9.0"
 jsr305 = "3.0.2"
@@ -53,7 +52,7 @@ jasperreports-fonts = { module = "net.sf.jasperreports:jasperreports-fonts", ver
 jakarta-el-api = { module = "jakarta.el:jakarta.el-api", version.ref = "jakartaElApi" }
 jakarta-servletApi = { module = "jakarta.servlet:jakarta.servlet-api" }
 jakarta-bind-api = { module = "jakarta.xml.bind:jakarta.xml.bind-api" }
-jaxb-runtime = { module = "org.glassfish.jaxb:jaxb-runtime", version.ref = "jaxb" }
+jaxb-runtime = { module = "org.glassfish.jaxb:jaxb-runtime" }
 jooq = { module = "org.jooq:jooq", version.ref = "jooq" }
 jsr305 = { module = "com.google.code.findbugs:jsr305", version.ref = "jsr305" }
 junitJupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junitJupiter" }
@@ -70,7 +69,7 @@ kris-core = { module = "ch.difty.kris:kris-core", version.ref = "kris" }
 logback-core = { module = "ch.qos.logback:logback-core" }
 lombok = { module = "org.projectlombok:lombok" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
-openfeign-jaxb = { module = "io.github.openfeign:feign-jaxb", version.ref = "openfeign" }
+openfeign-jaxb = { module = "io.github.openfeign:feign-jaxb-jakarta", version.ref = "openfeign" }
 openfeign-okhttp = { module = "io.github.openfeign:feign-okhttp", version.ref = "openfeign" }
 openfeign-slf4j = { module = "io.github.openfeign:feign-slf4j", version.ref = "openfeign" }
 postgresql = { module = "org.postgresql:postgresql" }
