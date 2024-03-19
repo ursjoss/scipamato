@@ -6,6 +6,7 @@ import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.ProviderManager
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
+import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer
 import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.AuthorityUtils
@@ -31,8 +32,8 @@ open class TestWicketSecurityConfiguration {
     @Bean
     open fun filterChain(http: HttpSecurity): SecurityFilterChain =
         http
+            .csrf(CsrfConfigurer<HttpSecurity>::disable)
             .securityContext { ctx -> ctx.requireExplicitSave(false) }
-            .csrf().disable()
             .authorizeHttpRequests { it.requestMatchers("/**").permitAll() }
             .logout(LogoutConfigurer<HttpSecurity>::permitAll)
             .build()

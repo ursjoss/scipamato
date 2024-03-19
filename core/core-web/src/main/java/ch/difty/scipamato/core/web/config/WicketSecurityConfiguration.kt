@@ -7,6 +7,7 @@ import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.ProviderManager
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
+import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer
 import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
@@ -21,8 +22,8 @@ open class WicketSecurityConfiguration(
     @Bean
     open fun filterChain(http: HttpSecurity): SecurityFilterChain =
         http
+            .csrf(CsrfConfigurer<HttpSecurity>::disable)
             .securityContext { ctx -> ctx.requireExplicitSave(false) }
-            .csrf().disable()
             .authorizeHttpRequests {
                 it.requestMatchers(EndpointRequest.to("health", "info")).permitAll()
                     .requestMatchers("/actuator/").hasRole(ADMIN_ROLE)

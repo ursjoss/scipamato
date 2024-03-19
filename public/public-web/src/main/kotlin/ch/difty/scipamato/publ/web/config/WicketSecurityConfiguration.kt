@@ -8,6 +8,8 @@ import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.ProviderManager
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
+import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer
 import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer
 import org.springframework.security.core.userdetails.User
 import org.springframework.security.core.userdetails.UserDetailsService
@@ -22,9 +24,9 @@ open class WicketSecurityConfiguration(
 
     @Bean
     open fun filterChain(http: HttpSecurity): SecurityFilterChain =
-        http.csrf().disable()
-            .headers().frameOptions().disable()
-            .and()
+        http
+            .csrf(CsrfConfigurer<HttpSecurity>::disable)
+            .headers { h -> h.frameOptions(HeadersConfigurer<HttpSecurity>.FrameOptionsConfig::disable) }
             .authorizeHttpRequests {
                 it.requestMatchers(EndpointRequest.to("health", "info")).permitAll()
                     .requestMatchers("/actuator/").hasRole(ADMIN_ROLE)
