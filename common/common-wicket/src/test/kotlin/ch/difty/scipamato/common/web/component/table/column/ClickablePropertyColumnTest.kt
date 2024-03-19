@@ -84,11 +84,11 @@ internal class ClickablePropertyColumnTest : WicketBaseTest() {
 //        tester.clickLink("panel:table:body:rows:1:cells:2:cell:link")
 //        clickPerformed shouldBeEqualTo "TestRecord(id=1, name=foo)"
 //    }
-//
-//    private fun setVariable(trModel: IModel<TestRecord>?) {
-//        val testRecord = trModel?.getObject()
-//        clickPerformed = testRecord?.toString()
-//    }
+
+    private fun setVariable(trModel: IModel<TestRecord>?) {
+        val testRecord = trModel?.getObject()
+        clickPerformed = testRecord?.toString()
+    }
 
     private fun assertComponents() {
         tester.assertComponent("panel", ClickablePropertyColumnTestPanel::class.java)
