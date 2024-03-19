@@ -50,10 +50,9 @@ internal class LinkIconColumnTest : WicketBaseTest() {
     }
 
     private fun assertImageTitle() {
-          // TODO reactivate with Wicket 10
-//        val responseTxt = tester.lastResponse.document
-//        val tagTester = TagTester.createTagByName(responseTxt, "i")
-//        tagTester.getAttribute("title") shouldBeEqualTo "the title"
+        val responseTxt = tester.lastResponse.document
+        val tagTester = TagTester.createTagByName(responseTxt, "i")
+        tagTester.getAttribute("title") shouldBeEqualTo "the title"
     }
 
     @Test
@@ -65,10 +64,9 @@ internal class LinkIconColumnTest : WicketBaseTest() {
     }
 
     private fun assertNoImageTitle() {
-          // TODO reactivate with Wicket 10
-//        val responseTxt = tester.lastResponse.document
-//        val tagTester = TagTester.createTagByName(responseTxt, "i")
-//        tagTester.getAttribute("title").shouldBeNull()
+        val responseTxt = tester.lastResponse.document
+        val tagTester = TagTester.createTagByName(responseTxt, "i")
+        tagTester.getAttribute("title").shouldBeNull()
     }
 
     @Test
