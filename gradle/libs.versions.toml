@@ -52,7 +52,7 @@ jakarta-el-api = { module = "jakarta.el:jakarta.el-api", version.ref = "jakartaE
 jakarta-servletApi = { module = "jakarta.servlet:jakarta.servlet-api" }
 jakarta-bind-api = { module = "jakarta.xml.bind:jakarta.xml.bind-api" }
 jaxb-runtime = { module = "org.glassfish.jaxb:jaxb-runtime" }
-jooq = { module = "org.jooq:jooq", version.ref = "jooq" }
+jooq = { module = "org.jooq:jooq" }
 jsr305 = { module = "com.google.code.findbugs:jsr305", version.ref = "jsr305" }
 junitJupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junitJupiter" }
 junitJupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junitJupiter" }
