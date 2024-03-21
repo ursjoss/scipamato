@@ -31,7 +31,7 @@ testing {
 }
 
 jooqModelator {
-    jooqVersion = libs.versions.jooq.get()
+    jooqVersion = libs.jooq.get().version
     jooqEdition = "OSS"
 
     jooqConfigPath = jooqConfigFile.absolutePath
