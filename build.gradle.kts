@@ -34,7 +34,6 @@ plugins {
 }
 
 extra["spring.cloudVersion"] = libs.versions.springCloud.get()
-extra["flyway.version"] = libs.versions.flyway.get()
 
 dependencyManagement {
     imports {
