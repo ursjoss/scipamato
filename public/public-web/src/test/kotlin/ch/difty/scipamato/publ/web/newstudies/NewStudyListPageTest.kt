@@ -9,7 +9,9 @@ import ch.difty.scipamato.publ.entity.Newsletter
 import ch.difty.scipamato.publ.persistence.api.NewStudyTopicService
 import ch.difty.scipamato.publ.web.CommercialFontResourceProvider
 import ch.difty.scipamato.publ.web.PublicPageParameters
+import ch.difty.scipamato.publ.web.clickLinkSameSite
 import ch.difty.scipamato.publ.web.common.BasePageTest
+import ch.difty.scipamato.publ.web.newFormTesterSameSite
 import ch.difty.scipamato.publ.web.paper.browse.PublicPaperDetailPage
 import ch.difty.scipamato.publ.web.resources.IcoMoonIconType
 import com.ninjasquad.springmockk.MockkBean
@@ -28,7 +30,6 @@ import org.apache.wicket.markup.html.list.ListView
 import org.apache.wicket.request.mapper.parameter.PageParameters
 import org.junit.jupiter.api.Test
 import java.time.LocalDate
-import java.util.ArrayList
 
 @Suppress("unused")
 class NewStudyListPageTest : BasePageTest<NewStudyListPage>() {
@@ -138,9 +139,9 @@ class NewStudyListPageTest : BasePageTest<NewStudyListPage>() {
     fun canAccessPublicPaperDetailPageForSpecificPaper_andReturnToNewStudyListPageFromThere() {
         tester.startPage(makePage())
         tester.assertRenderedPage(pageClass)
-        tester.clickLink("topics:1:topicStudies:0:reference")
+        tester.clickLinkSameSite("topics:1:topicStudies:0:reference")
         tester.assertRenderedPage(PublicPaperDetailPage::class.java)
-        tester.newFormTester("form").submit("back")
+        tester.newFormTesterSameSite("form").submit("back")
         tester.assertRenderedPage(NewStudyListPage::class.java)
     }
 
@@ -218,7 +219,7 @@ class NewStudyListPageTest : BasePageTest<NewStudyListPage>() {
     fun clickingLinkToArchivedNewsletter() {
         tester.startPage(makePage())
         tester.assertRenderedPage(pageClass)
-        tester.clickLink("archive:1:monthName")
+        tester.clickLinkSameSite("archive:1:monthName")
         tester.assertRenderedPage(NewStudyListPage::class.java)
         tester.debugComponentTrees()
 

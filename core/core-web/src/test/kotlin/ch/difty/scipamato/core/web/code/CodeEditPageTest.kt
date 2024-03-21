@@ -7,6 +7,7 @@ import ch.difty.scipamato.core.persistence.OptimisticLockingException
 import ch.difty.scipamato.core.web.authentication.LogoutPage
 import ch.difty.scipamato.core.web.code.CodeEditHeaderPanel.CodeMustMatchCodeClassValidator
 import ch.difty.scipamato.core.web.common.BasePageTest
+import ch.difty.scipamato.newFormTesterSameSite
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.checkboxx.CheckBoxX
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelect
@@ -115,7 +116,7 @@ internal class CodeEditPageTest : BasePageTest<CodeEditPage>() {
 
     private fun runSubmitTest() {
         tester.startPage(CodeEditPage(Model.of(cd), null))
-        val formTester = tester.newFormTester("form")
+        val formTester = tester.newFormTesterSameSite("form")
         formTester.setValue("translationsPanel:translations:1:name", "foo")
         assertTranslation("form:translationsPanel:translations:", 1, "de", "Name1", "some comment")
         formTester.submit("headerPanel:submit")
@@ -190,7 +191,7 @@ internal class CodeEditPageTest : BasePageTest<CodeEditPage>() {
 
     private fun assertCodeCodeClassMismatch(code: String?) {
         tester.startPage(CodeEditPage(Model.of(cd), null))
-        val formTester = tester.newFormTester("form")
+        val formTester = tester.newFormTesterSameSite("form")
         formTester.setValue("headerPanel:code", code)
         formTester.submit("headerPanel:submit")
         tester.assertErrorMessages("The first digit of the Code must match the Code Class Number.")
@@ -203,7 +204,7 @@ internal class CodeEditPageTest : BasePageTest<CodeEditPage>() {
         every { codeServiceMock.getCodeClass1("en_us") } returns cc1
         every { codeServiceMock.countByFilter(any()) } returns 0
         tester.startPage(CodeEditPage(Model.of(cd), null))
-        val formTester = tester.newFormTester("form")
+        val formTester = tester.newFormTesterSameSite("form")
         formTester.submit("headerPanel:delete")
         tester.assertNoInfoMessage()
         tester.assertNoErrorMessage()
@@ -217,7 +218,7 @@ internal class CodeEditPageTest : BasePageTest<CodeEditPage>() {
     fun submittingDelete_withServiceReturningNull_informsAboutRepoError() {
         every { codeServiceMock.delete(any(), any()) } returns null
         tester.startPage(CodeEditPage(Model.of(cd), null))
-        val formTester = tester.newFormTester("form")
+        val formTester = tester.newFormTesterSameSite("form")
         formTester.submit("headerPanel:delete")
         tester.assertNoInfoMessage()
         tester.assertErrorMessages("Could not delete code 2A.")
@@ -231,7 +232,7 @@ internal class CodeEditPageTest : BasePageTest<CodeEditPage>() {
             "nested exception is org.postgresql.util.PSQLException..."
         every { codeServiceMock.delete(any(), any()) } throws DataIntegrityViolationException(msg)
         tester.startPage(CodeEditPage(Model.of(cd), null))
-        val formTester = tester.newFormTester("form")
+        val formTester = tester.newFormTesterSameSite("form")
         formTester.submit("headerPanel:delete")
         tester.assertNoInfoMessage()
         tester.assertErrorMessages("You cannot delete code '2A' as it is still assigned to at least one paper.")
@@ -243,7 +244,7 @@ internal class CodeEditPageTest : BasePageTest<CodeEditPage>() {
         every { codeServiceMock.delete(any(), any()) } throws
             OptimisticLockingException("code_class", OptimisticLockingException.Type.DELETE)
         tester.startPage(CodeEditPage(Model.of(cd), null))
-        val formTester = tester.newFormTester("form")
+        val formTester = tester.newFormTesterSameSite("form")
         formTester.submit("headerPanel:delete")
         tester.assertNoInfoMessage()
         tester.assertErrorMessages(
@@ -257,7 +258,7 @@ internal class CodeEditPageTest : BasePageTest<CodeEditPage>() {
     fun submittingDelete_withException_addsErrorMsg() {
         every { codeServiceMock.delete(any(), any()) } throws RuntimeException("boom")
         tester.startPage(CodeEditPage(Model.of(cd), null))
-        val formTester = tester.newFormTester("form")
+        val formTester = tester.newFormTesterSameSite("form")
         formTester.submit("headerPanel:delete")
         tester.assertNoInfoMessage()
         tester.assertErrorMessages("An unexpected error occurred when trying to delete code 2A: boom")
@@ -270,7 +271,7 @@ internal class CodeEditPageTest : BasePageTest<CodeEditPage>() {
         every { codeServiceMock.countByFilter(any()) } returns 0
 
         tester.startPage(CodeEditPage(Model.of(cd), null))
-        val formTester = tester.newFormTester("form")
+        val formTester = tester.newFormTesterSameSite("form")
         formTester.submit("headerPanel:back")
         tester.assertRenderedPage(CodeListPage::class.java)
 
@@ -282,7 +283,7 @@ internal class CodeEditPageTest : BasePageTest<CodeEditPage>() {
     @Test
     fun clickingBackButton_withPageWithCallingPageRef_forwardsToThat() {
         tester.startPage(CodeEditPage(Model.of(cd), LogoutPage(PageParameters()).pageReference))
-        val formTester = tester.newFormTester("form")
+        val formTester = tester.newFormTesterSameSite("form")
         formTester.submit("headerPanel:back")
         tester.assertRenderedPage(LogoutPage::class.java)
     }

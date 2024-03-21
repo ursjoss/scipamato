@@ -1,5 +1,6 @@
 package ch.difty.scipamato.core.web.newsletter.list
 
+import ch.difty.scipamato.clickLinkSameSite
 import ch.difty.scipamato.common.entity.newsletter.PublicationStatus
 import ch.difty.scipamato.common.web.component.table.column.LinkIconPanel
 import ch.difty.scipamato.core.entity.newsletter.Newsletter
@@ -99,7 +100,7 @@ internal class NewsletterListPageTest : BasePageTest<NewsletterListPage>() {
     @Test
     fun clickingOnNewsletterIssue_forwardsToNewsletterEntryPage_withModelLoaded() {
         tester.startPage(pageClass)
-        tester.clickLink("results:body:rows:1:cells:1:cell:link")
+        tester.clickLinkSameSite("results:body:rows:1:cells:1:cell:link")
         tester.assertRenderedPage(NewsletterEditPage::class.java)
 
         // verify the newsletter was loaded in the target page
@@ -149,7 +150,8 @@ internal class NewsletterListPageTest : BasePageTest<NewsletterListPage>() {
         tester.startPage(pageClass)
 
         tester.assertRenderedPage(pageClass)
-        tester.clickLink("results:body:rows:1:cells:4:cell:link")
+
+        tester.clickLinkSameSite("results:body:rows:1:cells:4:cell:link")
         tester.assertRenderedPage(NewsletterTopicSortPage::class.java)
 
         verify { newsletterServiceMock.countByFilter(any()) }
@@ -164,7 +166,8 @@ internal class NewsletterListPageTest : BasePageTest<NewsletterListPage>() {
             startPage(pageClass)
 
             assertRenderedPage(pageClass)
-            clickLink("results:body:rows:1:cells:5:cell:link")
+
+            clickLinkSameSite("results:body:rows:1:cells:5:cell:link")
             assertComponentOnAjaxResponse("filterForm:newNewsletter")
             assertComponentOnAjaxResponse("results")
             assertComponentOnAjaxResponse("feedback")
@@ -182,7 +185,8 @@ internal class NewsletterListPageTest : BasePageTest<NewsletterListPage>() {
         tester.startPage(pageClass)
 
         tester.assertRenderedPage(pageClass)
-        tester.clickLink("results:body:rows:2:cells:5:cell:link")
+
+        tester.clickLinkSameSite("results:body:rows:2:cells:5:cell:link")
 
         verify { newsletterServiceMock.countByFilter(any()) }
         verify { newsletterServiceMock.findPageByFilter(any(), any()) }

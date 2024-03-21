@@ -5,6 +5,8 @@ import ch.difty.scipamato.common.config.ApplicationProperties
 import ch.difty.scipamato.common.web.PASSWORD
 import ch.difty.scipamato.common.web.USERNAME
 import ch.difty.scipamato.common.web.WicketBaseTest
+import ch.difty.scipamato.common.web.newFormTesterSameSite
+import ch.difty.scipamato.common.web.submitFormSameSite
 import com.ninjasquad.springmockk.MockkBean
 import de.agilecoders.wicket.core.markup.html.bootstrap.common.NotificationPanel
 import org.apache.wicket.markup.html.form.PasswordTextField
@@ -47,7 +49,7 @@ internal class AbstractLoginPageTest : WicketBaseTest() {
     fun submitting_withoutLoginData_rendersErrorMessages() {
         tester.startPage(page)
         tester.assertRenderedPage(AbstractLoginPage::class.java)
-        tester.submitForm("form")
+        tester.submitFormSameSite("form")
 
         tester.assertRenderedPage(AbstractLoginPage::class.java)
 
@@ -58,8 +60,7 @@ internal class AbstractLoginPageTest : WicketBaseTest() {
     fun submitting_withInvalidCredentials_doesNotLoginAndRendersErrorMessage() {
         tester.startPage(page)
         tester.assertRenderedPage(TestLoginPage::class.java)
-
-        val formTester = tester.newFormTester("form")
+        val formTester = tester.newFormTesterSameSite("form")
         formTester.setValue("username", USERNAME)
         formTester.setValue("password", "Invalid")
 
@@ -72,8 +73,7 @@ internal class AbstractLoginPageTest : WicketBaseTest() {
     fun submitting_withValidCredentials_doesLoginAndForwardsToTestHomePage() {
         tester.startPage(page)
         tester.assertRenderedPage(TestLoginPage::class.java)
-
-        val formTester = tester.newFormTester("form")
+        val formTester = tester.newFormTesterSameSite("form")
         formTester.setValue("username", USERNAME)
         formTester.setValue("password", PASSWORD)
 

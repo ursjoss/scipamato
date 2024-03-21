@@ -1,5 +1,6 @@
 package ch.difty.scipamato.core.web.paper.search
 
+import ch.difty.scipamato.clickLinkSameSite
 import ch.difty.scipamato.common.web.Mode
 import ch.difty.scipamato.common.web.component.table.column.LinkIconPanel
 import ch.difty.scipamato.core.entity.search.SearchCondition
@@ -7,6 +8,7 @@ import ch.difty.scipamato.core.entity.search.SearchOrder
 import ch.difty.scipamato.core.entity.search.SearchTerm
 import ch.difty.scipamato.core.entity.search.SearchTermType
 import ch.difty.scipamato.core.web.common.PanelTest
+import ch.difty.scipamato.newFormTesterSameSite
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable
 import org.amshove.kluent.shouldBeFalse
@@ -72,7 +74,7 @@ internal abstract class SearchOrderPanelTest : PanelTest<SearchOrderPanel>() {
     @Test
     fun clickingNewButton_forwardsToPaperSearchCriteriaPage() {
         tester.startComponentInPage(makePanel())
-        val formTester = tester.newFormTester("$PANEL_ID:form", false)
+        val formTester = tester.newFormTesterSameSite("$PANEL_ID:form", false)
         formTester.submit("addSearchCondition")
         tester.assertRenderedPage(PaperSearchCriteriaPage::class.java)
     }
@@ -80,7 +82,7 @@ internal abstract class SearchOrderPanelTest : PanelTest<SearchOrderPanel>() {
     @Test
     fun clickingLink_opensPaperSearchCriteriaPage() {
         tester.startComponentInPage(makePanel())
-        tester.clickLink("$PANEL_ID:form:searchConditions:body:rows:1:cells:1:cell:link")
+        tester.clickLinkSameSite("$PANEL_ID:form:searchConditions:body:rows:1:cells:1:cell:link")
         tester.assertRenderedPage(PaperSearchCriteriaPage::class.java)
     }
 

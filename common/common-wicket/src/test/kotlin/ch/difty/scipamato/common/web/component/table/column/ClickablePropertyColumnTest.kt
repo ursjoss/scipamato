@@ -2,6 +2,7 @@ package ch.difty.scipamato.common.web.component.table.column
 
 import ch.difty.scipamato.common.web.TestRecord
 import ch.difty.scipamato.common.web.WicketBaseTest
+import ch.difty.scipamato.common.web.clickLinkSameSite
 import ch.difty.scipamato.common.web.component.SerializableConsumer
 import io.mockk.mockk
 import io.mockk.verify
@@ -65,25 +66,23 @@ internal class ClickablePropertyColumnTest : WicketBaseTest() {
         clickPerformed.shouldBeNull()
     }
 
-    // TODO delete or fix and reactivate
-//    @Test
-//    fun clickLink() {
-//        tester.startComponentInPage(
-//            ClickablePropertyColumnTestPanel("panel", ::setVariable, false)
-//        )
-//        tester.debugComponentTrees()
-//        tester.clickLink("panel:table:body:rows:1:cells:2:cell:link")
-//        clickPerformed shouldBeEqualTo "TestRecord(id=1, name=foo)"
-//    }
-//
-//    @Test
-//    fun clickLink_inNewTab() {
-//        tester.startComponentInPage(
-//            ClickablePropertyColumnTestPanel("panel", ::setVariable, true)
-//        )
-//        tester.clickLink("panel:table:body:rows:1:cells:2:cell:link")
-//        clickPerformed shouldBeEqualTo "TestRecord(id=1, name=foo)"
-//    }
+    @Test
+    fun clickLink() {
+        tester.startComponentInPage(
+            ClickablePropertyColumnTestPanel("panel", ::setVariable, false)
+        )
+        tester.clickLinkSameSite("panel:table:body:rows:1:cells:2:cell:link")
+        clickPerformed shouldBeEqualTo "TestRecord(id=1, name=foo)"
+    }
+
+    @Test
+    fun clickLink_inNewTab() {
+        tester.startComponentInPage(
+            ClickablePropertyColumnTestPanel("panel", ::setVariable, true)
+        )
+        tester.clickLinkSameSite("panel:table:body:rows:1:cells:2:cell:link")
+        clickPerformed shouldBeEqualTo "TestRecord(id=1, name=foo)"
+    }
 
     private fun setVariable(trModel: IModel<TestRecord>?) {
         val testRecord = trModel?.getObject()

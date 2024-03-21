@@ -1,5 +1,6 @@
 package ch.difty.scipamato.core.web.paper.entry
 
+import ch.difty.scipamato.clickLinkSameSite
 import ch.difty.scipamato.common.web.Mode
 import ch.difty.scipamato.core.entity.Paper.NewsletterLink
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton
@@ -35,7 +36,7 @@ internal class EditablePaperPanelInViewModeTest : EditablePaperPanelTest() {
         tester.assertInvisible("$b:exclude")
         tester.assertInvisible("$b:pubmedRetrieval")
         tester.assertInvisible("$b:modAssociation")
-        tester.clickLink("panel:form:tabs:tabs-container:tabs:5:link")
+        tester.clickLinkSameSite("panel:form:tabs:tabs-container:tabs:5:link")
         val bb = "$b:tabs:panel:tab6Form"
         // TODO reactivate
 //        tester.assertInvisible("$bb:dropzone")

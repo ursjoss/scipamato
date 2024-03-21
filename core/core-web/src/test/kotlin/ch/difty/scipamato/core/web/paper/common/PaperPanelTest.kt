@@ -1,5 +1,6 @@
 package ch.difty.scipamato.core.web.paper.common
 
+import ch.difty.scipamato.clickLinkSameSite
 import ch.difty.scipamato.common.entity.CodeClassId
 import ch.difty.scipamato.core.AttachmentAware
 import ch.difty.scipamato.core.NewsletterAware
@@ -18,9 +19,8 @@ import org.apache.wicket.markup.html.form.Form
 import org.apache.wicket.markup.html.form.TextArea
 import org.apache.wicket.markup.html.form.TextField
 import org.junit.jupiter.api.AfterEach
-import java.util.ArrayList
 
-abstract class PaperPanelTest<T, P : PaperPanel<T>> : PanelTest<P>() where T : CodeBoxAware, T : NewsletterAware, T: AttachmentAware {
+abstract class PaperPanelTest<T, P : PaperPanel<T>> : PanelTest<P>() where T : CodeBoxAware, T : NewsletterAware, T : AttachmentAware {
 
     private val codeClasses: MutableList<CodeClass> = ArrayList()
     private val codesOfClass1: MutableList<Code> = ArrayList()
@@ -145,7 +145,7 @@ abstract class PaperPanelTest<T, P : PaperPanel<T>> : PanelTest<P>() where T : C
         assertTextAreaWithLabel("$bbb:methodOutcome", "mo", "Outcome")
         assertTextAreaWithLabel("$bbb:methodStatistics", "ms", "Statistical Method")
         assertTextAreaWithLabel("$bbb:methodConfounders", "mc", "Confounders")
-        tester.clickLink("panel:form:tabs:tabs-container:tabs:1:link")
+        tester.clickLinkSameSite("panel:form:tabs:tabs-container:tabs:1:link")
         bbb = "$bb:tab2Form"
         tester.assertComponent(bbb, Form::class.java)
         assertTextAreaWithLabel("$bbb:result", "r", "Results")
@@ -155,7 +155,7 @@ abstract class PaperPanelTest<T, P : PaperPanel<T>> : PanelTest<P>() where T : C
         assertTextAreaWithLabel("$bbb:resultExposureRange", "rer", "Exposure (Range)")
         assertTextAreaWithLabel("$bbb:resultEffectEstimate", "ree", "Effect Estimate/Results")
         assertTextAreaWithLabel("$bbb:conclusion", "cc", "Conclusion")
-        tester.clickLink("panel:form:tabs:tabs-container:tabs:2:link")
+        tester.clickLinkSameSite("panel:form:tabs:tabs-container:tabs:2:link")
         bbb = "$bb:tab3Form"
         tester.assertComponent(bbb, Form::class.java)
         assertMultiselectWithLabel("$bbb:codesClass1", newC(1, "F"), "cc1")
@@ -167,7 +167,7 @@ abstract class PaperPanelTest<T, P : PaperPanel<T>> : PanelTest<P>() where T : C
         assertMultiselectWithLabel("$bbb:codesClass6", newC(6, "A"), "cc6")
         assertMultiselectWithLabel("$bbb:codesClass7", newC(7, "A"), "cc7")
         assertMultiselectWithLabel("$bbb:codesClass8", newC(8, "A"), "cc8")
-        tester.clickLink("panel:form:tabs:tabs-container:tabs:3:link")
+        tester.clickLinkSameSite("panel:form:tabs:tabs-container:tabs:3:link")
         bbb = "$bb:tab4Form"
         tester.assertComponent(bbb, Form::class.java)
         assertTextAreaWithLabel("$bbb:populationPlace", "ppl", "Place/Country")
@@ -183,14 +183,14 @@ abstract class PaperPanelTest<T, P : PaperPanel<T>> : PanelTest<P>() where T : C
         assertTextAreaWithLabel("$bbb:resultExposureRange", "rer", "Exposure (Range)")
         assertTextAreaWithLabel("$bbb:conclusion", "cc", "Conclusion")
         assertTextAreaWithLabel("$bbb:resultEffectEstimate", "ree", "Effect Estimate/Results")
-        tester.clickLink("panel:form:tabs:tabs-container:tabs:4:link")
+        tester.clickLinkSameSite("panel:form:tabs:tabs-container:tabs:4:link")
         bbb = "$bb:tab5Form"
         assertTextAreaWithLabel("$bbb:originalAbstract", "oa", "Original Abstract")
         tester.assertComponent(bbb, Form::class.java)
-        tester.clickLink("panel:form:tabs:tabs-container:tabs:5:link")
+        tester.clickLinkSameSite("panel:form:tabs:tabs-container:tabs:5:link")
         bbb = "$bb:tab6Form"
         tester.assertComponent(bbb, Form::class.java)
-        tester.clickLink("panel:form:tabs:tabs-container:tabs:6:link")
+        tester.clickLinkSameSite("panel:form:tabs:tabs-container:tabs:6:link")
         bbb = "$bb:tab7Form"
         tester.assertComponent(bbb, Form::class.java)
         bb = "$b:tabs-container:tabs:"

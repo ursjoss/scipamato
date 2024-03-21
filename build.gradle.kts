@@ -51,6 +51,15 @@ val generatedPackages: Set<String> = setOf(
     "**/ch/difty/scipamato/publ/db/**"
 )
 
+testing {
+    suites {
+        @Suppress("UnstableApiUsage")
+        val test by getting(JvmTestSuite::class) {
+            useJUnitJupiter()
+        }
+    }
+}
+
 jacoco {
     toolVersion = libs.versions.jacoco.get()
 }

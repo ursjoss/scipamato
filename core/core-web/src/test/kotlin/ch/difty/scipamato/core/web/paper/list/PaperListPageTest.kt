@@ -1,5 +1,6 @@
 package ch.difty.scipamato.core.web.paper.list
 
+import ch.difty.scipamato.clickLinkSameSite
 import ch.difty.scipamato.core.config.ApplicationCoreProperties
 import ch.difty.scipamato.core.entity.projection.PaperSlim
 import ch.difty.scipamato.core.logic.parsing.AuthorParserStrategy
@@ -97,7 +98,7 @@ internal abstract class PaperListPageTest : BasePageTest<PaperListPage>() {
         every { paperSlimServiceMock.findPageByFilter(any(), any()) } returns list
         every { paperServiceMock.findByNumber(number, LC) } returns java.util.Optional.empty()
         tester.startPage(pageClass)
-        tester.clickLink("resultPanel:$EDIT_LINK")
+        tester.clickLinkSameSite("resultPanel:$EDIT_LINK")
         tester.assertRenderedPage(PaperEntryPage::class.java)
         verify(exactly = 2) { paperSlimServiceMock.countByFilter(any()) }
         verify { paperSlimServiceMock.findPageByFilter(any(), any()) }
