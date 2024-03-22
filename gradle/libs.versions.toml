@@ -36,7 +36,7 @@ univocityParsers = "2.9.1"
 wicket = "9.17.0"
 wicketBootstrap = "6.0.5"
 wicketJqueryUi = "9.12.0"
-wicketSpringBootStarter = "3.1.7"
+wicketSpringBootStarter = "4.0.0"
 wicketstuff = "9.17.0"
 
 [libraries]
