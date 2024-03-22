@@ -639,7 +639,7 @@ internal class EditablePaperPanelInEditModeTest : EditablePaperPanelTest() {
         assertExcluded(
             false,
             "Exclude paper from current search",
-            "fa-minus-circle"
+            "fa-circle-minus"
         )
     }
 
@@ -649,7 +649,7 @@ internal class EditablePaperPanelInEditModeTest : EditablePaperPanelTest() {
         val tagTester = TagTester.createTagByAttribute(responseTxt, "title", titleValue)
         tagTester.shouldNotBeNull()
         tagTester.name shouldBeEqualTo "button"
-        tagTester.value shouldContain "<i class=\"fas $iconValue\"></i>"
+        tagTester.value shouldContain "<i class=\"fa-solid $iconValue\"></i>"
         verify { newsletterServiceMock.canCreateNewsletterInProgress() }
     }
 
@@ -657,7 +657,7 @@ internal class EditablePaperPanelInEditModeTest : EditablePaperPanelTest() {
     fun startingPageShowingExclusions_adjustsIconAndTitleOfToggleInclusionsButton() {
         assertExcluded(
             true,
-            "Re-include paper into current search", "fa-check-circle"
+            "Re-include paper into current search", "fa-circle-check"
         )
     }
 

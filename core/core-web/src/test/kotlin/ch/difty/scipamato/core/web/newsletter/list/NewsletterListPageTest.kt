@@ -195,7 +195,7 @@ internal class NewsletterListPageTest : BasePageTest<NewsletterListPage>() {
         tester.startPage(pageClass)
 
         tester.assertRenderedPage(pageClass)
-        validateLinkIconColumn(1, "In Progress", "fas fa-trash-alt fa-fw")
+        validateLinkIconColumn(1, "In Progress", "fa-solid fa-trash-can fa-fw")
         validateLinkIconColumn(2, "Published", "")
 
         verify { newsletterServiceMock.countByFilter(any()) }
@@ -207,7 +207,7 @@ internal class NewsletterListPageTest : BasePageTest<NewsletterListPage>() {
         val bodyRow = "results:body:rows:$row:cells:"
         tester.assertLabel(bodyRow + "3:cell", status)
         tester.assertComponent(bodyRow + "4:cell", LinkIconPanel::class.java)
-        tester.assertModelValue(bodyRow + "4:cell", "fas fa-random fa-fw")
+        tester.assertModelValue(bodyRow + "4:cell", "fa-solid fa-shuffle fa-fw")
         tester.assertComponent(bodyRow + "5:cell", LinkIconPanel::class.java)
         tester.assertModelValue(bodyRow + "5:cell", value)
     }
