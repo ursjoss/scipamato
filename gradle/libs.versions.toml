@@ -3,7 +3,7 @@ coroutines = "1.8.0"
 detektPlugin = "1.23.5"
 # see https://github.com/detekt/detekt/issues/6198
 detektKotlinVersion = "1.9.22"
-equalsverifier = "3.15.8"
+equalsverifier = "3.16"
 flyway = "9.22.3"
 jacoco = "0.8.8"
 jasperreports = "6.21.2"
