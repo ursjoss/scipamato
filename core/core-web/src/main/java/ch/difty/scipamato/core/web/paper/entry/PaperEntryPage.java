@@ -85,7 +85,6 @@ import ch.difty.scipamato.core.web.paper.NewsletterChangeEvent;
 @Slf4j
 @AuthorizeInstantiation({ Roles.USER, Roles.ADMIN, Roles.VIEWER })
 public class PaperEntryPage extends SelfUpdatingPage<Paper> {
-// TODO https://nightlies.apache.org/wicket/guide/10.x/single.html#_authorizations
     private static final long serialVersionUID = 1L;
 
     @SpringBean

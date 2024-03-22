@@ -10,7 +10,6 @@ import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 buildscript {
     repositories {
-        mavenLocal()
         mavenCentral()
     }
     dependencies {

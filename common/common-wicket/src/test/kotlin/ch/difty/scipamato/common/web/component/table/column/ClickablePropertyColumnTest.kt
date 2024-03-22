@@ -85,8 +85,7 @@ internal class ClickablePropertyColumnTest : WicketBaseTest() {
     }
 
     private fun setVariable(trModel: IModel<TestRecord>?) {
-        val testRecord = trModel?.getObject()
-        clickPerformed = testRecord?.toString()
+        clickPerformed = trModel?.getObject()?.toString()
     }
 
     private fun assertComponents() {
