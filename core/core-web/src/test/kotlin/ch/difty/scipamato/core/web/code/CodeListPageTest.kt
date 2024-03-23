@@ -1,9 +1,11 @@
 package ch.difty.scipamato.core.web.code
 
+import ch.difty.scipamato.clickLinkSameSite
 import ch.difty.scipamato.core.entity.CodeClass
 import ch.difty.scipamato.core.entity.code.CodeDefinition
 import ch.difty.scipamato.core.entity.code.CodeTranslation
 import ch.difty.scipamato.core.web.common.BasePageTest
+import ch.difty.scipamato.newFormTesterSameSite
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelect
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable
@@ -32,7 +34,6 @@ internal class CodeListPageTest : BasePageTest<CodeListPage>() {
 
     private val results: List<CodeDefinition> = listOf(cd1, cd2)
 
-    @Suppress("LocalVariableName")
     override fun setUpHook() {
         every { codeServiceMock.countByFilter(any()) } returns results.size
         every { codeServiceMock.getCodeClass1("en_us") } returns cc1
@@ -106,7 +107,7 @@ internal class CodeListPageTest : BasePageTest<CodeListPage>() {
     @Test
     fun clickingOnCodeTitle_forwardsToCodeEditPage_withModelLoaded() {
         tester.startPage(pageClass)
-        tester.clickLink("resultPanel:results:body:rows:1:cells:$COLUMN_ID_WITH_LINK:cell:link")
+        tester.clickLinkSameSite("resultPanel:results:body:rows:1:cells:$COLUMN_ID_WITH_LINK:cell:link")
         tester.assertRenderedPage(CodeEditPage::class.java)
 
         // verify the codes were loaded into the target page
@@ -126,7 +127,7 @@ internal class CodeListPageTest : BasePageTest<CodeListPage>() {
         every { codeServiceMock.newUnpersistedCodeDefinition() } returns kd
         tester.startPage(pageClass)
         tester.assertRenderedPage(pageClass)
-        val formTester = tester.newFormTester("filterPanel:filterForm")
+        val formTester = tester.newFormTesterSameSite("filterPanel:filterForm")
         formTester.submit("newCode")
         tester.assertRenderedPage(CodeEditPage::class.java)
         verify { codeServiceMock.getCodeClass1("en_us") }

@@ -5,6 +5,7 @@ import io.mockk.mockk
 import org.jooq.DSLContext
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.springframework.batch.item.Chunk
 import org.springframework.batch.item.ItemWriter
 
 abstract class AbstractItemWriterTest<T, W : ItemWriter<T>> {
@@ -22,7 +23,7 @@ abstract class AbstractItemWriterTest<T, W : ItemWriter<T>> {
 
     @Test
     internal fun writingEmptyList_doesNotInteractWithJooq() {
-        writer.write(ArrayList())
+        writer.write(Chunk(emptyList()))
         confirmVerified(dslContextMock)
     }
 }

@@ -13,7 +13,7 @@ class LoginPage(
 ) : AbstractLoginPage<PublicPage>(parameters) {
 
     override val responsePage: PublicPage
-        get() = PublicPage(pageParameters)
+        get() = PublicPage(pageParameters ?: PageParameters())
 
     companion object {
         private const val serialVersionUID = 1L

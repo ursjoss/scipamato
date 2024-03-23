@@ -33,8 +33,6 @@ plugins {
 }
 
 extra["spring.cloudVersion"] = libs.versions.springCloud.get()
-extra["jooq.version"] = libs.versions.jooq.get()
-extra["flyway.version"] = libs.versions.flyway.get()
 
 dependencyManagement {
     imports {
@@ -51,6 +49,15 @@ val generatedPackages: Set<String> = setOf(
     "**/ch/difty/scipamato/core/pubmed/api/**",
     "**/ch/difty/scipamato/publ/db/**"
 )
+
+testing {
+    suites {
+        @Suppress("UnstableApiUsage")
+        val test by getting(JvmTestSuite::class) {
+            useJUnitJupiter()
+        }
+    }
+}
 
 jacoco {
     toolVersion = libs.versions.jacoco.get()

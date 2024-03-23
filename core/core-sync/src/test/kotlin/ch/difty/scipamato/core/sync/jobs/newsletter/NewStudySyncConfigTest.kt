@@ -11,8 +11,8 @@ import org.jooq.impl.DSL
 import org.jooq.tools.jdbc.MockConnection
 import org.jooq.tools.jdbc.MockDataProvider
 import org.junit.jupiter.api.Test
-import org.springframework.batch.core.configuration.annotation.JobBuilderFactory
-import org.springframework.batch.core.configuration.annotation.StepBuilderFactory
+import org.springframework.batch.core.repository.JobRepository
+import org.springframework.transaction.PlatformTransactionManager
 import java.sql.ResultSet
 import java.sql.Timestamp
 import javax.sql.DataSource
@@ -24,16 +24,16 @@ internal class NewStudySyncConfigTest {
     private val jooqCore: DSLContext = DSL.using(connection, SQLDialect.POSTGRES)
     private val jooqPublic: DSLContext = DSL.using(connection, SQLDialect.POSTGRES)
     private val coreDataSource = mockk<DataSource>()
-    private val jobBuilderFactory = mockk<JobBuilderFactory>()
-    private val stepBuilderFactory = mockk<StepBuilderFactory>()
+    private val jobRepository = mockk<JobRepository>()
+    private val transactionManager = mockk<PlatformTransactionManager>()
     private val dateTimeService = FrozenDateTimeService()
 
     private val config = NewStudySyncConfig(
         jooqCore,
         jooqPublic,
         coreDataSource,
-        jobBuilderFactory,
-        stepBuilderFactory,
+        jobRepository,
+        transactionManager,
         dateTimeService
     )
 

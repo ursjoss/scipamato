@@ -80,21 +80,21 @@ internal class PaperTest : Jsr303ValidatedEntityTest<Paper>(Paper::class.java) {
     fun validatingPaper_withNullNumber_fails() {
         val p = newValidEntity()
         p.number = null
-        validateAndAssertFailure(p, NUMBER, null, "{javax.validation.constraints.NotNull.message}")
+        validateAndAssertFailure(p, NUMBER, null, "{jakarta.validation.constraints.NotNull.message}")
     }
 
     @Test
     fun validatingPaper_withNegativeNumber_fails() {
         val p = newValidEntity()
         p.number = -1L
-        validateAndAssertFailure(p, NUMBER, -1L, "{javax.validation.constraints.Min.message}")
+        validateAndAssertFailure(p, NUMBER, -1L, "{jakarta.validation.constraints.Min.message}")
     }
 
     @Test
     fun validatingPaper_withNullTitle_fails() {
         val p = newValidEntity()
         p.title = null
-        validateAndAssertFailure(p, TITLE, null, "{javax.validation.constraints.NotNull.message}")
+        validateAndAssertFailure(p, TITLE, null, "{jakarta.validation.constraints.NotNull.message}")
     }
 
     private fun verifyFailedAuthorValidation(p: Paper, invalidValue: String) {
@@ -190,7 +190,7 @@ internal class PaperTest : Jsr303ValidatedEntityTest<Paper>(Paper::class.java) {
     fun validatingPaper_withNullFirstAuthor_fails() {
         val p = newValidEntity()
         p.firstAuthor = null
-        validateAndAssertFailure(p, FIRST_AUTHOR, null, "{javax.validation.constraints.NotNull.message}")
+        validateAndAssertFailure(p, FIRST_AUTHOR, null, "{jakarta.validation.constraints.NotNull.message}")
     }
 
     @Test
@@ -211,7 +211,7 @@ internal class PaperTest : Jsr303ValidatedEntityTest<Paper>(Paper::class.java) {
     fun validatingPaper_withNullLocation_fails() {
         val p = newValidEntity()
         p.location = null
-        validateAndAssertFailure(p, LOCATION, null, "{javax.validation.constraints.NotNull.message}")
+        validateAndAssertFailure(p, LOCATION, null, "{jakarta.validation.constraints.NotNull.message}")
     }
 
     @Test
@@ -255,7 +255,7 @@ internal class PaperTest : Jsr303ValidatedEntityTest<Paper>(Paper::class.java) {
     fun validatingPaper_withNullGoals_fails() {
         val p = newValidEntity()
         p.goals = null
-        validateAndAssertFailure(p, GOALS, null, "{javax.validation.constraints.NotNull.message}")
+        validateAndAssertFailure(p, GOALS, null, "{jakarta.validation.constraints.NotNull.message}")
     }
 
     @Test

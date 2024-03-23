@@ -16,7 +16,7 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapExternal
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapLink
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons
 import de.agilecoders.wicket.core.markup.html.bootstrap.image.IconType
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome5IconType
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome6IconType
 import org.apache.wicket.markup.ComponentTag
 import org.apache.wicket.markup.head.CssHeaderItem
 import org.apache.wicket.markup.head.IHeaderResponse
@@ -163,7 +163,7 @@ open class NewStudyListPage(parameters: PageParameters) : BasePage<Void>(paramet
     ) {
     }.apply {
         setTarget(BootstrapExternalLink.Target.blank)
-        setIconType(chooseIcon(FontAwesome5IconType.long_arrow_alt_right_s, IcoMoonIconType.arrow_right))
+        setIconType(chooseIcon(FontAwesome6IconType.right_long_s, IcoMoonIconType.arrow_right))
         setLabel(Model.of(linkItem.modelObject.title))
     }
 
@@ -198,7 +198,7 @@ open class NewStudyListPage(parameters: PageParameters) : BasePage<Void>(paramet
             override fun onClick() = setResponsePage(NewStudyListPage(pp))
         }.apply {
             setLabel(Model.of(monthName))
-            setIconType(chooseIcon(FontAwesome5IconType.link_s, IcoMoonIconType.link))
+            setIconType(chooseIcon(FontAwesome6IconType.link_s, IcoMoonIconType.link))
         }
     }
 

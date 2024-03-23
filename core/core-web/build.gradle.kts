@@ -69,10 +69,14 @@ dependencies {
 
     /** Caching: JCache with ehcache as cache provider */
     implementation(libs.bundles.caching)
-
+    implementation(libs.ehcache) {
+        capabilities {
+            requireCapability("org.ehcache:ehcache-jakarta")
+        }
+    }
     testImplementation(project(Module.scipamatoCommon("test")))
     testImplementation(project(Module.scipamatoCommon("persistence-jooq-test")))
-    testImplementation(libs.javax.servletApi)
+    testImplementation(libs.jakarta.servletApi)
     testImplementation(libs.validationApi)
     testImplementation(libs.lombok)
     testAnnotationProcessor(libs.lombok)

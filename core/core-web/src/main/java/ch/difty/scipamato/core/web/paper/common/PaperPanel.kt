@@ -36,7 +36,7 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.fileinput.Boo
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelect
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelectConfig
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome5IconType
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome6IconType
 import org.apache.wicket.AttributeModifier
 import org.apache.wicket.PageReference
 import org.apache.wicket.ajax.AjaxRequestTarget
@@ -143,11 +143,11 @@ abstract class PaperPanel<T>(
         )
         title = TextArea(PaperFields.TITLE.fieldName)
         val pm = paperIdManager
-        queue(newNavigationButton("previous", FontAwesome5IconType.step_backward_s, { pm.hasPrevious() }) {
+        queue(newNavigationButton("previous", FontAwesome6IconType.backward_step_s, { pm.hasPrevious() }) {
             pm.previous()
             pm.itemWithFocus
         })
-        queue(newNavigationButton("next", FontAwesome5IconType.step_forward_s, { pm.hasNext() }) {
+        queue(newNavigationButton("next", FontAwesome6IconType.forward_step_s, { pm.hasNext() }) {
             pm.next()
             pm.itemWithFocus
         })
@@ -218,10 +218,10 @@ abstract class PaperPanel<T>(
             // Otherwise: Show the open envelope if assigned to current, closed envelope if assigned to closed nl.
             private val iconType: IconType
                 get() = if (!isAssociatedWithNewsletter)
-                    FontAwesome5IconType.plus_square_s
+                    FontAwesome6IconType.square_plus_s
                 else if (isAssociatedWithWipNewsletter)
-                    FontAwesome5IconType.envelope_open_r
-                else FontAwesome5IconType.envelope_r
+                    FontAwesome6IconType.envelope_open_r
+                else FontAwesome6IconType.envelope_r
         }
         addRemoveNewsletter.outputMarkupPlaceholderTag = true
         queue(addRemoveNewsletter)

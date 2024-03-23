@@ -1,8 +1,11 @@
 package ch.difty.scipamato.core.web.paper.entry
 
+import ch.difty.scipamato.clickLinkSameSite
 import ch.difty.scipamato.common.web.Mode
 import ch.difty.scipamato.core.pubmed.PubmedArticleResult
 import ch.difty.scipamato.core.web.paper.search.PaperSearchPage
+import ch.difty.scipamato.newFormTesterSameSite
+import ch.difty.scipamato.submitFormSameSite
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxLink
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton
 import io.mockk.every
@@ -20,9 +23,9 @@ import org.apache.wicket.feedback.FeedbackMessage
 import org.apache.wicket.util.tester.TagTester
 import org.junit.jupiter.api.Test
 import org.springframework.http.HttpStatus
-import java.util.Optional
+import java.util.*
 
-@Suppress("SpellCheckingInspection")
+@Suppress("SpellCheckingInspection", "LargeClass")
 internal class EditablePaperPanelInEditModeTest : EditablePaperPanelTest() {
 
     override val mode: Mode
@@ -77,22 +80,22 @@ internal class EditablePaperPanelInEditModeTest : EditablePaperPanelTest() {
         assertCommonComponents(b)
         b += ":form"
 
-        tester.clickLink("panel:form:tabs:tabs-container:tabs:5:link")
+        tester.clickLinkSameSite("panel:form:tabs:tabs-container:tabs:5:link")
         val bb = "$b:tabs:panel"
         val bbb = "$bb:tab6Form"
         tester.assertInvisible("$bbb:attachmentNameMask")
         tester.assertInvisible("$bbb:hasAttachments")
 
-        verify(exactly=1) { codeClassServiceMock.find(any())}
-        verify(exactly=8) { codeServiceMock.findCodesOfClass(any(), any())}
-        verify(exactly= 8) { newsletterServiceMock.canCreateNewsletterInProgress()}
+        verify(exactly = 1) { codeClassServiceMock.find(any()) }
+        verify(exactly = 8) { codeServiceMock.findCodesOfClass(any(), any()) }
+        verify(exactly = 8) { newsletterServiceMock.canCreateNewsletterInProgress() }
     }
 
     @Test
     fun assertSubmit() {
         tester.startComponentInPage(makePanel())
         applyTestHackWithNestedMultiPartForms()
-        tester.submitForm("panel:form")
+        tester.submitFormSameSite("panel:form")
         verify(exactly = 2) { newsletterServiceMock.canCreateNewsletterInProgress() }
         verify(exactly = 2) { paperServiceMock.findPageOfIdsByFilter(any(), any()) }
     }
@@ -129,7 +132,7 @@ internal class EditablePaperPanelInEditModeTest : EditablePaperPanelTest() {
         val formId = "panel:form:"
         tester.assertModelValue(formId + "firstAuthorOverridden", false)
         tester.assertDisabled(formId + "firstAuthor")
-        val formTester = tester.newFormTester(formId)
+        val formTester = tester.newFormTesterSameSite(formId)
         formTester.getTextComponentValue("authors") shouldBeEqualTo "a"
         formTester.getTextComponentValue("firstAuthor") shouldBeEqualTo "fa"
         verify { newsletterServiceMock.canCreateNewsletterInProgress() }
@@ -155,11 +158,11 @@ internal class EditablePaperPanelInEditModeTest : EditablePaperPanelTest() {
     @Test
     fun mainCodeOfCodeClass1ChangeBehavior_whenChangingCodesClass1_reflectsInMainCodeOfCodeClass() {
         tester.startComponentInPage(makePanel())
-        tester.clickLink("panel:form:tabs:tabs-container:tabs:2:link")
+        tester.clickLinkSameSite("panel:form:tabs:tabs-container:tabs:2:link")
         val formId = "panel:form:tabs:panel:tab3Form:"
         tester.assertModelValue(formId + "mainCodeOfCodeclass1", "mcocc1")
         tester.assertModelValue(formId + "codesClass1", listOf(newC(1, "F")))
-        val formTester = tester.newFormTester(formId)
+        val formTester = tester.newFormTesterSameSite(formId)
         formTester.getTextComponentValue("mainCodeOfCodeclass1") shouldBeEqualTo "mcocc1"
         tester.executeAjaxEvent(formId + "codesClass1", "change")
         formTester.getTextComponentValue("mainCodeOfCodeclass1") shouldBeEqualTo "1F"
@@ -171,11 +174,11 @@ internal class EditablePaperPanelInEditModeTest : EditablePaperPanelTest() {
     @Test
     fun mainCodeOfCodeClass1ChangeBehavior_whenRemovingCodeOfClass1_clearsMainCodeOfCodeClass() {
         tester.startComponentInPage(makePanel())
-        tester.clickLink("panel:form:tabs:tabs-container:tabs:2:link")
+        tester.clickLinkSameSite("panel:form:tabs:tabs-container:tabs:2:link")
         val formId = "panel:form:tabs:panel:tab3Form:"
         tester.assertModelValue(formId + "mainCodeOfCodeclass1", "mcocc1")
         tester.assertModelValue(formId + "codesClass1", listOf(newC(1, "F")))
-        val formTester = tester.newFormTester(formId)
+        val formTester = tester.newFormTesterSameSite(formId)
         formTester.getTextComponentValue("mainCodeOfCodeclass1") shouldBeEqualTo "mcocc1"
         val indices = IntArray(2)
         indices[0] = 2
@@ -190,11 +193,11 @@ internal class EditablePaperPanelInEditModeTest : EditablePaperPanelTest() {
     @Test
     fun mainCodeOfCodeClass1ChangeBehavior_walkThroughStateChanges() {
         tester.startComponentInPage(makePanel())
-        tester.clickLink("panel:form:tabs:tabs-container:tabs:2:link")
+        tester.clickLinkSameSite("panel:form:tabs:tabs-container:tabs:2:link")
         val formId = "panel:form:tabs:panel:tab3Form:"
         tester.assertModelValue(formId + "mainCodeOfCodeclass1", "mcocc1")
         tester.assertModelValue(formId + "codesClass1", listOf(newC(1, "F")))
-        val formTester = tester.newFormTester(formId)
+        val formTester = tester.newFormTesterSameSite(formId)
         formTester.getTextComponentValue("mainCodeOfCodeclass1") shouldBeEqualTo "mcocc1"
 
         // first choice selected -> keep mainCode as is
@@ -232,11 +235,11 @@ internal class EditablePaperPanelInEditModeTest : EditablePaperPanelTest() {
     @Test
     fun canModifyMultipleCodes() {
         tester.startComponentInPage(makePanel())
-        tester.clickLink("panel:form:tabs:tabs-container:tabs:2:link")
+        tester.clickLinkSameSite("panel:form:tabs:tabs-container:tabs:2:link")
         val formId = "panel:form:tabs:panel:tab3Form:"
         tester.assertModelValue(formId + "mainCodeOfCodeclass1", "mcocc1")
         tester.assertModelValue(formId + "codesClass1", listOf(newC(1, "F")))
-        val formTester = tester.newFormTester(formId)
+        val formTester = tester.newFormTesterSameSite(formId)
         formTester.getTextComponentValue("mainCodeOfCodeclass1") shouldBeEqualTo "mcocc1"
 
         // first choice selected -> keep mainCode as is
@@ -247,7 +250,7 @@ internal class EditablePaperPanelInEditModeTest : EditablePaperPanelTest() {
         tester.executeAjaxEvent(formId + "codesClass1", "change")
 
         applyTestHackWithNestedMultiPartForms()
-        tester.submitForm("panel:form")
+        tester.submitFormSameSite("panel:form")
 
         verifyCodeAndCodeClassCalls(4, 5)
         verify(exactly = 3) { newsletterServiceMock.canCreateNewsletterInProgress() }
@@ -502,7 +505,7 @@ internal class EditablePaperPanelInEditModeTest : EditablePaperPanelTest() {
     fun clickingOnPubmedRetrievalButton_withMatchingPmId_andWithNoOtherValuesSet_setsThemFromPubmedIncludingOriginalAbstract() {
         tester.startComponentInPage(makePanelWithEmptyPaper(PMID))
         fixPubmedRetrievalButtonClicked("a", "fa", "t", "l", "2017", "doi", "oa")
-        tester.clickLink("panel:form:tabs:tabs-container:tabs:4:link")
+        tester.clickLinkSameSite("panel:form:tabs:tabs-container:tabs:4:link")
         tester.executeAjaxEvent("$PANEL_ID:form:pubmedRetrieval", "click")
         tester.assertInfoMessages(
             "Some fields have changed (Authors, First Author, Title, Pub. Year, Location, " +
@@ -571,7 +574,7 @@ internal class EditablePaperPanelInEditModeTest : EditablePaperPanelTest() {
         panel.modelObject.originalAbstract = null
         tester.startComponentInPage(panel)
         fixPubmedRetrievalButtonClicked("a", "fa", "t", "l", "2017", "doi", "oa")
-        tester.clickLink("panel:form:tabs:tabs-container:tabs:4:link")
+        tester.clickLinkSameSite("panel:form:tabs:tabs-container:tabs:4:link")
         tester.executeAjaxEvent("$PANEL_ID:form:pubmedRetrieval", "click")
         tester.assertInfoMessages(
             "Some fields have changed (Original Abstract). Click save if you want to keep the changes."
@@ -585,7 +588,7 @@ internal class EditablePaperPanelInEditModeTest : EditablePaperPanelTest() {
     fun clickingOnPubmedRetrievalButton_withMatchingPmId_andWithNoOtherValuesSet_butWithInvalidYear_warnsAboutYearButSetsOtherFields() {
         tester.startComponentInPage(makePanelWithEmptyPaper(PMID))
         fixPubmedRetrievalButtonClicked("a", "fa", "t", "l", "invalid", "doi", "oa")
-        tester.clickLink("panel:form:tabs:tabs-container:tabs:4:link")
+        tester.clickLinkSameSite("panel:form:tabs:tabs-container:tabs:4:link")
         tester.executeAjaxEvent("$PANEL_ID:form:pubmedRetrieval", "click")
         tester.assertInfoMessages(
             "Some fields have changed (Authors, First Author, Title, Location, " +
@@ -600,7 +603,7 @@ internal class EditablePaperPanelInEditModeTest : EditablePaperPanelTest() {
     fun clickingExclude_withBothSearchOrderIdAndPaperId_excludesPaperFromSearchOrder_andForwardsToPaperSearchPage() {
         every { itemNavigatorMock.itemWithFocus } returns null
         tester.startComponentInPage(makePanelWith(PMID, callingPageDummy, SEARCH_ORDER_ID, false))
-        val formTester = tester.newFormTester("$PANEL_ID:form")
+        val formTester = tester.newFormTesterSameSite("$PANEL_ID:form")
         formTester.submit("exclude")
         tester.assertRenderedPage(PaperSearchPage::class.java)
         verify { paperServiceMock.excludeFromSearchOrder(SEARCH_ORDER_ID, 1L) }
@@ -613,7 +616,7 @@ internal class EditablePaperPanelInEditModeTest : EditablePaperPanelTest() {
         every { itemNavigatorMock.itemWithFocus } returns idOfNextPaper
         every { paperServiceMock.findById(idOfNextPaper) } returns Optional.of(mockk())
         tester.startComponentInPage(makePanelWith(PMID, callingPageDummy, SEARCH_ORDER_ID, true))
-        val formTester = tester.newFormTester("$PANEL_ID:form")
+        val formTester = tester.newFormTesterSameSite("$PANEL_ID:form")
         invoking {
             formTester.submit("exclude")
         } shouldThrow Exception::class withMessage "forward to calling page triggered"
@@ -627,7 +630,7 @@ internal class EditablePaperPanelInEditModeTest : EditablePaperPanelTest() {
     fun clickingExclude_showingExcluded_reIncludesPaperIntoSearchOrder_andForwardsToPaperSearchPage() {
         every { itemNavigatorMock.itemWithFocus } returns null
         tester.startComponentInPage(makePanelWith(PMID, callingPageDummy, SEARCH_ORDER_ID, true))
-        val formTester = tester.newFormTester("$PANEL_ID:form")
+        val formTester = tester.newFormTesterSameSite("$PANEL_ID:form")
         formTester.submit("exclude")
         tester.assertRenderedPage(PaperSearchPage::class.java)
         verify { paperServiceMock.reincludeIntoSearchOrder(SEARCH_ORDER_ID, 1L) }
@@ -639,7 +642,7 @@ internal class EditablePaperPanelInEditModeTest : EditablePaperPanelTest() {
         assertExcluded(
             false,
             "Exclude paper from current search",
-            "fa-minus-circle"
+            "fa-circle-minus"
         )
     }
 
@@ -649,7 +652,7 @@ internal class EditablePaperPanelInEditModeTest : EditablePaperPanelTest() {
         val tagTester = TagTester.createTagByAttribute(responseTxt, "title", titleValue)
         tagTester.shouldNotBeNull()
         tagTester.name shouldBeEqualTo "button"
-        tagTester.value shouldContain "<i class=\"fas $iconValue\"></i>"
+        tagTester.value shouldContain "<i class=\"fa-solid $iconValue\"></i>"
         verify { newsletterServiceMock.canCreateNewsletterInProgress() }
     }
 
@@ -657,7 +660,7 @@ internal class EditablePaperPanelInEditModeTest : EditablePaperPanelTest() {
     fun startingPageShowingExclusions_adjustsIconAndTitleOfToggleInclusionsButton() {
         assertExcluded(
             true,
-            "Re-include paper into current search", "fa-check-circle"
+            "Re-include paper into current search", "fa-circle-check"
         )
     }
 
@@ -667,7 +670,7 @@ internal class EditablePaperPanelInEditModeTest : EditablePaperPanelTest() {
             every { page } throws RuntimeException("forward to calling page triggered")
         }
         tester.startComponentInPage(makePanelWith(PMID, callingPageRefMock, SEARCH_ORDER_ID, true))
-        val formTester = tester.newFormTester("$PANEL_ID:form")
+        val formTester = tester.newFormTesterSameSite("$PANEL_ID:form")
         invoking {
             formTester.submit("back")
         } shouldThrow Exception::class withMessage "forward to calling page triggered"

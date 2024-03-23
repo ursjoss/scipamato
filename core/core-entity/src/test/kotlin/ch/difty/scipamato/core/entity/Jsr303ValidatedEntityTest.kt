@@ -14,7 +14,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean
-import javax.validation.ConstraintViolation
+import jakarta.validation.ConstraintViolation
 
 @Suppress("SpellCheckingInspection")
 abstract class Jsr303ValidatedEntityTest<T : CoreEntity> protected constructor(private val clazz: Class<T>) {

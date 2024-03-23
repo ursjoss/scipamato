@@ -15,8 +15,8 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
 import de.agilecoders.wicket.core.markup.html.bootstrap.image.IconType;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.fileinput.BootstrapFileInput;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect;
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome5IconType;
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome5IconTypeBuilder;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome6IconType;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome6IconTypeBuilder;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
 import de.agilecoders.wicket.jquery.Key;
 import lombok.extern.slf4j.Slf4j;
@@ -595,10 +595,10 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
                 super.onConfigure();
                 setVisible(searchOrderId != null && !isViewMode());
                 if (showingExclusions) {
-                    setIconType(FontAwesome5IconType.check_circle_s);
+                    setIconType(FontAwesome6IconType.circle_check_s);
                     add(new AttributeModifier(TITLE_ATTR, new StringResourceModel("button.exclude.title.reinclude", this, null).getString()));
                 } else {
-                    setIconType(FontAwesome5IconType.minus_circle_s);
+                    setIconType(FontAwesome6IconType.circle_minus_s);
                     add(new AttributeModifier(TITLE_ATTR, new StringResourceModel("button.exclude.title.exclude", this, null).getString()));
                 }
             }
@@ -750,8 +750,8 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
 
     @SuppressWarnings("SameParameterValue")
     private IColumn<PaperAttachment, String> makeLinkIconColumn(String id) {
-        final FontAwesome5IconType trash = FontAwesome5IconTypeBuilder
-            .on(FontAwesome5IconTypeBuilder.FontAwesome5Solid.trash_alt)
+        final FontAwesome6IconType trash = FontAwesome6IconTypeBuilder
+            .on(FontAwesome6IconTypeBuilder.FontAwesome6Solid.trash_can)
             .fixedWidth()
             .build();
         return new LinkIconColumn<>(new StringResourceModel(COLUMN_HEADER + id, this, null)) {

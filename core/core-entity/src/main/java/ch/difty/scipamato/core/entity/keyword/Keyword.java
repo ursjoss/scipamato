@@ -16,7 +16,7 @@ import ch.difty.scipamato.core.entity.IdScipamatoEntity;
 public class Keyword extends IdScipamatoEntity<Integer> {
     private static final long serialVersionUID = 1L;
 
-    @javax.validation.constraints.NotNull
+    @jakarta.validation.constraints.NotNull
     private String name;
     private String searchOverride;
 

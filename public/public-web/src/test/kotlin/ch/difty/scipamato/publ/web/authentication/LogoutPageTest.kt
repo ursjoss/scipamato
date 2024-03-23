@@ -1,7 +1,9 @@
 package ch.difty.scipamato.publ.web.authentication
 
 import ch.difty.scipamato.publ.web.WicketTest
+import ch.difty.scipamato.publ.web.newFormTesterSameSite
 import ch.difty.scipamato.publ.web.paper.browse.PublicPage
+import ch.difty.scipamato.publ.web.submitFormSameSite
 import com.giffing.wicket.spring.boot.starter.configuration.extensions.external.spring.security.SecureWebSession
 import org.amshove.kluent.shouldBeFalse
 import org.apache.wicket.markup.html.form.Form
@@ -19,7 +21,7 @@ class LogoutPageTest : WicketTest() {
         val session = tester.session as SecureWebSession
         session.signOut()
         tester.startPage(LoginPage::class.java)
-        val formTester = tester.newFormTester(FORM)
+        val formTester = tester.newFormTesterSameSite(FORM)
         formTester.setValue("username", username)
         formTester.setValue("password", password)
         formTester.submit()
@@ -49,7 +51,7 @@ class LogoutPageTest : WicketTest() {
     fun submitting_invalidatesSessionAndSendsToHomePage_whichForwardsToLoginPage() {
         tester.startPage(makePage())
         tester.session.isSessionInvalidated.shouldBeFalse()
-        tester.submitForm(FORM)
+        tester.submitFormSameSite(FORM)
         tester.assertRenderedPage(LoginPage::class.java)
     }
 

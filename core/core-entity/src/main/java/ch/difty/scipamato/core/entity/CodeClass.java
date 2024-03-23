@@ -14,9 +14,9 @@ public class CodeClass extends IdScipamatoEntity<Integer> implements CodeClassLi
 
     private static final long serialVersionUID = 1L;
 
-    @javax.validation.constraints.NotNull
+    @jakarta.validation.constraints.NotNull
     private final String name;
-    @javax.validation.constraints.NotNull
+    @jakarta.validation.constraints.NotNull
     private final String description;
 
     public enum CodeClassFields implements FieldEnumType {

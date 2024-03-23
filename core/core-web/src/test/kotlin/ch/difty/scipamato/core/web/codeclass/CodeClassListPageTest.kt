@@ -1,5 +1,6 @@
 package ch.difty.scipamato.core.web.codeclass
 
+import ch.difty.scipamato.clickLinkSameSite
 import ch.difty.scipamato.core.entity.codeclass.CodeClassDefinition
 import ch.difty.scipamato.core.entity.codeclass.CodeClassTranslation
 import ch.difty.scipamato.core.web.common.BasePageTest
@@ -26,7 +27,6 @@ internal class CodeClassListPageTest : BasePageTest<CodeClassListPage>() {
 
     private val results = listOf(ccd1, ccd2)
 
-    @Suppress("LocalVariableName")
     override fun setUpHook() {
         every { codeClassServiceMock.countByFilter(any()) } returns results.size
         every { codeClassServiceMock.findPageOfEntityDefinitions(any(), any()) } returns results.iterator()
@@ -88,7 +88,7 @@ internal class CodeClassListPageTest : BasePageTest<CodeClassListPage>() {
     @Test
     fun clickingOnCodeTitle_forwardsToCodeEditPage_withModelLoaded() {
         tester.startPage(pageClass)
-        tester.clickLink("resultPanel:results:body:rows:1:cells:$COLUMN_ID_WITH_LINK:cell:link")
+        tester.clickLinkSameSite("resultPanel:results:body:rows:1:cells:$COLUMN_ID_WITH_LINK:cell:link")
         tester.assertRenderedPage(CodeClassEditPage::class.java)
 
         // verify the codes were loaded into the target page

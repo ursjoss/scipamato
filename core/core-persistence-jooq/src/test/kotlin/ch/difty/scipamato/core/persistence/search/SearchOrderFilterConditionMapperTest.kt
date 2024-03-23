@@ -21,7 +21,7 @@ internal class SearchOrderFilterConditionMapperTest :
     fun creatingWhereCondition_withNameMask_searchesForName() {
         filter.nameMask = "fOo"
         mapper.map(filter).toString() shouldBeEqualTo
-            """"public"."search_order"."name" ilike ('%' || replace(
+            """"public"."search_order"."name" ilike (('%' || replace(
                 |  replace(
                 |    replace('fOo', '!', '!!'),
                 |    '%',
@@ -29,7 +29,7 @@ internal class SearchOrderFilterConditionMapperTest :
                 |  ),
                 |  '_',
                 |  '!_'
-                |) || '%') escape '!'""".trimMargin()
+                |)) || '%') escape '!'""".trimMargin()
     }
 
     @Test

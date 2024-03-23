@@ -3,15 +3,13 @@ coroutines = "1.8.0"
 detektPlugin = "1.23.5"
 # see https://github.com/detekt/detekt/issues/6198
 detektKotlinVersion = "1.9.22"
+ehcache = "3.10.8"
 equalsverifier = "3.16"
-flyway = "9.22.3"
-jacoco = "0.8.8"
+jacoco = "0.8.11"
 jasperreports = "6.21.2"
 java = "17"
-javaxEl = "3.0.1-b12"
-javaxElApi = "3.0.1-b06"
+jakartaElApi = "6.0.0-RC1"
 jaxbPlugin = "7.0.0"
-jooq = "3.15.12"
 jooqModelatorPlugin = "3.9.0"
 jsr305 = "3.0.2"
 junitJupiter = "5.10.2"
@@ -25,36 +23,34 @@ lombokPlugin = "8.6"
 mockk = "1.13.10"
 openfeign = "13.2.1"
 sonarqubePlugin = "4.4.1.3373"
-springBoot = "2.7.18"
-springBootAdmin = "2.7.15"
-springCloud = "2021.0.0"
-springCloudStarter = "3.1.9"
+springBoot = "3.2.4"
+springBootAdmin = "3.2.3"
+springCloud = "2023.0.0"
+springCloudStarter = "4.1.0"
 springDependencyManagementPlugin = "1.1.4"
-springMockk = "3.1.2"
-testcontainers = "1.19.7"
+springMockk = "4.0.2"
 univocityParsers = "2.9.1"
-wicket = "9.17.0"
-wicketBootstrap = "6.0.5"
-wicketJqueryUi = "9.12.0"
-wicketSpringBootStarter = "3.1.7"
-wicketstuff = "9.17.0"
+wicket = "10.0.0"
+wicketBootstrap = "7.0.3"
+wicketJqueryUi = "10.0.0-M1"
+wicketSpringBootStarter = "4.0.0"
+wicketstuff = "10.0.0"
 
 [libraries]
 cacheApi = { module = "javax.cache:cache-api" }
 coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
-ehcache = { module = "org.ehcache:ehcache" }
+ehcache = { module = "org.ehcache:ehcache", version.ref = "ehcache" }
 equalsverifier = { module = "nl.jqno.equalsverifier:equalsverifier", version.ref = "equalsverifier" }
-flyway-core = { module = "org.flywaydb:flyway-core", version.ref = "flyway" }
+flyway-core = { module = "org.flywaydb:flyway-core" }
 fontAwesome = { module = "org.webjars:font-awesome" }
 hibernate-validator = { module = "org.hibernate.validator:hibernate-validator" }
 jasperreports = { module = "net.sf.jasperreports:jasperreports", version.ref = "jasperreports" }
 jasperreports-fonts = { module = "net.sf.jasperreports:jasperreports-fonts", version.ref = "jasperreports" }
-javax-el-api = { module = "javax.el:javax.el-api", version.ref = "javaxElApi" }
-javax-el-impl = { module = "org.glassfish:javax.el", version.ref = "javaxEl" }
-javax-servletApi = { module = "javax.servlet:javax.servlet-api" }
-jaxb-api = { module = "javax.xml.bind:jaxb-api" }
+jakarta-el-api = { module = "jakarta.el:jakarta.el-api", version.ref = "jakartaElApi" }
+jakarta-servletApi = { module = "jakarta.servlet:jakarta.servlet-api" }
+jakarta-bind-api = { module = "jakarta.xml.bind:jakarta.xml.bind-api" }
 jaxb-runtime = { module = "org.glassfish.jaxb:jaxb-runtime" }
-jooq = { module = "org.jooq:jooq", version.ref = "jooq" }
+jooq = { module = "org.jooq:jooq" }
 jsr305 = { module = "com.google.code.findbugs:jsr305", version.ref = "jsr305" }
 junitJupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junitJupiter" }
 junitJupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junitJupiter" }
@@ -70,7 +66,7 @@ kris-core = { module = "ch.difty.kris:kris-core", version.ref = "kris" }
 logback-core = { module = "ch.qos.logback:logback-core" }
 lombok = { module = "org.projectlombok:lombok" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
-openfeign-jaxb = { module = "io.github.openfeign:feign-jaxb", version.ref = "openfeign" }
+openfeign-jaxb = { module = "io.github.openfeign:feign-jaxb-jakarta", version.ref = "openfeign" }
 openfeign-okhttp = { module = "io.github.openfeign:feign-okhttp", version.ref = "openfeign" }
 openfeign-slf4j = { module = "io.github.openfeign:feign-slf4j", version.ref = "openfeign" }
 postgresql = { module = "org.postgresql:postgresql" }
@@ -93,11 +89,11 @@ spring-core = { module = "org.springframework:spring-core" }
 spring-oxm = { module = "org.springframework:spring-oxm" }
 spring-security-core = { module = "org.springframework.security:spring-security-core" }
 springMockk = { module = "com.ninja-squad:springmockk", version.ref = "springMockk" }
-testcontainers-junitJupiter = { module = "org.testcontainers:junit-jupiter", version.ref = "testcontainers" }
-testcontainers-postgresql = { module = "org.testcontainers:postgresql", version.ref = "testcontainers" }
-testcontainers-testcontainers = { module = "org.testcontainers:testcontainers", version.ref = "testcontainers" }
+testcontainers-junitJupiter = { module = "org.testcontainers:junit-jupiter" }
+testcontainers-postgresql = { module = "org.testcontainers:postgresql" }
+testcontainers-testcontainers = { module = "org.testcontainers:testcontainers" }
 univocity = { module = "com.univocity:univocity-parsers", version.ref = "univocityParsers" }
-validationApi = { module = "javax.validation:validation-api" }
+validationApi = { module = "jakarta.validation:jakarta.validation-api" }
 wicket-authroles = { module = "org.apache.wicket:wicket-auth-roles", version.ref = "wicket" }
 wicket-beanvalidation = { module = "org.apache.wicket:wicket-bean-validation", version.ref = "wicket" }
 wicket-core = { module = "org.apache.wicket:wicket-core", version.ref = "wicket" }
@@ -106,6 +102,7 @@ wicket-extensions = { module = "org.apache.wicket:wicket-extensions", version.re
 wicket-ioc = { module = "org.apache.wicket:wicket-ioc", version.ref = "wicket" }
 wicket-request = { module = "org.apache.wicket:wicket-request", version.ref = "wicket" }
 wicket-spring = { module = "org.apache.wicket:wicket-spring", version.ref = "wicket" }
+wicket-tester = { module = "org.apache.wicket:wicket-tester", version.ref = "wicket" }
 wicketBootstrap-core = { module = "de.agilecoders.wicket:wicket-bootstrap-core", version.ref = "wicketBootstrap" }
 wicketBootstrap-extensions = { module = "de.agilecoders.wicket:wicket-bootstrap-extensions", version.ref = "wicketBootstrap" }
 wicketBootstrap-sass = { module = "de.agilecoders.wicket:wicket-bootstrap-sass", version.ref = "wicketBootstrap" }
@@ -119,7 +116,7 @@ plugin-detekt = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", v
 plugin-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 
 [bundles]
-caching = ["spring-boot-starter-cache", "cacheApi", "ehcache"]
+caching = ["spring-boot-starter-cache", "cacheApi"]
 dbTest = ["testcontainers-testcontainers", "testcontainers-junitJupiter", "testcontainers-postgresql"]
 
 [plugins]
