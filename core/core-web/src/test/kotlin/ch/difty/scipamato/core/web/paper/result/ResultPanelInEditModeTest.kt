@@ -27,19 +27,19 @@ internal class ResultPanelInEditModeTest : ResultPanelTest() {
     @Test
     fun startingPage_showingResults() {
         searchOrder.apply { isShowExcluded = false }
-        assertExcludeIcon("fas fa-ban fa-fw", "Exclude the paper from the search")
+        assertExcludeIcon("fa-solid fa-ban fa-fw", "Exclude the paper from the search")
     }
 
     @Test
     fun startingPage_showingExclusions() {
         searchOrder.apply { isShowExcluded = true }
-        assertExcludeIcon("far fa-check-circle fa-fw", "Re-include the paper into the search")
+        assertExcludeIcon("fa-regular fa-circle-check fa-fw", "Re-include the paper into the search")
     }
 
     @Test
     fun startingPage_withPaperWithNoNewsletter_rendersAddToNewsletterLink() {
         paperSlim.newsletterAssociation.shouldBeNull()
-        assertNewsletterIcon("fas fa-plus-square fa-fw", "Add to current newsletter")
+        assertNewsletterIcon("fa-solid fa-square-plus fa-fw", "Add to current newsletter")
     }
 
     @Test
@@ -48,9 +48,9 @@ internal class ResultPanelInEditModeTest : ResultPanelTest() {
         paperSlim.newsletterAssociation.shouldBeNull()
         tester.startComponentInPage(newNonSearchRelevantResultPanel())
         val responseTxt = tester.lastResponse.document
-        TagTester.createTagByAttribute(responseTxt, "class", "fas fa-plus-square fa-fw").shouldBeNull()
-        TagTester.createTagByAttribute(responseTxt, "class", "far fa-envelope fa-fw").shouldBeNull()
-        TagTester.createTagByAttribute(responseTxt, "class", "far fa-envelope-open fa-fw").shouldBeNull()
+        TagTester.createTagByAttribute(responseTxt, "class", "fa-solid fa-square-plus fa-fw").shouldBeNull()
+        TagTester.createTagByAttribute(responseTxt, "class", "fa-regular fa-envelope fa-fw").shouldBeNull()
+        TagTester.createTagByAttribute(responseTxt, "class", "fa-regular fa-envelope-open fa-fw").shouldBeNull()
         verify(exactly = 1) { paperSlimServiceMock.countBySearchOrder(searchOrder) }
         verify { paperSlimServiceMock.findPageBySearchOrder(searchOrder, any()) }
         verify { paperServiceMock.findPageOfIdsBySearchOrder(any(), any()) }
@@ -60,14 +60,14 @@ internal class ResultPanelInEditModeTest : ResultPanelTest() {
     fun startingPage_withPaperWithNewsletterInStatusWip_rendersRemoveFromNewsletterLink() {
         val ns = NewsletterAssociation(1, "1802", PublicationStatus.WIP.id, null)
         paperSlim.newsletterAssociation = ns
-        assertNewsletterIcon("far fa-envelope-open fa-fw", "Remove from current newsletter")
+        assertNewsletterIcon("fa-regular fa-envelope-open fa-fw", "Remove from current newsletter")
     }
 
     @Test
     fun startingPage_withPaperWithPublishedNewsletter_rendersAssociatedWithNewsletterLink() {
         val ns = NewsletterAssociation(1, "1802", PublicationStatus.PUBLISHED.id, null)
         paperSlim.newsletterAssociation = ns
-        assertNewsletterIcon("far fa-envelope fa-fw", "Newsletter 1802")
+        assertNewsletterIcon("fa-regular fa-envelope fa-fw", "Newsletter 1802")
     }
 
     @Test

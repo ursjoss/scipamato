@@ -7,6 +7,7 @@ import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicTranslation
 import ch.difty.scipamato.core.persistence.OptimisticLockingException
 import ch.difty.scipamato.core.web.authentication.LogoutPage
 import ch.difty.scipamato.core.web.common.BasePageTest
+import ch.difty.scipamato.newFormTesterSameSite
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton
 import io.mockk.confirmVerified
 import io.mockk.every
@@ -84,7 +85,7 @@ internal class NewsletterTopicEditPageTest : BasePageTest<NewsletterTopicEditPag
 
     private fun runSubmitTest() {
         tester.startPage(NewsletterTopicEditPage(Model.of(ntd), null))
-        val formTester = tester.newFormTester("form")
+        val formTester = tester.newFormTesterSameSite("form")
         formTester.setValue("translationsPanel:translations:1:title", "1806")
         assertTranslation("form:translationsPanel:translations:", 1, "de", "thema1")
         formTester.submit("headerPanel:submit")
@@ -136,7 +137,7 @@ internal class NewsletterTopicEditPageTest : BasePageTest<NewsletterTopicEditPag
         every { newsletterTopicServiceMock.delete(any(), any()) } returns newsletterTopicDefinitionDummy
 
         tester.startPage(NewsletterTopicEditPage(Model.of(ntd), null))
-        val formTester = tester.newFormTester("form")
+        val formTester = tester.newFormTesterSameSite("form")
         formTester.submit("headerPanel:delete")
 
         verify { newsletterTopicServiceMock.delete(1, 1) }
@@ -153,7 +154,7 @@ internal class NewsletterTopicEditPageTest : BasePageTest<NewsletterTopicEditPag
         every { newsletterTopicServiceMock.delete(any(), any()) } throws DataIntegrityViolationException(msg)
 
         tester.startPage(NewsletterTopicEditPage(Model.of(ntd), null))
-        val formTester = tester.newFormTester("form")
+        val formTester = tester.newFormTesterSameSite("form")
         formTester.submit("headerPanel:delete")
 
         verify { newsletterTopicServiceMock.delete(any(), any()) }
@@ -165,7 +166,7 @@ internal class NewsletterTopicEditPageTest : BasePageTest<NewsletterTopicEditPag
     @Test
     fun clickingBackButton_withPageWithoutCallingPageRef_forwardsToNewsletterTopicListPage() {
         tester.startPage(NewsletterTopicEditPage(Model.of(ntd), null))
-        val formTester = tester.newFormTester("form")
+        val formTester = tester.newFormTesterSameSite("form")
         formTester.submit("headerPanel:back")
         tester.assertRenderedPage(NewsletterTopicListPage::class.java)
 
@@ -176,7 +177,7 @@ internal class NewsletterTopicEditPageTest : BasePageTest<NewsletterTopicEditPag
     @Test
     fun clickingBackButton_withPageWithCallingPageRef_forwardsToThat() {
         tester.startPage(NewsletterTopicEditPage(Model.of(ntd), LogoutPage(PageParameters()).pageReference))
-        val formTester = tester.newFormTester("form")
+        val formTester = tester.newFormTesterSameSite("form")
         formTester.submit("headerPanel:back")
         tester.assertRenderedPage(LogoutPage::class.java)
     }

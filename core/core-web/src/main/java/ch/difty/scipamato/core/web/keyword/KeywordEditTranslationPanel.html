@@ -5,11 +5,10 @@
     <div wicket:id="translations" class="row">
         <div class="col-sm-8 col-md-10">
             <div class="input-group mb-3">
-                <span wicket:id="langCode"
-                      class="input-group-addon"
-                      id="langCode-addOn">[langCode]</span>
-                <input wicket:id="name" class="form-control"
-                       aria-describedby="langCode-addOn"/>
+                <div class="input-group-prepend">
+                    <span wicket:id="langCode" class="input-group-text" id="langCode-addOn">[langCode]</span>
+                </div>
+                <input wicket:id="name" type="text" class="form-control" aria-describedby="langCode-addOn"/>
             </div>
         </div>
         <div class="col-sm-4 col-md-2">

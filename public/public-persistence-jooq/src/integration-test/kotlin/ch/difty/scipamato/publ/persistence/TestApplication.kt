@@ -18,6 +18,7 @@ open class TestApplication {
     }
 
     @Bean
+    @Suppress("MagicNumber")
     open fun applicationProperties() = object : ApplicationPublicProperties {
         override val buildVersion get() = "vxy"
         override val defaultLocalization get() = "de"
@@ -27,7 +28,7 @@ open class TestApplication {
         override val redirectFromPort get() = 8081
         override val multiSelectBoxActionBoxWithMoreEntriesThan get() = 4
         override val isCommercialFontPresent = false
-        override val isLessUsedOverCss = false
+        override val isSassUsedOverCss = false
         override val isNavbarVisibleByDefault = false
         override val cmsUrlSearchPage: String?
             get() = null

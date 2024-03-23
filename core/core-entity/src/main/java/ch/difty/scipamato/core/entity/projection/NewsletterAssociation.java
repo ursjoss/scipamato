@@ -16,9 +16,9 @@ public class NewsletterAssociation extends IdScipamatoEntity<Integer> {
 
     private static final long serialVersionUID = 1L;
 
-    @javax.validation.constraints.NotNull
+    @jakarta.validation.constraints.NotNull
     private String  issue;
-    @javax.validation.constraints.NotNull
+    @jakarta.validation.constraints.NotNull
     private Integer publicationStatusId;
     private String  headline;
 

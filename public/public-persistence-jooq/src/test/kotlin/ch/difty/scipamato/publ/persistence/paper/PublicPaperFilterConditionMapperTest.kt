@@ -115,14 +115,16 @@ class PublicPaperFilterConditionMapperTest : FilterConditionMapperTest<PaperReco
     @Test
     fun creatingWhereCondition_withPopulationCodes_searchesPopulationCodes() {
         filter.copy(populationCodes = listOf(PopulationCode.CHILDREN)).run {
-            mapper.map(this).toString() shouldBeEqualTo """"public"."paper"."codes_population" @> array[1]"""
+            mapper.map(this).toString() shouldBeEqualTo
+                """"public"."paper"."codes_population" like (('%' || cast(array[1] as varchar)) || '%') escape '!'"""
         }
     }
 
     @Test
     fun creatingWhereCondition_withMethodStudyDesignCodes_searchesStudyDesignCodes() {
         filter.copy(studyDesignCodes = listOf(StudyDesignCode.EPIDEMIOLOGICAL, StudyDesignCode.OVERVIEW_METHODOLOGY)).run {
-            mapper.map(this).toString() shouldBeEqualTo """"public"."paper"."codes_study_design" @> array[2, 3]"""
+            mapper.map(this).toString() shouldBeEqualTo
+                """"public"."paper"."codes_study_design" like (('%' || cast(array[2, 3] as varchar)) || '%') escape '!'"""
         }
     }
 
@@ -140,10 +142,10 @@ class PublicPaperFilterConditionMapperTest : FilterConditionMapperTest<PaperReco
         // Due to bug https://github.com/jOOQ/jOOQ/issues/4754
         // mapper.map(filter).toString() shouldBeEqualTo ""public"."paper"."codes" @> array['c1', 'c2']");
         mapper.map(this).toString() shouldBeEqualTo
-            """"public"."paper"."codes" @> array[
+            """"public"."paper"."codes" like (('%' || cast(array[
                         |  cast('c1' as clob),
                         |  cast('c2' as clob)
-                        |]""".trimMargin()
+                        |] as varchar)) || '%') escape '!'""".trimMargin()
     }
 
     @Test
@@ -228,10 +230,8 @@ class PublicPaperFilterConditionMapperTest : FilterConditionMapperTest<PaperReco
             codesOfClass7 = listOf(Code(code = "7G")),
             codesOfClass8 = listOf(Code(code = "8H")),
         ).run {
-            // Due to bug https://github.com/jOOQ/jOOQ/issues/4754
-            // mapper.map(filter).toString() shouldBeEqualTo ""public"."paper"."codes" @> array['1A', '2B', '3C', '4D', '5E', '6F', '7G', '8H']");
             mapper.map(this).toString() shouldBeEqualTo
-                """"public"."paper"."codes" @> array[
+                """"public"."paper"."codes" like (('%' || cast(array[
                 |  cast('1A' as clob),
                 |  cast('2B' as clob),
                 |  cast('3C' as clob),
@@ -240,7 +240,7 @@ class PublicPaperFilterConditionMapperTest : FilterConditionMapperTest<PaperReco
                 |  cast('6F' as clob),
                 |  cast('7G' as clob),
                 |  cast('8H' as clob)
-                |]""".trimMargin()
+                |] as varchar)) || '%') escape '!'""".trimMargin()
         }
     }
 

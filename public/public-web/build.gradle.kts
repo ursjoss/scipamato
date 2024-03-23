@@ -24,7 +24,7 @@ plugins {
  * Make the static wicket resources that reside next to the java classes in src{main,test} available.
  */
 sourceSets {
-    /** main: html, css, less, properties files */
+    /** main: html, css, sass, properties files */
     main {
         resources {
             srcDir("src/main/kotlin")
@@ -58,7 +58,11 @@ dependencies {
     implementation(libs.spring.boot.starter.security)
 
     implementation(libs.bundles.caching)
-    runtimeOnly(libs.jaxb.runtime)
+    implementation(libs.ehcache) {
+        capabilities {
+            requireCapability("org.ehcache:ehcache-jakarta")
+        }
+    }
 
     testImplementation(project(Module.scipamatoCommon("test")))
 }

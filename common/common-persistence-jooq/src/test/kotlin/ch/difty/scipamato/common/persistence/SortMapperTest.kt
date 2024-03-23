@@ -91,7 +91,7 @@ internal class SortMapperTest {
 
         invoking { mapperSpy.map(sortSpecMock, tableMock) } shouldThrow
             InvalidDataAccessApiUsageException::class withMessage
-            "Could not find table field: inexistentField; nested exception is java.lang.NoSuchFieldException"
+            "Could not find table field: inexistentField"
 
         verify { sortSpecMock.iterator() }
         verify { mapperSpy.getTableFieldFor(tableMock, "INEXISTENT_FIELD") }
@@ -105,7 +105,7 @@ internal class SortMapperTest {
 
         invoking { mapperSpy.map(sortSpecMock, tableMock) } shouldThrow
             InvalidDataAccessApiUsageException::class withMessage
-            "Could not find table field: illegalField; nested exception is java.lang.IllegalAccessException"
+            "Could not find table field: illegalField"
 
         verify { sortSpecMock.iterator() }
         verify { mapperSpy.getTableFieldFor(tableMock, "ILLEGAL_FIELD") }

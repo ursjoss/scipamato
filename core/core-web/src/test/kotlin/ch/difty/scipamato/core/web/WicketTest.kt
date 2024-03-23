@@ -5,6 +5,7 @@ import ch.difty.scipamato.core.auth.Roles
 import ch.difty.scipamato.core.web.authentication.LoginPage
 import ch.difty.scipamato.core.web.paper.list.PaperListPage
 import ch.difty.scipamato.core.web.security.TestUserDetailsService
+import ch.difty.scipamato.newFormTesterSameSite
 import com.giffing.wicket.spring.boot.starter.configuration.extensions.external.spring.security.SecureWebSession
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.checkboxx.CheckBoxX
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelect
@@ -18,7 +19,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.util.ReflectionTestUtils
-import java.util.Locale
+import java.util.*
 
 @Suppress("SpellCheckingInspection")
 @SpringBootTest
@@ -130,7 +131,7 @@ abstract class WicketTest : AbstractWicketTest() {
         val session = tester.session as SecureWebSession
         session.signOut()
         tester.startPage(LoginPage::class.java)
-        val formTester = tester.newFormTester("form")
+        val formTester = tester.newFormTesterSameSite("form")
         formTester.setValue("username", username)
         formTester.setValue("password", password)
         formTester.submit()

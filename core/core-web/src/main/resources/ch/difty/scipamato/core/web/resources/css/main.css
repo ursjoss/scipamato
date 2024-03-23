@@ -4,7 +4,18 @@
     border-color: #276cdb;
 }
 
-/* Fix DropZone Caption appearance */
-div.wicket-modal div.w_caption {
-    height: 2em;
+.container-fluid {
+    margin-top: 0.5rem
+}
+
+.card-header {
+    padding: 0.3rem 0.75rem;
+}
+
+.card-body {
+    padding: 0.3rem;
+}
+
+.table {
+    margin-bottom: 0.3rem
 }

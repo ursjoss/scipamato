@@ -40,6 +40,7 @@ abstract class ExportEntityTest {
         p.resultMeasuredOutcome = RESULT_MEASURED_OUTCOME
         p.conclusion = CONCLUSION
         p.pmId = PM_ID
+        p.originalAbstract = ABSTRACT
         p.addCode(Code("1F", "Code1F", "", false, CodeClassId.CC1.id, "CC1", "CC1D", 1))
         p.addCode(Code("4A", "Code4A", "", false, CodeClassId.CC4.id, "CC4", "CC4D", 1))
         p.addCode(Code("4C", "Code4C", "", false, CodeClassId.CC4.id, "CC4", "CC4D", 3))
@@ -49,6 +50,7 @@ abstract class ExportEntityTest {
     companion object {
         private const val ID = 1L
         const val NUMBER = 100L
+        const val ABSTRACT = "abstract"
         const val AUTHORS = "authors"
         const val TITLE = "title"
         const val LOCATION = "location"

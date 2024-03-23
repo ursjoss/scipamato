@@ -30,17 +30,17 @@ public class User extends IdScipamatoEntity<Integer> {
 
     public static final User NO_USER = new User(-1, "noUser", "n.a", "n.a.", "n.a.", "n.a");
 
-    @javax.validation.constraints.NotNull
-    @javax.validation.constraints.Size(max = 30)
+    @jakarta.validation.constraints.NotNull
+    @jakarta.validation.constraints.Size(max = 30)
     private String userName;
 
-    @javax.validation.constraints.NotNull
+    @jakarta.validation.constraints.NotNull
     private String firstName;
 
-    @javax.validation.constraints.NotNull
+    @jakarta.validation.constraints.NotNull
     private String lastName;
 
-    @javax.validation.constraints.NotNull
+    @jakarta.validation.constraints.NotNull
     private String email;
 
     private String password;

@@ -31,7 +31,7 @@ internal class StringSearchTermEvaluatorIntegrationTest : SearchTermEvaluatorInt
     fun stringTests(): List<DynamicTest> = mapOf(
         "foo" to StringExp(
             tokenString = "(WORD foo)",
-            condition = """cast(fn as varchar) ilike ('%' || replace(
+            condition = """cast(fn as varchar) ilike (('%' || replace(
                                        |  replace(
                                        |    replace('foo', '!', '!!'),
                                        |    '%',
@@ -39,7 +39,7 @@ internal class StringSearchTermEvaluatorIntegrationTest : SearchTermEvaluatorInt
                                        |  ),
                                        |  '_',
                                        |  '!_'
-                                       |) || '%') escape '!'""".trimMargin(),
+                                       |)) || '%') escape '!'""".trimMargin(),
             type = CONTAINS),
 
         "-foo" to StringExp(
@@ -47,7 +47,7 @@ internal class StringSearchTermEvaluatorIntegrationTest : SearchTermEvaluatorInt
             condition = """not (cast(coalesce(
                                       |  fn,
                                       |  ''
-                                      |) as varchar) ilike ('%' || replace(
+                                      |) as varchar) ilike (('%' || replace(
                                       |  replace(
                                       |    replace('foo', '!', '!!'),
                                       |    '%',
@@ -55,7 +55,7 @@ internal class StringSearchTermEvaluatorIntegrationTest : SearchTermEvaluatorInt
                                       |  ),
                                       |  '_',
                                       |  '!_'
-                                      |) || '%') escape '!')""".trimMargin(),
+                                      |)) || '%') escape '!')""".trimMargin(),
             type = CONTAINS),
         """"foo"""" to StringExp("(QUOTED foo)", "lower(cast(fn as varchar)) = lower('foo')", EQUALS),
         """-"foo"""" to StringExp("(NOTQUOTED foo)", "lower(cast(fn as varchar)) <> lower('foo')", EQUALS),

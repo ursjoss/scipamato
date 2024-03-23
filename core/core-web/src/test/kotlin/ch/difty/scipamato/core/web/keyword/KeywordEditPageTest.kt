@@ -5,6 +5,7 @@ import ch.difty.scipamato.core.entity.keyword.KeywordTranslation
 import ch.difty.scipamato.core.persistence.OptimisticLockingException
 import ch.difty.scipamato.core.web.authentication.LogoutPage
 import ch.difty.scipamato.core.web.common.BasePageTest
+import ch.difty.scipamato.newFormTesterSameSite
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton
 import io.mockk.confirmVerified
 import io.mockk.every
@@ -85,8 +86,7 @@ internal class KeywordEditPageTest : BasePageTest<KeywordEditPage>() {
 
     private fun runSubmitTest() {
         tester.startPage(KeywordEditPage(Model.of(kd), null))
-
-        val formTester = tester.newFormTester("form")
+        val formTester = tester.newFormTesterSameSite("form")
         formTester.setValue("translationsPanel:translations:1:name", "foo")
         assertTranslation("form:translationsPanel:translations:", 1, "de", "Name1")
         formTester.submit("headerPanel:submit")
@@ -141,8 +141,7 @@ internal class KeywordEditPageTest : BasePageTest<KeywordEditPage>() {
         every { keywordServiceMock.countByFilter(any()) } returns 0
 
         tester.startPage(KeywordEditPage(Model.of(kd), null))
-
-        val formTester = tester.newFormTester("form")
+        val formTester = tester.newFormTesterSameSite("form")
         formTester.submit("headerPanel:delete")
 
         verify { keywordServiceMock.delete(1, 1) }
@@ -160,7 +159,7 @@ internal class KeywordEditPageTest : BasePageTest<KeywordEditPage>() {
         every { keywordServiceMock.delete(any(), any()) } throws DataIntegrityViolationException(msg)
         tester.startPage(KeywordEditPage(Model.of(kd), null))
 
-        val formTester = tester.newFormTester("form")
+        val formTester = tester.newFormTesterSameSite("form")
         formTester.submit("headerPanel:delete")
 
         verify { keywordServiceMock.delete(1, 1) }
@@ -175,7 +174,7 @@ internal class KeywordEditPageTest : BasePageTest<KeywordEditPage>() {
             OptimisticLockingException("keyword", OptimisticLockingException.Type.DELETE)
         tester.startPage(KeywordEditPage(Model.of(kd), null))
 
-        val formTester = tester.newFormTester("form")
+        val formTester = tester.newFormTesterSameSite("form")
         formTester.submit("headerPanel:delete")
 
         verify { keywordServiceMock.delete(1, 1) }
@@ -193,7 +192,7 @@ internal class KeywordEditPageTest : BasePageTest<KeywordEditPage>() {
 
         tester.startPage(KeywordEditPage(Model.of(kd), null))
 
-        val formTester = tester.newFormTester("form")
+        val formTester = tester.newFormTesterSameSite("form")
         formTester.submit("headerPanel:delete")
 
         verify { keywordServiceMock.delete(1, 1) }
@@ -208,7 +207,7 @@ internal class KeywordEditPageTest : BasePageTest<KeywordEditPage>() {
 
         tester.startPage(KeywordEditPage(Model.of(kd), null))
 
-        val formTester = tester.newFormTester("form")
+        val formTester = tester.newFormTesterSameSite("form")
         formTester.submit("headerPanel:back")
         tester.assertRenderedPage(KeywordListPage::class.java)
 
@@ -220,7 +219,7 @@ internal class KeywordEditPageTest : BasePageTest<KeywordEditPage>() {
     fun clickingBackButton_withPageWithCallingPageRef_forwardsToThat() {
         tester.startPage(KeywordEditPage(Model.of(kd), LogoutPage(PageParameters()).pageReference))
 
-        val formTester = tester.newFormTester("form")
+        val formTester = tester.newFormTesterSameSite("form")
         formTester.submit("headerPanel:back")
         tester.assertRenderedPage(LogoutPage::class.java)
     }
@@ -228,7 +227,6 @@ internal class KeywordEditPageTest : BasePageTest<KeywordEditPage>() {
     @Test
     fun clickingAddNewKeyword_addsTranslationInRequestedLanguage_andRefreshesForm() {
         tester.startPage(KeywordEditPage(Model.of(kd), LogoutPage(PageParameters()).pageReference))
-
         val next = assertTranslationsInLanguages(1, "de", "de", "en", "fr")
         tester.clickLink("form:translationsPanel:translations:3:addTranslation")
         assertTranslationsInLanguages(next, "de", "de", "en", "en", "fr")
@@ -246,7 +244,6 @@ internal class KeywordEditPageTest : BasePageTest<KeywordEditPage>() {
     @Test
     fun clickingRemoveKeyword_removesTranslation_andRefreshesForm() {
         tester.startPage(KeywordEditPage(Model.of(kd), LogoutPage(PageParameters()).pageReference))
-
         val next = assertTranslationsInLanguages(1, "de", "de", "en", "fr")
         tester.clickLink("form:translationsPanel:translations:2:removeTranslation")
         assertTranslationsInLanguages(next, "de", "en", "fr")

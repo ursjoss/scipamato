@@ -29,6 +29,7 @@ open class TestApplication {
     }
 
     @Bean
+    @Suppress("MagicNumber")
     open fun applicationProperties(): ApplicationProperties =
         object : ApplicationProperties {
             override val buildVersion get() = "vxy"

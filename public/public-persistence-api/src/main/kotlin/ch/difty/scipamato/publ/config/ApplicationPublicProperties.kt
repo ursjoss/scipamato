@@ -10,10 +10,10 @@ interface ApplicationPublicProperties : ApplicationProperties {
     val isCommercialFontPresent: Boolean
 
     /**
-     * @return if true, SciPaMaTo will dynamically compile the LESS files into CSS
+     * @return if true, SciPaMaTo will dynamically compile the SASS files into CSS
      * classes. This is useful for development.
      */
-    val isLessUsedOverCss: Boolean
+    val isSassUsedOverCss: Boolean
 
     /**
      * @return the default visibility of the Navbar.

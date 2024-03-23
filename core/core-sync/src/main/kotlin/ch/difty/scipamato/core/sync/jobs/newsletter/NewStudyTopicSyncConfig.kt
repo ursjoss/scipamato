@@ -15,13 +15,13 @@ import org.jooq.DeleteConditionStep
 import org.jooq.TableField
 import org.jooq.conf.ParamType
 import org.springframework.batch.core.Job
-import org.springframework.batch.core.configuration.annotation.JobBuilderFactory
-import org.springframework.batch.core.configuration.annotation.StepBuilderFactory
+import org.springframework.batch.core.repository.JobRepository
 import org.springframework.batch.item.ItemWriter
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Profile
+import org.springframework.transaction.PlatformTransactionManager
 import java.sql.ResultSet
 import java.sql.SQLException
 import java.sql.Timestamp
@@ -43,16 +43,16 @@ open class NewStudyTopicSyncConfig(
     @Qualifier("dslContext") jooqCore: DSLContext,
     @Qualifier("publicDslContext") jooqPublic: DSLContext,
     @Qualifier("dataSource") coreDataSource: DataSource,
-    jobBuilderFactory: JobBuilderFactory,
-    stepBuilderFactory: StepBuilderFactory,
+    jobRepository: JobRepository,
+    transactionManager: PlatformTransactionManager,
     dateTimeService: DateTimeService,
 ) : SyncConfig<PublicNewStudyTopic, NewStudyTopicRecord>(TOPIC,
     CHUNK_SIZE,
     jooqCore,
     jooqPublic,
     coreDataSource,
-    jobBuilderFactory,
-    stepBuilderFactory,
+    jobRepository,
+    transactionManager,
     dateTimeService
 ) {
 

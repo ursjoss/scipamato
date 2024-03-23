@@ -55,7 +55,9 @@ abstract class WicketTest {
 
     @BeforeEach
     fun setUp() {
-        application.headerResponseDecorators.add { r -> JavaScriptFilteredIntoFooterHeaderResponse(r, AbstractPage.FOOTER_CONTAINER) }
+        application.headerResponseDecorators.add { r ->
+            JavaScriptFilteredIntoFooterHeaderResponse(r, AbstractPage.FOOTER_CONTAINER)
+        }
         ReflectionTestUtils.setField(application, "applicationContext", applicationContextMock)
         tester = WicketTester(application)
         every { sessionFacadeMock.paperIdManager } returns itemNavigator
@@ -80,6 +82,7 @@ abstract class WicketTest {
         tester.assertComponent(bb, TextField::class.java)
     }
 
+    @Suppress("SameParameterValue")
     protected fun assertLabeledMultiSelect(b: String, id: String) {
         val bb = "$b:$id"
         tester.assertComponent(bb + "Label", Label::class.java)

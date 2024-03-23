@@ -7,6 +7,7 @@ import io.mockk.mockk
 import org.amshove.kluent.shouldBeEqualTo
 import org.jooq.DSLContext
 import org.junit.jupiter.api.Test
+import org.springframework.batch.item.Chunk
 import java.sql.Timestamp
 import java.time.Instant
 
@@ -30,22 +31,22 @@ internal class ScipamatoItemWriterTest {
     private val papers = mutableListOf(l1)
 
     private var writer = object : ScipamatoItemWriter<PublicLanguage>(dslContext, "topic") {
-        override fun executeUpdate(l: PublicLanguage): Int {
-            tracker += l.code.toInt()
-            return l.code.toInt()
+        override fun executeUpdate(i: PublicLanguage): Int {
+            tracker += i.code.toInt()
+            return i.code.toInt()
         }
     }
 
     @Test
     fun writingOnePaper() {
-        writer.write(papers)
+        writer.write(Chunk(papers))
         tracker shouldBeEqualTo 2
     }
 
     @Test
     fun writingTwoPapers() {
         papers.add(l2)
-        writer.write(papers)
+        writer.write(Chunk(papers))
         tracker shouldBeEqualTo 5
     }
 }

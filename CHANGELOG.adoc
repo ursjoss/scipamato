@@ -67,7 +67,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[unreleased]]
 == [unreleased]
 
-{url-cl}1.8.11++...++main[Full Changelog]
+{url-cl}1.10.3++...++main[Full Changelog]
 
 .Added
 
@@ -85,6 +85,79 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 ////
 
 
+
+[[v1.10.3]]
+== {url-tree}1.10.3[1.10.3] -- 2024-02-04
+
+{url-cl}1.10.2++...++1.10.3[Full Changelog]
+
+.Changed
+- {url-issues}621[#621] Migrate from Bootsrap 4.x to 5.3
+- Bumped dependencies
+  kotlin, spring-boot-admin-starter-client, guava, feign, spring-cloud-starter-openfeign,
+  gradle, reckon,
+  jaxb, detekt,
+  unit5, mockk, testcontainers, equalsverifier,
+  github actions gradle-build-action, gradle-wrapper-validation, cache, upload-artifact and codeql
+
+
+[[v1.10.2]]
+== {url-tree}1.10.2[1.10.2] -- 2023-12-08
+
+{url-cl}1.10.0++...++1.10.2[Full Changelog]
+
+.Changed
+- Bumped dependency
+  kotlin,
+  spring boot,
+  wicket, wicketstuff, feign, spring-boot-admin-starter-client, jasperreports,
+  testcontainers-java monorepo, equalsverifier,
+  gradle, detektplugin, jaxb gradle plugin,
+  setup-java action
+- {url-issues}620[#620] Reverted (Data Migration: Update Abstract of old Studies with PM_ID)
+
+
+[[v1.10.1]]
+== {url-tree}1.10.1[1.10.1] -- 2023-12-07
+
+{url-cl}1.10.0++...++1.10.2[Full Changelog]
+
+.Changed
+- {url-issues}620[#620] Data Migration: Update Abstract of old Studies with PM_ID
+
+
+[[v1.10.0]]
+== {url-tree}1.10.0[1.10.0] -- 2023-11-14
+
+{url-cl}1.9.0++...++1.10.0[Full Changelog]
+
+.Added
+- {url-issues}604[#604] New (internal) Reference Abstract Report
+.Changed
+- {url-issues}338[#338] Migrate from Bootsrap 3.4 to 4.0
+- Bumped dependency
+  kotlin,
+  spring-boot, spring-dependency-management, spring-boot-admin, feign, flyway, lombok,
+  junit5, kotest, equalsverifier,
+  detekt, reckon
+
+
+[[v1.9.0]]
+== {url-tree}1.9.0[1.9.0] -- 2023-10-08
+
+{url-cl}1.8.11++...++1.9.0[Full Changelog]
+
+.Changed
+- Bumped dependency
+  postgresql, kris,
+  gradle,
+  sonarqube,
+  setup-java-action
+
+.Removed
+- Removed java platform 11 compatibility: Require minimum java platform 17.
+
+
 [[v1.8.11]]
 == {url-tree}1.8.11[1.8.11] -- 2023-09-03
 
@@ -99,14 +172,6 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
   junit5, kotest, mockk, equalsverifier, testcontainers
 - Bumped gradle, sonarqube plugin, detekt
 - Bumped checkout action, docker login action
-
-.Deprecated
-
-.Removed
-
-.Fixed
-
-.Security
 
 
 [[v1.8.10]]
@@ -182,7 +247,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 - kotest
 
 .Changed
-- Bumped kotlin, sprign-boot, wicket, wicketstuff, wicket-spring-boot-starter, spring-boot-admin-starter-client, flyway, lombok, kris
+- Bumped kotlin, spring-boot, wicket, wicketstuff, wicket-spring-boot-starter, spring-boot-admin-starter-client, flyway, lombok, kris
   spring-dependency-management, spring-cloud-starter-openfeign, feign, kotlin-loggin,
   mockk, spring-mockk, kluent, equalsverifier, junit5, kotest, testcontainers,
   gradle, sonarqube-plugin, detekt,

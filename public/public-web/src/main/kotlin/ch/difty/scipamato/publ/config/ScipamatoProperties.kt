@@ -46,10 +46,10 @@ data class ScipamatoProperties(
     var commercialFontPresent: Boolean = false,
 
     /**
-     * Indicates whether SciPaMaTo should compile the LESS sources into CSS (if
-     * true) or use the pre-compiled CSS classes (if false).
+     * Indicates whether SciPaMaTo should compile the SASS sources into CSS (if true)
+     * or use the pre-compiled CSS classes (if false).
      */
-    var lessUsedOverCss: Boolean = false,
+    var sassUsedOverCss: Boolean = false,
 
     /**
      * Indicates if the Navbar is visible by default. Can be overridden via page

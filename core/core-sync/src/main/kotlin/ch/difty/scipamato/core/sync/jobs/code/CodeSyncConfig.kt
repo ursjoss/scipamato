@@ -13,13 +13,13 @@ import org.jooq.TableField
 import org.jooq.conf.ParamType
 import org.jooq.impl.DSL
 import org.springframework.batch.core.Job
-import org.springframework.batch.core.configuration.annotation.JobBuilderFactory
-import org.springframework.batch.core.configuration.annotation.StepBuilderFactory
+import org.springframework.batch.core.repository.JobRepository
 import org.springframework.batch.item.ItemWriter
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Profile
+import org.springframework.transaction.PlatformTransactionManager
 import java.sql.ResultSet
 import java.sql.SQLException
 import java.sql.Timestamp
@@ -38,17 +38,17 @@ open class CodeSyncConfig(
     @Qualifier("dslContext") jooqCore: DSLContext,
     @Qualifier("publicDslContext") jooqPublic: DSLContext,
     @Qualifier("dataSource") coreDataSource: DataSource,
-    jobBuilderFactory: JobBuilderFactory,
-    stepBuilderFactory: StepBuilderFactory,
-    dateTimeService: DateTimeService
+    jobRepository: JobRepository,
+    transactionManager: PlatformTransactionManager,
+    dateTimeService: DateTimeService,
 ) : SyncConfig<PublicCode, CodeRecord>(
     topic = TOPIC,
     chunkSize = CHUNK_SIZE,
     jooqCore = jooqCore,
     jooqPublic = jooqPublic,
     coreDataSource = coreDataSource,
-    jobBuilderFactory = jobBuilderFactory,
-    stepBuilderFactory = stepBuilderFactory,
+    jobRepository = jobRepository,
+    transactionManager = transactionManager,
     dateTimeService = dateTimeService) {
 
     @Bean
@@ -96,7 +96,7 @@ open class CodeSyncConfig(
         created = getTimestamp(C_CREATED, rs),
         lastModified = getTimestamp(C_LAST_MODIFIED, rs),
         lastSynched = getNow(),
-        )
+    )
 
     override fun lastSynchedField(): TableField<CodeRecord, Timestamp> =
         ch.difty.scipamato.publ.db.tables.Code.CODE.LAST_SYNCHED

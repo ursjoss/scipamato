@@ -32,6 +32,6 @@ internal class NewsletterTopicTest : Jsr303ValidatedEntityTest<NewsletterTopic>(
     fun validatingNewsletter_withNullIssue_fails() {
         val nt = newValidEntity()
         nt.title = null
-        validateAndAssertFailure(nt, TITLE, null, "{javax.validation.constraints.NotNull.message}")
+        validateAndAssertFailure(nt, TITLE, null, "{jakarta.validation.constraints.NotNull.message}")
     }
 }

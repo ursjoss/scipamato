@@ -18,14 +18,14 @@ public class Code extends CoreEntity implements CodeLike {
 
     public static final String CODE_REGEX = "[1-9][A-Z]";
 
-    @javax.validation.constraints.NotNull
-    @javax.validation.constraints.Pattern(regexp = CODE_REGEX, message = "{code.invalidCode}")
+    @jakarta.validation.constraints.NotNull
+    @jakarta.validation.constraints.Pattern(regexp = CODE_REGEX, message = "{code.invalidCode}")
     private final String    code;
-    @javax.validation.constraints.NotNull
+    @jakarta.validation.constraints.NotNull
     private final String    name;
     private final String    comment;
     private final boolean   internal;
-    @javax.validation.constraints.NotNull
+    @jakarta.validation.constraints.NotNull
     private final CodeClass codeClass;
     private final int       sort;
 

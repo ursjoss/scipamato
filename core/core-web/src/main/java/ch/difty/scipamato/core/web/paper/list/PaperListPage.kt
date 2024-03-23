@@ -103,6 +103,6 @@ class PaperListPage(parameters: PageParameters?) : BasePage<Void?>(parameters) {
 
     companion object {
         private const val serialVersionUID = 1L
-        private const val RESULT_PAGE_SIZE = 12
+        private const val RESULT_PAGE_SIZE = 11
     }
 }

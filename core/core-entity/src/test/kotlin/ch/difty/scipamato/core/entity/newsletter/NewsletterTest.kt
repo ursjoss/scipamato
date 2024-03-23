@@ -66,14 +66,14 @@ internal class NewsletterTest : Jsr303ValidatedEntityTest<Newsletter>(Newsletter
     fun validatingNewsletter_withNullIssue_fails() {
         val nl = newValidEntity()
         nl.issue = null
-        validateAndAssertFailure(nl, ISSUE, null, "{javax.validation.constraints.NotNull.message}")
+        validateAndAssertFailure(nl, ISSUE, null, "{jakarta.validation.constraints.NotNull.message}")
     }
 
     @Test
     fun validatingNewsletter_withNullPublicationStatus_fails() {
         val nl = newValidEntity()
         nl.publicationStatus = null
-        validateAndAssertFailure(nl, PUBLICATION_STATUS, null, "{javax.validation.constraints.NotNull.message}")
+        validateAndAssertFailure(nl, PUBLICATION_STATUS, null, "{jakarta.validation.constraints.NotNull.message}")
     }
 
     @Test

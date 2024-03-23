@@ -97,17 +97,17 @@ internal class ScipamatoPublicPropertiesTest {
     }
 
     @Test
-    fun checkingLessOverCSS_ifTrue_delegatesToScipamatoProp() {
-        every { scipamatoPropMock.lessUsedOverCss } returns true
-        prop.isLessUsedOverCss shouldBeEqualTo true
-        verify { scipamatoPropMock.lessUsedOverCss }
+    fun checkingSassOverCSS_ifTrue_delegatesToScipamatoProp() {
+        every { scipamatoPropMock.sassUsedOverCss } returns true
+        prop.isSassUsedOverCss shouldBeEqualTo true
+        verify { scipamatoPropMock.sassUsedOverCss }
     }
 
     @Test
-    fun checkingLessOverCSS_ifNotPresent_delegatesToScipamatoProp() {
-        every { scipamatoPropMock.lessUsedOverCss } returns false
-        prop.isLessUsedOverCss shouldBeEqualTo false
-        verify { scipamatoPropMock.lessUsedOverCss }
+    fun checkingSassOverCSS_ifNotPresent_delegatesToScipamatoProp() {
+        every { scipamatoPropMock.sassUsedOverCss } returns false
+        prop.isSassUsedOverCss shouldBeEqualTo false
+        verify { scipamatoPropMock.sassUsedOverCss }
     }
 
     @Test

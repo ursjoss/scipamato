@@ -3,6 +3,7 @@ package ch.difty.scipamato.publ.web.paper.browse
 import ch.difty.scipamato.publ.entity.PublicPaper
 import ch.difty.scipamato.publ.web.PublicPageParameters
 import ch.difty.scipamato.publ.web.common.BasePageTest
+import ch.difty.scipamato.publ.web.newFormTesterSameSite
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapExternalLink
 import io.mockk.confirmVerified
@@ -76,7 +77,9 @@ class PublicPaperDetailPageTest : BasePageTest<PublicPaperDetailPage>() {
         tester.assertComponent("$form:back", BootstrapButton::class.java)
         tester.assertComponent("$form:previous", BootstrapButton::class.java)
         tester.assertComponent("$form:next", BootstrapButton::class.java)
-        if (pubmedVisible) tester.assertComponent("$form:pubmed", BootstrapExternalLink::class.java) else tester.assertInvisible("$form:pubmed")
+        if (pubmedVisible)
+            tester.assertComponent("$form:pubmed", BootstrapExternalLink::class.java)
+        else tester.assertInvisible("$form:pubmed")
     }
 
     private fun assertReferenceTopic(form: String) {
@@ -218,7 +221,7 @@ class PublicPaperDetailPageTest : BasePageTest<PublicPaperDetailPage>() {
             "goals", "methods", "population", "result", "comment"
         )
         tester.startPage(PublicPaperDetailPage(Model.of(p), null))
-        val formTester = tester.newFormTester("form")
+        val formTester = tester.newFormTesterSameSite("form")
         formTester.submit("previous")
         tester.assertRenderedPage(PublicPaperDetailPage::class.java)
 
@@ -239,7 +242,7 @@ class PublicPaperDetailPageTest : BasePageTest<PublicPaperDetailPage>() {
             "goals", "methods", "population", "result", "comment"
         )
         tester.startPage(PublicPaperDetailPage(Model.of(p), null))
-        val formTester = tester.newFormTester("form")
+        val formTester = tester.newFormTesterSameSite("form")
         formTester.submit("next")
         tester.assertRenderedPage(PublicPaperDetailPage::class.java)
 
@@ -259,7 +262,7 @@ class PublicPaperDetailPageTest : BasePageTest<PublicPaperDetailPage>() {
             "goals", "methods", "population", "result", "comment"
         )
         tester.startPage(PublicPaperDetailPage(Model.of(p), null))
-        val formTester = tester.newFormTester("form")
+        val formTester = tester.newFormTesterSameSite("form")
         formTester.submit("next")
         tester.assertRenderedPage(PublicPaperDetailPage::class.java)
 
@@ -276,7 +279,7 @@ class PublicPaperDetailPageTest : BasePageTest<PublicPaperDetailPage>() {
             "goals", "methods", "population", "result", "comment"
         )
         tester.startPage(PublicPaperDetailPage(Model.of(p), null))
-        val formTester = tester.newFormTester("form")
+        val formTester = tester.newFormTesterSameSite("form")
         formTester.submit("back")
         tester.assertRenderedPage(PublicPage::class.java)
 

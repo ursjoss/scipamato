@@ -1,11 +1,14 @@
 package ch.difty.scipamato.core.web.paper.entry
 
+import ch.difty.scipamato.clickLinkSameSite
 import ch.difty.scipamato.core.entity.Code
 import ch.difty.scipamato.core.entity.CodeClass
 import ch.difty.scipamato.core.entity.Paper
 import ch.difty.scipamato.core.persistence.OptimisticLockingException
 import ch.difty.scipamato.core.web.common.SelfUpdatingPageTest
 import ch.difty.scipamato.core.web.paper.common.PaperPanel
+import ch.difty.scipamato.newFormTesterSameSite
+import ch.difty.scipamato.submitFormSameSite
 import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.BootstrapTabbedPanel
 import io.mockk.every
 import io.mockk.verify
@@ -95,7 +98,7 @@ internal class PaperEntryPageTest : SelfUpdatingPageTest<PaperEntryPage>() {
         tester.startPage(makePage())
         applyTestHackWithNestedMultiPartForms()
 
-        tester.submitForm("contentPanel:form")
+        tester.submitFormSameSite("contentPanel:form")
         tester.assertErrorMessages(
             "'Authors' is required.", "'Title' is required.", "'Location' is required.",
             "'Pub. Year' is required.", "'SciPaMaTo-Core-No.' is required.", "'Goals' is required."
@@ -122,7 +125,7 @@ internal class PaperEntryPageTest : SelfUpdatingPageTest<PaperEntryPage>() {
     }
 
     private fun makeSavablePaperTester(): FormTester =
-        tester.newFormTester("contentPanel:form").apply {
+        tester.newFormTesterSameSite("contentPanel:form").apply {
             setValue("number", "100")
             setValue("authors", "Poe EA.")
             setValue("title", "Title")
@@ -165,7 +168,7 @@ internal class PaperEntryPageTest : SelfUpdatingPageTest<PaperEntryPage>() {
         every { paperServiceMock.findLowestFreeNumberStartingFrom(7L) } returns 19L
 
         tester.startPage(PaperEntryPage(PageParameters(), null))
-        val formTester = tester.newFormTester("contentPanel:form")
+        val formTester = tester.newFormTesterSameSite("contentPanel:form")
 
         formTester.getTextComponentValue("number").shouldNotBeNull()
         formTester.getTextComponentValue("authors").shouldNotBeNull()
@@ -209,9 +212,9 @@ internal class PaperEntryPageTest : SelfUpdatingPageTest<PaperEntryPage>() {
         )
 
         tester.startPage(makePage())
-        tester.clickLink("contentPanel:form:tabs:tabs-container:tabs:2:link")
+        tester.clickLinkSameSite("contentPanel:form:tabs:tabs-container:tabs:2:link")
 
-        val formTester = tester.newFormTester("contentPanel:form").apply {
+        val formTester = tester.newFormTesterSameSite("contentPanel:form").apply {
             setValue("authors", "Poe EA.")
             setValue("title", "Title")
             setValue("location", "loc")

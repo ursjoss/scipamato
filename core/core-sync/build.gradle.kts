@@ -9,7 +9,7 @@ plugins{
  */
 val generatedSourcesPath = "build/generated-src/jooq"
 sourceSets {
-    /** main: html, css, less, properties files */
+    /** main: html, css, sass, properties files */
     main {
         java {
             srcDir(setOf(generatedSourcesPath, "src/main/java"))

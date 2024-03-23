@@ -56,7 +56,7 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
 
     private static final long serialVersionUID = 1L;
 
-    private static final int RESULT_PAGE_SIZE = 12;
+    private static final int RESULT_PAGE_SIZE = 10;
 
     private PaperSlimBySearchOrderProvider dataProvider;
 

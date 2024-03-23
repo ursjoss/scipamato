@@ -8,6 +8,5 @@ dependencies {
 
     testImplementation(project(Module.scipamatoCommon("test")))
     testImplementation(libs.hibernate.validator)
-    testImplementation(libs.javax.el.api)
-    testImplementation(libs.javax.el.impl)
+    testImplementation(libs.jakarta.el.api)
 }

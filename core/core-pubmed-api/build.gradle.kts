@@ -32,7 +32,7 @@ dependencies {
 
     // Object/XML mapping
     implementation(libs.spring.oxm)
-    implementation(libs.jaxb.api)
+    implementation(libs.jakarta.bind.api)
     runtimeOnly(libs.jaxb.runtime)
 
     testImplementation(project(Module.scipamatoCommon("test")))

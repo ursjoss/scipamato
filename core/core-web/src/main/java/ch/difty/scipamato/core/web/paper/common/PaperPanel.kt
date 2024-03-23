@@ -31,12 +31,12 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.button.ButtonBehavior
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons
 import de.agilecoders.wicket.core.markup.html.bootstrap.image.IconType
 import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.BootstrapTabbedPanel
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.fileUpload.DropZoneFileUpload
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.checkboxx.CheckBoxX
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.fileinput.BootstrapFileInput
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelect
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelectConfig
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome5IconType
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome6IconType
 import org.apache.wicket.AttributeModifier
 import org.apache.wicket.PageReference
 import org.apache.wicket.ajax.AjaxRequestTarget
@@ -143,11 +143,11 @@ abstract class PaperPanel<T>(
         )
         title = TextArea(PaperFields.TITLE.fieldName)
         val pm = paperIdManager
-        queue(newNavigationButton("previous", FontAwesome5IconType.step_backward_s, { pm.hasPrevious() }) {
+        queue(newNavigationButton("previous", FontAwesome6IconType.backward_step_s, { pm.hasPrevious() }) {
             pm.previous()
             pm.itemWithFocus
         })
-        queue(newNavigationButton("next", FontAwesome5IconType.step_forward_s, { pm.hasNext() }) {
+        queue(newNavigationButton("next", FontAwesome6IconType.forward_step_s, { pm.hasNext() }) {
             pm.next()
             pm.itemWithFocus
         })
@@ -218,10 +218,10 @@ abstract class PaperPanel<T>(
             // Otherwise: Show the open envelope if assigned to current, closed envelope if assigned to closed nl.
             private val iconType: IconType
                 get() = if (!isAssociatedWithNewsletter)
-                    FontAwesome5IconType.plus_square_s
+                    FontAwesome6IconType.square_plus_s
                 else if (isAssociatedWithWipNewsletter)
-                    FontAwesome5IconType.envelope_open_r
-                else FontAwesome5IconType.envelope_r
+                    FontAwesome6IconType.envelope_open_r
+                else FontAwesome6IconType.envelope_r
         }
         addRemoveNewsletter.outputMarkupPlaceholderTag = true
         queue(addRemoveNewsletter)
@@ -397,7 +397,7 @@ abstract class PaperPanel<T>(
     protected abstract fun restartSearchInPaperSearchPage()
     protected abstract fun newExcludeButton(id: String): BootstrapButton
     private fun makeAndQueueSubmitButton(id: String) {
-        submit = object : BootstrapButton(id, StringResourceModel(submitLinkResourceLabel), Buttons.Type.Default) {
+        submit = object : BootstrapButton(id, StringResourceModel(submitLinkResourceLabel), Buttons.Type.Primary) {
             override fun onSubmit() {
                 super.onSubmit()
                 onFormSubmit()
@@ -464,7 +464,6 @@ abstract class PaperPanel<T>(
                 super.onInitialize()
                 if (isVisible) add(ButtonBehavior()
                     .setType(Buttons.Type.Info)
-                    .setBlock(true)
                     .setSize(Buttons.Size.Medium))
             }
 
@@ -787,7 +786,7 @@ abstract class PaperPanel<T>(
             tab6Form.isMultiPart = true
             tab6Form.add(SelfUpdateBroadcastingBehavior(page))
             queue(tab6Form)
-            queue(newDropZoneFileUpload())
+            queue(newFileInput())
             attachments = newAttachmentTable("attachments")
             queue(attachments)
 
@@ -897,7 +896,7 @@ abstract class PaperPanel<T>(
     abstract fun isaNewsletterInStatusWip(): Boolean
     abstract fun modifyNewsletterAssociation(target: AjaxRequestTarget)
     abstract fun newAttachmentTable(id: String): DataTable<PaperAttachment, String>
-    abstract fun newDropZoneFileUpload(): DropZoneFileUpload
+    abstract fun newFileInput(): BootstrapFileInput
 
     /**
      * override if needed

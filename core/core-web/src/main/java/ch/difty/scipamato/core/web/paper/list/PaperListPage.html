@@ -4,8 +4,8 @@
 <body>
     <wicket:extend>
         <div class="container-fluid">
-            <div class="row">
-                <form wicket:id="searchForm" role="form">
+            <form wicket:id="searchForm" role="form">
+                <div class="row">
                     <div class="col-xs-2 col-sm-2 col-md-1">
                         <div wicket:id="numberLabel"></div>
                         <input wicket:id="number" class="form-control"/>
@@ -34,16 +34,12 @@
                         <div wicket:id="fieldSearchLabel"></div>
                         <input wicket:id="fieldSearch" class="form-control"/>
                     </div>
-                    <div class="col-xs-3 col-sm-1 col-md-1" style="bottom: -20px;">
+                    <div class="col-xs-3 col-sm-1 col-md-1" style="padding-top: 1.5em;">
                         <a wicket:id="newPaper">New Paper</a>
                     </div>
-                </form>
-            </div>
-            <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12">
-                    <div wicket:id="resultPanel"></div>
                 </div>
-            </div>
+            </form>
+            <div wicket:id="resultPanel"></div>
         </div>
     </wicket:extend>
 </body>

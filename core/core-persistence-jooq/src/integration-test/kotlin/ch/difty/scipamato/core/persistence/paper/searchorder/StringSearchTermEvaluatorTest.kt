@@ -192,7 +192,7 @@ internal class StringSearchTermEvaluatorTest {
             """not (cast(coalesce(
                |  field_x,
                |  ''
-               |) as varchar) ilike ('%' || replace(
+               |) as varchar) ilike (('%' || replace(
                |  replace(
                |    replace('foo', '!', '!!'),
                |    '%',
@@ -200,14 +200,14 @@ internal class StringSearchTermEvaluatorTest {
                |  ),
                |  '_',
                |  '!_'
-               |) || '%') escape '!')""".trimMargin()
+               |)) || '%') escape '!')""".trimMargin()
     }
 
     @Test
     fun buildingConditionForWord_appliesContains() {
         expectToken(TokenType.WORD, "foo")
         evaluator.evaluate(stMock).toString() shouldBeEqualTo
-            """cast(field_x as varchar) ilike ('%' || replace(
+            """cast(field_x as varchar) ilike (('%' || replace(
                |  replace(
                |    replace('foo', '!', '!!'),
                |    '%',
@@ -215,7 +215,7 @@ internal class StringSearchTermEvaluatorTest {
                |  ),
                |  '_',
                |  '!_'
-               |) || '%') escape '!'""".trimMargin()
+               |)) || '%') escape '!'""".trimMargin()
     }
 
     @Test
@@ -781,7 +781,7 @@ internal class StringSearchTermEvaluatorTest {
                |  not (cast(coalesce(
                |    methods,
                |    ''
-               |  ) as varchar) ilike ('%' || replace(
+               |  ) as varchar) ilike (('%' || replace(
                |    replace(
                |      replace('foo', '!', '!!'),
                |      '%',
@@ -789,11 +789,11 @@ internal class StringSearchTermEvaluatorTest {
                |    ),
                |    '_',
                |    '!_'
-               |  ) || '%') escape '!')
+               |  )) || '%') escape '!')
                |  and not (cast(coalesce(
                |    method_study_design,
                |    ''
-               |  ) as varchar) ilike ('%' || replace(
+               |  ) as varchar) ilike (('%' || replace(
                |    replace(
                |      replace('foo', '!', '!!'),
                |      '%',
@@ -801,11 +801,11 @@ internal class StringSearchTermEvaluatorTest {
                |    ),
                |    '_',
                |    '!_'
-               |  ) || '%') escape '!')
+               |  )) || '%') escape '!')
                |  and not (cast(coalesce(
                |    population_place,
                |    ''
-               |  ) as varchar) ilike ('%' || replace(
+               |  ) as varchar) ilike (('%' || replace(
                |    replace(
                |      replace('foo', '!', '!!'),
                |      '%',
@@ -813,11 +813,11 @@ internal class StringSearchTermEvaluatorTest {
                |    ),
                |    '_',
                |    '!_'
-               |  ) || '%') escape '!')
+               |  )) || '%') escape '!')
                |  and not (cast(coalesce(
                |    method_outcome,
                |    ''
-               |  ) as varchar) ilike ('%' || replace(
+               |  ) as varchar) ilike (('%' || replace(
                |    replace(
                |      replace('foo', '!', '!!'),
                |      '%',
@@ -825,11 +825,11 @@ internal class StringSearchTermEvaluatorTest {
                |    ),
                |    '_',
                |    '!_'
-               |  ) || '%') escape '!')
+               |  )) || '%') escape '!')
                |  and not (cast(coalesce(
                |    exposure_pollutant,
                |    ''
-               |  ) as varchar) ilike ('%' || replace(
+               |  ) as varchar) ilike (('%' || replace(
                |    replace(
                |      replace('foo', '!', '!!'),
                |      '%',
@@ -837,11 +837,11 @@ internal class StringSearchTermEvaluatorTest {
                |    ),
                |    '_',
                |    '!_'
-               |  ) || '%') escape '!')
+               |  )) || '%') escape '!')
                |  and not (cast(coalesce(
                |    exposure_assessment,
                |    ''
-               |  ) as varchar) ilike ('%' || replace(
+               |  ) as varchar) ilike (('%' || replace(
                |    replace(
                |      replace('foo', '!', '!!'),
                |      '%',
@@ -849,11 +849,11 @@ internal class StringSearchTermEvaluatorTest {
                |    ),
                |    '_',
                |    '!_'
-               |  ) || '%') escape '!')
+               |  )) || '%') escape '!')
                |  and not (cast(coalesce(
                |    method_statistics,
                |    ''
-               |  ) as varchar) ilike ('%' || replace(
+               |  ) as varchar) ilike (('%' || replace(
                |    replace(
                |      replace('foo', '!', '!!'),
                |      '%',
@@ -861,11 +861,11 @@ internal class StringSearchTermEvaluatorTest {
                |    ),
                |    '_',
                |    '!_'
-               |  ) || '%') escape '!')
+               |  )) || '%') escape '!')
                |  and not (cast(coalesce(
                |    method_confounders,
                |    ''
-               |  ) as varchar) ilike ('%' || replace(
+               |  ) as varchar) ilike (('%' || replace(
                |    replace(
                |      replace('foo', '!', '!!'),
                |      '%',
@@ -873,7 +873,7 @@ internal class StringSearchTermEvaluatorTest {
                |    ),
                |    '_',
                |    '!_'
-               |  ) || '%') escape '!')
+               |  )) || '%') escape '!')
                |)""".trimMargin()
     }
 
@@ -882,7 +882,7 @@ internal class StringSearchTermEvaluatorTest {
         expectMethodToken(TokenType.WORD, "foo")
         evaluator.evaluate(stMock).toString() shouldBeEqualTo
             """(
-               |  cast(methods as varchar) ilike ('%' || replace(
+               |  cast(methods as varchar) ilike (('%' || replace(
                |    replace(
                |      replace('foo', '!', '!!'),
                |      '%',
@@ -890,8 +890,8 @@ internal class StringSearchTermEvaluatorTest {
                |    ),
                |    '_',
                |    '!_'
-               |  ) || '%') escape '!'
-               |  or cast(method_study_design as varchar) ilike ('%' || replace(
+               |  )) || '%') escape '!'
+               |  or cast(method_study_design as varchar) ilike (('%' || replace(
                |    replace(
                |      replace('foo', '!', '!!'),
                |      '%',
@@ -899,8 +899,8 @@ internal class StringSearchTermEvaluatorTest {
                |    ),
                |    '_',
                |    '!_'
-               |  ) || '%') escape '!'
-               |  or cast(population_place as varchar) ilike ('%' || replace(
+               |  )) || '%') escape '!'
+               |  or cast(population_place as varchar) ilike (('%' || replace(
                |    replace(
                |      replace('foo', '!', '!!'),
                |      '%',
@@ -908,8 +908,8 @@ internal class StringSearchTermEvaluatorTest {
                |    ),
                |    '_',
                |    '!_'
-               |  ) || '%') escape '!'
-               |  or cast(method_outcome as varchar) ilike ('%' || replace(
+               |  )) || '%') escape '!'
+               |  or cast(method_outcome as varchar) ilike (('%' || replace(
                |    replace(
                |      replace('foo', '!', '!!'),
                |      '%',
@@ -917,8 +917,8 @@ internal class StringSearchTermEvaluatorTest {
                |    ),
                |    '_',
                |    '!_'
-               |  ) || '%') escape '!'
-               |  or cast(exposure_pollutant as varchar) ilike ('%' || replace(
+               |  )) || '%') escape '!'
+               |  or cast(exposure_pollutant as varchar) ilike (('%' || replace(
                |    replace(
                |      replace('foo', '!', '!!'),
                |      '%',
@@ -926,8 +926,8 @@ internal class StringSearchTermEvaluatorTest {
                |    ),
                |    '_',
                |    '!_'
-               |  ) || '%') escape '!'
-               |  or cast(exposure_assessment as varchar) ilike ('%' || replace(
+               |  )) || '%') escape '!'
+               |  or cast(exposure_assessment as varchar) ilike (('%' || replace(
                |    replace(
                |      replace('foo', '!', '!!'),
                |      '%',
@@ -935,8 +935,8 @@ internal class StringSearchTermEvaluatorTest {
                |    ),
                |    '_',
                |    '!_'
-               |  ) || '%') escape '!'
-               |  or cast(method_statistics as varchar) ilike ('%' || replace(
+               |  )) || '%') escape '!'
+               |  or cast(method_statistics as varchar) ilike (('%' || replace(
                |    replace(
                |      replace('foo', '!', '!!'),
                |      '%',
@@ -944,8 +944,8 @@ internal class StringSearchTermEvaluatorTest {
                |    ),
                |    '_',
                |    '!_'
-               |  ) || '%') escape '!'
-               |  or cast(method_confounders as varchar) ilike ('%' || replace(
+               |  )) || '%') escape '!'
+               |  or cast(method_confounders as varchar) ilike (('%' || replace(
                |    replace(
                |      replace('foo', '!', '!!'),
                |      '%',
@@ -953,7 +953,7 @@ internal class StringSearchTermEvaluatorTest {
                |    ),
                |    '_',
                |    '!_'
-               |  ) || '%') escape '!'
+               |  )) || '%') escape '!'
                |)""".trimMargin()
     }
 
@@ -980,7 +980,7 @@ internal class StringSearchTermEvaluatorTest {
         evaluator.evaluate(sst).toString() shouldBeEqualTo
             """(
                |  (
-               |    cast(methods as varchar) ilike ('%' || replace(
+               |    cast(methods as varchar) ilike (('%' || replace(
                |      replace(
                |        replace('foo', '!', '!!'),
                |        '%',
@@ -988,8 +988,8 @@ internal class StringSearchTermEvaluatorTest {
                |      ),
                |      '_',
                |      '!_'
-               |    ) || '%') escape '!'
-               |    or cast(method_study_design as varchar) ilike ('%' || replace(
+               |    )) || '%') escape '!'
+               |    or cast(method_study_design as varchar) ilike (('%' || replace(
                |      replace(
                |        replace('foo', '!', '!!'),
                |        '%',
@@ -997,8 +997,8 @@ internal class StringSearchTermEvaluatorTest {
                |      ),
                |      '_',
                |      '!_'
-               |    ) || '%') escape '!'
-               |    or cast(population_place as varchar) ilike ('%' || replace(
+               |    )) || '%') escape '!'
+               |    or cast(population_place as varchar) ilike (('%' || replace(
                |      replace(
                |        replace('foo', '!', '!!'),
                |        '%',
@@ -1006,8 +1006,8 @@ internal class StringSearchTermEvaluatorTest {
                |      ),
                |      '_',
                |      '!_'
-               |    ) || '%') escape '!'
-               |    or cast(method_outcome as varchar) ilike ('%' || replace(
+               |    )) || '%') escape '!'
+               |    or cast(method_outcome as varchar) ilike (('%' || replace(
                |      replace(
                |        replace('foo', '!', '!!'),
                |        '%',
@@ -1015,8 +1015,8 @@ internal class StringSearchTermEvaluatorTest {
                |      ),
                |      '_',
                |      '!_'
-               |    ) || '%') escape '!'
-               |    or cast(exposure_pollutant as varchar) ilike ('%' || replace(
+               |    )) || '%') escape '!'
+               |    or cast(exposure_pollutant as varchar) ilike (('%' || replace(
                |      replace(
                |        replace('foo', '!', '!!'),
                |        '%',
@@ -1024,8 +1024,8 @@ internal class StringSearchTermEvaluatorTest {
                |      ),
                |      '_',
                |      '!_'
-               |    ) || '%') escape '!'
-               |    or cast(exposure_assessment as varchar) ilike ('%' || replace(
+               |    )) || '%') escape '!'
+               |    or cast(exposure_assessment as varchar) ilike (('%' || replace(
                |      replace(
                |        replace('foo', '!', '!!'),
                |        '%',
@@ -1033,8 +1033,8 @@ internal class StringSearchTermEvaluatorTest {
                |      ),
                |      '_',
                |      '!_'
-               |    ) || '%') escape '!'
-               |    or cast(method_statistics as varchar) ilike ('%' || replace(
+               |    )) || '%') escape '!'
+               |    or cast(method_statistics as varchar) ilike (('%' || replace(
                |      replace(
                |        replace('foo', '!', '!!'),
                |        '%',
@@ -1042,8 +1042,8 @@ internal class StringSearchTermEvaluatorTest {
                |      ),
                |      '_',
                |      '!_'
-               |    ) || '%') escape '!'
-               |    or cast(method_confounders as varchar) ilike ('%' || replace(
+               |    )) || '%') escape '!'
+               |    or cast(method_confounders as varchar) ilike (('%' || replace(
                |      replace(
                |        replace('foo', '!', '!!'),
                |        '%',
@@ -1051,12 +1051,12 @@ internal class StringSearchTermEvaluatorTest {
                |      ),
                |      '_',
                |      '!_'
-               |    ) || '%') escape '!'
+               |    )) || '%') escape '!'
                |  )
                |  and not (cast(coalesce(
                |    methods,
                |    ''
-               |  ) as varchar) ilike ('%' || replace(
+               |  ) as varchar) ilike (('%' || replace(
                |    replace(
                |      replace('bar', '!', '!!'),
                |      '%',
@@ -1064,11 +1064,11 @@ internal class StringSearchTermEvaluatorTest {
                |    ),
                |    '_',
                |    '!_'
-               |  ) || '%') escape '!')
+               |  )) || '%') escape '!')
                |  and not (cast(coalesce(
                |    method_study_design,
                |    ''
-               |  ) as varchar) ilike ('%' || replace(
+               |  ) as varchar) ilike (('%' || replace(
                |    replace(
                |      replace('bar', '!', '!!'),
                |      '%',
@@ -1076,11 +1076,11 @@ internal class StringSearchTermEvaluatorTest {
                |    ),
                |    '_',
                |    '!_'
-               |  ) || '%') escape '!')
+               |  )) || '%') escape '!')
                |  and not (cast(coalesce(
                |    population_place,
                |    ''
-               |  ) as varchar) ilike ('%' || replace(
+               |  ) as varchar) ilike (('%' || replace(
                |    replace(
                |      replace('bar', '!', '!!'),
                |      '%',
@@ -1088,11 +1088,11 @@ internal class StringSearchTermEvaluatorTest {
                |    ),
                |    '_',
                |    '!_'
-               |  ) || '%') escape '!')
+               |  )) || '%') escape '!')
                |  and not (cast(coalesce(
                |    method_outcome,
                |    ''
-               |  ) as varchar) ilike ('%' || replace(
+               |  ) as varchar) ilike (('%' || replace(
                |    replace(
                |      replace('bar', '!', '!!'),
                |      '%',
@@ -1100,11 +1100,11 @@ internal class StringSearchTermEvaluatorTest {
                |    ),
                |    '_',
                |    '!_'
-               |  ) || '%') escape '!')
+               |  )) || '%') escape '!')
                |  and not (cast(coalesce(
                |    exposure_pollutant,
                |    ''
-               |  ) as varchar) ilike ('%' || replace(
+               |  ) as varchar) ilike (('%' || replace(
                |    replace(
                |      replace('bar', '!', '!!'),
                |      '%',
@@ -1112,11 +1112,11 @@ internal class StringSearchTermEvaluatorTest {
                |    ),
                |    '_',
                |    '!_'
-               |  ) || '%') escape '!')
+               |  )) || '%') escape '!')
                |  and not (cast(coalesce(
                |    exposure_assessment,
                |    ''
-               |  ) as varchar) ilike ('%' || replace(
+               |  ) as varchar) ilike (('%' || replace(
                |    replace(
                |      replace('bar', '!', '!!'),
                |      '%',
@@ -1124,11 +1124,11 @@ internal class StringSearchTermEvaluatorTest {
                |    ),
                |    '_',
                |    '!_'
-               |  ) || '%') escape '!')
+               |  )) || '%') escape '!')
                |  and not (cast(coalesce(
                |    method_statistics,
                |    ''
-               |  ) as varchar) ilike ('%' || replace(
+               |  ) as varchar) ilike (('%' || replace(
                |    replace(
                |      replace('bar', '!', '!!'),
                |      '%',
@@ -1136,11 +1136,11 @@ internal class StringSearchTermEvaluatorTest {
                |    ),
                |    '_',
                |    '!_'
-               |  ) || '%') escape '!')
+               |  )) || '%') escape '!')
                |  and not (cast(coalesce(
                |    method_confounders,
                |    ''
-               |  ) as varchar) ilike ('%' || replace(
+               |  ) as varchar) ilike (('%' || replace(
                |    replace(
                |      replace('bar', '!', '!!'),
                |      '%',
@@ -1148,7 +1148,7 @@ internal class StringSearchTermEvaluatorTest {
                |    ),
                |    '_',
                |    '!_'
-               |  ) || '%') escape '!')
+               |  )) || '%') escape '!')
                |)""".trimMargin()
     }
     //endregion
@@ -1510,7 +1510,7 @@ internal class StringSearchTermEvaluatorTest {
                |  not (cast(coalesce(
                |    population,
                |    ''
-               |  ) as varchar) ilike ('%' || replace(
+               |  ) as varchar) ilike (('%' || replace(
                |    replace(
                |      replace('foo', '!', '!!'),
                |      '%',
@@ -1518,11 +1518,11 @@ internal class StringSearchTermEvaluatorTest {
                |    ),
                |    '_',
                |    '!_'
-               |  ) || '%') escape '!')
+               |  )) || '%') escape '!')
                |  and not (cast(coalesce(
                |    population_place,
                |    ''
-               |  ) as varchar) ilike ('%' || replace(
+               |  ) as varchar) ilike (('%' || replace(
                |    replace(
                |      replace('foo', '!', '!!'),
                |      '%',
@@ -1530,11 +1530,11 @@ internal class StringSearchTermEvaluatorTest {
                |    ),
                |    '_',
                |    '!_'
-               |  ) || '%') escape '!')
+               |  )) || '%') escape '!')
                |  and not (cast(coalesce(
                |    population_participants,
                |    ''
-               |  ) as varchar) ilike ('%' || replace(
+               |  ) as varchar) ilike (('%' || replace(
                |    replace(
                |      replace('foo', '!', '!!'),
                |      '%',
@@ -1542,11 +1542,11 @@ internal class StringSearchTermEvaluatorTest {
                |    ),
                |    '_',
                |    '!_'
-               |  ) || '%') escape '!')
+               |  )) || '%') escape '!')
                |  and not (cast(coalesce(
                |    population_duration,
                |    ''
-               |  ) as varchar) ilike ('%' || replace(
+               |  ) as varchar) ilike (('%' || replace(
                |    replace(
                |      replace('foo', '!', '!!'),
                |      '%',
@@ -1554,7 +1554,7 @@ internal class StringSearchTermEvaluatorTest {
                |    ),
                |    '_',
                |    '!_'
-               |  ) || '%') escape '!')
+               |  )) || '%') escape '!')
                |)""".trimMargin()
     }
 
@@ -1563,7 +1563,7 @@ internal class StringSearchTermEvaluatorTest {
         expectPopulationToken(TokenType.WORD, "foo")
         evaluator.evaluate(stMock).toString() shouldBeEqualTo
             """(
-               |  cast(population as varchar) ilike ('%' || replace(
+               |  cast(population as varchar) ilike (('%' || replace(
                |    replace(
                |      replace('foo', '!', '!!'),
                |      '%',
@@ -1571,8 +1571,8 @@ internal class StringSearchTermEvaluatorTest {
                |    ),
                |    '_',
                |    '!_'
-               |  ) || '%') escape '!'
-               |  or cast(population_place as varchar) ilike ('%' || replace(
+               |  )) || '%') escape '!'
+               |  or cast(population_place as varchar) ilike (('%' || replace(
                |    replace(
                |      replace('foo', '!', '!!'),
                |      '%',
@@ -1580,8 +1580,8 @@ internal class StringSearchTermEvaluatorTest {
                |    ),
                |    '_',
                |    '!_'
-               |  ) || '%') escape '!'
-               |  or cast(population_participants as varchar) ilike ('%' || replace(
+               |  )) || '%') escape '!'
+               |  or cast(population_participants as varchar) ilike (('%' || replace(
                |    replace(
                |      replace('foo', '!', '!!'),
                |      '%',
@@ -1589,8 +1589,8 @@ internal class StringSearchTermEvaluatorTest {
                |    ),
                |    '_',
                |    '!_'
-               |  ) || '%') escape '!'
-               |  or cast(population_duration as varchar) ilike ('%' || replace(
+               |  )) || '%') escape '!'
+               |  or cast(population_duration as varchar) ilike (('%' || replace(
                |    replace(
                |      replace('foo', '!', '!!'),
                |      '%',
@@ -1598,7 +1598,7 @@ internal class StringSearchTermEvaluatorTest {
                |    ),
                |    '_',
                |    '!_'
-               |  ) || '%') escape '!'
+               |  )) || '%') escape '!'
                |)""".trimMargin()
     }
 
@@ -1625,7 +1625,7 @@ internal class StringSearchTermEvaluatorTest {
         evaluator.evaluate(sst).toString() shouldBeEqualTo
             """(
                |  (
-               |    cast(population as varchar) ilike ('%' || replace(
+               |    cast(population as varchar) ilike (('%' || replace(
                |      replace(
                |        replace('foo', '!', '!!'),
                |        '%',
@@ -1633,8 +1633,8 @@ internal class StringSearchTermEvaluatorTest {
                |      ),
                |      '_',
                |      '!_'
-               |    ) || '%') escape '!'
-               |    or cast(population_place as varchar) ilike ('%' || replace(
+               |    )) || '%') escape '!'
+               |    or cast(population_place as varchar) ilike (('%' || replace(
                |      replace(
                |        replace('foo', '!', '!!'),
                |        '%',
@@ -1642,8 +1642,8 @@ internal class StringSearchTermEvaluatorTest {
                |      ),
                |      '_',
                |      '!_'
-               |    ) || '%') escape '!'
-               |    or cast(population_participants as varchar) ilike ('%' || replace(
+               |    )) || '%') escape '!'
+               |    or cast(population_participants as varchar) ilike (('%' || replace(
                |      replace(
                |        replace('foo', '!', '!!'),
                |        '%',
@@ -1651,8 +1651,8 @@ internal class StringSearchTermEvaluatorTest {
                |      ),
                |      '_',
                |      '!_'
-               |    ) || '%') escape '!'
-               |    or cast(population_duration as varchar) ilike ('%' || replace(
+               |    )) || '%') escape '!'
+               |    or cast(population_duration as varchar) ilike (('%' || replace(
                |      replace(
                |        replace('foo', '!', '!!'),
                |        '%',
@@ -1660,12 +1660,12 @@ internal class StringSearchTermEvaluatorTest {
                |      ),
                |      '_',
                |      '!_'
-               |    ) || '%') escape '!'
+               |    )) || '%') escape '!'
                |  )
                |  and not (cast(coalesce(
                |    population,
                |    ''
-               |  ) as varchar) ilike ('%' || replace(
+               |  ) as varchar) ilike (('%' || replace(
                |    replace(
                |      replace('bar', '!', '!!'),
                |      '%',
@@ -1673,11 +1673,11 @@ internal class StringSearchTermEvaluatorTest {
                |    ),
                |    '_',
                |    '!_'
-               |  ) || '%') escape '!')
+               |  )) || '%') escape '!')
                |  and not (cast(coalesce(
                |    population_place,
                |    ''
-               |  ) as varchar) ilike ('%' || replace(
+               |  ) as varchar) ilike (('%' || replace(
                |    replace(
                |      replace('bar', '!', '!!'),
                |      '%',
@@ -1685,11 +1685,11 @@ internal class StringSearchTermEvaluatorTest {
                |    ),
                |    '_',
                |    '!_'
-               |  ) || '%') escape '!')
+               |  )) || '%') escape '!')
                |  and not (cast(coalesce(
                |    population_participants,
                |    ''
-               |  ) as varchar) ilike ('%' || replace(
+               |  ) as varchar) ilike (('%' || replace(
                |    replace(
                |      replace('bar', '!', '!!'),
                |      '%',
@@ -1697,11 +1697,11 @@ internal class StringSearchTermEvaluatorTest {
                |    ),
                |    '_',
                |    '!_'
-               |  ) || '%') escape '!')
+               |  )) || '%') escape '!')
                |  and not (cast(coalesce(
                |    population_duration,
                |    ''
-               |  ) as varchar) ilike ('%' || replace(
+               |  ) as varchar) ilike (('%' || replace(
                |    replace(
                |      replace('bar', '!', '!!'),
                |      '%',
@@ -1709,7 +1709,7 @@ internal class StringSearchTermEvaluatorTest {
                |    ),
                |    '_',
                |    '!_'
-               |  ) || '%') escape '!')
+               |  )) || '%') escape '!')
                |)""".trimMargin()
     }
     //endregion

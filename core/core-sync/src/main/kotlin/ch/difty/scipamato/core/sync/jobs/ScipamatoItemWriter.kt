@@ -2,6 +2,7 @@ package ch.difty.scipamato.core.sync.jobs
 
 import ch.difty.scipamato.common.logger
 import org.jooq.DSLContext
+import org.springframework.batch.item.Chunk
 import org.springframework.batch.item.ItemWriter
 
 private val log = logger()
@@ -11,14 +12,13 @@ private val log = logger()
  *
  * [T] the type of the entity to be written
  */
-abstract class ScipamatoItemWriter<T> constructor(
+abstract class ScipamatoItemWriter<T>(
     protected val dslContext: DSLContext,
     private val topic: String,
 ) : ItemWriter<T> {
-
-    override fun write(items: List<T>) {
+    override fun write(chunk: Chunk<out T>) {
         var changeCount = 0
-        for (i in items) changeCount += executeUpdate(i)
+        for (i in chunk) changeCount += executeUpdate(i)
         log.info("$topic-sync: Successfully synced $changeCount $topic${if (changeCount == 1) "" else "s"}")
     }
 

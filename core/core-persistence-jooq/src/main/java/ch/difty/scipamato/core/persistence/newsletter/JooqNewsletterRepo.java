@@ -169,7 +169,7 @@ public class JooqNewsletterRepo extends
     @NotNull
     @Override
     public Optional<Paper.NewsletterLink> mergePaperIntoNewsletter(final int newsletterId, final long paperId,
-        @Nullable final Integer newsletterTopicId, @NotNull String languageCode) {
+        @Nullable final Integer newsletterTopicId, @NotNull final String languageCode) {
         final Timestamp ts = getDateTimeService().getCurrentTimestamp();
         final int count = tryInserting(newsletterId, paperId, newsletterTopicId, ts);
         return handleInsertedNewsletter(count, newsletterId, paperId, languageCode);

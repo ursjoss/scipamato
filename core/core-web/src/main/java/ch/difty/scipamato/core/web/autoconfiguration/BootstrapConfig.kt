@@ -3,7 +3,7 @@ package ch.difty.scipamato.core.web.autoconfiguration
 import com.giffing.wicket.spring.boot.context.extensions.ApplicationInitExtension
 import com.giffing.wicket.spring.boot.context.extensions.WicketApplicationInitConfiguration
 import de.agilecoders.wicket.core.Bootstrap
-import de.agilecoders.wicket.less.BootstrapLess
+import de.agilecoders.wicket.sass.BootstrapSass
 import de.agilecoders.wicket.themes.markup.html.bootswatch.BootswatchThemeProvider
 import org.apache.wicket.protocol.http.WebApplication
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass
@@ -18,6 +18,6 @@ open class BootstrapConfig(private val prop: BootstrapProperties) : WicketApplic
     override fun init(webApplication: WebApplication) {
         BootswatchThemeProvider(prop.theme).also { prop.themeProvider = it }
         Bootstrap.install(webApplication, prop)
-        BootstrapLess.install(webApplication)
+        BootstrapSass.install(webApplication)
     }
 }

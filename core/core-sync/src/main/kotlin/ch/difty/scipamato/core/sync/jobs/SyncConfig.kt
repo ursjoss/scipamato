@@ -10,14 +10,16 @@ import org.jooq.TableField
 import org.jooq.impl.UpdatableRecordImpl
 import org.springframework.batch.core.Job
 import org.springframework.batch.core.Step
-import org.springframework.batch.core.configuration.annotation.JobBuilderFactory
-import org.springframework.batch.core.configuration.annotation.StepBuilderFactory
+import org.springframework.batch.core.job.builder.JobBuilder
 import org.springframework.batch.core.launch.support.RunIdIncrementer
+import org.springframework.batch.core.repository.JobRepository
+import org.springframework.batch.core.step.builder.StepBuilder
 import org.springframework.batch.item.ItemReader
 import org.springframework.batch.item.ItemWriter
 import org.springframework.batch.item.database.JdbcCursorItemReader
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.transaction.PlatformTransactionManager
 import java.sql.Date
 import java.sql.ResultSet
 import java.sql.SQLException
@@ -37,16 +39,16 @@ abstract class SyncConfig<T, R : UpdatableRecordImpl<R>?>(
     @Qualifier("dslContext") protected val jooqCore: DSLContext,
     @Qualifier("publicDslContext") protected val jooqPublic: DSLContext,
     @Qualifier("dataSource") private val coreDataSource: DataSource,
-    private val jobBuilderFactory: JobBuilderFactory,
-    private val stepBuilderFactory: StepBuilderFactory,
-    private val dateTimeService: DateTimeService
+    private val jobRepository: JobRepository,
+    private val transactionManager: PlatformTransactionManager,
+    private val dateTimeService: DateTimeService,
 ) {
 
     @Value("\${purge_grace_time_in_minutes:30}")
     private val graceTime = 0
 
     fun createJob(): Job =
-        jobBuilderFactory[jobName]
+        JobBuilder(jobName, jobRepository)
             .incrementer(RunIdIncrementer())
             .flow(insertingOrUpdatingStep())
             .next(purgingStep())
@@ -60,7 +62,8 @@ abstract class SyncConfig<T, R : UpdatableRecordImpl<R>?>(
     abstract val jobName: String
 
     private fun insertingOrUpdatingStep(): Step =
-        stepBuilderFactory["${topic}InsertingOrUpdatingStep"].chunk<T, T>(chunkSize)
+        StepBuilder("${topic}InsertingOrUpdatingStep", jobRepository)
+            .chunk<T, T>(chunkSize, transactionManager)
             .reader(coreReader())
             .writer(publicWriter())
             .build()
@@ -91,16 +94,16 @@ abstract class SyncConfig<T, R : UpdatableRecordImpl<R>?>(
     abstract fun makeEntity(rs: ResultSet): T
 
     private fun purgingStep(): Step =
-        stepBuilderFactory[topic + "PurgingStep"]
-            .tasklet(HouseKeeper(jooqPublic, lastSynchedField(), dateTimeService, graceTime, topic))
+        StepBuilder(topic + "PurgingStep", jobRepository)
+            .tasklet(HouseKeeper(jooqPublic, lastSynchedField(), dateTimeService, graceTime, topic), transactionManager)
             .build()
 
     abstract fun lastSynchedField(): TableField<R, Timestamp>
 
     private fun pseudoForeignKeyConstraintStep(): Step =
-        stepBuilderFactory[topic + "PseudoForeignKeyStep"]
-        .tasklet(PseudoForeignKeyConstraintEnforcer(pseudoFkDcs, topic, plural))
-        .build()
+        StepBuilder(topic + "PseudoForeignKeyStep", jobRepository)
+            .tasklet(PseudoForeignKeyConstraintEnforcer(pseudoFkDcs, topic, plural), transactionManager)
+            .build()
 
     private val plural: String
         get() = "s"

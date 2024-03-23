@@ -45,14 +45,13 @@ dependencies {
     api(libs.wicket.spring)
     api(libs.wicket.authroles)
     api(libs.wicket.beanvalidation)
+    api(libs.hibernate.validator)
     api(libs.wicket.devutils)
+    api(libs.wicket.tester)
     api(libs.wicketstuff.annotation)
     api(libs.wicketBootstrap.core)
     api(libs.wicketBootstrap.extensions)
-    api(libs.wicketBootstrap.less){
-        exclude("commons-collections", "commons-collections")
-        exclude("commons-logging", "commons-logging")
-    }
+    api(libs.wicketBootstrap.sass)
     api(libs.wicketBootstrap.themes)
     api(libs.fontAwesome)
 
@@ -64,6 +63,6 @@ dependencies {
     testImplementation(libs.lombok)
     testAnnotationProcessor(libs.lombok)
 
-    testImplementation(libs.javax.servletApi)
+    testImplementation(libs.jakarta.servletApi)
     testImplementation(libs.validationApi)
 }

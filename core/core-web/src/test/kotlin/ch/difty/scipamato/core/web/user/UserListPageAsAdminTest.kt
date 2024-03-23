@@ -1,8 +1,10 @@
 package ch.difty.scipamato.core.web.user
 
+import ch.difty.scipamato.clickLinkSameSite
 import ch.difty.scipamato.core.auth.Role
 import ch.difty.scipamato.core.entity.User
 import ch.difty.scipamato.core.web.common.BasePageTest
+import ch.difty.scipamato.newFormTesterSameSite
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable
 import io.mockk.confirmVerified
@@ -14,7 +16,7 @@ import org.apache.wicket.markup.html.form.Form
 import org.apache.wicket.markup.html.link.Link
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
-import java.util.Optional
+import java.util.*
 
 @Suppress("SameParameterValue")
 internal class UserListPageAsAdminTest : BasePageTest<UserListPage>() {
@@ -100,11 +102,11 @@ internal class UserListPageAsAdminTest : BasePageTest<UserListPage>() {
     fun clickingOnUserName_forwardsToUserEntryPage_withModelLoaded() {
         every { userServiceMock.findById(1) } returns Optional.of(enabledUser)
         tester.startPage(pageClass)
-        tester.clickLink("results:body:rows:2:cells:1:cell:link")
+        tester.clickLinkSameSite("results:body:rows:2:cells:1:cell:link")
         tester.assertRenderedPage(UserEditPage::class.java)
 
         // verify the user was loaded in the target page
-        val formTester = tester.newFormTester("form")
+        val formTester = tester.newFormTesterSameSite("form")
         formTester.getTextComponentValue("userName") shouldBeEqualTo "enabledUser"
         verify { userServiceMock.countByFilter(any()) }
         verify { userServiceMock.findPageByFilter(any(), any()) }
@@ -116,12 +118,12 @@ internal class UserListPageAsAdminTest : BasePageTest<UserListPage>() {
         tester.startPage(pageClass)
         tester.assertRenderedPage(pageClass)
         tester.assertEnabled("filterForm:newUser")
-        val formTester = tester.newFormTester("filterForm")
+        val formTester = tester.newFormTesterSameSite("filterForm")
         formTester.submit("newUser")
         tester.assertRenderedPage(UserEditPage::class.java)
 
         // verify we have a blank user in the target page
-        val targetFormTester = tester.newFormTester("form")
+        val targetFormTester = tester.newFormTesterSameSite("form")
         targetFormTester.getTextComponentValue("issue").shouldBeNull()
         verify { userServiceMock.countByFilter(any()) }
         verify { userServiceMock.findPageByFilter(any(), any()) }

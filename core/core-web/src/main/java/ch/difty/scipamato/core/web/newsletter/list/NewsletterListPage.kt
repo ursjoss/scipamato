@@ -21,7 +21,7 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButt
 import de.agilecoders.wicket.core.markup.html.bootstrap.table.TableBehavior
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelect
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelectConfig
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome5IconTypeBuilder
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome6IconTypeBuilder
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable
 import org.apache.wicket.ajax.AjaxRequestTarget
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior
@@ -179,11 +179,11 @@ class NewsletterListPage(parameters: PageParameters?) : BasePage<Void>(parameter
     }
 
     private fun makeSortTopicLinkColumn(id: String): IColumn<Newsletter, String> {
-        val random = FontAwesome5IconTypeBuilder.FontAwesome5Solid.random.fixed()
+        val shuffle = FontAwesome6IconTypeBuilder.FontAwesome6Solid.shuffle.fixed()
         return object : LinkIconColumn<Newsletter>(
             StringResourceModel("$COLUMN_HEADER$id", this@NewsletterListPage, null)
         ) {
-            override fun createIconModel(rowModel: IModel<Newsletter>): IModel<String> = Model.of(random.cssClassName())
+            override fun createIconModel(rowModel: IModel<Newsletter>): IModel<String> = Model.of(shuffle.cssClassName())
             override fun createTitleModel(rowModel: IModel<Newsletter>): IModel<String> =
                 StringResourceModel("column.title.$id", this@NewsletterListPage, rowModel)
 
@@ -198,7 +198,7 @@ class NewsletterListPage(parameters: PageParameters?) : BasePage<Void>(parameter
     }
 
     private fun makeRemoveLinkColumn(id: String): IColumn<Newsletter, String> {
-        val trash = FontAwesome5IconTypeBuilder.FontAwesome5Solid.trash_alt.fixed()
+        val trash = FontAwesome6IconTypeBuilder.FontAwesome6Solid.trash_can.fixed()
         return object : LinkIconColumn<Newsletter>(
             StringResourceModel("$COLUMN_HEADER$id", this@NewsletterListPage, null)
         ) {

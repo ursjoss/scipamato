@@ -4,6 +4,7 @@ import ch.difty.scipamato.common.DateTimeService
 import ch.difty.scipamato.common.config.ApplicationProperties
 import ch.difty.scipamato.common.web.AbstractPage
 import ch.difty.scipamato.common.web.WicketBaseTest
+import ch.difty.scipamato.common.web.submitFormSameSite
 import com.ninjasquad.springmockk.MockkBean
 import de.agilecoders.wicket.core.markup.html.bootstrap.common.NotificationPanel
 import org.apache.wicket.markup.html.form.StatelessForm
@@ -46,7 +47,7 @@ internal class AbstractLogoutPageTest : WicketBaseTest() {
         }
         tester.startPage(page2)
         tester.assertRenderedPage(AbstractLogoutPage::class.java)
-        tester.submitForm("form")
+        tester.submitFormSameSite("form")
 
         tester.assertRenderedPage(TestLoginPage::class.java)
         tester.assertNoErrorMessage()
@@ -56,7 +57,7 @@ internal class AbstractLogoutPageTest : WicketBaseTest() {
     fun submitting_withoutLogoutData_rendersErrorMessages() {
         tester.startPage(page)
         tester.assertRenderedPage(AbstractLogoutPage::class.java)
-        tester.submitForm("form")
+        tester.submitFormSameSite("form")
 
         tester.assertRenderedPage(AbstractLogoutPage::class.java)
 

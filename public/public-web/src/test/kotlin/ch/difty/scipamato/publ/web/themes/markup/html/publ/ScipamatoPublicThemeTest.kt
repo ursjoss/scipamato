@@ -20,18 +20,18 @@ class ScipamatoPublicThemeTest {
     }
 
     @Test
-    fun newTheme_notUsingLessOverCss_hasCssReference() {
-        val theme = ScipamatoPublicTheme(false)
+    fun newTheme_notUsingSassOverCss_hasCssReference() {
+        val theme = ScipamatoPublicTheme(useSassOverCss = false)
         theme.dependencies shouldHaveSize 1
         val resourceReference = (theme.dependencies[0] as CssReferenceHeaderItem).reference
         resourceReference shouldBeInstanceOf ScipamatoPublicCssReference::class
     }
 
     @Test
-    fun newTheme_usingLessOverCss_hasLessReference() {
-        val theme = ScipamatoPublicTheme(true)
+    fun newTheme_usingSassOverCss_hasSassReference() {
+        val theme = ScipamatoPublicTheme(useSassOverCss = true)
         theme.dependencies shouldHaveSize 1
         val resourceReference = (theme.dependencies[0] as CssReferenceHeaderItem).reference
-        resourceReference shouldBeInstanceOf ScipamatoPublicLessReference::class
+        resourceReference shouldBeInstanceOf ScipamatoPublicSassReference::class
     }
 }

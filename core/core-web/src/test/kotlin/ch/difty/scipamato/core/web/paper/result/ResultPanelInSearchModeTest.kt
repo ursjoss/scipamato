@@ -23,25 +23,25 @@ internal class ResultPanelInSearchModeTest : ResultPanelTest() {
     @Test
     fun startingPage_showingResults() {
         searchOrder.apply { isShowExcluded = false }
-        assertExcludeIcon("fas fa-ban fa-fw", "Exclude the paper from the search")
+        assertExcludeIcon("fa-solid fa-ban fa-fw", "Exclude the paper from the search")
     }
 
     @Test
     fun startingPage_showingExclusions() {
         searchOrder.apply { isShowExcluded = true }
-        assertExcludeIcon("far fa-check-circle fa-fw", "Re-include the paper into the search")
+        assertExcludeIcon("fa-regular fa-circle-check fa-fw", "Re-include the paper into the search")
     }
 
     @Test
     fun startingPage_withPaperWithNoNewsletter_rendersAddToNewsletterLink() {
         paperSlim.newsletterAssociation.shouldBeNull()
-        assertNewsletterIcon("fas fa-plus-square fa-fw", "Add to current newsletter")
+        assertNewsletterIcon("fa-solid fa-square-plus fa-fw", "Add to current newsletter")
     }
 
     @Test
     fun startingPage_withPaperWithNewsletter_rendersAddToNewsletterLink() {
         val ns = NewsletterAssociation(1, "1802", PublicationStatus.PUBLISHED.id, null)
         paperSlim.newsletterAssociation = ns
-        assertNewsletterIcon("far fa-envelope fa-fw", "Newsletter 1802")
+        assertNewsletterIcon("fa-regular fa-envelope fa-fw", "Newsletter 1802")
     }
 }

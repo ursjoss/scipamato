@@ -6,6 +6,7 @@ import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.ProviderManager
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
+import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer
 import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.AuthorityUtils
@@ -31,8 +32,9 @@ open class TestWicketSecurityConfiguration {
     @Bean
     open fun filterChain(http: HttpSecurity): SecurityFilterChain =
         http
-            .csrf().disable()
-            .authorizeRequests { it.antMatchers("/**").permitAll() }
+            .csrf(CsrfConfigurer<HttpSecurity>::disable)
+            .securityContext { ctx -> ctx.requireExplicitSave(false) }
+            .authorizeHttpRequests { it.requestMatchers("/**").permitAll() }
             .logout(LogoutConfigurer<HttpSecurity>::permitAll)
             .build()
 
@@ -66,7 +68,7 @@ open class TestWicketSecurityConfiguration {
             private val enabled: Boolean = true,
             private val username: String,
             private val password: String?,
-            private val roles: List<Role>
+            private val roles: List<Role>,
         ) : UserDetails {
             override fun getUsername() = username
             override fun isCredentialsNonExpired() = credentialsNonExpired

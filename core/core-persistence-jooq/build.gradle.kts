@@ -32,7 +32,7 @@ testing {
 }
 
 jooqModelator {
-    jooqVersion = libs.versions.jooq.get()
+    jooqVersion = dependencyManagement.managedVersions["org.jooq:jooq"]
     jooqEdition = "OSS"
 
     jooqConfigPath = jooqConfigFile.absolutePath
@@ -81,7 +81,11 @@ sourceSets {
 }
 
 tasks {
-    val processResources by existing {
+    val jooqGroup = "jOOQ"
+    val jooqMetamodelTaskName = "generateJooqMetamodel"
+    val generateJooqConfig by creating {
+        group = jooqGroup
+        description = "Generates the jooqConfig.xml file to be consumed by the $jooqMetamodelTaskName task."
         val resourcesDir = sourceSets.main.get().output.resourcesDir
         resourcesDir?.mkdirs()
         val fileContent =
@@ -116,13 +120,15 @@ tasks {
                     <basedir>$rootDir</basedir>
                 </configuration>
             """.trimIndent()
-        file(jooqConfigFile).writeText(fileContent)
+        doLast {
+            jooqConfigFile.writeText(fileContent)
+        }
     }
-    val jooqMetamodelTaskName = "generateJooqMetamodel"
     withType<JooqModelatorTask> {
+        group = jooqGroup
         // prevent parallel run of this task between core and public
         outputs.dir(rootProject.layout.buildDirectory.get().asFile.resolve(jooqMetamodelTaskName))
-        dependsOn(processResources)
+        dependsOn(generateJooqConfig)
     }
     getByName("compileKotlin").dependsOn += jooqMetamodelTaskName
 }

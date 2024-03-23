@@ -12,7 +12,6 @@ import org.apache.wicket.extensions.ajax.markup.html.modal.ModalDialog
 import org.apache.wicket.markup.html.internal.HtmlHeaderContainer
 import org.junit.jupiter.api.Test
 
-@Suppress("SpellCheckingInspection")
 internal class PaperListPageInEditModeTest : PaperListPageTest() {
 
     override val userName: String = TestUserDetailsService.USER_ADMIN

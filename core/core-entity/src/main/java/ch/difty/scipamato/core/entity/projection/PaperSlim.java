@@ -15,13 +15,13 @@ public class PaperSlim extends IdScipamatoEntity<Long> {
 
     private static final long serialVersionUID = 1L;
 
-    @javax.validation.constraints.NotNull
+    @jakarta.validation.constraints.NotNull
     private Long    number;
-    @javax.validation.constraints.NotNull
+    @jakarta.validation.constraints.NotNull
     private String  firstAuthor;
-    @javax.validation.constraints.NotNull
+    @jakarta.validation.constraints.NotNull
     private Integer publicationYear;
-    @javax.validation.constraints.NotNull
+    @jakarta.validation.constraints.NotNull
     private String  title;
 
     private NewsletterAssociation newsletterAssociation;

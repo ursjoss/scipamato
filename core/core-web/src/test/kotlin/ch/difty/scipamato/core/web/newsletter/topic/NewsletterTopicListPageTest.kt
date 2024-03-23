@@ -2,9 +2,11 @@
 
 package ch.difty.scipamato.core.web.newsletter.topic
 
+import ch.difty.scipamato.clickLinkSameSite
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicDefinition
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicTranslation
 import ch.difty.scipamato.core.web.common.BasePageTest
+import ch.difty.scipamato.newFormTesterSameSite
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable
 import io.mockk.confirmVerified
@@ -87,7 +89,7 @@ internal class NewsletterTopicListPageTest : BasePageTest<NewsletterTopicListPag
     @Test
     fun clickingOnNewsletterTopicTitle_forwardsToNewsletterTopicEditPage_withModelLoaded() {
         tester.startPage(pageClass)
-        tester.clickLink("resultPanel:results:body:rows:1:cells:1:cell:link")
+        tester.clickLinkSameSite("resultPanel:results:body:rows:1:cells:1:cell:link")
         tester.assertRenderedPage(NewsletterTopicEditPage::class.java)
 
         // verify the newsletter was loaded into the target page
@@ -108,7 +110,7 @@ internal class NewsletterTopicListPageTest : BasePageTest<NewsletterTopicListPag
 
         tester.startPage(pageClass)
         tester.assertRenderedPage(pageClass)
-        val formTester = tester.newFormTester("filterPanel:filterForm")
+        val formTester = tester.newFormTesterSameSite("filterPanel:filterForm")
         formTester.submit("newNewsletterTopic")
         tester.assertRenderedPage(NewsletterTopicEditPage::class.java)
 

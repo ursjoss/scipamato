@@ -12,7 +12,7 @@ plugins {
  * Make the static wicket resources that reside next to the java classes in src{main,test} available.
  */
 sourceSets {
-    /** main: html, css, less, properties files */
+    /** main: html, css, sass, properties files */
     main {
         resources {
             srcDir("src/main/java")
@@ -62,15 +62,21 @@ dependencies {
     }
     implementation(libs.jasperreports.fonts)
     implementation(libs.univocity)
+    // temporarily needed until guava has been fully removed from wicket-bootstrap
+    implementation("com.google.guava:guava:33.1.0-jre")
 
     implementation(libs.kris.core)
 
     /** Caching: JCache with ehcache as cache provider */
     implementation(libs.bundles.caching)
-
+    implementation(libs.ehcache) {
+        capabilities {
+            requireCapability("org.ehcache:ehcache-jakarta")
+        }
+    }
     testImplementation(project(Module.scipamatoCommon("test")))
     testImplementation(project(Module.scipamatoCommon("persistence-jooq-test")))
-    testImplementation(libs.javax.servletApi)
+    testImplementation(libs.jakarta.servletApi)
     testImplementation(libs.validationApi)
     testImplementation(libs.lombok)
     testAnnotationProcessor(libs.lombok)

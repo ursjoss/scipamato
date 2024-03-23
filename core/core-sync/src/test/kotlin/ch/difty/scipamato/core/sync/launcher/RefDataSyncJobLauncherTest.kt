@@ -152,7 +152,7 @@ internal class RefDataSyncJobLauncherTest {
         val stepExecution2 = mockk<StepExecution>()
         every { stepExecution1.writeCount } returns BATCH_SIZE
         // simple fixture to get some variance in the returned records
-        every { stepExecution2.writeCount } returns id.toInt()
+        every { stepExecution2.writeCount } returns id
 
         every { jobExecution.stepExecutions } returns listOf(stepExecution1, stepExecution2)
 
@@ -292,7 +292,7 @@ internal class RefDataSyncJobLauncherTest {
 
     companion object {
         private const val JOB_STEP_ID_START = 75
-        private const val BATCH_SIZE = 100
+        private const val BATCH_SIZE = 100L
         private const val UNSYNCHED_PAPERS_MSG = "unsynched papers"
         private const val UNSYNCHED_NEWSLETTER_MSG = "unsynched newsletters"
     }

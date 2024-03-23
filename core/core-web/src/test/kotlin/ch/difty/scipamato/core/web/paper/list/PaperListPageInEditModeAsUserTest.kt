@@ -8,7 +8,6 @@ import io.mockk.every
 import io.mockk.verify
 import org.apache.wicket.markup.html.internal.HtmlHeaderContainer
 
-@Suppress("SpellCheckingInspection")
 internal class PaperListPageInEditModeAsUserTest : PaperListPageTest() {
 
     override val userName = TestUserDetailsService.USER_USER

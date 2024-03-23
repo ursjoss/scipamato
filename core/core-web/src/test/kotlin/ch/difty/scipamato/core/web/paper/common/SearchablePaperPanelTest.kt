@@ -1,5 +1,6 @@
 package ch.difty.scipamato.core.web.paper.common
 
+import ch.difty.scipamato.clickLinkSameSite
 import ch.difty.scipamato.common.AjaxRequestTargetSpy
 import ch.difty.scipamato.core.entity.search.SearchCondition
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton
@@ -92,7 +93,7 @@ internal class SearchablePaperPanelTest : PaperPanelTest<SearchCondition, Search
         tester.assertComponent("$b:submit", BootstrapButton::class.java)
         verifyCodeAndCodeClassCalls(1)
 
-        tester.clickLink("panel:form:tabs:tabs-container:tabs:5:link")
+        tester.clickLinkSameSite("panel:form:tabs:tabs-container:tabs:5:link")
         val bb = "$b:tabs:panel"
         val bbb = "$bb:tab6Form"
         assertTextFieldWithLabel("$bbb:attachmentNameMask", null, "Attachment Name Mask")
@@ -205,7 +206,7 @@ internal class SearchablePaperPanelTest : PaperPanelTest<SearchCondition, Search
 
     private fun prepareTabPanel(tabIndex: Int): String {
         val b = "panel:form:tabs"
-        tester.clickLink("$b:tabs-container:tabs:$tabIndex:link")
+        tester.clickLinkSameSite("$b:tabs-container:tabs:$tabIndex:link")
         return "$b:panel:tab${tabIndex + 1}Form"
     }
 }

@@ -1,5 +1,6 @@
 package ch.difty.scipamato.core.web.newsletter.edit
 
+import ch.difty.scipamato.clickLinkSameSite
 import ch.difty.scipamato.common.entity.newsletter.PublicationStatus
 import ch.difty.scipamato.core.entity.Paper
 import ch.difty.scipamato.core.entity.newsletter.Newsletter
@@ -9,6 +10,7 @@ import ch.difty.scipamato.core.web.common.BasePageTest
 import ch.difty.scipamato.core.web.paper.entry.PaperEntryPage
 import ch.difty.scipamato.core.web.paper.result.EDIT_LINK
 import ch.difty.scipamato.core.web.paper.result.ResultPanel
+import ch.difty.scipamato.newFormTesterSameSite
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.LocalDateTextField
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelect
@@ -63,7 +65,7 @@ internal class NewsletterEditPageTest : BasePageTest<NewsletterEditPage>() {
         every { newsletterServiceMock.canCreateNewsletterInProgress() } returns true
         every { newsletterServiceMock.saveOrUpdate(any()) } returns nl
         tester.startPage(NewsletterEditPage::class.java)
-        val formTester = tester.newFormTester("form")
+        val formTester = tester.newFormTesterSameSite("form")
         formTester.setValue("issue", "1806")
         formTester.submit("submit")
         tester.assertInfoMessages("Successfully saved Newsletter [id 0]: 1804 ({2}).")
@@ -76,7 +78,7 @@ internal class NewsletterEditPageTest : BasePageTest<NewsletterEditPage>() {
         every { newsletterServiceMock.canCreateNewsletterInProgress() } returns true
         every { newsletterServiceMock.saveOrUpdate(any()) } returns null
         tester.startPage(NewsletterEditPage::class.java)
-        val formTester = tester.newFormTester("form")
+        val formTester = tester.newFormTesterSameSite("form")
         formTester.setValue("issue", "1806")
         formTester.submit("submit")
         tester.assertNoInfoMessage()
@@ -90,7 +92,7 @@ internal class NewsletterEditPageTest : BasePageTest<NewsletterEditPage>() {
         every { newsletterServiceMock.saveOrUpdate(any()) } throws
             OptimisticLockingException("newsletter", OptimisticLockingException.Type.UPDATE)
         tester.startPage(NewsletterEditPage::class.java)
-        val formTester = tester.newFormTester("form")
+        val formTester = tester.newFormTesterSameSite("form")
         formTester.setValue("issue", "1806")
         formTester.submit("submit")
         tester.assertNoInfoMessage()
@@ -106,7 +108,7 @@ internal class NewsletterEditPageTest : BasePageTest<NewsletterEditPage>() {
         every { newsletterServiceMock.saveOrUpdate(any()) } throws
             IllegalArgumentException("newsletter.onlyOneInStatusWipAllowed")
         tester.startPage(NewsletterEditPage::class.java)
-        val formTester = tester.newFormTester("form")
+        val formTester = tester.newFormTesterSameSite("form")
         formTester.setValue("issue", "1806")
         formTester.submit("submit")
         tester.assertNoInfoMessage()
@@ -122,7 +124,7 @@ internal class NewsletterEditPageTest : BasePageTest<NewsletterEditPage>() {
         every { newsletterServiceMock.saveOrUpdate(any()) } throws
             RuntimeException("boom")
         tester.startPage(NewsletterEditPage::class.java)
-        val formTester = tester.newFormTester("form")
+        val formTester = tester.newFormTesterSameSite("form")
         formTester.setValue("issue", "1806")
         formTester.submit("submit")
         tester.assertNoInfoMessage()
@@ -141,7 +143,7 @@ internal class NewsletterEditPageTest : BasePageTest<NewsletterEditPage>() {
 
     @Test
     fun fieldsIssueAndIssueDate_areOnlyEnabledIfNewsletterIsInProgress() {
-        for (ps in PublicationStatus.values()) {
+        for (ps in PublicationStatus.entries) {
             val nl = Newsletter
                 .builder()
                 .issue("1804")
@@ -190,7 +192,7 @@ internal class NewsletterEditPageTest : BasePageTest<NewsletterEditPage>() {
         every { paperServiceMock.findByNumber(ps.number, "en_us") } returns Optional.of(p)
         tester.startPage(makePage())
         tester.assertRenderedPage(NewsletterEditPage::class.java)
-        tester.clickLink("resultPanel:$EDIT_LINK")
+        tester.clickLinkSameSite("resultPanel:$EDIT_LINK")
         tester.assertRenderedPage(PaperEntryPage::class.java)
         verify(exactly = 2) { paperSlimServiceMock.countByFilter(any()) }
         verify(exactly = 1) { paperSlimServiceMock.findPageByFilter(any(), any()) }

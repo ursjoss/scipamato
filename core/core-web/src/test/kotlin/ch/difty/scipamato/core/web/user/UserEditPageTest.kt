@@ -5,6 +5,7 @@ import ch.difty.scipamato.core.entity.User
 import ch.difty.scipamato.core.persistence.OptimisticLockingException
 import ch.difty.scipamato.core.web.CorePageParameters
 import ch.difty.scipamato.core.web.common.BasePageTest
+import ch.difty.scipamato.newFormTesterSameSite
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect
 import io.mockk.Matcher
@@ -28,7 +29,7 @@ import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 import java.util.*
 
-@Suppress("PrivatePropertyName", "SpellCheckingInspection", "SameParameterValue")
+@Suppress("SpellCheckingInspection", "SameParameterValue")
 internal class UserEditPageTest : BasePageTest<UserEditPage>() {
 
     private val user = User(
@@ -223,7 +224,7 @@ internal class UserEditPageTest : BasePageTest<UserEditPage>() {
         tester.startPage(newUserEditPageInMode(UserEditPage.Mode.EDIT))
         tester.assertRenderedPage(pageClass)
 
-        val formTester = tester.newFormTester("form")
+        val formTester = tester.newFormTesterSameSite("form")
         formTester.submit("submit")
         tester.assertInfoMessages("Successfully saved User [id 1]: user).")
         tester.assertNoErrorMessage()
@@ -239,7 +240,7 @@ internal class UserEditPageTest : BasePageTest<UserEditPage>() {
         tester.startPage(newUserEditPageInMode(UserEditPage.Mode.CHANGE_PASSWORD))
         tester.assertRenderedPage(pageClass)
 
-        val formTester = tester.newFormTester("form")
+        val formTester = tester.newFormTesterSameSite("form")
         formTester.setValue("currentPassword", PASSWORD1)
         formTester.setValue("password", PASSWORD2)
         formTester.setValue("password2", PASSWORD2)
@@ -256,7 +257,7 @@ internal class UserEditPageTest : BasePageTest<UserEditPage>() {
         tester.startPage(newUserEditPageInMode(UserEditPage.Mode.CHANGE_PASSWORD))
         tester.assertRenderedPage(pageClass)
 
-        val formTester = tester.newFormTester("form")
+        val formTester = tester.newFormTesterSameSite("form")
         formTester.setValue("currentPassword", PASSWORD1 + "X")
         formTester.setValue("password", PASSWORD2)
         formTester.setValue("password2", PASSWORD2)
@@ -271,7 +272,7 @@ internal class UserEditPageTest : BasePageTest<UserEditPage>() {
         tester.startPage(newUserEditPageInMode(UserEditPage.Mode.CHANGE_PASSWORD))
         tester.assertRenderedPage(pageClass)
 
-        val formTester = tester.newFormTester("form")
+        val formTester = tester.newFormTesterSameSite("form")
         formTester.setValue("currentPassword", PASSWORD1)
         formTester.setValue("password", PASSWORD2)
         formTester.setValue("password2", PASSWORD2 + "X")
@@ -293,7 +294,7 @@ internal class UserEditPageTest : BasePageTest<UserEditPage>() {
         tester.startPage(newUserEditPageInMode(UserEditPage.Mode.CHANGE_PASSWORD))
         tester.assertRenderedPage(pageClass)
 
-        val formTester = tester.newFormTester("form")
+        val formTester = tester.newFormTesterSameSite("form")
         formTester.setValue("password", PASSWORD2)
         formTester.setValue("password2", PASSWORD2)
         formTester.submit("submit")
@@ -310,7 +311,7 @@ internal class UserEditPageTest : BasePageTest<UserEditPage>() {
         tester.startPage(newUserEditPageInMode(UserEditPage.Mode.MANAGE))
         tester.assertRenderedPage(pageClass)
 
-        val formTester = tester.newFormTester("form")
+        val formTester = tester.newFormTesterSameSite("form")
         formTester.submit("submit")
         tester.assertInfoMessages("Successfully saved User [id 1]: user).")
         tester.assertNoErrorMessage()
@@ -324,7 +325,7 @@ internal class UserEditPageTest : BasePageTest<UserEditPage>() {
         tester.startPage(newUserEditPageInMode(UserEditPage.Mode.MANAGE))
         tester.assertRenderedPage(pageClass)
 
-        val formTester = tester.newFormTester("form")
+        val formTester = tester.newFormTesterSameSite("form")
         formTester.setValue("password", PASSWORD2)
         formTester.setValue("password2", PASSWORD2 + "X")
         formTester.submit("submit")
@@ -341,7 +342,7 @@ internal class UserEditPageTest : BasePageTest<UserEditPage>() {
         tester.startPage(newUserEditPageInMode(UserEditPage.Mode.MANAGE))
         tester.assertRenderedPage(pageClass)
 
-        val formTester = tester.newFormTester("form")
+        val formTester = tester.newFormTesterSameSite("form")
         formTester.setValue("password", PASSWORD2)
         formTester.setValue("password2", PASSWORD2)
         formTester.submit("submit")
@@ -359,7 +360,7 @@ internal class UserEditPageTest : BasePageTest<UserEditPage>() {
         tester.startPage(newUserEditPageInMode(UserEditPage.Mode.CREATE, null))
         tester.assertRenderedPage(pageClass)
 
-        val formTester = tester.newFormTester("form")
+        val formTester = tester.newFormTesterSameSite("form")
         formTester.setValue("userName", user.userName)
         formTester.setValue("firstName", user.firstName)
         formTester.setValue("lastName", user.lastName)
@@ -382,7 +383,7 @@ internal class UserEditPageTest : BasePageTest<UserEditPage>() {
         tester.startPage(newUserEditPageInMode(UserEditPage.Mode.MANAGE))
 
         tester.assertRenderedPage(pageClass)
-        val formTester = tester.newFormTester("form")
+        val formTester = tester.newFormTesterSameSite("form")
         formTester.setValue("password", PASSWORD2)
         formTester.setValue("password2", PASSWORD2)
         formTester.submit("submit")
@@ -400,7 +401,7 @@ internal class UserEditPageTest : BasePageTest<UserEditPage>() {
 
         tester.startPage(newUserEditPageInMode(UserEditPage.Mode.MANAGE))
         tester.assertRenderedPage(pageClass)
-        val formTester = tester.newFormTester("form")
+        val formTester = tester.newFormTesterSameSite("form")
         formTester.setValue("password", PASSWORD2)
         formTester.setValue("password2", PASSWORD2)
         formTester.submit("submit")
@@ -422,7 +423,7 @@ internal class UserEditPageTest : BasePageTest<UserEditPage>() {
         tester.startPage(newUserEditPageInMode(UserEditPage.Mode.MANAGE))
 
         tester.assertRenderedPage(pageClass)
-        val formTester = tester.newFormTester("form")
+        val formTester = tester.newFormTesterSameSite("form")
         formTester.setValue("password", PASSWORD2)
         formTester.setValue("password2", PASSWORD2)
         formTester.submit("submit")
@@ -441,7 +442,7 @@ internal class UserEditPageTest : BasePageTest<UserEditPage>() {
         tester.startPage(newUserEditPageInMode(UserEditPage.Mode.MANAGE))
         tester.assertRenderedPage(pageClass)
 
-        val formTester = tester.newFormTester("form")
+        val formTester = tester.newFormTesterSameSite("form")
         formTester.submit("delete")
         tester.assertRenderedPage(UserListPage::class.java)
         tester.assertNoErrorMessage()
@@ -459,7 +460,7 @@ internal class UserEditPageTest : BasePageTest<UserEditPage>() {
         tester.startPage(newUserEditPageInMode(UserEditPage.Mode.MANAGE))
         tester.assertRenderedPage(pageClass)
 
-        val formTester = tester.newFormTester("form")
+        val formTester = tester.newFormTesterSameSite("form")
         formTester.submit("delete")
         tester.assertRenderedPage(UserEditPage::class.java)
         tester.assertErrorMessages("There was an unexpected issue while deleting user user: foo")
