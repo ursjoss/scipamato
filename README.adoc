@@ -162,7 +162,7 @@ flowchart TD
 [[technology-stack]]
 == Technology Stack
 
-* Kotlin & Java 17
+* Kotlin & Java 21
 * https://projects.spring.io/spring-boot/[Spring Boot] with
 https://projects.spring.io/spring-security/[Spring Security]
 * https://projectlombok.org/[Lombok]
