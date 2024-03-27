@@ -71,9 +71,14 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Added
 
-////
 .Changed
+- {url-issues}602[#602] Bump Wicket Stack
+- {url-issues}657[#657] Bump major components (spring-boot-3.2, jOOQ 3.18, Flyway, wicket-10, spring-batch 5, jakarta, font-awesome 6)
+- {url-issues}669[#669] Bump JRE to Java 21
+- Bumped
+  gradle, KRis, detekt, sonarqube, openfeign
 
+////
 .Deprecated
 
 .Removed
@@ -92,7 +97,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 {url-cl}1.10.2++...++1.10.3[Full Changelog]
 
 .Changed
-- {url-issues}621[#621] Migrate from Bootsrap 4.x to 5.3
+- {url-issues}601[#601] Migrate from Bootstrap 4.x to 5.3
 - Bumped dependencies
   kotlin, spring-boot-admin-starter-client, guava, feign, spring-cloud-starter-openfeign,
   gradle, reckon,
