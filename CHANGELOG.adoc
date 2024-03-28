@@ -67,18 +67,13 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[unreleased]]
 == [unreleased]
 
-{url-cl}1.10.3++...++main[Full Changelog]
+{url-cl}2.0.0++...++main[Full Changelog]
 
 .Added
 
-.Changed
-- {url-issues}602[#602] Bump Wicket Stack
-- {url-issues}657[#657] Bump major components (spring-boot-3.2, jOOQ 3.18, Flyway, wicket-10, spring-batch 5, jakarta, font-awesome 6)
-- {url-issues}669[#669] Bump JRE to Java 21
-- Bumped
-  gradle, KRis, detekt, sonarqube, openfeign
-
 ////
+.Changed
+
 .Deprecated
 
 .Removed
@@ -89,6 +84,20 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 ////
 
+
+
+[[v2.0.0]]
+== {url-tree}2.0.0[2.0.0] -- 2024-03-28
+
+
+.Changed
+- {url-issues}669[#669] Bump Java version to 21
+- {url-issues}657[#657] Bump major components (spring-boot-3.2, jOOQ 3.18, Flyway, wicket-10, spring-batch 5, jakarta, font-awesome 6)
+- {url-issues}602[#602] Bump Wicket Stack
+- Bumped
+  spring-boot, kotlin, kotlinx-coroutines, wicket, wicketstuff, jOOQ, flyway, KRis, guava, lombok, spring-cloud-starter,
+  gradle, KRis, detekt, sonarqube, openfeign, jasperreports,
+  kotest, mockk, equalsverifier, testcontainers,
 
 
 [[v1.10.3]]
