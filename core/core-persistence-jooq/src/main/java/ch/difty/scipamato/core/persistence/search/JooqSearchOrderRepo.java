@@ -124,7 +124,8 @@ public class JooqSearchOrderRepo extends
             .fetchInto(SearchCondition.class);
     }
 
-    private @NotNull Map<Long, List<SearchTerm>> mapSearchTermsToSearchConditions(@NotNull final SearchOrder searchOrder) {
+    @NotNull
+    private Map<Long, List<SearchTerm>> mapSearchTermsToSearchConditions(@NotNull final SearchOrder searchOrder) {
         Objects.requireNonNull(searchOrder.getId());
         return fetchSearchTermsForSearchOrderWithId(searchOrder.getId())
             .stream()
@@ -516,7 +517,8 @@ public class JooqSearchOrderRepo extends
             insertStep.execute();
     }
 
-    private @NotNull InsertValuesStep6<SearchTermRecord, Long, Integer, String, String, Integer, Integer> doSearchTerm(
+    @NotNull
+    private InsertValuesStep6<SearchTermRecord, Long, Integer, String, String, Integer, Integer> doSearchTerm(
         @NotNull final Long searchConditionId,
         @NotNull InsertValuesStep6<SearchTermRecord, Long, Integer, String, String, Integer, Integer> insertStep, @NotNull final Integer userId,
         @NotNull final Class<? extends AbstractSearchTerm> clazz, @NotNull final Collection<? extends AbstractSearchTerm> searchTerms) {

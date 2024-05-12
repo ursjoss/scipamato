@@ -182,7 +182,8 @@ public class JooqCodeRepo extends AbstractRepo implements CodeRepository {
         }
     }
 
-    private @NotNull Condition filterToCondition(@NotNull final CodeFilter filter) {
+    @NotNull
+    private Condition filterToCondition(@NotNull final CodeFilter filter) {
         final ConditionalSupplier conditions = new ConditionalSupplier();
         if (filter.getNameMask() != null) {
             final String mask = '%' + filter.getNameMask() + '%';
@@ -209,7 +210,8 @@ public class JooqCodeRepo extends AbstractRepo implements CodeRepository {
         return conditions.combineWithAnd();
     }
 
-    private @NotNull List<CodeDefinition> mapRawRecordsIntoCodeDefinitions(@NotNull final Map<String, Result<Record>> rawRecords) {
+    @NotNull
+    private List<CodeDefinition> mapRawRecordsIntoCodeDefinitions(@NotNull final Map<String, Result<Record>> rawRecords) {
         final List<CodeDefinition> definitions = new ArrayList<>();
         final Map<Integer, CodeClass> codeClasses = codeClassRepo
             .find(getMainLanguage())
