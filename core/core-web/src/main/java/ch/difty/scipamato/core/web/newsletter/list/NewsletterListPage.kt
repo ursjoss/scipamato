@@ -89,7 +89,7 @@ class NewsletterListPage(parameters: PageParameters?) : BasePage<Void>(parameter
             PropertyModel.of<PublicationStatus>(filter, NewsletterFilterFields.PUBLICATION_STATUS.fieldName)
 
         @Suppress("SpreadOperator")
-        val choicesModel = Model.ofList(listOf(*PublicationStatus.values()))
+        val choicesModel = Model.ofList(PublicationStatus.entries)
         BootstrapSelect(id, selectionModel, choicesModel, EnumChoiceRenderer(this)).apply {
             isNullValid = true
             add(filterFormFieldUpdatingBehavior())

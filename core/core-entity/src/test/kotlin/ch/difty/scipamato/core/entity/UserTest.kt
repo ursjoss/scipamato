@@ -161,7 +161,7 @@ internal class UserTest {
 
     @Test
     fun assertEnumFields() {
-        User.UserFields.values().map { it.fieldName } shouldContainSame
+        User.UserFields.entries.map { it.fieldName } shouldContainSame
             listOf("userName", "firstName", "lastName", "email", "password", "enabled", "roles")
     }
 

@@ -6,7 +6,6 @@ import ch.difty.scipamato.core.entity.search.SearchTermType.INTEGER
 import ch.difty.scipamato.core.entity.search.SearchTermType.STRING
 import ch.difty.scipamato.core.entity.search.SearchTermType.UNSUPPORTED
 import ch.difty.scipamato.core.entity.search.SearchTermType.byId
-import ch.difty.scipamato.core.entity.search.SearchTermType.values
 import org.amshove.kluent.invoking
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldContainAll
@@ -18,7 +17,7 @@ internal class SearchTermTypeTest {
 
     @Test
     fun testValues() {
-        values() shouldContainAll listOf(BOOLEAN, INTEGER, STRING, AUDIT, UNSUPPORTED)
+        SearchTermType.entries shouldContainAll listOf(BOOLEAN, INTEGER, STRING, AUDIT, UNSUPPORTED)
     }
 
     @Test

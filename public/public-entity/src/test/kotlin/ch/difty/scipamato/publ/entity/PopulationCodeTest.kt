@@ -9,12 +9,12 @@ internal class PopulationCodeTest {
 
     @Test
     fun hasAllValues() {
-        PopulationCode.values() shouldContainAll listOf(PopulationCode.CHILDREN, PopulationCode.ADULTS)
+        PopulationCode.entries shouldContainAll listOf(PopulationCode.CHILDREN, PopulationCode.ADULTS)
     }
 
     @Test
     fun assertIds() {
-        PopulationCode.values().map { it.id } shouldContainAll listOf(1.toShort(), 2.toShort())
+        PopulationCode.entries.map { it.id } shouldContainAll listOf(1.toShort(), 2.toShort())
     }
 
     @Test

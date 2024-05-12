@@ -20,7 +20,7 @@ internal class UtilsTest {
 
     //region:asProperty
 
-    private val values = arrayOf(PropertyTestEnum.VAL1, PropertyTestEnum.VAL2, PropertyTestEnum.DEFAULT)
+    private val values = listOf(PropertyTestEnum.VAL1, PropertyTestEnum.VAL2, PropertyTestEnum.DEFAULT)
 
     private enum class PropertyTestEnum { VAL1, VAL2, DEFAULT }
 
@@ -31,12 +31,12 @@ internal class UtilsTest {
 
     @Test
     fun asProperty_withoutValues_returnsDefault() {
-        "VAL2".asProperty(arrayOf(), PropertyTestEnum.DEFAULT, PROPERTY_KEY) shouldBeEqualTo PropertyTestEnum.DEFAULT
+        "VAL2".asProperty(emptyList(), PropertyTestEnum.DEFAULT, PROPERTY_KEY) shouldBeEqualTo PropertyTestEnum.DEFAULT
     }
 
     @Test
     fun asProperty_withBlankReceiver_returnsDefault() {
-        "".asProperty(arrayOf(), PropertyTestEnum.DEFAULT, PROPERTY_KEY) shouldBeEqualTo PropertyTestEnum.DEFAULT
+        "".asProperty(emptyList(), PropertyTestEnum.DEFAULT, PROPERTY_KEY) shouldBeEqualTo PropertyTestEnum.DEFAULT
     }
 
     //endregion

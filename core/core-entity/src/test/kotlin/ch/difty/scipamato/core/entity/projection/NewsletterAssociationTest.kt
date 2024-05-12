@@ -58,7 +58,7 @@ internal class NewsletterAssociationTest {
 
     @Test
     fun assertEnumFields() {
-        NewsletterAssociation.NewsletterAssociationFields.values().map { it.fieldName } shouldContainSame
+        NewsletterAssociation.NewsletterAssociationFields.entries.map { it.fieldName } shouldContainSame
             listOf("id", "issue", "publicationStatusId", "headline")
     }
 }

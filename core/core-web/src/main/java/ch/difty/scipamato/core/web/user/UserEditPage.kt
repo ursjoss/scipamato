@@ -143,7 +143,7 @@ class UserEditPage(pp: PageParameters) : BasePage<ChangePasswordUser>(pp) {
         }.also { queue(it) }
         @Suppress("SpreadOperator")
         BootstrapMultiSelect(
-            ROLES, PropertyModel(model, ROLES), listOf(*Role.values()), EnumChoiceRenderer(this)
+            ROLES, PropertyModel(model, ROLES), Role.entries, EnumChoiceRenderer(this)
         ).apply {
             with(BootstrapSelectConfig()
                 .withMultiple(true)

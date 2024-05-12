@@ -41,8 +41,8 @@ open class SimpleFilterPanel(
         PublicPaperFilter::authorMask.queueAsTextFieldWithLabel("authorsSearch")
         PublicPaperFilter::publicationYearFrom.queueAsTextFieldWithLabel("pubYearFrom")
         PublicPaperFilter::publicationYearUntil.queueAsTextFieldWithLabel("pubYearUntil")
-        PublicPaperFilter::populationCodes.addCodesComplex("populationCodes", PopulationCode.values(), "160px")
-        PublicPaperFilter::studyDesignCodes.addCodesComplex("studyDesignCodes", StudyDesignCode.values(), "220px")
+        PublicPaperFilter::populationCodes.addCodesComplex("populationCodes", PopulationCode.entries, "160px")
+        PublicPaperFilter::studyDesignCodes.addCodesComplex("studyDesignCodes", StudyDesignCode.entries, "220px")
         PublicPaperFilter::keywords.queueKeywordMultiselect("keywords")
         PublicPaperFilter::titleMask.queueAsTextFieldWithLabel("titleSearch")
     }
@@ -79,7 +79,7 @@ open class SimpleFilterPanel(
 
     private fun <C : Enum<C>, V> KProperty1<PublicPaperFilter, V>.addCodesComplex(
         id: String,
-        values: Array<C>,
+        values: List<C>,
         width: String,
     ) {
         StringResourceModel("$id$LABEL_RESOURCE_TAG", this@SimpleFilterPanel, null).also {
@@ -98,7 +98,7 @@ open class SimpleFilterPanel(
 
         val model = PropertyModel.of<Collection<C>>(this@SimpleFilterPanel.model, name)
         @Suppress("SpreadOperator")
-        object : BootstrapMultiSelect<C>(id, model, listOf(*values), EnumChoiceRenderer(this@SimpleFilterPanel)) {
+        object : BootstrapMultiSelect<C>(id, model, values, EnumChoiceRenderer(this@SimpleFilterPanel)) {
             override fun onEvent(event: IEvent<*>) {
                 handleChangeEvent(event, this)
             }

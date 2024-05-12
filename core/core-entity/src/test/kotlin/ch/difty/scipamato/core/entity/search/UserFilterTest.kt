@@ -31,7 +31,7 @@ internal class UserFilterTest {
 
     @Test
     fun assertEnumFields() {
-        UserFilter.UserFilterFields.values().map { it.fieldName } shouldContainSame
+        UserFilter.UserFilterFields.entries.map { it.fieldName } shouldContainSame
             listOf("nameMask", "emailMask", "enabled")
     }
 }

@@ -9,7 +9,7 @@ internal class StudyDesignCodeTest {
 
     @Test
     fun hasAllValues() {
-        StudyDesignCode.values() shouldContainAll listOf(
+        StudyDesignCode.entries shouldContainAll listOf(
             StudyDesignCode.EXPERIMENTAL,
             StudyDesignCode.EPIDEMIOLOGICAL,
             StudyDesignCode.OVERVIEW_METHODOLOGY
@@ -18,7 +18,7 @@ internal class StudyDesignCodeTest {
 
     @Test
     fun assertIds() {
-        StudyDesignCode.values().map { it.id } shouldContainAll listOf(1.toShort(), 2.toShort(), 3.toShort())
+        StudyDesignCode.entries.map { it.id } shouldContainAll listOf(1.toShort(), 2.toShort(), 3.toShort())
     }
 
     @Test

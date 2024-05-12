@@ -14,7 +14,7 @@ enum class StudyDesignCode(val id: Short) {
     ;
 
     companion object {
-        private val ID2CODE: Map<Short, StudyDesignCode> = values().associateBy { it.id }
+        private val ID2CODE: Map<Short, StudyDesignCode> = entries.associateBy { it.id }
         fun of(id: Short): StudyDesignCode? = ID2CODE[id]
     }
 }

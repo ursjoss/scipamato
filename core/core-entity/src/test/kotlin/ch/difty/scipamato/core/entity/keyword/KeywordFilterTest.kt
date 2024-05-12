@@ -26,6 +26,6 @@ internal class KeywordFilterTest {
 
     @Test
     fun assertEnumFields() {
-        KeywordFilter.KeywordFilterFields.values().map { it.fieldName } shouldContainAll listOf("nameMask")
+        KeywordFilter.KeywordFilterFields.entries.map { it.fieldName } shouldContainAll listOf("nameMask")
     }
 }

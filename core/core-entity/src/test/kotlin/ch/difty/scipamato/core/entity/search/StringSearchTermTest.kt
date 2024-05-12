@@ -26,7 +26,6 @@ import ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType.UNSUPPOR
 import ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType.WHITESPACE
 import ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType.WORD
 import ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType.byMatchType
-import ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType.values
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldContainAll
 import org.amshove.kluent.shouldHaveSize
@@ -42,6 +41,7 @@ internal class StringSearchTermTest {
         assertToken(st, 0, tt, rawData, data, negate)
     }
 
+    @Suppress("LongParameterList")
     private fun assertToken(
         st: StringSearchTerm,
         idx: Int,
@@ -232,7 +232,7 @@ internal class StringSearchTermTest {
 
     @Test
     fun assertTokenTypes() {
-        values() shouldContainAll listOf(
+        TokenType.entries shouldContainAll listOf(
             NOTREGEX, REGEX, WHITESPACE, SOME, EMPTY, NOTOPENLEFTRIGHTQUOTED, OPENLEFTRIGHTQUOTED, NOTOPENLEFTRIGHT,
             OPENLEFTRIGHT, NOTOPENRIGHTQUOTED, OPENRIGHTQUOTED, NOTOPENRIGHT, OPENRIGHT, NOTOPENLEFTQUOTED,
             OPENLEFTQUOTED, NOTOPENLEFT, OPENLEFT, NOTQUOTED, QUOTED, NOTWORD, WORD, RAW, UNSUPPORTED
