@@ -150,7 +150,7 @@ internal class CodeDefinitionTest {
 
     @Test
     fun assertCodeFields() {
-        CodeDefinition.CodeDefinitionFields.values().map { it.fieldName } shouldContainSame
+        CodeDefinition.CodeDefinitionFields.entries.map { it.fieldName } shouldContainSame
             listOf("code", "mainLanguageCode", "codeClass", "sort", "internal", "name")
     }
 

@@ -8,7 +8,7 @@ class PublicPageParametersTest {
 
     @Test
     fun assertParameters() {
-        PublicPageParameters.values() shouldContainSame listOf(
+        PublicPageParameters.entries shouldContainSame listOf(
             PublicPageParameters.SEARCH_ORDER_ID,
             PublicPageParameters.SHOW_EXCLUDED,
             PublicPageParameters.SHOW_NAVBAR,

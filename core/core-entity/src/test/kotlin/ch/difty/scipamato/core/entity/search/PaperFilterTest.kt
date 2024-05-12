@@ -44,7 +44,7 @@ internal class PaperFilterTest {
 
     @Test
     fun assertEnumFields() {
-        PaperFilter.PaperFilterFields.values().map { it.fieldName } shouldContainAll listOf(
+        PaperFilter.PaperFilterFields.entries.map { it.fieldName } shouldContainAll listOf(
             "number",
             "authorMask",
             "methodsMask",

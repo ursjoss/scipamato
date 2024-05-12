@@ -9,7 +9,7 @@ internal class AuthorParserStrategyTest {
 
     @Test
     fun values() {
-        AuthorParserStrategy.values() shouldContainAll listOf(PUBMED)
+        AuthorParserStrategy.entries shouldContainAll listOf(PUBMED)
     }
 
     @Test

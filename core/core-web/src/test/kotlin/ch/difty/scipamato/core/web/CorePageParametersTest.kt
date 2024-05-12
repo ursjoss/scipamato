@@ -8,7 +8,7 @@ internal class CorePageParametersTest {
 
     @Test
     fun values() {
-        CorePageParameters.values() shouldContainSame listOf(
+        CorePageParameters.entries shouldContainSame listOf(
             CorePageParameters.SEARCH_ORDER_ID,
             CorePageParameters.SHOW_EXCLUDED,
             CorePageParameters.USER_ID,

@@ -38,7 +38,7 @@ internal class CodeFilterTest {
 
     @Test
     fun assertEnumFields() {
-        CodeFilter.CodeFilterFields.values().map { it.fieldName } shouldContainSame
+        CodeFilter.CodeFilterFields.entries.map { it.fieldName } shouldContainSame
             listOf("codeClass", "nameMask", "commentMask", "internal")
     }
 }

@@ -11,7 +11,7 @@ internal class RisExporterStrategyTest {
 
     @Test
     fun values() {
-        RisExporterStrategy.values() shouldContainSame listOf(DEFAULT, DISTILLERSR)
+        RisExporterStrategy.entries shouldContainSame listOf(DEFAULT, DISTILLERSR)
     }
 
     @Test

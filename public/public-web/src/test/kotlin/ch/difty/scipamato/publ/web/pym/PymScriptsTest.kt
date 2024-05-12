@@ -8,7 +8,7 @@ class PymScriptsTest {
 
     @Test
     fun testValues() {
-        PymScripts.values() shouldContainSame listOf(PymScripts.INSTANTIATE, PymScripts.RESIZE)
+        PymScripts.entries shouldContainSame listOf(PymScripts.INSTANTIATE, PymScripts.RESIZE)
     }
 
     @Test

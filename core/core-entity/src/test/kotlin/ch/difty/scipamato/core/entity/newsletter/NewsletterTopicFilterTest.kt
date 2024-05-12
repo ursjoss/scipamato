@@ -26,7 +26,7 @@ internal class NewsletterTopicFilterTest {
 
     @Test
     fun assertEnumFields() {
-        NewsletterTopicFilter.NewsletterTopicFilterFields.values().map { it.fieldName } shouldContainSame
+        NewsletterTopicFilter.NewsletterTopicFilterFields.entries.map { it.fieldName } shouldContainSame
             listOf("titleMask")
     }
 }

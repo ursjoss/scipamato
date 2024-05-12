@@ -17,22 +17,22 @@ internal class RoleTest {
 
     @Test
     fun hasAllValues() {
-        Role.values() shouldContainAll listOf(ADMIN, USER, VIEWER)
+        Role.entries shouldContainAll listOf(ADMIN, USER, VIEWER)
     }
 
     @Test
     fun assertIds() {
-        Role.values().map { it.id } shouldContainAll listOf(1, 2, 3)
+        Role.entries.map { it.id } shouldContainAll listOf(1, 2, 3)
     }
 
     @Test
     fun assertKeys() {
-        Role.values().map { it.key } shouldContainAll listOf(Roles.ADMIN, Roles.USER, Roles.VIEWER)
+        Role.entries.map { it.key } shouldContainAll listOf(Roles.ADMIN, Roles.USER, Roles.VIEWER)
     }
 
     @Test
     fun assertDescriptions() {
-        Role.values().map { it.description } shouldContainSame
+        Role.entries.map { it.description } shouldContainSame
             listOf("System Administration", "Main SciPaMaTo Users", "Read-only Viewer")
     }
 

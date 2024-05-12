@@ -16,14 +16,12 @@ enum class AuthorParserStrategy {
 
     companion object {
 
-        private val STRATEGIES = values()
-
         /**
          * Converts the string based [propertyValue] into the proper [AuthorParserStrategy] enum value.
          * Accepts a [propertyKey] for logging purposes
          */
         fun fromProperty(propertyValue: String, propertyKey: String): AuthorParserStrategy =
-            propertyValue.asProperty(STRATEGIES, PUBMED, propertyKey)
+            propertyValue.asProperty(entries, PUBMED, propertyKey)
     }
 }
 

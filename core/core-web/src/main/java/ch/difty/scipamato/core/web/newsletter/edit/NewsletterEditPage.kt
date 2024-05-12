@@ -135,7 +135,7 @@ class NewsletterEditPage(model: IModel<Newsletter>?) : BasePage<Newsletter>(getM
         val publicationStatus = object : BootstrapSelect<PublicationStatus>(
             id,
             PropertyModel(model, Newsletter.NewsletterFields.PUBLICATION_STATUS.fieldName),
-            listOf(*PublicationStatus.values()),
+            PublicationStatus.entries,
             EnumChoiceRenderer(this)
         ) {
             override fun onConfigure() {
