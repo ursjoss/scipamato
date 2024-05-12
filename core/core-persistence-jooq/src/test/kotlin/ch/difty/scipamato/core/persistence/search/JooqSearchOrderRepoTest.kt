@@ -179,7 +179,7 @@ internal class JooqSearchOrderRepoTest :
 
             override fun fetchCodesForSearchConditionWithId(
                 searchCondition: SearchCondition,
-                languageCode: String
+                languageCode: String?,
             ): List<Code> =
                 listOf(Code("1F", "Code 1F", "", false, 1, "CC 1", "", 0))
 

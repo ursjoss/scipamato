@@ -23,8 +23,8 @@ public interface SearchTerm {
      * @return one of the implementations of {@link SearchTerm}
      */
     @NotNull
-    static SearchTerm newSearchTerm(final long id, final int searchTermTypeId, final long searchConditionId,
-        @NotNull final String fieldName, @NotNull final String rawSearchTerm) {
+    static SearchTerm newSearchTerm(final long id, final int searchTermTypeId, final long searchConditionId, @NotNull final String fieldName,
+        @NotNull final String rawSearchTerm) {
         return newSearchTerm(id, SearchTermType.byId(searchTermTypeId), searchConditionId, fieldName, rawSearchTerm);
     }
 
@@ -45,21 +45,15 @@ public interface SearchTerm {
      * @return one of the implementations of {@link SearchTerm}
      */
     @NotNull
-    static SearchTerm newSearchTerm(final long id, @NotNull final SearchTermType type, final long searchConditionId,
-        @NotNull final String fieldName, @NotNull final String rawSearchTerm) {
-        switch (type) {
-        case BOOLEAN:
-            return new BooleanSearchTerm(id, searchConditionId, fieldName, rawSearchTerm);
-        case INTEGER:
-            return new IntegerSearchTerm(id, searchConditionId, fieldName, rawSearchTerm);
-        case STRING:
-            return new StringSearchTerm(id, searchConditionId, fieldName, rawSearchTerm);
-        case AUDIT:
-            return new AuditSearchTerm(id, searchConditionId, fieldName, rawSearchTerm);
-        case UNSUPPORTED:
-        default:
-            throw new AssertionError("SearchTermType." + type + " is not supported");
-        }
+    static SearchTerm newSearchTerm(final long id, @NotNull final SearchTermType type, final long searchConditionId, @NotNull final String fieldName,
+        @NotNull final String rawSearchTerm) {
+        return switch (type) {
+            case BOOLEAN -> new BooleanSearchTerm(id, searchConditionId, fieldName, rawSearchTerm);
+            case INTEGER -> new IntegerSearchTerm(id, searchConditionId, fieldName, rawSearchTerm);
+            case STRING -> new StringSearchTerm(id, searchConditionId, fieldName, rawSearchTerm);
+            case AUDIT -> new AuditSearchTerm(id, searchConditionId, fieldName, rawSearchTerm);
+            default -> throw new AssertionError("SearchTermType." + type + " is not supported");
+        };
     }
 
     /**
@@ -88,8 +82,7 @@ public interface SearchTerm {
      * @return the search term
      */
     @NotNull
-    static IntegerSearchTerm newIntegerSearchTerm(@NotNull final String fieldName,
-        @NotNull final String rawSearchTerm) {
+    static IntegerSearchTerm newIntegerSearchTerm(@NotNull final String fieldName, @NotNull final String rawSearchTerm) {
         return new IntegerSearchTerm(fieldName, rawSearchTerm);
     }
 
@@ -104,8 +97,7 @@ public interface SearchTerm {
      * @return the search term
      */
     @NotNull
-    static BooleanSearchTerm newBooleanSearchTerm(@NotNull final String fieldName,
-        @NotNull final String rawSearchTerm) {
+    static BooleanSearchTerm newBooleanSearchTerm(@NotNull final String fieldName, @NotNull final String rawSearchTerm) {
         return new BooleanSearchTerm(fieldName, rawSearchTerm);
     }
 

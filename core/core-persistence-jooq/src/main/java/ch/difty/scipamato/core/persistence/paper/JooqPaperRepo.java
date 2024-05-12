@@ -102,7 +102,7 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
         return record.getId();
     }
 
-    @NotNull
+    @Nullable
     @Override
     protected Long getIdFrom(@NotNull final Paper entity) {
         return entity.getId();
@@ -119,7 +119,7 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
         }
     }
 
-    private void enrichCodesOf(final Paper entity, final String languageCode) {
+    private void enrichCodesOf(@NotNull final Paper entity, @NotNull final String languageCode) {
         final List<Code> codes = getDsl()
             .select(CODE.CODE_.as("C_ID"), DSL
                 .coalesce(CODE_TR.NAME, NOT_TRANSL)
@@ -149,7 +149,7 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
             entity.addCodes(codes);
     }
 
-    private void enrichNewsletterAssociation(final Paper entity, final String languageCode) {
+    private void enrichNewsletterAssociation(@NotNull final Paper entity, @NotNull final String languageCode) {
         Record6<Integer, String, Integer, Integer, String, String> r = getDsl()
             .select(NEWSLETTER.ID, NEWSLETTER.ISSUE, NEWSLETTER.PUBLICATION_STATUS, PAPER_NEWSLETTER.NEWSLETTER_TOPIC_ID, NEWSLETTER_TOPIC_TR.TITLE,
                 PAPER_NEWSLETTER.HEADLINE)
@@ -170,7 +170,7 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
             entity.setNewsletterLink(r.value1(), r.value2(), r.value3(), r.value4(), r.value5(), r.value6());
     }
 
-    private void enrichAttachmentsOf(final Paper entity) {
+    private void enrichAttachmentsOf(@NotNull final Paper entity) {
         final Long id = entity.getId();
         if (id != null)
             entity.setAttachments(loadSlimAttachment(id));
@@ -485,7 +485,8 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
             return condition;
     }
 
-    @NotNull Optional<String> evaluateNumbers(@Nullable final Record1<Long[]> numbers) {
+    @NotNull
+    Optional<String> evaluateNumbers(@Nullable final Record1<Long[]> numbers) {
         if (numbers == null || numbers.value1() == null || numbers.value1().length == 0)
             return Optional.empty();
         return Optional.of(Arrays

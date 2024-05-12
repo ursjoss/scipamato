@@ -4,6 +4,7 @@ import static ch.difty.scipamato.core.db.tables.ScipamatoUser.SCIPAMATO_USER;
 import static java.util.stream.Collectors.toSet;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import lombok.extern.slf4j.Slf4j;
@@ -87,7 +88,7 @@ public class JooqUserRepo
         return record.getId();
     }
 
-    @NotNull
+    @Nullable
     @Override
     protected Integer getIdFrom(@NotNull final User entity) {
         return entity.getId();
@@ -96,6 +97,7 @@ public class JooqUserRepo
     @Override
     protected void enrichAssociatedEntitiesOf(@Nullable final User entity, @Nullable final String languageCode) {
         if (entity != null) {
+            Objects.requireNonNull(entity.getId());
             final Set<Role> roles = userRoleRepo.findRolesForUser(entity.getId());
             if (!roles.isEmpty())
                 entity.setRoles(roles);
@@ -104,24 +106,24 @@ public class JooqUserRepo
 
     @Override
     protected void saveAssociatedEntitiesOf(@NotNull final User user, @NotNull final String languageCode) {
-        storeNewRolesOf(user);
+        Objects.requireNonNull(user.getId());
+        storeNewRolesOf(user.getId(), user.getRoles());
     }
 
     @Override
     protected void updateAssociatedEntities(@NotNull final User user, @NotNull final String languageCode) {
-        storeNewRolesOf(user);
-        deleteObsoleteRolesFrom(user);
+        Objects.requireNonNull(user.getId());
+        storeNewRolesOf(user.getId(), user.getRoles());
+        deleteObsoleteRolesFrom(user.getId(), user.getRoles());
         getLogger().info("{} updated roles of user {}.", getActiveUser().getUserName(), user.getFullName());
     }
 
-    private void storeNewRolesOf(final User user) {
-        userRoleRepo.addNewUserRolesOutOf(user.getId(), user.getRoles());
+    private void storeNewRolesOf(final int userId, @NotNull final Set<Role> roles) {
+        userRoleRepo.addNewUserRolesOutOf(userId, roles);
     }
 
-    private void deleteObsoleteRolesFrom(final User user) {
-        final Integer userId = user.getId();
-        final Set<Integer> roleIds = user
-            .getRoles()
+    private void deleteObsoleteRolesFrom(final int userId, @NotNull final Set<Role> roles) {
+        final Set<Integer> roleIds = roles
             .stream()
             .map(Role::getId)
             .collect(toSet());
@@ -139,7 +141,7 @@ public class JooqUserRepo
         if (users.isEmpty()) {
             return null;
         } else {
-            final User user = users.get(0);
+            final User user = users.getFirst();
             enrichAssociatedEntitiesOf(user, null);
             return user;
         }

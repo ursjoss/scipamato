@@ -119,7 +119,7 @@ public class JooqCodeClassRepo extends AbstractRepo implements CodeClassReposito
         return toCodeClassDefinition(null, 0, translations);
     }
 
-    private void considerSorting(final PaginationContext pc, final List<CodeClassDefinition> results) {
+    private void considerSorting(@NotNull final PaginationContext pc, @NotNull final List<CodeClassDefinition> results) {
         for (final Sort.SortProperty sortProperty : pc.getSort()) {
             final String propName = sortProperty.getName();
             if (propName.equals(CODE_CLASS_TR.NAME.getName())) {
@@ -130,8 +130,8 @@ public class JooqCodeClassRepo extends AbstractRepo implements CodeClassReposito
         }
     }
 
-    private void compareBy(final List<CodeClassDefinition> results, final Sort.SortProperty sortProperty,
-        final Comparator<CodeClassDefinition> byComparator) {
+    private void compareBy(@NotNull final List<CodeClassDefinition> results, @NotNull final Sort.SortProperty sortProperty,
+        @NotNull final Comparator<CodeClassDefinition> byComparator) {
         if (sortProperty.getDirection() == Sort.Direction.DESC)
             results.sort(byComparator.reversed());
         else
@@ -143,10 +143,13 @@ public class JooqCodeClassRepo extends AbstractRepo implements CodeClassReposito
         final SelectJoinStep<Record1<Integer>> selectStep = getDsl()
             .selectCount()
             .from(CODE_CLASS);
-        return applyWhereCondition(filter, selectStep).fetchOneInto(Integer.class);
+        final Integer count = applyWhereCondition(filter, selectStep).fetchOneInto(Integer.class);
+        return count != null ? count : 0;
     }
 
-    private <R extends Record> SelectConditionStep<R> applyWhereCondition(final CodeClassFilter filter, final SelectJoinStep<R> selectStep) {
+    @NotNull
+    private <R extends Record> SelectConditionStep<R> applyWhereCondition(@Nullable final CodeClassFilter filter,
+        @NotNull final SelectJoinStep<R> selectStep) {
         if (filter != null) {
             return selectStep.where(filterToCondition(filter));
         } else {
@@ -154,7 +157,8 @@ public class JooqCodeClassRepo extends AbstractRepo implements CodeClassReposito
         }
     }
 
-    private Condition filterToCondition(final CodeClassFilter filter) {
+    @NotNull
+    private Condition filterToCondition(@NotNull final CodeClassFilter filter) {
         final ConditionalSupplier conditions = new ConditionalSupplier();
         if (filter.getNameMask() != null) {
             final String mask = '%' + filter.getNameMask() + '%';
@@ -173,7 +177,8 @@ public class JooqCodeClassRepo extends AbstractRepo implements CodeClassReposito
         return conditions.combineWithAnd();
     }
 
-    private List<CodeClassDefinition> mapRawRecordsIntoCodeClassDefinitions(final Map<Integer, Result<Record>> rawRecords) {
+    @NotNull
+    private List<CodeClassDefinition> mapRawRecordsIntoCodeClassDefinitions(@NotNull final Map<Integer, @NotNull Result<Record>> rawRecords) {
         final List<CodeClassDefinition> definitions = new ArrayList<>();
         for (final Map.Entry<Integer, Result<Record>> entry : rawRecords.entrySet()) {
             final List<CodeClassTranslation> translations = entry
@@ -231,6 +236,7 @@ public class JooqCodeClassRepo extends AbstractRepo implements CodeClassReposito
             .set(CODE_CLASS.VERSION, CODE_CLASS.VERSION.add(1))
             .returning()
             .fetchOne();
+        Objects.requireNonNull(ccRecord);
         final Integer id = ccRecord.get(CODE_CLASS.ID);
         final List<CodeClassTranslation> persistedTranslations = updateOrInsertAndLoadCodeClassTranslations(codeClassDefinition, userId);
         final CodeClassDefinition persistedEntity = toCodeClassDefinition(id, ccRecord.get(CODE_CLASS.VERSION), persistedTranslations);
@@ -238,18 +244,23 @@ public class JooqCodeClassRepo extends AbstractRepo implements CodeClassReposito
         return persistedEntity;
     }
 
-    private CodeClassDefinition toCodeClassDefinition(final Integer id, final int version, final List<CodeClassTranslation> persistedTranslations) {
+    @NotNull
+    private CodeClassDefinition toCodeClassDefinition(@Nullable final Integer id, final int version,
+        @NotNull final List<CodeClassTranslation> persistedTranslations) {
         return new CodeClassDefinition(id, getMainLanguage(), version, persistedTranslations.toArray(new CodeClassTranslation[0]));
     }
 
-    private List<CodeClassTranslation> updateOrInsertAndLoadCodeClassTranslations(final CodeClassDefinition entity, final int userId) {
+    @NotNull
+    private List<CodeClassTranslation> updateOrInsertAndLoadCodeClassTranslations(@NotNull final CodeClassDefinition entity, final int userId) {
+        Objects.requireNonNull(entity.getId());
         final Result<CodeClassTrRecord> persistedTranslations = loadCodeClassTranslationsFromDbFor(entity.getId());
         final Collection<CodeClassTranslation> entityTranslations = entity.getTranslations(null);
         removeObsoletePersistedRecordsFor(persistedTranslations, entityTranslations);
         return addOrUpdate(entity, entityTranslations, userId);
     }
 
-    private Result<CodeClassTrRecord> loadCodeClassTranslationsFromDbFor(final Integer codeClassId) {
+    @NotNull
+    private Result<CodeClassTrRecord> loadCodeClassTranslationsFromDbFor(@NotNull final Integer codeClassId) {
         return getDsl()
             .selectFrom(CODE_CLASS_TR)
             .where(CODE_CLASS_TR.ID.eq(codeClassId))
@@ -257,15 +268,15 @@ public class JooqCodeClassRepo extends AbstractRepo implements CodeClassReposito
     }
 
     // package-protected for test purposes
-    void removeObsoletePersistedRecordsFor(final Result<CodeClassTrRecord> persistedTranslations,
-        final Collection<CodeClassTranslation> entityTranslations) {
+    void removeObsoletePersistedRecordsFor(@NotNull final Result<CodeClassTrRecord> persistedTranslations,
+        @NotNull final Collection<CodeClassTranslation> entityTranslations) {
         for (final CodeClassTrRecord pcctr : persistedTranslations) {
             if (!isPresentIn(entityTranslations, pcctr))
                 pcctr.delete();
         }
     }
 
-    private boolean isPresentIn(final Collection<CodeClassTranslation> translations, final CodeClassTrRecord cct) {
+    private boolean isPresentIn(@NotNull final Collection<CodeClassTranslation> translations, @NotNull final CodeClassTrRecord cct) {
         for (final CodeClassTranslation ct : translations) {
             if (ct.getId() != null && ct
                 .getId()
@@ -275,8 +286,9 @@ public class JooqCodeClassRepo extends AbstractRepo implements CodeClassReposito
         return false;
     }
 
-    private List<CodeClassTranslation> addOrUpdate(final CodeClassDefinition entity, final Collection<CodeClassTranslation> entityTranslations,
-        final int userId) {
+    @NotNull
+    private List<CodeClassTranslation> addOrUpdate(@NotNull final CodeClassDefinition entity,
+        @NotNull final Collection<CodeClassTranslation> entityTranslations, final int userId) {
         final List<CodeClassTranslation> cctsPersisted = new ArrayList<>();
         for (final CodeClassTranslation cct : entityTranslations) {
             if (cct.getDescription() == null)
@@ -285,14 +297,16 @@ public class JooqCodeClassRepo extends AbstractRepo implements CodeClassReposito
                 considerAdding(updateCodeClassTr(entity, cct, userId, cct.getVersion()), cctsPersisted, cct);
             } else {
                 final CodeClassTrRecord cctRecord = insertAndGetCodeClassTr(entity.getId(), userId, cct);
-                cctsPersisted.add(toCodeClassTranslation(cctRecord));
+                if (cctRecord != null)
+                    cctsPersisted.add(toCodeClassTranslation(cctRecord));
             }
         }
         return cctsPersisted;
     }
 
     // package-private for testing purposes
-    void considerAdding(final CodeClassTrRecord cctRecord, final List<CodeClassTranslation> cctsPersisted, final CodeClassTranslation cct) {
+    void considerAdding(@Nullable final CodeClassTrRecord cctRecord, @NotNull final List<CodeClassTranslation> cctsPersisted,
+        @NotNull final CodeClassTranslation cct) {
         if (cctRecord != null) {
             cctsPersisted.add(toCodeClassTranslation(cctRecord));
         } else {
@@ -300,7 +314,8 @@ public class JooqCodeClassRepo extends AbstractRepo implements CodeClassReposito
         }
     }
 
-    private CodeClassTrRecord insertAndGetCodeClassTr(final Integer id, final int userId, final CodeClassTranslation cct) {
+    @Nullable
+    private CodeClassTrRecord insertAndGetCodeClassTr(@Nullable final Integer id, final int userId, @NotNull final CodeClassTranslation cct) {
         return getDsl()
             .insertInto(CODE_CLASS_TR)
             .set(CODE_CLASS_TR.CODE_CLASS_ID, id)
@@ -313,7 +328,8 @@ public class JooqCodeClassRepo extends AbstractRepo implements CodeClassReposito
             .fetchOne();
     }
 
-    private CodeClassTrRecord updateCodeClassTr(final CodeClassDefinition entity, final CodeClassTranslation ct, final int userId,
+    @Nullable
+    private CodeClassTrRecord updateCodeClassTr(@NotNull final CodeClassDefinition entity, @NotNull final CodeClassTranslation ct, final int userId,
         final int currentCctVersion) {
         final Integer id = entity.getId();
         return getDsl()
@@ -331,7 +347,8 @@ public class JooqCodeClassRepo extends AbstractRepo implements CodeClassReposito
             .fetchOne();
     }
 
-    private CodeClassTranslation toCodeClassTranslation(final CodeClassTrRecord record) {
+    @NotNull
+    private CodeClassTranslation toCodeClassTranslation(@NotNull final CodeClassTrRecord record) {
         return new CodeClassTranslation(record.get(CODE_CLASS_TR.ID), record.get(CODE_CLASS_TR.LANG_CODE), record.get(CODE_CLASS_TR.NAME),
             record.get(CODE_CLASS_TR.DESCRIPTION), record.get(CODE_CLASS_TR.VERSION));
     }
@@ -352,7 +369,7 @@ public class JooqCodeClassRepo extends AbstractRepo implements CodeClassReposito
         return toBeDeleted;
     }
 
-    private int deleteCodeClassMatching(final Integer id, final int version) {
+    private int deleteCodeClassMatching(@NotNull final Integer id, final int version) {
         return getDsl()
             .delete(CODE_CLASS)
             .where(CODE_CLASS.ID.equal(id))
@@ -361,7 +378,7 @@ public class JooqCodeClassRepo extends AbstractRepo implements CodeClassReposito
     }
 
     // package-private for testing purposes
-    void logOrThrow(final int deleteCount, final Integer id, final String deletedAsString) {
+    void logOrThrow(final int deleteCount, @NotNull final Integer id, @NotNull final String deletedAsString) {
         if (deleteCount > 0) {
             log.info("{} deleted {} record: {} with code class {}.", getActiveUser().getUserName(), deleteCount, CODE_CLASS.getName(), id);
         } else {

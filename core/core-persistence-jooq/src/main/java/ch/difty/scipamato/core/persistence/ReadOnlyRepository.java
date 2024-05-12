@@ -126,7 +126,7 @@ public interface ReadOnlyRepository<T extends CoreEntity, ID, F extends Scipamat
      *
      * @param filter
      *     of type {@code F}
-     * @return list of all matching entities {@code T}
+     * @return count of all matching entities {@code T}
      */
     int countByFilter(@Nullable F filter);
 

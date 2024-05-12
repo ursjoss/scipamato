@@ -63,10 +63,10 @@ public abstract class JooqEntityRepo<R extends Record, T extends CoreEntity, ID,
      * @param applicationProperties
      *     {@link ApplicationProperties}
      */
-    protected JooqEntityRepo(@NotNull DSLContext dsl, @NotNull M mapper, @NotNull JooqSortMapper<R, T, TI> sortMapper,
-        @NotNull GenericFilterConditionMapper<F> filterConditionMapper, @NotNull DateTimeService dateTimeService,
-        @NotNull InsertSetStepSetter<R, T> insertSetStepSetter, @NotNull UpdateSetStepSetter<R, T> updateSetStepSetter,
-        @NotNull ApplicationProperties applicationProperties) {
+    protected JooqEntityRepo(@NotNull final DSLContext dsl, @NotNull final M mapper, @NotNull final JooqSortMapper<R, T, TI> sortMapper,
+        @NotNull final GenericFilterConditionMapper<F> filterConditionMapper, @NotNull final DateTimeService dateTimeService,
+        @NotNull final InsertSetStepSetter<R, T> insertSetStepSetter, @NotNull final UpdateSetStepSetter<R, T> updateSetStepSetter,
+        @NotNull final ApplicationProperties applicationProperties) {
         super(dsl, mapper, sortMapper, filterConditionMapper, dateTimeService, applicationProperties);
         this.insertSetStepSetter = insertSetStepSetter;
         this.updateSetStepSetter = updateSetStepSetter;
@@ -103,10 +103,10 @@ public abstract class JooqEntityRepo<R extends Record, T extends CoreEntity, ID,
     @Nullable
     @Override
     public T add(@NotNull final T entity, @NotNull final String languageCode) {
-        R saved = doSave(entity, languageCode);
+        final R saved = doSave(entity, languageCode);
         if (saved != null) {
             getLogger().info("{} inserted 1 record: {} with id {}.", getActiveUser().getUserName(), getTable().getName(), getIdFrom(saved));
-            T savedEntity = getMapper().map(saved);
+            final T savedEntity = getMapper().map(saved);
             enrichAssociatedEntitiesOf(savedEntity, languageCode);
             return savedEntity;
         } else {
@@ -120,10 +120,10 @@ public abstract class JooqEntityRepo<R extends Record, T extends CoreEntity, ID,
         entity.setCreatedBy(getUserId());
         entity.setLastModifiedBy(getUserId());
 
-        InsertSetMoreStep<R> step = insertSetStepSetter.setNonKeyFieldsFor(getDsl().insertInto(getTable()), entity);
+        final InsertSetMoreStep<R> step = insertSetStepSetter.setNonKeyFieldsFor(getDsl().insertInto(getTable()), entity);
         insertSetStepSetter.considerSettingKeyOf(step, entity);
 
-        R saved = step
+        final R saved = step
             .returning()
             .fetchOne();
         insertSetStepSetter.resetIdToEntity(entity, saved);
@@ -139,12 +139,12 @@ public abstract class JooqEntityRepo<R extends Record, T extends CoreEntity, ID,
      * @param languageCode
      *     the two character language code
      */
-    protected void saveAssociatedEntitiesOf(@NotNull T entity, @NotNull String languageCode) {
+    protected void saveAssociatedEntitiesOf(@NotNull final T entity, @NotNull final String languageCode) {
     }
 
     @NotNull
     @Override
-    public T delete(@NotNull final ID id, int version) {
+    public T delete(@NotNull final ID id, final int version) {
         final T toBeDeleted = findById(id, version);
         if (toBeDeleted != null) {
             deleteAssociatedEntitiesOf(toBeDeleted);
@@ -171,8 +171,8 @@ public abstract class JooqEntityRepo<R extends Record, T extends CoreEntity, ID,
      * @param entity
      *     the entity to free from the associated sub entities
      */
-    @SuppressWarnings("EmptyMethod")
-    protected void deleteAssociatedEntitiesOf(T entity) {
+    @SuppressWarnings({ "EmptyMethod", "unused" })
+    protected void deleteAssociatedEntitiesOf(final T entity) {
     }
 
     @Nullable
@@ -184,13 +184,13 @@ public abstract class JooqEntityRepo<R extends Record, T extends CoreEntity, ID,
     @Nullable
     @Override
     public T update(@NotNull final T entity, @NotNull final String languageCode) {
-        ID id = getIdFrom(entity);
+        final ID id = getIdFrom(entity);
         Objects.requireNonNull(id);
 
         entity.setLastModified(now());
         entity.setLastModifiedBy(getUserId());
 
-        R updated = updateSetStepSetter
+        final R updated = updateSetStepSetter
             .setFieldsFor(getDsl().update(getTable()), entity)
             .where(getTableId().equal(id))
             .and(getRecordVersion().equal(entity.getVersion()))
@@ -198,7 +198,7 @@ public abstract class JooqEntityRepo<R extends Record, T extends CoreEntity, ID,
             .fetchOne();
         if (updated != null) {
             updateAssociatedEntities(entity, languageCode);
-            T savedEntity = findById(id);
+            final T savedEntity = findById(id);
             enrichAssociatedEntitiesOf(savedEntity, languageCode);
             getLogger().info("{} updated 1 record: {} with id {}.", getActiveUser().getUserName(), getTable().getName(), id);
             return savedEntity;

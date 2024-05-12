@@ -76,6 +76,7 @@ public class JooqPaperSlimRepo
             return null;
     }
 
+    @NotNull
     private SelectOnConditionStep<Record9<Long, Long, String, Integer, String, Integer, String, Integer, String>> getBaseQuery() {
         return getDsl()
             .select(PAPER.ID, PAPER.NUMBER, PAPER.FIRST_AUTHOR, PAPER.PUBLICATION_YEAR, PAPER.TITLE, NEWSLETTER.ID, NEWSLETTER.ISSUE,
@@ -87,7 +88,7 @@ public class JooqPaperSlimRepo
             .on(PAPER_NEWSLETTER.NEWSLETTER_ID.eq(NEWSLETTER.ID));
     }
 
-    private int getStatusId(final Record9<Long, Long, String, Integer, String, Integer, String, Integer, String> record) {
+    private int getStatusId(@NotNull final Record9<Long, Long, String, Integer, String, Integer, String, Integer, String> record) {
         return record.get(NEWSLETTER.PUBLICATION_STATUS.getName(), Integer.class);
     }
 
@@ -113,7 +114,8 @@ public class JooqPaperSlimRepo
         return results;
     }
 
-    private PaperSlim newPaperSlim(final Record9<Long, Long, String, Integer, String, Integer, String, Integer, String> r) {
+    @NotNull
+    private PaperSlim newPaperSlim(@NotNull final Record9<Long, Long, String, Integer, String, Integer, String, Integer, String> r) {
         final Integer newsletterId = r.value6();
         if (newsletterId != null)
             return new PaperSlim(r.value1(), r.value2(), r.value3(), r.value4(), r.value5(), newsletterId, r.value7(), getStatusId(r), r.value9());
@@ -123,7 +125,7 @@ public class JooqPaperSlimRepo
 
     @NotNull
     @Override
-    public List<PaperSlim> findPageByFilter(final PaperFilter filter, @NotNull final PaginationContext pc, @Nullable final String languageCode) {
+    public List<PaperSlim> findPageByFilter(@Nullable final PaperFilter filter, @NotNull final PaginationContext pc, @Nullable final String languageCode) {
         final List<PaperSlim> results = new ArrayList<>();
         final Condition conditions = getFilterConditionMapper().map(filter);
         final Collection<SortField<PaperSlim>> sortCriteria = getSortMapper().map(pc.getSort(), getTable());
@@ -140,7 +142,7 @@ public class JooqPaperSlimRepo
     @NotNull
     @Override
     public List<PaperSlim> findBySearchOrder(@NotNull final SearchOrder searchOrder) {
-        List<PaperSlim> papers = searchOrderRepository.findBySearchOrder(searchOrder);
+        final List<PaperSlim> papers = searchOrderRepository.findBySearchOrder(searchOrder);
         enrichAssociatedEntitiesOfAll(papers, null);
         return papers;
     }
