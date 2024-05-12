@@ -7,6 +7,7 @@ import static ch.difty.scipamato.core.db.tables.Paper.PAPER;
 import static ch.difty.scipamato.core.db.tables.PaperNewsletter.PAPER_NEWSLETTER;
 
 import java.sql.Timestamp;
+import java.util.Objects;
 import java.util.Optional;
 
 import lombok.extern.slf4j.Slf4j;
@@ -62,7 +63,7 @@ public class JooqNewsletterRepo extends
         return record.getId();
     }
 
-    @NotNull
+    @Nullable
     @Override
     protected Integer getIdFrom(@NotNull final Newsletter entity) {
         return entity.getId();
@@ -92,7 +93,8 @@ public class JooqNewsletterRepo extends
             enrichPaperAssociationsOf(entity, languageCode);
     }
 
-    private void enrichPaperAssociationsOf(final Newsletter entity, final String languageCode) {
+    private void enrichPaperAssociationsOf(@NotNull final Newsletter entity, @Nullable final String languageCode) {
+        Objects.requireNonNull(entity.getId());
         final Result<Record7<Long, Long, String, Integer, String, Integer, String>> records = loadNewsletterPaperTopicRecords(entity.getId(),
             languageCode);
         for (final Record record : records)
@@ -108,8 +110,9 @@ public class JooqNewsletterRepo extends
      *     the language code, e.g. 'de' or 'en'
      * @return record containing paper, paper_newsletter and (left joined) newsletter_topic
      */
+    @NotNull
     private Result<Record7<Long, Long, String, Integer, String, Integer, String>> loadNewsletterPaperTopicRecords(final int newsletterId,
-        final String languageCode) {
+        @Nullable final String languageCode) {
         return getDsl()
             .select(PAPER.ID, PAPER.NUMBER, PAPER.FIRST_AUTHOR, PAPER.PUBLICATION_YEAR, PAPER.TITLE, NEWSLETTER_TOPIC.ID, NEWSLETTER_TOPIC_TR.TITLE)
             .from(PAPER)
@@ -134,7 +137,8 @@ public class JooqNewsletterRepo extends
      *     the newsletter paper topic record
      * @return PaperSlim associated with the newsletter
      */
-    private PaperSlim extractPaperFrom(final Record record) {
+    @NotNull
+    private PaperSlim extractPaperFrom(@NotNull final Record record) {
         return new PaperSlim(record.get(PAPER.ID), record.get(PAPER.NUMBER), record.get(PAPER.FIRST_AUTHOR), record.get(PAPER.PUBLICATION_YEAR),
             record.get(PAPER.TITLE));
     }
@@ -146,7 +150,8 @@ public class JooqNewsletterRepo extends
      *     the newsletter paper topic record
      * @return NewsletterTopic of the paper to newsletter association, if defined - null otherwise
      */
-    private NewsletterTopic extractTopicFrom(final Record record) {
+    @Nullable
+    private NewsletterTopic extractTopicFrom(@NotNull final Record record) {
         final Integer newsletterTopicId = record.get(NEWSLETTER_TOPIC.ID);
         if (newsletterTopicId != null) {
             return new NewsletterTopic(newsletterTopicId, record.get(NEWSLETTER_TOPIC_TR.TITLE));
@@ -177,7 +182,8 @@ public class JooqNewsletterRepo extends
     }
 
     // package-private for testing purposes
-    @NotNull Optional<Paper.NewsletterLink> handleInsertedNewsletter(final int count, final int newsletterId, final long paperId,
+    @NotNull
+    Optional<Paper.NewsletterLink> handleInsertedNewsletter(final int count, final int newsletterId, final long paperId,
         @NotNull final String languageCode) {
         if (count > 0) {
             final Record6<Integer, String, Integer, Integer, String, String> r = fetchMergedNewsletter(newsletterId, paperId, languageCode);
@@ -188,7 +194,8 @@ public class JooqNewsletterRepo extends
     }
 
     // package-private for stubbing purposes
-    @Nullable Record6<Integer, String, Integer, Integer, String, String> fetchMergedNewsletter(final int newsletterId, final long paperId,
+    @Nullable
+    Record6<Integer, String, Integer, Integer, String, String> fetchMergedNewsletter(final int newsletterId, final long paperId,
         @NotNull final String languageCode) {
         return getDsl()
             .select(NEWSLETTER.ID, NEWSLETTER.ISSUE, NEWSLETTER.PUBLICATION_STATUS, NEWSLETTER_TOPIC.ID, NEWSLETTER_TOPIC_TR.TITLE,

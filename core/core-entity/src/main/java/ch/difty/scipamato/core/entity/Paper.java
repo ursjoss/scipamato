@@ -81,9 +81,9 @@ public class Paper extends IdScipamatoEntity<Long> implements CodeBoxAware, News
      * <p>
      * See also PubmedAuthorParser
      */
+    @SuppressWarnings("UnnecessaryUnicodeEscape")
     private static final String AUTHOR_REGEX =
-        "^" + RE_WW + "(" + RE_S_WW + ")*(," + RE_S_WW + "(" + RE_S_WW + ")*)*(;" + RE_S_WW + "(" + RE_S_WW
-        + ")*)?\\.$";
+        "^" + RE_WW + "(" + RE_S_WW + ")*(," + RE_S_WW + "(" + RE_S_WW + ")*)*(;" + RE_S_WW + "(" + RE_S_WW + ")*)?\\.$";
 
     /**
      * Regex to validate DOIs. Does not capture the full range of possible DOIs, but
@@ -175,7 +175,7 @@ public class Paper extends IdScipamatoEntity<Long> implements CodeBoxAware, News
     private Long number;
 
     /**
-     * Digital Object Identifier (see https://www.doi.org)
+     * Digital Object Identifier (see <a href="https://www.doi.org">DOI Homepage</a>)
      * <p>
      * /^10.\d{4,9}/[-._;()/:A-Z0-9]+$/i
      */
@@ -257,22 +257,22 @@ public class Paper extends IdScipamatoEntity<Long> implements CodeBoxAware, News
 
     @NotNull
     @Override
-    public List<Code> getCodesOf(@NotNull CodeClassId ccId) {
+    public List<Code> getCodesOf(@NotNull final CodeClassId ccId) {
         return this.codes.getCodesBy(ccId);
     }
 
     @Override
-    public void clearCodesOf(@NotNull CodeClassId ccId) {
+    public void clearCodesOf(@NotNull final CodeClassId ccId) {
         this.codes.clearBy(ccId);
     }
 
     @Override
-    public void addCode(@Nullable Code code) {
+    public void addCode(@Nullable final Code code) {
         this.codes.addCode(code);
     }
 
     @Override
-    public void addCodes(@NotNull List<Code> codes) {
+    public void addCodes(@NotNull final List<Code> codes) {
         this.codes.addCodes(codes);
     }
 
@@ -303,15 +303,15 @@ public class Paper extends IdScipamatoEntity<Long> implements CodeBoxAware, News
     public static class NewsletterLink implements Serializable {
         private static final long serialVersionUID = 1L;
 
-        private Integer newsletterId;
-        private String  issue;
-        private Integer publicationStatusId;
+        Integer newsletterId;
+        String  issue;
+        Integer publicationStatusId;
         @Nullable
-        private Integer topicId;
+        Integer topicId;
         @Nullable
-        private String  topic;
+        String  topic;
         @Nullable
-        private String  headline;
+        String  headline;
     }
 
     @Override
@@ -319,11 +319,10 @@ public class Paper extends IdScipamatoEntity<Long> implements CodeBoxAware, News
         if (newsletterLink != null) {
             final NewsletterLink nl = newsletterLink;
             if (newsletterTopic == null)
-                setNewsletterLink(nl.getNewsletterId(), nl.getIssue(), nl.getPublicationStatusId(), null, null,
-                    nl.getHeadline());
+                setNewsletterLink(nl.getNewsletterId(), nl.getIssue(), nl.getPublicationStatusId(), null, null, nl.getHeadline());
             else
-                setNewsletterLink(nl.getNewsletterId(), nl.getIssue(), nl.getPublicationStatusId(),
-                    newsletterTopic.getId(), newsletterTopic.getTitle(), nl.getHeadline());
+                setNewsletterLink(nl.getNewsletterId(), nl.getIssue(), nl.getPublicationStatusId(), newsletterTopic.getId(),
+                    newsletterTopic.getTitle(), nl.getHeadline());
         }
     }
 
@@ -337,8 +336,7 @@ public class Paper extends IdScipamatoEntity<Long> implements CodeBoxAware, News
     public void setNewsletterHeadline(@Nullable final String headline) {
         final NewsletterLink nl = newsletterLink;
         if (nl != null)
-            setNewsletterLink(nl.getNewsletterId(), nl.getIssue(), nl.getPublicationStatusId(), nl.getTopicId(),
-                nl.getTopic(), headline);
+            setNewsletterLink(nl.getNewsletterId(), nl.getIssue(), nl.getPublicationStatusId(), nl.getTopicId(), nl.getTopic(), headline);
     }
 
     /**
@@ -358,9 +356,8 @@ public class Paper extends IdScipamatoEntity<Long> implements CodeBoxAware, News
      * @param headline
      *     the headline of the paper newsletter association
      */
-    public void setNewsletterLink(@Nullable final Integer newsletterId, @Nullable final String issue,
-        @Nullable final Integer publicationStatusId, @Nullable final Integer topicId, @Nullable final String topic,
-        @Nullable final String headline) {
+    public void setNewsletterLink(@Nullable final Integer newsletterId, @Nullable final String issue, @Nullable final Integer publicationStatusId,
+        @Nullable final Integer topicId, @Nullable final String topic, @Nullable final String headline) {
         this.newsletterLink = new NewsletterLink(newsletterId, issue, publicationStatusId, topicId, topic, headline);
     }
 

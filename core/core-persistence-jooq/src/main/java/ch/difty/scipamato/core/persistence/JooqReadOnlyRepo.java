@@ -153,7 +153,7 @@ public abstract class JooqReadOnlyRepo<R extends Record, T extends CoreEntity, I
 
     @Nullable
     @Override
-    public T findById(@NotNull final ID id, final int version, @Nullable String languageCode) {
+    public T findById(@NotNull final ID id, final int version, @Nullable final String languageCode) {
         final T entity = getDsl()
             .selectFrom(getTable())
             .where(getTableId().equal(id))

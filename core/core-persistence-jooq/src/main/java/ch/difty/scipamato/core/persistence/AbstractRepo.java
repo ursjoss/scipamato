@@ -27,7 +27,7 @@ public abstract class AbstractRepo {
      * @param dateTimeService
      *     the {@link DateTimeService} providing access to the system time
      */
-    protected AbstractRepo(@NotNull DSLContext dsl, @NotNull DateTimeService dateTimeService) {
+    protected AbstractRepo(@NotNull final DSLContext dsl, @NotNull final DateTimeService dateTimeService) {
         this.dsl = dsl;
         this.dateTimeService = dateTimeService;
     }
@@ -67,7 +67,11 @@ public abstract class AbstractRepo {
      */
     @NotNull
     protected Integer getUserId() {
-        return getActiveUser().getId();
+        final Integer id = getActiveUser().getId();
+        if (id != null)
+            return id;
+        else
+            throw new IllegalStateException("Active user must have an id");
     }
 
     /**
