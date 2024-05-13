@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test
 internal class ClickablePropertyColumn2Test {
 
     private val actionMock = mockk<SerializableBiConsumer<IModel<String>, Int>>(relaxed = true)
-    private val paramterSupplierMock = mockk<SerializableSupplier<Int>>()
+    private val parameterSupplierMock = mockk<SerializableSupplier<Int>>()
 
     private val displayModel = Model("foo")
     private val property = "prop"
@@ -26,12 +26,12 @@ internal class ClickablePropertyColumn2Test {
     fun testOnClick_withSortProperty() {
         val sort = "sort"
 
-        every { paramterSupplierMock.get() } returns suppliedValue
+        every { parameterSupplierMock.get() } returns suppliedValue
 
-        c = ClickablePropertyColumn2(displayModel, property, actionMock, paramterSupplierMock, sort)
+        c = ClickablePropertyColumn2(displayModel, property, actionMock, parameterSupplierMock, sort)
         c.onClick(clickModel)
 
-        verify { paramterSupplierMock.get() }
+        verify { parameterSupplierMock.get() }
         verify { actionMock.accept(clickModel, suppliedValue) }
     }
 
@@ -39,29 +39,29 @@ internal class ClickablePropertyColumn2Test {
     fun testOnClick_inNewTab() {
         val sort = "sort"
 
-        every { paramterSupplierMock.get() } returns suppliedValue
+        every { parameterSupplierMock.get() } returns suppliedValue
 
-        c = ClickablePropertyColumn2(displayModel, property, actionMock, paramterSupplierMock, sort, true)
+        c = ClickablePropertyColumn2(displayModel, property, actionMock, parameterSupplierMock, sort, true)
         c.onClick(clickModel)
 
-        verify { paramterSupplierMock.get() }
+        verify { parameterSupplierMock.get() }
         verify { actionMock.accept(clickModel, suppliedValue) }
     }
 
     @Test
     fun testOnClick_withoutSortProperty() {
-        every { paramterSupplierMock.get() } returns suppliedValue
+        every { parameterSupplierMock.get() } returns suppliedValue
 
-        c = ClickablePropertyColumn2(displayModel, property, actionMock, paramterSupplierMock)
+        c = ClickablePropertyColumn2(displayModel, property, actionMock, parameterSupplierMock)
         c.onClick(clickModel)
 
-        verify { paramterSupplierMock.get() }
+        verify { parameterSupplierMock.get() }
         verify { actionMock.accept(clickModel, suppliedValue) }
     }
 
     @Test
     fun gettingProperty() {
-        c = ClickablePropertyColumn2(displayModel, property, actionMock, paramterSupplierMock)
+        c = ClickablePropertyColumn2(displayModel, property, actionMock, parameterSupplierMock)
         c.property shouldBeEqualTo property
     }
 }

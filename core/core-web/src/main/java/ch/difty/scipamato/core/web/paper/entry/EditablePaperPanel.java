@@ -239,8 +239,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
     }
 
     /**
-     * Enable the codeClass1 field to update the mainCodeOfCodeClass1 field
-     * automatically.
+     * Enable the codeClass1 field to update the mainCodeOfCodeClass1 field automatically.
      */
     @Override
     protected void addCodeClass1ChangeBehavior(@NotNull final TextField<String> mainCodeOfCodeClass1,
@@ -361,7 +360,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
 
     /**
      * If a field in the scipamato paper is null or filled with a default value
-     * indicating 'not set', the value from the pubmed paper is inserted. Otherwise
+     * indicating 'not set', the value from the pubmed paper is inserted. Otherwise,
      * the two values are compared and differences are alerted.
      * If the paper has been added to SciPaMaTo as 'ahead of print', we overwrite
      * the fields (except for title and first author).
@@ -655,7 +654,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
             @Override
             protected void onError(final AjaxRequestTarget target) {
                 super.onError(target);
-                log.error("Unexpected error: " + target.getLogData());
+                log.error("Unexpected error: {}", target.getLogData());
                 error("Unexpected error during upload");
             }
 

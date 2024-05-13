@@ -62,7 +62,7 @@ interface ItemNavigator<T> : Serializable {
 
     /**
      * Does nothing if the handed over id is already present in the list of ids.
-     * Otherwise puts the id to the head of the list.
+     * Otherwise, it puts the id to the head of the list.
      *
      * @param idCandidate the id candidate
      */

@@ -11,7 +11,7 @@ import java.util.*
  * other scenario where we only want to display such data in one of the
  * languages, e.g. specified by the locale of the browser.
  *
- * The name "Definition" was not very considerate and I'm planning to refactor
+ * The name "Definition" was not very considerate, and I'm planning to refactor
  * this one day. In fact those Definition* classes should rather be some kind
  * of Entity class while the normal entities are closer to projections or DTOs.
  * But that's something to consider for the future when the important functionality
