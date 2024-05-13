@@ -16,7 +16,7 @@ import java.io.Serializable
 internal interface NavigatedItems<T> : Serializable {
     fun size(): Int
     val items: List<T>
-    val itemWithFocus: T?
+    val itemWithFocus: T
     fun setFocusToItem(item: T)
     fun hasPrevious(): Boolean
     fun previous()

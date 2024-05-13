@@ -9,11 +9,11 @@ import java.util.concurrent.atomic.AtomicInteger
  * @param [T] type of the items that are managed. Must implement [Serializable].
  */
 internal class NavigatedList<T : Serializable>(
-    val initialItems: Collection<T>,
+    initialItems: Collection<T>,
 ) : NavigatedItems<T> {
 
     override val items: List<T> = initialItems.distinct()
-    override val itemWithFocus: T? get() = items[index.get()]
+    override val itemWithFocus: T get() = items[index.get()]
 
     private val index = AtomicInteger()
 
