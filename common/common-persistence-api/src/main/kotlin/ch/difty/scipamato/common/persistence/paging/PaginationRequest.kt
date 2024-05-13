@@ -13,7 +13,7 @@ package ch.difty.scipamato.common.persistence.paging
  * This class was inspired by spring data's Pageable, however it only tracks
  * offset and pageSize together with the (optional) sortSpecification.
  */
-data class PaginationRequest constructor(
+data class PaginationRequest(
     override val offset: Int = 0,
     override val pageSize: Int = Int.MAX_VALUE,
     override val sort: Sort,

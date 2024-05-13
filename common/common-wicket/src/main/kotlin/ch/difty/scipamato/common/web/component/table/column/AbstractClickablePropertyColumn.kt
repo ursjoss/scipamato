@@ -38,7 +38,7 @@ abstract class AbstractClickablePropertyColumn<T, S> internal constructor(
 
     abstract fun onClick(clicked: IModel<T>?)
 
-    private inner class LinkPanel constructor(
+    private inner class LinkPanel(
         id: String,
         rowModel: IModel<T>?,
         labelModel: IModel<*>?,
