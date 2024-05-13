@@ -35,13 +35,16 @@ internal class PublicationStatusTest {
 
     @Test
     fun assertNames() {
-        PublicationStatus.entries.map { it.description } shouldContainSame listOf("in progress", "published", "cancelled")
+        PublicationStatus.entries.map { it.description } shouldContainSame
+            listOf("in progress", "published", "cancelled")
     }
 
     @Test
     fun testById_withInvalidIds() {
-        invoking { PublicationStatus.byId(-2) } shouldThrow IllegalArgumentException::class withMessage "id -2 is not supported"
-        invoking { PublicationStatus.byId(2) } shouldThrow IllegalArgumentException::class withMessage "id 2 is not supported"
+        invoking { PublicationStatus.byId(-2) } shouldThrow
+            IllegalArgumentException::class withMessage "id -2 is not supported"
+        invoking { PublicationStatus.byId(2) } shouldThrow
+            IllegalArgumentException::class withMessage "id 2 is not supported"
     }
 
     @Test
