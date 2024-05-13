@@ -47,7 +47,7 @@ abstract class AbstractClickablePropertyColumn<T, S> internal constructor(
             add(object : Link<T>("link", rowModel) {
 
                 override fun onClick() {
-                    onClick(getModel())
+                    onClick(model)
                 }
 
                 override fun onComponentTag(tag: ComponentTag) {
