@@ -13,6 +13,7 @@ import org.amshove.kluent.shouldNotContain
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
+@Suppress("KotlinConstantConditions")
 internal class SortTest {
 
     private val sortProperties = ArrayList<SortProperty>(4)
@@ -117,6 +118,7 @@ internal class SortTest {
 
     @Test
     fun sortPropertyEqualityTests() {
+        @Suppress("RedundantNullableReturnType")
         val sf1: SortProperty? = SortProperty("foo", Direction.DESC)
 
         (sf1 == null).shouldBeFalse()
