@@ -7,6 +7,6 @@ internal class ModeTest {
 
     @Test
     fun testValues() {
-        Mode.values() shouldContainAll listOf(Mode.EDIT, Mode.VIEW, Mode.SEARCH)
+        Mode.entries shouldContainAll listOf(Mode.EDIT, Mode.VIEW, Mode.SEARCH)
     }
 }
