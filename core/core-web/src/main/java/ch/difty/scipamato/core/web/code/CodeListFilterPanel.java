@@ -28,6 +28,7 @@ import ch.difty.scipamato.core.web.model.CodeClassModel;
 @SuppressWarnings("SameParameterValue")
 abstract class CodeListFilterPanel extends DefinitionListFilterPanel<CodeDefinition, CodeFilter, CodeService, CodeDefinitionProvider> {
 
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     CodeListFilterPanel(@NotNull final String id, @NotNull final CodeDefinitionProvider provider) {
@@ -56,6 +57,7 @@ abstract class CodeListFilterPanel extends DefinitionListFilterPanel<CodeDefinit
 
         final BootstrapSelect<CodeClass> codeClasses = new BootstrapSelect<>(id, model, choices, choiceRenderer);
         codeClasses.add(new AjaxFormComponentUpdatingBehavior("change") {
+            @java.io.Serial
             private static final long serialVersionUID = 1L;
 
             @Override

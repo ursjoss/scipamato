@@ -54,6 +54,7 @@ import ch.difty.scipamato.core.web.paper.result.ResultPanel;
 @SuppressWarnings({ "SameParameterValue", "SpellCheckingInspection", "unused" })
 public class PaperSearchPage extends BasePage<SearchOrder> {
 
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     private static final int RESULT_PAGE_SIZE = 10;
@@ -200,6 +201,7 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
 
     private void makeResultPanel(final String id) {
         resultPanelLabel = new Label(id + LABEL_TAG) {
+            @java.io.Serial
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -219,6 +221,7 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
         queue(resultPanelLabel);
 
         resultPanel = new ResultPanel(id, dataProvider, mode) {
+            @java.io.Serial
             private static final long serialVersionUID = 1L;
 
             @Override

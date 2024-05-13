@@ -14,6 +14,9 @@ import ch.difty.scipamato.core.web.DefinitionProvider;
 public abstract class DefinitionListPage<T extends DefinitionEntity<?, ?>, F extends ScipamatoFilter, S extends DefinitionProviderService<T, F>, P extends DefinitionProvider<T, F, S>>
     extends BasePage<T> {
 
+    @java.io.Serial
+    private static final long serialVersionUID = 1L;
+
     private F     filter;
     private P     provider;
     private Panel resultPanel;

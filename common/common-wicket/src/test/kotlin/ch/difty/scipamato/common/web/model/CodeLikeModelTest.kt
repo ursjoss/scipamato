@@ -23,6 +23,7 @@ internal class CodeLikeModelTest {
     private val ccls = listOf(cclMock, cclMock)
 
     private val model = object : CodeLikeModel<CodeLike, CodeLikeService<CodeLike>>(CC_ID, LANG_CODE, serviceMock) {
+        private val serialVersionUID: Long = 1L
         override fun injectThis() {
             // no-op
         }

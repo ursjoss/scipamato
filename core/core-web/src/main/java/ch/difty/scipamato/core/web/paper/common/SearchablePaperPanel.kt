@@ -52,6 +52,7 @@ abstract class SearchablePaperPanel protected constructor(
 
     override fun newFileInput(): BootstrapFileInput =
         object : BootstrapFileInput("bootstrapFileInput") {
+            private val serialVersionUID: Long = 1L
             override fun onSubmit(target: AjaxRequestTarget) {
                 // no-op, as it's not visible anyway
             }

@@ -19,6 +19,7 @@ import ch.difty.scipamato.common.entity.DefinitionTranslation;
 public abstract class DefinitionEditTranslationPanel<E extends DefinitionEntity<?, T>, T extends DefinitionTranslation>
     extends BasePanel<E> {
 
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     protected DefinitionEditTranslationPanel(@NotNull final String id, @Nullable final IModel<E> model) {
@@ -33,6 +34,8 @@ public abstract class DefinitionEditTranslationPanel<E extends DefinitionEntity<
 
     private RefreshingView<T> newRefreshingView(final String id) {
         final RefreshingView<T> translations = new RefreshingView<>(id) {
+            @java.io.Serial
+            private static final long serialVersionUID = 1L;
             @Override
             protected Iterator<IModel<T>> getItemModels() {
                 final Collection<T> translations = getModelObject().getTranslations(null);

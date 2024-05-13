@@ -42,6 +42,7 @@ import ch.difty.scipamato.core.web.common.BasePage;
 @SuppressWarnings("SameParameterValue")
 public class UserListPage extends BasePage<Void> {
 
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     private static final String COLUMN_HEADER = "column.header.";
@@ -119,6 +120,7 @@ public class UserListPage extends BasePage<Void> {
 
     private PropertyColumn<User, String> makePropertyColumn(String propExpression) {
         return new PropertyColumn<>(new StringResourceModel(COLUMN_HEADER + propExpression, this, null), propExpression, propExpression) {
+            @java.io.Serial
             private static final long serialVersionUID = -6075124056081316865L;
         };
     }
@@ -127,6 +129,7 @@ public class UserListPage extends BasePage<Void> {
         final String trueLabel = new StringResourceModel(propExpression + ".true", this, null).getString();
         final String falseLabel = new StringResourceModel(propExpression + ".false", this, null).getString();
         return new PropertyColumn<>(new StringResourceModel(COLUMN_HEADER + propExpression, this, null), propExpression, propExpression) {
+            @java.io.Serial
             private static final long serialVersionUID = 406991980303131840L;
 
             @Override

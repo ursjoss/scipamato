@@ -18,17 +18,23 @@ internal class AbstractPanelTest : WicketBaseTest() {
 
     @Test
     fun testViewMode_withOneArgConstructor() {
-        assertViewMode(object : AbstractPanel<TestRecord>("panel") {})
+        assertViewMode(object : AbstractPanel<TestRecord>("panel") {
+            private val serialVersionUID: Long = 1L
+        })
     }
 
     @Test
     fun testViewMode_withTwoArgConstructor() {
-        assertViewMode(object : AbstractPanel<TestRecord>("panel", Model.of(TestRecord(1, "foo"))) {})
+        assertViewMode(object : AbstractPanel<TestRecord>("panel", Model.of(TestRecord(1, "foo"))) {
+            private val serialVersionUID: Long = 1L
+        })
     }
 
     @Test
     fun testViewMode_withThreeArgConstructor() {
-        assertViewMode(object : AbstractPanel<TestRecord>("id", Model.of(TestRecord(1, "foo")), Mode.VIEW) {})
+        assertViewMode(object : AbstractPanel<TestRecord>("id", Model.of(TestRecord(1, "foo")), Mode.VIEW) {
+            private val serialVersionUID: Long = 1L
+        })
     }
 
     private fun assertViewMode(p: AbstractPanel<TestRecord>) {
@@ -41,7 +47,9 @@ internal class AbstractPanelTest : WicketBaseTest() {
 
     @Test
     fun testEditMode() {
-        assertEditMode(object : AbstractPanel<TestRecord>("panel", Model.of(TestRecord(1, "foo")), Mode.EDIT) {})
+        assertEditMode(object : AbstractPanel<TestRecord>("panel", Model.of(TestRecord(1, "foo")), Mode.EDIT) {
+            private val serialVersionUID: Long = 1L
+        })
     }
 
     private fun assertEditMode(p: AbstractPanel<TestRecord>) {
@@ -54,7 +62,9 @@ internal class AbstractPanelTest : WicketBaseTest() {
 
     @Test
     fun testSearchMode() {
-        assertSearchMode(object : AbstractPanel<TestRecord>("panel", Model.of(TestRecord(1, "foo")), Mode.SEARCH) {})
+        assertSearchMode(object : AbstractPanel<TestRecord>("panel", Model.of(TestRecord(1, "foo")), Mode.SEARCH) {
+            private val serialVersionUID: Long = 1L
+        })
     }
 
     private fun assertSearchMode(p: AbstractPanel<TestRecord>) {

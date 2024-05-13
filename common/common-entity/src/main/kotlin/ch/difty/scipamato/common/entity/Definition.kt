@@ -49,7 +49,7 @@ abstract class AbstractDefinitionEntity<T : DefinitionTranslation, ID>(
     val mainLanguageCode: String,
     mainName: String,
     version: Int? = 0, // TODO make non-nullable
-    translationArray: Array<out T>
+    translationArray: Array<out T>,
 ) : ScipamatoEntity(version = version ?: 0), DefinitionEntity<ID, T> {
 
     private val translations: MutableMap<String, List<T>> = translationArray.groupBy { it.langCode }.toMutableMap()
@@ -137,6 +137,10 @@ abstract class AbstractDefinitionEntity<T : DefinitionTranslation, ID>(
 
     override fun toString() =
         "AbstractDefinitionEntity[translations=$translationsAsString, mainLanguageCode=$mainLanguageCode, name=$name]"
+
+    companion object {
+        private const val serialVersionUID: Long = 1L
+    }
 }
 
 // TODO directly implement as data classes
@@ -156,5 +160,9 @@ abstract class AbstractDefinitionTranslation(
         ID("id"),
         LANG_CODE("langCode"),
         NAME("name")
+    }
+
+    companion object {
+        private const val serialVersionUID: Long = 1L
     }
 }

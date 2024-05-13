@@ -5,6 +5,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class MainCssResourceReference extends CssResourceReference {
 
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     private static final MainCssResourceReference INSTANCE = new MainCssResourceReference();

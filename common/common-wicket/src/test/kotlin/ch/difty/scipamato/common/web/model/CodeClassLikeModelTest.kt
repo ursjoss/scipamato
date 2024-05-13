@@ -21,6 +21,7 @@ internal class CodeClassLikeModelTest {
 
     private val model =
         object : CodeClassLikeModel<CodeClassLike, CodeClassLikeService<CodeClassLike>>(LANG_CODE, serviceMock) {
+            private val serialVersionUID: Long = 1L
             override fun injectThis() {
                 // no-op
             }

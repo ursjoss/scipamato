@@ -17,6 +17,7 @@ import org.wicketstuff.jasperreports.handlers.PdfResourceHandler;
  */
 public class ScipamatoPdfResourceHandler extends PdfResourceHandler {
 
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     private final ClusterablePdfExporterConfiguration config;

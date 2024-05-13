@@ -70,6 +70,7 @@ open class TestWicketSecurityConfiguration {
             private val password: String?,
             private val roles: List<Role>,
         ) : UserDetails {
+
             override fun getUsername() = username
             override fun isCredentialsNonExpired() = credentialsNonExpired
             override fun getPassword() = password
@@ -78,10 +79,18 @@ open class TestWicketSecurityConfiguration {
             override fun isEnabled() = enabled
             override fun getAuthorities(): Collection<GrantedAuthority> =
                 AuthorityUtils.commaSeparatedStringToAuthorityList(roles.joinToString { "," })
+
+            companion object {
+                private const val serialVersionUID: Long = 1L
+            }
         }
 
         class Role(private val authority: String?) : GrantedAuthority {
             override fun getAuthority(): String? = authority
+
+            companion object {
+                private const val serialVersionUID: Long = 1L
+            }
         }
 
         companion object {

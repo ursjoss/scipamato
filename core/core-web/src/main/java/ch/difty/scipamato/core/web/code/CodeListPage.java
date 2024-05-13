@@ -24,6 +24,7 @@ import ch.difty.scipamato.core.web.common.DefinitionListPage;
 @SuppressWarnings({ "SameParameterValue" })
 public class CodeListPage extends DefinitionListPage<CodeDefinition, CodeFilter, CodeService, CodeDefinitionProvider> {
 
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     @SuppressWarnings("unused")
@@ -52,6 +53,9 @@ public class CodeListPage extends DefinitionListPage<CodeDefinition, CodeFilter,
     @Override
     protected Panel newFilterPanel(@NotNull final String id) {
         return new CodeListFilterPanel(id, getProvider()) {
+
+            @java.io.Serial
+            private static final long serialVersionUID = 1L;
 
             @Override
             protected void doOnUpdate(@NotNull final AjaxRequestTarget target) {

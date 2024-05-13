@@ -16,6 +16,7 @@ import ch.difty.scipamato.core.persistence.KeywordService;
  */
 public class KeywordModel extends InjectedLoadableDetachableModel<Keyword> {
 
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     @SpringBean

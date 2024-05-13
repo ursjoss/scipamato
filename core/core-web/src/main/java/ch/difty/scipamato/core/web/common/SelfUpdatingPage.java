@@ -27,6 +27,7 @@ import ch.difty.scipamato.core.config.ApplicationCoreProperties;
  */
 @SuppressWarnings("unused")
 public abstract class SelfUpdatingPage<T> extends BasePage<T> {
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     @SpringBean

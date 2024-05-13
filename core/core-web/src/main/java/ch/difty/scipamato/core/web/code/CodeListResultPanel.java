@@ -16,6 +16,7 @@ import ch.difty.scipamato.core.web.common.DefinitionListResultPanel;
 class CodeListResultPanel
     extends DefinitionListResultPanel<CodeDefinition, CodeFilter, CodeService, CodeDefinitionProvider> {
 
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     CodeListResultPanel(@NotNull final String id, @NotNull final CodeDefinitionProvider provider) {

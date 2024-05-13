@@ -10,8 +10,10 @@ import ch.difty.scipamato.core.entity.codeclass.CodeClassTranslation;
 import ch.difty.scipamato.core.web.common.DefinitionEditHeaderPanel;
 
 @SuppressWarnings("SameParameterValue")
-abstract class CodeClassEditHeaderPanel
-    extends DefinitionEditHeaderPanel<CodeClassDefinition, CodeClassTranslation, Integer> {
+public abstract class CodeClassEditHeaderPanel extends DefinitionEditHeaderPanel<CodeClassDefinition, CodeClassTranslation, Integer> {
+
+    @java.io.Serial
+    private static final long serialVersionUID = 1011264548992464361L;
 
     CodeClassEditHeaderPanel(@NotNull final String id, @Nullable final IModel<CodeClassDefinition> model) {
         super(id, model);

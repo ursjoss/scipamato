@@ -120,6 +120,7 @@ abstract class PaperPanel<T>(
     public override fun onInitialize() {
         super.onInitialize()
         form = object : Form<T>("form", CompoundPropertyModel(model)) {
+            private val serialVersionUID: Long = 1L
             override fun onSubmit() {
                 super.onSubmit()
                 onFormSubmit()
@@ -205,6 +206,7 @@ abstract class PaperPanel<T>(
             // Otherwise show if we have an open newsletter or if it is already assigned to a (closed) newsletter
             private fun shallBeVisible() = isEditMode && (isaNewsletterInStatusWip() || isAssociatedWithNewsletter)
             private fun shallBeEnabled() = !isAssociatedWithNewsletter || isAssociatedWithWipNewsletter
+            private val serialVersionUID: Long = 1L
 
             private val titleResourceModel: StringResourceModel
                 get() = StringResourceModel("modNewsletterAssociation-$titleKey.title", this, this@PaperPanel.model)
@@ -229,6 +231,7 @@ abstract class PaperPanel<T>(
 
     private fun <U> newSelfUpdatingTextField(id: String): TextField<U> = object :
         TextField<U>(id) {
+        private val serialVersionUID: Long = 1L
         override fun onEvent(event: IEvent<*>) {
             super.onEvent(event)
             if (event.payload.javaClass == SelfUpdateEvent::class.java) {
@@ -267,6 +270,7 @@ abstract class PaperPanel<T>(
 
     private fun newPmIdChangeBehavior(): OnChangeAjaxBehavior = object :
         OnChangeAjaxBehavior() {
+        private val serialVersionUID: Long = 1L
         override fun onUpdate(target: AjaxRequestTarget) {
             target.add(pubmedRetrieval)
         }
@@ -275,24 +279,31 @@ abstract class PaperPanel<T>(
     private fun queueTabPanel(tabId: String) {
         mutableListOf<ITab>().apply {
             add(object : AbstractTab(StringResourceModel("tab1$LABEL_RESOURCE_TAG", this@PaperPanel, null)) {
+                private val serialVersionUID: Long = 1L
                 override fun getPanel(panelId: String): Panel = TabPanel1(panelId, form.model)
             })
             add(object : AbstractTab(StringResourceModel("tab2$LABEL_RESOURCE_TAG", this@PaperPanel, null)) {
+                private val serialVersionUID: Long = 1L
                 override fun getPanel(panelId: String): Panel = TabPanel2(panelId, form.model)
             })
             add(object : AbstractTab(StringResourceModel("tab3$LABEL_RESOURCE_TAG", this@PaperPanel, null)) {
+                private val serialVersionUID: Long = 1L
                 override fun getPanel(panelId: String): Panel = TabPanel3(panelId, form.model)
             })
             add(object : AbstractTab(StringResourceModel("tab4$LABEL_RESOURCE_TAG", this@PaperPanel, null)) {
+                private val serialVersionUID: Long = 1L
                 override fun getPanel(panelId: String): Panel = TabPanel4(panelId, form.model)
             })
             add(object : AbstractTab(StringResourceModel("tab5$LABEL_RESOURCE_TAG", this@PaperPanel, null)) {
+                private val serialVersionUID: Long = 1L
                 override fun getPanel(panelId: String): Panel = TabPanel5(panelId, form.model)
             })
             add(object : AbstractTab(StringResourceModel("tab6$LABEL_RESOURCE_TAG", this@PaperPanel, null)) {
+                private val serialVersionUID: Long = 1L
                 override fun getPanel(panelId: String): Panel = TabPanel6(panelId, form.model)
             })
             add(object : AbstractTab(StringResourceModel("tab7$LABEL_RESOURCE_TAG", this@PaperPanel, null)) {
+                private val serialVersionUID: Long = 1L
                 override fun getPanel(panelId: String): Panel = TabPanel7(panelId, form.model)
             })
         }.also {
@@ -326,6 +337,7 @@ abstract class PaperPanel<T>(
     private fun addDisableBehavior(vararg components: FormComponent<*>) {
         if (isEditMode || isSearchMode) for (fc in components) {
             fc.add(object : AjaxFormComponentUpdatingBehavior("input") {
+                private val serialVersionUID: Long = 1L
                 override fun onUpdate(target: AjaxRequestTarget) {
                     disableButton(target, submit!!)
                 }
@@ -370,11 +382,12 @@ abstract class PaperPanel<T>(
         id: String,
         icon: IconType,
         isEnabled: SerializableSupplier<Boolean>,
-        idSupplier: SerializableSupplier<Long?>?,
+        idSupplier: SerializableSupplier<Long?>,
     ): BootstrapButton
 
     private fun makeAndQueueBackButton(id: String, forceRequerySupplier: SerializableSupplier<Boolean>) {
         object : BootstrapButton(id, StringResourceModel("button.back.label"), Buttons.Type.Default) {
+            private val serialVersionUID: Long = 1L
             override fun onSubmit() {
                 if (java.lang.Boolean.TRUE == forceRequerySupplier.get())
                     restartSearchInPaperSearchPage()
@@ -398,6 +411,7 @@ abstract class PaperPanel<T>(
     protected abstract fun newExcludeButton(id: String): BootstrapButton
     private fun makeAndQueueSubmitButton(id: String) {
         submit = object : BootstrapButton(id, StringResourceModel(submitLinkResourceLabel), Buttons.Type.Primary) {
+            private val serialVersionUID: Long = 1L
             override fun onSubmit() {
                 super.onSubmit()
                 onFormSubmit()
@@ -460,6 +474,7 @@ abstract class PaperPanel<T>(
     private fun makePdfResourceLink(id: String, dataSource: JasperPaperDataSource<*>?): ResourceLink<Void> {
         val button = "button."
         val link: ResourceLink<Void> = object : ResourceLink<Void>(id, dataSource) {
+            private val serialVersionUID: Long = 1L
             override fun onInitialize() {
                 super.onInitialize()
                 if (isVisible) add(ButtonBehavior()
@@ -497,6 +512,7 @@ abstract class PaperPanel<T>(
     }
 
     private abstract inner class AbstractTabPanel(id: String, model: IModel<*>) : Panel(id, model) {
+        private val serialVersionUID: Long = 1L
         abstract fun tabIndex(): Int
         fun queueTo(fieldType: FieldEnumType): TextArea<String> = queueTo(fieldType, false, null)
 
@@ -535,6 +551,7 @@ abstract class PaperPanel<T>(
                 TextArea(id)
             } else {
                 object : TextArea<String>(id) {
+                    private val serialVersionUID: Long = 1L
                     override fun onEvent(event: IEvent<*>) {
                         if (event.payload.javaClass == NewFieldChangeEvent::class.java) {
                             (event.payload as NewFieldChangeEvent).considerAddingToTarget(this)
@@ -551,6 +568,7 @@ abstract class PaperPanel<T>(
         private fun addNewFieldSpecificAttributes(field: TextArea<String>) {
             field.add(AttributeAppender("class", " newField"))
             field.add(object : AjaxFormComponentUpdatingBehavior(CHANGE) {
+                private val serialVersionUID: Long = 1L
                 override fun onUpdate(target: AjaxRequestTarget) {
                     val id = field.id
                     val markupId = field.markupId
@@ -567,6 +585,7 @@ abstract class PaperPanel<T>(
         fun queueSearchOnlyTextFieldName(field: FieldEnumType) {
             val labelModel = StringResourceModel("${field.fieldName}$LABEL_RESOURCE_TAG", this, null)
             object : TextField<String>(field.fieldName) {
+                private val serialVersionUID: Long = 1L
                 override fun onConfigure() {
                     super.onConfigure()
                     isVisible = isSearchMode
@@ -577,6 +596,7 @@ abstract class PaperPanel<T>(
             }.also {
                 queue(it)
                 queue(object : Label("${field.fieldName}$LABEL_TAG", labelModel) {
+                    private val serialVersionUID: Long = 1L
                     override fun onConfigure() {
                         super.onConfigure()
                         isVisible = isSearchMode
@@ -587,11 +607,13 @@ abstract class PaperPanel<T>(
     }
 
     private inner class TabPanel1(id: String, model: IModel<T>) : AbstractTabPanel(id, model) {
+        private val serialVersionUID: Long = 1L
         override fun tabIndex(): Int = 0
 
         override fun onInitialize() {
             super.onInitialize()
             val tab1Form: Form<T> = object : Form<T>("tab1Form", CompoundPropertyModel(model)) {
+                private val serialVersionUID: Long = 1L
                 override fun onSubmit() {
                     super.onSubmit()
                     onFormSubmit()
@@ -615,11 +637,12 @@ abstract class PaperPanel<T>(
     }
 
     private inner class TabPanel2(id: String, model: IModel<T>) : AbstractTabPanel(id, model) {
+        private val serialVersionUID: Long = 1L
         override fun tabIndex(): Int = 1
-
         override fun onInitialize() {
             super.onInitialize()
             val tab2Form: Form<T> = object : Form<T>("tab2Form", CompoundPropertyModel(model)) {
+                private val serialVersionUID: Long = 1L
                 override fun onSubmit() {
                     super.onSubmit()
                     onFormSubmit()
@@ -638,10 +661,12 @@ abstract class PaperPanel<T>(
     }
 
     private inner class TabPanel3 constructor(id: String, model: IModel<T?>) : AbstractTabPanel(id, model) {
+        private val serialVersionUID: Long = 1L
         override fun tabIndex(): Int = 2
         override fun onInitialize() {
             super.onInitialize()
             val tab3Form: Form<T> = object : Form<T>("tab3Form", CompoundPropertyModel(model)) {
+                private val serialVersionUID: Long = 1L
                 override fun onSubmit() {
                     super.onSubmit()
                     onFormSubmit()
@@ -689,6 +714,7 @@ abstract class PaperPanel<T>(
                 ?: codeClassId.name
             queue(Label("$CODES_CLASS_BASE_NAME${id}Label", Model.of(className)))
             val model: ChainingModel<List<Code>> = object : ChainingModel<List<Code>>(this@PaperPanel.model) {
+                private val serialVersionUID: Long = 1L
                 @Suppress("UNCHECKED_CAST")
                 val modelObject: CodeBoxAware
                     get() = (target as IModel<CodeBoxAware>).`object`
@@ -725,11 +751,12 @@ abstract class PaperPanel<T>(
     }
 
     private inner class TabPanel4(id: String, model: IModel<T?>) : AbstractTabPanel(id, model) {
+        private val serialVersionUID: Long = 1L
         override fun tabIndex(): Int = 3
-
         override fun onInitialize() {
             super.onInitialize()
             val tab4Form: Form<T> = object : Form<T>("tab4Form", CompoundPropertyModel(model)) {
+                private val serialVersionUID: Long = 1L
                 override fun onSubmit() {
                     super.onSubmit()
                     onFormSubmit()
@@ -754,11 +781,13 @@ abstract class PaperPanel<T>(
     }
 
     private inner class TabPanel5(id: String, model: IModel<T?>) : AbstractTabPanel(id, model) {
+        private val serialVersionUID: Long = 1L
         override fun tabIndex(): Int = 4
 
         override fun onInitialize() {
             super.onInitialize()
             val tab5Form: Form<T> = object : Form<T>("tab5Form", CompoundPropertyModel(model)) {
+                private val serialVersionUID: Long = 1L
                 override fun onSubmit() {
                     super.onSubmit()
                     onFormSubmit()
@@ -772,11 +801,13 @@ abstract class PaperPanel<T>(
     }
 
     private inner class TabPanel6(id: String, model: IModel<T?>) : AbstractTabPanel(id, model) {
+        private val serialVersionUID: Long = 1L
         override fun tabIndex(): Int = 5
 
         override fun onInitialize() {
             super.onInitialize()
             val tab6Form: Form<T> = object : Form<T>("tab6Form", CompoundPropertyModel(model)) {
+                private val serialVersionUID: Long = 1L
                 override fun onSubmit() {
                     super.onSubmit()
                     onFormSubmit()
@@ -798,6 +829,7 @@ abstract class PaperPanel<T>(
             val labelModel = StringResourceModel("${field.fieldName}$LABEL_RESOURCE_TAG", this, null)
             val checkBoxModel = PropertyModel<Boolean>(model, field.fieldName)
             object : CheckBoxX(field.fieldName, checkBoxModel) {
+                private val serialVersionUID: Long = 1L
                 override fun onConfigure() {
                     super.onConfigure()
                     isVisible = isSearchMode
@@ -812,6 +844,7 @@ abstract class PaperPanel<T>(
             }.also {
                 queue(it)
                 queue(object : Label("${field.fieldName}$LABEL_TAG", labelModel) {
+                    private val serialVersionUID: Long = 1L
                     override fun onConfigure() {
                         super.onConfigure()
                         isVisible = isSearchMode
@@ -822,11 +855,12 @@ abstract class PaperPanel<T>(
     }
 
     private inner class TabPanel7(id: String, model: IModel<T?>) : AbstractTabPanel(id, model) {
+        private val serialVersionUID: Long = 1L
         override fun tabIndex(): Int = 6
-
         override fun onInitialize() {
             super.onInitialize()
             val tab7Form: Form<T> = object : Form<T>("tab7Form", CompoundPropertyModel(model)) {
+                private val serialVersionUID: Long = 1L
                 override fun onSubmit() {
                     super.onSubmit()
                     onFormSubmit()
@@ -842,6 +876,7 @@ abstract class PaperPanel<T>(
         private fun queueHeadline(fieldType: FieldEnumType) {
             val id = fieldType.fieldName
             val field: TextArea<String> = object : TextArea<String>(id) {
+                private val serialVersionUID: Long = 1L
                 override fun onConfigure() {
                     super.onConfigure()
                     isEnabled = isSearchMode || isAssociatedWithNewsletter
@@ -857,6 +892,7 @@ abstract class PaperPanel<T>(
 
         private fun makeAndQueueNewsletterTopicSelectBox(id: String) {
             val model: ChainingModel<NewsletterTopic> = object : ChainingModel<NewsletterTopic>(this@PaperPanel.model) {
+                private val serialVersionUID: Long = 1L
                 @Suppress("UNCHECKED_CAST")
                 val modelObject: NewsletterAware
                     get() = (target as IModel<NewsletterAware>).`object`
@@ -879,6 +915,7 @@ abstract class PaperPanel<T>(
                 .withNoneSelectedText(noneSelectedModel.getObject())
                 .withLiveSearch(true)
             val topic = object : BootstrapSelect<NewsletterTopic>(id, model, newsletterTopicChoice, choiceRenderer) {
+                private val serialVersionUID: Long = 1L
                 override fun onConfigure() {
                     super.onConfigure()
                     isEnabled = isSearchMode || isAssociatedWithNewsletter
@@ -937,6 +974,7 @@ abstract class PaperPanel<T>(
 
     private fun queuePubmedRetrievalLink(linkId: String) {
         pubmedRetrieval = object : BootstrapAjaxLink<Void>(linkId, Buttons.Type.Primary) {
+            private val serialVersionUID: Long = 1L
             override fun onInitialize() {
                 super.onInitialize()
                 add(ButtonBehavior()

@@ -180,6 +180,7 @@ class UserEditPage(pp: PageParameters) : BasePage<ChangePasswordUser>(pp) {
 
         object : BootstrapButton("delete", StringResourceModel("delete.label"),
             Buttons.Type.Default) {
+            private val serialVersionUID: Long = 1L
             override fun onSubmit() {
                 super.onSubmit()
                 doOnDelete()
@@ -194,6 +195,7 @@ class UserEditPage(pp: PageParameters) : BasePage<ChangePasswordUser>(pp) {
     @Suppress("SameParameterValue")
     private fun queueSubmitButton(id: String) {
         queue(object : BootstrapButton(id, StringResourceModel("submit.label"), Buttons.Type.Primary) {
+            private val serialVersionUID: Long = 1L
             override fun onSubmit() {
                 super.onSubmit()
                 doOnSubmit()

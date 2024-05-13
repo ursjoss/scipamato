@@ -13,6 +13,7 @@ import ch.difty.scipamato.core.web.DefinitionProvider;
 
 public class KeywordDefinitionProvider extends DefinitionProvider<KeywordDefinition, KeywordFilter, KeywordService> {
 
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     @SpringBean

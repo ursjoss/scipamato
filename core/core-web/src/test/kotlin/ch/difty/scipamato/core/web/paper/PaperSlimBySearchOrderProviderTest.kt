@@ -25,6 +25,7 @@ internal class PaperSlimBySearchOrderProviderTest : AbstractPaperSlimProviderTes
 
     override fun newProvider(): PaperSlimBySearchOrderProvider =
         object : PaperSlimBySearchOrderProvider(filterDummy, PAGE_SIZE) {
+            private val serialVersionUID: Long = 1L
             override fun getLanguageCode(): String = LC
         }
 
@@ -102,6 +103,7 @@ internal class PaperSlimBySearchOrderProviderTest : AbstractPaperSlimProviderTes
             isShowExcluded = result
         }
         val provider2 = object : PaperSlimBySearchOrderProvider(filter2Dummy, PAGE_SIZE) {
+            private val serialVersionUID: Long = 1L
             override fun getLanguageCode(): String = LC
         }
         provider2.isShowExcluded shouldBeEqualTo result

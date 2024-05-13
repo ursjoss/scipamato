@@ -47,6 +47,10 @@ abstract class AbstractScipamatoProperties<SP : ScipamatoBaseProperties> protect
 
     override val multiSelectBoxActionBoxWithMoreEntriesThan: Int
         get() = scipamatoProperties.multiSelectBoxActionBoxWithMoreEntriesThan
+
+    companion object {
+        private const val serialVersionUID: Long = 1L
+    }
 }
 
 @Component

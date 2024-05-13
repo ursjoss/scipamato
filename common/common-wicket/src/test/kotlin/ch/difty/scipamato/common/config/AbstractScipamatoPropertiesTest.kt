@@ -13,7 +13,9 @@ internal class AbstractScipamatoPropertiesTest {
     private val scipamatoPropMock = mockk<ScipamatoBaseProperties>()
     private val mavenPropMock = mockk<MavenProperties>()
     private val prop =
-        object : AbstractScipamatoProperties<ScipamatoBaseProperties>(scipamatoPropMock, mavenPropMock) {}
+        object : AbstractScipamatoProperties<ScipamatoBaseProperties>(scipamatoPropMock, mavenPropMock) {
+            private val serialVersionUID: Long = 1L
+        }
 
     @AfterEach
     fun tearDown() {

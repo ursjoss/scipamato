@@ -24,6 +24,7 @@ import ch.difty.scipamato.core.entity.search.SearchOrder;
  */
 public class PaperSlimBySearchOrderProvider extends AbstractPaperSlimProvider<SearchOrder> {
 
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     /**

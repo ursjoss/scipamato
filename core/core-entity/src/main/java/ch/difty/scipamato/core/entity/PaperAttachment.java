@@ -23,6 +23,7 @@ import ch.difty.scipamato.common.entity.FieldEnumType;
 @EqualsAndHashCode(callSuper = true, exclude = { "content" })
 public class PaperAttachment extends IdScipamatoEntity<Integer> {
 
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     private static final long BYTES_PER_KB = 1024;

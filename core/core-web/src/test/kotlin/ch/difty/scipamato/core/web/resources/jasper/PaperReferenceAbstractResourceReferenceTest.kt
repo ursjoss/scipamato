@@ -26,6 +26,7 @@ internal class PaperReferenceAbstractResourceReferenceTest : JasperReportResourc
         val rr: JasperReportResourceReference = object : JasperReportResourceReference(
             PaperReferenceAbstractResourceReference::class.java, "baz", false
         ) {
+            private val serialVersionUID: Long = 1L
             override val resourceStreamFromResource: IResourceStream?
                 get() = null
         }
@@ -38,6 +39,7 @@ internal class PaperReferenceAbstractResourceReferenceTest : JasperReportResourc
         val rr: JasperReportResourceReference = object : JasperReportResourceReference(
             PaperReferenceAbstractResourceReference::class.java, "baz", false
         ) {
+            private val serialVersionUID: Long = 1L
             override val resourceStreamFromResource: IResourceStream
                 get() = mockk()
 
@@ -53,6 +55,7 @@ internal class PaperReferenceAbstractResourceReferenceTest : JasperReportResourc
         val rr: JasperReportResourceReference = object : JasperReportResourceReference(
             PaperReferenceAbstractResourceReference::class.java, "baz", false
         ) {
+            private val serialVersionUID: Long = 1L
             override fun compileReport(): Unit = throw JRException("boom")
         }
         invoking { rr.getReport() } shouldThrow JasperReportException::class withMessage

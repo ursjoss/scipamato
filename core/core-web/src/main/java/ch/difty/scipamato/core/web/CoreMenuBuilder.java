@@ -35,6 +35,7 @@ import ch.difty.scipamato.core.web.user.UserListPage;
 @Component
 public class CoreMenuBuilder extends AbstractMenuBuilder {
 
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     public CoreMenuBuilder(@NotNull final ApplicationProperties applicationProperties,

@@ -15,6 +15,7 @@ import ch.difty.scipamato.common.web.pages.login.AbstractLogoutPage;
 @AuthorizeInstantiation({ USER, ADMIN })
 public class LogoutPage extends AbstractLogoutPage<LoginPage> {
 
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     public LogoutPage(@Nullable PageParameters parameters) {

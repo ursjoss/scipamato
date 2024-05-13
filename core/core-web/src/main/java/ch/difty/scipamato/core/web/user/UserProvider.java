@@ -21,6 +21,7 @@ import ch.difty.scipamato.core.persistence.UserService;
 
 class UserProvider extends SortableDataProvider<User, String> implements IFilterStateLocator<UserFilter> {
 
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     @SpringBean

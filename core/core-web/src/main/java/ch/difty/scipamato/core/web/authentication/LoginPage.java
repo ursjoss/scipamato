@@ -13,6 +13,7 @@ import ch.difty.scipamato.core.web.paper.list.PaperListPage;
 @WicketSignInPage
 public class LoginPage extends AbstractLoginPage<PaperListPage> {
 
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     public LoginPage(@Nullable PageParameters parameters) {

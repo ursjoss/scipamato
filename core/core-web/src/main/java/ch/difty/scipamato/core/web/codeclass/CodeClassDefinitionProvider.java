@@ -13,6 +13,7 @@ import ch.difty.scipamato.core.web.DefinitionProvider;
 public class CodeClassDefinitionProvider
     extends DefinitionProvider<CodeClassDefinition, CodeClassFilter, CodeClassService> {
 
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     @SpringBean

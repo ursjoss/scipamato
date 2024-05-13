@@ -21,6 +21,7 @@ import ch.difty.scipamato.core.persistence.OptimisticLockingException;
 public abstract class DeletableDefinitionEditHeaderPanel<E extends DefinitionEntity<ID, T>, T extends DefinitionTranslation, ID>
     extends DefinitionEditHeaderPanel<E, T, ID> {
 
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     /**
@@ -41,6 +42,7 @@ public abstract class DeletableDefinitionEditHeaderPanel<E extends DefinitionEnt
 
     private BootstrapButton newDeleteButton(final String id) {
         final BootstrapButton db = new BootstrapButton(id, new StringResourceModel(id + LABEL_RESOURCE_TAG), Buttons.Type.Default) {
+            @java.io.Serial
             private static final long serialVersionUID = 1L;
 
             @Override

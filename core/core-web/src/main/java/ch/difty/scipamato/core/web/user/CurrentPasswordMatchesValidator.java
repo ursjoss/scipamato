@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  */
 class CurrentPasswordMatchesValidator implements IValidator<String> {
 
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     private final PasswordEncoder passwordEncoder;

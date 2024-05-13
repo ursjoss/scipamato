@@ -12,8 +12,9 @@ import ch.difty.scipamato.core.entity.code.CodeTranslation;
 import ch.difty.scipamato.core.web.common.DefinitionEditTranslationPanel;
 
 @SuppressWarnings({ "SameParameterValue", "WicketForgeJavaIdInspection" })
-class CodeEditTranslationPanel extends DefinitionEditTranslationPanel<CodeDefinition, CodeTranslation> {
+public class CodeEditTranslationPanel extends DefinitionEditTranslationPanel<CodeDefinition, CodeTranslation> {
 
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     CodeEditTranslationPanel(@NotNull final String id, @Nullable final IModel<CodeDefinition> model) {

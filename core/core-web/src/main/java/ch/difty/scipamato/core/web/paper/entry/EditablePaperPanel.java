@@ -82,10 +82,10 @@ import ch.difty.scipamato.core.web.paper.jasper.summaryshort.PaperSummaryShortDa
  *
  * @author u.joss
  */
-@SuppressWarnings("ALL")
 @Slf4j
 public abstract class EditablePaperPanel extends PaperPanel<Paper> {
 
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     private static final String COLUMN_HEADER = "column.header.";
@@ -133,8 +133,9 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
      */
     @NotNull
     @Override
-    protected TextField<String> makeFirstAuthor(@NotNull String firstAuthorId, @NotNull CheckBox firstAuthorOverridden) {
-        TextField<String> firstAuthor = new TextField<>(firstAuthorId) {
+    protected TextField<String> makeFirstAuthor(@NotNull final String firstAuthorId, @NotNull final CheckBox firstAuthorOverridden) {
+        final TextField<String> firstAuthor = new TextField<>(firstAuthorId) {
+            @java.io.Serial
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -162,14 +163,16 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
      * Behavior to parse the authors string and populate the firstAuthor field - but
      * only if not overridden.
      */
-    private OnChangeAjaxBehavior makeFirstAuthorChangeBehavior(TextArea<String> authors, CheckBox overridden, TextField<String> firstAuthor) {
+    private OnChangeAjaxBehavior makeFirstAuthorChangeBehavior(@NotNull final TextArea<String> authors, @NotNull final CheckBox overridden,
+        @NotNull final TextField<String> firstAuthor) {
         return new OnChangeAjaxBehavior() {
+            @java.io.Serial
             private static final long serialVersionUID = 1L;
 
             @Override
-            protected void onUpdate(@NotNull AjaxRequestTarget target) {
+            protected void onUpdate(@NotNull final AjaxRequestTarget target) {
                 if (Boolean.FALSE.equals(overridden.getModelObject())) {
-                    AuthorParser p = authorParserFactory.createParser(authors.getValue());
+                    final AuthorParser p = authorParserFactory.createParser(authors.getValue());
                     firstAuthor.setModelObject(p.getFirstAuthor());
                 }
                 target.add(firstAuthor);
@@ -253,6 +256,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
     private OnChangeAjaxBehavior makeCodeClass1ChangeBehavior(final BootstrapMultiSelect<Code> codeClass1,
         final TextField<String> mainCodeOfCodeClass1) {
         return new OnChangeAjaxBehavior() {
+            @java.io.Serial
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -536,6 +540,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
     protected BootstrapButton newNavigationButton(@NotNull String id, @NotNull IconType icon, @NotNull SerializableSupplier<Boolean> isEnabled,
         @NotNull SerializableSupplier<Long> idSupplier) {
         final BootstrapButton btn = new BootstrapButton(id, Model.of(""), Buttons.Type.Default) {
+            @java.io.Serial
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -561,12 +566,13 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
     }
 
     @Nullable
-    protected abstract GenericWebPage<Paper> getResponsePage(@NotNull final Paper p, @Nullable Long searchOrderId, boolean showingExclusions);
+    protected abstract GenericWebPage<Paper> getResponsePage(@NotNull final Paper p, @Nullable final Long searchOrderId, boolean showingExclusions);
 
     @NotNull
     @Override
-    protected BootstrapButton newExcludeButton(@NotNull String id) {
-        BootstrapButton exclude = new BootstrapButton(id, Model.of(""), Buttons.Type.Default) {
+    protected BootstrapButton newExcludeButton(@NotNull final String id) {
+        final BootstrapButton exclude = new BootstrapButton(id, Model.of(""), Buttons.Type.Default) {
+            @java.io.Serial
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -622,19 +628,20 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
     @NotNull
     @Override
     public BootstrapFileInput newFileInput() {
-        final IModel<List<FileUpload>> model = new ListModel<FileUpload>();
-        BootstrapFileInput upload = new BootstrapFileInput("bootstrapFileInput", model) {
+        final IModel<List<FileUpload>> model = new ListModel<>();
+        final BootstrapFileInput upload = new BootstrapFileInput("bootstrapFileInput", model) {
+            @java.io.Serial
             private static final long serialVersionUID = 1L;
 
             @Override
-            protected void onSubmit(@NotNull AjaxRequestTarget target) {
+            protected void onSubmit(@NotNull final AjaxRequestTarget target) {
                 super.onSubmit(target);
                 Paper p = null;
-                List<FileUpload> fileUploads = model.getObject();
-                for (FileUpload upload : fileUploads) {
+                final List<FileUpload> fileUploads = model.getObject();
+                for (final FileUpload upload : fileUploads) {
                     try {
                         p = paperService.saveAttachment(convertToPaperAttachment(upload));
-                    } catch (Exception ex) {
+                    } catch (final Exception ex) {
                         log.error("Unexpected error when uploading file {}: {}", upload.getClientFileName(), ex.getMessage());
                         error("Unexpected error saving file " + upload.getClientFileName() + ": " + ex.getMessage());
                     }
@@ -707,6 +714,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
         PaperAttachmentProvider provider = new PaperAttachmentProvider(model);
         BootstrapDefaultDataTable<PaperAttachment, String> table = new BootstrapDefaultDataTable<>(id, makeTableColumns(), provider,
             ATTACHMENT_PAGE_SIZE) {
+            @java.io.Serial
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -728,13 +736,14 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
         return columns;
     }
 
-    private void onTitleClick(IModel<PaperAttachment> m) {
-        Integer id = m
+    private void onTitleClick(@NotNull final IModel<PaperAttachment> m) {
+        final Integer id = m
             .getObject()
             .getId();
-        PaperAttachment pa = paperService.loadAttachmentWithContentBy(id);
+        Objects.requireNonNull(id);
+        final PaperAttachment pa = paperService.loadAttachmentWithContentBy(id);
         if (pa != null) {
-            ByteArrayResource r = new ByteArrayResource(pa.getContentType(), pa.getContent(), pa.getName());
+            final ByteArrayResource r = new ByteArrayResource(pa.getContentType(), pa.getContent(), pa.getName());
             getRequestCycle().scheduleRequestHandlerAfterCurrent(new ResourceRequestHandler(r, new PageParameters()));
         } else {
             log.warn("Unexpected condition with paperService unable to load attachment with content by id {}", id);
@@ -742,39 +751,43 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
     }
 
     @SuppressWarnings("SameParameterValue")
-    private ClickablePropertyColumn<PaperAttachment, String> makeClickableColumn(FieldEnumType propExpression,
-        SerializableConsumer<IModel<PaperAttachment>> consumer) {
+    private ClickablePropertyColumn<PaperAttachment, String> makeClickableColumn(@NotNull final FieldEnumType propExpression,
+        @NotNull final SerializableConsumer<IModel<PaperAttachment>> consumer) {
         return new ClickablePropertyColumn<>(new StringResourceModel(COLUMN_HEADER + propExpression.getFieldName(), this, null),
             propExpression.getFieldName(), consumer, null);
     }
 
     @SuppressWarnings("SameParameterValue")
-    private IColumn<PaperAttachment, String> makeLinkIconColumn(String id) {
+    private IColumn<PaperAttachment, String> makeLinkIconColumn(@NotNull final String id) {
         final FontAwesome6IconType trash = FontAwesome6IconTypeBuilder
             .on(FontAwesome6IconTypeBuilder.FontAwesome6Solid.trash_can)
             .fixedWidth()
             .build();
         return new LinkIconColumn<>(new StringResourceModel(COLUMN_HEADER + id, this, null)) {
+            @java.io.Serial
             private static final long serialVersionUID = 1L;
 
             @Override
-            protected IModel<String> createIconModel(@NotNull IModel<PaperAttachment> rowModel) {
+            @NotNull
+            protected IModel<String> createIconModel(@NotNull final IModel<PaperAttachment> rowModel) {
                 return Model.of(trash.cssClassName() + " text-danger");
             }
 
             @Override
-            public IModel<String> createTitleModel(@NotNull IModel<PaperAttachment> rowModel) {
+            @Nullable
+            public IModel<String> createTitleModel(@NotNull final IModel<PaperAttachment> rowModel) {
                 return new StringResourceModel("column.title.removeAttachment", EditablePaperPanel.this, null).setParameters(rowModel
                     .getObject()
                     .getName());
             }
 
             @Override
-            protected void onClickPerformed(@NotNull AjaxRequestTarget target, @NotNull IModel<PaperAttachment> rowModel,
-                @NotNull AjaxLink<Void> link) {
+            protected void onClickPerformed(@NotNull final AjaxRequestTarget target, @NotNull final IModel<PaperAttachment> rowModel,
+                @NotNull final AjaxLink<Void> link) {
                 final Integer id = rowModel
                     .getObject()
                     .getId();
+                Objects.requireNonNull(id);
                 setModelObject(paperService.deleteAttachment(id));
                 target.add(getAttachments());
             }
@@ -820,6 +833,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
 
     class TextFieldValueMustBeUniqueValidator extends AbstractFormValidator {
 
+        @java.io.Serial
         private static final long serialVersionUID = 1L;
 
         private final String             label;

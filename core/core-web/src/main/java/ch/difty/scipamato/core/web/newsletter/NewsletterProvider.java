@@ -22,6 +22,7 @@ import ch.difty.scipamato.core.persistence.NewsletterService;
 public class NewsletterProvider extends SortableDataProvider<Newsletter, String>
     implements IFilterStateLocator<NewsletterFilter> {
 
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     @SpringBean

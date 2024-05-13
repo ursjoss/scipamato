@@ -51,4 +51,8 @@ data class PaginationRequest(
         require(offset >= 0) { "offset must not be less than zero!" }
         require(pageSize >= 1) { "Page size must not be less than one!" }
     }
+
+    companion object {
+        private const val serialVersionUID: Long = 1L
+    }
 }

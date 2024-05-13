@@ -64,6 +64,7 @@ internal class SearchablePaperPanelTest : PaperPanelTest<SearchCondition, Search
             attachmentNameMask = attachmentName
         }
         return object : SearchablePaperPanel("panel", Model.of(sc)) {
+            private val serialVersionUID: Long = 1L
             override fun onFormSubmit() {
                 // no-op
             }

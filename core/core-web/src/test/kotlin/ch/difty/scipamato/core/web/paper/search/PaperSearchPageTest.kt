@@ -92,6 +92,7 @@ internal class PaperSearchPageTest : BasePageTest<PaperSearchPage>() {
     fun clickingRemoveButtonOnSearchCondition_removesSearchCondition() {
         val labelDisplayValue = "searchConditionDisplayValue"
         val sc: SearchCondition = object : SearchCondition() {
+            private val serialVersionUID: Long = 1L
             override fun getDisplayValue(): String = labelDisplayValue
         }
         val conditions = listOf(sc)
@@ -128,6 +129,7 @@ internal class PaperSearchPageTest : BasePageTest<PaperSearchPage>() {
         every { searchOrderServiceMock.findById(27L) } returns Optional.of(SearchOrder())
         val labelDisplayValue = "searchConditionDisplayValue"
         val sc: SearchCondition = object : SearchCondition() {
+            private val serialVersionUID: Long = 1L
             override fun getDisplayValue(): String = labelDisplayValue
         }
         val conditions = listOf(sc)
@@ -153,6 +155,7 @@ internal class PaperSearchPageTest : BasePageTest<PaperSearchPage>() {
             OptimisticLockingException("searchOrder", "record", OptimisticLockingException.Type.UPDATE)
         val labelDisplayValue = "searchConditionDisplayValue"
         val sc: SearchCondition = object : SearchCondition() {
+            private val serialVersionUID: Long = 1L
             override fun getDisplayValue(): String = labelDisplayValue
         }
         val conditions = listOf(sc)

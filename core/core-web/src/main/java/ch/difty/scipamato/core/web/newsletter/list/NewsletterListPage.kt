@@ -98,6 +98,7 @@ class NewsletterListPage(parameters: PageParameters?) : BasePage<Void>(parameter
 
     private fun filterFormFieldUpdatingBehavior() = object :
         AjaxFormComponentUpdatingBehavior("change") {
+        private val serialVersionUID: Long = 1L
         override fun onUpdate(target: AjaxRequestTarget) {
             target.add(results)
         }
@@ -171,6 +172,7 @@ class NewsletterListPage(parameters: PageParameters?) : BasePage<Void>(parameter
             propExpression,
             propExpression
         ) {
+        private val serialVersionUID: Long = 1L
         override fun getDataModel(rowModel: IModel<Newsletter?>): IModel<String> {
             val dataModel = super.getDataModel(rowModel)
             val ps = dataModel.getObject() as PublicationStatus
@@ -183,7 +185,10 @@ class NewsletterListPage(parameters: PageParameters?) : BasePage<Void>(parameter
         return object : LinkIconColumn<Newsletter>(
             StringResourceModel("$COLUMN_HEADER$id", this@NewsletterListPage, null)
         ) {
-            override fun createIconModel(rowModel: IModel<Newsletter>): IModel<String> = Model.of(shuffle.cssClassName())
+            private val serialVersionUID: Long = 1L
+            override fun createIconModel(rowModel: IModel<Newsletter>): IModel<String> =
+                Model.of(shuffle.cssClassName())
+
             override fun createTitleModel(rowModel: IModel<Newsletter>): IModel<String> =
                 StringResourceModel("column.title.$id", this@NewsletterListPage, rowModel)
 
@@ -202,6 +207,7 @@ class NewsletterListPage(parameters: PageParameters?) : BasePage<Void>(parameter
         return object : LinkIconColumn<Newsletter>(
             StringResourceModel("$COLUMN_HEADER$id", this@NewsletterListPage, null)
         ) {
+            private val serialVersionUID: Long = 1L
             override fun createIconModel(rowModel: IModel<Newsletter>): IModel<String> =
                 Model.of(if (rowModel.getObject().isDeletable) trash.cssClassName() else "")
 

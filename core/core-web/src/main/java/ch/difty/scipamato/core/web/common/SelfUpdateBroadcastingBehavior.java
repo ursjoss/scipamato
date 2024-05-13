@@ -7,6 +7,8 @@ import org.apache.wicket.event.Broadcast;
 import org.jetbrains.annotations.NotNull;
 
 public class SelfUpdateBroadcastingBehavior extends AjaxFormValidatingBehavior {
+
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     private final Page page;

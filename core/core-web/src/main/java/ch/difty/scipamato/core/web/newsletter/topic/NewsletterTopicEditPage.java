@@ -24,6 +24,7 @@ import ch.difty.scipamato.core.web.common.DefinitionEditPage;
 public class NewsletterTopicEditPage
     extends DefinitionEditPage<NewsletterTopicDefinition, NewsletterTopicTranslation, Integer> {
 
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     @SuppressWarnings("unused")
@@ -45,6 +46,9 @@ public class NewsletterTopicEditPage
     @Override
     protected NewsletterTopicEditHeaderPanel newDefinitionHeaderPanel(@NotNull final String id) {
         return new NewsletterTopicEditHeaderPanel(id, getModel()) {
+
+            @java.io.Serial
+            private static final long serialVersionUID = 1L;
 
             @Nullable
             @Override

@@ -17,6 +17,7 @@ import ch.difty.scipamato.core.web.newsletter.NewsletterTopicDefinitionProvider;
 class NewsletterTopicListResultPanel extends
     DefinitionListResultPanel<NewsletterTopicDefinition, NewsletterTopicFilter, NewsletterTopicService, NewsletterTopicDefinitionProvider> {
 
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     NewsletterTopicListResultPanel(@NotNull final String id,

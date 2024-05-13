@@ -99,6 +99,7 @@ class SearchOrderSelectorPanel internal constructor(
             .withLiveSearch(true)
         searchOrder = BootstrapSelect(id, model, choices, choiceRenderer).with(config).apply {
             add(object : AjaxFormComponentUpdatingBehavior(CHANGE) {
+                private val serialVersionUID: Long = 1L
                 override fun onUpdate(target: AjaxRequestTarget) {
                     modelChanged()
                     target.add(global)
@@ -114,6 +115,7 @@ class SearchOrderSelectorPanel internal constructor(
 
     private fun makeAndQueueName(id: String) {
         name = object : TextField<String?>(id) {
+            private val serialVersionUID: Long = 1L
             override fun onConfigure() {
                 super.onConfigure()
                 isEnabled = isUserEntitled
@@ -122,6 +124,7 @@ class SearchOrderSelectorPanel internal constructor(
             convertEmptyInputStringToNull = true
             outputMarkupId = true
             add(object : AjaxFormComponentUpdatingBehavior(CHANGE) {
+                private val serialVersionUID: Long = 1L
                 override fun onUpdate(target: AjaxRequestTarget) {
                     saveOrUpdate()
                     target.apply {
@@ -142,6 +145,7 @@ class SearchOrderSelectorPanel internal constructor(
 
     private fun makeAndQueueGlobalCheckBox(id: String) {
         global = object : CheckBoxX(id) {
+            private val serialVersionUID: Long = 1L
             override fun onConfigure() {
                 super.onConfigure()
                 isEnabled = !isViewMode && isUserEntitled
@@ -163,6 +167,7 @@ class SearchOrderSelectorPanel internal constructor(
     private fun makeAndQueueNewButton(id: String) {
         queue(
             object : AjaxSubmitLink(id, form) {
+                private val serialVersionUID: Long = 1L
                 override fun onSubmit(target: AjaxRequestTarget) {
                     super.onSubmit(target)
                     target.apply {
@@ -206,6 +211,7 @@ class SearchOrderSelectorPanel internal constructor(
     private fun makeAndQueueDeleteButton(id: String) {
         queue(
             object : AjaxSubmitLink(id, form) {
+                private val serialVersionUID: Long = 1L
                 override fun onConfigure() {
                     super.onConfigure()
                     isEnabled = isModelSelected && isUserEntitled
@@ -230,6 +236,7 @@ class SearchOrderSelectorPanel internal constructor(
 
     private fun makeAndQueueShowExcludedCheckBox(id: String) {
         showExcluded = object : AjaxCheckBox(id) {
+            private val serialVersionUID: Long = 1L
             override fun onConfigure() {
                 super.onConfigure()
                 if (isVisible && !hasExclusions() && modelObject != null)
@@ -249,6 +256,7 @@ class SearchOrderSelectorPanel internal constructor(
         }.also { queue(it) }
 
         showExcludedLabel = object : Label("$id$LABEL_TAG", StringResourceModel("$id$LABEL_RESOURCE_TAG", this, null)) {
+            private val serialVersionUID: Long = 1L
             override fun onConfigure() {
                 super.onConfigure()
                 isVisible = hasExclusions()

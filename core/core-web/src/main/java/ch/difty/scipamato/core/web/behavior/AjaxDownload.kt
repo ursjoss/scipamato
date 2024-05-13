@@ -37,15 +37,27 @@ sealed class AjaxDownload(private val addAntiCache: Boolean) : AbstractAjaxBehav
         handler.contentDisposition = ContentDisposition.ATTACHMENT
         component.requestCycle.scheduleRequestHandlerAfterCurrent(handler)
     }
+
+    companion object {
+        private const val serialVersionUID: Long = 1L
+    }
 }
 
 open class AjaxTextDownload @JvmOverloads constructor(
     addAntiCache: Boolean = true
-) : AbstractAjaxTextDownload("application/text", addAntiCache)
+) : AbstractAjaxTextDownload("application/text", addAntiCache) {
+    companion object {
+        private const val serialVersionUID: Long = 1L
+    }
+}
 
 open class AjaxCsvDownload @JvmOverloads constructor(
     addAntiCache: Boolean = true
-) : AbstractAjaxTextDownload("text/csv", addAntiCache)
+) : AbstractAjaxTextDownload("text/csv", addAntiCache) {
+    companion object {
+        private const val serialVersionUID: Long = 1L
+    }
+}
 
 abstract class AbstractAjaxTextDownload(
     val contentType: String,
@@ -53,6 +65,10 @@ abstract class AbstractAjaxTextDownload(
 ) : AjaxDownload(addAntiCache) {
     var content: String? = null
     override val resourceStream: IResourceStream get() = StringResourceStream(content, contentType)
+
+    companion object {
+        private const val serialVersionUID: Long = 1L
+    }
 }
 
 private fun CharSequence.toUrl(antiCache: Boolean): String =

@@ -35,6 +35,7 @@ import ch.difty.scipamato.core.web.paper.common.SearchablePaperPanel;
 @AuthorizeInstantiation({ Roles.USER, Roles.ADMIN, Roles.VIEWER })
 public class PaperSearchCriteriaPage extends BasePage<SearchCondition> {
 
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     @SpringBean
@@ -62,6 +63,7 @@ public class PaperSearchCriteriaPage extends BasePage<SearchCondition> {
     @SuppressWarnings("SameParameterValue")
     private SearchablePaperPanel makeSearchablePanel(String id) {
         return new SearchablePaperPanel(id, getModel()) {
+            @java.io.Serial
             private static final long serialVersionUID = 1L;
 
             @Override

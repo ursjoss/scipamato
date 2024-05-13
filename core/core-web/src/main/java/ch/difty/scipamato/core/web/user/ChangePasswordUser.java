@@ -19,6 +19,7 @@ import ch.difty.scipamato.core.entity.User;
  */
 public class ChangePasswordUser implements Serializable {
 
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     private final User user;

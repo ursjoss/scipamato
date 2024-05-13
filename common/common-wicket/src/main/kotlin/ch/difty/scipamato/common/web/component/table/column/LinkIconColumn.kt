@@ -40,6 +40,8 @@ abstract class LinkIconColumn<T : Serializable>(
             createIconModel(rowModel),
             createTitleModel(rowModel)
         ) {
+            private val serialVersionUID: Long = 1L
+
             override fun onClickPerformed(target: AjaxRequestTarget) {
                 this@LinkIconColumn.onClickPerformed(target, rowModel, link)
             }

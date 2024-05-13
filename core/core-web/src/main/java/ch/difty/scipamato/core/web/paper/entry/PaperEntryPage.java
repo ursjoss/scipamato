@@ -85,6 +85,8 @@ import ch.difty.scipamato.core.web.paper.NewsletterChangeEvent;
 @Slf4j
 @AuthorizeInstantiation({ Roles.USER, Roles.ADMIN, Roles.VIEWER })
 public class PaperEntryPage extends SelfUpdatingPage<Paper> {
+
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     @SpringBean
@@ -213,6 +215,7 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
     @Override
     protected void implSpecificOnInitialize() {
         contentPanel = new EditablePaperPanel("contentPanel", getModel(), callingPage, searchOrderId, showingExclusions, mode, tabIndexModel) {
+            @java.io.Serial
             private static final long serialVersionUID = 1L;
 
             @Override

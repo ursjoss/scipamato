@@ -43,6 +43,7 @@ import ch.difty.scipamato.core.web.paper.SearchOrderChangeEvent;
 @SuppressWarnings({ "SameParameterValue", "WicketForgeJavaIdInspection", "unused" })
 public class SearchOrderPanel extends BasePanel<SearchOrder> {
 
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     private DataTable<SearchCondition, String> searchConditions;
@@ -78,6 +79,7 @@ public class SearchOrderPanel extends BasePanel<SearchOrder> {
     private void queueNewButton(String id, SerializableBiFunction<IModel<SearchCondition>, Long, GenericWebPage<SearchCondition>> pageFunction,
         SerializableSupplier<IModel<SearchCondition>> modelProvider) {
         queue(new BootstrapAjaxButton(id, new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null), Type.Default) {
+            @java.io.Serial
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -124,6 +126,7 @@ public class SearchOrderPanel extends BasePanel<SearchOrder> {
             .fixedWidth()
             .build();
         return new LinkIconColumn<>(new StringResourceModel("column.header." + id, this, null)) {
+            @java.io.Serial
             private static final long serialVersionUID = 1L;
 
             @Override

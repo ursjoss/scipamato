@@ -23,8 +23,9 @@ import ch.difty.scipamato.core.web.common.DeletableDefinitionEditHeaderPanel;
 import ch.difty.scipamato.core.web.model.CodeClassModel;
 
 @SuppressWarnings({ "SameParameterValue", "WicketForgeJavaIdInspection" })
-abstract class CodeEditHeaderPanel extends DeletableDefinitionEditHeaderPanel<CodeDefinition, CodeTranslation, String> {
+public abstract class CodeEditHeaderPanel extends DeletableDefinitionEditHeaderPanel<CodeDefinition, CodeTranslation, String> {
 
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     private BootstrapSelect<CodeClass> codeClasses;
@@ -68,6 +69,7 @@ abstract class CodeEditHeaderPanel extends DeletableDefinitionEditHeaderPanel<Co
      * that corresponds with the first number in the code (i.e. Code Class 2).
      */
     static class CodeMustMatchCodeClassValidator extends AbstractFormValidator {
+        @java.io.Serial
         private static final long serialVersionUID = 1L;
 
         private final FormComponent<?>[] components;

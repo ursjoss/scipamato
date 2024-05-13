@@ -12,7 +12,7 @@ import org.springframework.test.util.ReflectionTestUtils
 internal const val USERNAME = "testuser"
 internal const val PASSWORD = "secretpw"
 
-@Suppress("SerialVersionUIDInSerializableClass", "UnnecessaryAbstractClass")
+@Suppress("UnnecessaryAbstractClass")
 @SpringBootTest(classes = [TestApplication::class])
 abstract class WicketBaseTest {
 

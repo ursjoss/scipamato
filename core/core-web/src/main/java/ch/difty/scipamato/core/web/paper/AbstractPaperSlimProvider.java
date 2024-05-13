@@ -31,6 +31,7 @@ import ch.difty.scipamato.core.persistence.PaperSlimService;
 public abstract class AbstractPaperSlimProvider<F extends PaperSlimFilter>
     extends SortableDataProvider<PaperSlim, String> implements IFilterStateLocator<F> {
 
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     private final int maxRowsPerPage;
