@@ -61,7 +61,7 @@ abstract class WicketTest {
         ReflectionTestUtils.setField(application, "applicationContext", applicationContextMock)
         tester = WicketTester(application)
         every { sessionFacadeMock.paperIdManager } returns itemNavigator
-        val locale = Locale("en_US")
+        val locale = Locale.of("en_US")
         every { sessionFacadeMock.languageCode } returns locale.language
         tester.session.locale = locale
         every { keywordServiceMock.findKeywords("en_us") } returns listOf(

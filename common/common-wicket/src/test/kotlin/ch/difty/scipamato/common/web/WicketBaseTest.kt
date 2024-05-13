@@ -32,7 +32,7 @@ abstract class WicketBaseTest {
 
         ReflectionTestUtils.setField(wicketApplication, "applicationContext", applicationContextMock)
         tester = WicketTester(wicketApplication)
-        val locale = java.util.Locale("en_US")
+        val locale = java.util.Locale.of("en_US")
         tester.session.locale = locale
         setUpHook()
     }
