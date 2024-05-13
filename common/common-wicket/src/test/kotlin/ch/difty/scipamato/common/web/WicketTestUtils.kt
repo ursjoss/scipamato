@@ -1,6 +1,5 @@
 package ch.difty.scipamato.common.web
 
-import org.apache.wicket.Page
 import org.apache.wicket.protocol.http.FetchMetadataResourceIsolationPolicy.SAME_SITE
 import org.apache.wicket.protocol.http.FetchMetadataResourceIsolationPolicy.SEC_FETCH_SITE_HEADER
 import org.apache.wicket.util.tester.FormTester
