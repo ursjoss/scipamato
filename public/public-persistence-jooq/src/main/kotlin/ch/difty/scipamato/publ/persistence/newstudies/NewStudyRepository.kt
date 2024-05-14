@@ -13,7 +13,7 @@ interface NewStudyRepository {
     fun findNewStudyTopicsForNewsletter(newsletterId: Int, languageCode: String): List<NewStudyTopic>
 
     /**
-     * Identifies the most recent newsletter (based on issue date) and returns an its id - or null.
+     * Identifies the most recent newsletter (based on issue date) returning its id - or null.
      */
     fun findMostRecentNewsletterId(): Int?
 

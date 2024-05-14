@@ -49,11 +49,13 @@ open class SimpleFilterPanel(
 
     private fun <V> KProperty1<PublicPaperFilter, V>.queueAsTextFieldWithLabel(id: String) {
         object : TextField<String>(id, PropertyModel.of(this@SimpleFilterPanel.model, name)) {
+            private val serialVersionUID: Long = 1
             override fun onEvent(event: IEvent<*>) {
                 handleChangeEvent(event, this)
             }
         }.apply<TextField<String>> {
             add(object : AjaxFormComponentUpdatingBehavior(CHANGE) {
+                private val serialVersionUID: Long = 1
                 override fun onUpdate(target: AjaxRequestTarget) {
                     sendChangeEvent(target, this@apply)
                 }
@@ -99,11 +101,13 @@ open class SimpleFilterPanel(
         val model = PropertyModel.of<Collection<C>>(this@SimpleFilterPanel.model, name)
         @Suppress("SpreadOperator")
         object : BootstrapMultiSelect<C>(id, model, values, EnumChoiceRenderer(this@SimpleFilterPanel)) {
+            private val serialVersionUID: Long = 1
             override fun onEvent(event: IEvent<*>) {
                 handleChangeEvent(event, this)
             }
         }.with(config).apply {
             add(object : AjaxFormComponentUpdatingBehavior(CHANGE) {
+                private val serialVersionUID: Long = 1
                 override fun onUpdate(target: AjaxRequestTarget) {
                     sendChangeEvent(target, this@apply)
                 }
@@ -129,11 +133,13 @@ open class SimpleFilterPanel(
             .withLiveSearch(true)
             .withLiveSearchStyle("startsWith")
         object : BootstrapMultiSelect<Keyword>(id, model, KeywordModel(languageCode), choiceRenderer) {
+            private val serialVersionUID: Long = 1
             override fun onEvent(event: IEvent<*>) {
                 handleChangeEvent(event, this)
             }
         }.with(config).apply {
             add(object : AjaxFormComponentUpdatingBehavior(CHANGE) {
+                private val serialVersionUID: Long = 1
                 override fun onUpdate(target: AjaxRequestTarget) {
                     sendChangeEvent(target, this@apply)
                 }

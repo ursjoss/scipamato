@@ -29,7 +29,7 @@ data class ScipamatoProperties(
 
     /**
      * Port from where an unsecured http connection is forwarded to the secured
-     * https port (@literal server.port}. Only has an effect if https is configured.
+     * https port (`server.port`). Only has an effect if https is configured.
      */
     override var redirectFromPort: Int? = null,
 
@@ -39,9 +39,7 @@ data class ScipamatoProperties(
      *
      * SciPaMaTo expects to find the font in the following location:
      *
-     * <pre>
-     * src/main/resources/ch/difty/scipamato/publ/web/resources/fonts/MetaOT/
-    </pre> *
+     * `src/main/resources/ch/difty/scipamato/publ/web/resources/fonts/MetaOT/`
      */
     var commercialFontPresent: Boolean = false,
 

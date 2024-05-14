@@ -110,6 +110,7 @@ class PublicPaperDetailPage : BasePage<PublicPaper> {
         getEnabled: () -> Boolean,
         getId: () -> Long?,
     ) = object : BootstrapButton(id, Model.of(""), Buttons.Type.Default) {
+        private val serialVersionUID: Long = 1
         override fun onSubmit() {
             getId()?.let {
                 pageParameters[PublicPageParameters.NUMBER.parameterName] = it
@@ -133,6 +134,7 @@ class PublicPaperDetailPage : BasePage<PublicPaper> {
         StringResourceModel("$BUTTON_RESOURCE_PREFIX$id$LABEL_RESOURCE_TAG"),
         Buttons.Type.Default,
     ) {
+        private val serialVersionUID: Long = 1
         override fun onSubmit() {
             callingPageRef?.let { pr ->
                 setResponsePage(pr.page)
@@ -155,6 +157,7 @@ class PublicPaperDetailPage : BasePage<PublicPaper> {
 
     private fun newExternalLink(id: String, href: String = "", getVisibility: () -> Boolean = { false }) =
         object : BootstrapExternalLink(id, Model.of(href), Buttons.Type.Default) {
+            private val serialVersionUID: Long = 1
             override fun onConfigure() {
                 super.onConfigure()
                 isVisible = getVisibility()

@@ -15,7 +15,7 @@ fun WicketTester.newFormTesterSameSite(path: String): FormTester {
     return newFormTester(path)
 }
 
-fun WicketTester.submitFormSameSite(path: String): Unit {
+fun WicketTester.submitFormSameSite(path: String) {
     addRequestHeader(SEC_FETCH_SITE_HEADER, SAME_SITE)
     submitForm(path)
 }

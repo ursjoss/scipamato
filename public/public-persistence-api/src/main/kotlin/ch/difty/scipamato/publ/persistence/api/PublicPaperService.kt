@@ -7,7 +7,7 @@ import ch.difty.scipamato.publ.entity.filter.PublicPaperFilter
 interface PublicPaperService {
 
     /**
-     * Finds an individual paper by it's [number] (business key). Returns a [PublicPaper] or null.
+     * Finds an individual paper by its [number] (business key). Returns a [PublicPaper] or null.
      */
     fun findByNumber(number: Long): PublicPaper?
 

@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.util.Locale
 
+@Suppress("SpellCheckingInspection")
 internal class ParentUrlLocaleExtractorTest {
 
     private lateinit var localeExtractor: LocaleExtractor
@@ -51,6 +52,7 @@ internal class ParentUrlLocaleExtractorTest {
 
     @Test
     fun canHandleHttpInsteadOfHttps() {
+        @Suppress("HttpUrlsUsage")
         val input = "http://www.foo.swisstph.ch/fr/projects/page-daccueil/datenbank/"
         localeExtractor.extractLocaleFrom(input) shouldBeEqualTo Locale.FRENCH
     }

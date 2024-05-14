@@ -29,6 +29,7 @@ class SimpleFilterPanelTest : PanelTest<SimpleFilterPanel>() {
 
     private fun makePanelSpy(): SimpleFilterPanel = object :
         SimpleFilterPanel(PANEL, Model.of(PublicPaperFilter()), "en") {
+        private val serialVersionUID: Long = 1L
         override fun handleChangeEvent(event: IEvent<*>, component: FormComponent<*>) {
             super.handleChangeEvent(event, component)
             eventHandlerCallCount++

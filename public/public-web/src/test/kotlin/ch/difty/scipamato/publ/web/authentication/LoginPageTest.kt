@@ -9,6 +9,7 @@ import org.apache.wicket.markup.html.internal.HtmlHeaderContainer
 import org.apache.wicket.request.mapper.parameter.PageParameters
 import org.junit.jupiter.api.Test
 
+@Suppress("SpellCheckingInspection")
 class LoginPageTest : WicketTest() {
 
     @Test

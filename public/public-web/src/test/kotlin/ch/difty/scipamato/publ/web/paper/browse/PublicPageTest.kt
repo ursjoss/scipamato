@@ -158,7 +158,8 @@ class PublicPageTest : BasePageTest<PublicPage>() {
     private fun assertTableRow(bb: String, vararg values: String) {
         var i = 1
         for (v in values) {
-            if (i != 2) tester.assertLabel(bb + ":" + i++ + ":cell", v) else tester.assertLabel(bb + ":" + i++ + ":cell:link:label", v)
+            if (i != 2) tester.assertLabel(bb + ":" + i++ + ":cell", v)
+            else tester.assertLabel(bb + ":" + i++ + ":cell:link:label", v)
         }
     }
 

@@ -15,8 +15,8 @@ class ScipamatoPublicThemeTest {
 
     @Test
     fun newTheme_withSomeName_hasSomeName() {
-        val theme = ScipamatoPublicTheme(false, "somename")
-        theme.name() shouldBeEqualTo "somename"
+        val theme = ScipamatoPublicTheme(false, "someName")
+        theme.name() shouldBeEqualTo "someName"
     }
 
     @Test
