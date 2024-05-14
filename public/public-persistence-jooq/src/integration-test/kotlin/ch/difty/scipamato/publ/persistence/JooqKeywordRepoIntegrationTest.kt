@@ -35,7 +35,6 @@ internal open class JooqKeywordRepoIntegrationTest {
     @Suppress("SpellCheckingInspection")
     @Test
     fun findingAllKeywords1InFrench() {
-        @Suppress("SpellCheckingInspection")
         val keywords = repo.findKeywords("fr")
         keywords.map { it.name } shouldContainAll listOf("Activités réduites", "Aérosol", "Allergie")
         keywords.forEach { c -> log.debug(c.toString()) }

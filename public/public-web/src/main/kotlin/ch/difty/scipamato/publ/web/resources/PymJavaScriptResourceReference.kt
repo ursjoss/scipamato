@@ -6,4 +6,8 @@ import org.apache.wicket.request.resource.JavaScriptResourceReference
  * JavaScriptResourceReference to pym.js allowing to use SciPaMaTo within a responsive iframe.
  * @see [https://blog.apps.npr.org/pym.js/](https://blog.apps.npr.org/pym.js/)
  */
-object PymJavaScriptResourceReference : JavaScriptResourceReference(PymJavaScriptResourceReference::class.java, "js/pym.v1.js")
+object PymJavaScriptResourceReference :
+    JavaScriptResourceReference(PymJavaScriptResourceReference::class.java, "js/pym.v1.js") {
+    fun readResolve(): Any = PymJavaScriptResourceReference
+    private const val serialVersionUID: Long = 1L
+}

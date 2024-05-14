@@ -133,7 +133,10 @@ class PublicPaperProviderTest {
         provider.setSort("title", srt)
 
         every {
-            serviceMock.findPageOfNumbersByFilter(filterDummy, matchPaginationContext(0, Int.MAX_VALUE, sortDescription))
+            serviceMock.findPageOfNumbersByFilter(
+                filter = filterDummy,
+                paginationContext = matchPaginationContext(0, Int.MAX_VALUE, sortDescription),
+            )
         } returns listOf(5L, 3L, 17L)
         provider.findAllPaperNumbersByFilter() shouldContainSame listOf(5L, 3L, 17L)
         verify { serviceMock.findPageOfNumbersByFilter(filterDummy, any()) }

@@ -122,7 +122,9 @@ class PublicPaperFilterConditionMapperTest : FilterConditionMapperTest<PaperReco
 
     @Test
     fun creatingWhereCondition_withMethodStudyDesignCodes_searchesStudyDesignCodes() {
-        filter.copy(studyDesignCodes = listOf(StudyDesignCode.EPIDEMIOLOGICAL, StudyDesignCode.OVERVIEW_METHODOLOGY)).run {
+        filter.copy(
+            studyDesignCodes = listOf(StudyDesignCode.EPIDEMIOLOGICAL, StudyDesignCode.OVERVIEW_METHODOLOGY)
+        ).run {
             mapper.map(this).toString() shouldBeEqualTo
                 """"public"."paper"."codes_study_design" like (('%' || cast(array[2, 3] as varchar)) || '%') escape '!'"""
         }

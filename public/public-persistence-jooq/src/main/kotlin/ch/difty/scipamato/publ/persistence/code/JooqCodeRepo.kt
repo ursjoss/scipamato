@@ -28,5 +28,7 @@ open class JooqCodeRepo(private val dslContext: DSLContext) : CodeRepository {
         .orderBy(
             ch.difty.scipamato.publ.db.tables.Code.CODE.CODE_CLASS_ID,
             ch.difty.scipamato.publ.db.tables.Code.CODE.SORT
-        ).map { r -> Code(r[0] as Int?, r[1] as String?, r[2] as String?, r[3] as String?, r[4] as String?, r[5] as Int) }
+        ).map { r ->
+            Code(r[0] as Int?, r[1] as String?, r[2] as String?, r[3] as String?, r[4] as String?, r[5] as Int)
+        }
 }

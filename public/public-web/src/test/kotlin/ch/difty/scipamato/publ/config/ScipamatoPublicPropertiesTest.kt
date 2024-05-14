@@ -10,7 +10,6 @@ import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
-@Suppress("SpellCheckingInspection")
 internal class ScipamatoPublicPropertiesTest {
 
     private lateinit var prop: ScipamatoPublicProperties

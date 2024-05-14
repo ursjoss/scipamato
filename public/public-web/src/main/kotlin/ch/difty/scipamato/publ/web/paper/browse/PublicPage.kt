@@ -56,6 +56,7 @@ class PublicPage(parameters: PageParameters) : BasePage<Void>(parameters) {
 
     private fun makeAndQueueFilterForm(id: String) {
         object : FilterForm<PublicPaperFilter>(id, dataProvider) {
+            private val serialVersionUID: Long = 1
             override fun onSubmit() {
                 super.onSubmit()
                 updateNavigateable()
@@ -75,9 +76,11 @@ class PublicPage(parameters: PageParameters) : BasePage<Void>(parameters) {
     ) {
         mutableListOf<ITab>().apply {
             add(object : AbstractTab(StringResourceModel("tab1$LABEL_RESOURCE_TAG", this@PublicPage, null)) {
+                private val serialVersionUID: Long = 1
                 override fun getPanel(panelId: String): Panel = TabPanel1(panelId, Model.of(filter))
             })
             add(object : AbstractTab(StringResourceModel("tab2$LABEL_RESOURCE_TAG", this@PublicPage, null)) {
+                private val serialVersionUID: Long = 1
                 override fun getPanel(panelId: String): Panel = TabPanel2(panelId, Model.of(filter))
             })
         }.also {
@@ -89,6 +92,7 @@ class PublicPage(parameters: PageParameters) : BasePage<Void>(parameters) {
         id: String,
         model: IModel<PublicPaperFilter>,
     ) : AbstractTabPanel(id, model) {
+        private val serialVersionUID: Long = 1
         override fun onInitialize() {
             super.onInitialize()
             queue(Form<Any>("tab1Form"))
@@ -100,6 +104,7 @@ class PublicPage(parameters: PageParameters) : BasePage<Void>(parameters) {
         id: String,
         model: IModel<PublicPaperFilter>,
     ) : AbstractTabPanel(id, model) {
+        private val serialVersionUID: Long = 1
         override fun onInitialize() {
             super.onInitialize()
             val form = Form<Any>("tab2Form")
@@ -159,6 +164,7 @@ class PublicPage(parameters: PageParameters) : BasePage<Void>(parameters) {
     ) {
         val labelModel = StringResourceModel("$BUTTON_RESOURCE_PREFIX$id$LABEL_RESOURCE_TAG", this, null)
         object : BootstrapButton(id, labelModel, Buttons.Type.Primary) {
+            private val serialVersionUID: Long = 1
             override fun onSubmit() {
                 super.onSubmit()
                 isQueryingInitialized = true
@@ -173,6 +179,7 @@ class PublicPage(parameters: PageParameters) : BasePage<Void>(parameters) {
         val labelModel = StringResourceModel("$BUTTON_RESOURCE_PREFIX$id$LABEL_RESOURCE_TAG", this, null)
         val titleModel = StringResourceModel("$BUTTON_RESOURCE_PREFIX$id$TITLE_RESOURCE_TAG", this, null)
         object : BootstrapButton(id, labelModel, Buttons.Type.Default) {
+            private val serialVersionUID: Long = 1
             override fun onSubmit() {
                 super.onSubmit()
                 setResponsePage(PublicPage(pageParameters))
@@ -183,6 +190,7 @@ class PublicPage(parameters: PageParameters) : BasePage<Void>(parameters) {
 
     private fun queueHelpLink(id: String) {
         object : BootstrapExternalLink(id, StringResourceModel("$id.url", this, null)) {
+            private val serialVersionUID: Long = 1
         }.apply {
             setTarget(BootstrapExternalLink.Target.blank)
             setLabel(StringResourceModel(id + LABEL_RESOURCE_TAG, this, null))
@@ -194,6 +202,7 @@ class PublicPage(parameters: PageParameters) : BasePage<Void>(parameters) {
     private fun makeAndQueueResultTable(id: String) {
         object : BootstrapDefaultDataTable<PublicPaper, String>(id, makeTableColumns(), dataProvider,
             dataProvider.rowsPerPage.toLong()) {
+            private val serialVersionUID: Long = 1
             override fun onConfigure() {
                 super.onConfigure()
                 isVisible = isQueryingInitialized

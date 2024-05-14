@@ -20,6 +20,8 @@ open class TestApplication {
     @Bean
     @Suppress("MagicNumber")
     open fun applicationProperties() = object : ApplicationPublicProperties {
+        private val serialVersionUID: Long = 1L
+
         override val buildVersion get() = "vxy"
         override val defaultLocalization get() = "de"
         override val brand get() = "scipamato"

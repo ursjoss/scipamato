@@ -118,7 +118,9 @@ class NewStudyListPageTest : BasePageTest<NewStudyListPage>() {
         tester.assertLabel("archive:1:monthName:label", "Dec 2017")
     }
 
-    private fun assertNewStudy(base: String, studyIndex: Int, headline: String, description: String, reference: String) {
+    private fun assertNewStudy(
+        base: String, studyIndex: Int, headline: String, description: String, reference: String
+    ) {
         val path = base + "topicStudies:" + studyIndex + ":"
         tester.assertLabel(path + "headline", headline)
         tester.assertLabel(path + "description", description)
@@ -208,6 +210,7 @@ class NewStudyListPageTest : BasePageTest<NewStudyListPage>() {
             every { isNavbarVisibleByDefault } returns false
         }
         val page: NewStudyListPage = object : NewStudyListPage(PageParameters()) {
+            private val serialVersionUID: Long = 1L
             override val properties: ApplicationPublicProperties
                 get() = applicationProperties
         }

@@ -27,5 +27,6 @@ class JooqNewStudyTopicService(private val repo: NewStudyRepository) : NewStudyT
     override fun findArchivedNewsletters(newsletterCount: Int, languageCode: String): List<Newsletter> =
         repo.findArchivedNewsletters(newsletterCount, languageCode)
 
-    override fun findNewStudyPageLinks(languageCode: String): List<NewStudyPageLink> = repo.findNewStudyPageLinks(languageCode)
+    override fun findNewStudyPageLinks(languageCode: String): List<NewStudyPageLink> =
+        repo.findNewStudyPageLinks(languageCode)
 }

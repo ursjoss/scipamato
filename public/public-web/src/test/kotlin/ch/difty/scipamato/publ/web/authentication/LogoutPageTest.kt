@@ -17,6 +17,7 @@ class LogoutPageTest : WicketTest() {
         login(USERNAME, PASSWORD)
     }
 
+    @Suppress("SameParameterValue")
     private fun login(username: String?, password: String?) {
         val session = tester.session as SecureWebSession
         session.signOut()

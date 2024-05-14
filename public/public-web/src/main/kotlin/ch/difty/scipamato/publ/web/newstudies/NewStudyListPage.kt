@@ -61,7 +61,9 @@ open class NewStudyListPage(parameters: PageParameters) : BasePage<Void>(paramet
 
     override fun renderHead(response: IHeaderResponse) {
         super.renderHead(response)
-        response.render(CssHeaderItem.forReference(CssResourceReference(NewStudyListPage::class.java, "NewStudyListPage.css")))
+        response.render(
+            CssHeaderItem.forReference(CssResourceReference(NewStudyListPage::class.java, "NewStudyListPage.css"))
+        )
     }
 
     override fun onInitialize() {
@@ -86,6 +88,7 @@ open class NewStudyListPage(parameters: PageParameters) : BasePage<Void>(paramet
         href,
         StringResourceModel("$id$LABEL_RESOURCE_TAG", this, null).string
     ) {
+        private val serialVersionUID: Long = 1L
         override fun onComponentTag(tag: ComponentTag) {
             super.onComponentTag(tag)
             tag.put(TARGET, BLANK)
@@ -103,9 +106,11 @@ open class NewStudyListPage(parameters: PageParameters) : BasePage<Void>(paramet
         val topics = retrieveStudyCollection()
         paperIdManager.initialize(extractPaperNumbersFrom(topics))
         return object : ListView<NewStudyTopic>(id, topics) {
+            private val serialVersionUID: Long = 1L
             override fun populateItem(topic: ListItem<NewStudyTopic>) {
                 topic.add(Label("topicTitle", PropertyModel<Any>(topic.model, "title")))
                 topic.add(object : ListView<NewStudy>("topicStudies", topic.modelObject.studies) {
+                    private val serialVersionUID: Long = 1L
                     override fun populateItem(study: ListItem<NewStudy>) {
                         study.add(Label("headline", PropertyModel<Any>(study.model, "headline")))
                         study.add(Label("description", PropertyModel<Any>(study.model, "description")))
@@ -123,7 +128,8 @@ open class NewStudyListPage(parameters: PageParameters) : BasePage<Void>(paramet
         else newStudyTopicService.findNewStudyTopicsForNewsletterIssue(issue.toString(), languageCode)
     }
 
-    private fun extractPaperNumbersFrom(topics: List<NewStudyTopic>): List<Long> = topics.flatMap { it.studies }.map { it.number }
+    private fun extractPaperNumbersFrom(topics: List<NewStudyTopic>): List<Long> =
+        topics.flatMap { it.studies }.map { it.number }
 
     /**
      * Link pointing to the study detail page with the current [study] (with [id])
@@ -132,6 +138,7 @@ open class NewStudyListPage(parameters: PageParameters) : BasePage<Void>(paramet
         val pp = PageParameters()
         pp[PublicPageParameters.NUMBER.parameterName] = study.modelObject.number
         return object : Link<NewStudy>(id) {
+            private val serialVersionUID: Long = 1L
             override fun onClick() {
                 paperIdManager.setFocusToItem(study.modelObject.number)
                 setResponsePage(PublicPaperDetailPage(pp, pageReference))
@@ -151,6 +158,7 @@ open class NewStudyListPage(parameters: PageParameters) : BasePage<Void>(paramet
     private fun newLinkList(id: String): ListView<NewStudyPageLink> {
         val links = newStudyTopicService.findNewStudyPageLinks(languageCode)
         return object : ListView<NewStudyPageLink>(id, links) {
+            private val serialVersionUID: Long = 1L
             override fun populateItem(link: ListItem<NewStudyPageLink>) {
                 link.add(newExternalLink("link", link))
             }
@@ -161,13 +169,15 @@ open class NewStudyListPage(parameters: PageParameters) : BasePage<Void>(paramet
         id,
         Model.of(linkItem.modelObject.url)
     ) {
+        private val serialVersionUID: Long = 1
     }.apply {
         setTarget(BootstrapExternalLink.Target.blank)
         setIconType(chooseIcon(FontAwesome6IconType.right_long_s, IcoMoonIconType.arrow_right))
         setLabel(Model.of(linkItem.modelObject.title))
     }
 
-    fun chooseIcon(free: IconType, commercial: IconType): IconType = if (properties.isCommercialFontPresent) commercial else free
+    fun chooseIcon(free: IconType, commercial: IconType): IconType =
+        if (properties.isCommercialFontPresent) commercial else free
 
     /** The archive section lists links pointing to previous newsletters with their studies. */
     private fun newArchiveSectionWithPreviousNewsletters() {
@@ -184,6 +194,7 @@ open class NewStudyListPage(parameters: PageParameters) : BasePage<Void>(paramet
         val newsletterCount = properties.numberOfPreviousNewslettersInArchive
         val newsletters = newStudyTopicService.findArchivedNewsletters(newsletterCount, languageCode)
         return object : ListView<Newsletter>(id, newsletters) {
+            private val serialVersionUID: Long = 1L
             override fun populateItem(nl: ListItem<Newsletter>) {
                 nl.add(newLinkToArchivedNewsletter("monthName", nl))
             }
@@ -195,6 +206,7 @@ open class NewStudyListPage(parameters: PageParameters) : BasePage<Void>(paramet
         pp[PublicPageParameters.ISSUE.parameterName] = newsletter.modelObject.issue
         val monthName = newsletter.modelObject.getMonthName(languageCode)
         return object : BootstrapLink<Newsletter>(id, Buttons.Type.Link) {
+            private val serialVersionUID: Long = 1L
             override fun onClick() = setResponsePage(NewStudyListPage(pp))
         }.apply {
             setLabel(Model.of(monthName))

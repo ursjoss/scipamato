@@ -39,7 +39,7 @@ interface ApplicationPublicProperties : ApplicationProperties {
     val isResponsiveIframeSupportEnabled: Boolean
 
     /**
-     * @return the user name that is eligible to see the protected actuator end points.
+     * @return the username that is eligible to see the protected actuator end points.
      */
     val managementUserName: String
 

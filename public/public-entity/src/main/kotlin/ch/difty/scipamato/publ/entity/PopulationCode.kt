@@ -12,7 +12,7 @@ enum class PopulationCode(val id: Short) {
     ;
 
     companion object {
-        private val ID2CODE: Map<Short, PopulationCode> = values().associateBy { it.id }
+        private val ID2CODE: Map<Short, PopulationCode> = entries.associateBy { it.id }
         fun of(id: Short): PopulationCode? = ID2CODE[id]
     }
 }

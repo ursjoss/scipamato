@@ -85,7 +85,7 @@ open class JooqNewStudyRepo(private val dsl: DSLContext) : NewStudyRepository {
      *
      * @param newStudyTopicSortValue the sort value of the NewStudyTopic to be created
      * @param newStudyTopicTitleValue the title value of the NewStudyTopic to be created
-     * @param newStudyRecords the database resultset of the newStudyRecord including NewStudy fields
+     * @param newStudyRecords the database result-set of the newStudyRecord including NewStudy fields
      * @param newStudyTable database table representation of the NewStudy table. Required to access the fields.
      * @param aliasedNewsStudySortField the aliased NewStudy.Sort field, the value must not be null
      * @return single NewStudyTopic

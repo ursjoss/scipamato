@@ -24,7 +24,7 @@ import org.amshove.kluent.shouldNotContain
 import org.apache.wicket.markup.head.IHeaderResponse
 import org.apache.wicket.request.mapper.parameter.PageParameters
 import org.junit.jupiter.api.Test
-import java.util.Locale
+import java.util.*
 
 class BasePageAdditionTest : WicketTest() {
 
@@ -43,6 +43,7 @@ class BasePageAdditionTest : WicketTest() {
 
     private fun newPageWithParameters(pp: PageParameters): BasePage<*> {
         return object : BasePage<Any?>(pp) {
+            private val serialVersionUID: Long = 1L
             override val properties: ApplicationPublicProperties
                 get() = applicationProperties
 
@@ -105,9 +106,12 @@ class BasePageAdditionTest : WicketTest() {
 
         tester.startPage(newPageWithParameters(pp))
 
-        tester.lastResponseAsString.contains("PymJavaScriptResourceReference/js/pym.v1") shouldBeEqualTo render
-        tester.lastResponseAsString.contains("var pymChild = new pym.Child({ id: 'scipamato-public' });") shouldBeEqualTo render
-        tester.lastResponseAsString.contains("pymChild.sendHeight();") shouldBeEqualTo render
+        tester.lastResponseAsString
+            .contains("PymJavaScriptResourceReference/js/pym.v1") shouldBeEqualTo render
+        tester.lastResponseAsString
+            .contains("var pymChild = new pym.Child({ id: 'scipamato-public' });") shouldBeEqualTo render
+        tester.lastResponseAsString
+            .contains("pymChild.sendHeight();") shouldBeEqualTo render
 
         verify { applicationProperties.isResponsiveIframeSupportEnabled }
     }
@@ -117,6 +121,7 @@ class BasePageAdditionTest : WicketTest() {
         val response = mockk<IHeaderResponse>()
         // call it for coverage
         var page: BasePage<*> = object : BasePage<Any?>(pp) {
+            private val serialVersionUID: Long = 1L
             override val properties: ApplicationPublicProperties
                 get() = applicationProperties
         }

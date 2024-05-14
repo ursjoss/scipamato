@@ -15,7 +15,6 @@ import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldContainAll
 import org.amshove.kluent.shouldContainSame
 import org.amshove.kluent.shouldHaveSize
-import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.fail
 import org.springframework.beans.factory.annotation.Autowired
@@ -139,12 +138,12 @@ internal open class JooqPublicPaperRepoIntegrationTest {
     }
 
     @Test
-    @Disabled
     fun findingPageByFilter_withOriginallySetAndThenClearedFilter_findsAll() {
-        filter.copy(codesOfClass2 = newCodes("2R"))
-//        filter.codesOfClass2.clear()
-        repo.findPageByFilter(filter, allSorted).map { it.number } shouldContainSame
-            listOf(8984L, 8934L, 8924L, 2L, 8933L, 8983L, 8993L, 8861L, 8916L, 8973L, 1L, 3L, 8897L)
+        val modifiedFilter = filter.copy(codesOfClass2 = newCodes("2R"))
+        modifiedFilter.copy(codesOfClass2 = null).run {
+            repo.findPageByFilter(this, allSorted).map { it.number } shouldContainSame
+                listOf(8984L, 8934L, 8924L, 2L, 8933L, 8983L, 8993L, 8861L, 8916L, 8973L, 1L, 3L, 8897L)
+        }
     }
 
     @Test

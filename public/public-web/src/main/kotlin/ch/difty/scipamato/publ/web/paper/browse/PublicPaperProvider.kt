@@ -22,7 +22,8 @@ import org.apache.wicket.spring.injection.annot.SpringBean
 internal class PublicPaperProvider(
     paperFilter: PublicPaperFilter?,
     resultPageSize: Int,
-) : SortableDataProvider<PublicPaper, String>(), ISortableDataProvider<PublicPaper, String>, IFilterStateLocator<PublicPaperFilter> {
+) : SortableDataProvider<PublicPaper, String>(),
+    ISortableDataProvider<PublicPaper, String>, IFilterStateLocator<PublicPaperFilter> {
 
     @SpringBean
     private lateinit var service: PublicPaperService

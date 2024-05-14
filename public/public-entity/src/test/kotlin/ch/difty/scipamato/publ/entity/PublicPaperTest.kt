@@ -3,7 +3,6 @@ package ch.difty.scipamato.publ.entity
 import nl.jqno.equalsverifier.EqualsVerifier
 import org.amshove.kluent.shouldBeEqualTo
 
-@Suppress("SpellCheckingInspection")
 internal class PublicPaperTest : PublicDbEntityTest<PublicPaper>() {
 
     override fun newEntity() = PublicPaper(

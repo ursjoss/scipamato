@@ -67,8 +67,8 @@ class PublicPaperFilterConditionMapper : AbstractFilterConditionMapper<PublicPap
             filter.publicationYearFrom == filter.publicationYearUntil
 
     /*
-     * Currently does not allow to mix quoted and unquoted terms. If this will
-     * become necessary we might have to implement a proper tokenization of the
+     * Currently does not allow to mix quoted and unquoted terms. If this
+     * becomes necessary, we might have to implement a proper tokenization of the
      * search term, as was done in core with the SearchTerm hierarchy.
      */
     private fun TableField<PaperRecord, String>.tokenize(mask: String): List<Condition> {
@@ -120,8 +120,8 @@ class PublicPaperFilterConditionMapper : AbstractFilterConditionMapper<PublicPap
      * return PAPER.CODES.contains(codeCollection.toArray(new String[0]));
      * </pre>
      *
-     * While I originally casted to PostgresDataType.TEXT, I now need to cast to SQLDataType.CLOB
-     * due to https://github.com/jOOQ/jOOQ/issues/7375
+     * While I originally cast to `PostgresDataType.TEXT`, I now need to cast to
+     * `SQLDataType.CLOB` due to https://github.com/jOOQ/jOOQ/issues/7375
      */
     private fun List<String>.toCondition(): Condition =
         Paper.PAPER.CODES.contains(

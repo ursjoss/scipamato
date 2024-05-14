@@ -3,7 +3,6 @@ package ch.difty.scipamato.publ.entity
 import nl.jqno.equalsverifier.EqualsVerifier
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.Test
-import java.time.LocalDateTime
 
 internal class CodeTest : PublicDbEntityTest<Code>() {
 
