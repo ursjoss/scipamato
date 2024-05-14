@@ -24,8 +24,8 @@ import java.io.Serial;
 @Slf4j
 @AuthorizeInstantiation({ Roles.USER, Roles.ADMIN })
 @SuppressWarnings({ "SameParameterValue" })
-public class NewsletterTopicListPage extends
-    DefinitionListPage<NewsletterTopicDefinition, NewsletterTopicFilter, NewsletterTopicService, NewsletterTopicDefinitionProvider> {
+public class NewsletterTopicListPage
+    extends DefinitionListPage<NewsletterTopicDefinition, NewsletterTopicFilter, NewsletterTopicService, NewsletterTopicDefinitionProvider> {
 
     @java.io.Serial
     private static final long serialVersionUID = 1L;
@@ -62,8 +62,7 @@ public class NewsletterTopicListPage extends
             @Override
             protected BootstrapAjaxButton doQueueNewNewsletterTopicButton(@NotNull final String id) {
                 return newResponsePageButton(id,
-                    () -> new NewsletterTopicEditPage(Model.of(service.newUnpersistedNewsletterTopicDefinition()),
-                        getPage().getPageReference()));
+                    () -> new NewsletterTopicEditPage(Model.of(service.newUnpersistedNewsletterTopicDefinition()), getPage().getPageReference()));
             }
         };
     }

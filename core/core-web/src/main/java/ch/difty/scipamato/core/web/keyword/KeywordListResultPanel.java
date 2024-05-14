@@ -15,8 +15,7 @@ import ch.difty.scipamato.core.web.common.DefinitionListResultPanel;
 import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("SameParameterValue")
-class KeywordListResultPanel
-    extends DefinitionListResultPanel<KeywordDefinition, KeywordFilter, KeywordService, KeywordDefinitionProvider> {
+class KeywordListResultPanel extends DefinitionListResultPanel<KeywordDefinition, KeywordFilter, KeywordService, KeywordDefinitionProvider> {
 
     @java.io.Serial
     private static final long serialVersionUID = 1L;

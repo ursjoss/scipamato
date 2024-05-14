@@ -38,8 +38,7 @@ public class CoreMenuBuilder extends AbstractMenuBuilder {
     @java.io.Serial
     private static final long serialVersionUID = 1L;
 
-    public CoreMenuBuilder(@NotNull final ApplicationProperties applicationProperties,
-        @NotNull final ScipamatoWebSessionFacade webSessionFacade) {
+    public CoreMenuBuilder(@NotNull final ApplicationProperties applicationProperties, @NotNull final ScipamatoWebSessionFacade webSessionFacade) {
         super(applicationProperties, webSessionFacade);
     }
 
@@ -53,8 +52,7 @@ public class CoreMenuBuilder extends AbstractMenuBuilder {
         }
 
         addExternalLink(navbar, new StringResourceModel("menu.help.url", page, null).getString(),
-            new StringResourceModel("menu.help", page, null).getString(), FontAwesome6IconType.circle_question_s,
-            Navbar.ComponentPosition.RIGHT);
+            new StringResourceModel("menu.help", page, null).getString(), FontAwesome6IconType.circle_question_s, Navbar.ComponentPosition.RIGHT);
         addExternalLink(navbar, new StringResourceModel("menu.changelog.url", page, null)
             .setParameters(getVersionAnker())
             .getString(), getVersionLink(), FontAwesome6IconType.briefcase_s, Navbar.ComponentPosition.RIGHT);
@@ -71,8 +69,7 @@ public class CoreMenuBuilder extends AbstractMenuBuilder {
         final String labelParent = "menu.newsletters.";
         if (hasOneOfRoles(Roles.USER, Roles.ADMIN)) {
             addEntryToMenu(labelParent + "newsletter", page, NewsletterListPage.class, FontAwesome6IconType.newspaper_s, links);
-            addEntryToMenu(labelParent + "newslettertopic", page, NewsletterTopicListPage.class, FontAwesome6IconType.bookmark_s,
-                links);
+            addEntryToMenu(labelParent + "newslettertopic", page, NewsletterTopicListPage.class, FontAwesome6IconType.bookmark_s, links);
         }
     }
 

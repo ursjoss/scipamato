@@ -10,7 +10,8 @@ import org.apache.wicket.util.resource.ResourceStreamNotFoundException
 import org.junit.jupiter.api.Test
 import java.io.InputStream
 
-internal class PaperReferenceAbstractResourceReferenceTest : JasperReportResourceReferenceTest<PaperReferenceAbstractResourceReference>() {
+internal class PaperReferenceAbstractResourceReferenceTest :
+    JasperReportResourceReferenceTest<PaperReferenceAbstractResourceReference>() {
 
     override val resourceReference: PaperReferenceAbstractResourceReference
         get() = PaperReferenceAbstractResourceReference.get()

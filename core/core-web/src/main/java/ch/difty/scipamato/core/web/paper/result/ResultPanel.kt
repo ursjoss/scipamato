@@ -182,7 +182,8 @@ abstract class ResultPanel protected constructor(
 
             override fun createTitleModel(rowModel: IModel<PaperSlim>): IModel<String> =
                 StringResourceModel(
-                    if (dataProvider.isShowExcluded) "column.title.reinclude" else "column.title.exclude", this@ResultPanel, null
+                    if (dataProvider.isShowExcluded) "column.title.reinclude"
+                    else "column.title.exclude", this@ResultPanel, null
                 )
 
             override fun onClickPerformed(target: AjaxRequestTarget, rowModel: IModel<PaperSlim>, link: AjaxLink<Void>) {
@@ -266,7 +267,11 @@ abstract class ResultPanel protected constructor(
                 newsletterService.removePaperFromWipNewsletter(paper.id!!)
             } else {
                 warn(
-                    StringResourceModel("newsletter.readonly", this@ResultPanel, Model.of(paper.newsletterAssociation)).string
+                    StringResourceModel(
+                        "newsletter.readonly",
+                        this@ResultPanel,
+                        Model.of(paper.newsletterAssociation)
+                    ).string
                 )
             }
             target.add(results)

@@ -29,7 +29,7 @@ class PaperReviewDataSource(
     override fun makeEntity(p: Paper): PaperReview = PaperReview(p, reportHeaderFields)
 
     companion object {
-        private const val FILE_BASE_NAME = "paper_review"
         private const val serialVersionUID = 1L
+        private const val FILE_BASE_NAME = "paper_review"
     }
 }

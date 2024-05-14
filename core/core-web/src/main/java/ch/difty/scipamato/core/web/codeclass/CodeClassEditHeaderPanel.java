@@ -21,8 +21,7 @@ public abstract class CodeClassEditHeaderPanel extends DefinitionEditHeaderPanel
 
     @Override
     protected void makeAndQueueFilterFields() {
-        final TextField<Integer> idField = new TextField<>(
-            CodeClassDefinition.CodeClassDefinitionFields.ID.getFieldName());
+        final TextField<Integer> idField = new TextField<>(CodeClassDefinition.CodeClassDefinitionFields.ID.getFieldName());
         idField.setEnabled(false);
         queueFieldAndLabel(idField);
     }

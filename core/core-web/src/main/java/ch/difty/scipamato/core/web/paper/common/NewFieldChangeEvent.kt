@@ -24,7 +24,7 @@ data class NewFieldChangeEvent @JvmOverloads constructor(
         if (isValidTarget(component)) target.add(component)
     }
 
-    private fun isValidTarget(component: TextArea<*>): Boolean {
-        return this.id == null || this.id == component.id && (this.markupId == null || this.markupId != component.markupId)
-    }
+    private fun isValidTarget(component: TextArea<*>): Boolean =
+        id == null ||
+            id == component.id && (markupId == null || markupId != component.markupId)
 }

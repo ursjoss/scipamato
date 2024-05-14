@@ -31,8 +31,7 @@ class CodeListResultPanel extends DefinitionListResultPanel<CodeDefinition, Code
         columns.add(makePropertyColumn(CodeDefinition.CodeDefinitionFields.CODE.getFieldName()));
         columns.add(makeClickableColumn("translationsAsString", this::onTitleClick));
         columns.add(makePropertyColumn(CodeDefinition.CodeDefinitionFields.SORT.getFieldName()));
-        columns.add(makeBooleanPropertyColumn(CodeDefinition.CodeDefinitionFields.INTERNAL.getFieldName(),
-            CodeDefinition::isInternal));
+        columns.add(makeBooleanPropertyColumn(CodeDefinition.CodeDefinitionFields.INTERNAL.getFieldName(), CodeDefinition::isInternal));
         return columns;
     }
 

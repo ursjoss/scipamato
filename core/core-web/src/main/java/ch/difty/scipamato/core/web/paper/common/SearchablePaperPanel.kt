@@ -39,7 +39,7 @@ abstract class SearchablePaperPanel protected constructor(
 
     override fun newNavigationButton(
         id: String, icon: IconType,
-        isEnabled: SerializableSupplier<Boolean>, idSupplier: SerializableSupplier<Long?>?,
+        isEnabled: SerializableSupplier<Boolean>, idSupplier: SerializableSupplier<Long?>,
     ): BootstrapButton = BootstrapButton(id, Model.of(""), Buttons.Type.Default).apply {
         isVisible = false
     }

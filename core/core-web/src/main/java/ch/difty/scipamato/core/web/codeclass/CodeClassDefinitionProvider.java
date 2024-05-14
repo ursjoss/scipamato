@@ -10,8 +10,7 @@ import ch.difty.scipamato.core.entity.codeclass.CodeClassFilter;
 import ch.difty.scipamato.core.persistence.CodeClassService;
 import ch.difty.scipamato.core.web.DefinitionProvider;
 
-public class CodeClassDefinitionProvider
-    extends DefinitionProvider<CodeClassDefinition, CodeClassFilter, CodeClassService> {
+public class CodeClassDefinitionProvider extends DefinitionProvider<CodeClassDefinition, CodeClassFilter, CodeClassService> {
 
     @java.io.Serial
     private static final long serialVersionUID = 1L;

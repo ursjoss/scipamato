@@ -65,12 +65,14 @@ data class ScipamatoProperties(
     /**
      * @return the author parser strategy used for interpreting the authors string.
      */
-    var authorParserStrategy: AuthorParserStrategy = AuthorParserStrategy.fromProperty(authorParser, AUTHOR_PARSER_PROPERTY_KEY),
+    var authorParserStrategy: AuthorParserStrategy =
+        AuthorParserStrategy.fromProperty(authorParser, AUTHOR_PARSER_PROPERTY_KEY),
 
     /**
      * @return the strategy for exporting studies into RIS file format.
      */
-    var risExporterStrategy: RisExporterStrategy = RisExporterStrategy.fromProperty(risExporter, RIS_EXPORTER_PROPERTY_KEY),
+    var risExporterStrategy: RisExporterStrategy =
+        RisExporterStrategy.fromProperty(risExporter, RIS_EXPORTER_PROPERTY_KEY),
 
     /**
      * The threshold above which the multi-select box may (if configured) show the

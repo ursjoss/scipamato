@@ -710,7 +710,8 @@ abstract class PaperPanel<T>(
 
         private fun makeCodeClassComplex(codeClassId: CodeClassId, codeClasses: List<CodeClass?>): BootstrapMultiSelect<Code> {
             val id = codeClassId.id
-            val className = codeClasses.filterNotNull().filter { it.id != null && it.id == id }.map { it.name }.firstOrNull()
+            val className = codeClasses.filterNotNull()
+                .filter { it.id != null && it.id == id }.map { it.name }.firstOrNull()
                 ?: codeClassId.name
             queue(Label("$CODES_CLASS_BASE_NAME${id}Label", Model.of(className)))
             val model: ChainingModel<List<Code>> = object : ChainingModel<List<Code>>(this@PaperPanel.model) {

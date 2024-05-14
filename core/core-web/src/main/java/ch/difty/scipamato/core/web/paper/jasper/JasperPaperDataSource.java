@@ -24,8 +24,7 @@ import ch.difty.scipamato.core.web.paper.AbstractPaperSlimProvider;
  *     the type of the {@link ExportEntity}
  * @author u.joss
  */
-public abstract class JasperPaperDataSource<E extends ExportEntity>
-    extends JRConcreteResource<ScipamatoPdfResourceHandler> {
+public abstract class JasperPaperDataSource<E extends ExportEntity> extends JRConcreteResource<ScipamatoPdfResourceHandler> {
 
     @java.io.Serial
     private static final long serialVersionUID = 1L;
