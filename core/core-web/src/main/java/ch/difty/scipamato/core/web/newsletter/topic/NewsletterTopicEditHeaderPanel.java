@@ -11,7 +11,7 @@ import ch.difty.scipamato.core.web.common.DeletableDefinitionEditHeaderPanel;
 import java.io.Serial;
 
 @SuppressWarnings("SameParameterValue")
-abstract class NewsletterTopicEditHeaderPanel
+public abstract class NewsletterTopicEditHeaderPanel
     extends DeletableDefinitionEditHeaderPanel<NewsletterTopicDefinition, NewsletterTopicTranslation, Integer> {
 
     @java.io.Serial
