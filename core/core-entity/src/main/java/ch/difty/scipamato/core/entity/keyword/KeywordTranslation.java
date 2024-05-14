@@ -13,6 +13,7 @@ import ch.difty.scipamato.common.entity.AbstractDefinitionTranslation;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class KeywordTranslation extends AbstractDefinitionTranslation {
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     public KeywordTranslation(@Nullable final Integer id, @NotNull final String langCode, @Nullable final String name,

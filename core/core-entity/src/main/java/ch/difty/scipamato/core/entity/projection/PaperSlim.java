@@ -12,7 +12,7 @@ import ch.difty.scipamato.core.entity.IdScipamatoEntity;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class PaperSlim extends IdScipamatoEntity<Long> {
-
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     @jakarta.validation.constraints.NotNull

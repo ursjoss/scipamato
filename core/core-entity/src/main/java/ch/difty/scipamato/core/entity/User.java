@@ -26,6 +26,7 @@ import ch.difty.scipamato.core.auth.Role;
 @EqualsAndHashCode(callSuper = true)
 public class User extends IdScipamatoEntity<Integer> {
 
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     public static final User NO_USER = new User(-1, "noUser", "n.a", "n.a.", "n.a.", "n.a");

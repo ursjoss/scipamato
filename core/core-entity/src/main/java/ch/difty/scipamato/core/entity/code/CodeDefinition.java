@@ -20,6 +20,7 @@ import ch.difty.scipamato.core.entity.CodeClass;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class CodeDefinition extends AbstractDefinitionEntity<CodeTranslation, String> {
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     @Nullable

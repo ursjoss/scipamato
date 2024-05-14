@@ -14,6 +14,7 @@ import ch.difty.scipamato.common.entity.FieldEnumType;
 @EqualsAndHashCode(callSuper = true)
 public class Code extends CoreEntity implements CodeLike {
 
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     public static final String CODE_REGEX = "[1-9][A-Z]";

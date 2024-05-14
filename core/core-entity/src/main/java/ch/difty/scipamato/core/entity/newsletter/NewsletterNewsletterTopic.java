@@ -8,7 +8,7 @@ import ch.difty.scipamato.core.entity.CoreEntity;
 @Data
 @AllArgsConstructor
 public class NewsletterNewsletterTopic extends CoreEntity {
-
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     private int    newsletterId;
@@ -23,12 +23,12 @@ public class NewsletterNewsletterTopic extends CoreEntity {
     }
 
     @Override
-    public boolean equals(Object other) {
+    public boolean equals(final Object other) {
         if (this == other)
             return true;
         if (other == null || this.getClass() != other.getClass())
             return false;
-        NewsletterNewsletterTopic o = (NewsletterNewsletterTopic) other;
+        final NewsletterNewsletterTopic o = (NewsletterNewsletterTopic) other;
         return this.newsletterId == o.newsletterId && this.newsletterTopicId == o.newsletterTopicId;
     }
 

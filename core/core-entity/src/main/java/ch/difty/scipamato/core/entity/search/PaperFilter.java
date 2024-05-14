@@ -12,6 +12,7 @@ import ch.difty.scipamato.core.entity.PaperSlimFilter;
 @EqualsAndHashCode(callSuper = false)
 public class PaperFilter implements ScipamatoFilter, PaperSlimFilter {
 
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     private Long    number;

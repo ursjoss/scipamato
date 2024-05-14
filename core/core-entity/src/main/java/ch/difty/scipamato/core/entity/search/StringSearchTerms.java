@@ -6,5 +6,6 @@ package ch.difty.scipamato.core.entity.search;
  * @author u.joss
  */
 class StringSearchTerms extends SearchTerms<StringSearchTerm> {
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 }

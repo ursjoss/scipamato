@@ -25,6 +25,7 @@ import ch.difty.scipamato.core.entity.PaperSlimFilter;
 @EqualsAndHashCode(callSuper = true, exclude = { "showExcluded" })
 public class SearchOrder extends IdScipamatoEntity<Long> implements PaperSlimFilter {
 
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     static final int    DISPL_VALUE_THRESHOLD = 100;
