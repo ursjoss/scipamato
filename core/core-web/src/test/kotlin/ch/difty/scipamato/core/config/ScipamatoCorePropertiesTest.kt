@@ -6,7 +6,6 @@ import ch.difty.scipamato.core.logic.parsing.AuthorParserStrategy
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.Test
 
-@Suppress("SpellCheckingInspection")
 internal class ScipamatoCorePropertiesTest {
 
     private val scipamatoProp = ScipamatoProperties(

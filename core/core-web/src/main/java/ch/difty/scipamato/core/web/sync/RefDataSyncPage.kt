@@ -32,6 +32,7 @@ class RefDataSyncPage(parameters: PageParameters) : BasePage<Void>(parameters) {
         queue(SyncResultListPanel("syncResults"))
     }
 
+    @Suppress("SameParameterValue")
     private fun newButton(id: String): BootstrapAjaxButton {
         val labelModel = StringResourceModel("button.$id.label", this, null)
         return object : BootstrapAjaxButton(id, labelModel, Buttons.Type.Primary) {
