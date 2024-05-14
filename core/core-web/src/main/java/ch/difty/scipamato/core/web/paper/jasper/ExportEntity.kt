@@ -13,7 +13,7 @@ fun na(s: String?): String = s ?: ""
  * @param value the value to test against if it is null or blank to not show the label
  * @return label
  */
-fun na(label: String?, value: String?): String = if (value == null || value.isEmpty()) "" else label ?: ""
+fun na(label: String?, value: String?): String = if (value.isNullOrEmpty()) "" else label ?: ""
 
 /**
  * Provides the label, but only if the associated value is neither null nor blank.
@@ -22,4 +22,4 @@ fun na(label: String?, value: String?): String = if (value == null || value.isEm
  * @param value the value to test against if it is null or blank to not show the label
  * @return label
  */
-fun na2(label: String, value: String?): String = if (value == null || value.isEmpty()) "" else label
+fun na2(label: String, value: String?): String = if (value.isNullOrEmpty()) "" else label

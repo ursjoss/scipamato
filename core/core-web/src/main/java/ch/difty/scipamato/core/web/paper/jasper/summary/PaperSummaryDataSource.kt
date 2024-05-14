@@ -103,7 +103,7 @@ class PaperSummaryDataSource : JasperPaperDataSource<PaperSummary> {
         private const val BASE_NAME_MULTIPLE = "paper_summaries"
 
         private fun makeSinglePaperBaseName(number: String?): String {
-            return if (number != null && number.isNotEmpty())
+            return if (!number.isNullOrEmpty())
                 BASE_NAME_SINGLE + number
             else
                 BASE_NAME_SINGLE_FALLBACK
