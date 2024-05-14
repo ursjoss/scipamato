@@ -40,6 +40,7 @@ abstract class LinkIconPanel protected constructor(
     }
 
     private fun makeLink(): AjaxLink<Void> = object : AjaxLink<Void>(ID_LINK) {
+        private val serialVersionUID: Long = 1L
         override fun onClick(target: AjaxRequestTarget) {
             onClickPerformed(target)
         }

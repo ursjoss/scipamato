@@ -12,12 +12,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  */
 class CurrentPasswordMatchesValidator implements IValidator<String> {
 
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     private final PasswordEncoder passwordEncoder;
     private final String          currentPasswordHashPersisted;
 
-    public CurrentPasswordMatchesValidator(@NotNull PasswordEncoder passwordEncoder,
+    public CurrentPasswordMatchesValidator(@NotNull final PasswordEncoder passwordEncoder,
         @NotNull final String currentPasswordHashPersisted) {
         this.passwordEncoder = passwordEncoder;
         this.currentPasswordHashPersisted = currentPasswordHashPersisted;
@@ -27,7 +28,7 @@ class CurrentPasswordMatchesValidator implements IValidator<String> {
     public void validate(@NotNull final IValidatable<String> validatable) {
         final String pwCandidate = validatable.getValue();
         if (!passwordEncoder.matches(pwCandidate, currentPasswordHashPersisted)) {
-            ValidationError error = new ValidationError();
+            final ValidationError error = new ValidationError();
             error.addKey(getClass().getSimpleName() + "." + "not-matching");
             validatable.error(error);
         }

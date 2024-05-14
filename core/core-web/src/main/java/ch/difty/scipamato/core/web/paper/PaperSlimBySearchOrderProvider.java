@@ -24,6 +24,7 @@ import ch.difty.scipamato.core.entity.search.SearchOrder;
  */
 public class PaperSlimBySearchOrderProvider extends AbstractPaperSlimProvider<SearchOrder> {
 
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     /**
@@ -59,13 +60,12 @@ public class PaperSlimBySearchOrderProvider extends AbstractPaperSlimProvider<Se
     @NotNull
     @Override
     protected List<Paper> findAll(@NotNull final Direction dir, @NotNull final String sortProp) {
-        return getPaperService().findPageBySearchOrder(getFilterState(), new PaginationRequest(dir, sortProp),
-            getLanguageCode());
+        return getPaperService().findPageBySearchOrder(getFilterState(), new PaginationRequest(dir, sortProp), getLanguageCode());
     }
 
     @NotNull
     @Override
-    protected List<Long> findAllIds(@NotNull Direction dir, @NotNull String sortProp) {
+    protected List<Long> findAllIds(@NotNull final Direction dir, @NotNull final String sortProp) {
         return getPaperService().findPageOfIdsBySearchOrder(getFilterState(), new PaginationRequest(dir, sortProp));
     }
 
@@ -81,7 +81,7 @@ public class PaperSlimBySearchOrderProvider extends AbstractPaperSlimProvider<Se
     }
 
     @Override
-    public void setShowExcluded(boolean showExcluded) {
+    public void setShowExcluded(final boolean showExcluded) {
         getFilterState().setShowExcluded(showExcluded);
     }
 }

@@ -19,6 +19,7 @@ class SyncResultListPanel(id: String) : Panel(id) {
         makeAndQueueTable("taskMessages")
     }
 
+    @Suppress("SameParameterValue")
     private fun makeAndQueueTable(id: String) {
         buildList {
             add(makePropertyColumn("messageLevel"))

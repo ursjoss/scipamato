@@ -19,6 +19,7 @@ import ch.difty.scipamato.core.entity.User;
 @EqualsAndHashCode(callSuper = true)
 public class ScipamatoUserDetails extends User implements UserDetails {
 
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     private final Set<Role> roles;

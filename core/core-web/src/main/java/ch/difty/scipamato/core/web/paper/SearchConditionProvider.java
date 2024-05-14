@@ -19,6 +19,7 @@ import ch.difty.scipamato.core.entity.search.SearchCondition;
  */
 public class SearchConditionProvider extends SortableDataProvider<SearchCondition, String> {
 
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     private final IModel<List<SearchCondition>> searchConditionsModel;

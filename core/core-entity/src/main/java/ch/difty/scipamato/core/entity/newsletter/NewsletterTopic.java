@@ -15,6 +15,7 @@ import ch.difty.scipamato.core.entity.IdScipamatoEntity;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class NewsletterTopic extends IdScipamatoEntity<Integer> {
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     @jakarta.validation.constraints.NotNull

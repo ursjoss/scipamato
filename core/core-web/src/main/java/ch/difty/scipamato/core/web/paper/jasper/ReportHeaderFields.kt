@@ -7,7 +7,7 @@ import org.apache.wicket.util.io.IClusterable
  * order to avoid having constructor with numerous String arguments.
  *
  * This class can be used to serve various jasper reports with different needs
- * for localized labels. Consequently hardly any validation occurs in this
+ * for localized labels. Consequently, hardly any validation occurs in this
  * class. It is up to the DTOs that are passed into the reports to validate the
  * required labels are non-null.
  */

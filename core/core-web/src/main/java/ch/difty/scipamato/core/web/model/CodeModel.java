@@ -16,6 +16,7 @@ import ch.difty.scipamato.core.persistence.CodeService;
  */
 public class CodeModel extends CodeLikeModel<Code, CodeService> {
 
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     public CodeModel(@NotNull final CodeClassId codeClassId, @NotNull final String languageCode) {

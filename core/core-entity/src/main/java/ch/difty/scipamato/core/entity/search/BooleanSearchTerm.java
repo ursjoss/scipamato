@@ -13,6 +13,7 @@ import org.jetbrains.annotations.Nullable;
  * @author u.joss
  */
 public class BooleanSearchTerm extends AbstractSearchTerm {
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     private final boolean value;

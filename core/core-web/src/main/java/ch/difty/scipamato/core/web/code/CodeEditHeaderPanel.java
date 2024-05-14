@@ -23,8 +23,9 @@ import ch.difty.scipamato.core.web.common.DeletableDefinitionEditHeaderPanel;
 import ch.difty.scipamato.core.web.model.CodeClassModel;
 
 @SuppressWarnings({ "SameParameterValue", "WicketForgeJavaIdInspection" })
-abstract class CodeEditHeaderPanel extends DeletableDefinitionEditHeaderPanel<CodeDefinition, CodeTranslation, String> {
+public abstract class CodeEditHeaderPanel extends DeletableDefinitionEditHeaderPanel<CodeDefinition, CodeTranslation, String> {
 
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     private BootstrapSelect<CodeClass> codeClasses;
@@ -41,7 +42,7 @@ abstract class CodeEditHeaderPanel extends DeletableDefinitionEditHeaderPanel<Co
         queueFieldAndLabel(new TextField<>(CodeDefinition.CodeDefinitionFields.SORT.getFieldName()));
         queue(new Label("internalLabel",
             new StringResourceModel(CodeDefinition.CodeDefinitionFields.INTERNAL.getFieldName() + LABEL_RESOURCE_TAG, this, null)));
-        CheckBoxX internal = new CheckBoxX(CodeDefinition.CodeDefinitionFields.INTERNAL.getFieldName());
+        final CheckBoxX internal = new CheckBoxX(CodeDefinition.CodeDefinitionFields.INTERNAL.getFieldName());
         internal
             .getConfig()
             .withThreeState(false)
@@ -53,7 +54,7 @@ abstract class CodeEditHeaderPanel extends DeletableDefinitionEditHeaderPanel<Co
 
     protected abstract Form<CodeDefinition> getForm();
 
-    private void queueBootstrapSelectAndLabel(final String id) {
+    private void queueBootstrapSelectAndLabel(@NotNull final String id) {
         queue(new Label(id + LABEL_TAG, new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null)));
         final PropertyModel<CodeClass> model = PropertyModel.of(getModel(), CodeFilter.CodeFilterFields.CODE_CLASS.getFieldName());
         final CodeClassModel choices = new CodeClassModel(getLocale().getLanguage());
@@ -68,6 +69,7 @@ abstract class CodeEditHeaderPanel extends DeletableDefinitionEditHeaderPanel<Co
      * that corresponds with the first number in the code (i.e. Code Class 2).
      */
     static class CodeMustMatchCodeClassValidator extends AbstractFormValidator {
+        @java.io.Serial
         private static final long serialVersionUID = 1L;
 
         private final FormComponent<?>[] components;

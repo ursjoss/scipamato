@@ -46,6 +46,7 @@ internal abstract class ResultPanelTest : PanelTest<ResultPanel>() {
 
     override fun makePanel(): ResultPanel =
         object : ResultPanel(PANEL_ID, PaperSlimBySearchOrderProvider(searchOrder, ROWS_PER_PAGE), mode) {
+            private val serialVersionUID: Long = 1L
             override val isOfferingSearchComposition: Boolean
                 get() = true
         }
@@ -255,6 +256,7 @@ internal abstract class ResultPanelTest : PanelTest<ResultPanel>() {
     // with isOfferingSearchComposition = false
     fun newNonSearchRelevantResultPanel(): ResultPanel =
         object : ResultPanel(PANEL_ID, PaperSlimBySearchOrderProvider(searchOrder, ROWS_PER_PAGE), mode) {
+            private val serialVersionUID: Long = 1L
             override val isOfferingSearchComposition: Boolean
                 get() = false
         }

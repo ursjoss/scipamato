@@ -4,6 +4,7 @@ import static ch.difty.scipamato.common.web.WicketUtilsKt.LABEL_RESOURCE_TAG;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons.Type;
@@ -43,6 +44,7 @@ import ch.difty.scipamato.core.web.paper.SearchOrderChangeEvent;
 @SuppressWarnings({ "SameParameterValue", "WicketForgeJavaIdInspection", "unused" })
 public class SearchOrderPanel extends BasePanel<SearchOrder> {
 
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     private DataTable<SearchCondition, String> searchConditions;
@@ -50,7 +52,7 @@ public class SearchOrderPanel extends BasePanel<SearchOrder> {
     @SpringBean
     private PageFactory pageFactory;
 
-    SearchOrderPanel(@NotNull String id, @Nullable IModel<SearchOrder> model, @NotNull Mode mode) {
+    SearchOrderPanel(@NotNull final String id, @Nullable final IModel<SearchOrder> model, @NotNull final Mode mode) {
         super(id, model, mode);
     }
 
@@ -65,7 +67,7 @@ public class SearchOrderPanel extends BasePanel<SearchOrder> {
         queue(new Form<>(id));
         queueNewButton("addSearchCondition", pageFactory.newPaperSearchCriteriaPage(), () -> Model.of(new SearchCondition()));
 
-        SearchConditionProvider p = new SearchConditionProvider(
+        final SearchConditionProvider p = new SearchConditionProvider(
             new PropertyModel<>(getModel(), SearchOrder.SearchOrderFields.CONDITIONS.getFieldName()));
         searchConditions = new BootstrapDefaultDataTable<>("searchConditions", makeTableColumns(), p, 10);
         searchConditions.setOutputMarkupId(true);
@@ -75,9 +77,11 @@ public class SearchOrderPanel extends BasePanel<SearchOrder> {
         queue(searchConditions);
     }
 
-    private void queueNewButton(String id, SerializableBiFunction<IModel<SearchCondition>, Long, GenericWebPage<SearchCondition>> pageFunction,
-        SerializableSupplier<IModel<SearchCondition>> modelProvider) {
+    private void queueNewButton(@NotNull final String id,
+        @NotNull final SerializableBiFunction<IModel<SearchCondition>, Long, GenericWebPage<SearchCondition>> pageFunction,
+        final SerializableSupplier<IModel<SearchCondition>> modelProvider) {
         queue(new BootstrapAjaxButton(id, new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null), Type.Default) {
+            @java.io.Serial
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -87,7 +91,7 @@ public class SearchOrderPanel extends BasePanel<SearchOrder> {
             }
 
             @Override
-            protected void onSubmit(@NotNull AjaxRequestTarget target) {
+            protected void onSubmit(@NotNull final AjaxRequestTarget target) {
                 super.onSubmit(target);
                 setResponsePage(pageFunction.apply(modelProvider.get(), SearchOrderPanel.this
                     .getModelObject()
@@ -108,22 +112,25 @@ public class SearchOrderPanel extends BasePanel<SearchOrder> {
         return columns;
     }
 
-    private boolean isEntitledToModify(final SearchOrder searchOrder) {
-        return searchOrder.getOwner() == getActiveUser().getId() || !searchOrder.isGlobal();
+    private boolean isEntitledToModify(@NotNull final SearchOrder searchOrder) {
+        return searchOrder.getOwner() == Objects.requireNonNull(getActiveUser().getId()) || !searchOrder.isGlobal();
     }
 
-    private ClickablePropertyColumn2<SearchCondition, String, Long> makeClickableColumn(String propExpression, String sortProperty,
-        SerializableBiConsumer<IModel<SearchCondition>, Long> consumer, SerializableSupplier<Long> supplier) {
+    private ClickablePropertyColumn2<SearchCondition, String, Long> makeClickableColumn(@NotNull final String propExpression,
+        @Nullable final String sortProperty, @NotNull final SerializableBiConsumer<IModel<SearchCondition>, Long> consumer,
+        @NotNull final SerializableSupplier<Long> supplier) {
         final StringResourceModel displayModel = new StringResourceModel("column.header." + propExpression, this, null);
         return new ClickablePropertyColumn2<>(displayModel, propExpression, consumer, supplier, sortProperty);
     }
 
-    private IColumn<SearchCondition, String> makeLinkIconColumn(String id, SerializableConsumer<IModel<SearchCondition>> consumer) {
+    private IColumn<SearchCondition, String> makeLinkIconColumn(@NotNull final String id,
+        @NotNull final SerializableConsumer<IModel<SearchCondition>> consumer) {
         final FontAwesome6IconType trash = FontAwesome6IconTypeBuilder
             .on(FontAwesome6IconTypeBuilder.FontAwesome6Solid.trash_can)
             .fixedWidth()
             .build();
         return new LinkIconColumn<>(new StringResourceModel("column.header." + id, this, null)) {
+            @java.io.Serial
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -133,13 +140,13 @@ public class SearchOrderPanel extends BasePanel<SearchOrder> {
 
             @NotNull
             @Override
-            protected IModel<String> createIconModel(@NotNull IModel<SearchCondition> rowModel) {
+            protected IModel<String> createIconModel(@NotNull final IModel<SearchCondition> rowModel) {
                 return Model.of(trash.cssClassName() + " text-danger");
             }
 
             @Override
-            protected void onClickPerformed(@NotNull AjaxRequestTarget target, @NotNull IModel<SearchCondition> rowModel,
-                @NotNull AjaxLink<Void> link) {
+            protected void onClickPerformed(@NotNull final AjaxRequestTarget target, @NotNull final IModel<SearchCondition> rowModel,
+                @NotNull final AjaxLink<Void> link) {
                 if (isEntitledToModify(getModelObject())) {
                     consumer.accept(rowModel);
                     target.add(searchConditions);

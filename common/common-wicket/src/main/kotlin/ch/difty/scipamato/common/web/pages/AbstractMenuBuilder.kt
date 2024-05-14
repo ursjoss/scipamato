@@ -68,9 +68,7 @@ abstract class AbstractMenuBuilder protected constructor(
                     StringResourceModel("menu.$labelResource", page, null),
                     Model.of(iconType)
                 ) {
-                    @java.io.Serial
                     private val serialVersionUID: Long = 1L
-
                     override fun newSubMenuButtons(buttonMarkupId: String) = ArrayList<AbstractLink>().apply {
                         action.accept(this)
                     }
@@ -109,7 +107,6 @@ abstract class AbstractMenuBuilder protected constructor(
     fun hasOneOfRoles(vararg roles: String): Boolean = webSessionFacade.hasAtLeastOneRoleOutOf(*roles)
 
     companion object {
-        @java.io.Serial
-        private val serialVersionUID: Long = 1L
+        private const val serialVersionUID: Long = 1L
     }
 }

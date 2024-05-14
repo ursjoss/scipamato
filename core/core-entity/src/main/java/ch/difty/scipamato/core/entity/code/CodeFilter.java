@@ -12,6 +12,7 @@ import ch.difty.scipamato.core.entity.CodeClass;
 @EqualsAndHashCode(callSuper = false)
 @SuppressWarnings("SameParameterValue")
 public class CodeFilter implements ScipamatoFilter {
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     private CodeClass codeClass;

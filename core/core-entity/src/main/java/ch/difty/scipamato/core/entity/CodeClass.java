@@ -12,6 +12,7 @@ import ch.difty.scipamato.common.entity.FieldEnumType;
 @EqualsAndHashCode(callSuper = true)
 public class CodeClass extends IdScipamatoEntity<Integer> implements CodeClassLike {
 
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     @jakarta.validation.constraints.NotNull

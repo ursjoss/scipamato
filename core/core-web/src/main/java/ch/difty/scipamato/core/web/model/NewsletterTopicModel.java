@@ -16,6 +16,7 @@ import ch.difty.scipamato.core.persistence.NewsletterTopicService;
  */
 public class NewsletterTopicModel extends InjectedLoadableDetachableModel<NewsletterTopic> {
 
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     @SpringBean

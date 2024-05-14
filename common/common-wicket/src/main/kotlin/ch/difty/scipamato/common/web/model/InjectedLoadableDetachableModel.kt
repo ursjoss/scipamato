@@ -6,6 +6,7 @@ import org.apache.wicket.model.LoadableDetachableModel
 abstract class InjectedLoadableDetachableModel<T> : LoadableDetachableModel<List<T>>() {
 
     init {
+        @Suppress("LeakingThis")
         injectThis()
     }
 

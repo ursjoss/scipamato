@@ -66,6 +66,7 @@ class PaperListPage(parameters: PageParameters?) : BasePage<Void?>(parameters) {
 
     private fun makeAndQueueFilterForm(id: String) {
         queue(object : FilterForm<PaperFilter>(id, dataProvider) {
+            private val serialVersionUID: Long = 1L
             override fun onSubmit() {
                 super.onSubmit()
                 updateNavigateable()
@@ -84,6 +85,7 @@ class PaperListPage(parameters: PageParameters?) : BasePage<Void?>(parameters) {
 
     private fun makeAndQueueResultPanel(id: String) {
         resultPanel = object : ResultPanel(id, dataProvider, mode) {
+            private val serialVersionUID: Long = 1L
             override val isOfferingSearchComposition: Boolean
                 get() = false
         }.apply {

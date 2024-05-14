@@ -11,8 +11,10 @@ import ch.difty.scipamato.core.entity.keyword.KeywordTranslation;
 import ch.difty.scipamato.core.web.common.DeletableDefinitionEditHeaderPanel;
 
 @SuppressWarnings("SameParameterValue")
-abstract class KeywordEditHeaderPanel
-    extends DeletableDefinitionEditHeaderPanel<KeywordDefinition, KeywordTranslation, Integer> {
+public abstract class KeywordEditHeaderPanel extends DeletableDefinitionEditHeaderPanel<KeywordDefinition, KeywordTranslation, Integer> {
+
+    @java.io.Serial
+    private static final long serialVersionUID = 1L;
 
     KeywordEditHeaderPanel(@NotNull final String id, @Nullable final IModel<KeywordDefinition> model) {
         super(id, model);

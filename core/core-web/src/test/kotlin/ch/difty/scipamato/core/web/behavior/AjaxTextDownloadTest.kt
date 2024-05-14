@@ -49,6 +49,7 @@ internal class AjaxTextDownloadTest : WicketTest() {
 
     private fun assertAntiCacheBehavior(ad2: AjaxTextDownload) {
         val l = object : AjaxLink<Void>("l") {
+            private val serialVersionUID: Long = 1L
             override fun onClick(target: AjaxRequestTarget?) {
                 ad2.initiate(targetDummy)
             }

@@ -1,5 +1,6 @@
 package ch.difty.scipamato.core.web.code;
 
+import java.io.Serial;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -28,6 +29,7 @@ import ch.difty.scipamato.core.web.common.DefinitionEditPage;
 @SuppressWarnings({ "SameParameterValue", "SpellCheckingInspection" })
 public class CodeEditPage extends DefinitionEditPage<CodeDefinition, CodeTranslation, String> {
 
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     private static final Pattern DUPLICATE_KEY_PATTERN = Pattern.compile(
@@ -52,6 +54,9 @@ public class CodeEditPage extends DefinitionEditPage<CodeDefinition, CodeTransla
     @Override
     protected CodeEditHeaderPanel newDefinitionHeaderPanel(@NotNull final String id) {
         return new CodeEditHeaderPanel(id, getModel()) {
+
+            @java.io.Serial
+            private static final long serialVersionUID = 1L;
 
             @NotNull
             @Override

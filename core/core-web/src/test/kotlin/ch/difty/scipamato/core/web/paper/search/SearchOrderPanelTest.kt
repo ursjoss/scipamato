@@ -41,6 +41,7 @@ internal abstract class SearchOrderPanelTest : PanelTest<SearchOrderPanel>() {
         assertForm("$b:form")
     }
 
+    @Suppress("SameParameterValue")
     private fun assertForm(b: String) {
         tester.assertComponent(b, Form::class.java)
         val bb = "$b:addSearchCondition"

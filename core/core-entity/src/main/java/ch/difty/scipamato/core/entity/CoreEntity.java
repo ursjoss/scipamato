@@ -17,6 +17,7 @@ import ch.difty.scipamato.common.entity.ScipamatoEntity;
     "lastModifiedByName" })
 public abstract class CoreEntity extends ScipamatoEntity {
 
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     /**

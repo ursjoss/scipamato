@@ -12,10 +12,12 @@ import ch.difty.scipamato.core.entity.keyword.KeywordFilter;
 import ch.difty.scipamato.core.persistence.KeywordService;
 import ch.difty.scipamato.core.web.common.DefinitionListResultPanel;
 
-@SuppressWarnings("SameParameterValue")
-class KeywordListResultPanel
-    extends DefinitionListResultPanel<KeywordDefinition, KeywordFilter, KeywordService, KeywordDefinitionProvider> {
+import org.jetbrains.annotations.Nullable;
 
+@SuppressWarnings("SameParameterValue")
+class KeywordListResultPanel extends DefinitionListResultPanel<KeywordDefinition, KeywordFilter, KeywordService, KeywordDefinitionProvider> {
+
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     KeywordListResultPanel(@NotNull final String id, @NotNull final KeywordDefinitionProvider provider) {
@@ -30,7 +32,7 @@ class KeywordListResultPanel
         return columns;
     }
 
-    private void onTitleClick(final IModel<KeywordDefinition> model) {
+    private void onTitleClick(@Nullable final IModel<KeywordDefinition> model) {
         setResponsePage(new KeywordEditPage(model, getPage().getPageReference()));
     }
 }

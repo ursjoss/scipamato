@@ -126,6 +126,7 @@ sealed class JRisAdapter(
     )
 
     companion object {
+        private const val serialVersionUID: Long = 1L
         private const val AUTHOR_DELIM = ","
         private const val AUTHOR_SUFFIX = "."
 
@@ -176,6 +177,10 @@ class DefaultRisAdapter(
             doi = p.doi?.takeUnless { it.trim().isBlank() },
             databaseName = dbName
         )
+
+    companion object {
+        private const val serialVersionUID: Long = 1L
+    }
 }
 
 /**
@@ -227,5 +232,9 @@ class DistillerSrRisAdapter(
         ep == null -> sp.toString()
         sp == null -> ep.toString()
         else -> "$sp-$ep"
+    }
+
+    companion object {
+        private const val serialVersionUID: Long = 1L
     }
 }

@@ -13,13 +13,19 @@ import org.apache.wicket.request.mapper.parameter.PageParameters
 
 @WicketHomePage
 class TestHomePage : AbstractPage<Void>(PageParameters()) {
+
     override val properties: ApplicationProperties
         get() = TestApplicationProperties()
     override val isNavbarVisible: Boolean
         get() = true
+
+    companion object {
+        private const val serialVersionUID: Long = 1L
+    }
 }
 
 class TestAbstractPage(model: IModel<TestRecord>) : AbstractPage<TestRecord>(CompoundPropertyModel.of(model)) {
+
     override fun onInitialize() {
         super.onInitialize()
 
@@ -33,13 +39,22 @@ class TestAbstractPage(model: IModel<TestRecord>) : AbstractPage<TestRecord>(Com
         get() = TestApplicationProperties()
     override val isNavbarVisible: Boolean
         get() = true
+
+    companion object {
+        private const val serialVersionUID: Long = 1L
+    }
 }
 
 class TestAbstractPanel(id: String, mode: Mode) : AbstractPanel<TestRecord>(id, null, mode) {
+
     override fun onInitialize() {
         super.onInitialize()
         queueFieldAndLabel(TextField<String>("foo"))
         queueFieldAndLabel(TextField<String>("bar"), PropertyValidator<String>())
         queueCheckBoxAndLabel(CheckBoxX("baz", Model.of(true)))
+    }
+
+    companion object {
+        private const val serialVersionUID: Long = 1L
     }
 }

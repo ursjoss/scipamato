@@ -32,7 +32,6 @@ internal class CodeClassEditPageTest : BasePageTest<CodeClassEditPage>() {
 
     private val ccd: CodeClassDefinition = CodeClassDefinition(1, "de", 1, cct_de, cct_en, cct_fr, cct_de2)
 
-    @Suppress("LocalVariableName")
     public override fun setUpHook() {
         every { codeClassServiceMock.find(any()) } returns listOf(
             CodeClass(1, "cc1", "d1"),
@@ -122,7 +121,6 @@ internal class CodeClassEditPageTest : BasePageTest<CodeClassEditPage>() {
         tester.assertErrorMessages("An unexpected error occurred when trying to save code class 1: fooMsg")
     }
 
-    @Suppress("SpellCheckingInspection")
     @Test
     fun submitting_withDuplicateKeyConstraintViolationException_addsErrorMsg() {
         val msg = (

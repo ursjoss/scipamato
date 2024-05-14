@@ -48,6 +48,7 @@ internal abstract class SearchOrderSelectorPanelTest : PanelTest<SearchOrderSele
         assertForm("$b:form")
     }
 
+    @Suppress("SameParameterValue")
     private fun assertForm(b: String) {
         tester.assertComponent(b, Form::class.java)
         tester.assertComponent("$b:searchOrder", BootstrapSelect::class.java)

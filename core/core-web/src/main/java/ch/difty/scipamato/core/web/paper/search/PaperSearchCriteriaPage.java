@@ -5,6 +5,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.string.StringValue;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import ch.difty.scipamato.core.auth.Roles;
@@ -35,6 +36,7 @@ import ch.difty.scipamato.core.web.paper.common.SearchablePaperPanel;
 @AuthorizeInstantiation({ Roles.USER, Roles.ADMIN, Roles.VIEWER })
 public class PaperSearchCriteriaPage extends BasePage<SearchCondition> {
 
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     @SpringBean
@@ -60,19 +62,20 @@ public class PaperSearchCriteriaPage extends BasePage<SearchCondition> {
     }
 
     @SuppressWarnings("SameParameterValue")
-    private SearchablePaperPanel makeSearchablePanel(String id) {
+    private SearchablePaperPanel makeSearchablePanel(@NotNull final String id) {
         return new SearchablePaperPanel(id, getModel()) {
+            @java.io.Serial
             private static final long serialVersionUID = 1L;
 
             @Override
             protected void onFormSubmit() {
-                Long searchOrderId = getSearchOrderId();
+                final Long searchOrderId = getSearchOrderId();
                 if (searchOrderId != null) {
                     try {
                         final SearchCondition sc = searchOrderService.saveOrUpdateSearchCondition(getModelObject(),
                             searchOrderId, getLanguageCode());
                         setModelObject(sc);
-                    } catch (Exception ex) {
+                    } catch (final Exception ex) {
                         error(new StringResourceModel("save.error.hint", this, null)
                             .setParameters(getNullSafeId(), ex.getMessage())
                             .getString());
@@ -96,11 +99,13 @@ public class PaperSearchCriteriaPage extends BasePage<SearchCondition> {
         };
     }
 
+    @Nullable
     private Long getSearchOrderId() {
         final StringValue sv = getPageParameters().get(CorePageParameters.SEARCH_ORDER_ID.getName());
         return sv.isNull() ? null : sv.toLong();
     }
 
+    @NotNull
     private String getNullSafeId() {
         return getModelObject().getId() != null ? getModelObject().getId() : "";
     }

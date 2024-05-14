@@ -13,7 +13,7 @@ import ch.difty.scipamato.core.entity.IdScipamatoEntity;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class NewsletterAssociation extends IdScipamatoEntity<Integer> {
-
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     @jakarta.validation.constraints.NotNull
@@ -41,8 +41,8 @@ public class NewsletterAssociation extends IdScipamatoEntity<Integer> {
         }
     }
 
-    public NewsletterAssociation(@Nullable Integer id, @NotNull String issue, @NotNull Integer publicationStatusId,
-        @Nullable String headline) {
+    public NewsletterAssociation(@Nullable final Integer id, @NotNull final String issue, @NotNull final Integer publicationStatusId,
+        @Nullable final String headline) {
         setId(id);
         this.issue = issue;
         this.publicationStatusId = publicationStatusId;

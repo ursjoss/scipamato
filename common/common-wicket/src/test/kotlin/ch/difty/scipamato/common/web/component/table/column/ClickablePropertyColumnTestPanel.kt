@@ -31,11 +31,21 @@ internal class ClickablePropertyColumnTestPanel(
         id: String,
         action: SerializableConsumer<IModel<TestRecord>>,
     ): IColumn<TestRecord, String> =
-        object : ClickablePropertyColumn<TestRecord, String>(Model.of(id), "name", action, null, inNewTab) {}
+        object : ClickablePropertyColumn<TestRecord, String>(Model.of(id), "name", action, null, inNewTab) {
+            private val serialVersionUID: Long = 1L
+        }
 
     internal class TestDataProvider : SortableDataProvider<TestRecord, String>() {
         override fun iterator(first: Long, count: Long): Iterator<TestRecord> = listOf(TestRecord(1, "foo")).iterator()
         override fun size(): Long = 1
         override fun model(record: TestRecord): IModel<TestRecord> = Model.of(record)
+
+        companion object {
+            private const val serialVersionUID: Long = 1L
+        }
+    }
+
+    companion object {
+        private const val serialVersionUID: Long = 1L
     }
 }

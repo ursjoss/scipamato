@@ -24,6 +24,7 @@ import ch.difty.scipamato.core.web.DefinitionProvider;
 public abstract class DefinitionListResultPanel<T extends DefinitionEntity<?, ?>, F extends ScipamatoFilter, S extends DefinitionProviderService<T, F>, P extends DefinitionProvider<T, F, S>>
     extends BasePanel<T> {
 
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     private static final int    ROWS_PER_PAGE = 10;
@@ -42,7 +43,7 @@ public abstract class DefinitionListResultPanel<T extends DefinitionEntity<?, ?>
         makeAndQueueTable("results");
     }
 
-    private void makeAndQueueTable(final String id) {
+    private void makeAndQueueTable(@NotNull final String id) {
         final DataTable<T, String> results = new BootstrapDefaultDataTable<>(id, makeTableColumns(), dataProvider, ROWS_PER_PAGE);
         results.setOutputMarkupId(true);
         results.add(new TableBehavior()
@@ -73,8 +74,11 @@ public abstract class DefinitionListResultPanel<T extends DefinitionEntity<?, ?>
         final String falseLabel = new StringResourceModel(propExpression + ".false", this, null).getString();
         return new PropertyColumn<>(new StringResourceModel(COLUMN_HEADER + propExpression, this, null), propExpression, propExpression) {
 
+            @java.io.Serial
+            private static final long serialVersionUID = 1L;
+
             @Override
-            public IModel<?> getDataModel(final IModel<T> rowModel) {
+            public IModel<?> getDataModel(@NotNull final IModel<T> rowModel) {
                 return (Model.of(Boolean.TRUE.equals(predicate.apply(rowModel.getObject())) ? trueLabel : falseLabel));
             }
         };

@@ -42,7 +42,7 @@ public interface PageFactory {
      *
      * @param container
      *     the page or panel to set the response page
-     * @return the SerializableConsumer you can then let accept the constructor
+     * @return the SerializableConsumer you can then get to accept the constructor
      *     argument (pageParameters) of the PaperSearchPageWithPage
      */
     @NotNull

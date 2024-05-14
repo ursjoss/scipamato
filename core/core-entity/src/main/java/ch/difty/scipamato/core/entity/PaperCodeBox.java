@@ -22,6 +22,7 @@ import ch.difty.scipamato.common.entity.CodeClassId;
  */
 public class PaperCodeBox implements CodeBox {
 
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     private final List<Code> codes = new ArrayList<>();
@@ -80,7 +81,7 @@ public class PaperCodeBox implements CodeBox {
             .stream()
             .distinct()
             .filter(this::isNewAndNonNull)
-            .collect(Collectors.toList()));
+            .toList());
     }
 
     @Override
@@ -128,7 +129,7 @@ public class PaperCodeBox implements CodeBox {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (this == obj)
             return true;
         if (obj == null)

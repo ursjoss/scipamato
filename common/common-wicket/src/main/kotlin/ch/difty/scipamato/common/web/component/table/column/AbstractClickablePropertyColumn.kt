@@ -38,16 +38,18 @@ abstract class AbstractClickablePropertyColumn<T, S> internal constructor(
 
     abstract fun onClick(clicked: IModel<T>?)
 
-    private inner class LinkPanel constructor(
+    @Suppress("serial")
+    private inner class LinkPanel(
         id: String,
         rowModel: IModel<T>?,
         labelModel: IModel<*>?,
     ) : Panel(id) {
+
         init {
             add(object : Link<T>("link", rowModel) {
-
+                private val serialVersionUID: Long = 1L
                 override fun onClick() {
-                    onClick(getModel())
+                    onClick(model)
                 }
 
                 override fun onComponentTag(tag: ComponentTag) {

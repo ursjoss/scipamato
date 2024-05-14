@@ -58,6 +58,7 @@ import org.jetbrains.annotations.Nullable;
  */
 @SuppressWarnings("SameParameterValue")
 public class StringSearchTerm extends AbstractSearchTerm {
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     private static final String RE_NOT   = "-";
@@ -166,6 +167,7 @@ public class StringSearchTerm extends AbstractSearchTerm {
      * indicates whether the search should be inverted ({@code not})
      */
     public static class Token implements Serializable {
+        @java.io.Serial
         private static final long serialVersionUID = 1L;
 
         public final TokenType type;

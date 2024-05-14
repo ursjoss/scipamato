@@ -99,6 +99,7 @@ class NewsletterEditPage(model: IModel<Newsletter>?) : BasePage<Newsletter>(getM
 
     private fun newIssueField(id: String): TextField<String> = object :
         TextField<String>(id) {
+        private val serialVersionUID: Long = 1L
         override fun onConfigure() {
             super.onConfigure()
             isEnabled = isInStatusInProgress
@@ -110,6 +111,7 @@ class NewsletterEditPage(model: IModel<Newsletter>?) : BasePage<Newsletter>(getM
 
     private fun newIssueDateField(id: String): LocalDateTextField =
         object : LocalDateTextField(id, StringResourceModel("date.format", this@NewsletterEditPage, null).string) {
+            private val serialVersionUID: Long = 1L
             override fun onConfigure() {
                 super.onConfigure()
                 isEnabled = isInStatusInProgress
@@ -122,6 +124,7 @@ class NewsletterEditPage(model: IModel<Newsletter>?) : BasePage<Newsletter>(getM
 
     private fun queueForm(id: String) {
         val form: Form<Newsletter> = object : Form<Newsletter>(id, CompoundPropertyModel(model)) {
+            private val serialVersionUID: Long = 1L
             override fun onSubmit() {
                 super.onSubmit()
                 doUpdate()
@@ -138,6 +141,7 @@ class NewsletterEditPage(model: IModel<Newsletter>?) : BasePage<Newsletter>(getM
             PublicationStatus.entries,
             EnumChoiceRenderer(this)
         ) {
+            private val serialVersionUID: Long = 1L
             override fun onConfigure() {
                 super.onConfigure()
                 this.isEnabled = !newNewsletter
@@ -180,6 +184,7 @@ class NewsletterEditPage(model: IModel<Newsletter>?) : BasePage<Newsletter>(getM
 
     private fun makeAndQueueResultPanel(id: String) {
         val resultPanel = object : ResultPanel(id, dataProvider!!, Mode.EDIT) {
+            private val serialVersionUID: Long = 1L
             override val isOfferingSearchComposition: Boolean
                 get() = false
         }

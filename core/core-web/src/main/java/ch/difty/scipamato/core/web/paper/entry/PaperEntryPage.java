@@ -80,11 +80,12 @@ import ch.difty.scipamato.core.web.paper.NewsletterChangeEvent;
  *
  * @author u.joss
  */
-@SuppressWarnings("ALL")
 @MountPath("entry")
 @Slf4j
 @AuthorizeInstantiation({ Roles.USER, Roles.ADMIN, Roles.VIEWER })
 public class PaperEntryPage extends SelfUpdatingPage<Paper> {
+
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     @SpringBean
@@ -108,7 +109,7 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
      *     page reference to the page that called this page. Can be null.
      */
     @SuppressWarnings({ "SameParameterValue" })
-    public PaperEntryPage(IModel<Paper> paperModel, PageReference callingPage) {
+    public PaperEntryPage(@Nullable final IModel<Paper> paperModel, @Nullable final PageReference callingPage) {
         this(paperModel, callingPage, null, false, Model.of(0));
     }
 
@@ -129,8 +130,8 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
      *     excluded from it. If true, the current paper has already been
      *     excluded from the search order. You can re-include it.
      */
-    public PaperEntryPage(@Nullable IModel<Paper> paperModel, @Nullable PageReference callingPage, @Nullable Long searchOrderId,
-        boolean showingExclusions, @Nullable Model<Integer> tabIndexModel) {
+    public PaperEntryPage(@Nullable final IModel<Paper> paperModel, @Nullable final PageReference callingPage, @Nullable final Long searchOrderId,
+        final boolean showingExclusions, @Nullable final Model<Integer> tabIndexModel) {
         super(paperModel);
         this.callingPage = callingPage;
         this.searchOrderId = searchOrderId;
@@ -155,7 +156,7 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
      * @param callingPage
      *     page reference to the page that called this page. Can be null.
      */
-    public PaperEntryPage(@Nullable PageParameters parameters, @Nullable PageReference callingPage) {
+    public PaperEntryPage(@Nullable final PageParameters parameters, @Nullable final PageReference callingPage) {
         super(parameters);
         initDefaultModel();
         this.callingPage = callingPage;
@@ -171,7 +172,7 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
      * @param parameters
      *     page parameters
      */
-    public PaperEntryPage(PageParameters parameters) {
+    public PaperEntryPage(@Nullable final PageParameters parameters) {
         this(parameters, null);
     }
 
@@ -195,7 +196,7 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
      * Sets the n.a. values so the paper could be saved or filled with PubMed information
      */
     private void initDefaultModel() {
-        Paper paper = new Paper();
+        final Paper paper = new Paper();
         paper.setNumber(findEmptyNumber());
         paper.setAuthors(Paper.NA_AUTHORS);
         paper.setTitle(Paper.NA_STRING);
@@ -213,6 +214,7 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
     @Override
     protected void implSpecificOnInitialize() {
         contentPanel = new EditablePaperPanel("contentPanel", getModel(), callingPage, searchOrderId, showingExclusions, mode, tabIndexModel) {
+            @java.io.Serial
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -222,7 +224,7 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
 
             @NotNull
             @Override
-            protected PaperEntryPage getResponsePage(@NotNull Paper p, @Nullable Long searchOrderId, boolean showingExclusions) {
+            protected PaperEntryPage getResponsePage(@NotNull final Paper p, @Nullable final Long searchOrderId, final boolean showingExclusions) {
                 return new PaperEntryPage(Model.of(p), getCallingPage(), searchOrderId, showingExclusions, tabIndexModel);
             }
         };
@@ -236,7 +238,7 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
         doUpdate(getModelObject());
     }
 
-    private void doUpdate(Paper paper) {
+    private void doUpdate(@NotNull final Paper paper) {
         try {
             if (mode == Mode.EDIT) {
                 final boolean wasNew = getNullSafeId() == 0;
@@ -252,14 +254,14 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
                         .getString());
                 }
             }
-        } catch (OptimisticLockingException ole) {
+        } catch (@NotNull final OptimisticLockingException ole) {
             @SuppressWarnings("SpellCheckingInspection") final String msg = new StringResourceModel("save.optimisticlockexception.hint", this, null)
                 .setParameters(ole.getTableName(), getNullSafeId())
                 .getString();
             log.error(msg);
             error(msg);
-        } catch (Exception ex) {
-            String msg = new StringResourceModel("save.error.hint", this, null)
+        } catch (@NotNull final Exception ex) {
+            final String msg = new StringResourceModel("save.error.hint", this, null)
                 .setParameters(getNullSafeId(), ex.getMessage())
                 .getString();
             log.error(msg);

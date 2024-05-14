@@ -54,6 +54,7 @@ import ch.difty.scipamato.core.web.paper.result.ResultPanel;
 @SuppressWarnings({ "SameParameterValue", "SpellCheckingInspection", "unused" })
 public class PaperSearchPage extends BasePage<SearchOrder> {
 
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     private static final int RESULT_PAGE_SIZE = 10;
@@ -130,11 +131,12 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
         return sv.isNull() ? modeFromUserRole() : Mode.valueOf(sv.toString());
     }
 
+    @NotNull
     private Mode modeFromUserRole() {
         return hasOneOfRoles(Roles.USER, Roles.ADMIN) ? Mode.EDIT : Mode.VIEW;
     }
 
-    private void setShowExcluded(SearchOrder so) {
+    private void setShowExcluded(@NotNull final SearchOrder so) {
         so.setShowExcluded(showExcludedFromPageParameters());
     }
 
@@ -149,14 +151,14 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
         so.setId(searchOrderIdFromPageParameters());
         so.setShowExcluded(showExcludedFromPageParameters());
         so.setName(null);
-        so.setOwner(getActiveUser().getId());
+        so.setOwner(Objects.requireNonNull(getActiveUser().getId()));
         return so;
     }
 
     private SearchOrder makeNewModelObject() {
         final SearchOrder so = new SearchOrder(null);
         so.setName(null);
-        so.setOwner(getActiveUser().getId());
+        so.setOwner(Objects.requireNonNull(getActiveUser().getId()));
         return so;
     }
 
@@ -182,7 +184,7 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
         }
     }
 
-    private void makeSearchOrderSelectorPanel(String id) {
+    private void makeSearchOrderSelectorPanel(@NotNull final String id) {
         queuePanelHeadingFor(id);
 
         searchOrderSelectorPanel = new SearchOrderSelectorPanel(id, getModel(), mode);
@@ -190,7 +192,7 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
         queue(searchOrderSelectorPanel);
     }
 
-    private void makeSearchOrderPanel(final String id) {
+    private void makeSearchOrderPanel(@NotNull final String id) {
         queuePanelHeadingFor(id);
 
         searchOrderPanel = new SearchOrderPanel(id, getModel(), mode);
@@ -200,6 +202,7 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
 
     private void makeResultPanel(final String id) {
         resultPanelLabel = new Label(id + LABEL_TAG) {
+            @java.io.Serial
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -219,6 +222,7 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
         queue(resultPanelLabel);
 
         resultPanel = new ResultPanel(id, dataProvider, mode) {
+            @java.io.Serial
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -246,14 +250,14 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
             manageNewsletterChangeEvent(event);
     }
 
-    private void manageSearchOrderChange(final IEvent<?> event) {
+    private void manageSearchOrderChange(@NotNull final IEvent<?> event) {
         final SearchOrderChangeEvent soce = (SearchOrderChangeEvent) event.getPayload();
         handleSearchOrderChangeEvent(soce);
         updateNavigateable();
         event.dontBroadcastDeeper();
     }
 
-    private void handleSearchOrderChangeEvent(final SearchOrderChangeEvent soce) {
+    private void handleSearchOrderChangeEvent(@NotNull final SearchOrderChangeEvent soce) {
         setExclusionIntoModel(soce);
         if (soce.getDroppedConditionId() != null)
             searchOrderService.removeSearchConditionWithId(soce.getDroppedConditionId());
@@ -261,7 +265,7 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
         addSubPanelsAsTarget(soce);
     }
 
-    private void manageNewsletterChangeEvent(final IEvent<?> event) {
+    private void manageNewsletterChangeEvent(@NotNull final IEvent<?> event) {
         final AjaxRequestTarget target = ((NewsletterChangeEvent) event.getPayload()).getTarget();
         target.add(getFeedbackPanel());
         event.dontBroadcastDeeper();
@@ -271,7 +275,7 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
      * Adds or removes an excluded id - depending on whether the showExcluded flag is
      * set in the model
      */
-    private void setExclusionIntoModel(final SearchOrderChangeEvent soce) {
+    private void setExclusionIntoModel(@NotNull final SearchOrderChangeEvent soce) {
         if (soce.getExcludedId() != null) {
             if (!getModelObject().isShowExcluded()) {
                 getModelObject().addExclusionOfPaperWithId(soce.getExcludedId());
@@ -281,7 +285,7 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
         }
     }
 
-    private void resetAndSaveProviderModel(final SearchOrderChangeEvent soce) {
+    private void resetAndSaveProviderModel(@NotNull final SearchOrderChangeEvent soce) {
         if (getModelObject() != null && !soce.isNewSearchOrderRequested()) {
             updateExistingSearchOrder(soce);
         } else {
@@ -289,12 +293,12 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
         }
     }
 
-    private void updateExistingSearchOrder(final SearchOrderChangeEvent soce) {
+    private void updateExistingSearchOrder(@NotNull final SearchOrderChangeEvent soce) {
         if (soce.getExcludedId() != null) {
             try {
-                SearchOrder p = searchOrderService.saveOrUpdate(getModelObject());
+                final SearchOrder p = searchOrderService.saveOrUpdate(getModelObject());
                 setModelObject(p);
-            } catch (OptimisticLockingException ole) {
+            } catch (final OptimisticLockingException ole) {
                 handleOptimisticLockingException(ole);
             }
         }
@@ -305,7 +309,7 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
             updateNavigateable();
     }
 
-    private void handleOptimisticLockingException(final OptimisticLockingException ole) {
+    private void handleOptimisticLockingException(@NotNull final OptimisticLockingException ole) {
         final String msg = new StringResourceModel("save.optimisticlockexception.hint", this, null)
             .setParameters(ole.getTableName(), getModelObject().getId())
             .getString();
@@ -316,20 +320,20 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
     private void newSearchOrder() {
         final SearchOrder newSearchOrder = makeNewModelObject();
         try {
-            final SearchOrder persistedNewSearchOrder = searchOrderService.saveOrUpdate(newSearchOrder);
+            final SearchOrder persistedNewSearchOrder = Objects.requireNonNull(searchOrderService.saveOrUpdate(newSearchOrder));
             setModelObject(persistedNewSearchOrder);
             final PageParameters pp = new PageParameters();
             pp.add(SEARCH_ORDER_ID.getName(), persistedNewSearchOrder.getId());
             pp.add(SHOW_EXCLUDED.getName(), false);
             pp.add(MODE.getName(), mode);
             pageFactory.setResponsePageToPaperSearchPageConsumer(this);
-        } catch (OptimisticLockingException ole) {
+        } catch (final OptimisticLockingException ole) {
             handleOptimisticLockingException(ole);
         }
     }
 
-    private void manageToggleExclusion(final IEvent<?> event) {
-        ToggleExclusionsEvent tee = (ToggleExclusionsEvent) event.getPayload();
+    private void manageToggleExclusion(@NotNull final IEvent<?> event) {
+        final ToggleExclusionsEvent tee = (ToggleExclusionsEvent) event.getPayload();
         setShowExcludedWhereRelevant();
         updateNavigateable();
         addingToTarget(tee.getTarget());
@@ -343,14 +347,12 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
         getModelObject().setShowExcluded(!oldValue);
     }
 
-    private void addingToTarget(final AjaxRequestTarget target) {
-        if (target != null) {
-            target.add(resultPanelLabel);
-            target.add(resultPanel);
-        }
+    private void addingToTarget(@NotNull final AjaxRequestTarget target) {
+        target.add(resultPanelLabel);
+        target.add(resultPanel);
     }
 
-    private void addSubPanelsAsTarget(final SearchOrderChangeEvent soce) {
+    private void addSubPanelsAsTarget(@NotNull final SearchOrderChangeEvent soce) {
         final AjaxRequestTarget target = soce.getTarget();
         target.add(searchOrderSelectorPanel);
         target.add(searchOrderPanel);

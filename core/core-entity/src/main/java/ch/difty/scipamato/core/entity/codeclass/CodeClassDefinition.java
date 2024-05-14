@@ -20,6 +20,7 @@ import ch.difty.scipamato.common.entity.FieldEnumType;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class CodeClassDefinition extends AbstractDefinitionEntity<CodeClassTranslation, Integer> {
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     @Nullable
@@ -41,7 +42,7 @@ public class CodeClassDefinition extends AbstractDefinitionEntity<CodeClassTrans
     @NotNull
     @Override
     public Integer getNullSafeId() {
-        return id;
+        return id != null ? id : -1;
     }
 
     public enum CodeClassDefinitionFields implements FieldEnumType {

@@ -29,6 +29,7 @@ internal abstract class LinkIconColumnTestPanel(
 
     private fun makeLinkIconColumn(): IColumn<TestRecord, String?> =
         object : LinkIconColumn<TestRecord>(Model.of("linkIconColumnLabel")) {
+            private val serialVersionUID: Long = 1L
             override fun createIconModel(rowModel: IModel<TestRecord>): IModel<String> = Model.of("fa fa-fw fa-filter")
             override fun createTitleModel(rowModel: IModel<TestRecord>): IModel<String>? = titleModel
             override fun onClickPerformed(
@@ -47,5 +48,13 @@ internal abstract class LinkIconColumnTestPanel(
         override fun iterator(first: Long, count: Long): Iterator<TestRecord> = listOf(TestRecord(1, "foo")).iterator()
         override fun size(): Long = 1
         override fun model(record: TestRecord): IModel<TestRecord> = Model.of(record)
+
+        companion object {
+            private const val serialVersionUID: Long = 1L
+        }
+    }
+
+    companion object {
+        private const val serialVersionUID: Long = 1L
     }
 }

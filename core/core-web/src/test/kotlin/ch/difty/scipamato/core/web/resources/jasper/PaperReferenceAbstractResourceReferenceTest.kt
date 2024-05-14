@@ -10,7 +10,8 @@ import org.apache.wicket.util.resource.ResourceStreamNotFoundException
 import org.junit.jupiter.api.Test
 import java.io.InputStream
 
-internal class PaperReferenceAbstractResourceReferenceTest : JasperReportResourceReferenceTest<PaperReferenceAbstractResourceReference>() {
+internal class PaperReferenceAbstractResourceReferenceTest :
+    JasperReportResourceReferenceTest<PaperReferenceAbstractResourceReference>() {
 
     override val resourceReference: PaperReferenceAbstractResourceReference
         get() = PaperReferenceAbstractResourceReference.get()
@@ -26,6 +27,7 @@ internal class PaperReferenceAbstractResourceReferenceTest : JasperReportResourc
         val rr: JasperReportResourceReference = object : JasperReportResourceReference(
             PaperReferenceAbstractResourceReference::class.java, "baz", false
         ) {
+            private val serialVersionUID: Long = 1L
             override val resourceStreamFromResource: IResourceStream?
                 get() = null
         }
@@ -38,6 +40,7 @@ internal class PaperReferenceAbstractResourceReferenceTest : JasperReportResourc
         val rr: JasperReportResourceReference = object : JasperReportResourceReference(
             PaperReferenceAbstractResourceReference::class.java, "baz", false
         ) {
+            private val serialVersionUID: Long = 1L
             override val resourceStreamFromResource: IResourceStream
                 get() = mockk()
 
@@ -53,6 +56,7 @@ internal class PaperReferenceAbstractResourceReferenceTest : JasperReportResourc
         val rr: JasperReportResourceReference = object : JasperReportResourceReference(
             PaperReferenceAbstractResourceReference::class.java, "baz", false
         ) {
+            private val serialVersionUID: Long = 1L
             override fun compileReport(): Unit = throw JRException("boom")
         }
         invoking { rr.getReport() } shouldThrow JasperReportException::class withMessage

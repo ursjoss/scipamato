@@ -45,6 +45,7 @@ import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic;
 @SuppressWarnings({ "SameParameterValue" })
 public class SearchCondition implements ScipamatoFilter, CodeBoxAware, NewsletterAware, AttachmentAware {
 
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     private static final String JOIN_DELIMITER = " AND ";

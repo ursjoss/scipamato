@@ -10,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
  */
 class JasperReportException extends RuntimeException {
 
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     JasperReportException(@NotNull final Exception ex) {

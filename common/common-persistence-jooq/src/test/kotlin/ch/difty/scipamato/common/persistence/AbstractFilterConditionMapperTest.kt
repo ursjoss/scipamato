@@ -32,4 +32,8 @@ internal class AbstractFilterConditionMapperTest {
     }
 }
 
-class TestFilter : ScipamatoFilter
+class TestFilter : ScipamatoFilter {
+    companion object {
+        private const val serialVersionUID: Long = 1L
+    }
+}

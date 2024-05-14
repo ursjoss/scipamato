@@ -42,6 +42,7 @@ abstract class DefinitionEditPage<E : DefinitionEntity<ID, T>, T : DefinitionTra
 
     @Suppress("TooGenericExceptionCaught")
     private fun newForm(id: String): Form<E> = object : Form<E>(id, CompoundPropertyModel(model)) {
+        private val serialVersionUID: Long = 1L
         override fun onSubmit() {
             super.onSubmit()
             try {

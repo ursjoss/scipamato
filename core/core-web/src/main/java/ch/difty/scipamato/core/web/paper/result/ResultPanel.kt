@@ -111,6 +111,8 @@ abstract class ResultPanel protected constructor(
             dataProvider,
             dataProvider.rowsPerPage.toLong()
         ) {
+            private val serialVersionUID: Long = 1L
+
             override fun onAfterRender() {
                 super.onAfterRender()
                 paperIdManager.initialize(this@ResultPanel.dataProvider.findAllPaperIdsByFilter())
@@ -170,6 +172,8 @@ abstract class ResultPanel protected constructor(
         object : LinkIconColumn<PaperSlim>(
             StringResourceModel("$COLUMN_HEADER$id", this@ResultPanel, null)
         ) {
+            private val serialVersionUID: Long = 1L
+
             override fun createIconModel(rowModel: IModel<PaperSlim>): IModel<String> {
                 val circle = FontAwesome6IconTypeBuilder.FontAwesome6Regular.circle_check.fixed()
                 val ban = FontAwesome6IconTypeBuilder.FontAwesome6Solid.ban.fixed()
@@ -178,7 +182,8 @@ abstract class ResultPanel protected constructor(
 
             override fun createTitleModel(rowModel: IModel<PaperSlim>): IModel<String> =
                 StringResourceModel(
-                    if (dataProvider.isShowExcluded) "column.title.reinclude" else "column.title.exclude", this@ResultPanel, null
+                    if (dataProvider.isShowExcluded) "column.title.reinclude"
+                    else "column.title.exclude", this@ResultPanel, null
                 )
 
             override fun onClickPerformed(target: AjaxRequestTarget, rowModel: IModel<PaperSlim>, link: AjaxLink<Void>) {
@@ -215,6 +220,7 @@ abstract class ResultPanel protected constructor(
         envelopeOpen: FontAwesome6IconType, envelope: FontAwesome6IconType,
     ): LinkIconColumn<PaperSlim> = object :
         LinkIconColumn<PaperSlim>(StringResourceModel("$COLUMN_HEADER$id", this@ResultPanel, null)) {
+        private val serialVersionUID: Long = 1L
         override fun createIconModel(rowModel: IModel<PaperSlim>) = Model.of(newLinkIcon(rowModel.getObject()))
         private fun newLinkIcon(paper: PaperSlim): String =
             if (hasNoNewsletter(paper))
@@ -261,7 +267,11 @@ abstract class ResultPanel protected constructor(
                 newsletterService.removePaperFromWipNewsletter(paper.id!!)
             } else {
                 warn(
-                    StringResourceModel("newsletter.readonly", this@ResultPanel, Model.of(paper.newsletterAssociation)).string
+                    StringResourceModel(
+                        "newsletter.readonly",
+                        this@ResultPanel,
+                        Model.of(paper.newsletterAssociation)
+                    ).string
                 )
             }
             target.add(results)
@@ -464,6 +474,7 @@ abstract class ResultPanel protected constructor(
         val baseUrl = properties.cmsUrlSearchPage
         val risAdapter = risAdapterFactory.createRisAdapter(brand, url, baseUrl)
         risDownload = object : AjaxTextDownload(true) {
+            private val serialVersionUID: Long = 1L
             override fun onRequest() {
                 content = risAdapter.build(dataProvider.findAllPapersByFilter())
                 fileName = "export.ris"
@@ -477,6 +488,7 @@ abstract class ResultPanel protected constructor(
     private fun addOrReplaceExportLink(id: String, initiate: (AjaxRequestTarget) -> Unit) {
         val titleResourceKey = LINK_RESOURCE_PREFIX + id + TITLE_RESOURCE_TAG
         val reviewLink: AjaxLink<Void> = object : AjaxLink<Void>(id) {
+            private val serialVersionUID: Long = 1L
             override fun onClick(target: AjaxRequestTarget) {
                 initiate(target)
             }
@@ -488,6 +500,7 @@ abstract class ResultPanel protected constructor(
     private fun addExportReviewCsvAjax() {
         val csvBuilder = ReviewCsvAdapter(reviewReportHeaderFields(""))
         csvDownload = object : AjaxCsvDownload(true) {
+            private val serialVersionUID: Long = 1L
             override fun onRequest() {
                 content = csvBuilder.build(dataProvider.findAllPapersByFilter())
                 fileName = ReviewCsvAdapter.FILE_NAME

@@ -45,6 +45,7 @@ abstract class AbstractLoginPage<R : AbstractPage<*>>(
     }
 
     private fun newLoginForm(id: String): StatelessForm<Void> = object : StatelessForm<Void>(id) {
+        private val serialVersionUID: Long = 1L
         override fun onSubmit() {
             if (signIn(username, password)) {
                 log.info("User '$username' logged in successfully")

@@ -19,9 +19,9 @@ import ch.difty.scipamato.core.entity.newsletter.Newsletter;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterFilter;
 import ch.difty.scipamato.core.persistence.NewsletterService;
 
-public class NewsletterProvider extends SortableDataProvider<Newsletter, String>
-    implements IFilterStateLocator<NewsletterFilter> {
+public class NewsletterProvider extends SortableDataProvider<Newsletter, String> implements IFilterStateLocator<NewsletterFilter> {
 
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     @SpringBean
@@ -33,7 +33,7 @@ public class NewsletterProvider extends SortableDataProvider<Newsletter, String>
         this(null);
     }
 
-    public NewsletterProvider(@Nullable NewsletterFilter filter) {
+    public NewsletterProvider(@Nullable final NewsletterFilter filter) {
         Injector
             .get()
             .inject(this);
@@ -42,16 +42,16 @@ public class NewsletterProvider extends SortableDataProvider<Newsletter, String>
     }
 
     /** package-private for test purposes */
-    void setService(@NotNull NewsletterService service) {
+    void setService(@NotNull final NewsletterService service) {
         this.service = service;
     }
 
     @NotNull
     @Override
-    public Iterator<Newsletter> iterator(long offset, long size) {
-        Sort.Direction dir = getSort().isAscending() ? Sort.Direction.ASC : Sort.Direction.DESC;
-        String sortProp = getSort().getProperty();
-        PaginationContext pc = new PaginationRequest((int) offset, (int) size, dir, sortProp);
+    public Iterator<Newsletter> iterator(final long offset, final long size) {
+        final Sort.Direction dir = getSort().isAscending() ? Sort.Direction.ASC : Sort.Direction.DESC;
+        final String sortProp = getSort().getProperty();
+        final PaginationContext pc = new PaginationRequest((int) offset, (int) size, dir, sortProp);
         return service
             .findPageByFilter(filter, pc)
             .iterator();
@@ -64,7 +64,7 @@ public class NewsletterProvider extends SortableDataProvider<Newsletter, String>
 
     @NotNull
     @Override
-    public IModel<Newsletter> model(Newsletter entity) {
+    public IModel<Newsletter> model(@NotNull final Newsletter entity) {
         return new Model<>(entity);
     }
 
@@ -75,7 +75,7 @@ public class NewsletterProvider extends SortableDataProvider<Newsletter, String>
     }
 
     @Override
-    public void setFilterState(@NotNull NewsletterFilter state) {
+    public void setFilterState(@NotNull final NewsletterFilter state) {
         this.filter = state;
     }
 }

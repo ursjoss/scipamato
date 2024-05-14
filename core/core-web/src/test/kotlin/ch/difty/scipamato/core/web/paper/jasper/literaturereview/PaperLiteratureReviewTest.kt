@@ -9,7 +9,6 @@ import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldThrow
 import org.junit.jupiter.api.Test
 
-@Suppress("SpellCheckingInspection")
 internal class PaperLiteratureReviewTest : ExportEntityTest() {
 
     private val rhf = newReportHeaderFields()

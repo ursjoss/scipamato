@@ -37,6 +37,7 @@ import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic;
 @EqualsAndHashCode(callSuper = true)
 public class Paper extends IdScipamatoEntity<Long> implements CodeBoxAware, NewsletterAware, AttachmentAware {
 
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     public static final String NA_AUTHORS   = "N A.";
@@ -301,6 +302,7 @@ public class Paper extends IdScipamatoEntity<Long> implements CodeBoxAware, News
 
     @Value
     public static class NewsletterLink implements Serializable {
+        @java.io.Serial
         private static final long serialVersionUID = 1L;
 
         Integer newsletterId;

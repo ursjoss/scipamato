@@ -19,6 +19,7 @@ import ch.difty.scipamato.core.entity.PaperAttachment;
  */
 public class PaperAttachmentProvider extends SortableDataProvider<PaperAttachment, String> {
 
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     private final IModel<List<PaperAttachment>> attachmentsModel;

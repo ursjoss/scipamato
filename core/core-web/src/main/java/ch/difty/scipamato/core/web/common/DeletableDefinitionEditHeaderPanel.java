@@ -21,6 +21,7 @@ import ch.difty.scipamato.core.persistence.OptimisticLockingException;
 public abstract class DeletableDefinitionEditHeaderPanel<E extends DefinitionEntity<ID, T>, T extends DefinitionTranslation, ID>
     extends DefinitionEditHeaderPanel<E, T, ID> {
 
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     /**
@@ -41,6 +42,7 @@ public abstract class DeletableDefinitionEditHeaderPanel<E extends DefinitionEnt
 
     private BootstrapButton newDeleteButton(final String id) {
         final BootstrapButton db = new BootstrapButton(id, new StringResourceModel(id + LABEL_RESOURCE_TAG), Buttons.Type.Default) {
+            @java.io.Serial
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -50,7 +52,7 @@ public abstract class DeletableDefinitionEditHeaderPanel<E extends DefinitionEnt
                     final E ntd = DeletableDefinitionEditHeaderPanel.this.getModelObject();
                     if (ntd.getNullSafeId() != null) {
                         final ID recordId = ntd.getNullSafeId();
-                        E deleted = doDelete(ntd, recordId);
+                        final E deleted = doDelete(ntd, recordId);
                         if (deleted != null) {
                             setResponsePage(staticResponsePage());
                             info(new StringResourceModel("delete.successful.hint", this, null)
@@ -60,22 +62,22 @@ public abstract class DeletableDefinitionEditHeaderPanel<E extends DefinitionEnt
                             handleRepoError(recordId);
                         }
                     }
-                } catch (OptimisticLockingException ole) {
+                } catch (final OptimisticLockingException ole) {
                     handleOptimisticLockingException(ole);
-                } catch (DataIntegrityViolationException dive) {
+                } catch (final DataIntegrityViolationException dive) {
                     handleDataIntegrityViolationException(dive);
-                } catch (Exception oe) {
+                } catch (final Exception oe) {
                     handleOtherException(oe);
                 }
             }
 
-            private void handleRepoError(final ID recordId) {
+            private void handleRepoError(@NotNull final ID recordId) {
                 error(new StringResourceModel("delete.unsuccessful.hint", this, null)
                     .setParameters(recordId, "")
                     .getString());
             }
 
-            private void handleOptimisticLockingException(final OptimisticLockingException ole) {
+            private void handleOptimisticLockingException(@NotNull final OptimisticLockingException ole) {
                 final String msg = new StringResourceModel("delete.optimisticlockexception.hint", this, null)
                     .setParameters(ole.getTableName(), DeletableDefinitionEditHeaderPanel.this
                         .getModelObject()

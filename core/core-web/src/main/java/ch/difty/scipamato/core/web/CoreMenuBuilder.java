@@ -35,10 +35,10 @@ import ch.difty.scipamato.core.web.user.UserListPage;
 @Component
 public class CoreMenuBuilder extends AbstractMenuBuilder {
 
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
-    public CoreMenuBuilder(@NotNull final ApplicationProperties applicationProperties,
-        @NotNull final ScipamatoWebSessionFacade webSessionFacade) {
+    public CoreMenuBuilder(@NotNull final ApplicationProperties applicationProperties, @NotNull final ScipamatoWebSessionFacade webSessionFacade) {
         super(applicationProperties, webSessionFacade);
     }
 
@@ -52,30 +52,28 @@ public class CoreMenuBuilder extends AbstractMenuBuilder {
         }
 
         addExternalLink(navbar, new StringResourceModel("menu.help.url", page, null).getString(),
-            new StringResourceModel("menu.help", page, null).getString(), FontAwesome6IconType.circle_question_s,
-            Navbar.ComponentPosition.RIGHT);
+            new StringResourceModel("menu.help", page, null).getString(), FontAwesome6IconType.circle_question_s, Navbar.ComponentPosition.RIGHT);
         addExternalLink(navbar, new StringResourceModel("menu.changelog.url", page, null)
             .setParameters(getVersionAnker())
             .getString(), getVersionLink(), FontAwesome6IconType.briefcase_s, Navbar.ComponentPosition.RIGHT);
         addPageLink(navbar, page, LogoutPage.class, "menu.logout", FontAwesome6IconType.right_from_bracket_s, Navbar.ComponentPosition.RIGHT);
     }
 
-    private void addPaperMenuEntries(final List<AbstractLink> links, Page page) {
+    private void addPaperMenuEntries(@NotNull final List<AbstractLink> links, @NotNull final Page page) {
         final String labelParent = "menu.papers.";
         addEntryToMenu(labelParent + "paper", page, PaperListPage.class, FontAwesome6IconType.list_s, links);
         addEntryToMenu(labelParent + "search", page, PaperSearchPage.class, FontAwesome6IconType.magnifying_glass_s, links);
     }
 
-    private void addNewsletterMenuEntries(final List<AbstractLink> links, Page page) {
+    private void addNewsletterMenuEntries(@NotNull final List<AbstractLink> links, @NotNull final Page page) {
         final String labelParent = "menu.newsletters.";
         if (hasOneOfRoles(Roles.USER, Roles.ADMIN)) {
             addEntryToMenu(labelParent + "newsletter", page, NewsletterListPage.class, FontAwesome6IconType.newspaper_s, links);
-            addEntryToMenu(labelParent + "newslettertopic", page, NewsletterTopicListPage.class, FontAwesome6IconType.bookmark_s,
-                links);
+            addEntryToMenu(labelParent + "newslettertopic", page, NewsletterTopicListPage.class, FontAwesome6IconType.bookmark_s, links);
         }
     }
 
-    private void addRefDataMenuEntries(final List<AbstractLink> links, Page page) {
+    private void addRefDataMenuEntries(@NotNull final List<AbstractLink> links, @NotNull final Page page) {
         final String labelParent = "menu.refData.";
         if (hasOneOfRoles(Roles.USER, Roles.ADMIN)) {
             addEntryToMenu(labelParent + "keyword", page, KeywordListPage.class, FontAwesome6IconType.briefcase_s, links);
@@ -85,7 +83,7 @@ public class CoreMenuBuilder extends AbstractMenuBuilder {
         }
     }
 
-    private void addPreferencesMenuEntries(final List<AbstractLink> links, Page page) {
+    private void addPreferencesMenuEntries(@NotNull final List<AbstractLink> links, @NotNull final Page page) {
         final String labelParent = "menu.preferences.";
         if (hasOneOfRoles(Roles.ADMIN)) {
             addEntryToMenu(labelParent + "users", page, UserListPage.class, FontAwesome6IconType.users_s, links);

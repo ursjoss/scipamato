@@ -20,6 +20,9 @@ import ch.difty.scipamato.common.entity.DefinitionTranslation;
 public abstract class DefinitionEditHeaderPanel<E extends DefinitionEntity<ID, T>, T extends DefinitionTranslation, ID>
     extends BasePanel<E> {
 
+    @java.io.Serial
+    private static final long serialVersionUID = 1L;
+
     protected DefinitionEditHeaderPanel(@NotNull final String id, @Nullable final IModel<E> model) {
         super(id, model);
     }
@@ -43,8 +46,9 @@ public abstract class DefinitionEditHeaderPanel<E extends DefinitionEntity<ID, T
     }
 
     private BootstrapButton newBackButton(final String id) {
-        BootstrapButton back = new BootstrapButton(id, new StringResourceModel(id + LABEL_RESOURCE_TAG),
+        final BootstrapButton back = new BootstrapButton(id, new StringResourceModel(id + LABEL_RESOURCE_TAG),
             Buttons.Type.Default) {
+            @java.io.Serial
             private static final long serialVersionUID = 1L;
 
             @Override

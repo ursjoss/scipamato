@@ -42,6 +42,7 @@ internal class AbstractLogoutPageTest : WicketBaseTest() {
     fun submit_withResponsePage() {
         val parameters = PageParameters()
         val page2 = object : TestLogoutPage(parameters) {
+            private val serialVersionUID: Long = 1L
             override val responsePage: AbstractPage<*>
                 get() = TestLoginPage(parameters)
         }

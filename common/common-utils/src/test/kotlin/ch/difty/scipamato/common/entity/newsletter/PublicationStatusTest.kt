@@ -3,12 +3,11 @@ package ch.difty.scipamato.common.entity.newsletter
 import ch.difty.scipamato.common.entity.newsletter.PublicationStatus.CANCELLED
 import ch.difty.scipamato.common.entity.newsletter.PublicationStatus.PUBLISHED
 import ch.difty.scipamato.common.entity.newsletter.PublicationStatus.WIP
-import ch.difty.scipamato.common.entity.newsletter.PublicationStatus.values
 import org.amshove.kluent.invoking
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeFalse
 import org.amshove.kluent.shouldBeTrue
-import org.amshove.kluent.shouldContainAll
+import org.amshove.kluent.shouldContainSame
 import org.amshove.kluent.shouldThrow
 import org.amshove.kluent.withMessage
 import org.junit.jupiter.api.Test
@@ -17,7 +16,7 @@ internal class PublicationStatusTest {
 
     @Test
     fun testValues() {
-        values() shouldContainAll listOf(WIP, PUBLISHED, CANCELLED)
+        PublicationStatus.entries shouldContainSame listOf(WIP, PUBLISHED, CANCELLED)
     }
 
     @Test
@@ -36,13 +35,16 @@ internal class PublicationStatusTest {
 
     @Test
     fun assertNames() {
-        values().map { it.description } shouldContainAll listOf("in progress", "published", "cancelled")
+        PublicationStatus.entries.map { it.description } shouldContainSame
+            listOf("in progress", "published", "cancelled")
     }
 
     @Test
     fun testById_withInvalidIds() {
-        invoking { PublicationStatus.byId(-2) } shouldThrow IllegalArgumentException::class withMessage "id -2 is not supported"
-        invoking { PublicationStatus.byId(2) } shouldThrow IllegalArgumentException::class withMessage "id 2 is not supported"
+        invoking { PublicationStatus.byId(-2) } shouldThrow
+            IllegalArgumentException::class withMessage "id -2 is not supported"
+        invoking { PublicationStatus.byId(2) } shouldThrow
+            IllegalArgumentException::class withMessage "id 2 is not supported"
     }
 
     @Test

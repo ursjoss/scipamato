@@ -13,6 +13,9 @@ import ch.difty.scipamato.core.web.DefinitionProvider;
 public abstract class DefinitionListFilterPanel<T extends DefinitionEntity<?, ?>, F extends ScipamatoFilter, S extends DefinitionProviderService<T, F>, P extends DefinitionProvider<T, F, S>>
     extends BasePanel<T> {
 
+    @java.io.Serial
+    private static final long serialVersionUID = 1L;
+
     private final P dataProvider;
 
     protected DefinitionListFilterPanel(@NotNull final String id, @NotNull final P provider) {
@@ -31,7 +34,7 @@ public abstract class DefinitionListFilterPanel<T extends DefinitionEntity<?, ?>
         makeAndQueueFilterForm("filterForm");
     }
 
-    private void makeAndQueueFilterForm(final String id) {
+    private void makeAndQueueFilterForm(@NotNull final String id) {
         queue(new FilterForm<>(id, dataProvider));
         queueFilterFormFields();
     }

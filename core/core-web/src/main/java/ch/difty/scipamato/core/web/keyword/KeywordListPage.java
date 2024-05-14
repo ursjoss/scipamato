@@ -24,6 +24,7 @@ import ch.difty.scipamato.core.web.common.DefinitionListPage;
 public class KeywordListPage
     extends DefinitionListPage<KeywordDefinition, KeywordFilter, KeywordService, KeywordDefinitionProvider> {
 
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     @SuppressWarnings("unused")
@@ -50,6 +51,9 @@ public class KeywordListPage
     @Override
     protected Panel newFilterPanel(@NotNull final String id) {
         return new KeywordListFilterPanel(id, getProvider()) {
+            @java.io.Serial
+            private static final long serialVersionUID = 1L;
+
             @NotNull
             @Override
             protected BootstrapAjaxButton doQueueNewKeywordButton(@NotNull final String id) {

@@ -41,6 +41,10 @@ abstract class AbstractCsvAdapter<T>(
     private fun SemicolonDelimitedSettings() = CsvWriterSettings().apply {
         format = CsvFormat().apply { delimiter = ';' }
     }
+
+    companion object {
+        private const val serialVersionUID: Long = 1L
+    }
 }
 
 /**
@@ -71,6 +75,7 @@ class ReviewCsvAdapter(private val rhf: ReportHeaderFields) : AbstractCsvAdapter
     ),
 ) {
     companion object {
+        private const val serialVersionUID: Long = 1L
         const val FILE_NAME = "review.csv"
     }
 }

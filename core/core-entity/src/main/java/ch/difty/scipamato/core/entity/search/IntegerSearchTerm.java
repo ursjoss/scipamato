@@ -36,6 +36,7 @@ import org.jetbrains.annotations.Nullable;
  * @author u.joss
  */
 public class IntegerSearchTerm extends AbstractSearchTerm {
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     private static final int COMP_SYMBOL_MAX_LENGTH = 2;

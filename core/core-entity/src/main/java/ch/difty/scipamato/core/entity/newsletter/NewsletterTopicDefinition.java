@@ -18,6 +18,7 @@ import ch.difty.scipamato.common.entity.AbstractDefinitionEntity;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class NewsletterTopicDefinition extends AbstractDefinitionEntity<NewsletterTopicTranslation, Integer> {
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     @Nullable
@@ -79,7 +80,7 @@ public class NewsletterTopicDefinition extends AbstractDefinitionEntity<Newslett
     /**
      * Title as Alias for name, as it's used in the database
      */
-    public void setTitleInLanguage(@NotNull final String langCode, @NotNull String title) {
+    public void setTitleInLanguage(@NotNull final String langCode, @NotNull final String title) {
         setNameInLanguage(langCode, title);
     }
 }

@@ -5,7 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import ch.difty.scipamato.core.entity.Paper;
 
 /**
- * Gathers the content for the the fields methods, population and result based on a Paper.
+ * Gathers the content for the fields methods, population and result based on a Paper.
  * <p>
  * The content may either be those fields themselves or some concatenated short fields.
  */

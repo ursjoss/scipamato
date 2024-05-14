@@ -67,7 +67,7 @@ import org.jetbrains.annotations.Nullable;
  */
 @SuppressWarnings({ "SameParameterValue", "SpellCheckingInspection" })
 public class AuditSearchTerm extends AbstractSearchTerm {
-
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     private static final int DATE_TIME_LENGTH = 10;

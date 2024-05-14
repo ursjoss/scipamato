@@ -24,6 +24,7 @@ abstract class SelfUpdatingPageTest<T : BasePage<*>> : BasePageTest<T>() {
         val p: SelfUpdatingPage<*> = object : SelfUpdatingPage<CodeClass?>(
             Model.of(CodeClass(1, "CC1", ""))
         ) {
+            private val serialVersionUID: Long = 1L
             override fun getForm(): Form<CodeClass?> = Form("id")
         }
         p.implSpecificOnInitialize()
@@ -44,4 +45,8 @@ class TestApplicationCoreProperties : ApplicationCoreProperties {
     override val titleOrBrand get() = ""
     override val risExporterStrategy get() = RisExporterStrategy.DEFAULT
     override val pubmedApiKey: String? get() = null
+
+    companion object {
+        private const val serialVersionUID: Long = 1L
+    }
 }

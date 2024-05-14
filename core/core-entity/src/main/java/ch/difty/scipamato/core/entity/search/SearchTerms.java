@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 
 public abstract class SearchTerms<C extends Serializable> extends LinkedHashMap<String, C> {
 
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     @Override

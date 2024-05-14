@@ -12,7 +12,7 @@ import org.springframework.test.util.ReflectionTestUtils
 internal const val USERNAME = "testuser"
 internal const val PASSWORD = "secretpw"
 
-@Suppress("SerialVersionUIDInSerializableClass", "UnnecessaryAbstractClass")
+@Suppress("UnnecessaryAbstractClass")
 @SpringBootTest(classes = [TestApplication::class])
 abstract class WicketBaseTest {
 
@@ -32,7 +32,7 @@ abstract class WicketBaseTest {
 
         ReflectionTestUtils.setField(wicketApplication, "applicationContext", applicationContextMock)
         tester = WicketTester(wicketApplication)
-        val locale = java.util.Locale("en_US")
+        val locale = java.util.Locale.of("en_US")
         tester.session.locale = locale
         setUpHook()
     }

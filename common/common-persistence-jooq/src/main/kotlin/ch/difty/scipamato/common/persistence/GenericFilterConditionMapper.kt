@@ -2,7 +2,6 @@ package ch.difty.scipamato.common.persistence
 
 import ch.difty.scipamato.common.entity.filter.ScipamatoFilter
 import org.jooq.Condition
-import org.jooq.impl.DSL
 
 /**
  * Mapper translating the provided filter into matching conditions.

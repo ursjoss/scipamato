@@ -1,6 +1,7 @@
 package ch.difty.scipamato.core.web.resources.jasper
 
-internal class PaperSummaryTableReportResourceReferenceTest : JasperReportResourceReferenceTest<PaperSummaryTableReportResourceReference>() {
+internal class PaperSummaryTableReportResourceReferenceTest :
+    JasperReportResourceReferenceTest<PaperSummaryTableReportResourceReference>() {
 
     override val resourceReference: PaperSummaryTableReportResourceReference
         get() = PaperSummaryTableReportResourceReference.get()

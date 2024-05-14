@@ -45,7 +45,7 @@ abstract class WicketTest : AbstractWicketTest() {
 
         every { sessionFacadeMock.paperIdManager } returns itemNavigatorMock
 
-        val locale = Locale("en_US")
+        val locale = Locale.of("en_US")
 
         with(sessionFacadeMock) {
             every { languageCode } returns locale.language

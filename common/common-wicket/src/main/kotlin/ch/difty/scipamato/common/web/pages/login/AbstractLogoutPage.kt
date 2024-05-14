@@ -27,6 +27,7 @@ abstract class AbstractLogoutPage<R : AbstractPage<*>>(
 
     @Suppress("SameParameterValue")
     private fun newForm(id: String): StatelessForm<Void> = object : StatelessForm<Void>(id) {
+        private val serialVersionUID: Long = 1L
         override fun onSubmit() {
             signOutAndInvalidate()
             responsePage?.let { setResponsePage(it) }

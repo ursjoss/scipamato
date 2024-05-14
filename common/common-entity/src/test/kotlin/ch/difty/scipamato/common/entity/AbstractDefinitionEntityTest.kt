@@ -229,7 +229,7 @@ class AbstractDefinitionEntityTest {
 
     @Test
     fun translationFields() {
-        AbstractDefinitionTranslation.DefinitionTranslationFields.values() shouldContainSame listOf(
+        AbstractDefinitionTranslation.DefinitionTranslationFields.entries shouldContainSame listOf(
             AbstractDefinitionTranslation.DefinitionTranslationFields.ID,
             AbstractDefinitionTranslation.DefinitionTranslationFields.LANG_CODE,
             AbstractDefinitionTranslation.DefinitionTranslationFields.NAME

@@ -21,17 +21,16 @@ import ch.difty.scipamato.core.web.common.DefinitionEditPage;
 @Slf4j
 @AuthorizeInstantiation({ Roles.USER, Roles.ADMIN })
 @SuppressWarnings("SameParameterValue")
-public class NewsletterTopicEditPage
-    extends DefinitionEditPage<NewsletterTopicDefinition, NewsletterTopicTranslation, Integer> {
+public class NewsletterTopicEditPage extends DefinitionEditPage<NewsletterTopicDefinition, NewsletterTopicTranslation, Integer> {
 
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     @SuppressWarnings("unused")
     @SpringBean
     private NewsletterTopicService service;
 
-    NewsletterTopicEditPage(@Nullable final IModel<NewsletterTopicDefinition> model,
-        @Nullable final PageReference callingPageRef) {
+    NewsletterTopicEditPage(@Nullable final IModel<NewsletterTopicDefinition> model, @Nullable final PageReference callingPageRef) {
         super(model, callingPageRef);
     }
 
@@ -46,10 +45,12 @@ public class NewsletterTopicEditPage
     protected NewsletterTopicEditHeaderPanel newDefinitionHeaderPanel(@NotNull final String id) {
         return new NewsletterTopicEditHeaderPanel(id, getModel()) {
 
+            @java.io.Serial
+            private static final long serialVersionUID = 1L;
+
             @Nullable
             @Override
-            protected NewsletterTopicDefinition doDelete(@NotNull final NewsletterTopicDefinition ntd,
-                @NotNull final Integer recordId) {
+            protected NewsletterTopicDefinition doDelete(@NotNull final NewsletterTopicDefinition ntd, @NotNull final Integer recordId) {
                 return service.delete(recordId, ntd.getVersion());
             }
 

@@ -18,13 +18,16 @@ import ch.difty.scipamato.core.persistence.NewsletterTopicService;
 import ch.difty.scipamato.core.web.common.DefinitionListPage;
 import ch.difty.scipamato.core.web.newsletter.NewsletterTopicDefinitionProvider;
 
+import java.io.Serial;
+
 @MountPath("newsletter/topics")
 @Slf4j
 @AuthorizeInstantiation({ Roles.USER, Roles.ADMIN })
 @SuppressWarnings({ "SameParameterValue" })
-public class NewsletterTopicListPage extends
-    DefinitionListPage<NewsletterTopicDefinition, NewsletterTopicFilter, NewsletterTopicService, NewsletterTopicDefinitionProvider> {
+public class NewsletterTopicListPage
+    extends DefinitionListPage<NewsletterTopicDefinition, NewsletterTopicFilter, NewsletterTopicService, NewsletterTopicDefinitionProvider> {
 
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     @SuppressWarnings("unused")
@@ -52,12 +55,14 @@ public class NewsletterTopicListPage extends
     protected Panel newFilterPanel(@NotNull final String id) {
         return new NewsletterTopicListFilterPanel(id, getProvider()) {
 
+            @java.io.Serial
+            private static final long serialVersionUID = 1L;
+
             @NotNull
             @Override
             protected BootstrapAjaxButton doQueueNewNewsletterTopicButton(@NotNull final String id) {
                 return newResponsePageButton(id,
-                    () -> new NewsletterTopicEditPage(Model.of(service.newUnpersistedNewsletterTopicDefinition()),
-                        getPage().getPageReference()));
+                    () -> new NewsletterTopicEditPage(Model.of(service.newUnpersistedNewsletterTopicDefinition()), getPage().getPageReference()));
             }
         };
     }

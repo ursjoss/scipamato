@@ -24,6 +24,7 @@ import ch.difty.scipamato.core.web.common.DefinitionEditPage;
 @SuppressWarnings("SameParameterValue")
 public class KeywordEditPage extends DefinitionEditPage<KeywordDefinition, KeywordTranslation, Integer> {
 
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     @SuppressWarnings("unused")
@@ -45,6 +46,9 @@ public class KeywordEditPage extends DefinitionEditPage<KeywordDefinition, Keywo
     @Override
     protected KeywordEditHeaderPanel newDefinitionHeaderPanel(@NotNull final String id) {
         return new KeywordEditHeaderPanel(id, getModel()) {
+            @java.io.Serial
+            private static final long serialVersionUID = 1L;
+
             @Nullable
             @Override
             protected KeywordDefinition doDelete(@NotNull final KeywordDefinition kd, @NotNull final Integer recordId) {
@@ -69,6 +73,9 @@ public class KeywordEditPage extends DefinitionEditPage<KeywordDefinition, Keywo
     @Override
     protected KeywordEditTranslationPanel newDefinitionTranslationPanel(@NotNull final String id) {
         return new KeywordEditTranslationPanel(id, getModel()) {
+            @java.io.Serial
+            private static final long serialVersionUID = 1L;
+
             @NotNull
             @Override
             protected Form<KeywordDefinition> getForm() {

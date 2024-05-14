@@ -57,7 +57,7 @@ abstract class BasePage<T> : AbstractPage<T> {
         menuBuilder.addMenuLinksTo(nb, this)
     }
 
-
+    @Suppress("SameParameterValue")
     protected fun hasOneOfRoles(vararg roles: String): Boolean = sessionFacade.hasAtLeastOneRoleOutOf(*roles)
 
     companion object {

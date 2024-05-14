@@ -11,9 +11,9 @@ import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicFilter;
 import ch.difty.scipamato.core.persistence.NewsletterTopicService;
 import ch.difty.scipamato.core.web.DefinitionProvider;
 
-public class NewsletterTopicDefinitionProvider
-    extends DefinitionProvider<NewsletterTopicDefinition, NewsletterTopicFilter, NewsletterTopicService> {
+public class NewsletterTopicDefinitionProvider extends DefinitionProvider<NewsletterTopicDefinition, NewsletterTopicFilter, NewsletterTopicService> {
 
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     @SpringBean

@@ -11,6 +11,7 @@ import ch.difty.scipamato.common.entity.filter.ScipamatoFilter;
 @EqualsAndHashCode(callSuper = false)
 public class UserFilter implements ScipamatoFilter {
 
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     private String  nameMask;

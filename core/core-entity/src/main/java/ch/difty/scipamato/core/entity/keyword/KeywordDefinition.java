@@ -19,6 +19,7 @@ import ch.difty.scipamato.common.entity.AbstractDefinitionEntity;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class KeywordDefinition extends AbstractDefinitionEntity<KeywordTranslation, Integer> {
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     @Nullable

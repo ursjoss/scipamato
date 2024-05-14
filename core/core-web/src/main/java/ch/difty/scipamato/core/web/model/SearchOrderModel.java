@@ -21,6 +21,7 @@ import ch.difty.scipamato.core.persistence.SearchOrderService;
  */
 public class SearchOrderModel extends InjectedLoadableDetachableModel<SearchOrder> {
 
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     @SpringBean

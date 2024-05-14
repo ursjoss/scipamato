@@ -74,12 +74,8 @@ class PaperReview(p: Paper, rhf: ReportHeaderFields) : ExportEntity {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
-
         other as PaperReview
-
-        if (number != other.number) return false
-
-        return true
+        return number == other.number
     }
 
     override fun hashCode(): Int = number.hashCode()

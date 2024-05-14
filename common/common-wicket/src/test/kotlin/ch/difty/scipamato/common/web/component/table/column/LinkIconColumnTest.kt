@@ -18,6 +18,7 @@ internal class LinkIconColumnTest : WicketBaseTest() {
     private var clickPerformed: String? = null
 
     private val lc = object : LinkIconColumn<TestRecord>(Model.of("headerText")) {
+        private val serialVersionUID: Long = 1L
         override fun createIconModel(rowModel: IModel<TestRecord>): IModel<String> = Model.of("the iconModel")
         override fun onClickPerformed(target: AjaxRequestTarget, rowModel: IModel<TestRecord>, link: AjaxLink<Void>) {
             clickPerformed = rowModel.getObject()?.toString()
@@ -26,6 +27,7 @@ internal class LinkIconColumnTest : WicketBaseTest() {
 
     private fun newPanelWithTitle(title: String?): LinkIconColumnTestPanel =
         object : LinkIconColumnTestPanel(ID, title?.let { Model.of(it) }) {
+            private val serialVersionUID: Long = 1L
             override fun onClickPerformed(rowModel: IModel<TestRecord>, link: AjaxLink<Void>) {
                 clickPerformed = rowModel.getObject()?.toString()
             }

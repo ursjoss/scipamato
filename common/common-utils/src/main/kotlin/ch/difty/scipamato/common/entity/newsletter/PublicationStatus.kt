@@ -11,11 +11,8 @@ enum class PublicationStatus(val id: Int, val description: String) {
     val isInProgress: Boolean get() = WIP == this
 
     companion object {
-        // cache the array
-        private val NEWSLETTER_STATI = values()
-
         fun byId(id: Int): PublicationStatus {
-            for (t in NEWSLETTER_STATI)
+            for (t in entries)
                 if (t.id == id) return t
             throw IllegalArgumentException("id $id is not supported")
         }

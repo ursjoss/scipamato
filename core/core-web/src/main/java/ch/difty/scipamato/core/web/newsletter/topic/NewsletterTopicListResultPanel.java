@@ -13,10 +13,13 @@ import ch.difty.scipamato.core.persistence.NewsletterTopicService;
 import ch.difty.scipamato.core.web.common.DefinitionListResultPanel;
 import ch.difty.scipamato.core.web.newsletter.NewsletterTopicDefinitionProvider;
 
+import org.jetbrains.annotations.Nullable;
+
 @SuppressWarnings("SameParameterValue")
 class NewsletterTopicListResultPanel extends
     DefinitionListResultPanel<NewsletterTopicDefinition, NewsletterTopicFilter, NewsletterTopicService, NewsletterTopicDefinitionProvider> {
 
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     NewsletterTopicListResultPanel(@NotNull final String id,
@@ -32,7 +35,7 @@ class NewsletterTopicListResultPanel extends
         return columns;
     }
 
-    private void onTitleClick(final IModel<NewsletterTopicDefinition> model) {
+    private void onTitleClick(@Nullable final IModel<NewsletterTopicDefinition> model) {
         setResponsePage(new NewsletterTopicEditPage(model, getPage().getPageReference()));
     }
 }

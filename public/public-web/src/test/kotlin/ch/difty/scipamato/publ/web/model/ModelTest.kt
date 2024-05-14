@@ -23,7 +23,7 @@ abstract class ModelTest {
     protected fun setUp() {
         ReflectionTestUtils.setField(application!!, "applicationContext", applicationContextMock)
         val tester = WicketTester(application)
-        val locale = Locale("en_US")
+        val locale = Locale.of("en_US")
         tester
             .session.locale = locale
         setUpLocal()

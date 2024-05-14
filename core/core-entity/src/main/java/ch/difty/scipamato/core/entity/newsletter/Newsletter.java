@@ -19,6 +19,7 @@ import ch.difty.scipamato.core.entity.projection.PaperSlim;
 @Builder
 @EqualsAndHashCode(callSuper = true)
 public class Newsletter extends IdScipamatoEntity<Integer> {
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     @jakarta.validation.constraints.NotNull
@@ -84,7 +85,7 @@ public class Newsletter extends IdScipamatoEntity<Integer> {
             .values()
             .stream()
             .flatMap(List::stream)
-            .collect(Collectors.toList())
+            .toList()
             .contains(paper))
             removePaperIfOnDifferentTopic(topic, paper);
         addPaperToTopic(topic, paper);

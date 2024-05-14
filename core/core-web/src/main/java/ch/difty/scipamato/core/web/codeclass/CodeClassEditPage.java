@@ -28,6 +28,7 @@ import ch.difty.scipamato.core.web.common.DefinitionEditPage;
 @SuppressWarnings({ "SameParameterValue", "SpellCheckingInspection" })
 public class CodeClassEditPage extends DefinitionEditPage<CodeClassDefinition, CodeClassTranslation, Integer> {
 
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     private static final Pattern DUPLICATE_KEY_PATTERN = Pattern.compile(
@@ -52,6 +53,9 @@ public class CodeClassEditPage extends DefinitionEditPage<CodeClassDefinition, C
     @Override
     protected CodeClassEditHeaderPanel newDefinitionHeaderPanel(@NotNull final String id) {
         return new CodeClassEditHeaderPanel(id, getModel()) {
+
+            @java.io.Serial
+            private static final long serialVersionUID = 1L;
 
             @Nullable
             @Override

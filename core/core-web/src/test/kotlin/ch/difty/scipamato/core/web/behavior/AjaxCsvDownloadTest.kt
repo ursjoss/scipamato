@@ -40,6 +40,7 @@ internal class AjaxCsvDownloadTest : WicketTest() {
     @Test
     fun `clicking the link adds javascript to target`() {
         val l = object : AjaxLink<Void>("l") {
+            private val serialVersionUID: Long = 1L
             override fun onClick(target: AjaxRequestTarget?) = ad.initiate(targetDummy)
         }
         l.add(ad)
@@ -61,6 +62,7 @@ internal class AjaxCsvDownloadTest : WicketTest() {
 
     private fun assertAntiCacheBehavior(ad: AjaxCsvDownload) {
         val l = object : AjaxLink<Void>("l") {
+            private val serialVersionUID: Long = 1L
             override fun onClick(target: AjaxRequestTarget?) {
                 ad.initiate(targetDummy)
             }

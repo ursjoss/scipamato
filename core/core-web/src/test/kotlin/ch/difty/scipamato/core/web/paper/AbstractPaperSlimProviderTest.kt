@@ -37,7 +37,7 @@ internal abstract class AbstractPaperSlimProviderTest<F : PaperSlimFilter, P : A
     fun setUp() {
         val tester = WicketTester(application)
 
-        tester.session.locale = Locale("en")
+        tester.session.locale = Locale.of("en")
         provider = newProvider().apply {
             service = paperSlimServiceMock
             paperService = paperServiceMock

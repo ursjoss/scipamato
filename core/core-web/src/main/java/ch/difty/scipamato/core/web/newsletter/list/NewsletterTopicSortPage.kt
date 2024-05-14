@@ -55,6 +55,7 @@ class NewsletterTopicSortPage(
         topics: List<NewsletterNewsletterTopic>
     ): Sortable<NewsletterNewsletterTopic> =
         object : Sortable<NewsletterNewsletterTopic>(id, topics) {
+            private val serialVersionUID: Long = 1L
             override fun newListView(
                 model: IModel<List<NewsletterNewsletterTopic>>?
             ): HashListView<NewsletterNewsletterTopic> =
@@ -67,6 +68,7 @@ class NewsletterTopicSortPage(
             StringResourceModel("$id$LABEL", this, null),
             Buttons.Type.Primary
         ) {
+            private val serialVersionUID: Long = 1L
             override fun onSubmit(target: AjaxRequestTarget) {
                 super.onSubmit(target)
                 alignSortToIndex(topics)
@@ -97,6 +99,7 @@ class NewsletterTopicSortPage(
             StringResourceModel(id + LABEL, this, null),
             Buttons.Type.Default
         ) {
+            private val serialVersionUID: Long = 1L
             override fun onSubmit(target: AjaxRequestTarget) {
                 super.onSubmit(target)
                 if (previousPageRef != null)
@@ -115,6 +118,7 @@ class NewsletterTopicSortPage(
             model: IModel<List<NewsletterNewsletterTopic>>?
         ): HashListView<NewsletterNewsletterTopic> =
             object : HashListView<NewsletterNewsletterTopic>(id, model) {
+                private val serialVersionUID: Long = 1L
                 override fun populateItem(item: ListItem<NewsletterNewsletterTopic?>?) {
                     item?.apply {
                         add(

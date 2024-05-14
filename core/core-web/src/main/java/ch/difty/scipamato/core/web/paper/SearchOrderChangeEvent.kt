@@ -4,18 +4,15 @@ import org.apache.wicket.ajax.AjaxRequestTarget
 
 /**
  * The event indicates that there were changes in the search order deriving from
- * the [SearchOrderPanel] that will or may affect other child components
- * of the parent page container holding the [SearchOrderPanel].
- *
+ * the `SearchOrderPanel` that will or may affect other child components
+ * of the parent page container holding the `SearchOrderPanel`.
  *
  * There are a couple of special options that can be achieved with the event:
  *
- *
- *  * if the excluded id is set, the sink will be requested to handle that id
- * an treat it as an excluded id.
+ *  * if the excluded id is set, the sink will be requested to handle that id,
+ *    treating it as an excluded id.
  *  * if the newSearchOrderRequested flag is set, the sink will need to take
- * care of creating a new SearchOrder and set it as the model.
- *
+ *    care of creating a new SearchOrder and set it as the model.
  *
  * @author u.joss
  */

@@ -29,6 +29,7 @@ internal abstract class KeywordEditTranslationPanel(
 
     @Suppress("SameParameterValue")
     private fun newAddLink(id: String, item: Item<KeywordTranslation>): AjaxLink<Void> = object : AjaxLink<Void>(id) {
+        private val serialVersionUID: Long = 1L
         override fun onClick(target: AjaxRequestTarget) {
             val currentKt = item.modelObject
             val langCode = currentKt.langCode
@@ -44,6 +45,7 @@ internal abstract class KeywordEditTranslationPanel(
     @Suppress("SameParameterValue")
     private fun newRemoveLink(id: String, item: Item<KeywordTranslation>): AjaxLink<Void> =
         object : AjaxLink<Void>(id) {
+            private val serialVersionUID: Long = 1L
             override fun onClick(target: AjaxRequestTarget) {
                 val currentKt = item.modelObject
                 val keywordDefinition = this@KeywordEditTranslationPanel.modelObject!!

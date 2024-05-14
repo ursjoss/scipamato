@@ -47,6 +47,7 @@ internal abstract class EditablePaperPanelTest : PaperPanelTest<Paper, EditableP
 
     private fun newPanel(p: Paper, pageRef: PageReference?, searchOrderId: Long?, mode: Mode): EditablePaperPanel =
         object : EditablePaperPanel(PANEL_ID, Model.of(p), pageRef, searchOrderId, SHOW_EXCLUDED, mode, Model.of(0)) {
+            private val serialVersionUID: Long = 1L
             override fun onFormSubmit() {
                 // no-op
             }
@@ -143,6 +144,7 @@ internal abstract class EditablePaperPanelTest : PaperPanelTest<Paper, EditableP
         showExcluded: Boolean,
     ): EditablePaperPanel =
         object : EditablePaperPanel(PANEL_ID, Model.of(p), callingPage, searchOrderId, showExcluded, mode, Model.of(0)) {
+            private val serialVersionUID: Long = 1L
             override fun onFormSubmit() {
                 // no-op
             }

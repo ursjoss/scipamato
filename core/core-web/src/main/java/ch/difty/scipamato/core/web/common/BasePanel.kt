@@ -42,7 +42,8 @@ abstract class BasePanel<T> @JvmOverloads constructor(
     /**
      * Retrieves the label's resource string (short form) for given [componentId].
      */
-    protected fun getShortLabelResourceFor(componentId: String): String = getResourceFor(componentId, SHORT_LABEL_RESOURCE_TAG)
+    protected fun getShortLabelResourceFor(componentId: String): String =
+        getResourceFor(componentId, SHORT_LABEL_RESOURCE_TAG)
 
     private fun getResourceFor(componentId: String, tag: String): String =
         StringResourceModel("$componentId$tag", this, null).string

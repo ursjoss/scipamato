@@ -9,6 +9,7 @@ import org.jetbrains.annotations.NotNull;
  */
 public class PaperReferenceAbstractResourceReference extends JasperReportResourceReference {
 
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     private static final String NAME = "paper_reference_abstract_A4";
