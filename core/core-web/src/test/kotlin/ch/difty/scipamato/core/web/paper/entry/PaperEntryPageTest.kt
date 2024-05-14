@@ -26,7 +26,7 @@ internal class PaperEntryPageTest : SelfUpdatingPageTest<PaperEntryPage>() {
 
     private val persistedPaper = Paper().apply { id = ID }
 
-    override fun makePage(): PaperEntryPage = PaperEntryPage(Model.of(Paper()), null)
+    override fun makePage(): PaperEntryPage = PaperEntryPage(Model.of(Paper().apply { id = 0L }), null)
 
     override val pageClass: Class<PaperEntryPage>
         get() = PaperEntryPage::class.java
@@ -189,6 +189,8 @@ internal class PaperEntryPageTest : SelfUpdatingPageTest<PaperEntryPage>() {
 
     @Test
     fun eventTest() {
+        every { paperServiceMock.mergePaperIntoWipNewsletter(any(), any(),any()) } returns java.util.Optional.empty()
+
         tester.startPage(makePage())
 
         tester.executeAjaxEvent("contentPanel:form:modAssociation", "click")

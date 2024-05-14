@@ -862,11 +862,12 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
             final Long id = EditablePaperPanel.this
                 .getModelObject()
                 .getId();
-            Objects.requireNonNull(id);
-            final Optional<String> violatedPaperNumber = paperService.hasDuplicateFieldNextToCurrent(label, value, id);
-            if (violatedPaperNumber.isPresent()) {
-                final Map<String, Object> vars = Map.of("input", value, "numbers", violatedPaperNumber.get());
-                error(field, resourceKey() + "." + label + "MustBeUnique", vars);
+            if (id != null) {
+                final Optional<String> violatedPaperNumber = paperService.hasDuplicateFieldNextToCurrent(label, value, id);
+                if (violatedPaperNumber.isPresent()) {
+                    final Map<String, Object> vars = Map.of("input", value, "numbers", violatedPaperNumber.get());
+                    error(field, resourceKey() + "." + label + "MustBeUnique", vars);
+                }
             }
         }
     }
