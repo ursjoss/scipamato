@@ -69,7 +69,7 @@ public class ChangePasswordUser implements Serializable {
         return user.getId();
     }
 
-    public void setId(Integer id) {
+    public void setId(final Integer id) {
         user.setId(id);
     }
 

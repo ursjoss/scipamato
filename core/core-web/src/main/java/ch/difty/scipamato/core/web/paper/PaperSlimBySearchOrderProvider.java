@@ -66,7 +66,7 @@ public class PaperSlimBySearchOrderProvider extends AbstractPaperSlimProvider<Se
 
     @NotNull
     @Override
-    protected List<Long> findAllIds(@NotNull Direction dir, @NotNull String sortProp) {
+    protected List<Long> findAllIds(@NotNull final Direction dir, @NotNull final String sortProp) {
         return getPaperService().findPageOfIdsBySearchOrder(getFilterState(), new PaginationRequest(dir, sortProp));
     }
 
@@ -82,7 +82,7 @@ public class PaperSlimBySearchOrderProvider extends AbstractPaperSlimProvider<Se
     }
 
     @Override
-    public void setShowExcluded(boolean showExcluded) {
+    public void setShowExcluded(final boolean showExcluded) {
         getFilterState().setShowExcluded(showExcluded);
     }
 }

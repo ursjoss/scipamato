@@ -42,7 +42,7 @@ public abstract class CodeEditHeaderPanel extends DeletableDefinitionEditHeaderP
         queueFieldAndLabel(new TextField<>(CodeDefinition.CodeDefinitionFields.SORT.getFieldName()));
         queue(new Label("internalLabel",
             new StringResourceModel(CodeDefinition.CodeDefinitionFields.INTERNAL.getFieldName() + LABEL_RESOURCE_TAG, this, null)));
-        CheckBoxX internal = new CheckBoxX(CodeDefinition.CodeDefinitionFields.INTERNAL.getFieldName());
+        final CheckBoxX internal = new CheckBoxX(CodeDefinition.CodeDefinitionFields.INTERNAL.getFieldName());
         internal
             .getConfig()
             .withThreeState(false)
@@ -54,7 +54,7 @@ public abstract class CodeEditHeaderPanel extends DeletableDefinitionEditHeaderP
 
     protected abstract Form<CodeDefinition> getForm();
 
-    private void queueBootstrapSelectAndLabel(final String id) {
+    private void queueBootstrapSelectAndLabel(@NotNull final String id) {
         queue(new Label(id + LABEL_TAG, new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null)));
         final PropertyModel<CodeClass> model = PropertyModel.of(getModel(), CodeFilter.CodeFilterFields.CODE_CLASS.getFieldName());
         final CodeClassModel choices = new CodeClassModel(getLocale().getLanguage());

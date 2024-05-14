@@ -48,7 +48,7 @@ public abstract class DefinitionEditTranslationPanel<E extends DefinitionEntity<
             }
 
             @Override
-            protected void populateItem(final Item<T> item) {
+            protected void populateItem(@NotNull final Item<T> item) {
                 addColumns(item);
             }
 

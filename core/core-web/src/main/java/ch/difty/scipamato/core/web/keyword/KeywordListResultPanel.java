@@ -12,6 +12,8 @@ import ch.difty.scipamato.core.entity.keyword.KeywordFilter;
 import ch.difty.scipamato.core.persistence.KeywordService;
 import ch.difty.scipamato.core.web.common.DefinitionListResultPanel;
 
+import org.jetbrains.annotations.Nullable;
+
 @SuppressWarnings("SameParameterValue")
 class KeywordListResultPanel
     extends DefinitionListResultPanel<KeywordDefinition, KeywordFilter, KeywordService, KeywordDefinitionProvider> {
@@ -31,7 +33,7 @@ class KeywordListResultPanel
         return columns;
     }
 
-    private void onTitleClick(final IModel<KeywordDefinition> model) {
+    private void onTitleClick(@Nullable final IModel<KeywordDefinition> model) {
         setResponsePage(new KeywordEditPage(model, getPage().getPageReference()));
     }
 }

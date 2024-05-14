@@ -43,7 +43,7 @@ public abstract class DefinitionListResultPanel<T extends DefinitionEntity<?, ?>
         makeAndQueueTable("results");
     }
 
-    private void makeAndQueueTable(final String id) {
+    private void makeAndQueueTable(@NotNull final String id) {
         final DataTable<T, String> results = new BootstrapDefaultDataTable<>(id, makeTableColumns(), dataProvider, ROWS_PER_PAGE);
         results.setOutputMarkupId(true);
         results.add(new TableBehavior()
@@ -78,7 +78,7 @@ public abstract class DefinitionListResultPanel<T extends DefinitionEntity<?, ?>
             private static final long serialVersionUID = 1L;
 
             @Override
-            public IModel<?> getDataModel(final IModel<T> rowModel) {
+            public IModel<?> getDataModel(@NotNull final IModel<T> rowModel) {
                 return (Model.of(Boolean.TRUE.equals(predicate.apply(rowModel.getObject())) ? trueLabel : falseLabel));
             }
         };

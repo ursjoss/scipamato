@@ -12,9 +12,10 @@ import ch.difty.scipamato.core.entity.code.CodeFilter;
 import ch.difty.scipamato.core.persistence.CodeService;
 import ch.difty.scipamato.core.web.common.DefinitionListResultPanel;
 
+import org.jetbrains.annotations.Nullable;
+
 @SuppressWarnings("SameParameterValue")
-class CodeListResultPanel
-    extends DefinitionListResultPanel<CodeDefinition, CodeFilter, CodeService, CodeDefinitionProvider> {
+class CodeListResultPanel extends DefinitionListResultPanel<CodeDefinition, CodeFilter, CodeService, CodeDefinitionProvider> {
 
     @java.io.Serial
     private static final long serialVersionUID = 1L;
@@ -35,7 +36,7 @@ class CodeListResultPanel
         return columns;
     }
 
-    private void onTitleClick(final IModel<CodeDefinition> model) {
+    private void onTitleClick(@Nullable final IModel<CodeDefinition> model) {
         setResponsePage(new CodeEditPage(model, getPage().getPageReference()));
     }
 }

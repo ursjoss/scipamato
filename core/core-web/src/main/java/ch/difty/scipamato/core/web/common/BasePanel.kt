@@ -11,6 +11,7 @@ import ch.difty.scipamato.core.entity.User
 import org.apache.wicket.model.IModel
 import org.apache.wicket.model.StringResourceModel
 import org.apache.wicket.spring.injection.annot.SpringBean
+import org.jetbrains.annotations.NotNull
 import org.springframework.security.core.context.SecurityContextHolder
 
 abstract class BasePanel<T> @JvmOverloads constructor(

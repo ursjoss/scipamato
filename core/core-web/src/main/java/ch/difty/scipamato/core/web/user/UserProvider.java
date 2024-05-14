@@ -42,15 +42,15 @@ class UserProvider extends SortableDataProvider<User, String> implements IFilter
     }
 
     /** package-private for test purposes */
-    void setService(@NotNull UserService service) {
+    void setService(@NotNull final UserService service) {
         this.service = service;
     }
 
     @Override
-    public Iterator<User> iterator(long offset, long size) {
-        Sort.Direction dir = getSort().isAscending() ? Sort.Direction.ASC : Sort.Direction.DESC;
-        String sortProp = getSort().getProperty();
-        PaginationContext pc = new PaginationRequest((int) offset, (int) size, dir, sortProp);
+    public Iterator<User> iterator(final long offset, final long size) {
+        final Sort.Direction dir = getSort().isAscending() ? Sort.Direction.ASC : Sort.Direction.DESC;
+        final String sortProp = getSort().getProperty();
+        final PaginationContext pc = new PaginationRequest((int) offset, (int) size, dir, sortProp);
         return service
             .findPageByFilter(filter, pc)
             .iterator();
@@ -63,7 +63,7 @@ class UserProvider extends SortableDataProvider<User, String> implements IFilter
 
     @NotNull
     @Override
-    public IModel<User> model(User entity) {
+    public IModel<User> model(final User entity) {
         return new Model<>(entity);
     }
 
@@ -74,7 +74,7 @@ class UserProvider extends SortableDataProvider<User, String> implements IFilter
     }
 
     @Override
-    public void setFilterState(@NotNull UserFilter state) {
+    public void setFilterState(@NotNull final UserFilter state) {
         this.filter = state;
     }
 }

@@ -23,7 +23,7 @@ public class KeywordDefinitionProvider extends DefinitionProvider<KeywordDefinit
         this(null);
     }
 
-    KeywordDefinitionProvider(@Nullable KeywordFilter filter) {
+    KeywordDefinitionProvider(@Nullable final KeywordFilter filter) {
         super(filter);
         setSort(Keyword.KeywordFields.NAME.getFieldName(), SortOrder.ASCENDING);
     }

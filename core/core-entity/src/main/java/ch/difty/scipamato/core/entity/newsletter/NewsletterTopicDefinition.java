@@ -80,7 +80,7 @@ public class NewsletterTopicDefinition extends AbstractDefinitionEntity<Newslett
     /**
      * Title as Alias for name, as it's used in the database
      */
-    public void setTitleInLanguage(@NotNull final String langCode, @NotNull String title) {
+    public void setTitleInLanguage(@NotNull final String langCode, @NotNull final String title) {
         setNameInLanguage(langCode, title);
     }
 }

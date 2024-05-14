@@ -61,13 +61,13 @@ public class CoreMenuBuilder extends AbstractMenuBuilder {
         addPageLink(navbar, page, LogoutPage.class, "menu.logout", FontAwesome6IconType.right_from_bracket_s, Navbar.ComponentPosition.RIGHT);
     }
 
-    private void addPaperMenuEntries(final List<AbstractLink> links, Page page) {
+    private void addPaperMenuEntries(@NotNull final List<AbstractLink> links, @NotNull final Page page) {
         final String labelParent = "menu.papers.";
         addEntryToMenu(labelParent + "paper", page, PaperListPage.class, FontAwesome6IconType.list_s, links);
         addEntryToMenu(labelParent + "search", page, PaperSearchPage.class, FontAwesome6IconType.magnifying_glass_s, links);
     }
 
-    private void addNewsletterMenuEntries(final List<AbstractLink> links, Page page) {
+    private void addNewsletterMenuEntries(@NotNull final List<AbstractLink> links, @NotNull final Page page) {
         final String labelParent = "menu.newsletters.";
         if (hasOneOfRoles(Roles.USER, Roles.ADMIN)) {
             addEntryToMenu(labelParent + "newsletter", page, NewsletterListPage.class, FontAwesome6IconType.newspaper_s, links);
@@ -76,7 +76,7 @@ public class CoreMenuBuilder extends AbstractMenuBuilder {
         }
     }
 
-    private void addRefDataMenuEntries(final List<AbstractLink> links, Page page) {
+    private void addRefDataMenuEntries(@NotNull final List<AbstractLink> links, @NotNull final Page page) {
         final String labelParent = "menu.refData.";
         if (hasOneOfRoles(Roles.USER, Roles.ADMIN)) {
             addEntryToMenu(labelParent + "keyword", page, KeywordListPage.class, FontAwesome6IconType.briefcase_s, links);
@@ -86,7 +86,7 @@ public class CoreMenuBuilder extends AbstractMenuBuilder {
         }
     }
 
-    private void addPreferencesMenuEntries(final List<AbstractLink> links, Page page) {
+    private void addPreferencesMenuEntries(@NotNull final List<AbstractLink> links, @NotNull final Page page) {
         final String labelParent = "menu.preferences.";
         if (hasOneOfRoles(Roles.ADMIN)) {
             addEntryToMenu(labelParent + "users", page, UserListPage.class, FontAwesome6IconType.users_s, links);

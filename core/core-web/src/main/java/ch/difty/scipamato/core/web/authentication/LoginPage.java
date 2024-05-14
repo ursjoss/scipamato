@@ -16,7 +16,7 @@ public class LoginPage extends AbstractLoginPage<PaperListPage> {
     @java.io.Serial
     private static final long serialVersionUID = 1L;
 
-    public LoginPage(@Nullable PageParameters parameters) {
+    public LoginPage(@Nullable final PageParameters parameters) {
         super(parameters);
     }
 

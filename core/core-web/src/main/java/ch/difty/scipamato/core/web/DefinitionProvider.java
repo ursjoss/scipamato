@@ -41,7 +41,7 @@ public abstract class DefinitionProvider<T extends DefinitionEntity<?, ?>, F ext
     protected abstract F newFilter();
 
     @Override
-    public Iterator<T> iterator(long offset, long size) {
+    public Iterator<T> iterator(final long offset, final long size) {
         final Sort.Direction dir = getSort().isAscending() ? Sort.Direction.ASC : Sort.Direction.DESC;
         final String sortProp = getSort().getProperty();
         final PaginationContext pc = new PaginationRequest((int) offset, (int) size, dir, sortProp);
@@ -55,7 +55,7 @@ public abstract class DefinitionProvider<T extends DefinitionEntity<?, ?>, F ext
 
     @NotNull
     @Override
-    public IModel<T> model(@NotNull T entity) {
+    public IModel<T> model(@NotNull final T entity) {
         return new Model<>(entity);
     }
 
@@ -66,7 +66,7 @@ public abstract class DefinitionProvider<T extends DefinitionEntity<?, ?>, F ext
     }
 
     @Override
-    public void setFilterState(@NotNull F state) {
+    public void setFilterState(@NotNull final F state) {
         this.filter = state;
     }
 }

@@ -34,7 +34,7 @@ public abstract class DefinitionListFilterPanel<T extends DefinitionEntity<?, ?>
         makeAndQueueFilterForm("filterForm");
     }
 
-    private void makeAndQueueFilterForm(final String id) {
+    private void makeAndQueueFilterForm(@NotNull final String id) {
         queue(new FilterForm<>(id, dataProvider));
         queueFilterFormFields();
     }

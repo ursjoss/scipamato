@@ -33,11 +33,11 @@ public abstract class SelfUpdatingPage<T> extends BasePage<T> {
     @SpringBean
     private ApplicationCoreProperties applicationProperties;
 
-    protected SelfUpdatingPage(@Nullable PageParameters parameters) {
+    protected SelfUpdatingPage(@Nullable final PageParameters parameters) {
         super(parameters);
     }
 
-    protected SelfUpdatingPage(@Nullable IModel<T> model) {
+    protected SelfUpdatingPage(@Nullable final IModel<T> model) {
         super(model);
     }
 

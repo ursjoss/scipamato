@@ -18,6 +18,7 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.wicketstuff.annotation.mount.MountPath;
 
@@ -76,7 +77,7 @@ public class UserListPage extends BasePage<Void> {
         queueNewButton("newUser");
     }
 
-    private void queueNewButton(String id) {
+    private void queueNewButton(@NotNull final String id) {
         queue(newResponsePageButton(id, () -> {
             final PageParameters pp = new PageParameters();
             pp.set(CorePageParameters.MODE.getName(), UserEditPage.Mode.CREATE);
@@ -84,7 +85,7 @@ public class UserListPage extends BasePage<Void> {
         }));
     }
 
-    private void makeAndQueueTable(String id) {
+    private void makeAndQueueTable(@NotNull final String id) {
         final DataTable<User, String> results = new BootstrapDefaultDataTable<>(id, makeTableColumns(), dataProvider, ROWS_PER_PAGE);
         results.setOutputMarkupId(true);
         results.add(new TableBehavior()
@@ -103,13 +104,14 @@ public class UserListPage extends BasePage<Void> {
         return columns;
     }
 
-    private ClickablePropertyColumn<User, String> makeClickableColumn(String propExpression, SerializableConsumer<IModel<User>> consumer) {
+    private ClickablePropertyColumn<User, String> makeClickableColumn(@NotNull final String propExpression,
+        @NotNull final SerializableConsumer<IModel<User>> consumer) {
         return new ClickablePropertyColumn<>(new StringResourceModel(COLUMN_HEADER + propExpression, this, null), propExpression, consumer,
             propExpression);
     }
 
-    private void onTitleClick(final IModel<User> userModel) {
-        PageParameters pp = new PageParameters();
+    private void onTitleClick(@NotNull final IModel<User> userModel) {
+        final PageParameters pp = new PageParameters();
         pp.add(CorePageParameters.USER_ID.getName(), userModel
             .getObject()
             .getId());
@@ -118,14 +120,15 @@ public class UserListPage extends BasePage<Void> {
         setResponsePage(new UserEditPage(pp));
     }
 
-    private PropertyColumn<User, String> makePropertyColumn(String propExpression) {
+    private PropertyColumn<User, String> makePropertyColumn(@NotNull final String propExpression) {
         return new PropertyColumn<>(new StringResourceModel(COLUMN_HEADER + propExpression, this, null), propExpression, propExpression) {
             @java.io.Serial
             private static final long serialVersionUID = -6075124056081316865L;
         };
     }
 
-    private PropertyColumn<User, String> makeBooleanPropertyColumn(String propExpression, final SerializableFunction<User, Boolean> predicate) {
+    private PropertyColumn<User, String> makeBooleanPropertyColumn(@NotNull final String propExpression,
+        @NotNull final SerializableFunction<User, Boolean> predicate) {
         final String trueLabel = new StringResourceModel(propExpression + ".true", this, null).getString();
         final String falseLabel = new StringResourceModel(propExpression + ".false", this, null).getString();
         return new PropertyColumn<>(new StringResourceModel(COLUMN_HEADER + propExpression, this, null), propExpression, propExpression) {
@@ -133,7 +136,7 @@ public class UserListPage extends BasePage<Void> {
             private static final long serialVersionUID = 406991980303131840L;
 
             @Override
-            public IModel<?> getDataModel(final IModel<User> rowModel) {
+            public IModel<?> getDataModel(@NotNull final IModel<User> rowModel) {
                 return Model.of(Boolean.TRUE.equals(predicate.apply(rowModel.getObject())) ? trueLabel : falseLabel);
             }
         };

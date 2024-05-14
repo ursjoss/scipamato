@@ -56,8 +56,8 @@ public abstract class DefinitionListPage<T extends DefinitionEntity<?, ?>, F ext
     protected abstract P newProvider(F filter);
 
     @NotNull
-    protected abstract Panel newFilterPanel(final String id);
+    protected abstract Panel newFilterPanel(@NotNull final String id);
 
     @NotNull
-    protected abstract Panel newResultPanel(final String id);
+    protected abstract Panel newResultPanel(@NotNull final String id);
 }

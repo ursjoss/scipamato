@@ -19,7 +19,7 @@ public class SelfUpdateBroadcastingBehavior extends AjaxFormValidatingBehavior {
     }
 
     @Override
-    protected void onAfterSubmit(@NotNull AjaxRequestTarget target) {
+    protected void onAfterSubmit(@NotNull final AjaxRequestTarget target) {
         super.onAfterSubmit(target);
         page.send(page, Broadcast.BREADTH, new SelfUpdateEvent(target));
     }

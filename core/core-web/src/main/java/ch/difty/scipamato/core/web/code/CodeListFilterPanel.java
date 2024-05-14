@@ -61,7 +61,7 @@ abstract class CodeListFilterPanel extends DefinitionListFilterPanel<CodeDefinit
             private static final long serialVersionUID = 1L;
 
             @Override
-            protected void onUpdate(@NotNull AjaxRequestTarget target) {
+            protected void onUpdate(@NotNull final AjaxRequestTarget target) {
                 doOnUpdate(target);
             }
         });
