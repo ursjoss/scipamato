@@ -24,7 +24,6 @@ import org.apache.wicket.settings.DebugSettings
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 
-@Suppress("serial")
 internal class AbstractPageTest : WicketBaseTest() {
 
     @MockkBean
@@ -34,6 +33,7 @@ internal class AbstractPageTest : WicketBaseTest() {
 
     override fun setUpHook() {
         page = object : AbstractPage<TestRecord>(Model.of(TestRecord(1, "foo"))) {
+            private val serialVersionUID: Long = 1L
             override val properties: ApplicationProperties
                 get() = TestApplicationProperties()
         }
@@ -63,6 +63,7 @@ internal class AbstractPageTest : WicketBaseTest() {
     @Test
     fun test_withPageParametersConstructor() {
         page = object : AbstractPage<TestRecord>(PageParameters()) {
+            private val serialVersionUID: Long = 1L
             override val properties: ApplicationProperties
                 get() = TestApplicationProperties()
             override val isNavbarVisible: Boolean
@@ -169,6 +170,7 @@ internal class AbstractPageTest : WicketBaseTest() {
         }
 
         page = object : AbstractPage<TestRecord>(Model.of(TestRecord(1, "foo"))) {
+            private val serialVersionUID: Long = 1L
             override val properties: ApplicationProperties
                 get() = TestApplicationProperties()
             override val debugSettings: DebugSettings

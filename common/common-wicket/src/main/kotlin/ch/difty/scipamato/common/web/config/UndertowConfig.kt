@@ -39,10 +39,17 @@ open class UndertowConfig(
     open fun getUndertow(): AbstractServletWebServerFactory {
         val redirectFromPort = scipamatoProperties.redirectFromPort
         val confidentialPort = serverProperties.port
-        log.info("Adding http listener on port $redirectFromPort redirecting to confidential port $confidentialPort for https.")
+        log.info(
+            "Adding http listener on port $redirectFromPort redirecting " +
+                "to confidential port $confidentialPort for https."
+        )
         val factory = UndertowServletWebServerFactory()
         redirectFromPort?.let { port ->
-            factory.addBuilderCustomizers(UndertowBuilderCustomizer { builder: Undertow.Builder -> builder.addHttpListener(port, "0.0.0.0") })
+            factory.addBuilderCustomizers(
+                UndertowBuilderCustomizer { builder: Undertow.Builder ->
+                    builder.addHttpListener(port, "0.0.0.0")
+                }
+            )
         }
         factory.addDeploymentInfoCustomizers(UndertowDeploymentInfoCustomizer { deploymentInfo: DeploymentInfo ->
             deploymentInfo.addSecurityConstraint(
