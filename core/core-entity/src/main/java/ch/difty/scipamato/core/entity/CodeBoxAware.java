@@ -27,7 +27,7 @@ public interface CodeBoxAware {
      * @return all {@link Code}s of a specific {@link CodeClassId} assigned
      */
     @NotNull
-    List<Code> getCodesOf(@NotNull CodeClassId ccId);
+    List<Code> getCodesOf(@NotNull final CodeClassId ccId);
 
     /**
      * Clear all assigned codes.
@@ -40,7 +40,7 @@ public interface CodeBoxAware {
      * @param ccId
      *     the code class id
      */
-    void clearCodesOf(@NotNull CodeClassId ccId);
+    void clearCodesOf(@NotNull final CodeClassId ccId);
 
     /**
      * Add the specified {@link Code}
@@ -48,7 +48,7 @@ public interface CodeBoxAware {
      * @param code
      *     to add
      */
-    void addCode(@Nullable Code code);
+    void addCode(@Nullable final Code code);
 
     /**
      * Add the entire list of {@link Code}s.
@@ -56,7 +56,7 @@ public interface CodeBoxAware {
      * @param codes
      *     to add
      */
-    void addCodes(@NotNull List<Code> codes);
+    void addCodes(@NotNull final List<Code> codes);
 
     void setCodesExcluded(@Nullable final String codesExcluded);
 

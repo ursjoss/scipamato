@@ -51,8 +51,7 @@ public class JooqUserRoleRepo implements UserRoleRepository {
     @Override
     @CacheEvict(key = "#userId")
     public Set<Role> addNewUserRolesOutOf(@NotNull final Integer userId, @NotNull final Set<Role> roles) {
-        InsertValuesStep2<UserRoleRecord, Integer, Integer> step = dsl.insertInto(USER_ROLE, USER_ROLE.USER_ID,
-            USER_ROLE.ROLE_ID);
+        InsertValuesStep2<UserRoleRecord, Integer, Integer> step = dsl.insertInto(USER_ROLE, USER_ROLE.USER_ID, USER_ROLE.ROLE_ID);
         for (final Role r : roles)
             step = step.values(userId, r.getId());
         step

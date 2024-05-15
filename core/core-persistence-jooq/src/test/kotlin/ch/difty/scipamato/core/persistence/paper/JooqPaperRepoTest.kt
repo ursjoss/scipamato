@@ -203,11 +203,11 @@ internal class JooqPaperRepoTest :
         every { filterConditionMapper.map(filter) } returns conditionMock
         every { sortMapper.map(sort, table) } returns sortFields
 
-        every { dsl.selectFrom(table) } returns mockk() {
-            every { where(conditionMock) } returns mockk() {
-                every { orderBy(sortFields) } returns mockk() {
-                    every { limit(20) } returns mockk() {
-                        every { offset(0) } returns mockk() {
+        every { dsl.selectFrom(table) } returns mockk {
+            every { where(conditionMock) } returns mockk {
+                every { orderBy(sortFields) } returns mockk {
+                    every { limit(20) } returns mockk {
+                        every { offset(0) } returns mockk {
                             // don't want to go into the enrichment test fixture, thus returning empty list
                             every { fetch(mapper) } returns emptyList()
                         }
@@ -240,11 +240,11 @@ internal class JooqPaperRepoTest :
         every { filterConditionMapper.map(filter) } returns conditionMock
         every { sortMapper.map(sort, table) } returns sortFields
 
-        every { dsl.selectFrom(table) } returns mockk() {
-            every { where(conditionMock) } returns mockk() {
-                every { orderBy(sortFields) } returns mockk() {
-                    every { limit(20) } returns mockk() {
-                        every { offset(0) } returns mockk() {
+        every { dsl.selectFrom(table) } returns mockk {
+            every { where(conditionMock) } returns mockk {
+                every { orderBy(sortFields) } returns mockk {
+                    every { limit(20) } returns mockk {
+                        every { offset(0) } returns mockk {
                             // don't want to go into the enrichment test fixture, thus returning empty list
                             every { fetch(mapper) } returns emptyList()
                         }

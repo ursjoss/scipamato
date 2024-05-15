@@ -43,7 +43,7 @@ public class PaperAttachment extends IdScipamatoEntity<Integer> {
 
         private final String name;
 
-        PaperAttachmentFields(final String name) {
+        PaperAttachmentFields(@NotNull final String name) {
             this.name = name;
         }
 
@@ -60,8 +60,8 @@ public class PaperAttachment extends IdScipamatoEntity<Integer> {
     public PaperAttachment() {
     }
 
-    public PaperAttachment(@Nullable final Integer id, final Long paperId, final String name, final byte[] content,
-        final String contentType, final Long size) {
+    public PaperAttachment(@Nullable final Integer id, @NotNull final Long paperId, @NotNull final String name, final byte[] content,
+        @NotNull final String contentType, @NotNull final Long size) {
         setId(id);
         setPaperId(paperId);
         setName(name);
@@ -70,15 +70,13 @@ public class PaperAttachment extends IdScipamatoEntity<Integer> {
         setSize(size);
     }
 
-    /**
-     * @return the size in bytes
-     */
+    /** @return the size in bytes */
     public Long getSize() {
         return size;
     }
 
     /**
-     * @return the size in kilo bytes (rounded up)
+     * @return the size in kilobytes (rounded up)
      */
     @Nullable
     public Long getSizeKiloBytes() {

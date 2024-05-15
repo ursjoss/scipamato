@@ -213,7 +213,7 @@ public class JooqCodeClassRepo extends AbstractRepo implements CodeClassReposito
             .orderBy(CODE_CLASS_TR.ID)
             .fetchGroups(CODE_CLASS.ID);
         if (!records.isEmpty())
-            return mapRawRecordsIntoCodeClassDefinitions(records).get(0);
+            return mapRawRecordsIntoCodeClassDefinitions(records).getFirst();
         else
             return null;
     }

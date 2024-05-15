@@ -118,8 +118,7 @@ public interface ReadOnlyRepository<T extends CoreEntity, ID, F extends Scipamat
      * @return list of all matching entities {@code T}
      */
     @NotNull
-    List<T> findPageByFilter(@Nullable F filter, @NotNull PaginationContext paginationContext,
-        @Nullable String languageCode);
+    List<T> findPageByFilter(@Nullable F filter, @NotNull PaginationContext paginationContext, @Nullable String languageCode);
 
     /**
      * Counts all persisted entities matching the provided filter.

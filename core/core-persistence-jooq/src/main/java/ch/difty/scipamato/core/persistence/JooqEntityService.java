@@ -32,13 +32,13 @@ public abstract class JooqEntityService<ID extends Number, T extends IdScipamato
     @Nullable
     @Transactional
     @Override
-    public T saveOrUpdate(@NotNull T entity) {
+    public T saveOrUpdate(@NotNull final T entity) {
         if (entity.getId() == null) {
-            T added = getRepository().add(entity);
+            final T added = getRepository().add(entity);
             enrichAuditNamesOf(added);
             return added;
         } else {
-            T updated = getRepository().update(entity);
+            final T updated = getRepository().update(entity);
             enrichAuditNamesOf(updated);
             return updated;
         }
@@ -46,7 +46,7 @@ public abstract class JooqEntityService<ID extends Number, T extends IdScipamato
 
     @Override
     @Transactional
-    public void remove(@Nullable T entity) {
+    public void remove(@Nullable final T entity) {
         if (entity != null && entity.getId() != null) {
             getRepository().delete(entity.getId(), entity.getVersion());
         }

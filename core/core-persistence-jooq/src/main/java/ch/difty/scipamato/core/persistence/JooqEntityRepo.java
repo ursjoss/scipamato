@@ -84,7 +84,7 @@ public abstract class JooqEntityRepo<R extends Record, T extends CoreEntity, ID,
      * @return the id of type {@code ID}
      */
     @NotNull
-    protected abstract ID getIdFrom(@NotNull R record);
+    protected abstract ID getIdFrom(@NotNull final R record);
 
     /**
      * @param entity
@@ -92,7 +92,7 @@ public abstract class JooqEntityRepo<R extends Record, T extends CoreEntity, ID,
      * @return the id of type {@code ID}
      */
     @Nullable
-    protected abstract ID getIdFrom(@NotNull T entity);
+    protected abstract ID getIdFrom(@NotNull final T entity);
 
     @Nullable
     @Override

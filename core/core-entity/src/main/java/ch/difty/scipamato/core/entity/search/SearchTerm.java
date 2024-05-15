@@ -30,7 +30,7 @@ public interface SearchTerm {
 
     /**
      * Static factory method to produce implementations of {@link SearchTerm}s of
-     * the various sub types.
+     * the various subtypes.
      *
      * @param id
      *     the database id

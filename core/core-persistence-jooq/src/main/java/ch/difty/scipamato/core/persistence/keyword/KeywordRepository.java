@@ -95,7 +95,7 @@ public interface KeywordRepository {
      *     {@code null} if it can't be added. Only the version field is populated out of
      *     all the audit fields.
      * @throws OptimisticLockingException
-     *     if the record version has increased in the mean time
+     *     if the record version has increased in the meantime
      */
     @Nullable
     KeywordDefinition update(@NotNull KeywordDefinition entity);

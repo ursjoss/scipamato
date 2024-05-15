@@ -17,8 +17,7 @@ import ch.difty.scipamato.core.entity.CoreEntity;
  *     the type of the filter extending {@link ScipamatoFilter}
  * @author u.joss
  */
-public interface EntityRepository<T extends CoreEntity, ID, F extends ScipamatoFilter>
-    extends ReadOnlyRepository<T, ID, F> {
+public interface EntityRepository<T extends CoreEntity, ID, F extends ScipamatoFilter> extends ReadOnlyRepository<T, ID, F> {
 
     /**
      * Add an entity {@code T} to the database.

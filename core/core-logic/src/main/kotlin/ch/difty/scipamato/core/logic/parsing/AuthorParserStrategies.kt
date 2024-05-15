@@ -80,6 +80,6 @@ class PubmedAuthorParser(authorsString: String) : AuthorParser {
     companion object {
         private val AUTHORS_SEPARATOR_REGEX = " *, *".toRegex()
         private val TOKEN_SEPARATOR_REGEX = " +".toRegex()
-        private val CARDINALITY_PATTERN = Pattern.compile("(?:1st|2nd|3rd)|(?:\\d+th)|(?:Jr)")
+        private val CARDINALITY_PATTERN = Pattern.compile("(?:1st|2nd|3rd)|\\d+th|Jr")
     }
 }

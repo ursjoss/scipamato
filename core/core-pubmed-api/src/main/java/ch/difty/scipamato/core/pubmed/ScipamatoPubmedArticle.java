@@ -57,7 +57,7 @@ class ScipamatoPubmedArticle extends AbstractPubmedArticleFacade {
     /**
      * Get the year from {@link Year} - otherwise from {@link MedlineDate}
      */
-    private String getPublicationYearFrom(final Journal journal) {
+    private String getPublicationYearFrom(@NotNull final Journal journal) {
         final JournalIssue journalIssue = journal.getJournalIssue();
         Objects.requireNonNull(journalIssue);
         final PubDate pubDate = journalIssue.getPubDate();
@@ -79,8 +79,8 @@ class ScipamatoPubmedArticle extends AbstractPubmedArticleFacade {
                 .orElse("0"));
     }
 
-    private String makeLocationFrom(@NotNull final MedlineJournalInfo medlineJournalInfo, final JournalIssue journalIssue,
-        final List<java.lang.Object> paginationElocation, boolean aheadOfPrint) {
+    private String makeLocationFrom(@NotNull final MedlineJournalInfo medlineJournalInfo, @NotNull final JournalIssue journalIssue,
+        @NotNull final List<java.lang.Object> paginationElocation, final boolean aheadOfPrint) {
         final StringBuilder sb = new StringBuilder();
         appendMedlineTa(medlineJournalInfo, sb);
         appendPublicationYearOrDate(journalIssue, aheadOfPrint, sb);
@@ -98,7 +98,7 @@ class ScipamatoPubmedArticle extends AbstractPubmedArticleFacade {
         sb.append(". ");
     }
 
-    private void appendPublicationYearOrDate(final JournalIssue journalIssue, final boolean aheadOfPrint, final StringBuilder sb) {
+    private void appendPublicationYearOrDate(@NotNull final JournalIssue journalIssue, final boolean aheadOfPrint, @NotNull final StringBuilder sb) {
         if (!aheadOfPrint) {
             sb.append(getPublicationYear());
             sb.append(";");
@@ -108,7 +108,7 @@ class ScipamatoPubmedArticle extends AbstractPubmedArticleFacade {
         }
     }
 
-    private void appendVolume(final JournalIssue journalIssue, final StringBuilder sb) {
+    private void appendVolume(@NotNull final JournalIssue journalIssue, @NotNull final StringBuilder sb) {
         final String volume = journalIssue.getVolume();
         if (StringUtils.hasLength(volume)) {
             sb.append(" ");
@@ -116,7 +116,7 @@ class ScipamatoPubmedArticle extends AbstractPubmedArticleFacade {
         }
     }
 
-    private void appendIssue(final JournalIssue journalIssue, final StringBuilder sb) {
+    private void appendIssue(@NotNull final JournalIssue journalIssue, @NotNull final StringBuilder sb) {
         final String issue = journalIssue.getIssue();
         if (StringUtils.hasLength(issue)) {
             sb.append(" (");
@@ -125,7 +125,7 @@ class ScipamatoPubmedArticle extends AbstractPubmedArticleFacade {
         }
     }
 
-    private void appendPagination(final List<java.lang.Object> paginationElocation, final StringBuilder sb) {
+    private void appendPagination(@NotNull final List<java.lang.Object> paginationElocation, @NotNull final StringBuilder sb) {
         if (!CollectionUtils.isEmpty(paginationElocation)) {
             final String pages = paginationElocation
                 .stream()
@@ -152,7 +152,7 @@ class ScipamatoPubmedArticle extends AbstractPubmedArticleFacade {
         }
     }
 
-    private void appendAdditionalInfoForAheadOfPrint(final StringBuilder sb) {
+    private void appendAdditionalInfoForAheadOfPrint(@NotNull final StringBuilder sb) {
         sb.append(" doi: ");
         sb.append(getDoi());
         sb.append(". ");
@@ -162,7 +162,7 @@ class ScipamatoPubmedArticle extends AbstractPubmedArticleFacade {
     /**
      * For aheadOfPrint papers: Concatenate the Date as {@code Year Month Day} from e.g. the ArticleDate
      */
-    private String getAheadOfPrintDateFromArticleDate(final JournalIssue journalIssue) {
+    private String getAheadOfPrintDateFromArticleDate(@NotNull final JournalIssue journalIssue) {
         final PubDate pubDate = journalIssue.getPubDate();
         Objects.requireNonNull(pubDate);
         final List<java.lang.Object> datishObjects = pubDate.getYearOrMonthOrDayOrSeasonOrMedlineDate();
@@ -174,14 +174,18 @@ class ScipamatoPubmedArticle extends AbstractPubmedArticleFacade {
 
     // package-private for testing
     void handleDatishObject(@NotNull final StringBuilder sb, @NotNull final java.lang.Object o) {
-        if (o instanceof Year) {
-            sb.append(((Year) o).getvalue());
+        switch (o) {
+        case final Year year -> {
+            sb.append(year.getvalue());
             sb.append(" ");
-        } else if (o instanceof Month) {
-            sb.append(((Month) o).getvalue());
+        }
+        case final Month month -> {
+            sb.append(month.getvalue());
             sb.append(" ");
-        } else if (o instanceof Day) {
-            sb.append(((Day) o).getvalue());
+        }
+        case final Day day -> sb.append(day.getvalue());
+        default -> {
+        }
         }
     }
 
@@ -191,7 +195,7 @@ class ScipamatoPubmedArticle extends AbstractPubmedArticleFacade {
      * <p>
      * E.g. from "1145-9" to "1145-1149"
      */
-    private String complementPageRange(final String pages) {
+    private String complementPageRange(@NotNull final String pages) {
         final int psPos = pages.indexOf(PAGE_SEPARATOR);
         if (psPos > -1) {
             final String first = pages.substring(0, psPos);
@@ -211,7 +215,7 @@ class ScipamatoPubmedArticle extends AbstractPubmedArticleFacade {
         }
     }
 
-    private String getDoiFrom(final PubmedArticle pubmedArticle) {
+    private String getDoiFrom(@NotNull final PubmedArticle pubmedArticle) {
         String doi = null;
         if (pubmedArticle.getPubmedData() != null) {
             doi = getDoiFromArticleIdList(pubmedArticle

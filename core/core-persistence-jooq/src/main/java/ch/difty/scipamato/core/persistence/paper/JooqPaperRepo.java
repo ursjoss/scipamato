@@ -23,7 +23,6 @@ import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.jooq.Record;
 import org.jooq.*;
 import org.jooq.impl.DSL;
 import org.slf4j.Logger;
@@ -200,7 +199,7 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
         considerStoringNewsletterLinkOf(paper);
     }
 
-    private void storeNewCodesOf(final Paper paper) {
+    private void storeNewCodesOf(@NotNull final Paper paper) {
         InsertValuesStep4<PaperCodeRecord, Long, String, Integer, Integer> step = getDsl().insertInto(PAPER_CODE, PAPER_CODE.PAPER_ID,
             PAPER_CODE.CODE, PAPER_CODE.CREATED_BY, PAPER_CODE.LAST_MODIFIED_BY);
         final Long paperId = paper.getId();
@@ -214,7 +213,7 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
             getLogger().info("{} stored {} codes of paper with id {}.", getActiveUser().getUserName(), inserted, paper.getId());
     }
 
-    private void deleteObsoleteCodesFrom(final Paper paper) {
+    private void deleteObsoleteCodesFrom(@NotNull final Paper paper) {
         final List<String> codes = paper
             .getCodes()
             .stream()
@@ -236,7 +235,7 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
      * @param paper
      *     the paper to store the newsletter link
      */
-    private void considerStoringNewsletterLinkOf(final Paper paper) {
+    private void considerStoringNewsletterLinkOf(@NotNull final Paper paper) {
         if (paper.getNewsletterLink() != null) {
             final Paper.NewsletterLink nl = paper.getNewsletterLink();
             final int inserted = getDsl()
@@ -469,7 +468,7 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
         return evaluateNumbers(fetchRecords(idOfCurrentPaper, PAPER.DOI.eq(doi)));
     }
 
-    private Record1<Long[]> fetchRecords(final Long idOfCurrentPaper, final Condition condition) {
+    private Record1<Long[]> fetchRecords(@Nullable final Long idOfCurrentPaper, @NotNull final Condition condition) {
         final Condition matchingCondition = determineCondition(idOfCurrentPaper, condition);
         return getDsl()
             .select(DSL.arrayAgg(PAPER.NUMBER))
@@ -478,7 +477,7 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
             .fetchOne();
     }
 
-    private Condition determineCondition(final Long idOfCurrentPaper, final Condition condition) {
+    private Condition determineCondition(@Nullable final Long idOfCurrentPaper, @NotNull final Condition condition) {
         if (idOfCurrentPaper != null)
             return condition.and(PAPER.ID.ne(idOfCurrentPaper));
         else

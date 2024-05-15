@@ -29,12 +29,11 @@ public class UserRecordMapper extends EntityRecordMapper<ScipamatoUserRecord, Us
     @NotNull
     @Override
     protected AuditFields getAuditFieldsOf(@NotNull ScipamatoUserRecord r) {
-        return new AuditFields(r.getCreated(), r.getCreatedBy(), r.getLastModified(), r.getLastModifiedBy(),
-            r.getVersion());
+        return new AuditFields(r.getCreated(), r.getCreatedBy(), r.getLastModified(), r.getLastModifiedBy(), r.getVersion());
     }
 
     @Override
-    protected void mapFields(@NotNull ScipamatoUserRecord from, @NotNull User to) {
+    protected void mapFields(@NotNull final ScipamatoUserRecord from, @NotNull final User to) {
         to.setId(from.getId());
         to.setUserName(from.getUserName());
         to.setFirstName(from.getFirstName());

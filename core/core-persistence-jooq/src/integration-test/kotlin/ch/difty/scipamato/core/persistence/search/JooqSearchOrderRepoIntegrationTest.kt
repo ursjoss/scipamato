@@ -9,7 +9,16 @@ import ch.difty.scipamato.core.entity.search.SearchOrder
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import org.amshove.kluent.*
+import org.amshove.kluent.shouldBeEmpty
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeGreaterOrEqualTo
+import org.amshove.kluent.shouldBeGreaterThan
+import org.amshove.kluent.shouldBeNull
+import org.amshove.kluent.shouldContainAll
+import org.amshove.kluent.shouldContainSame
+import org.amshove.kluent.shouldHaveSize
+import org.amshove.kluent.shouldNotBeEqualTo
+import org.amshove.kluent.shouldNotBeNull
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.fail
 import org.springframework.beans.factory.annotation.Autowired
@@ -31,10 +40,10 @@ internal open class JooqSearchOrderRepoIntegrationTest {
     }
 
     @Test
-    @Suppress("ConstantConditionIf")
     fun findingById_withExistingId_returnsEntity() {
         val searchOrder = repo.findById(RECORD_COUNT_PREPOPULATED.toLong())
             ?: fail { "Unable to load search order" }
+        @Suppress("KotlinConstantConditions")
         if (MAX_ID_PREPOPULATED > 0)
             searchOrder.id shouldBeEqualTo MAX_ID_PREPOPULATED
         else
@@ -138,8 +147,8 @@ internal open class JooqSearchOrderRepoIntegrationTest {
         so.excludedPaperIds shouldContainAll listOf(1L)
     }
 
-    @Suppress("LongMethod")
     @Test
+    @Suppress("LongMethod", "CyclomaticComplexMethod")
     fun addAndModifyAndDeleteSearchConditions() {
         // make search order with single condition (string search term)
         val initialSearchOrder = makeMinimalSearchOrder()

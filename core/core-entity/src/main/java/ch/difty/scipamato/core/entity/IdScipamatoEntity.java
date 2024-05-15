@@ -32,7 +32,7 @@ public abstract class IdScipamatoEntity<ID extends Number> extends CoreEntity {
 
         private final String name;
 
-        IdScipamatoEntityFields(final String name) {
+        IdScipamatoEntityFields(@NotNull final String name) {
             this.name = name;
         }
 

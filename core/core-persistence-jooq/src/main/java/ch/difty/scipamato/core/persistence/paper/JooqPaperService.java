@@ -83,9 +83,9 @@ public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter
         return sr;
     }
 
-    private Paper savePubmedArticle(final PubmedArticleFacade article, final long minimumNumber) {
+    private Paper savePubmedArticle(@NotNull final PubmedArticleFacade article, final long minimumNumber) {
         final Paper p = new Paper();
-        p.setPmId(Integer.valueOf(article.getPmId()));
+        p.setPmId(Integer.valueOf(Objects.requireNonNull(article.getPmId())));
         p.setAuthors(article.getAuthors());
         p.setFirstAuthor(article.getFirstAuthor());
         p.setTitle(article.getTitle());
@@ -97,7 +97,8 @@ public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter
         return getRepository().add(p);
     }
 
-    private void fillServiceResultFrom(final List<Paper> newPapers, final List<String> existingPmIds, final ServiceResult sr) {
+    private void fillServiceResultFrom(@NotNull final List<Paper> newPapers, @NotNull final List<String> existingPmIds,
+        @NotNull final ServiceResult sr) {
         existingPmIds
             .stream()
             .map(pmId -> "PMID " + pmId)
@@ -113,7 +114,7 @@ public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter
     public Optional<Paper> findByNumber(@NotNull final Long number, @NotNull final String languageCode) {
         final List<Paper> papers = getRepository().findByNumbers(Collections.singletonList(number), languageCode);
         if (!papers.isEmpty()) {
-            final Paper paper = papers.get(0);
+            final Paper paper = papers.getFirst();
 
             enrichAuditNamesOf(paper);
             return Optional.ofNullable(paper);
@@ -177,7 +178,9 @@ public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter
     public Optional<Paper.NewsletterLink> mergePaperIntoWipNewsletter(final long paperId, @Nullable final Integer newsletterTopicId,
         @NotNull final String languageCode) {
         final Optional<Newsletter> nlo = newsletterRepo.getNewsletterInStatusWorkInProgress();
-        return nlo.flatMap(newsletter -> newsletterRepo.mergePaperIntoNewsletter(newsletter.getId(), paperId, newsletterTopicId, languageCode));
+        return nlo.flatMap(
+            newsletter -> newsletterRepo.mergePaperIntoNewsletter(Objects.requireNonNull(newsletter.getId()), paperId, newsletterTopicId,
+                languageCode));
     }
 
     @Transactional
@@ -192,13 +195,10 @@ public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter
         @NotNull final Long idOfCurrentPaper) {
         if (fieldValue == null)
             return Optional.empty();
-        switch (fieldName) {
-        case "doi":
-            return getRepository().isDoiAlreadyAssigned((String) fieldValue, idOfCurrentPaper);
-        case "pmId":
-            return getRepository().isPmIdAlreadyAssigned((Integer) fieldValue, idOfCurrentPaper);
-        default:
-            throw new IllegalArgumentException("Field '" + fieldName + "' is not supported by this validator.");
-        }
+        return switch (fieldName) {
+            case "doi" -> getRepository().isDoiAlreadyAssigned((String) fieldValue, idOfCurrentPaper);
+            case "pmId" -> getRepository().isPmIdAlreadyAssigned((Integer) fieldValue, idOfCurrentPaper);
+            default -> throw new IllegalArgumentException("Field '" + fieldName + "' is not supported by this validator.");
+        };
     }
 }

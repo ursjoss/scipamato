@@ -7,14 +7,14 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import ch.difty.scipamato.common.entity.FieldEnumType;
 import ch.difty.scipamato.common.entity.ScipamatoEntity;
 
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = true, exclude = { "createdBy", "createdByName", "createdByFullName", "lastModifiedBy",
-    "lastModifiedByName" })
+@EqualsAndHashCode(callSuper = true, exclude = { "createdBy", "createdByName", "createdByFullName", "lastModifiedBy", "lastModifiedByName" })
 public abstract class CoreEntity extends ScipamatoEntity {
 
     @java.io.Serial
@@ -83,7 +83,7 @@ public abstract class CoreEntity extends ScipamatoEntity {
 
         private final String name;
 
-        CoreEntityFields(final String name) {
+        CoreEntityFields(@NotNull final String name) {
             this.name = name;
         }
 
@@ -99,14 +99,14 @@ public abstract class CoreEntity extends ScipamatoEntity {
         return makeDisplayValue(createdByName, getCreated());
     }
 
-    private String makeDisplayValue(String name, LocalDateTime ldt) {
+    private String makeDisplayValue(@Nullable final String name, @Nullable final LocalDateTime ldt) {
         final StringBuilder sb = new StringBuilder();
         String close = "";
         if (name != null) {
             sb.append(name);
         }
         if (ldt != null) {
-            if (sb.length() > 0) {
+            if (!sb.isEmpty()) {
                 sb.append(" (");
                 close = ")";
             }

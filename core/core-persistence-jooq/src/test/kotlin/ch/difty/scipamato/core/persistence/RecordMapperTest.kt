@@ -36,7 +36,7 @@ abstract class RecordMapperTest<R : Record, E : CoreEntity> {
      * record.setLastModified(LAST_MOD);
      * record.setLastModifiedBy(LAST_MOD_BY);
      * record.setVersion(VERSION);
-     </pre>` *
+    </pre>` *
      *
      * @param record
      * for which the audit fields are set into

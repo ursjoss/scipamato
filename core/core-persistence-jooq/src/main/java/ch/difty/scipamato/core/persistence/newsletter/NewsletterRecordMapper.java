@@ -12,7 +12,7 @@ import ch.difty.scipamato.core.persistence.EntityRecordMapper;
 
 /**
  * Mapper mapping {@link NewsletterRecord}s into entity {@link Newsletter}.
- *
+ * <br/><br/>
  * <b>Note:</b> the mapper leaves the {@link NewsletterTopic}s empty.
  *
  * @author u.joss
@@ -28,13 +28,12 @@ public class NewsletterRecordMapper extends EntityRecordMapper<NewsletterRecord,
 
     @NotNull
     @Override
-    protected AuditFields getAuditFieldsOf(@NotNull NewsletterRecord r) {
-        return new AuditFields(r.getCreated(), r.getCreatedBy(), r.getLastModified(), r.getLastModifiedBy(),
-            r.getVersion());
+    protected AuditFields getAuditFieldsOf(@NotNull final NewsletterRecord r) {
+        return new AuditFields(r.getCreated(), r.getCreatedBy(), r.getLastModified(), r.getLastModifiedBy(), r.getVersion());
     }
 
     @Override
-    protected void mapFields(@NotNull NewsletterRecord from, @NotNull Newsletter to) {
+    protected void mapFields(@NotNull final NewsletterRecord from, @NotNull final Newsletter to) {
         to.setId(from.getId());
         to.setIssue(from.getIssue());
         to.setIssueDate(from.getIssueDate() != null ?

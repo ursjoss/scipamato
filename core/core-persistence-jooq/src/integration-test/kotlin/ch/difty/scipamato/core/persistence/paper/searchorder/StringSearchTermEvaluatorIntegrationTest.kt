@@ -28,6 +28,7 @@ internal class StringSearchTermEvaluatorIntegrationTest : SearchTermEvaluatorInt
         SearchTerm.newSearchTerm(ID, searchTermType, SC_ID, FN, rawSearchTerm) as StringSearchTerm
 
     @TestFactory
+    @Suppress("LongMethod")
     fun stringTests(): List<DynamicTest> = mapOf(
         "foo" to StringExp(
             tokenString = "(WORD foo)",

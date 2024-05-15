@@ -38,7 +38,7 @@ public class JooqSearchOrderService extends JooqEntityService<Long, SearchOrder,
 
     @Override
     @Transactional
-    public void removeSearchConditionWithId(@Nullable Long searchConditionId) {
+    public void removeSearchConditionWithId(@Nullable final Long searchConditionId) {
         if (searchConditionId != null)
             getRepository().deleteSearchConditionWithId(searchConditionId);
     }

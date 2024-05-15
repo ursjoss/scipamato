@@ -15,8 +15,8 @@ public class AuditFields {
     final Integer       lastModifiedBy;
     final int           version;
 
-    public AuditFields(@Nullable final Timestamp c, @Nullable final Integer cb, @Nullable final Timestamp lm,
-        @Nullable final Integer lmb, @Nullable final Integer v) {
+    public AuditFields(@Nullable final Timestamp c, @Nullable final Integer cb, @Nullable final Timestamp lm, @Nullable final Integer lmb,
+        @Nullable final Integer v) {
         created = c != null ? c.toLocalDateTime() : null;
         createdBy = cb;
         lastModified = lm != null ? lm.toLocalDateTime() : null;

@@ -21,6 +21,7 @@ import org.testcontainers.junit.jupiter.Testcontainers
  */
 @JooqTest
 @Testcontainers
+@Suppress("MagicNumber")
 open class IntegerSearchTermEvaluatorIntegrationTest : SearchTermEvaluatorIntegrationTest<IntegerSearchTerm>() {
 
     override val searchTermType: Int = SearchTermType.INTEGER.id
@@ -31,7 +32,7 @@ open class IntegerSearchTermEvaluatorIntegrationTest : SearchTermEvaluatorIntegr
         SearchTerm.newSearchTerm(ID, searchTermType, SC_ID, FN, rawSearchTerm) as IntegerSearchTerm
 
     @TestFactory
-    fun integerTests() : List<DynamicTest> = mapOf(
+    fun integerTests(): List<DynamicTest> = mapOf(
         "<2016" to IntegerExp(2016, 2016, LESS_THAN, "fn < 2016"),
         "<=2016" to IntegerExp(2016, 2016, LESS_OR_EQUAL, "fn <= 2016"),
         "2016" to IntegerExp(2016, 2016, EXACT, "fn = 2016"),

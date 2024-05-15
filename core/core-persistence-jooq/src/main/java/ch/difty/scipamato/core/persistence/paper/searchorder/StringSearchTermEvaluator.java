@@ -4,7 +4,6 @@ import static ch.difty.scipamato.common.persistence.TranslationUtilsKt.deCamelCa
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.jetbrains.annotations.NotNull;
@@ -39,12 +38,12 @@ public class StringSearchTermEvaluator implements SearchTermEvaluator<StringSear
                 "methodConfounders")
             .map(TranslationUtilsKt::deCamelCase)
             .map(DSL::field)
-            .collect(Collectors.toList()));
+            .toList());
         populationFields.addAll(Stream
             .of(POPULATION, "populationPlace", "populationParticipants", "populationDuration")
             .map(TranslationUtilsKt::deCamelCase)
             .map(DSL::field)
-            .collect(Collectors.toList()));
+            .toList());
     }
 
     @NotNull
@@ -58,12 +57,13 @@ public class StringSearchTermEvaluator implements SearchTermEvaluator<StringSear
         return conditions.combineWithAnd();
     }
 
-    private void addToConditions(final ConditionalSupplier cs, final Token tk, final Field<Object> field, final Field<String> value) {
+    private void addToConditions(@NotNull final ConditionalSupplier cs, @NotNull final Token tk, @NotNull final Field<Object> field,
+        @NotNull final Field<String> value) {
         distinguishConditions(cs, tk, field, value, tk.type.negate);
     }
 
-    private void distinguishConditions(final ConditionalSupplier cs, final Token tk, final Field<Object> field, final Field<String> value,
-        final boolean negate) {
+    private void distinguishConditions(@NotNull final ConditionalSupplier cs, @NotNull final Token tk, @NotNull final Field<Object> field,
+        @NotNull final Field<String> value, final boolean negate) {
         switch (tk.type.matchType) {
         case NONE:
             break;
@@ -88,7 +88,8 @@ public class StringSearchTermEvaluator implements SearchTermEvaluator<StringSear
         }
     }
 
-    private void containsCondition(final ConditionalSupplier cs, final Field<Object> field, final Field<String> value, final boolean negate) {
+    private void containsCondition(@NotNull final ConditionalSupplier cs, @NotNull final Field<Object> field, @NotNull final Field<String> value,
+        final boolean negate) {
         if (METHODS.equalsIgnoreCase(field.getName())) {
             containsMultiple(cs, value, negate, methodFields);
         } else if (POPULATION.equalsIgnoreCase(field.getName())) {
@@ -103,7 +104,7 @@ public class StringSearchTermEvaluator implements SearchTermEvaluator<StringSear
     }
 
     private void containsMultiple(final ConditionalSupplier cs, final Field<String> value, final boolean negate, final List<Field<Object>> fields) {
-        ConditionalSupplier csSub = new ConditionalSupplier();
+        final ConditionalSupplier csSub = new ConditionalSupplier();
         for (final Field<Object> mf : fields)
             csSub.add(() -> negate ?
                 DSL
@@ -113,7 +114,8 @@ public class StringSearchTermEvaluator implements SearchTermEvaluator<StringSear
         cs.add(() -> negate ? csSub.combineWithAnd() : csSub.combineWithOr());
     }
 
-    private void equalsCondition(final ConditionalSupplier cs, final Field<Object> field, final Field<String> value, final boolean negate) {
+    private void equalsCondition(@NotNull final ConditionalSupplier cs, @NotNull final Field<Object> field, @NotNull final Field<String> value,
+        final boolean negate) {
         if (METHODS.equalsIgnoreCase(field.getName())) {
             equalsMultiple(cs, value, negate, methodFields);
         } else if (POPULATION.equalsIgnoreCase(field.getName())) {
@@ -123,14 +125,16 @@ public class StringSearchTermEvaluator implements SearchTermEvaluator<StringSear
         }
     }
 
-    private void equalsMultiple(final ConditionalSupplier cs, final Field<String> value, final boolean negate, final List<Field<Object>> fields) {
-        ConditionalSupplier csSub = new ConditionalSupplier();
+    private void equalsMultiple(@NotNull final ConditionalSupplier cs, @NotNull final Field<String> value, final boolean negate,
+        @NotNull final List<Field<Object>> fields) {
+        final ConditionalSupplier csSub = new ConditionalSupplier();
         for (final Field<Object> mf : fields)
             csSub.add(() -> negate ? mf.notEqualIgnoreCase(value) : mf.equalIgnoreCase(value));
         cs.add(() -> negate ? csSub.combineWithAnd() : csSub.combineWithOr());
     }
 
-    private void likeCondition(final ConditionalSupplier cs, final Field<Object> field, final Field<String> value, final boolean negate) {
+    private void likeCondition(@NotNull final ConditionalSupplier cs, @NotNull final Field<Object> field, @NotNull final Field<String> value,
+        final boolean negate) {
         if (METHODS.equalsIgnoreCase(field.getName())) {
             likeMultiple(cs, value, negate, methodFields);
         } else if (POPULATION.equalsIgnoreCase(field.getName())) {
@@ -144,8 +148,9 @@ public class StringSearchTermEvaluator implements SearchTermEvaluator<StringSear
         }
     }
 
-    private void likeMultiple(final ConditionalSupplier cs, final Field<String> value, final boolean negate, final List<Field<Object>> fields) {
-        ConditionalSupplier csSub = new ConditionalSupplier();
+    private void likeMultiple(@NotNull final ConditionalSupplier cs, @NotNull final Field<String> value, final boolean negate,
+        @NotNull final List<Field<Object>> fields) {
+        final ConditionalSupplier csSub = new ConditionalSupplier();
         for (final Field<Object> mf : fields) {
             csSub.add(() -> negate ?
                 DSL
@@ -156,7 +161,8 @@ public class StringSearchTermEvaluator implements SearchTermEvaluator<StringSear
         cs.add(() -> negate ? csSub.combineWithAnd() : csSub.combineWithOr());
     }
 
-    private void regexCondition(final ConditionalSupplier cs, final Field<Object> field, final Field<String> value, final boolean negate) {
+    private void regexCondition(@NotNull final ConditionalSupplier cs, @NotNull final Field<Object> field, @NotNull final Field<String> value,
+        final boolean negate) {
         if (METHODS.equalsIgnoreCase(field.getName())) {
             regexMultiple(cs, value, negate, methodFields);
         } else if (POPULATION.equalsIgnoreCase(field.getName())) {
@@ -172,8 +178,9 @@ public class StringSearchTermEvaluator implements SearchTermEvaluator<StringSear
         }
     }
 
-    private void regexMultiple(final ConditionalSupplier cs, final Field<String> value, final boolean negate, final List<Field<Object>> fields) {
-        ConditionalSupplier csSub = new ConditionalSupplier();
+    private void regexMultiple(@NotNull final ConditionalSupplier cs, @NotNull final Field<String> value, final boolean negate,
+        @NotNull final List<Field<Object>> fields) {
+        final ConditionalSupplier csSub = new ConditionalSupplier();
         for (final Field<Object> mf : fields) {
             csSub.add(() -> negate ?
                 DSL
@@ -190,7 +197,7 @@ public class StringSearchTermEvaluator implements SearchTermEvaluator<StringSear
         cs.add(() -> negate ? csSub.combineWithAnd() : csSub.combineWithOr());
     }
 
-    private void lengthCondition(final ConditionalSupplier cs, final Field<Object> field, final boolean negate) {
+    private void lengthCondition(@NotNull final ConditionalSupplier cs, @NotNull final Field<Object> field, final boolean negate) {
         if (METHODS.equalsIgnoreCase(field.getName())) {
             lengthMultiple(cs, negate, methodFields);
         } else if (POPULATION.equalsIgnoreCase(field.getName())) {
@@ -200,15 +207,15 @@ public class StringSearchTermEvaluator implements SearchTermEvaluator<StringSear
         }
     }
 
-    private void lengthMultiple(final ConditionalSupplier cs, final boolean negate, final List<Field<Object>> fields) {
-        ConditionalSupplier csSub = new ConditionalSupplier();
+    private void lengthMultiple(@NotNull final ConditionalSupplier cs, final boolean negate, @NotNull final List<Field<Object>> fields) {
+        final ConditionalSupplier csSub = new ConditionalSupplier();
         for (final Field<Object> mf : fields) {
             lengthCond(csSub, mf, negate);
         }
         cs.add(() -> negate ? csSub.combineWithAnd() : csSub.combineWithOr());
     }
 
-    private void lengthCond(final ConditionalSupplier cs, final Field<Object> field, final boolean negate) {
+    private void lengthCond(@NotNull final ConditionalSupplier cs, @NotNull final Field<Object> field, final boolean negate) {
         final Field<Integer> length = DSL.length(field.cast(String.class));
         cs.add(() -> negate ?
             field

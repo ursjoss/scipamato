@@ -12,7 +12,7 @@ public enum SearchTermType {
     INTEGER(1),
     STRING(2),
     AUDIT(3),
-    // Dummy that helps testing business logic that throws an exception with
+    // Dummy that helps to test business logic that throws an exception with
     // undefined values (handled in the default case of a switch).
     UNSUPPORTED(-1);
 

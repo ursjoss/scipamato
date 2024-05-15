@@ -63,7 +63,8 @@ abstract class Jsr303ValidatedEntityTest<T : CoreEntity> protected constructor(p
     }
 
     /**
-     * Validates the passed in entity that is assumed to have exactly one validation issue. Asserts the validation message.
+     * Validates the passed in entity that is assumed to have exactly one validation issue.
+     * Asserts the validation message.
      */
     protected fun validateAndAssertFailure(validateable: T, fieldType: FieldEnumType, invalidValue: Any?, msg: String) {
         validate(validateable)

@@ -129,7 +129,7 @@ internal open class JooqPaperRepoIntegrationTest {
         val ccr = dsl
             .selectFrom(CodeClass.CODE_CLASS)
             .where(CodeClass.CODE_CLASS.ID.eq(cr.codeClassId))
-            ?.fetchOne() ?: fail("Unable to fetch record")
+            .fetchOne() ?: fail("Unable to fetch record")
         val codeClass = ch.difty.scipamato.core.entity.CodeClass(ccr.id, "", "")
         val code = ch.difty.scipamato.core.entity.Code(
             cr.code, "", "", true,
@@ -560,6 +560,7 @@ internal open class JooqPaperRepoIntegrationTest {
         assertNewsletterLink(paper, "1804", 0, null, null, null)
     }
 
+    @Suppress("LongParameterList")
     private fun assertNewsletterLink(
         paper: Paper,
         issue: String,

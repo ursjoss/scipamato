@@ -24,7 +24,6 @@ import org.amshove.kluent.shouldContainAll
 import org.amshove.kluent.shouldHaveSize
 import org.junit.jupiter.api.Test
 
-@Suppress("UsePropertyAccessSyntax")
 internal class JooqSearchOrderRepoTest :
     JooqEntityRepoTest<SearchOrderRecord, SearchOrder, Long, ch.difty.scipamato.core.db.tables.SearchOrder,
         SearchOrderRecordMapper, SearchOrderFilter>() {

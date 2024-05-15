@@ -37,24 +37,24 @@ public class JooqUserService implements UserService {
 
     @NotNull
     @Override
-    public Optional<User> findById(@NotNull Integer id) {
+    public Optional<User> findById(@NotNull final Integer id) {
         return Optional.ofNullable(repo.findById(id));
     }
 
     @NotNull
     @Override
-    public List<User> findPageByFilter(@Nullable UserFilter filter, @NotNull PaginationContext paginationContext) {
+    public List<User> findPageByFilter(@Nullable final UserFilter filter, @NotNull final PaginationContext paginationContext) {
         return repo.findPageByFilter(filter, paginationContext);
     }
 
     @Override
-    public int countByFilter(@Nullable UserFilter filter) {
+    public int countByFilter(@Nullable final UserFilter filter) {
         return repo.countByFilter(filter);
     }
 
     @Nullable
     @Override
-    public User saveOrUpdate(@NotNull User user) {
+    public User saveOrUpdate(@NotNull final User user) {
         final String password = user.getPassword();
         if (password != null)
             user.setPassword(passwordEncoder.encode(password));
@@ -66,14 +66,14 @@ public class JooqUserService implements UserService {
 
     @NotNull
     @Override
-    public Optional<User> findByUserName(@Nullable String userName) {
+    public Optional<User> findByUserName(@Nullable final String userName) {
         if (userName == null)
             return Optional.empty();
         return Optional.ofNullable(repo.findByUserName(userName));
     }
 
     @Override
-    public void remove(@Nullable User entity) {
+    public void remove(@Nullable final User entity) {
         if (entity != null && entity.getId() != null)
             repo.delete(entity.getId(), entity.getVersion());
     }

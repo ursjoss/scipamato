@@ -61,7 +61,7 @@ public class User extends IdScipamatoEntity<Integer> {
 
         private final String name;
 
-        UserFields(final String name) {
+        UserFields(@NotNull final String name) {
             this.name = name;
         }
 
@@ -72,9 +72,8 @@ public class User extends IdScipamatoEntity<Integer> {
         }
     }
 
-    public User(final int id, @NotNull final String userName, @NotNull final String firstName,
-        @NotNull final String lastName, @NotNull final String email, @Nullable final String password,
-        final boolean enabled, @Nullable final Set<Role> roles) {
+    public User(final int id, @NotNull final String userName, @NotNull final String firstName, @NotNull final String lastName,
+        @NotNull final String email, @Nullable final String password, final boolean enabled, @Nullable final Set<Role> roles) {
         setId(id);
         this.userName = userName;
         this.firstName = firstName;
@@ -85,8 +84,8 @@ public class User extends IdScipamatoEntity<Integer> {
         setRoles(roles);
     }
 
-    public User(final int id, @NotNull final String userName, @NotNull final String firstName,
-        @NotNull final String lastName, @NotNull final String email, @Nullable final String password) {
+    public User(final int id, @NotNull final String userName, @NotNull final String firstName, @NotNull final String lastName,
+        @NotNull final String email, @Nullable final String password) {
         this(id, userName, firstName, lastName, email, password, false, null);
     }
 

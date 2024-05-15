@@ -84,8 +84,7 @@ public class AuditSearchTerm extends AbstractSearchTerm {
         this(null, fieldName, rawSearchTerm);
     }
 
-    private AuditSearchTerm(@Nullable final Long searchConditionId, @NotNull final String fieldName,
-        @NotNull final String rawSearchTerm) {
+    private AuditSearchTerm(@Nullable final Long searchConditionId, @NotNull final String fieldName, @NotNull final String rawSearchTerm) {
         this(null, searchConditionId, fieldName, rawSearchTerm);
     }
 
@@ -133,17 +132,14 @@ public class AuditSearchTerm extends AbstractSearchTerm {
         // in the constructed regex terms will break
         WHITESPACE(RE_S + "+", MatchType.NONE, FieldType.NONE, 1),
 
-        RANGEQUOTED(
-            "=?" + RE_QUOTE + "(" + RE_DATE + ")" + RE_QUOTE + RE_RANGE_DIV + RE_QUOTE + "(" + RE_DATE + ")" + RE_QUOTE,
-            MatchType.RANGE, FieldType.DATE, 3),
+        RANGEQUOTED("=?" + RE_QUOTE + "(" + RE_DATE + ")" + RE_QUOTE + RE_RANGE_DIV + RE_QUOTE + "(" + RE_DATE + ")" + RE_QUOTE, MatchType.RANGE,
+            FieldType.DATE, 3),
         RANGE("=?" + "(" + RE_DATE + ")" + RE_RANGE_DIV + "(" + RE_DATE + ")", MatchType.RANGE, FieldType.DATE, 6),
-        GREATEROREQUALQUOTED(">=" + RE_QUOTE + "(" + RE_DATE + ")" + RE_QUOTE, MatchType.GREATER_OR_EQUAL,
-            FieldType.DATE, 9),
+        GREATEROREQUALQUOTED(">=" + RE_QUOTE + "(" + RE_DATE + ")" + RE_QUOTE, MatchType.GREATER_OR_EQUAL, FieldType.DATE, 9),
         GREATEROREQUAL(">=" + "(" + RE_DATE + ")", MatchType.GREATER_OR_EQUAL, FieldType.DATE, 11),
         GREATERTHANQUOTED(">" + RE_QUOTE + "(" + RE_DATE + ")" + RE_QUOTE, MatchType.GREATER_THAN, FieldType.DATE, 13),
         GREATERTHAN(">" + "(" + RE_DATE + ")", MatchType.GREATER_THAN, FieldType.DATE, 15),
-        LESSOREQUALQUOTED("<=" + RE_QUOTE + "(" + RE_DATE + ")" + RE_QUOTE, MatchType.LESS_OR_EQUAL, FieldType.DATE,
-            17),
+        LESSOREQUALQUOTED("<=" + RE_QUOTE + "(" + RE_DATE + ")" + RE_QUOTE, MatchType.LESS_OR_EQUAL, FieldType.DATE, 17),
         LESSOREQUAL("<=" + "(" + RE_DATE + ")", MatchType.LESS_OR_EQUAL, FieldType.DATE, 19),
         LESSTHANQUOTED("<" + RE_QUOTE + "(" + RE_DATE + ")" + RE_QUOTE, MatchType.LESS_THAN, FieldType.DATE, 21),
         LESSTHAN("<" + "(" + RE_DATE + ")", MatchType.LESS_THAN, FieldType.DATE, 23),
@@ -162,8 +158,7 @@ public class AuditSearchTerm extends AbstractSearchTerm {
         final         FieldType fieldType;
         private final int       group;
 
-        TokenType(@NotNull final String pattern, @NotNull final MatchType matchType, @NotNull final FieldType fieldType,
-            final int group) {
+        TokenType(@NotNull final String pattern, @NotNull final MatchType matchType, @NotNull final FieldType fieldType, final int group) {
             this.pattern = pattern;
             this.group = group;
             this.fieldType = fieldType;
@@ -181,6 +176,7 @@ public class AuditSearchTerm extends AbstractSearchTerm {
     }
 
     public static class Token implements Serializable {
+        @java.io.Serial
         private static final long serialVersionUID = 1L;
 
         private final TokenType              type;
@@ -260,21 +256,18 @@ public class AuditSearchTerm extends AbstractSearchTerm {
         return Pattern.compile(tokenPatternBuilder.substring(1));
     }
 
-    private static List<Token> tokenize(final String input, final Pattern pattern, final boolean isUserType,
-        final boolean isDateType) {
+    private static List<Token> tokenize(final String input, final Pattern pattern, final boolean isUserType, final boolean isDateType) {
         return processTokens(pattern.matcher(input), isUserType, isDateType);
     }
 
-    private static List<Token> processTokens(final Matcher matcher, final boolean isUserType,
-        final boolean isDateType) {
+    private static List<Token> processTokens(final Matcher matcher, final boolean isUserType, final boolean isDateType) {
         final List<Token> tokens = new ArrayList<>();
         while (matcher.find())
             getNextToken(matcher, isUserType, isDateType).ifPresent(tokens::add);
         return tokens;
     }
 
-    private static Optional<Token> getNextToken(final Matcher matcher, final boolean isUserType,
-        final boolean isDateType) {
+    private static Optional<Token> getNextToken(final Matcher matcher, final boolean isUserType, final boolean isDateType) {
         for (final TokenType tk : TokenType.TOKEN_TYPES) {
             if (tk == TokenType.RAW || matcher.group(TokenType.WHITESPACE.name()) != null)
                 continue;
@@ -295,21 +288,19 @@ public class AuditSearchTerm extends AbstractSearchTerm {
     }
 
     private static String buildRange(final Matcher matcher, final TokenType tk) {
-        return completeDateTimeIfNecessary(matcher.group(tk.group), RangeElement.BEGIN) + "-"
-               + completeDateTimeIfNecessary(matcher.group(tk.group + 1), RangeElement.END);
+        return completeDateTimeIfNecessary(matcher.group(tk.group), RangeElement.BEGIN) + "-" + completeDateTimeIfNecessary(
+            matcher.group(tk.group + 1), RangeElement.END);
     }
 
     private static String completeDateTimeIfNecessary(final String data, final RangeElement rangeElement) {
         if (data.length() != DATE_TIME_LENGTH) {
             return data;
         } else {
-            switch (rangeElement) {
-            case BEGIN:
-                return data + " 00:00:00";
-            case END:
-            default:
-                return data + " 23:59:59";
-            }
+            //noinspection SwitchStatementWithTooFewBranches
+            return switch (rangeElement) {
+                case BEGIN -> data + " 00:00:00";
+                default -> data + " 23:59:59";
+            };
         }
     }
 

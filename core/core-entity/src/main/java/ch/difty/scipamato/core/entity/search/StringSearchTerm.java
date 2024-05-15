@@ -74,8 +74,7 @@ public class StringSearchTerm extends AbstractSearchTerm {
         this(null, fieldName, rawSearchTerm);
     }
 
-    private StringSearchTerm(@Nullable final Long searchConditionId, @NotNull final String fieldName,
-        @NotNull final String rawSearchTerm) {
+    private StringSearchTerm(@Nullable final Long searchConditionId, @NotNull final String fieldName, @NotNull final String rawSearchTerm) {
         this(null, searchConditionId, fieldName, rawSearchTerm);
     }
 
@@ -101,26 +100,22 @@ public class StringSearchTerm extends AbstractSearchTerm {
     }
 
     public enum TokenType {
-        // Token types must not have underscores. Otherwise the named capturing groups
+        // Token types must not have underscores. Otherwise, the named capturing groups
         // in the constructed regex terms will break
         NOTREGEX("-s/(.+)/", MatchType.REGEX, 2, false, false, true),
         REGEX("s/(.+)/", MatchType.REGEX, 4, false, false, false),
         WHITESPACE(RE_S + "+", MatchType.NONE, 5, false, false, false),
         SOME(">\"\"", MatchType.LENGTH, 6, false, false, false),
         EMPTY("=\"\"", MatchType.LENGTH, 7, false, false, true),
-        NOTOPENLEFTRIGHTQUOTED(RE_NOT + RE_QUOTE + RE_AST + "(" + RE_FOO2 + ")" + RE_AST + RE_QUOTE, MatchType.LIKE, 9,
-            true, true, true),
-        OPENLEFTRIGHTQUOTED(RE_QUOTE + RE_AST + "(" + RE_FOO2 + ")" + RE_AST + RE_QUOTE, MatchType.LIKE, 11, true, true,
-            false),
+        NOTOPENLEFTRIGHTQUOTED(RE_NOT + RE_QUOTE + RE_AST + "(" + RE_FOO2 + ")" + RE_AST + RE_QUOTE, MatchType.LIKE, 9, true, true, true),
+        OPENLEFTRIGHTQUOTED(RE_QUOTE + RE_AST + "(" + RE_FOO2 + ")" + RE_AST + RE_QUOTE, MatchType.LIKE, 11, true, true, false),
         NOTOPENLEFTRIGHT(RE_NOT + RE_AST + "\\b(" + RE_FOO + ")\\b" + RE_AST, MatchType.LIKE, 13, true, true, true),
         OPENLEFTRIGHT(RE_AST + "\\b(" + RE_FOO + ")\\b" + RE_AST, MatchType.LIKE, 15, true, true, false),
-        NOTOPENRIGHTQUOTED(RE_NOT + RE_QUOTE + "(" + RE_FOO2 + ")" + RE_AST + RE_QUOTE, MatchType.LIKE, 17, false, true,
-            true),
+        NOTOPENRIGHTQUOTED(RE_NOT + RE_QUOTE + "(" + RE_FOO2 + ")" + RE_AST + RE_QUOTE, MatchType.LIKE, 17, false, true, true),
         OPENRIGHTQUOTED(RE_QUOTE + "(" + RE_FOO2 + ")" + RE_AST + RE_QUOTE, MatchType.LIKE, 19, false, true, false),
         NOTOPENRIGHT(RE_NOT + "\\b(" + RE_FOO + ")\\b" + RE_AST, MatchType.LIKE, 21, false, true, true),
         OPENRIGHT("\\b(" + RE_FOO + ")\\b" + RE_AST, MatchType.LIKE, 23, false, true, false),
-        NOTOPENLEFTQUOTED(RE_NOT + RE_QUOTE + RE_AST + "(" + RE_FOO2 + ")" + RE_QUOTE, MatchType.LIKE, 25, true, false,
-            true),
+        NOTOPENLEFTQUOTED(RE_NOT + RE_QUOTE + RE_AST + "(" + RE_FOO2 + ")" + RE_QUOTE, MatchType.LIKE, 25, true, false, true),
         OPENLEFTQUOTED(RE_QUOTE + RE_AST + "(" + RE_FOO2 + ")" + RE_QUOTE, MatchType.LIKE, 27, true, false, false),
         NOTOPENLEFT(RE_NOT + RE_AST + "\\b(" + RE_FOO + ")\\b", MatchType.LIKE, 29, true, false, true),
         OPENLEFT(RE_AST + "\\b(" + RE_FOO + ")\\b", MatchType.LIKE, 31, true, false, false),
@@ -141,8 +136,8 @@ public class StringSearchTerm extends AbstractSearchTerm {
         private final boolean   wcRight;
         public final  boolean   negate;
 
-        TokenType(@NotNull final String pattern, @NotNull final MatchType matchType, final int group,
-            final boolean wcLeft, final boolean wcRight, final boolean negate) {
+        TokenType(@NotNull final String pattern, @NotNull final MatchType matchType, final int group, final boolean wcLeft, final boolean wcRight,
+            final boolean negate) {
             this.pattern = pattern;
             this.group = group;
             this.matchType = matchType;
@@ -159,7 +154,6 @@ public class StringSearchTerm extends AbstractSearchTerm {
                     types.add(tt);
             return types;
         }
-
     }
 
     /**
@@ -183,7 +177,7 @@ public class StringSearchTerm extends AbstractSearchTerm {
             this.sqlData = sqlize(data);
         }
 
-        private String sqlize(final String data) {
+        private String sqlize(@NotNull final String data) {
             final StringBuilder sb = new StringBuilder();
             switch (type.matchType) {
             case LIKE:
@@ -206,7 +200,7 @@ public class StringSearchTerm extends AbstractSearchTerm {
         }
     }
 
-    private static List<Token> lex(final String input) {
+    private static List<Token> lex(@NotNull final String input) {
         return tokenize(input, buildPattern());
     }
 
@@ -218,7 +212,7 @@ public class StringSearchTerm extends AbstractSearchTerm {
         return Pattern.compile(tokenPatternBuilder.substring(1));
     }
 
-    private static List<Token> tokenize(final String input, final Pattern pattern) {
+    private static List<Token> tokenize(@NotNull final String input, @NotNull final Pattern pattern) {
         final Matcher matcher = pattern.matcher(input);
         final List<Token> tokens = new ArrayList<>();
         while (matcher.find())
@@ -228,7 +222,7 @@ public class StringSearchTerm extends AbstractSearchTerm {
         return tokens;
     }
 
-    private static Optional<Token> getNextToken(final Matcher matcher) {
+    private static Optional<Token> getNextToken(@NotNull final Matcher matcher) {
         for (final TokenType tk : TokenType.TOKEN_TYPES) {
             if (tk == TokenType.RAW || matcher.group(TokenType.WHITESPACE.name()) != null)
                 continue;

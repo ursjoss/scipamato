@@ -35,8 +35,7 @@ public interface PaperSlimRepository extends ReadOnlyRepository<PaperSlim, Long,
      * @see #findBySearchOrder(SearchOrder)
      */
     @NotNull
-    List<PaperSlim> findPageBySearchOrder(@NotNull SearchOrder searchOrder,
-        @NotNull PaginationContext paginationContext);
+    List<PaperSlim> findPageBySearchOrder(@NotNull SearchOrder searchOrder, @NotNull PaginationContext paginationContext);
 
     /**
      * Counts all persisted entities of type {@code T} matching the provided

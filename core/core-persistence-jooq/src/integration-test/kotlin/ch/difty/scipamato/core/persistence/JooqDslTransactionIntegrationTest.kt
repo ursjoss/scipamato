@@ -57,7 +57,6 @@ internal open class JooqDslTransactionIntegrationTest {
         rollback.shouldBeTrue()
     }
 
-    @Suppress("RedundantLambdaArrow")
     @Test
     fun jOOQTransactionsSimple() {
         var rollback = false
@@ -89,7 +88,6 @@ internal open class JooqDslTransactionIntegrationTest {
         rollback.shouldBeTrue()
     }
 
-    @Suppress("RedundantLambdaArrow")
     @Test
     fun jOOQTransactionsNested() {
         val rollback1 = AtomicBoolean(false)

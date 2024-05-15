@@ -11,7 +11,6 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.jetbrains.annotations.NotNull;
-import org.jooq.Record;
 import org.jooq.*;
 import org.jooq.impl.DSL;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -140,7 +139,7 @@ public abstract class JooqBySearchOrderRepo<T extends IdScipamatoEntity<Long>, M
      * Combines the individual search terms of a single {@link SearchCondition}
      * using AND operators
      */
-    private Condition getConditionFromSingleSearchCondition(final SearchCondition searchCondition) {
+    private Condition getConditionFromSingleSearchCondition(@NotNull final SearchCondition searchCondition) {
         final ConditionalSupplier conditions = new ConditionalSupplier();
         for (final BooleanSearchTerm st : searchCondition.getBooleanSearchTerms())
             conditions.add(() -> booleanSearchTermEvaluator.evaluate(st));
@@ -175,7 +174,8 @@ public abstract class JooqBySearchOrderRepo<T extends IdScipamatoEntity<Long>, M
         return conditions.combineWithAnd();
     }
 
-    private Condition codeConditions(final List<String> codes, final Function<SelectConditionStep<Record1<Integer>>, Condition> selector) {
+    private Condition codeConditions(@NotNull final List<String> codes,
+        @NotNull final Function<SelectConditionStep<Record1<Integer>>, Condition> selector) {
         final ConditionalSupplier codeConditions = new ConditionalSupplier();
         for (final String code : codes) {
             final SelectConditionStep<Record1<Integer>> step = DSL
@@ -212,14 +212,14 @@ public abstract class JooqBySearchOrderRepo<T extends IdScipamatoEntity<Long>, M
     }
 
     @NotNull
-    private Condition evaluateStringSearchTerm(final TableField<?, String> field, final String value) {
+    private Condition evaluateStringSearchTerm(@NotNull final TableField<?, String> field, @NotNull final String value) {
         final StringSearchTerm st = SearchTerm.newStringSearchTerm(field
             .getQualifiedName()
             .toString(), value);
         return stringSearchTermEvaluator.evaluate(st);
     }
 
-    private Condition attachmentConditions(final SearchCondition sc) {
+    private Condition attachmentConditions(@NotNull final SearchCondition sc) {
         final ConditionalSupplier attConditions = new ConditionalSupplier();
         final SelectConditionStep<Record1<Integer>> step0 = DSL
             .selectOne()

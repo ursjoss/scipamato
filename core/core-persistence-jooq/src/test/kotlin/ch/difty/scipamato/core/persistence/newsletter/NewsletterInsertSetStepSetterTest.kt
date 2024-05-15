@@ -31,8 +31,12 @@ internal class NewsletterInsertSetStepSetterTest : InsertSetStepSetterTest<Newsl
 
     override fun stepSetFixtureExceptAudit() {
         every { step.set(NEWSLETTER.ISSUE, NewsletterRecordMapperTest.ISSUE) } returns moreStep
-        every { moreStep.set(NEWSLETTER.ISSUE_DATE, Date.valueOf(NewsletterRecordMapperTest.ISSUE_DATE)) } returns moreStep
-        every { moreStep.set(NEWSLETTER.PUBLICATION_STATUS, NewsletterRecordMapperTest.PUBLICATION_STATUS.id) } returns moreStep
+        every {
+            moreStep.set(NEWSLETTER.ISSUE_DATE, Date.valueOf(NewsletterRecordMapperTest.ISSUE_DATE))
+        } returns moreStep
+        every {
+            moreStep.set(NEWSLETTER.PUBLICATION_STATUS, NewsletterRecordMapperTest.PUBLICATION_STATUS.id)
+        } returns moreStep
     }
 
     override fun setStepFixtureAudit() {

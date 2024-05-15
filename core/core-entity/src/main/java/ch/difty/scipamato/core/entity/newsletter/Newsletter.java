@@ -74,7 +74,7 @@ public class Newsletter extends IdScipamatoEntity<Integer> {
      * it will be reassigned to the new topic.
      *
      * @param paper
-     *     the paper (as {@link PaperSlim} to add or update its association with the newspaper.
+     *     the paper (as {@link PaperSlim}) to add or update its association with the newspaper.
      *     Neither paper nor its id may be null.
      * @param topic
      *     the topic of the new association, may be null indicating 'no topic'
@@ -110,7 +110,7 @@ public class Newsletter extends IdScipamatoEntity<Integer> {
     }
 
     /**
-     * either topics can be null. the topics do *not* differ if a) both are null or b) both are not null
+     * either topics can be null. the topics do *not* differ if a. both are null or b. both are not null
      * and are equal.
      */
     private boolean topicsDiffer(final NewsletterTopic t1, final NewsletterTopic t2) {

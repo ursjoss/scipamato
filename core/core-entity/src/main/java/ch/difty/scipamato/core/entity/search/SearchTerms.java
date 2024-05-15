@@ -3,6 +3,8 @@ package ch.difty.scipamato.core.entity.search;
 import java.io.Serializable;
 import java.util.LinkedHashMap;
 
+import org.jetbrains.annotations.Nullable;
+
 public abstract class SearchTerms<C extends Serializable> extends LinkedHashMap<String, C> {
 
     @java.io.Serial
@@ -19,7 +21,7 @@ public abstract class SearchTerms<C extends Serializable> extends LinkedHashMap<
     }
 
     @Override
-    public boolean equals(final Object obj) {
+    public boolean equals(@Nullable final Object obj) {
         if (this == obj)
             return true;
         if (obj == null)

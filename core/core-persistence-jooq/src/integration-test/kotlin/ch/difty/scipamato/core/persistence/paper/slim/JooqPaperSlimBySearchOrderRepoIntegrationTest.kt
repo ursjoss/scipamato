@@ -97,7 +97,8 @@ internal open class JooqPaperSlimBySearchOrderRepoIntegrationTest {
     fun findingPaged_withSearchCondition_withNoAttachments() {
         sc.hasAttachments = false
         so.add(sc)
-        repo.findPageBySearchOrder(so, pc).map { it.number } shouldContainSame listOf(1L, 2L, 3L, 4L, 10L, 11L, 12L, 13L, 14L, 15L)
+        repo.findPageBySearchOrder(so, pc).map { it.number } shouldContainSame
+            listOf(1L, 2L, 3L, 4L, 10L, 11L, 12L, 13L, 14L, 15L)
     }
 
     @Test

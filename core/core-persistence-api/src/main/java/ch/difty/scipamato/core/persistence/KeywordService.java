@@ -39,8 +39,7 @@ public interface KeywordService extends DefinitionProviderService<KeywordDefinit
      * @return a page of entities of type {@code T} as list
      */
     @NotNull
-    List<KeywordDefinition> findPageOfKeywordDefinitions(@Nullable KeywordFilter filter,
-        @NotNull PaginationContext paginationContext);
+    List<KeywordDefinition> findPageOfKeywordDefinitions(@Nullable KeywordFilter filter, @NotNull PaginationContext paginationContext);
 
     /**
      * Counts the number of {@link KeywordDefinition}s matching the specified filter.
@@ -107,7 +106,7 @@ public interface KeywordService extends DefinitionProviderService<KeywordDefinit
      *     the record version - used for optimistic locking
      * @return the deleted entity
      * @throws OptimisticLockingException
-     *     if the record version has increased in the mean time
+     *     if the record version has increased in the meantime
      */
     @Nullable
     KeywordDefinition delete(int id, int version);

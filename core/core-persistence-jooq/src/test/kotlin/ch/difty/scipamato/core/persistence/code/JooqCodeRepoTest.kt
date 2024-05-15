@@ -58,7 +58,7 @@ internal class JooqCodeRepoTest {
         val ctr1 = mockk<CodeTrRecord>(relaxed = true)
         val ctr2 = mockk<CodeTrRecord>(relaxed = true)
         val resultMock: Result<CodeTrRecord> = mockk {
-            every { iterator() } returns mockk() {
+            every { iterator() } returns mockk {
                 every { hasNext() } returnsMany listOf(true, true, false)
                 every { next() } returnsMany listOf(ctr1, ctr2)
             }

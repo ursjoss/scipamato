@@ -29,7 +29,7 @@ public class JaxbConfiguration {
     @NotNull
     @Bean
     public Marshaller marshaller() {
-        Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
+        final Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
         marshaller.setPackagesToScan(PACKAGE);
         return marshaller;
     }
@@ -37,7 +37,7 @@ public class JaxbConfiguration {
     @NotNull
     @Bean
     public Unmarshaller unmarshaller() {
-        Jaxb2Marshaller unmarshaller = new Jaxb2Marshaller();
+        final Jaxb2Marshaller unmarshaller = new Jaxb2Marshaller();
         unmarshaller.setSupportDtd(true);
         unmarshaller.setPackagesToScan(PACKAGE);
         return unmarshaller;

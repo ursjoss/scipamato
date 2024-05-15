@@ -27,8 +27,7 @@ public interface PubmedArticleFacade {
             return new ScipamatoPubmedArticle((PubmedArticle) pubmedArticleOrPubmedBookArticle);
         else if (pubmedArticleOrPubmedBookArticle instanceof PubmedBookArticle)
             return new ScipamatoPubmedBookArticle((PubmedBookArticle) pubmedArticleOrPubmedBookArticle);
-        throw new IllegalArgumentException(
-            "Cannot instantiate ScipamatoArticle from provided object " + pubmedArticleOrPubmedBookArticle.toString());
+        throw new IllegalArgumentException("Cannot instantiate ScipamatoArticle from provided object " + pubmedArticleOrPubmedBookArticle.toString());
     }
 
     @Nullable

@@ -28,8 +28,7 @@ public class PaperUpdateSetStepSetter implements UpdateSetStepSetter<PaperRecord
 
     @NotNull
     @Override
-    public UpdateSetMoreStep<PaperRecord> setFieldsFor(@NotNull UpdateSetFirstStep<PaperRecord> step,
-        @NotNull Paper e) {
+    public UpdateSetMoreStep<PaperRecord> setFieldsFor(@NotNull final UpdateSetFirstStep<PaperRecord> step, @NotNull final Paper e) {
         final Timestamp created = e.getCreated() == null ? null : UtilsKt.toTimestamp(e.getCreated());
         final Timestamp lastMod = e.getLastModified() == null ? null : UtilsKt.toTimestamp(e.getLastModified());
         return step

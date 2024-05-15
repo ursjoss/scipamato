@@ -66,6 +66,5 @@ public interface BySearchOrderRepository<T extends IdScipamatoEntity<Long>> {
      * @see #findBySearchOrder(SearchOrder)
      */
     @NotNull
-    List<Long> findPageOfIdsBySearchOrder(@NotNull SearchOrder searchOrder,
-        @NotNull PaginationContext paginationContext);
+    List<Long> findPageOfIdsBySearchOrder(@NotNull SearchOrder searchOrder, @NotNull PaginationContext paginationContext);
 }

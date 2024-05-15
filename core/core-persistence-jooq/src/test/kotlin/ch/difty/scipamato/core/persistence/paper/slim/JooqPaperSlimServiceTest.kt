@@ -16,7 +16,6 @@ import org.amshove.kluent.shouldBeTrue
 import org.amshove.kluent.shouldContainSame
 import org.junit.jupiter.api.Test
 
-@Suppress("UsePropertyAccessSyntax")
 internal class JooqPaperSlimServiceTest : AbstractServiceTest<Long, PaperSlim, PaperSlimRepository>() {
 
     override val repo = mockk<PaperSlimRepository>()

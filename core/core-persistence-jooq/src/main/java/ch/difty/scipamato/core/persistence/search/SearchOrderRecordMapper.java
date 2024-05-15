@@ -29,13 +29,12 @@ public class SearchOrderRecordMapper extends EntityRecordMapper<SearchOrderRecor
 
     @NotNull
     @Override
-    protected AuditFields getAuditFieldsOf(@NotNull SearchOrderRecord r) {
-        return new AuditFields(r.getCreated(), r.getCreatedBy(), r.getLastModified(), r.getLastModifiedBy(),
-            r.getVersion());
+    protected AuditFields getAuditFieldsOf(@NotNull final SearchOrderRecord r) {
+        return new AuditFields(r.getCreated(), r.getCreatedBy(), r.getLastModified(), r.getLastModifiedBy(), r.getVersion());
     }
 
     @Override
-    protected void mapFields(@NotNull SearchOrderRecord from, @NotNull SearchOrder to) {
+    protected void mapFields(@NotNull final SearchOrderRecord from, @NotNull final SearchOrder to) {
         to.setId(from.getId());
         to.setName(from.getName());
         to.setOwner(from.getOwner());

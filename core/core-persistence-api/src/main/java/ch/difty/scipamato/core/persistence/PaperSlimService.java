@@ -38,8 +38,7 @@ public interface PaperSlimService extends ReadOnlyService<Long, PaperSlim, Paper
      * @return paged list of papers
      */
     @NotNull
-    List<PaperSlim> findPageBySearchOrder(@NotNull SearchOrder searchOrder,
-        @NotNull PaginationContext paginationContext);
+    List<PaperSlim> findPageBySearchOrder(@NotNull SearchOrder searchOrder, @NotNull PaginationContext paginationContext);
 
     /**
      * Counts the number of entities matching the specified {@link SearchOrder}.

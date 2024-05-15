@@ -27,18 +27,18 @@ public class JooqPaperSlimService extends JooqReadOnlyService<Long, PaperSlim, P
 
     @NotNull
     @Override
-    public List<PaperSlim> findBySearchOrder(@NotNull SearchOrder searchOrder) {
+    public List<PaperSlim> findBySearchOrder(@NotNull final SearchOrder searchOrder) {
         return getRepository().findBySearchOrder(searchOrder);
     }
 
     @NotNull
     @Override
-    public List<PaperSlim> findPageBySearchOrder(@NotNull SearchOrder searchOrder, @NotNull PaginationContext paginationContext) {
+    public List<PaperSlim> findPageBySearchOrder(@NotNull final SearchOrder searchOrder, @NotNull final PaginationContext paginationContext) {
         return getRepository().findPageBySearchOrder(searchOrder, paginationContext);
     }
 
     @Override
-    public int countBySearchOrder(@NotNull SearchOrder searchOrder) {
+    public int countBySearchOrder(@NotNull final SearchOrder searchOrder) {
         return getRepository().countBySearchOrder(searchOrder);
     }
 }

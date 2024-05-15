@@ -70,8 +70,7 @@ public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilt
      * @return paged list of entities (attachments without content)
      */
     @NotNull
-    List<Paper> findPageBySearchOrder(@NotNull SearchOrder searchOrder, @NotNull PaginationContext paginationContext,
-        @NotNull String languageCode);
+    List<Paper> findPageBySearchOrder(@NotNull SearchOrder searchOrder, @NotNull PaginationContext paginationContext, @NotNull String languageCode);
 
     /**
      * Counts all persisted entities of type {@code T} matching the provided
@@ -145,8 +144,7 @@ public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilt
      * @return paged list of entity ids
      */
     @NotNull
-    List<Long> findPageOfIdsBySearchOrder(@NotNull SearchOrder searchOrder,
-        @NotNull PaginationContext paginationContext);
+    List<Long> findPageOfIdsBySearchOrder(@NotNull SearchOrder searchOrder, @NotNull PaginationContext paginationContext);
 
     /**
      * Excludes the given paperId from the results of the searchOrder with given

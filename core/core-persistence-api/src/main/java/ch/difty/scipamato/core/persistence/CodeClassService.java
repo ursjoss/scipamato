@@ -71,7 +71,7 @@ public interface CodeClassService
      *     the record version - used for optimistic locking
      * @return the deleted entity
      * @throws OptimisticLockingException
-     *     if the record version has increased in the mean time
+     *     if the record version has increased in the meantime
      */
     @Nullable
     CodeClassDefinition delete(@NotNull Integer id, int version);

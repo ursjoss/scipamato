@@ -71,7 +71,7 @@ public interface CodeService extends CodeLikeService<Code>, DefinitionProviderSe
      *     the record version - used for optimistic locking
      * @return the deleted entity
      * @throws OptimisticLockingException
-     *     if the record version has increased in the mean time
+     *     if the record version has increased in the meantime
      */
     @Nullable
     CodeDefinition delete(@NotNull String code, int version);
