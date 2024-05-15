@@ -253,7 +253,7 @@ class AbstractDefinitionEntityTest {
             .usingGetClass()
             .withIgnoredFields(
                 "created",
-                "modified",
+                "lastModified",
             )
             .verify()
     }
