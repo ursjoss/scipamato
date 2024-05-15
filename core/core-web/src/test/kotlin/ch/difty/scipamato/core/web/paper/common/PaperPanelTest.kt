@@ -196,7 +196,7 @@ abstract class PaperPanelTest<T, P : PaperPanel<T>> : PanelTest<P>() where T : C
         bb = "$b:tabs-container:tabs:"
         tester.assertLabel(bb + "0:link:title", "Goals, Population, and Methods")
         tester.assertLabel(bb + "1:link:title", "Results and Comments")
-        tester.assertLabel(bb + "2:link:title", "Codes and new Studies")
+        tester.assertLabel(bb + "2:link:title", "Codes")
         tester.assertLabel(bb + "3:link:title", "Short Summary")
         tester.assertLabel(bb + "4:link:title", "Original Abstract")
         tester.assertLabel(bb + "5:link:title", "Attachments")
