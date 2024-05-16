@@ -32,7 +32,6 @@ import javax.sql.DataSource
  *  1. purging: removes records that have not been touched by the first step
  * (within a defined grace time in minutes)
  *
- *
  * @author u.joss
  */
 @Configuration
@@ -81,28 +80,28 @@ open class PaperSyncConfig(
 
     override fun selectSql(): String =
         jooqCore
-        .select(C_ID, C_NUMBER, C_PM_ID, C_AUTHORS, C_TITLE, C_LOCATION, C_PUB_YEAR, C_GOALS, C_METHODS,
-            C_POPULATION, C_RESULT, C_COMMENT, C_VERSION, C_CREATED, C_LAST_MODIFIED, DSL
-            .arrayAgg(PaperCode.PAPER_CODE.CODE)
-            .`as`(ALIAS_CODES), C_METHOD_STUDY_DESIGN, C_METHOD_OUTCOME, C_EXPOSURE_POLLUTANT,
-            C_EXPOSURE_ASSESSMENT, C_METHOD_STATISTICS, C_METHOD_CONFOUNDERS, C_POPULATION_PLACE,
-            C_POPULATION_PARTICIPANTS, C_POPULATION_DURATION, C_RESULT_EXPOSURE_RANGE, C_RESULT_EFFECT_ESTIMATE,
-            C_RESULT_MEASURED_OUTCOME, C_CONCLUSION)
-        .from(Paper.PAPER)
-        .innerJoin(PaperCode.PAPER_CODE)
-        .on(Paper.PAPER.ID.eq(PaperCode.PAPER_CODE.PAPER_ID))
-        .innerJoin(Code.CODE)
-        .on(PaperCode.PAPER_CODE.CODE.eq(Code.CODE.CODE_))
-        .groupBy(C_ID, C_NUMBER, C_PM_ID, C_AUTHORS, C_TITLE, C_LOCATION, C_PUB_YEAR, C_GOALS, C_METHODS,
-            C_POPULATION, C_RESULT, C_COMMENT, C_VERSION, C_CREATED, C_LAST_MODIFIED, C_METHOD_STUDY_DESIGN,
-            C_METHOD_OUTCOME, C_EXPOSURE_POLLUTANT, C_EXPOSURE_ASSESSMENT, C_METHOD_STATISTICS,
-            C_METHOD_CONFOUNDERS, C_POPULATION_PLACE, C_POPULATION_PARTICIPANTS, C_POPULATION_DURATION,
-            C_RESULT_EXPOSURE_RANGE, C_RESULT_EFFECT_ESTIMATE, C_RESULT_MEASURED_OUTCOME, C_CONCLUSION)
-        .sql
+            .select(C_ID, C_NUMBER, C_PM_ID, C_AUTHORS, C_TITLE, C_LOCATION, C_PUB_YEAR, C_GOALS, C_METHODS,
+                C_POPULATION, C_RESULT, C_COMMENT, C_VERSION, C_CREATED, C_LAST_MODIFIED, DSL
+                .arrayAgg(PaperCode.PAPER_CODE.CODE)
+                .`as`(ALIAS_CODES), C_METHOD_STUDY_DESIGN, C_METHOD_OUTCOME, C_EXPOSURE_POLLUTANT,
+                C_EXPOSURE_ASSESSMENT, C_METHOD_STATISTICS, C_METHOD_CONFOUNDERS, C_POPULATION_PLACE,
+                C_POPULATION_PARTICIPANTS, C_POPULATION_DURATION, C_RESULT_EXPOSURE_RANGE, C_RESULT_EFFECT_ESTIMATE,
+                C_RESULT_MEASURED_OUTCOME, C_CONCLUSION)
+            .from(Paper.PAPER)
+            .innerJoin(PaperCode.PAPER_CODE)
+            .on(Paper.PAPER.ID.eq(PaperCode.PAPER_CODE.PAPER_ID))
+            .innerJoin(Code.CODE)
+            .on(PaperCode.PAPER_CODE.CODE.eq(Code.CODE.CODE_))
+            .groupBy(C_ID, C_NUMBER, C_PM_ID, C_AUTHORS, C_TITLE, C_LOCATION, C_PUB_YEAR, C_GOALS, C_METHODS,
+                C_POPULATION, C_RESULT, C_COMMENT, C_VERSION, C_CREATED, C_LAST_MODIFIED, C_METHOD_STUDY_DESIGN,
+                C_METHOD_OUTCOME, C_EXPOSURE_POLLUTANT, C_EXPOSURE_ASSESSMENT, C_METHOD_STATISTICS,
+                C_METHOD_CONFOUNDERS, C_POPULATION_PLACE, C_POPULATION_PARTICIPANTS, C_POPULATION_DURATION,
+                C_RESULT_EXPOSURE_RANGE, C_RESULT_EFFECT_ESTIMATE, C_RESULT_MEASURED_OUTCOME, C_CONCLUSION)
+            .sql
 
     @Throws(SQLException::class)
     override fun makeEntity(rs: ResultSet): PublicPaper {
-        
+
         val paper: PublicPaper = PublicPaper(
             id = getLong(C_ID, rs),
             number = getLong(C_NUMBER, rs),
@@ -123,7 +122,7 @@ open class PaperSyncConfig(
             codesStudyDesign = null,
             codes = extractCodes(ALIAS_CODES, rs),
             lastSynched = getNow(),
-            )
+        )
         codeAggregator.load(paper.codes)
         paper.codesPopulation = codeAggregator.codesPopulation
         paper.codesStudyDesign = codeAggregator.codesStudyDesign

@@ -19,9 +19,9 @@ private val log = logger()
  * of a composite key, together with the languageCode, i.e. there is one translation in each defined language for every
  * logical code class maintained in scipamato-core.
  *
- * With this, we cannot use code_class_id in table code as a foreign key to code_class.code_class_id. Therefore we
+ * With this, we cannot use code_class_id in table code as a foreign key to code_class.code_class_id. Therefore, we
  * cannot define a delete cascade rule, as it is not a proper foreign key with a unique constraint. In case a code_class
- * is deleted in scipamato-core, we cannot rely on the database to cascade the delete to any code in scipamato-public
+ * is deleted in scipamato-core, we cannot rely on the database to cascade the deletion to any code in scipamato-public
  * that references the code class that is deleted.
  *
  * This tasklet allows to define a delete statement that does just that, where this is appropriate. If a null delete

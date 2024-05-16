@@ -7,7 +7,7 @@ import kotlin.math.min
 /**
  * The [SyncJobResult] collects log messages for one or more job steps
  * and keeps track of the entire jobs result. If all steps succeed, the jobs
- * result is success. If only one step fails, the job fails.
+ * result is success. If a single step fails, the entire job fails.
  */
 class SyncJobResult {
     private val logMessages: MutableList<LogMessage> = ArrayList()

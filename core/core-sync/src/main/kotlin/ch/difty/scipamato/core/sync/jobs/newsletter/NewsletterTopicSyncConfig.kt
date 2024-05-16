@@ -25,7 +25,8 @@ import javax.sql.DataSource
  * Defines the newsletter synchronization job, applying two steps:
  *
  *  1. insertingOrUpdating: inserts new records or updates if already present
- *  1. purging: removes records that have not been touched during the first step (within a defined grace time in minutes)
+ *  1. purging: removes records that have not been touched during the first step
+ *     (within a defined grace time in minutes)
  */
 @Configuration
 @Profile("!wickettest")

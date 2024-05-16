@@ -12,7 +12,8 @@ import org.jooq.DSLContext
  *  * Every record will be updated at least with the current timestamp in last_synched.
  *  * id columns and audit fields are those of the scipamato-core tables
  */
-class NewStudyItemWriter(jooqDslContextPublic: DSLContext) : ScipamatoItemWriter<PublicNewStudy>(jooqDslContextPublic, "newStudy") {
+class NewStudyItemWriter(jooqDslContextPublic: DSLContext)
+    : ScipamatoItemWriter<PublicNewStudy>(jooqDslContextPublic, "newStudy") {
     override fun executeUpdate(i: PublicNewStudy): Int =
         dslContext
             .insertInto(NewStudy.NEW_STUDY)
