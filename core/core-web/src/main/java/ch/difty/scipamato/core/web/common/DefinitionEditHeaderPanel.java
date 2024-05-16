@@ -17,8 +17,7 @@ import ch.difty.scipamato.common.entity.DefinitionTranslation;
 
 @SuppressWarnings("SameParameterValue")
 @Slf4j
-public abstract class DefinitionEditHeaderPanel<E extends DefinitionEntity<ID, T>, T extends DefinitionTranslation, ID>
-    extends BasePanel<E> {
+public abstract class DefinitionEditHeaderPanel<E extends DefinitionEntity<ID, T>, T extends DefinitionTranslation, ID> extends BasePanel<E> {
 
     @java.io.Serial
     private static final long serialVersionUID = 1L;
@@ -41,13 +40,12 @@ public abstract class DefinitionEditHeaderPanel<E extends DefinitionEntity<ID, T
         queue(newBackButton("back"));
     }
 
-    private BootstrapButton newSubmitButton(final String id) {
+    private BootstrapButton newSubmitButton(@NotNull final String id) {
         return new BootstrapButton(id, new StringResourceModel(id + LABEL_RESOURCE_TAG), Buttons.Type.Primary);
     }
 
-    private BootstrapButton newBackButton(final String id) {
-        final BootstrapButton back = new BootstrapButton(id, new StringResourceModel(id + LABEL_RESOURCE_TAG),
-            Buttons.Type.Default) {
+    private BootstrapButton newBackButton(@NotNull final String id) {
+        final BootstrapButton back = new BootstrapButton(id, new StringResourceModel(id + LABEL_RESOURCE_TAG), Buttons.Type.Default) {
             @java.io.Serial
             private static final long serialVersionUID = 1L;
 

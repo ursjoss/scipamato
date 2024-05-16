@@ -9,7 +9,7 @@ import org.amshove.kluent.shouldBeFalse
 import org.amshove.kluent.shouldBeInstanceOf
 import org.amshove.kluent.shouldBeTrue
 import org.junit.jupiter.api.Test
-import java.util.Locale
+import java.util.*
 
 internal class CoreWebSessionFacadeTest : WicketTest() {
 

@@ -21,7 +21,7 @@ import org.apache.wicket.markup.html.link.ResourceLink
 import org.apache.wicket.model.Model
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
-import java.util.Optional
+import java.util.*
 
 @Suppress("SpellCheckingInspection")
 internal abstract class EditablePaperPanelTest : PaperPanelTest<Paper, EditablePaperPanel>() {
@@ -143,7 +143,9 @@ internal abstract class EditablePaperPanelTest : PaperPanelTest<Paper, EditableP
         searchOrderId: Long?,
         showExcluded: Boolean,
     ): EditablePaperPanel =
-        object : EditablePaperPanel(PANEL_ID, Model.of(p), callingPage, searchOrderId, showExcluded, mode, Model.of(0)) {
+        object : EditablePaperPanel(
+            PANEL_ID, Model.of(p), callingPage, searchOrderId, showExcluded, mode, Model.of(0)
+        ) {
             private val serialVersionUID: Long = 1L
             override fun onFormSubmit() {
                 // no-op

@@ -78,7 +78,7 @@ abstract class WicketTest : AbstractWicketTest() {
         with(paperServiceMock) {
             every { findPageOfIdsByFilter(any(), any()) } returns emptyList()
             every { findPageOfIdsBySearchOrder(any(), any()) } returns emptyList()
-            every { hasDuplicateFieldNextToCurrent(any(), any(), any()) } returns java.util.Optional.empty()
+            every { hasDuplicateFieldNextToCurrent(any(), any(), any()) } returns Optional.empty()
             every { excludeFromSearchOrder(any(), any()) } returns Unit
             every { reincludeIntoSearchOrder(any(), any()) } returns Unit
             every { findLowestFreeNumberStartingFrom(any()) } returns 100L

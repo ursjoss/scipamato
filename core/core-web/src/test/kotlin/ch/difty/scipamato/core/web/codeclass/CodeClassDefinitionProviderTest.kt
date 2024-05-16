@@ -78,10 +78,13 @@ internal class CodeClassDefinitionProviderTest : AbstractWicketTest() {
 
     @Test
     fun iterating_withNoRecords_returnsNoRecords() {
-        every { codeClassServiceMock.findPageOfEntityDefinitions(filterDummy, any()) } returns emptyList<CodeClassDefinition>().iterator()
+        every { codeClassServiceMock.findPageOfEntityDefinitions(filterDummy, any()) } returns
+            emptyList<CodeClassDefinition>().iterator()
         val it = provider.iterator(0, 3)
         it.hasNext().shouldBeFalse()
-        verify { codeClassServiceMock.findPageOfEntityDefinitions(filterDummy, matchPaginationContext(0, 3, "id: ASC")) }
+        verify {
+            codeClassServiceMock.findPageOfEntityDefinitions(filterDummy, matchPaginationContext(0, 3, "id: ASC"))
+        }
     }
 
     @Test
@@ -89,7 +92,9 @@ internal class CodeClassDefinitionProviderTest : AbstractWicketTest() {
         every { codeClassServiceMock.findPageOfEntityDefinitions(filterDummy, any()) } returns entities.iterator()
         val it = provider.iterator(0, 3)
         assertRecordsIn(it)
-        verify { codeClassServiceMock.findPageOfEntityDefinitions(filterDummy, matchPaginationContext(0, 3, "id: ASC")) }
+        verify {
+            codeClassServiceMock.findPageOfEntityDefinitions(filterDummy, matchPaginationContext(0, 3, "id: ASC"))
+        }
     }
 
     private fun assertRecordsIn(it: Iterator<CodeClassDefinition>) {
@@ -105,7 +110,9 @@ internal class CodeClassDefinitionProviderTest : AbstractWicketTest() {
         every { codeClassServiceMock.findPageOfEntityDefinitions(filterDummy, any()) } returns entities.iterator()
         val it = provider.iterator(3, 3)
         assertRecordsIn(it)
-        verify { codeClassServiceMock.findPageOfEntityDefinitions(filterDummy, matchPaginationContext(3, 3, "id: ASC")) }
+        verify {
+            codeClassServiceMock.findPageOfEntityDefinitions(filterDummy, matchPaginationContext(3, 3, "id: ASC"))
+        }
     }
 
     @Test
@@ -114,6 +121,8 @@ internal class CodeClassDefinitionProviderTest : AbstractWicketTest() {
         every { codeClassServiceMock.findPageOfEntityDefinitions(filterDummy, any()) } returns entities.iterator()
         val it = provider.iterator(6, 3)
         assertRecordsIn(it)
-        verify { codeClassServiceMock.findPageOfEntityDefinitions(filterDummy, matchPaginationContext(6, 3, "id: DESC")) }
+        verify {
+            codeClassServiceMock.findPageOfEntityDefinitions(filterDummy, matchPaginationContext(6, 3, "id: DESC"))
+        }
     }
 }

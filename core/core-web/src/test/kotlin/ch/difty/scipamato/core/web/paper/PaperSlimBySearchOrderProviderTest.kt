@@ -12,7 +12,8 @@ import org.junit.jupiter.api.Test
 
 private const val ID = 55L
 
-internal class PaperSlimBySearchOrderProviderTest : AbstractPaperSlimProviderTest<SearchOrder, PaperSlimBySearchOrderProvider>() {
+internal class PaperSlimBySearchOrderProviderTest :
+    AbstractPaperSlimProviderTest<SearchOrder, PaperSlimBySearchOrderProvider>() {
 
     override val filterDummy = SearchOrder().apply {
         name = "foo"
@@ -30,7 +31,9 @@ internal class PaperSlimBySearchOrderProviderTest : AbstractPaperSlimProviderTes
         }
 
     override fun localVerify(offset: Int, pageSize: Int, sort: String) {
-        verify { paperSlimServiceMock.findPageBySearchOrder(filterDummy, matchPaginationContext(offset, pageSize, sort)) }
+        verify {
+            paperSlimServiceMock.findPageBySearchOrder(filterDummy, matchPaginationContext(offset, pageSize, sort))
+        }
     }
 
     @Test

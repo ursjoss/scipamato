@@ -6,13 +6,12 @@ import java.util.List;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.model.IModel;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import ch.difty.scipamato.core.entity.code.CodeDefinition;
 import ch.difty.scipamato.core.entity.code.CodeFilter;
 import ch.difty.scipamato.core.persistence.CodeService;
 import ch.difty.scipamato.core.web.common.DefinitionListResultPanel;
-
-import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("SameParameterValue")
 class CodeListResultPanel extends DefinitionListResultPanel<CodeDefinition, CodeFilter, CodeService, CodeDefinitionProvider> {

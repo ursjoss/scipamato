@@ -189,7 +189,7 @@ internal class PaperEntryPageTest : SelfUpdatingPageTest<PaperEntryPage>() {
 
     @Test
     fun eventTest() {
-        every { paperServiceMock.mergePaperIntoWipNewsletter(any(), any(),any()) } returns java.util.Optional.empty()
+        every { paperServiceMock.mergePaperIntoWipNewsletter(any(), any(), any()) } returns java.util.Optional.empty()
 
         tester.startPage(makePage())
 

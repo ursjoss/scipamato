@@ -20,7 +20,6 @@ import org.apache.wicket.markup.html.WebMarkupContainer
 import org.apache.wicket.markup.html.form.Form
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
-import java.util.ArrayList
 
 internal abstract class PaperListPageTest : BasePageTest<PaperListPage>() {
 

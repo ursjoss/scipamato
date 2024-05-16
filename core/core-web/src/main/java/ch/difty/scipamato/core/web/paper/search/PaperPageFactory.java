@@ -25,8 +25,7 @@ public class PaperPageFactory implements PageFactory {
 
     @NotNull
     @Override
-    public SerializableConsumer<PageParameters> setResponsePageToPaperSearchPageConsumer(
-        @NotNull final MarkupContainer container) {
+    public SerializableConsumer<PageParameters> setResponsePageToPaperSearchPageConsumer(@NotNull final MarkupContainer container) {
         return pp -> container.setResponsePage(new PaperSearchPage(pp));
     }
 

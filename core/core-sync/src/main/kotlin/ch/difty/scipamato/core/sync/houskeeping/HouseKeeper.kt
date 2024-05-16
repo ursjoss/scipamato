@@ -15,13 +15,13 @@ import java.sql.Timestamp
 private val log = logger()
 
 /**
- * [Tasklet] used for house keeping, i.e. purging records that once were
+ * [Tasklet] used for housekeeping, i.e. purging records that once were
  * present in scipamato-core and were synchronized to scipamato-public in the past
  * but now are not present anymore in scipamato-core.
  *
  * The synchronization step that inserts/updates records from core to public
  * touches the lastSynchronized timestamp of each record present in scipamato-core.
- * Hence any record in scipamato-public that has no updated timestamp after the first
+ * Hence, any record in scipamato-public that has no updated timestamp after the first
  * synchronization step must be missing in core and is eligible for purging.
  *
  * A grace time (in minutes) is applied before purging, i.e. any record which
@@ -57,7 +57,10 @@ class HouseKeeper<R : UpdatableRecordImpl<*>?>(
             .execute()
 
         if (result > 0)
-            log.info { "Successfully deleted $result $entityName${if (result > 1) "es" else ""} in scipamato-public (not touched since $cutOff)" }
+            log.info {
+                "Successfully deleted $result $entityName${if (result > 1) "es" else ""} " +
+                    "in scipamato-public (not touched since $cutOff)"
+            }
 
         return RepeatStatus.FINISHED
     }

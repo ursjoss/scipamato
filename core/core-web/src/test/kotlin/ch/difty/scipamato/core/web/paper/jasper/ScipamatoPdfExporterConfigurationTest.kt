@@ -7,7 +7,6 @@ import org.amshove.kluent.shouldBeFalse
 import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldBeTrue
 import org.junit.jupiter.api.Test
-import java.util.ArrayList
 
 internal class ScipamatoPdfExporterConfigurationTest {
 

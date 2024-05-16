@@ -32,8 +32,7 @@ public interface PageFactory {
      *     arguments of the PaperSearchCriteriaPage
      */
     @NotNull
-    SerializableBiConsumer<IModel<SearchCondition>, Long> setResponsePageToPaperSearchCriteriaPageConsumer(
-        @NotNull MarkupContainer container);
+    SerializableBiConsumer<IModel<SearchCondition>, Long> setResponsePageToPaperSearchCriteriaPageConsumer(@NotNull MarkupContainer container);
 
     /**
      * Returns a consumer that sets the responsePage of the provided container

@@ -78,10 +78,13 @@ internal class KeywordDefinitionProviderTest : AbstractWicketTest() {
 
     @Test
     fun iterating_withNoRecords_returnsNoRecords() {
-        every { keywordServiceMock.findPageOfEntityDefinitions(filterDummy, any()) } returns emptyList<KeywordDefinition>().iterator()
+        every { keywordServiceMock.findPageOfEntityDefinitions(filterDummy, any()) } returns
+            emptyList<KeywordDefinition>().iterator()
         val it = provider.iterator(0, 3)
         it.hasNext().shouldBeFalse()
-        verify { keywordServiceMock.findPageOfEntityDefinitions(filterDummy, matchPaginationContext(0, 3, "name: ASC")) }
+        verify {
+            keywordServiceMock.findPageOfEntityDefinitions(filterDummy, matchPaginationContext(0, 3, "name: ASC"))
+        }
     }
 
     @Test
@@ -89,7 +92,9 @@ internal class KeywordDefinitionProviderTest : AbstractWicketTest() {
         every { keywordServiceMock.findPageOfEntityDefinitions(filterDummy, any()) } returns entities.iterator()
         val it = provider.iterator(0, 3)
         assertRecordsIn(it)
-        verify { keywordServiceMock.findPageOfEntityDefinitions(filterDummy, matchPaginationContext(0, 3, "name: ASC")) }
+        verify {
+            keywordServiceMock.findPageOfEntityDefinitions(filterDummy, matchPaginationContext(0, 3, "name: ASC"))
+        }
     }
 
     private fun assertRecordsIn(it: Iterator<KeywordDefinition>) {
@@ -105,7 +110,9 @@ internal class KeywordDefinitionProviderTest : AbstractWicketTest() {
         every { keywordServiceMock.findPageOfEntityDefinitions(filterDummy, any()) } returns entities.iterator()
         val it = provider.iterator(3, 3)
         assertRecordsIn(it)
-        verify { keywordServiceMock.findPageOfEntityDefinitions(filterDummy, matchPaginationContext(3, 3, "name: ASC")) }
+        verify {
+            keywordServiceMock.findPageOfEntityDefinitions(filterDummy, matchPaginationContext(3, 3, "name: ASC"))
+        }
     }
 
     @Test
@@ -114,6 +121,8 @@ internal class KeywordDefinitionProviderTest : AbstractWicketTest() {
         every { keywordServiceMock.findPageOfEntityDefinitions(filterDummy, any()) } returns entities.iterator()
         val it = provider.iterator(6, 3)
         assertRecordsIn(it)
-        verify { keywordServiceMock.findPageOfEntityDefinitions(filterDummy, matchPaginationContext(6, 3, "name: DESC")) }
+        verify {
+            keywordServiceMock.findPageOfEntityDefinitions(filterDummy, matchPaginationContext(6, 3, "name: DESC"))
+        }
     }
 }

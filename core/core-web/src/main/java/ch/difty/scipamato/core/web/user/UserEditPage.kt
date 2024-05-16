@@ -103,7 +103,7 @@ class UserEditPage(pp: PageParameters) : BasePage<ChangePasswordUser>(pp) {
 
     /**
      * If the user id is supplied as page parameter, use its id (or that of the active user,
-     * if the parameter is not a numeric value). Otherwise use the id of the current user,
+     * if the parameter is not a numeric value). Otherwise, use the id of the current user,
      * unless if in CREATE Mode, then prepare for new user by returning null.
      */
     private fun determineUserId(userIdStringValue: StringValue): Int? {

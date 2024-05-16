@@ -200,7 +200,7 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
         queue(searchOrderPanel);
     }
 
-    private void makeResultPanel(final String id) {
+    private void makeResultPanel(@NotNull final String id) {
         resultPanelLabel = new Label(id + LABEL_TAG) {
             @java.io.Serial
             private static final long serialVersionUID = 1L;

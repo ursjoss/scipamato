@@ -39,9 +39,9 @@ class PaperSummaryTable(p: Paper, rhf: ReportHeaderFields) : ExportEntity {
 
     override fun toString(): String =
         "PaperSummaryTable(" +
-            "number=$number, firstAuthor=$firstAuthor, publicationYear=$publicationYear, codesOfClass1=$codesOfClass1, " +
-            "codesOfClass4=$codesOfClass4, codesOfClass7=$codesOfClass7, goals=$goals, title=$title, result=$result, " +
-            "caption=$caption, brand=$brand, numberLabel=$numberLabel" +
+            "number=$number, firstAuthor=$firstAuthor, publicationYear=$publicationYear, " +
+            "codesOfClass1=$codesOfClass1, codesOfClass4=$codesOfClass4, codesOfClass7=$codesOfClass7, " +
+            "goals=$goals, title=$title, result=$result, caption=$caption, brand=$brand, numberLabel=$numberLabel" +
             ")"
 
     companion object {

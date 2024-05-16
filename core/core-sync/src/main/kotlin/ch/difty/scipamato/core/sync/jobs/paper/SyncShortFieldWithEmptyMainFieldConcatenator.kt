@@ -23,7 +23,8 @@ private val log = logger()
  * will not adapt to the browser locale of a viewer.
  */
 @Component
-internal open class SyncShortFieldWithEmptyMainFieldConcatenator : AbstractShortFieldConcatenator(false), SyncShortFieldConcatenator {
+internal open class SyncShortFieldWithEmptyMainFieldConcatenator
+    : AbstractShortFieldConcatenator(false), SyncShortFieldConcatenator {
 
     override fun methodsFrom(rs: ResultSet): String? = try {
         methodsFrom(rs, Tables.PAPER.METHODS, Tables.PAPER.METHOD_STUDY_DESIGN, Tables.PAPER.METHOD_OUTCOME,
@@ -100,6 +101,7 @@ internal open class SyncShortFieldWithEmptyMainFieldConcatenator : AbstractShort
     }
 
     // package-private for stubbing purposes
+    @Suppress("LongParameterList")
     @Throws(SQLException::class)
     open fun resultFrom(
         rs: ResultSet,

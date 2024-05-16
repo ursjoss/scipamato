@@ -70,7 +70,7 @@ public class UserListPage extends BasePage<Void> {
         makeAndQueueTable("results");
     }
 
-    private void makeAndQueueFilterForm(final String id) {
+    private void makeAndQueueFilterForm(@NotNull final String id) {
         queue(new FilterForm<>(id, dataProvider));
 
         queueFieldAndLabel(new TextField<>(USER_NAME.getFieldName(), PropertyModel.of(filter, UserFilter.UserFilterFields.NAME_MASK.getFieldName())));
@@ -94,6 +94,7 @@ public class UserListPage extends BasePage<Void> {
         queue(results);
     }
 
+    @NotNull
     private List<IColumn<User, String>> makeTableColumns() {
         final List<IColumn<User, String>> columns = new ArrayList<>();
         columns.add(makeClickableColumn(USER_NAME.getFieldName(), this::onTitleClick));
@@ -104,6 +105,7 @@ public class UserListPage extends BasePage<Void> {
         return columns;
     }
 
+    @NotNull
     private ClickablePropertyColumn<User, String> makeClickableColumn(@NotNull final String propExpression,
         @NotNull final SerializableConsumer<IModel<User>> consumer) {
         return new ClickablePropertyColumn<>(new StringResourceModel(COLUMN_HEADER + propExpression, this, null), propExpression, consumer,
@@ -120,6 +122,7 @@ public class UserListPage extends BasePage<Void> {
         setResponsePage(new UserEditPage(pp));
     }
 
+    @NotNull
     private PropertyColumn<User, String> makePropertyColumn(@NotNull final String propExpression) {
         return new PropertyColumn<>(new StringResourceModel(COLUMN_HEADER + propExpression, this, null), propExpression, propExpression) {
             @java.io.Serial
@@ -127,6 +130,7 @@ public class UserListPage extends BasePage<Void> {
         };
     }
 
+    @NotNull
     private PropertyColumn<User, String> makeBooleanPropertyColumn(@NotNull final String propExpression,
         @NotNull final SerializableFunction<User, Boolean> predicate) {
         final String trueLabel = new StringResourceModel(propExpression + ".true", this, null).getString();

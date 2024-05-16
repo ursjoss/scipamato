@@ -20,7 +20,8 @@ import org.apache.wicket.markup.html.form.TextArea
 import org.apache.wicket.markup.html.form.TextField
 import org.junit.jupiter.api.AfterEach
 
-abstract class PaperPanelTest<T, P : PaperPanel<T>> : PanelTest<P>() where T : CodeBoxAware, T : NewsletterAware, T : AttachmentAware {
+abstract class PaperPanelTest<T, P : PaperPanel<T>> : PanelTest<P>()
+    where T : CodeBoxAware, T : NewsletterAware, T : AttachmentAware {
 
     private val codeClasses: MutableList<CodeClass> = ArrayList()
     private val codesOfClass1: MutableList<Code> = ArrayList()

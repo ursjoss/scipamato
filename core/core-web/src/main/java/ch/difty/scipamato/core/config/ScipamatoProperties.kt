@@ -53,7 +53,7 @@ data class ScipamatoProperties(
 
     /**
      * Port from where an unsecured http connection is forwarded to the secured
-     * https port (@literal server.port}. Only has an effect if https is configured.
+     * https port `server.port`. Only has an effect if https is configured.
      */
     override var redirectFromPort: Int? = null,
 

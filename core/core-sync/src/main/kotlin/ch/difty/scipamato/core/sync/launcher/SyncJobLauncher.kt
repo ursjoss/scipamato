@@ -6,5 +6,10 @@ package ch.difty.scipamato.core.sync.launcher
 fun interface SyncJobLauncher {
 
     /** Launch the synchronization */
-    fun launch(setSuccess: (String) -> Unit, setFailure: (String) -> Unit, setWarning: (String) -> Unit, setDone: () -> Unit)
+    fun launch(
+        setSuccess: (String) -> Unit,
+        setFailure: (String) -> Unit,
+        setWarning: (String) -> Unit,
+        setDone: () -> Unit,
+    )
 }

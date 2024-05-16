@@ -78,7 +78,8 @@ internal class CodeDefinitionProviderTest : AbstractWicketTest() {
 
     @Test
     fun iterating_withNoRecords_returnsNoRecords() {
-        every { codeServiceMock.findPageOfEntityDefinitions(filterDummy, any()) } returns emptyList<CodeDefinition>().iterator()
+        every { codeServiceMock.findPageOfEntityDefinitions(filterDummy, any()) } returns
+            emptyList<CodeDefinition>().iterator()
         val it = provider.iterator(0, 3)
         it.hasNext().shouldBeFalse()
         verify {

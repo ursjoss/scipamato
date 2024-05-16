@@ -8,7 +8,6 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar
 import io.mockk.clearMocks
 import io.mockk.every
 import io.mockk.verify
-import org.apache.wicket.extensions.ajax.markup.html.modal.ModalDialog
 import org.apache.wicket.markup.html.internal.HtmlHeaderContainer
 import org.junit.jupiter.api.Test
 

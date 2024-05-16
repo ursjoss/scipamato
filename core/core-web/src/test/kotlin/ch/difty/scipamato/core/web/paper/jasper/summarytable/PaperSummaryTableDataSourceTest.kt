@@ -18,7 +18,6 @@ import org.amshove.kluent.shouldBeInstanceOf
 import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldBeTrue
 import org.junit.jupiter.api.Test
-import java.util.ArrayList
 
 internal class PaperSummaryTableDataSourceTest : PaperDataSourceTest() {
 

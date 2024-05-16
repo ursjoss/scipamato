@@ -31,8 +31,7 @@ public class KeywordEditPage extends DefinitionEditPage<KeywordDefinition, Keywo
     @SpringBean
     private KeywordService service;
 
-    public KeywordEditPage(@Nullable final IModel<KeywordDefinition> model,
-        @Nullable final PageReference callingPageRef) {
+    public KeywordEditPage(@Nullable final IModel<KeywordDefinition> model, @Nullable final PageReference callingPageRef) {
         super(model, callingPageRef);
     }
 

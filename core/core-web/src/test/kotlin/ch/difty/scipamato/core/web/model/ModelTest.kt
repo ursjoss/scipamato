@@ -4,7 +4,7 @@ import ch.difty.scipamato.core.web.AbstractWicketTest
 import org.apache.wicket.util.tester.WicketTester
 import org.junit.jupiter.api.BeforeEach
 import org.springframework.test.util.ReflectionTestUtils
-import java.util.Locale
+import java.util.*
 
 abstract class ModelTest : AbstractWicketTest() {
 

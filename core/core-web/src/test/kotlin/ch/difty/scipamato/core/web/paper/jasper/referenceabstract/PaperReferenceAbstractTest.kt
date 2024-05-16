@@ -89,8 +89,9 @@ internal class PaperReferenceAbstractTest : ExportEntityTest() {
     fun testingToString() {
         plr = PaperReferenceAbstract(p, rhf)
         plr.toString() shouldBeEqualTo
-            "PaperReferenceAbstract(number=100, authors=authors, publicationYear=2017, title=title, abstract=abstract, " +
-            "location=location, doi=doi, pubmedLink=baseUrl/1234, caption=caption, brand=brand, numberLabel=numberLabel)"
+            "PaperReferenceAbstract(number=100, authors=authors, publicationYear=2017, " +
+            "title=title, abstract=abstract, location=location, doi=doi, pubmedLink=baseUrl/1234, " +
+            "caption=caption, brand=brand, numberLabel=numberLabel)"
     }
 
     companion object {

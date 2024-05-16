@@ -39,7 +39,7 @@ class SyncResultListPanel(id: String) : Panel(id) {
     private fun makePropertyColumn(propExpression: String) = PropertyColumn<SyncJobResult.LogMessage, String>(
         StringResourceModel("${COLUMN_HEADER}$propExpression", this@SyncResultListPanel, null),
         propExpression,
-        propExpression
+        propExpression,
     )
 
 

@@ -11,8 +11,7 @@ import ch.difty.scipamato.core.persistence.KeywordService;
 import ch.difty.scipamato.core.web.common.DefinitionListFilterPanel;
 
 @SuppressWarnings({ "SameParameterValue", "WicketForgeJavaIdInspection" })
-abstract class KeywordListFilterPanel
-    extends DefinitionListFilterPanel<KeywordDefinition, KeywordFilter, KeywordService, KeywordDefinitionProvider> {
+abstract class KeywordListFilterPanel extends DefinitionListFilterPanel<KeywordDefinition, KeywordFilter, KeywordService, KeywordDefinitionProvider> {
 
     @java.io.Serial
     private static final long serialVersionUID = 1L;
@@ -22,13 +21,12 @@ abstract class KeywordListFilterPanel
     }
 
     protected void queueFilterFormFields() {
-        queueFieldAndLabel(new TextField<>("name",
-            PropertyModel.of(getFilter(), KeywordFilter.KeywordFilterFields.NAME_MASK.getFieldName())));
+        queueFieldAndLabel(new TextField<>("name", PropertyModel.of(getFilter(), KeywordFilter.KeywordFilterFields.NAME_MASK.getFieldName())));
 
         queueNewKeywordButton("newKeyword");
     }
 
-    private void queueNewKeywordButton(final String id) {
+    private void queueNewKeywordButton(@NotNull final String id) {
         queue(doQueueNewKeywordButton(id));
     }
 

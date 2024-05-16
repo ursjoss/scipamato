@@ -63,7 +63,7 @@ public class SearchOrderPanel extends BasePanel<SearchOrder> {
         queueForm("form");
     }
 
-    private void queueForm(final String id) {
+    private void queueForm(@NotNull final String id) {
         queue(new Form<>(id));
         queueNewButton("addSearchCondition", pageFactory.newPaperSearchCriteriaPage(), () -> Model.of(new SearchCondition()));
 
@@ -79,7 +79,7 @@ public class SearchOrderPanel extends BasePanel<SearchOrder> {
 
     private void queueNewButton(@NotNull final String id,
         @NotNull final SerializableBiFunction<IModel<SearchCondition>, Long, GenericWebPage<SearchCondition>> pageFunction,
-        final SerializableSupplier<IModel<SearchCondition>> modelProvider) {
+        @NotNull final SerializableSupplier<IModel<SearchCondition>> modelProvider) {
         queue(new BootstrapAjaxButton(id, new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null), Type.Default) {
             @java.io.Serial
             private static final long serialVersionUID = 1L;

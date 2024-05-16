@@ -17,7 +17,6 @@ import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable
 import org.apache.wicket.model.IModel
 import org.apache.wicket.model.Model
 import org.apache.wicket.model.StringResourceModel
-import java.util.ArrayList
 
 /**
  * The [SearchablePaperPanel] offers a look-alike panel to the paper entry

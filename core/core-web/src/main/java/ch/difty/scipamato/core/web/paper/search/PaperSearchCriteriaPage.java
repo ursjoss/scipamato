@@ -72,8 +72,7 @@ public class PaperSearchCriteriaPage extends BasePage<SearchCondition> {
                 final Long searchOrderId = getSearchOrderId();
                 if (searchOrderId != null) {
                     try {
-                        final SearchCondition sc = searchOrderService.saveOrUpdateSearchCondition(getModelObject(),
-                            searchOrderId, getLanguageCode());
+                        final SearchCondition sc = searchOrderService.saveOrUpdateSearchCondition(getModelObject(), searchOrderId, getLanguageCode());
                         setModelObject(sc);
                     } catch (final Exception ex) {
                         error(new StringResourceModel("save.error.hint", this, null)

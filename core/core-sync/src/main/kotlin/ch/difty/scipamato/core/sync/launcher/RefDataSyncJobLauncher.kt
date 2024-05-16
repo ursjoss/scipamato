@@ -17,7 +17,7 @@ import java.util.*
 private val log = logger()
 
 /**
- * Launcher for the reference dat sync job. Comprises of the following synchronization jobs:
+ * Launcher for the reference dat sync job. Consists of the following synchronization jobs:
  *
  *  1. languages
  *  1. NewStudyPage links

@@ -55,9 +55,7 @@ abstract class PaperSummaryCommon private constructor(
 
         other as PaperSummaryCommon
 
-        if (number != other.number) return false
-
-        return true
+        return number == other.number
     }
 
     override fun hashCode(): Int = number.hashCode()

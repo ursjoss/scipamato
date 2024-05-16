@@ -96,7 +96,8 @@ internal class CodeListPageTest : BasePageTest<CodeListPage>() {
             var colIdx = 1
             row.forEach { value ->
                 tester.assertLabel(
-                    "$b:body:rows:$rowIdx:cells:$colIdx:cell${if (colIdxAsLink != null && colIdx++ == colIdxAsLink) ":link:label" else ""}",
+                    "$b:body:rows:$rowIdx:cells:$colIdx:cell" +
+                        if (colIdxAsLink != null && colIdx++ == colIdxAsLink) ":link:label" else "",
                     value
                 )
             }
