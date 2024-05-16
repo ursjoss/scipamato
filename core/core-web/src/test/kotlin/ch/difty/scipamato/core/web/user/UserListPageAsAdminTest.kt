@@ -91,7 +91,8 @@ internal class UserListPageAsAdminTest : BasePageTest<UserListPage>() {
             )
             for (value in values)
                 tester.assertLabel(
-                    "$b:body:rows:$rIdx:cells:$colIdx:cell${if (colIdxAsLink != null && colIdx++ == colIdxAsLink) ":link:label" else ""}",
+                    "$b:body:rows:$rIdx:cells:$colIdx:cell" +
+                        if (colIdxAsLink != null && colIdx++ == colIdxAsLink) ":link:label" else "",
                     value
                 )
             rIdx++

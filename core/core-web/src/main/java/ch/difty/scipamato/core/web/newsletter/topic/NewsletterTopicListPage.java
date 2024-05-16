@@ -18,8 +18,6 @@ import ch.difty.scipamato.core.persistence.NewsletterTopicService;
 import ch.difty.scipamato.core.web.common.DefinitionListPage;
 import ch.difty.scipamato.core.web.newsletter.NewsletterTopicDefinitionProvider;
 
-import java.io.Serial;
-
 @MountPath("newsletter/topics")
 @Slf4j
 @AuthorizeInstantiation({ Roles.USER, Roles.ADMIN })

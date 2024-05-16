@@ -66,7 +66,8 @@ internal class NewsletterTopicSortPageTest : BasePageTest<NewsletterTopicSortPag
         newsletter.id = null
         invoking {
             tester.startPage(NewsletterTopicSortPage(Model.of(newsletter), null))
-        } shouldThrow IllegalStateException::class withMessage "Cannot start page w/o non-null newsletter topic id in model"
+        } shouldThrow IllegalStateException::class withMessage
+            "Cannot start page w/o non-null newsletter topic id in model"
 
         verify(exactly = 0) { newsletterTopicServiceMock.getSortedNewsletterTopicsForNewsletter(any()) }
         verify(exactly = 0) { newsletterTopicServiceMock.removeObsoleteNewsletterTopicsFromSort(any()) }

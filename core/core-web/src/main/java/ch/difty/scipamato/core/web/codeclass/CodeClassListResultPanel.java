@@ -13,8 +13,8 @@ import ch.difty.scipamato.core.persistence.CodeClassService;
 import ch.difty.scipamato.core.web.common.DefinitionListResultPanel;
 
 @SuppressWarnings("SameParameterValue")
-class CodeClassListResultPanel extends
-    DefinitionListResultPanel<CodeClassDefinition, CodeClassFilter, CodeClassService, CodeClassDefinitionProvider> {
+class CodeClassListResultPanel
+    extends DefinitionListResultPanel<CodeClassDefinition, CodeClassFilter, CodeClassService, CodeClassDefinitionProvider> {
 
     @java.io.Serial
     private static final long serialVersionUID = 1L;

@@ -42,8 +42,9 @@ class PaperReferenceAbstract(p: Paper, rhf: ReportHeaderFields) : ExportEntity {
 
     override fun hashCode(): Int = number.hashCode()
     override fun toString(): String = "PaperReferenceAbstract(" +
-        "number=$number, authors=$authors, publicationYear=$publicationYear, title=$title, abstract=$abstract, location=$location, " +
-        "doi=$doi, pubmedLink=$pubmedLink, caption=$caption, brand=$brand, numberLabel=$numberLabel" +
+        "number=$number, authors=$authors, publicationYear=$publicationYear, " +
+        "title=$title, abstract=$abstract, location=$location, doi=$doi, " +
+        "pubmedLink=$pubmedLink, caption=$caption, brand=$brand, numberLabel=$numberLabel" +
         ")"
 
     companion object {

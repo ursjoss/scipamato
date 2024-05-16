@@ -13,7 +13,7 @@ public class RisExporterConfiguration {
 
     @NotNull
     @Bean
-    public RisAdapterFactory risAdapterFactory(final ApplicationCoreProperties appProperties) {
+    public RisAdapterFactory risAdapterFactory(@NotNull final ApplicationCoreProperties appProperties) {
         return RisAdapterFactory.Companion.create(appProperties.getRisExporterStrategy());
     }
 }

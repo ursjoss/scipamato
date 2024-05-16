@@ -17,11 +17,12 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
-import java.util.Locale
+import java.util.*
 
 @SpringBootTest
 @ActiveProfiles("wickettest")
-internal abstract class AbstractPaperSlimProviderTest<F : PaperSlimFilter, P : AbstractPaperSlimProvider<F>> : AbstractWicketTest() {
+internal abstract class AbstractPaperSlimProviderTest<F : PaperSlimFilter, P : AbstractPaperSlimProvider<F>> :
+    AbstractWicketTest() {
 
     private val entityDummy: PaperSlim = PaperSlim(1L, 1L, "fa", 2020, "t")
     protected val paperDummy = Paper().apply { title = "foo" }

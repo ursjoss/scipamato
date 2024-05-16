@@ -11,7 +11,7 @@ import org.apache.wicket.markup.html.form.CheckBox
 import org.apache.wicket.markup.html.form.Form
 import org.apache.wicket.model.Model
 import org.junit.jupiter.api.Test
-import java.util.Optional
+import java.util.*
 
 internal class PaperSearchCriteriaPageTest : BasePageTest<PaperSearchCriteriaPage>() {
 
@@ -79,7 +79,9 @@ internal class PaperSearchCriteriaPageTest : BasePageTest<PaperSearchCriteriaPag
             "An unexpected error occurred when trying to save Search Order [id ]: foo"
         )
         tester.assertRenderedPage(pageClass)
-        verify(exactly = 2) { searchOrderServiceMock.saveOrUpdateSearchCondition(searchCondition, SEARCH_ORDER_ID, "en_us") }
+        verify(exactly = 2) {
+            searchOrderServiceMock.saveOrUpdateSearchCondition(searchCondition, SEARCH_ORDER_ID, "en_us")
+        }
         verify(exactly = 0) { searchOrderServiceMock.findPageByFilter(any(), any()) }
     }
 

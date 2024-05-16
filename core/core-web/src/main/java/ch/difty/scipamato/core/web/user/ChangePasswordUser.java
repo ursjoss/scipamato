@@ -69,7 +69,7 @@ public class ChangePasswordUser implements Serializable {
         return user.getId();
     }
 
-    public void setId(final Integer id) {
+    public void setId(@Nullable final Integer id) {
         user.setId(id);
     }
 
@@ -78,7 +78,7 @@ public class ChangePasswordUser implements Serializable {
         return user.getUserName();
     }
 
-    public void setUserName(final String value) {
+    public void setUserName(@Nullable final String value) {
         user.setUserName(value);
     }
 
@@ -87,7 +87,7 @@ public class ChangePasswordUser implements Serializable {
         return user.getFirstName();
     }
 
-    public void setFirstName(final String value) {
+    public void setFirstName(@Nullable final String value) {
         user.setFirstName(value);
     }
 
@@ -96,7 +96,7 @@ public class ChangePasswordUser implements Serializable {
         return user.getLastName();
     }
 
-    public void setLastName(final String value) {
+    public void setLastName(@Nullable final String value) {
         user.setLastName(value);
     }
 
@@ -105,7 +105,7 @@ public class ChangePasswordUser implements Serializable {
         return user.getEmail();
     }
 
-    public void setEmail(final String value) {
+    public void setEmail(@Nullable final String value) {
         user.setEmail(value);
     }
 
@@ -131,15 +131,15 @@ public class ChangePasswordUser implements Serializable {
         return new ArrayList<>(user.getRoles());
     }
 
-    public void setRoles(final List<Role> roles) {
+    public void setRoles(@NotNull final List<Role> roles) {
         user.setRoles(new HashSet<>(roles));
     }
 
-    public void addRole(final Role role) {
+    public void addRole(@NotNull final Role role) {
         user.addRole(role);
     }
 
-    public void removeRole(final Role role) {
+    public void removeRole(@NotNull final Role role) {
         user.removeRole(role);
     }
 

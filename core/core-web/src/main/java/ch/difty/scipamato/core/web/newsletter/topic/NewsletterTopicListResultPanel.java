@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.model.IModel;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicDefinition;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicFilter;
@@ -13,17 +14,14 @@ import ch.difty.scipamato.core.persistence.NewsletterTopicService;
 import ch.difty.scipamato.core.web.common.DefinitionListResultPanel;
 import ch.difty.scipamato.core.web.newsletter.NewsletterTopicDefinitionProvider;
 
-import org.jetbrains.annotations.Nullable;
-
 @SuppressWarnings("SameParameterValue")
-class NewsletterTopicListResultPanel extends
-    DefinitionListResultPanel<NewsletterTopicDefinition, NewsletterTopicFilter, NewsletterTopicService, NewsletterTopicDefinitionProvider> {
+class NewsletterTopicListResultPanel
+    extends DefinitionListResultPanel<NewsletterTopicDefinition, NewsletterTopicFilter, NewsletterTopicService, NewsletterTopicDefinitionProvider> {
 
     @java.io.Serial
     private static final long serialVersionUID = 1L;
 
-    NewsletterTopicListResultPanel(@NotNull final String id,
-        @NotNull final NewsletterTopicDefinitionProvider provider) {
+    NewsletterTopicListResultPanel(@NotNull final String id, @NotNull final NewsletterTopicDefinitionProvider provider) {
         super(id, provider);
     }
 

@@ -31,7 +31,6 @@ import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields
 import ch.difty.scipamato.core.web.paper.jasper.ScipamatoPdfExporterConfiguration
 import ch.difty.scipamato.core.web.paper.jasper.literaturereview.PaperLiteratureReviewDataSource
 import ch.difty.scipamato.core.web.paper.jasper.literaturereview.PaperLiteratureReviewPlusDataSource
-import ch.difty.scipamato.core.web.paper.jasper.referenceabstract.PaperReferenceAbstract
 import ch.difty.scipamato.core.web.paper.jasper.referenceabstract.PaperReferenceAbstractDataSource
 import ch.difty.scipamato.core.web.paper.jasper.review.PaperReviewDataSource
 import ch.difty.scipamato.core.web.paper.jasper.summary.PaperSummaryDataSource
@@ -138,7 +137,7 @@ abstract class ResultPanel protected constructor(
 
     /**
      * Determines if the result panel is embedded into a page that offers composing complex searches.
-     * If so, the table offers an icon column to exclude papers from searches. Otherwise it will not.
+     * If so, the table offers an icon column to exclude papers from searches. Otherwise, it will not.
      */
     protected abstract val isOfferingSearchComposition: Boolean
 

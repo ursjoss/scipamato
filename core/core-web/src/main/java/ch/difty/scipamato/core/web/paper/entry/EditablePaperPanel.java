@@ -203,7 +203,8 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
         return new PaperSummaryDataSource(p, rhf, shortFieldConcatenator, config);
     }
 
-    private ScipamatoPdfExporterConfiguration makeExporterConfig(final String brand, final String headerPart, final Paper p) {
+    private ScipamatoPdfExporterConfiguration makeExporterConfig(@NotNull final String brand, @NotNull final String headerPart,
+        @NotNull final Paper p) {
         return new ScipamatoPdfExporterConfiguration.Builder(headerPart, p.getNumber())
             .withCreator(brand)
             .withPaperTitle(p.getTitle())
@@ -696,7 +697,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
         return -1;
     }
 
-    private PaperAttachment convertToPaperAttachment(final FileUpload upload) {
+    private PaperAttachment convertToPaperAttachment(@NotNull final FileUpload upload) {
         final PaperAttachment pa = new PaperAttachment();
         pa.setPaperId(EditablePaperPanel.this
             .getModelObject()
@@ -708,7 +709,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
         return pa;
     }
 
-    private String sanitize(final String originalFileName) {
+    private String sanitize(@NotNull final String originalFileName) {
         return originalFileName.replace(" ", "_");
     }
 

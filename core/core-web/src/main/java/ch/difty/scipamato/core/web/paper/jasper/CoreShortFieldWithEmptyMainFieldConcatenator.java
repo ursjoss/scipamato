@@ -16,8 +16,7 @@ import ch.difty.scipamato.core.entity.Paper;
  * a new line. The labels will be localized depending on the browser locale of the user (if language is supported).
  */
 @Component
-public class CoreShortFieldWithEmptyMainFieldConcatenator extends AbstractShortFieldConcatenator
-    implements CoreShortFieldConcatenator {
+public class CoreShortFieldWithEmptyMainFieldConcatenator extends AbstractShortFieldConcatenator implements CoreShortFieldConcatenator {
 
     public CoreShortFieldWithEmptyMainFieldConcatenator() {
         super(true);
@@ -27,12 +26,10 @@ public class CoreShortFieldWithEmptyMainFieldConcatenator extends AbstractShortF
     @Override
     public String methodsFrom(@NotNull final Paper p, @NotNull final ReportHeaderFields rhf) {
         return methodsFrom(p.getMethods(), new Tuple(rhf.getMethodStudyDesignLabel(), p.getMethodStudyDesign()),
-            new Tuple(rhf.getMethodOutcomeLabel(), p.getMethodOutcome()),
-            new Tuple(rhf.getPopulationPlaceLabel(), p.getPopulationPlace()),
+            new Tuple(rhf.getMethodOutcomeLabel(), p.getMethodOutcome()), new Tuple(rhf.getPopulationPlaceLabel(), p.getPopulationPlace()),
             new Tuple(rhf.getExposurePollutantLabel(), p.getExposurePollutant()),
             new Tuple(rhf.getExposureAssessmentLabel(), p.getExposureAssessment()),
-            new Tuple(rhf.getMethodStatisticsLabel(), p.getMethodStatistics()),
-            new Tuple(rhf.getMethodConfoundersLabel(), p.getMethodConfounders()));
+            new Tuple(rhf.getMethodStatisticsLabel(), p.getMethodStatistics()), new Tuple(rhf.getMethodConfoundersLabel(), p.getMethodConfounders()));
     }
 
     @NotNull
@@ -48,7 +45,6 @@ public class CoreShortFieldWithEmptyMainFieldConcatenator extends AbstractShortF
     public String resultFrom(@NotNull final Paper p, @NotNull final ReportHeaderFields rhf) {
         return resultFrom(p.getResult(), new Tuple(rhf.getResultMeasuredOutcomeLabel(), p.getResultMeasuredOutcome()),
             new Tuple(rhf.getResultExposureRangeLabel(), p.getResultExposureRange()),
-            new Tuple(rhf.getResultEffectEstimateLabel(), p.getResultEffectEstimate()),
-            new Tuple(rhf.getConclusionLabel(), p.getConclusion()));
+            new Tuple(rhf.getResultEffectEstimateLabel(), p.getResultEffectEstimate()), new Tuple(rhf.getConclusionLabel(), p.getConclusion()));
     }
 }

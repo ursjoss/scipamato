@@ -92,7 +92,8 @@ internal class NewsletterListPageTest : BasePageTest<NewsletterListPage>() {
         }
         var colIdx = 1
         values.forEach { value ->
-            val p = "$b:body:rows:$rowIdx:cells:$colIdx:cell${if (colIdxAsLink != null && colIdx++ == colIdxAsLink) ":link:label" else ""}"
+            val p = "$b:body:rows:$rowIdx:cells:$colIdx:cell" +
+                if (colIdxAsLink != null && colIdx++ == colIdxAsLink) ":link:label" else ""
             tester.assertLabel(p, value)
         }
     }

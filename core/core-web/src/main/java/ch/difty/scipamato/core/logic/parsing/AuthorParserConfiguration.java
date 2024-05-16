@@ -13,7 +13,7 @@ public class AuthorParserConfiguration {
 
     @NotNull
     @Bean
-    public AuthorParserFactory authorParserFactory(final ApplicationCoreProperties appProperties) {
+    public AuthorParserFactory authorParserFactory(@NotNull final ApplicationCoreProperties appProperties) {
         return AuthorParserFactory.Companion.create(appProperties.getAuthorParserStrategy());
     }
 }

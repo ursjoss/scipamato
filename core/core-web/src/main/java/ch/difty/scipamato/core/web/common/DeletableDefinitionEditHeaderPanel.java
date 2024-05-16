@@ -40,7 +40,7 @@ public abstract class DeletableDefinitionEditHeaderPanel<E extends DefinitionEnt
         queue(newDeleteButton("delete"));
     }
 
-    private BootstrapButton newDeleteButton(final String id) {
+    private BootstrapButton newDeleteButton(@NotNull final String id) {
         final BootstrapButton db = new BootstrapButton(id, new StringResourceModel(id + LABEL_RESOURCE_TAG), Buttons.Type.Default) {
             @java.io.Serial
             private static final long serialVersionUID = 1L;
@@ -88,7 +88,7 @@ public abstract class DeletableDefinitionEditHeaderPanel<E extends DefinitionEnt
             }
 
             @SuppressWarnings("unused")
-            private void handleDataIntegrityViolationException(final DataIntegrityViolationException dive) {
+            private void handleDataIntegrityViolationException(@NotNull final DataIntegrityViolationException dive) {
                 @SuppressWarnings("SpellCheckingInspection") final String msg = new StringResourceModel("delete.dataintegrityviolation.hint", this,
                     null)
                     .setParameters(DeletableDefinitionEditHeaderPanel.this
@@ -98,7 +98,7 @@ public abstract class DeletableDefinitionEditHeaderPanel<E extends DefinitionEnt
                 error(msg);
             }
 
-            private void handleOtherException(final Exception oe) {
+            private void handleOtherException(@NotNull final Exception oe) {
                 final String msg = new StringResourceModel("delete.error.hint", this, null)
                     .setParameters(DeletableDefinitionEditHeaderPanel.this
                         .getModelObject()

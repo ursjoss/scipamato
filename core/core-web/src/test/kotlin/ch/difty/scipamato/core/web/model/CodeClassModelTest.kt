@@ -6,7 +6,6 @@ import io.mockk.every
 import io.mockk.verify
 import org.amshove.kluent.shouldContainSame
 import org.junit.jupiter.api.Test
-import java.util.ArrayList
 
 internal class CodeClassModelTest : ModelTest() {
 

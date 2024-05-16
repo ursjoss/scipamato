@@ -28,7 +28,7 @@ public abstract class NewsletterTopicListFilterPanel
         queueNewNewsletterTopicButton("newNewsletterTopic");
     }
 
-    private void queueNewNewsletterTopicButton(final String id) {
+    private void queueNewNewsletterTopicButton(@NotNull final String id) {
         queue(doQueueNewNewsletterTopicButton(id));
     }
 

@@ -21,7 +21,7 @@ import org.apache.wicket.markup.html.panel.Panel
 import org.apache.wicket.util.tester.TagTester
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
-import java.util.Optional
+import java.util.*
 
 const val EDIT_LINK = "table:body:rows:1:cells:4:cell:link"
 
@@ -160,7 +160,7 @@ internal abstract class ResultPanelTest : PanelTest<ResultPanel>() {
      * how to verify the action otherwise.
      *
      * Also, this is not really asserting anything, just verifying the methods have
-     * been called. Bit of a workaround
+     * been called. It's a bit of a workaround
      */
     private fun verifyPdfExport() {
         verify(exactly = 2) { paperSlimServiceMock.countBySearchOrder(searchOrder) }

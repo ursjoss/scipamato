@@ -13,7 +13,7 @@ class SyncResultDataProvider : SortableDataProvider<SyncJobResult.LogMessage, St
     private val syncJobResult get() = ScipamatoSession.get().syncJobResult
 
     override fun iterator(first: Long, count: Long): Iterator<SyncJobResult.LogMessage> {
-        val s : SortParam<String>? = sort
+        val s: SortParam<String>? = sort
         val dir = if (s == null || s.isAscending) Sort.Direction.ASC else Sort.Direction.DESC
         val sortProp = s?.property ?: "message"
         return syncJobResult.getPagedResultMessages(first.toInt(), count.toInt(), sortProp, dir)

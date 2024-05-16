@@ -1,5 +1,7 @@
 package ch.difty.scipamato.core.web.paper.jasper;
 
+import java.util.Objects;
+
 import net.sf.jasperreports.engine.JRAbstractExporter;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
 import net.sf.jasperreports.engine.export.JRPdfExporterContext;
@@ -37,11 +39,7 @@ public class ScipamatoPdfResourceHandler extends PdfResourceHandler {
      *     the {@link ClusterablePdfExporterConfiguration}
      */
     public ScipamatoPdfResourceHandler(@Nullable final ClusterablePdfExporterConfiguration config) {
-        if (config != null) {
-            this.config = config;
-        } else {
-            this.config = makeDefaultExporterConfig();
-        }
+        this.config = Objects.requireNonNullElseGet(config, this::makeDefaultExporterConfig);
     }
 
     private ScipamatoPdfExporterConfiguration makeDefaultExporterConfig() {

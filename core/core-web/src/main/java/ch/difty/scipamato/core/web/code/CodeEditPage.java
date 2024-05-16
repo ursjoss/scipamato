@@ -1,6 +1,5 @@
 package ch.difty.scipamato.core.web.code;
 
-import java.io.Serial;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

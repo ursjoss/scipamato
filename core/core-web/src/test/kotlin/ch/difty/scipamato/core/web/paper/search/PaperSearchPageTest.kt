@@ -18,7 +18,7 @@ import org.apache.wicket.model.Model
 import org.apache.wicket.request.mapper.parameter.PageParameters
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
-import java.util.Optional
+import java.util.*
 
 @Suppress("SameParameterValue")
 internal class PaperSearchPageTest : BasePageTest<PaperSearchPage>() {

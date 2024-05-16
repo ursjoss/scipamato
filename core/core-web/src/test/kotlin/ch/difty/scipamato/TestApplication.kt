@@ -23,7 +23,9 @@ open class TestApplication : WicketBootSecuredWebApplication() {
         super.init()
 
         // enable putting JavaScript into Footer Container
-        headerResponseDecorators.add { r -> JavaScriptFilteredIntoFooterHeaderResponse(r, AbstractPage.FOOTER_CONTAINER) }
+        headerResponseDecorators.add { r ->
+            JavaScriptFilteredIntoFooterHeaderResponse(r, AbstractPage.FOOTER_CONTAINER)
+        }
         registerJasperJrxmlFilesWithPackageResourceGuard()
     }
 

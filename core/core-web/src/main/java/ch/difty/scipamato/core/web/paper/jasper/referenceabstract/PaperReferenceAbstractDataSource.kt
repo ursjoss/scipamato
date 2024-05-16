@@ -9,7 +9,6 @@ import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields
 import ch.difty.scipamato.core.web.paper.jasper.ScipamatoPdfResourceHandler
 import ch.difty.scipamato.core.web.resources.jasper.PaperReferenceAbstractResourceReference
 import net.sf.jasperreports.engine.JasperReport
-import java.util.HashMap
 
 /**
  * DataSource for the PaperReferenceAbstractReport.

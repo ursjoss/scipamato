@@ -80,7 +80,8 @@ internal class CodeClassListPageTest : BasePageTest<CodeClassListPage>() {
             tester.assertComponent("$b:body:rows:$rowIdx:cells:$colIdxAsLink:cell:link", Link::class.java)
         var colIdx = 1
         for (value in values) {
-            val p = "$b:body:rows:$rowIdx:cells:$colIdx:cell${if (colIdxAsLink != null && colIdx++ == colIdxAsLink) ":link:label" else ""}"
+            val p = "$b:body:rows:$rowIdx:cells:$colIdx:cell" +
+                if (colIdxAsLink != null && colIdx++ == colIdxAsLink) ":link:label" else ""
             tester.assertLabel(p, value)
         }
     }

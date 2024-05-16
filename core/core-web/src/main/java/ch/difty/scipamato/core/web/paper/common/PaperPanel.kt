@@ -716,6 +716,7 @@ abstract class PaperPanel<T>(
             queue(Label("$CODES_CLASS_BASE_NAME${id}Label", Model.of(className)))
             val model: ChainingModel<List<Code>> = object : ChainingModel<List<Code>>(this@PaperPanel.model) {
                 private val serialVersionUID: Long = 1L
+
                 @Suppress("UNCHECKED_CAST")
                 val modelObject: CodeBoxAware
                     get() = (target as IModel<CodeBoxAware>).`object`
@@ -894,6 +895,7 @@ abstract class PaperPanel<T>(
         private fun makeAndQueueNewsletterTopicSelectBox(id: String) {
             val model: ChainingModel<NewsletterTopic> = object : ChainingModel<NewsletterTopic>(this@PaperPanel.model) {
                 private val serialVersionUID: Long = 1L
+
                 @Suppress("UNCHECKED_CAST")
                 val modelObject: NewsletterAware
                     get() = (target as IModel<NewsletterAware>).`object`

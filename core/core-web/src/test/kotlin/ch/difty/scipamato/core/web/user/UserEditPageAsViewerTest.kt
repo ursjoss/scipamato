@@ -10,7 +10,7 @@ import org.amshove.kluent.withMessage
 import org.apache.wicket.authorization.UnauthorizedInstantiationException
 import org.apache.wicket.request.mapper.parameter.PageParameters
 import org.junit.jupiter.api.Test
-import java.util.Optional
+import java.util.*
 
 @Suppress("SpellCheckingInspection")
 internal open class UserEditPageAsViewerTest : WicketTest() {

@@ -18,8 +18,7 @@ import ch.difty.scipamato.core.web.common.DefinitionListPage;
 @Slf4j
 @AuthorizeInstantiation({ Roles.USER, Roles.ADMIN })
 @SuppressWarnings({ "SameParameterValue" })
-public class CodeClassListPage
-    extends DefinitionListPage<CodeClassDefinition, CodeClassFilter, CodeClassService, CodeClassDefinitionProvider> {
+public class CodeClassListPage extends DefinitionListPage<CodeClassDefinition, CodeClassFilter, CodeClassService, CodeClassDefinitionProvider> {
 
     @java.io.Serial
     private static final long serialVersionUID = 1L;

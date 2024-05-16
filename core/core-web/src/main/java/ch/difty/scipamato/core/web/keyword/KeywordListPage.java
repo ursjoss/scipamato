@@ -21,8 +21,7 @@ import ch.difty.scipamato.core.web.common.DefinitionListPage;
 @Slf4j
 @AuthorizeInstantiation({ Roles.USER, Roles.ADMIN })
 @SuppressWarnings({ "SameParameterValue" })
-public class KeywordListPage
-    extends DefinitionListPage<KeywordDefinition, KeywordFilter, KeywordService, KeywordDefinitionProvider> {
+public class KeywordListPage extends DefinitionListPage<KeywordDefinition, KeywordFilter, KeywordService, KeywordDefinitionProvider> {
 
     @java.io.Serial
     private static final long serialVersionUID = 1L;
@@ -58,8 +57,7 @@ public class KeywordListPage
             @Override
             protected BootstrapAjaxButton doQueueNewKeywordButton(@NotNull final String id) {
                 return newResponsePageButton(id,
-                    () -> new KeywordEditPage(Model.of(service.newUnpersistedKeywordDefinition()),
-                        getPage().getPageReference()));
+                    () -> new KeywordEditPage(Model.of(service.newUnpersistedKeywordDefinition()), getPage().getPageReference()));
             }
         };
     }

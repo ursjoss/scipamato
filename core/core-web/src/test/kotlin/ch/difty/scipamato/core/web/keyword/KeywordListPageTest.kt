@@ -80,7 +80,8 @@ internal class KeywordListPageTest : BasePageTest<KeywordListPage>() {
         var colIdx = 1
         for (value in values)
             tester.assertLabel(
-                "$b:body:rows:$rowIdx:cells:$colIdx:cell${if (colIdxAsLink != null && colIdx++ == colIdxAsLink) ":link:label" else ""}",
+                "$b:body:rows:$rowIdx:cells:$colIdx:cell" +
+                    if (colIdxAsLink != null && colIdx++ == colIdxAsLink) ":link:label" else "",
                 value
             )
     }
@@ -101,8 +102,8 @@ internal class KeywordListPageTest : BasePageTest<KeywordListPage>() {
 
     @Test
     fun clickingNewKeyword_forwardsToKeywordEditPage() {
-        val kt_en = KeywordTranslation(1, "en", "kt_en", 1)
-        val kd = KeywordDefinition(1, "en", 1, kt_en)
+        val ktEn = KeywordTranslation(1, "en", "kt_en", 1)
+        val kd = KeywordDefinition(1, "en", 1, ktEn)
         every { keywordServiceMock.newUnpersistedKeywordDefinition() } returns kd
         tester.startPage(pageClass)
         tester.assertRenderedPage(pageClass)

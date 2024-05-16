@@ -23,8 +23,7 @@ import org.apache.wicket.model.Model
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 import java.time.LocalDate
-import java.util.ArrayList
-import java.util.Optional
+import java.util.*
 
 internal class NewsletterEditPageTest : BasePageTest<NewsletterEditPage>() {
 
@@ -97,7 +96,8 @@ internal class NewsletterEditPageTest : BasePageTest<NewsletterEditPage>() {
         formTester.submit("submit")
         tester.assertNoInfoMessage()
         tester.assertErrorMessages(
-            "The newsletter with id 0 has been modified concurrently by another user. Please reload it and apply your changes once more."
+            "The newsletter with id 0 has been modified concurrently by another user. " +
+                "Please reload it and apply your changes once more."
         )
         verify { newsletterServiceMock.saveOrUpdate(any()) }
     }

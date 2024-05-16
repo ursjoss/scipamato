@@ -8,8 +8,6 @@ import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicDefinition;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicTranslation;
 import ch.difty.scipamato.core.web.common.DeletableDefinitionEditHeaderPanel;
 
-import java.io.Serial;
-
 @SuppressWarnings("SameParameterValue")
 public abstract class NewsletterTopicEditHeaderPanel
     extends DeletableDefinitionEditHeaderPanel<NewsletterTopicDefinition, NewsletterTopicTranslation, Integer> {

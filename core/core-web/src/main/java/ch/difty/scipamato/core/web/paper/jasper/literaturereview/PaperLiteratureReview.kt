@@ -35,19 +35,17 @@ class PaperLiteratureReview(p: Paper, rhf: ReportHeaderFields) : ExportEntity {
 
         other as PaperLiteratureReview
 
-        if (number != other.number) return false
-
-        return true
+        return number == other.number
     }
 
     override fun hashCode(): Int = number.hashCode()
     override fun toString(): String = "PaperLiteratureReview(" +
-        "number=$number, authors=$authors, publicationYear=$publicationYear, title=$title, goals=$goals, location=$location, " +
-        "doi=$doi, pubmedLink=$pubmedLink, caption=$caption, brand=$brand, numberLabel=$numberLabel" +
+        "number=$number, authors=$authors, publicationYear=$publicationYear, " +
+        "title=$title, goals=$goals, location=$location, doi=$doi, " +
+        "pubmedLink=$pubmedLink, caption=$caption, brand=$brand, numberLabel=$numberLabel" +
         ")"
 
     companion object {
         private const val serialVersionUID = 1L
     }
-
 }
