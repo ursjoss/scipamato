@@ -14,7 +14,6 @@ import org.amshove.kluent.shouldBeFalse
 import org.amshove.kluent.shouldBeTrue
 import org.junit.jupiter.api.Test
 
-@Suppress("UsePropertyAccessSyntax")
 internal class JooqSearchOrderServiceTest : AbstractServiceTest<Long, SearchOrder, SearchOrderRepository>() {
 
     override val repo = mockk<SearchOrderRepository>(relaxed = true) {

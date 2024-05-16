@@ -40,17 +40,20 @@ public class PaperCodeBox implements CodeBox {
         return collectBy(codeClassId).size();
     }
 
-    private List<Code> collectBy(final CodeClassId ccId) {
+    private List<Code> collectBy(@NotNull final CodeClassId ccId) {
         return codes
             .stream()
             .filter(isMatching(ccId))
             .collect(Collectors.toList());
     }
 
-    private Predicate<? super Code> isMatching(final CodeClassId ccId) {
-        return c -> ccId.getId() == c
-            .getCodeClass()
-            .getId();
+    private Predicate<? super Code> isMatching(@NotNull final CodeClassId ccId) {
+        return c -> {
+            final Integer id = c
+                .getCodeClass()
+                .getId();
+            return id != null && ccId.getId() == id;
+        };
     }
 
     @Override
@@ -59,7 +62,7 @@ public class PaperCodeBox implements CodeBox {
             codes.add(code);
     }
 
-    private boolean isNewAndNonNull(final Code code) {
+    private boolean isNewAndNonNull(@Nullable final Code code) {
         return code != null && !codes.contains(code);
     }
 
@@ -129,7 +132,7 @@ public class PaperCodeBox implements CodeBox {
     }
 
     @Override
-    public boolean equals(final Object obj) {
+    public boolean equals(@Nullable final Object obj) {
         if (this == obj)
             return true;
         if (obj == null)

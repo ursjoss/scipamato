@@ -64,7 +64,7 @@ public abstract class JooqReadOnlyService<ID extends Number, T extends IdScipama
         }
     }
 
-    private void setCreatedMetaData(final T entity) {
+    private void setCreatedMetaData(@NotNull final T entity) {
         final Optional<User> user = getUserWithId(entity.getCreatedBy());
         entity.setCreatedByName(user
             .map(User::getDisplayValue)
@@ -74,13 +74,13 @@ public abstract class JooqReadOnlyService<ID extends Number, T extends IdScipama
             .orElse(null));
     }
 
-    private void setModifiedMeta(final T entity) {
+    private void setModifiedMeta(@NotNull final T entity) {
         entity.setLastModifiedByName(getUserWithId(entity.getLastModifiedBy())
             .map(User::getDisplayValue)
             .orElse(null));
     }
 
-    private Optional<User> getUserWithId(final Integer id) {
+    private Optional<User> getUserWithId(@Nullable final Integer id) {
         if (id != null)
             return Optional.ofNullable(getUserRepository().findById(id));
         return Optional.empty();
@@ -102,8 +102,7 @@ public abstract class JooqReadOnlyService<ID extends Number, T extends IdScipama
 
     @NotNull
     @Override
-    public List<ID> findPageOfIdsByFilter(@Nullable final F filter,
-        @NotNull final PaginationContext paginationContext) {
+    public List<ID> findPageOfIdsByFilter(@Nullable final F filter, @NotNull final PaginationContext paginationContext) {
         return repo.findPageOfIdsByFilter(filter, paginationContext);
     }
 }

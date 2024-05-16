@@ -31,7 +31,7 @@ import org.jetbrains.annotations.Nullable;
  * </ul>
  * <p>
  * NOTE: The INCOMPLETE will not find any papers. It's more about gracefully handling
- * unfinished search terms. See https://github.com/ursjoss/scipamato/issues/84
+ * unfinished search terms. See <a href="https://github.com/ursjoss/scipamato/issues/84">Issues</a>
  *
  * @author u.joss
  */
@@ -76,8 +76,7 @@ public class IntegerSearchTerm extends AbstractSearchTerm {
         this(null, fieldName, rawSearchTerm);
     }
 
-    IntegerSearchTerm(@Nullable final Long searchConditionId, @NotNull final String fieldName,
-        @NotNull final String rawSearchTerm) {
+    IntegerSearchTerm(@Nullable final Long searchConditionId, @NotNull final String fieldName, @NotNull final String rawSearchTerm) {
         this(null, searchConditionId, fieldName, rawSearchTerm);
     }
 
@@ -140,16 +139,16 @@ public class IntegerSearchTerm extends AbstractSearchTerm {
         }
     }
 
-    private boolean isNumeric(String rst) {
+    private boolean isNumeric(@NotNull final String rst) {
         try {
             Integer.parseInt(rst.trim());
             return true;
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             return false;
         }
     }
 
-    private int extractInteger(final String rst, final int compSymbolMaxLength) {
+    private int extractInteger(@NotNull final String rst, final int compSymbolMaxLength) {
         return Integer.parseInt(rst
             .substring(compSymbolMaxLength)
             .trim());

@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test
 import java.sql.Timestamp
 import java.time.LocalDateTime
 
-@Suppress("UsePropertyAccessSyntax")
 internal class AuditFieldsTest {
 
     @Test

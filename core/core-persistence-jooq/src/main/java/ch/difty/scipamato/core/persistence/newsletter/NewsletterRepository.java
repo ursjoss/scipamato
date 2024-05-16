@@ -35,8 +35,8 @@ public interface NewsletterRepository extends EntityRepository<Newsletter, Integ
      * @return the count of records that were inserted or updated (expected to be 1 all the time)
      */
     @NotNull
-    Optional<Paper.NewsletterLink> mergePaperIntoNewsletter(int newsletterId, long paperId,
-        @Nullable Integer newsletterTopicId, @NotNull String languageCode);
+    Optional<Paper.NewsletterLink> mergePaperIntoNewsletter(int newsletterId, long paperId, @Nullable Integer newsletterTopicId,
+        @NotNull String languageCode);
 
     /**
      * Removes the paper with the specified id from the newsletter with the given id.

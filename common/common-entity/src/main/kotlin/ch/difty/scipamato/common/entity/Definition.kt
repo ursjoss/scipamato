@@ -41,7 +41,7 @@ interface DefinitionTranslation : Serializable {
 }
 
 /**
- * Abstract base class comprising of the state and behavior common to all [DefinitionEntity] implementations.
+ * Abstract base class consisting of the state and behavior common to all [DefinitionEntity] implementations.
  * It contains definition translations of type  [T] and an id of type [ID].
  */
 // TODO directly implement as data classes

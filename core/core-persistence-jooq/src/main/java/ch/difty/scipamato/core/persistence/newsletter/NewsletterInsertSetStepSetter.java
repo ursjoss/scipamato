@@ -17,7 +17,7 @@ import ch.difty.scipamato.core.persistence.InsertSetStepSetter;
 
 /**
  * The insert step setter used for inserting new {@link Newsletter}s.
- *
+ * <br/><br/>
  * <b>Note:</b> the {@link NewsletterTopic}s are not inserted here.
  *
  * @author u.joss
@@ -27,8 +27,7 @@ public class NewsletterInsertSetStepSetter implements InsertSetStepSetter<Newsle
 
     @NotNull
     @Override
-    public InsertSetMoreStep<NewsletterRecord> setNonKeyFieldsFor(@NotNull final InsertSetStep<NewsletterRecord> step,
-        @NotNull final Newsletter e) {
+    public InsertSetMoreStep<NewsletterRecord> setNonKeyFieldsFor(@NotNull final InsertSetStep<NewsletterRecord> step, @NotNull final Newsletter e) {
         return step
             .set(NEWSLETTER.ISSUE, e.getIssue())
             .set(NEWSLETTER.ISSUE_DATE, Date.valueOf(e.getIssueDate()))
@@ -41,15 +40,16 @@ public class NewsletterInsertSetStepSetter implements InsertSetStepSetter<Newsle
     }
 
     @Override
-    public void considerSettingKeyOf(@NotNull final InsertSetMoreStep<NewsletterRecord> step,
-        @NotNull final Newsletter entity) {
+    public void considerSettingKeyOf(@NotNull final InsertSetMoreStep<NewsletterRecord> step, @NotNull final Newsletter entity) {
         final Integer id = entity.getId();
-        if (id != null)
+        if (id != null) {
+            //noinspection ResultOfMethodCallIgnored
             step.set(NEWSLETTER.ID, id);
+        }
     }
 
     @Override
-    public void resetIdToEntity(@NotNull Newsletter entity, @Nullable NewsletterRecord saved) {
+    public void resetIdToEntity(@NotNull final Newsletter entity, @Nullable final NewsletterRecord saved) {
         if (saved != null)
             entity.setId(saved.getId());
     }

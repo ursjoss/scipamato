@@ -5,6 +5,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class OptimisticLockingException extends RuntimeException {
 
+    @java.io.Serial
     private static final long serialVersionUID = 1L;
 
     private final String tableName;
@@ -14,14 +15,13 @@ public class OptimisticLockingException extends RuntimeException {
         this(tableName, null, type);
     }
 
-    public OptimisticLockingException(@NotNull final String tableName, @Nullable final String record,
-        @NotNull final Type type) {
+    public OptimisticLockingException(@NotNull final String tableName, @Nullable final String record, @NotNull final Type type) {
         super(makeMessage(tableName, record, type));
         this.tableName = tableName;
         this.record = record;
     }
 
-    private static String makeMessage(final String tableName, final String record, final Type type) {
+    private static String makeMessage(@NotNull final String tableName, @Nullable final String record, @NotNull final Type type) {
         final StringBuilder sb = new StringBuilder();
         sb
             .append("Record in table '")

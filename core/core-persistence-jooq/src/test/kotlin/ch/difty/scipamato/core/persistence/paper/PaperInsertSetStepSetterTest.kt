@@ -33,7 +33,9 @@ internal class PaperInsertSetStepSetterTest : InsertSetStepSetterTest<PaperRecor
         every { moreStep.set(PAPER.DOI, PaperRecordMapperTest.DOI) } returns moreStep
         every { moreStep.set(PAPER.AUTHORS, PaperRecordMapperTest.AUTHORS) } returns moreStep
         every { moreStep.set(PAPER.FIRST_AUTHOR, PaperRecordMapperTest.FIRST_AUTHOR) } returns moreStep
-        every { moreStep.set(PAPER.FIRST_AUTHOR_OVERRIDDEN, PaperRecordMapperTest.FIRST_AUTHOR_OVERRIDDEN) } returns moreStep
+        every {
+            moreStep.set(PAPER.FIRST_AUTHOR_OVERRIDDEN, PaperRecordMapperTest.FIRST_AUTHOR_OVERRIDDEN)
+        } returns moreStep
         every { moreStep.set(PAPER.TITLE, PaperRecordMapperTest.TITLE) } returns moreStep
         every { moreStep.set(PAPER.LOCATION, PaperRecordMapperTest.LOCATION) } returns moreStep
         every { moreStep.set(PAPER.PUBLICATION_YEAR, PaperRecordMapperTest.PUBLICATION_YEAR) } returns moreStep
@@ -43,7 +45,9 @@ internal class PaperInsertSetStepSetterTest : InsertSetStepSetterTest<PaperRecor
         every { moreStep.set(PAPER.METHODS, PaperRecordMapperTest.METHODS) } returns moreStep
 
         every { moreStep.set(PAPER.POPULATION_PLACE, PaperRecordMapperTest.POPULATION_PLACE) } returns moreStep
-        every { moreStep.set(PAPER.POPULATION_PARTICIPANTS, PaperRecordMapperTest.POPULATION_PARTICIPANTS) } returns moreStep
+        every {
+            moreStep.set(PAPER.POPULATION_PARTICIPANTS, PaperRecordMapperTest.POPULATION_PARTICIPANTS)
+        } returns moreStep
         every { moreStep.set(PAPER.POPULATION_DURATION, PaperRecordMapperTest.POPULATION_DURATION) } returns moreStep
         every { moreStep.set(PAPER.EXPOSURE_POLLUTANT, PaperRecordMapperTest.EXPOSURE_POLLUTANT) } returns moreStep
         every { moreStep.set(PAPER.EXPOSURE_ASSESSMENT, PaperRecordMapperTest.EXPOSURE_ASSESSMENT) } returns moreStep
@@ -56,19 +60,31 @@ internal class PaperInsertSetStepSetterTest : InsertSetStepSetterTest<PaperRecor
         every { moreStep.set(PAPER.COMMENT, PaperRecordMapperTest.COMMENT) } returns moreStep
         every { moreStep.set(PAPER.INTERN, PaperRecordMapperTest.INTERN) } returns moreStep
 
-        every { moreStep.set(PAPER.RESULT_EXPOSURE_RANGE, PaperRecordMapperTest.RESULT_EXPOSURE_RANGE) } returns moreStep
-        every { moreStep.set(PAPER.RESULT_EFFECT_ESTIMATE, PaperRecordMapperTest.RESULT_EFFECT_ESTIMATE) } returns moreStep
-        every { moreStep.set(PAPER.RESULT_MEASURED_OUTCOME, PaperRecordMapperTest.RESULT_MEASURED_OUTCOME) } returns moreStep
+        every {
+            moreStep.set(PAPER.RESULT_EXPOSURE_RANGE, PaperRecordMapperTest.RESULT_EXPOSURE_RANGE)
+        } returns moreStep
+        every {
+            moreStep.set(PAPER.RESULT_EFFECT_ESTIMATE, PaperRecordMapperTest.RESULT_EFFECT_ESTIMATE)
+        } returns moreStep
+        every {
+            moreStep.set(PAPER.RESULT_MEASURED_OUTCOME, PaperRecordMapperTest.RESULT_MEASURED_OUTCOME)
+        } returns moreStep
         every { moreStep.set(PAPER.CONCLUSION, PaperRecordMapperTest.CONCLUSION) } returns moreStep
 
         every { moreStep.set(PAPER.ORIGINAL_ABSTRACT, PaperRecordMapperTest.ORIGINAL_ABSTRACT) } returns moreStep
 
-        every { moreStep.set(PAPER.MAIN_CODE_OF_CODECLASS1, PaperRecordMapperTest.MAIN_CODE_OF_CODECLASS1) } returns moreStep
+        every {
+            moreStep.set(PAPER.MAIN_CODE_OF_CODECLASS1, PaperRecordMapperTest.MAIN_CODE_OF_CODECLASS1)
+        } returns moreStep
     }
 
     override fun setStepFixtureAudit() {
-        every { moreStep.set(PAPER.CREATED_BY, ch.difty.scipamato.core.persistence.RecordMapperTest.CREATED_BY) } returns moreStep
-        every { moreStep.set(PAPER.LAST_MODIFIED_BY, ch.difty.scipamato.core.persistence.RecordMapperTest.LAST_MOD_BY) } returns moreStep
+        every {
+            moreStep.set(PAPER.CREATED_BY, ch.difty.scipamato.core.persistence.RecordMapperTest.CREATED_BY)
+        } returns moreStep
+        every {
+            moreStep.set(PAPER.LAST_MODIFIED_BY, ch.difty.scipamato.core.persistence.RecordMapperTest.LAST_MOD_BY)
+        } returns moreStep
     }
 
     override fun verifyCallToFieldsExceptKeyAndAudit() {
@@ -152,7 +168,9 @@ internal class PaperInsertSetStepSetterTest : InsertSetStepSetterTest<PaperRecor
 
     override fun verifySettingAuditFields() {
         verify { moreStep.set(PAPER.CREATED_BY, ch.difty.scipamato.core.persistence.RecordMapperTest.CREATED_BY) }
-        verify { moreStep.set(PAPER.LAST_MODIFIED_BY, ch.difty.scipamato.core.persistence.RecordMapperTest.LAST_MOD_BY) }
+        verify {
+            moreStep.set(PAPER.LAST_MODIFIED_BY, ch.difty.scipamato.core.persistence.RecordMapperTest.LAST_MOD_BY)
+        }
     }
 
     @Test

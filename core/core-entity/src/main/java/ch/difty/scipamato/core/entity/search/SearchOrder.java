@@ -83,7 +83,7 @@ public class SearchOrder extends IdScipamatoEntity<Long> implements PaperSlimFil
         setExcludedPaperIds(excludedPaperIds);
     }
 
-    private void setSearchConditions(final List<SearchCondition> searchConditions) {
+    private void setSearchConditions(@Nullable final List<SearchCondition> searchConditions) {
         if (searchConditions != null) {
             this.searchConditions.clear();
             this.searchConditions.addAll(searchConditions);
@@ -164,7 +164,7 @@ public class SearchOrder extends IdScipamatoEntity<Long> implements PaperSlimFil
             .stream()
             .map(SearchCondition::getDisplayValue)
             .collect(Collectors.joining(JOIN_DELIMITER)));
-        if (sb.length() == 0)
+        if (sb.isEmpty())
             sb.append("--");
 
         if (truncate && sb.length() > DISPL_VALUE_THRESHOLD) {
@@ -174,7 +174,7 @@ public class SearchOrder extends IdScipamatoEntity<Long> implements PaperSlimFil
         return sb;
     }
 
-    private void part2(final StringBuilder sb) {
+    private void part2(@NotNull final StringBuilder sb) {
         sb
             .append(" (")
             .append(getId())

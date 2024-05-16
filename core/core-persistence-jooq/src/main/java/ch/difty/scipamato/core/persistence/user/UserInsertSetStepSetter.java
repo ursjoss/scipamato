@@ -26,8 +26,7 @@ public class UserInsertSetStepSetter implements InsertSetStepSetter<ScipamatoUse
 
     @NotNull
     @Override
-    public InsertSetMoreStep<ScipamatoUserRecord> setNonKeyFieldsFor(@NotNull InsertSetStep<ScipamatoUserRecord> step,
-        @NotNull User e) {
+    public InsertSetMoreStep<ScipamatoUserRecord> setNonKeyFieldsFor(@NotNull final InsertSetStep<ScipamatoUserRecord> step, @NotNull final User e) {
         return step
             .set(SCIPAMATO_USER.USER_NAME, e.getUserName())
             .set(SCIPAMATO_USER.FIRST_NAME, e.getFirstName())
@@ -41,14 +40,16 @@ public class UserInsertSetStepSetter implements InsertSetStepSetter<ScipamatoUse
     }
 
     @Override
-    public void considerSettingKeyOf(@NotNull InsertSetMoreStep<ScipamatoUserRecord> step, @NotNull User entity) {
-        Integer id = entity.getId();
-        if (id != null)
+    public void considerSettingKeyOf(@NotNull final InsertSetMoreStep<ScipamatoUserRecord> step, @NotNull final User entity) {
+        final Integer id = entity.getId();
+        if (id != null) {
+            //noinspection ResultOfMethodCallIgnored
             step.set(SCIPAMATO_USER.ID, id);
+        }
     }
 
     @Override
-    public void resetIdToEntity(@NotNull User entity, @Nullable ScipamatoUserRecord saved) {
+    public void resetIdToEntity(@NotNull final User entity, @Nullable final ScipamatoUserRecord saved) {
         if (saved != null)
             entity.setId(saved.getId());
     }

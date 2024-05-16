@@ -15,8 +15,7 @@ import ch.difty.scipamato.core.persistence.InsertSetStepSetter;
 
 /**
  * The insert step setter used for inserting new {@link SearchOrder}s.
- *
- *
+ * <br/><br/>
  * <b>Note:</b> the {@link SearchCondition}s are not inserted here.
  *
  * @author u.joss
@@ -26,8 +25,8 @@ public class SearchOrderInsertSetStepSetter implements InsertSetStepSetter<Searc
 
     @NotNull
     @Override
-    public InsertSetMoreStep<SearchOrderRecord> setNonKeyFieldsFor(@NotNull InsertSetStep<SearchOrderRecord> step,
-        @NotNull SearchOrder e) {
+    public InsertSetMoreStep<SearchOrderRecord> setNonKeyFieldsFor(@NotNull final InsertSetStep<SearchOrderRecord> step,
+        @NotNull final SearchOrder e) {
         return step
             .set(SEARCH_ORDER.NAME, e.getName())
             .set(SEARCH_ORDER.OWNER, e.getOwner())
@@ -38,14 +37,16 @@ public class SearchOrderInsertSetStepSetter implements InsertSetStepSetter<Searc
     }
 
     @Override
-    public void considerSettingKeyOf(@NotNull InsertSetMoreStep<SearchOrderRecord> step, @NotNull SearchOrder entity) {
-        Long id = entity.getId();
-        if (id != null)
+    public void considerSettingKeyOf(@NotNull final InsertSetMoreStep<SearchOrderRecord> step, @NotNull final SearchOrder entity) {
+        final Long id = entity.getId();
+        if (id != null) {
+            //noinspection ResultOfMethodCallIgnored
             step.set(SEARCH_ORDER.ID, id);
+        }
     }
 
     @Override
-    public void resetIdToEntity(@NotNull SearchOrder entity, @Nullable SearchOrderRecord saved) {
+    public void resetIdToEntity(@NotNull final SearchOrder entity, @Nullable final SearchOrderRecord saved) {
         if (saved != null)
             entity.setId(saved.getId());
     }

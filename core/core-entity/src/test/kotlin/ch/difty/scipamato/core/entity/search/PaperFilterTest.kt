@@ -30,7 +30,8 @@ internal class PaperFilterTest {
         f.newsletterId shouldBeEqualTo 2
 
         f.toString() shouldBeEqualTo
-            "PaperFilter(number=1, authorMask=authorMask, methodsMask=methodsMask, populationMask=populationMask, searchMask=searchMask, " +
+            "PaperFilter(number=1, authorMask=authorMask, methodsMask=methodsMask, " +
+            "populationMask=populationMask, searchMask=searchMask, " +
             "publicationYearFrom=2015, publicationYearUntil=2017, newsletterId=2)"
     }
 

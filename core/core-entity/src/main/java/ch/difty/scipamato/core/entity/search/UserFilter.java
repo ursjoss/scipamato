@@ -25,7 +25,7 @@ public class UserFilter implements ScipamatoFilter {
 
         private final String name;
 
-        UserFilterFields(final String name) {
+        UserFilterFields(@NotNull final String name) {
             this.name = name;
         }
 

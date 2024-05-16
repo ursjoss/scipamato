@@ -19,13 +19,10 @@ import ch.difty.scipamato.core.persistence.paper.searchorder.PaperBackedSearchOr
  */
 @Repository
 @Profile("!wickettest")
-public class JooqPaperBySearchOrderRepo extends JooqBySearchOrderRepo<Paper, PaperRecordMapper>
-    implements PaperBackedSearchOrderRepository {
+public class JooqPaperBySearchOrderRepo extends JooqBySearchOrderRepo<Paper, PaperRecordMapper> implements PaperBackedSearchOrderRepository {
 
-    public JooqPaperBySearchOrderRepo(@Qualifier("dslContext") @NotNull final DSLContext dsl,
-        @NotNull final PaperRecordMapper mapper,
+    public JooqPaperBySearchOrderRepo(@Qualifier("dslContext") @NotNull final DSLContext dsl, @NotNull final PaperRecordMapper mapper,
         @NotNull final JooqSortMapper<PaperRecord, Paper, ch.difty.scipamato.core.db.tables.Paper> sortMapper) {
         super(dsl, mapper, sortMapper);
     }
-
 }

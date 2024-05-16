@@ -40,7 +40,10 @@ internal class UserInsertSetStepSetterTest : InsertSetStepSetterTest<ScipamatoUs
             moreStep.set(SCIPAMATO_USER.CREATED_BY, ch.difty.scipamato.core.persistence.RecordMapperTest.CREATED_BY)
         } returns moreStep
         every {
-            moreStep.set(SCIPAMATO_USER.LAST_MODIFIED_BY, ch.difty.scipamato.core.persistence.RecordMapperTest.LAST_MOD_BY)
+            moreStep.set(
+                SCIPAMATO_USER.LAST_MODIFIED_BY,
+                ch.difty.scipamato.core.persistence.RecordMapperTest.LAST_MOD_BY
+            )
         } returns moreStep
     }
 
@@ -68,7 +71,10 @@ internal class UserInsertSetStepSetterTest : InsertSetStepSetterTest<ScipamatoUs
             moreStep.set(SCIPAMATO_USER.CREATED_BY, ch.difty.scipamato.core.persistence.RecordMapperTest.CREATED_BY)
         }
         verify {
-            moreStep.set(SCIPAMATO_USER.LAST_MODIFIED_BY, ch.difty.scipamato.core.persistence.RecordMapperTest.LAST_MOD_BY)
+            moreStep.set(
+                SCIPAMATO_USER.LAST_MODIFIED_BY,
+                ch.difty.scipamato.core.persistence.RecordMapperTest.LAST_MOD_BY,
+            )
         }
     }
 

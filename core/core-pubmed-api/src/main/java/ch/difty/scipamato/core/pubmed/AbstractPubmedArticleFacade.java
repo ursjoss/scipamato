@@ -40,11 +40,11 @@ public abstract class AbstractPubmedArticleFacade implements PubmedArticleFacade
         return combine(individualAuthors, collectives);
     }
 
-    private String getIndividualAuthors(final AuthorList authorList) {
+    private String getIndividualAuthors(@NotNull final AuthorList authorList) {
         final List<String> names = new ArrayList<>();
         for (final Author author : authorList.getAuthor()) {
             final StringBuilder auth = parseIndividualAuthor(author);
-            if (auth.length() > 0)
+            if (!auth.isEmpty())
                 names.add(auth.toString());
         }
         return names
@@ -52,12 +52,12 @@ public abstract class AbstractPubmedArticleFacade implements PubmedArticleFacade
             .collect(Collectors.joining(", ", "", ""));
     }
 
-    private StringBuilder parseIndividualAuthor(final Author author) {
+    private StringBuilder parseIndividualAuthor(@NotNull final Author author) {
         final StringBuilder asb = new StringBuilder();
         for (final java.lang.Object o : author.getLastNameOrForeNameOrInitialsOrSuffixOrCollectiveName()) {
             if (o instanceof ForeName || o instanceof CollectiveName)
                 continue;
-            if (asb.length() > 0)
+            if (!asb.isEmpty())
                 asb.append(" ");
             if (o instanceof LastName)
                 asb.append(((LastName) o).getvalue());
@@ -69,11 +69,11 @@ public abstract class AbstractPubmedArticleFacade implements PubmedArticleFacade
         return asb;
     }
 
-    private String getCollectives(final AuthorList authorList) {
+    private String getCollectives(@NotNull final AuthorList authorList) {
         final List<String> names = new ArrayList<>();
         for (final Author author : authorList.getAuthor()) {
             final StringBuilder asb = parseCollectiveAuthor(author);
-            if (asb.length() > 0)
+            if (!asb.isEmpty())
                 names.add(asb.toString());
         }
         return names
@@ -81,7 +81,7 @@ public abstract class AbstractPubmedArticleFacade implements PubmedArticleFacade
             .collect(Collectors.joining(", ", "", ""));
     }
 
-    private StringBuilder parseCollectiveAuthor(final Author author) {
+    private StringBuilder parseCollectiveAuthor(@NotNull final Author author) {
         final StringBuilder asb = new StringBuilder();
         for (final java.lang.Object o : author.getLastNameOrForeNameOrInitialsOrSuffixOrCollectiveName()) {
             if (o instanceof CollectiveName)
@@ -90,15 +90,15 @@ public abstract class AbstractPubmedArticleFacade implements PubmedArticleFacade
         return asb;
     }
 
-    private String combine(final String individualAuthors, final String collectives) {
+    private String combine(@NotNull final String individualAuthors, @NotNull final String collectives) {
         final StringBuilder comb = new StringBuilder();
         comb.append(individualAuthors);
         if (StringUtils.hasLength(collectives)) {
-            if (comb.length() > 0)
+            if (!comb.isEmpty())
                 comb.append("; ");
             comb.append(collectives);
         }
-        if (comb.length() > 0)
+        if (!comb.isEmpty())
             comb.append(".");
         return comb.toString();
     }

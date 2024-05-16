@@ -314,7 +314,8 @@ internal open class JooqNewsletterTopicRepoIntegrationTest {
     @Test
     fun removingObsoleteNewsletterTopicsFromSort() {
         repo.removeObsoleteNewsletterTopicsFromSort(1)
-        // TODO currently only asserting that the method runs without failure. Need test data and actually assert the behavior
+        // TODO currently only asserting that the method runs without failure.
+        // Need test data and actually assert the behavior
     }
 
     @Test

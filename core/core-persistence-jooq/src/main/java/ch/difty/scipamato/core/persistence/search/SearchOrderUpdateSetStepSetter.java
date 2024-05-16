@@ -28,8 +28,8 @@ public class SearchOrderUpdateSetStepSetter implements UpdateSetStepSetter<Searc
 
     @NotNull
     @Override
-    public UpdateSetMoreStep<SearchOrderRecord> setFieldsFor(@NotNull UpdateSetFirstStep<SearchOrderRecord> step,
-        @NotNull SearchOrder e) {
+    public UpdateSetMoreStep<SearchOrderRecord> setFieldsFor(@NotNull final UpdateSetFirstStep<SearchOrderRecord> step,
+        @NotNull final SearchOrder e) {
         final Timestamp created = e.getCreated() == null ? null : UtilsKt.toTimestamp(e.getCreated());
         final Timestamp lastMod = e.getLastModified() == null ? null : UtilsKt.toTimestamp(e.getLastModified());
         return step

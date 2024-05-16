@@ -17,8 +17,7 @@ import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicFilter;
  *
  * @author Urs Joss
  */
-public interface NewsletterTopicService
-    extends DefinitionProviderService<NewsletterTopicDefinition, NewsletterTopicFilter> {
+public interface NewsletterTopicService extends DefinitionProviderService<NewsletterTopicDefinition, NewsletterTopicFilter> {
 
     /**
      * Find the localized {@link NewsletterTopic}s
@@ -109,7 +108,7 @@ public interface NewsletterTopicService
      *     the record version - used for optimistic locking
      * @return the deleted entity
      * @throws OptimisticLockingException
-     *     if the record version has increased in the mean time
+     *     if the record version has increased in the meantime
      */
     @Nullable
     NewsletterTopicDefinition delete(int id, int version);

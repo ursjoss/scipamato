@@ -1136,7 +1136,8 @@ internal class SearchConditionTest {
         val stMock = mockk<SearchTerm> {
             every { searchTermType } returns SearchTermType.UNSUPPORTED
         }
-        invoking { sc2.addSearchTerm(stMock) } shouldThrow AssertionError::class withMessage "SearchTermType.UNSUPPORTED is not supported"
+        invoking { sc2.addSearchTerm(stMock) } shouldThrow
+            AssertionError::class withMessage "SearchTermType.UNSUPPORTED is not supported"
     }
 
     @Test

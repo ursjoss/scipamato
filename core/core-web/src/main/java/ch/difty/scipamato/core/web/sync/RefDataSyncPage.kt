@@ -18,7 +18,6 @@ import org.apache.wicket.request.mapper.parameter.PageParameters
 import org.apache.wicket.spring.injection.annot.SpringBean
 import java.time.Duration
 
-@Suppress("serial")
 @AuthorizeInstantiation(Roles.USER, Roles.ADMIN)
 class RefDataSyncPage(parameters: PageParameters) : BasePage<Void>(parameters) {
 
@@ -36,6 +35,7 @@ class RefDataSyncPage(parameters: PageParameters) : BasePage<Void>(parameters) {
     private fun newButton(id: String): BootstrapAjaxButton {
         val labelModel = StringResourceModel("button.$id.label", this, null)
         return object : BootstrapAjaxButton(id, labelModel, Buttons.Type.Primary) {
+            private val serialVersionUID: Long = 1L
             override fun onSubmit(target: AjaxRequestTarget) {
                 super.onSubmit(target)
                 ScipamatoCoreApplication.getApplication().launchSyncTask(SyncBatchTask(jobLauncher))

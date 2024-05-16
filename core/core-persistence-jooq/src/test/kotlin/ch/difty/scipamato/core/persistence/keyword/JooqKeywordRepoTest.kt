@@ -86,7 +86,9 @@ internal class JooqKeywordRepoTest {
     @Test
     fun managingTranslations() {
         val entity = KeywordDefinition(1, "de", 10)
-        invoking { repo.manageTranslations(null, entity, emptyList()) } shouldThrow OptimisticLockingException::class withMessage
+        invoking {
+            repo.manageTranslations(null, entity, emptyList())
+        } shouldThrow OptimisticLockingException::class withMessage
             "Record in table 'keyword' has been modified prior to the update attempt. Aborting...." +
             " [KeywordDefinition(id=1, searchOverride=null)]"
     }

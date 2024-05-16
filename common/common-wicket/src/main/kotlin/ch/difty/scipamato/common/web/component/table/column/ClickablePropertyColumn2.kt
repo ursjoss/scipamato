@@ -9,7 +9,7 @@ import org.apache.wicket.model.IModel
  * `Apache Wicket Cookbook` - thanks to Igor Vaynberg.
  *
  * Adjusted to accept a BiConsumer instead of a Consumer, thus accepting two
- * arguments in the constructor of the referring page. In addition accepting a
+ * arguments in the constructor of the referring page. In addition, accepting a
  * supplier to provide the additional argument for the bi-consumer.
  *
  * @param [T] the type of the object that will be rendered in this column's cells

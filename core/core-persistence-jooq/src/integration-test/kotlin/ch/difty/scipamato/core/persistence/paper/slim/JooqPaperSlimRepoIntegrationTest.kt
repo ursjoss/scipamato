@@ -36,7 +36,7 @@ internal open class JooqPaperSlimRepoIntegrationTest {
     @Test
     fun findingById_withExistingId_returnsEntity() {
         val paper = repo.findById(MAX_ID_PREPOPULATED) ?: fail { "Unable to load paper" }
-        @Suppress("ConstantConditionIf")
+        @Suppress("KotlinConstantConditions")
         if (MAX_ID_PREPOPULATED > 0)
             paper.id shouldBeEqualTo MAX_ID_PREPOPULATED
         else

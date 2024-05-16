@@ -426,7 +426,9 @@ internal class JooqPaperServiceTest : AbstractServiceTest<Long, Paper, PaperRepo
 
         val nl = Paper.NewsletterLink(1, "link", 2, 3, "topic", "headline")
         every { newsletterRepoMock.newsletterInStatusWorkInProgress } returns java.util.Optional.of(wipNewsletter)
-        every { newsletterRepoMock.mergePaperIntoNewsletter(newsletterId, paperId, topicId, langCode) } returns java.util.Optional.of(nl)
+        every {
+            newsletterRepoMock.mergePaperIntoNewsletter(newsletterId, paperId, topicId, langCode)
+        } returns java.util.Optional.of(nl)
         val result = service.mergePaperIntoWipNewsletter(paperId, topicId, langCode)
         result.isPresent.shouldBeTrue()
         result.get() shouldBeEqualTo nl
@@ -442,7 +444,8 @@ internal class JooqPaperServiceTest : AbstractServiceTest<Long, Paper, PaperRepo
         val languageCode = "en"
 
         every { newsletterRepoMock.newsletterInStatusWorkInProgress } returns java.util.Optional.empty()
-        service.mergePaperIntoWipNewsletter(paperId, topicId, languageCode) shouldBeEqualTo java.util.Optional.empty<Any>()
+        service.mergePaperIntoWipNewsletter(paperId, topicId, languageCode) shouldBeEqualTo
+            java.util.Optional.empty<Any>()
         verify { newsletterRepoMock.newsletterInStatusWorkInProgress }
     }
 

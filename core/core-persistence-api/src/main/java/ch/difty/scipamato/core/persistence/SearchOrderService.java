@@ -27,8 +27,7 @@ public interface SearchOrderService extends EntityService<Long, SearchOrder, Sea
      * @return the saved search condition
      */
     @Nullable
-    SearchCondition saveOrUpdateSearchCondition(@NotNull SearchCondition searchCondition, long searchOrderId,
-        @NotNull String languageCode);
+    SearchCondition saveOrUpdateSearchCondition(@NotNull SearchCondition searchCondition, long searchOrderId, @NotNull String languageCode);
 
     /**
      * Remove SearchCondition from Database.

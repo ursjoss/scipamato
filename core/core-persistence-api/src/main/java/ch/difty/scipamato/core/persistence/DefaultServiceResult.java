@@ -13,19 +13,19 @@ public class DefaultServiceResult implements ServiceResult {
     private final List<String> errorMessages = new ArrayList<>();
 
     @Override
-    public void addInfoMessage(@Nullable String msg) {
+    public void addInfoMessage(@Nullable final String msg) {
         if (msg != null)
             infoMessages.add(msg);
     }
 
     @Override
-    public void addWarnMessage(@Nullable String msg) {
+    public void addWarnMessage(@Nullable final String msg) {
         if (msg != null)
             warnMessages.add(msg);
     }
 
     @Override
-    public void addErrorMessage(@Nullable String msg) {
+    public void addErrorMessage(@Nullable final String msg) {
         if (msg != null)
             errorMessages.add(msg);
     }

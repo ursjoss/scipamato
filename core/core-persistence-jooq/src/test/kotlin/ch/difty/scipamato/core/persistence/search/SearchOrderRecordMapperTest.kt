@@ -9,7 +9,6 @@ import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeFalse
 import org.jooq.RecordMapper
 
-@Suppress("UsePropertyAccessSyntax")
 internal class SearchOrderRecordMapperTest : RecordMapperTest<SearchOrderRecord, SearchOrder>() {
 
     override val mapper: RecordMapper<SearchOrderRecord, SearchOrder> = SearchOrderRecordMapper()

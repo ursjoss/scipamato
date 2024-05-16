@@ -103,7 +103,7 @@ public interface CodeRepository extends CodeLikeRepository<Code> {
      * If the translation is not available in the database, we will still
      * receive a {@link CodeClass}, but with name/description 'not translated'
      *
-     * @param langCode
+     * @param langCode language Code
      * @return {@link CodeClass} never null
      */
     @NotNull

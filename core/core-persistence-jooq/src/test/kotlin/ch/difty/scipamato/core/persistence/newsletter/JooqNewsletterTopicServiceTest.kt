@@ -65,7 +65,8 @@ internal class JooqNewsletterTopicServiceTest {
     @Test
     fun findingPageOfEntityDefinitions_delegatesToRepo() {
         every { repo.findPageOfNewsletterTopicDefinitions(filterMock, paginationContextMock) } returns topicDefinitions
-        service.findPageOfEntityDefinitions(filterMock, paginationContextMock).asSequence() shouldContainSame topicDefinitions.asSequence()
+        service.findPageOfEntityDefinitions(filterMock, paginationContextMock).asSequence() shouldContainSame
+            topicDefinitions.asSequence()
         verify { topicDefinitionMock == topicDefinitionMock }
         verify { repo.findPageOfNewsletterTopicDefinitions(filterMock, paginationContextMock) }
     }

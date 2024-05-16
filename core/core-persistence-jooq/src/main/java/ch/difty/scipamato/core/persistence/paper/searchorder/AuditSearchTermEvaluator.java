@@ -8,6 +8,7 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
+import java.util.Objects;
 
 import org.jetbrains.annotations.NotNull;
 import org.jooq.Condition;
@@ -51,13 +52,14 @@ public class AuditSearchTermEvaluator implements SearchTermEvaluator<AuditSearch
         return conditions.combineWithAnd();
     }
 
-    private void handleUserField(final AuditSearchTerm searchTerm, final ConditionalSupplier conditions, final Token token) {
+    private void handleUserField(@NotNull final AuditSearchTerm searchTerm, @NotNull final ConditionalSupplier conditions,
+        @NotNull final Token token) {
         final String fieldName = searchTerm.getFieldName();
         checkField(fieldName, CREATED_BY, LAST_MOD_BY, "user", "CONTAINS");
 
         final Field<Object> field = DSL.field(fieldName);
-        final String userName = "%" + token
-            .getUserSqlData()
+        final String userName = "%" + Objects
+            .requireNonNull(token.getUserSqlData())
             .toLowerCase() + "%";
         final SelectConditionStep<Record1<Long>> step = DSL
             .select(PAPER.ID)
@@ -70,13 +72,14 @@ public class AuditSearchTermEvaluator implements SearchTermEvaluator<AuditSearch
         conditions.add(() -> PAPER.ID.in(step));
     }
 
-    private void checkField(final String fieldName, final Paper.PaperFields createdField, final Paper.PaperFields lastModField,
-        final String fieldType, final String matchType) {
+    private void checkField(@NotNull final String fieldName, @NotNull final Paper.PaperFields createdField,
+        @NotNull final Paper.PaperFields lastModField, @NotNull final String fieldType, @NotNull final String matchType) {
         if (!isOneOrTheOther(createdField, lastModField, fieldName))
             throwWithMessage(fieldName, fieldType, createdField, lastModField, matchType);
     }
 
-    private boolean isOneOrTheOther(final Paper.PaperFields createdField, final Paper.PaperFields lastModField, final String fieldName) {
+    private boolean isOneOrTheOther(@NotNull final Paper.PaperFields createdField, @NotNull final Paper.PaperFields lastModField,
+        @NotNull final String fieldName) {
         //@formatter:off
         return (
                createdField.getFieldName().equals(fieldName)
@@ -85,18 +88,20 @@ public class AuditSearchTermEvaluator implements SearchTermEvaluator<AuditSearch
         //@formatter:on
     }
 
-    private void throwWithMessage(final String fieldName, String fieldType, FieldEnumType fld1, FieldEnumType fld2, String matchType) {
+    private void throwWithMessage(@NotNull final String fieldName, @NotNull final String fieldType, @NotNull final FieldEnumType fld1,
+        @NotNull final FieldEnumType fld2, @NotNull final String matchType) {
         final String msg = String.format(Locale.US, "Field %s is not one of the expected %s fields [%s, %s] entitled to use MatchType.%s", fieldName,
             fieldType, fld1.getFieldName(), fld2.getFieldName(), matchType);
         throw new IllegalArgumentException(msg);
     }
 
-    private void handleDateField(final AuditSearchTerm searchTerm, final ConditionalSupplier conditions, final Token token) {
+    private void handleDateField(@NotNull final AuditSearchTerm searchTerm, @NotNull final ConditionalSupplier conditions,
+        @NotNull final Token token) {
         final String fieldName = searchTerm.getFieldName();
         checkField(fieldName, CREATED, LAST_MOD, "date", token.getType().matchType.name());
 
-        if (token
-                .getDateSqlData()
+        if (Objects
+                .requireNonNull(token.getDateSqlData())
                 .length() == DATE_RANGE_PATTERN_LENGTH) {
             handleDateRange(conditions, token, fieldName);
         } else {
@@ -104,9 +109,9 @@ public class AuditSearchTermEvaluator implements SearchTermEvaluator<AuditSearch
         }
     }
 
-    private void handleDateRange(final ConditionalSupplier conditions, final Token token, final String fieldName) {
-        final LocalDateTime ldt1 = LocalDateTime.parse(token
-            .getDateSqlData()
+    private void handleDateRange(@NotNull final ConditionalSupplier conditions, @NotNull final Token token, @NotNull final String fieldName) {
+        final LocalDateTime ldt1 = LocalDateTime.parse(Objects
+            .requireNonNull(token.getDateSqlData())
             .substring(0, 19), DateTimeFormatter.ofPattern(DATE_FORMAT));
         final LocalDateTime ldt2 = LocalDateTime.parse(token
             .getDateSqlData()
@@ -114,13 +119,13 @@ public class AuditSearchTermEvaluator implements SearchTermEvaluator<AuditSearch
         addToConditions(token, DSL.field(fieldName), DSL.val(Timestamp.valueOf(ldt1)), DSL.val(Timestamp.valueOf(ldt2)), conditions);
     }
 
-    private void handleSingleDate(final ConditionalSupplier conditions, final Token token, final String fieldName) {
-        final LocalDateTime ldt = LocalDateTime.parse(token.getDateSqlData(), DateTimeFormatter.ofPattern(DATE_FORMAT));
+    private void handleSingleDate(@NotNull final ConditionalSupplier conditions, @NotNull final Token token, @NotNull final String fieldName) {
+        final LocalDateTime ldt = LocalDateTime.parse(Objects.requireNonNull(token.getDateSqlData()), DateTimeFormatter.ofPattern(DATE_FORMAT));
         addToConditions(token, DSL.field(fieldName), DSL.val(Timestamp.valueOf(ldt)), DSL.val(Timestamp.valueOf(ldt)), conditions);
     }
 
-    private void addToConditions(final Token token, final Field<Object> field, final Field<Timestamp> value1, final Field<Timestamp> value2,
-        final ConditionalSupplier conditions) {
+    private void addToConditions(@NotNull final Token token, @NotNull final Field<Object> field, @NotNull final Field<Timestamp> value1,
+        @NotNull final Field<Timestamp> value2, @NotNull final ConditionalSupplier conditions) {
         switch (token.getType().matchType) {
         case RANGE:
             conditions.add(() -> field.between(value1, value2));

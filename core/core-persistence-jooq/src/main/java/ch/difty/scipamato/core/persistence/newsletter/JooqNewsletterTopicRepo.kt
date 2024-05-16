@@ -28,8 +28,6 @@ import org.jooq.impl.DSL
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Repository
-import java.util.ArrayList
-import java.util.Comparator
 import java.util.function.Consumer
 
 private val log = logger()
@@ -173,7 +171,9 @@ open class JooqNewsletterTopicRepo(
     /**
      * Currently only accepting title as sort. It's a bit hacky...
      */
-    private fun List<NewsletterTopicDefinition>.bestEffortSortUsing(pc: PaginationContext): List<NewsletterTopicDefinition> {
+    private fun List<NewsletterTopicDefinition>.bestEffortSortUsing(
+        pc: PaginationContext,
+    ): List<NewsletterTopicDefinition> {
         for ((propName, direction) in pc.sort) {
             if (propName == NewsletterTopicTr.NEWSLETTER_TOPIC_TR.TITLE.name) {
                 val comparator: Comparator<NewsletterTopicDefinition> = if (direction === Sort.Direction.DESC)
@@ -220,7 +220,9 @@ open class JooqNewsletterTopicRepo(
         return persistedEntity
     }
 
-    private fun persistTranslations(entity: NewsletterTopicDefinition, userId: Int, ntId: Int): List<NewsletterTopicTranslation> {
+    private fun persistTranslations(
+        entity: NewsletterTopicDefinition, userId: Int, ntId: Int,
+    ): List<NewsletterTopicTranslation> {
         val nttPersisted: MutableList<NewsletterTopicTranslation> = ArrayList()
         entity.getTranslations(null).forEach { ntt ->
             val nttRecord = insertAndGetNewsletterTopicTr(ntId, userId, ntt)
@@ -340,7 +342,9 @@ open class JooqNewsletterTopicRepo(
         if (nttRecord != null) {
             nttPersisted.add(toTopicTranslation(nttRecord))
         } else {
-            throw OptimisticLockingException(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.name, nttAsString, OptimisticLockingException.Type.UPDATE)
+            throw OptimisticLockingException(
+                NewsletterTopicTr.NEWSLETTER_TOPIC_TR.name, nttAsString, OptimisticLockingException.Type.UPDATE
+            )
         }
     }
 
@@ -387,7 +391,8 @@ open class JooqNewsletterTopicRepo(
         }
     }
 
-    override fun findPersistedSortedNewsletterTopicsForNewsletterWithId(newsletterId: Int): List<NewsletterNewsletterTopic> = dsl
+    override fun findPersistedSortedNewsletterTopicsForNewsletterWithId(newsletterId: Int):
+        List<NewsletterNewsletterTopic> = dsl
         .select(
             ch.difty.scipamato.core.db.tables.NewsletterNewsletterTopic.NEWSLETTER_NEWSLETTER_TOPIC.NEWSLETTER_ID,
             ch.difty.scipamato.core.db.tables.NewsletterNewsletterTopic.NEWSLETTER_NEWSLETTER_TOPIC.NEWSLETTER_TOPIC_ID,
@@ -409,7 +414,8 @@ open class JooqNewsletterTopicRepo(
         )
         .fetchInto(NewsletterNewsletterTopic::class.java)
 
-    override fun findAllSortedNewsletterTopicsForNewsletterWithId(newsletterId: Int): List<NewsletterNewsletterTopic> = dsl
+    override fun findAllSortedNewsletterTopicsForNewsletterWithId(newsletterId: Int):
+        List<NewsletterNewsletterTopic> = dsl
         .selectDistinct(
             Tables.PAPER_NEWSLETTER.NEWSLETTER_ID,
             Tables.PAPER_NEWSLETTER.NEWSLETTER_TOPIC_ID,

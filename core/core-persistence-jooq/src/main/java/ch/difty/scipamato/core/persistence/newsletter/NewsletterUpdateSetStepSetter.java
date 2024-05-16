@@ -18,8 +18,7 @@ import ch.difty.scipamato.core.persistence.UpdateSetStepSetter;
 
 /**
  * The update step setter used for updating {@link Newsletter}s.
- *
- *
+ * <br/><br/>
  * <b>Note:</b> the {@link NewsletterTopic}s are not updated here.
  *
  * @author u.joss
@@ -29,8 +28,7 @@ public class NewsletterUpdateSetStepSetter implements UpdateSetStepSetter<Newsle
 
     @NotNull
     @Override
-    public UpdateSetMoreStep<NewsletterRecord> setFieldsFor(@NotNull final UpdateSetFirstStep<NewsletterRecord> step,
-        @NotNull final Newsletter e) {
+    public UpdateSetMoreStep<NewsletterRecord> setFieldsFor(@NotNull final UpdateSetFirstStep<NewsletterRecord> step, @NotNull final Newsletter e) {
         final Timestamp created = e.getCreated() == null ? null : UtilsKt.toTimestamp(e.getCreated());
         final Timestamp lastMod = e.getLastModified() == null ? null : UtilsKt.toTimestamp(e.getLastModified());
         return step

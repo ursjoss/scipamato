@@ -129,7 +129,7 @@ public class JooqSearchOrderRepo extends
         Objects.requireNonNull(searchOrder.getId());
         return fetchSearchTermsForSearchOrderWithId(searchOrder.getId())
             .stream()
-            .collect(groupingBy(SearchTerm::getSearchConditionId));
+            .collect(groupingBy(Objects.requireNonNull(SearchTerm::getSearchConditionId)));
     }
 
     @NotNull
@@ -173,7 +173,7 @@ public class JooqSearchOrderRepo extends
         final List<SearchTerm> searchTerms = fetchSearchTermsForSearchConditionWithId(searchConditionId);
         return searchTerms
             .stream()
-            .collect(groupingBy(SearchTerm::getSearchConditionId));
+            .collect(groupingBy(Objects.requireNonNull(SearchTerm::getSearchConditionId)));
     }
 
     private List<SearchTerm> fetchSearchTermsForSearchConditionWithId(final long searchConditionId) {
@@ -197,7 +197,8 @@ public class JooqSearchOrderRepo extends
     /*
      * Taking care of searchConditions that do not have searchTerms
      */
-    private void addSearchTermLessConditionsOf(final SearchOrder searchOrder, final Map<Long, SearchCondition> idToSc, final String languageCode) {
+    private void addSearchTermLessConditionsOf(@NotNull final SearchOrder searchOrder, @NotNull final Map<Long, SearchCondition> idToSc,
+        @NotNull final String languageCode) {
         assert (searchOrder.getId() != null);
         final Long searchOrderId = searchOrder.getId();
         final List<Long> conditionIdsWithSearchTerms = findConditionIdsWithSearchTerms(searchOrderId);
@@ -518,8 +519,7 @@ public class JooqSearchOrderRepo extends
     }
 
     @NotNull
-    private InsertValuesStep6<SearchTermRecord, Long, Integer, String, String, Integer, Integer> doSearchTerm(
-        @NotNull final Long searchConditionId,
+    private InsertValuesStep6<SearchTermRecord, Long, Integer, String, String, Integer, Integer> doSearchTerm(@NotNull final Long searchConditionId,
         @NotNull InsertValuesStep6<SearchTermRecord, Long, Integer, String, String, Integer, Integer> insertStep, @NotNull final Integer userId,
         @NotNull final Class<? extends AbstractSearchTerm> clazz, @NotNull final Collection<? extends AbstractSearchTerm> searchTerms) {
         for (final AbstractSearchTerm st : searchTerms) {

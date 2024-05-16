@@ -7,7 +7,7 @@ import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldContainSame
 import org.junit.jupiter.api.Test
 
-@Suppress("PrivatePropertyName", "LocalVariableName", "VariableNaming", "serial")
+@Suppress("PrivatePropertyName", "LocalVariableName", "VariableNaming")
 class AbstractDefinitionEntityTest {
 
     private var dt_de = TestDefinitionTranslation(1, "de", "deutsch", 10)
@@ -39,6 +39,7 @@ class AbstractDefinitionEntityTest {
         version: Int? = 0,
         translations: Array<AbstractDefinitionTranslation>,
     ) : AbstractDefinitionEntity<DefinitionTranslation, String>(mainLanguageCode, mainName, version, translations) {
+        private val serialVersionUID: Long = 1L
         override val nullSafeId: String get() = "foo"
     }
 
@@ -51,6 +52,7 @@ class AbstractDefinitionEntityTest {
         mainName,
         translationArray = translations
     ) {
+        private val serialVersionUID: Long = 1L
         override val nullSafeId: String get() = "foo"
     }
 
@@ -59,13 +61,17 @@ class AbstractDefinitionEntityTest {
         langCode: String,
         name: String?,
         version: Int? = 0,
-    ) : AbstractDefinitionTranslation(id, langCode, name, version)
+    ) : AbstractDefinitionTranslation(id, langCode, name, version) {
+        private val serialVersionUID: Long = 1L
+    }
 
     private inner class TestDefinitionTranslation2(
         id: Int?,
         langCode: String,
         name: String?,
-    ) : AbstractDefinitionTranslation(id, langCode, name)
+    ) : AbstractDefinitionTranslation(id, langCode, name) {
+        private val serialVersionUID: Long = 1L
+    }
 
     @Test
     fun entity_canGetMainLanguageCode() {
@@ -246,8 +252,8 @@ class AbstractDefinitionEntityTest {
             .withRedefinedSuperclass()
             .usingGetClass()
             .withIgnoredFields(
-                ScipamatoEntity.ScipamatoEntityFields.CREATED.fieldName,
-                ScipamatoEntity.ScipamatoEntityFields.MODIFIED.fieldName
+                "created",
+                "lastModified",
             )
             .verify()
     }

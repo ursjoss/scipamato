@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package ch.difty.scipamato.common.entity
 
 import ch.difty.scipamato.common.entity.ScipamatoEntity.ScipamatoEntityFields.CREATED

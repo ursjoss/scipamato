@@ -24,13 +24,12 @@ public class PaperSlimRecordMapper extends EntityRecordMapper<PaperRecord, Paper
 
     @NotNull
     @Override
-    protected AuditFields getAuditFieldsOf(@NotNull PaperRecord r) {
-        return new AuditFields(r.getCreated(), r.getCreatedBy(), r.getLastModified(), r.getLastModifiedBy(),
-            r.getVersion());
+    protected AuditFields getAuditFieldsOf(@NotNull final PaperRecord r) {
+        return new AuditFields(r.getCreated(), r.getCreatedBy(), r.getLastModified(), r.getLastModifiedBy(), r.getVersion());
     }
 
     @Override
-    protected void mapFields(@NotNull PaperRecord from, @NotNull PaperSlim to) {
+    protected void mapFields(@NotNull final PaperRecord from, @NotNull final PaperSlim to) {
         to.setId(from.getId());
         to.setNumber(from.getNumber());
         to.setFirstAuthor(from.getFirstAuthor());

@@ -25,7 +25,7 @@ open class BooleanSearchTermEvaluatorIntegrationTest : SearchTermEvaluatorIntegr
         SearchTerm.newSearchTerm(ID, searchTermType, SC_ID, FN, rawSearchTerm) as BooleanSearchTerm
 
     @TestFactory
-    fun booleanTests() : List<DynamicTest> = mapOf(
+    fun booleanTests(): List<DynamicTest> = mapOf(
         "true" to BooleanExp(true, "fn = true"),
         "false" to BooleanExp(false, "fn = false"),
     ).map { (rawSearchTerm, exp) ->

@@ -209,6 +209,7 @@ internal class SearchOrderTest {
     fun testingFullDisplayValue_withoutNameButWithSingleCondition_returnsIt() {
         val so1 = SearchOrder(10L, null, 1, false, null, excludedIds)
         so1.add(object : SearchCondition() {
+            private val serialVersionUID: Long = 1L
             override fun getDisplayValue(): String = "f1DisplayValue"
         })
 
@@ -218,6 +219,7 @@ internal class SearchOrderTest {
     @Test
     fun testingFullDisplayValue_withSingleCondition_returnsIt() {
         so.add(object : SearchCondition() {
+            private val serialVersionUID: Long = 1L
             override fun getDisplayValue(): String = "f1DisplayValue"
         })
 
@@ -227,9 +229,11 @@ internal class SearchOrderTest {
     @Test
     fun testingFullDisplayValue_withTwoConditions_joinsThemUsingOR() {
         so.add(object : SearchCondition() {
+            private val serialVersionUID: Long = 1L
             override fun getDisplayValue(): String = "c1DisplayValue"
         })
         so.add(object : SearchCondition() {
+            private val serialVersionUID: Long = 1L
             override fun getDisplayValue(): String = "c2DisplayValue"
         })
 
@@ -239,6 +243,7 @@ internal class SearchOrderTest {
     @Test
     fun testingDisplayValue_withFullDisplayValueBelowThreshold_returnsFullDisplayValue() {
         so.add(object : SearchCondition() {
+            private val serialVersionUID: Long = 1L
             override fun getDisplayValue(): String = "f1DisplayValue"
         })
 
@@ -248,21 +253,27 @@ internal class SearchOrderTest {
     @Test
     fun testingDisplayValue_withFullDisplayValueAboveThreshold_returnsTruncatedFullDisplayValue() {
         so.add(object : SearchCondition() {
+            private val serialVersionUID: Long = 1L
             override fun getDisplayValue(): String = "c1DisplayValue"
         })
         so.add(object : SearchCondition() {
+            private val serialVersionUID: Long = 1L
             override fun getDisplayValue(): String = "c2DisplayValue"
         })
         so.add(object : SearchCondition() {
+            private val serialVersionUID: Long = 1L
             override fun getDisplayValue(): String = "c3DisplayValue"
         })
         so.add(object : SearchCondition() {
+            private val serialVersionUID: Long = 1L
             override fun getDisplayValue(): String = "c4DisplayValue"
         })
         so.add(object : SearchCondition() {
+            private val serialVersionUID: Long = 1L
             override fun getDisplayValue(): String = "c5DisplayValue"
         })
         so.add(object : SearchCondition() {
+            private val serialVersionUID: Long = 1L
             override fun getDisplayValue(): String = "c6DisplayValue"
         })
         so.displayValue shouldBeEqualTo "soName: c1DisplayValue; OR c2DisplayValue; " +

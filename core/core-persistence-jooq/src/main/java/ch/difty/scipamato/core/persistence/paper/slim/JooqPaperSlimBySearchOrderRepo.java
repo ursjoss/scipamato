@@ -33,16 +33,14 @@ import ch.difty.scipamato.core.persistence.paper.searchorder.PaperSlimBackedSear
 public class JooqPaperSlimBySearchOrderRepo extends JooqBySearchOrderRepo<PaperSlim, PaperSlimRecordMapper>
     implements PaperSlimBackedSearchOrderRepository {
 
-    public JooqPaperSlimBySearchOrderRepo(@NotNull @Qualifier("dslContext") final DSLContext dsl,
-        @NotNull final PaperSlimRecordMapper mapper,
+    public JooqPaperSlimBySearchOrderRepo(@NotNull @Qualifier("dslContext") final DSLContext dsl, @NotNull final PaperSlimRecordMapper mapper,
         @NotNull final JooqSortMapper<PaperRecord, PaperSlim, ch.difty.scipamato.core.db.tables.Paper> sortMapper) {
         super(dsl, mapper, sortMapper);
     }
 
     @NotNull
     @Override
-    public List<PaperSlim> findPageBySearchOrder(@NotNull final SearchOrder searchOrder,
-        @NotNull final PaginationContext pc) {
+    public List<PaperSlim> findPageBySearchOrder(@NotNull final SearchOrder searchOrder, @NotNull final PaginationContext pc) {
         final List<PaperSlim> results = new ArrayList<>();
         final Condition paperMatches = getConditionsFrom(searchOrder);
         final Collection<SortField<PaperSlim>> sortCriteria = getSortMapper().map(pc.getSort(), PAPER);
@@ -58,8 +56,8 @@ public class JooqPaperSlimBySearchOrderRepo extends JooqBySearchOrderRepo<PaperS
 
     private SelectOnConditionStep<Record9<Long, Long, String, Integer, String, Integer, String, Integer, String>> getBaseQuery() {
         return getDsl()
-            .select(PAPER.ID, PAPER.NUMBER, PAPER.FIRST_AUTHOR, PAPER.PUBLICATION_YEAR, PAPER.TITLE, NEWSLETTER.ID,
-                NEWSLETTER.ISSUE, NEWSLETTER.PUBLICATION_STATUS, PAPER_NEWSLETTER.HEADLINE)
+            .select(PAPER.ID, PAPER.NUMBER, PAPER.FIRST_AUTHOR, PAPER.PUBLICATION_YEAR, PAPER.TITLE, NEWSLETTER.ID, NEWSLETTER.ISSUE,
+                NEWSLETTER.PUBLICATION_STATUS, PAPER_NEWSLETTER.HEADLINE)
             .from(PAPER)
             .leftOuterJoin(PAPER_NEWSLETTER)
             .on(PAPER.ID.eq(PAPER_NEWSLETTER.PAPER_ID))
@@ -67,18 +65,15 @@ public class JooqPaperSlimBySearchOrderRepo extends JooqBySearchOrderRepo<PaperS
             .on(PAPER_NEWSLETTER.NEWSLETTER_ID.eq(NEWSLETTER.ID));
     }
 
-    private PaperSlim newPaperSlim(
-        final Record9<Long, Long, String, Integer, String, Integer, String, Integer, String> r) {
+    private PaperSlim newPaperSlim(final Record9<Long, Long, String, Integer, String, Integer, String, Integer, String> r) {
         final Integer newsletterId = r.value6();
         if (newsletterId != null)
-            return new PaperSlim(r.value1(), r.value2(), r.value3(), r.value4(), r.value5(), newsletterId, r.value7(),
-                getStatusId(r), r.value9());
+            return new PaperSlim(r.value1(), r.value2(), r.value3(), r.value4(), r.value5(), newsletterId, r.value7(), getStatusId(r), r.value9());
         else
             return new PaperSlim(r.value1(), r.value2(), r.value3(), r.value4(), r.value5());
     }
 
-    private int getStatusId(
-        final Record9<Long, Long, String, Integer, String, Integer, String, Integer, String> record) {
+    private int getStatusId(final Record9<Long, Long, String, Integer, String, Integer, String, Integer, String> record) {
         return record.get(NEWSLETTER.PUBLICATION_STATUS.getName(), Integer.class);
     }
 }

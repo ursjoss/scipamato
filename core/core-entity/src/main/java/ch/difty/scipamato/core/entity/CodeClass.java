@@ -26,7 +26,7 @@ public class CodeClass extends IdScipamatoEntity<Integer> implements CodeClassLi
 
         private final String name;
 
-        CodeClassFields(final String name) {
+        CodeClassFields(@NotNull final String name) {
             this.name = name;
         }
 

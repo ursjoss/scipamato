@@ -11,8 +11,7 @@ import ch.difty.scipamato.core.persistence.EntityRecordMapper;
 
 /**
  * Mapper mapping {@link PaperRecord}s into entity {@link Paper}.
- *
- *
+ * <br/><br/>
  * <b>Note:</b> the mapper leaves the {@link Code}s empty.
  *
  * @author u.joss
@@ -28,13 +27,12 @@ public class PaperRecordMapper extends EntityRecordMapper<PaperRecord, Paper> {
 
     @NotNull
     @Override
-    protected AuditFields getAuditFieldsOf(@NotNull PaperRecord r) {
-        return new AuditFields(r.getCreated(), r.getCreatedBy(), r.getLastModified(), r.getLastModifiedBy(),
-            r.getVersion());
+    protected AuditFields getAuditFieldsOf(@NotNull final PaperRecord r) {
+        return new AuditFields(r.getCreated(), r.getCreatedBy(), r.getLastModified(), r.getLastModifiedBy(), r.getVersion());
     }
 
     @Override
-    protected void mapFields(@NotNull PaperRecord from, @NotNull Paper to) {
+    protected void mapFields(@NotNull final PaperRecord from, @NotNull final Paper to) {
         to.setId(from.getId());
         to.setNumber(from.getNumber());
         to.setPmId(from.getPmId());

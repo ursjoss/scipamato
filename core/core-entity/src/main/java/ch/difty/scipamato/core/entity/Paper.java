@@ -160,7 +160,7 @@ public class Paper extends IdScipamatoEntity<Long> implements CodeBoxAware, News
 
         private final String name;
 
-        PaperFields(final String name) {
+        PaperFields(@NotNull final String name) {
             this.name = name;
         }
 

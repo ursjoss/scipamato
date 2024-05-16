@@ -27,8 +27,7 @@ public interface SearchOrderRepository extends EntityRepository<SearchOrder, Lon
      * @return the updated search condition (including it's id
      */
     @Nullable
-    SearchCondition addSearchCondition(@NotNull SearchCondition searchCondition, long searchOrderId,
-        @NotNull String languageCode);
+    SearchCondition addSearchCondition(@NotNull SearchCondition searchCondition, long searchOrderId, @NotNull String languageCode);
 
     /**
      * Updates an already persisted but modified {@link SearchCondition}.
@@ -42,8 +41,7 @@ public interface SearchOrderRepository extends EntityRepository<SearchOrder, Lon
      * @return the persisted search condition.
      */
     @Nullable
-    SearchCondition updateSearchCondition(@NotNull SearchCondition searchCondition, long searchOrderId,
-        @NotNull String languageCode);
+    SearchCondition updateSearchCondition(@NotNull SearchCondition searchCondition, long searchOrderId, @NotNull String languageCode);
 
     /**
      * Remove SearchCondition from Database.

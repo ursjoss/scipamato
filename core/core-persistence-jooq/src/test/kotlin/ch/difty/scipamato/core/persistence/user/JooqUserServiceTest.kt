@@ -16,7 +16,6 @@ import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 import org.springframework.security.crypto.password.PasswordEncoder
 
-@Suppress("UsePropertyAccessSyntax")
 internal class JooqUserServiceTest {
 
     private val repoMock = mockk<UserRepository>()

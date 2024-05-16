@@ -6,7 +6,6 @@ import org.amshove.kluent.shouldNotBeNull
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 
-@Suppress("SpellCheckingInspection")
 @SpringBootTest
 internal abstract class PubmedIntegrationTest {
 

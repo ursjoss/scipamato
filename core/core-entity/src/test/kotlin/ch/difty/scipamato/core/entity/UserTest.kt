@@ -16,7 +16,6 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 
-@Suppress("SpellCheckingInspection")
 internal class UserTest {
 
     private val user = User(ID, USER_NAME, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD)

@@ -14,7 +14,7 @@ import ch.difty.scipamato.core.pubmed.api.PubmedBookArticle;
 /**
  * Derives from {@link AbstractPubmedArticleFacade} wrapping an instance of
  * {@link PubmedBookArticle}.
- *
+ * <br/><br/>
  * <b>Note:</b> The extraction of the fields implemented so far is purely based
  * upon inspection of the DTD. I'm not sure if the {@link PubmedBookArticle} is
  * relevant for scipamato at all. If it is, we'll need a real example from
@@ -36,7 +36,7 @@ class ScipamatoPubmedBookArticle extends AbstractPubmedArticleFacade {
                 .getvalue() :
             null);
         if (!authorLists.isEmpty()) {
-            AuthorList authorList = authorLists.get(0);
+            final AuthorList authorList = authorLists.getFirst();
             setAuthors(getAuthorsFrom(authorList));
             setFirstAuthor(getFirstAuthorFrom(authorList));
         }
@@ -56,7 +56,7 @@ class ScipamatoPubmedBookArticle extends AbstractPubmedArticleFacade {
         setOriginalAbstract(getAbstractFrom(bookDocument.getAbstract()));
     }
 
-    private String getLocationFrom(BookDocument bookDocument) {
+    private String getLocationFrom(@NotNull final BookDocument bookDocument) {
         return bookDocument
             .getLocationLabel()
             .stream()

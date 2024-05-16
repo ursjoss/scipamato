@@ -63,7 +63,7 @@ internal class JooqNewsletterRepoTest : JooqEntityRepoTest<NewsletterRecord, New
             updateSetStepSetter,
             applicationProperties
         ) {
-            override fun findById(id: Int, version: Int): Newsletter? = entity
+            override fun findById(id: Int, version: Int): Newsletter = entity
         }
 
     override fun expectEntityIdsWithValues() {

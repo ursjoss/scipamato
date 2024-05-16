@@ -22,8 +22,7 @@ public class BooleanSearchTerm extends AbstractSearchTerm {
         this(null, null, fieldName, rawSearchTerm);
     }
 
-    BooleanSearchTerm(@Nullable final Long searchConditionId, @NotNull final String fieldName,
-        @NotNull final String rawSearchTerm) {
+    BooleanSearchTerm(@Nullable final Long searchConditionId, @NotNull final String fieldName, @NotNull final String rawSearchTerm) {
         this(null, searchConditionId, fieldName, rawSearchTerm);
     }
 

@@ -13,7 +13,7 @@ public interface UserRoleRepository {
      *
      * @param userId
      *     the id of the user to find roles for
-     * @return list of {@link Role}s
+     * @return set of {@link Role}s
      */
     @NotNull
     Set<Role> findRolesForUser(@NotNull Integer userId);

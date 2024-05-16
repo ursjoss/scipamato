@@ -7,7 +7,7 @@ import org.apache.wicket.request.mapper.parameter.PageParameters
 @WicketSignInPage
 class TestLoginPage(parameters: PageParameters) : AbstractLoginPage<TestLoginPage>(parameters) {
 
-    override val responsePage: TestLoginPage?
+    override val responsePage: TestLoginPage
         get() = TestLoginPage(pageParameters)
 
     companion object {

@@ -46,8 +46,7 @@ public interface PaperService extends EntityService<Long, Paper, PaperFilter> {
      * @return paged list of papers
      */
     @NotNull
-    List<Paper> findPageBySearchOrder(@NotNull SearchOrder searchOrder, @NotNull PaginationContext paginationContext,
-        @NotNull String languageCode);
+    List<Paper> findPageBySearchOrder(@NotNull SearchOrder searchOrder, @NotNull PaginationContext paginationContext, @NotNull String languageCode);
 
     /**
      * Finds a page full of ids of papers as list matching the provided
@@ -60,8 +59,7 @@ public interface PaperService extends EntityService<Long, Paper, PaperFilter> {
      * @return paged list of paper ids
      */
     @NotNull
-    List<Long> findPageOfIdsBySearchOrder(@NotNull SearchOrder searchOrder,
-        @NotNull PaginationContext paginationContext);
+    List<Long> findPageOfIdsBySearchOrder(@NotNull SearchOrder searchOrder, @NotNull PaginationContext paginationContext);
 
     /**
      * Counts the number of entities matching the specified {@link SearchOrder}.
@@ -181,8 +179,7 @@ public interface PaperService extends EntityService<Long, Paper, PaperFilter> {
      * @return optional of NewsletterLink
      */
     @NotNull
-    Optional<Paper.NewsletterLink> mergePaperIntoWipNewsletter(long paperId, @Nullable Integer newsletterTopicId,
-        @NotNull String languageCode);
+    Optional<Paper.NewsletterLink> mergePaperIntoWipNewsletter(long paperId, @Nullable Integer newsletterTopicId, @NotNull String languageCode);
 
     /**
      * Removes the paper with the specified id from the newsletter with the given id.
@@ -210,6 +207,5 @@ public interface PaperService extends EntityService<Long, Paper, PaperFilter> {
      * @return optional of numbers of violated papers
      */
     @NotNull
-    Optional<String> hasDuplicateFieldNextToCurrent(@NotNull String fieldName, @Nullable Object fieldValue,
-        @NotNull Long idOfCurrentPaper);
+    Optional<String> hasDuplicateFieldNextToCurrent(@NotNull String fieldName, @Nullable Object fieldValue, @NotNull Long idOfCurrentPaper);
 }

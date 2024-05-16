@@ -27,7 +27,7 @@ import org.apache.wicket.request.mapper.parameter.PageParameters
 import org.apache.wicket.settings.DebugSettings
 import org.apache.wicket.spring.injection.annot.SpringBean
 
-@Suppress("SameParameterValue", "TooManyFunctions", "serial")
+@Suppress("SameParameterValue", "TooManyFunctions")
 abstract class AbstractPage<T> : GenericWebPage<T> {
 
     @SpringBean
@@ -116,6 +116,7 @@ abstract class AbstractPage<T> : GenericWebPage<T> {
 
     private fun newNavbar(markupId: String): Navbar =
         object : Navbar(markupId) {
+            private val serialVersionUID: Long = 1L
             override fun onConfigure() {
                 super.onConfigure()
                 isVisible = isNavbarVisible
@@ -156,6 +157,7 @@ abstract class AbstractPage<T> : GenericWebPage<T> {
             StringResourceModel(id + LABEL_RESOURCE_TAG, this@AbstractPage, null),
             Buttons.Type.Default
         ) {
+            private val serialVersionUID: Long = 1L
             override fun onSubmit(target: AjaxRequestTarget) {
                 super.onSubmit(target)
                 setResponsePage(responsePage.get())

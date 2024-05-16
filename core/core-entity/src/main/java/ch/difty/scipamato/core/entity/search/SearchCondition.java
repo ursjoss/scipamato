@@ -4,11 +4,7 @@ import static ch.difty.scipamato.core.entity.IdScipamatoEntity.IdScipamatoEntity
 import static ch.difty.scipamato.core.entity.Paper.PaperFields.*;
 import static java.util.Collections.emptyList;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -20,7 +16,10 @@ import ch.difty.scipamato.common.entity.FieldEnumType;
 import ch.difty.scipamato.common.entity.filter.ScipamatoFilter;
 import ch.difty.scipamato.core.AttachmentAware;
 import ch.difty.scipamato.core.NewsletterAware;
-import ch.difty.scipamato.core.entity.*;
+import ch.difty.scipamato.core.entity.Code;
+import ch.difty.scipamato.core.entity.CodeBox;
+import ch.difty.scipamato.core.entity.CodeBoxAware;
+import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic;
 
 /**
@@ -151,7 +150,7 @@ public class SearchCondition implements ScipamatoFilter, CodeBoxAware, Newslette
         return getIntegerValue(ID);
     }
 
-    public void setId(final String value) {
+    public void setId(@Nullable final String value) {
         setIntegerValue(value, ID);
     }
 
@@ -160,7 +159,7 @@ public class SearchCondition implements ScipamatoFilter, CodeBoxAware, Newslette
         return getIntegerValue(NUMBER);
     }
 
-    public void setNumber(final String value) {
+    public void setNumber(@Nullable final String value) {
         setIntegerValue(value, NUMBER);
     }
 
@@ -169,7 +168,7 @@ public class SearchCondition implements ScipamatoFilter, CodeBoxAware, Newslette
         return getStringValue(DOI);
     }
 
-    public void setDoi(final String value) {
+    public void setDoi(@Nullable final String value) {
         setStringValue(value, DOI);
     }
 
@@ -178,7 +177,7 @@ public class SearchCondition implements ScipamatoFilter, CodeBoxAware, Newslette
         return getIntegerValue(PMID);
     }
 
-    public void setPmId(final String value) {
+    public void setPmId(@Nullable final String value) {
         setIntegerValue(value, PMID);
     }
 
@@ -187,7 +186,7 @@ public class SearchCondition implements ScipamatoFilter, CodeBoxAware, Newslette
         return getStringValue(AUTHORS);
     }
 
-    public void setAuthors(final String value) {
+    public void setAuthors(@Nullable final String value) {
         setStringValue(value, AUTHORS);
     }
 
@@ -196,7 +195,7 @@ public class SearchCondition implements ScipamatoFilter, CodeBoxAware, Newslette
         return getStringValue(FIRST_AUTHOR);
     }
 
-    public void setFirstAuthor(final String value) {
+    public void setFirstAuthor(@Nullable final String value) {
         setStringValue(value, FIRST_AUTHOR);
     }
 
@@ -205,7 +204,7 @@ public class SearchCondition implements ScipamatoFilter, CodeBoxAware, Newslette
         return getBooleanValue(FIRST_AUTHOR_OVERRIDDEN);
     }
 
-    public void setFirstAuthorOverridden(final Boolean value) {
+    public void setFirstAuthorOverridden(@Nullable final Boolean value) {
         setBooleanValue(value, FIRST_AUTHOR_OVERRIDDEN);
     }
 
@@ -214,7 +213,7 @@ public class SearchCondition implements ScipamatoFilter, CodeBoxAware, Newslette
         return getStringValue(TITLE);
     }
 
-    public void setTitle(final String value) {
+    public void setTitle(@Nullable final String value) {
         setStringValue(value, TITLE);
     }
 
@@ -223,7 +222,7 @@ public class SearchCondition implements ScipamatoFilter, CodeBoxAware, Newslette
         return getStringValue(LOCATION);
     }
 
-    public void setLocation(final String value) {
+    public void setLocation(@Nullable final String value) {
         setStringValue(value, LOCATION);
     }
 
@@ -232,7 +231,7 @@ public class SearchCondition implements ScipamatoFilter, CodeBoxAware, Newslette
         return getIntegerValue(PUBL_YEAR);
     }
 
-    public void setPublicationYear(final String value) {
+    public void setPublicationYear(@Nullable final String value) {
         setIntegerValue(value, PUBL_YEAR);
     }
 
@@ -241,7 +240,7 @@ public class SearchCondition implements ScipamatoFilter, CodeBoxAware, Newslette
         return getStringValue(GOALS);
     }
 
-    public void setGoals(final String value) {
+    public void setGoals(@Nullable final String value) {
         setStringValue(value, GOALS);
     }
 
@@ -250,7 +249,7 @@ public class SearchCondition implements ScipamatoFilter, CodeBoxAware, Newslette
         return getStringValue(POPULATION);
     }
 
-    public void setPopulation(final String value) {
+    public void setPopulation(@Nullable final String value) {
         setStringValue(value, POPULATION);
     }
 
@@ -259,7 +258,7 @@ public class SearchCondition implements ScipamatoFilter, CodeBoxAware, Newslette
         return getStringValue(METHODS);
     }
 
-    public void setMethods(final String value) {
+    public void setMethods(@Nullable final String value) {
         setStringValue(value, METHODS);
     }
 
@@ -268,7 +267,7 @@ public class SearchCondition implements ScipamatoFilter, CodeBoxAware, Newslette
         return getStringValue(RESULT);
     }
 
-    public void setResult(final String value) {
+    public void setResult(@Nullable final String value) {
         setStringValue(value, RESULT);
     }
 
@@ -277,7 +276,7 @@ public class SearchCondition implements ScipamatoFilter, CodeBoxAware, Newslette
         return getStringValue(COMMENT);
     }
 
-    public void setComment(final String value) {
+    public void setComment(@Nullable final String value) {
         setStringValue(value, COMMENT);
     }
 
@@ -286,7 +285,7 @@ public class SearchCondition implements ScipamatoFilter, CodeBoxAware, Newslette
         return getStringValue(INTERN);
     }
 
-    public void setIntern(final String value) {
+    public void setIntern(@Nullable final String value) {
         setStringValue(value, INTERN);
     }
 
@@ -295,7 +294,7 @@ public class SearchCondition implements ScipamatoFilter, CodeBoxAware, Newslette
         return getStringValue(ORIGINAL_ABSTRACT);
     }
 
-    public void setOriginalAbstract(final String value) {
+    public void setOriginalAbstract(@Nullable final String value) {
         setStringValue(value, ORIGINAL_ABSTRACT);
     }
 
@@ -304,7 +303,7 @@ public class SearchCondition implements ScipamatoFilter, CodeBoxAware, Newslette
         return getStringValue(POPULATION_PLACE);
     }
 
-    public void setPopulationPlace(final String value) {
+    public void setPopulationPlace(@Nullable final String value) {
         setStringValue(value, POPULATION_PLACE);
     }
 
@@ -313,7 +312,7 @@ public class SearchCondition implements ScipamatoFilter, CodeBoxAware, Newslette
         return getStringValue(POPULATION_PARTICIPANTS);
     }
 
-    public void setPopulationParticipants(final String value) {
+    public void setPopulationParticipants(@Nullable final String value) {
         setStringValue(value, POPULATION_PARTICIPANTS);
     }
 
@@ -322,7 +321,7 @@ public class SearchCondition implements ScipamatoFilter, CodeBoxAware, Newslette
         return getStringValue(POPULATION_DURATION);
     }
 
-    public void setPopulationDuration(final String value) {
+    public void setPopulationDuration(@Nullable final String value) {
         setStringValue(value, POPULATION_DURATION);
     }
 
@@ -331,7 +330,7 @@ public class SearchCondition implements ScipamatoFilter, CodeBoxAware, Newslette
         return getStringValue(EXPOSURE_POLLUTANT);
     }
 
-    public void setExposurePollutant(final String value) {
+    public void setExposurePollutant(@Nullable final String value) {
         setStringValue(value, EXPOSURE_POLLUTANT);
     }
 
@@ -340,7 +339,7 @@ public class SearchCondition implements ScipamatoFilter, CodeBoxAware, Newslette
         return getStringValue(EXPOSURE_ASSESSMENT);
     }
 
-    public void setExposureAssessment(final String value) {
+    public void setExposureAssessment(@Nullable final String value) {
         setStringValue(value, EXPOSURE_ASSESSMENT);
     }
 
@@ -349,7 +348,7 @@ public class SearchCondition implements ScipamatoFilter, CodeBoxAware, Newslette
         return getStringValue(METHOD_STUDY_DESIGN);
     }
 
-    public void setMethodStudyDesign(final String value) {
+    public void setMethodStudyDesign(@Nullable final String value) {
         setStringValue(value, METHOD_STUDY_DESIGN);
     }
 
@@ -358,7 +357,7 @@ public class SearchCondition implements ScipamatoFilter, CodeBoxAware, Newslette
         return getStringValue(METHOD_OUTCOME);
     }
 
-    public void setMethodOutcome(final String value) {
+    public void setMethodOutcome(@Nullable final String value) {
         setStringValue(value, METHOD_OUTCOME);
     }
 
@@ -367,7 +366,7 @@ public class SearchCondition implements ScipamatoFilter, CodeBoxAware, Newslette
         return getStringValue(METHOD_STATISTICS);
     }
 
-    public void setMethodStatistics(final String value) {
+    public void setMethodStatistics(@Nullable final String value) {
         setStringValue(value, METHOD_STATISTICS);
     }
 
@@ -376,7 +375,7 @@ public class SearchCondition implements ScipamatoFilter, CodeBoxAware, Newslette
         return getStringValue(METHOD_CONFOUNDERS);
     }
 
-    public void setMethodConfounders(final String value) {
+    public void setMethodConfounders(@Nullable final String value) {
         setStringValue(value, METHOD_CONFOUNDERS);
     }
 
@@ -385,7 +384,7 @@ public class SearchCondition implements ScipamatoFilter, CodeBoxAware, Newslette
         return getStringValue(RESULT_EXPOSURE_RANGE);
     }
 
-    public void setResultExposureRange(final String value) {
+    public void setResultExposureRange(@Nullable final String value) {
         setStringValue(value, RESULT_EXPOSURE_RANGE);
     }
 
@@ -394,7 +393,7 @@ public class SearchCondition implements ScipamatoFilter, CodeBoxAware, Newslette
         return getStringValue(RESULT_EFFECT_ESTIMATE);
     }
 
-    public void setResultEffectEstimate(final String value) {
+    public void setResultEffectEstimate(@Nullable final String value) {
         setStringValue(value, RESULT_EFFECT_ESTIMATE);
     }
 
@@ -403,7 +402,7 @@ public class SearchCondition implements ScipamatoFilter, CodeBoxAware, Newslette
         return getStringValue(CONCLUSION);
     }
 
-    public void setConclusion(final String value) {
+    public void setConclusion(@Nullable final String value) {
         setStringValue(value, CONCLUSION);
     }
 
@@ -412,7 +411,7 @@ public class SearchCondition implements ScipamatoFilter, CodeBoxAware, Newslette
         return getStringValue(RESULT_MEASURED_OUTCOME);
     }
 
-    public void setResultMeasuredOutcome(final String value) {
+    public void setResultMeasuredOutcome(@Nullable final String value) {
         setStringValue(value, RESULT_MEASURED_OUTCOME);
     }
 
@@ -421,7 +420,7 @@ public class SearchCondition implements ScipamatoFilter, CodeBoxAware, Newslette
         return getStringValue(MAIN_CODE_OF_CODECLASS1);
     }
 
-    public void setMainCodeOfCodeclass1(final String value) {
+    public void setMainCodeOfCodeclass1(@Nullable final String value) {
         setStringValue(value, MAIN_CODE_OF_CODECLASS1);
     }
 
@@ -430,7 +429,7 @@ public class SearchCondition implements ScipamatoFilter, CodeBoxAware, Newslette
         return getAuditValue(CREATED_BY);
     }
 
-    public void setCreatedDisplayValue(final String value) {
+    public void setCreatedDisplayValue(@Nullable final String value) {
         setAuditValue(value, CREATED_BY, CREATED);
     }
 
@@ -439,7 +438,7 @@ public class SearchCondition implements ScipamatoFilter, CodeBoxAware, Newslette
         return getAuditValue(LAST_MOD_BY);
     }
 
-    public void setModifiedDisplayValue(final String value) {
+    public void setModifiedDisplayValue(@Nullable final String value) {
         setAuditValue(value, LAST_MOD_BY, LAST_MOD);
     }
 
@@ -486,7 +485,7 @@ public class SearchCondition implements ScipamatoFilter, CodeBoxAware, Newslette
     }
 
     @Override
-    public void addCode(@NotNull final Code code) {
+    public void addCode(@Nullable final Code code) {
         this.codes.addCode(code);
     }
 
@@ -520,12 +519,12 @@ public class SearchCondition implements ScipamatoFilter, CodeBoxAware, Newslette
             .collect(Collectors.toList());
     }
 
-    private String getStringValue(final FieldEnumType fieldType) {
+    private String getStringValue(@NotNull final FieldEnumType fieldType) {
         final StringSearchTerm st = stringSearchTerms.get(fieldType.getFieldName());
         return st != null ? st.getRawSearchTerm() : null;
     }
 
-    private void setStringValue(final String value, final FieldEnumType fieldType) {
+    private void setStringValue(@Nullable final String value, @NotNull final FieldEnumType fieldType) {
         final String key = fieldType.getFieldName();
         if (value != null) {
             stringSearchTerms.put(key, SearchTerm.newStringSearchTerm(key, value));
@@ -536,12 +535,12 @@ public class SearchCondition implements ScipamatoFilter, CodeBoxAware, Newslette
         }
     }
 
-    private String getIntegerValue(final FieldEnumType fieldType) {
+    private String getIntegerValue(@NotNull final FieldEnumType fieldType) {
         final IntegerSearchTerm st = integerSearchTerms.get(fieldType.getFieldName());
         return st != null ? st.getRawSearchTerm() : null;
     }
 
-    private void setIntegerValue(final String value, final FieldEnumType fieldType) {
+    private void setIntegerValue(@Nullable final String value, @NotNull final FieldEnumType fieldType) {
         final String key = fieldType.getFieldName();
         if (value != null) {
             integerSearchTerms.put(key, SearchTerm.newIntegerSearchTerm(key, value));
@@ -552,12 +551,12 @@ public class SearchCondition implements ScipamatoFilter, CodeBoxAware, Newslette
         }
     }
 
-    private Boolean getBooleanValue(final FieldEnumType fieldType) {
+    private Boolean getBooleanValue(@NotNull final FieldEnumType fieldType) {
         final BooleanSearchTerm st = booleanSearchTerms.get(fieldType.getFieldName());
         return st != null ? st.getValue() : null;
     }
 
-    private void setBooleanValue(final Boolean value, final FieldEnumType fieldType) {
+    private void setBooleanValue(@Nullable final Boolean value, @NotNull final FieldEnumType fieldType) {
         final String key = fieldType.getFieldName();
         if (value != null) {
             booleanSearchTerms.put(key, SearchTerm.newBooleanSearchTerm(key, value.toString()));
@@ -568,7 +567,7 @@ public class SearchCondition implements ScipamatoFilter, CodeBoxAware, Newslette
         }
     }
 
-    private String getAuditValue(final FieldEnumType fieldType) {
+    private String getAuditValue(@NotNull final FieldEnumType fieldType) {
         final AuditSearchTerm st = auditSearchTerms.get(fieldType.getFieldName());
         return st != null ? st.getRawSearchTerm() : null;
     }
@@ -576,7 +575,7 @@ public class SearchCondition implements ScipamatoFilter, CodeBoxAware, Newslette
     /**
      * Here we allow multiple keys (i.e. fields)
      */
-    private void setAuditValue(final String value, final FieldEnumType... fieldTypes) {
+    private void setAuditValue(@Nullable final String value, @NotNull final FieldEnumType... fieldTypes) {
         for (final FieldEnumType fieldType : fieldTypes) {
             final String key = fieldType.getFieldName();
             if (value != null) {
@@ -618,19 +617,19 @@ public class SearchCondition implements ScipamatoFilter, CodeBoxAware, Newslette
             .filter((final String s) -> !s.isEmpty())
             .collect(Collectors.joining(JOIN_DELIMITER)));
         if (!codes.isEmpty()) {
-            if (sb.length() > 0)
+            if (!sb.isEmpty())
                 sb.append(JOIN_DELIMITER);
             sb.append(codes);
         }
         if (!(codesExcluded == null || codesExcluded.isBlank())) {
-            if (sb.length() > 0)
+            if (!sb.isEmpty())
                 sb.append(JOIN_DELIMITER);
             sb.append("-");
             final List<String> codes = getExcludedCodeCodes();
             String delim = "";
             if (codes.size() > 1)
                 sb.append("(");
-            for (String c : codes) {
+            for (final String c : codes) {
                 sb.append(delim);
                 sb.append(c);
                 delim = "|";
@@ -639,34 +638,34 @@ public class SearchCondition implements ScipamatoFilter, CodeBoxAware, Newslette
                 sb.append(")");
         }
         if (newsletterIssue != null) {
-            if (sb.length() > 0)
+            if (!sb.isEmpty())
                 sb.append(JOIN_DELIMITER);
             sb
                 .append("issue=")
                 .append(newsletterIssue);
         }
         if (newsletterHeadline != null) {
-            if (sb.length() > 0)
+            if (!sb.isEmpty())
                 sb.append(JOIN_DELIMITER);
             sb
                 .append("headline=")
                 .append(newsletterHeadline);
         }
         if (newsletterTopicId != null) {
-            if (sb.length() > 0)
+            if (!sb.isEmpty())
                 sb.append(JOIN_DELIMITER);
             sb
                 .append("topic=")
                 .append(newsletterTopicTitle);
         }
         if (attachmentNameMask != null) {
-            if (sb.length() > 0)
+            if (!sb.isEmpty())
                 sb.append(JOIN_DELIMITER);
             sb
                 .append("attachment=")
                 .append(attachmentNameMask);
         } else if (hasAttachments != null) {
-            if (sb.length() > 0)
+            if (!sb.isEmpty())
                 sb.append(JOIN_DELIMITER);
             sb
                 .append("attachment=")
@@ -698,7 +697,7 @@ public class SearchCondition implements ScipamatoFilter, CodeBoxAware, Newslette
     }
 
     @Override
-    public boolean equals(final Object obj) {
+    public boolean equals(@Nullable final Object obj) {
         if (this == obj)
             return true;
         if (obj == null)
@@ -768,7 +767,7 @@ public class SearchCondition implements ScipamatoFilter, CodeBoxAware, Newslette
     }
 
     @Override
-    public void setHasAttachments(@Nullable Boolean hasAttachments) {
+    public void setHasAttachments(@Nullable final Boolean hasAttachments) {
         this.hasAttachments = hasAttachments;
     }
 

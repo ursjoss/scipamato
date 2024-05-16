@@ -31,7 +31,7 @@ abstract class InsertSetStepSetterTest<R : Record, E : CoreEntity> {
      * when(getMoreStep().set(PAPER.DOI, DOI)).thenReturn(getMoreStep());
      * when(getMoreStep().set(PAPER.AUTHORS, AUTHORS)).thenReturn(getMoreStep());
      * ...
-     </pre>` *
+    </pre>` *
      *
      * **Note:** No need to set the audit fields - those are managed later
      */

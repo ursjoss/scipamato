@@ -125,7 +125,8 @@ public class JooqPaperSlimRepo
 
     @NotNull
     @Override
-    public List<PaperSlim> findPageByFilter(@Nullable final PaperFilter filter, @NotNull final PaginationContext pc, @Nullable final String languageCode) {
+    public List<PaperSlim> findPageByFilter(@Nullable final PaperFilter filter, @NotNull final PaginationContext pc,
+        @Nullable final String languageCode) {
         final List<PaperSlim> results = new ArrayList<>();
         final Condition conditions = getFilterConditionMapper().map(filter);
         final Collection<SortField<PaperSlim>> sortCriteria = getSortMapper().map(pc.getSort(), getTable());

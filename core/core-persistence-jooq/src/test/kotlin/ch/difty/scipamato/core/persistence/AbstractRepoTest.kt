@@ -21,7 +21,7 @@ internal class AbstractRepoTest {
     @Test
     fun gettingActiveUser_withAuthenticationPresent_returnsPrincipalAsUser() {
         repo = object : AbstractRepo(dslContext, dateTimeService) {
-            override fun getAuthentication(): Authentication? = this@AbstractRepoTest.authentication
+            override fun getAuthentication(): Authentication = this@AbstractRepoTest.authentication
         }
         every { authentication.principal } returns userMock
         repo.activeUser shouldBeEqualTo userMock

@@ -19,8 +19,7 @@ import ch.difty.scipamato.core.entity.IdScipamatoEntity;
  *     the filter, extending {@link ScipamatoFilter}
  * @author u.joss
  */
-public interface EntityService<ID extends Number, T extends IdScipamatoEntity<ID>, F extends ScipamatoFilter>
-    extends ReadOnlyService<ID, T, F> {
+public interface EntityService<ID extends Number, T extends IdScipamatoEntity<ID>, F extends ScipamatoFilter> extends ReadOnlyService<ID, T, F> {
 
     /**
      * Update the provided entity.
@@ -29,7 +28,7 @@ public interface EntityService<ID extends Number, T extends IdScipamatoEntity<ID
      *     the entity to persist
      * @return the persisted entity
      * @throws OptimisticLockingException
-     *     if the record version has increased in the mean time
+     *     if the record version has increased in the meantime
      */
     @Nullable
     T saveOrUpdate(@NotNull T entity);
@@ -40,7 +39,7 @@ public interface EntityService<ID extends Number, T extends IdScipamatoEntity<ID
      * @param entity
      *     the entity to remove from the database
      * @throws OptimisticLockingException
-     *     if the record version has increased in the mean time
+     *     if the record version has increased in the meantime
      */
     void remove(@Nullable T entity);
 }

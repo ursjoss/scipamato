@@ -28,8 +28,7 @@ public class UserUpdateSetStepSetter implements UpdateSetStepSetter<ScipamatoUse
 
     @NotNull
     @Override
-    public UpdateSetMoreStep<ScipamatoUserRecord> setFieldsFor(@NotNull UpdateSetFirstStep<ScipamatoUserRecord> step,
-        @NotNull User e) {
+    public UpdateSetMoreStep<ScipamatoUserRecord> setFieldsFor(@NotNull final UpdateSetFirstStep<ScipamatoUserRecord> step, @NotNull final User e) {
         final Timestamp created = e.getCreated() == null ? null : UtilsKt.toTimestamp(e.getCreated());
         final Timestamp lastMod = e.getLastModified() == null ? null : UtilsKt.toTimestamp(e.getLastModified());
         final String password = e.getPassword();

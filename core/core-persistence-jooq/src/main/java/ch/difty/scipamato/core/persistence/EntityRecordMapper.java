@@ -45,7 +45,7 @@ public abstract class EntityRecordMapper<R extends Record, T extends CoreEntity>
      *     {@code return new AuditFields(r.getCreated(), r.getCreatedBy(), r.getLastModified(), r.getLastModifiedBy(), r.getVersion())}
      */
     @NotNull
-    protected abstract AuditFields getAuditFieldsOf(@NotNull R record);
+    protected abstract AuditFields getAuditFieldsOf(@NotNull final R record);
 
     /**
      * Implement the mapping of the normal (i.e. non-audit) fields from record into
@@ -56,7 +56,7 @@ public abstract class EntityRecordMapper<R extends Record, T extends CoreEntity>
      * @param to
      *     the entity to fill the fields into
      */
-    protected abstract void mapFields(@NotNull R from, @NotNull T to);
+    protected abstract void mapFields(@NotNull final R from, @NotNull final T to);
 
     /**
      * Maps the audit fields form the record to the entity.
