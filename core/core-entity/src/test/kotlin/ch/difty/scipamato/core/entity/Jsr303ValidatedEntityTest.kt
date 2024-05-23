@@ -5,6 +5,7 @@ import ch.difty.scipamato.common.entity.ScipamatoEntity.ScipamatoEntityFields.CR
 import ch.difty.scipamato.common.entity.ScipamatoEntity.ScipamatoEntityFields.MODIFIED
 import ch.difty.scipamato.core.entity.CoreEntity.CoreEntityFields.CREATOR_ID
 import ch.difty.scipamato.core.entity.CoreEntity.CoreEntityFields.MODIFIER_ID
+import jakarta.validation.ConstraintViolation
 import nl.jqno.equalsverifier.EqualsVerifier
 import org.amshove.kluent.shouldBeEmpty
 import org.amshove.kluent.shouldBeEqualTo
@@ -14,7 +15,6 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean
-import jakarta.validation.ConstraintViolation
 
 @Suppress("SpellCheckingInspection")
 abstract class Jsr303ValidatedEntityTest<T : CoreEntity> protected constructor(private val clazz: Class<T>) {
@@ -34,7 +34,8 @@ abstract class Jsr303ValidatedEntityTest<T : CoreEntity> protected constructor(p
 
     @BeforeEach
     internal fun setUp() {
-        validatorFactoryBean.setProviderClass(HibernateValidator::class.java)
+        @Suppress("UNCHECKED_CAST")
+        (HibernateValidator::class.java as? Class<Any>)?.let { validatorFactoryBean.setProviderClass(it) }
         validatorFactoryBean.afterPropertiesSet()
     }
 
