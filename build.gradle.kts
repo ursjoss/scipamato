@@ -153,9 +153,9 @@ subprojects {
     }
 
     tasks {
-        withType<KotlinCompile> {
-            kotlinOptions {
-                freeCompilerArgs = freeCompilerArgs + listOf("-opt-in=kotlin.RequiresOptIn")
+        named("compileKotlin", org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask::class.java) {
+            compilerOptions {
+                freeCompilerArgs.add("-opt-in=kotlin.RequiresOptIn")
             }
         }
         val deleteOutFolderTask by registering(Delete::class) {
@@ -197,11 +197,9 @@ subprojects {
     }
 }
 
-tasks {
-    withType<KotlinCompile> {
-        kotlinOptions {
-            freeCompilerArgs = listOf("-Xjsr305=strict")
-        }
+tasks.named("compileKotlin", org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask::class.java) {
+    compilerOptions {
+        freeCompilerArgs.add("-Xjsr305=strict")
     }
 }
 
