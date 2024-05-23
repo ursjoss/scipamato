@@ -7,6 +7,7 @@ import ch.difty.scipamato.core.db.tables.NewsletterTopicTr
 import ch.difty.scipamato.core.db.tables.PaperNewsletter
 import ch.difty.scipamato.core.sync.PublicNewStudyTopic
 import ch.difty.scipamato.core.sync.jobs.SyncConfig
+import ch.difty.scipamato.core.sync.newPublicNewStudyTopic
 import ch.difty.scipamato.publ.db.tables.NewStudyTopic
 import ch.difty.scipamato.publ.db.tables.NewsletterTopic
 import ch.difty.scipamato.publ.db.tables.records.NewStudyTopicRecord
@@ -86,16 +87,15 @@ open class NewStudyTopicSyncConfig(
             .getSQL(ParamType.INLINED)
 
     @Throws(SQLException::class)
-    override fun makeEntity(rs: ResultSet): PublicNewStudyTopic =
-        PublicNewStudyTopic(
-            newsletterId = getInteger(PN_NEWSLETTER_ID, rs),
-            newsletterTopicId = getInteger(NTT_NEWSLETTER_TOPIC_ID, rs),
-            sort = getSortOrMaxIntFrom(rs),
-            version = getInteger(NTT_VERSION, rs),
-            created = getTimestamp(NTT_CREATED, rs),
-            lastModified = getLaterTimeStampFrom(NTTLM, NNTLM, rs),
-            lastSynched = getNow(),
-        )
+    override fun makeEntity(rs: ResultSet): PublicNewStudyTopic = newPublicNewStudyTopic(
+        newsletterId = getInteger(PN_NEWSLETTER_ID, rs),
+        newsletterTopicId = getInteger(NTT_NEWSLETTER_TOPIC_ID, rs),
+        sort = getSortOrMaxIntFrom(rs),
+        version = getInteger(NTT_VERSION, rs),
+        created = getTimestamp(NTT_CREATED, rs),
+        lastModified = getLaterTimeStampFrom(NTTLM, NNTLM, rs),
+        lastSynched = getNow(),
+    )
 
     @Throws(SQLException::class)
     private fun getSortOrMaxIntFrom(rs: ResultSet): Int = getInteger(NNT_SORT, rs) ?: Int.MAX_VALUE

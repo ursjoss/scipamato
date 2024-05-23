@@ -5,6 +5,7 @@ import ch.difty.scipamato.core.db.tables.Code
 import ch.difty.scipamato.core.db.tables.CodeTr
 import ch.difty.scipamato.core.sync.PublicCode
 import ch.difty.scipamato.core.sync.jobs.SyncConfig
+import ch.difty.scipamato.core.sync.newPublicCode
 import ch.difty.scipamato.publ.db.tables.CodeClass
 import ch.difty.scipamato.publ.db.tables.records.CodeRecord
 import org.jooq.DSLContext
@@ -85,7 +86,7 @@ open class CodeSyncConfig(
     }
 
     @Throws(SQLException::class)
-    override fun makeEntity(rs: ResultSet): PublicCode = PublicCode(
+    override fun makeEntity(rs: ResultSet): PublicCode = newPublicCode(
         code = getString(C_CODE, rs),
         langCode = getString(C_LANG_CODE, rs),
         codeClassId = getInteger(C_CODE_CLASS_ID, rs),

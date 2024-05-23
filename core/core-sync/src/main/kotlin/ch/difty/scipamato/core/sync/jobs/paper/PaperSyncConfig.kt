@@ -8,6 +8,7 @@ import ch.difty.scipamato.core.db.tables.PaperCode
 import ch.difty.scipamato.core.sync.PublicPaper
 import ch.difty.scipamato.core.sync.code.CodeAggregator
 import ch.difty.scipamato.core.sync.jobs.SyncConfig
+import ch.difty.scipamato.core.sync.newPublicPaper
 import ch.difty.scipamato.publ.db.tables.records.PaperRecord
 import org.jooq.DSLContext
 import org.jooq.TableField
@@ -102,7 +103,7 @@ open class PaperSyncConfig(
     @Throws(SQLException::class)
     override fun makeEntity(rs: ResultSet): PublicPaper {
 
-        val paper: PublicPaper = PublicPaper(
+        val paper: PublicPaper = newPublicPaper(
             id = getLong(C_ID, rs),
             number = getLong(C_NUMBER, rs),
             pmId = getInteger(C_PM_ID, rs),

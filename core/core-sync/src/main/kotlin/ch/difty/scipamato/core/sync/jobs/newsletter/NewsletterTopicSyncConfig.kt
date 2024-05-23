@@ -5,6 +5,7 @@ import ch.difty.scipamato.core.db.tables.NewsletterTopic
 import ch.difty.scipamato.core.db.tables.NewsletterTopicTr
 import ch.difty.scipamato.core.sync.PublicNewsletterTopic
 import ch.difty.scipamato.core.sync.jobs.SyncConfig
+import ch.difty.scipamato.core.sync.newPublicNewsletterTopic
 import ch.difty.scipamato.publ.db.tables.records.NewsletterTopicRecord
 import org.jooq.DSLContext
 import org.jooq.TableField
@@ -64,16 +65,15 @@ open class NewsletterTopicSyncConfig(
             .sql
 
     @Throws(SQLException::class)
-    override fun makeEntity(rs: ResultSet): PublicNewsletterTopic =
-        PublicNewsletterTopic(
-            id = getInteger(C_ID, rs),
-            langCode = getString(C_LANG_CODE, rs),
-            title = getString(C_TITLE, rs),
-            version = getInteger(C_VERSION, rs),
-            created = getTimestamp(C_CREATED, rs),
-            lastModified = getTimestamp(C_LAST_MODIFIED, rs),
-            lastSynched = getNow(),
-        )
+    override fun makeEntity(rs: ResultSet): PublicNewsletterTopic = newPublicNewsletterTopic(
+        id = getInteger(C_ID, rs),
+        langCode = getString(C_LANG_CODE, rs),
+        title = getString(C_TITLE, rs),
+        version = getInteger(C_VERSION, rs),
+        created = getTimestamp(C_CREATED, rs),
+        lastModified = getTimestamp(C_LAST_MODIFIED, rs),
+        lastSynched = getNow(),
+    )
 
     override fun lastSynchedField(): TableField<NewsletterTopicRecord, Timestamp> =
         ch.difty.scipamato.publ.db.tables.NewsletterTopic.NEWSLETTER_TOPIC.LAST_SYNCHED
