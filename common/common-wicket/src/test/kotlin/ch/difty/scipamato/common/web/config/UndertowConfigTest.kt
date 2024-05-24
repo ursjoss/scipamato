@@ -74,7 +74,6 @@ internal class UndertowConfigTest {
         factory.session shouldBeInstanceOf Session::class
         factory.session.storeDir.shouldBeNull()
         factory.ssl.shouldBeNull()
-        factory.sslStoreProvider.shouldBeNull()
     }
 
     @Suppress("SwallowedException")
@@ -86,7 +85,7 @@ internal class UndertowConfigTest {
             server.start()
             server.port shouldBeEqualTo 8080
         } catch (ex: Exception) {
-            fail { "Did not start successfully: " }
+            fail { "Did not start successfully: $ex" }
         } finally {
             server.stop()
         }
