@@ -5,6 +5,8 @@ dependencies {
     api(project(Module.scipamatoCommon("persistence-api")))
     api(libs.flyway.core)
 
+    implementation(libs.flyway.postgresql)
+
     runtimeOnly(libs.postgresql)
 
     implementation(project(Module.scipamatoCommon("entity")))
