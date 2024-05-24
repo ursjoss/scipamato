@@ -37,7 +37,7 @@ abstract class BasePage<T> : AbstractPage<T> {
     @SpringBean(name = "metaOTFontResourceProvider")
     private lateinit var metaOtFontResourceProvider: CommercialFontResourceProvider
 
-    override val isNavbarVisible: Boolean
+    final override val isNavbarVisible: Boolean
 
     protected val languageCode: String
         get() = sessionFacade.languageCode
