@@ -65,7 +65,7 @@ class JooqConfigurationTest {
         assertThat(elp
             .provide()
             .getClass()
-            .getName()).isEqualTo("org.springframework.boot.autoconfigure.jooq.JooqExceptionTranslator");
+            .getName()).isEqualTo("org.springframework.boot.autoconfigure.jooq.ExceptionTranslatorExecuteListener");
 
         // assert TransactionProvider
         config.transactionProvider().shouldNotBeNull();

@@ -10,7 +10,7 @@ import org.jooq.impl.DSL
 import org.jooq.impl.DefaultConfiguration
 import org.jooq.impl.DefaultExecuteListenerProvider
 import org.springframework.beans.factory.annotation.Qualifier
-import org.springframework.boot.autoconfigure.jooq.JooqExceptionTranslator
+import org.springframework.boot.autoconfigure.jooq.ExceptionTranslatorExecuteListener
 import org.springframework.boot.autoconfigure.jooq.JooqProperties
 import org.springframework.boot.autoconfigure.jooq.SpringTransactionProvider
 import org.springframework.boot.context.properties.ConfigurationProperties
@@ -41,7 +41,7 @@ open class DataSourceConfig(
 
     @Bean
     open fun executeListenerProvider(): ExecuteListenerProvider =
-        DefaultExecuteListenerProvider(JooqExceptionTranslator())
+        DefaultExecuteListenerProvider(ExceptionTranslatorExecuteListener.DEFAULT)
 
     /**
      * @return Scipamato-Core datasource.

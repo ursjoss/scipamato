@@ -9,7 +9,7 @@ import org.jooq.SQLDialect
 import org.jooq.impl.DataSourceConnectionProvider
 import org.jooq.impl.DefaultExecuteListenerProvider
 import org.junit.jupiter.api.Test
-import org.springframework.boot.autoconfigure.jooq.JooqExceptionTranslator
+import org.springframework.boot.autoconfigure.jooq.ExceptionTranslatorExecuteListener
 import org.springframework.boot.autoconfigure.jooq.JooqProperties
 
 internal class DataSourceConfigTest {
@@ -21,11 +21,11 @@ internal class DataSourceConfigTest {
     private val config = DataSourceConfig(jooqProperties)
 
     @Test
-    fun listenerProviderShouldBeJooqExceptionTranslator() {
+    fun listenerProviderShouldBeExceptionTranslatorExecuteListener() {
         val listenerProvider = config.executeListenerProvider()
         listenerProvider shouldBeInstanceOf DefaultExecuteListenerProvider::class
         val translator = listenerProvider.provide()
-        translator shouldBeInstanceOf JooqExceptionTranslator::class
+        translator shouldBeInstanceOf ExceptionTranslatorExecuteListener::class
     }
 
     @Test
