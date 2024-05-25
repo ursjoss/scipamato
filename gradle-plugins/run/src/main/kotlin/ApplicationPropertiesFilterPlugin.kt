@@ -18,6 +18,7 @@ class ApplicationPropertiesFilterPlugin : Plugin<Project> {
         with(project) {
 
             tasks.named<ProcessResources>("processResources") {
+                duplicatesStrategy = DuplicatesStrategy.INCLUDE
                 from("src/main/resources") {
                     include("**/application*.yml")
                     include("**/application*.yaml")
@@ -25,7 +26,6 @@ class ApplicationPropertiesFilterPlugin : Plugin<Project> {
                     val tokens: Map<String, Any> = project.collectProperties()
                     inputs.properties(tokens)
                     filter<ReplaceTokens>("tokens" to tokens)
-                    duplicatesStrategy = DuplicatesStrategy.WARN
                 }
                 into("build/resources/main")
             }
