@@ -5,6 +5,7 @@ import ch.difty.scipamato.core.db.tables.CodeClass
 import ch.difty.scipamato.core.db.tables.CodeClassTr
 import ch.difty.scipamato.core.sync.PublicCodeClass
 import ch.difty.scipamato.core.sync.jobs.SyncConfig
+import ch.difty.scipamato.core.sync.newPublicCodeClass
 import ch.difty.scipamato.publ.db.tables.records.CodeClassRecord
 import org.jooq.DSLContext
 import org.jooq.TableField
@@ -58,17 +59,16 @@ open class CodeClassSyncConfig(
             .sql
 
     @Throws(SQLException::class)
-    override fun makeEntity(rs: ResultSet): PublicCodeClass =
-        PublicCodeClass(
-            codeClassId = getInteger(C_ID, rs),
-            langCode = getString(C_LANG_CODE, rs),
-            name = getString(C_NAME, rs),
-            description = getString(C_DESCRIPTION, rs),
-            version = getInteger(C_VERSION, rs),
-            created = getTimestamp(C_CREATED, rs),
-            lastModified = getTimestamp(C_LAST_MODIFIED, rs),
-            lastSynched = getNow(),
-        )
+    override fun makeEntity(rs: ResultSet): PublicCodeClass = newPublicCodeClass(
+        codeClassId = getInteger(C_ID, rs),
+        langCode = getString(C_LANG_CODE, rs),
+        name = getString(C_NAME, rs),
+        description = getString(C_DESCRIPTION, rs),
+        version = getInteger(C_VERSION, rs),
+        created = getTimestamp(C_CREATED, rs),
+        lastModified = getTimestamp(C_LAST_MODIFIED, rs),
+        lastSynched = getNow(),
+    )
 
     override fun lastSynchedField(): TableField<CodeClassRecord, Timestamp> =
         ch.difty.scipamato.publ.db.tables.CodeClass.CODE_CLASS.LAST_SYNCHED

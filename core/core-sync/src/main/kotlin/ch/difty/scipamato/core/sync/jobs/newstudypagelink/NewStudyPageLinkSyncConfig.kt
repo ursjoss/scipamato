@@ -4,6 +4,7 @@ import ch.difty.scipamato.common.DateTimeService
 import ch.difty.scipamato.core.db.tables.NewStudyPageLink
 import ch.difty.scipamato.core.sync.PublicNewStudyPageLink
 import ch.difty.scipamato.core.sync.jobs.SyncConfig
+import ch.difty.scipamato.core.sync.newPublicNewStudyPageLink
 import ch.difty.scipamato.publ.db.tables.records.NewStudyPageLinkRecord
 import org.jooq.DSLContext
 import org.jooq.TableField
@@ -56,17 +57,16 @@ open class NewStudyPageLinkSyncConfig(
             .sql
 
     @Throws(SQLException::class)
-    override fun makeEntity(rs: ResultSet): PublicNewStudyPageLink =
-        PublicNewStudyPageLink(
-            langCode = getString(C_LANG_CODE, rs),
-            sort = getInteger(C_SORT, rs),
-            title = getString(C_TITLE, rs),
-            url = getString(C_URL, rs),
-            version = null,
-            created = null,
-            lastModified = null,
-            lastSynched = getNow(),
-        )
+    override fun makeEntity(rs: ResultSet): PublicNewStudyPageLink = newPublicNewStudyPageLink(
+        langCode = getString(C_LANG_CODE, rs),
+        sort = getInteger(C_SORT, rs),
+        title = getString(C_TITLE, rs),
+        url = getString(C_URL, rs),
+        version = null,
+        created = null,
+        lastModified = null,
+        lastSynched = getNow(),
+    )
 
     override fun lastSynchedField(): TableField<NewStudyPageLinkRecord, Timestamp> =
         ch.difty.scipamato.publ.db.tables.NewStudyPageLink.NEW_STUDY_PAGE_LINK.LAST_SYNCHED

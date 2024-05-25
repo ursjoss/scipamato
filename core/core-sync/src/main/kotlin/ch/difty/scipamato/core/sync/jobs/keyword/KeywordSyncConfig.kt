@@ -5,6 +5,7 @@ import ch.difty.scipamato.core.db.tables.Keyword
 import ch.difty.scipamato.core.db.tables.KeywordTr
 import ch.difty.scipamato.core.sync.PublicKeyword
 import ch.difty.scipamato.core.sync.jobs.SyncConfig
+import ch.difty.scipamato.core.sync.newPublicKeyword
 import ch.difty.scipamato.publ.db.tables.records.KeywordRecord
 import org.jooq.DSLContext
 import org.jooq.TableField
@@ -64,18 +65,17 @@ open class KeywordSyncConfig(
             .sql
 
     @Throws(SQLException::class)
-    override fun makeEntity(rs: ResultSet): PublicKeyword =
-        PublicKeyword(
-            id = getInteger(KT_ID, rs) ?: -1,
-            keywordId = rs.getInt(ALIAS_KEYWORD_ID),
-            langCode = getString(KT_LANG_CODE, rs),
-            name = getString(KT_NAME, rs),
-            version = getInteger(KT_VERSION, rs),
-            created = getTimestamp(KT_CREATED, rs),
-            lastModified = getTimestamp(KT_LAST_MODIFIED, rs),
-            lastSynched = getNow(),
-            searchOverride = getString(KW_SEARCH_OVERRIDE, rs),
-        )
+    override fun makeEntity(rs: ResultSet): PublicKeyword = newPublicKeyword(
+        id = getInteger(KT_ID, rs) ?: -1,
+        keywordId = rs.getInt(ALIAS_KEYWORD_ID),
+        langCode = getString(KT_LANG_CODE, rs),
+        name = getString(KT_NAME, rs),
+        version = getInteger(KT_VERSION, rs),
+        created = getTimestamp(KT_CREATED, rs),
+        lastModified = getTimestamp(KT_LAST_MODIFIED, rs),
+        lastSynched = getNow(),
+        searchOverride = getString(KW_SEARCH_OVERRIDE, rs),
+    )
 
     override fun lastSynchedField(): TableField<KeywordRecord, Timestamp> = ch.difty.scipamato.publ.db.tables.Keyword.KEYWORD.LAST_SYNCHED
 

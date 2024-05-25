@@ -4,6 +4,7 @@ import ch.difty.scipamato.common.DateTimeService
 import ch.difty.scipamato.core.db.tables.Language
 import ch.difty.scipamato.core.sync.PublicLanguage
 import ch.difty.scipamato.core.sync.jobs.SyncConfig
+import ch.difty.scipamato.core.sync.newPublicLanguage
 import ch.difty.scipamato.publ.db.tables.records.LanguageRecord
 import org.jooq.DSLContext
 import org.jooq.TableField
@@ -56,7 +57,7 @@ open class LanguageSyncConfig(
     @Throws(SQLException::class)
     override fun makeEntity(rs: ResultSet): PublicLanguage {
         val value = getBoolean(C_MAIN, rs)
-        return PublicLanguage(
+        return newPublicLanguage(
             code = getString(C_CODE, rs),
             lastSynched = getNow(),
             mainLanguage = value,

@@ -8,6 +8,7 @@ import ch.difty.scipamato.core.db.tables.PaperNewsletter
 import ch.difty.scipamato.core.db.tables.records.PaperRecord
 import ch.difty.scipamato.core.sync.PublicNewStudy
 import ch.difty.scipamato.core.sync.jobs.SyncConfig
+import ch.difty.scipamato.core.sync.newPublicNewStudy
 import ch.difty.scipamato.publ.db.tables.NewStudy
 import ch.difty.scipamato.publ.db.tables.NewsletterTopic
 import ch.difty.scipamato.publ.db.tables.records.NewStudyRecord
@@ -78,21 +79,20 @@ open class NewStudySyncConfig(
             .getSQL(ParamType.INLINED)
 
     @Throws(SQLException::class)
-    override fun makeEntity(rs: ResultSet): PublicNewStudy =
-        PublicNewStudy(
-            newsletterId = getInteger(PN_NEWSLETTER_ID, rs),
-            paperNumber = getLong(P_NUMBER, rs),
-            newsletterTopicId = getInteger(PN_NEWSLETTER_TOPIC_ID, rs),
-            sort = 1, // change this if the users will request to be able to sort the studies within the topic
-            year = getInteger(P_YEAR, rs),
-            authors = getAuthors(P_FIRST_AUTHOR, P_AUTHORS, rs),
-            headline = getString(PN_HEADLINE, rs),
-            description = getString(P_GOALS, rs),
-            version = getInteger(PN_VERSION, rs),
-            created = getTimestamp(PN_CREATED, rs),
-            lastModified = getTimestamp(PN_LAST_MODIFIED, rs),
-            lastSynched = getNow(),
-        )
+    override fun makeEntity(rs: ResultSet): PublicNewStudy = newPublicNewStudy(
+        newsletterId = getInteger(PN_NEWSLETTER_ID, rs),
+        paperNumber = getLong(P_NUMBER, rs),
+        newsletterTopicId = getInteger(PN_NEWSLETTER_TOPIC_ID, rs),
+        sort = 1, // change this if the users will request to be able to sort the studies within the topic
+        year = getInteger(P_YEAR, rs),
+        authors = getAuthors(P_FIRST_AUTHOR, P_AUTHORS, rs),
+        headline = getString(PN_HEADLINE, rs),
+        description = getString(P_GOALS, rs),
+        version = getInteger(PN_VERSION, rs),
+        created = getTimestamp(PN_CREATED, rs),
+        lastModified = getTimestamp(PN_LAST_MODIFIED, rs),
+        lastSynched = getNow(),
+    )
 
     @Suppress("SameParameterValue")
     @Throws(SQLException::class)

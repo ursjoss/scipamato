@@ -4,6 +4,7 @@ import ch.difty.scipamato.common.DateTimeService
 import ch.difty.scipamato.core.db.tables.Newsletter
 import ch.difty.scipamato.core.sync.PublicNewsletter
 import ch.difty.scipamato.core.sync.jobs.SyncConfig
+import ch.difty.scipamato.core.sync.newPublicNewsletter
 import ch.difty.scipamato.publ.db.tables.records.NewsletterRecord
 import org.jooq.DSLContext
 import org.jooq.TableField
@@ -63,16 +64,15 @@ open class NewsletterSyncConfig(
             .getSQL(ParamType.INLINED)
 
     @Throws(SQLException::class)
-    override fun makeEntity(rs: ResultSet): PublicNewsletter =
-        PublicNewsletter(
-            id = getInteger(N_ID, rs),
-            issue = getString(N_ISSUE, rs),
-            issueDate = getDate(N_ISSUE_DATE, rs),
-            version = getInteger(N_VERSION, rs),
-            created = getTimestamp(N_CREATED, rs),
-            lastModified = getTimestamp(N_LAST_MODIFIED, rs),
-            lastSynched = getNow(),
-        )
+    override fun makeEntity(rs: ResultSet): PublicNewsletter = newPublicNewsletter(
+        id = getInteger(N_ID, rs),
+        issue = getString(N_ISSUE, rs),
+        issueDate = getDate(N_ISSUE_DATE, rs),
+        version = getInteger(N_VERSION, rs),
+        created = getTimestamp(N_CREATED, rs),
+        lastModified = getTimestamp(N_LAST_MODIFIED, rs),
+        lastSynched = getNow(),
+    )
 
 
     override fun lastSynchedField(): TableField<NewsletterRecord, Timestamp> =
