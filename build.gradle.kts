@@ -4,7 +4,6 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED
 import org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED
 import org.gradle.api.tasks.testing.logging.TestLogEvent.SKIPPED
 import org.gradle.api.tasks.testing.logging.TestLogEvent.STARTED
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.springframework.boot.gradle.plugin.SpringBootPlugin
 import org.springframework.boot.gradle.tasks.bundling.BootJar
 
@@ -183,6 +182,19 @@ subprojects {
         register("version") {
             doLast {
                 println(project.version)
+            }
+        }
+
+        register("printSourceSetInformation") {
+            doLast {
+                sourceSets.forEach { srcSet ->
+                    println("[" + srcSet.name + "]")
+                    println("-->Source directories: " + srcSet.allJava.srcDirs)
+                    println("-->Output directories: " + srcSet.output.classesDirs.files)
+                    println("-->Compile classpath:")
+//                    srcSet.compileClasspath.files.forEach { println("  " + it.path) }
+                    println("")
+                }
             }
         }
     }

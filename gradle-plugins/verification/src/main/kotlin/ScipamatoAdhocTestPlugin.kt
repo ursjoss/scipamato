@@ -16,7 +16,7 @@ class ScipamatoAdhocTestPlugin : Plugin<Project> {
             configure<TestingExtension> {
                 suites {
                     register("adhocTest", JvmTestSuite::class) {
-                        sources.java.srcDir("src/adhoc-test/kotlin")
+                        sources.java.setSrcDirs(setOf("src/adhoc-test/kotlin"))
                         dependencies {
                             implementation(project())
                         }

@@ -39,9 +39,9 @@ val coreProjects = listOf(
 )
 val publicProjects = listOf("entity", "persistence-api", "persistence-jooq", "web")
 
-fun scipamatoCommonProjects(modules: List<String>) = modules.map { "common-$it" }.toTypedArray()
-fun scipamatoCoreProjects(modules: List<String>) = modules.map { "core-$it" }.toTypedArray()
-fun scipamatoPublicProjects(modules: List<String>) = modules.map { "public-$it" }.toTypedArray()
+fun scipamatoCommonProjects(modules: List<String>) = modules.map { "common-$it" }
+fun scipamatoCoreProjects(modules: List<String>) = modules.map { "core-$it" }
+fun scipamatoPublicProjects(modules: List<String>) = modules.map { "public-$it" }
 
 fun scipamatoCommon(module: String) = "common".scipamatoModule(module)
 fun scipamatoCore(module: String) = "core".scipamatoModule(module)
@@ -49,9 +49,9 @@ fun scipamatoPublic(module: String) = "public".scipamatoModule(module)
 
 fun String.scipamatoModule(module: String) = ":$this-$module"
 
-include(*scipamatoCommonProjects(commonProjects))
-include(*scipamatoCoreProjects(coreProjects))
-include(*scipamatoPublicProjects(publicProjects))
+include(scipamatoCommonProjects(commonProjects))
+include(scipamatoCoreProjects(coreProjects))
+include(scipamatoPublicProjects(publicProjects))
 
 includeBuild("gradle-plugins")
 

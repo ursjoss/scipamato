@@ -3,6 +3,7 @@ package ch.difty.scipamato.core.persistence.newsletter
 import ch.difty.scipamato.common.entity.newsletter.PublicationStatus
 import ch.difty.scipamato.common.persistence.paging.PaginationContext
 import ch.difty.scipamato.core.entity.Paper
+import ch.difty.scipamato.core.entity.User
 import ch.difty.scipamato.core.entity.newsletter.Newsletter
 import ch.difty.scipamato.core.entity.newsletter.NewsletterFilter
 import ch.difty.scipamato.core.persistence.AbstractServiceTest
@@ -18,17 +19,17 @@ import org.amshove.kluent.shouldThrow
 import org.amshove.kluent.withMessage
 import org.junit.jupiter.api.Test
 
-@Suppress("UsePropertyAccessSyntax")
+@Suppress("UnusedEquals")
 internal class JooqNewsletterServiceTest : AbstractServiceTest<Int, Newsletter, NewsletterRepository>() {
 
-    private val repoMock = mockk<NewsletterRepository>(relaxed = true) {
-        every { delete(any(), any()) } returns newsletterMock
-        every { update(any()) } returns newsletterMock
-    }
     private val filterMock = mockk<NewsletterFilter>()
     private val paginationContextMock = mockk<PaginationContext>()
     private val newsletterMock = mockk<Newsletter>(relaxed = true)
     private val newsletterWipMock = mockk<Newsletter>()
+    private val repoMock = mockk<NewsletterRepository>(relaxed = true) {
+        every { delete(any(), any()) } returns newsletterMock
+        every { update(any()) } returns newsletterMock
+    }
 
     private val service = JooqNewsletterService(repoMock, userRepoMock)
 
@@ -115,18 +116,27 @@ internal class JooqNewsletterServiceTest : AbstractServiceTest<Int, Newsletter, 
     }
 
     @Test
-    fun savingOrUpdating_withSavedEntity_butOtherNewsletterInWipStatus() {
+    fun savingOrUpdating_withSavedEntity_AndSameNewsletterInWipStatus_updates() {
         val newsletterId = 1
+        val user = User.NO_USER
 
         every { newsletterMock.id } returns newsletterId
         every { newsletterMock.publicationStatus } returns PublicationStatus.WIP
+        every { newsletterMock.createdBy } returns 0
         every { repoMock.newsletterInStatusWorkInProgress } returns java.util.Optional.of(newsletterWipMock)
         every { newsletterWipMock.id } returns newsletterId
+        every { userRepoMock.findById(0)} returns user
 
         service.saveOrUpdate(newsletterMock)
 
         verify { newsletterMock.publicationStatus }
         verify(exactly = 3) { newsletterMock.id }
+        verify{ newsletterMock.createdBy }
+        verify{ newsletterMock.lastModifiedBy }
+        verify{ newsletterMock.createdByName = user.userName }
+        verify{ newsletterMock.createdByFullName = user.fullName }
+        verify{ newsletterMock.lastModifiedByName = user.userName }
+        verify(exactly = 2) { userRepoMock.findById(0) }
         verify { repoMock.newsletterInStatusWorkInProgress }
         verify { newsletterWipMock.id }
         verify { repoMock.update(newsletterMock) }

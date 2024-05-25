@@ -16,12 +16,12 @@ import org.junit.jupiter.api.Test
 
 internal class JooqSearchOrderServiceTest : AbstractServiceTest<Long, SearchOrder, SearchOrderRepository>() {
 
+    override val entity = mockk<SearchOrder>(relaxed = true)
     override val repo = mockk<SearchOrderRepository>(relaxed = true) {
         every { delete(any(), any()) } returns entity
     }
     private val filterMock = mockk<SearchOrderFilter>()
     private val paginationContextMock = mockk<PaginationContext>()
-    override val entity = mockk<SearchOrder>(relaxed = true)
     private val searchConditionMock = mockk<SearchCondition>()
 
     private var service = JooqSearchOrderService(repo, userRepoMock)

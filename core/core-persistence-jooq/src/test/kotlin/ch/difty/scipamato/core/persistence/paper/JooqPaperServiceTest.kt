@@ -39,6 +39,7 @@ import org.junit.jupiter.api.Test
 
 internal class JooqPaperServiceTest : AbstractServiceTest<Long, Paper, PaperRepository>() {
 
+    override val entity = mockk<Paper>(relaxed = true)
     override val repo = mockk<PaperRepository>(relaxed = true) {
         every { delete(any(), any()) } returns entity
     }
@@ -46,7 +47,6 @@ internal class JooqPaperServiceTest : AbstractServiceTest<Long, Paper, PaperRepo
     private val filterMock = mockk<PaperFilter>()
     private val searchOrderMock = mockk<SearchOrder>()
     private val paginationContextMock = mockk<PaginationContext>()
-    override val entity = mockk<Paper>(relaxed = true)
     private val paperMock2 = mockk<Paper>(relaxed = true)
     private val paperMock3 = mockk<Paper>(relaxed = true)
     private val attachmentMock = mockk<PaperAttachment>()

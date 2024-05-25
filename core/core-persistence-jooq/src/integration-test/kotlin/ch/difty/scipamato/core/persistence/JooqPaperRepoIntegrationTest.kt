@@ -509,7 +509,7 @@ internal open class JooqPaperRepoIntegrationTest {
     }
 
     /**
-     * Verify the rollback is occurring, also that the JooqExceptionTranslator is
+     * Verify the rollback is occurring, also that the ExceptionTranslatorExecuteListener is
      * doing it's job to translate jooq specific exceptions into spring exceptions.
      */
     @Test
@@ -520,7 +520,7 @@ internal open class JooqPaperRepoIntegrationTest {
             repo.update(paper)
             fail { "Should have thrown exception due to null value on non-null column" }
         } catch (dae: org.jooq.exception.DataAccessException) {
-            fail { "JooqExceptionTranslator did not translate the jooqException into a spring exception" }
+            fail { "ExceptionTranslatorExecuteListener did not translate the jooqException into a spring exception: $dae" }
         } catch (dae: DataAccessException) {
             dae shouldBeInstanceOf DataIntegrityViolationException::class
             dae.message?.shouldStartWith("""jOOQ; SQL [update "public"."paper" set "number" = ?""")

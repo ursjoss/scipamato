@@ -27,13 +27,13 @@ sourceSets {
     /** main: html, css, sass, properties files */
     main {
         resources {
-            srcDir("src/main/kotlin")
+            setSrcDirs(setOf("src/main/resources", "src/main/kotlin"))
         }
     }
     /** test: html and properties files */
     test {
         resources {
-            srcDir("src/test/kotlin")
+            setSrcDirs(setOf("src/test/resources", "src/test/kotlin"))
         }
     }
 }
