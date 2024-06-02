@@ -8,6 +8,7 @@ build/
 # ide stuff
 .factorypath
 .idea/
+.kotlin/
 **/*.iml
 **/.ipr
 **/.iws
