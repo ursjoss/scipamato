@@ -67,7 +67,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[unreleased]]
 == [unreleased]
 
-{url-cl}2.0.0++...++main[Full Changelog]
+{url-cl}2.0.1++...++main[Full Changelog]
 
 .Added
 
@@ -85,10 +85,25 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 ////
 
 
+[[v2.0.1]]
+== {url-tree}2.0.1[2.0.1] -- 2024-06-02
+
+.Changed
+- Bumped
+  spring-boot, spring-dependency-management, spring-cloud-starter-openfeign, spring-boot-admin-starter-client,
+  kotlin, kotlinx-coroutines, wicket
+  jasperreports, jakarta.el-api, guava,
+  kotest, mockk, equalsverifier,
+  gradle,
+  docker-login-action, wrapper-validation-action
+- Refactored: Prepared for upcoming kotlin-2.0 migration
+
+.Fixed
+- Fix Tab Title to "Code"
+
 
 [[v2.0.0]]
 == {url-tree}2.0.0[2.0.0] -- 2024-03-28
-
 
 .Changed
 - {url-issues}669[#669] Bump Java version to 21
