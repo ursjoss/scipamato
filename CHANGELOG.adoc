@@ -71,7 +71,6 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Added
 
-////
 .Changed
 
 .Deprecated
@@ -79,7 +78,9 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Removed
 
 .Fixed
+- {url-issues}701[#701] Fix deletion of attachments with very long names
 
+////
 .Security
 
 ////
