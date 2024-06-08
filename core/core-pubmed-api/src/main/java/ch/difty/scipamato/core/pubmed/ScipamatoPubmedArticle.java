@@ -185,6 +185,7 @@ class ScipamatoPubmedArticle extends AbstractPubmedArticleFacade {
         }
         case final Day day -> sb.append(day.getvalue());
         default -> {
+            // no-op
         }
         }
     }

@@ -950,6 +950,7 @@ abstract class PaperPanel<T>(
         mainCodeOfCodeClass1: TextField<String>,
         codeClass1: BootstrapMultiSelect<Code>,
     ) {
+        // override to add code class change behavior
     }
 
     internal class CodeClass1ConsistencyValidator(

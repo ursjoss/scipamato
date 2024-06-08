@@ -185,7 +185,11 @@ abstract class ResultPanel protected constructor(
                     else "column.title.exclude", this@ResultPanel, null
                 )
 
-            override fun onClickPerformed(target: AjaxRequestTarget, rowModel: IModel<PaperSlim>, link: AjaxLink<Void>) {
+            override fun onClickPerformed(
+                target: AjaxRequestTarget,
+                rowModel: IModel<PaperSlim>,
+                link: AjaxLink<Void>,
+            ) {
                 val excludedId = rowModel.getObject().id
                 target.add(results)
                 excludedId?.let {
@@ -391,11 +395,19 @@ abstract class ResultPanel protected constructor(
             .build()
         if (plus)
             addOrReplace(
-                newJasperResourceLink(id, "literature_review_plus", PaperLiteratureReviewPlusDataSource(dataProvider, rhf, config))
+                newJasperResourceLink(
+                    id,
+                    "literature_review_plus",
+                    PaperLiteratureReviewPlusDataSource(dataProvider, rhf, config)
+                )
             )
         else
             addOrReplace(
-                newJasperResourceLink(id, "literature_review", PaperLiteratureReviewDataSource(dataProvider, rhf, config))
+                newJasperResourceLink(
+                    id,
+                    "literature_review",
+                    PaperLiteratureReviewDataSource(dataProvider, rhf, config)
+                )
             )
     }
 

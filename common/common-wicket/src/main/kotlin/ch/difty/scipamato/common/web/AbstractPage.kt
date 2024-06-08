@@ -134,7 +134,9 @@ abstract class AbstractPage<T> : GenericWebPage<T> {
             StringResourceModel("brandname", this, null).string
         else brand
 
-    protected open fun addLinksTo(nb: Navbar) {}
+    protected open fun addLinksTo(nb: Navbar) {
+        // override to add links
+    }
 
     @JvmOverloads
     fun queueFieldAndLabel(field: FormComponent<*>, pv: PropertyValidator<*>? = null) {
