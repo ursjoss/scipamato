@@ -10,7 +10,7 @@ import org.wicketstuff.annotation.mount.MountPath
 @MountPath("logout")
 abstract class AbstractLogoutPage<R : AbstractPage<*>>(
     parameters: PageParameters?,
-) : AbstractPage<Void>(parameters) {
+) : AbstractPage<Unit>(parameters) {
 
     @SpringBean
     private lateinit var scipamatoProperties: ApplicationProperties
@@ -26,7 +26,7 @@ abstract class AbstractLogoutPage<R : AbstractPage<*>>(
     }
 
     @Suppress("SameParameterValue")
-    private fun newForm(id: String): StatelessForm<Void> = object : StatelessForm<Void>(id) {
+    private fun newForm(id: String): StatelessForm<Unit> = object : StatelessForm<Unit>(id) {
         private val serialVersionUID: Long = 1L
         override fun onSubmit() {
             signOutAndInvalidate()

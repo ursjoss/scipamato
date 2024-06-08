@@ -41,7 +41,7 @@ class NewsletterTopicSortPage(
         topics = service.getSortedNewsletterTopicsForNewsletter(newsletterTopicId)
 
         queue(newHeader("header"))
-        queue(Form<Void>("form"))
+        queue(Form<Unit>("form"))
         queue(newSortable("sortable", topics))
         queue(newSubmitButton("submit"))
         queue(newCancelButton("cancel"))

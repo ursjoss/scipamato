@@ -84,8 +84,8 @@ abstract class PaperPanel<T>(
     mode
 ) where T : CodeBoxAware, T : NewsletterAware, T : AttachmentAware {
 
-    private var summaryLink: ResourceLink<Void>? = null
-    private var summaryShortLink: ResourceLink<Void>? = null
+    private var summaryLink: ResourceLink<Unit>? = null
+    private var summaryShortLink: ResourceLink<Unit>? = null
 
     var authors: TextArea<String>? = null
     var firstAuthor: TextField<String>? = null
@@ -96,7 +96,7 @@ abstract class PaperPanel<T>(
     var doi: TextField<Any>? = null
     var originalAbstract: TextArea<String>? = null
 
-    private var pubmedRetrieval: BootstrapAjaxLink<Void>? = null
+    private var pubmedRetrieval: BootstrapAjaxLink<Unit>? = null
     private var attachments: DataTable<PaperAttachment, String>? = null
     private var submit: BootstrapButton? = null
     private val newsletterTopicChoice = NewsletterTopicModel(localization)
@@ -181,8 +181,8 @@ abstract class PaperPanel<T>(
         summaryShortLink = makeSummaryShortLink("summaryShort")
         form.addOrReplace(summaryShortLink)
         considerAddingMoreValidation()
-        val addRemoveNewsletter: BootstrapAjaxLink<Void> = object :
-            BootstrapAjaxLink<Void>("modAssociation", Buttons.Type.Primary) {
+        val addRemoveNewsletter: BootstrapAjaxLink<Unit> = object :
+            BootstrapAjaxLink<Unit>("modAssociation", Buttons.Type.Primary) {
             override fun onInitialize() {
                 super.onInitialize()
                 add(ButtonBehavior()
@@ -455,7 +455,7 @@ abstract class PaperPanel<T>(
         }
     }
 
-    private fun makeSummaryLink(id: String): ResourceLink<Void> {
+    private fun makeSummaryLink(id: String): ResourceLink<Unit> {
         return makePdfResourceLink(id, summaryDataSource)
     }
 
@@ -463,7 +463,7 @@ abstract class PaperPanel<T>(
      * @return [PaperSummaryDataSource]
      */
     protected abstract val summaryDataSource: PaperSummaryDataSource?
-    private fun makeSummaryShortLink(id: String): ResourceLink<Void> {
+    private fun makeSummaryShortLink(id: String): ResourceLink<Unit> {
         return makePdfResourceLink(id, summaryShortDataSource)
     }
 
@@ -471,9 +471,9 @@ abstract class PaperPanel<T>(
      * @return [PaperSummaryShortDataSource]
      */
     protected abstract val summaryShortDataSource: PaperSummaryShortDataSource?
-    private fun makePdfResourceLink(id: String, dataSource: JasperPaperDataSource<*>?): ResourceLink<Void> {
+    private fun makePdfResourceLink(id: String, dataSource: JasperPaperDataSource<*>?): ResourceLink<Unit> {
         val button = "button."
-        val link: ResourceLink<Void> = object : ResourceLink<Void>(id, dataSource) {
+        val link: ResourceLink<Unit> = object : ResourceLink<Unit>(id, dataSource) {
             private val serialVersionUID: Long = 1L
             override fun onInitialize() {
                 super.onInitialize()
@@ -950,6 +950,7 @@ abstract class PaperPanel<T>(
         mainCodeOfCodeClass1: TextField<String>,
         codeClass1: BootstrapMultiSelect<Code>,
     ) {
+        // override to add code class change behavior
     }
 
     internal class CodeClass1ConsistencyValidator(
@@ -976,7 +977,7 @@ abstract class PaperPanel<T>(
     }
 
     private fun queuePubmedRetrievalLink(linkId: String) {
-        pubmedRetrieval = object : BootstrapAjaxLink<Void>(linkId, Buttons.Type.Primary) {
+        pubmedRetrieval = object : BootstrapAjaxLink<Unit>(linkId, Buttons.Type.Primary) {
             private val serialVersionUID: Long = 1L
             override fun onInitialize() {
                 super.onInitialize()

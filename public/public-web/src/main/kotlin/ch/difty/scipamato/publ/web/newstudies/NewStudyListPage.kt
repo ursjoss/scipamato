@@ -43,7 +43,7 @@ import org.wicketstuff.annotation.mount.MountPath
  */
 @MountPath("new-studies")
 @Suppress("SameParameterValue", "TooManyFunctions")
-open class NewStudyListPage(parameters: PageParameters) : BasePage<Void>(parameters) {
+open class NewStudyListPage(parameters: PageParameters) : BasePage<Unit>(parameters) {
 
     @SpringBean
     private lateinit var newStudyTopicService: NewStudyTopicService

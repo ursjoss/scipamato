@@ -51,7 +51,7 @@ import org.wicketstuff.annotation.mount.MountPath
 @MountPath("/newsletters")
 @AuthorizeInstantiation(Roles.USER, Roles.ADMIN)
 @Suppress("SameParameterValue", "TooManyFunctions")
-class NewsletterListPage(parameters: PageParameters?) : BasePage<Void>(parameters) {
+class NewsletterListPage(parameters: PageParameters?) : BasePage<Unit>(parameters) {
 
     @SpringBean
     private lateinit var service: NewsletterService

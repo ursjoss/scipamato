@@ -26,7 +26,7 @@ private val log = logger()
 @Slf4j
 abstract class AbstractLoginPage<R : AbstractPage<*>>(
     parameters: PageParameters?,
-) : AbstractPage<Void>(parameters) {
+) : AbstractPage<Unit>(parameters) {
 
     @SpringBean
     private lateinit var scipamatoProperties: ApplicationProperties
@@ -44,7 +44,7 @@ abstract class AbstractLoginPage<R : AbstractPage<*>>(
         queue(newLoginForm("form"))
     }
 
-    private fun newLoginForm(id: String): StatelessForm<Void> = object : StatelessForm<Void>(id) {
+    private fun newLoginForm(id: String): StatelessForm<Unit> = object : StatelessForm<Unit>(id) {
         private val serialVersionUID: Long = 1L
         override fun onSubmit() {
             if (signIn(username, password)) {
@@ -55,7 +55,7 @@ abstract class AbstractLoginPage<R : AbstractPage<*>>(
                 error(getString("msg.login.failure"))
             }
         }
-    }.apply<StatelessForm<Void>> {
+    }.apply<StatelessForm<Unit>> {
         defaultModel = CompoundPropertyModel(this@AbstractLoginPage)
     }.also {
         queue(newHeader("header"))

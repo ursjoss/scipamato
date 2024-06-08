@@ -65,7 +65,7 @@ abstract class ResultPanel protected constructor(
     id: String,
     private val dataProvider: AbstractPaperSlimProvider<out PaperSlimFilter>,
     override val mode: Mode,
-) : BasePanel<Void>(id) {
+) : BasePanel<Unit>(id) {
 
     @SpringBean
     private lateinit var paperService: PaperService
@@ -185,7 +185,11 @@ abstract class ResultPanel protected constructor(
                     else "column.title.exclude", this@ResultPanel, null
                 )
 
-            override fun onClickPerformed(target: AjaxRequestTarget, rowModel: IModel<PaperSlim>, link: AjaxLink<Void>) {
+            override fun onClickPerformed(
+                target: AjaxRequestTarget,
+                rowModel: IModel<PaperSlim>,
+                link: AjaxLink<Void>,
+            ) {
                 val excludedId = rowModel.getObject().id
                 target.add(results)
                 excludedId?.let {
@@ -391,11 +395,19 @@ abstract class ResultPanel protected constructor(
             .build()
         if (plus)
             addOrReplace(
-                newJasperResourceLink(id, "literature_review_plus", PaperLiteratureReviewPlusDataSource(dataProvider, rhf, config))
+                newJasperResourceLink(
+                    id,
+                    "literature_review_plus",
+                    PaperLiteratureReviewPlusDataSource(dataProvider, rhf, config)
+                )
             )
         else
             addOrReplace(
-                newJasperResourceLink(id, "literature_review", PaperLiteratureReviewDataSource(dataProvider, rhf, config))
+                newJasperResourceLink(
+                    id,
+                    "literature_review",
+                    PaperLiteratureReviewDataSource(dataProvider, rhf, config)
+                )
             )
     }
 
@@ -404,7 +416,7 @@ abstract class ResultPanel protected constructor(
     }
 
 
-    private fun newPdfSummaryTable(id: String, resourceKeyPart: String): ResourceLink<Void> {
+    private fun newPdfSummaryTable(id: String, resourceKeyPart: String): ResourceLink<Unit> {
         val pdfCaption = StringResourceModel("paper_summary_table.titlePart", this, null).string
         val brand = properties.brand
         val rhf = ReportHeaderFields(
@@ -426,7 +438,7 @@ abstract class ResultPanel protected constructor(
     }
 
 
-    private fun newPdfReferenceAbstract(id: String, resourceKeyPart: String): ResourceLink<Void> {
+    private fun newPdfReferenceAbstract(id: String, resourceKeyPart: String): ResourceLink<Unit> {
         val brand = properties.brand
         val pdfCaption = StringResourceModel("paper_reference_abstract.caption", this, null)
             .setParameters(brand).string
@@ -447,7 +459,7 @@ abstract class ResultPanel protected constructor(
     }
 
     private fun newJasperResourceLink(id: String, resourceKeyPart: String, resource: JasperPaperDataSource<*>) =
-        ResourceLink<Void>(id, resource).apply {
+        ResourceLink<Unit>(id, resource).apply {
             outputMarkupId = true
             body = StringResourceModel("$LINK_RESOURCE_PREFIX$resourceKeyPart$LABEL_RESOURCE_TAG")
             add(AttributeModifier(
@@ -486,7 +498,7 @@ abstract class ResultPanel protected constructor(
 
     private fun addOrReplaceExportLink(id: String, initiate: (AjaxRequestTarget) -> Unit) {
         val titleResourceKey = LINK_RESOURCE_PREFIX + id + TITLE_RESOURCE_TAG
-        val reviewLink: AjaxLink<Void> = object : AjaxLink<Void>(id) {
+        val reviewLink: AjaxLink<Unit> = object : AjaxLink<Unit>(id) {
             private val serialVersionUID: Long = 1L
             override fun onClick(target: AjaxRequestTarget) {
                 initiate(target)
