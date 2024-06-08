@@ -73,7 +73,7 @@ class PublicPaperDetailPage : BasePage<PublicPaper> {
     override fun onInitialize() {
         super.onInitialize()
 
-        queue(Form<Void>("form"))
+        queue(Form<Unit>("form"))
 
         queue(newNavigationButton("previous", FontAwesome6IconType.backward_step_s, paperIdManager::hasPrevious) {
             paperIdManager.previous()

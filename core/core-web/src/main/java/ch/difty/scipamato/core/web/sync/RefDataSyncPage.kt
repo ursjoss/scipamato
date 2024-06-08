@@ -19,14 +19,14 @@ import org.apache.wicket.spring.injection.annot.SpringBean
 import java.time.Duration
 
 @AuthorizeInstantiation(Roles.USER, Roles.ADMIN)
-class RefDataSyncPage(parameters: PageParameters) : BasePage<Void>(parameters) {
+class RefDataSyncPage(parameters: PageParameters) : BasePage<Unit>(parameters) {
 
     @SpringBean
     private lateinit var jobLauncher: SyncJobLauncher
 
     override fun onInitialize() {
         super.onInitialize()
-        queue(BootstrapForm<Void>("synchForm"))
+        queue(BootstrapForm<Unit>("synchForm"))
         queue(newButton("synchronize"))
         queue(SyncResultListPanel("syncResults"))
     }

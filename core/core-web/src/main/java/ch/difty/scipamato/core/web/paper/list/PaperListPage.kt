@@ -28,7 +28,7 @@ import org.wicketstuff.annotation.mount.MountPath
 @MountPath("/")
 @AuthorizeInstantiation(Roles.USER, Roles.ADMIN, Roles.VIEWER)
 @Suppress("SameParameterValue")
-class PaperListPage(parameters: PageParameters?) : BasePage<Void?>(parameters) {
+class PaperListPage(parameters: PageParameters?) : BasePage<Unit>(parameters) {
 
     private val filter = PaperFilter()
     private val dataProvider = PaperSlimByPaperFilterProvider(filter, RESULT_PAGE_SIZE)

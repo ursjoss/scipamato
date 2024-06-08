@@ -33,7 +33,7 @@ abstract class AbstractMenuBuilder protected constructor(
         iconType: IconType,
         position: Navbar.ComponentPosition,
     ) {
-        NavbarButton<Void, P>(
+        NavbarButton<Unit, P>(
             referringPageClass,
             StringResourceModel(labelResource, menuPage, null)
         ).setIconType(iconType)
@@ -86,7 +86,7 @@ abstract class AbstractMenuBuilder protected constructor(
         links: MutableList<AbstractLink>,
         pageParameters: PageParameters = PageParameters(),
     ) {
-        MenuBookmarkablePageLink<Void, P>(
+        MenuBookmarkablePageLink<Unit, P>(
             pageClass,
             pageParameters,
             StringResourceModel(label, component, null)

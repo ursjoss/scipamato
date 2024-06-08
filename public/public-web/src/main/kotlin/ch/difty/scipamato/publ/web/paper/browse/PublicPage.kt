@@ -42,7 +42,7 @@ import org.wicketstuff.annotation.mount.MountPath
 @WicketHomePage
 @MountPath("/")
 @Suppress("SameParameterValue", "UnnecessaryAbstractClass", "TooManyFunctions")
-class PublicPage(parameters: PageParameters) : BasePage<Void>(parameters) {
+class PublicPage(parameters: PageParameters) : BasePage<Unit>(parameters) {
 
     private val filter: PublicPaperFilter = PublicPaperFilter()
     private val dataProvider = PublicPaperProvider(filter, RESULT_PAGE_SIZE)
