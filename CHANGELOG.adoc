@@ -67,10 +67,11 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[unreleased]]
 == [unreleased]
 
-{url-cl}2.0.1++...++main[Full Changelog]
+{url-cl}2.0.2++...++main[Full Changelog]
 
 .Added
 
+////
 .Changed
 
 .Deprecated
@@ -78,13 +79,24 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Removed
 
 .Fixed
-- {url-issues}701[#701] Fix deletion of attachments with very long names
-- {url-issues}708[#708] Keep back-button hidden in public detail page after opening from search list
 
-////
 .Security
 
 ////
+
+
+[[v2.0.2]]
+== {url-tree}2.0.2[2.0.2] -- 2024-06-09
+
+.Changed
+- Bumped
+  wicketbootstrap, wicketstuff,
+  spring-boot-admin-starter-client,
+  kotest
+
+.Fixed
+- {url-issues}701[#701] Fix deletion of attachments with very long names
+- {url-issues}708[#708] Keep back-button hidden in public detail page after opening from search list
 
 
 [[v2.0.1]]
