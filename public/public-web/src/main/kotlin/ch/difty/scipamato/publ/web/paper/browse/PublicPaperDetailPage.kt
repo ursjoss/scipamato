@@ -114,7 +114,7 @@ class PublicPaperDetailPage : BasePage<PublicPaper> {
         override fun onSubmit() {
             getId()?.let {
                 pageParameters[PublicPageParameters.NUMBER.parameterName] = it
-                setResponsePage(PublicPaperDetailPage(pageParameters, callingPageRef))
+                setResponsePage(PublicPaperDetailPage(pageParameters, callingPageRef, showBackButton))
             }
         }
 
