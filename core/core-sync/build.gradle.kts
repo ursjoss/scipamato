@@ -47,7 +47,7 @@ tasks {
     val copyPublicFiles by registering(Copy::class) {
         from("$rootDir/public/public-persistence-jooq/build/generated-src/jooq/ch/difty/scipamato/publ")
         destinationDir = File("$rootDir/core/core-sync/build/generated-src/jooq/ch/difty/scipamato/publ")
-        dependsOn(":public-persistence-jooq:generateJooqMetamodel")
+        dependsOn(":public-persistence-jooq:generateJooq")
     }
 
     getByName("compileKotlin").dependsOn += copyCoreFiles
