@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.web.paper.jasper;
 
-import net.sf.jasperreports.export.PdfExporterConfiguration;
+import net.sf.jasperreports.pdf.PdfExporterConfiguration;
 import org.apache.wicket.util.io.IClusterable;
 
 /**

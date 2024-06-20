@@ -46,6 +46,7 @@ flyway-postgresql = { module = "org.flywaydb:flyway-database-postgresql" }
 fontAwesome = { module = "org.webjars:font-awesome" }
 hibernate-validator = { module = "org.hibernate.validator:hibernate-validator" }
 jasperreports = { module = "net.sf.jasperreports:jasperreports", version.ref = "jasperreports" }
+jasperreports-pdf = { module = "net.sf.jasperreports:jasperreports-pdf", version.ref = "jasperreports" }
 jasperreports-fonts = { module = "net.sf.jasperreports:jasperreports-fonts", version.ref = "jasperreports" }
 jakarta-el-api = { module = "jakarta.el:jakarta.el-api", version.ref = "jakartaElApi" }
 jakarta-servletApi = { module = "jakarta.servlet:jakarta.servlet-api" }

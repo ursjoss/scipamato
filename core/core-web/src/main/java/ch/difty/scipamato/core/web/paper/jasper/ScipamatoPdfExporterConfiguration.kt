@@ -2,7 +2,7 @@ package ch.difty.scipamato.core.web.paper.jasper
 
 import ch.difty.scipamato.core.entity.Code
 import ch.difty.scipamato.core.entity.User
-import net.sf.jasperreports.export.SimplePdfExporterConfiguration
+import net.sf.jasperreports.pdf.SimplePdfExporterConfiguration
 
 /**
  * Custom implementation of the [SimplePdfExporterConfiguration] which is clusterable

@@ -3,11 +3,11 @@ package ch.difty.scipamato.core.web.paper.jasper;
 import java.util.Objects;
 
 import net.sf.jasperreports.engine.JRAbstractExporter;
-import net.sf.jasperreports.engine.export.JRPdfExporter;
-import net.sf.jasperreports.engine.export.JRPdfExporterContext;
 import net.sf.jasperreports.export.OutputStreamExporterOutput;
-import net.sf.jasperreports.export.PdfExporterConfiguration;
-import net.sf.jasperreports.export.PdfReportConfiguration;
+import net.sf.jasperreports.pdf.JRPdfExporter;
+import net.sf.jasperreports.pdf.JRPdfExporterContext;
+import net.sf.jasperreports.pdf.PdfExporterConfiguration;
+import net.sf.jasperreports.pdf.PdfReportConfiguration;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.wicketstuff.jasperreports.handlers.PdfResourceHandler;
