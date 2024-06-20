@@ -41,7 +41,7 @@ tasks {
     val copyCoreFiles by registering(Copy::class) {
         from("$rootDir/core/core-persistence-jooq/build/generated-src/jooq/ch/difty/scipamato/core")
         destinationDir = File("$rootDir/core/core-sync/build/generated-src/jooq/ch/difty/scipamato/core")
-        dependsOn(":core-persistence-jooq:generateJooqMetamodel")
+        dependsOn(":core-persistence-jooq:generateJooq")
     }
 
     val copyPublicFiles by registering(Copy::class) {

@@ -28,7 +28,6 @@ testing {
     }
 }
 
-
 @OptIn(ExperimentalJooqGeneratorConfig::class)
 jooqGenerator {
     val dbUserName = props.getProperty("spring.datasource.hikari.username")
