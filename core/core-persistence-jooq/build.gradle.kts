@@ -1,22 +1,50 @@
 @file:Suppress("SpellCheckingInspection")
 
-import ch.ayedo.jooqmodelator.gradle.JooqModelatorTask
+import com.optravis.jooq.gradle.ContainerConfig
+import com.optravis.jooq.gradle.DbConnectionConfig
+import com.optravis.jooq.gradle.ExperimentalJooqGeneratorConfig
+import com.optravis.jooq.gradle.GeneratorType
+import com.optravis.jooq.gradle.JooqDatabaseConfig
+import com.optravis.jooq.gradle.JooqGeneratorConfig
 
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
-    alias(libs.plugins.jooqModelator)
+    alias(libs.plugins.jooqPlugin)
     id("scipamato-integration-test")
 }
 
 description = "SciPaMaTo-Core :: Persistence jOOQ Project"
 
-val moduleName = "core/core-persistence-jooq"
-val dbPackageName = "ch.difty.scipamato.core.db"
-val dbPackagePath get() = dbPackageName.replace('.', '/')
-val generatedSourcesPath = "build/generated-src/jooq"
-val jooqConfigFile = layout.buildDirectory.get().asFile.resolve("jooqConfig.xml")
-val dockerDbPort = 15432
 val props = file("src/integration-test/resources/application.properties").asProperties()
+
+@OptIn(ExperimentalJooqGeneratorConfig::class)
+jooqGenerator {
+    val dbUserName = props.getProperty("spring.datasource.hikari.username")
+    val dbPassword = props.getProperty("spring.datasource.hikari.password")
+    containerConfig = ContainerConfig(
+        image = "postgres:15.4",
+        port = 5432,
+        environment = mapOf(
+            "POSTGRES_DB" to props.getProperty("db.name"),
+            "POSTGRES_USER" to dbUserName,
+            "POSTGRES_PASSWORD" to dbPassword,
+        ),
+    )
+    jooqDbConfig = JooqDatabaseConfig.postgres(recordVersionFields = listOf("version"))
+    generatorConfig = JooqGeneratorConfig(
+        generatorType = GeneratorType.Java,
+        deprecateUnknownTypes = true,
+        javaTimeTypes = false,
+        daos = false,
+        pojos = false,
+    )
+    connectionConfig = DbConnectionConfig(
+        user = dbUserName,
+        password = dbPassword,
+        urlTemplate = "jdbc:postgresql://localhost:{{port}}/${props.getProperty("db.name")}",
+    )
+    packageName = "ch.difty.scipamato.core.db"
+}
 
 testing {
     suites {
@@ -31,34 +59,12 @@ testing {
     }
 }
 
-jooqModelator {
-    jooqVersion = dependencyManagement.managedVersions["org.jooq:jooq"]
-    jooqEdition = "OSS"
-
-    jooqConfigPath = jooqConfigFile.absolutePath
-    jooqOutputPath = "$generatedSourcesPath/$dbPackagePath"
-
-    migrationEngine = "FLYWAY"
-    migrationsPaths = listOf("$rootDir/$moduleName/src/main/resources/db/migration/")
-
-    dockerTag = "postgres:15.4"
-
-    dockerEnv = listOf(
-        "POSTGRES_DB=${props.getProperty("db.name")}",
-        "POSTGRES_USER=${props.getProperty("spring.datasource.hikari.username")}",
-        "POSTGRES_PASSWORD=${props.getProperty("spring.datasource.hikari.password")}"
-    )
-    dockerHostPort = dockerDbPort
-    dockerContainerPort = props.getProperty("db.port").toInt()
-}
-
 dependencies {
     api(project(Module.scipamatoCore("persistence-api")))
     api(project(Module.scipamatoCommon("persistence-jooq")))
     implementation(project(Module.scipamatoCore("entity")))
     implementation(project(Module.scipamatoCommon("utils")))
 
-    jooqModelatorRuntime(libs.postgresql)
     runtimeOnly(libs.postgresql)
     api(libs.jooq)
 
@@ -70,67 +76,6 @@ dependencies {
 
     testImplementation(libs.lombok)
     testAnnotationProcessor(libs.lombok)
-}
-
-sourceSets {
-    main {
-        java {
-            srcDir(setOf(generatedSourcesPath, "src/main/java"))
-        }
-    }
-}
-
-tasks {
-    val jooqGroup = "jOOQ"
-    val jooqMetamodelTaskName = "generateJooqMetamodel"
-    val generateJooqConfig by creating {
-        group = jooqGroup
-        description = "Generates the jooqConfig.xml file to be consumed by the $jooqMetamodelTaskName task."
-        val resourcesDir = sourceSets.main.get().output.resourcesDir
-        resourcesDir?.mkdirs()
-        val fileContent =
-            """
-                <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-                <configuration>
-                    <jdbc>
-                        <driver>org.postgresql.Driver</driver>
-                        <url>jdbc:postgresql://localhost:$dockerDbPort/${props.getProperty("db.name")}?loggerLevel=OFF</url>
-                        <user>${props.getProperty("spring.datasource.hikari.username")}</user>
-                        <password>${props.getProperty("spring.datasource.hikari.password")}</password>
-                    </jdbc>
-                    <generator>
-                        <name>org.jooq.codegen.DefaultGenerator</name>
-                        <database>
-                            <name>org.jooq.meta.postgres.PostgresDatabase</name>
-                            <inputSchema>${props.getProperty("db.schema")}</inputSchema>
-                            <recordVersionFields>version</recordVersionFields>
-                        </database>
-                        <generate>
-                            <deprecated>false</deprecated>
-                            <instanceFields>true</instanceFields>
-                            <pojos>false</pojos>
-                            <javaTimeTypes>false</javaTimeTypes>
-                            <springAnnotations>true</springAnnotations>
-                        </generate>
-                        <target>
-                            <packageName>$dbPackageName</packageName>
-                            <directory>$moduleName/$generatedSourcesPath</directory>
-                        </target>
-                    </generator>
-                    <basedir>$rootDir</basedir>
-                </configuration>
-            """.trimIndent()
-        doLast {
-            jooqConfigFile.writeText(fileContent)
-        }
-    }
-    withType<JooqModelatorTask> {
-        group = jooqGroup
-        // prevent parallel run of this task between core and public
-        outputs.dir(rootProject.layout.buildDirectory.get().asFile.resolve(jooqMetamodelTaskName))
-        dependsOn(generateJooqConfig)
-    }
-    getByName("compileKotlin").dependsOn += jooqMetamodelTaskName
 }
 
 idea {
