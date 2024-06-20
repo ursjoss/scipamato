@@ -72,18 +72,12 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 
 .Changed
-- {url-issues}712[#712] Replace jooqModelator with Optravis jooq-plugin
+- {url-issues}712[#712] Use Optravis jooq-plugin instead of jooqModelator
 
-////
 .Deprecated
 
 .Removed
-
-.Fixed
-
-.Security
-
-////
+- {url-issues}712[#712] Remove usage of jooqModelator gradle plugin
 
 
 [[v2.0.2]]

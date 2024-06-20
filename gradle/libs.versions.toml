@@ -10,7 +10,6 @@ jasperreports = "6.21.3"
 java = "21"
 jakartaElApi = "6.0.0"
 jaxbPlugin = "7.0.0"
-jooqModelatorPlugin = "3.9.0"
 jooqPlugin = "1.2.1"
 jsr305 = "3.0.2"
 junitJupiter = "5.10.2"
@@ -124,7 +123,6 @@ dbTest = ["testcontainers-testcontainers", "testcontainers-junitJupiter", "testc
 [plugins]
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detektPlugin" }
 jaxb = { id = "com.intershop.gradle.jaxb", version.ref = "jaxbPlugin" }
-jooqModelator = { id = "ch.ayedo.jooqmodelator", version.ref = "jooqModelatorPlugin" }
 jooqPlugin = { id = "com.optravis.jooq", version.ref = "jooqPlugin" }
 licenseReport = { id = "com.github.hierynomus.license-report", version.ref = "licensePlugin" }
 lombok = { id = "io.freefair.lombok", version.ref = "lombokPlugin" }
