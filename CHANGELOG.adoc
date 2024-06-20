@@ -67,14 +67,29 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[unreleased]]
 == [unreleased]
 
-{url-cl}2.0.2++...++main[Full Changelog]
+{url-cl}2.0.3++...++main[Full Changelog]
 
 .Added
 
+////
 .Changed
-- {url-issues}712[#712] Use Optravis jooq-plugin instead of jooqModelator
 
 .Deprecated
+
+.Removed
+
+.Fixed
+
+.Security
+////
+
+
+[[v2.0.3]]
+== {url-tree}2.0.3[2.0.3] -- 2024-06-20
+
+.Changed
+- {url-issues}712[#712] Use Optravis jooq-plugin instead of jooqModelator
+- Bumped spring-boot, wicketstuff, feign
 
 .Removed
 - {url-issues}712[#712] Remove usage of jooqModelator gradle plugin
