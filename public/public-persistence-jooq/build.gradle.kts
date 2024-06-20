@@ -1,10 +1,11 @@
 @file:Suppress("SpellCheckingInspection")
 
 import com.optravis.jooq.gradle.ContainerConfig
-import com.optravis.jooq.gradle.JooqGeneratorConfig
 import com.optravis.jooq.gradle.DbConnectionConfig
 import com.optravis.jooq.gradle.ExperimentalJooqGeneratorConfig
+import com.optravis.jooq.gradle.GeneratorType
 import com.optravis.jooq.gradle.JooqDatabaseConfig
+import com.optravis.jooq.gradle.JooqGeneratorConfig
 
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
@@ -43,9 +44,12 @@ jooqGenerator {
     )
     jooqDbConfig = JooqDatabaseConfig.postgres(recordVersionFields = listOf("version"))
     generatorConfig = JooqGeneratorConfig(
+        generatorType = GeneratorType.Java,
         deprecateUnknownTypes = true,
         javaTimeTypes = false,
-        kotlinPojos = false,
+        daos = false,
+        // pojos are required for core/core-sync only
+        pojos = true,
     )
     connectionConfig = DbConnectionConfig(
         user = dbUserName,
