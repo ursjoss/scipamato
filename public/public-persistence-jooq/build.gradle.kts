@@ -1,6 +1,7 @@
 @file:Suppress("SpellCheckingInspection")
 
 import com.optravis.jooq.gradle.ContainerConfig
+import com.optravis.jooq.gradle.JooqGeneratorConfig
 import com.optravis.jooq.gradle.DbConnectionConfig
 import com.optravis.jooq.gradle.ExperimentalJooqGeneratorConfig
 import com.optravis.jooq.gradle.JooqDatabaseConfig
@@ -28,7 +29,7 @@ testing {
 
 
 @OptIn(ExperimentalJooqGeneratorConfig::class)
-jooqGeneratorExtension {
+jooqGenerator {
     val dbUserName = props.getProperty("spring.datasource.hikari.username")
     val dbPassword = props.getProperty("spring.datasource.hikari.password")
     containerConfig = ContainerConfig(
@@ -40,18 +41,17 @@ jooqGeneratorExtension {
             "POSTGRES_PASSWORD" to dbPassword,
         ),
     )
-    jooqDbConfig =  JooqDatabaseConfig(
-        name = "org.jooq.meta.postgres.PostgresDatabase",
-        inputSchema = "public",
-//        recordVersionFields = "version", // TODO
+    jooqDbConfig = JooqDatabaseConfig.postgres(recordVersionFields = listOf("version"))
+    generatorConfig = JooqGeneratorConfig(
+        deprecateUnknownTypes = true,
+        javaTimeTypes = false,
+        kotlinPojos = false,
     )
     connectionConfig = DbConnectionConfig(
         user = dbUserName,
         password = dbPassword,
         urlTemplate = "jdbc:postgresql://localhost:{{port}}/${props.getProperty("db.name")}",
     )
-//    kotlinPojos = true // TODO
-//    javaTimeTypes = false // TODO
     packageName = "ch.difty.scipamato.publ.db"
 }
 
