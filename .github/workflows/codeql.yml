@@ -55,10 +55,11 @@ jobs:
     - name: Download postgres
       run: docker pull postgres:15.4
 
-    - name: Build
+    - name: Setup gradle
       uses: gradle/actions/setup-gradle@v3
-      with:
-        arguments: build
+
+    - name: Run build
+      run: ./gradlew build
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v3

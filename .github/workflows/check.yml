@@ -57,15 +57,11 @@ jobs:
     - name: Download postgres
       run: docker pull postgres:15.4
 
-    - name: Build
+    - name: Setup gradle
       uses: gradle/actions/setup-gradle@v3
-      with:
-        arguments: |
-          check
-          detekt
-          mergeDetektSarif
-          :gradle-plugins:buildPlugins
-          --continue
+
+    - name: Run build
+      run:  ./gradlew check detekt mergeDetektSarif :gradle-plugins:buildPlugins --continue
 
     - name: Upload sarif file to GitHub
       uses: github/codeql-action/upload-sarif@v3
