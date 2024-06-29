@@ -71,9 +71,10 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Added
 
-////
 .Changed
+- {url-issues}718[#718] Switch license plugin
 
+////
 .Deprecated
 
 .Removed

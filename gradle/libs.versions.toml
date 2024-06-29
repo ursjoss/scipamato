@@ -18,7 +18,7 @@ kotest = "5.9.1"
 kotlin = "1.9.24"
 kotlinLogging = "3.0.5"
 kris = "0.5.3"
-licensePlugin = "0.16.1"
+licensePlugin = "2.8"
 lombokPlugin = "8.6"
 mockk = "1.13.11"
 openfeign = "13.3"
@@ -124,7 +124,7 @@ dbTest = ["testcontainers-testcontainers", "testcontainers-junitJupiter", "testc
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detektPlugin" }
 jaxb = { id = "com.intershop.gradle.jaxb", version.ref = "jaxbPlugin" }
 jooqPlugin = { id = "com.optravis.jooq", version.ref = "jooqPlugin" }
-licenseReport = { id = "com.github.hierynomus.license-report", version.ref = "licensePlugin" }
+licenseReport = { id = "com.github.jk1.dependency-license-report", version.ref = "licensePlugin" }
 lombok = { id = "io.freefair.lombok", version.ref = "lombokPlugin" }
 sonarqube = { id = "org.sonarqube", version.ref = "sonarqubePlugin" }
 springBoot = { id = "org.springframework.boot", version.ref = "springBoot" }
