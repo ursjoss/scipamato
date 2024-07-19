@@ -12,7 +12,6 @@ jakartaElApi = "6.0.0"
 jaxbPlugin = "7.0.0"
 jooqPlugin = "1.2.3"
 jsr305 = "3.0.2"
-junitJupiter = "5.10.3"
 kluent = "1.73"
 kotest = "5.9.1"
 kotlin = "1.9.24"
@@ -53,9 +52,9 @@ jakarta-bind-api = { module = "jakarta.xml.bind:jakarta.xml.bind-api" }
 jaxb-runtime = { module = "org.glassfish.jaxb:jaxb-runtime" }
 jooq = { module = "org.jooq:jooq" }
 jsr305 = { module = "com.google.code.findbugs:jsr305", version.ref = "jsr305" }
-junitJupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junitJupiter" }
-junitJupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junitJupiter" }
-junitJupiter-params = { module = "org.junit.jupiter:junit-jupiter-params", version.ref = "junitJupiter" }
+junitJupiter-api = { module = "org.junit.jupiter:junit-jupiter-api" }
+junitJupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine" }
+junitJupiter-params = { module = "org.junit.jupiter:junit-jupiter-params" }
 kluent = { module = "org.amshove.kluent:kluent", version.ref = "kluent" }
 kotest-framework-api = { module = "io.kotest:kotest-framework-api", version.ref = "kotest" }
 kotest-property = { module = "io.kotest:kotest-property", version.ref = "kotest" }
