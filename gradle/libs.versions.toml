@@ -1,6 +1,6 @@
 [versions]
 coroutines = "1.8.1"
-detektPlugin = "1.23.6"
+detektPlugin = "1.23.7"
 # see https://github.com/detekt/detekt/issues/6198
 detektKotlinVersion = "1.9.23"
 ehcache = "3.10.8"
