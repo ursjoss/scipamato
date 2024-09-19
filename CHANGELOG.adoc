@@ -67,12 +67,11 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[unreleased]]
 == [unreleased]
 
-{url-cl}2.0.3++...++main[Full Changelog]
+{url-cl}2.0.4++...++main[Full Changelog]
 
 .Added
 
 .Changed
-- {url-issues}718[#718] Switch license plugin
 
 ////
 .Deprecated
@@ -83,6 +82,19 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Security
 ////
+
+
+[[v2.0.4]]
+== {url-tree}2.0.4[2.0.4] -- 2024-09-19
+
+.Changed
+- {url-issues}718[#718] Switch license plugin
+- bumped spring-boot, kotlin, coroutines, gradle, jOOQ, guava, lombok,
+  spring-cloud-starter-openfeign, feign-jaxb-jarkarta, kris, spring-boot-admin-starter-client,
+  spring-dependency-management, jakarta.el-api,
+  jnuit5, mockk, equalsverifier, sonarqube, detekt, dependency-license-report,
+  docker/login-action gradle/actions
+- migrated from gradle-build-action to gradle/actions/setup-gradle
 
 
 [[v2.0.3]]
