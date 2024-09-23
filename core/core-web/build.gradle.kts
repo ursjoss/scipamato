@@ -63,7 +63,7 @@ dependencies {
     implementation(libs.jasperreports.fonts)
     implementation(libs.univocity)
     // temporarily needed until guava has been fully removed from wicket-bootstrap
-    implementation("com.google.guava:guava:33.3.0-jre")
+    implementation("com.google.guava:guava:33.3.1-jre")
 
     implementation(libs.kris.core)
 
