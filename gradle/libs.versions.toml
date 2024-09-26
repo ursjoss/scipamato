@@ -33,7 +33,7 @@ wicket = "10.2.0"
 wicketBootstrap = "7.0.5"
 wicketJqueryUi = "10.0.0-M1"
 wicketSpringBootStarter = "4.0.0"
-wicketstuff = "10.1.1"
+wicketstuff = "10.2.0"
 
 [libraries]
 cacheApi = { module = "javax.cache:cache-api" }
