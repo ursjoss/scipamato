@@ -7,7 +7,7 @@ import ch.difty.scipamato.common.paper.AbstractShortFieldConcatenator;
 import ch.difty.scipamato.core.entity.Paper;
 
 /**
- * Gathers the content for the the fields methods, population and result.
+ * Gathers the content for the fields `methods`, `population` and `result`.
  * <p>
  * There are some main fields (result, population and method) that could alternatively
  * be represented with a number of Short field (Kurzerfassung). If the main field is populated, it will always
