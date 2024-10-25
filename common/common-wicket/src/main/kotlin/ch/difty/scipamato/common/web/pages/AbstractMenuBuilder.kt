@@ -4,7 +4,6 @@ import ch.difty.scipamato.common.config.ApplicationProperties
 import ch.difty.scipamato.common.web.AbstractPage
 import ch.difty.scipamato.common.web.ScipamatoWebSessionFacade
 import ch.difty.scipamato.common.web.component.SerializableConsumer
-import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapExternalLink
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.dropdown.MenuBookmarkablePageLink
 import de.agilecoders.wicket.core.markup.html.bootstrap.image.IconType
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar
@@ -15,6 +14,7 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarExternalLin
 import org.apache.wicket.Component
 import org.apache.wicket.Page
 import org.apache.wicket.markup.html.link.AbstractLink
+import org.apache.wicket.markup.html.link.PopupSettings
 import org.apache.wicket.model.Model
 import org.apache.wicket.model.StringResourceModel
 import org.apache.wicket.request.mapper.parameter.PageParameters
@@ -49,7 +49,10 @@ abstract class AbstractMenuBuilder protected constructor(
     ) {
         NavbarExternalLink(Model.of(url)).apply {
             setLabel(Model.of(label))
-            setTarget(BootstrapExternalLink.Target.blank)
+            val popupSettings = PopupSettings(PopupSettings.RESIZABLE or PopupSettings.SCROLLBARS).apply {
+                setTarget("_blank")
+            }
+            setPopupSettings(popupSettings)
             iconType?.let { setIconType(it) }
         }.also { navbar.addComponents(NavbarComponents.transform(position, it)) }
     }

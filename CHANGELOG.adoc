@@ -72,14 +72,18 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 
 .Changed
+- bumped jooq-gradle-plugin
 
 ////
 .Deprecated
 
 .Removed
+////
 
 .Fixed
+- {url-issues}727[#727] Open Help/Changelog in new browser window
 
+////
 .Security
 ////
 
