@@ -391,7 +391,7 @@ abstract class PaperPanel<T>(
             override fun onSubmit() {
                 if (java.lang.Boolean.TRUE == forceRequerySupplier.get())
                     restartSearchInPaperSearchPage()
-                else if (callingPage != null)
+                else if (callingPage != null && callingPage.page != null)
                     setResponsePage(callingPage.page)
             }
 
