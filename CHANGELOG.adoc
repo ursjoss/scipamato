@@ -67,25 +67,31 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[unreleased]]
 == [unreleased]
 
-{url-cl}2.0.5++...++main[Full Changelog]
+{url-cl}2.0.6++...++main[Full Changelog]
 
 .Added
+
+////
+.Changed
+
+.Deprecated
+
+.Removed
+
+.Fixed
+
+.Security
+////
+
+
+[[v2.0.6]]
+== {url-tree}2.0.6[2.0.6] -- 2024-10-29
 
 .Changed
 - bumped jooq-gradle-plugin
 
-////
-.Deprecated
-
-.Removed
-////
-
 .Fixed
 - {url-issues}727[#727] Open Help/Changelog in new browser window
-
-////
-.Security
-////
 
 
 [[v2.0.5]]
