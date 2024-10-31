@@ -1,11 +1,11 @@
 {
     "$schema": "https://docs.renovatebot.com/renovate-schema.json",
     "extends": [
-        "config:base",
+        "config:recommended",
         ":semanticCommitTypeAll(chore)"
     ],
-    "rebaseWhen" : "conflicted",
-    "labels" : [
+    "rebaseWhen": "conflicted",
+    "labels": [
         "dependencies"
     ]
 }
