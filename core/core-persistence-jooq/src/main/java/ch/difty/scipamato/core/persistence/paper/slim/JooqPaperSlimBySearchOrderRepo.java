@@ -48,7 +48,7 @@ public class JooqPaperSlimBySearchOrderRepo extends JooqBySearchOrderRepo<PaperS
     public List<PaperSlim> findPageBySearchOrder(@NotNull final SearchOrder searchOrder, @NotNull final PaginationContext pc) {
         final StopWatch watch = new StopWatch("JooqPaperSlimBySearchOrderRepo");
         watch.start();
-        log.info("Start getting iterator page ({} of size {}) of PaperSlim entries for search order with id {}", pc.getOffset(), pc.getPageSize(), searchOrder.getId());
+        log.info("++ > Getting papers (p{}@{}) for so {}...", pc.getOffset(), pc.getPageSize(), searchOrder.getId());
 
         final List<PaperSlim> results = new ArrayList<>();
         final Condition paperMatches = getConditionsFrom(searchOrder);
@@ -61,7 +61,7 @@ public class JooqPaperSlimBySearchOrderRepo extends JooqBySearchOrderRepo<PaperS
             .fetch())
             results.add(newPaperSlim(r));
         watch.stop();
-        log.info("- iterator page ({} of size {}) of PaperSlim entries for search order with id {} in {} ms.", pc.getOffset(), pc.getPageSize(), searchOrder.getId(), watch.getTotalTimeMillis());
+        log.info("++ >   papers found (p{}@{}) for so {} in {} ms.", pc.getOffset(), pc.getPageSize(), searchOrder.getId(), watch.getTotalTimeMillis());
         return results;
     }
 
