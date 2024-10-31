@@ -67,7 +67,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[unreleased]]
 == [unreleased]
 
-{url-cl}2.0.6++...++main[Full Changelog]
+{url-cl}2.0.7++...++main[Full Changelog]
 
 .Added
 
@@ -82,6 +82,15 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Security
 ////
+
+
+[[v2.0.7]]
+== {url-tree}2.0.7[2.0.7] -- 2024-10-31
+
+.Changed
+
+.Fixed
+- avoid a null poiner exception
 
 
 [[v2.0.6]]
