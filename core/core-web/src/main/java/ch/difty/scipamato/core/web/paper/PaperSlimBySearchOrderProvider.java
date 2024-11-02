@@ -61,7 +61,7 @@ public class PaperSlimBySearchOrderProvider extends AbstractPaperSlimProvider<Se
             .iterator();
         watch.stop();
         if (getSearchOrderId() != null) {
-            log.info("++   iterator found (p{}@{}) for so {} in {} ms", pc.getOffset(), getSearchOrderId(), getSearchOrderId(),
+            log.info("++   iterator found (p{}@{}) for so {} in {} ms", pc.getOffset(), pc.getPageSize(), getSearchOrderId(),
                 watch.getTotalTimeMillis());
             log.info("++ ------------------------------------------------");
         }
