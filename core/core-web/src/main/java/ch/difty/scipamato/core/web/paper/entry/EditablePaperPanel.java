@@ -644,12 +644,14 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
                 super.onSubmit(target);
                 Paper p = null;
                 final List<FileUpload> fileUploads = model.getObject();
-                for (final FileUpload upload : fileUploads) {
-                    try {
-                        p = paperService.saveAttachment(convertToPaperAttachment(upload));
-                    } catch (final Exception ex) {
-                        log.error("Unexpected error when uploading file {}: {}", upload.getClientFileName(), ex.getMessage());
-                        error("Unexpected error saving file " + upload.getClientFileName() + ": " + ex.getMessage());
+                if (fileUploads != null) {
+                    for (final FileUpload upload : fileUploads) {
+                        try {
+                            p = paperService.saveAttachment(convertToPaperAttachment(upload));
+                        } catch (final Exception ex) {
+                            log.error("Unexpected error when uploading file {}: {}", upload.getClientFileName(), ex.getMessage());
+                            error("Unexpected error saving file " + upload.getClientFileName() + ": " + ex.getMessage());
+                        }
                     }
                 }
                 if (p != null) {
