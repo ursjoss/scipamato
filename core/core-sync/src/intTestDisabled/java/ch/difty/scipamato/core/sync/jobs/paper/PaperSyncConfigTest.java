@@ -23,7 +23,7 @@ import org.springframework.batch.core.configuration.annotation.JobBuilderFactory
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.SpyBean;
+import org.springframework.boot.test.mock.mockito.MockitoSpyBean;
 
 import ch.difty.scipamato.common.DateTimeService;
 import ch.difty.scipamato.core.db.tables.Code;
@@ -49,7 +49,7 @@ class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
     @MockK
     private SyncShortFieldConcatenator shortFieldConcatenator;
 
-    @SpyBean(name = "dslContext")
+    @MockitoSpyBean(name = "dslContext")
     private DSLContext jooqCore;
 
     @MockK
