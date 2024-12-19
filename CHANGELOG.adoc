@@ -67,7 +67,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[unreleased]]
 == [unreleased]
 
-{url-cl}2.0.10++...++main[Full Changelog]
+{url-cl}2.0.11++...++main[Full Changelog]
 
 .Added
 
@@ -82,6 +82,13 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Security
 ////
+
+
+[[v2.0.11]]
+== {url-tree}2.0.11[2.0.11] -- 2024-12-19
+
+.Changed
+- Bumped spring-boot, spring-dependency-management, wicket, jOOQ, KRis, guava
 
 
 [[v2.0.10]]
