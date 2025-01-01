@@ -75,14 +75,27 @@ class PublicPaperDetailPage : BasePage<PublicPaper> {
 
         queue(Form<Unit>("form"))
 
-        queue(newNavigationButton("previous", FontAwesome6IconType.backward_step_s, paperIdManager::hasPrevious) {
-            paperIdManager.previous()
-            paperIdManager.itemWithFocus
-        })
-        queue(newNavigationButton("next", FontAwesome6IconType.forward_step_s, paperIdManager::hasNext) {
-            paperIdManager.next()
-            paperIdManager.itemWithFocus
-        })
+        queue(
+            newNavigationButton(
+                "previous",
+                FontAwesome6IconType.backward_step_s,
+                @JvmSerializableLambda { paperIdManager.hasPrevious() },
+                @JvmSerializableLambda {
+                    paperIdManager.previous()
+                    paperIdManager.itemWithFocus
+                },
+            )
+        )
+        queue(
+            newNavigationButton(
+                "next",
+                FontAwesome6IconType.forward_step_s,
+                @JvmSerializableLambda { paperIdManager.hasNext() },
+                @JvmSerializableLambda {
+                    paperIdManager.next()
+                    paperIdManager.itemWithFocus
+                }
+            ))
         queue(newBackButton("back"))
         queue(newPubmedLink("pubmed"))
 
@@ -148,14 +161,18 @@ class PublicPaperDetailPage : BasePage<PublicPaper> {
 
     private fun newPubmedLink(id: String): BootstrapExternalLink = if (modelObject != null) {
         val pmId = modelObject.pmId
-        newExternalLink(id, href = "${properties.pubmedBaseUrl}$pmId") { pmId != null }.apply {
+        newExternalLink(id, href = "${properties.pubmedBaseUrl}$pmId") @JvmSerializableLambda { pmId != null }.apply {
             setTarget(BootstrapExternalLink.Target.blank)
             setLabel(id.toLabelResourceModel(LINK_RESOURCE_PREFIX))
             add(AttributeModifier(AM_TITLE, id.toTitleResourceModel(LINK_RESOURCE_PREFIX)))
         }
     } else newExternalLink(id)
 
-    private fun newExternalLink(id: String, href: String = "", getVisibility: () -> Boolean = { false }) =
+    private fun newExternalLink(
+        id: String,
+        href: String = "",
+        getVisibility: () -> Boolean = @JvmSerializableLambda { false },
+    ) =
         object : BootstrapExternalLink(id, Model.of(href), Buttons.Type.Default) {
             private val serialVersionUID: Long = 1
             override fun onConfigure() {
