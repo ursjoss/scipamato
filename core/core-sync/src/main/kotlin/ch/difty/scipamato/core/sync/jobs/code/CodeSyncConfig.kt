@@ -4,6 +4,7 @@ import ch.difty.scipamato.common.DateTimeService
 import ch.difty.scipamato.core.db.tables.Code
 import ch.difty.scipamato.core.db.tables.CodeTr
 import ch.difty.scipamato.core.sync.PublicCode
+import ch.difty.scipamato.core.sync.PublicCodeTable
 import ch.difty.scipamato.core.sync.jobs.SyncConfig
 import ch.difty.scipamato.core.sync.newPublicCode
 import ch.difty.scipamato.publ.db.tables.CodeClass
@@ -100,12 +101,12 @@ open class CodeSyncConfig(
     )
 
     override fun lastSynchedField(): TableField<CodeRecord, Timestamp> =
-        ch.difty.scipamato.publ.db.tables.Code.CODE.LAST_SYNCHED
+        PublicCodeTable.CODE.LAST_SYNCHED
 
     override val pseudoFkDcs: DeleteConditionStep<CodeRecord>?
         get() = jooqPublic
-            .delete(ch.difty.scipamato.publ.db.tables.Code.CODE)
-            .where(ch.difty.scipamato.publ.db.tables.Code.CODE.CODE_CLASS_ID.notIn(jooqPublic
+            .delete(PublicCodeTable.CODE)
+            .where(PublicCodeTable.CODE.CODE_CLASS_ID.notIn(jooqPublic
                 .selectDistinct(CodeClass.CODE_CLASS.CODE_CLASS_ID)
                 .from(CodeClass.CODE_CLASS)))
 

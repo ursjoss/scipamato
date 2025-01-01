@@ -3,6 +3,7 @@ package ch.difty.scipamato.core.sync.jobs.newstudypagelink
 import ch.difty.scipamato.common.DateTimeService
 import ch.difty.scipamato.core.db.tables.NewStudyPageLink
 import ch.difty.scipamato.core.sync.PublicNewStudyPageLink
+import ch.difty.scipamato.core.sync.PublicNewStudyPageLinkTable
 import ch.difty.scipamato.core.sync.jobs.SyncConfig
 import ch.difty.scipamato.core.sync.newPublicNewStudyPageLink
 import ch.difty.scipamato.publ.db.tables.records.NewStudyPageLinkRecord
@@ -69,7 +70,7 @@ open class NewStudyPageLinkSyncConfig(
     )
 
     override fun lastSynchedField(): TableField<NewStudyPageLinkRecord, Timestamp> =
-        ch.difty.scipamato.publ.db.tables.NewStudyPageLink.NEW_STUDY_PAGE_LINK.LAST_SYNCHED
+        PublicNewStudyPageLinkTable.NEW_STUDY_PAGE_LINK.LAST_SYNCHED
 
     companion object {
         private const val TOPIC = "newStudyPageLink"

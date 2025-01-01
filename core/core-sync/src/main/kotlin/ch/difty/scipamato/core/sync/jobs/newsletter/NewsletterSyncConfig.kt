@@ -3,6 +3,7 @@ package ch.difty.scipamato.core.sync.jobs.newsletter
 import ch.difty.scipamato.common.DateTimeService
 import ch.difty.scipamato.core.db.tables.Newsletter
 import ch.difty.scipamato.core.sync.PublicNewsletter
+import ch.difty.scipamato.core.sync.PublicNewsletterTable
 import ch.difty.scipamato.core.sync.jobs.SyncConfig
 import ch.difty.scipamato.core.sync.newPublicNewsletter
 import ch.difty.scipamato.publ.db.tables.records.NewsletterRecord
@@ -76,7 +77,7 @@ open class NewsletterSyncConfig(
 
 
     override fun lastSynchedField(): TableField<NewsletterRecord, Timestamp> =
-        ch.difty.scipamato.publ.db.tables.Newsletter.NEWSLETTER.LAST_SYNCHED
+        PublicNewsletterTable.NEWSLETTER.LAST_SYNCHED
 
     companion object {
         private const val TOPIC = "newsletter"

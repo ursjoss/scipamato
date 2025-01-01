@@ -4,6 +4,7 @@ import ch.difty.scipamato.common.DateTimeService
 import ch.difty.scipamato.core.db.tables.Keyword
 import ch.difty.scipamato.core.db.tables.KeywordTr
 import ch.difty.scipamato.core.sync.PublicKeyword
+import ch.difty.scipamato.core.sync.PublicKeywordTable
 import ch.difty.scipamato.core.sync.jobs.SyncConfig
 import ch.difty.scipamato.core.sync.newPublicKeyword
 import ch.difty.scipamato.publ.db.tables.records.KeywordRecord
@@ -77,7 +78,7 @@ open class KeywordSyncConfig(
         searchOverride = getString(KW_SEARCH_OVERRIDE, rs),
     )
 
-    override fun lastSynchedField(): TableField<KeywordRecord, Timestamp> = ch.difty.scipamato.publ.db.tables.Keyword.KEYWORD.LAST_SYNCHED
+    override fun lastSynchedField(): TableField<KeywordRecord, Timestamp> = PublicKeywordTable.KEYWORD.LAST_SYNCHED
 
     companion object {
         private const val TOPIC = "keyword"

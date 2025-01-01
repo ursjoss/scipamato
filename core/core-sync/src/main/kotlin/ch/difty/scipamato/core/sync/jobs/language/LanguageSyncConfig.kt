@@ -3,6 +3,7 @@ package ch.difty.scipamato.core.sync.jobs.language
 import ch.difty.scipamato.common.DateTimeService
 import ch.difty.scipamato.core.db.tables.Language
 import ch.difty.scipamato.core.sync.PublicLanguage
+import ch.difty.scipamato.core.sync.PublicLanguageTable
 import ch.difty.scipamato.core.sync.jobs.SyncConfig
 import ch.difty.scipamato.core.sync.newPublicLanguage
 import ch.difty.scipamato.publ.db.tables.records.LanguageRecord
@@ -65,7 +66,7 @@ open class LanguageSyncConfig(
     }
 
     override fun lastSynchedField(): TableField<LanguageRecord, Timestamp> =
-        ch.difty.scipamato.publ.db.tables.Language.LANGUAGE.LAST_SYNCHED
+        PublicLanguageTable.LANGUAGE.LAST_SYNCHED
 
     companion object {
         private const val TOPIC = "language"

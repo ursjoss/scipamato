@@ -92,11 +92,11 @@ abstract class ResultPanel protected constructor(
     }
 
     private fun addOrReplaceExportLinks() {
-        addOrReplaceExportLink("exportRisLink") { risDownload.initiate(it) }
+        addOrReplaceExportLink("exportRisLink") @JvmSerializableLambda { risDownload.initiate(it) }
         addOrReplacePdfSummaryLink("summaryLink")
         addOrReplacePdfSummaryShortLink("summaryShortLink")
         addOrReplacePdfReviewLink("reviewLink")
-        addOrReplaceExportLink("reviewCsvLink") { csvDownload.initiate(it) }
+        addOrReplaceExportLink("reviewCsvLink") @JvmSerializableLambda { csvDownload.initiate(it) }
         addOrReplacePdfLiteratureReviewLink("literatureReviewLink", false)
         addOrReplacePdfLiteratureReviewLink("literatureReviewPlusLink", true)
         addOrReplacePdfSummaryTableLink("summaryTableLink")
