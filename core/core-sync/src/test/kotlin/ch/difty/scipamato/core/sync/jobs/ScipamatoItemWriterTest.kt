@@ -17,16 +17,16 @@ internal class ScipamatoItemWriterTest {
 
     private val dslContext = mockk<DSLContext>()
 
-    private val l1 = PublicLanguage(
-        code = "2",
-        lastSynched = Timestamp.from(Instant.now()),
-        mainLanguage = true,
-    )
-    private val l2 = PublicLanguage(
-        code = "3",
-        lastSynched = Timestamp.from(Instant.now()),
-        mainLanguage = true,
-    )
+    private val l1 = PublicLanguage().apply {
+        code = "2"
+        lastSynched = Timestamp.from(Instant.now())
+        mainLanguage = true
+    }
+    private val l2 = PublicLanguage().apply {
+        code = "3"
+        lastSynched = Timestamp.from(Instant.now())
+        mainLanguage = true
+    }
 
     private val papers = mutableListOf(l1)
 
