@@ -51,7 +51,7 @@ abstract class AbstractCsvAdapter<T>(
  * Adapter to build the Review CSV file, accepting a list of [Paper]s
  */
 class ReviewCsvAdapter(private val rhf: ReportHeaderFields) : AbstractCsvAdapter<Paper>(
-    rowMapper = { types -> types.map { PaperReview(it, rhf).toRow() } },
+    rowMapper = @JvmSerializableLambda { types -> types.map { PaperReview(it, rhf).toRow() } },
     headers = arrayOf(
         rhf.numberLabel,
         rhf.authorYearLabel,
