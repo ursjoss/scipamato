@@ -6,6 +6,7 @@ import ch.difty.scipamato.core.db.tables.Code
 import ch.difty.scipamato.core.db.tables.Paper
 import ch.difty.scipamato.core.db.tables.PaperCode
 import ch.difty.scipamato.core.sync.PublicPaper
+import ch.difty.scipamato.core.sync.PublicPaperTable
 import ch.difty.scipamato.core.sync.code.CodeAggregator
 import ch.difty.scipamato.core.sync.jobs.SyncConfig
 import ch.difty.scipamato.core.sync.newPublicPaper
@@ -137,7 +138,7 @@ open class PaperSyncConfig(
         .getArray(alias)
         .array as Array<String>
 
-    override fun lastSynchedField(): TableField<PaperRecord, Timestamp> = ch.difty.scipamato.publ.db.tables.Paper.PAPER.LAST_SYNCHED
+    override fun lastSynchedField(): TableField<PaperRecord, Timestamp> = PublicPaperTable.PAPER.LAST_SYNCHED
 
     companion object {
         private const val TOPIC = "paper"

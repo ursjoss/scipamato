@@ -4,6 +4,7 @@ import ch.difty.scipamato.common.DateTimeService
 import ch.difty.scipamato.core.db.tables.CodeClass
 import ch.difty.scipamato.core.db.tables.CodeClassTr
 import ch.difty.scipamato.core.sync.PublicCodeClass
+import ch.difty.scipamato.core.sync.PublicCodeClassTable
 import ch.difty.scipamato.core.sync.jobs.SyncConfig
 import ch.difty.scipamato.core.sync.newPublicCodeClass
 import ch.difty.scipamato.publ.db.tables.records.CodeClassRecord
@@ -71,7 +72,7 @@ open class CodeClassSyncConfig(
     )
 
     override fun lastSynchedField(): TableField<CodeClassRecord, Timestamp> =
-        ch.difty.scipamato.publ.db.tables.CodeClass.CODE_CLASS.LAST_SYNCHED
+        PublicCodeClassTable.CODE_CLASS.LAST_SYNCHED
 
     companion object {
         private const val TOPIC = "codeClass"

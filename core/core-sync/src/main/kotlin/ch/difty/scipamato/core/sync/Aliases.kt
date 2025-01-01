@@ -10,3 +10,12 @@ typealias PublicNewStudy = ch.difty.scipamato.publ.db.tables.pojos.NewStudy
 typealias PublicNewStudyTopic = ch.difty.scipamato.publ.db.tables.pojos.NewStudyTopic
 typealias PublicNewStudyPageLink = ch.difty.scipamato.publ.db.tables.pojos.NewStudyPageLink
 typealias PublicPaper = ch.difty.scipamato.publ.db.tables.pojos.Paper
+
+typealias PublicCodeTable = ch.difty.scipamato.publ.db.tables.Code
+typealias PublicCodeClassTable = ch.difty.scipamato.publ.db.tables.CodeClass
+typealias PublicKeywordTable = ch.difty.scipamato.publ.db.tables.Keyword
+typealias PublicLanguageTable = ch.difty.scipamato.publ.db.tables.Language
+typealias PublicNewsletterTable = ch.difty.scipamato.publ.db.tables.Newsletter
+typealias PublicNewsletterTopicTable = ch.difty.scipamato.publ.db.tables.NewsletterTopic
+typealias PublicNewStudyPageLinkTable = ch.difty.scipamato.publ.db.tables.NewStudyPageLink
+typealias PublicPaperTable = ch.difty.scipamato.publ.db.tables.Paper

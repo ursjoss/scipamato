@@ -16,7 +16,7 @@ fun newPublicCode(
     created: Timestamp?,
     lastModified: Timestamp?,
     lastSynched: Timestamp?,
-): PublicCode = ch.difty.scipamato.publ.db.tables.pojos.Code(
+): PublicCode = PublicCode(
     code, langCode, codeClassId, name, comment, sort, version, created, lastModified, lastSynched
 )
 
@@ -29,7 +29,7 @@ fun newPublicCodeClass(
     created: Timestamp?,
     lastModified: Timestamp?,
     lastSynched: Timestamp?,
-): PublicCodeClass = ch.difty.scipamato.publ.db.tables.pojos.CodeClass(
+): PublicCodeClass = PublicCodeClass(
     codeClassId, langCode, name, description, version, created, lastModified, lastSynched
 )
 
@@ -43,7 +43,7 @@ fun newPublicKeyword(
     lastModified: Timestamp?,
     lastSynched: Timestamp?,
     searchOverride: String?,
-): PublicKeyword = ch.difty.scipamato.publ.db.tables.pojos.Keyword(
+): PublicKeyword = PublicKeyword(
     id, keywordId, langCode, name, version, created, lastModified, lastSynched, searchOverride
 )
 
@@ -51,7 +51,7 @@ fun newPublicLanguage(
     code: String?,
     lastSynched: Timestamp?,
     mainLanguage: Boolean?,
-): PublicLanguage = ch.difty.scipamato.publ.db.tables.pojos.Language(
+): PublicLanguage = PublicLanguage(
     code, lastSynched, mainLanguage
 )
 
@@ -63,7 +63,7 @@ fun newPublicNewsletter(
     created: Timestamp?,
     lastModified: Timestamp?,
     lastSynched: Timestamp?,
-): PublicNewsletter = ch.difty.scipamato.publ.db.tables.pojos.Newsletter(
+): PublicNewsletter = PublicNewsletter(
     id, issue, issueDate, version, created, lastModified, lastSynched
 )
 
@@ -75,7 +75,7 @@ fun newPublicNewsletterTopic(
     created: Timestamp?,
     lastModified: Timestamp?,
     lastSynched: Timestamp?,
-): PublicNewsletterTopic = ch.difty.scipamato.publ.db.tables.pojos.NewsletterTopic(
+): PublicNewsletterTopic = PublicNewsletterTopic(
     id, langCode, title, version, created, lastModified, lastSynched
 )
 
@@ -92,7 +92,7 @@ fun newPublicNewStudy(
     created: Timestamp?,
     lastModified: Timestamp?,
     lastSynched: Timestamp?,
-): PublicNewStudy = ch.difty.scipamato.publ.db.tables.pojos.NewStudy(
+): PublicNewStudy = PublicNewStudy(
     newsletterId, paperNumber, newsletterTopicId, sort, year, authors, headline, description,
     version, created, lastModified, lastSynched
 )
@@ -105,7 +105,7 @@ fun newPublicNewStudyTopic(
     created: Timestamp?,
     lastModified: Timestamp?,
     lastSynched: Timestamp?,
-): PublicNewStudyTopic = ch.difty.scipamato.publ.db.tables.pojos.NewStudyTopic(
+): PublicNewStudyTopic = PublicNewStudyTopic(
     newsletterId, newsletterTopicId, sort, version, created, lastModified, lastSynched
 )
 
@@ -118,7 +118,7 @@ fun newPublicNewStudyPageLink(
     created: Timestamp?,
     lastModified: Timestamp?,
     lastSynched: Timestamp?,
-): PublicNewStudyPageLink = ch.difty.scipamato.publ.db.tables.pojos.NewStudyPageLink(
+): PublicNewStudyPageLink = PublicNewStudyPageLink(
     langCode, sort, title, url, version, created, lastModified, lastSynched
 )
 
@@ -142,7 +142,7 @@ fun newPublicPaper(
     codesStudyDesign: Array<Short>?,
     codes: Array<String>?,
     lastSynched: Timestamp?,
-): PublicPaper = ch.difty.scipamato.publ.db.tables.pojos.Paper(
+): PublicPaper = PublicPaper(
     id, number, pmId, authors, title, location, publicationYear, goals, methods, population, result,
     comment, version, created, lastModified, codesPopulation, codesStudyDesign, codes, lastSynched
 )
