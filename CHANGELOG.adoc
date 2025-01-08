@@ -67,16 +67,13 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[unreleased]]
 == [unreleased]
 
-{url-cl}2.0.11++...++main[Full Changelog]
+{url-cl}2.1.0++...++main[Full Changelog]
 
 .Added
 
-.Changed
-- Bumped kotlin, coroutines, wicket-bootstrap, wicketstuff,
-  mockk, equalsverifier,
-  gradle
-
 ////
+.Changed
+
 .Deprecated
 
 .Removed
@@ -85,6 +82,15 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Security
 ////
+
+
+[[v2.1.0]]
+== {url-tree}2.1.0[2.1.0] -- 2025-01-08
+
+.Changed
+- Bumped kotlin, coroutines, wicket-bootstrap, wicketstuff,
+  mockk, equalsverifier,
+  gradle
 
 
 [[v2.0.11]]
