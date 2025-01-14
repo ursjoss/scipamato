@@ -3,12 +3,10 @@ package ch.difty.scipamato.core.web.paper;
 import java.util.Iterator;
 import java.util.List;
 
-import lombok.extern.slf4j.Slf4j;
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder;
 import org.apache.wicket.injection.Injector;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.springframework.util.StopWatch;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.common.persistence.paging.PaginationRequest;
@@ -24,7 +22,6 @@ import ch.difty.scipamato.core.entity.search.SearchOrder;
  *
  * @author u.joss
  */
-@Slf4j
 public class PaperSlimBySearchOrderProvider extends AbstractPaperSlimProvider<SearchOrder> {
 
     @java.io.Serial
@@ -50,35 +47,14 @@ public class PaperSlimBySearchOrderProvider extends AbstractPaperSlimProvider<Se
     @NotNull
     @Override
     protected Iterator<PaperSlim> findPage(@NotNull final PaginationContext pc) {
-        final StopWatch watch = new StopWatch("PaperSlimBySearchOrderProvider#findPage");
-        watch.start();
-        if (getSearchOrderId() != null) {
-            log.info("++ ------------------------------------------------");
-            log.info("++ Getting iterator (p{}@{}) for so {}...", pc.getOffset(), pc.getPageSize(), getSearchOrderId());
-        }
-        final Iterator<PaperSlim> iterator = getService()
+        return getService()
             .findPageBySearchOrder(getFilterState(), pc)
             .iterator();
-        watch.stop();
-        if (getSearchOrderId() != null) {
-            log.info("++   iterator found (p{}@{}) for so {} in {} ms", pc.getOffset(), pc.getPageSize(), getSearchOrderId(),
-                watch.getTotalTimeMillis());
-            log.info("++ ------------------------------------------------");
-        }
-        return iterator;
     }
 
     @Override
     protected long getSize() {
-        final StopWatch watch = new StopWatch("PaperSlimBySearchOrderProvider#getSize");
-        watch.start();
-        if (getSearchOrderId() != null)
-            log.info(">> Getting size for so {}...", getSearchOrderId());
-        final int size = getService().countBySearchOrder(getFilterState());
-        watch.stop();
-        if (getSearchOrderId() != null)
-            log.info(">> size {} found for so {} in {} ms.", size, getSearchOrderId(), watch.getTotalTimeMillis());
-        return size;
+        return getService().countBySearchOrder(getFilterState());
     }
 
     @NotNull
