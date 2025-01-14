@@ -8,10 +8,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.jooq.*;
-import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
@@ -24,8 +22,6 @@ import ch.difty.scipamato.core.entity.search.SearchOrder;
 import ch.difty.scipamato.core.persistence.paper.searchorder.JooqBySearchOrderRepo;
 import ch.difty.scipamato.core.persistence.paper.searchorder.PaperSlimBackedSearchOrderRepository;
 
-import org.springframework.util.StopWatch;
-
 /**
  * {@link PaperSlim} specific repository returning those entities by
  * SearchOrders.
@@ -33,7 +29,6 @@ import org.springframework.util.StopWatch;
  * @author u.joss
  */
 @Repository
-@Slf4j
 @Profile("!wickettest")
 public class JooqPaperSlimBySearchOrderRepo extends JooqBySearchOrderRepo<PaperSlim, PaperSlimRecordMapper>
     implements PaperSlimBackedSearchOrderRepository {
@@ -46,10 +41,6 @@ public class JooqPaperSlimBySearchOrderRepo extends JooqBySearchOrderRepo<PaperS
     @NotNull
     @Override
     public List<PaperSlim> findPageBySearchOrder(@NotNull final SearchOrder searchOrder, @NotNull final PaginationContext pc) {
-        final StopWatch watch = new StopWatch("JooqPaperSlimBySearchOrderRepo");
-        watch.start();
-        log.info("++ > Getting papers (p{}@{}) for so {}...", pc.getOffset(), pc.getPageSize(), searchOrder.getId());
-
         final List<PaperSlim> results = new ArrayList<>();
         final Condition paperMatches = getConditionsFrom(searchOrder);
         final Collection<SortField<PaperSlim>> sortCriteria = getSortMapper().map(pc.getSort(), PAPER);
@@ -60,8 +51,6 @@ public class JooqPaperSlimBySearchOrderRepo extends JooqBySearchOrderRepo<PaperS
             .offset(pc.getOffset())
             .fetch())
             results.add(newPaperSlim(r));
-        watch.stop();
-        log.info("++ >   papers found (p{}@{}) for so {} in {} ms.", pc.getOffset(), pc.getPageSize(), searchOrder.getId(), watch.getTotalTimeMillis());
         return results;
     }
 
