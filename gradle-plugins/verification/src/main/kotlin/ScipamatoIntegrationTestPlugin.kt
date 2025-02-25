@@ -1,6 +1,5 @@
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.api.attributes.TestSuiteType
 import org.gradle.api.plugins.JvmTestSuitePlugin
 import org.gradle.api.plugins.jvm.JvmTestSuite
 import org.gradle.kotlin.dsl.apply
@@ -18,7 +17,6 @@ class ScipamatoIntegrationTestPlugin : Plugin<Project> {
             configure<TestingExtension> {
                 suites {
                     register("integrationTest", JvmTestSuite::class) {
-                        testType.set(TestSuiteType.INTEGRATION_TEST)
                         sources {
                             java.srcDir("src/integration-test/kotlin")
                             resources.srcDir("src/integration-test/resources")
