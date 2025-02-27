@@ -63,6 +63,7 @@ class ReviewCsvAdapter(private val rhf: ReportHeaderFields) : AbstractCsvAdapter
         rhf.populationParticipantsLabel,
         rhf.exposureAssessmentLabel,
         rhf.resultExposureRangeLabel,
+        rhf.methodStatisticsLabel,
         rhf.methodConfoundersLabel,
         rhf.resultEffectEstimateLabel,
         rhf.conclusionLabel,
