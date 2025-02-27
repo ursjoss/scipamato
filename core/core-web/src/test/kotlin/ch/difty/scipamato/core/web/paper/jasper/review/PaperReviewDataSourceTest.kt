@@ -36,6 +36,7 @@ internal class PaperReviewDataSourceTest : PaperDataSourceTest() {
         populationParticipantsLabel = "ppal",
         exposureAssessmentLabel = "eal",
         resultExposureRangeLabel = "rerl",
+        methodStatisticsLabel = "msl",
         methodConfoundersLabel = "mcl",
         resultEffectEstimateLabel = "reel",
         conclusionLabel = "ccl",
@@ -59,6 +60,7 @@ internal class PaperReviewDataSourceTest : PaperDataSourceTest() {
         every { paperMock.populationParticipants } returns "pp"
         every { paperMock.exposureAssessment } returns "ea"
         every { paperMock.resultExposureRange } returns "rer"
+        every { paperMock.methodStatistics } returns "ms"
         every { paperMock.methodConfounders } returns "mc"
         every { paperMock.resultEffectEstimate } returns "ree"
         every { paperMock.conclusion } returns "cc"
@@ -94,6 +96,7 @@ internal class PaperReviewDataSourceTest : PaperDataSourceTest() {
         assertFieldValue("populationParticipants", "pp", f, jsds)
         assertFieldValue("exposureAssessment", "ea", f, jsds)
         assertFieldValue("resultExposureRange", "rer", f, jsds)
+        assertFieldValue("methodStatistics", "ms", f, jsds)
         assertFieldValue("methodConfounders", "mc", f, jsds)
         assertFieldValue("resultEffectEstimate", "ree", f, jsds)
         assertFieldValue("conclusion", "cc", f, jsds)
@@ -108,6 +111,7 @@ internal class PaperReviewDataSourceTest : PaperDataSourceTest() {
         assertFieldValue("populationParticipantsLabel", "ppal", f, jsds)
         assertFieldValue("exposureAssessmentLabel", "eal", f, jsds)
         assertFieldValue("resultExposureRangeLabel", "rerl", f, jsds)
+        assertFieldValue("methodStaticisLabel", "msl", f, jsds)
         assertFieldValue("methodConfoundersLabel", "mcl", f, jsds)
         assertFieldValue("resultEffectEstimateLabel", "reel", f, jsds)
         assertFieldValue("conclusionLabel", "ccl", f, jsds)
@@ -142,6 +146,7 @@ internal class PaperReviewDataSourceTest : PaperDataSourceTest() {
         verify { paperMock.populationParticipants }
         verify { paperMock.exposureAssessment }
         verify { paperMock.resultExposureRange }
+        verify { paperMock.methodStatistics }
         verify { paperMock.methodConfounders }
         verify { paperMock.resultEffectEstimate }
         verify { paperMock.conclusion }

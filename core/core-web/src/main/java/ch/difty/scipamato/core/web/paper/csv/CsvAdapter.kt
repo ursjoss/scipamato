@@ -92,6 +92,7 @@ private fun PaperReview.toRow() = arrayOf(
     populationParticipants,
     exposureAssessment,
     resultExposureRange,
+    methodStatistics,
     methodConfounders,
     resultEffectEstimate,
     conclusion,
