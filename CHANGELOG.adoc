@@ -67,10 +67,9 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[unreleased]]
 == [unreleased]
 
-{url-cl}2.1.1++...++main[Full Changelog]
+{url-cl}2.1.2++...++main[Full Changelog]
 
 .Added
-- {url-issues}843[#843] Add field "Statistical Method" to Review csv (and PDF) exports
 
 ////
 .Changed
@@ -83,6 +82,19 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Security
 ////
+
+
+[[v2.1.2]]
+== {url-tree}2.1.2[2.1.2] -- 2025-02-27
+
+.Added
+- {url-issues}843[#843] Add field "Statistical Method" to Review csv (and PDF) exports
+
+.Changed
+- Bumped spring-boot, kotlin, jOOQ, spring-boot-admin-starter-client, lombok, wicketstuff,
+  detekt, mockk, equalsverifier,
+  gradle
+
 
 [[v2.1.1]]
 == {url-tree}2.1.1[2.1.1] -- 2025-01-25
