@@ -365,6 +365,7 @@ abstract class ResultPanel protected constructor(
         populationParticipantsLabel = getShortLabelResourceFor(PaperFields.POPULATION_PARTICIPANTS.fieldName),
         exposureAssessmentLabel = getShortLabelResourceFor(PaperFields.EXPOSURE_ASSESSMENT.fieldName),
         resultExposureRangeLabel = getShortLabelResourceFor(PaperFields.RESULT_EXPOSURE_RANGE.fieldName),
+        methodStatisticsLabel = getLabelResourceFor(PaperFields.METHOD_STATISTICS.fieldName),
         methodConfoundersLabel = getLabelResourceFor(PaperFields.METHOD_CONFOUNDERS.fieldName),
         resultEffectEstimateLabel = getShortLabelResourceFor(PaperFields.RESULT_EFFECT_ESTIMATE.fieldName),
         conclusionLabel = getShortLabelResourceFor(PaperFields.CONCLUSION.fieldName),

@@ -70,6 +70,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 {url-cl}2.1.1++...++main[Full Changelog]
 
 .Added
+- {url-issues}843[#843] Add field "Statistical Method" to Review csv (and PDF) exports
 
 ////
 .Changed

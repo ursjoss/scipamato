@@ -26,6 +26,7 @@ internal class PaperReviewTest : ExportEntityTest() {
         populationDurationLabel = POPULATION_DURATION_LABEL,
         exposureAssessmentLabel = EXPOSURE_ASSESSMENT_LABEL,
         resultExposureRangeLabel = RESULT_EXPOSURE_RANGE_LABEL,
+        methodStatisticsLabel = METHOD_STATISTICS_LABEL,
         methodConfoundersLabel = METHOD_CONFOUNDERS_LABEL,
         resultEffectEstimateLabel = RESULT_EFFECT_ESTIMATE_LABEL,
         conclusionLabel = CONCLUSION_LABEL,
@@ -47,6 +48,7 @@ internal class PaperReviewTest : ExportEntityTest() {
         pr.populationParticipantsLabel shouldBeEqualTo POPULATION_PARTICIPANTS_LABEL
         pr.exposureAssessmentLabel shouldBeEqualTo EXPOSURE_ASSESSMENT_LABEL
         pr.resultExposureRangeLabel shouldBeEqualTo RESULT_EXPOSURE_RANGE_LABEL
+        pr.methodStatisticsLabel shouldBeEqualTo METHOD_STATISTICS_LABEL
         pr.methodConfoundersLabel shouldBeEqualTo METHOD_CONFOUNDERS_LABEL
         pr.resultEffectEstimateLabel shouldBeEqualTo RESULT_EFFECT_ESTIMATE_LABEL
         pr.conclusionLabel shouldBeEqualTo CONCLUSION_LABEL
@@ -98,6 +100,7 @@ internal class PaperReviewTest : ExportEntityTest() {
         pr.populationParticipants shouldBeEqualTo POPULATION_PARTICIPANTS
         pr.exposureAssessment shouldBeEqualTo EXPOSURE_ASSESSMENT
         pr.resultExposureRange shouldBeEqualTo RESULT_EXPOSURE_RANGE
+        pr.methodStatistics shouldBeEqualTo METHOD_STATISTICS
         pr.methodConfounders shouldBeEqualTo METHOD_CONFOUNDERS
         pr.resultEffectEstimate shouldBeEqualTo RESULT_EFFECT_ESTIMATE
         pr.conclusion shouldBeEqualTo CONCLUSION

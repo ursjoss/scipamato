@@ -14,9 +14,9 @@ object ReviewCsvBuilderSpec : DescribeSpec({
         val builder = ReviewCsvAdapter(rhf = rhf)
         it("can build CSV with multiline fields with dynamic quoting") {
             builder.build(listOf(PaperWithIndex(1), PaperWithIndex(2))) shouldBeEqualTo """
-                ${BOM}nl;ayl;ppl;mol;epl;msdl;pdl;ppl;eal;rerl;mcl;reel;cl1;cl2;il;gl;pl;ml;rl
-                1;Bond1 J 2021;pp1;mo1;eo1;msd1;pd1;pp1;ea1;rer1;mc1;ree1;c11;c21;i1;g1;p1;m1;r1
-                2;Bond2 J 2022;pp2;mo2;eo2;msd2;pd2;pp2;ea2;rer2;mc2;ree2;c12;"c22
+                ${BOM}nl;ayl;ppl;mol;epl;msdl;pdl;ppl;eal;rerl;msl;mcl;reel;cl1;cl2;il;gl;pl;ml;rl
+                1;Bond1 J 2021;pp1;mo1;eo1;msd1;pd1;pp1;ea1;rer1;ms1;mc1;ree1;c11;c21;i1;g1;p1;m1;r1
+                2;Bond2 J 2022;pp2;mo2;eo2;msd2;pd2;pp2;ea2;rer2;ms2;mc2;ree2;c12;"c22
                 foo
                 bar
                 baz";i2;g2;p2;m2;r2
@@ -39,6 +39,7 @@ private val rhf = ReportHeaderFields(
     populationParticipantsLabel = "ppl",
     exposureAssessmentLabel = "eal",
     resultExposureRangeLabel = "rerl",
+    methodStatisticsLabel = "msl",
     methodConfoundersLabel = "mcl",
     resultEffectEstimateLabel = "reel",
     conclusionLabel = "cl1",
@@ -63,6 +64,7 @@ private fun PaperWithIndex(i: Int) = Paper().apply {
     populationParticipants = "pp$i"
     exposureAssessment = "ea$i"
     resultExposureRange = "rer$i"
+    methodStatistics = "ms$i"
     methodConfounders = "mc$i"
     resultEffectEstimate = "ree$i"
     conclusion = "c1$i"
