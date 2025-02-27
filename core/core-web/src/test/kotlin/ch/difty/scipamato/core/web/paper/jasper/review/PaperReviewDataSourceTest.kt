@@ -48,7 +48,7 @@ internal class PaperReviewDataSourceTest : PaperDataSourceTest() {
         resultLabel = "rl",
     )
 
-    public override fun setUpHook() {
+    override fun setUpHook() {
         every { paperMock.number } returns NUMBER
         every { paperMock.firstAuthor } returns "fa"
         every { paperMock.publicationYear } returns 2017
@@ -111,7 +111,7 @@ internal class PaperReviewDataSourceTest : PaperDataSourceTest() {
         assertFieldValue("populationParticipantsLabel", "ppal", f, jsds)
         assertFieldValue("exposureAssessmentLabel", "eal", f, jsds)
         assertFieldValue("resultExposureRangeLabel", "rerl", f, jsds)
-        assertFieldValue("methodStaticisLabel", "msl", f, jsds)
+        assertFieldValue("methodStatisticsLabel", "msl", f, jsds)
         assertFieldValue("methodConfoundersLabel", "mcl", f, jsds)
         assertFieldValue("resultEffectEstimateLabel", "reel", f, jsds)
         assertFieldValue("conclusionLabel", "ccl", f, jsds)
