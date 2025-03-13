@@ -2,10 +2,13 @@ package ch.difty.scipamato.core.logic.export
 
 import ch.difty.scipamato.core.entity.Paper
 import ch.difty.scipamato.core.logic.exporting.DefaultRisAdapter
+import org.amshove.kluent.invoking
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldContainAll
 import org.amshove.kluent.shouldNotContain
 import org.amshove.kluent.shouldNotContainAny
+import org.amshove.kluent.shouldThrow
+import org.amshove.kluent.withMessage
 import org.junit.jupiter.api.Test
 
 @Suppress("SpellCheckingInspection")
@@ -53,7 +56,7 @@ internal class DefaultRisAdapterTest {
     }
 
     @Test
-    fun canParseSimplePaperWithOneAuthorAndSipleButNonParseableLocation() {
+    fun canParseSimplePaperWithOneAuthorAndSimpleButNonParseableLocation() {
         val expected =
             """TY  - JOUR
                   |AU  - Bond,J.
@@ -372,4 +375,48 @@ internal class DefaultRisAdapterTest {
             |""".trimMargin()
         adapter.build(listOf(p)) shouldBeEqualTo expected
     }
+
+    @Test
+    fun bug848_withPmId32733175() {
+        val paper = Paper().apply {
+            number = 10215
+            pmId = 32733175
+            doi = "10.1177/1559325820942699"
+            title = "The Association Between PM2.5 and Depression in China."
+            authors = "He G, Chen Y, Wang S, Dong Y, Ju G, Chen B."
+            publicationYear = 2020
+            location = "Dose Response. 2020; 18 (3): 1559325820942699."
+            goals = "goals"
+            originalAbstract = "original abstract"
+        }
+        val expected =
+            """TY  - JOUR
+                  |AU  - He,G.
+                  |AU  - Chen,Y.
+                  |AU  - Wang,S.
+                  |AU  - Dong,Y.
+                  |AU  - Ju,G.
+                  |AU  - Chen,B.
+                  |PY  - 2020
+                  |TI  - The Association Between PM2.5 and Depression in China.
+                  |JO  - Dose Response
+                  |SP  - 1559325820942699
+                  |VL  - 18
+                  |IS  - 3
+                  |ID  - 32733175
+                  |DO  - 10.1177/1559325820942699
+                  |M1  - 10215
+                  |M2  - goals
+                  |AB  - original abstract
+                  |DB  - scipamato
+                  |L1  - https://scipamato.ch/paper/number/10215
+                  |L2  - http://localhost:8080/32733175
+                  |ER  - 
+                  |
+              """.trimMargin()
+//        adapter.build(listOf(paper)) shouldBeEqualTo expected // BUG
+        invoking { adapter.build(listOf(paper)) } shouldThrow
+            NumberFormatException::class withMessage "For input string: \"1559325820942699\""
+    }
+
 }
