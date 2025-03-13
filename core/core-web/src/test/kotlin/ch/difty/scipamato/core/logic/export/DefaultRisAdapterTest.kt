@@ -2,13 +2,10 @@ package ch.difty.scipamato.core.logic.export
 
 import ch.difty.scipamato.core.entity.Paper
 import ch.difty.scipamato.core.logic.exporting.DefaultRisAdapter
-import org.amshove.kluent.invoking
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldContainAll
 import org.amshove.kluent.shouldNotContain
 import org.amshove.kluent.shouldNotContainAny
-import org.amshove.kluent.shouldThrow
-import org.amshove.kluent.withMessage
 import org.junit.jupiter.api.Test
 
 @Suppress("SpellCheckingInspection")
@@ -414,9 +411,7 @@ internal class DefaultRisAdapterTest {
                   |ER  - 
                   |
               """.trimMargin()
-//        adapter.build(listOf(paper)) shouldBeEqualTo expected // BUG
-        invoking { adapter.build(listOf(paper)) } shouldThrow
-            NumberFormatException::class withMessage "For input string: \"1559325820942699\""
+        adapter.build(listOf(paper)) shouldBeEqualTo expected
     }
 
 }

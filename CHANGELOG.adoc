@@ -77,9 +77,12 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Deprecated
 
 .Removed
+////
 
 .Fixed
+- {url-issues}848[#848] Fix exporting papers to RIS format with very large pages indication
 
+////
 .Security
 ////
 
