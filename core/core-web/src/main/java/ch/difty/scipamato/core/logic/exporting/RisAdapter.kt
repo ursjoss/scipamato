@@ -69,8 +69,8 @@ sealed class JRisAdapter(
     @Suppress("LongParameterList")
     protected abstract fun newRisRecord(
         p: Paper,
-        startPage: Int?,
-        endPage: Int?,
+        startPage: Long?,
+        endPage: Long?,
         periodical: String,
         volume: String?,
         issue: String?
@@ -110,8 +110,8 @@ sealed class JRisAdapter(
                 periodical = groups[i++],
                 volume = groups[i++],
                 issue = groups[i++].takeUnless { it.trim().isBlank() },
-                startPage = groups[i++].run { if (isNotEmpty()) toInt() else null },
-                endPage = groups[i].run { if (isNotEmpty()) toInt() else null }
+                startPage = groups[i++].run { if (isNotEmpty()) toLongOrNull() else null },
+                endPage = groups[i].run { if (isNotEmpty()) toLongOrNull() else null }
             )
         }
         return LocationComponents(location)
@@ -121,8 +121,8 @@ sealed class JRisAdapter(
         val periodical: String,
         val volume: String? = null,
         val issue: String? = null,
-        val startPage: Int? = null,
-        val endPage: Int? = null
+        val startPage: Long? = null,
+        val endPage: Long? = null
     )
 
     companion object {
@@ -152,8 +152,8 @@ class DefaultRisAdapter(
 ) : JRisAdapter(dbName, internalUrl, publicUrl) {
     override fun newRisRecord(
         p: Paper,
-        startPage: Int?,
-        endPage: Int?,
+        startPage: Long?,
+        endPage: Long?,
         periodical: String,
         volume: String?,
         issue: String?
@@ -200,8 +200,8 @@ class DistillerSrRisAdapter(
     override fun build(papers: List<Paper>) = build(papers, defaultDistillerSort)
     override fun newRisRecord(
         p: Paper,
-        startPage: Int?,
-        endPage: Int?,
+        startPage: Long?,
+        endPage: Long?,
         periodical: String,
         volume: String?,
         issue: String?
@@ -227,7 +227,7 @@ class DistillerSrRisAdapter(
             databaseName = dbName
         )
 
-    private fun getPages(sp: Int?, ep: Int?) = when {
+    private fun getPages(sp: Long?, ep: Long?) = when {
         sp == null && ep == null -> null
         ep == null -> sp.toString()
         sp == null -> ep.toString()
