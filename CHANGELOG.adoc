@@ -67,7 +67,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[unreleased]]
 == [unreleased]
 
-{url-cl}2.1.2++...++main[Full Changelog]
+{url-cl}2.1.4++...++main[Full Changelog]
 
 .Added
 
@@ -83,6 +83,17 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Security
 
 ////
+
+
+[[v2.1.4]]
+== {url-tree}2.1.4[2.1.4] -- 2025-03-21
+
+.Changed
+- reconfigured renovate to pin github action digists
+- Bumped kotlin, spring-boot, guava, spring-cloud-starter-openfeign,
+  equalsverifier,
+  actions/cache, actions/upload-artifact, docker/login-action
+
 
 [[v2.1.3]]
 == {url-tree}2.1.3[2.1.3] -- 2025-03-13
