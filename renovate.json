@@ -8,5 +8,15 @@
     "rebaseWhen": "conflicted",
     "labels": [
         "dependencies"
+    ],
+    "packageRules": [
+        {
+            "matchManagers": ["github-actions"],
+            "matchDepTypes": ["action"],
+            "matchUpdateTypes": ["digest"],
+            "automerge": true,
+            "automergeType": "branch",
+            "requiredStatusChecks": ["Check", "CodeQL"]
+        }
     ]
 }
