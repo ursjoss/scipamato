@@ -76,3 +76,12 @@ jobs:
       with:
         name: reports
         path: '**/build/reports'
+
+    - name: Re-run all tests with Gradle
+      run: ./gradlew check
+
+    - name: Report analysis to sonar
+      run: ./gradlew sonar
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
