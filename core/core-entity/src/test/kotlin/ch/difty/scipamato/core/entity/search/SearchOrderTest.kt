@@ -217,6 +217,17 @@ internal class SearchOrderTest {
     }
 
     @Test
+    fun testingFullDisplayValue_withoutNameButWithSingleConditionAndExclusions_returnsIt() {
+        val so1 = SearchOrder(10L, null, 1, false, null, listOf(2L))
+        so1.add(object : SearchCondition() {
+            private val serialVersionUID: Long = 1L
+            override fun getDisplayValue(): String = "f1DisplayValue"
+        })
+
+        so1.displayValue shouldBeEqualTo "f1DisplayValue ! (10)"
+    }
+
+    @Test
     fun testingFullDisplayValue_withSingleCondition_returnsIt() {
         so.add(object : SearchCondition() {
             private val serialVersionUID: Long = 1L
@@ -278,6 +289,12 @@ internal class SearchOrderTest {
         })
         so.displayValue shouldBeEqualTo "soName: c1DisplayValue; OR c2DisplayValue; " +
             "OR c3DisplayValue; OR c4DisplayValue; OR c5DisplayValu... (10)"
+
+        so.addExclusionOfPaperWithId(1L)
+
+        so.displayValue shouldBeEqualTo "soName: c1DisplayValue; OR c2DisplayValue; " +
+            "OR c3DisplayValue; OR c4DisplayValue; OR c5DisplayValu... ! (10)"
+
     }
 
     @Test

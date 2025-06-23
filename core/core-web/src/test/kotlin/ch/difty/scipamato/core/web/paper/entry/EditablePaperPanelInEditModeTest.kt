@@ -642,7 +642,7 @@ internal class EditablePaperPanelInEditModeTest : EditablePaperPanelTest() {
         assertExcluded(
             false,
             "Exclude paper from current search",
-            "fa-circle-minus"
+            "fa-ban"
         )
     }
 

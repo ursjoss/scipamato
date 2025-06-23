@@ -610,7 +610,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
                     setIconType(FontAwesome6IconType.circle_check_s);
                     add(new AttributeModifier(TITLE_ATTR, new StringResourceModel("button.exclude.title.reinclude", this, null).getString()));
                 } else {
-                    setIconType(FontAwesome6IconType.circle_minus_s);
+                    setIconType(FontAwesome6IconType.ban_s);
                     add(new AttributeModifier(TITLE_ATTR, new StringResourceModel("button.exclude.title.exclude", this, null).getString()));
                 }
             }

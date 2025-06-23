@@ -171,6 +171,10 @@ public class SearchOrder extends IdScipamatoEntity<Long> implements PaperSlimFil
             sb.delete(DISPL_VALUE_CUTOFF, sb.length());
             sb.append(DISPL_VALUE_ELLIPSIS);
         }
+
+        if (!excludedPaperIds.isEmpty())
+            sb.append(" !");
+
         return sb;
     }
 
