@@ -71,9 +71,10 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Added
 
-////
 .Changed
+- {url-issues}911[#911] Search Order name to indicate excluded papers with an exclamation mark
 
+////
 .Deprecated
 
 .Removed
