@@ -67,14 +67,13 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[unreleased]]
 == [unreleased]
 
-{url-cl}2.1.5++...++main[Full Changelog]
+{url-cl}2.1.6++...++main[Full Changelog]
 
 .Added
 
-.Changed
-- {url-issues}911[#911] Search Order name to indicate excluded papers with an exclamation mark
-
 ////
+.Changed
+
 .Deprecated
 
 .Removed
@@ -84,6 +83,16 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Security
 
 ////
+
+
+[[v2.1.6]]
+== {url-tree}2.1.6[2.1.6] -- 2025-06-23
+
+.Changed
+- {url-issues}911[#911] Search Order name to indicate excluded papers with an exclamation mark
+- Bumped spring-boot, kotlin, mockk, equalsverifier,
+  lombok plugin,
+  codeql-action, gradle action
 
 
 [[v2.1.5]]
