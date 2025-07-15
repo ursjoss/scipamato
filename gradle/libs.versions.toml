@@ -29,11 +29,11 @@ springCloudStarter = "4.3.0"
 springDependencyManagementPlugin = "1.1.7"
 springMockk = "4.0.2"
 univocityParsers = "2.9.1"
-wicket = "10.5.0"
-wicketBootstrap = "7.0.10"
+wicket = "10.6.0"
+wicketBootstrap = "7.0.11"
 wicketJqueryUi = "10.0.0-M1"
 wicketSpringBootStarter = "4.0.0"
-wicketstuff = "10.5.0"
+wicketstuff = "10.6.0"
 
 [libraries]
 cacheApi = { module = "javax.cache:cache-api" }
