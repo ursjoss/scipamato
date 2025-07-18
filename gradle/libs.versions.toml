@@ -4,7 +4,7 @@ detektPlugin = "1.23.8"
 # see https://github.com/detekt/detekt/issues/6198
 detektKotlinVersion = "2.0.21"
 ehcache = "3.10.8"
-equalsverifier = "4.0.5"
+equalsverifier = "4.0.6"
 jacoco = "0.8.11"
 jasperreports = "6.21.5"
 java = "21"
