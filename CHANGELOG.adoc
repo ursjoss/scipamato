@@ -67,7 +67,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[unreleased]]
 == [unreleased]
 
-{url-cl}2.1.6++...++main[Full Changelog]
+{url-cl}2.1.7++...++main[Full Changelog]
 
 .Added
 
@@ -83,6 +83,15 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Security
 
 ////
+
+[[v2.1.7]]
+== {url-tree}2.1.7[2.1.7] -- 2025-09-18
+
+.Changed
+- Bumped spring-boot, wicket-spring-boot-starter, spring-boot-admin-starter-client,
+  kotlin, guava, jasperreports, ehcache, wicket, wicketstuff, wicket-bootstrap,
+  mockk, equalsverifier, gradle, lombok, sonarqube, reckon,
+  cache, checkout, setup-java, docker-login, codeql-action, gradle-actions
 
 
 [[v2.1.6]]
