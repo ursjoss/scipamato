@@ -13,7 +13,7 @@ jaxbPlugin = "7.0.2"
 jooqPlugin = "2.2.7"
 jsr305 = "3.0.2"
 kluent = "1.73"
-kotest = "5.9.1"
+kotest = "6.0.3"
 kotlin = "2.2.20"
 kotlinLogging = "3.0.5"
 kris = "0.5.25"
@@ -56,7 +56,7 @@ junitJupiter-api = { module = "org.junit.jupiter:junit-jupiter-api" }
 junitJupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine" }
 junitJupiter-params = { module = "org.junit.jupiter:junit-jupiter-params" }
 kluent = { module = "org.amshove.kluent:kluent", version.ref = "kluent" }
-kotest-framework-api = { module = "io.kotest:kotest-framework-api", version.ref = "kotest" }
+kotest-framework-engine = { module = "io.kotest:kotest-framework-engine", version.ref = "kotest" }
 kotest-property = { module = "io.kotest:kotest-property", version.ref = "kotest" }
 kotest-runner-junit5 = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
@@ -123,6 +123,7 @@ dbTest = ["testcontainers-testcontainers", "testcontainers-junitJupiter", "testc
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detektPlugin" }
 jaxb = { id = "com.intershop.gradle.jaxb", version.ref = "jaxbPlugin" }
 jooqPlugin = { id = "com.optravis.jooq", version.ref = "jooqPlugin" }
+kotest = { id = "io.kotest", version.ref = "kotest" }
 licenseReport = { id = "com.github.jk1.dependency-license-report", version.ref = "licensePlugin" }
 lombok = { id = "io.freefair.lombok", version.ref = "lombokPlugin" }
 sonarqube = { id = "org.sonarqube", version.ref = "sonarqubePlugin" }
