@@ -29,6 +29,7 @@ plugins {
     alias(libs.plugins.lombok)
     idea
     jacoco
+    alias(libs.plugins.kotest)
     alias(libs.plugins.detekt)
     alias(libs.plugins.sonarqube)
     alias(libs.plugins.licenseReport)
@@ -142,7 +143,7 @@ subprojects {
             exclude("org.hamcrest", "hamcrest")
             exclude("org.assertj", "assertj-core")
         }
-        testImplementation(rootProject.libs.kotest.framework.api)
+        testImplementation(rootProject.libs.kotest.framework.engine)
         testImplementation(rootProject.libs.kotest.property)
         testImplementation(rootProject.libs.kluent) {
             exclude("org.mockito", "mockito-core")
