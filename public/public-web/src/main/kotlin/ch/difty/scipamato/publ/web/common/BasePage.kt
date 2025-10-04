@@ -11,7 +11,7 @@ import ch.difty.scipamato.publ.web.PublicPageParameters
 import ch.difty.scipamato.publ.web.pym.PymScripts
 import ch.difty.scipamato.publ.web.resources.MainCssResourceReference
 import ch.difty.scipamato.publ.web.resources.PymJavaScriptResourceReference
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome6CdnCssReference
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome7CdnCssReference
 import org.apache.wicket.markup.head.CssHeaderItem
 import org.apache.wicket.markup.head.IHeaderResponse
 import org.apache.wicket.markup.head.JavaScriptContentHeaderItem
@@ -68,7 +68,7 @@ abstract class BasePage<T> : AbstractPage<T> {
     override fun renderHead(response: IHeaderResponse) {
         super.renderHead(response)
         response.render(CssHeaderItem.forReference(MainCssResourceReference))
-        response.render(CssHeaderItem.forReference(FontAwesome6CdnCssReference.instance()))
+        response.render(CssHeaderItem.forReference(FontAwesome7CdnCssReference.instance()))
         if (properties.isCommercialFontPresent) renderCommercialFonts(response)
         if (properties.isResponsiveIframeSupportEnabled) renderPymForResponsiveIframe(response)
     }

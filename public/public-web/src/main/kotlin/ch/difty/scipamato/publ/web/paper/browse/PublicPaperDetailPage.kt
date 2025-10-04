@@ -11,7 +11,7 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapExternalLink
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons
 import de.agilecoders.wicket.core.markup.html.bootstrap.image.IconType
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome6IconType
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome7IconType
 import org.apache.wicket.AttributeModifier
 import org.apache.wicket.PageReference
 import org.apache.wicket.markup.html.basic.Label
@@ -78,7 +78,7 @@ class PublicPaperDetailPage : BasePage<PublicPaper> {
         queue(
             newNavigationButton(
                 "previous",
-                FontAwesome6IconType.backward_step_s,
+                FontAwesome7IconType.backward_step_s,
                 @JvmSerializableLambda { paperIdManager.hasPrevious() },
                 @JvmSerializableLambda {
                     paperIdManager.previous()
@@ -89,7 +89,7 @@ class PublicPaperDetailPage : BasePage<PublicPaper> {
         queue(
             newNavigationButton(
                 "next",
-                FontAwesome6IconType.forward_step_s,
+                FontAwesome7IconType.forward_step_s,
                 @JvmSerializableLambda { paperIdManager.hasNext() },
                 @JvmSerializableLambda {
                     paperIdManager.next()

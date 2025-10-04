@@ -3,7 +3,7 @@ package ch.difty.scipamato.core.web;
 import java.util.List;
 
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome6IconType;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome7IconType;
 import org.apache.wicket.Page;
 import org.apache.wicket.markup.html.link.AbstractLink;
 import org.apache.wicket.model.StringResourceModel;
@@ -44,58 +44,58 @@ public class CoreMenuBuilder extends AbstractMenuBuilder {
 
     @Override
     public void addMenuLinksTo(@NotNull final Navbar navbar, @NotNull final Page page) {
-        newMenu(navbar, page, "papers", FontAwesome6IconType.paperclip_s, l -> addPaperMenuEntries(l, page));
+        newMenu(navbar, page, "papers", FontAwesome7IconType.paperclip_s, l -> addPaperMenuEntries(l, page));
         if (hasOneOfRoles(Roles.USER, Roles.ADMIN)) {
-            newMenu(navbar, page, "newsletters", FontAwesome6IconType.book_s, l -> addNewsletterMenuEntries(l, page));
-            newMenu(navbar, page, "refData", FontAwesome6IconType.folder_open_s, l -> addRefDataMenuEntries(l, page));
-            newMenu(navbar, page, "preferences", FontAwesome6IconType.user_s, l -> addPreferencesMenuEntries(l, page));
+            newMenu(navbar, page, "newsletters", FontAwesome7IconType.book_s, l -> addNewsletterMenuEntries(l, page));
+            newMenu(navbar, page, "refData", FontAwesome7IconType.folder_open_s, l -> addRefDataMenuEntries(l, page));
+            newMenu(navbar, page, "preferences", FontAwesome7IconType.user_s, l -> addPreferencesMenuEntries(l, page));
         }
 
         addExternalLink(navbar, new StringResourceModel("menu.help.url", page, null).getString(),
-            new StringResourceModel("menu.help", page, null).getString(), FontAwesome6IconType.circle_question_s, Navbar.ComponentPosition.RIGHT);
+            new StringResourceModel("menu.help", page, null).getString(), FontAwesome7IconType.circle_question_s, Navbar.ComponentPosition.RIGHT);
         addExternalLink(navbar, new StringResourceModel("menu.changelog.url", page, null)
             .setParameters(getVersionAnker())
-            .getString(), getVersionLink(), FontAwesome6IconType.briefcase_s, Navbar.ComponentPosition.RIGHT);
-        addPageLink(navbar, page, LogoutPage.class, "menu.logout", FontAwesome6IconType.right_from_bracket_s, Navbar.ComponentPosition.RIGHT);
+            .getString(), getVersionLink(), FontAwesome7IconType.briefcase_s, Navbar.ComponentPosition.RIGHT);
+        addPageLink(navbar, page, LogoutPage.class, "menu.logout", FontAwesome7IconType.right_from_bracket_s, Navbar.ComponentPosition.RIGHT);
     }
 
     private void addPaperMenuEntries(@NotNull final List<AbstractLink> links, @NotNull final Page page) {
         final String labelParent = "menu.papers.";
-        addEntryToMenu(labelParent + "paper", page, PaperListPage.class, FontAwesome6IconType.list_s, links);
-        addEntryToMenu(labelParent + "search", page, PaperSearchPage.class, FontAwesome6IconType.magnifying_glass_s, links);
+        addEntryToMenu(labelParent + "paper", page, PaperListPage.class, FontAwesome7IconType.list_s, links);
+        addEntryToMenu(labelParent + "search", page, PaperSearchPage.class, FontAwesome7IconType.magnifying_glass_s, links);
     }
 
     private void addNewsletterMenuEntries(@NotNull final List<AbstractLink> links, @NotNull final Page page) {
         final String labelParent = "menu.newsletters.";
         if (hasOneOfRoles(Roles.USER, Roles.ADMIN)) {
-            addEntryToMenu(labelParent + "newsletter", page, NewsletterListPage.class, FontAwesome6IconType.newspaper_s, links);
-            addEntryToMenu(labelParent + "newslettertopic", page, NewsletterTopicListPage.class, FontAwesome6IconType.bookmark_s, links);
+            addEntryToMenu(labelParent + "newsletter", page, NewsletterListPage.class, FontAwesome7IconType.newspaper_s, links);
+            addEntryToMenu(labelParent + "newslettertopic", page, NewsletterTopicListPage.class, FontAwesome7IconType.bookmark_s, links);
         }
     }
 
     private void addRefDataMenuEntries(@NotNull final List<AbstractLink> links, @NotNull final Page page) {
         final String labelParent = "menu.refData.";
         if (hasOneOfRoles(Roles.USER, Roles.ADMIN)) {
-            addEntryToMenu(labelParent + "keyword", page, KeywordListPage.class, FontAwesome6IconType.briefcase_s, links);
-            addEntryToMenu(labelParent + "code", page, CodeListPage.class, FontAwesome6IconType.barcode_s, links);
-            addEntryToMenu(labelParent + "codeClass", page, CodeClassListPage.class, FontAwesome6IconType.qrcode_s, links);
-            addEntryToMenu(labelParent + "sync", page, RefDataSyncPage.class, FontAwesome6IconType.rotate_s, links);
+            addEntryToMenu(labelParent + "keyword", page, KeywordListPage.class, FontAwesome7IconType.briefcase_s, links);
+            addEntryToMenu(labelParent + "code", page, CodeListPage.class, FontAwesome7IconType.barcode_s, links);
+            addEntryToMenu(labelParent + "codeClass", page, CodeClassListPage.class, FontAwesome7IconType.qrcode_s, links);
+            addEntryToMenu(labelParent + "sync", page, RefDataSyncPage.class, FontAwesome7IconType.rotate_s, links);
         }
     }
 
     private void addPreferencesMenuEntries(@NotNull final List<AbstractLink> links, @NotNull final Page page) {
         final String labelParent = "menu.preferences.";
         if (hasOneOfRoles(Roles.ADMIN)) {
-            addEntryToMenu(labelParent + "users", page, UserListPage.class, FontAwesome6IconType.users_s, links);
+            addEntryToMenu(labelParent + "users", page, UserListPage.class, FontAwesome7IconType.users_s, links);
         }
         if (hasOneOfRoles(Roles.USER, Roles.ADMIN)) {
             final PageParameters pp = new PageParameters();
             pp.add("mode", UserEditPage.Mode.EDIT);
-            addEntryToMenu(labelParent + "profile", page, UserEditPage.class, FontAwesome6IconType.user_pen_s, links, pp);
+            addEntryToMenu(labelParent + "profile", page, UserEditPage.class, FontAwesome7IconType.user_pen_s, links, pp);
 
             final PageParameters pp2 = new PageParameters();
             pp2.add("mode", UserEditPage.Mode.CHANGE_PASSWORD);
-            addEntryToMenu(labelParent + "password", page, UserEditPage.class, FontAwesome6IconType.key_s, links, pp2);
+            addEntryToMenu(labelParent + "password", page, UserEditPage.class, FontAwesome7IconType.key_s, links, pp2);
         }
     }
 }
