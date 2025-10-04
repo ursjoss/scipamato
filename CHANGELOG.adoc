@@ -71,9 +71,14 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Added
 
-////
 .Changed
+- Bump wicket, wicket-bootstrap, wicketstuff, KRis,
+  kotest, mockk, equalsverifier,
+  lombok gradle-plugin,
+  gradle/action, actions/cache, docker/login-action, codeql-action
+- Migrated from FontAwesome6 to FontAwesome7 icons
 
+////
 .Deprecated
 
 .Removed

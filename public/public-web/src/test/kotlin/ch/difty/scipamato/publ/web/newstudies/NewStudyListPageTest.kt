@@ -16,7 +16,7 @@ import ch.difty.scipamato.publ.web.paper.browse.PublicPaperDetailPage
 import ch.difty.scipamato.publ.web.resources.IcoMoonIconType
 import com.ninjasquad.springmockk.MockkBean
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapExternalLink
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome6IconType
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome7IconType
 import io.mockk.confirmVerified
 import io.mockk.every
 import io.mockk.mockk
@@ -199,8 +199,8 @@ class NewStudyListPageTest : BasePageTest<NewStudyListPage>() {
     @Test
     fun icon_withFreeFont() {
         val page = makePage()
-        val icon = page.chooseIcon(FontAwesome6IconType.right_long_s, IcoMoonIconType.arrow_right)
-        icon shouldBeEqualTo FontAwesome6IconType.right_long_s
+        val icon = page.chooseIcon(FontAwesome7IconType.right_long_s, IcoMoonIconType.arrow_right)
+        icon shouldBeEqualTo FontAwesome7IconType.right_long_s
     }
 
     @Test
@@ -214,7 +214,7 @@ class NewStudyListPageTest : BasePageTest<NewStudyListPage>() {
             override val properties: ApplicationPublicProperties
                 get() = applicationProperties
         }
-        val icon = page.chooseIcon(FontAwesome6IconType.right_long_s, IcoMoonIconType.arrow_right)
+        val icon = page.chooseIcon(FontAwesome7IconType.right_long_s, IcoMoonIconType.arrow_right)
         icon shouldBeEqualTo IcoMoonIconType.arrow_right
     }
 

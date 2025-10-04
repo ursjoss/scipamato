@@ -9,8 +9,8 @@ import java.util.Objects;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons.Type;
 import de.agilecoders.wicket.core.markup.html.bootstrap.table.TableBehavior;
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome6IconType;
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome6IconTypeBuilder;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome7IconType;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome7IconTypeBuilder;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
@@ -125,8 +125,8 @@ public class SearchOrderPanel extends BasePanel<SearchOrder> {
 
     private IColumn<SearchCondition, String> makeLinkIconColumn(@NotNull final String id,
         @NotNull final SerializableConsumer<IModel<SearchCondition>> consumer) {
-        final FontAwesome6IconType trash = FontAwesome6IconTypeBuilder
-            .on(FontAwesome6IconTypeBuilder.FontAwesome6Solid.trash_can)
+        final FontAwesome7IconType trash = FontAwesome7IconTypeBuilder
+            .on(FontAwesome7IconTypeBuilder.FontAwesome7Solid.trash_can)
             .fixedWidth()
             .build();
         return new LinkIconColumn<>(new StringResourceModel("column.header." + id, this, null)) {

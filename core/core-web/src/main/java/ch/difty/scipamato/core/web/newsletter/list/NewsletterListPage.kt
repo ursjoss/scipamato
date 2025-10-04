@@ -21,7 +21,7 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButt
 import de.agilecoders.wicket.core.markup.html.bootstrap.table.TableBehavior
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelect
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelectConfig
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome6IconTypeBuilder
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome7IconTypeBuilder
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable
 import org.apache.wicket.ajax.AjaxRequestTarget
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior
@@ -181,7 +181,7 @@ class NewsletterListPage(parameters: PageParameters?) : BasePage<Unit>(parameter
     }
 
     private fun makeSortTopicLinkColumn(id: String): IColumn<Newsletter, String> {
-        val shuffle = FontAwesome6IconTypeBuilder.FontAwesome6Solid.shuffle.fixed()
+        val shuffle = FontAwesome7IconTypeBuilder.FontAwesome7Solid.shuffle.fixed()
         return object : LinkIconColumn<Newsletter>(
             StringResourceModel("$COLUMN_HEADER$id", this@NewsletterListPage, null)
         ) {
@@ -203,7 +203,7 @@ class NewsletterListPage(parameters: PageParameters?) : BasePage<Unit>(parameter
     }
 
     private fun makeRemoveLinkColumn(id: String): IColumn<Newsletter, String> {
-        val trash = FontAwesome6IconTypeBuilder.FontAwesome6Solid.trash_can.fixed()
+        val trash = FontAwesome7IconTypeBuilder.FontAwesome7Solid.trash_can.fixed()
         return object : LinkIconColumn<Newsletter>(
             StringResourceModel("$COLUMN_HEADER$id", this@NewsletterListPage, null)
         ) {

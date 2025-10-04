@@ -4,7 +4,7 @@ import ch.difty.scipamato.common.config.ApplicationProperties
 import ch.difty.scipamato.common.navigator.LongNavigator
 import ch.difty.scipamato.common.web.pages.AbstractMenuBuilder
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome6IconType
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome7IconType
 import org.apache.wicket.Page
 import org.apache.wicket.model.StringResourceModel
 import org.springframework.boot.autoconfigure.SpringBootApplication
@@ -57,12 +57,12 @@ class TestMenuBuilder(
     override fun addMenuLinksTo(navbar: Navbar, page: Page) {
         addPageLink(
             navbar, page, TestHomePage::class.java, "menu.home",
-            FontAwesome6IconType.house_s, Navbar.ComponentPosition.LEFT
+            FontAwesome7IconType.house_s, Navbar.ComponentPosition.LEFT
         )
         addExternalLink(
             navbar, "https://github.com/ursjoss/scipamato/wiki",
             StringResourceModel("menu.help", page, null).string,
-            FontAwesome6IconType.circle_question_s, Navbar.ComponentPosition.RIGHT
+            FontAwesome7IconType.circle_question_s, Navbar.ComponentPosition.RIGHT
         )
     }
 
