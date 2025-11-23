@@ -67,7 +67,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[unreleased]]
 == [unreleased]
 
-{url-cl}2.1.8++...++main[Full Changelog]
+{url-cl}2.1.9++...++main[Full Changelog]
 
 .Added
 
@@ -84,6 +84,18 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Security
 
 ////
+
+[[v2.1.9]]
+== {url-tree}2.1.9[2.1.9] -- 2025-11-23
+
+{url-cl}2.1.8++...++2.1.9[Full Changelog]
+
+.Changed
+- Bump sprint-boot, sprint-boot-admin-starter-client, lombok,
+  gradle,
+  kotest, equalsverifier,
+  dependency-license-report, sonarqube,
+  github actions checkout, code-ql, digest
 
 
 [[v2.1.8]]
