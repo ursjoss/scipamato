@@ -47,8 +47,8 @@ tasks {
 
 dependencies {
     implementation(project(":common-utils"))
-    implementation(project(Module.scipamatoPublic("entity")))
-    implementation(project(Module.scipamatoPublic("persistence-jooq")))
+    implementation(project(":public-entity"))
+    implementation(project(":public-persistence-jooq"))
     implementation(project(":common-wicket"))
 
     annotationProcessor(libs.spring.boot.configurationprocessor) {

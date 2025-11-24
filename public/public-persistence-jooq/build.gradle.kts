@@ -66,9 +66,9 @@ jooqGenerator {
 }
 
 dependencies {
-    api(project(Module.scipamatoPublic("persistence-api")))
+    api(project(":public-persistence-api"))
     api(project(":common-persistence-jooq"))
-    implementation(project(Module.scipamatoPublic("entity")))
+    implementation(project(":public-entity"))
     implementation(project(":common-utils"))
 
     runtimeOnly(libs.postgresql)
