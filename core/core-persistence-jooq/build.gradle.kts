@@ -67,9 +67,9 @@ testing {
 }
 
 dependencies {
-    api(project(Module.scipamatoCore("persistence-api")))
+    api(project(":core-persistence-api"))
     api(project(":common-persistence-jooq"))
-    implementation(project(Module.scipamatoCore("entity")))
+    implementation(project(":core-entity"))
     implementation(project(":common-utils"))
 
     runtimeOnly(libs.postgresql)
@@ -79,7 +79,7 @@ dependencies {
 
     testImplementation(project(":common-persistence-jooq-test"))
     testImplementation(project(":common-test"))
-    testImplementation(project(Module.scipamatoCore("entity")))
+    testImplementation(project(":core-entity"))
 
     testImplementation(libs.lombok)
     testAnnotationProcessor(libs.lombok)

@@ -35,11 +35,11 @@ tasks {
 
 dependencies {
     implementation(project(":common-utils"))
-    implementation(project(Module.scipamatoCore("entity")))
-    implementation(project(Module.scipamatoCore("logic")))
-    implementation(project(Module.scipamatoCore("persistence-jooq")))
-    implementation(project(Module.scipamatoCore("pubmed-api")))
-    implementation(project(Module.scipamatoCore("sync")))
+    implementation(project(":core-entity"))
+    implementation(project(":core-logic"))
+    implementation(project(":core-persistence-jooq"))
+    implementation(project(":core-pubmed-api"))
+    implementation(project(":core-sync"))
     implementation(project(":common-wicket"))
 
     annotationProcessor(libs.spring.boot.configurationprocessor) {
