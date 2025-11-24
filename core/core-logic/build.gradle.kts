@@ -1,8 +1,8 @@
 description = "SciPaMaTo-Core :: Business Logic Project"
 
 dependencies {
-    implementation(project(Module.scipamatoCommon("utils")))
-    implementation(project(Module.scipamatoCore("entity")))
+    implementation(project(":common-utils"))
+    implementation(project(":core-entity"))
 
-    testImplementation(project(Module.scipamatoCommon("test")))
+    testImplementation(project(":common-test"))
 }
