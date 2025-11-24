@@ -2,7 +2,6 @@ import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 description = "SciPaMaTo-Core :: Web GUI Project"
 
-@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     alias(libs.plugins.springBoot).apply(true)
     id("application-properties-filter")
@@ -35,13 +34,13 @@ tasks {
 }
 
 dependencies {
-    implementation(project(Module.scipamatoCommon("utils")))
+    implementation(project(":common-utils"))
     implementation(project(Module.scipamatoCore("entity")))
     implementation(project(Module.scipamatoCore("logic")))
     implementation(project(Module.scipamatoCore("persistence-jooq")))
     implementation(project(Module.scipamatoCore("pubmed-api")))
     implementation(project(Module.scipamatoCore("sync")))
-    implementation(project(Module.scipamatoCommon("wicket")))
+    implementation(project(":common-wicket"))
 
     annotationProcessor(libs.spring.boot.configurationprocessor) {
         exclude("om.vaadin.external.google", "android-json")
@@ -74,8 +73,8 @@ dependencies {
             requireCapability("org.ehcache:ehcache-jakarta")
         }
     }
-    testImplementation(project(Module.scipamatoCommon("test")))
-    testImplementation(project(Module.scipamatoCommon("persistence-jooq-test")))
+    testImplementation(project(":common-test"))
+    testImplementation(project(":common-persistence-jooq-test"))
     testImplementation(libs.jakarta.servletApi)
     testImplementation(libs.validationApi)
     testImplementation(libs.lombok)

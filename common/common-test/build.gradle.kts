@@ -1,8 +1,8 @@
 description = "SciPaMaTo-Common :: Test Project"
 
 dependencies {
-    api(project(Module.scipamatoCommon("utils")))
-    api(project(Module.scipamatoCommon("entity")))
+    api(project(":common-utils"))
+    api(project(":common-entity"))
 
     api(libs.spring.boot.starter.test) {
         exclude("junit", "junit")

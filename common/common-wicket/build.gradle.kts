@@ -19,9 +19,9 @@ sourceSets {
 }
 
 dependencies {
-    implementation(project(Module.scipamatoCommon("utils")))
-    implementation(project(Module.scipamatoCommon("entity")))
-    implementation(project(Module.scipamatoCommon("persistence-api")))
+    implementation(project(":common-utils"))
+    implementation(project(":common-entity"))
+    implementation(project(":common-persistence-api"))
 
     api(libs.spring.boot.starter.undertow)
     api(libs.spring.boot.starter.actuator)
@@ -58,7 +58,7 @@ dependencies {
     testImplementation(libs.lombok)
     testAnnotationProcessor(libs.lombok)
 
-    testImplementation(project(Module.scipamatoCommon("test")))
+    testImplementation(project(":common-test"))
 
     testImplementation(libs.lombok)
     testAnnotationProcessor(libs.lombok)

@@ -17,7 +17,7 @@ sourceSets {
 }
 
 dependencies {
-    implementation(project(Module.scipamatoCommon("utils")))
+    implementation(project(":common-utils"))
     implementation(libs.spring.boot.starter.batch)
     implementation(libs.spring.boot.starter.jooq)
     annotationProcessor(libs.spring.boot.configurationprocessor) {
@@ -27,8 +27,8 @@ dependencies {
     runtimeOnly(libs.postgresql)
     implementation(libs.jooq)
 
-    testImplementation(project(Module.scipamatoCommon("persistence-jooq-test")))
-    testImplementation(project(Module.scipamatoCommon("test")))
+    testImplementation(project(":common-persistence-jooq-test"))
+    testImplementation(project(":common-test"))
     testImplementation(libs.jooq)
 
     testImplementation(libs.lombok)

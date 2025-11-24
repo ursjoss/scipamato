@@ -1,6 +1,5 @@
 object Module {
 
-    fun scipamatoCommon(module: String) = ":common-$module"
     fun scipamatoCommonProjects(modules: List<String>) = modules.map { "common-$it" }.toTypedArray()
 
     fun scipamatoCore(module: String) = ":core-$module"

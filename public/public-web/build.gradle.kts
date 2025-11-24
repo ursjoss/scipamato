@@ -2,7 +2,6 @@ import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 description = "SciPaMaTo-Public :: Web Project"
 
-@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     alias(libs.plugins.springBoot).apply(true)
     id("application-properties-filter")
@@ -47,10 +46,10 @@ tasks {
 }
 
 dependencies {
-    implementation(project(Module.scipamatoCommon("utils")))
+    implementation(project(":common-utils"))
     implementation(project(Module.scipamatoPublic("entity")))
     implementation(project(Module.scipamatoPublic("persistence-jooq")))
-    implementation(project(Module.scipamatoCommon("wicket")))
+    implementation(project(":common-wicket"))
 
     annotationProcessor(libs.spring.boot.configurationprocessor) {
         exclude("om.vaadin.external.google", "android-json")
@@ -64,5 +63,5 @@ dependencies {
         }
     }
 
-    testImplementation(project(Module.scipamatoCommon("test")))
+    testImplementation(project(":common-test"))
 }

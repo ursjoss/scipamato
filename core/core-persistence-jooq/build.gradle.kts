@@ -68,17 +68,17 @@ testing {
 
 dependencies {
     api(project(Module.scipamatoCore("persistence-api")))
-    api(project(Module.scipamatoCommon("persistence-jooq")))
+    api(project(":common-persistence-jooq"))
     implementation(project(Module.scipamatoCore("entity")))
-    implementation(project(Module.scipamatoCommon("utils")))
+    implementation(project(":common-utils"))
 
     runtimeOnly(libs.postgresql)
     api(libs.jooq)
 
     implementation(libs.spring.security.core)
 
-    testImplementation(project(Module.scipamatoCommon("persistence-jooq-test")))
-    testImplementation(project(Module.scipamatoCommon("test")))
+    testImplementation(project(":common-persistence-jooq-test"))
+    testImplementation(project(":common-test"))
     testImplementation(project(Module.scipamatoCore("entity")))
 
     testImplementation(libs.lombok)
