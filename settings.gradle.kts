@@ -4,6 +4,7 @@ import org.ajoberstar.reckon.gradle.ReckonExtension
 
 pluginManagement {
     repositories {
+        mavenCentral()
         gradlePluginPortal()
     }
 }
