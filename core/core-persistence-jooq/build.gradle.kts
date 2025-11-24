@@ -6,8 +6,9 @@ import com.optravis.jooq.gradle.ExperimentalJooqGeneratorConfig
 import com.optravis.jooq.gradle.GeneratorType
 import com.optravis.jooq.gradle.JooqDatabaseConfig
 import com.optravis.jooq.gradle.JooqGeneratorConfig
+import java.util.Properties
+import kotlin.apply
 
-@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     alias(libs.plugins.jooqPlugin)
     id("scipamato-integration-test")
@@ -16,6 +17,12 @@ plugins {
 description = "SciPaMaTo-Core :: Persistence jOOQ Project"
 
 val props = file("src/integration-test/resources/application.properties").asProperties()
+
+fun File.asProperties() = Properties().apply {
+    inputStream().use { fis ->
+        load(fis)
+    }
+}
 
 @OptIn(ExperimentalJooqGeneratorConfig::class)
 jooqGenerator {
