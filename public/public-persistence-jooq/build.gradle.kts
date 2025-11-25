@@ -6,8 +6,9 @@ import com.optravis.jooq.gradle.ExperimentalJooqGeneratorConfig
 import com.optravis.jooq.gradle.GeneratorType
 import com.optravis.jooq.gradle.JooqDatabaseConfig
 import com.optravis.jooq.gradle.JooqGeneratorConfig
+import java.util.Properties
+import kotlin.apply
 
-@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     alias(libs.plugins.jooqPlugin)
     id("scipamato-integration-test")
@@ -15,6 +16,12 @@ plugins {
 description = "SciPaMaTo-Public:: Persistence jOOQ Project"
 
 val props = file("src/integration-test/resources/application.properties").asProperties()
+
+fun File.asProperties() = Properties().apply {
+    inputStream().use { fis ->
+        load(fis)
+    }
+}
 
 testing {
     suites {
@@ -59,16 +66,16 @@ jooqGenerator {
 }
 
 dependencies {
-    api(project(Module.scipamatoPublic("persistence-api")))
-    api(project(Module.scipamatoCommon("persistence-jooq")))
-    implementation(project(Module.scipamatoPublic("entity")))
-    implementation(project(Module.scipamatoCommon("utils")))
+    api(project(":public-persistence-api"))
+    api(project(":common-persistence-jooq"))
+    implementation(project(":public-entity"))
+    implementation(project(":common-utils"))
 
     runtimeOnly(libs.postgresql)
     api(libs.jooq)
 
-    testImplementation(project(Module.scipamatoCommon("persistence-jooq-test")))
-    testImplementation(project(Module.scipamatoCommon("test")))
+    testImplementation(project(":common-persistence-jooq-test"))
+    testImplementation(project(":common-test"))
 }
 
 idea {

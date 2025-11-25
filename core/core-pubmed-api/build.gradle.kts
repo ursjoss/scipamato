@@ -1,6 +1,5 @@
 description = "SciPaMaTo-Core :: Pubmed API Project"
 
-@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     alias(libs.plugins.jaxb)
     id("scipamato-integration-test")
@@ -20,7 +19,7 @@ testing {
 }
 
 dependencies {
-    implementation(project(Module.scipamatoCommon("utils")))
+    implementation(project(":common-utils"))
 
     // Cloud access
     api(libs.spring.cloud.starter.openfeign) {
@@ -35,7 +34,7 @@ dependencies {
     implementation(libs.jakarta.bind.api)
     runtimeOnly(libs.jaxb.runtime)
 
-    testImplementation(project(Module.scipamatoCommon("test")))
+    testImplementation(project(":common-test"))
 }
 
 /**

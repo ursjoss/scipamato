@@ -1,9 +1,9 @@
 description = "SciPaMaTo-Common :: Persistence API Project"
 
 dependencies {
-    implementation(project(Module.scipamatoCommon("utils")))
-    implementation(project(Module.scipamatoCommon("entity")))
+    implementation(project(":common-utils"))
+    implementation(project(":common-entity"))
 
-    testImplementation(project(Module.scipamatoCommon("test")))
-    testImplementation(project(Module.scipamatoCommon("utils")))
+    testImplementation(project(":common-test"))
+    testImplementation(project(":common-utils"))
 }

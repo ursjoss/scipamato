@@ -1,7 +1,7 @@
 description = "SciPaMaTo-Common :: Persistence jOOQ Test Project"
 
 dependencies {
-    implementation(project(Module.scipamatoCommon("entity")))
-    implementation(project(Module.scipamatoCommon("test")))
-    implementation(project(Module.scipamatoCommon("persistence-jooq")))
+    implementation(project(":common-entity"))
+    implementation(project(":common-test"))
+    implementation(project(":common-persistence-jooq"))
 }
