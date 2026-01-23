@@ -63,5 +63,6 @@ dependencies {
         }
     }
 
-    testImplementation(project(":common-test"))
+    testImplementation(testFixtures(project(":common-wicket")))
+    testImplementation(testFixtures(project(":common-persistence-jooq")))
 }

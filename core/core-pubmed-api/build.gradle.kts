@@ -34,7 +34,7 @@ dependencies {
     implementation(libs.jakarta.bind.api)
     runtimeOnly(libs.jaxb.runtime)
 
-    testImplementation(project(":common-test"))
+    testImplementation(testFixtures(project(":common-utils")))
 }
 
 /**

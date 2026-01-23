@@ -6,7 +6,7 @@ import org.jooq.Record
 import org.jooq.Table
 import org.junit.jupiter.api.Test
 
-@Suppress("FunctionName", "kotlin:S100")
+@Suppress("FunctionNaming", "kotlin:S100", "unused")
 abstract class FilterConditionMapperTest<R : Record, TI : Table<R>, F : ScipamatoFilter> {
 
     protected abstract val table: TI

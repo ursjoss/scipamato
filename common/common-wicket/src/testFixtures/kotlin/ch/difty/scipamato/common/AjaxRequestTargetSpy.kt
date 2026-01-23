@@ -11,7 +11,7 @@ import org.apache.wicket.request.IRequestCycle
 import org.apache.wicket.request.component.IRequestablePage
 import org.apache.wicket.request.mapper.parameter.PageParameters
 
-@Suppress("TooManyFunctions")
+@Suppress("TooManyFunctions", "unused")
 class AjaxRequestTargetSpy : AjaxRequestTarget {
     private val delegate = EmptyAjaxRequestHandler.getInstance()
 
