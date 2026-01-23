@@ -74,8 +74,8 @@ dependencies {
     runtimeOnly(libs.postgresql)
     api(libs.jooq)
 
-    testImplementation(project(":common-persistence-jooq-test"))
-    testImplementation(project(":common-test"))
+    testImplementation(testFixtures(project(":common-persistence-jooq")))
+    testImplementation(testFixtures(project(":common-utils")))
 }
 
 idea {

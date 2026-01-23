@@ -27,12 +27,13 @@ dependencies {
     runtimeOnly(libs.postgresql)
     implementation(libs.jooq)
 
-    testImplementation(project(":common-persistence-jooq-test"))
-    testImplementation(project(":common-test"))
     testImplementation(libs.jooq)
 
     testImplementation(libs.lombok)
     testAnnotationProcessor(libs.lombok)
+
+    testImplementation(testFixtures(project(":common-persistence-jooq")))
+    testImplementation(testFixtures(project(":common-utils")))
 
 //    integrationTestRuntimeOnly(libs.postgresql)
 }

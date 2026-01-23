@@ -73,8 +73,8 @@ dependencies {
             requireCapability("org.ehcache:ehcache-jakarta")
         }
     }
-    testImplementation(project(":common-test"))
-    testImplementation(project(":common-persistence-jooq-test"))
+    testImplementation(testFixtures(project(":common-wicket")))
+    testImplementation(testFixtures(project(":common-persistence-jooq")))
     testImplementation(libs.jakarta.servletApi)
     testImplementation(libs.validationApi)
     testImplementation(libs.lombok)

@@ -4,6 +4,5 @@ dependencies {
     implementation(project(":common-utils"))
     implementation(project(":common-entity"))
 
-    testImplementation(project(":common-test"))
     testImplementation(project(":common-utils"))
 }

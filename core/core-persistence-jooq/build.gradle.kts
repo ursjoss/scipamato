@@ -77,12 +77,13 @@ dependencies {
 
     implementation(libs.spring.security.core)
 
-    testImplementation(project(":common-persistence-jooq-test"))
-    testImplementation(project(":common-test"))
     testImplementation(project(":core-entity"))
 
     testImplementation(libs.lombok)
     testAnnotationProcessor(libs.lombok)
+
+    testImplementation(testFixtures(project(":common-persistence-jooq")))
+    testImplementation(testFixtures(project(":common-utils")))
 }
 
 idea {

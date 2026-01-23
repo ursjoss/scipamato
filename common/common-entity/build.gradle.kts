@@ -5,6 +5,6 @@ dependencies {
 
     api(libs.validationApi)
 
-    testImplementation(project(":common-test"))
     testImplementation(libs.spring.context)
+    testImplementation(libs.equalsverifier)
 }

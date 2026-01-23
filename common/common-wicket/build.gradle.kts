@@ -1,5 +1,11 @@
 description = "SciPaMaTo-Common :: Wicket Project"
 
+plugins {
+    `java-library`
+    `java-test-fixtures`
+    `maven-publish`
+}
+
 /**
  * Make the static wicket resources that reside next to the kotlin classes in src{main,test} available.
  */
@@ -58,11 +64,12 @@ dependencies {
     testImplementation(libs.lombok)
     testAnnotationProcessor(libs.lombok)
 
-    testImplementation(project(":common-test"))
-
     testImplementation(libs.lombok)
     testAnnotationProcessor(libs.lombok)
 
     testImplementation(libs.jakarta.servletApi)
     testImplementation(libs.validationApi)
+
+    testFixturesApi(testFixtures(project(":common-utils")))
+    testFixturesApi(libs.wicket.core)
 }

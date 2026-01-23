@@ -4,6 +4,4 @@ dependencies {
     api(project(":common-persistence-api"))
     implementation(project(":public-entity"))
     implementation(project(":common-utils"))
-
-    testImplementation(project(":common-test"))
 }

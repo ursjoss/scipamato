@@ -6,6 +6,7 @@ dependencies {
 
     api(libs.spring.boot.starter.validation)
 
-    testImplementation(project(":common-test"))
     testImplementation(libs.hibernate.validator)
+
+    testImplementation(libs.equalsverifier)
 }

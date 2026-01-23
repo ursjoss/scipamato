@@ -33,7 +33,7 @@ dependencyResolutionManagement {
 rootProject.name = "scipamato"
 
 val commonProjects = listOf(
-    "test", "utils", "entity", "persistence-api", "persistence-jooq-test", "persistence-jooq", "wicket"
+    "utils", "entity", "persistence-api", "persistence-jooq", "wicket"
 )
 val coreProjects = listOf(
     "entity", "logic", "pubmed-api", "persistence-api", "persistence-jooq", "sync", "web"
