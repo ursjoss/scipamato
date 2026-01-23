@@ -85,6 +85,24 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 ////
 
+
+[[v2.1.10]]
+== {url-tree}2.1.10[2.1.10] -- 2026-01-21
+
+{url-cl}2.1.9++...++2.1.10[Full Changelog]
+
+.Changed
+- Bumped kotlin, spring-boot, spring-cloud-starter-openfeign, spring-boot-admin-starter-client,
+  wicket, wicketbootstrap, wicketstuff,
+  kotest, mockk, equalverifier,
+  gradle,lombok, sonarqube,
+  cache, checkout, setup-java, upload-artifact,codeql-action
+
+.Removed
+- buildSrc
+- modules common-test and commons-persistence-jooq-test
+
+
 [[v2.1.9]]
 == {url-tree}2.1.9[2.1.9] -- 2025-11-23
 
