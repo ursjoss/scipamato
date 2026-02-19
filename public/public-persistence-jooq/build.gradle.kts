@@ -83,3 +83,7 @@ idea {
         inheritOutputDirs = true
     }
 }
+
+tasks.named<Test>("test") {
+    systemProperty("api.version", "1.44")
+}
