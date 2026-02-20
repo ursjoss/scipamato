@@ -144,10 +144,13 @@ class PublicPaperFilterConditionMapperTest : FilterConditionMapperTest<PaperReco
         // Due to bug https://github.com/jOOQ/jOOQ/issues/4754
         // mapper.map(filter).toString() shouldBeEqualTo ""public"."paper"."codes" @> array['c1', 'c2']");
         mapper.map(this).toString() shouldBeEqualTo
-            """"public"."paper"."codes" like (('%' || cast(array[
-                        |  cast('c1' as clob),
-                        |  cast('c2' as clob)
-                        |] as varchar)) || '%') escape '!'""".trimMargin()
+            """"public"."paper"."codes" like (('%' || cast(
+                |  array[
+                |    cast('c1' as clob),
+                |    cast('c2' as clob)
+                |  ]
+                |  as varchar
+                |)) || '%') escape '!'""".trimMargin()
     }
 
     @Test
@@ -233,16 +236,19 @@ class PublicPaperFilterConditionMapperTest : FilterConditionMapperTest<PaperReco
             codesOfClass8 = listOf(Code(code = "8H")),
         ).run {
             mapper.map(this).toString() shouldBeEqualTo
-                """"public"."paper"."codes" like (('%' || cast(array[
-                |  cast('1A' as clob),
-                |  cast('2B' as clob),
-                |  cast('3C' as clob),
-                |  cast('4D' as clob),
-                |  cast('5E' as clob),
-                |  cast('6F' as clob),
-                |  cast('7G' as clob),
-                |  cast('8H' as clob)
-                |] as varchar)) || '%') escape '!'""".trimMargin()
+                """"public"."paper"."codes" like (('%' || cast(
+                |  array[
+                |    cast('1A' as clob),
+                |    cast('2B' as clob),
+                |    cast('3C' as clob),
+                |    cast('4D' as clob),
+                |    cast('5E' as clob),
+                |    cast('6F' as clob),
+                |    cast('7G' as clob),
+                |    cast('8H' as clob)
+                |  ]
+                |  as varchar
+                |)) || '%') escape '!'""".trimMargin()
         }
     }
 
