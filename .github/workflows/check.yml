@@ -11,6 +11,10 @@ on:
     branches:
     - main
 
+tenants:
+  security-events: write
+  contents: read
+
 jobs:
   build:
     strategy:

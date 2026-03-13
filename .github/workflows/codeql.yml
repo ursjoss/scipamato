@@ -8,6 +8,10 @@ on:
   schedule:
     - cron: '37 10 * * 1'
 
+tenants:
+  security-events: write
+  contents: read
+
 jobs:
   analyze:
     name: Analyze
