@@ -11,7 +11,7 @@ on:
     branches:
     - main
 
-tenants:
+permissions:
   security-events: write
   contents: read
 
