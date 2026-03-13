@@ -1,6 +1,8 @@
 [versions]
-# PINNED: tcontainers-1.21.4: org.apache.commons:commons-compress 1.24.0 -> 1.26.0+
+# PINNED: testcontainers-1.21.4: org.apache.commons:commons-compress 1.24.0 -> 1.26.0+
 commonsCompress = "1.28.0"
+# PINNED: spring-cloud-openfeign-core-4.3.1, wicket-bootstrap-7.0.14...: org.apache.commons:commons-lang3 3.17.0 -> 3.18.0+
+commonsLang = "3.20.0"
 # PINNED: spring-cloud-starter-openfeign-4.3.1 - commons-fileupload:commons-fileupload 1.5.0 -> 1.6.0+
 commonsFileupload = "1.6.0"
 coroutines = "1.10.2"
@@ -44,6 +46,7 @@ wicketstuff = "10.8.0"
 [libraries]
 cacheApi = { module = "javax.cache:cache-api" }
 commons-compress = { module = "org.apache.commons:commons-compress", version.ref = "commonsCompress" }
+commons-lang3 = { module = "org.apache.commons:commons-lang3", version.ref = "commonsLang" }
 commons-fileupload = { module = "commons-fileupload:commons-fileupload", version.ref = "commonsFileupload" }
 coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 ehcache = { module = "org.ehcache:ehcache", version.ref = "ehcache" }

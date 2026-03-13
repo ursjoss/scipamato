@@ -66,6 +66,8 @@ dependencies {
 
     implementation(libs.kris.core)
 
+    implementation(libs.commons.lang3)
+
     /** Caching: JCache with ehcache as cache provider */
     implementation(libs.bundles.caching)
     implementation(libs.ehcache) {

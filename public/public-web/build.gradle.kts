@@ -56,6 +56,8 @@ dependencies {
     }
     implementation(libs.spring.boot.starter.security)
 
+    implementation(libs.commons.lang3)
+
     implementation(libs.bundles.caching)
     implementation(libs.ehcache) {
         capabilities {
