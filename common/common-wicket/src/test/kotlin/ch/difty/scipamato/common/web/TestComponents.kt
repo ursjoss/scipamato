@@ -60,7 +60,7 @@ class TestMenuBuilder(
             FontAwesome7IconType.house_s, Navbar.ComponentPosition.LEFT
         )
         addExternalLink(
-            navbar, "https://github.com/ursjoss/scipamato/wiki",
+            navbar, "https://github.com/jococo-ch/scipamato/wiki",
             StringResourceModel("menu.help", page, null).string,
             FontAwesome7IconType.circle_question_s, Navbar.ComponentPosition.RIGHT
         )

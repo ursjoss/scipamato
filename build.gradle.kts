@@ -64,8 +64,8 @@ val detektReportFile = layout.buildDirectory.get().asFile.resolve("reports/detek
 sonarqube {
     properties {
         property("sonar.host.url", "https://sonarcloud.io")
-        property("sonar.projectKey", "ursjoss_${project.name}")
-        property("sonar.organization", "ursjoss-github")
+        property("sonar.projectKey", "jococo-ch_${project.name}")
+        property("sonar.organization", "jococo-ch-github")
         property("sonar.exclusions", "**/ch/difty/scipamato/publ/web/themes/markup/html/publ/**/*,$genPkg")
         property("sonar.coverage.exclusions", (generatedPackages + testPackages).joinToString(","))
         property("sonar.coverage.jacoco.xmlReportPaths", jacocoTestReportFile)

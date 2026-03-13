@@ -11,7 +11,7 @@ ifdef::env-github[]
 :warning-caption: :warning:
 endif::[]
 // Refs:
-:url-repo: https://github.com/ursjoss/scipamato/
+:url-repo: https://github.com/jococo-ch/scipamato/
 :url-issues: {url-repo}issues/
 :url-tree: {url-repo}tree/
 :url-cl: {url-repo}compare/

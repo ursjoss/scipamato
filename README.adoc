@@ -1,6 +1,6 @@
-image:https://img.shields.io/github/license/ursjoss/scipamato.svg[LICENSE, link=https://github.com/ursjoss/scipamato/blob/main/LICENSE.adoc] image:https://github.com/ursjoss/scipamato/actions/workflows/check.yml/badge.svg?branch=main[Build Status, link=https://github.com/ursjoss/scipamato/actions] image:https://sonarcloud.io/api/project_badges/measure?project=ursjoss_scipamato&metric=alert_status[Quality Gate, link=https://sonarcloud.io/dashboard?id=ursjoss_scipamato]
-image:https://sonarcloud.io/api/project_badges/measure?project=ursjoss_scipamato&metric=coverage[Coverage, link=https://sonarcloud.io/dashboard?id=ursjoss_scipamato]
-image:https://github.com/ursjoss/scipamato/actions/workflows/codeql.yml/badge.svg?branch=main&event=push[CodeQL, link=https://github.com/ursjoss/scipamato/actions/workflows/codeql.yml]
+image:https://img.shields.io/github/license/jococo-ch/scipamato.svg[LICENSE, link=https://github.com/jococo-ch/scipamato/blob/main/LICENSE.adoc] image:https://github.com/jococo-ch/scipamato/actions/workflows/check.yml/badge.svg?branch=main[Build Status, link=https://github.com/jococo-ch/scipamato/actions] image:https://sonarcloud.io/api/project_badges/measure?project=jococo-ch_scipamato&metric=alert_status[Quality Gate, link=https://sonarcloud.io/dashboard?id=jococo-ch_scipamato]
+image:https://sonarcloud.io/api/project_badges/measure?project=jococo-ch_scipamato&metric=coverage[Coverage, link=https://sonarcloud.io/dashboard?id=jococo-ch_scipamato]
+image:https://github.com/jococo-ch/scipamato/actions/workflows/codeql.yml/badge.svg?branch=main&event=push[CodeQL, link=https://github.com/jococo-ch/scipamato/actions/workflows/codeql.yml]
 
 [[scipamato]]
 == SciPaMaTo
@@ -199,26 +199,26 @@ image:https://structure101.com/images/s101_170.png[Structure101]
 [[user-docu-scipamato-core]]
 === SciPaMaTo-Core Documentation
 
-* https://github.com/ursjoss/scipamato/wiki/Entering-Papers[Entering Papers]
-* https://github.com/ursjoss/scipamato/wiki/Filtering-Papers[Filtering Papers]
-* https://github.com/ursjoss/scipamato/wiki/Searches[Complex Searches on Papers]
-* https://github.com/ursjoss/scipamato/wiki/Newsletters[Newsletters]
-* https://github.com/ursjoss/scipamato/wiki/New-Studies[New Studies]
-* https://github.com/ursjoss/scipamato/wiki/ReferenceData[Reference Data]
+* https://github.com/jococo-ch/scipamato/wiki/Entering-Papers[Entering Papers]
+* https://github.com/jococo-ch/scipamato/wiki/Filtering-Papers[Filtering Papers]
+* https://github.com/jococo-ch/scipamato/wiki/Searches[Complex Searches on Papers]
+* https://github.com/jococo-ch/scipamato/wiki/Newsletters[Newsletters]
+* https://github.com/jococo-ch/scipamato/wiki/New-Studies[New Studies]
+* https://github.com/jococo-ch/scipamato/wiki/ReferenceData[Reference Data]
 
 [[user-docu-scipamato-public]]
 === SciPaMaTo-Public Documentation
 
-* https://github.com/ursjoss/scipamato/wiki/Filtering-Papers-Public[Filtering Papers]
+* https://github.com/jococo-ch/scipamato/wiki/Filtering-Papers-Public[Filtering Papers]
 
 [[information-for-developers]]
 == Information for Developers
 
-Refer to the https://github.com/ursjoss/scipamato/wiki/QuickStart[Quick-Start Guide] to get the project up and running as quickly as possible.
+Refer to the https://github.com/jococo-ch/scipamato/wiki/QuickStart[Quick-Start Guide] to get the project up and running as quickly as possible.
 
-See https://github.com/ursjoss/scipamato/wiki/Developer-Information[Developer Wiki]
+See https://github.com/jococo-ch/scipamato/wiki/Developer-Information[Developer Wiki]
 
 [[information-for-operations]]
 == Information for Operations
 
-See https://github.com/ursjoss/scipamato/wiki/Operations[Operations Wiki]
+See https://github.com/jococo-ch/scipamato/wiki/Operations[Operations Wiki]
