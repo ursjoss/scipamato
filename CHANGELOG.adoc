@@ -67,7 +67,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[unreleased]]
 == [unreleased]
 
-{url-cl}2.1.9++...++main[Full Changelog]
+{url-cl}2.1.11++...++main[Full Changelog]
 
 .Added
 
@@ -84,6 +84,19 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Security
 
 ////
+
+
+[[v2.1.11]]
+== {url-tree}2.1.11[2.1.11] -- 2026-02-20
+
+{url-cl}2.1.10++...++2.1.11[Full Changelog]
+
+.Changed
+- Bumped spring-boot, kotlin, feign,
+  gradle, reckon, dependency-license-report,
+  kotest, mockk, equalsverifier,
+  github actions cache, checkout, docker/login-action, codeql-action, gradle/actions
+- Fixed some typos in README and wiki-pages
 
 
 [[v2.1.10]]
