@@ -90,7 +90,7 @@ internal open class JooqNewStudyRepoIntegrationTest {
         results.map { it.title } shouldContainAll
             listOf("Search", "Project Repository")
         results.map { it.url } shouldContainAll
-            listOf("https://duckduckgo.com/", "https://github.com/jococo-ch/scipamato")
+            listOf("https://duckduckgo.com/", "https://github.com/ursjoss/scipamato")
     }
 
     @Test
