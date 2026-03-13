@@ -31,7 +31,7 @@ import org.jetbrains.annotations.Nullable;
  * </ul>
  * <p>
  * NOTE: The INCOMPLETE will not find any papers. It's more about gracefully handling
- * unfinished search terms. See <a href="https://github.com/ursjoss/scipamato/issues/84">Issues</a>
+ * unfinished search terms. See <a href="https://github.com/jococo-ch/scipamato/issues/84">Issues</a>
  *
  * @author u.joss
  */

@@ -472,7 +472,7 @@ abstract class ResultPanel protected constructor(
         }
 
     // Deserialization of the panel without recreating the jasper links renders them invalid
-    // see https://github.com/ursjoss/scipamato/issues/2
+    // see https://github.com/jococo-ch/scipamato/issues/2
     @Suppress("UnusedPrivateMember")
     @Throws(IOException::class, ClassNotFoundException::class)
     private fun readObject(s: ObjectInputStream) {

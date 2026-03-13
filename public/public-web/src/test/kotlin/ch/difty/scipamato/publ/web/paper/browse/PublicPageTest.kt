@@ -99,7 +99,7 @@ class PublicPageTest : BasePageTest<PublicPage>() {
         tester.assertComponent("$b:query", BootstrapButton::class.java)
         tester.assertComponent("$b:clear", BootstrapButton::class.java)
         tester.assertComponent("$b:help", BootstrapExternalLink::class.java)
-        tester.assertModelValue("$b:help", "https://github.com/ursjoss/scipamato/wiki/Filtering-Papers-Public")
+        tester.assertModelValue("$b:help", "https://github.com/jococo-ch/scipamato/wiki/Filtering-Papers-Public")
 
         // query was not yet executed and results panel is still invisible
         tester.assertInvisible("results")

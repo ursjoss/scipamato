@@ -26,11 +26,11 @@ internal class PaperListPageInViewModeTest : PaperListPageTest() {
         assertNestedMenu(0, 0, "Left", "Papers")
         assertExternalLink(
             "navbar:container:collapse:navRightListEnclosure:navRightList:0:component",
-            "https://github.com/ursjoss/scipamato/wiki/"
+            "https://github.com/jococo-ch/scipamato/wiki/"
         )
         assertExternalLink(
             "navbar:container:collapse:navRightListEnclosure:navRightList:1:component",
-            "https://github.com/ursjoss/scipamato/blob/main/CHANGELOG.adoc"
+            "https://github.com/jococo-ch/scipamato/blob/main/CHANGELOG.adoc"
         )
         assertPageLinkButton(2, "Right", "Logout")
     }
