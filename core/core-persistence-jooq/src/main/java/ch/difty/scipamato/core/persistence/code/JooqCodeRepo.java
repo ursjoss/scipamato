@@ -405,9 +405,9 @@ public class JooqCodeRepo extends AbstractRepo implements CodeRepository {
     }
 
     @NotNull
-    private CodeTranslation toCodeTranslation(@NotNull final CodeTrRecord record) {
-        return new CodeTranslation(record.get(CODE_TR.ID), record.get(CODE_TR.LANG_CODE), record.get(CODE_TR.NAME), record.get(CODE_TR.COMMENT),
-            record.get(CODE_TR.VERSION));
+    private CodeTranslation toCodeTranslation(@NotNull final CodeTrRecord rcd) {
+        return new CodeTranslation(rcd.get(CODE_TR.ID), rcd.get(CODE_TR.LANG_CODE), rcd.get(CODE_TR.NAME), rcd.get(CODE_TR.COMMENT),
+            rcd.get(CODE_TR.VERSION));
     }
 
     @Nullable

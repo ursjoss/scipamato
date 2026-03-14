@@ -348,9 +348,9 @@ public class JooqCodeClassRepo extends AbstractRepo implements CodeClassReposito
     }
 
     @NotNull
-    private CodeClassTranslation toCodeClassTranslation(@NotNull final CodeClassTrRecord record) {
-        return new CodeClassTranslation(record.get(CODE_CLASS_TR.ID), record.get(CODE_CLASS_TR.LANG_CODE), record.get(CODE_CLASS_TR.NAME),
-            record.get(CODE_CLASS_TR.DESCRIPTION), record.get(CODE_CLASS_TR.VERSION));
+    private CodeClassTranslation toCodeClassTranslation(@NotNull final CodeClassTrRecord rcd) {
+        return new CodeClassTranslation(rcd.get(CODE_CLASS_TR.ID), rcd.get(CODE_CLASS_TR.LANG_CODE), rcd.get(CODE_CLASS_TR.NAME),
+            rcd.get(CODE_CLASS_TR.DESCRIPTION), rcd.get(CODE_CLASS_TR.VERSION));
     }
 
     @Nullable

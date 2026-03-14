@@ -47,7 +47,7 @@ internal abstract class LinkIconColumnTestPanel(
     internal class TestDataProvider : SortableDataProvider<TestRecord, String>() {
         override fun iterator(first: Long, count: Long): Iterator<TestRecord> = listOf(TestRecord(1, "foo")).iterator()
         override fun size(): Long = 1
-        override fun model(record: TestRecord): IModel<TestRecord> = Model.of(record)
+        override fun model(rcd: TestRecord): IModel<TestRecord> = Model.of(rcd)
 
         companion object {
             private const val serialVersionUID: Long = 1L

@@ -233,26 +233,26 @@ open class JooqNewsletterTopicRepo(
 
     override fun update(entity: NewsletterTopicDefinition): NewsletterTopicDefinition? {
         require(entity.id != null) { "entity.id must not be null" }
-        val record = updateAndLoadNewsletterTopicDefinition(
+        val rcd = updateAndLoadNewsletterTopicDefinition(
             entity = entity,
             userId = userId,
             currentVersion = entity.version
         )
-        return handleUpdatedRecord(record, entity, userId)
+        return handleUpdatedRecord(rcd, entity, userId)
     }
 
     // package-private for testing purposes
     // entity.id must not be null
     fun handleUpdatedRecord(
-        record: NewsletterTopicRecord?,
+        rcd: NewsletterTopicRecord?,
         entity: NewsletterTopicDefinition,
         userId: Int,
     ): NewsletterTopicDefinition {
-        if (record != null) {
+        if (rcd != null) {
             val persistedTranslations = updateOrInsertAndLoadNewsletterTopicTranslations(entity, userId)
             val updatedEntity = toTopicDefinition(
                 id = entity.id,
-                version = record.get(ch.difty.scipamato.core.db.tables.NewsletterTopic.NEWSLETTER_TOPIC.VERSION),
+                version = rcd.get(ch.difty.scipamato.core.db.tables.NewsletterTopic.NEWSLETTER_TOPIC.VERSION),
                 persistedTranslations = persistedTranslations)
             log.info { "${activeUser.userName} updated 1 record: $name with id ${updatedEntity.id}." }
             return updatedEntity
@@ -348,12 +348,12 @@ open class JooqNewsletterTopicRepo(
         }
     }
 
-    private fun toTopicTranslation(record: NewsletterTopicTrRecord): NewsletterTopicTranslation =
+    private fun toTopicTranslation(rcd: NewsletterTopicTrRecord): NewsletterTopicTranslation =
         NewsletterTopicTranslation(
-            record.get(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.ID),
-            record.get(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.LANG_CODE),
-            record.get(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.TITLE),
-            record.get(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.VERSION)
+            rcd.get(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.ID),
+            rcd.get(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.LANG_CODE),
+            rcd.get(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.TITLE),
+            rcd.get(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.VERSION)
         )
 
     override fun delete(id: Int, version: Int): NewsletterTopicDefinition? {

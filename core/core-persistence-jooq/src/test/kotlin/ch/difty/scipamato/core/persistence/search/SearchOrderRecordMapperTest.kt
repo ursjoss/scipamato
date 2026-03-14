@@ -22,12 +22,12 @@ internal class SearchOrderRecordMapperTest : RecordMapperTest<SearchOrderRecord,
         }
     }
 
-    override fun setAuditFieldsIn(record: SearchOrderRecord) {
-        record.created = CREATED
-        record.createdBy = CREATED_BY
-        record.lastModified = LAST_MOD
-        record.lastModifiedBy = LAST_MOD_BY
-        record.version = VERSION
+    override fun setAuditFieldsIn(rcd: SearchOrderRecord) {
+        rcd.created = CREATED
+        rcd.createdBy = CREATED_BY
+        rcd.lastModified = LAST_MOD
+        rcd.lastModifiedBy = LAST_MOD_BY
+        rcd.version = VERSION
     }
 
     override fun assertEntity(entity: SearchOrder) {

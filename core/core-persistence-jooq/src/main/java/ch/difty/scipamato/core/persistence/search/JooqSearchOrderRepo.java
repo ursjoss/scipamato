@@ -90,8 +90,8 @@ public class JooqSearchOrderRepo extends
 
     @NotNull
     @Override
-    protected Long getIdFrom(@NotNull final SearchOrderRecord record) {
-        return record.getId();
+    protected Long getIdFrom(@NotNull final SearchOrderRecord rcd) {
+        return rcd.getId();
     }
 
     @Nullable

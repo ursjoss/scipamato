@@ -66,12 +66,12 @@ public class JooqPaperSlimRepo
     @Nullable
     @Override
     public PaperSlim findById(@NotNull final Long id, @Nullable final String languageCode) {
-        final Record9<Long, Long, String, Integer, String, Integer, String, Integer, String> record = getBaseQuery()
+        final Record9<Long, Long, String, Integer, String, Integer, String, Integer, String> rcd = getBaseQuery()
             .where(getTableId().equal(id))
             .fetchOne();
-        if (record != null)
-            return new PaperSlim(record.value1(), record.value2(), record.value3(), record.value4(), record.value5(), record.value6(),
-                record.value7(), getStatusId(record), record.value9());
+        if (rcd != null)
+            return new PaperSlim(rcd.value1(), rcd.value2(), rcd.value3(), rcd.value4(), rcd.value5(), rcd.value6(),
+                rcd.value7(), getStatusId(rcd), rcd.value9());
         else
             return null;
     }
@@ -88,19 +88,19 @@ public class JooqPaperSlimRepo
             .on(PAPER_NEWSLETTER.NEWSLETTER_ID.eq(NEWSLETTER.ID));
     }
 
-    private int getStatusId(@NotNull final Record9<Long, Long, String, Integer, String, Integer, String, Integer, String> record) {
-        return record.get(NEWSLETTER.PUBLICATION_STATUS.getName(), Integer.class);
+    private int getStatusId(@NotNull final Record9<Long, Long, String, Integer, String, Integer, String, Integer, String> rcd) {
+        return rcd.get(NEWSLETTER.PUBLICATION_STATUS.getName(), Integer.class);
     }
 
     @Nullable
     @Override
     public PaperSlim findById(@NotNull final Long id, final int version, @Nullable final String languageCode) {
-        final Record9<Long, Long, String, Integer, String, Integer, String, Integer, String> record = getBaseQuery()
+        final Record9<Long, Long, String, Integer, String, Integer, String, Integer, String> rcd = getBaseQuery()
             .where(getTableId().equal(id))
             .and(getRecordVersion().equal(version))
             .fetchOne();
-        if (record != null)
-            return newPaperSlim(record);
+        if (rcd != null)
+            return newPaperSlim(rcd);
         else
             return null;
     }

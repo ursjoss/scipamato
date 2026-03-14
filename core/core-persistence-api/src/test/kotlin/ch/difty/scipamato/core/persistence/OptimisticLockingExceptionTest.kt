@@ -16,7 +16,7 @@ internal class OptimisticLockingExceptionTest {
 
     @Test
     fun validateRecord() {
-        ole.record shouldBeEqualTo "foo 1"
+        ole.rcd shouldBeEqualTo "foo 1"
     }
 
     @Test

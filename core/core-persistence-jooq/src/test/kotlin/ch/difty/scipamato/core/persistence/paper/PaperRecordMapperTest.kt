@@ -15,54 +15,54 @@ class PaperRecordMapperTest : RecordMapperTest<PaperRecord, Paper>() {
     override val mapper: RecordMapper<PaperRecord, Paper> = PaperRecordMapper()
 
     override fun makeRecord(): PaperRecord {
-        val record = PaperRecord()
-        record.id = ID
-        record.number = NUMBER
-        record.pmId = PM_ID
-        record.doi = DOI
-        record.authors = AUTHORS
-        record.firstAuthor = FIRST_AUTHOR
-        record.firstAuthorOverridden = FIRST_AUTHOR_OVERRIDDEN
-        record.title = TITLE
-        record.location = LOCATION
-        record.publicationYear = PUBLICATION_YEAR
+        val rcd = PaperRecord()
+        rcd.id = ID
+        rcd.number = NUMBER
+        rcd.pmId = PM_ID
+        rcd.doi = DOI
+        rcd.authors = AUTHORS
+        rcd.firstAuthor = FIRST_AUTHOR
+        rcd.firstAuthorOverridden = FIRST_AUTHOR_OVERRIDDEN
+        rcd.title = TITLE
+        rcd.location = LOCATION
+        rcd.publicationYear = PUBLICATION_YEAR
 
-        record.goals = GOALS
-        record.population = POPULATION
-        record.methods = METHODS
+        rcd.goals = GOALS
+        rcd.population = POPULATION
+        rcd.methods = METHODS
 
-        record.populationPlace = POPULATION_PLACE
-        record.populationParticipants = POPULATION_PARTICIPANTS
-        record.populationDuration = POPULATION_DURATION
-        record.exposurePollutant = EXPOSURE_POLLUTANT
-        record.exposureAssessment = EXPOSURE_ASSESSMENT
-        record.methodStudyDesign = METHOD_STUDY_DESIGN
-        record.methodOutcome = METHOD_OUTCOME
-        record.methodStatistics = METHOD_STATISTICS
-        record.methodConfounders = METHOD_CONFOUNDERS
+        rcd.populationPlace = POPULATION_PLACE
+        rcd.populationParticipants = POPULATION_PARTICIPANTS
+        rcd.populationDuration = POPULATION_DURATION
+        rcd.exposurePollutant = EXPOSURE_POLLUTANT
+        rcd.exposureAssessment = EXPOSURE_ASSESSMENT
+        rcd.methodStudyDesign = METHOD_STUDY_DESIGN
+        rcd.methodOutcome = METHOD_OUTCOME
+        rcd.methodStatistics = METHOD_STATISTICS
+        rcd.methodConfounders = METHOD_CONFOUNDERS
 
-        record.result = RESULT
-        record.comment = COMMENT
-        record.intern = INTERN
+        rcd.result = RESULT
+        rcd.comment = COMMENT
+        rcd.intern = INTERN
 
-        record.resultExposureRange = RESULT_EXPOSURE_RANGE
-        record.resultEffectEstimate = RESULT_EFFECT_ESTIMATE
-        record.resultMeasuredOutcome = RESULT_MEASURED_OUTCOME
-        record.conclusion = CONCLUSION
+        rcd.resultExposureRange = RESULT_EXPOSURE_RANGE
+        rcd.resultEffectEstimate = RESULT_EFFECT_ESTIMATE
+        rcd.resultMeasuredOutcome = RESULT_MEASURED_OUTCOME
+        rcd.conclusion = CONCLUSION
 
-        record.originalAbstract = ORIGINAL_ABSTRACT
+        rcd.originalAbstract = ORIGINAL_ABSTRACT
 
-        record.mainCodeOfCodeclass1 = MAIN_CODE_OF_CODECLASS1
+        rcd.mainCodeOfCodeclass1 = MAIN_CODE_OF_CODECLASS1
 
-        return record
+        return rcd
     }
 
-    override fun setAuditFieldsIn(record: PaperRecord) {
-        record.created = CREATED
-        record.createdBy = CREATED_BY
-        record.lastModified = LAST_MOD
-        record.lastModifiedBy = LAST_MOD_BY
-        record.version = VERSION
+    override fun setAuditFieldsIn(rcd: PaperRecord) {
+        rcd.created = CREATED
+        rcd.createdBy = CREATED_BY
+        rcd.lastModified = LAST_MOD
+        rcd.lastModifiedBy = LAST_MOD_BY
+        rcd.version = VERSION
     }
 
     override fun assertEntity(entity: Paper) {

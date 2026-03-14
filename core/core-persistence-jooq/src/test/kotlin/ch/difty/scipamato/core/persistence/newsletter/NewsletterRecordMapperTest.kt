@@ -26,12 +26,12 @@ internal class NewsletterRecordMapperTest : RecordMapperTest<NewsletterRecord, N
         publicationStatus = PUBLICATION_STATUS.id
     }
 
-    override fun setAuditFieldsIn(record: NewsletterRecord) {
-        record.created = CREATED
-        record.createdBy = CREATED_BY
-        record.lastModified = LAST_MOD
-        record.lastModifiedBy = LAST_MOD_BY
-        record.version = VERSION
+    override fun setAuditFieldsIn(rcd: NewsletterRecord) {
+        rcd.created = CREATED
+        rcd.createdBy = CREATED_BY
+        rcd.lastModified = LAST_MOD
+        rcd.lastModifiedBy = LAST_MOD_BY
+        rcd.version = VERSION
     }
 
     override fun assertEntity(entity: Newsletter) {
@@ -44,10 +44,10 @@ internal class NewsletterRecordMapperTest : RecordMapperTest<NewsletterRecord, N
 
     @Test
     fun mapping_withIssueDateInRecordNull_mapsRecordToEntity_withIssueDateNull() {
-        val record = makeRecord()
-        setAuditFieldsIn(record)
-        record.issueDate = null
-        val entity = mapper.map(record) ?: fail("unable to get entity")
+        val rcd = makeRecord()
+        setAuditFieldsIn(rcd)
+        rcd.issueDate = null
+        val entity = mapper.map(rcd) ?: fail("unable to get entity")
         entity.issueDate.shouldBeNull()
     }
 

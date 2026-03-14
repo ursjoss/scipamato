@@ -258,8 +258,8 @@ public class JooqKeywordRepo extends AbstractRepo implements KeywordRepository {
 
         final int userId = getUserId();
         final List<KeywordTranslation> persistedTranslations = updateOrInsertAndLoadKeywordTranslations(entity, userId);
-        final KeywordRecord record = updateAndLoadKeywordDefinition(entity, userId, entity.getVersion());
-        return manageTranslations(record, entity, persistedTranslations);
+        final KeywordRecord rcd = updateAndLoadKeywordDefinition(entity, userId, entity.getVersion());
+        return manageTranslations(rcd, entity, persistedTranslations);
     }
 
     @NotNull
@@ -293,12 +293,12 @@ public class JooqKeywordRepo extends AbstractRepo implements KeywordRepository {
 
     // package-private for testing purposes
     @NotNull
-    KeywordDefinition manageTranslations(@Nullable final KeywordRecord record, @NotNull final KeywordDefinition entity,
+    KeywordDefinition manageTranslations(@Nullable final KeywordRecord rcd, @NotNull final KeywordDefinition entity,
         @NotNull final List<KeywordTranslation> persistedTranslations) {
-        if (record != null) {
-            final KeywordDefinition updatedEntity = toKeywordDefinition(entity.getId(), record.get(KEYWORD.SEARCH_OVERRIDE),
-                record.get(KEYWORD.VERSION), persistedTranslations);
-            log.info("{} updated 1 record: {} with id {}.", getActiveUser().getUserName(), KEYWORD.getName(), updatedEntity.getId());
+        if (rcd != null) {
+            final KeywordDefinition updatedEntity = toKeywordDefinition(entity.getId(), rcd.get(KEYWORD.SEARCH_OVERRIDE),
+                rcd.get(KEYWORD.VERSION), persistedTranslations);
+            log.info("{} updated 1 rcd: {} with id {}.", getActiveUser().getUserName(), KEYWORD.getName(), updatedEntity.getId());
             return updatedEntity;
         } else {
             throw new OptimisticLockingException(KEYWORD.getName(), entity.toString(), OptimisticLockingException.Type.UPDATE);
@@ -402,9 +402,9 @@ public class JooqKeywordRepo extends AbstractRepo implements KeywordRepository {
     }
 
     @NotNull
-    private KeywordTranslation toKeywordTranslation(@NotNull final KeywordTrRecord record) {
-        return new KeywordTranslation(record.get(KEYWORD_TR.ID), record.get(KEYWORD_TR.LANG_CODE), record.get(KEYWORD_TR.NAME),
-            record.get(KEYWORD_TR.VERSION));
+    private KeywordTranslation toKeywordTranslation(@NotNull final KeywordTrRecord rcd) {
+        return new KeywordTranslation(rcd.get(KEYWORD_TR.ID), rcd.get(KEYWORD_TR.LANG_CODE), rcd.get(KEYWORD_TR.NAME),
+            rcd.get(KEYWORD_TR.VERSION));
     }
 
     @Nullable
