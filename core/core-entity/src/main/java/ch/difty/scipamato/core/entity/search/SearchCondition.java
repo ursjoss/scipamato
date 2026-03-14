@@ -625,16 +625,16 @@ public class SearchCondition implements ScipamatoFilter, CodeBoxAware, Newslette
             if (!sb.isEmpty())
                 sb.append(JOIN_DELIMITER);
             sb.append("-");
-            final List<String> codes = getExcludedCodeCodes();
+            final List<String> excludedCodes = getExcludedCodeCodes();
             String delim = "";
-            if (codes.size() > 1)
+            if (excludedCodes.size() > 1)
                 sb.append("(");
-            for (final String c : codes) {
+            for (final String c : excludedCodes) {
                 sb.append(delim);
                 sb.append(c);
                 delim = "|";
             }
-            if (codes.size() > 1)
+            if (excludedCodes.size() > 1)
                 sb.append(")");
         }
         if (newsletterIssue != null) {
