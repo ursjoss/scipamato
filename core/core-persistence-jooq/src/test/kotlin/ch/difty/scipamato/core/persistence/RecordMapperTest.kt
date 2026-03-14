@@ -4,6 +4,7 @@ import ch.difty.scipamato.core.entity.CoreEntity
 import io.mockk.every
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeNull
+import org.jooq.Record
 import org.jooq.RecordMapper
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.fail
