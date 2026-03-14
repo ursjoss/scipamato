@@ -21,12 +21,12 @@ internal class PaperSlimRecordMapperTest : RecordMapperTest<PaperRecord, PaperSl
             publicationYear = PaperRecordMapperTest.PUBLICATION_YEAR
         }
 
-    override fun setAuditFieldsIn(record: PaperRecord) {
-        record.created = CREATED
-        record.createdBy = CREATED_BY
-        record.lastModified = LAST_MOD
-        record.lastModifiedBy = LAST_MOD_BY
-        record.version = VERSION
+    override fun setAuditFieldsIn(rcd: PaperRecord) {
+        rcd.created = CREATED
+        rcd.createdBy = CREATED_BY
+        rcd.lastModified = LAST_MOD
+        rcd.lastModifiedBy = LAST_MOD_BY
+        rcd.version = VERSION
     }
 
     override fun assertEntity(entity: PaperSlim) {

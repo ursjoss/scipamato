@@ -59,8 +59,8 @@ public class JooqNewsletterRepo extends
 
     @NotNull
     @Override
-    protected Integer getIdFrom(@NotNull final NewsletterRecord record) {
-        return record.getId();
+    protected Integer getIdFrom(@NotNull final NewsletterRecord rcd) {
+        return rcd.getId();
     }
 
     @Nullable
@@ -97,8 +97,8 @@ public class JooqNewsletterRepo extends
         Objects.requireNonNull(entity.getId());
         final Result<Record7<Long, Long, String, Integer, String, Integer, String>> records = loadNewsletterPaperTopicRecords(entity.getId(),
             languageCode);
-        for (final Record record : records)
-            entity.addPaper(extractPaperFrom(record), extractTopicFrom(record));
+        for (final Record rcd : records)
+            entity.addPaper(extractPaperFrom(rcd), extractTopicFrom(rcd));
     }
 
     /**
@@ -133,28 +133,28 @@ public class JooqNewsletterRepo extends
     /**
      * Extracts the {@link PaperSlim}s from the record.
      *
-     * @param record
+     * @param rcd
      *     the newsletter paper topic record
      * @return PaperSlim associated with the newsletter
      */
     @NotNull
-    private PaperSlim extractPaperFrom(@NotNull final Record record) {
-        return new PaperSlim(record.get(PAPER.ID), record.get(PAPER.NUMBER), record.get(PAPER.FIRST_AUTHOR), record.get(PAPER.PUBLICATION_YEAR),
-            record.get(PAPER.TITLE));
+    private PaperSlim extractPaperFrom(@NotNull final Record rcd) {
+        return new PaperSlim(rcd.get(PAPER.ID), rcd.get(PAPER.NUMBER), rcd.get(PAPER.FIRST_AUTHOR), rcd.get(PAPER.PUBLICATION_YEAR),
+            rcd.get(PAPER.TITLE));
     }
 
     /**
      * Extracts the {@link NewsletterTopic} from the record.
      *
-     * @param record
+     * @param rcd
      *     the newsletter paper topic record
      * @return NewsletterTopic of the paper to newsletter association, if defined - null otherwise
      */
     @Nullable
-    private NewsletterTopic extractTopicFrom(@NotNull final Record record) {
-        final Integer newsletterTopicId = record.get(NEWSLETTER_TOPIC.ID);
+    private NewsletterTopic extractTopicFrom(@NotNull final Record rcd) {
+        final Integer newsletterTopicId = rcd.get(NEWSLETTER_TOPIC.ID);
         if (newsletterTopicId != null) {
-            return new NewsletterTopic(newsletterTopicId, record.get(NEWSLETTER_TOPIC_TR.TITLE));
+            return new NewsletterTopic(newsletterTopicId, rcd.get(NEWSLETTER_TOPIC_TR.TITLE));
         } else {
             return null;
         }

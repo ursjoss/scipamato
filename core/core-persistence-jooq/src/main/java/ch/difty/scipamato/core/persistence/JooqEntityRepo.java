@@ -79,12 +79,12 @@ public abstract class JooqEntityRepo<R extends Record, T extends CoreEntity, ID,
     protected abstract Logger getLogger();
 
     /**
-     * @param record
-     *     persisted record that now holds the ID from the database.
+     * @param rcd
+     *     persisted rcd that now holds the ID from the database.
      * @return the id of type {@code ID}
      */
     @NotNull
-    protected abstract ID getIdFrom(@NotNull final R record);
+    protected abstract ID getIdFrom(@NotNull final R rcd);
 
     /**
      * @param entity

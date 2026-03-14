@@ -9,19 +9,19 @@ public class OptimisticLockingException extends RuntimeException {
     private static final long serialVersionUID = 1L;
 
     private final String tableName;
-    private final String record;
+    private final String rcd;
 
     public OptimisticLockingException(@NotNull final String tableName, @NotNull final Type type) {
         this(tableName, null, type);
     }
 
-    public OptimisticLockingException(@NotNull final String tableName, @Nullable final String record, @NotNull final Type type) {
-        super(makeMessage(tableName, record, type));
+    public OptimisticLockingException(@NotNull final String tableName, @Nullable final String rcd, @NotNull final Type type) {
+        super(makeMessage(tableName, rcd, type));
         this.tableName = tableName;
-        this.record = record;
+        this.rcd = rcd;
     }
 
-    private static String makeMessage(@NotNull final String tableName, @Nullable final String record, @NotNull final Type type) {
+    private static String makeMessage(@NotNull final String tableName, @Nullable final String rcd, @NotNull final Type type) {
         final StringBuilder sb = new StringBuilder();
         sb
             .append("Record in table '")
@@ -29,10 +29,10 @@ public class OptimisticLockingException extends RuntimeException {
             .append("' has been modified prior to the ")
             .append(type.description)
             .append(" attempt. Aborting....");
-        if (record != null)
+        if (rcd != null)
             sb
                 .append(" [")
-                .append(record)
+                .append(rcd)
                 .append("]");
         return sb.toString();
     }
@@ -43,8 +43,8 @@ public class OptimisticLockingException extends RuntimeException {
     }
 
     @Nullable
-    public String getRecord() {
-        return record;
+    public String getRcd() {
+        return rcd;
     }
 
     public enum Type {

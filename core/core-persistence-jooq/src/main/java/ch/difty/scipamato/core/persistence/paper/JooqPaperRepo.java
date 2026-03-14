@@ -97,8 +97,8 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
 
     @NotNull
     @Override
-    protected Long getIdFrom(@NotNull final PaperRecord record) {
-        return record.getId();
+    protected Long getIdFrom(@NotNull final PaperRecord rcd) {
+        return rcd.getId();
     }
 
     @Nullable

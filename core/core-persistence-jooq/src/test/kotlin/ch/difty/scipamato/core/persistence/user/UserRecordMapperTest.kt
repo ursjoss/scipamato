@@ -17,7 +17,7 @@ internal class UserRecordMapperTest : RecordMapperTest<ScipamatoUserRecord, User
         VERSION, CREATED, CREATED_BY, LAST_MOD, LAST_MOD_BY
     )
 
-    override fun setAuditFieldsIn(record: ScipamatoUserRecord) {
+    override fun setAuditFieldsIn(rcd: ScipamatoUserRecord) {
         // no-op
     }
 
