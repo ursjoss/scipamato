@@ -38,14 +38,14 @@ public abstract class EntityRecordMapper<R extends Record, T extends CoreEntity>
     protected abstract T makeEntity();
 
     /**
-     * @param record
+     * @param rcd
      *     the record to provide the audit fields for
      * @return an instance of the {@link AuditFields} dto
      *     <p>
      *     {@code return new AuditFields(r.getCreated(), r.getCreatedBy(), r.getLastModified(), r.getLastModifiedBy(), r.getVersion())}
      */
     @NotNull
-    protected abstract AuditFields getAuditFieldsOf(@NotNull final R record);
+    protected abstract AuditFields getAuditFieldsOf(@NotNull final R rcd);
 
     /**
      * Implement the mapping of the normal (i.e. non-audit) fields from record into

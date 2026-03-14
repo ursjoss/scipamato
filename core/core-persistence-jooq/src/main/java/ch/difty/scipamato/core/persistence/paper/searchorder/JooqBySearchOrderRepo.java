@@ -61,7 +61,7 @@ public abstract class JooqBySearchOrderRepo<T extends IdScipamatoEntity<Long>, M
      * @param sortMapper
      *     paper or paperSlim specific {@link JooqSortMapper}
      */
-    public JooqBySearchOrderRepo(@Qualifier("dslContext") @NotNull final DSLContext dsl, @NotNull final M mapper,
+    protected JooqBySearchOrderRepo(@Qualifier("dslContext") @NotNull final DSLContext dsl, @NotNull final M mapper,
         @NotNull final JooqSortMapper<PaperRecord, T, ch.difty.scipamato.core.db.tables.Paper> sortMapper) {
         this.dsl = dsl;
         this.mapper = mapper;
