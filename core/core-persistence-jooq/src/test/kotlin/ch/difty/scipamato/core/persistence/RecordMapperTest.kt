@@ -16,9 +16,9 @@ abstract class RecordMapperTest<R : Record, E : CoreEntity> {
 
     @Test
     internal fun mapping_mapsRecordToEntity() {
-        val record = makeRecord()
-        setAuditFieldsIn(record)
-        val entity = mapper.map(record) ?: fail("Unable to get entity")
+        val rcd = makeRecord()
+        setAuditFieldsIn(rcd)
+        val entity = mapper.map(rcd) ?: fail("Unable to get entity")
         assertEntity(entity)
         assertAuditFieldsOf(entity)
     }
@@ -31,17 +31,17 @@ abstract class RecordMapperTest<R : Record, E : CoreEntity> {
 
     /**
      * `<pre>
-     * record.setCreated(CREATED);
-     * record.setCreatedBy(CREATED_BY);
-     * record.setLastModified(LAST_MOD);
-     * record.setLastModifiedBy(LAST_MOD_BY);
-     * record.setVersion(VERSION);
+     * rcd.setCreated(CREATED);
+     * rcd.setCreatedBy(CREATED_BY);
+     * rcd.setLastModified(LAST_MOD);
+     * rcd.setLastModifiedBy(LAST_MOD_BY);
+     * rcd.setVersion(VERSION);
     </pre>` *
      *
-     * @param record
+     * @param rcd
      * for which the audit fields are set into
      */
-    protected abstract fun setAuditFieldsIn(record: R)
+    protected abstract fun setAuditFieldsIn(rcd: R)
 
     /**
      * Assert non-audit fields of entity (audit fields are asserted separately)

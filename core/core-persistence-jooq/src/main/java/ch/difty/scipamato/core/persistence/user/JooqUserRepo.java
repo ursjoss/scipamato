@@ -84,8 +84,8 @@ public class JooqUserRepo
 
     @NotNull
     @Override
-    protected Integer getIdFrom(@NotNull final ScipamatoUserRecord record) {
-        return record.getId();
+    protected Integer getIdFrom(@NotNull final ScipamatoUserRecord rcd) {
+        return rcd.getId();
     }
 
     @Nullable
