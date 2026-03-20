@@ -67,7 +67,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[unreleased]]
 == [unreleased]
 
-{url-cl}2.1.11++...++main[Full Changelog]
+{url-cl}2.1.12++...++main[Full Changelog]
 
 .Added
 
@@ -84,6 +84,20 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Security
 
 ////
+
+
+[[v2.1.12]]
+== {url-tree}2.1.12[2.1.12] -- 2026-03-20
+
+{url-cl}2.1.11++...++2.1.12[Full Changelog]
+
+.Changed
+- Moved from github.com/ursjoss to github.com/jococo-ch/
+- Bumped spring-boot, spring-cloud, feign
+  spring-boot-admin-starter-client, gradle, postgresql,
+  kotest, equalsverifier,
+  commons-compress, commons-lang3, commons-fileupload,
+  sonarqube, upload-artifact-action, login-action, codeql-action, gradle-actions
 
 
 [[v2.1.11]]
