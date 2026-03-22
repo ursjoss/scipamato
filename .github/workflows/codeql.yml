@@ -36,12 +36,12 @@ jobs:
         distribution: 'zulu'
 
     - name: Initialize CodeQL
-      uses: github/codeql-action/init@0d579ffd059c29b07949a3cce3983f0780820c98 # v4
+      uses: github/codeql-action/init@38697555549f1db7851b81482ff19f1fa5c4fedc # v4
       with:
         languages: ${{ matrix.language }}
 
     - name: Cache global .gradle folder
-      uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5
+      uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
       with:
         path: ~/.gradle/caches
         key: global-gradle-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}-${{ hashFiles('**/*.kt*') }}-${{ hashFiles('**/*.java') }}
@@ -64,7 +64,7 @@ jobs:
       run: ./gradlew build --no-build-cache
 
     - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@0d579ffd059c29b07949a3cce3983f0780820c98 # v4
+      uses: github/codeql-action/analyze@38697555549f1db7851b81482ff19f1fa5c4fedc # v4
       with:
         category: "/language:${{matrix.language}}"
 
