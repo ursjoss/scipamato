@@ -87,7 +87,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 
 [[v2.1.12]]
-== {url-tree}2.1.12[2.1.12] -- 2026-03-20
+== {url-tree}2.1.12[2.1.12] -- 2026-03-24
 
 {url-cl}2.1.11++...++2.1.12[Full Changelog]
 
