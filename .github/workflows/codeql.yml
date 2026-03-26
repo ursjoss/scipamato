@@ -59,6 +59,8 @@ jobs:
 
     - name: Setup gradle
       uses: gradle/actions/setup-gradle@39e147cb9de83bb9910b8ef8bd7fff0ee20fcd6f # v6
+      with:
+        cache-disabled: true
 
     - name: Run build
       run: ./gradlew build --no-build-cache
