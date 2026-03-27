@@ -166,7 +166,7 @@ class NewsletterEditPage(model: IModel<Newsletter>?) : BasePage<Newsletter>(getM
         } catch (ole: OptimisticLockingException) {
             val msg = StringResourceModel("save.optimisticlockexception.hint", this, null)
                 .setParameters(ole.tableName, nullSafeId).string
-            log.error(msg)
+            log.error { msg }
             error(msg)
         } catch (iae: IllegalArgumentException) {
             val msg = StringResourceModel(iae.message, this, null).string
@@ -174,7 +174,7 @@ class NewsletterEditPage(model: IModel<Newsletter>?) : BasePage<Newsletter>(getM
         } catch (ex: Exception) {
             val msg = StringResourceModel("save.error.hint", this, null)
                 .setParameters(nullSafeId, ex.message).string
-            log.error(msg)
+            log.error { msg }
             error(msg)
         }
     }

@@ -19,7 +19,7 @@ abstract class ScipamatoItemWriter<T>(
     override fun write(chunk: Chunk<out T>) {
         var changeCount = 0
         for (i in chunk) changeCount += executeUpdate(i)
-        log.info("$topic-sync: Successfully synced $changeCount $topic${if (changeCount == 1) "" else "s"}")
+        log.info { "$topic-sync: Successfully synced $changeCount $topic${if (changeCount == 1) "" else "s"}" }
     }
 
     protected abstract fun executeUpdate(i: T): Int

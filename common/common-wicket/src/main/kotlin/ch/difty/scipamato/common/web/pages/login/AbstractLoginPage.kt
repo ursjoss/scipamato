@@ -48,10 +48,10 @@ abstract class AbstractLoginPage<R : AbstractPage<*>>(
         private val serialVersionUID: Long = 1L
         override fun onSubmit() {
             if (signIn(username, password)) {
-                log.info("User '$username' logged in successfully")
+                log.info { "User '$username' logged in successfully" }
                 setResponsePage(responsePage)
             } else {
-                log.warn("Unsuccessful login attempt by user '$username'.")
+                log.warn { "Unsuccessful login attempt by user '$username'." }
                 error(getString("msg.login.failure"))
             }
         }

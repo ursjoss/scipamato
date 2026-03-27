@@ -61,7 +61,7 @@ open class RefDataSyncJobLauncher(
         setWarning: (String) -> Unit,
         setDone: () -> Unit,
     ) {
-        log.info("Starting synchronization job from scipamato-core to scipamato-public...")
+        log.info { "Starting synchronization job from scipamato-core to scipamato-public..." }
         val jobParameters = jobParameters
         try {
             warner.findUnsynchronizedPapers()?.let {
@@ -81,10 +81,10 @@ open class RefDataSyncJobLauncher(
             jobLauncher.run(syncNewStudyJob, jobParameters).handle("newStudies", setSuccess, setFailure)
             jobLauncher.run(syncKeywordJob, jobParameters).handle("keywords", setSuccess, setFailure)
 
-            log.info("Job finished ${if (jobSuccess.isUnsuccessful) "with issues" else "successfully"}.")
+            log.info { "Job finished ${if (jobSuccess.isUnsuccessful) "with issues" else "successfully"}." }
             setDone()
         } catch (ex: Exception) {
-            log.error("Job terminated.", ex)
+            log.error(ex) { "Job terminated." }
             setFailure("Unexpected exception of type ${ex.javaClass}: ${ex.message}")
         }
     }

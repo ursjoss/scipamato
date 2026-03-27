@@ -11,8 +11,6 @@ import io.undertow.servlet.api.TransportGuaranteeType
 import io.undertow.servlet.api.WebResourceCollection
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.boot.autoconfigure.web.ServerProperties
-import org.springframework.boot.web.embedded.undertow.UndertowBuilderCustomizer
-import org.springframework.boot.web.embedded.undertow.UndertowDeploymentInfoCustomizer
 import org.springframework.boot.web.embedded.undertow.UndertowServletWebServerFactory
 import org.springframework.boot.web.servlet.server.AbstractServletWebServerFactory
 import org.springframework.context.annotation.Bean
@@ -39,19 +37,19 @@ open class UndertowConfig(
     open fun getUndertow(): AbstractServletWebServerFactory {
         val redirectFromPort = scipamatoProperties.redirectFromPort
         val confidentialPort = serverProperties.port
-        log.info(
+        log.info {
             "Adding http listener on port $redirectFromPort redirecting " +
                 "to confidential port $confidentialPort for https."
-        )
+        }
         val factory = UndertowServletWebServerFactory()
         redirectFromPort?.let { port ->
             factory.addBuilderCustomizers(
-                UndertowBuilderCustomizer { builder: Undertow.Builder ->
+                { builder: Undertow.Builder ->
                     builder.addHttpListener(port, "0.0.0.0")
                 }
             )
         }
-        factory.addDeploymentInfoCustomizers(UndertowDeploymentInfoCustomizer { deploymentInfo: DeploymentInfo ->
+        factory.addDeploymentInfoCustomizers({ deploymentInfo: DeploymentInfo ->
             deploymentInfo.addSecurityConstraint(
                 SecurityConstraint()
                     .addWebResourceCollection(WebResourceCollection()
@@ -60,7 +58,7 @@ open class UndertowConfig(
                     .setEmptyRoleSemantic(SecurityInfo.EmptyRoleSemantic.PERMIT)
             ).confidentialPortManager = ConfidentialPortManager { confidentialPort }
         })
-        log.debug("UndertowEmbeddedServletContainerFactory configured.")
+        log.debug { "UndertowEmbeddedServletContainerFactory configured." }
         return factory
     }
 }

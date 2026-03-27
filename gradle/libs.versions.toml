@@ -21,7 +21,7 @@ jsr305 = "3.0.2"
 kluent = "1.73"
 kotest = "6.1.9"
 kotlin = "2.3.20"
-kotlinLogging = "3.0.5"
+kotlinLogging = "8.0.01"
 kris = "0.5.25"
 licensePlugin = "3.1.1"
 lombokPlugin = "9.2.0"
@@ -72,7 +72,7 @@ kotest-property = { module = "io.kotest:kotest-property", version.ref = "kotest"
 kotest-runner-junit5 = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlin" }
-kotlinLogging = { module = "io.github.microutils:kotlin-logging", version.ref = "kotlinLogging" }
+kotlinLogging = { module = "io.github.oshai:kotlin-logging", version.ref = "kotlinLogging" }
 kris-core = { module = "ch.difty.kris:kris-core", version.ref = "kris" }
 logback-core = { module = "ch.qos.logback:logback-core" }
 lombok = { module = "org.projectlombok:lombok" }
