@@ -11,8 +11,6 @@ import io.undertow.servlet.api.TransportGuaranteeType
 import io.undertow.servlet.api.WebResourceCollection
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.boot.autoconfigure.web.ServerProperties
-import org.springframework.boot.web.embedded.undertow.UndertowBuilderCustomizer
-import org.springframework.boot.web.embedded.undertow.UndertowDeploymentInfoCustomizer
 import org.springframework.boot.web.embedded.undertow.UndertowServletWebServerFactory
 import org.springframework.boot.web.servlet.server.AbstractServletWebServerFactory
 import org.springframework.context.annotation.Bean
@@ -46,12 +44,12 @@ open class UndertowConfig(
         val factory = UndertowServletWebServerFactory()
         redirectFromPort?.let { port ->
             factory.addBuilderCustomizers(
-                UndertowBuilderCustomizer { builder: Undertow.Builder ->
+                { builder: Undertow.Builder ->
                     builder.addHttpListener(port, "0.0.0.0")
                 }
             )
         }
-        factory.addDeploymentInfoCustomizers(UndertowDeploymentInfoCustomizer { deploymentInfo: DeploymentInfo ->
+        factory.addDeploymentInfoCustomizers({ deploymentInfo: DeploymentInfo ->
             deploymentInfo.addSecurityConstraint(
                 SecurityConstraint()
                     .addWebResourceCollection(WebResourceCollection()
