@@ -34,19 +34,12 @@ jobs:
       with:
         java-version: '21'
         distribution: 'zulu'
+        cache: gradle
 
     - name: Initialize CodeQL
       uses: github/codeql-action/init@c10b8064de6f491fea524254123dbe5e09572f13 # v4
       with:
         languages: ${{ matrix.language }}
-
-    - name: Cache global .gradle folder
-      uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
-      with:
-        path: ~/.gradle/caches
-        key: global-gradle-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}-${{ hashFiles('**/*.kt*') }}-${{ hashFiles('**/*.java') }}
-        restore-keys: |
-          gradle-cache-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
 
     - name: Login to Docker Hub
       uses: docker/login-action@b45d80f862d83dbcd57f89517bcf500b2ab88fb2 # v4.0.0
@@ -56,11 +49,6 @@ jobs:
 
     - name: Download postgres
       run: docker pull postgres:15.4
-
-    - name: Setup gradle
-      uses: gradle/actions/setup-gradle@39e147cb9de83bb9910b8ef8bd7fff0ee20fcd6f # v6
-      with:
-        cache-disabled: true
 
     - name: Run build
       run: ./gradlew build --no-build-cache
