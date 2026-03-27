@@ -34,12 +34,12 @@ class ScipamatoPublicApplicationTest {
 
         val app = ScipamatoPublicApplication(properties)
 
-        log.info("We should see single log about pym being enabled")
+        log.info { "We should see single log about pym being enabled" }
 
         app.logSpecialConfiguration()
 
         // visually assert the respective log is on console (no automatic assertion)
-        log.info("----")
+        log.info { "----" }
     }
 
     @Test

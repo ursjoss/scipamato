@@ -39,21 +39,21 @@ internal open class JooqCodeClassRepoIntegrationTest {
     fun findingAllCodesClassesInGerman() {
         val ccs = repo.find("de")
         ccs shouldHaveSize CODE_CLASS_COUNT
-        ccs.forEach { cc -> log.debug(cc.toString()) }
+        ccs.forEach { cc -> log.debug { cc.toString() } }
     }
 
     @Test
     fun findingAllCodesClassesInEnglish() {
         val ccs = repo.find("en")
         ccs shouldHaveSize CODE_CLASS_COUNT
-        ccs.forEach { cc -> log.debug(cc.toString()) }
+        ccs.forEach { cc -> log.debug { cc.toString() } }
     }
 
     @Test
     fun findingAllCodesClassesInFrench() {
         val ccs = repo.find("fr")
         ccs shouldHaveSize CODE_CLASS_COUNT
-        ccs.forEach { cc -> log.debug(cc.toString()) }
+        ccs.forEach { cc -> log.debug { cc.toString() } }
     }
 
     @Test

@@ -36,8 +36,9 @@ open class ScipamatoPublicApplication(
 
     // package-private for testing purposes
     fun logSpecialConfiguration() {
-        if (applicationProperties.isCommercialFontPresent) log.info("CommercialFonts enabled.")
-        if (applicationProperties.isResponsiveIframeSupportEnabled) log.info("Responsive iframes using PymJs enabled.")
+        if (applicationProperties.isCommercialFontPresent) log.info { "CommercialFonts enabled." }
+        if (applicationProperties.isResponsiveIframeSupportEnabled)
+            log.info { "Responsive iframes using PymJs enabled." }
     }
 }
 

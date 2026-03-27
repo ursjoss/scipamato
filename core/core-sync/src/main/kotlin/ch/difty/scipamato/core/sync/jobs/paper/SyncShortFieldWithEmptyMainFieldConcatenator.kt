@@ -31,7 +31,7 @@ internal open class SyncShortFieldWithEmptyMainFieldConcatenator
             Tables.PAPER.POPULATION_PLACE, Tables.PAPER.EXPOSURE_POLLUTANT, Tables.PAPER.EXPOSURE_ASSESSMENT, Tables.PAPER.METHOD_STATISTICS,
             Tables.PAPER.METHOD_CONFOUNDERS)
     } catch (se: SQLException) {
-        log.error(UNABLE_MSG, se)
+        log.error(se) { UNABLE_MSG }
         null
     }
 
@@ -67,7 +67,7 @@ internal open class SyncShortFieldWithEmptyMainFieldConcatenator
             Tables.PAPER.POPULATION_DURATION
         )
     } catch (se: SQLException) {
-        log.error(UNABLE_MSG, se)
+        log.error(se) { UNABLE_MSG }
         null
     }
 
@@ -96,7 +96,7 @@ internal open class SyncShortFieldWithEmptyMainFieldConcatenator
             Paper.PAPER.CONCLUSION
         )
     } catch (se: SQLException) {
-        log.error(UNABLE_MSG, se)
+        log.error(se) { UNABLE_MSG }
         null
     }
 
