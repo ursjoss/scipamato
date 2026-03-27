@@ -48,7 +48,7 @@ abstract class JasperReportResourceReference(
     @Throws(JRException::class)
     open fun compileReport() {
         report = JasperCompileManager.compileReport(inputStream)
-        log.info("Successfully compiled JasperReport $name...")
+        log.info { "Successfully compiled JasperReport $name..." }
     }
 
     private val inputStream: InputStream

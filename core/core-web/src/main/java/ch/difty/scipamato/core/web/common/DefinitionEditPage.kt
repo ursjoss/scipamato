@@ -71,7 +71,7 @@ abstract class DefinitionEditPage<E : DefinitionEntity<ID, T>, T : DefinitionTra
         private fun handleOptimisticLockingException(ole: OptimisticLockingException) {
             val msg = StringResourceModel("save.optimisticlockexception.hint", this, null)
                 .setParameters(ole.tableName, modelObject!!.nullSafeId).string
-            log.error(msg)
+            log.error { msg }
             error(msg)
         }
 
@@ -79,7 +79,7 @@ abstract class DefinitionEditPage<E : DefinitionEntity<ID, T>, T : DefinitionTra
             val msg = StringResourceModel("save.error.hint", this, null)
                 .setParameters(modelObject!!.nullSafeId, oe.message)
                 .string
-            log.error(msg)
+            log.error { msg }
             error(msg)
         }
     }

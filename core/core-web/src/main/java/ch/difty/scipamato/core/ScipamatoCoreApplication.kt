@@ -55,7 +55,7 @@ open class ScipamatoCoreApplication : WicketBootSecuredWebApplication() {
             if (!executorService.awaitTermination(60, TimeUnit.SECONDS))
                 executorService.shutdownNow()
         } catch (e: InterruptedException) {
-            log.error("Unable to shutdown executor service", e)
+            log.error(e) { "Unable to shutdown executor service" }
         }
         super.onDestroy()
     }

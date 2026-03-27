@@ -80,7 +80,7 @@ class UserEditPage(pp: PageParameters) : BasePage<ChangePasswordUser>(pp) {
         if (isInAdminMode && !activeUser.roles.contains(Role.ADMIN)) {
             val msg = StringResourceModel("page.access-forbidden", this, null)
                 .setParameters(activeUser.userName, this.javaClass).string
-            log.warn(msg)
+            log.warn { msg }
             throw UnauthorizedInstantiationException(pageClass)
         }
     }
@@ -225,12 +225,12 @@ class UserEditPage(pp: PageParameters) : BasePage<ChangePasswordUser>(pp) {
             } catch (ole: OptimisticLockingException) {
                 val msg = StringResourceModel("save.optimisticlockexception.hint", this, null)
                     .setParameters(ole.tableName, modelObject.id).string
-                log.error(msg)
+                log.error { msg }
                 error(msg)
             } catch (ex: Exception) {
                 val msg = StringResourceModel("save.error.hint", this, null)
                     .setParameters(modelObject.id, ex.message).string
-                log.error(msg)
+                log.error { msg }
                 error(msg)
             }
         }
@@ -247,7 +247,7 @@ class UserEditPage(pp: PageParameters) : BasePage<ChangePasswordUser>(pp) {
         } catch (ex: Exception) {
             val msg = StringResourceModel("delete.error.hint", this, null)
                 .setParameters(userName, ex.message).string
-            log.error(msg)
+            log.error { msg }
             error(msg)
         }
     }

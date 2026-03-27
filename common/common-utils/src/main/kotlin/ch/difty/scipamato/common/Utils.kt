@@ -1,6 +1,6 @@
 package ch.difty.scipamato.common
 
-import mu.KotlinLogging
+import io.github.oshai.kotlinlogging.KotlinLogging
 import java.sql.Timestamp
 import java.time.LocalDateTime
 
@@ -21,14 +21,14 @@ fun <T : Enum<T>> String.asProperty(values: List<T>, defaultValue: T, propertyKe
     if (isNotBlank()) {
         values.filter { equals(it.name, ignoreCase = true) }.take(1).apply {
             if (isNotEmpty()) {
-                log.info("{}={}", propertyKey, this@asProperty)
+                log.info { "${propertyKey}=${this@asProperty}" }
                 return first()
             }
         }
     }
-    val msg =
-        """{} is not properly defined. Current value: '{}' - now using {}
-        | - specify one of {} in your property configuration (e.g. application.properties).""".trimMargin()
-    log.warn(msg, propertyKey, this, defaultValue, values)
+    log.warn {
+        """$propertyKey is not properly defined. Current value: '$this' - now using $defaultValue
+        | - specify one of $values in your property configuration (e.g. application.properties).""".trimMargin()
+    }
     return defaultValue
 }

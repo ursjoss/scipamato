@@ -22,14 +22,14 @@ internal open class JooqKeywordRepoIntegrationTest {
     fun findingAllKeywordsInGerman() {
         val keywords = repo.findKeywords("de")
         keywords.map { it.name } shouldContainAll listOf("Aerosol", "Aktivität, eingeschränkte", "Allergie")
-        keywords.forEach { c -> log.debug(c.toString()) }
+        keywords.forEach { c -> log.debug { c.toString() } }
     }
 
     @Test
     fun findingAllKeywords1InEnglish() {
         val keywords = repo.findKeywords("en")
         keywords.map { it.name } shouldContainAll listOf("Aerosol", "Allergies", "Restricted activity")
-        keywords.forEach { c -> log.debug(c.toString()) }
+        keywords.forEach { c -> log.debug { c.toString() } }
     }
 
     @Suppress("SpellCheckingInspection")
@@ -37,6 +37,6 @@ internal open class JooqKeywordRepoIntegrationTest {
     fun findingAllKeywords1InFrench() {
         val keywords = repo.findKeywords("fr")
         keywords.map { it.name } shouldContainAll listOf("Activités réduites", "Aérosol", "Allergie")
-        keywords.forEach { c -> log.debug(c.toString()) }
+        keywords.forEach { c -> log.debug { c.toString() } }
     }
 }

@@ -36,9 +36,8 @@ open class WicketSecurityConfiguration(
     @Bean
     @Throws(Exception::class)
     open fun authenticationManager(): AuthenticationManager {
-        val provider = DaoAuthenticationProvider().apply {
+        val provider = DaoAuthenticationProvider(userDetailsService).apply {
             setPasswordEncoder(passwordEncoder())
-            setUserDetailsService(userDetailsService)
         }
         return ProviderManager(provider)
     }

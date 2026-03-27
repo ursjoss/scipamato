@@ -60,7 +60,7 @@ abstract class BasePage<T> : AbstractPage<T> {
         val puValue = parameters[PublicPageParameters.PARENT_URL.parameterName]
         if (!puValue.isNull) {
             val locale = localeExtractor.extractLocaleFrom(puValue.toString())
-            log.info("Switching Locale to {}", locale.language)
+            log.info { "Switching Locale to ${locale.language}" }
             session.locale = locale
         }
     }
