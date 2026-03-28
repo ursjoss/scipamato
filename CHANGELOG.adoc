@@ -67,7 +67,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[unreleased]]
 == [unreleased]
 
-{url-cl}2.1.12++...++main[Full Changelog]
+{url-cl}2.1.13++...++main[Full Changelog]
 
 .Added
 
@@ -84,6 +84,16 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Security
 
 ////
+
+
+[[v2.1.13]]
+== {url-tree}2.1.13[2.1.13] -- 2026-03-24
+
+{url-cl}2.1.12++...++2.1.13[Full Changelog]
+
+.Changed
+- Bumped spring-boot, kotlin-logging,
+  gradle github actions, codeql-action
 
 
 [[v2.1.12]]
