@@ -36,6 +36,7 @@ jobs:
       with:
         distribution: 'zulu'
         java-version: ${{ matrix.jdk }}
+        cache: gradle
 
     - name: Cache SonarCloud packages
       uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
@@ -44,27 +45,14 @@ jobs:
         key: ${{ runner.os }}-sonar
         restore-keys: ${{ runner.os }}-sonar
 
-    - name: Cache global .gradle folder
-      uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
-      with:
-        path: ~/.gradle/caches
-        key: global-gradle-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}-${{ hashFiles('**/*.kt*') }}-${{ hashFiles('**/*.java') }}
-        restore-keys: |
-          gradle-cache-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
-
     - name: Login to Docker Hub
-      uses: docker/login-action@b45d80f862d83dbcd57f89517bcf500b2ab88fb2 # v4.0.0
+      uses: docker/login-action@4907a6ddec9925e35a0a9e82d7399ccc52663121 # v4.1.0
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
     - name: Download postgres
       run: docker pull postgres:15.4
-
-    - name: Setup gradle
-      uses: gradle/actions/setup-gradle@39e147cb9de83bb9910b8ef8bd7fff0ee20fcd6f # v6
-      with:
-        cache-disabled: true
 
     - name: Run build
       run:  ./gradlew check detekt mergeDetektSarif :gradle-plugins:buildPlugins --continue
@@ -82,3 +70,4 @@ jobs:
       with:
         name: reports
         path: '**/build/reports'
+
