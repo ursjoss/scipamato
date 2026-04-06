@@ -21,29 +21,30 @@ jobs:
       matrix:
         jdk: [21]
     runs-on: ubuntu-latest
-    env:
-      JDK_VERSION: ${{ matrix.jdk }}
 
     steps:
     - name: Checkout repository
       uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
 
     - name: Gradle wrapper validation
-      uses: gradle/actions/wrapper-validation@39e147cb9de83bb9910b8ef8bd7fff0ee20fcd6f # v6
+      uses: gradle/actions/wrapper-validation@50e97c2cd7a37755bbfafc9c5b7cafaece252f6e # v6
       
     - name: Set up JDK ${{ matrix.jdk }}
       uses: actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654 # v5
       with:
         distribution: 'zulu'
         java-version: ${{ matrix.jdk }}
-        cache: gradle
 
-    - name: Cache SonarCloud packages
+    - name: Gradle cache
       uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
       with:
-        path: ~/.sonar/cache
-        key: ${{ runner.os }}-sonar
-        restore-keys: ${{ runner.os }}-sonar
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+        key: gradle-${{ runner.os }}-${{ hashFiles('**/gradle-wrapper.properties', '**/*.gradle*', '**/*.versions.toml') }}-${{ hashFiles('**/*.kts') }}
+        restore-keys: |
+          gradle-${{ runner.os }}-${{ hashFiles('**/gradle-wrapper.properties', '**/*.gradle*', '**/*.versions.toml') }}-
+          gradle-${{ runner.os }}-
 
     - name: Login to Docker Hub
       uses: docker/login-action@4907a6ddec9925e35a0a9e82d7399ccc52663121 # v4.1.0
@@ -55,14 +56,7 @@ jobs:
       run: docker pull postgres:15.4
 
     - name: Run build
-      run:  ./gradlew check detekt mergeDetektSarif :gradle-plugins:buildPlugins --continue
-
-    - name: Upload sarif file to GitHub
-      uses: github/codeql-action/upload-sarif@c10b8064de6f491fea524254123dbe5e09572f13 # v4
-      if: success() || failure()
-      with:
-        sarif_file: build/detekt-merged.sarif
-        category: detekt
+      run:  ./gradlew check detekt mergeDetektSarif :gradle-plugins:buildPlugins --no-daemon --warning-mode=all --continue
 
     - name: Upload failure artifacts
       if: failure()
@@ -70,4 +64,11 @@ jobs:
       with:
         name: reports
         path: '**/build/reports'
+
+    - name: Upload sarif file to GitHub
+      uses: github/codeql-action/upload-sarif@c10b8064de6f491fea524254123dbe5e09572f13 # v4
+      if: success() || failure()
+      with:
+        sarif_file: build/detekt-merged.sarif
+        category: detekt
 
