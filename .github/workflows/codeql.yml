@@ -11,7 +11,7 @@ on:
 jobs:
   analyze:
     name: Analyze (${{ matrix.language }})
-    runs-on: ${{ (matrix.language == 'swift' && 'macos-latest') || 'ubuntu-latest' }}
+    runs-on: ubuntu-latest
     permissions:
       security-events: write
       packages: read
@@ -29,29 +29,48 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
 
+    - name: Gradle wrapper validation
+      if: matrix.language == 'java-kotlin'
+      uses: gradle/actions/wrapper-validation@50e97c2cd7a37755bbfafc9c5b7cafaece252f6e # v6.1.0
+
     - name: Set up JDK 21
+      if: matrix.language == 'java-kotlin'
       uses: actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654 # v5
       with:
         java-version: '21'
         distribution: 'zulu'
-        cache: gradle
 
     - name: Initialize CodeQL
       uses: github/codeql-action/init@c10b8064de6f491fea524254123dbe5e09572f13 # v4
       with:
         languages: ${{ matrix.language }}
 
+    - name: Gradle cache
+      if: matrix.language == 'java-kotlin'
+      uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
+      with:
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+        key: gradle-${{ runner.os }}-${{ hashFiles('**/gradle-wrapper.properties', '**/*.gradle*', '**/*.versions.toml') }}-${{ hashFiles('**/*.kts') }}
+        restore-keys: |
+          gradle-${{ runner.os }}-${{ hashFiles('**/gradle-wrapper.properties', '**/*.gradle*', '**/*.versions.toml') }}-
+          gradle-${{ runner.os }}-
+
     - name: Login to Docker Hub
+      if: matrix.language == 'java-kotlin'
       uses: docker/login-action@4907a6ddec9925e35a0a9e82d7399ccc52663121 # v4.1.0
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
     - name: Download postgres
+      if: matrix.language == 'java-kotlin'
       run: docker pull postgres:15.4
 
     - name: Run build
-      run: ./gradlew build --no-build-cache
+      if: matrix.language == 'java-kotlin'
+      run: ./gradlew classes testClasses --no-daemon --warning-mode=all
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@c10b8064de6f491fea524254123dbe5e09572f13 # v4
