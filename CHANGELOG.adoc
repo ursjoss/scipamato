@@ -67,7 +67,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[unreleased]]
 == [unreleased]
 
-{url-cl}2.1.13++...++main[Full Changelog]
+{url-cl}2.1.14++...++main[Full Changelog]
 
 .Added
 
@@ -84,6 +84,18 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Security
 
 ////
+
+[[v2.1.14]]
+== {url-tree}2.1.14[2.1.14] -- 2026-04-24
+
+{url-cl}2.1.13++...++2.1.14[Full Changelog]
+
+.Changed
+- Bumped spring boot, spring-cloud-dependencies, spring-cloud-starter-openfeign, feign,
+  kotlin, lombok, guava,
+  ehcache,
+  kotest, jacoco, equalsverifier, dependency-license-report,
+  gradle-actions, codeql-action, login-action, upload-artifiact and cache actions
 
 
 [[v2.1.13]]
