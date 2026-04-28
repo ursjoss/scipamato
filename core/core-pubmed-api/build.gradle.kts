@@ -29,6 +29,7 @@ dependencies {
     implementation(libs.openfeign.jaxb)
     implementation(libs.openfeign.okhttp)
     implementation(libs.openfeign.slf4j)
+    implementation(libs.bouncycastle)
 
     // Object/XML mapping
     implementation(libs.spring.oxm)
