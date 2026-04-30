@@ -32,7 +32,7 @@ openfeign = "13.12"
 # PINNED: jooq-gradle-2.2.7 - org.postgresql:postgresql 42.7.5 -> 42.7.7+
 postgresql = "42.7.11"
 sonarqubePlugin = "7.3.0.8198"
-springBoot = "3.5.14"
+springBoot = "4.0.6"
 springBootAdmin = "3.5.8"
 springCloud = "2025.1.1"
 springCloudStarter = "4.3.2"
