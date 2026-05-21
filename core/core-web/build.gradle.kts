@@ -29,7 +29,6 @@ tasks {
     withType<BootJar> {
         enabled = true
         mainClass.set("ch.difty.scipamato.core.ScipamatoCoreApplicationKt")
-        launchScript()
     }
 }
 
