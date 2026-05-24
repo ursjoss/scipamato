@@ -60,6 +60,7 @@ dependencies {
         exclude("commons-logging", "commons-logging")
     }
     implementation(libs.jasperreports.fonts)
+    implementation(libs.jasperreports.pdf)
     implementation(libs.univocity)
     // temporarily needed until guava has been fully removed from wicket-bootstrap
     implementation("com.google.guava:guava:33.6.0-jre")
@@ -88,3 +89,4 @@ idea {
         inheritOutputDirs = true
     }
 }
+

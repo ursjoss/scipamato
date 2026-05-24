@@ -14,7 +14,7 @@ detektKotlinVersion = "2.0.21"
 ehcache = "3.12.0"
 equalsverifier = "4.5"
 jacoco = "0.8.14"
-jasperreports = "6.21.5"
+jasperreports = "7.0.6"
 java = "21"
 jakartaElApi = "6.0.1"
 jaxbPlugin = "8.0.1"
@@ -43,7 +43,7 @@ wicket = "10.9.1"
 wicketBootstrap = "7.0.14"
 wicketJqueryUi = "10.0.0-M1"
 wicketSpringBootStarter = "4.1.1"
-wicketstuff = "10.8.0"
+wicketstuff = "10.9.1"
 
 [libraries]
 bouncycastle = { module = "org.bouncycastle:bcprov-jdk18on", version.ref = "bouncycastle" }
@@ -60,6 +60,7 @@ fontAwesome = { module = "org.webjars:font-awesome" }
 hibernate-validator = { module = "org.hibernate.validator:hibernate-validator" }
 jasperreports = { module = "net.sf.jasperreports:jasperreports", version.ref = "jasperreports" }
 jasperreports-fonts = { module = "net.sf.jasperreports:jasperreports-fonts", version.ref = "jasperreports" }
+jasperreports-pdf = { module = "net.sf.jasperreports:jasperreports-pdf", version.ref = "jasperreports" }
 jakarta-el-api = { module = "jakarta.el:jakarta.el-api", version.ref = "jakartaElApi" }
 jakarta-servletApi = { module = "jakarta.servlet:jakarta.servlet-api" }
 jakarta-bind-api = { module = "jakarta.xml.bind:jakarta.xml.bind-api" }

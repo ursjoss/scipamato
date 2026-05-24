@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.13.0.final using JasperReports Library version 6.13.0-46ada4d1be8f3c5985fd0b6146f3ed44caed6f05  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="paper_review_A4" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="822" leftMargin="10" rightMargin="10" topMargin="10" bottomMargin="10" whenResourceMissingType="Empty" uuid="78a3a702-e0d1-460b-9e25-bd791531de4e">
+<!-- Created with Jaspersoft Studio version 7.0.6.final using JasperReports Library version 7.0.6-5d2a603fdc6b3db8f842a83383e594f41891534d  -->
+<jasperReport name="paper_review_A4" language="java" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="822" leftMargin="10" rightMargin="10" topMargin="10" bottomMargin="10" whenResourceMissingType="Empty" uuid="78a3a702-e0d1-460b-9e25-bd791531de4e">
 	<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.pageHeight" value="mm"/>
@@ -35,405 +34,249 @@
 	<field name="conclusionLabel" class="java.lang.String"/>
 	<field name="brand" class="java.lang.String"/>
 	<field name="createdBy" class="java.lang.String"/>
-	<background>
-		<band splitType="Stretch"/>
-	</background>
-	<title>
-		<band splitType="Stretch"/>
-	</title>
-	<pageHeader>
-		<band splitType="Stretch">
-			<property name="local_mesure_unitheight" value="pixel"/>
-			<property name="com.jaspersoft.studio.unit.height" value="px"/>
-			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
-		</band>
+	<background splitType="Stretch"/>
+	<title splitType="Stretch"/>
+	<pageHeader splitType="Stretch">
+		<property name="local_mesure_unitheight" value="pixel"/>
+		<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
 	</pageHeader>
-	<columnHeader>
-		<band height="25" splitType="Stretch">
+	<columnHeader height="25" splitType="Stretch">
+		<element kind="textField" uuid="96ec2b98-c9e2-4d18-a210-d05bc0fba9d2" x="0" y="0" width="40" height="15" fontName="DejaVu Sans" fontSize="8.0" textAdjust="StretchHeight" printWhenDetailOverflows="true" hTextAlign="Right">
+			<expression><![CDATA[$F{numberLabel}]]></expression>
 			<property name="local_mesure_unitheight" value="pixel"/>
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
-			<textField textAdjust="StretchHeight">
-				<reportElement x="0" y="0" width="40" height="15" isPrintWhenDetailOverflows="true" uuid="96ec2b98-c9e2-4d18-a210-d05bc0fba9d2">
-					<property name="local_mesure_unitheight" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-				</reportElement>
-				<textElement textAlignment="Right">
-					<font fontName="DejaVu Sans" size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{numberLabel}]]></textFieldExpression>
-			</textField>
-			<textField textAdjust="StretchHeight">
-				<reportElement x="41" y="0" width="60" height="15" isPrintWhenDetailOverflows="true" uuid="a3fc231a-ac6b-4334-ba04-73fcdeea4ca6">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-					<property name="local_mesure_unitx" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="local_mesure_unitwidth" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-				</reportElement>
-				<textElement>
-					<font fontName="DejaVu Sans" size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{authorYearLabel}]]></textFieldExpression>
-			</textField>
-			<textField textAdjust="StretchHeight">
-				<reportElement x="101" y="0" width="60" height="15" isPrintWhenDetailOverflows="true" uuid="39440d76-e068-4980-a1a6-b02dcb1c481d">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-					<property name="local_mesure_unitwidth" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-				</reportElement>
-				<textElement>
-					<font fontName="DejaVu Sans" size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{populationPlaceLabel}]]></textFieldExpression>
-			</textField>
-			<textField textAdjust="StretchHeight">
-				<reportElement x="161" y="0" width="60" height="15" isPrintWhenDetailOverflows="true" uuid="e42510f5-9f62-4c82-82e7-eafdcb8abac0">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-					<property name="local_mesure_unitx" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="local_mesure_unitwidth" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-				</reportElement>
-				<textElement>
-					<font fontName="DejaVu Sans" size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{methodOutcomeLabel}]]></textFieldExpression>
-			</textField>
-			<textField textAdjust="StretchHeight">
-				<reportElement x="221" y="0" width="60" height="15" isPrintWhenDetailOverflows="true" uuid="0f627783-deb6-4866-9719-6fb3bfc8ccd3">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-					<property name="local_mesure_unitx" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="local_mesure_unitwidth" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-				</reportElement>
-				<textElement>
-					<font fontName="DejaVu Sans" size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{exposurePollutantLabel}]]></textFieldExpression>
-			</textField>
-			<textField textAdjust="StretchHeight">
-				<reportElement x="281" y="0" width="60" height="15" isPrintWhenDetailOverflows="true" uuid="11489e1d-f85a-41f4-9d9c-5c88b99f9a23">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-					<property name="local_mesure_unitx" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="local_mesure_unitwidth" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-				</reportElement>
-				<textElement>
-					<font fontName="DejaVu Sans" size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{methodStudyDesignLabel}]]></textFieldExpression>
-			</textField>
-			<textField textAdjust="StretchHeight">
-				<reportElement x="341" y="0" width="60" height="15" isPrintWhenDetailOverflows="true" uuid="ca3781fd-6bac-43df-ad07-2338adc40d8d">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-					<property name="local_mesure_unitx" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="local_mesure_unitwidth" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-				</reportElement>
-				<textElement>
-					<font fontName="DejaVu Sans" size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{populationDurationLabel}]]></textFieldExpression>
-			</textField>
-			<textField textAdjust="StretchHeight">
-				<reportElement x="401" y="0" width="60" height="15" isPrintWhenDetailOverflows="true" uuid="b7769323-dfc5-4d81-9a99-86d59a460875">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-					<property name="local_mesure_unitx" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="local_mesure_unitwidth" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-				</reportElement>
-				<textElement>
-					<font fontName="DejaVu Sans" size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{populationParticipantsLabel}]]></textFieldExpression>
-			</textField>
-			<textField textAdjust="StretchHeight">
-				<reportElement x="461" y="0" width="60" height="15" isPrintWhenDetailOverflows="true" uuid="602685d6-9690-4ccd-b055-b6563ef1ebb1">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-					<property name="local_mesure_unitx" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="local_mesure_unitwidth" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-				</reportElement>
-				<textElement>
-					<font fontName="DejaVu Sans" size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{exposureAssessmentLabel}]]></textFieldExpression>
-			</textField>
-			<textField textAdjust="StretchHeight">
-				<reportElement x="521" y="0" width="60" height="15" isPrintWhenDetailOverflows="true" uuid="80a74250-3f38-43b8-97da-d18744674685">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-					<property name="local_mesure_unitx" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="local_mesure_unitwidth" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-				</reportElement>
-				<textElement>
-					<font fontName="DejaVu Sans" size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{resultExposureRangeLabel}]]></textFieldExpression>
-			</textField>
-            <textField textAdjust="StretchHeight">
-                <reportElement x="581" y="0" width="60" height="15" isPrintWhenDetailOverflows="true" uuid="f994e1bb-5242-438d-8343-32722a772395">
-                    <property name="com.jaspersoft.studio.unit.height" value="px"/>
-                    <property name="local_mesure_unitx" value="pixel"/>
-                    <property name="com.jaspersoft.studio.unit.x" value="px"/>
-                    <property name="local_mesure_unitwidth" value="pixel"/>
-                    <property name="com.jaspersoft.studio.unit.width" value="px"/>
-                </reportElement>
-                <textElement>
-                    <font fontName="DejaVu Sans" size="8"/>
-                </textElement>
-                <textFieldExpression><![CDATA[$F{methodStatisticsLabel}]]></textFieldExpression>
-            </textField>
-			<textField textAdjust="StretchHeight">
-				<reportElement x="641" y="0" width="60" height="15" isPrintWhenDetailOverflows="true" uuid="f994e1bb-5242-438d-8343-32722a772395">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-					<property name="local_mesure_unitx" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="local_mesure_unitwidth" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-				</reportElement>
-				<textElement>
-					<font fontName="DejaVu Sans" size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{methodConfoundersLabel}]]></textFieldExpression>
-			</textField>
-			<textField textAdjust="StretchHeight">
-				<reportElement x="701" y="0" width="60" height="15" isPrintWhenDetailOverflows="true" uuid="807dfc2a-e2e1-4110-959c-b6f909c6f89a">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-					<property name="local_mesure_unitx" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="local_mesure_unitwidth" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-				</reportElement>
-				<textElement>
-					<font fontName="DejaVu Sans" size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{resultEffectEstimateLabel}]]></textFieldExpression>
-			</textField>
-			<textField textAdjust="StretchHeight">
-				<reportElement x="761" y="0" width="60" height="15" isPrintWhenDetailOverflows="true" uuid="fdb29cd4-5676-4b88-a4a1-0b9868e3e2d4">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-					<property name="local_mesure_unitx" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="local_mesure_unitwidth" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-				</reportElement>
-				<textElement>
-					<font fontName="DejaVu Sans" size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{conclusionLabel}]]></textFieldExpression>
-			</textField>
-			<line>
-				<reportElement positionType="Float" x="0" y="18" width="822" height="1" uuid="3b112d72-6d72-417c-864b-9f03c43113a2">
-					<property name="local_mesure_unity" value="pixel"/>
-					<property name="local_mesure_unitheight" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-					<property name="local_mesure_unitx" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-				</reportElement>
-			</line>
-		</band>
+		</element>
+		<element kind="textField" uuid="a3fc231a-ac6b-4334-ba04-73fcdeea4ca6" x="41" y="0" width="60" height="15" fontName="DejaVu Sans" fontSize="8.0" textAdjust="StretchHeight" printWhenDetailOverflows="true">
+			<expression><![CDATA[$F{authorYearLabel}]]></expression>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<property name="local_mesure_unitx" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.x" value="px"/>
+			<property name="local_mesure_unitwidth" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.width" value="px"/>
+		</element>
+		<element kind="textField" uuid="39440d76-e068-4980-a1a6-b02dcb1c481d" x="101" y="0" width="60" height="15" fontName="DejaVu Sans" fontSize="8.0" textAdjust="StretchHeight" printWhenDetailOverflows="true">
+			<expression><![CDATA[$F{populationPlaceLabel}]]></expression>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<property name="local_mesure_unitwidth" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.width" value="px"/>
+		</element>
+		<element kind="textField" uuid="e42510f5-9f62-4c82-82e7-eafdcb8abac0" x="161" y="0" width="60" height="15" fontName="DejaVu Sans" fontSize="8.0" textAdjust="StretchHeight" printWhenDetailOverflows="true">
+			<expression><![CDATA[$F{methodOutcomeLabel}]]></expression>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<property name="local_mesure_unitx" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.x" value="px"/>
+			<property name="local_mesure_unitwidth" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.width" value="px"/>
+		</element>
+		<element kind="textField" uuid="0f627783-deb6-4866-9719-6fb3bfc8ccd3" x="221" y="0" width="60" height="15" fontName="DejaVu Sans" fontSize="8.0" textAdjust="StretchHeight" printWhenDetailOverflows="true">
+			<expression><![CDATA[$F{exposurePollutantLabel}]]></expression>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<property name="local_mesure_unitx" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.x" value="px"/>
+			<property name="local_mesure_unitwidth" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.width" value="px"/>
+		</element>
+		<element kind="textField" uuid="11489e1d-f85a-41f4-9d9c-5c88b99f9a23" x="281" y="0" width="60" height="15" fontName="DejaVu Sans" fontSize="8.0" textAdjust="StretchHeight" printWhenDetailOverflows="true">
+			<expression><![CDATA[$F{methodStudyDesignLabel}]]></expression>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<property name="local_mesure_unitx" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.x" value="px"/>
+			<property name="local_mesure_unitwidth" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.width" value="px"/>
+		</element>
+		<element kind="textField" uuid="ca3781fd-6bac-43df-ad07-2338adc40d8d" x="341" y="0" width="60" height="15" fontName="DejaVu Sans" fontSize="8.0" textAdjust="StretchHeight" printWhenDetailOverflows="true">
+			<expression><![CDATA[$F{populationDurationLabel}]]></expression>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<property name="local_mesure_unitx" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.x" value="px"/>
+			<property name="local_mesure_unitwidth" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.width" value="px"/>
+		</element>
+		<element kind="textField" uuid="b7769323-dfc5-4d81-9a99-86d59a460875" x="401" y="0" width="60" height="15" fontName="DejaVu Sans" fontSize="8.0" textAdjust="StretchHeight" printWhenDetailOverflows="true">
+			<expression><![CDATA[$F{populationParticipantsLabel}]]></expression>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<property name="local_mesure_unitx" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.x" value="px"/>
+			<property name="local_mesure_unitwidth" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.width" value="px"/>
+		</element>
+		<element kind="textField" uuid="602685d6-9690-4ccd-b055-b6563ef1ebb1" x="461" y="0" width="60" height="15" fontName="DejaVu Sans" fontSize="8.0" textAdjust="StretchHeight" printWhenDetailOverflows="true">
+			<expression><![CDATA[$F{exposureAssessmentLabel}]]></expression>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<property name="local_mesure_unitx" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.x" value="px"/>
+			<property name="local_mesure_unitwidth" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.width" value="px"/>
+		</element>
+		<element kind="textField" uuid="80a74250-3f38-43b8-97da-d18744674685" x="521" y="0" width="60" height="15" fontName="DejaVu Sans" fontSize="8.0" textAdjust="StretchHeight" printWhenDetailOverflows="true">
+			<expression><![CDATA[$F{resultExposureRangeLabel}]]></expression>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<property name="local_mesure_unitx" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.x" value="px"/>
+			<property name="local_mesure_unitwidth" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.width" value="px"/>
+		</element>
+		<element kind="textField" uuid="f994e1bb-5242-438d-8343-32722a772395" x="581" y="0" width="60" height="15" fontName="DejaVu Sans" fontSize="8.0" textAdjust="StretchHeight" printWhenDetailOverflows="true">
+			<expression><![CDATA[$F{methodStatisticsLabel}]]></expression>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<property name="local_mesure_unitx" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.x" value="px"/>
+			<property name="local_mesure_unitwidth" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.width" value="px"/>
+		</element>
+		<element kind="textField" uuid="f994e1bb-5242-438d-8343-32722a772395" x="641" y="0" width="60" height="15" fontName="DejaVu Sans" fontSize="8.0" textAdjust="StretchHeight" printWhenDetailOverflows="true">
+			<expression><![CDATA[$F{methodConfoundersLabel}]]></expression>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<property name="local_mesure_unitx" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.x" value="px"/>
+			<property name="local_mesure_unitwidth" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.width" value="px"/>
+		</element>
+		<element kind="textField" uuid="807dfc2a-e2e1-4110-959c-b6f909c6f89a" x="701" y="0" width="60" height="15" fontName="DejaVu Sans" fontSize="8.0" textAdjust="StretchHeight" printWhenDetailOverflows="true">
+			<expression><![CDATA[$F{resultEffectEstimateLabel}]]></expression>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<property name="local_mesure_unitx" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.x" value="px"/>
+			<property name="local_mesure_unitwidth" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.width" value="px"/>
+		</element>
+		<element kind="textField" uuid="fdb29cd4-5676-4b88-a4a1-0b9868e3e2d4" x="761" y="0" width="60" height="15" fontName="DejaVu Sans" fontSize="8.0" textAdjust="StretchHeight" printWhenDetailOverflows="true">
+			<expression><![CDATA[$F{conclusionLabel}]]></expression>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<property name="local_mesure_unitx" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.x" value="px"/>
+			<property name="local_mesure_unitwidth" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.width" value="px"/>
+		</element>
+		<element kind="line" uuid="3b112d72-6d72-417c-864b-9f03c43113a2" positionType="Float" x="0" y="18" width="822" height="1">
+			<property name="local_mesure_unity" value="pixel"/>
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<property name="local_mesure_unitx" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.x" value="px"/>
+		</element>
+		<property name="local_mesure_unitheight" value="pixel"/>
+		<property name="com.jaspersoft.studio.unit.height" value="px"/>
 	</columnHeader>
 	<detail>
 		<band height="24" splitType="Stretch">
+			<element kind="textField" uuid="e28f7734-468a-4c0d-a90d-22a2547bba31" x="0" y="0" width="40" height="15" fontName="DejaVu Sans" fontSize="8.0" textAdjust="StretchHeight" printWhenDetailOverflows="true" hTextAlign="Right">
+				<expression><![CDATA[$F{number}]]></expression>
+				<property name="local_mesure_unitheight" value="pixel"/>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			</element>
+			<element kind="textField" uuid="f109c53f-dfed-4291-bb9a-8af1494ba689" x="41" y="0" width="60" height="15" fontName="DejaVu Sans" fontSize="8.0" textAdjust="StretchHeight" printWhenDetailOverflows="true">
+				<expression><![CDATA[$F{authorYear}]]></expression>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<property name="local_mesure_unitx" value="pixel"/>
+				<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				<property name="local_mesure_unitwidth" value="pixel"/>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+			</element>
+			<element kind="textField" uuid="2fb6b86a-bb18-46a9-a6ce-c091011d18a3" x="101" y="0" width="60" height="15" fontName="DejaVu Sans" fontSize="8.0" textAdjust="StretchHeight" printWhenDetailOverflows="true">
+				<expression><![CDATA[$F{populationPlace}]]></expression>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<property name="local_mesure_unitwidth" value="pixel"/>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+			</element>
+			<element kind="textField" uuid="1d677349-f3f6-4124-987f-327a52dc2e3d" x="161" y="0" width="60" height="15" fontName="DejaVu Sans" fontSize="8.0" textAdjust="StretchHeight" printWhenDetailOverflows="true">
+				<expression><![CDATA[$F{methodOutcome}]]></expression>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<property name="local_mesure_unitx" value="pixel"/>
+				<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				<property name="local_mesure_unitwidth" value="pixel"/>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+			</element>
+			<element kind="textField" uuid="2667f9fe-7659-4ad8-b47f-e2fb1a4f0816" x="221" y="0" width="60" height="15" fontName="DejaVu Sans" fontSize="8.0" textAdjust="StretchHeight" printWhenDetailOverflows="true">
+				<expression><![CDATA[$F{exposurePollutant}]]></expression>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<property name="local_mesure_unitx" value="pixel"/>
+				<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				<property name="local_mesure_unitwidth" value="pixel"/>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+			</element>
+			<element kind="textField" uuid="cb7c28b8-7666-485a-8f24-5706ee242dbd" x="281" y="0" width="60" height="15" fontName="DejaVu Sans" fontSize="8.0" textAdjust="StretchHeight" printWhenDetailOverflows="true">
+				<expression><![CDATA[$F{methodStudyDesign}]]></expression>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<property name="local_mesure_unitx" value="pixel"/>
+				<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				<property name="local_mesure_unitwidth" value="pixel"/>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+			</element>
+			<element kind="textField" uuid="14533bb7-088a-4fd6-bd08-8a4e4a4ae60a" x="341" y="0" width="60" height="15" fontName="DejaVu Sans" fontSize="8.0" textAdjust="StretchHeight" printWhenDetailOverflows="true">
+				<expression><![CDATA[$F{populationDuration}]]></expression>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<property name="local_mesure_unitx" value="pixel"/>
+				<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				<property name="local_mesure_unitwidth" value="pixel"/>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+			</element>
+			<element kind="textField" uuid="e26a1bdb-f576-4130-95ec-0cff35976006" x="401" y="0" width="60" height="15" fontName="DejaVu Sans" fontSize="8.0" textAdjust="StretchHeight" printWhenDetailOverflows="true">
+				<expression><![CDATA[$F{populationParticipants}]]></expression>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<property name="local_mesure_unitx" value="pixel"/>
+				<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				<property name="local_mesure_unitwidth" value="pixel"/>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+			</element>
+			<element kind="textField" uuid="e984c0a4-edad-42ae-bc42-d5ae493e8706" x="461" y="0" width="60" height="15" fontName="DejaVu Sans" fontSize="8.0" textAdjust="StretchHeight" printWhenDetailOverflows="true">
+				<expression><![CDATA[$F{exposureAssessment}]]></expression>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<property name="local_mesure_unitx" value="pixel"/>
+				<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				<property name="local_mesure_unitwidth" value="pixel"/>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+			</element>
+			<element kind="textField" uuid="10eeb179-7032-446f-86af-9c72d417d0c5" x="521" y="0" width="60" height="15" fontName="DejaVu Sans" fontSize="8.0" textAdjust="StretchHeight" printWhenDetailOverflows="true">
+				<expression><![CDATA[$F{resultExposureRange}]]></expression>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<property name="local_mesure_unitx" value="pixel"/>
+				<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				<property name="local_mesure_unitwidth" value="pixel"/>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+			</element>
+			<element kind="textField" uuid="04f82aef-83d4-4539-99e6-005be1504bff" x="581" y="0" width="60" height="15" fontName="DejaVu Sans" fontSize="8.0" textAdjust="StretchHeight" printWhenDetailOverflows="true">
+				<expression><![CDATA[$F{methodStatistics}]]></expression>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<property name="local_mesure_unitx" value="pixel"/>
+				<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				<property name="local_mesure_unitwidth" value="pixel"/>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+			</element>
+			<element kind="textField" uuid="04f82aef-83d4-4539-99e6-005be1504bff" x="641" y="0" width="60" height="15" fontName="DejaVu Sans" fontSize="8.0" textAdjust="StretchHeight" printWhenDetailOverflows="true">
+				<expression><![CDATA[$F{methodConfounders}]]></expression>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<property name="local_mesure_unitx" value="pixel"/>
+				<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				<property name="local_mesure_unitwidth" value="pixel"/>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+			</element>
+			<element kind="textField" uuid="46e5dd70-0862-479a-91d5-8dfffdf71eab" x="701" y="0" width="60" height="15" fontName="DejaVu Sans" fontSize="8.0" textAdjust="StretchHeight" printWhenDetailOverflows="true">
+				<expression><![CDATA[$F{resultEffectEstimate}]]></expression>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<property name="local_mesure_unitx" value="pixel"/>
+				<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				<property name="local_mesure_unitwidth" value="pixel"/>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+			</element>
+			<element kind="textField" uuid="7384afbb-498e-405e-aa6c-7fe39bda8cc4" x="761" y="0" width="60" height="15" fontName="DejaVu Sans" fontSize="8.0" textAdjust="StretchHeight" printWhenDetailOverflows="true">
+				<expression><![CDATA[$F{conclusion}]]></expression>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<property name="local_mesure_unitx" value="pixel"/>
+				<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				<property name="local_mesure_unitwidth" value="pixel"/>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+			</element>
 			<property name="local_mesure_unitheight" value="pixel"/>
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
-			<textField textAdjust="StretchHeight">
-				<reportElement x="0" y="0" width="40" height="15" isPrintWhenDetailOverflows="true" uuid="e28f7734-468a-4c0d-a90d-22a2547bba31">
-					<property name="local_mesure_unitheight" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-				</reportElement>
-				<textElement textAlignment="Right">
-					<font fontName="DejaVu Sans" size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{number}]]></textFieldExpression>
-			</textField>
-			<textField textAdjust="StretchHeight">
-				<reportElement x="41" y="0" width="60" height="15" isPrintWhenDetailOverflows="true" uuid="f109c53f-dfed-4291-bb9a-8af1494ba689">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-					<property name="local_mesure_unitx" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="local_mesure_unitwidth" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-				</reportElement>
-				<textElement>
-					<font fontName="DejaVu Sans" size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{authorYear}]]></textFieldExpression>
-			</textField>
-			<textField textAdjust="StretchHeight">
-				<reportElement x="101" y="0" width="60" height="15" isPrintWhenDetailOverflows="true" uuid="2fb6b86a-bb18-46a9-a6ce-c091011d18a3">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-					<property name="local_mesure_unitwidth" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-				</reportElement>
-				<textElement>
-					<font fontName="DejaVu Sans" size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{populationPlace}]]></textFieldExpression>
-			</textField>
-			<textField textAdjust="StretchHeight">
-				<reportElement x="161" y="0" width="60" height="15" isPrintWhenDetailOverflows="true" uuid="1d677349-f3f6-4124-987f-327a52dc2e3d">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-					<property name="local_mesure_unitx" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="local_mesure_unitwidth" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-				</reportElement>
-				<textElement>
-					<font fontName="DejaVu Sans" size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{methodOutcome}]]></textFieldExpression>
-			</textField>
-			<textField textAdjust="StretchHeight">
-				<reportElement x="221" y="0" width="60" height="15" isPrintWhenDetailOverflows="true" uuid="2667f9fe-7659-4ad8-b47f-e2fb1a4f0816">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-					<property name="local_mesure_unitx" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="local_mesure_unitwidth" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-				</reportElement>
-				<textElement>
-					<font fontName="DejaVu Sans" size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{exposurePollutant}]]></textFieldExpression>
-			</textField>
-			<textField textAdjust="StretchHeight">
-				<reportElement x="281" y="0" width="60" height="15" isPrintWhenDetailOverflows="true" uuid="cb7c28b8-7666-485a-8f24-5706ee242dbd">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-					<property name="local_mesure_unitx" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="local_mesure_unitwidth" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-				</reportElement>
-				<textElement>
-					<font fontName="DejaVu Sans" size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{methodStudyDesign}]]></textFieldExpression>
-			</textField>
-			<textField textAdjust="StretchHeight">
-				<reportElement x="341" y="0" width="60" height="15" isPrintWhenDetailOverflows="true" uuid="14533bb7-088a-4fd6-bd08-8a4e4a4ae60a">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-					<property name="local_mesure_unitx" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="local_mesure_unitwidth" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-				</reportElement>
-				<textElement>
-					<font fontName="DejaVu Sans" size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{populationDuration}]]></textFieldExpression>
-			</textField>
-			<textField textAdjust="StretchHeight">
-				<reportElement x="401" y="0" width="60" height="15" isPrintWhenDetailOverflows="true" uuid="e26a1bdb-f576-4130-95ec-0cff35976006">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-					<property name="local_mesure_unitx" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="local_mesure_unitwidth" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-				</reportElement>
-				<textElement>
-					<font fontName="DejaVu Sans" size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{populationParticipants}]]></textFieldExpression>
-			</textField>
-			<textField textAdjust="StretchHeight">
-				<reportElement x="461" y="0" width="60" height="15" isPrintWhenDetailOverflows="true" uuid="e984c0a4-edad-42ae-bc42-d5ae493e8706">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-					<property name="local_mesure_unitx" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="local_mesure_unitwidth" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-				</reportElement>
-				<textElement>
-					<font fontName="DejaVu Sans" size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{exposureAssessment}]]></textFieldExpression>
-			</textField>
-			<textField textAdjust="StretchHeight">
-				<reportElement x="521" y="0" width="60" height="15" isPrintWhenDetailOverflows="true" uuid="10eeb179-7032-446f-86af-9c72d417d0c5">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-					<property name="local_mesure_unitx" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="local_mesure_unitwidth" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-				</reportElement>
-				<textElement>
-					<font fontName="DejaVu Sans" size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{resultExposureRange}]]></textFieldExpression>
-			</textField>
-            <textField textAdjust="StretchHeight">
-                <reportElement x="581" y="0" width="60" height="15" isPrintWhenDetailOverflows="true" uuid="04f82aef-83d4-4539-99e6-005be1504bff">
-                    <property name="com.jaspersoft.studio.unit.height" value="px"/>
-                    <property name="local_mesure_unitx" value="pixel"/>
-                    <property name="com.jaspersoft.studio.unit.x" value="px"/>
-                    <property name="local_mesure_unitwidth" value="pixel"/>
-                    <property name="com.jaspersoft.studio.unit.width" value="px"/>
-                </reportElement>
-                <textElement>
-                    <font fontName="DejaVu Sans" size="8"/>
-                </textElement>
-                <textFieldExpression><![CDATA[$F{methodStatistics}]]></textFieldExpression>
-            </textField>
-			<textField textAdjust="StretchHeight">
-				<reportElement x="641" y="0" width="60" height="15" isPrintWhenDetailOverflows="true" uuid="04f82aef-83d4-4539-99e6-005be1504bff">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-					<property name="local_mesure_unitx" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="local_mesure_unitwidth" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-				</reportElement>
-				<textElement>
-					<font fontName="DejaVu Sans" size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{methodConfounders}]]></textFieldExpression>
-			</textField>
-			<textField textAdjust="StretchHeight">
-				<reportElement x="701" y="0" width="60" height="15" isPrintWhenDetailOverflows="true" uuid="46e5dd70-0862-479a-91d5-8dfffdf71eab">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-					<property name="local_mesure_unitx" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="local_mesure_unitwidth" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-				</reportElement>
-				<textElement>
-					<font fontName="DejaVu Sans" size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{resultEffectEstimate}]]></textFieldExpression>
-			</textField>
-			<textField textAdjust="StretchHeight">
-				<reportElement x="761" y="0" width="60" height="15" isPrintWhenDetailOverflows="true" uuid="7384afbb-498e-405e-aa6c-7fe39bda8cc4">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-					<property name="local_mesure_unitx" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="local_mesure_unitwidth" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-				</reportElement>
-				<textElement>
-					<font fontName="DejaVu Sans" size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{conclusion}]]></textFieldExpression>
-			</textField>
 		</band>
 	</detail>
-	<columnFooter>
-		<band splitType="Stretch"/>
-	</columnFooter>
-	<pageFooter>
-		<band splitType="Stretch"/>
-	</pageFooter>
-	<summary>
-		<band splitType="Stretch">
-			<property name="local_mesure_unitheight" value="pixel"/>
-			<property name="com.jaspersoft.studio.unit.height" value="px"/>
-		</band>
+	<columnFooter splitType="Stretch"/>
+	<pageFooter splitType="Stretch"/>
+	<summary splitType="Stretch">
+		<property name="local_mesure_unitheight" value="pixel"/>
+		<property name="com.jaspersoft.studio.unit.height" value="px"/>
 	</summary>
 </jasperReport>
