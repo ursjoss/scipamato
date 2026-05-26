@@ -29,7 +29,7 @@ jooqGenerator {
     val dbUserName = props.getProperty("spring.datasource.hikari.username")
     val dbPassword = props.getProperty("spring.datasource.hikari.password")
     containerConfig = ContainerConfig(
-        image = "postgres:15.4",
+        image = "postgres:17.4",
         port = 5432,
         environment = mapOf(
             "POSTGRES_DB" to props.getProperty("db.name"),
