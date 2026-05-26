@@ -3,10 +3,10 @@ package ch.difty.scipamato.core.sync.houskeeping
 import ch.difty.scipamato.common.logger
 import org.jooq.DeleteConditionStep
 import org.jooq.impl.UpdatableRecordImpl
-import org.springframework.batch.core.StepContribution
 import org.springframework.batch.core.scope.context.ChunkContext
+import org.springframework.batch.core.step.StepContribution
 import org.springframework.batch.core.step.tasklet.Tasklet
-import org.springframework.batch.repeat.RepeatStatus
+import org.springframework.batch.infrastructure.repeat.RepeatStatus
 
 private val log = logger()
 

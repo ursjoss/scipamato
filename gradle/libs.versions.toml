@@ -89,12 +89,11 @@ slf4j-api = { module = "org.slf4j:slf4j-api" }
 spring-boot-admin-starter-client = { module = "de.codecentric:spring-boot-admin-starter-client", version.ref = "springBootAdmin" }
 spring-boot-configurationprocessor = { module = "org.springframework.boot:spring-boot-configuration-processor", version.ref = "springBoot" }
 spring-boot-starter-actuator = { module = "org.springframework.boot:spring-boot-starter-actuator", version.ref = "springBoot" }
-spring-boot-starter-batch = { module = "org.springframework.boot:spring-boot-starter-batch", version.ref = "springBoot" }
+spring-boot-starter-batch-jdbc = { module = "org.springframework.boot:spring-boot-starter-batch-jdbc", version.ref = "springBoot" }
 spring-boot-starter-cache = { module = "org.springframework.boot:spring-boot-starter-cache", version.ref = "springBoot" }
 spring-boot-starter-jooq = { module = "org.springframework.boot:spring-boot-starter-jooq", version.ref = "springBoot" }
 spring-boot-starter-security = { module = "org.springframework.boot:spring-boot-starter-security", version.ref = "springBoot" }
 spring-boot-starter-test = { module = "org.springframework.boot:spring-boot-starter-test", version.ref = "springBoot" }
-spring-boot-starter-undertow = { module = "org.springframework.boot:spring-boot-starter-undertow", version.ref = "springBoot" }
 spring-boot-starter-validation = { module = "org.springframework.boot:spring-boot-starter-validation", version.ref = "springBoot" }
 spring-boot-starter-web = { module = "org.springframework.boot:spring-boot-starter-web", version.ref = "springBoot" }
 spring-boot-starter-wicket = { module = "com.giffing.wicket.spring.boot.starter:wicket-spring-boot-starter", version.ref = "wicketSpringBootStarter" }
@@ -104,8 +103,8 @@ spring-core = { module = "org.springframework:spring-core" }
 spring-oxm = { module = "org.springframework:spring-oxm" }
 spring-security-core = { module = "org.springframework.security:spring-security-core" }
 springMockk = { module = "com.ninja-squad:springmockk", version.ref = "springMockk" }
-testcontainers-junitJupiter = { module = "org.testcontainers:junit-jupiter" }
-testcontainers-postgresql = { module = "org.testcontainers:postgresql" }
+testcontainers-junitJupiter = { module = "org.testcontainers:testcontainers-junit-jupiter" }
+testcontainers-postgresql = { module = "org.testcontainers:testcontainers-postgresql" }
 testcontainers-testcontainers = { module = "org.testcontainers:testcontainers" }
 univocity = { module = "com.univocity:univocity-parsers", version.ref = "univocityParsers" }
 validationApi = { module = "jakarta.validation:jakarta.validation-api" }
