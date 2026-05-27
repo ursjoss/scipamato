@@ -34,7 +34,7 @@ import javax.sql.DataSource
  * [R] related record implementation
  */
 @Suppress("LongParameterList", "TooManyFunctions")
-abstract class SyncConfig<T, R : UpdatableRecordImpl<R>?>(
+abstract class SyncConfig<T: Any, R : UpdatableRecordImpl<R>?>(
     private val topic: String,
     private val chunkSize: Int,
     @Qualifier("dslContext") protected val jooqCore: DSLContext,

@@ -29,7 +29,7 @@ abstract class BasePanel<T> @JvmOverloads constructor(
         get() = webSessionFacade.paperIdManager
 
     protected val activeUser: User
-        get() = SecurityContextHolder.getContext().authentication.principal as User
+        get() = SecurityContextHolder.getContext().authentication?.principal as User
 
     protected val localization: String
         get() = webSessionFacade.languageCode

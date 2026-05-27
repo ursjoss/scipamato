@@ -1,0 +1,4 @@
+CREATE SEQUENCE IF NOT EXISTS batch_Job_seq
+    START WITH 1 INCREMENT BY 1 NO CYCLE;
+
+ALTER SEQUENCE batch_job_seq RENAME TO batch_job_instance_seq;

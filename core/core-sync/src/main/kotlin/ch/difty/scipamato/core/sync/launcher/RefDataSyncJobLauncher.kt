@@ -2,11 +2,11 @@ package ch.difty.scipamato.core.sync.launcher
 
 import ch.difty.scipamato.common.logger
 import org.springframework.batch.core.BatchStatus
-import org.springframework.batch.core.Job
-import org.springframework.batch.core.JobExecution
-import org.springframework.batch.core.JobParameters
-import org.springframework.batch.core.JobParametersBuilder
-import org.springframework.batch.core.launch.JobLauncher
+import org.springframework.batch.core.job.Job
+import org.springframework.batch.core.job.JobExecution
+import org.springframework.batch.core.job.parameters.JobParameters
+import org.springframework.batch.core.job.parameters.JobParametersBuilder
+import org.springframework.batch.core.launch.JobOperator
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Component
@@ -34,7 +34,7 @@ private val log = logger()
 @Profile("!wickettest")
 @Suppress("LongParameterList")
 open class RefDataSyncJobLauncher(
-    private val jobLauncher: JobLauncher,
+    private val jobOperator: JobOperator,
     @Qualifier("syncLanguageJob") private val syncLanguageJob: Job,
     @Qualifier("syncNewStudyPageLinkJob") private val syncNewStudyPageLinkJob: Job,
     @Qualifier("syncCodeClassJob") private val syncCodeClassJob: Job,
@@ -70,16 +70,16 @@ open class RefDataSyncJobLauncher(
             warner.findNewsletterswithUnsynchronizedPapers()?.let {
                 setWarning(it)
             }
-            jobLauncher.run(syncLanguageJob, jobParameters).handle("languages", setSuccess, setFailure)
-            jobLauncher.run(syncNewStudyPageLinkJob, jobParameters).handle("newStudyPage_links", setSuccess, setFailure)
-            jobLauncher.run(syncCodeClassJob, jobParameters).handle("code_classes", setSuccess, setFailure)
-            jobLauncher.run(syncCodeJob, jobParameters).handle("codes", setSuccess, setFailure)
-            jobLauncher.run(syncPaperJob, jobParameters).handle("papers", setSuccess, setFailure)
-            jobLauncher.run(syncNewsletterJob, jobParameters).handle("newsletters", setSuccess, setFailure)
-            jobLauncher.run(syncNewsletterTopicJob, jobParameters).handle("newsletterTopics", setSuccess, setFailure)
-            jobLauncher.run(syncNewStudyTopicJob, jobParameters).handle("newStudyTopics", setSuccess, setFailure)
-            jobLauncher.run(syncNewStudyJob, jobParameters).handle("newStudies", setSuccess, setFailure)
-            jobLauncher.run(syncKeywordJob, jobParameters).handle("keywords", setSuccess, setFailure)
+            jobOperator.start(syncLanguageJob, jobParameters).handle("languages", setSuccess, setFailure)
+            jobOperator.start(syncNewStudyPageLinkJob, jobParameters).handle("newStudyPage_links", setSuccess, setFailure)
+            jobOperator.start(syncCodeClassJob, jobParameters).handle("code_classes", setSuccess, setFailure)
+            jobOperator.start(syncCodeJob, jobParameters).handle("codes", setSuccess, setFailure)
+            jobOperator.start(syncPaperJob, jobParameters).handle("papers", setSuccess, setFailure)
+            jobOperator.start(syncNewsletterJob, jobParameters).handle("newsletters", setSuccess, setFailure)
+            jobOperator.start(syncNewsletterTopicJob, jobParameters).handle("newsletterTopics", setSuccess, setFailure)
+            jobOperator.start(syncNewStudyTopicJob, jobParameters).handle("newStudyTopics", setSuccess, setFailure)
+            jobOperator.start(syncNewStudyJob, jobParameters).handle("newStudies", setSuccess, setFailure)
+            jobOperator.start(syncKeywordJob, jobParameters).handle("keywords", setSuccess, setFailure)
 
             log.info { "Job finished ${if (jobSuccess.isUnsuccessful) "with issues" else "successfully"}." }
             setDone()
