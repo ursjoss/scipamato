@@ -2,18 +2,16 @@ package ch.difty.scipamato.publ.persistence
 
 import ch.difty.scipamato.common.entity.CodeClassId
 import ch.difty.scipamato.common.logger
+import ch.difty.scipamato.common.persistence.JooqIntegrationTest
 import ch.difty.scipamato.publ.persistence.code.JooqCodeRepo
 import org.amshove.kluent.shouldHaveSize
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.jooq.JooqTest
-import org.testcontainers.junit.jupiter.Testcontainers
 
 private val log = logger()
 
 @Suppress("MagicNumber")
-@JooqTest
-@Testcontainers
+@JooqIntegrationTest
 internal open class JooqCodeRepoIntegrationTest {
 
     @Autowired

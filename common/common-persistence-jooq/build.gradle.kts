@@ -21,6 +21,9 @@ dependencies {
     api(project(":common-utils"))
     api(project(":common-entity"))
 
+    testFixturesApi(libs.spring.boot.starter.flyway)
+    testFixturesApi(libs.spring.boot.starter.jooq.test)
+    testFixturesApi(libs.testcontainers.junitJupiter)
     testFixturesApi(libs.junitJupiter.api)
     testFixturesApi(project(":common-entity"))
     testFixturesApi(libs.kluent) {

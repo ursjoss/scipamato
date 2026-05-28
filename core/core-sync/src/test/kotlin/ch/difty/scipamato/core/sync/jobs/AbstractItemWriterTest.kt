@@ -5,10 +5,10 @@ import io.mockk.mockk
 import org.jooq.DSLContext
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.springframework.batch.item.Chunk
-import org.springframework.batch.item.ItemWriter
+import org.springframework.batch.infrastructure.item.Chunk
+import org.springframework.batch.infrastructure.item.ItemWriter
 
-abstract class AbstractItemWriterTest<T, W : ItemWriter<T>> {
+abstract class AbstractItemWriterTest<T: Any, W : ItemWriter<T>> {
 
     private val dslContextMock = mockk<DSLContext>()
 

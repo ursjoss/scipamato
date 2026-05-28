@@ -14,9 +14,9 @@ import ch.difty.scipamato.publ.db.tables.records.PaperRecord
 import org.jooq.DSLContext
 import org.jooq.TableField
 import org.jooq.impl.DSL
-import org.springframework.batch.core.Job
+import org.springframework.batch.core.job.Job
 import org.springframework.batch.core.repository.JobRepository
-import org.springframework.batch.item.ItemWriter
+import org.springframework.batch.infrastructure.item.ItemWriter
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

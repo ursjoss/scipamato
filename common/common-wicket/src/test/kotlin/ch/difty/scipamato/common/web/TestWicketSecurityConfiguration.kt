@@ -22,9 +22,8 @@ open class TestWicketSecurityConfiguration {
     @Bean
     @Throws(Exception::class)
     open fun authenticationManager(): AuthenticationManager {
-        val provider = DaoAuthenticationProvider().apply {
+        val provider = DaoAuthenticationProvider(TestUserDetailsService()).apply {
             setPasswordEncoder(BCryptPasswordEncoder())
-            setUserDetailsService(TestUserDetailsService())
         }
         return ProviderManager(provider)
     }

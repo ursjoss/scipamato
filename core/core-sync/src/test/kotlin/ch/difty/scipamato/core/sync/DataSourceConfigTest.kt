@@ -9,8 +9,8 @@ import org.jooq.SQLDialect
 import org.jooq.impl.DataSourceConnectionProvider
 import org.jooq.impl.DefaultExecuteListenerProvider
 import org.junit.jupiter.api.Test
-import org.springframework.boot.autoconfigure.jooq.ExceptionTranslatorExecuteListener
-import org.springframework.boot.autoconfigure.jooq.JooqProperties
+import org.springframework.boot.jooq.autoconfigure.ExceptionTranslatorExecuteListener
+import org.springframework.boot.jooq.autoconfigure.JooqProperties
 
 internal class DataSourceConfigTest {
 

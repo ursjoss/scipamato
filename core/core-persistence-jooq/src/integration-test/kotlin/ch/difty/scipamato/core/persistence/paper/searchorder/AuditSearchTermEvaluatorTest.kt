@@ -1,5 +1,6 @@
 package ch.difty.scipamato.core.persistence.paper.searchorder
 
+import ch.difty.scipamato.common.persistence.JooqIntegrationTest
 import ch.difty.scipamato.core.entity.search.AuditSearchTerm
 import ch.difty.scipamato.core.entity.search.AuditSearchTerm.Token
 import ch.difty.scipamato.core.entity.search.AuditSearchTerm.TokenType
@@ -10,11 +11,8 @@ import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldThrow
 import org.amshove.kluent.withMessage
 import org.junit.jupiter.api.Test
-import org.springframework.boot.test.autoconfigure.jooq.JooqTest
-import org.testcontainers.junit.jupiter.Testcontainers
 
-@JooqTest
-@Testcontainers
+@JooqIntegrationTest
 @Suppress("TooManyFunctions", "FunctionName")
 internal open class AuditSearchTermEvaluatorTest {
 

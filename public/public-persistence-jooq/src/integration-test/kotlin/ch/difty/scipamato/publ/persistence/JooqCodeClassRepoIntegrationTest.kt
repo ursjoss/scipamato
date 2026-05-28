@@ -1,14 +1,12 @@
 package ch.difty.scipamato.publ.persistence
 
+import ch.difty.scipamato.common.persistence.JooqIntegrationTest
 import ch.difty.scipamato.publ.persistence.codeclass.JooqCodeClassRepo
 import org.amshove.kluent.shouldContainAll
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.jooq.JooqTest
-import org.testcontainers.junit.jupiter.Testcontainers
 
-@JooqTest
-@Testcontainers
+@JooqIntegrationTest
 @Suppress("FunctionName")
 internal open class JooqCodeClassRepoIntegrationTest {
 

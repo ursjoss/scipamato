@@ -13,6 +13,7 @@ import com.ninjasquad.springmockk.MockkBean
 import io.mockk.confirmVerified
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
+import io.mockk.junit5.MockKExtension
 import io.mockk.mockk
 import io.mockk.verify
 import org.amshove.kluent.shouldBeEqualTo
@@ -24,8 +25,10 @@ import org.amshove.kluent.shouldNotContain
 import org.apache.wicket.markup.head.IHeaderResponse
 import org.apache.wicket.request.mapper.parameter.PageParameters
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
 import java.util.*
 
+@ExtendWith(MockKExtension::class)
 class BasePageAdditionTest : WicketTest() {
 
     @MockkBean

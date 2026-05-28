@@ -124,11 +124,11 @@ internal class JooqCoreConfigurationTest {
         config.executeListenerProviders() shouldHaveSize 1
         val elp = config.executeListenerProviders()[0] as DefaultExecuteListenerProvider
         elp.provide().javaClass.name shouldBeEqualTo
-            "org.springframework.boot.autoconfigure.jooq.ExceptionTranslatorExecuteListener"
+            "org.springframework.boot.jooq.autoconfigure.DefaultExceptionTranslatorExecuteListener"
 
         // assert TransactionProvider
         config.transactionProvider().shouldNotBeNull()
         config.transactionProvider().javaClass.name shouldBeEqualTo
-            "org.springframework.boot.autoconfigure.jooq.SpringTransactionProvider"
+            "org.springframework.boot.jooq.autoconfigure.SpringTransactionProvider"
     }
 }

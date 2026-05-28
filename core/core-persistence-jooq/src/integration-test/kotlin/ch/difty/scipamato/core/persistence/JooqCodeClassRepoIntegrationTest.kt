@@ -1,6 +1,7 @@
 package ch.difty.scipamato.core.persistence
 
 import ch.difty.scipamato.common.logger
+import ch.difty.scipamato.common.persistence.JooqIntegrationTest
 import ch.difty.scipamato.common.persistence.paging.PaginationRequest
 import ch.difty.scipamato.common.persistence.paging.Sort
 import ch.difty.scipamato.core.entity.codeclass.CodeClassDefinition
@@ -20,15 +21,12 @@ import org.amshove.kluent.withMessage
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.fail
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.jooq.JooqTest
-import org.testcontainers.junit.jupiter.Testcontainers
 
 private const val CODE_CLASS_COUNT = 8
 
 private var log = logger()
 
-@JooqTest
-@Testcontainers
+@JooqIntegrationTest
 @Suppress("TooManyFunctions", "FunctionName", "MagicNumber", "SpellCheckingInspection", "DuplicatedCode")
 internal open class JooqCodeClassRepoIntegrationTest {
 

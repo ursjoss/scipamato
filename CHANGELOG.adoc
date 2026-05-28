@@ -71,9 +71,12 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Added
 
-////
 
 .Changed
+- Bumped spring-boot, spring-boot-admin, spring-cloud-starter, spring-mockk,
+  wicket-spring-boot-starter,
+- migrated from undertow to tomcat
+- upgraded postgres from 15.4 to 17.4
 
 .Deprecated
 
@@ -83,7 +86,6 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Security
 
-////
 
 [[v2.1.14]]
 == {url-tree}2.1.14[2.1.14] -- 2026-04-24

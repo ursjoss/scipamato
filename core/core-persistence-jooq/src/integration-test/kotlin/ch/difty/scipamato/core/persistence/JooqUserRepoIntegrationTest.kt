@@ -1,5 +1,6 @@
 package ch.difty.scipamato.core.persistence
 
+import ch.difty.scipamato.common.persistence.JooqIntegrationTest
 import ch.difty.scipamato.core.auth.Role
 import ch.difty.scipamato.core.entity.User
 import ch.difty.scipamato.core.persistence.user.JooqUserRepo
@@ -17,12 +18,9 @@ import org.amshove.kluent.shouldNotBeNull
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.fail
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.jooq.JooqTest
-import org.testcontainers.junit.jupiter.Testcontainers
 
 @Suppress("TooManyFunctions", "FunctionName", "MagicNumber", "SpellCheckingInspection")
-@JooqTest
-@Testcontainers
+@JooqIntegrationTest
 internal open class JooqUserRepoIntegrationTest {
 
     @Autowired

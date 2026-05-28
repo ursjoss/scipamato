@@ -1,5 +1,6 @@
 package ch.difty.scipamato.publ.persistence
 
+import ch.difty.scipamato.common.persistence.JooqIntegrationTest
 import ch.difty.scipamato.common.persistence.paging.PaginationRequest
 import ch.difty.scipamato.common.persistence.paging.Sort.Direction
 import ch.difty.scipamato.publ.entity.Code
@@ -18,11 +19,8 @@ import org.amshove.kluent.shouldHaveSize
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.fail
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.jooq.JooqTest
-import org.testcontainers.junit.jupiter.Testcontainers
 
-@JooqTest
-@Testcontainers
+@JooqIntegrationTest
 @Suppress("TooManyFunctions", "FunctionName", "MagicNumber", "SpellCheckingInspection")
 internal open class JooqPublicPaperRepoIntegrationTest {
 

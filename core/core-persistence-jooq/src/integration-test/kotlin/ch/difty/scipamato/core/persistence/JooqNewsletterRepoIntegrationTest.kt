@@ -1,6 +1,7 @@
 package ch.difty.scipamato.core.persistence
 
 import ch.difty.scipamato.common.entity.newsletter.PublicationStatus
+import ch.difty.scipamato.common.persistence.JooqIntegrationTest
 import ch.difty.scipamato.common.persistence.paging.PaginationRequest
 import ch.difty.scipamato.common.persistence.paging.Sort
 import ch.difty.scipamato.core.entity.Paper
@@ -22,12 +23,9 @@ import org.amshove.kluent.shouldNotContain
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.fail
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.jooq.JooqTest
-import org.testcontainers.junit.jupiter.Testcontainers
 import java.time.LocalDate
 
-@JooqTest
-@Testcontainers
+@JooqIntegrationTest
 @Suppress("TooManyFunctions", "FunctionName", "SpellCheckingInspection", "MagicNumber", "SameParameterValue")
 internal open class JooqNewsletterRepoIntegrationTest {
 

@@ -18,7 +18,7 @@ sourceSets {
 
 dependencies {
     implementation(project(":common-utils"))
-    implementation(libs.spring.boot.starter.batch)
+    implementation(libs.spring.boot.starter.batch.jdbc)
     implementation(libs.spring.boot.starter.jooq)
     annotationProcessor(libs.spring.boot.configurationprocessor) {
         exclude("com.vaadin.external.google", "android-json")

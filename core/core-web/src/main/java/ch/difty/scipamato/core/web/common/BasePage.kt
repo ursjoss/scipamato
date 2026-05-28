@@ -32,7 +32,7 @@ abstract class BasePage<T> : AbstractPage<T> {
         get() = applicationProperties
 
     private val authentication: Authentication
-        get() = SecurityContextHolder.getContext().authentication
+        get() = SecurityContextHolder.getContext().authentication!!
 
     protected val activeUser: User
         get() = authentication.principal as User

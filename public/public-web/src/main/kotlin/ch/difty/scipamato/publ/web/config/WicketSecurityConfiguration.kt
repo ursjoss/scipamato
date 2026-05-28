@@ -1,7 +1,7 @@
 package ch.difty.scipamato.publ.web.config
 
 import ch.difty.scipamato.publ.config.ScipamatoPublicProperties
-import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest
+import org.springframework.boot.security.autoconfigure.actuate.web.servlet.EndpointRequest
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.authentication.AuthenticationManager

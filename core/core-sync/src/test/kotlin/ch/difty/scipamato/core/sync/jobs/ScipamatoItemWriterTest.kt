@@ -7,7 +7,7 @@ import io.mockk.mockk
 import org.amshove.kluent.shouldBeEqualTo
 import org.jooq.DSLContext
 import org.junit.jupiter.api.Test
-import org.springframework.batch.item.Chunk
+import org.springframework.batch.infrastructure.item.Chunk
 import java.sql.Timestamp
 import java.time.Instant
 

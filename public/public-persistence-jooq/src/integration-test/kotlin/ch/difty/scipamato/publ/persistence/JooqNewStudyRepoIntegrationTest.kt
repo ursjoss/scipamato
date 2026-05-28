@@ -1,5 +1,6 @@
 package ch.difty.scipamato.publ.persistence
 
+import ch.difty.scipamato.common.persistence.JooqIntegrationTest
 import ch.difty.scipamato.publ.persistence.newstudies.NewStudyRepository
 import org.amshove.kluent.shouldBeEmpty
 import org.amshove.kluent.shouldBeEqualTo
@@ -9,11 +10,8 @@ import org.amshove.kluent.shouldHaveSize
 import org.amshove.kluent.shouldStartWith
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.jooq.JooqTest
-import org.testcontainers.junit.jupiter.Testcontainers
 
-@JooqTest
-@Testcontainers
+@JooqIntegrationTest
 @Suppress("FunctionName", "SpellCheckingInspection", "MagicNumber")
 internal open class JooqNewStudyRepoIntegrationTest {
 

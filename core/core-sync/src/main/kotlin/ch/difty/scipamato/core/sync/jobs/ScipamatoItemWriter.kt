@@ -2,8 +2,8 @@ package ch.difty.scipamato.core.sync.jobs
 
 import ch.difty.scipamato.common.logger
 import org.jooq.DSLContext
-import org.springframework.batch.item.Chunk
-import org.springframework.batch.item.ItemWriter
+import org.springframework.batch.infrastructure.item.Chunk
+import org.springframework.batch.infrastructure.item.ItemWriter
 
 private val log = logger()
 
@@ -12,7 +12,7 @@ private val log = logger()
  *
  * [T] the type of the entity to be written
  */
-abstract class ScipamatoItemWriter<T>(
+abstract class ScipamatoItemWriter<T: Any>(
     protected val dslContext: DSLContext,
     private val topic: String,
 ) : ItemWriter<T> {

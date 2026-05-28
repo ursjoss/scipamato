@@ -8,17 +8,18 @@ import org.jooq.DSLContext
 import org.jooq.DeleteConditionStep
 import org.jooq.TableField
 import org.jooq.impl.UpdatableRecordImpl
-import org.springframework.batch.core.Job
-import org.springframework.batch.core.Step
+import org.springframework.batch.core.job.Job
 import org.springframework.batch.core.job.builder.JobBuilder
-import org.springframework.batch.core.launch.support.RunIdIncrementer
+import org.springframework.batch.core.job.parameters.RunIdIncrementer
 import org.springframework.batch.core.repository.JobRepository
+import org.springframework.batch.core.step.Step
 import org.springframework.batch.core.step.builder.StepBuilder
-import org.springframework.batch.item.ItemReader
-import org.springframework.batch.item.ItemWriter
-import org.springframework.batch.item.database.JdbcCursorItemReader
+import org.springframework.batch.infrastructure.item.ItemReader
+import org.springframework.batch.infrastructure.item.ItemWriter
+import org.springframework.batch.infrastructure.item.database.JdbcCursorItemReader
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.jdbc.core.RowMapper
 import org.springframework.transaction.PlatformTransactionManager
 import java.sql.Date
 import java.sql.ResultSet
@@ -33,7 +34,7 @@ import javax.sql.DataSource
  * [R] related record implementation
  */
 @Suppress("LongParameterList", "TooManyFunctions")
-abstract class SyncConfig<T, R : UpdatableRecordImpl<R>?>(
+abstract class SyncConfig<T: Any, R : UpdatableRecordImpl<R>?>(
     private val topic: String,
     private val chunkSize: Int,
     @Qualifier("dslContext") protected val jooqCore: DSLContext,
@@ -61,9 +62,13 @@ abstract class SyncConfig<T, R : UpdatableRecordImpl<R>?>(
      */
     abstract val jobName: String
 
+    private fun coreReader(): ItemReader<T> =
+        JdbcCursorItemReader<T>(coreDataSource, selectSql(), rowMapper())
+
     private fun insertingOrUpdatingStep(): Step =
         StepBuilder("${topic}InsertingOrUpdatingStep", jobRepository)
-            .chunk<T, T>(chunkSize, transactionManager)
+            .chunk<T, T>(chunkSize)
+            .transactionManager(transactionManager)
             .reader(coreReader())
             .writer(publicWriter())
             .build()
@@ -73,12 +78,8 @@ abstract class SyncConfig<T, R : UpdatableRecordImpl<R>?>(
      */
     abstract fun publicWriter(): ItemWriter<T>
 
-    private fun coreReader(): ItemReader<out T> =
-        JdbcCursorItemReader<T>().apply {
-            dataSource = coreDataSource
-            sql = selectSql()
-            setRowMapper { rs: ResultSet, _: Int -> makeEntity(rs) }
-        }
+
+    private fun rowMapper(): RowMapper<T> = RowMapper { rs: ResultSet, _: Int -> makeEntity(rs) }
 
     /**
      * Returns SQL string to fetch the records from scipamato-core
@@ -95,14 +96,16 @@ abstract class SyncConfig<T, R : UpdatableRecordImpl<R>?>(
 
     private fun purgingStep(): Step =
         StepBuilder(topic + "PurgingStep", jobRepository)
-            .tasklet(HouseKeeper(jooqPublic, lastSynchedField(), dateTimeService, graceTime, topic), transactionManager)
+            .tasklet(HouseKeeper(jooqPublic, lastSynchedField(), dateTimeService, graceTime, topic))
+            .transactionManager(transactionManager)
             .build()
 
     abstract fun lastSynchedField(): TableField<R, Timestamp>
 
     private fun pseudoForeignKeyConstraintStep(): Step =
         StepBuilder(topic + "PseudoForeignKeyStep", jobRepository)
-            .tasklet(PseudoForeignKeyConstraintEnforcer(pseudoFkDcs, topic, plural), transactionManager)
+            .tasklet(PseudoForeignKeyConstraintEnforcer(pseudoFkDcs, topic, plural))
+            .transactionManager(transactionManager)
             .build()
 
     private val plural: String

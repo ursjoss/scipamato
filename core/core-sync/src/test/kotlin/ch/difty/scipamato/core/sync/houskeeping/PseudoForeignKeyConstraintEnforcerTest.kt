@@ -8,9 +8,9 @@ import io.mockk.verify
 import org.amshove.kluent.shouldBeEqualTo
 import org.jooq.DeleteConditionStep
 import org.junit.jupiter.api.Test
-import org.springframework.batch.core.StepContribution
 import org.springframework.batch.core.scope.context.ChunkContext
-import org.springframework.batch.repeat.RepeatStatus
+import org.springframework.batch.core.step.StepContribution
+import org.springframework.batch.infrastructure.repeat.RepeatStatus
 
 internal class PseudoForeignKeyConstraintEnforcerTest {
 

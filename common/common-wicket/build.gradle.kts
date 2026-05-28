@@ -29,7 +29,6 @@ dependencies {
     implementation(project(":common-entity"))
     implementation(project(":common-persistence-api"))
 
-    api(libs.spring.boot.starter.undertow)
     api(libs.spring.boot.starter.actuator)
     api(libs.spring.boot.starter.security)
     annotationProcessor(libs.spring.boot.configurationprocessor) {
@@ -38,12 +37,8 @@ dependencies {
     api(libs.spring.boot.admin.starter.client)
     api(libs.spring.core)
 
-    api(libs.spring.boot.starter.web) {
-        exclude("org.springframework.boot", "spring-boot-starter-tomcat")
-    }
-    api(libs.spring.boot.starter.wicket) {
-        exclude("org.springframework.boot", "spring-boot-starter-tomcat")
-    }
+    api(libs.spring.boot.starter.web)
+    api(libs.spring.boot.starter.wicket)
     api(libs.wicket.core)
     api(libs.wicket.ioc)
     api(libs.wicket.extensions)

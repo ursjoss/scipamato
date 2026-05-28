@@ -1,5 +1,6 @@
 package ch.difty.scipamato.core.persistence.paper.searchorder
 
+import ch.difty.scipamato.common.persistence.JooqIntegrationTest
 import ch.difty.scipamato.core.entity.search.IntegerSearchTerm
 import ch.difty.scipamato.core.entity.search.IntegerSearchTerm.MatchType
 import ch.difty.scipamato.core.entity.search.IntegerSearchTerm.MatchType.EXACT
@@ -13,14 +14,11 @@ import ch.difty.scipamato.core.entity.search.SearchTermType
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.DynamicTest
 import org.junit.jupiter.api.TestFactory
-import org.springframework.boot.test.autoconfigure.jooq.JooqTest
-import org.testcontainers.junit.jupiter.Testcontainers
 
 /**
  * Test class to integration test the search term and the search term evaluator.
  */
-@JooqTest
-@Testcontainers
+@JooqIntegrationTest
 @Suppress("MagicNumber")
 open class IntegerSearchTermEvaluatorIntegrationTest : SearchTermEvaluatorIntegrationTest<IntegerSearchTerm>() {
 

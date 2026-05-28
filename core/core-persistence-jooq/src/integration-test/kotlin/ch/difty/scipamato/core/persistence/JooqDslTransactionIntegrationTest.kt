@@ -1,5 +1,6 @@
 package ch.difty.scipamato.core.persistence
 
+import ch.difty.scipamato.common.persistence.JooqIntegrationTest
 import ch.difty.scipamato.core.db.Tables.PAPER
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeTrue
@@ -8,16 +9,13 @@ import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.fail
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.jooq.JooqTest
 import org.springframework.dao.DataAccessException
 import org.springframework.jdbc.datasource.DataSourceTransactionManager
 import org.springframework.transaction.support.DefaultTransactionDefinition
-import org.testcontainers.junit.jupiter.Testcontainers
 import java.util.concurrent.atomic.AtomicBoolean
 
 @Suppress("MagicNumber")
-@JooqTest
-@Testcontainers
+@JooqIntegrationTest
 internal open class JooqDslTransactionIntegrationTest {
 
     @Autowired
