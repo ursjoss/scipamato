@@ -5,6 +5,7 @@ import ch.difty.scipamato.publ.entity.PublicPaper
 import ch.difty.scipamato.publ.entity.filter.PublicPaperFilter
 import ch.difty.scipamato.publ.persistence.api.PublicPaperService
 import ch.difty.scipamato.publ.web.matchPaginationContext
+import com.ninjasquad.springmockk.MockkBean
 import io.mockk.confirmVerified
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
@@ -27,7 +28,7 @@ class PublicPaperProviderTest {
 
     private lateinit var provider: PublicPaperProvider
 
-    @MockK
+    @MockkBean
     private lateinit var serviceMock: PublicPaperService
 
     @Autowired
