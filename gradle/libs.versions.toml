@@ -29,6 +29,8 @@ licensePlugin = "3.1.2"
 lombokPlugin = "9.5.0"
 mockk = "1.14.9"
 openfeign = "13.12"
+# PINNED: com.optravis.jooq.gradle:jooq-gradle:4.0.6 - org.postgresql:postgresql 42.7.5 -> 42.7.11+
+postgresql = "42.7.11"
 sonarqubePlugin = "7.3.0.8198"
 springBoot = "4.0.6"
 springBootAdmin = "4.0.4"
@@ -82,7 +84,7 @@ mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 openfeign-jaxb = { module = "io.github.openfeign:feign-jaxb-jakarta", version.ref = "openfeign" }
 openfeign-okhttp = { module = "io.github.openfeign:feign-okhttp", version.ref = "openfeign" }
 openfeign-slf4j = { module = "io.github.openfeign:feign-slf4j", version.ref = "openfeign" }
-postgresql = { module = "org.postgresql:postgresql" }
+postgresql = { module = "org.postgresql:postgresql", version.ref = "postgresql" }
 slf4j-api = { module = "org.slf4j:slf4j-api" }
 spring-boot-admin-starter-client = { module = "de.codecentric:spring-boot-admin-starter-client", version.ref = "springBootAdmin" }
 spring-boot-configurationprocessor = { module = "org.springframework.boot:spring-boot-configuration-processor", version.ref = "springBoot" }

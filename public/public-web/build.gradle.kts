@@ -56,6 +56,7 @@ dependencies {
     implementation(libs.spring.boot.starter.security)
 
     implementation(libs.commons.lang3)
+    implementation(libs.postgresql)
 
     implementation(libs.bundles.caching)
     implementation(libs.ehcache) {

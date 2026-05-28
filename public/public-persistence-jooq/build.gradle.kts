@@ -73,8 +73,10 @@ dependencies {
     implementation(project(":common-utils"))
 
     runtimeOnly(libs.postgresql)
+
     api(libs.jooq)
     implementation(libs.commons.compress)
+    implementation(libs.postgresql)
 
     testImplementation(libs.spring.boot.starter.jooq.test)
     testImplementation(testFixtures(project(":common-persistence-jooq")))
