@@ -2,21 +2,19 @@
 
 package ch.difty.scipamato.core.persistence
 
+import ch.difty.scipamato.common.persistence.JooqIntegrationTest
 import ch.difty.scipamato.core.db.Tables.PAPER
 import org.amshove.kluent.shouldHaveSize
 import org.jooq.DSLContext
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.jooq.test.autoconfigure.JooqTest
-import org.testcontainers.junit.jupiter.Testcontainers
 
 /**
  * @author Lukas Eder
  * @author Thomas Darimont
  * @author Urs Joss
  */
-@JooqTest
-@Testcontainers
+@JooqIntegrationTest
 internal open class JooqEntityDslIntegrationTest {
 
     @Autowired

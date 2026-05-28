@@ -1,5 +1,6 @@
 package ch.difty.scipamato.core.persistence.paper.slim
 
+import ch.difty.scipamato.common.persistence.JooqIntegrationTest
 import ch.difty.scipamato.common.persistence.paging.PaginationRequest
 import ch.difty.scipamato.core.entity.search.SearchCondition
 import ch.difty.scipamato.core.entity.search.SearchOrder
@@ -10,11 +11,8 @@ import org.amshove.kluent.shouldContainSame
 import org.amshove.kluent.shouldHaveSize
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.jooq.test.autoconfigure.JooqTest
-import org.testcontainers.junit.jupiter.Testcontainers
 
-@JooqTest
-@Testcontainers
+@JooqIntegrationTest
 @Suppress("FunctionName", "TooManyFunctions", "SpellCheckingInspection", "MagicNumber")
 internal open class JooqPaperSlimBySearchOrderRepoIntegrationTest {
 

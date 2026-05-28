@@ -1,19 +1,17 @@
 package ch.difty.scipamato.core.persistence.paper.searchorder
 
+import ch.difty.scipamato.common.persistence.JooqIntegrationTest
 import ch.difty.scipamato.core.entity.search.BooleanSearchTerm
 import ch.difty.scipamato.core.entity.search.SearchTerm
 import ch.difty.scipamato.core.entity.search.SearchTermType
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.DynamicTest
 import org.junit.jupiter.api.TestFactory
-import org.springframework.boot.jooq.test.autoconfigure.JooqTest
-import org.testcontainers.junit.jupiter.Testcontainers
 
 /**
  * Test class to integration test the search term and the search term evaluator.
  */
-@JooqTest
-@Testcontainers
+@JooqIntegrationTest
 open class BooleanSearchTermEvaluatorIntegrationTest : SearchTermEvaluatorIntegrationTest<BooleanSearchTerm>() {
 
     override val searchTermType = SearchTermType.BOOLEAN.id

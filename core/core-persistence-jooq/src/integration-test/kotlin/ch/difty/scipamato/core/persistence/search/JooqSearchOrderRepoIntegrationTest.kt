@@ -2,6 +2,7 @@
 
 package ch.difty.scipamato.core.persistence.search
 
+import ch.difty.scipamato.common.persistence.JooqIntegrationTest
 import ch.difty.scipamato.core.entity.Code
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic
 import ch.difty.scipamato.core.entity.search.SearchCondition
@@ -22,11 +23,8 @@ import org.amshove.kluent.shouldNotBeNull
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.fail
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.jooq.test.autoconfigure.JooqTest
-import org.testcontainers.junit.jupiter.Testcontainers
 
-@JooqTest
-@Testcontainers
+@JooqIntegrationTest
 @Suppress("TooManyFunctions", "DuplicatedCode", "SpellCheckingInspection", "MagicNumber", "SameParameterValue")
 internal open class JooqSearchOrderRepoIntegrationTest {
 

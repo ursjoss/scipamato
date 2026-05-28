@@ -1,17 +1,15 @@
 package ch.difty.scipamato.publ.persistence
 
 import ch.difty.scipamato.common.logger
+import ch.difty.scipamato.common.persistence.JooqIntegrationTest
 import ch.difty.scipamato.publ.persistence.keyword.JooqKeywordRepo
 import org.amshove.kluent.shouldContainAll
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.jooq.test.autoconfigure.JooqTest
-import org.testcontainers.junit.jupiter.Testcontainers
 
 private val log = logger()
 
-@JooqTest
-@Testcontainers
+@JooqIntegrationTest
 internal open class JooqKeywordRepoIntegrationTest {
 
     @Autowired

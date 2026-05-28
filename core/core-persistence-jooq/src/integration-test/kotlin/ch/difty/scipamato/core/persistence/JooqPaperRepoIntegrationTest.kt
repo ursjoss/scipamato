@@ -1,5 +1,6 @@
 package ch.difty.scipamato.core.persistence
 
+import ch.difty.scipamato.common.persistence.JooqIntegrationTest
 import ch.difty.scipamato.common.persistence.paging.PaginationRequest
 import ch.difty.scipamato.common.persistence.paging.Sort.Direction
 import ch.difty.scipamato.core.db.Tables.PAPER_ATTACHMENT
@@ -34,13 +35,10 @@ import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.fail
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.jooq.test.autoconfigure.JooqTest
 import org.springframework.dao.DataAccessException
 import org.springframework.dao.DataIntegrityViolationException
-import org.testcontainers.junit.jupiter.Testcontainers
 
-@JooqTest
-@Testcontainers
+@JooqIntegrationTest
 @Suppress("TooManyFunctions", "FunctionName", "MagicNumber", "SpellCheckingInspection")
 internal open class JooqPaperRepoIntegrationTest {
 

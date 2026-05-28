@@ -1,5 +1,6 @@
 package ch.difty.scipamato.core.persistence.paper.slim
 
+import ch.difty.scipamato.common.persistence.JooqIntegrationTest
 import ch.difty.scipamato.common.persistence.paging.PaginationRequest
 import ch.difty.scipamato.core.entity.search.PaperFilter
 import ch.difty.scipamato.core.entity.search.SearchCondition
@@ -16,12 +17,9 @@ import org.amshove.kluent.shouldStartWith
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.fail
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.jooq.test.autoconfigure.JooqTest
-import org.testcontainers.junit.jupiter.Testcontainers
 
 @Suppress("FunctionName", "MagicNumber", "SpellCheckingInspection")
-@JooqTest
-@Testcontainers
+@JooqIntegrationTest
 internal open class JooqPaperSlimRepoIntegrationTest {
 
     @Autowired

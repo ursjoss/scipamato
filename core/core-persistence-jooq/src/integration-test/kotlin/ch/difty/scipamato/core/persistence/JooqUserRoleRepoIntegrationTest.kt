@@ -1,17 +1,15 @@
 package ch.difty.scipamato.core.persistence
 
+import ch.difty.scipamato.common.persistence.JooqIntegrationTest
 import ch.difty.scipamato.core.auth.Role
 import ch.difty.scipamato.core.persistence.user.JooqUserRoleRepo
 import org.amshove.kluent.shouldBeEmpty
 import org.amshove.kluent.shouldContainSame
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.jooq.test.autoconfigure.JooqTest
-import org.testcontainers.junit.jupiter.Testcontainers
 
 @Suppress("FunctionName", "MagicNumber")
-@JooqTest
-@Testcontainers
+@JooqIntegrationTest
 internal open class JooqUserRoleRepoIntegrationTest {
 
     @Autowired
