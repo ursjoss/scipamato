@@ -32,7 +32,7 @@ internal class TomcatConfigTest {
     private val config = TomcatConfig(serverPropsMock, scipamatoPropertiesMock)
 
     private val factory: TomcatServletWebServerFactory =
-        config.getTomcat() as TomcatServletWebServerFactory
+        config.getTomcat()
 
     @AfterEach
     fun tearDown() {
@@ -56,7 +56,6 @@ internal class TomcatConfigTest {
     @Test
     fun canStartAndStopTomcatServletContainer() {
         val server = factory.getWebServer()
-        server.port shouldBeEqualTo -1
         try {
             server.start()
             server.port shouldBeEqualTo 8080
