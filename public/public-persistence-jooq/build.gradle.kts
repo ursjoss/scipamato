@@ -76,6 +76,7 @@ dependencies {
     api(libs.jooq)
     implementation(libs.commons.compress)
 
+    testImplementation(libs.spring.boot.starter.jooq.test)
     testImplementation(testFixtures(project(":common-persistence-jooq")))
     testImplementation(testFixtures(project(":common-utils")))
 }

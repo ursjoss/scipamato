@@ -79,7 +79,7 @@ dependencies {
     implementation(libs.spring.security.core)
 
     testImplementation(project(":core-entity"))
-
+    testImplementation(libs.spring.boot.starter.jooq.test)
     testImplementation(libs.lombok)
     testAnnotationProcessor(libs.lombok)
 

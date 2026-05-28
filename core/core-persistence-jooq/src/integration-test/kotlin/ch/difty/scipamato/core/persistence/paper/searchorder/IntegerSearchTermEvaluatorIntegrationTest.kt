@@ -13,7 +13,7 @@ import ch.difty.scipamato.core.entity.search.SearchTermType
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.DynamicTest
 import org.junit.jupiter.api.TestFactory
-import org.springframework.boot.test.autoconfigure.jooq.JooqTest
+import org.springframework.boot.jooq.test.autoconfigure.JooqTest
 import org.testcontainers.junit.jupiter.Testcontainers
 
 /**
