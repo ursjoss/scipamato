@@ -16,14 +16,14 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.batch.core.BatchStatus
 import org.springframework.batch.core.ExitStatus
-import org.springframework.batch.core.Job
-import org.springframework.batch.core.JobExecution
-import org.springframework.batch.core.StepExecution
-import org.springframework.batch.core.launch.JobLauncher
+import org.springframework.batch.core.job.Job
+import org.springframework.batch.core.job.JobExecution
+import org.springframework.batch.core.launch.JobOperator
+import org.springframework.batch.core.step.StepExecution
 
 internal class RefDataSyncJobLauncherTest {
 
-    private val jobLauncher = mockk<JobLauncher>()
+    private val jobOperator = mockk<JobOperator>()
     private val warner = mockk<Warner>()
 
     private val syncLanguageJob = mockk<Job>()
@@ -38,7 +38,7 @@ internal class RefDataSyncJobLauncherTest {
     private val syncKeywordJob = mockk<Job>()
 
     private var launcher = RefDataSyncJobLauncher(
-        jobLauncher, syncLanguageJob, syncNewStudyPageLinkJob,
+        jobOperator, syncLanguageJob, syncNewStudyPageLinkJob,
         syncCodeClassJob, syncCodeJob, syncPaperJob, syncNewsletterJob, syncNewsletterTopicJob, syncNewStudyJob,
         syncNewStudyTopicJob, syncKeywordJob, warner
     )
@@ -65,7 +65,7 @@ internal class RefDataSyncJobLauncherTest {
 
     @AfterEach
     fun tearDown() {
-        confirmVerified(jobLauncher, warner)
+        confirmVerified(jobOperator, warner)
     }
 
     private fun jobsPerTopic(): Map<String, Job> {
@@ -87,7 +87,7 @@ internal class RefDataSyncJobLauncherTest {
     fun jobParameters_haveSingleIdentifyingParameterRunDate_withCurrentDate() {
         val params = launcher.jobParameters
         params.parameters.shouldHaveSize(1)
-        params.parameters.values.first().isIdentifying.shouldBeTrue()
+        params.parameters.first().identifying.shouldBeTrue()
     }
 
     @Test
@@ -139,7 +139,7 @@ internal class RefDataSyncJobLauncherTest {
 
     private fun jobLauncherFixture(executionID: Long, status: BatchStatus, exitStatus: ExitStatus, job: Job) {
         val jobExecution = jobExecutionFixture(executionID, status, exitStatus)
-        every { jobLauncher.run(eq(job), any()) } returns jobExecution
+        every { jobOperator.start(eq(job), any()) } returns jobExecution
     }
 
     private fun jobExecutionFixture(id: Long, status: BatchStatus, exitStatus: ExitStatus): JobExecution {
@@ -177,7 +177,7 @@ internal class RefDataSyncJobLauncherTest {
     private fun verifyMocks(jobMap: Map<String, Job>) {
         verify { warner.findUnsynchronizedPapers() }
         verify { warner.findNewsletterswithUnsynchronizedPapers() }
-        jobMap.values.forEach { job -> verify { jobLauncher.run(job, any()) } }
+        jobMap.values.forEach { job -> verify { jobOperator.start(job, any()) } }
     }
 
     @Test
@@ -255,7 +255,7 @@ internal class RefDataSyncJobLauncherTest {
         verify { warner.findUnsynchronizedPapers() }
         verify { warner.findNewsletterswithUnsynchronizedPapers() }
 
-        jobMap.values.take(3).forEach { job -> verify { jobLauncher.run(job, any()) } }
+        jobMap.values.take(3).forEach { job -> verify { jobOperator.start(job, any()) } }
     }
 
     @Suppress("ReturnCount")
@@ -284,7 +284,7 @@ internal class RefDataSyncJobLauncherTest {
             }
         }
 
-        every { jobLauncher.run(syncCodeClassJob, any()) } throws RuntimeException("unexpected exception somewhere")
+        every { jobOperator.start(syncCodeClassJob, any()) } throws RuntimeException("unexpected exception somewhere")
 
         failureMsg.add("Unexpected exception of type class java.lang.RuntimeException: unexpected exception somewhere")
         return successMsg to failureMsg
