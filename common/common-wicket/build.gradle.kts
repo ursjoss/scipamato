@@ -38,6 +38,7 @@ dependencies {
     api(libs.spring.core)
 
     api(libs.spring.boot.starter.web)
+    api(libs.tomcat)
     api(libs.spring.boot.starter.wicket)
     api(libs.wicket.core)
     api(libs.wicket.ioc)
