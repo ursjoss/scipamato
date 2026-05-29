@@ -27,7 +27,7 @@ kotlinLogging = "8.0.4"
 kris = "0.5.25"
 licensePlugin = "3.1.2"
 lombokPlugin = "9.5.0"
-mockk = "1.14.9"
+mockk = "1.14.11"
 openfeign = "13.12"
 # PINNED: com.optravis.jooq.gradle:jooq-gradle:4.0.6 - org.postgresql:postgresql 42.7.5 -> 42.7.11+
 postgresql = "42.7.11"
