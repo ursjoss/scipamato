@@ -50,6 +50,8 @@ dependencies {
     implementation(project(":public-persistence-jooq"))
     implementation(project(":common-wicket"))
 
+    implementation(libs.tomcat)
+
     annotationProcessor(libs.spring.boot.configurationprocessor) {
         exclude("om.vaadin.external.google", "android-json")
     }

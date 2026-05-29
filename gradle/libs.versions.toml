@@ -38,6 +38,8 @@ springCloud = "2025.1.1"
 springCloudStarter = "5.0.1"
 springDependencyManagementPlugin = "1.1.7"
 springMockk = "5.0.1"
+# PINNED: org.springframework.boot:spring-boot-starter-web:4.0.6 - org.apache.tomcat.embed:tomcat-embed-core 11.0.21 -> 11.0.22
+tomcat = "11.0.22"
 univocityParsers = "2.9.1"
 wicket = "10.9.1"
 wicketBootstrap = "7.0.14"
@@ -108,6 +110,7 @@ springMockk = { module = "com.ninja-squad:springmockk", version.ref = "springMoc
 testcontainers-junitJupiter = { module = "org.testcontainers:testcontainers-junit-jupiter" }
 testcontainers-postgresql = { module = "org.testcontainers:testcontainers-postgresql" }
 testcontainers-testcontainers = { module = "org.testcontainers:testcontainers" }
+tomcat = { module = "org.apache.tomcat.embed:tomcat-embed-core", version.ref = "tomcat" }
 univocity = { module = "com.univocity:univocity-parsers", version.ref = "univocityParsers" }
 validationApi = { module = "jakarta.validation:jakarta.validation-api" }
 wicket-authroles = { module = "org.apache.wicket:wicket-auth-roles", version.ref = "wicket" }
