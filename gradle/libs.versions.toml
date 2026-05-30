@@ -45,7 +45,7 @@ wicket = "10.9.1"
 wicketBootstrap = "7.0.14"
 wicketJqueryUi = "10.0.0-M1"
 wicketSpringBootStarter = "5.0.0"
-wicketstuff = "10.9.1"
+wicketstuff = "10.9.2"
 
 [libraries]
 bouncycastle = { module = "org.bouncycastle:bcprov-jdk18on", version.ref = "bouncycastle" }
